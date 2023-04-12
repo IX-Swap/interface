@@ -37,7 +37,7 @@ import { AdditionalInformation } from './sections/AdditionalInformation'
 import { schema, editSchema } from './schema'
 
 import {
-  initialValues,
+  getInitialValues,
   industryOptions,
   tokenTypeOptions,
   networkOptions,
@@ -90,6 +90,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const vetting = useVetting(issuanceId)
   const smartContractStrategy = vetting.data?.smartContractStrategy
   const offer = useOfferFormInitialValues(issuanceId, smartContractStrategy)
+  const initialValues = useMemo(() => getInitialValues(smartContractStrategy), [smartContractStrategy])
 
   const validationSchema = React.useMemo(() => (props.edit ? editSchema : schema), [props.edit])
   const countries = React.useMemo(() => {
@@ -134,7 +135,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
         loader.stop()
       }
     },
-    [initialValues, vetting.data, offer.data, offer.issuance, isFullEdit]
+    [vetting.data, offer.data, offer.issuance, isFullEdit, initialValues]
   )
 
   const saveDraft = React.useCallback((values: InformationFormValues) => _submit(values, true), [_submit])
@@ -169,7 +170,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     setter('timeframe.closed', undefined)
     setter('timeframe.claim', undefined)
 
-    if(!value) {
+    if (!value) {
       setter('presaleAlocated', '')
       setter('presaleMaxInvestment', '')
       setter('presaleMinInvestment', '')
@@ -469,9 +470,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     touch={setFieldTouched}
                     label="Decimals"
                     placeholder="18"
-                    inputFilter={numberFilter}
+                    inputFilter={integerNumberFilter}
                     disabled={props.edit}
-                    value={values.decimals.toString()}
+                    value={values.decimals?.toString()}
                     error={(touched.decimals && errors.decimals) as string}
                   />
                   {smartContractStrategy === SMART_CONTRACT_STRATEGIES.original ? (
@@ -549,7 +550,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     placeholder="Price per Token"
                     inputFilter={numberFilter}
                     disabled={props.edit}
-                    value={`${values.tokenPrice}`}
+                    value={`${values.tokenPrice || ''}`}
                     error={(touched.tokenPrice && errors.tokenPrice) as string}
                   />
                   <DropdownField

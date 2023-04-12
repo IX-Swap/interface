@@ -1,5 +1,5 @@
 export const isSubmitDisabled = (errors: any, touched: any) => {
-  return getError(errors, touched, false)
+  return getVisibleError(errors, touched, false)
 }
 
 const getIsDisabled = (message?: string, isDraft?: boolean) => {
@@ -13,12 +13,12 @@ const getIsDisabled = (message?: string, isDraft?: boolean) => {
   return false
 }
 
-const getError = (errors: any, touched: any, isDraft: boolean) => {
-  const notTouched = !Object.keys(touched).length
-  if (notTouched) {
-    return true
-  }
-  const hasError = Object.entries(touched).some(([fieldName, value]: any) => {
+const getVisibleError = (errors: any, touched: any, isDraft: boolean) => {
+  // const notTouched = !Object.keys(touched).length
+  // if (notTouched) {
+  //   return true
+  // }
+  const hasVisibleError = Object.entries(touched).some(([fieldName, value]: any) => {
     if (Array.isArray(value)) {
       return value.some((arrayItem, index) => {
         if (!arrayItem) {
@@ -39,9 +39,9 @@ const getError = (errors: any, touched: any, isDraft: boolean) => {
 
     return value ? getIsDisabled(errors[fieldName], isDraft) : false
   })
-  return hasError
+  return hasVisibleError
 }
 
 export const isDraftDisabled = (errors: any, touched: any) => {
-  return getError(errors, touched, true)
+  return getVisibleError(errors, touched, true)
 }

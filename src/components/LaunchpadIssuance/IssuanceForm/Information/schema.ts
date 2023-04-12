@@ -97,7 +97,7 @@ export const schema = yup.object().shape({
     .min(2, getLongerThanOrEqual('Token symbol', 2))
     .max(6, 'Token symbol should be at most 6 charachters')
     .matches(/^[a-zA-Z]+$/, { message: 'Please enter only letters' }),
-  tokenPrice: yup.string().required(REQUIRED),
+  tokenPrice: yup.string().required(REQUIRED).nullable(),
   tokenStandart: yup.string().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
 
   tokenReceiverAddress: yup
@@ -124,7 +124,7 @@ export const schema = yup.object().shape({
     })
     .nullable(),
 
-  decimals: yup.number().min(0).max(50),
+  decimals: yup.number().min(0).max(50).required(REQUIRED).nullable(),
   trusteeAddress: yup
     .string()
     .when('smartContractStrategy', {
@@ -141,7 +141,9 @@ export const schema = yup.object().shape({
   tokenAddress: yup
     .string()
     .when('smartContractStrategy', {
-      is: (str?: SMART_CONTRACT_STRATEGIES) => str !== SMART_CONTRACT_STRATEGIES.original,
+      is: function (str?: any) {
+        return str !== SMART_CONTRACT_STRATEGIES.original
+      },
       then: yup
         .string()
         .test('addressConstraint', 'Please enter a valid address', function () {
@@ -320,18 +322,20 @@ export const schema = yup.object().shape({
 
   members: yup.array(
     yup.object().shape({
-      photo: limitedSizeFileSchema,
-      name: yup.string().required(REQUIRED),
+      photo: limitedSizeFileSchema.nullable(),
+      name: yup.string().required(REQUIRED).nullable(),
       role: yup
         .string()
         .min(2, getLongerThanOrEqual('Team member position', 2))
         .max(STRING_NORMAL, getHaveAtMost('Team member position', STRING_NORMAL))
-        .required(REQUIRED),
+        .required(REQUIRED)
+        .nullable(),
       about: yup
         .string()
         .min(2, getLongerThanOrEqual('Team member description', 2))
         .max(STRING_BIG, getHaveAtMost('Team member description', STRING_BIG))
-        .required(REQUIRED),
+        .required(REQUIRED)
+        .nullable(),
     })
   ),
 

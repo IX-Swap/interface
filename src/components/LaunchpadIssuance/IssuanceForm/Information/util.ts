@@ -8,80 +8,90 @@ import {
   OfferDistributionFrequency,
   OfferInvestmentStructure,
 } from 'state/launchpad/types'
+import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 
-export const initialValues = {
-  profilePicture: undefined,
-  cardPicture: undefined,
+export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGIES) =>
+  ({
+    profilePicture: undefined,
+    cardPicture: undefined,
 
-  shortDescription: '',
-  longDescription: '',
+    shortDescription: '',
+    longDescription: '',
 
-  title: '',
+    title: '',
 
-  companyIdNumber: '',
+    companyIdNumber: '',
 
-  investmentStructure: '',
-  issuerIdentificationNumber: '',
-
-  industry: undefined,
-  investmentType: undefined,
-
-  country: '',
-
-  tokenName: '',
-  tokenTicker: '',
-  decimals: 0,
-  trusteeAddress: '',
-  tokenType: '',
-
-  network: undefined,
-
-  hardCap: '',
-  softCap: '',
-
-  tokenPrice: 0,
-  tokenStandart: undefined,
-  totalSupply: '',
-  tokenReceiverAddress: '',
-
-  minInvestment: '',
-  maxInvestment: '',
-
-  hasPresale: undefined,
-  presaleAlocated: '',
-  presaleMinInvestment: '',
-  presaleMaxInvestment: '',
-
-  images: [],
-  videos: [{ id: 0 }],
-
-  additionalDocuments: [{ id: 0 }],
-
-  members: [{ id: 0 }],
-  faq: [{ id: 0 }],
-
-  allowOnlyAccredited: undefined,
-  tokenomicsAgreement: undefined,
-
-  terms: {
     investmentStructure: '',
-  },
+    issuerIdentificationNumber: '',
 
-  timeframe: {
-    whitelist: undefined,
-    presale: undefined,
-    sale: undefined,
-    closed: undefined,
-    claim: undefined,
-  },
+    industry: undefined,
+    investmentType: undefined,
 
-  // social: [{ type: '' }],
-  social: [],
+    country: '',
 
-  website: '',
-  whitepaper: '',
-  email: '',
-} as unknown as InformationFormValues
+    tokenName: '',
+    tokenTicker: '',
+    decimals: null,
+    trusteeAddress: '',
+    tokenType: '',
+
+    network: undefined,
+
+    hardCap: '',
+    softCap: '',
+
+    tokenPrice: null,
+    tokenStandart: undefined,
+    totalSupply: '',
+    tokenReceiverAddress: '',
+
+    minInvestment: '',
+    maxInvestment: '',
+
+    hasPresale: undefined,
+    presaleAlocated: '',
+    presaleMinInvestment: '',
+    presaleMaxInvestment: '',
+
+    images: [],
+    videos: [{ id: 0 }],
+
+    additionalDocuments: [{ id: 0 }],
+
+    members: [
+      {
+        photo: null,
+        name: null,
+        role: null,
+        about: null,
+      },
+    ],
+    faq: [{ id: 0 }],
+
+    allowOnlyAccredited: undefined,
+    tokenomicsAgreement: undefined,
+
+    terms: {
+      investmentStructure: '',
+    },
+
+    timeframe: {
+      whitelist: undefined,
+      presale: undefined,
+      sale: undefined,
+      closed: undefined,
+      claim: undefined,
+    },
+
+    // social: [{ type: '' }],
+    social: [],
+
+    website: '',
+    whitepaper: '',
+    email: '',
+    smartContractStrategy,
+  } as unknown as InformationFormValues)
 
 export const industryOptions = [
   { label: 'Blockchain', value: OfferIndustry.blockchain },
