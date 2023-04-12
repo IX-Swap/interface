@@ -40,7 +40,7 @@ export const SingPassPage = () => {
           fontSize: '14px',
           color: '#FFFFFF',
           marginLeft: '10px',
-          width: '150px',
+          width: '216px',
           marginTop: '0px',
           marginBottom: '25px'
         }}
@@ -90,25 +90,25 @@ export const SingPassPage = () => {
             }}
           >
             <InfoItem label='NRIC/FIN' value={data?.uinfin} />
-            <div style={{ display: 'flex', gap: '30%' }}>
+            <div style={{ display: 'flex', gap: '44%' }}>
               <InfoItem label='Name' value={data?.name} />
               <InfoItem
                 label='Nationality/Citizenship'
                 value={data?.nationality}
               />
             </div>
-            <div style={{ display: 'flex', gap: '30%' }}>
+            <div style={{ display: 'flex', gap: '44%' }}>
               {' '}
               <InfoItem label='Date of Birth' value={data?.dob} />
               <InfoItem label='Sex' value={data?.sex} />
             </div>
 
-            <div style={{ display: 'flex', gap: '30%' }}>
+            <div style={{ display: 'flex', gap: '44%' }}>
               {' '}
               <InfoItem label='Email' value={data?.email} />
               <InfoItem label='Mobile Number' value={data?.mobileno} />
             </div>
-            <div style={{ display: 'flex', gap: '30%' }}>
+            <div style={{ display: 'flex', gap: '44%' }}>
               {' '}
               <InfoItem
                 label='Registered Address'
@@ -149,7 +149,8 @@ export const SingPassPage = () => {
           color: 'rgba(255, 255, 255, 0.5)',
           marginTop: '40px',
           marginBottom: '40px',
-          marginLeft: '20px'
+          marginLeft: '20px',
+          lineHeight: '138%'
         }}
       >
         Clicking the “I Agree” button permits this digital service to retrieve
@@ -159,7 +160,8 @@ export const SingPassPage = () => {
             color: '#FFFFFF',
             cursor: 'hover',
             textDecoration: 'none',
-            fontSize: '12px'
+            fontSize: '12px',
+            lineHeight: '138%'
           }}
           href='https://www.singpass.gov.sg/home/ui/terms-of-use'
         >
