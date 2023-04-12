@@ -3,7 +3,7 @@ import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 import { CheckCircle, Clock, Info } from 'react-feather'
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
-import { useCheckClaimed, useClaimOffer } from 'state/launchpad/hooks'
+import { useCheckClaimed, useClaimOfferRefund } from 'state/launchpad/hooks'
 import { InvestedDataRes, Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
@@ -46,7 +46,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
   } = props.offer
 
   const addPopup = useAddPopup()
-  const claim = useClaimOffer(id)
+  const claimRefund = useClaimOfferRefund(id)
   const { setHasClaimed, hasClaimed } = useCheckClaimed(id)
 
   const [contactFormOpen, setContactForm] = React.useState(false)
@@ -56,7 +56,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
 
   const isSuccessfull = React.useMemo(() => softCapReached, [])
 
-  const { amount: amountToClaim, loading: amountLoading, error: amountError } = props.investedData
+  const { amount, amountClaim, loading: amountLoading, error: amountError } = props.investedData
   const launchpadContract = useLaunchpadInvestmentContract()
   const { chainId = 137, account } = useActiveWeb3React()
   const tokenCurrency = useCurrency(investingTokenAddress)
@@ -65,7 +65,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
           tokenCurrency,
-          ethers.utils.parseUnits(amountToClaim?.toString() || '0', investingTokenDecimals) as any
+          ethers.utils.parseUnits(amount?.toString(), investingTokenDecimals) as any
         )
       : undefined,
     LAUNCHPAD_INVESTMENT_ADDRESS[chainId]
@@ -81,8 +81,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
         const data = await launchpadContract.claim(contractSaleId, account)
 
         if (data.hash)
-          await claim(isSuccessfull, {
-            amount: amountToClaim?.toString() ?? '0',
+          await claimRefund({
+            amount: amount?.toString(),
             txHash: data.hash,
           })
 
@@ -92,9 +92,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
     } catch (err: any) {
       addPopup({ info: { success: false, summary: err?.toString() } })
     }
-  }, [claim, amountToClaim])
+  }, [claimRefund, amount])
 
-  // todo add check was claimed already when backend is ready
   return (
     <InvestFormContainer gap="1rem" padding="0 0 3rem 0">
       <Title>{canClaim ? 'Token Claim' : 'Closed'}</Title>
@@ -120,14 +119,14 @@ export const ClosedStage: React.FC<Props> = (props) => {
           {amountLoading && <Loader />}
           {!amountLoading && !amountError && (
             <MyInvestmentAmount>
-              {amountToClaim ?? 0} {isSuccessfull ? tokenSymbol : investingTokenSymbol}
+              {isSuccessfull ? amountClaim : amount} {isSuccessfull ? tokenSymbol : investingTokenSymbol}
             </MyInvestmentAmount>
           )}
           {amountError}
         </Column>
 
         {!isSuccessfull && (
-          <ClaimedFilledButton onClick={onSubmit} disabled={!canClaim || (amountToClaim ?? 0) <= 0 || hasClaimed}>
+          <ClaimedFilledButton onClick={onSubmit} disabled={!canClaim || amount <= 0 || hasClaimed}>
             Claim
           </ClaimedFilledButton>
         )}
