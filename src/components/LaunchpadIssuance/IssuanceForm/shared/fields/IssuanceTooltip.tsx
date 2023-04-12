@@ -4,7 +4,7 @@ import { Info } from "react-feather"
 import styled, { useTheme } from "styled-components"
 
 interface IssuanceTooltipProps {
-    tooltipContent: string
+    tooltipContent: string | React.ReactNode
 }
 
 export const IssuanceTooltip = ({tooltipContent} : IssuanceTooltipProps) => {

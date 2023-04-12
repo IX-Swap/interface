@@ -26,6 +26,7 @@ import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { LAUNCHPAD_INVESTMENT_ADDRESS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
+import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/shared/fields/IssuanceTooltip'
 
 interface Props {
   offer: Offer
@@ -114,6 +115,13 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
     lastStatus,
   ])
 
+  const tooltipContent = <div>
+    <PresaleTooltipTitle>Pre-Sale Conditions</PresaleTooltipTitle>
+    <br/>
+    <PresaleTooltipText>These conditions are applicable only to the pre-sale round. 
+      For public sale conditions, please refer to the &quot;Deals&quot; page for more info.</PresaleTooltipText>
+  </div> as React.ReactNode
+
   const launchpadContract = useLaunchpadInvestmentContract()
   const tokenCurrency = useCurrency(offer.investingTokenAddress)
   const { chainId = 137, account } = useActiveWeb3React()
@@ -173,7 +181,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
       <InfoList
         title={<InfoContainer>
                 <InfoListTitle>{isPresale ? 'Pre-Sale Conditions' : 'Public Sale Conditions'}</InfoListTitle>
-                <Info size="13" color={theme.launchpad.colors.text.caption} />
+                {isPresale ? 
+                  <IssuanceTooltip tooltipContent={tooltipContent} /> : 
+                  <Info size="16" color={theme.launchpad.colors.text.caption} />}
               </InfoContainer>}
         fontSize="13px"
         lineHeight="32px"
@@ -222,10 +232,18 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
   )
 }
 
+const PresaleTooltipTitle = styled.b`
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+`
+
+const PresaleTooltipText = styled.p`
+  color: ${(props) => props.theme.launchpad.colors.text.body};
+  font-weight: 400
+`
+
 const InfoContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-  align-items: center;
   gap: 7px;
 `
 
