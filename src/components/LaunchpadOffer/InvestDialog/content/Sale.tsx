@@ -108,6 +108,13 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     ]
   }, [availableToInvest, amountInvested, investingTokenSymbol, formatter, lastStatus])
 
+  const tooltipContent = <div>
+    <PresaleTooltipTitle>Pre-Sale Conditions</PresaleTooltipTitle>
+    <br/>
+    <PresaleTooltipText>These conditions are applicable only to the pre-sale round. 
+      For public sale conditions, please refer to the &quot;Deals&quot; page for more info.</PresaleTooltipText>
+  </div> as React.ReactNode
+
   const launchpadContract = useLaunchpadInvestmentContract()
   const tokenCurrency = useCurrency(offer.investingTokenAddress)
   const { chainId = 137, account } = useActiveWeb3React()
@@ -166,7 +173,12 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       <OfferLinks network={network} address={tokenAddress} symbol={tokenSymbol} decimals={decimals} />
 
       <InfoList
-        title={<InfoListTitle>{isPresale ? 'Pre-Sale Conditions' : 'Public Sale Conditions'}</InfoListTitle>}
+        title={<InfoContainer>
+                <InfoListTitle>{isPresale ? 'Pre-Sale Conditions' : 'Public Sale Conditions'}</InfoListTitle>
+                {isPresale ? 
+                  <IssuanceTooltip tooltipContent={tooltipContent} /> : 
+                  <Info size="16" color={theme.launchpad.colors.text.caption} />}
+              </InfoContainer>}
         fontSize="13px"
         lineHeight="32px"
         entries={conditions}
@@ -218,7 +230,22 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
   )
 }
 
-const InfoListTitle = styled.div`
+const PresaleTooltipTitle = styled.b`
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+`
+
+const PresaleTooltipText = styled.p`
+  color: ${(props) => props.theme.launchpad.colors.text.body};
+  font-weight: 400
+`
+
+const InfoContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 7px;
+`
+
+const InfoListTitle = styled.text`
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
