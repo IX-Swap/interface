@@ -140,7 +140,7 @@ export const useGetPinnedOffer = () => {
 }
 
 export const useFormatOfferValue = (addComa = true) => {
-  return React.useCallback((value?: string) => {
+  return React.useCallback((value?: string, decimalsLimit?: number) => {
     if (!value) {
       return ''
     }
@@ -162,10 +162,14 @@ export const useFormatOfferValue = (addComa = true) => {
         .join('')
 
       if (decimals !== undefined) {
-        result = result.concat(`.${decimals}`)
+        if (decimalsLimit && decimals.length > decimalsLimit) {
+          const formatDecimals = decimals.substring(0, decimalsLimit);
+          result = result.concat(`.${formatDecimals}`)
+        } else {
+          result = result.concat(`.${decimals}`)
+        }
       }
     }
-
     return result
   }, [])
 }
@@ -1007,13 +1011,13 @@ export const useOfferFormInitialValues = (
         faq: payload.faq,
         members: payload.members.map(
           (member) =>
-            ({
-              id: member.id,
-              name: member.name,
-              role: member.title,
-              about: member.description,
-              photo: files.find((x) => x.id === member.avatar?.id),
-            } as TeamMember)
+          ({
+            id: member.id,
+            name: member.name,
+            role: member.title,
+            about: member.description,
+            photo: files.find((x) => x.id === member.avatar?.id),
+          } as TeamMember)
         ),
 
         social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
