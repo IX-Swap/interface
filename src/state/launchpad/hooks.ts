@@ -41,7 +41,7 @@ import {
   TeamMember,
   VideoLink,
 } from 'components/LaunchpadIssuance/IssuanceForm/Information/types'
-import { initialValues as informationInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Information/util'
+import { getInitialValues as getOfferInitialValues } from 'components/LaunchpadIssuance/IssuanceForm/Information/util'
 import { IssuanceFile } from 'components/LaunchpadIssuance/IssuanceForm/types'
 import { DirectorInfo, VettingFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/types'
 import { initialValues as vettingInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
@@ -163,7 +163,7 @@ export const useFormatOfferValue = (addComa = true) => {
 
       if (decimals !== undefined) {
         if (decimalsLimit && decimals.length > decimalsLimit) {
-          const formatDecimals = decimals.substring(0, decimalsLimit);
+          const formatDecimals = decimals.substring(0, decimalsLimit)
           result = result.concat(`.${formatDecimals}`)
         } else {
           result = result.concat(`.${decimals}`)
@@ -965,11 +965,11 @@ export const useOfferFormInitialValues = (
 
   React.useEffect(() => {
     if (!offer.loading && !offer.data) {
-      setValues(informationInitialFormValues)
+      setValues(getOfferInitialValues(smartContractStrategy))
     } else if (!offer.loading && offer.data) {
       transform(offer.data).then(setValues)
     }
-  }, [offer.loading, offer.data])
+  }, [offer.loading, offer.data, smartContractStrategy])
 
   const transform = React.useCallback(
     async (payload: Offer): Promise<InformationFormValues> => {
@@ -982,8 +982,6 @@ export const useOfferFormInitialValues = (
       ])
         .then((res) => res.filter((x) => !!x))
         .then((res) => res as { id: number; file: File }[])
-
-      const isDraft = offer.data?.status && offer.data.status === OfferStatus.draft
 
       const res = {
         id: payload?.id,
@@ -1010,13 +1008,13 @@ export const useOfferFormInitialValues = (
         faq: payload.faq,
         members: payload.members.map(
           (member) =>
-          ({
-            id: member.id,
-            name: member.name,
-            role: member.title,
-            about: member.description,
-            photo: files.find((x) => x.id === member.avatar?.id),
-          } as TeamMember)
+            ({
+              id: member.id,
+              name: member.name,
+              role: member.title,
+              about: member.description,
+              photo: files.find((x) => x.id === member.avatar?.id),
+            } as TeamMember)
         ),
 
         social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
@@ -1077,7 +1075,7 @@ export const useOfferFormInitialValues = (
         tokenType: payload.investingTokenSymbol as OfferTokenType,
         tokenAddress: payload.tokenAddress,
         investingTokenAddress: payload.investingTokenAddress,
-        smartContractStrategy: smartContractStrategy, // hidden field
+        smartContractStrategy,
       }
       return res
     },

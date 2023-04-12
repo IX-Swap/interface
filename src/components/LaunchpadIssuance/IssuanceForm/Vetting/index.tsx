@@ -135,340 +135,347 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
       enableReinitialize={true}
       innerRef={form}
     >
-      {({ submitForm, setFieldValue, values, errors, resetForm, touched, setFieldTouched }) => (
-        <FormContainer>
-          <ConfirmationForm
-            isOpen={showConfirmDialog}
-            onClose={() => setShowConfirmDialog(false)}
-            onSave={submitForm}
-          />
-
-          <CloseConfirmation
-            isOpen={showCloseDialog}
-            onDiscard={() => history.push(`/issuance/create?id=${issuanceId}`)}
-            onClose={onConfirmationClose}
-            onSave={() => saveDraft(values)}
-          />
-
-          {loader.isLoading && (
-            <LoaderContainer width="100vw" height="100vh">
-              <Loader />
-            </LoaderContainer>
-          )}
-
-          <FormHeader>
-            <OutlineButton background={theme.launchpad.colors.background} onClick={goBack} padding="1rem 0.75rem">
-              <ArrowLeft color={theme.launchpad.colors.primary} />
-            </OutlineButton>
-
-            <FormTitle>Vetting</FormTitle>
-          </FormHeader>
-
-          <FormSideBar>
-            {!isReset &&
-              [IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
-                initialValues?.data?.status as IssuanceStatus
-              ) && (
-                <RejectInfo
-                  message={initialValues?.data?.reasonRequested}
-                  longMessage={initialValues?.data?.changesRequested}
-                  status={initialValues?.data?.status}
-                  issuanceId={issuanceId}
-                  onClear={() => {
-                    resetForm({ values: defaultValues })
-                    setReset(true)
-                  }}
-                  onSubmit={toSubmit}
-                />
-              )}
-            <VettingActionButtons
-              onSaveDraft={() => saveDraft(values)}
-              onSubmit={toSubmit}
-              isView={view}
-              draftDisabled={view || isDraftDisabled(errors, touched)}
-              submitDisabled={view || isSubmitDisabled(errors, touched)}
-              vettingId={String(initialValues.vettingId)}
-              status={initialValues?.data?.status}
+      {({ submitForm, setFieldValue, values, errors, resetForm, touched, setFieldTouched }) => {
+        const submitDisabled = view || isSubmitDisabled(errors, touched)
+        return (
+          <FormContainer>
+            <ConfirmationForm
+              isOpen={showConfirmDialog}
+              onClose={() => setShowConfirmDialog(false)}
+              onSave={submitForm}
             />
-          </FormSideBar>
 
-          <FormBody>
-            <StrategyInfoBlock>
-              {strategyOptions.map((strategy, idx) => (
-                <StrategyCard
-                  key={strategy.option + idx}
-                  field="smartContractStrategy"
-                  id={strategy.option}
-                  checked={
-                    strategy.option ===
-                    (values.smartContractStrategy ? values.smartContractStrategy : defaultValues.smartContractStrategy)
-                  }
-                  option={strategy.option}
-                  text={strategy.text}
-                  tooltipContent={strategy.tooltipContent}
+            <CloseConfirmation
+              isOpen={showCloseDialog}
+              onDiscard={() => history.push(`/issuance/create?id=${issuanceId}`)}
+              onClose={onConfirmationClose}
+              onSave={() => saveDraft(values)}
+            />
+
+            {loader.isLoading && (
+              <LoaderContainer width="100vw" height="100vh">
+                <Loader />
+              </LoaderContainer>
+            )}
+
+            <FormHeader>
+              <OutlineButton background={theme.launchpad.colors.background} onClick={goBack} padding="1rem 0.75rem">
+                <ArrowLeft color={theme.launchpad.colors.primary} />
+              </OutlineButton>
+
+              <FormTitle>Vetting</FormTitle>
+            </FormHeader>
+
+            <FormSideBar>
+              {!isReset &&
+                [IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
+                  initialValues?.data?.status as IssuanceStatus
+                ) && (
+                  <RejectInfo
+                    message={initialValues?.data?.reasonRequested}
+                    longMessage={initialValues?.data?.changesRequested}
+                    status={initialValues?.data?.status}
+                    issuanceId={issuanceId}
+                    onClear={() => {
+                      resetForm({ values: defaultValues })
+                      setReset(true)
+                    }}
+                    onSubmit={toSubmit}
+                  />
+                )}
+              <VettingActionButtons
+                onSaveDraft={() => saveDraft(values)}
+                onSubmit={toSubmit}
+                isView={view}
+                draftDisabled={view || isDraftDisabled(errors, touched)}
+                submitDisabled={submitDisabled}
+                vettingId={String(initialValues.vettingId)}
+                status={initialValues?.data?.status}
+              />
+            </FormSideBar>
+
+            <FormBody>
+              <StrategyInfoBlock>
+                {strategyOptions.map((strategy, idx) => (
+                  <StrategyCard
+                    key={strategy.option + idx}
+                    field="smartContractStrategy"
+                    id={strategy.option}
+                    checked={
+                      strategy.option ===
+                      (values.smartContractStrategy
+                        ? values.smartContractStrategy
+                        : defaultValues.smartContractStrategy)
+                    }
+                    option={strategy.option}
+                    text={strategy.text}
+                    tooltipContent={strategy.tooltipContent}
+                    disabled={view}
+                    setter={setFieldValue}
+                    touch={setFieldTouched}
+                  />
+                ))}
+              </StrategyInfoBlock>
+
+              <Separator />
+
+              <IssuerInfoBlock>
+                <FormField
+                  label="Applicant's Full Name"
+                  placeholder="Full name of the Applicant"
+                  field="applicantFullName"
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  disabled={view}
+                  value={values.applicantFullName}
+                  error={touched.applicantFullName ? errors.applicantFullName : ''}
+                  inputFilter={textFilter}
+                />
+
+                <FormField
+                  label="Email Address"
+                  placeholder="Email Address"
+                  field="email"
                   disabled={view}
                   setter={setFieldValue}
                   touch={setFieldTouched}
+                  value={values.email}
+                  error={touched.email ? errors.email : ''}
+                  inputFilter={textFilter}
                 />
-              ))}
-            </StrategyInfoBlock>
 
-            <Separator />
+                <FormField
+                  label="Name of Company"
+                  placeholder="Name of your company"
+                  field="companyName"
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  disabled={view}
+                  value={values.companyName}
+                  error={touched.companyName ? errors.companyName : ''}
+                  inputFilter={textFilter}
+                />
 
-            <IssuerInfoBlock>
-              <FormField
-                label="Applicant's Full Name"
-                placeholder="Full name of the Applicant"
-                field="applicantFullName"
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                disabled={view}
-                value={values.applicantFullName}
-                error={touched.applicantFullName ? errors.applicantFullName : ''}
-                inputFilter={textFilter}
-              />
+                <FormField
+                  label="Company Website"
+                  placeholder="Company Website"
+                  field="companyWebsite"
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  disabled={view}
+                  value={values.companyWebsite}
+                  error={touched.companyWebsite ? errors.companyWebsite : ''}
+                  inputFilter={textFilter}
+                />
+              </IssuerInfoBlock>
 
-              <FormField
-                label="Email Address"
-                placeholder="Email Address"
-                field="email"
-                disabled={view}
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                value={values.email}
-                error={touched.email ? errors.email : ''}
-                inputFilter={textFilter}
-              />
+              <Separator />
 
-              <FormField
-                label="Name of Company"
-                placeholder="Name of your company"
-                field="companyName"
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                disabled={view}
-                value={values.companyName}
-                error={touched.companyName ? errors.companyName : ''}
-                inputFilter={textFilter}
-              />
+              <DescriptionBlock>
+                <FileField
+                  label="Upload the company's pitch deck"
+                  field="document.pitchDeck"
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  disabled={view}
+                  value={values.document.pitchDeck}
+                  error={(touched.document?.pitchDeck && errors.document?.pitchDeck) as string}
+                  isImage
+                />
 
-              <FormField
-                label="Company Website"
-                placeholder="Company Website"
-                field="companyWebsite"
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                disabled={view}
-                value={values.companyWebsite}
-                error={touched.companyWebsite ? errors.companyWebsite : ''}
-                inputFilter={textFilter}
-              />
-            </IssuerInfoBlock>
+                <FieldArray name="fundingDocuments">
+                  {({ push, handleRemove }) => (
+                    <>
+                      <AdditionalFiles>
+                        <Hint>Upload additional documents relevant to the funding objective. (Optional)</Hint>
 
-            <Separator />
+                        <AddDocumentButton padding="0" onClick={() => push({ file: null })} disabled={view}>
+                          <Plus size="14" /> Add Document
+                        </AddDocumentButton>
+                      </AdditionalFiles>
 
-            <DescriptionBlock>
-              <FileField
-                label="Upload the company's pitch deck"
-                field="document.pitchDeck"
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                disabled={view}
-                value={values.document.pitchDeck}
-                error={(touched.document?.pitchDeck && errors.document?.pitchDeck) as string}
-                isImage
-              />
+                      <FundingDocumentsGrid>
+                        {values.fundingDocuments.map((entry, idx) => (
+                          <Field name={`fundingDocuments[${idx}].file`} key={idx}>
+                            {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                              <FileField
+                                error={meta.touched ? meta.error : ''}
+                                value={value}
+                                disabled={view}
+                                field={name}
+                                setter={(name: string, value: any) =>
+                                  onChange({
+                                    target: { name, value },
+                                  })
+                                }
+                                touch={setFieldTouched}
+                                trailing={
+                                  !view && (
+                                    <DeleteButton onClick={handleRemove(idx)}>
+                                      <Trash />
+                                    </DeleteButton>
+                                  )
+                                }
+                                isDocument
+                              />
+                            )}
+                          </Field>
+                        ))}
+                      </FundingDocumentsGrid>
+                    </>
+                  )}
+                </FieldArray>
 
-              <FieldArray name="fundingDocuments">
-                {({ push, handleRemove }) => (
-                  <>
-                    <AdditionalFiles>
-                      <Hint>Upload additional documents relevant to the funding objective. (Optional)</Hint>
+                <TextareaField
+                  label="Description"
+                  placeholder="Short description of the company/offering"
+                  field="description"
+                  disabled={view}
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  span={3}
+                  value={values.description}
+                  error={touched.description ? errors.description : ''}
+                />
+              </DescriptionBlock>
 
-                      <AddDocumentButton padding="0" onClick={() => push({ file: null })} disabled={view}>
-                        <Plus size="14" /> Add Document
-                      </AddDocumentButton>
-                    </AdditionalFiles>
+              <Separator />
 
-                    <FundingDocumentsGrid>
-                      {values.fundingDocuments.map((entry, idx) => (
-                        <Field name={`fundingDocuments[${idx}].file`} key={idx}>
-                          {({ field: { name, value, onChange }, meta }: FieldProps) => (
-                            <FileField
-                              error={meta.touched ? meta.error : ''}
-                              value={value}
-                              disabled={view}
-                              field={name}
-                              setter={(name: string, value: any) =>
-                                onChange({
-                                  target: { name, value },
-                                })
-                              }
-                              touch={setFieldTouched}
-                              trailing={
-                                !view && (
-                                  <DeleteButton onClick={handleRemove(idx)}>
-                                    <Trash />
-                                  </DeleteButton>
-                                )
-                              }
-                              isDocument
-                            />
-                          )}
-                        </Field>
-                      ))}
-                    </FundingDocumentsGrid>
-                  </>
-                )}
-              </FieldArray>
+              <FilesBlock>
+                <FileField
+                  label="Certificate of Incorporation"
+                  disabled={view}
+                  hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
+                  field="document.certificateOfIncorporation"
+                  value={values.document.certificateOfIncorporation}
+                  error={
+                    (touched.document?.certificateOfIncorporation &&
+                      errors.document?.certificateOfIncorporation) as string
+                  }
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  isDocument
+                />
+                <FileField
+                  optional
+                  label="Certificate of Incumbency"
+                  disabled={view}
+                  hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
+                  field="document.certificateOfIncumbency"
+                  value={values.document.certificateOfIncumbency}
+                  error={
+                    (touched.document?.certificateOfIncumbency && errors.document?.certificateOfIncumbency) as string
+                  }
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  isDocument
+                />
 
-              <TextareaField
-                label="Description"
-                placeholder="Short description of the company/offering"
-                field="description"
-                disabled={view}
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                span={3}
-                value={values.description}
-                error={touched.description ? errors.description : ''}
-              />
-            </DescriptionBlock>
-
-            <Separator />
-
-            <FilesBlock>
-              <FileField
-                label="Certificate of Incorporation"
-                disabled={view}
-                hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
-                field="document.certificateOfIncorporation"
-                value={values.document.certificateOfIncorporation}
-                error={
-                  (touched.document?.certificateOfIncorporation &&
-                    errors.document?.certificateOfIncorporation) as string
-                }
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                isDocument
-              />
-              <FileField
-                optional
-                label="Certificate of Incumbency"
-                disabled={view}
-                hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
-                field="document.certificateOfIncumbency"
-                value={values.document.certificateOfIncumbency}
-                error={
-                  (touched.document?.certificateOfIncumbency && errors.document?.certificateOfIncumbency) as string
-                }
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                isDocument
-              />
-
-              <FileField
-                label="Share & Director Registry"
-                disabled={view}
-                hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
-                field="document.shareDirectorRegistry"
-                value={values.document.shareDirectorRegistry}
-                error={(touched.document?.shareDirectorRegistry && errors.document?.shareDirectorRegistry) as string}
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                isDocument
-              />
-              <FileField
-                optional
-                label="Copy of Audited Financials"
-                disabled={view}
-                hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. 
+                <FileField
+                  label="Share & Director Registry"
+                  disabled={view}
+                  hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
+                  field="document.shareDirectorRegistry"
+                  value={values.document.shareDirectorRegistry}
+                  error={(touched.document?.shareDirectorRegistry && errors.document?.shareDirectorRegistry) as string}
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  isDocument
+                />
+                <FileField
+                  optional
+                  label="Copy of Audited Financials"
+                  disabled={view}
+                  hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. 
                       Not applicable to licensed entities. 
                       Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
-                field="document.auditedFinancials"
-                value={values.document.auditedFinancials}
-                error={(touched.document?.auditedFinancials && errors.document?.auditedFinancials) as string}
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                isDocument
-              />
+                  field="document.auditedFinancials"
+                  value={values.document.auditedFinancials}
+                  error={(touched.document?.auditedFinancials && errors.document?.auditedFinancials) as string}
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  isDocument
+                />
 
-              <FileField
-                label="Memorandum and Article of Association Company Constitution"
+                <FileField
+                  label="Memorandum and Article of Association Company Constitution"
+                  disabled={view}
+                  hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
+                  field="document.memorandumArticle"
+                  value={values.document.memorandumArticle}
+                  error={(touched.document?.memorandumArticle && errors.document?.memorandumArticle) as string}
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  isDocument
+                />
+                <FileField
+                  label="Ownership Structure"
+                  hint={
+                    <div>
+                      <text>Supported file formats are doc, docx, PNG, JPG, JPEG and PDF.</text>
+                      <br />
+                      <ExampleLink>See Examples</ExampleLink>
+                    </div>
+                  }
+                  field="document.ownershipStructure"
+                  value={values.document.ownershipStructure}
+                  error={(touched.document?.ownershipStructure && errors.document?.ownershipStructure) as string}
+                  disabled={view}
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  isDocument
+                />
+
+                <FileField
+                  label="Resolution of Authorized Signatory List"
+                  hint="Document must include specimen signatures or equivalent. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
+                  field="document.resolutionAuthorizedSignatory"
+                  value={values.document.resolutionAuthorizedSignatory}
+                  error={
+                    (touched.document?.resolutionAuthorizedSignatory &&
+                      errors.document?.resolutionAuthorizedSignatory) as string
+                  }
+                  disabled={view}
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  isDocument
+                />
+              </FilesBlock>
+
+              <Separator />
+
+              <DirectorField
+                directorTitle="Beneficial Owner"
+                directors={values.beneficialOwners}
+                setter={setFieldValue}
                 disabled={view}
-                hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
-                field="document.memorandumArticle"
-                value={values.document.memorandumArticle}
-                error={(touched.document?.memorandumArticle && errors.document?.memorandumArticle) as string}
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                isDocument
+                field="beneficialOwners"
               />
-              <FileField
-                label="Ownership Structure"
-                hint={<div>
-                  <text>Supported file formats are doc, docx, PNG, JPG, JPEG and PDF.</text>
-                  <br/>
-                  <ExampleLink>See Examples</ExampleLink>
-                </div>}
-                field="document.ownershipStructure"
-                value={values.document.ownershipStructure}
-                error={(touched.document?.ownershipStructure && errors.document?.ownershipStructure) as string}
+
+              <DirectorField
+                directorTitle="Director"
                 disabled={view}
+                directors={values.directors}
                 setter={setFieldValue}
-                touch={setFieldTouched}
-                isDocument
+                field="directors"
               />
-
-              <FileField
-                label="Resolution of Authorized Signatory List"
-                hint="Document must include specimen signatures or equivalent. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
-                field="document.resolutionAuthorizedSignatory"
-                value={values.document.resolutionAuthorizedSignatory}
-                error={
-                  (touched.document?.resolutionAuthorizedSignatory &&
-                    errors.document?.resolutionAuthorizedSignatory) as string
-                }
-                disabled={view}
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                isDocument
-              />
-            </FilesBlock>
-
-            <Separator />
-
-            <DirectorField
-              directorTitle="Beneficial Owner"
-              directors={values.beneficialOwners}
-              setter={setFieldValue}
-              disabled={view}
-              field="beneficialOwners"
-            />
-
-            <DirectorField
-              directorTitle="Director"
-              disabled={view}
-              directors={values.directors}
-              setter={setFieldValue}
-              field="directors"
-            />
-            <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
-              <OutlineButton width="280px" onClick={goBack}>
-                Back
-              </OutlineButton>
-              {!view ||
-                (![IssuanceStatus.approved, IssuanceStatus.declined].includes(
-                  initialValues?.data?.status as IssuanceStatus
-                ) && (
-                  <FilledButton width="280px" onClick={toSubmit} disabled={view || isSubmitDisabled(errors, touched)}>
-                    Submit
-                  </FilledButton>
-                ))}
-            </Row>
-          </FormBody>
-        </FormContainer>
-      )}
+              <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
+                <OutlineButton width="280px" onClick={goBack}>
+                  Back
+                </OutlineButton>
+                {!view ||
+                  (![IssuanceStatus.approved, IssuanceStatus.declined].includes(
+                    initialValues?.data?.status as IssuanceStatus
+                  ) && (
+                    <FilledButton width="280px" onClick={toSubmit} disabled={submitDisabled}>
+                      Submit
+                    </FilledButton>
+                  ))}
+              </Row>
+            </FormBody>
+          </FormContainer>
+        )
+      }}
     </Formik>
   )
 }
