@@ -13,6 +13,9 @@ import { FatcaView } from 'app/pages/identity/components/IndividualIdentityView/
 import { InvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/InvestorDeclarationView'
 import { OptInRequirementView } from 'app/pages/identity/components/IndividualIdentityView/OptInRequirementView/OptInRequirementView'
 import { NoticeOfAssessmentView } from 'app/pages/identity/components/IndividualIdentityView/NoticeOfAssessment/NoticeOfAssessmentView'
+import { BorderBottom } from '@mui/icons-material'
+import  useStyles  from './IndividualIdentityView.styles'
+import { FormSectionHeaderReview } from '../FormSectionHeaderReview'
 
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity
@@ -21,11 +24,18 @@ export interface IndividualIdentityViewProps {
 export const IndividualIdentityView = ({
   data
 }: IndividualIdentityViewProps) => {
+  const classes = useStyles()
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
         <FieldContainer>
           <Grid item container direction={'column'} spacing={5}>
+            <Grid
+              item
+              className={classes.headerReview}
+            >
+              <FormSectionHeaderReview  title='Review Responses' />
+            </Grid>
             <Grid item>
               <FormSectionHeader title='Personal Information' />
             </Grid>
@@ -48,7 +58,7 @@ export const IndividualIdentityView = ({
           </Grid>
         </FieldContainer>
       </Grid>
-
+      {/* 
       <Grid item className={privateClassNames()}>
         <FieldContainer>
           <Grid item container direction={'column'} spacing={5}>
@@ -60,27 +70,27 @@ export const IndividualIdentityView = ({
             </Grid>
           </Grid>
         </FieldContainer>
-      </Grid>
+      </Grid> */}
 
-      <NoticeOfAssessmentView />
+      {/* <NoticeOfAssessmentView /> */}
 
-      <Grid item className={privateClassNames()}>
+      {/* <Grid item className={privateClassNames()}>
         <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
       </Grid>
 
       <Grid item>
         <FatcaView data={data} />
-      </Grid>
+      </Grid> */}
 
-      <Grid item>
+      {/* <Grid item>
         <InvestorDeclarationView isCorporate={false} data={data} />
       </Grid>
 
       <Grid item>
         <OptInRequirementView data={data} />
-      </Grid>
+      </Grid> */}
 
-      <Grid item>
+      {/* <Grid item>
         <FieldContainer>
           <Grid item container direction={'column'} spacing={3}>
             <Grid item>
@@ -91,7 +101,7 @@ export const IndividualIdentityView = ({
             </Grid>
           </Grid>
         </FieldContainer>
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }

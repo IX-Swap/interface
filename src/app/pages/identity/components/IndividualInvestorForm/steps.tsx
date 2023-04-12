@@ -68,71 +68,71 @@ export const individualInvestorFormSteps = [
       </>
     )
   },
-  {
-    label: 'Financial and Tax Information',
-    getFormValues: getFinancialInfoFormValues,
-    getRequestPayload: getFinancialAndTaxDeclarationRequestPayload,
-    validationSchema: financialAndTaxDeclarationSchema,
-    component: () => (
-      <>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <FinancialInformationForm />
-          </Grid>
-          <Grid item xs={12}>
-            <TaxDeclarationForm />
-          </Grid>
-          <Grid item xs={12}>
-            <FieldContainer>
-              <UsCitizenshipConfirmation />
-            </FieldContainer>
-          </Grid>
-        </Grid>
-        <ValidateOnMount />
-      </>
-    )
-  },
-  {
-    label: 'Investor Declaration',
-    getFormValues: getInvestorDeclarationFormValues,
-    getRequestPayload: getInvestorDeclarationRequestPayload,
-    validationSchema: individualInvestorStatusDeclarationSchema,
-    component: () => (
-      <>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <InvestorDeclarationForm />
-          </Grid>
-          <Grid item xs={12}>
-            <FieldContainer>
-              <IndividualUploadDocumentsForm />
-            </FieldContainer>
-          </Grid>
-        </Grid>
-        <ValidateOnMount />
-      </>
-    )
-  },
+  // {
+  //   label: 'Financial and Tax Information',
+  //   getFormValues: getFinancialInfoFormValues,
+  //   getRequestPayload: getFinancialAndTaxDeclarationRequestPayload,
+  //   validationSchema: financialAndTaxDeclarationSchema,
+  //   component: () => (
+  //     <>
+  //       <Grid container spacing={2}>
+  //         <Grid item xs={12}>
+  //           <FinancialInformationForm />
+  //         </Grid>
+  //         <Grid item xs={12}>
+  //           <TaxDeclarationForm />
+  //         </Grid>
+  //         <Grid item xs={12}>
+  //           <FieldContainer>
+  //             <UsCitizenshipConfirmation />
+  //           </FieldContainer>
+  //         </Grid>
+  //       </Grid>
+  //       <ValidateOnMount />
+  //     </>
+  //   )
+  // },
+  // {
+  //   label: 'Investor Declaration',
+  //   getFormValues: getInvestorDeclarationFormValues,
+  //   getRequestPayload: getInvestorDeclarationRequestPayload,
+  //   validationSchema: individualInvestorStatusDeclarationSchema,
+  //   component: () => (
+  //     <>
+  //       <Grid container spacing={2}>
+  //         <Grid item xs={12}>
+  //           <InvestorDeclarationForm />
+  //         </Grid>
+  //         <Grid item xs={12}>
+  //           <FieldContainer>
+  //             <IndividualUploadDocumentsForm />
+  //           </FieldContainer>
+  //         </Grid>
+  //       </Grid>
+  //       <ValidateOnMount />
+  //     </>
+  //   )
+  // },
   {
     label: 'Review & Submit',
     getFormValues: (data: any) => {
       const allData = {
         ...getDocumentsFormValues(data),
-        ...getInvestorDeclarationFormValues(data),
+        // ...getInvestorDeclarationFormValues(data),
         ...getPersonalInfoFormValues(data),
-        ...getFinancialInfoFormValues(data)
+        // ...getFinancialInfoFormValues(data)
       }
       return allData
     },
     getRequestPayload: (data: any) => {
       return {
         ...getDocumentsRequestPayload(data),
-        ...getInvestorDeclarationRequestPayload(data),
+        // ...getInvestorDeclarationRequestPayload(data),
         ...getPersonalInfoRequestPayload(data),
-        ...getFinancialAndTaxDeclarationRequestPayload(data)
+        // ...getFinancialAndTaxDeclarationRequestPayload(data)
       }
     },
-    validationSchema: individualInvestorValidationSchema,
+    // validationSchema: individualInvestorValidationSchema,
     component: () => <IndividualIdentityContainer />
   }
 ]
