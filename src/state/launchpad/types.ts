@@ -493,8 +493,7 @@ export const InvestmentStatusesLabels = {
 }
 export interface InvestedData {
   amount: number
-  amountPresale: number
-  amountSale: number
+  availableToInvest: number
   lastStatus: INVESTMENT_STATUSES | null
 }
 

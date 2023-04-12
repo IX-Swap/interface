@@ -51,9 +51,10 @@ export const Menu = ({ close }: Props) => {
 
   const { isCorporate, isApproved } = useKyc()
   const { isOfferManager, isAdmin } = useRole()
+
   const showIssuance = useMemo(
-    () => isAdmin || (isCorporate && isApproved && isOfferManager),
-    [isAdmin, isCorporate, isApproved, isOfferManager]
+    () => account && (isAdmin || (isCorporate && isApproved && isOfferManager)),
+    [account, isAdmin, isCorporate, isApproved, isOfferManager]
   )
   return (
     <ModalContainer>

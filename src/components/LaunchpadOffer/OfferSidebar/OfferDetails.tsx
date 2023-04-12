@@ -1,25 +1,19 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-
 import { capitalize } from '@material-ui/core'
 import { Copy, Info } from 'react-feather'
-import { Link } from 'react-router-dom'
 import { Offer, OfferStatus, WhitelistStatus } from 'state/launchpad/types'
 
 import MetamaskIcon from 'assets/images/metamask.png'
 
 import { useFormatOfferValue, useGetWhitelistStatus, useInvestedData } from 'state/launchpad/hooks'
-
 import { InvestmentSaleStatusInfo } from 'components/Launchpad/InvestmentCard/InvestmentSaleStatusInfo'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
-
 import { OfferInvestmentIndicator } from './OfferInvestmentIndicator'
 import { OfferFundRaiseIndicator } from './OfferFundRaiseIndicator'
-
 import { Column, Row, Separator } from '../../LaunchpadMisc/styled'
 import { InvestDialog } from '../InvestDialog'
-
 import PlainCopy from 'components/PlainCopy/PlainCopy'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
 import { shortenAddress } from 'utils'
@@ -27,6 +21,7 @@ import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { nameChainMap } from 'constants/chains'
 import { ExternalLink } from 'theme'
 import { text10, text33, text6, text9 } from 'components/LaunchpadMisc/typography'
+import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
 interface Props {
   offer: Offer
 }
@@ -86,6 +81,8 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const closeInvestDialog = React.useCallback(() => setShowInvestDialog(false), [])
 
   const daysTillClosed = props.offer.daysTillClosed ?? 0
+
+  const [showSuccess, setShowSuccess] = React.useState(false)
 
   return (
     <Container>
@@ -150,8 +147,17 @@ export const OfferDetails: React.FC<Props> = (props) => {
           )}
         </InvestButtonContainer>
 
+        {showSuccess && <InvestSuccessModal show={showSuccess} onClose={() => setShowSuccess(false)} />}
         {showInvestDialog && (
-          <InvestDialog offer={props.offer} onClose={closeInvestDialog} investedData={investedData} />
+          <InvestDialog
+            offer={props.offer}
+            onClose={closeInvestDialog}
+            investedData={investedData}
+            openSuccess={() => {
+              closeInvestDialog()
+              setShowSuccess(true)
+            }}
+          />
         )}
       </OfferSidebarSummary>
 
