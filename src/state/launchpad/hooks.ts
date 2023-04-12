@@ -287,10 +287,9 @@ export const useDerivedBalanceInfo = (id: string) => {
   )
 }
 
-export const useClaimOffer = (id: string) => {
+export const useClaimOfferRefund = (id: string) => {
   return React.useCallback(
-    (isSuccessful: boolean, payload: { amount: string; txHash: string }) =>
-      apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, payload),
+    (payload: { amount: string; txHash: string }) => apiService.post(`/offers/${id}/claim/refund`, payload),
     [id]
   )
 }
@@ -311,6 +310,7 @@ export const useInvestedData = (offerId: string) => {
 
   const [data, setData] = React.useState<InvestedData>({
     amount: 0,
+    amountClaim: 0,
     availableToInvest: 0,
     lastStatus: null,
   })

@@ -493,6 +493,7 @@ export const InvestmentStatusesLabels = {
 }
 export interface InvestedData {
   amount: number
+  amountClaim: number
   availableToInvest: number
   lastStatus: INVESTMENT_STATUSES | null
 }
