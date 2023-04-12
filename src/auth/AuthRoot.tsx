@@ -25,7 +25,7 @@ export const AuthRoot: React.FC = () => {
   const tenantLogoDark: string = sessionService.get('logoDark') ?? ''
 
   const { data = '' }: { data: string } = useRawDataroomFile(
-    `dataroom/raw/${tenantBgImage}`
+    `dataroom/raw-public/${tenantBgImage}`
   )
 
   const bg = data !== '' ? data : DotsImage
