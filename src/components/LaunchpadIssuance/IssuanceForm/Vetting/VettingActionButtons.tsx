@@ -80,7 +80,7 @@ export const VettingActionButtons = ({
 
   const { isDraft, isApproved, isRejected } = useMemo(() => {
     return {
-      isDraft: status === IssuanceStatus.draft,
+      isDraft: !status || status === IssuanceStatus.draft,
       isApproved: status === IssuanceStatus.approved,
       isRejected: status === IssuanceStatus.declined,
     }
