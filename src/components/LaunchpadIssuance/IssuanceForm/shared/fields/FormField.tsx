@@ -3,7 +3,17 @@ import React from 'react'
 import { IssuanceTextField } from 'components/LaunchpadIssuance/utils/TextField'
 import { FormFieldWrapper } from '../styled'
 
-interface Props {
+interface StylingProps {
+  padding?: string
+  height?: string
+
+  fontSize?: string
+  lineHeight?: string
+
+  borderless?: boolean
+}
+
+interface Props extends StylingProps {
   label?: string
   placeholder?: string
 
@@ -54,6 +64,10 @@ export const FormField: React.FC<Props> = (props) => {
         placeholder={props.placeholder}
         onChange={onChange}
         inputFilter={props.inputFilter}
+        padding={props.padding}
+        height={props.height}
+        fontSize={props.fontSize}
+        lineHeight={props.lineHeight}
       />
     </FormFieldWrapper>
   )

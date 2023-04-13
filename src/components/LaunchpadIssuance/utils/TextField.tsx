@@ -72,6 +72,7 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
         height={props.height}
         padding={props.padding}
         borderless={props.borderless}
+        
       >
         <InnerContainer>
           {props.label && (

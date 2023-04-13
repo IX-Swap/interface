@@ -535,7 +535,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     field="softCap"
                     setter={setFieldValue}
                     touch={setFieldTouched}
-                    label="Minimum Amount to Raise"
+                    label="Minimum Amount to Raise (Amount in the selected token type)"
                     placeholder="Minimum Amount to Raise"
                     inputFilter={numberFilter}
                     disabled={props.edit}
@@ -592,23 +592,25 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     field="minInvestment"
                     setter={setFieldValue}
                     touch={setFieldTouched}
-                    label="Minimum Investment per Investor"
+                    label="Minimum Investment per Investor (Amount in the selected token type)"
                     placeholder="No. of Tokens"
                     inputFilter={numberFilter}
                     disabled={props.edit}
                     value={values.minInvestment}
                     error={(touched.minInvestment && errors.minInvestment) as string}
+                    padding={'1rem 4px 1rem 1.25rem'}
                   />
                   <FormField
                     field="maxInvestment"
                     setter={setFieldValue}
                     touch={setFieldTouched}
-                    label="Maximum Investment per Investor"
+                    label="Maximum Investment per Investor (Amount in the selected token type)"
                     placeholder="No. of Tokens"
                     inputFilter={numberFilter}
                     disabled={props.edit}
                     value={values.maxInvestment}
                     error={(touched.maxInvestment && errors.maxInvestment) as string}
+                    padding={'1rem 4px 1rem 1.25rem'}
                   />
                   <Column gap="1rem">
                     <BaseCheckboxWithLabel
@@ -651,7 +653,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     field="presaleAlocated"
                     setter={setFieldValue}
                     touch={setFieldTouched}
-                    label="Pre-Sale Allocation"
+                    label="Pre-Sale Allocation (Amount in the selected token type)"
                     placeholder="Total fundraising amount allocated for Pre-Sale"
                     inputFilter={numberFilter}
                     value={values.presaleAlocated}
@@ -663,11 +665,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     field="presaleMaxInvestment"
                     setter={setFieldValue}
                     touch={setFieldTouched}
-                    label="Maximum Investment per Investor"
+                    label="Maximum Investment per Investor (Amount in the selected token type)"
                     placeholder="No. of Tokens"
                     inputFilter={numberFilter}
                     value={values.presaleMaxInvestment}
                     error={(touched.presaleMaxInvestment && errors.presaleMaxInvestment) as string}
+                    padding={'1rem 4px 1rem 1.25rem'}
                   />
 
                   <FormField
@@ -675,11 +678,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     field="presaleMinInvestment"
                     setter={setFieldValue}
                     touch={setFieldTouched}
-                    label="Minimum Investment per Investor"
+                    label="Minimum Investment per Investor (Amount in the selected token type)"
                     placeholder="No. of Tokens"
                     inputFilter={numberFilter}
                     value={values.presaleMinInvestment}
                     error={(touched.presaleMinInvestment && errors.presaleMinInvestment) as string}
+                    padding={'1rem 4px 1rem 1.25rem'}
                   />
                 </FormGrid>
 
