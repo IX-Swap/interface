@@ -653,7 +653,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     field="presaleAlocated"
                     setter={setFieldValue}
                     touch={setFieldTouched}
-                    label="Pre-Sale Allocation"
+                    label="Pre-Sale Allocation (Amount in the selected token type)"
                     placeholder="Total fundraising amount allocated for Pre-Sale"
                     inputFilter={numberFilter}
                     value={values.presaleAlocated}
@@ -665,11 +665,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     field="presaleMaxInvestment"
                     setter={setFieldValue}
                     touch={setFieldTouched}
-                    label="Maximum Investment per Investor"
+                    label="Maximum Investment per Investor (Amount in the selected token type)"
                     placeholder="No. of Tokens"
                     inputFilter={numberFilter}
                     value={values.presaleMaxInvestment}
                     error={(touched.presaleMaxInvestment && errors.presaleMaxInvestment) as string}
+                    padding={'1rem 4px 1rem 1.25rem'}
                   />
 
                   <FormField
@@ -677,11 +678,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     field="presaleMinInvestment"
                     setter={setFieldValue}
                     touch={setFieldTouched}
-                    label="Minimum Investment per Investor"
+                    label="Minimum Investment per Investor (Amount in the selected token type)"
                     placeholder="No. of Tokens"
                     inputFilter={numberFilter}
                     value={values.presaleMinInvestment}
                     error={(touched.presaleMinInvestment && errors.presaleMinInvestment) as string}
+                    padding={'1rem 4px 1rem 1.25rem'}
                   />
                 </FormGrid>
 
