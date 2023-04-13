@@ -41,7 +41,7 @@ export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGI
     hardCap: '',
     softCap: '',
 
-    tokenPrice: null,
+    tokenPrice: '',
     tokenStandart: undefined,
     totalSupply: '',
     tokenReceiverAddress: '',
@@ -55,9 +55,9 @@ export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGI
     presaleMaxInvestment: '',
 
     images: [],
-    videos: [{ id: 0 }],
+    videos: [{ url: null }],
 
-    additionalDocuments: [{ id: 0 }],
+    additionalDocuments: [{ file: null }],
 
     members: [
       {
@@ -67,7 +67,12 @@ export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGI
         about: null,
       },
     ],
-    faq: [{ id: 0 }],
+    faq: [
+      {
+        question: null,
+        answer: null,
+      },
+    ],
 
     allowOnlyAccredited: undefined,
     tokenomicsAgreement: undefined,
@@ -84,7 +89,6 @@ export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGI
       claim: undefined,
     },
 
-    // social: [{ type: '' }],
     social: [],
 
     website: '',

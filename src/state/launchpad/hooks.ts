@@ -973,6 +973,7 @@ export const useOfferFormInitialValues = (
 
   const transform = React.useCallback(
     async (payload: Offer): Promise<InformationFormValues> => {
+      const initialValues = getOfferInitialValues(smartContractStrategy)
       const files = await Promise.all([
         ...payload.members.map((x) => getFile(x.avatar)),
         ...payload.files.filter((x) => x.type !== OfferFileType.video).map((x) => getFile(x.file)),
@@ -982,6 +983,20 @@ export const useOfferFormInitialValues = (
       ])
         .then((res) => res.filter((x) => !!x))
         .then((res) => res as { id: number; file: File }[])
+
+      const { images, videos, documents } = payload.files.reduce(
+        (accum: any, item) => {
+          if (item.type === OfferFileType.image) {
+            accum.images.push(item)
+          } else if (item.type === OfferFileType.video) {
+            accum.videos.push(item)
+          } else if (item.type === OfferFileType.document) {
+            accum.files.push(item)
+          }
+          return accum
+        },
+        { images: [], videos: [], documents: [] }
+      )
 
       const res = {
         id: payload?.id,
@@ -1005,38 +1020,38 @@ export const useOfferFormInitialValues = (
         hardCap: payload.hardCap,
         softCap: payload.softCap,
 
-        faq: payload.faq,
-        members: payload.members.map(
-          (member) =>
-            ({
-              id: member.id,
-              name: member.name,
-              role: member.title,
-              about: member.description,
-              photo: files.find((x) => x.id === member.avatar?.id),
-            } as TeamMember)
-        ),
+        faq: payload.faq?.length ? payload.faq : initialValues.faq,
+        members: payload.members?.length
+          ? payload.members.map(
+              (member) =>
+                ({
+                  id: member.id,
+                  name: member.name,
+                  role: member.title,
+                  about: member.description,
+                  photo: files.find((x) => x.id === member.avatar?.id),
+                } as TeamMember)
+            )
+          : initialValues.members,
 
         social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
           type: name as SocialMediaType,
           url: link,
         })),
 
-        images: payload.files
-          .filter((x) => x.type === OfferFileType.image)
-          .map((image) => files.find((x) => x.id === image.file?.id) as IssuanceFile),
+        images: images.map((image: any) => files.find((x) => x.id === image.file?.id) as IssuanceFile),
 
-        videos: payload.files
-          .filter((x) => x.type === OfferFileType.video)
-          .map((video) => ({ url: video.videoUrl, id: video.id } as VideoLink)),
+        videos: videos.length
+          ? videos.map((video: any) => ({ url: video.videoUrl, id: video.id } as VideoLink))
+          : initialValues.videos,
 
-        additionalDocuments: payload.files
-          .filter((x) => x.type === OfferFileType.document)
-          .map((document) => {
-            const file = files.find((x) => x.id === document.file?.id)
+        additionalDocuments: documents.length
+          ? documents.map((document: any) => {
+              const file = files.find((x) => x.id === document.file?.id)
 
-            return { file: file, asset: document?.file } as AdditionalDocument
-          }),
+              return { file: file, asset: document?.file } as AdditionalDocument
+            })
+          : initialValues.additionalDocuments,
 
         hasPresale: payload.hasPresale,
         presaleAlocated: payload.presaleAlocated,
@@ -1140,7 +1155,7 @@ export const useSubmitOffer = () => {
         // mapping : tokenSymbol, investingTokenSymbol frontend to server
         tokenSymbol: payload.tokenTicker,
         investingTokenSymbol: payload.tokenType,
-        tokenPrice: payload.tokenPrice.toString(),
+        tokenPrice: payload.tokenPrice?.toString(),
         decimals: payload.decimals,
         tokenStandart: payload.tokenStandart,
 
@@ -1177,14 +1192,18 @@ export const useSubmitOffer = () => {
           claim: payload.timeframe.claim,
         },
 
-        faq: payload.faq.map((x) => ({ question: x.question, answer: x.answer })),
+        faq: payload.faq
+          .filter((m) => Object.values(m).some(Boolean))
+          .map((x) => ({ question: x.question, answer: x.answer })),
 
-        members: payload.members.map((x, idx) => ({
-          avatarId: findDoc('member.photo', idx) ?? initial.members[idx].photo?.id,
-          name: x.name,
-          title: x.role,
-          description: x.about,
-        })),
+        members: payload.members
+          .filter((m) => Object.values(m).some(Boolean))
+          .map((x, idx) => ({
+            avatarId: findDoc('member.photo', idx) ?? initial.members[idx].photo?.id,
+            name: x.name,
+            title: x.role,
+            description: x.about,
+          })),
 
         files: [
           ...payload.additionalDocuments
