@@ -15,6 +15,7 @@ interface Props {
   isLoading?: boolean
 
   fetchMore: () => void
+  filter: FilterConfig
   onFilter: (filter: FilterConfig) => void
 }
 
@@ -22,7 +23,7 @@ export const InvestmentList: React.FC<Props> = (props) => {
   return (
     <InvestmentListContainer>
       <InvestmentTitle>Investments</InvestmentTitle>
-      <InvestmentListFilter onFilter={props.onFilter} />
+      <InvestmentListFilter filter={props.filter} onFilter={props.onFilter} />
       <InvestmentListGrid>
         {props.offers.map((offer) => (
           <InvestmentCard key={offer.id} offer={offer} />
