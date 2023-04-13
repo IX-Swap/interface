@@ -199,9 +199,11 @@ export const getThemeOverrides = (
       root: {
         width: 20,
         height: 20,
-        fill: '#102756',
+        // fill: '#102756',
+        fill: theme.palette.backgrounds.default,
         borderRadius: 4,
-        backgroundColor: '#102756',
+        // backgroundColor: '#102756',
+        backgroundColor: theme.palette.backgrounds.default,
         '.Mui-checked &': {
           fill: '#0055FF'
         }

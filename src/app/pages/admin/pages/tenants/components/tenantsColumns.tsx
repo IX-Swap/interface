@@ -34,7 +34,7 @@ export const columns: any[] = [
           sx={{
             width: 30,
             height: 30,
-            backgroundColor:
+            backgroundImage:
               selectedTheme !== undefined ? selectedTheme.hex : '#000',
             borderRadius: '5px'
           }}

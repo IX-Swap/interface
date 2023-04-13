@@ -52,7 +52,7 @@ export const button = (theme: Theme) => {
         border: `1px solid ${buttonPalette.borderOutlined}`,
         color: primary.main,
         '&:hover': {
-          border: `1px solid ${alpha('#4c88ff', 0.3)}`
+          border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`
         }
       },
       text: {
@@ -77,7 +77,7 @@ export const button = (theme: Theme) => {
         style: {
           border: `1px solid ${
             theme.palette.mode === 'light'
-              ? alpha('#4c88ff', 0.1)
+              ? alpha(theme.palette.primary.main, 0.1)
               : 'transparent'
           }`,
           display: 'flex',

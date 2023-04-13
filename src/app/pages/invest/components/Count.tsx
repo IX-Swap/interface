@@ -10,7 +10,7 @@ export const Count = ({ value }: CountProps) => {
     <Typography
       display={'inline'}
       sx={theme => ({
-        backgroundColor: '#4c88ff10',
+        backgroundColor: `${theme.palette.info.main}10`,
         color: theme.palette.info.main,
         borderRadius: 16,
         marginLeft: 1.5,

@@ -21,7 +21,7 @@ export const breadcrumbs = (theme: Theme) => {
         },
         '&:hover': {
           '> a': {
-            color: '#4C88FF',
+            color: theme.palette.primary.main,
             textDecoration: 'underline'
           }
         }

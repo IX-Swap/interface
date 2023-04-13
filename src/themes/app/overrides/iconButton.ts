@@ -10,7 +10,7 @@ export const iconButton = (theme: Theme) => {
         svg: { fill: iconButtonPalette.fill, minWidth: 14, minHeight: 14 },
         ':hover': {
           backgroundColor: iconButtonPalette.bgHover,
-          svg: { fill: '#4C88FF' }
+          svg: { fill: theme.palette.primary.main }
         },
         ':disabled': {
           svg: {
