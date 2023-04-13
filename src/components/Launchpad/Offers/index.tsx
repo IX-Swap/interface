@@ -15,7 +15,15 @@ export const Offers = () => {
   const [hasMore, setHasMore] = React.useState(true)
   const [offers, setOffers] = React.useState<Offer[]>([])
   const [loading, setLoading] = React.useState<boolean>(true)
-  const [filter, setFilter] = React.useState<FilterConfig | undefined>()
+  const [filter, setFilter] = React.useState<FilterConfig>(() => {
+    const newFilter = localStorage.getItem('offersFilter')
+    return newFilter ? (JSON.parse(newFilter) as FilterConfig) : { search: '', industry: [], stage: [], type: [] }
+  })
+
+  const onFilter = (newFilter: FilterConfig) => {
+    setFilter(newFilter)
+    localStorage.setItem('offersFilter', JSON.stringify(newFilter))
+  }
 
   React.useEffect(() => {
     getOffers(1, filter)
@@ -52,7 +60,8 @@ export const Offers = () => {
       <Pinned />
       <InvestmentList
         offers={offers}
-        onFilter={setFilter}
+        filter={filter}
+        onFilter={onFilter}
         fetchMore={fetchMore}
         isLoading={loading}
         hasMore={hasMore}

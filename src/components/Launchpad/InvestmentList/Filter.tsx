@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import { FilterDropdown, FilterOption } from './FilterDropdown'
@@ -18,31 +18,37 @@ export interface FilterConfig {
 
 interface Props {
   onFilter: (filter: FilterConfig) => void
+  filter: FilterConfig
 }
 
-export const InvestmentListFilter: React.FC<Props> = (props) => {
-  const [filter, setFilter] = React.useState<FilterConfig>({ search: '', industry: [], stage: [], type: [] })
+export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
+  const updateFilter = (newFilter: Partial<FilterConfig>) => onFilter({ ...filter, ...newFilter })
 
-  const onSearchChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => setFilter((state) => ({ ...state, search: event.target.value })),
-    []
+  const onSearchChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => updateFilter({ search: event.target.value }),
+    [updateFilter]
   )
 
-  const onIndustrySelect = React.useCallback((options: FilterOption<string>[]) => {
-    setFilter((state) => ({ ...state, industry: options }))
-  }, [])
+  const onIndustrySelect = useCallback(
+    (options: FilterOption<string>[]) => {
+      updateFilter({ industry: options })
+    },
+    [updateFilter]
+  )
 
-  const onStageSelect = React.useCallback((options: FilterOption<string>[]) => {
-    setFilter((state) => ({ ...state, stage: options }))
-  }, [])
+  const onStageSelect = useCallback(
+    (options: FilterOption<string>[]) => {
+      updateFilter({ stage: options })
+    },
+    [updateFilter]
+  )
 
-  const onTypeSelect = React.useCallback((options: FilterOption<string>[]) => {
-    setFilter((state) => ({ ...state, type: options }))
-  }, [])
-
-  React.useEffect(() => {
-    props.onFilter(filter)
-  }, [filter])
+  const onTypeSelect = useCallback(
+    (options: FilterOption<string>[]) => {
+      updateFilter({ type: options })
+    },
+    [updateFilter]
+  )
 
   return (
     <FilterContainer>
@@ -58,7 +64,7 @@ export const InvestmentListFilter: React.FC<Props> = (props) => {
       {/* Disabled for version 2 https://app.clickup.com/t/4733323/IXS-2662 */}
       <FilterDropdown label="Type" options={OFFER_TYPE_LABELS} onSelect={onTypeSelect} disabled={true} />
 
-      <FilterButton type="button" onClick={() => props.onFilter(filter)} disabled={true}>
+      <FilterButton type="button" onClick={() => onFilter(filter)} disabled={true}>
         <FilterIcon /> Filter
       </FilterButton>
     </FilterContainer>
@@ -107,7 +113,7 @@ const FilterButton = styled.button`
   height: 40px;
   background: ${(props) =>
     props.disabled ? props.theme.launchpad.colors.disabled : props.theme.launchpad.colors.background};
-    border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
   border: 1px solid #e6e6ff;
   border-radius: 6px;
