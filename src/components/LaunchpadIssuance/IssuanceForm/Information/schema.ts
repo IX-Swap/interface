@@ -132,7 +132,9 @@ export const schema = yup.object().shape({
       then: yup
         .string()
         .test('addressConstraint', 'Please enter a valid address', function () {
-          return Boolean(isEthChainAddress(this.parent.trusteeAddress))
+          const { originalValue } = this as any
+          if (!originalValue) return true
+          return Boolean(isEthChainAddress(originalValue))
         })
         .required(REQUIRED),
     })
