@@ -215,13 +215,12 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
 
   const minTokenInvestment = React.useMemo(
     () => {
-      const minTokenInv = Number(props.minInvestment) / Number(props.tokenPrice);
-      return formatedValue(`${minTokenInv >= 1 ? Math.floor(minTokenInv) : minTokenInv.toFixed(2)}`) ?? 'N/A'
+      return formatedValue(`${(Number(props.minInvestment) / Number(props.tokenPrice)).toFixed(2)}`) ?? 'N/A'
     },
     [props.minInvestment, props.tokenPrice]
   )
   const maxTokenInvestment = React.useMemo(
-    () => formatedValue(`${Math.floor(Number(props.maxInvestment) / Number(props.tokenPrice))}`) ?? 'N/A',
+    () => formatedValue(`${(Number(props.maxInvestment) / Number(props.tokenPrice)).toFixed(2)}`) ?? 'N/A',
     [props.maxInvestment, props.tokenPrice]
   )
 
