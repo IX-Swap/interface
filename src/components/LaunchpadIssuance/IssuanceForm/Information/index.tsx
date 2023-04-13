@@ -550,7 +550,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     placeholder="Price per Token"
                     inputFilter={numberFilter}
                     disabled={props.edit}
-                    value={`${values.tokenPrice || ''}`}
+                    value={values.tokenPrice?.toString()}
                     error={(touched.tokenPrice && errors.tokenPrice) as string}
                   />
                   <DropdownField

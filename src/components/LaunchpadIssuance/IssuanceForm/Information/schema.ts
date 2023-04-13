@@ -62,43 +62,48 @@ const checkMinSmallerThanMaximum = function (minimum: string, maximum: string) {
 export const schema = yup.object().shape({
   shortDescription: yup
     .string()
+    .nullable()
     .required(REQUIRED)
     .min(STRING_SMALL, getLongerThanOrEqual('Short Description', STRING_SMALL))
     .max(150, getHaveAtMost('Short Description', 150)),
 
   longDescription: yup
     .string()
+    .nullable()
     .required(REQUIRED)
     .min(STRING_SMALL, getLongerThanOrEqual('Description', STRING_SMALL))
     .max(STRING_HUGE, getHaveAtMost('Description', STRING_HUGE)),
 
   title: yup
     .string()
+    .nullable()
     .min(3, getLongerThanOrEqual('Name of issuance', 3))
     .max(STRING_NORMAL, getHaveAtMost('Name of issuance', STRING_NORMAL))
     .required(REQUIRED),
 
-  network: yup.string().oneOf(Object.values(OfferNetwork)).required(REQUIRED),
-  industry: yup.string().oneOf(Object.values(OfferIndustry)).required(REQUIRED),
-  investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required(REQUIRED),
-  country: yup.string().required(REQUIRED).oneOf(countryCodes, 'Select a country from the list'),
+  network: yup.string().nullable().oneOf(Object.values(OfferNetwork)).required(REQUIRED),
+  industry: yup.string().nullable().oneOf(Object.values(OfferIndustry)).required(REQUIRED),
+  investmentType: yup.string().nullable().oneOf(Object.values(OfferInvestmentStructure)).required(REQUIRED),
+  country: yup.string().nullable().required(REQUIRED).oneOf(countryCodes, 'Select a country from the list'),
 
   issuerIdentificationNumber: yup
     .string()
+    .nullable()
     .required(REQUIRED)
     .min(8, getLongerThanOrEqual('Identification number', 8))
     .max(64, getHaveAtMost('Identification number', 64)),
 
-  tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required(REQUIRED),
-  tokenName: yup.string().min(3, getLongerThanOrEqual('Token name', 3)).required(REQUIRED),
+  tokenType: yup.string().nullable().oneOf(Object.values(OfferTokenType)).required(REQUIRED),
+  tokenName: yup.string().nullable().min(3, getLongerThanOrEqual('Token name', 3)).required(REQUIRED),
   tokenTicker: yup
     .string()
+    .nullable()
     .required(REQUIRED)
     .min(2, getLongerThanOrEqual('Token symbol', 2))
     .max(6, 'Token symbol should be at most 6 charachters')
     .matches(/^[a-zA-Z]+$/, { message: 'Please enter only letters' }),
-  tokenPrice: yup.string().required(REQUIRED).nullable(),
-  tokenStandart: yup.string().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
+  tokenPrice: yup.string().nullable().required(REQUIRED),
+  tokenStandart: yup.string().nullable().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
 
   tokenReceiverAddress: yup
     .string()
@@ -106,8 +111,9 @@ export const schema = yup.object().shape({
       is: OfferTokenStandart.erc20,
       then: yup
         .string()
+        .nullable()
         .test('addressConstraint', 'Please enter a valid address', function () {
-          return Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
+          return this.parent.tokenReceiverAddress ? Boolean(isEthChainAddress(this.parent.tokenReceiverAddress)) : true
         })
         .required(REQUIRED),
     })
@@ -119,6 +125,7 @@ export const schema = yup.object().shape({
       is: OfferTokenStandart.erc20,
       then: yup
         .string()
+        .nullable()
         .matches(/[0-9]+/, 'Invalid value')
         .required(REQUIRED),
     })
@@ -131,6 +138,7 @@ export const schema = yup.object().shape({
       is: SMART_CONTRACT_STRATEGIES.original,
       then: yup
         .string()
+        .nullable()
         .test('addressConstraint', 'Please enter a valid address', function () {
           const { originalValue } = this as any
           if (!originalValue) return true
@@ -148,6 +156,7 @@ export const schema = yup.object().shape({
       },
       then: yup
         .string()
+        .nullable()
         .test('addressConstraint', 'Please enter a valid address', function () {
           return Boolean(isEthChainAddress(this.parent.tokenAddress))
         })
@@ -157,6 +166,7 @@ export const schema = yup.object().shape({
 
   softCap: yup
     .string()
+    .nullable()
     .matches(/[0-9]+/, 'Invalid value')
     .required(REQUIRED)
     .test('softCapConstraint', 'Minimum amount to raise should be smaller than total amolunt', function ():
@@ -166,6 +176,7 @@ export const schema = yup.object().shape({
     }),
   hardCap: yup
     .string()
+    .nullable()
     .matches(/[0-9]+/, 'Invalid value')
     .required(REQUIRED)
     .test('hardCapConstraint', 'Total amount to raise should be greater than minimum amount', function ():
@@ -176,6 +187,7 @@ export const schema = yup.object().shape({
 
   minInvestment: yup
     .string()
+    .nullable()
     .required(REQUIRED)
     .test('minInvestmentConstraint', 'Minimum investment should be smaller than maximum investment', function ():
       | boolean
@@ -185,6 +197,7 @@ export const schema = yup.object().shape({
 
   maxInvestment: yup
     .string()
+    .nullable()
     .required(REQUIRED)
     .test('maxInvestmentConstraint', 'Maximum investment should be greater than minimum investment', function ():
       | boolean
@@ -263,9 +276,9 @@ export const schema = yup.object().shape({
       otherwise: yup.string().nullable(),
     }),
 
-  email: yup.string().required(REQUIRED).email('Enter a valid email'),
-  website: yup.string().required(REQUIRED).url('Enter a valid URL'),
-  whitepaper: yup.string().required(REQUIRED).url('Enter a valid URL'),
+  email: yup.string().nullable().required(REQUIRED).email('Enter a valid email'),
+  website: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),
+  whitepaper: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),
 
   allowOnlyAccredited: yup.boolean(),
   tokenomicsAgreement: yup.boolean().required(REQUIRED),
@@ -276,19 +289,21 @@ export const schema = yup.object().shape({
   terms: yup.object().shape({
     investmentStructure: yup
       .string()
+      .nullable()
       .min(2, getLongerThanOrEqual('Investment Structure', 2))
       .max(STRING_NORMAL, getHaveAtMost('Investment Structure', STRING_NORMAL))
       .required(REQUIRED),
-    dividentYield: yup.string(),
-    investmentPeriod: yup.number(),
-    grossIrr: yup.string(),
-    distributionFrequency: yup.string().oneOf(Object.values(OfferDistributionFrequency)),
+    dividentYield: yup.string().nullable(),
+    investmentPeriod: yup.number().nullable(),
+    grossIrr: yup.string().nullable(),
+    distributionFrequency: yup.string().nullable().oneOf(Object.values(OfferDistributionFrequency)),
   }),
 
   faq: yup.array(
     yup.object().shape({
       question: yup
         .string()
+        .nullable()
         .optional()
         .min(STRING_SMALL, getLongerThanOrEqual('Question', STRING_SMALL))
         .max(STRING_BIG, getHaveAtMost('Question', STRING_BIG))
@@ -305,6 +320,7 @@ export const schema = yup.object().shape({
         }),
       answer: yup
         .string()
+        .nullable()
         .optional()
         .min(STRING_SMALL, getLongerThanOrEqual('Answer', STRING_SMALL))
         .max(STRING_HUGE, getHaveAtMost('Answer', STRING_HUGE))
@@ -370,14 +386,14 @@ export const schema = yup.object().shape({
 
   videos: yup.array(
     yup.object().shape({
-      url: yup.string().url('Enter a valid URL'),
+      url: yup.string().nullable().url('Enter a valid URL'),
     })
   ),
 
   social: yup
     .array(
       yup.object().shape({
-        url: yup.string().url('Enter a valid URL'),
+        url: yup.string().nullable().url('Enter a valid URL'),
       })
     )
     .min(1, 'Add at least one social link'),
@@ -388,23 +404,25 @@ export const editSchema = yup.object().shape({
   cardPicture: requiredFileSchema,
   shortDescription: yup
     .string()
+    .nullable()
     .required(REQUIRED)
     .min(STRING_SMALL, getLongerThanOrEqual('Short Description', STRING_SMALL))
     .max(150, getHaveAtMost('Short Description', 150)),
   longDescription: yup
     .string()
+    .nullable()
     .required(REQUIRED)
     .min(STRING_SMALL, getLongerThanOrEqual('Description', STRING_SMALL))
     .max(STRING_HUGE, getHaveAtMost('Description', STRING_HUGE)),
 
-  network: yup.string().oneOf(Object.values(OfferNetwork)).required(REQUIRED),
-  industry: yup.string().oneOf(Object.values(OfferIndustry)).required(REQUIRED),
-  investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required(REQUIRED),
-  country: yup.string().required(REQUIRED).oneOf(countryCodes, 'Select a country from the list'),
+  network: yup.string().nullable().oneOf(Object.values(OfferNetwork)).required(REQUIRED),
+  industry: yup.string().nullable().oneOf(Object.values(OfferIndustry)).required(REQUIRED),
+  investmentType: yup.string().nullable().oneOf(Object.values(OfferInvestmentStructure)).required(REQUIRED),
+  country: yup.string().nullable().required(REQUIRED).oneOf(countryCodes, 'Select a country from the list'),
 
-  email: yup.string().required(REQUIRED).email('Enter a valid email'),
-  website: yup.string().required(REQUIRED).url('Enter a valid URL'),
-  whitepaper: yup.string().required(REQUIRED).url('Enter a valid URL'),
+  email: yup.string().nullable().required(REQUIRED).email('Enter a valid email'),
+  website: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),
+  whitepaper: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),
 
   allowOnlyAccredited: yup.boolean(),
   tokenomicsAgreement: yup.boolean().required(REQUIRED),
@@ -412,7 +430,7 @@ export const editSchema = yup.object().shape({
   social: yup
     .array(
       yup.object().shape({
-        url: yup.string().url('Enter a valid URL'),
+        url: yup.string().nullable().url('Enter a valid URL'),
       })
     )
     .min(1, 'Add at least one social link'),
@@ -427,7 +445,7 @@ export const editSchema = yup.object().shape({
 
   videos: yup.array(
     yup.object().shape({
-      url: yup.string().url('Enter a valid URL'),
+      url: yup.string().nullable().url('Enter a valid URL'),
     })
   ),
 
@@ -435,6 +453,7 @@ export const editSchema = yup.object().shape({
     yup.object().shape({
       question: yup
         .string()
+        .nullable()
         .optional()
         .min(STRING_SMALL, getLongerThanOrEqual('Question', STRING_SMALL))
         .max(STRING_BIG, getHaveAtMost('Question', STRING_BIG))
@@ -451,6 +470,7 @@ export const editSchema = yup.object().shape({
         }),
       answer: yup
         .string()
+        .nullable()
         .optional()
         .min(STRING_SMALL, getLongerThanOrEqual('Answer', STRING_SMALL))
         .max(STRING_HUGE, getHaveAtMost('Answer', STRING_HUGE))
@@ -470,15 +490,17 @@ export const editSchema = yup.object().shape({
 
   members: yup.array(
     yup.object().shape({
-      photo: limitedSizeFileSchema,
-      name: yup.string().required(REQUIRED),
+      photo: limitedSizeFileSchema.nullable(),
+      name: yup.string().nullable().required(REQUIRED),
       role: yup
         .string()
+        .nullable()
         .min(2, getLongerThanOrEqual('Team member position', 2))
         .max(STRING_NORMAL, getHaveAtMost('Team member position', STRING_NORMAL))
         .required(REQUIRED),
       about: yup
         .string()
+        .nullable()
         .min(2, getLongerThanOrEqual('Team member description', 2))
         .max(STRING_BIG, getHaveAtMost('Team member description', STRING_BIG))
         .required(REQUIRED),
