@@ -8,7 +8,7 @@ export const buttonGroup = (theme: Theme) => {
     styleOverrides: {
       outlined: {
         button: {
-          borderColor: alpha('#4c88ff', 0.3),
+          borderColor: alpha(theme.palette.primary.main, 0.3),
           backgroundColor: buttonGroupPalette.bg,
 
           ':hover': {

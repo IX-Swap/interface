@@ -81,7 +81,7 @@ export const ViewTenant = () => {
                     style={{
                       width: 30,
                       height: 30,
-                      backgroundColor:
+                      backgroundImage:
                         selectedTheme !== undefined
                           ? selectedTheme.hex
                           : '#000',

@@ -35,7 +35,7 @@ export const chip = (theme: Theme) => {
           borderRadius: '56px',
           '& .MuiChip-deleteIcon': {
             '& rect': {
-              fill: '#4C88FF'
+              fill: theme.palette.primary.main
             }
           }
         },
