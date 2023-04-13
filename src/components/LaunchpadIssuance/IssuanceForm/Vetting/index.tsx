@@ -136,6 +136,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
       innerRef={form}
     >
       {({ submitForm, setFieldValue, values, errors, resetForm, touched, setFieldTouched }) => {
+        const draftDisabled = view || isDraftDisabled(errors, touched)
         const submitDisabled = view || isSubmitDisabled(errors, touched)
         return (
           <FormContainer>
@@ -149,7 +150,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               isOpen={showCloseDialog}
               onDiscard={() => history.push(`/issuance/create?id=${issuanceId}`)}
               onClose={onConfirmationClose}
-              onSave={() => saveDraft(values)}
+              onSave={() => (draftDisabled ? onConfirmationClose() : saveDraft(values))}
             />
 
             {loader.isLoading && (
@@ -187,7 +188,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 onSaveDraft={() => saveDraft(values)}
                 onSubmit={toSubmit}
                 isView={view}
-                draftDisabled={view || isDraftDisabled(errors, touched)}
+                draftDisabled={draftDisabled}
                 submitDisabled={submitDisabled}
                 vettingId={String(initialValues.vettingId)}
                 status={initialValues?.data?.status}

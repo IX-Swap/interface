@@ -294,7 +294,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 isOpen={showCloseDialog}
                 onDiscard={() => history.push(`/issuance/create?id=${issuanceId}`)}
                 onClose={onConfirmationClose}
-                onSave={() => saveDraft(values)}
+                onSave={() => (draftDisabled ? onConfirmationClose() : saveDraft(values))}
               />
               {showReview && (
                 <Portal>
