@@ -984,14 +984,18 @@ export const useOfferFormInitialValues = (
         .then((res) => res.filter((x) => !!x))
         .then((res) => res as { id: number; file: File }[])
 
-      const { images, videos, documents } = payload.files.reduce(
+      const {
+        images = [],
+        videos = [],
+        documents = [],
+      } = payload.files?.reduce(
         (accum: any, item) => {
           if (item.type === OfferFileType.image) {
             accum.images.push(item)
           } else if (item.type === OfferFileType.video) {
             accum.videos.push(item)
           } else if (item.type === OfferFileType.document) {
-            accum.files.push(item)
+            accum.documents.push(item)
           }
           return accum
         },
