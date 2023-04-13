@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react'
-import { Box, Grid, Card, CardContent } from '@mui/material'
 import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
 import { Icon } from 'ui/Icons/Icon'
-import { ReactComponent as SingpassLogo } from 'assets/singpass-logo-color.svg'
 import { AuthRoute } from 'auth/router/config'
 
 export const SingPassPage = () => {
@@ -34,103 +32,100 @@ export const SingPassPage = () => {
     label: string
     value: string
   }) => (
-    <div style={{ padding: '3px' }}>
+    <div>
       <ChevronIcon />
-      <span>{label} : </span>
-      <span style={{ lineHeight: '30px', color: '#595E60' }}>
+      <span style={{ fontSize: '12px' }}>{label} </span>
+      <p
+        style={{
+          fontSize: '14px',
+          color: '#FFFFFF',
+          marginLeft: '10px',
+          width: '216px',
+          marginTop: '0px',
+          marginBottom: '25px'
+        }}
+      >
         {value.length > 0 ? value : '-'}
-      </span>
+      </p>
     </div>
   )
 
   return (
-    <div style={{ padding: '5px' }}>
-      <Card
-        variant='elevation'
-        style={{
-          height: '60%',
-          width: '100%',
-          borderRadius: 8,
-          marginTop: 50,
-          boxShadow: 'none'
-        }}
-      >
-        <CardContent style={{ padding: 0, width: '100%' }}>
+    <div style={{ padding: '5px', marginLeft: '-39px' }}>
+      <div>
+        <div style={{ padding: 0, width: '100%', marginTop: 50 }}>
           <div
             style={{
               height: '100%',
               padding: '10px',
-              width: '100%',
-              background: '#FFFFFF',
-              borderTop: '5px solid #151B25'
+              width: '100%'
             }}
           >
-            <Grid style={{ textAlign: 'center' }}>
-              <Box pt={1}>
-                <SingpassLogo width={200} />
-              </Box>
-            </Grid>
-            <div
-              style={{
-                fontWeight: 400,
-                fontSize: '16px',
-                lineHeight: '22px',
-                color: '#4E545C',
-                margin: '20px'
-              }}
-            >
-              Singpass retrieves personal data from relevant government agencies
-              to pre-fill the relevant fields, making digital transactions
-              faster and more convenient.
-            </div>
             <div
               style={{
                 fontWeight: 600,
-                fontSize: '16px',
-                lineHeight: '22px',
-                color: '#595E60',
-                margin: '20px'
+                fontSize: '24px',
+                lineHeight: '130%',
+                color: '#FFFFFF',
+                margin: '20px',
+                letterSpacing: '0.2px',
+                width: '100%'
               }}
             >
-              This digital service InvestaX, Ic Sg Pte. Ltd., is requesting the
-              following information from Singpass, for the purpose of form
-              filling.
+              Investax, IC SG Pte. Ltd., will use the gathered data to
+              auto-populate your onboarding document.
             </div>
+            <div
+              style={{ borderBottom: 'solid 1px #595E60', marginLeft: '22px' }}
+            ></div>
           </div>
+
           <div
             style={{
               fontWeight: 400,
               fontSize: '16px',
               lineHeight: '22px',
               color: '#4E545C',
-              padding: '20px',
-              background: '#FFFFFF'
+              padding: '20px'
             }}
           >
             <InfoItem label='NRIC/FIN' value={data?.uinfin} />
-            <InfoItem label='Name' value={data?.name} />
-            <InfoItem
-              label='Nationality/Citizenship'
-              value={data?.nationality}
-            />
-            <InfoItem label='Date of Birth' value={data?.dob} />
-            <InfoItem label='Sex' value={data?.sex} />
-            <InfoItem label='Email' value={data?.email} />
-            <InfoItem label='Mobile Number' value={data?.mobileno} />
-            <InfoItem
-              label='Registered Address'
-              value={`
+            <div style={{ display: 'flex', gap: '44%' }}>
+              <InfoItem label='Name' value={data?.name} />
+              <InfoItem
+                label='Nationality/Citizenship'
+                value={data?.nationality}
+              />
+            </div>
+            <div style={{ display: 'flex', gap: '44%' }}>
+              {' '}
+              <InfoItem label='Date of Birth' value={data?.dob} />
+              <InfoItem label='Sex' value={data?.sex} />
+            </div>
+
+            <div style={{ display: 'flex', gap: '44%' }}>
+              {' '}
+              <InfoItem label='Email' value={data?.email} />
+              <InfoItem label='Mobile Number' value={data?.mobileno} />
+            </div>
+            <div style={{ display: 'flex', gap: '44%' }}>
+              {' '}
+              <InfoItem
+                label='Registered Address'
+                value={`
                 ${data?.regadd?.line1}
                 ${data?.regadd?.line2}
                 ${data?.regadd?.city}
                 ${data?.regadd?.country}
                 ${data?.regadd?.postalCode}
             `}
-            />
-            <InfoItem
-              label='Employment Sector'
-              value={data?.employmentsector}
-            />
+              />
+              <InfoItem
+                label='Employment Sector'
+                value={data?.employmentsector}
+              />
+            </div>
+
             <InfoItem
               label='IRAS Notice of Assessment (Last 2 Years)'
               value={data?.noahistory?.noas
@@ -142,24 +137,31 @@ export const SingPassPage = () => {
                 .join()}
             />
           </div>
-        </CardContent>
-      </Card>
+          <div
+            style={{ borderBottom: 'solid 1px #595E60', marginLeft: '22px' }}
+          ></div>
+        </div>
+      </div>
       <p
         style={{
-          fontSize: '14px',
+          fontSize: '12px',
           textAlign: 'left',
-          color: 'white',
+          color: 'rgba(255, 255, 255, 0.5)',
           marginTop: '40px',
-          marginBottom: '40px'
+          marginBottom: '40px',
+          marginLeft: '20px',
+          lineHeight: '138%'
         }}
       >
         Clicking the “I Agree” button permits this digital service to retrieve
         your data based on the{' '}
         <a
           style={{
-            color: '#98042D',
+            color: '#FFFFFF',
             cursor: 'hover',
-            textDecoration: 'none'
+            textDecoration: 'none',
+            fontSize: '12px',
+            lineHeight: '138%'
           }}
           href='https://www.singpass.gov.sg/home/ui/terms-of-use'
         >
@@ -171,19 +173,21 @@ export const SingPassPage = () => {
           display: 'flex',
           alignItems: 'center',
           margin: '0 auto',
-          marginBottom: '40px'
+          marginBottom: '40px',
+          gap: '39%'
         }}
       >
         <button
           onClick={onCancel}
           style={{
-            marginRight: '10%',
-            marginLeft: '16%',
-            color: '#7A787F',
+            // marginRight: '10%',
+            width: '230px',
+            marginLeft: '18px',
+            color: '#FFFFFF',
             boxShadow: 'none',
-            background: '#FFFFFF',
+            background: '#11295D',
             boxSizing: 'border-box',
-            border: '2px solid #E6E5E8',
+            border: '2px solid #11295D',
             padding: '16px 32px',
             textAlign: 'center',
             letterSpacing: '0px',
@@ -198,6 +202,7 @@ export const SingPassPage = () => {
         <button
           onClick={() => onAgree(data?.email, data?.mobileno)}
           style={{
+            width: '230px',
             color: '#FFFFFF',
             boxShadow: 'none',
             background: '#0000FF',
