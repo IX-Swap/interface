@@ -36,7 +36,7 @@ const getTokenInfo = (address: string, symbol: string, currency: Currency | null
     return {
       name: symbol,
       address,
-      icon: <CurrencyLogo currency={currency} /> 
+      icon: <CurrencyLogo currency={currency} />,
     } as TokenOption
   }
 
@@ -63,10 +63,10 @@ export const useGetWarning = (offer: Offer) => {
 
     const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
     let warning = ''
-    if (isInsufficientBalance) {
+    if (value === '') {
+      warning = ''
+    } else if (isInsufficientBalance) {
       warning = `Insufficient balance`
-    } else if (value === '') {
-      warning = `Please enter amount of your estimated investment`
     } else if (Number(min) > realValue) {
       warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
     } else if (Number(max) < realValue) {
@@ -77,14 +77,21 @@ export const useGetWarning = (offer: Offer) => {
     return warning
   }
 
-  return getWarning;
+  return getWarning
 }
 
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
-  const { tokenPrice, tokenAddress, tokenSymbol, investingTokenAddress, 
-    investingTokenSymbol, investingTokenDecimals, decimals } = props.offer
+  const {
+    tokenPrice,
+    tokenAddress,
+    tokenSymbol,
+    investingTokenAddress,
+    investingTokenSymbol,
+    investingTokenDecimals,
+    decimals,
+  } = props.offer
 
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
@@ -97,9 +104,9 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const changeValue = (value: string) => {
     setInputValue(value)
 
-    const warning = getWarning(value)
-    setWarning(getWarning(value))
-    props.setDisabled(Boolean(warning))
+    const newWarning = getWarning(value)
+    setWarning(newWarning)
+    props.setDisabled(Boolean(newWarning) || !value)
 
     props.onChange(
       value
@@ -129,10 +136,13 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const offerTokenCurrency = useCurrency(tokenAddress)
   const offerInvestmentTokenCurrency = useCurrency(investingTokenAddress)
 
-  const offerToken = React.useMemo(() => getTokenInfo(tokenAddress, tokenSymbol, offerTokenCurrency, mixedTokens), [mixedTokens])
+  const offerToken = React.useMemo(
+    () => getTokenInfo(tokenAddress, tokenSymbol, offerTokenCurrency, mixedTokens),
+    [tokenAddress, tokenSymbol, offerTokenCurrency, mixedTokens]
+  )
   const offerInvestmentToken = React.useMemo(
     () => getTokenInfo(investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens),
-    [mixedTokens]
+    [investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens]
   )
 
   return (
@@ -141,7 +151,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
         type="number"
         onChange={changeValue}
         trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
-        caption={warning === 'Loading' ? <Loader/> : warning}
+        caption={warning === 'Loading' ? <Loader /> : warning}
         height="90px"
         fontSize="24px"
         lineHeight="29px"

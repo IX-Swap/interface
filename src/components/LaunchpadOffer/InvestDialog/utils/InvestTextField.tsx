@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { useFormatOfferValue } from 'state/launchpad/hooks'
-import { text10, text8 } from 'components/LaunchpadMisc/typography'
+import { text10, text32 } from 'components/LaunchpadMisc/typography'
 
 interface StylingProps {
   padding?: string
@@ -149,7 +149,7 @@ const Trailing = styled.div`
 const Caption = styled.div`
   grid-area: caption;
 
-  ${text8}
+  ${text32}
 
   color: ${(props) => props.theme.launchpad.colors.text.error};
 `
