@@ -62,15 +62,15 @@ export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGI
     members: [
       {
         photo: null,
-        name: null,
-        role: null,
-        about: null,
+        name: '',
+        role: '',
+        about: '',
       },
     ],
     faq: [
       {
-        question: null,
-        answer: null,
+        question: '',
+        answer: '',
       },
     ],
 

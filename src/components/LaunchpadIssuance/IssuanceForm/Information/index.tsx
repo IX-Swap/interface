@@ -481,7 +481,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     value={values.decimals?.toString()}
                     error={(touched.decimals && errors.decimals) as string}
                   />
-                  {smartContractStrategy === SMART_CONTRACT_STRATEGIES.original ? (
+                  {smartContractStrategy === SMART_CONTRACT_STRATEGIES.original && (
                     <FormField
                       field="trusteeAddress"
                       setter={setFieldValue}
@@ -492,7 +492,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                       value={values.trusteeAddress}
                       error={(touched.trusteeAddress && errors.trusteeAddress) as string}
                     />
-                  ) : (
+                  )}
+
+                  {smartContractStrategy !== SMART_CONTRACT_STRATEGIES.original && (
                     <FormField
                       field="tokenAddress"
                       setter={setFieldValue}
