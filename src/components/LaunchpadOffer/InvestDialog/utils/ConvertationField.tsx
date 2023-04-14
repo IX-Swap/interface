@@ -68,7 +68,7 @@ export const useGetWarning = (offer: Offer) => {
       warning = ''
     } else if (isInsufficientBalance) {
       warning = `Insufficient balance`
-    } else if(availableToInvest && realValue > availableToInvest) {
+    } else if (availableToInvest && realValue > availableToInvest) {
       warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
     } else if (Number(min) > realValue) {
       warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
