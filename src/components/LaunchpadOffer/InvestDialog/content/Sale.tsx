@@ -190,7 +190,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
         entries={investmentAllowance}
       />
 
-      <ConvertationField offer={offer} onChange={setAmount} setDisabled={setDisabled} />
+      <ConvertationField offer={offer} availableToInvest={availableToInvest} onChange={setAmount} setDisabled={setDisabled} />
 
       <Agreement>
         <AgreementCheckbox state={agreed} toggle={() => setAgreed((state) => !state)} />
