@@ -21,6 +21,7 @@ interface Props {
   offer: Offer
   setDisabled: (value: boolean) => void
   onChange: (value: string) => void
+  availableToInvest?: number
 }
 
 const getTokenInfo = (address: string, symbol: string, currency: Currency | null | undefined, options: Option[]) => {
@@ -53,7 +54,7 @@ export const useGetWarning = (offer: Offer) => {
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
   const isSufficientBalance = useDerivedBalanceInfo(offer.id)
 
-  const getWarning = (value: string) => {
+  const getWarning = (value: string, availableToInvest?: number) => {
     const isPresale = offer.status !== OfferStatus.sale
     const realValue = value ? Number(value.replace(/,/g, '')) : 0
     const min = isPresale ? offer.presaleMinInvestment : offer.minInvestment
@@ -67,13 +68,15 @@ export const useGetWarning = (offer: Offer) => {
       warning = ''
     } else if (isInsufficientBalance) {
       warning = `Insufficient balance`
+    } else if (availableToInvest && realValue > availableToInvest) {
+      warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
     } else if (Number(min) > realValue) {
       warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
     } else if (Number(max) < realValue) {
       warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
     } else if (available < realValue) {
       warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
-    }
+    } 
     return warning
   }
 
@@ -104,7 +107,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const changeValue = (value: string) => {
     setInputValue(value)
 
-    const newWarning = getWarning(value)
+    const newWarning = getWarning(value, props.availableToInvest)
     setWarning(newWarning)
     props.setDisabled(Boolean(newWarning) || !value)
 
