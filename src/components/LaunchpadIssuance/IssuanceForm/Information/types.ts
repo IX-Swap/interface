@@ -1,4 +1,4 @@
-import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import {
   Asset,
   OfferDistributionFrequency,
@@ -115,6 +115,7 @@ export interface InformationFormValues {
   }
 
   social: SocialMediaLink[]
+  smartContractStrategy?: SMART_CONTRACT_STRATEGIES
 }
 
 export interface SocialMediaLink {

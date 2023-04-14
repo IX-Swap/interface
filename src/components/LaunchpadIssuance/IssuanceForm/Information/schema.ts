@@ -134,6 +134,12 @@ export const schema = yup.object().shape({
   decimals: yup.number().min(0).max(50).required(REQUIRED).nullable(),
   trusteeAddress: yup
     .string()
+    .nullable()
+    .test('addressConstraint', 'Please enter a valid address', function () {
+      const { originalValue } = this as any
+      if (!originalValue) return true
+      return Boolean(isEthChainAddress(originalValue))
+    })
     .when('smartContractStrategy', {
       is: SMART_CONTRACT_STRATEGIES.original,
       then: yup
@@ -145,8 +151,7 @@ export const schema = yup.object().shape({
           return Boolean(isEthChainAddress(originalValue))
         })
         .required(REQUIRED),
-    })
-    .nullable(),
+    }),
 
   tokenAddress: yup
     .string()
