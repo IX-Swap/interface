@@ -77,7 +77,6 @@ export const useGetWarning = (offer: Offer) => {
     } else if (available < realValue) {
       warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
     } 
-    debugger
     return warning
   }
 
