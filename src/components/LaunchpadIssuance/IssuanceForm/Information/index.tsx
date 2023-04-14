@@ -52,7 +52,7 @@ import {
   useSubmitOffer,
   useVetting,
 } from 'state/launchpad/hooks'
-import { useAddPopup } from 'state/application/hooks'
+import { useAddPopup, useShowError } from 'state/application/hooks'
 import { OfferReview } from '../Review'
 import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { useQueryParams } from 'hooks/useParams'
@@ -74,6 +74,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const history = useHistory()
   const addPopup = useAddPopup()
   const { isAdmin } = useRole()
+  const showError = useShowError()
 
   const loader = useLoader(false)
 
@@ -244,6 +245,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     return exists ? !offer.data?.id : false
   }, [offer])
 
+  const onSaveError = () => {
+    onConfirmationClose()
+    showError('Cannot save changes, please check the form for error messages')
+  }
+
   if (offer.loading || formIsLoading) {
     return (
       <LoaderContainer width="100vw" height="100vh">
@@ -294,7 +300,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 isOpen={showCloseDialog}
                 onDiscard={() => history.push(`/issuance/create?id=${issuanceId}`)}
                 onClose={onConfirmationClose}
-                onSave={() => (draftDisabled ? onConfirmationClose() : saveDraft(values))}
+                onSave={() => (draftDisabled ? onSaveError() : saveDraft(values))}
               />
               {showReview && (
                 <Portal>
