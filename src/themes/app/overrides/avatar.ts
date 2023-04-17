@@ -5,13 +5,13 @@ export const avatar = (theme: Theme) => {
   return {
     styleOverrides: {
       colorDefault: {
-        backgroundColor: alpha('#4C88FF', 0.1),
-        color: '#4C88FF',
-        border: '1px solid #4C88FF'
+        backgroundColor: alpha(theme.palette.primary.main, 0.1),
+        color: theme.palette.primary.main,
+        border: `1px solid ${theme.palette.primary.main}`
       },
       root: {
         ':hover': {
-          backgroundColor: '#4C88FF',
+          backgroundColor: theme.palette.primary.main,
           color: '#FFFFFF',
           cursor: 'pointer'
         }

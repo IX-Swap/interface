@@ -18,31 +18,31 @@ export const capitalStructures = [
 export const tenantThemes = [
   {
     name: 'red',
-    hex: '#F24822'
+    hex: 'linear-gradient(to bottom right, #A41523 50%, #FF7033 50%)'
   },
   {
     name: 'orange',
-    hex: '#f39c12'
-  },
-  {
-    name: 'yellow',
-    hex: '#FFCD29'
+    hex: 'linear-gradient(to bottom right, #E56E00 50% , #C25D00 50%)'
   },
   {
     name: 'green',
-    hex: '#85E0A3'
+    hex: 'linear-gradient(to bottom right, #10BA73 50%, #9BD106 50%)'
+  },
+  {
+    name: 'turquoise',
+    hex: 'linear-gradient(to bottom right, #059CA1 50%, #04E3F1 50%)'
   },
   {
     name: 'blue',
-    hex: '#00a8ff'
+    hex: 'linear-gradient(to bottom right, #0E1A32 50%, #0055FF 50%)'
   },
   {
-    name: 'indigo',
-    hex: '#3E68FF'
+    name: 'pink',
+    hex: 'linear-gradient(to bottom right, #1E000E 50%, #FF57A5 50%)'
   },
   {
     name: 'violet',
-    hex: '#9747FF'
+    hex: 'linear-gradient(to bottom right, #6622CC 50%, #D966FF 50%)'
   }
 ]
 

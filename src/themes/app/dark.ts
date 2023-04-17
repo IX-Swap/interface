@@ -277,29 +277,35 @@ export const darkTheme: ThemesSet = {
   default: {
     palette: defaultPalette
   },
-  violet: {
+  red: {
     palette: {
       ...defaultPalette,
       primary: {
         ...defaultPalette.primary,
-        main: '#9b00ed'
+        main: '#EA4600'
       },
       info: {
         ...defaultPalette.info,
-        main: '#9b00ed'
+        main: '#EA4600'
       },
       button: {
         ...defaultPalette.button,
-        bgContained: '#9b00ed',
-        bgContainedHover: '#8300ea',
-        bgContainedDisabled: '#49148c'
+        bgContained: '#EA4600',
+        bgContainedHover: '#FF7033',
+        bgContainedDisabled: '#B33D0A'
       },
       paginationItem: {
         ...defaultPalette.paginationItem,
-        colorHover: '#9b00ed',
-        borderHover: '#9b00ed20',
-        bgActive: '#9b00ed',
-        borderActive: '#9b00ed'
+        colorHover: '#EA4600',
+        borderHover: '#EA460020',
+        bgActive: '#EA4600',
+        borderActive: '#EA4600'
+      },
+      stepIcon: {
+        ...defaultPalette.stepIcon,
+        bgActive: tinycolor('#EA4600').setAlpha(0.1).toRgbString(),
+        colorActive: '#EA4600',
+        borderActive: tinycolor('#EA4600').setAlpha(0.5).toRgbString()
       }
     }
   },
@@ -308,24 +314,158 @@ export const darkTheme: ThemesSet = {
       ...defaultPalette,
       primary: {
         ...defaultPalette.primary,
-        main: '#f57d00'
+        main: '#A65000'
       },
       info: {
         ...defaultPalette.info,
-        main: '#f57d00'
+        main: '#A65000'
       },
       button: {
         ...defaultPalette.button,
-        bgContained: '#f57d00',
-        bgContainedHover: '#ffa200',
-        bgContainedDisabled: '#ef6d00'
+        bgContained: '#A65000',
+        bgContainedHover: '#C25D00',
+        bgContainedDisabled: '#9F5007'
       },
       paginationItem: {
         ...defaultPalette.paginationItem,
-        colorHover: '#f57d00',
-        borderHover: '#f57d0020',
-        bgActive: '#f57d00',
-        borderActive: '#f57d00'
+        colorHover: '#A65000',
+        borderHover: '#A6500020',
+        bgActive: '#A65000',
+        borderActive: '#A65000'
+      },
+      stepIcon: {
+        ...defaultPalette.stepIcon,
+        bgActive: tinycolor('#A65000').setAlpha(0.1).toRgbString(),
+        colorActive: '#A65000',
+        borderActive: tinycolor('#A65000').setAlpha(0.5).toRgbString()
+      }
+    }
+  },
+  green: {
+    palette: {
+      ...defaultPalette,
+      primary: {
+        ...defaultPalette.primary,
+        main: '#8ABA05'
+      },
+      info: {
+        ...defaultPalette.info,
+        main: '#8ABA05'
+      },
+      button: {
+        ...defaultPalette.button,
+        bgContained: '#8ABA05',
+        bgContainedHover: '#9BD106',
+        bgContainedDisabled: '#749C05'
+      },
+      paginationItem: {
+        ...defaultPalette.paginationItem,
+        colorHover: '#8ABA05',
+        borderHover: '#8ABA0520',
+        bgActive: '#8ABA05',
+        borderActive: '#8ABA05'
+      },
+      stepIcon: {
+        ...defaultPalette.stepIcon,
+        bgActive: tinycolor('#8ABA05').setAlpha(0.1).toRgbString(),
+        colorActive: '#8ABA05',
+        borderActive: tinycolor('#8ABA05').setAlpha(0.5).toRgbString()
+      }
+    }
+  },
+  turquoise: {
+    palette: {
+      ...defaultPalette,
+      primary: {
+        ...defaultPalette.primary,
+        main: '#03BDC9'
+      },
+      info: {
+        ...defaultPalette.info,
+        main: '#03BDC9'
+      },
+      button: {
+        ...defaultPalette.button,
+        bgContained: '#03BDC9',
+        bgContainedHover: '#04E3F1',
+        bgContainedDisabled: '#05ACB6'
+      },
+      paginationItem: {
+        ...defaultPalette.paginationItem,
+        colorHover: '#03BDC9',
+        borderHover: '#03BDC920',
+        bgActive: '#03BDC9',
+        borderActive: '#03BDC9'
+      },
+      stepIcon: {
+        ...defaultPalette.stepIcon,
+        bgActive: tinycolor('#03BDC9').setAlpha(0.1).toRgbString(),
+        colorActive: '#03BDC9',
+        borderActive: tinycolor('#03BDC9').setAlpha(0.5).toRgbString()
+      }
+    }
+  },
+  pink: {
+    palette: {
+      ...defaultPalette,
+      primary: {
+        ...defaultPalette.primary,
+        main: '#FF268B'
+      },
+      info: {
+        ...defaultPalette.info,
+        main: '#FF268B'
+      },
+      button: {
+        ...defaultPalette.button,
+        bgContained: '#FF268B',
+        bgContainedHover: '#FF57A5',
+        bgContainedDisabled: '#811044'
+      },
+      paginationItem: {
+        ...defaultPalette.paginationItem,
+        colorHover: '#FF268B',
+        borderHover: '#FF268B20',
+        bgActive: '#FF268B',
+        borderActive: '#FF268B'
+      },
+      stepIcon: {
+        ...defaultPalette.stepIcon,
+        bgActive: tinycolor('#FF268B').setAlpha(0.1).toRgbString(),
+        colorActive: '#FF268B',
+        borderActive: tinycolor('#FF268B').setAlpha(0.5).toRgbString()
+      }
+    }
+  },
+  violet: {
+    palette: {
+      ...defaultPalette,
+      primary: {
+        ...defaultPalette.primary,
+        main: '#C000FF'
+      },
+      info: {
+        ...defaultPalette.info,
+        main: '#C000FF'
+      },
+      button: {
+        ...defaultPalette.button,
+        bgContained: '#C000FF',
+        bgContainedHover: '#D966FF',
+        bgContainedDisabled: '#7B3A90'
+      },
+      paginationItem: {
+        ...defaultPalette.paginationItem,
+        colorHover: '#C000FF',
+        borderHover: '#C000FF20',
+        bgActive: '#C000FF',
+        borderActive: '#C000FF'
+      },
+      stepIcon: {
+        ...defaultPalette.stepIcon,
+        bgActive: tinycolor('#C000FF').setAlpha(0.1).toRgbString(),
+        colorActive: '#C000FF',
+        borderActive: tinycolor('#C000FF').setAlpha(0.5).toRgbString()
       }
     }
   }

@@ -91,24 +91,24 @@ export const darkTheme: ThemesSet = {
   default: {
     palette: defaultPalette
   },
-  violet: {
+  red: {
     palette: {
       ...defaultPalette,
       backgrounds: {
         ...defaultPalette.backgrounds,
-        alternative: 'rgb(41, 17, 61)'
+        default: '#700913',
+        alternative: '#A41523'
       },
       button: {
         ...defaultPalette.button,
-        bgContained: '#9b00ed',
-        bgContainedHover: '#8300ea!important',
-        bgContainedDisabled: '#49148c'
+        bgContained: '#EA4600',
+        bgContainedHover: '#FF7033!important',
+        bgContainedDisabled: '#B33D0A'
       },
       input: {
-        ...defaultPalette.input,
-        bgBase: '#49148c',
-        boxShadowBase: '0 0 0 100px #49148c inset!important',
-        boxShadowOutline: '0 0 0 100px #691b9a inset !important'
+        bgBase: '#70091340',
+        boxShadowBase: '0 0 0 100px #70091340 inset!important',
+        boxShadowOutline: '0 0 0 100px #700913 inset !important'
       }
     }
   },
@@ -117,19 +117,103 @@ export const darkTheme: ThemesSet = {
       ...defaultPalette,
       backgrounds: {
         ...defaultPalette.backgrounds,
-        alternative: '#e65200'
+        default: '#7B3B00',
+        alternative: '#E56E00'
       },
       button: {
         ...defaultPalette.button,
-        bgContained: '#f57d00',
-        bgContainedHover: '#ffa200!important',
-        bgContainedDisabled: '#ef6d00'
+        bgContained: '#A65000',
+        bgContainedHover: '#C25D00!important',
+        bgContainedDisabled: '#9F5007'
       },
       input: {
-        ...defaultPalette.input,
-        bgBase: '#ef6d00',
-        boxShadowBase: '0 0 0 100px #ef6d00 inset!important',
-        boxShadowOutline: '0 0 0 100px #fb8d00 inset !important'
+        bgBase: '#7B3B0040',
+        boxShadowBase: '0 0 0 100px #7B3B0040 inset!important',
+        boxShadowOutline: '0 0 0 100px #7B3B00 inset !important'
+      }
+    }
+  },
+  green: {
+    palette: {
+      ...defaultPalette,
+      backgrounds: {
+        ...defaultPalette.backgrounds,
+        default: '#007336',
+        alternative: '#10BA73'
+      },
+      button: {
+        ...defaultPalette.button,
+        bgContained: '#8ABA05',
+        bgContainedHover: '#9BD106!important',
+        bgContainedDisabled: '#749C05'
+      },
+      input: {
+        bgBase: '#00733640',
+        boxShadowBase: '0 0 0 100px #00733640 inset!important',
+        boxShadowOutline: '0 0 0 100px #007336 inset !important'
+      }
+    }
+  },
+  turquoise: {
+    palette: {
+      ...defaultPalette,
+      backgrounds: {
+        ...defaultPalette.backgrounds,
+        default: '#1A2B5D',
+        alternative: '#059CA1'
+      },
+      button: {
+        ...defaultPalette.button,
+        bgContained: '#03BDC9',
+        bgContainedHover: '#04E3F1!important',
+        bgContainedDisabled: '#05ACB6'
+      },
+      input: {
+        bgBase: '#1A2B5D40',
+        boxShadowBase: '0 0 0 100px #1A2B5D40 inset!important',
+        boxShadowOutline: '0 0 0 100px #1A2B5D inset !important'
+      }
+    }
+  },
+  pink: {
+    palette: {
+      ...defaultPalette,
+      backgrounds: {
+        ...defaultPalette.backgrounds,
+        default: '#54233A',
+        alternative: '#1E000E'
+      },
+      button: {
+        ...defaultPalette.button,
+        bgContained: '#FF268B',
+        bgContainedHover: '#FF57A5!important',
+        bgContainedDisabled: '#811044'
+      },
+      input: {
+        bgBase: '#54233A40',
+        boxShadowBase: '0 0 0 100px #54233A40 inset!important',
+        boxShadowOutline: '0 0 0 100px #54233A inset !important'
+      }
+    }
+  },
+  violet: {
+    palette: {
+      ...defaultPalette,
+      backgrounds: {
+        ...defaultPalette.backgrounds,
+        default: '#3C0E83',
+        alternative: '#6622CC'
+      },
+      button: {
+        ...defaultPalette.button,
+        bgContained: '#C000FF',
+        bgContainedHover: '#D966FF!important',
+        bgContainedDisabled: '#7B3A90'
+      },
+      input: {
+        bgBase: '#3C0E8340',
+        boxShadowBase: '0 0 0 100px #3C0E8340 inset!important',
+        boxShadowOutline: '0 0 0 100px #3C0E83 inset !important'
       }
     }
   }

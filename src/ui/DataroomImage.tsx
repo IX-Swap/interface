@@ -10,7 +10,7 @@ export interface DataroomImageProps extends AvatarProps {
 
 export const DataroomImage = (props: DataroomImageProps) => {
   const { photoId, width, height, children, ...rest } = props
-  const uri = `dataroom/raw/${photoId}`
+  const uri = `dataroom/raw-public/${photoId}`
   const { data = '' } = useRawDataroomFile(uri, {
     enabled: photoId !== undefined
   })

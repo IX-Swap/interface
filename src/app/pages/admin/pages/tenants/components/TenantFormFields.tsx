@@ -136,7 +136,8 @@ export const TenantFormFields = ({
                     valueExtractor={documentValueExtractor}
                     accept={DataroomFileType.image}
                     documentInfo={{
-                      type: 'Logo Light'
+                      type: 'Logo Light',
+                      feature: 'public-files'
                     }}
                   />
                 </Grid>
@@ -152,7 +153,8 @@ export const TenantFormFields = ({
                     valueExtractor={documentValueExtractor}
                     accept={DataroomFileType.image}
                     documentInfo={{
-                      type: 'Logo Dark'
+                      type: 'Logo Dark',
+                      feature: 'public-files'
                     }}
                   />
                 </Grid>
@@ -168,7 +170,8 @@ export const TenantFormFields = ({
                     valueExtractor={documentValueExtractor}
                     accept={DataroomFileType.image}
                     documentInfo={{
-                      type: 'Background Image'
+                      type: 'Background Image',
+                      feature: 'public-files'
                     }}
                   />
                 </Grid>
