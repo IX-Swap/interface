@@ -39,7 +39,7 @@ export const ManageOffer = () => {
   const { usersClaimed, issuerClaimed, status, softCapReached } = offer || {}
   const showError = useShowError()
 
-  const [isLoading, setIsLoading] = React.useState<boolean>(true)
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
 
   const triggerUserClaim = useTriggerUserClaim(offer?.id)
@@ -68,6 +68,7 @@ export const ManageOffer = () => {
     // todo add blockchain
     if (triggerUserClaim.isLoading) return
     triggerUserClaim.load(undefined, () => {
+      setIsLoading(false)
       addPopup({ info: { success: true, summary: 'User claim has been triggered succesfully!' } })
       load()
     })
@@ -78,6 +79,7 @@ export const ManageOffer = () => {
     // todo add blockchain
     if (triggerIssuerClaim.isLoading) return
     triggerIssuerClaim.load(undefined, () => {
+      setIsLoading(false)
       addPopup({ info: { success: true, summary: 'Funds have been withdrawn succesfully!' } })
       load()
     })
