@@ -55,6 +55,7 @@ export default class ErrorBoundary extends React.Component<unknown, ErrorBoundar
       ...errorInfo,
       fatal: true,
     })
+    window.location.reload()
   }
 
   render() {
