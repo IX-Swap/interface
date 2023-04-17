@@ -6,5 +6,6 @@ export const ROLES = [
   'authorizer',
   'admin',
   'issuer',
-  'fundmanager'
+  'fundmanager',
+  'tenantOwner'
 ]

@@ -10,7 +10,8 @@ export enum AppRole {
   RETAIL = 'retail',
   EXPERT = 'expert',
   // TODO backend api always return lowercase
-  FUND_MANAGER = 'fundmanager'
+  FUND_MANAGER = 'fundmanager',
+  TENANT_OWNER = 'tenantOwner'
 }
 
 export const getUserRoles = (roles?: string) => {
