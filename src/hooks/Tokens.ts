@@ -24,37 +24,35 @@ import { useActiveWeb3React } from './web3'
 function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean): { [address: string]: Token } {
   const { chainId } = useActiveWeb3React()
   const userAddedTokens = useUserAddedTokens()
+  
+  if (!chainId) return {}
 
-  return useMemo(() => {
-    if (!chainId) return {}
+  // reduce to just tokens
+  let mapWithoutUrls = {}
+  if (tokenMap[chainId]) {
+    mapWithoutUrls = Object.keys(tokenMap[chainId]).reduce<{ [address: string]: Token }>((newMap, address) => {
+      newMap[address] = tokenMap[chainId]?.[address]?.token
+      return newMap
+    }, {})
+  }
 
-    // reduce to just tokens
-    let mapWithoutUrls = {}
-    if (tokenMap[chainId]) {
-      mapWithoutUrls = Object.keys(tokenMap[chainId]).reduce<{ [address: string]: Token }>((newMap, address) => {
-        newMap[address] = tokenMap[chainId]?.[address]?.token
-        return newMap
-      }, {})
-    }
+  if (includeUserAdded) {
+    return (
+      userAddedTokens
+        // reduce into all ALL_TOKENS filtered by the current chain
+        .reduce<{ [address: string]: Token }>(
+          (tokenMap, token) => {
+            tokenMap[token.address] = token
+            return tokenMap
+          },
+          // must make a copy because reduce modifies the map, and we do not
+          // want to make a copy in every iteration
+          { ...mapWithoutUrls }
+        )
+    )
+  }
 
-    if (includeUserAdded) {
-      return (
-        userAddedTokens
-          // reduce into all ALL_TOKENS filtered by the current chain
-          .reduce<{ [address: string]: Token }>(
-            (tokenMap, token) => {
-              tokenMap[token.address] = token
-              return tokenMap
-            },
-            // must make a copy because reduce modifies the map, and we do not
-            // want to make a copy in every iteration
-            { ...mapWithoutUrls }
-          )
-      )
-    }
-
-    return mapWithoutUrls
-  }, [chainId, userAddedTokens, tokenMap, includeUserAdded])
+  return mapWithoutUrls
 }
 
 export function useSimpleTokens(): { [address: string]: Token } {
@@ -69,7 +67,7 @@ export function useAllTokens(): { [address: string]: Token } {
   const tokens = useSimpleTokens()
   const { secTokens } = useSecTokens()
 
-  return useMemo(() => ({ ...tokens, ...secTokens }), [tokens, secTokens])
+  return { ...tokens, ...secTokens }
 }
 export function useOnlySecurityTokens(): { [address: string]: Token } {
   const { secTokens } = useSecTokens()
@@ -202,10 +200,9 @@ export function useCurrencyFromMap(tokens: any, currencyId?: string | null): Cur
   const nativeCurrency = useNativeCurrency()
   const { chainId } = useActiveWeb3React()
   const isNative = Boolean(currencyId?.toUpperCase() === nativeCurrency?.symbol)
-  const shorthandMatchAddress = useMemo(() => {
-    const chain = supportedChainId(chainId || 0)
-    return chain && currencyId ? (TOKEN_SHORTHANDS as any)[currencyId.toUpperCase()]?.[chain] : undefined
-  }, [chainId, currencyId])
+  const chain = supportedChainId(chainId || 0)
+  const shorthandMatchAddress =
+    chain && currencyId ? (TOKEN_SHORTHANDS as any)[currencyId.toUpperCase()]?.[chain] : undefined
 
   const token = useTokenFromMapOrNetwork(tokens, isNative ? undefined : shorthandMatchAddress ?? currencyId)
 

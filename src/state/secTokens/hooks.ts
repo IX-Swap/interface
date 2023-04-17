@@ -138,20 +138,18 @@ export function listToSecTokenMap(
 export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: string]: WrappedTokenInfo } {
   const { chainId } = useActiveWeb3React()
 
-  return useMemo(() => {
-    if (!tokenMap || chainId === undefined) return {}
-    if (!tokenMap[chainId]) return {}
-    // reduce to just tokens
-    const mapWithoutUrls = Object.keys(tokenMap[chainId]).reduce<{ [address: string]: WrappedTokenInfo }>(
-      (newMap, address) => {
-        newMap[address] = tokenMap[chainId][address].token
-        return newMap
-      },
-      {}
-    )
+  if (!tokenMap || chainId === undefined) return {}
+  if (!tokenMap[chainId]) return {}
+  // reduce to just tokens
+  const mapWithoutUrls = Object.keys(tokenMap[chainId]).reduce<{ [address: string]: WrappedTokenInfo }>(
+    (newMap, address) => {
+      newMap[address] = tokenMap[chainId][address].token
+      return newMap
+    },
+    {}
+  )
 
-    return mapWithoutUrls
-  }, [tokenMap, chainId])
+  return mapWithoutUrls
 }
 
 export function useAccreditationStatus(currencyId?: string) {

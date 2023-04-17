@@ -64,11 +64,12 @@ export const useGetWarning = (offer: Offer) => {
 
     const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
     let warning = ''
+    debugger
     if (value === '') {
       warning = ''
     } else if (isInsufficientBalance) {
       warning = `Insufficient balance`
-    } else if (availableToInvest && realValue > availableToInvest) {
+    } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
       warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
     } else if (Number(min) > realValue) {
       warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
@@ -76,7 +77,7 @@ export const useGetWarning = (offer: Offer) => {
       warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
     } else if (available < realValue) {
       warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
-    } 
+    }
     return warning
   }
 
@@ -227,11 +228,11 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
     () =>
       tokensOptions.map(
         (token) =>
-          ({
-            name: token.label,
-            address: token.address,
-            icon: token.icon,
-          } as TokenOption)
+        ({
+          name: token.label,
+          address: token.address,
+          icon: token.icon,
+        } as TokenOption)
       ),
     [tokensOptions]
   )

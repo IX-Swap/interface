@@ -240,10 +240,10 @@ export function useSingleCallResult(
   options?: ListenerOptions,
   gasRequired?: number
 ): CallState {
-  const fragment = useMemo(() => contract?.interface?.getFunction(methodName), [contract, methodName])
+  const fragment = contract?.interface?.getFunction(methodName)
 
-  const calls = useMemo<Call[]>(() => {
-    return contract && fragment && isValidMethodArgs(inputs)
+  const calls =
+    contract && fragment && isValidMethodArgs(inputs)
       ? [
           {
             address: contract.address,
@@ -252,12 +252,9 @@ export function useSingleCallResult(
           },
         ]
       : []
-  }, [contract, fragment, inputs, gasRequired])
 
   const result = useCallsData(calls, options)[0]
   const latestBlockNumber = useBlockNumber()
 
-  return useMemo(() => {
-    return toCallState(result, contract?.interface, fragment, latestBlockNumber)
-  }, [result, contract, fragment, latestBlockNumber])
+  return toCallState(result, contract?.interface, fragment, latestBlockNumber)
 }

@@ -8,12 +8,7 @@ import { useActiveWeb3React } from './web3'
 
 export const useNativeCurrency = (): NativeCurrency => {
   const { chainId } = useActiveWeb3React()
-  return useMemo(
-    () =>
-      chainId
+  return chainId
         ? nativeOnChain(chainId)
-        : // display mainnet when not connected
-          nativeOnChain(SupportedChainId.MAINNET),
-    [chainId]
-  )
+        : nativeOnChain(SupportedChainId.MAINNET)
 }

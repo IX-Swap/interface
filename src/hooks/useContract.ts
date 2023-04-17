@@ -52,10 +52,9 @@ export function useContract<T extends Contract = Contract>(
 ): T | null {
   const { library, account, chainId } = useActiveWeb3React()
 
-  return useMemo(
-    () => getContractInstance({ addressOrAddressMap, ABI, withSignerIfPossible, library, chainId, account }),
-    [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account]
-  ) as T
+  return (
+    getContractInstance({ addressOrAddressMap, ABI, withSignerIfPossible, library, chainId, account }) as T
+  )
 }
 
 interface ContractInstanceProps {
