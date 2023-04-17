@@ -39,6 +39,9 @@ export const ManageOffer = () => {
   const { usersClaimed, issuerClaimed, status, softCapReached } = offer || {}
   const showError = useShowError()
 
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
+
+
   const triggerUserClaim = useTriggerUserClaim(offer?.id)
   const triggerIssuerClaim = useTriggerIssuerClaim(offer?.id)
 
@@ -61,6 +64,7 @@ export const ManageOffer = () => {
   }, [status, usersClaimed, canWithdraw])
 
   const onClaimForUsers = useCallback(() => {
+    setIsLoading(true)
     // todo add blockchain
     if (triggerUserClaim.isLoading) return
     triggerUserClaim.load(undefined, () => {
@@ -70,6 +74,7 @@ export const ManageOffer = () => {
   }, [triggerUserClaim.isLoading, triggerUserClaim.load, load])
 
   const onClaimForIssuer = useCallback(() => {
+    setIsLoading(true)
     // todo add blockchain
     if (triggerIssuerClaim.isLoading) return
     triggerIssuerClaim.load(undefined, () => {
@@ -99,7 +104,7 @@ export const ManageOffer = () => {
     }
   }, [triggerUserClaim.error, triggerIssuerClaim.error])
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Centered>
         <Loader />
@@ -121,6 +126,13 @@ export const ManageOffer = () => {
   }
   return (
     <Wrapper>
+
+      {loading && (
+        <Centered>
+          <Loader />
+        </Centered>
+      )}
+
       <ConfirmModal isOpen={confirmClaim} setOpen={setConfirmClaim} onAccept={onClaim} />
 
       {isOpenWhitelisting && (
