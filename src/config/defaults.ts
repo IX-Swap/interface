@@ -25,11 +25,11 @@ export const tenantThemes = [
     hex: 'linear-gradient(to bottom right, #E56E00 50% , #C25D00 50%)'
   },
   {
-    name: 'yellow',
+    name: 'green',
     hex: 'linear-gradient(to bottom right, #10BA73 50%, #9BD106 50%)'
   },
   {
-    name: 'green',
+    name: 'turquoise',
     hex: 'linear-gradient(to bottom right, #059CA1 50%, #04E3F1 50%)'
   },
   {
@@ -37,7 +37,7 @@ export const tenantThemes = [
     hex: 'linear-gradient(to bottom right, #0E1A32 50%, #0055FF 50%)'
   },
   {
-    name: 'indigo',
+    name: 'pink',
     hex: 'linear-gradient(to bottom right, #1E000E 50%, #FF57A5 50%)'
   },
   {

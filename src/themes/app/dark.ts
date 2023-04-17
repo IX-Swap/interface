@@ -341,7 +341,7 @@ export const darkTheme: ThemesSet = {
       }
     }
   },
-  yellow: {
+  green: {
     palette: {
       ...defaultPalette,
       primary: {
@@ -373,7 +373,7 @@ export const darkTheme: ThemesSet = {
       }
     }
   },
-  green: {
+  turquoise: {
     palette: {
       ...defaultPalette,
       primary: {
@@ -405,7 +405,7 @@ export const darkTheme: ThemesSet = {
       }
     }
   },
-  indigo: {
+  pink: {
     palette: {
       ...defaultPalette,
       primary: {
