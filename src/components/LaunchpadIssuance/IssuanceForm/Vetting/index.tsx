@@ -415,7 +415,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                     <div>
                       <text>Supported file formats are doc, docx, PNG, JPG, JPEG and PDF.</text>
                       <br />
-                      <ExampleLink>See Examples</ExampleLink>
+                      <ExampleLink href='https://s3.eu-central-1.amazonaws.com/static.ixswap.io/ownership-structure-example.pdf' target='_blank'>See Examples</ExampleLink>
                     </div>
                   }
                   field="document.ownershipStructure"
