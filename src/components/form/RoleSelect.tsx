@@ -26,7 +26,12 @@ export const RoleSelect = (props: RoleSelectProps) => {
       renderValue={selected => (selected as string[]).join(', ')}
     >
       {ROLES.map(name => (
-        <SelectItem key={name} value={name} disabled={name === 'user'}>
+        <SelectItem
+          key={name}
+          value={name}
+          disabled={name === 'user'}
+          sx={{ padding: '5px !important' }}
+        >
           <UICheckbox checked={props.value.includes(name)} />
           <ListItemText primary={getName(name)} />
         </SelectItem>
