@@ -5,15 +5,15 @@ import { PersonnelList } from 'app/pages/identity/components/CorporateIdentityVi
 import { BeneficialOwnersList } from 'app/pages/identity/components/CorporateIdentityView/BeneficialOwnersList'
 import { CorporateAddress } from 'app/pages/identity/components/CorporateIdentityView/CorporateAddress'
 import { CorporateInfo } from 'app/pages/identity/components/CorporateIdentityView/CorporateInfo'
-import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
+// import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 import { OwnershipStructure } from 'app/pages/identity/components/CorporateIdentityView/OwnershipStructure'
 import { DirectorList } from 'app/pages/identity/components/CorporateIdentityView/DirectorList'
-import { InvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/InvestorDeclarationView'
-import { OptInView } from 'app/pages/identity/components/CorporateIdentityView/OptInView'
-import { DocumentsView } from 'app/pages/identity/components/CorporateIdentityView/DocumentsView'
-import { InstitutionalInvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/InstitutionalInvestorDeclarationView'
+// import { InvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/InvestorDeclarationView'
+// import { OptInView } from 'app/pages/identity/components/CorporateIdentityView/OptInView'
+// import { DocumentsView } from 'app/pages/identity/components/CorporateIdentityView/DocumentsView'
+// import { InstitutionalInvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/InstitutionalInvestorDeclarationView'
 
 export interface CorporateIdentityViewProps {
   data: CorporateIdentity
@@ -26,6 +26,13 @@ export const CorporateIdentityView = ({ data }: CorporateIdentityViewProps) => {
       <Grid item>
         <FieldContainer>
           <Grid container direction='column' spacing={5}>
+            <Grid item>
+              <FormSectionHeader
+                title='Review Responses'
+                hasBottomBorder={true}
+              />
+            </Grid>
+
             <Grid item>
               <FormSectionHeader title='Corporate Information' />
             </Grid>
@@ -63,7 +70,7 @@ export const CorporateIdentityView = ({ data }: CorporateIdentityViewProps) => {
         <BeneficialOwnersList data={data} />
       </Grid>
 
-      <Grid item>
+      {/* <Grid item>
         <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
       </Grid>
 
@@ -81,7 +88,7 @@ export const CorporateIdentityView = ({ data }: CorporateIdentityViewProps) => {
 
       <Grid item>
         <DocumentsView data={data.documents} />
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }

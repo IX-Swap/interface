@@ -47,7 +47,7 @@ export const IdentitiesList: React.FC = () => {
                   align='center'
                   color='textSecondary'
                 >
-                  Choose the type of Identity
+                  Choose between the 2 types below.
                 </Typography>
               </Grid>
             )}
