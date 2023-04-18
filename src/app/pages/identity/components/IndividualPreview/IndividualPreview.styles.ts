@@ -43,5 +43,38 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('md')]: {
       display: 'none'
     }
+  },
+  hourglassImage: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '40px'
+  },
+  approvalText: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    color: '#D3A701',
+    fontWeight: 600,
+    fontSize: '18px',
+    textAlign: 'center',
+    lineHeight: '140%',
+    paddingTop: '22px !important'
+  },
+  approvalSubText: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    textAlign: 'center',
+    marginTop: '0px',
+    paddingTop: '22px !important',
+    color: '#D3A701',
+    fontWeight: 400,
+    fontSize: '14px',
+    lineHeight: '20px'
+  },
+  backgroud: {
+    backgroundColor: '#FFF5CD',
+    border: 'solid 1px #FFC900',
+    height: '289px',
+    marginTop: '60px',
+    paddingLeft: '16px'
   }
 }))
