@@ -67,6 +67,8 @@ export const useGetWarning = (offer: Offer) => {
 
     if (value === '') {
       warning = ''
+    } else if (!inputCurrency) {
+      warning = `Loading`
     } else if (isInsufficientBalance) {
       warning = `Insufficient balance`
     } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
@@ -228,11 +230,11 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
     () =>
       tokensOptions.map(
         (token) =>
-          ({
-            name: token.label,
-            address: token.address,
-            icon: token.icon,
-          } as TokenOption)
+        ({
+          name: token.label,
+          address: token.address,
+          icon: token.icon,
+        } as TokenOption)
       ),
     [tokensOptions]
   )
