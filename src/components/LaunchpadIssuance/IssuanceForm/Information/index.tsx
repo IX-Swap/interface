@@ -108,9 +108,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const isFullEdit = useMemo(() => {
     let res = false
     if (offer.data?.status) {
-      res =
-        [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(offer.data.status) ||
-        (isAdmin && offer.data.status === IssuanceStatus.pendingApproval)
+      res = [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(offer.data.status)
     }
     return res
   }, [offer.data?.status, isAdmin])
@@ -300,7 +298,16 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 isOpen={showCloseDialog}
                 onDiscard={() => history.push(`/issuance/create?id=${issuanceId}`)}
                 onClose={onConfirmationClose}
-                onSave={() => (draftDisabled ? onSaveError() : saveDraft(values))}
+                onSave={() => {
+                  if (props.edit) {
+                    if (submitDisabled) return onSaveError()
+                    submit(values)
+                  } else {
+                    if (draftDisabled) return onSaveError()
+                    saveDraft(values)
+                  }
+                  onConfirmationClose()
+                }}
               />
               {showReview && (
                 <Portal>
