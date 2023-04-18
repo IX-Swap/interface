@@ -78,9 +78,9 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   const vettingStatus = useMemo(() => issuance?.vetting?.status, [issuance])
   const offerStatus = useMemo(() => issuance?.vetting?.offer?.status, [issuance])
   const isOfferDeployed = useMemo(() => offer && Boolean(offer.contractSaleId), [offer])
-  const isShowDistributionAddress = issuance?.vetting?.smartContractStrategy !== SMART_CONTRACT_STRATEGIES.original;
+  const showDistributionAddress = issuance?.vetting?.smartContractStrategy !== SMART_CONTRACT_STRATEGIES.original;
 
-  const notAprroveDisabled = useMemo(() => {
+  const notAprrovedDisabled = useMemo(() => {
     if (!offerStatus || offerLoading || isOfferDeployed) return true
     return ![OfferStatus.draft, OfferStatus.changesRequested, OfferStatus.declined, OfferStatus.approved].includes(
       offerStatus
@@ -88,7 +88,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   }, [offerStatus, offerLoading])
 
   const issuanceError = useMemo(() => {
-    if (notAprroveDisabled || !touchedFee) {
+    if (notAprrovedDisabled || !touchedFee) {
       return ''
     } else if (issuanceFee === undefined) {
       return 'Fee is required!'
@@ -98,14 +98,14 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
       return 'Fee should be less than 100%!'
     }
     return ''
-  }, [notAprroveDisabled, issuanceFee, touchedFee])
+  }, [notAprrovedDisabled, issuanceFee, touchedFee])
 
-  const checkDistributionDisable = isShowDistributionAddress && (Boolean(distributionError) || !distributionAddress) 
-  const disableSubmit = offer?.status !== OfferStatus.approved || Boolean(issuanceError) || checkDistributionDisable
+  const isDistributionDisabled = showDistributionAddress && (Boolean(distributionError) || !distributionAddress) 
+  const disableSubmit = offer?.status !== OfferStatus.approved || Boolean(issuanceError) || isDistributionDisabled
 
   const confirmFeeDisabled = useMemo(() => {
-    return Boolean(issuanceError) || notAprroveDisabled || !issuanceFee || isLoading || Number(offer?.feeRate) === issuanceFee
-  }, [issuanceError, notAprroveDisabled, offer, issuanceFee, isLoading])
+    return Boolean(issuanceError) || notAprrovedDisabled || !issuanceFee || isLoading || Number(offer?.feeRate) === issuanceFee
+  }, [issuanceError, notAprrovedDisabled, offer, issuanceFee, isLoading])
 
   const vettingLink = useMemo(() => {
     if (
@@ -176,15 +176,13 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
     [touchedFee, touchFee, setIssuanceFee]
   )
 
-  const onChangeDistribution = useCallback((field: string, value: string) => {
-      setDistributionAddress(value)
+  const onChangeDistribution = (field: string, value: string) => {
+    setDistributionAddress(value)
 
-      if (value === "") setDistributionError("Required")
-      else if(!isEthChainAddress(value)) setDistributionError("Enter a Valid Address")
-      else setDistributionError("")
-    },
-    [setIssuanceFee]
-  )
+    if (value === "") setDistributionError("Required")
+    else if(!isEthChainAddress(value)) setDistributionError("Enter a Valid Address")
+    else setDistributionError("")
+  };
 
   if (issuance === null) {
     return null
@@ -244,7 +242,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
                   setter={onChangeFee}
                   value={`${issuanceFee === undefined ? '' : issuanceFee}`}
                   inputFilter={filterNumberWithDecimals}
-                  disabled={notAprroveDisabled}
+                  disabled={notAprrovedDisabled}
                 />
               </Column>
               <FilledButton
@@ -259,7 +257,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
           </Column>
         )}
 
-        {isShowDistributionAddress && <Column>
+        {showDistributionAddress && <Column>
           <Column style={{ gap: '25px', flex: '1 1' }}>
             <FieldLabel>Distribution Controller Address</FieldLabel>
               <FormField
@@ -267,7 +265,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
                 field="distributionControllerAddress"
                 setter={onChangeDistribution}
                 value={distributionAddress}
-                disabled={notAprroveDisabled}
+                disabled={notAprrovedDisabled}
               />
           </Column>
           {distributionError && <ErrorText>{distributionError}</ErrorText>}
