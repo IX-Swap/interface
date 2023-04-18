@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { ChevronDown } from 'react-feather'
@@ -18,6 +18,7 @@ interface Props<T> {
   single?: boolean
   disabled?: boolean
   onSelect: (options: FilterOption<T>[]) => void
+  selected: FilterOption<T> | FilterOption<T>[]
 }
 
 interface DropdownPosition {
@@ -25,7 +26,8 @@ interface DropdownPosition {
   y: number
 }
 
-export function FilterDropdown<T>({ label, options, single, disabled = false, onSelect }: Props<T>) {
+export function FilterDropdown<T>({ label, options, single, disabled = false, onSelect, selected }: Props<T>) {
+  const [touched, setTouched] = React.useState(false)
   const [showDropdown, setShowDropdown] = React.useState(false)
   const [position, setPosition] = React.useState<DropdownPosition | null>(null)
   const [selectedOptions, setSelectedOptions] = React.useState<FilterOption<T>[]>([])
@@ -52,10 +54,15 @@ export function FilterDropdown<T>({ label, options, single, disabled = false, on
     }
   }, [showDropdown, container])
 
+  const getIsChecked = useCallback(
+    (option: any) => Boolean(selectedOptions.find((sel) => sel.value === option.value)),
+    [selectedOptions]
+  )
+
   const selectOption = useCallback(
     (option: FilterOption<T>) => {
-      const updatedSelectedOptions = selectedOptions.includes(option)
-        ? selectedOptions.filter((x) => x !== option)
+      const updatedSelectedOptions = getIsChecked(option)
+        ? selectedOptions.filter((x) => x.value !== option.value)
         : single
         ? [option]
         : selectedOptions.concat(option)
@@ -65,6 +72,19 @@ export function FilterDropdown<T>({ label, options, single, disabled = false, on
     },
     [selectedOptions]
   )
+
+  useEffect(() => {
+    if (touched || selectedOptions.length > 0) {
+      return
+    }
+    if (Array.isArray(selected) && selected.length) {
+      setTouched(true)
+      setSelectedOptions(selected)
+    } else if (!Array.isArray(selected) && selected) {
+      setTouched(true)
+      setSelectedOptions([selected])
+    }
+  }, [selected, selectedOptions, touched, setTouched])
 
   return (
     <DropdownContainer ref={container} disabled={disabled}>
@@ -80,7 +100,7 @@ export function FilterDropdown<T>({ label, options, single, disabled = false, on
         <DropdownMenu x={position.x} y={position.y} open={showDropdown}>
           {options.map((option, idx) => (
             <DropdownOption key={`${label}-${idx}`} onClick={() => selectOption(option)}>
-              {selectedOptions.includes(option) ? <StyledChecked /> : <StyledNotChecked />}
+              {getIsChecked(option) ? <StyledChecked /> : <StyledNotChecked />}
               {option.label}
             </DropdownOption>
           ))}
