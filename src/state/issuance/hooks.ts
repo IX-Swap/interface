@@ -124,11 +124,11 @@ export const useBackLink = (issuanceId: string) => {
 
 export const useDeployOffer = (offerId?: string) => {
   return React.useCallback(
-    (feeRate?: string | number) => {
+    (feeRate?: string | number, distributionControllerAddress?: string) => {
       if (!offerId) {
         return
       }
-      return apiService.post(`offers/blockchain/deploy/${offerId}`, { feeRate: Number(feeRate) })
+      return apiService.post(`offers/blockchain/deploy/${offerId}`, { feeRate: Number(feeRate), distributionControllerAddress })
     },
     [offerId]
   )
