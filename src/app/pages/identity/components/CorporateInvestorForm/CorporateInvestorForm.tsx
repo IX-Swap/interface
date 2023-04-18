@@ -35,8 +35,8 @@ export const CorporateInvestorForm = ({
 
   const { open, openDialog, closeDialog } = useConfirmSubmitDialog()
 
-  const createMutation = useCreateCorporate(type)
-  const updateMutation = useUpdateCorporate(type)
+  const createMutation = useCreateCorporate()
+  const updateMutation = useUpdateCorporate()
   const submitMutation = useSubmitCorporate(openDialog)
   const { isCorporateJourneyCompleted } = useOnboardingJourneys()
   const { data: corporateData, isLoading } = useAllCorporates({})

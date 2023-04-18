@@ -21,21 +21,12 @@ export interface InformationFieldsProps {
 export const InformationFields = ({
   type = 'corporate'
 }: InformationFieldsProps) => {
-  const { control, watch, reset, clearErrors, getValues } = useFormContext()
+  const { control, watch, clearErrors } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
 
   const isIssuer: boolean = watch('isIssuer', false)
   const isTenantOwner: boolean = watch('isTenantOwner', false)
   const theme = useTheme()
-
-  useEffect(() => {
-    if (isIssuer) {
-      reset({ ...getValues(), issuer: {} })
-    }
-    if (isTenantOwner) {
-      reset({ ...getValues(), tenantOwner: {} })
-    }
-  }, [isTenantOwner, isIssuer, reset, getValues])
 
   useEffect(() => {
     if (legalEntityStatus !== 'others') {
