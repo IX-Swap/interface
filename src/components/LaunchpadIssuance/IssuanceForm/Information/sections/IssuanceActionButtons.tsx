@@ -81,9 +81,8 @@ export const IssuanceActionButtons = ({
     }
   }
 
-  const { isPendingApproved, isApproved, isRejected, showReviewButtons } = useMemo(
+  const { isApproved, isRejected, showReviewButtons } = useMemo(
     () => ({
-      isPendingApproved: status === OfferStatus.pendingApproval,
       isApproved: status === OfferStatus.approved,
       isRejected: status === OfferStatus.declined,
       showReviewButtons: ![
@@ -154,7 +153,7 @@ export const IssuanceActionButtons = ({
         setMessage={setChangesRejected}
         setReason={setReasonRejected}
       />
-      {!isPendingApproved && !isApproved && isAdmin && (
+      {(!isApproved || isAdmin) && (
         <FormSubmitContainer>
           {showDraft && (
             <OutlineButton disabled={draftDisabled} onClick={onSaveDraft}>
