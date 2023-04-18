@@ -12,7 +12,7 @@ const requiredFileSchema = limitedSizeFileSchema.required('File required')
 
 const directorSchema = yup.array(
   yup.object().shape({
-    fullName: yup.string().required('Full name required').min(2, 'Full name should be at least 2 characters long'),
+    fullName: yup.string().nullable().required('Full name required').min(2, 'Full name should be at least 2 characters long'),
 
     proofOfIdentity: requiredFileSchema,
     proofOfAddress: requiredFileSchema,
