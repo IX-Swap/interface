@@ -120,10 +120,10 @@ export const SingPassPage = () => {
                 ${data?.regadd?.postalCode}
             `}
               />
-              <InfoItem
+              {/* <InfoItem
                 label='Employment Sector'
                 value={data?.employmentsector}
-              />
+              /> */}
             </div>
 
             <InfoItem
