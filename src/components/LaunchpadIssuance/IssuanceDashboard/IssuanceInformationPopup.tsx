@@ -141,7 +141,13 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
     setShowConfirm(false)
     setIsLoading(true)
     try {
-      await deploy(issuanceFee, distributionAddress)
+      if(showDistributionAddress) {
+        await deploy(issuanceFee, distributionAddress)
+      }
+      else {
+        await deploy(issuanceFee)
+      }
+      
       showSuccess(`Offer #${offer?.id} - ${offer?.title} deployed successfully`)
     } catch (e: any) {
       showError(e?.message ?? '')
