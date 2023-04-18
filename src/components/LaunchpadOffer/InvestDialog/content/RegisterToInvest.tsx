@@ -138,7 +138,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
                 {warning && <ErrorText>{warning}</ErrorText>}
               </FormFieldContainer>
 
-              <InvestFormSubmitButton state={submitState.current} onSubmit={submitForm}>
+              <InvestFormSubmitButton state={submitState.current} onSubmit={submitForm} disabled={Boolean(warning)}>
                 {submitState.current === InvestSubmitState.default && 'Submit'}
                 {submitState.current === InvestSubmitState.success && (
                   <>
