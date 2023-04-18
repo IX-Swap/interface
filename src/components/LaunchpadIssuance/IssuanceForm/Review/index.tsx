@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
-import { File, Eye, ArrowLeft, Mail } from 'react-feather'
+import { File, Eye, ArrowLeft, Mail, Download } from 'react-feather'
 
 import { OfferTerms } from 'components/LaunchpadOffer/OfferSidebar/OfferTerms'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
@@ -12,6 +12,7 @@ import { text2, text5, text53 } from 'components/LaunchpadMisc/typography'
 import { useFormatOfferValue } from 'state/launchpad/hooks'
 import { InformationFormValues } from '../Information/types'
 import { ReviewSidebar } from './Sidebar'
+import { isDownload, isPreview } from 'components/LaunchpadOffer/util/files'
 
 interface Props {
   values: InformationFormValues
@@ -79,6 +80,10 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
     return values.additionalDocuments
       .filter((x) => x.file)
       .map((doc) => {
+        const hasAsset = !!doc.asset
+        const isPreviewing = hasAsset && isPreview(doc.file.file.name)
+        const isDownloading = hasAsset && !isPreviewing && isDownload(doc.file.file.name)
+        const ValueIcon = isPreviewing ? Eye : Download
         return {
           label: (
             <FileName>
@@ -87,11 +92,13 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
           ),
           value: (
             <span style={{ cursor: 'pointer' }}>
-              <Eye size="14" stroke={theme.launchpad.colors.text.body} />
+              <ValueIcon size="14" stroke={theme.launchpad.colors.text.body} />
             </span>
           ),
           file: doc.asset || doc.file.file,
-          hasAsset: !!doc.asset,
+          hasAsset,
+          isPreviewing,
+          isDownloading,
         }
       })
   }, [theme, values.additionalDocuments])
@@ -129,7 +136,6 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
     },
     [formatedValue]
   )
-
   return (
     <ReviewModalContainer>
       <ReviewContainer>

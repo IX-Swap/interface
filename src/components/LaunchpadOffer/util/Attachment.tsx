@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
 
 import { Separator } from '../../LaunchpadMisc/styled'
 import { KycLightDocPreviewModal } from 'components/KycLightDocPreviewModal'
 import { InfoEntry } from './InfoList'
+import { downloadFile, downloadLocalFile, extractDocType, isDownload, isPreview } from './files'
 
 interface Props {
   fontSize?: string
@@ -12,45 +12,6 @@ interface Props {
   entry: InfoEntry
   idx?: number
   isLast?: boolean
-}
-
-const extractDocType = (docName: any) => docName?.substring(docName.lastIndexOf('.')).split('.')[1]
-
-const downloadFile = async (url: string, name: string, type: string) => {
-  const link = document.createElement('a')
-  const { data } = (await axios(url, {
-    responseType: 'blob',
-  })) as any
-
-  const blob = new Blob([data], { type })
-
-  link.download = name
-  link.href = URL.createObjectURL(blob)
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-}
-
-const downloadLocalFile = async (file: File) => {
-  const link = document.createElement('a')
-  const blob = new Blob([file], { type: file.type })
-
-  link.download = file.name
-  link.href = URL.createObjectURL(blob)
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-}
-
-const isPreview = (docName?: string) => {
-  const docType = extractDocType(docName)
-
-  return !['docx', 'doc'].includes(docType)
-}
-const isDownload = (docName: string) => {
-  const docType = extractDocType(docName)
-
-  return ['docx', 'doc'].includes(docType)
 }
 
 export const Attachment: React.FC<Props> = (props) => {
@@ -65,15 +26,15 @@ export const Attachment: React.FC<Props> = (props) => {
     }
   })
 
-  const handlePreviewClick = ({ file, hasAsset }: any) => {
+  const handlePreviewClick = ({ file, hasAsset, isPreviewing, isDownloading }: any) => {
     if (!file) {
       return
     }
-    if (!hasAsset) {
+    if (hasAsset === false) {
       downloadLocalFile(file)
-    } else if (isPreview(file.name)) {
+    } else if (isPreviewing || isPreview(file.name)) {
       openModal()
-    } else if (isDownload(file.name)) {
+    } else if (isDownloading || isDownload(file.name)) {
       const { name, public: publicUrl, mimeType } = file
       downloadFile(publicUrl, name, mimeType)
     }
