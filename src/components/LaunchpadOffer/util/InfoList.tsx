@@ -11,6 +11,8 @@ export interface InfoEntry {
   value?: React.ReactNode
   file?: Asset | File
   hasAsset?: boolean
+  isPreviewing?: boolean
+  isDownloading?: boolean
 }
 
 interface Props {
