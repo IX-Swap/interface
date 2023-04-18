@@ -4,7 +4,7 @@ import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar.svg'
 import { Avatar } from 'components/Avatar'
 import { Status } from 'ui/Status/Status'
 import { Box, Typography, Grid, Container } from '@mui/material'
-import { FieldsDisplay } from 'app/pages/identity/components/DataPreview/FieldDisplay'
+// import { FieldsDisplay } from 'app/pages/identity/components/DataPreview/FieldDisplay'
 
 export interface DataPreviewProps {
   avatar?: string
@@ -63,7 +63,7 @@ export const DataPreview = ({
         </Grid>
       </Container>
       <Box className={classes.emptyBox} />
-      <FieldsDisplay fields={fields} />
+      {/* <FieldsDisplay fields={fields} /> */}
       <div className={classes.whiteBackground}></div>
     </>
   )

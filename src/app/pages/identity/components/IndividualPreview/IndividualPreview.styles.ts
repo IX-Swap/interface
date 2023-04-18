@@ -2,17 +2,20 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
-    backgroundColor: theme.palette.backgrounds.default,
+    // backgroundColor: theme.palette.background.paper,
+    border: '1px solid black',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'nowrap',
     paddingTop: theme.spacing(2.5),
+    paddingBottom: theme.spacing(2.5),
     [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap',
       justifyContent: 'center'
     }
   },
   buttonBox: {
+    alignItems: 'end',
     paddingTop: theme.spacing(14.2),
     display: 'flex',
     justifyContent: 'flex-end',
@@ -30,7 +33,8 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   index: {
-    zIndex: 2
+    zIndex: 2,
+    display: 'flex'
   },
   approveButton: {
     paddingRight: theme.spacing(12.5),

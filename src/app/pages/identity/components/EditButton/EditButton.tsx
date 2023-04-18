@@ -13,6 +13,7 @@ export interface EditButtonProps {
     'text' | 'outlined' | 'contained',
     ButtonPropsVariantOverrides
   >
+  customLabel?: boolean
 }
 
 export const EditButton: React.FC<EditButtonProps> = ({
@@ -20,7 +21,10 @@ export const EditButton: React.FC<EditButtonProps> = ({
   params = {},
   replace = false,
   variant = 'outlined',
-  fullWidth = false
+  fullWidth = false,
+  customLabel = false,
+  children,
+  ...rest
 }) => (
   <Button
     component={AppRouterLinkComponent}
@@ -31,7 +35,8 @@ export const EditButton: React.FC<EditButtonProps> = ({
     replace={replace}
     disableElevation
     fullWidth={fullWidth}
+    {...rest}
   >
-    Edit
+    {customLabel ? children : 'Edit'}
   </Button>
 )

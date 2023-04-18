@@ -4,7 +4,7 @@ import { Box, Grid } from '@mui/material'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { Status } from 'ui/Status/Status'
-import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
+// import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
 
@@ -85,7 +85,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
       <Grid item className={classes.approveButton}>
         <Status label={data.status} type={status} />
       </Grid>
-      <Grid item>
+      <Grid item sx={{ border: '1px solid black', flexGrow: 1 }}>
         <Box>
           <DataPreview
             avatar={data.logo}
@@ -107,16 +107,23 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
               userId: data.user._id,
               label: data.companyLegalName
             }}
-          />
+            customLabel
+            sx={{
+              padding: '10px 50px !important',
+              width: 'auto !important'
+            }}
+          >
+            Edit Personal Information
+          </EditButton>
           <Box mx={1} component='span' />
-          <ViewButton
+          {/* <ViewButton
             link={details.viewLink}
             params={{
               identityId: data._id,
               userId: data.user._id,
               label: data.companyLegalName
             }}
-          />
+          /> */}
         </Box>
       </Grid>
     </Grid>

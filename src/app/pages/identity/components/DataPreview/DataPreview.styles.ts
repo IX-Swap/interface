@@ -33,7 +33,8 @@ export const useStyles = makeStyles(theme => ({
     top: '0',
     right: '0',
     width: '100%',
-    height: theme.spacing(33.4),
+    // height: theme.spacing(33.4),
+    height: theme.spacing(60),
     backgroundColor: theme.palette.background.paper,
     zIndex: 1,
     [theme.breakpoints.down('md')]: {
@@ -41,6 +42,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   preview: {
+    border: '1px solid black',
     zIndex: 5,
     [theme.breakpoints.down('md')]: {
       backgroundColor: theme.palette.background.paper,
