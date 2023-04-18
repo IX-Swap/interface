@@ -208,8 +208,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
             break
 
           case IssuanceStatus.pendingApproval:
-            if (props.edit && isAdmin) {
-              history.replace(`/issuance/create/information?id=${issuanceId}`)
+            if (!props.edit && isAdmin) {
+              history.replace(`/issuance/edit/information?id=${issuanceId}`)
             } else if (!isAdmin) {
               history.replace(`/issuance`)
             }
@@ -288,7 +288,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       >
         {({ values, errors, touched, setFieldValue, setFieldTouched, submitForm, resetForm }) => {
           const draftDisabled = isDraftDisabled(errors, touched)
-          const submitDisabled = !values.tokenomicsAgreement || isSubmitDisabled(errors, touched)
+          const submitDisabled = isSubmitDisabled(errors, touched)
           return (
             <>
               <ConfirmationForm
@@ -623,11 +623,16 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   <Column gap="1rem">
                     <BaseCheckboxWithLabel
                       state={Boolean(values.tokenomicsAgreement)}
-                      toggle={() => setFieldValue('tokenomicsAgreement', !values.tokenomicsAgreement)}
+                      toggle={() => {
+                        setFieldTouched('tokenomicsAgreement', true)
+                        setFieldValue('tokenomicsAgreement', !values.tokenomicsAgreement)
+                      }}
                       disabled={props.edit}
                       label="I understand and agree that once I submit this form and it is approved, IX Swap will mint and deposit the tokens into a smart contract based on the information provided."
                     />
-                    {errors.tokenomicsAgreement && <ErrorText>{errors.tokenomicsAgreement}</ErrorText>}
+                    {touched.tokenomicsAgreement && errors.tokenomicsAgreement && (
+                      <ErrorText>{errors.tokenomicsAgreement}</ErrorText>
+                    )}
                   </Column>
                 </FormGrid>
 

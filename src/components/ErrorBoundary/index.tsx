@@ -61,23 +61,7 @@ export default class ErrorBoundary extends React.Component<unknown, ErrorBoundar
     const { error, isChunkError } = this.state
 
     if (error !== null && isChunkError) {
-      return (
-        <FallbackWrapper style={{ height: '100vh', textAlign: 'center' }}>
-          <BodyWrapper style={{ height: '100%' }}>
-            <ColumnCenter style={{ justifyContent: 'center', height: '100%' }}>
-              <SomethingWentWrongWrapper>
-                <TYPE.label fontSize={24} fontWeight={600}>
-                  <Trans>Error occured while loading the content</Trans>
-                </TYPE.label>
-
-                <TYPE.label fontSize={20} fontWeight={600}>
-                  <Trans>Please, refresh the page</Trans>
-                </TYPE.label>
-              </SomethingWentWrongWrapper>
-            </ColumnCenter>
-          </BodyWrapper>
-        </FallbackWrapper>
-      )
+      window.location.reload()
     } else if (error !== null) {
       // find out what is this const encodedBody = encodeURIComponent(issueBody(error))
       return (

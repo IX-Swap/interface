@@ -1313,8 +1313,8 @@ export const useMinimalOfferEdit = () => {
       issuerWebsite: payload.website,
       whitepaperUrl: payload.whitepaper,
 
-      profilePictureId: 123, // why 123?
-      cardPictureId: 123, // why 123?
+      profilePictureId: files.find((x) => x.name === 'profile')?.id || payload.profilePicture?.id || null,
+      cardPictureId: files.find((x) => x.name === 'card')?.id || payload.cardPicture?.id || null,
 
       faq: payload.faq.map((faq) => ({
         id: faq.id,

@@ -52,17 +52,28 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
 
   return (
     <FilterContainer>
-      <FilterDropdown label="Industry" options={OFFER_INDUSTRY_LABELS} onSelect={onIndustrySelect} />
-      <FilterDropdown label="Stage" options={OFFER_STAGE_LABELS} onSelect={onStageSelect} />
+      <FilterDropdown
+        selected={filter.industry}
+        label="Industry"
+        options={OFFER_INDUSTRY_LABELS}
+        onSelect={onIndustrySelect}
+      />
+      <FilterDropdown selected={filter.stage} label="Stage" options={OFFER_STAGE_LABELS} onSelect={onStageSelect} />
 
       <FilterSearchField>
-        <FilterSearchInput onChange={onSearchChange} />
+        <FilterSearchInput value={filter.search} onChange={onSearchChange} />
         <SearchIcon />
       </FilterSearchField>
 
       <Spacer />
       {/* Disabled for version 2 https://app.clickup.com/t/4733323/IXS-2662 */}
-      <FilterDropdown label="Type" options={OFFER_TYPE_LABELS} onSelect={onTypeSelect} disabled={true} />
+      <FilterDropdown
+        selected={filter.type}
+        label="Type"
+        options={OFFER_TYPE_LABELS}
+        onSelect={onTypeSelect}
+        disabled={true}
+      />
 
       <FilterButton type="button" onClick={() => onFilter(filter)} disabled={true}>
         <FilterIcon /> Filter

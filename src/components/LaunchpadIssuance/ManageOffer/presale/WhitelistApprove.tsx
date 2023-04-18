@@ -32,6 +32,8 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
     refreshWhitelists()
   }
 
+  const disabledAll = disabledManage || !totalItems || manageWhitelists.isLoading
+
   const randomError = useMemo(() => {
     if (approveRandom.error) {
       return approveRandom.error
@@ -39,14 +41,13 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
     if (count && totalItems && +count > totalItems) {
       return `You can approve maximum ${totalItems} users`
     }
-    if (!totalItems) {
+    if (!disabledAll && !totalItems) {
       return 'There are no users to approve'
     }
     return ''
   }, [count, totalItems, approveRandom.error])
 
   const disabledRandom = disabledManage || !count || !totalItems || approveRandom.isLoading || !!randomError
-  const disabledAll = disabledManage || !totalItems || manageWhitelists.isLoading
 
   const onApproveRandom = () => {
     if (disabledRandom) return

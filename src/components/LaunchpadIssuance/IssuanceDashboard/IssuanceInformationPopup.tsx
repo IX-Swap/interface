@@ -12,13 +12,14 @@ import styled, { useTheme } from 'styled-components'
 import { DiscreteInternalLink } from 'theme'
 import { filterNumberWithDecimals } from 'utils/input'
 import { FormField } from '../IssuanceForm/shared/fields/FormField'
-import { IssuanceStatus } from '../types'
+import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from '../types'
 import { Label } from '../utils/TextField'
 import { MiniStatusBadge } from './MiniStatusBadge'
 import { ConfirmPopup } from '../utils/ConfirmPopup'
 import { useConfirmFee, useDeployOffer } from 'state/issuance/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { isEthChainAddress } from 'utils'
 
 export interface IsssuanceApplicationPopupProps {
   issuance: Issuance | null
@@ -68,6 +69,8 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   const confirmFee = useConfirmFee(offer?.id)
 
   const [issuanceFee, setIssuanceFee] = useState<number | undefined>()
+  const [distributionAddress, setDistributionAddress] = useState<string>("")
+  const [distributionError, setDistributionError] = useState<string>("")
   const [touchedFee, touchFee] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -75,8 +78,9 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   const vettingStatus = useMemo(() => issuance?.vetting?.status, [issuance])
   const offerStatus = useMemo(() => issuance?.vetting?.offer?.status, [issuance])
   const isOfferDeployed = useMemo(() => offer && Boolean(offer.contractSaleId), [offer])
+  const showDistributionAddress = issuance?.vetting?.smartContractStrategy !== SMART_CONTRACT_STRATEGIES.original;
 
-  const feeDisabled = useMemo(() => {
+  const notAprrovedDisabled = useMemo(() => {
     if (!offerStatus || offerLoading || isOfferDeployed) return true
     return ![OfferStatus.draft, OfferStatus.changesRequested, OfferStatus.declined, OfferStatus.approved].includes(
       offerStatus
@@ -84,7 +88,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   }, [offerStatus, offerLoading])
 
   const issuanceError = useMemo(() => {
-    if (feeDisabled || !touchedFee) {
+    if (notAprrovedDisabled || !touchedFee) {
       return ''
     } else if (issuanceFee === undefined) {
       return 'Fee is required!'
@@ -94,46 +98,49 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
       return 'Fee should be less than 100%!'
     }
     return ''
-  }, [feeDisabled, issuanceFee, touchedFee])
+  }, [notAprrovedDisabled, issuanceFee, touchedFee])
+
+  const isDistributionDisabled = showDistributionAddress && (Boolean(distributionError) || !distributionAddress) 
+  const disableSubmit = offer?.status !== OfferStatus.approved || Boolean(issuanceError) || isDistributionDisabled
+
   const confirmFeeDisabled = useMemo(() => {
-    return Boolean(issuanceError) || feeDisabled || !issuanceFee || isLoading || Number(offer?.feeRate) === issuanceFee
-  }, [issuanceError, feeDisabled, offer, issuanceFee, isLoading])
+    return Boolean(issuanceError) || notAprrovedDisabled || !issuanceFee || isLoading || Number(offer?.feeRate) === issuanceFee
+  }, [issuanceError, notAprrovedDisabled, offer, issuanceFee, isLoading])
 
   const vettingLink = useMemo(() => {
-    if (
-      vettingStatus &&
-      [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(vettingStatus)
-    ) {
+    if (!vettingStatus) {
+      return ''
+    }
+    if ([IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(vettingStatus)) {
       return `/issuance/create/vetting?id=${issuance?.id}`
     }
     return `/issuance/view/vetting?id=${issuance?.id}`
   }, [issuance?.id, vettingStatus])
 
   const informationLink = useMemo(() => {
-    if (
-      !offerStatus ||
-      [
-        OfferStatus.approved,
-        OfferStatus.whitelist,
-        OfferStatus.preSale,
-        OfferStatus.sale,
-        OfferStatus.claim,
-        OfferStatus.closed,
-      ].includes(offerStatus)
-    ) {
-      return `/issuance/review/information?id=${issuance?.id}`
+    if (!offerStatus) {
+      return ''
+    }
+    if ([OfferStatus.draft, OfferStatus.changesRequested, OfferStatus.declined].includes(offerStatus)) {
+      return `/issuance/create/information?id=${issuance?.id}`
     }
     if (offerStatus === OfferStatus.pendingApproval) {
       return `/issuance/edit/information?id=${issuance?.id}`
     }
-    return `/issuance/create/information?id=${issuance?.id}`
+    return `/issuance/review/information?id=${issuance?.id}`
   }, [issuance?.id, offerStatus])
 
   const onSubmit = async () => {
     setShowConfirm(false)
     setIsLoading(true)
     try {
-      await deploy(issuanceFee)
+      if(showDistributionAddress) {
+        await deploy(issuanceFee, distributionAddress)
+      }
+      else {
+        await deploy(issuanceFee)
+      }
+      
       showSuccess(`Offer #${offer?.id} - ${offer?.title} deployed successfully`)
     } catch (e: any) {
       showError(e?.message ?? '')
@@ -167,6 +174,14 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
     },
     [touchedFee, touchFee, setIssuanceFee]
   )
+
+  const onChangeDistribution = (field: string, value: string) => {
+    setDistributionAddress(value)
+
+    if (value === "") setDistributionError("Required")
+    else if(!isEthChainAddress(value)) setDistributionError("Enter a Valid Address")
+    else setDistributionError("")
+  };
 
   if (issuance === null) {
     return null
@@ -226,7 +241,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
                   setter={onChangeFee}
                   value={`${issuanceFee === undefined ? '' : issuanceFee}`}
                   inputFilter={filterNumberWithDecimals}
-                  disabled={feeDisabled}
+                  disabled={notAprrovedDisabled}
                 />
               </Column>
               <FilledButton
@@ -240,6 +255,22 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
             {issuanceError && <ErrorText>{issuanceError}</ErrorText>}
           </Column>
         )}
+
+        {showDistributionAddress && <Column>
+          <Column style={{ gap: '25px', flex: '1 1' }}>
+            <FieldLabel>Distribution Controller Address</FieldLabel>
+              <FormField
+                placeholder="Distribution Controller Address"
+                field="distributionControllerAddress"
+                setter={onChangeDistribution}
+                value={distributionAddress}
+                disabled={notAprrovedDisabled}
+              />
+          </Column>
+          {distributionError && <ErrorText>{distributionError}</ErrorText>}
+        </Column>
+        }
+
         <Separator />
         <Column>
           {isOfferDeployed ? (
@@ -248,7 +279,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
             </FilledButton>
           ) : (
             <FilledButton
-              disabled={offer?.status !== OfferStatus.approved || Boolean(issuanceError)}
+              disabled={disableSubmit}
               onClick={() => setShowConfirm(true)}
             >
               Deploy
