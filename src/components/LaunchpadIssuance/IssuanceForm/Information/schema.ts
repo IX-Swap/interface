@@ -286,7 +286,7 @@ export const schema = yup.object().shape({
   whitepaper: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),
 
   allowOnlyAccredited: yup.boolean(),
-  tokenomicsAgreement: yup.boolean().required(REQUIRED),
+  tokenomicsAgreement: yup.boolean().oneOf([true], REQUIRED).required(REQUIRED),
 
   profilePicture: requiredFileSchema,
   cardPicture: requiredFileSchema,
@@ -430,7 +430,7 @@ export const editSchema = yup.object().shape({
   whitepaper: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),
 
   allowOnlyAccredited: yup.boolean(),
-  tokenomicsAgreement: yup.boolean().required(REQUIRED),
+  tokenomicsAgreement: yup.boolean().oneOf([true], REQUIRED).required(REQUIRED),
 
   social: yup
     .array(
