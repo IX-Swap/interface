@@ -84,7 +84,7 @@ export const schema = yup.object().shape({
   network: yup.string().nullable().oneOf(Object.values(OfferNetwork)).required(REQUIRED),
   industry: yup.string().nullable().oneOf(Object.values(OfferIndustry)).required(REQUIRED),
   investmentType: yup.string().nullable().oneOf(Object.values(OfferInvestmentStructure)).required(REQUIRED),
-  country: yup.string().nullable().required(REQUIRED).oneOf(countryCodes, 'Select a country from the list'),
+  country: yup.string().nullable().oneOf(countryCodes, 'Select a country from the list').required(REQUIRED),
 
   issuerIdentificationNumber: yup
     .string()
@@ -423,7 +423,7 @@ export const editSchema = yup.object().shape({
   network: yup.string().nullable().oneOf(Object.values(OfferNetwork)).required(REQUIRED),
   industry: yup.string().nullable().oneOf(Object.values(OfferIndustry)).required(REQUIRED),
   investmentType: yup.string().nullable().oneOf(Object.values(OfferInvestmentStructure)).required(REQUIRED),
-  country: yup.string().nullable().required(REQUIRED).oneOf(countryCodes, 'Select a country from the list'),
+  country: yup.string().nullable().oneOf(countryCodes, 'Select a country from the list').required(REQUIRED),
 
   email: yup.string().nullable().required(REQUIRED).email('Enter a valid email'),
   website: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),

@@ -339,7 +339,11 @@ export const NewIssuanceForm = () => {
                   borderColor={theme.launchpad.colors.warn + '4d'}
                   width="320px"
                   as={DiscreteInternalLink}
-                  to={isAdmin ? `/issuance/edit/information?id=${issuance.data?.id}` : null}
+                  to={
+                    isAdmin
+                      ? `/issuance/edit/information?id=${issuance.data?.id}`
+                      : `/issuance/review/information?id=${issuance.data?.id}`
+                  }
                 >
                   Pending approval
                 </OutlineButton>
