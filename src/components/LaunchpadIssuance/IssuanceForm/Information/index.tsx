@@ -208,8 +208,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
             break
 
           case IssuanceStatus.pendingApproval:
-            if (props.edit && isAdmin) {
-              history.replace(`/issuance/create/information?id=${issuanceId}`)
+            if (!props.edit && isAdmin) {
+              history.replace(`/issuance/edit/information?id=${issuanceId}`)
             } else if (!isAdmin) {
               history.replace(`/issuance`)
             }
