@@ -108,33 +108,26 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   }, [issuanceError, notAprrovedDisabled, offer, issuanceFee, isLoading])
 
   const vettingLink = useMemo(() => {
-    if (
-      vettingStatus &&
-      [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(vettingStatus)
-    ) {
+    if (!vettingStatus) {
+      return ''
+    }
+    if ([IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(vettingStatus)) {
       return `/issuance/create/vetting?id=${issuance?.id}`
     }
     return `/issuance/view/vetting?id=${issuance?.id}`
   }, [issuance?.id, vettingStatus])
 
   const informationLink = useMemo(() => {
-    if (
-      !offerStatus ||
-      [
-        OfferStatus.approved,
-        OfferStatus.whitelist,
-        OfferStatus.preSale,
-        OfferStatus.sale,
-        OfferStatus.claim,
-        OfferStatus.closed,
-      ].includes(offerStatus)
-    ) {
-      return `/issuance/review/information?id=${issuance?.id}`
+    if (!offerStatus) {
+      return ''
+    }
+    if ([OfferStatus.draft, OfferStatus.changesRequested, OfferStatus.declined].includes(offerStatus)) {
+      return `/issuance/create/information?id=${issuance?.id}`
     }
     if (offerStatus === OfferStatus.pendingApproval) {
       return `/issuance/edit/information?id=${issuance?.id}`
     }
-    return `/issuance/create/information?id=${issuance?.id}`
+    return `/issuance/review/information?id=${issuance?.id}`
   }, [issuance?.id, offerStatus])
 
   const onSubmit = async () => {
