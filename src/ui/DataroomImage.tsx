@@ -16,7 +16,11 @@ export const DataroomImage = (props: DataroomImageProps) => {
   })
 
   return (
-    <Avatar {...rest} src={data} style={{ width, height, background: 'none' }}>
+    <Avatar
+      {...rest}
+      src={data}
+      style={{ width, height, background: 'none', border: 0 }}
+    >
       {children}
     </Avatar>
   )

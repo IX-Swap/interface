@@ -7,7 +7,7 @@ import { identityQueryKeys } from 'config/queryKeys'
 import { useParams } from 'react-router-dom'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
-export const useUpdateCorporate = (corporateType: string) => {
+export const useUpdateCorporate = () => {
   const { snackbarService, apiService } = useServices()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
@@ -16,10 +16,19 @@ export const useUpdateCorporate = (corporateType: string) => {
 
   const updateCorporate = async (values: any) => {
     const uri = identityURL.corporates.update(userId, params.identityId)
+    const declaredAs = ['investor']
+
+    if (values.isIssuer === true) declaredAs.push('issuer')
+    if (values.isTenantOwner === true) declaredAs.push('tenantOwner')
+
+    values.declaredAs = declaredAs
+
     delete values._id
+    delete values.isIssuer
+    delete values.isTenantOwner
+
     return await apiService.put<CorporateIdentity>(uri, {
-      ...values,
-      type: corporateType
+      ...values
     })
   }
 

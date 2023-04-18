@@ -19,6 +19,9 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
     return status ?? value
   }
 
+  const declaredAs =
+    typeof data?.declaredAs !== 'undefined' ? data.declaredAs : []
+
   return (
     <Grid item container flexDirection={'column'} spacing={5}>
       <Grid item>
@@ -65,8 +68,9 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           <Grid item>
             <LabelledValue
               isRedesigned
-              value={data.sourceOfFund}
-              label='Source of Funds'
+              label='Legal Entity'
+              className={privateClassNames()}
+              value={getLegalEntityStatus(data.legalEntityStatus)}
             />
           </Grid>
         </Grid>
@@ -79,6 +83,7 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           spacing={5}
         >
           <Grid item />
+
           <Grid item>
             <LabelledValue
               isRedesigned
@@ -89,11 +94,40 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           <Grid item>
             <LabelledValue
               isRedesigned
-              label='Legal Entity'
-              className={privateClassNames()}
-              value={getLegalEntityStatus(data.legalEntityStatus)}
+              value={data.sourceOfFund}
+              label='Source of Funds'
             />
           </Grid>
+        </Grid>
+
+        <Grid
+          item
+          container
+          direction={'column'}
+          justifyContent={'flex-end'}
+          spacing={3}
+        >
+          <Grid item />
+          {declaredAs.includes('issuer') && (
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                hasCheck
+                label=''
+                value='I declare that I am an Issuer.'
+              />
+            </Grid>
+          )}
+          {declaredAs.includes('tenantOwner') && (
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                hasCheck
+                label=''
+                value='I declare that I am an Tenant Owner.'
+              />
+            </Grid>
+          )}
         </Grid>
       </Grid>
     </Grid>

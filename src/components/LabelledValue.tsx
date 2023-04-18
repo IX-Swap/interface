@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Grid, GridProps, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { formatDateToMMDDYY } from 'helpers/dates'
+import { ReactComponent as CompletedIcon } from 'assets/icons/completed-icon.svg'
 
 const isDateTime = (value: string) => {
   return (
@@ -65,6 +66,7 @@ export interface LabelledValueProps {
   valueColor?: string
   isNewThemeOn?: boolean
   isRedesigned?: boolean
+  hasCheck?: boolean
 }
 
 export const LabelledValue = (props: LabelledValueProps & GridProps) => {
@@ -82,6 +84,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     valueColor,
     isNewThemeOn = false,
     isRedesigned = false,
+    hasCheck = false,
     ...rest
   } = props
   const direction = row ? 'row' : 'column'
@@ -148,13 +151,16 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
           {last.text}
         </Box>
       ) : (
-        <Typography
-          style={last.styles}
-          align={align}
-          color={isRedesigned ? 'text.secondary' : undefined}
-        >
-          {last.text}
-        </Typography>
+        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+          {hasCheck && <CompletedIcon />}
+          <Typography
+            style={last.styles}
+            align={align}
+            color={isRedesigned ? 'text.secondary' : undefined}
+          >
+            {last.text}
+          </Typography>
+        </Box>
       )}
     </Grid>
   )
