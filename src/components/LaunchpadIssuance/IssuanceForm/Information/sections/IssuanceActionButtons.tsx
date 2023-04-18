@@ -153,7 +153,7 @@ export const IssuanceActionButtons = ({
         setMessage={setChangesRejected}
         setReason={setReasonRejected}
       />
-      {(!isApproved || isAdmin) && (
+      {(!isApproved && isAdmin) && (
         <FormSubmitContainer>
           {showDraft && (
             <OutlineButton disabled={draftDisabled} onClick={onSaveDraft}>
