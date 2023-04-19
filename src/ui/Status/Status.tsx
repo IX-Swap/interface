@@ -7,6 +7,7 @@ export type StatusType =
   | 'submitted'
   | 'rejected'
   | 'draft'
+  | 'passed'
   | string
 
 export interface StatusProps {
