@@ -102,7 +102,14 @@ export const schema = yup.object().shape({
     .min(2, getLongerThanOrEqual('Token symbol', 2))
     .max(6, 'Token symbol should be at most 6 charachters')
     .matches(/^[a-zA-Z]+$/, { message: 'Please enter only letters' }),
-  tokenPrice: yup.string().nullable().required(REQUIRED),
+  tokenPrice: yup
+    .string()
+    .nullable()
+    .test('notZero', 'Token price should be bigger than 0!', function () {
+      const { originalValue } = this as any
+      return !originalValue || +originalValue > 0
+    })
+    .required(REQUIRED),
   tokenStandart: yup.string().nullable().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
 
   tokenReceiverAddress: yup
@@ -137,8 +144,7 @@ export const schema = yup.object().shape({
     .nullable()
     .test('addressConstraint', 'Please enter a valid address', function () {
       const { originalValue } = this as any
-      if (!originalValue) return true
-      return Boolean(isEthChainAddress(originalValue))
+      return !originalValue || Boolean(isEthChainAddress(originalValue))
     })
     .when('smartContractStrategy', {
       is: SMART_CONTRACT_STRATEGIES.original,
@@ -147,8 +153,7 @@ export const schema = yup.object().shape({
         .nullable()
         .test('addressConstraint', 'Please enter a valid address', function () {
           const { originalValue } = this as any
-          if (!originalValue) return true
-          return Boolean(isEthChainAddress(originalValue))
+          return !originalValue || Boolean(isEthChainAddress(originalValue))
         })
         .required(REQUIRED),
     }),
