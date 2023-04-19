@@ -20,6 +20,7 @@ import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import { history } from 'config/history'
 import { SingPassPage } from '../sing-pass-data/SingPass'
 import storageService from 'services/storage'
+import { useTenant } from 'auth/hooks/useTenant'
 
 export const registerFormInitialValues = {
   isMyInfo: false,
@@ -70,31 +71,39 @@ export const Register: React.FC = observer(() => {
       }
     : registerFormInitialValues
 
-  const handleSubmit = async (values: SignupArgs) => {
-    await signup(
-      {
-        tenantId: storageService.get('tenantId'),
-        name: values.name ?? 'Singpass User',
-        email: values.email,
-        singPassLogin: isMyInfo,
-        mobileNo: values.phoneNumber,
-        password: values.password,
-        accountType: identity?.toLocaleUpperCase(),
-        uinfin: data?.uinfin
-      },
-      isMyInfo
-        ? {
-            onError: (error: any) => {
-              if (
-                error?.message ===
-                'Sorry but this email address is already taken'
-              ) {
-                history.push(`${AuthRoute.myinfoError}?errorType=email`)
+  const useSubmit = () => {
+    useTenant()
+    return async (values: SignupArgs) =>
+      await signup(
+        {
+          tenantId: storageService.get('tenantId'),
+          name: values.name ?? 'Singpass User',
+          email: values.email,
+          singPassLogin: isMyInfo,
+          mobileNo: values.phoneNumber,
+          password: values.password,
+          accountType: identity?.toLocaleUpperCase(),
+          uinfin: data?.uinfin
+        },
+        isMyInfo
+          ? {
+              onError: (error: any) => {
+                if (
+                  error?.message ===
+                  'Sorry but this email address is already taken'
+                ) {
+                  history.push(`${AuthRoute.myinfoError}?errorType=email`)
+                }
               }
             }
-          }
-        : undefined
-    )
+          : undefined
+      )
+  }
+
+  const submitSignup = useSubmit()
+
+  const handleSubmit = async (values: SignupArgs) => {
+    await submitSignup(values)
   }
 
   if (authorizeLoading) {
