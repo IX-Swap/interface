@@ -41,7 +41,7 @@ export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGI
     hardCap: '',
     softCap: '',
 
-    tokenPrice: '',
+    tokenPrice: null,
     tokenStandart: undefined,
     totalSupply: '',
     tokenReceiverAddress: '',
