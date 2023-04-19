@@ -116,7 +116,7 @@ export const DataExtractTable = () => {
               <OverflowIssuanceTable>
                 <OverflowRow count={columnCount}></OverflowRow>
                 {items?.map((investment: IssuanceDataExtract) => (
-                  <OverflowRow count={columnCount} key={investment.offerId + investment.offerInvestmentId}>
+                  <OverflowRow count={columnCount} key={investment.offerId + investment.offerInvestmentId + investment.walletAddress}>
                     {fields.map((field) => (
                       <DataCell key={field} field={field} investment={investment} />
                     ))}
