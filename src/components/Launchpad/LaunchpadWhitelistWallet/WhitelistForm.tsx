@@ -49,6 +49,7 @@ export const WhitelistForm = ({ offerId, onSuccess: callback }: WhitelistFormPro
               value={values.walletAddress}
               onChange={(v) => setFieldValue('walletAddress', v)}
               error={errors.walletAddress}
+              maxLength={64}
             />
             <IssuanceTextField
               label="Full Name"

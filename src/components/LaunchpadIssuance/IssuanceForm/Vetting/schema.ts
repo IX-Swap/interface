@@ -1,4 +1,8 @@
 import * as yup from 'yup'
+import { STRING_MIN, STRING_MAX, TEXT_MAX, TEXT_MIN } from 'components/LaunchpadIssuance/utils/TextField'
+
+const getLongerThanOrEqual = (field: string, chars: number) => `${field} should have at least ${chars} characters`
+const getHaveAtMost = (field: string, chars: number) => `${field} should have at most ${chars} characters`
 
 const fileSchema = yup.mixed()
 
@@ -12,7 +16,12 @@ const requiredFileSchema = limitedSizeFileSchema.required('File required')
 
 const directorSchema = yup.array(
   yup.object().shape({
-    fullName: yup.string().nullable().required('Full name required').min(2, 'Full name should be at least 2 characters long'),
+    fullName: yup
+      .string()
+      .nullable()
+      .min(STRING_MIN, getLongerThanOrEqual('Full name', STRING_MIN))
+      .max(STRING_MAX, getHaveAtMost('Full name', STRING_MAX))
+      .required('Full name required'),
 
     proofOfIdentity: requiredFileSchema,
     proofOfAddress: requiredFileSchema,
@@ -20,10 +29,20 @@ const directorSchema = yup.array(
 )
 
 export const schema = yup.object().shape({
-  applicantFullName: yup.string().nullable().required("Enter applicant's name"),
+  applicantFullName: yup
+    .string()
+    .nullable()
+    .min(STRING_MIN, getLongerThanOrEqual("Applicant's Full Name", STRING_MIN))
+    .max(STRING_MAX, getHaveAtMost("Applicant's Full Name", STRING_MAX))
+    .required("Enter applicant's name"),
   email: yup.string().email('Enter a valid email').nullable().required('Email required'),
 
-  companyName: yup.string().nullable().required('Enter company name'),
+  companyName: yup
+    .string()
+    .nullable()
+    .min(STRING_MIN, getLongerThanOrEqual('Name of Company', STRING_MIN))
+    .max(STRING_MAX, getHaveAtMost('Name of Company', STRING_MAX))
+    .required('Enter company name'),
   companyWebsite: yup
     .string()
     .matches(
@@ -35,7 +54,8 @@ export const schema = yup.object().shape({
 
   description: yup
     .string()
-    .min(10, 'Description should be at least 10 characters long')
+    .min(TEXT_MIN, getLongerThanOrEqual('Description', TEXT_MIN))
+    .max(TEXT_MAX, getHaveAtMost('Description', TEXT_MAX))
     .nullable()
     .required('Description required'),
 

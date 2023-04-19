@@ -6,6 +6,11 @@ import { OptionalLabel } from '../IssuanceForm/shared/styled'
 import { Column } from 'components/LaunchpadMisc/styled'
 import { text19, text30 } from 'components/LaunchpadMisc/typography'
 
+export const TEXT_MIN = 10
+export const TEXT_MAX = 65535
+export const STRING_MIN = 2
+export const STRING_MAX = 255
+
 interface StylingProps {
   padding?: string
   height?: string
@@ -34,6 +39,7 @@ interface Props extends StylingProps {
   onChange?: (value: string) => void
   inputFilter?: (value: string) => string
   name?: string
+  maxLength?: number
 }
 
 export const IssuanceTextField: React.FC<Props> = (props) => {
@@ -72,7 +78,6 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
         height={props.height}
         padding={props.padding}
         borderless={props.borderless}
-        
       >
         <InnerContainer>
           {props.label && (
@@ -94,7 +99,7 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
             disabled={props.disabled}
             value={inputValue}
             onInput={onChange}
-            maxLength={props.type === 'text' ? 19 : 60}
+            maxLength={props.maxLength || (props.type === 'text' ? TEXT_MAX : STRING_MAX)}
           />
         </InnerContainer>
 
