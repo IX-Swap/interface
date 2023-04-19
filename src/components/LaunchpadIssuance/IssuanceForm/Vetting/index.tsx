@@ -21,7 +21,7 @@ import { useLoader, useSubmitVettingForm, useVettingFormInitialValues } from 'st
 import { schema } from './schema'
 import { FormGrid } from '../shared/FormGrid'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { useAddPopup } from 'state/application/hooks'
+import { useAddPopup, useShowError } from 'state/application/hooks'
 import { defaultValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
 import { useQueryParams } from 'hooks/useParams'
 import { textFilter } from 'utils/input'
@@ -40,12 +40,14 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const history = useHistory()
   const loader = useLoader(false)
   const addPopup = useAddPopup()
+  const showError = useShowError()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
   const [isReset, setReset] = React.useState(false)
 
   const onConfirmationClose = React.useCallback(() => {
     setShowCloseDialog(false)
+    showError('Cannot save changes, please check the form for error messages')
   }, [])
 
   const {
