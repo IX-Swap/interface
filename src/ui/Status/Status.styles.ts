@@ -16,6 +16,8 @@ export const useStyles = makeStyles(theme => {
         return theme.palette.error.dark
       case 'draft':
         return theme.palette.info.light
+      case 'passed':
+        return '#4C88FF'
       default:
         return '#ffffff'
     }
@@ -31,6 +33,8 @@ export const useStyles = makeStyles(theme => {
         return theme.palette.error.light
       case 'draft':
         return theme.palette.info.dark
+      case 'passed':
+        return '#4C88FF20'
     }
   }
 

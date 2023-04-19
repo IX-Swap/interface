@@ -46,13 +46,29 @@ export const columns: any[] = [
   {
     key: 'active',
     label: 'Status',
-    render: (row: boolean) => {
-      return (
-        <Status
-          type={row ? 'approved' : 'submitted'}
-          label={row ? 'Active' : 'Inactive'}
-        />
-      )
+    render: (active: boolean | string) => {
+      let statusType = 'approved'
+      let statusLabel = 'Live'
+
+      switch (active) {
+        case 'underReview':
+          statusType = 'submitted'
+          statusLabel = 'Under Review'
+          break
+        case 'approved':
+          statusType = 'passed'
+          statusLabel = 'Approved'
+          break
+        case 'disabled':
+          statusType = 'rejected'
+          statusLabel = 'Disabled'
+          break
+
+        default:
+          break
+      }
+
+      return <Status type={statusType} label={statusLabel} />
     }
   }
 ]
