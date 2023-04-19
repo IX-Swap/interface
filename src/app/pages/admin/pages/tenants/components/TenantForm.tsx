@@ -17,11 +17,16 @@ export const TenantForm = ({
 }) => {
   const { isTablet } = useAppBreakpoints()
 
+  const newTenantSchema = createTenantSchema
+  delete newTenantSchema.fields.status
+
   return (
     <Form
       data-testid='tenant-form'
       defaultValues={tenant === undefined ? initialTenantFormValues : tenant}
-      validationSchema={createTenantSchema}
+      validationSchema={
+        tenant !== undefined ? createTenantSchema : newTenantSchema
+      }
       allowInvalid
       id={`tenantForm`}
     >

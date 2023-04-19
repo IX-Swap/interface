@@ -31,6 +31,7 @@ export const Status = ({ label, type }: StatusProps) => {
       label={label}
       color={'success'}
       variant={getChipVariant(type)}
+      sx={{ width: '140px' }}
     />
   )
 }
