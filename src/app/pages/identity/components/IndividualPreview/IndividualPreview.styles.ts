@@ -2,13 +2,13 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
-    // backgroundColor: theme.palette.background.paper,
-    border: '1px solid black',
+    backgroundColor: theme.palette.background.paper,
+    // border: '1px solid black',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'nowrap',
     paddingTop: theme.spacing(2.5),
-    paddingBottom: theme.spacing(2.5),
+    paddingBottom: theme.spacing(2),
     [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap',
       justifyContent: 'center'
@@ -46,6 +46,31 @@ export const useStyles = makeStyles(theme => ({
     zIndex: 5,
     [theme.breakpoints.down('md')]: {
       display: 'none'
+    }
+  },
+  wrapper: {
+    marginTop: theme.spacing(2),
+    flexDirection: 'column-reverse',
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row'
+    }
+  },
+  content: {
+    width: 'calc(100% - 312px)',
+    [theme.breakpoints.down('md')]: {
+      width: '100%'
+    }
+  },
+  rightBlock: {
+    width: 296,
+    marginLeft: theme.spacing(2),
+    gap: theme.spacing(2),
+    alignContent: 'flex-start',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      marginLeft: 0,
+      gap: 0,
+      marginBottom: theme.spacing(2)
     }
   }
 }))

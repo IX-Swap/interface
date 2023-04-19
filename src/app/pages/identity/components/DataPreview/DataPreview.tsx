@@ -26,6 +26,21 @@ export const DataPreview = ({
   identityType
 }: DataPreviewProps) => {
   const classes = useStyles()
+  const {
+    container,
+    preview,
+    containerAvatar,
+    isIndividualGrid,
+    corporateName,
+    dataContainer,
+    dataBox,
+    dataLabel,
+    dataValue,
+    approveButton,
+    emptyBox,
+    whiteBackground
+  } = classes
+
   const userIdentity = isIndividual ? ' Individual ' : ' Corporate '
   const typeStatus = status.toLowerCase()
   const identityLabel =
@@ -35,9 +50,9 @@ export const DataPreview = ({
 
   return (
     <>
-      <Container className={classes.container}>
-        <Grid className={classes.preview}>
-          <Grid className={classes.containerAvatar} item>
+      <Container className={container}>
+        <Grid className={preview}>
+          <Grid className={containerAvatar} item>
             <Avatar
               documentId={avatar}
               ownerId={userId}
@@ -47,24 +62,44 @@ export const DataPreview = ({
               fallback={<AvatarPhoto />}
             />
           </Grid>
-          <Grid item style={{ textAlign: 'center' }}>
-            <Typography variant='h3' display={'flex'} justifyContent={'center'}>
+          <Grid item className={isIndividualGrid}>
+            <Typography variant='h3' className={corporateName}>
               {name}
             </Typography>
+            <Box className={dataContainer}>
+              <Box className={dataBox}>
+                <Typography variant='subtitle1' className={dataLabel}>
+                  {identityLabel + ' Identity'}
+                </Typography>
+                <Typography
+                  variant='subtitle1'
+                  className={`${dataLabel} ${dataValue}`}
+                >
+                  {userIdentity}
+                </Typography>
+              </Box>
+
+              <Box className={dataBox}>
+                <Typography variant='subtitle1' className={dataLabel}>
+                  {identityLabel + ' Role'}
+                </Typography>
+                <Typography
+                  variant='subtitle1'
+                  className={`${dataLabel} ${dataValue}`}
+                >
+                  -
+                </Typography>
+              </Box>
+            </Box>
           </Grid>
-          <Grid item className={classes.isIndividualGrid}>
-            <Typography variant='subtitle1' className={classes.textCorporate}>
-              {userIdentity + identityLabel + ' Identity'}
-            </Typography>
-          </Grid>
-          <Grid item className={classes.approveButton}>
+          <Grid item className={approveButton}>
             <Status label={status} type={typeStatus} />
           </Grid>
         </Grid>
       </Container>
-      <Box className={classes.emptyBox} />
+      <Box className={emptyBox} />
       {/* <FieldsDisplay fields={fields} /> */}
-      <div className={classes.whiteBackground}></div>
+      <div className={whiteBackground}></div>
     </>
   )
 }

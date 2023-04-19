@@ -7,6 +7,9 @@ import { Status } from 'ui/Status/Status'
 // import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
+import { CorporateIdentityView } from '../CorporateIdentityView/CorporateIdentityView'
+import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
+import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 
 export interface CorporatesPreviewProps {
   data?: CorporateIdentity
@@ -17,6 +20,8 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
   if (data === undefined) {
     return null
   }
+
+  console.log(data)
 
   const corporateIdentityFields = [
     {
@@ -81,42 +86,43 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
   }
   const details = getDetails()
   return (
-    <Grid container className={classes.container}>
-      <Grid item className={classes.approveButton}>
-        <Status label={data.status} type={status} />
-      </Grid>
-      <Grid item sx={{ border: '1px solid black', flexGrow: 1 }}>
-        <Box>
-          <DataPreview
-            avatar={data.logo}
-            userId={data.user._id}
-            fields={corporateIdentityFields}
-            name={data.user.name}
-            isIndividual={false}
-            status={data.status}
-            identityType={data.type}
-          />
-        </Box>
-      </Grid>
-      <Grid item className={classes.index}>
-        <Box className={classes.buttonBox}>
-          <EditButton
-            link={details.editLink}
-            params={{
-              identityId: data._id,
-              userId: data.user._id,
-              label: data.companyLegalName
-            }}
-            customLabel
-            sx={{
-              padding: '10px 50px !important',
-              width: 'auto !important'
-            }}
-          >
-            Edit Personal Information
-          </EditButton>
-          <Box mx={1} component='span' />
-          {/* <ViewButton
+    <>
+      <Grid container className={classes.container}>
+        <Grid item className={classes.approveButton}>
+          <Status label={data.status} type={status} />
+        </Grid>
+        <Grid item sx={{ border: '1px solid black', flexGrow: 1 }}>
+          <Box>
+            <DataPreview
+              avatar={data.logo}
+              userId={data.user._id}
+              fields={corporateIdentityFields}
+              name={data.user.name}
+              isIndividual={false}
+              status={data.status}
+              identityType={data.type}
+            />
+          </Box>
+        </Grid>
+        <Grid item className={classes.index}>
+          <Box className={classes.buttonBox}>
+            <EditButton
+              link={details.editLink}
+              params={{
+                identityId: data._id,
+                userId: data.user._id,
+                label: data.companyLegalName
+              }}
+              customLabel
+              sx={{
+                padding: '10px 50px !important',
+                width: 'auto !important'
+              }}
+            >
+              Edit Personal Information
+            </EditButton>
+            <Box mx={1} component='span' />
+            {/* <ViewButton
             link={details.viewLink}
             params={{
               identityId: data._id,
@@ -124,8 +130,27 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
               label: data.companyLegalName
             }}
           /> */}
-        </Box>
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+
+      <Grid container className={classes.wrapper}>
+        <Grid item xs={12}>
+          <RejectionMessage data={data} />
+        </Grid>
+
+        <Grid item className={classes.content}>
+          <CorporateIdentityView data={data} hideHeader />
+        </Grid>
+
+        <Grid container item className={classes.rightBlock}>
+          <Box position='sticky' top={90}>
+            <Grid item xs={12}>
+              <TwoFANotice />
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+    </>
   )
 }

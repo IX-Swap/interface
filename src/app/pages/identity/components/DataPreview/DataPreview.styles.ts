@@ -23,7 +23,6 @@ export const useStyles = makeStyles(theme => ({
   containerAvatar: {
     justifyContent: 'center',
     display: 'flex',
-    marginBottom: theme.spacing(3.5),
     [theme.breakpoints.down('md')]: {
       marginBottom: theme.spacing(3)
     }
@@ -34,7 +33,8 @@ export const useStyles = makeStyles(theme => ({
     right: '0',
     width: '100%',
     // height: theme.spacing(33.4),
-    height: theme.spacing(60),
+    height: theme.spacing(57),
+    // borderBottom: '1px solid black',
     backgroundColor: theme.palette.background.paper,
     zIndex: 1,
     [theme.breakpoints.down('md')]: {
@@ -42,27 +42,54 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   preview: {
-    border: '1px solid black',
+    display: 'flex',
     zIndex: 5,
     [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
       backgroundColor: theme.palette.background.paper,
       paddingTop: theme.spacing(2.5),
       width: theme.spacing(43)
     }
   },
-  textCorporate: {
-    color: theme.palette.text.secondary,
+  corporateName: {
+    marginBottom: theme.spacing(3.5)
+  },
+  dataContainer: {
+    display: 'flex',
+    gap: 80,
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      gap: 20
+    }
+  },
+  dataBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+    gap: 10,
+    [theme.breakpoints.down('md')]: {
+      alignItems: 'center'
+    }
+  },
+  dataLabel: {
     maxWidth: theme.spacing(40)
+  },
+  dataValue: {
+    color: theme.palette.text.secondary
   },
   isIndividualGrid: {
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'start',
+    marginLeft: theme.spacing(4),
     [theme.breakpoints.down('md')]: {
+      marginLeft: 0,
+      alignItems: 'center',
       paddingTop: theme.spacing(1)
     }
   },
   emptyBox: {
-    height: theme.spacing(5),
+    height: theme.spacing(13),
     [theme.breakpoints.down('md')]: {
       height: theme.spacing(2)
     }
