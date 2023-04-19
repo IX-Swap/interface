@@ -5,6 +5,8 @@ import { Avatar } from 'components/Avatar'
 import { Status } from 'ui/Status/Status'
 import { Box, Typography, Grid, Container } from '@mui/material'
 // import { FieldsDisplay } from 'app/pages/identity/components/DataPreview/FieldDisplay'
+import { ReactComponent as ApprovedBadge } from 'assets/icons/kyc-accreditation/approved-badge.svg'
+// import { ReactComponent as AccreditedBadge } from 'assets/icons/kyc-accreditation/accredited-badge.svg'
 
 export interface DataPreviewProps {
   avatar?: string
@@ -63,9 +65,11 @@ export const DataPreview = ({
             />
           </Grid>
           <Grid item className={isIndividualGrid}>
-            <Typography variant='h3' className={corporateName}>
-              {name}
-            </Typography>
+            <Box className={corporateName}>
+              <Typography variant='h3'>{name}</Typography>
+              {status === 'Approved' && <ApprovedBadge />}
+              {/* <AccreditedBadge /> */}
+            </Box>
             <Box className={dataContainer}>
               <Box className={dataBox}>
                 <Typography variant='subtitle1' className={dataLabel}>

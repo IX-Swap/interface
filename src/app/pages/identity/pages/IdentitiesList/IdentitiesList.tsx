@@ -28,7 +28,7 @@ export const IdentitiesList: React.FC = () => {
                 </Grid>
                 <Box className={classes.box}>
                   <Typography className={classes.breadcrumbsLink}>
-                    Profiles
+                    Profile
                   </Typography>
                   <Box className={classes.dot}>
                     <Dot />
@@ -39,6 +39,7 @@ export const IdentitiesList: React.FC = () => {
                 </Box>
               </>
             )}
+
             {!hasIdentity && !isLoadingIdentities && (
               <Grid item xs={12} className={classes.createIdentity}>
                 <Typography variant='h2' align='center'>

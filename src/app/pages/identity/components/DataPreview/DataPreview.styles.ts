@@ -52,6 +52,8 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   corporateName: {
+    display: 'flex',
+    gap: 8,
     marginBottom: theme.spacing(3.5)
   },
   dataContainer: {

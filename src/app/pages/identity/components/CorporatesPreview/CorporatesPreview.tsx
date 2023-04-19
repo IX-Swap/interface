@@ -1,15 +1,16 @@
 import React from 'react'
 import { useStyles } from 'app/pages/identity/components/IndividualPreview/IndividualPreview.styles'
 import { Box, Grid } from '@mui/material'
-import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { Status } from 'ui/Status/Status'
 // import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
 import { CorporateIdentityView } from '../CorporateIdentityView/CorporateIdentityView'
-import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
+import { StatusBox } from 'app/pages/identity/components/StatusBox/StatusBox'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
+import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
+import { ReactComponent as EditIcon } from 'assets/icons/kyc-accreditation/edit.svg'
 
 export interface CorporatesPreviewProps {
   data?: CorporateIdentity
@@ -119,9 +120,10 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
                 width: 'auto !important'
               }}
             >
+              <EditIcon style={{ fill: '#fff', marginRight: '10px' }} />
               Edit Personal Information
             </EditButton>
-            <Box mx={1} component='span' />
+            {/* <Box mx={1} component='span' /> */}
             {/* <ViewButton
             link={details.viewLink}
             params={{
@@ -135,14 +137,16 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
       </Grid>
 
       <Grid container className={classes.wrapper}>
-        <Grid item xs={12}>
-          <RejectionMessage data={data} />
-        </Grid>
-
         <Grid item className={classes.content}>
+          {data.status !== 'Draft' && (
+            <StatusBox
+              status={data.status === 'Submitted' ? 'Pending' : data.status}
+              identityType='corporate'
+              applicationType='kyc'
+            />
+          )}
           <CorporateIdentityView data={data} hideHeader />
         </Grid>
-
         <Grid container item className={classes.rightBlock}>
           <Box position='sticky' top={90}>
             <Grid item xs={12}>
