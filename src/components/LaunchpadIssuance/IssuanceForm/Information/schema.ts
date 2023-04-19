@@ -97,7 +97,7 @@ export const schema = yup.object().shape({
     .min(3, getLongerThanOrEqual('Token name', 3))
     .max(64, getLongerThanOrEqual('Token name', 64))
     .required(REQUIRED),
-  investmentStructure: yup
+  tokenTicker: yup
     .string()
     .nullable()
     .min(STRING_MIN, getLongerThanOrEqual('Token symbol', STRING_MIN))
