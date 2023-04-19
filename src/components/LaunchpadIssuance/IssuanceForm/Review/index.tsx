@@ -118,14 +118,15 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
   }, [values.email])
 
   const formatInfo = useCallback(
-    (text1?: string, number1?: string | number, number2?: string | number, text2?: string) => {
+    (text1?: string, number1?: string | number | null, number2?: string | number, text2?: string) => {
       const NA = 'N/A'
       if (!text1 && !number1 && !text2 && !number2) {
         return NA
       }
       let part1 = NA
       let part2 = NA
-      const getNumber = (nb?: string | number) => (nb ? (typeof nb === 'string' ? nb : formatedValue(`${nb}`)) : NA)
+      const getNumber = (nb?: string | number | null) =>
+        nb ? (typeof nb === 'string' ? nb : formatedValue(`${nb}`)) : NA
       if (text1 || number1) {
         part1 = `${text1 || NA} ${getNumber(number1)}`
       }

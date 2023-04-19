@@ -54,11 +54,11 @@ export interface InformationFormValues {
 
   tokenName: string
   tokenTicker: string
-  decimals: number
+  decimals: number | null
   trusteeAddress: string
   tokenType: OfferTokenType
   tokenStandart: OfferTokenStandart
-  tokenPrice: number
+  tokenPrice: number | null
   totalSupply: string
   tokenReceiverAddress: string
 
