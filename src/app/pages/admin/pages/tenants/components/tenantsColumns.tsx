@@ -44,22 +44,22 @@ export const columns: any[] = [
     }
   },
   {
-    key: 'active',
+    key: 'status',
     label: 'Status',
-    render: (active: boolean | string) => {
+    render: (status: boolean | string) => {
       let statusType = 'approved'
       let statusLabel = 'Live'
 
-      switch (active) {
-        case 'underReview':
+      switch (status) {
+        case 'UNDER_REVIEW':
           statusType = 'submitted'
           statusLabel = 'Under Review'
           break
-        case 'approved':
+        case 'APPROVED':
           statusType = 'passed'
           statusLabel = 'Approved'
           break
-        case 'disabled':
+        case 'DISABLED':
           statusType = 'rejected'
           statusLabel = 'Disabled'
           break

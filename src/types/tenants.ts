@@ -7,6 +7,7 @@ export interface TenantFormValues {
   url: string
   email: string
   description: string
+  status: string
   theme: string
   logoLight: string | undefined
   logoDark: string | undefined
@@ -22,6 +23,7 @@ export const initialTenantFormValues: TenantFormValues = {
   backgroundImage: undefined,
   companyName: '',
   tenantCode: '',
+  status: '',
   theme: '',
   url: '',
   email: '',
@@ -37,6 +39,7 @@ export const createTenantSchema = object()
       .email('This must be a valid email format')
       .required('Email is required'),
     description: string().required('Description is required'),
+    status: string().required('Status is required'),
     theme: string().required('Theme is required'),
     logoLight: string().required('Logo Light is required'),
     logoDark: string().required('Logo Dark is required'),
