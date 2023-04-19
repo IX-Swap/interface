@@ -35,6 +35,9 @@ interface Props extends StylingProps {
   touch?: (field: string, touched: boolean) => void
 
   inputFilter?: (value?: string) => string
+
+  type?: React.HTMLInputTypeAttribute
+  maxLength?: number
 }
 
 export const FormField: React.FC<Props> = (props) => {
@@ -68,6 +71,8 @@ export const FormField: React.FC<Props> = (props) => {
         height={props.height}
         fontSize={props.fontSize}
         lineHeight={props.lineHeight}
+        type={props.type}
+        maxLength={props.maxLength}
       />
     </FormFieldWrapper>
   )

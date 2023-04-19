@@ -98,6 +98,7 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
               inputFilter={integerNumberFilter}
               disabled={disabledManage}
               error={disabledManage ? '' : randomError}
+              maxLength={64}
             />
             <EndAdornment disabled={disabledRandom} onClick={() => onClickManage(disabledRandom, setOpenApproveRandom)}>
               Approve

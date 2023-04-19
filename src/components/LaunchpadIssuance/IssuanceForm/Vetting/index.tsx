@@ -31,6 +31,7 @@ import { VettingActionButtons } from './VettingActionButtons'
 import { StrategyCard } from './StrategyCard'
 import { strategyOptions } from './constants'
 import { isDraftDisabled, isSubmitDisabled } from 'components/LaunchpadIssuance/utils/form'
+import { TEXT_MAX } from 'components/LaunchpadIssuance/utils/TextField'
 
 export interface IssuanceVettingFormProps {
   view?: boolean

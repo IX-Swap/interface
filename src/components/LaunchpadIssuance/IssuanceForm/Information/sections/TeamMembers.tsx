@@ -86,6 +86,7 @@ export const TeamMembersBlock: React.FC<Props> = ({ members }) => {
                         span={2}
                         label="About"
                         placeholder="Short Introduction about your team member"
+                        maxLength={1000}
                       />
                     )}
                   </Field>

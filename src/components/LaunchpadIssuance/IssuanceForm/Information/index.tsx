@@ -382,6 +382,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   setter={setFieldValue}
                   touch={setFieldTouched}
                   error={(touched.shortDescription && errors.shortDescription) as string}
+                  maxLength={150}
                 />
 
                 <FormGrid>
@@ -411,6 +412,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     disabled={props.edit}
                     value={values.issuerIdentificationNumber}
                     error={(touched.issuerIdentificationNumber && errors.issuerIdentificationNumber) as string}
+                    maxLength={64}
                   />
 
                   <DropdownField
@@ -465,6 +467,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     disabled={props.edit}
                     value={values.tokenName}
                     error={(touched.tokenName && errors.tokenName) as string}
+                    maxLength={64}
                   />
                   <FormField
                     field="tokenTicker"
@@ -476,6 +479,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     inputFilter={uppercaseFilter}
                     value={values.tokenTicker}
                     error={(touched.tokenTicker && errors.tokenTicker) as string}
+                    maxLength={6}
                   />
                   <FormField
                     field="decimals"
@@ -487,6 +491,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     disabled={props.edit}
                     value={values.decimals?.toString()}
                     error={(touched.decimals && errors.decimals) as string}
+                    maxLength={6}
                   />
                   {smartContractStrategy === SMART_CONTRACT_STRATEGIES.original && (
                     <FormField
@@ -498,6 +503,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                       disabled={props.edit}
                       value={values.trusteeAddress}
                       error={(touched.trusteeAddress && errors.trusteeAddress) as string}
+                      maxLength={64}
                     />
                   )}
 
@@ -511,6 +517,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                       disabled={props.edit}
                       value={values.tokenAddress}
                       error={(touched.tokenAddress && errors.tokenAddress) as string}
+                      maxLength={64}
                     />
                   )}
                   <DropdownField
@@ -545,6 +552,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     disabled={props.edit}
                     value={values.hardCap}
                     error={(touched.hardCap && errors.hardCap) as string}
+                    maxLength={64}
                   />
                   <FormField
                     field="softCap"
@@ -556,6 +564,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     disabled={props.edit}
                     value={values.softCap}
                     error={(touched.softCap && errors.softCap) as string}
+                    maxLength={64}
                   />
                   <FormField
                     field="tokenPrice"
@@ -567,6 +576,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     disabled={props.edit}
                     value={values.tokenPrice?.toString()}
                     error={(touched.tokenPrice && errors.tokenPrice) as string}
+                    maxLength={64}
                   />
                   <DropdownField
                     field="tokenStandart"
@@ -589,6 +599,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     disabled={props.edit || values.tokenStandart !== OfferTokenStandart.erc20}
                     value={`${values.totalSupply}`}
                     error={(touched.totalSupply && errors.totalSupply) as string}
+                    maxLength={64}
                   />
                   <FormField
                     field="tokenReceiverAddress"
@@ -602,6 +613,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     trailing={
                       <IssuanceTooltip tooltipContent={"It's a wallet address that will receive remaining tokens"} />
                     }
+                    maxLength={64}
                   />
                   <FormField
                     field="minInvestment"
@@ -614,6 +626,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     value={values.minInvestment}
                     error={(touched.minInvestment && errors.minInvestment) as string}
                     padding={'1rem 4px 1rem 1.25rem'}
+                    maxLength={64}
                   />
                   <FormField
                     field="maxInvestment"
@@ -626,6 +639,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     value={values.maxInvestment}
                     error={(touched.maxInvestment && errors.maxInvestment) as string}
                     padding={'1rem 4px 1rem 1.25rem'}
+                    maxLength={64}
                   />
                   <Column gap="1rem">
                     <BaseCheckboxWithLabel
@@ -678,6 +692,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     inputFilter={numberFilter}
                     value={values.presaleAlocated}
                     error={(touched.presaleAlocated && errors.presaleAlocated) as string}
+                    maxLength={64}
                   />
 
                   <FormField
@@ -691,6 +706,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     value={values.presaleMaxInvestment}
                     error={(touched.presaleMaxInvestment && errors.presaleMaxInvestment) as string}
                     padding={'1rem 4px 1rem 1.25rem'}
+                    maxLength={64}
                   />
 
                   <FormField
@@ -704,6 +720,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     value={values.presaleMinInvestment}
                     error={(touched.presaleMinInvestment && errors.presaleMinInvestment) as string}
                     padding={'1rem 4px 1rem 1.25rem'}
+                    maxLength={64}
                   />
                 </FormGrid>
 
@@ -804,6 +821,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     value={values.terms?.dividentYield}
                     error={(touched.terms?.dividentYield && (touched.terms && errors.terms)?.dividentYield) as string}
                     inputFilter={filterNumberWithDecimals}
+                    maxLength={64}
                   />
                   <FormField
                     field="terms.investmentPeriod"
@@ -818,6 +836,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                       (touched.terms?.investmentPeriod && (touched.terms && errors.terms)?.investmentPeriod) as string
                     }
                     inputFilter={integerNumberFilter}
+                    maxLength={64}
                   />
                   <FormField
                     field="terms.grossIrr"
@@ -830,6 +849,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     value={values.terms?.grossIrr}
                     error={(touched.terms?.grossIrr && (touched.terms && errors.terms)?.grossIrr) as string}
                     inputFilter={filterNumberWithDecimals}
+                    maxLength={64}
                   />
 
                   <DropdownField
