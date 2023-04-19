@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper } from '../styled'
 import { text37, text38 } from 'components/LaunchpadMisc/typography'
+import { TEXT_MAX } from 'components/LaunchpadIssuance/utils/TextField'
 
 interface Props {
   label: string
@@ -16,6 +17,7 @@ interface Props {
   field: string
   setter: (field: string, value: string) => void
   touch?: (field: string, touched: boolean) => void
+  maxLength?: number
 }
 
 export const TextareaField: React.FC<Props> = (props) => {
@@ -34,7 +36,12 @@ export const TextareaField: React.FC<Props> = (props) => {
       <FieldLabel>{props.label}</FieldLabel>
       <FieldPlaceholder>{props.placeholder}</FieldPlaceholder>
 
-      <Textarea value={props.value} onChange={onChange} disabled={props.disabled} />
+      <Textarea
+        value={props.value}
+        onChange={onChange}
+        disabled={props.disabled}
+        maxLength={props.maxLength || TEXT_MAX}
+      />
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
     </FormFieldWrapper>

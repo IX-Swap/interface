@@ -21,7 +21,7 @@ import { useLoader, useSubmitVettingForm, useVettingFormInitialValues } from 'st
 import { schema } from './schema'
 import { FormGrid } from '../shared/FormGrid'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { useAddPopup } from 'state/application/hooks'
+import { useAddPopup, useShowError } from 'state/application/hooks'
 import { defaultValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
 import { useQueryParams } from 'hooks/useParams'
 import { textFilter } from 'utils/input'
@@ -31,6 +31,7 @@ import { VettingActionButtons } from './VettingActionButtons'
 import { StrategyCard } from './StrategyCard'
 import { strategyOptions } from './constants'
 import { isDraftDisabled, isSubmitDisabled } from 'components/LaunchpadIssuance/utils/form'
+import { TEXT_MAX } from 'components/LaunchpadIssuance/utils/TextField'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -40,12 +41,14 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const history = useHistory()
   const loader = useLoader(false)
   const addPopup = useAddPopup()
+  const showError = useShowError()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
   const [isReset, setReset] = React.useState(false)
 
   const onConfirmationClose = React.useCallback(() => {
     setShowCloseDialog(false)
+    showError('Cannot save changes, please check the form for error messages')
   }, [])
 
   const {
@@ -415,7 +418,12 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                     <div>
                       <text>Supported file formats are doc, docx, PNG, JPG, JPEG and PDF.</text>
                       <br />
-                      <ExampleLink href='https://s3.eu-central-1.amazonaws.com/static.ixswap.io/ownership-structure-example.pdf' target='_blank'>See Examples</ExampleLink>
+                      <ExampleLink
+                        href="https://s3.eu-central-1.amazonaws.com/static.ixswap.io/ownership-structure-example.pdf"
+                        target="_blank"
+                      >
+                        See Examples
+                      </ExampleLink>
                     </div>
                   }
                   field="document.ownershipStructure"

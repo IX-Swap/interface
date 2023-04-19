@@ -1083,9 +1083,9 @@ export const useOfferFormInitialValues = (
 
         timeframe: payload.timeframe,
         tokenName: payload.tokenName ?? '',
-        decimals: Number(payload.decimals),
+        decimals: payload.decimals ? Number(payload.decimals) : null,
         trusteeAddress: payload.trusteeAddress,
-        tokenPrice: Number(payload.tokenPrice),
+        tokenPrice: payload.tokenPrice ? Number(payload.tokenPrice) : null,
         tokenStandart: payload.tokenStandart,
         totalSupply: payload.totalSupply ?? '',
         tokenReceiverAddress: payload.tokenReceiverAddress ?? '',

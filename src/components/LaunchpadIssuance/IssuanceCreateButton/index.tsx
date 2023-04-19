@@ -178,6 +178,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
                 value={values.name}
                 onChange={(v) => setFieldValue('name', v)}
                 inputFilter={textFilter}
+                maxLength={1000}
               />
 
               {errors.name && <ErrorText>{errors.name}</ErrorText>}

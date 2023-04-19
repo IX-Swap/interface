@@ -4,6 +4,7 @@ import { Column } from 'components/LaunchpadMisc/styled'
 import { InformationFormValues } from '../Information/types'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { useRole } from 'state/user/hooks'
 
 interface Props {
   offer: Partial<InformationFormValues>
@@ -14,10 +15,21 @@ interface Props {
 }
 
 export const ReviewSidebar: React.FC<Props> = (props) => {
+  const { isAdmin } = useRole()
   const { status } = props.offer
-  const canDraft = useMemo(
-    () => status && [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(status),
-    [status]
+
+  const { canDraft, canSubmit } = useMemo(
+    () => ({
+      canDraft: status
+        ? [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(status)
+        : false,
+      canSubmit: status
+        ? isAdmin
+          ? status !== IssuanceStatus.approved
+          : ![IssuanceStatus.approved, IssuanceStatus.pendingApproval].includes(status)
+        : false,
+    }),
+    [status, isAdmin]
   )
   const backText = useMemo(() => (status === IssuanceStatus.approved ? 'Back' : 'Back to Form'), [status])
 
@@ -30,7 +42,7 @@ export const ReviewSidebar: React.FC<Props> = (props) => {
           </OutlineButton>
         )}
         <OutlineButton onClick={props.onClose}>{backText}</OutlineButton>
-        {status !== IssuanceStatus.approved && (
+        {canSubmit && (
           <FilledButton disabled={props.submitDisabled} onClick={() => props.onSubmit(false)}>
             Submit
           </FilledButton>
