@@ -19,8 +19,8 @@ import { Redirect } from 'react-router-dom'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import { history } from 'config/history'
 import { SingPassPage } from '../sing-pass-data/SingPass'
-import storageService from 'services/storage'
 import { useTenant } from 'auth/hooks/useTenant'
+import { useServices } from 'hooks/useServices'
 
 export const registerFormInitialValues = {
   isMyInfo: false,
@@ -38,6 +38,7 @@ export const Register: React.FC = observer(() => {
   const email = getFilterValue('email')
   const mobile = getFilterValue('mobile')
   const isIndividual = identity === 'individual'
+  const { sessionService } = useServices()
 
   useEffect(() => {
     if (identity === undefined || identity === '') {
@@ -76,7 +77,7 @@ export const Register: React.FC = observer(() => {
     return async (values: SignupArgs) =>
       await signup(
         {
-          tenantId: storageService.get('tenantId'),
+          tenantId: sessionService.get('tenantId'),
           name: values.name ?? 'Singpass User',
           email: values.email,
           singPassLogin: isMyInfo,
