@@ -12,7 +12,7 @@ import { ReactComponent as ApprovedBadge } from 'assets/icons/kyc-accreditation/
 export interface DataPreviewProps {
   avatar?: string
   userId?: string
-  fields?: Array<{ key: string; value?: string }>
+  //   fields?: Array<{ key: string; value?: string }>
   name?: string
   isIndividual: boolean
   status: string
@@ -22,7 +22,7 @@ export interface DataPreviewProps {
 export const DataPreview = ({
   avatar,
   userId,
-  fields,
+  //   fields,
   name,
   isIndividual,
   status,

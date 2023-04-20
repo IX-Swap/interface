@@ -11,7 +11,6 @@ import { CorporateIdentityView } from '../CorporateIdentityView/CorporateIdentit
 import { StatusBox } from 'app/pages/identity/components/StatusBox/StatusBox'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
-import { ReactComponent as EditIcon } from 'assets/icons/kyc-accreditation/edit.svg'
 import { IdentityCTA } from '../IdentityCTA/IdentityCTA'
 import { AccreditationCTA } from '../AccreditationCTA/AccreditationCTA'
 
@@ -29,24 +28,24 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
 
   console.log(data)
 
-  const corporateIdentityFields = [
-    {
-      key: 'Company Name',
-      value: data.companyLegalName
-    },
-    {
-      key: 'Company Registration Number',
-      value: data.registrationNumber
-    },
-    {
-      key: 'Email Address',
-      value: data.representatives?.[0].email
-    },
-    {
-      key: 'Contact Number',
-      value: data.representatives?.[0].contactNumber
-    }
-  ]
+  //   const corporateIdentityFields = [
+  //     {
+  //       key: 'Company Name',
+  //       value: data.companyLegalName
+  //     },
+  //     {
+  //       key: 'Company Registration Number',
+  //       value: data.registrationNumber
+  //     },
+  //     {
+  //       key: 'Email Address',
+  //       value: data.representatives?.[0].email
+  //     },
+  //     {
+  //       key: 'Contact Number',
+  //       value: data.representatives?.[0].contactNumber
+  //     }
+  //   ]
 
   //   const status = data.status.toLowerCase()
 
@@ -112,7 +111,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             <DataPreview
               avatar={data.logo}
               userId={data.user._id}
-              fields={corporateIdentityFields}
+              //   fields={corporateIdentityFields}
               name={data.user.name}
               isIndividual={false}
               status={data.status}
@@ -129,13 +128,13 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
               label: data.companyLegalName
             }}
             customLabel
+            showIcon
             sx={{
               padding: '10px 50px !important',
               width: 'auto !important'
             }}
           >
-            <EditIcon style={{ fill: '#fff', marginRight: '10px' }} />
-            Edit Personal Information
+            Edit {selectedIdx === 0 ? 'Personal' : 'Accreditation'} Information
           </EditButton>
           {/* <Box mx={1} component='span' /> */}
           {/* <ViewButton
