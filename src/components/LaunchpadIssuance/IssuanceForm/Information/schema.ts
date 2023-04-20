@@ -120,12 +120,12 @@ export const schema = yup.object().shape({
       is: OfferTokenStandart.erc20,
       then: yup
         .string()
-        .nullable()
         .when('smartContractStrategy', {
           is: SMART_CONTRACT_STRATEGIES.original,
           then: yup.string()
+          .nullable()
           .test('addressConstraint', 'Please enter a valid address', function () {
-            return this.parent.tokenReceiverAddress ? Boolean(isEthChainAddress(this.parent.tokenReceiverAddress)) : true
+            return !this.parent.tokenReceiverAddress || Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
           })
           .required(REQUIRED),
         })
@@ -138,10 +138,10 @@ export const schema = yup.object().shape({
       is: OfferTokenStandart.erc20,
       then: yup
         .string()
-        .nullable()
         .when('smartContractStrategy', {
           is: SMART_CONTRACT_STRATEGIES.original,
           then: yup.string()
+          .nullable()
           .matches(/[0-9]+/, 'Invalid value')
           .required(REQUIRED),
         })
