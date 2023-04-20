@@ -25,10 +25,18 @@ interface Props {
 
 export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, errors, touched }) => {
   const [showAddSocial, setShowAddSocial] = React.useState(false)
-  const toggleDialog = React.useCallback(() => setShowAddSocial((state) => !state), [])
+  const toggleDialog = React.useCallback(() => {
+    setShowAddSocial((state) => !state)
+    setAddedSocial(undefined)
+    setAddedSocialLink("")
+    setAddedSocialError("")
+    setAddedSocialLinkError("")
+  }, [])
 
   const [addedSocial, setAddedSocial] = React.useState<SocialMediaType>()
+  const [addedSocialError, setAddedSocialError] = React.useState<string>("")
   const [addedSocialLink, setAddedSocialLink] = React.useState<string>()
+  const [addedSocialLinkError, setAddedSocialLinkError] = React.useState<string>("")
 
   const socialOptions = React.useMemo(() => {
     const defaultLinks = [
@@ -47,8 +55,22 @@ export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, 
     return defaultLinks.filter((x) => !selectedLinks.has(x.value))
   }, [values.social])
 
+  const onChangeAddedSocial = (value: SocialMediaType | undefined) => {
+    setAddedSocial(value);
+    if(!value) setAddedSocialError("Required")
+    else setAddedSocialError("")
+  }
+
+  const onChangeAddedSocialLink = (value: string) => {
+    setAddedSocialLink(value);
+    if(!value) setAddedSocialLinkError("Required")
+    else setAddedSocialLinkError("")
+  }
+
   const addSocialMedia = React.useCallback(() => {
     if (!addedSocial || !addedSocialLink) {
+      if(!addedSocial) setAddedSocialError("Required")
+      if(!addedSocialLink) setAddedSocialLinkError("Required")
       return
     }
 
@@ -57,9 +79,6 @@ export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, 
     setTimeout(() => {
       if (touch) touch(`social[${newIndex}]`, true)
     })
-
-    setAddedSocial(undefined)
-    setAddedSocialLink(undefined)
 
     toggleDialog()
   }, [addedSocial, addedSocialLink])
@@ -138,25 +157,26 @@ export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, 
 
       <IssuanceDialog show={showAddSocial} onClose={toggleDialog} width="480px" title="Add Social Link">
         <SocialMediaContainer>
-          <DropdownField
-            label={'Social Media'}
-            placeholder="Choose Social Media"
-            options={socialOptions}
-            field={''}
-            onChange={setAddedSocial}
-            wrapperStyle={{
-              marginTop: '16px',
-            }}
-          />
-
-          <FormField
-            label={`${capitalize(addedSocial)} Link`}
-            placeholder="Social Media Link"
-            field={''}
-            setter={(field, value) => setAddedSocialLink(value)}
-            touch={touch}
-          />
-
+            <DropdownField
+              label={'Social Media'}
+              placeholder="Choose Social Media"
+              options={socialOptions}
+              field={''}
+              onChange={onChangeAddedSocial}
+              wrapperStyle={{
+                marginTop: '16px',
+              }}
+              error={addedSocialError}
+            />
+            
+            <FormField
+              label={`${capitalize(addedSocial)} Link`}
+              placeholder="Social Media Link"
+              field={''}
+              setter={(field, value) => onChangeAddedSocialLink(value)}
+              touch={touch}
+              error={addedSocialLinkError}
+            />
           <FilledButton onClick={addSocialMedia}>Submit</FilledButton>
         </SocialMediaContainer>
       </IssuanceDialog>

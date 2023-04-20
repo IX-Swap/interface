@@ -213,7 +213,7 @@ const Input = styled.input<Pick<StylingProps, 'fontSize' | 'lineHeight'>>`
 `
 
 const ErrorText = styled.div`
-  color: ${(props) => props.theme.launchpad.colors.error};
+  color: ${(props) => props.theme.launchpad.colors.text.error};
 
   font-style: normal;
   font-weight: 500;
