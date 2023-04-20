@@ -6,6 +6,7 @@ import { Status } from 'ui/Status/Status'
 import { Box, Typography, Grid, Container } from '@mui/material'
 // import { FieldsDisplay } from 'app/pages/identity/components/DataPreview/FieldDisplay'
 import { ReactComponent as ApprovedBadge } from 'assets/icons/kyc-accreditation/approved-badge.svg'
+// TODO: Do not remove, waiting for API to fetch accreditation application status
 // import { ReactComponent as AccreditedBadge } from 'assets/icons/kyc-accreditation/accredited-badge.svg'
 
 export interface DataPreviewProps {
@@ -68,6 +69,7 @@ export const DataPreview = ({
             <Box className={corporateName}>
               <Typography variant='h3'>{name}</Typography>
               {status === 'Approved' && <ApprovedBadge />}
+              {/** TODO: Do not remove, waiting for API to fetch accreditation application status */}
               {/* <AccreditedBadge /> */}
             </Box>
             <Box className={dataContainer}>

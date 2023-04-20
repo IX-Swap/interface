@@ -22,8 +22,8 @@ interface Status {
 
 export const StatusBox = (props: StatusBoxProps) => {
   const { status, identityType, applicationType } = props
-  const classes = useStyles()
-  const { container, pending, rejected, approved, locked, accredited } = classes
+  const { container, pending, rejected, approved, locked, accredited } =
+    useStyles()
   const application = applicationType === 'kyc' ? 'Identity' : 'Accreditation'
   const infoType =
     applicationType === 'kyc'

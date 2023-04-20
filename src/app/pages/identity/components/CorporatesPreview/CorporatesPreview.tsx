@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useStyles } from 'app/pages/identity/components/IndividualPreview/IndividualPreview.styles'
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Tab, Tabs } from '@mui/material'
+import { TabPanel } from 'components/TabPanel'
 import { IdentityRoute } from 'app/pages/identity/router/config'
-import { Status } from 'ui/Status/Status'
+// import { Status } from 'ui/Status/Status'
 // import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
@@ -11,6 +12,8 @@ import { StatusBox } from 'app/pages/identity/components/StatusBox/StatusBox'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { ReactComponent as EditIcon } from 'assets/icons/kyc-accreditation/edit.svg'
+import { IdentityCTA } from '../IdentityCTA/IdentityCTA'
+import { AccreditationCTA } from '../AccreditationCTA/AccreditationCTA'
 
 export interface CorporatesPreviewProps {
   data?: CorporateIdentity
@@ -18,6 +21,8 @@ export interface CorporatesPreviewProps {
 
 export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
   const classes = useStyles()
+  const [selectedIdx, setSelectedIdx] = useState(0)
+
   if (data === undefined) {
     return null
   }
@@ -43,7 +48,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
     }
   ]
 
-  const status = data.status.toLowerCase()
+  //   const status = data.status.toLowerCase()
 
   const getDetails = () => {
     let details = {
@@ -86,13 +91,23 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
     return details
   }
   const details = getDetails()
+
   return (
     <>
       <Grid container className={classes.container}>
-        <Grid item className={classes.approveButton}>
-          <Status label={data.status} type={status} />
+        <Grid item className={classes.tabs}>
+          {/* <Status label={data.status} type={status} /> */}
+          <Tabs
+            value={selectedIdx}
+            onChange={(_, index) => setSelectedIdx(index)}
+            indicatorColor='primary'
+            textColor='primary'
+          >
+            <Tab label='Identity' />
+            <Tab label='Accreditation' />
+          </Tabs>
         </Grid>
-        <Grid item sx={{ border: '1px solid black', flexGrow: 1 }}>
+        <Grid item className={classes.profile}>
           <Box>
             <DataPreview
               avatar={data.logo}
@@ -105,26 +120,25 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             />
           </Box>
         </Grid>
-        <Grid item className={classes.index}>
-          <Box className={classes.buttonBox}>
-            <EditButton
-              link={details.editLink}
-              params={{
-                identityId: data._id,
-                userId: data.user._id,
-                label: data.companyLegalName
-              }}
-              customLabel
-              sx={{
-                padding: '10px 50px !important',
-                width: 'auto !important'
-              }}
-            >
-              <EditIcon style={{ fill: '#fff', marginRight: '10px' }} />
-              Edit Personal Information
-            </EditButton>
-            {/* <Box mx={1} component='span' /> */}
-            {/* <ViewButton
+        <Grid item className={classes.buttonBox}>
+          <EditButton
+            link={details.editLink}
+            params={{
+              identityId: data._id,
+              userId: data.user._id,
+              label: data.companyLegalName
+            }}
+            customLabel
+            sx={{
+              padding: '10px 50px !important',
+              width: 'auto !important'
+            }}
+          >
+            <EditIcon style={{ fill: '#fff', marginRight: '10px' }} />
+            Edit Personal Information
+          </EditButton>
+          {/* <Box mx={1} component='span' /> */}
+          {/* <ViewButton
             link={details.viewLink}
             params={{
               identityId: data._id,
@@ -132,20 +146,56 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
               label: data.companyLegalName
             }}
           /> */}
-          </Box>
         </Grid>
       </Grid>
 
       <Grid container className={classes.wrapper}>
         <Grid item className={classes.content}>
-          {data.status !== 'Draft' && (
-            <StatusBox
-              status={data.status === 'Submitted' ? 'Pending' : data.status}
-              identityType='corporate'
-              applicationType='kyc'
-            />
-          )}
-          <CorporateIdentityView data={data} hideHeader />
+          <TabPanel pt={0} value={selectedIdx} index={0}>
+            <>
+              {data.status !== 'Draft' && (
+                <StatusBox
+                  status={data.status === 'Submitted' ? 'Pending' : data.status}
+                  identityType='corporate'
+                  applicationType='kyc'
+                />
+              )}
+              {data.status === 'Rejected' && (
+                <IdentityCTA
+                  link={details.editLink}
+                  params={{
+                    identityId: data._id,
+                    userId: data.user._id,
+                    label: data.companyLegalName
+                  }}
+                />
+              )}
+
+              <CorporateIdentityView data={data} hideHeader />
+            </>
+          </TabPanel>
+
+          <TabPanel pt={0} value={selectedIdx} index={1}>
+            {data.status !== 'Approved' ? (
+              <StatusBox
+                status={'Locked'}
+                identityType='corporate'
+                applicationType='accreditation'
+              />
+            ) : (
+              <>
+                <AccreditationCTA
+                  link={details.editLink}
+                  params={{
+                    identityId: data._id,
+                    userId: data.user._id,
+                    label: data.companyLegalName
+                  }}
+                />
+                {/** TODO: Accreditaion details */}
+              </>
+            )}
+          </TabPanel>
         </Grid>
         <Grid container item className={classes.rightBlock}>
           <Box position='sticky' top={90}>

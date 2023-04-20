@@ -48,7 +48,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
 
   return (
     <Grid container className={classes.container}>
-      <Grid item className={classes.approveButton}>
+      <Grid item className={classes.tabs}>
         <Status label={data.status} type={status} />
       </Grid>
       <Grid item>
@@ -63,26 +63,24 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
           />
         </Box>
       </Grid>
-      <Grid item className={classes.index}>
-        <Box className={classes.buttonBox}>
-          <EditButton
-            link={IdentityRoute.editIndividual}
-            params={{
-              label: name,
-              identityId: data._id,
-              userId: data.user._id
-            }}
-          />
-          <Box mx={1} component='span' />
-          <ViewButton
-            link={IdentityRoute.viewIndividual}
-            params={{
-              label: name,
-              identityId: data._id,
-              userId: data.user._id
-            }}
-          />
-        </Box>
+      <Grid item className={classes.buttonBox}>
+        <EditButton
+          link={IdentityRoute.editIndividual}
+          params={{
+            label: name,
+            identityId: data._id,
+            userId: data.user._id
+          }}
+        />
+        <Box mx={1} component='span' />
+        <ViewButton
+          link={IdentityRoute.viewIndividual}
+          params={{
+            label: name,
+            identityId: data._id,
+            userId: data.user._id
+          }}
+        />
       </Grid>
     </Grid>
   )

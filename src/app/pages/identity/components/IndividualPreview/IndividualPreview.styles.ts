@@ -10,16 +10,31 @@ export const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(2.5),
     paddingBottom: theme.spacing(2),
     [theme.breakpoints.down('md')]: {
-      flexWrap: 'wrap',
-      justifyContent: 'center'
+      flexDirection: 'column',
+      alignItems: 'center'
     }
   },
+  tabs: {
+    display: 'flex',
+    alignItems: 'end',
+    zIndex: 5,
+    '& button': {
+      textTransform: 'capitalize',
+      '&[aria-selected="true"]': {
+        color: theme.palette.text.primary,
+        textTransform: 'capitalize'
+      }
+    }
+  },
+  profile: {
+    flexGrow: 1
+  },
   buttonBox: {
+    zIndex: 2,
     alignItems: 'end',
     paddingTop: theme.spacing(14.2),
     display: 'flex',
     justifyContent: 'flex-end',
-    width: '100%',
     '& a': {
       width: theme.spacing(12.5),
       height: theme.spacing(6.1)
@@ -30,22 +45,6 @@ export const useStyles = makeStyles(theme => ({
       '& a': {
         width: theme.spacing(20.6)
       }
-    }
-  },
-  index: {
-    zIndex: 2,
-    display: 'flex'
-  },
-  approveButton: {
-    paddingRight: theme.spacing(12.5),
-    paddingTop: theme.spacing(14.5),
-    '& div': {
-      width: theme.spacing(14.7),
-      textAlign: 'center'
-    },
-    zIndex: 5,
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
     }
   },
   wrapper: {
