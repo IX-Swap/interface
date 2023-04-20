@@ -131,7 +131,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             showIcon
             sx={{
               padding: '10px 50px !important',
-              width: 'auto !important'
+              width: '300px !important'
             }}
           >
             Edit {selectedIdx === 0 ? 'Personal' : 'Accreditation'} Information

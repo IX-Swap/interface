@@ -92,8 +92,8 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
             customLabel
             showIcon
             sx={{
-              padding: '10px 50px !important',
-              width: 'auto !important'
+              padding: '10px 30px !important',
+              width: '300px !important'
             }}
           >
             Edit {selectedIdx === 0 ? 'Personal' : 'Accreditation'} Information
