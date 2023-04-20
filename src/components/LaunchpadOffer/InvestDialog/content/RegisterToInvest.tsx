@@ -60,6 +60,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
   const whitelist = useGetWhitelistStatus(props.offer.id)
   const requestWhitelist = useRequestWhitelist(props.offer.id)
   const disableForm = React.useMemo(() => whitelist.status === WhitelistStatus.accepted, [whitelist])
+  const [amount, setAmount] = React.useState("")
   const submit = React.useCallback(
     async (values: FormValues) => {
       try {
@@ -80,6 +81,13 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     }
 
     setValue('isInterested', value)
+
+    if(!value) {
+      setAmount("")
+      setValue('amount', 0)
+      setWarning("")
+    }
+
   }, [])
 
   const onChangeAmount = (value: any, setValue: ValueSetter) => {
@@ -90,6 +98,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     const warningText = getWarning(value)
     setWarning(warningText)
     setValue('amount', cleanAmount(value))
+    setAmount(value)
   }
 
   return (
@@ -131,14 +140,16 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
                   type="number"
                   label="How much will be your estimated investment?"
                   trailing={<CurrencyLabel>{props.offer.investingTokenSymbol}</CurrencyLabel>}
+                  value={amount}
                   onChange={(value) => onChangeAmount(value, setFieldValue)}
+                  disabled={!values.isInterested}
                 />
 
                 {errors.amount && <ErrorText>{errors.amount}</ErrorText>}
                 {warning && <ErrorText>{warning}</ErrorText>}
               </FormFieldContainer>
 
-              <InvestFormSubmitButton state={submitState.current} onSubmit={submitForm} disabled={Boolean(warning)}>
+              <InvestFormSubmitButton state={submitState.current} onSubmit={submitForm} disabled={Boolean(warning) || !values.isInterested}>
                 {submitState.current === InvestSubmitState.default && 'Submit'}
                 {submitState.current === InvestSubmitState.success && (
                   <>
