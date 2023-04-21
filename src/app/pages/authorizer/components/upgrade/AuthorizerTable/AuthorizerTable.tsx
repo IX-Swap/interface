@@ -1,6 +1,6 @@
 import { Viewable } from 'types/util'
 import React from 'react'
-import { withExtraActions } from 'app/pages/authorizer/components/withExtraActions'
+// import { withExtraActions } from 'app/pages/authorizer/components/withExtraActions'
 import {
   TableView,
   TableViewProps,
@@ -71,7 +71,7 @@ export const AuthorizerTable = <T,>(
           name={name}
           uri={uri}
           columns={columns}
-          actions={withExtraActions<T>()}
+          //   actions={withExtraActions<T>()}
           filter={mergedFilters}
           selectionHelper={selectable ? selectionHelperContext : undefined}
           paperProps={

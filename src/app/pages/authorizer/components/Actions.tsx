@@ -89,7 +89,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
   return (
-    <Grid container wrap='nowrap' justifyContent='flex-end'>
+    <Grid wrap='nowrap' justifyContent='flex-end'>
       {/* <Grid item>
         <IconButton
           component={AppRouterLinkComponent}

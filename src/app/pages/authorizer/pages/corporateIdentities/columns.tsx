@@ -4,9 +4,22 @@ import React from 'react'
 import { renderRepresentativeName } from 'helpers/tables'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { Status } from 'ui/Status/Status'
+import { Actions } from 'app/pages/authorizer/components/Actions'
+import { Box } from '@mui/material'
 
 const renderRiskReport = (rating?: string) => {
   return rating ?? 'Unknown'
+}
+
+const renderColumnWithApproval = (row: object, investorType?: string) => {
+  return (
+    <Box display={'flex'} justifyContent={''}>
+      {typeof investorType !== 'undefined'
+        ? renderInvestorStatus(row?.status, investorType)
+        : renderStatus(row?.status)}
+      <Actions item={row} cacheQueryKey={''} />
+    </Box>
+  )
 }
 
 const renderStatus = (status: string) => {
@@ -59,17 +72,17 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
   {
     key: 'status',
     label: 'KYC Status',
-    render: renderStatus
+    render: (_, row) => renderColumnWithApproval(row)
   },
   {
     key: 'declaredAsStatus',
     label: 'Issuer Status',
-    render: (_, row) => renderInvestorStatus(row, 'issuer')
+    render: (_, row) => renderColumnWithApproval(row, 'issuer')
   },
   {
     key: 'declaredAsStatus',
     label: 'Tenant Owner Status',
-    render: (_, row) => renderInvestorStatus(row, 'tenantOwner')
+    render: (_, row) => renderColumnWithApproval(row, 'tenantOwner')
   }
 ]
 
