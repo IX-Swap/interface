@@ -189,6 +189,22 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
   return undefined
 }
 
+export function useTokenLoading(tokenAddress?: string): boolean {
+  const tokens = useAllTokens()
+
+  const address = isEthChainAddress(tokenAddress)
+
+  const tokenContract = useTokenContract(address ? address : undefined, false)
+  const tokenContractBytes32 = useBytes32TokenContract(address ? address : undefined, false)
+  const token: Token | undefined = address ? tokens[address] : undefined
+
+  const tokenName = useSingleCallResult(token ? undefined : tokenContract, 'name', undefined, NEVER_RELOAD)
+  const symbol = useSingleCallResult(token ? undefined : tokenContract, 'symbol', undefined, NEVER_RELOAD)
+  const decimals = useSingleCallResult(token ? undefined : tokenContract, 'decimals', undefined, NEVER_RELOAD)
+
+  return (decimals.loading || symbol.loading || tokenName.loading || !decimals.result)
+}
+
 export function useTokenFromMapOrNetwork(tokens: any, tokenAddress?: string | null): Token | null | undefined {
   const address = isValidAddress(tokenAddress || '')
   const token: Token | undefined = address ? tokens[address] : undefined
