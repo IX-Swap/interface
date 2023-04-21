@@ -3,17 +3,29 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import React from 'react'
 import { renderRepresentativeName } from 'helpers/tables'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
-import { AuthorizableStatus } from '../../components/AuthorizableStatus'
+import { Status } from 'ui/Status/Status'
 
 const renderRiskReport = (rating?: string) => {
-  return (
-    <AuthorizableStatus
-      status={rating ?? 'UNKNOWN'}
-      compact={false}
-      isNewTheme
-    />
-  )
+  return rating ?? 'Unknown'
 }
+
+const renderStatus = (status: string) => {
+  return <Status label={status} type={status.toLowerCase()} />
+}
+
+const renderInvestorStatus = (row: any, investorType: string) => {
+  if (
+    typeof row.declaredAs !== 'undefined' &&
+    Boolean(row.declaredAs.includes(investorType))
+  ) {
+    return renderStatus(row.declaredAsStatus[investorType])
+  }
+
+  return <Status label='N/A' type='draft' />
+}
+
+const renderType = (type?: string) =>
+  typeof type !== 'undefined' && type.charAt(0).toUpperCase() + type.slice(1)
 
 export const columns: Array<TableColumn<CorporateIdentity>> = [
   {
@@ -36,7 +48,29 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
   },
   {
     key: 'type',
-    label: 'Type'
+    label: 'Type',
+    render: renderType
   },
-  { key: 'cynopsis.riskRating', label: 'Risk Report', render: renderRiskReport }
+  {
+    key: 'cynopsis.riskRating',
+    label: 'Risk Report',
+    render: renderRiskReport
+  },
+  {
+    key: 'status',
+    label: 'KYC Status',
+    render: renderStatus
+  },
+  {
+    key: 'declaredAsStatus',
+    label: 'Issuer Status',
+    render: (_, row) => renderInvestorStatus(row, 'issuer')
+  },
+  {
+    key: 'declaredAsStatus',
+    label: 'Tenant Owner Status',
+    render: (_, row) => renderInvestorStatus(row, 'tenantOwner')
+  }
 ]
+
+export const compactColumns = [...columns.slice(1)]

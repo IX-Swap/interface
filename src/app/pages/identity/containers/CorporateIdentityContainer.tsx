@@ -48,5 +48,5 @@ export const CorporateIdentityContainer = ({
 
   const isIssuer = data.type === 'issuer'
 
-  return <CorporateIdentityView data={data} isIssuer={isIssuer} />
+  return <CorporateIdentityView data={data} isIssuer={isIssuer} showReview />
 }

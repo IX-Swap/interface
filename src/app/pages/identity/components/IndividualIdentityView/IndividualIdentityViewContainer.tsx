@@ -13,5 +13,5 @@ export const IndividualIdentityViewContainer = () => {
     return null
   }
 
-  return <IndividualIdentityView data={data} />
+  return <IndividualIdentityView data={data} showReview />
 }

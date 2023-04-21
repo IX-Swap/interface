@@ -130,7 +130,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             customLabel
             showIcon
             sx={{
-              padding: '10px 50px !important',
+              padding: '10px 30px !important',
               width: '300px !important'
             }}
           >
