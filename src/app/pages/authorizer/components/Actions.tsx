@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react'
 // import { Launch as LaunchIcon } from '@mui/icons-material'
 import {
-  Grid,
+  Grid
   //  IconButton,
-  Box
+  //   Box
 } from '@mui/material'
 // import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
@@ -118,9 +118,9 @@ export const Actions = (props: ActionsProps): JSX.Element => {
           <LaunchIcon color='disabled' />
         </IconButton>
       </Grid> */}
-      <Grid item>
+      {/* <Grid item>
         <Box px={1} />
-      </Grid>
+      </Grid> */}
       {isCommitment && item.fundStatus !== 'Funds on hold' ? (
         <Grid item style={{ minWidth: 26 }} />
       ) : (
