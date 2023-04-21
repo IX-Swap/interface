@@ -47,6 +47,8 @@ import { DateRangeField } from '../shared/fields/DateRangeField'
 import { RejectInfo } from '../shared/RejectInfo'
 import { FormSideBar, FormBody } from '../shared/styled'
 import { IssuanceTooltip } from '../shared/fields/IssuanceTooltip'
+import { text11 } from 'components/LaunchpadMisc/typography'
+import { useFormatOfferValue } from 'state/launchpad/hooks'
 
 interface Props {
   formikProps: FormikProps<InformationFormValues>
@@ -86,6 +88,7 @@ export const InformationForm = (props: Props) => {
   // hooks
   const history = useHistory()
   const showError = useShowError()
+  const formatedValue = useFormatOfferValue()
 
   // memos
   const draftDisabled = useMemo(() => isDraftDisabled(errors, touched), [errors, touched])
@@ -93,6 +96,20 @@ export const InformationForm = (props: Props) => {
   const countries = useMemo(() => {
     return getData().map((country) => ({ value: country.code, label: country.name }))
   }, [])
+  const showSupplyHint = useMemo(
+    () =>
+      smartContractStrategy === SMART_CONTRACT_STRATEGIES.original &&
+      values.tokenStandart === OfferTokenStandart.xtokenlite,
+    [smartContractStrategy, values.tokenStandart]
+  )
+  const supplyHintValue = useMemo(() => {
+    if (showSupplyHint && values.tokenPrice && values.hardCap) {
+      const supplyForSale = Number(values.hardCap) / Number(values.tokenPrice)
+      return formatedValue(Math.ceil(supplyForSale).toString())
+    } else {
+      return '0'
+    }
+  }, [showSupplyHint, values.tokenPrice, values.hardCap])
 
   // states
   const [showReview, setShowReview] = useState(false)
@@ -500,7 +517,13 @@ export const InformationForm = (props: Props) => {
             padding={'1rem 4px 1rem 1.25rem'}
             maxLength={64}
           />
+
           <Column gap="1rem">
+            {showSupplyHint && (
+              <SupplyHintText>
+                {supplyHintValue} tokens will be issued based on the price per token and total fundraising amount.
+              </SupplyHintText>
+            )}
             <BaseCheckboxWithLabel
               state={Boolean(values.tokenomicsAgreement)}
               toggle={() => {
@@ -827,4 +850,11 @@ const ErrorText = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 10px;
+`
+
+const SupplyHintText = styled.div`
+  ${text11}
+  color: ${(props) => props.theme.launchpad.colors.primary};
+  margin-bottom: 6px;
+  margin-top: -26px;
 `
