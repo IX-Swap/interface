@@ -44,7 +44,7 @@ export const WhitelistForm = ({ offerId, onSuccess: callback }: WhitelistFormPro
         <>
           <ShortFormBody>
             <IssuanceTextField
-              label="Wallet"
+              label="Wallet Address"
               placeholder={placeholders.walletAddress}
               value={values.walletAddress}
               onChange={(v) => setFieldValue('walletAddress', v)}
@@ -66,7 +66,8 @@ export const WhitelistForm = ({ offerId, onSuccess: callback }: WhitelistFormPro
                     padding="0 1.5rem"
                     disabled={!values.fullName || !values.walletAddress}
                   >
-                    <Plus size="15" color={theme.launchpad.colors.primary} /> Add Wallet
+                    <Plus size="15" color={theme.launchpad.colors.primary} />
+                    <span style={{ fontWeight: 600 }}> Add Wallet</span>
                   </OutlineButton>
                 )}
                 {loadingSave && (
