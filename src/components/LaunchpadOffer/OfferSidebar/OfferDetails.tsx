@@ -23,6 +23,7 @@ import { ExternalLink } from 'theme'
 import { text10, text33, text6, text9 } from 'components/LaunchpadMisc/typography'
 import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
 import { useActiveWeb3React } from 'hooks/web3'
+import { useTokenLoading } from 'hooks/Tokens'
 interface Props {
   offer: Offer
 }
@@ -46,6 +47,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
     props.offer.tokenAddress,
     ExplorerDataType.TOKEN
   )
+  const loading = useTokenLoading(props.offer.investingTokenAddress)
   const { addToken } = useAddTokenByDetailsToMetamask()
   const addToMetamask = () => {
     addToken({
