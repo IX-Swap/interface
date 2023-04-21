@@ -15,7 +15,7 @@ export const OfferTeamMembers: React.FC<Props> = (props) => {
 
       {props.team.map((member, idx) => (
         <TeamMemberCard key={`team-member-${idx}`}>
-          <TeamMemberPhoto src={member.avatar.public} />
+          <TeamMemberPhoto src={member.avatar?.public} />
           <TeamMemberName>{member.name}</TeamMemberName>
           <TeamMemberRole>{member.title}</TeamMemberRole>
           <TeamMemberSummary>{member.description}</TeamMemberSummary>

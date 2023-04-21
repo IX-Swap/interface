@@ -444,30 +444,36 @@ export const InformationForm = (props: Props) => {
             value={values.tokenStandart}
             error={(touched.tokenStandart && errors.tokenStandart) as string}
           />
-          <FormField
-            field="totalSupply"
-            setter={setFieldValue}
-            touch={setFieldTouched}
-            label="Total supply"
-            placeholder="No. of Tokens"
-            inputFilter={numberFilter}
-            disabled={edit || values.tokenStandart !== OfferTokenStandart.erc20}
-            value={`${values.totalSupply}`}
-            error={(touched.totalSupply && errors.totalSupply) as string}
-            maxLength={64}
-          />
-          <FormField
-            field="tokenReceiverAddress"
-            setter={setFieldValue}
-            touch={setFieldTouched}
-            label="Token receiver address"
-            placeholder="Token receiver address"
-            disabled={edit || values.tokenStandart !== OfferTokenStandart.erc20}
-            value={`${values.tokenReceiverAddress}`}
-            error={(touched.tokenReceiverAddress && errors.tokenReceiverAddress) as string}
-            trailing={<IssuanceTooltip tooltipContent={"It's a wallet address that will receive remaining tokens"} />}
-            maxLength={64}
-          />
+          {smartContractStrategy === SMART_CONTRACT_STRATEGIES.original && (
+            <>
+              <FormField
+                field="totalSupply"
+                setter={setFieldValue}
+                touch={setFieldTouched}
+                label="Total supply"
+                placeholder="No. of Tokens"
+                inputFilter={numberFilter}
+                disabled={edit || values.tokenStandart !== OfferTokenStandart.erc20}
+                value={`${values.totalSupply}`}
+                error={(touched.totalSupply && errors.totalSupply) as string}
+                maxLength={64}
+              />
+              <FormField
+                field="tokenReceiverAddress"
+                setter={setFieldValue}
+                touch={setFieldTouched}
+                label="Token receiver address"
+                placeholder="Token receiver address"
+                disabled={edit || values.tokenStandart !== OfferTokenStandart.erc20}
+                value={`${values.tokenReceiverAddress}`}
+                error={(touched.tokenReceiverAddress && errors.tokenReceiverAddress) as string}
+                trailing={
+                  <IssuanceTooltip tooltipContent={"It's a wallet address that will receive remaining tokens"} />
+                }
+                maxLength={64}
+              />
+            </>
+          )}
           <FormField
             field="minInvestment"
             setter={setFieldValue}
