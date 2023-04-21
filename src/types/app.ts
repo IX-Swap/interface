@@ -21,6 +21,7 @@ export enum AppFeature {
   SecurityTokenWithdrawals = 'security-token-withdrawals',
   WithdrawalAddresses = 'blockchain-addresses',
   Corporates = 'corporates',
+  CorporatesAccreditation = 'corporates/accreditation',
   Holdings = 'holdings',
   Individuals = 'individuals',
   IndividualsAuthorization = 'authorization/identity/individuals',

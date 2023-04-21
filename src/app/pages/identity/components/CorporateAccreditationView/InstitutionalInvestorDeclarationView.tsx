@@ -13,13 +13,25 @@ export interface InstitutionalInvestorDeclarationViewProps {
 export const InstitutionalInvestorDeclarationView: React.FC<
   InstitutionalInvestorDeclarationViewProps
 > = ({ data }) => {
-  const { isInstitutionalInvestor, documents } = data
+  //   const { isInstitutionalInvestor, documents } = data
 
-  const institutionalInvestorDocuments = documents.filter(
-    doc =>
-      Object.values(doc).length > 0 &&
-      doc.type === 'Institutional Investor Documents'
-  )
+  //   const institutionalInvestorDocuments = documents.filter(
+  //     doc =>
+  //       Object.values(doc).length > 0 &&
+  //       doc.type === 'Institutional Investor Documents'
+  //   )
+
+  const { isInstitutionalInvestor, declarations } = data
+
+  const institutionalInvestorDocuments =
+    declarations.investorsStatus.institutionalInvestorDocuments
+      .map(doc => doc.value)
+      .filter(
+        doc =>
+          typeof doc !== 'undefined' &&
+          Object.values(doc).length > 0 &&
+          doc.type === 'Institutional Investor Documents'
+      )
 
   return (
     <FieldContainer>

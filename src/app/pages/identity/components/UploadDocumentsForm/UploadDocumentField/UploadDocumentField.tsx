@@ -35,7 +35,8 @@ export const UploadDocumentField = ({
       ? watch(name).map((file: { value: DataroomFile }) => file.value)
       : []
   const filteredDefaultUploadedFiles = defaultUploadedFiles.filter(
-    (file: DataroomFile) => Object.keys(file).length > 0
+    (file: DataroomFile) =>
+      typeof file !== 'undefined' && Object.keys(file).length > 0
   )
   const [uploadedFiles, setUploadedFiles] = useState<DataroomFile[]>(
     filteredDefaultUploadedFiles

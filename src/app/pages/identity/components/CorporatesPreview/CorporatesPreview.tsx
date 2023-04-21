@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useStyles } from 'app/pages/identity/components/IndividualPreview/IndividualPreview.styles'
-import { Box, Grid, Tab, Tabs } from '@mui/material'
+import { Box, Grid, Paper, Tab, Tabs } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 // import { Status } from 'ui/Status/Status'
@@ -13,6 +13,7 @@ import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityCTA } from '../IdentityCTA/IdentityCTA'
 import { AccreditationCTA } from '../AccreditationCTA/AccreditationCTA'
+import { CorporateAccreditationView } from '../CorporateAccreditationView/CorporateAccreditationView'
 
 export interface CorporatesPreviewProps {
   data?: CorporateIdentity
@@ -130,8 +131,9 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             customLabel
             showIcon
             sx={{
-              padding: '10px 50px !important',
-              width: 'auto !important'
+              padding: '10px 30px !important',
+              width: '330px !important',
+              visibility: 'hidden'
             }}
           >
             Edit {selectedIdx === 0 ? 'Personal' : 'Accreditation'} Information
@@ -175,6 +177,14 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
           </TabPanel>
 
           <TabPanel pt={0} value={selectedIdx} index={1}>
+            {/* ! TEMPORARY WHILE WE DON'T HAVE ACCREDITATION STATUS FROM API */}
+            <AccreditationCTA
+              link={IdentityRoute.createCorporateAccreditation}
+              params={{
+                identityId: data._id,
+                userId: data.user._id
+              }}
+            />
             {data.status !== 'Approved' ? (
               <StatusBox
                 status={'Locked'}
@@ -183,21 +193,50 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
               />
             ) : (
               <>
-                <AccreditationCTA
-                  link={details.editLink}
+                {/* TODO: if no accreditation exists */}
+                {/* <AccreditationCTA
+                  link={IdentityRoute.createCorporateAccreditation}
                   params={{
                     identityId: data._id,
-                    userId: data.user._id,
-                    label: data.companyLegalName
+                    userId: data.user._id
                   }}
-                />
-                {/** TODO: Accreditaion details */}
+                /> */}
+
+                {/* TODO: else, show this */}
+                <CorporateAccreditationView data={data} />
               </>
             )}
           </TabPanel>
         </Grid>
         <Grid container item className={classes.rightBlock}>
           <Box position='sticky' top={90}>
+            <Grid item xs={12}>
+              {/* TODO: only show when an accreditation is already created, hide when approved? (submitted?) */}
+              <Paper sx={{ p: 4, borderRadius: 2, mb: 2 }}>
+                <EditButton
+                  fullWidth
+                  variant={'contained'}
+                  link={
+                    selectedIdx === 0
+                      ? details.editLink
+                      : IdentityRoute.editCorporateAccreditation
+                  }
+                  params={{
+                    identityId: data._id,
+                    userId: data.user._id
+                  }}
+                  customLabel
+                  sx={{
+                    paddingLeft: '10px !important',
+                    paddingRight: '10px !important',
+                    width: '100% !important'
+                  }}
+                >
+                  Edit {selectedIdx === 0 ? 'Personal' : 'Accreditation'}{' '}
+                  Information
+                </EditButton>
+              </Paper>
+            </Grid>
             <Grid item xs={12}>
               <TwoFANotice />
             </Grid>

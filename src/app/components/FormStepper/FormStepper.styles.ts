@@ -26,7 +26,8 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   stepperBlock: {
-    width: '100%'
+    width: '100%',
+    marginBottom: theme.spacing(2)
   },
   stepperBlockWrapper: {
     borderRadius: 8,
