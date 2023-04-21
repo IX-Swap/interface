@@ -75,7 +75,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     [submitState]
   )
 
-  const onChangeInterested = React.useCallback((value: any, setValue: ValueSetter) => {
+  const onChangeInterested = (value: any, setValue: ValueSetter) => {
     if (disableForm) {
       return
     }
@@ -88,7 +88,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
       setWarning("")
     }
 
-  }, [])
+  }
 
   const onChangeAmount = (value: any, setValue: ValueSetter) => {
     if (disableForm) {
