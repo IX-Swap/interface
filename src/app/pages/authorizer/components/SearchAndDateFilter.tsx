@@ -15,7 +15,8 @@ export const SearchAndDateFilter = () => {
   const isCommitments = category === 'commitments'
   return (
     <>
-      {location?.pathname?.includes('individuals') ? (
+      {location?.pathname?.includes('individuals') ||
+      location?.pathname?.includes('corporates') ? (
         <SearchQueryFilterGroup>
           <Grid container spacing={3}>
             {isCommitments && (
