@@ -31,7 +31,8 @@ export const StatusFilterItem: React.FC<StatusFilterItemProps> = ({
   const { location } = useHistory()
   return (
     <>
-      {location?.pathname?.includes('individuals') ? (
+      {location?.pathname?.includes('individuals') ||
+      location?.pathname?.includes('corporates') ? (
         <ListItem
           style={{ width: '100px', background: 'none', textAlign: 'center' }}
           button

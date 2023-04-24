@@ -9,7 +9,8 @@ export const Filters = () => {
   const { location } = useHistory()
   return (
     <>
-      {location?.pathname?.includes('individuals') ? (
+      {location?.pathname?.includes('individuals') ||
+      location?.pathname?.includes('corporates') ? (
         ''
       ) : (
         <SidebarTitle>FILTERS</SidebarTitle>

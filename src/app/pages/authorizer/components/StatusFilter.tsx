@@ -24,7 +24,8 @@ export const BaseStatusFilter = ({ statusFilters }: BaseStatusFilterProps) => {
   const { location } = useHistory()
   return (
     <>
-      {location?.pathname?.includes('individuals') ? (
+      {location?.pathname?.includes('individuals') ||
+      location?.pathname?.includes('corporates') ? (
         <SearchQueryFilter<'authorizationStatus'>
           name='authorizationStatus'
           defaultValue=''
