@@ -27,6 +27,22 @@ export const useStyles = makeStyles((theme: any) => ({
     textTransform: 'uppercase',
     backgroundColor: '#F8F8FD'
   },
+
+  kycTheme: {
+    height: 28,
+    borderRadius: 14,
+    border: 'none',
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 14,
+    display: 'inline-flex',
+    fontWeight: 600,
+    flexWrap: 'nowrap',
+    whiteSpace: 'nowrap',
+    textTransform: 'capitalize',
+    BorderColor: 'none',
+    color: '#778194'
+  },
   compact: {
     width: 24,
     height: 24,
@@ -40,6 +56,11 @@ export const useStyles = makeStyles((theme: any) => ({
     color: '#8DCA82',
     backgroundColor: '#EEF7F1'
   },
+
+  approvedNewKYCTheme: {
+    BorderColor: 'none',
+    color: '#778194'
+  },
   open: {
     color: '#EEE4FF',
     borderColor: '#0BBE12'
@@ -49,7 +70,7 @@ export const useStyles = makeStyles((theme: any) => ({
     backgroundColor: '#EEE4FF'
   },
   unknown: {
-    color: '#EEE4FF',
+    color: '#778194',
     borderColor: '#0BBE12'
   },
   unknownNewTheme: {

@@ -5,7 +5,7 @@ import { authorizerQueryKeys } from 'config/queryKeys'
 
 export const IndividualIdentities: React.FC = () => (
   <AuthorizerList
-    title='Authorize Individual Identity'
+    title='Authorize KYC Applications'
     uri='/identity/individuals/list'
     name={authorizerQueryKeys.getIndividualIdentityList}
     columns={columns}

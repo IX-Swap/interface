@@ -51,7 +51,7 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     icon: DSWithdrawalIcon
   },
   {
-    label: 'Individual Identities',
+    label: 'KYC Applications',
     path: AuthorizerRoute.individualIdentities,
     color: '#90A30F',
     icon: IndividualIcon

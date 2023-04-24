@@ -86,34 +86,39 @@ export const Actions = (props: ActionsProps): JSX.Element => {
   const isCommitment = category === 'commitments'
   return (
     <Grid container wrap='nowrap' justifyContent='flex-end'>
-      <Grid item>
-        <IconButton
-          component={AppRouterLinkComponent}
-          size='small'
-          data-testid='view-button'
-          to={
-            category === 'virtual-accounts'
-              ? `/app/authorizer/${category}/${id}/view`
-              : category === 'listings' && listingType === 'OTC'
-              ? `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
-              : (status === 'Approved' ||
-                  status === 'Rejected' ||
-                  status === 'Submitted') &&
-                category === 'cash-withdrawals'
-              ? `/app/authorizer/${category}/${userId}/${id}/${status}/view`
-              : status === '' && category === 'cash-withdrawals'
-              ? `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
-              : `/app/authorizer/${category}/${userId}/${id}/view`
-          }
-          params={{
-            itemId: id,
-            cacheQueryKey,
-            listingType
-          }}
-        >
-          <LaunchIcon color='disabled' />
-        </IconButton>
-      </Grid>
+      {location?.pathname?.includes('individuals') ? (
+        ''
+      ) : (
+        <Grid item>
+          <IconButton
+            component={AppRouterLinkComponent}
+            size='small'
+            data-testid='view-button'
+            to={
+              category === 'virtual-accounts'
+                ? `/app/authorizer/${category}/${id}/view`
+                : category === 'listings' && listingType === 'OTC'
+                ? `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
+                : (status === 'Approved' ||
+                    status === 'Rejected' ||
+                    status === 'Submitted') &&
+                  category === 'cash-withdrawals'
+                ? `/app/authorizer/${category}/${userId}/${id}/${status}/view`
+                : status === '' && category === 'cash-withdrawals'
+                ? `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
+                : `/app/authorizer/${category}/${userId}/${id}/view`
+            }
+            params={{
+              itemId: id,
+              cacheQueryKey,
+              listingType
+            }}
+          >
+            <LaunchIcon color='disabled' />
+          </IconButton>
+        </Grid>
+      )}
+
       <Grid item>
         <Box px={1} />
       </Grid>

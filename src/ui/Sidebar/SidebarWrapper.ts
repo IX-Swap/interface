@@ -24,3 +24,10 @@ export const SidebarWrapper = styled('div')(({ theme }) => ({
     }
   }
 }))
+
+export const SidebarWrapperKyc = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.backgrounds.light,
+  padding: theme.spacing(1, 0),
+  marginTop: theme.spacing(2),
+  width: 1250
+}))

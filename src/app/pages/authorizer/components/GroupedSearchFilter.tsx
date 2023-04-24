@@ -16,7 +16,7 @@ export const GroupedSearchFilter = ({
       {({ value, onChange }) => (
         <TextInput
           fullWidth
-          label='Search'
+          placeholder='Search'
           variant='outlined'
           value={value ?? ''}
           onChange={event => onChange(event.target.value)}
