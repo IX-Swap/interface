@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useStyles } from 'app/pages/identity/components/IndividualPreview/IndividualPreview.styles'
-import { Box, Grid, Tab, Tabs } from '@mui/material'
+import { Box, Grid, Paper, Tab, Tabs } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 // import { Status } from 'ui/Status/Status'
@@ -13,6 +13,7 @@ import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityCTA } from '../IdentityCTA/IdentityCTA'
 import { AccreditationCTA } from '../AccreditationCTA/AccreditationCTA'
+import { CorporateAccreditationView } from '../CorporateAccreditationView/CorporateAccreditationView'
 
 export interface CorporatesPreviewProps {
   data?: CorporateIdentity
@@ -26,7 +27,14 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
     return null
   }
 
-  console.log(data)
+  const onKycTab = selectedIdx === 0
+  //   const kycSubmitted = data.status === 'Submitted'
+  const kycSubmitted = false
+  const kycApproved = data.status === 'Approved'
+  const hasAccreditation = typeof data.accreditationStatus !== 'undefined'
+  //   const accreditationSubmitted = data.accreditationStatus === 'Submitted'
+  const accreditationSubmitted = false
+  const accreditationApproved = data.accreditationStatus === 'Approved'
 
   //   const corporateIdentityFields = [
   //     {
@@ -114,7 +122,8 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
               //   fields={corporateIdentityFields}
               name={data.user.name}
               isIndividual={false}
-              status={data.status}
+              kycStatus={data.status}
+              accreditationStatus={data.accreditationStatus}
               identityType={data.type}
             />
           </Box>
@@ -130,11 +139,12 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             customLabel
             showIcon
             sx={{
-              padding: '10px 50px !important',
-              width: 'auto !important'
+              padding: '10px 30px !important',
+              width: '330px !important',
+              visibility: 'hidden'
             }}
           >
-            Edit {selectedIdx === 0 ? 'Personal' : 'Accreditation'} Information
+            Edit {onKycTab ? 'Personal' : 'Accreditation'} Information
           </EditButton>
           {/* <Box mx={1} component='span' /> */}
           {/* <ViewButton
@@ -154,7 +164,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             <>
               {data.status !== 'Draft' && (
                 <StatusBox
-                  status={data.status === 'Submitted' ? 'Pending' : data.status}
+                  status={data.status}
                   identityType='corporate'
                   applicationType='kyc'
                 />
@@ -170,34 +180,85 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
                 />
               )}
 
-              <CorporateIdentityView data={data} hideHeader />
+              <CorporateIdentityView data={data} hideAvatar />
             </>
           </TabPanel>
 
           <TabPanel pt={0} value={selectedIdx} index={1}>
-            {data.status !== 'Approved' ? (
+            {!kycApproved ? (
               <StatusBox
                 status={'Locked'}
                 identityType='corporate'
                 applicationType='accreditation'
               />
+            ) : !hasAccreditation ? (
+              <AccreditationCTA
+                link={IdentityRoute.createCorporateAccreditation}
+                params={{
+                  identityId: data._id,
+                  userId: data.user._id
+                }}
+              />
             ) : (
               <>
-                <AccreditationCTA
-                  link={details.editLink}
-                  params={{
-                    identityId: data._id,
-                    userId: data.user._id,
-                    label: data.companyLegalName
-                  }}
-                />
-                {/** TODO: Accreditaion details */}
+                {data.accreditationStatus !== 'Draft' && (
+                  <StatusBox
+                    status={data.accreditationStatus ?? 'Pending'}
+                    identityType='corporate'
+                    applicationType='accreditation'
+                  />
+                )}
+                {data.accreditationStatus === 'Rejected' && (
+                  <AccreditationCTA
+                    link={IdentityRoute.editCorporateAccreditation}
+                    params={{
+                      identityId: data._id,
+                      userId: data.user._id
+                    }}
+                    retry
+                  />
+                )}
+
+                <CorporateAccreditationView data={data} />
               </>
             )}
           </TabPanel>
         </Grid>
         <Grid container item className={classes.rightBlock}>
           <Box position='sticky' top={90}>
+            {((onKycTab && !kycApproved && !kycSubmitted) ||
+              (!onKycTab &&
+                kycApproved &&
+                hasAccreditation &&
+                !accreditationApproved &&
+                !accreditationSubmitted)) && (
+              <Grid item xs={12}>
+                <Paper sx={{ p: 4, borderRadius: 2, mb: 2 }}>
+                  <EditButton
+                    fullWidth
+                    variant={'contained'}
+                    link={
+                      onKycTab
+                        ? details.editLink
+                        : IdentityRoute.editCorporateAccreditation
+                    }
+                    params={{
+                      identityId: data._id,
+                      userId: data.user._id
+                    }}
+                    customLabel
+                    sx={{
+                      paddingLeft: '10px !important',
+                      paddingRight: '10px !important',
+                      width: '100% !important'
+                    }}
+                  >
+                    Edit {onKycTab ? 'Personal' : 'Accreditation'} Information
+                  </EditButton>
+                </Paper>
+              </Grid>
+            )}
+
             <Grid item xs={12}>
               <TwoFANotice />
             </Grid>

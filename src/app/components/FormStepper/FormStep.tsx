@@ -41,6 +41,7 @@ export interface FormStepProps {
     value: boolean
   }
   overRideStep?: boolean
+  statusFieldName?: string
 }
 
 interface OnSubmitSuccessArgs {
@@ -51,6 +52,7 @@ interface OnSubmitSuccessArgs {
   redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
   createModeRedirect: CreateModeRedirect
   history: H.History
+  statusFieldName: string
 }
 
 const onSubmitSuccess = ({
@@ -60,9 +62,10 @@ const onSubmitSuccess = ({
   setCompleted,
   redirectCallback,
   createModeRedirect,
-  history
+  history,
+  statusFieldName
 }: OnSubmitSuccessArgs) => {
-  if (isSuccessRequest(data?.status) && !isLastStep && isEditing) {
+  if (isSuccessRequest(data?.[statusFieldName]) && !isLastStep && isEditing) {
     //eslint-disable-line
     setCompleted?.()
   }
@@ -105,7 +108,8 @@ export const FormStep = (props: FormStepProps) => {
     followDefaultMode = true,
     dataToCheck = undefined,
     isCreateMode: hasCreateMode = undefined,
-    overRideStep = false
+    overRideStep = false,
+    statusFieldName = 'status'
   } = props
   const isCurrentStep = activeStep === index
   const classes = useStyles()
@@ -146,7 +150,8 @@ export const FormStep = (props: FormStepProps) => {
         setCompleted,
         redirectCallback,
         createModeRedirect,
-        history
+        history,
+        statusFieldName
       })
     }
     if (shouldSaveStep && (data?.step ?? 0) < activeStep + 1) {

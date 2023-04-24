@@ -1,7 +1,11 @@
 import React, { ReactElement } from 'react'
-import { Launch as LaunchIcon } from '@mui/icons-material'
-import { Grid, IconButton, Box } from '@mui/material'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
+// import { Launch as LaunchIcon } from '@mui/icons-material'
+import {
+  Grid
+  //  IconButton,
+  //   Box
+} from '@mui/material'
+// import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'helpers/strings'
 import { history } from 'config/history'
@@ -13,6 +17,7 @@ import { useLocation } from 'react-router-dom'
 export interface ActionsProps {
   item: any
   cacheQueryKey: any
+  featureCategory?: string
 }
 
 export type ActionsType = (props: ActionsProps) => ReactElement
@@ -30,28 +35,30 @@ const getUserId = (item: any) => {
 }
 
 export const Actions = (props: ActionsProps): JSX.Element => {
-  const { item, cacheQueryKey } = props
+  const { item, cacheQueryKey, featureCategory } = props
   const location = useLocation()
   const id: string = item._id
   const splitted = location.pathname.split('/')
   const status = location.search.split('=')[1]
 
-  const category = splitted[splitted.length - 1]
+  const category = featureCategory ?? splitted[splitted.length - 1]
   const userId: string = getUserId(item)
   const listingType: string = item.listingType
-  console.log(props.item, 'propsdpdppd')
+  //   console.log(props.item, 'propsdpdppd')
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'approve',
     cacheQueryKey,
-    listingType
+    listingType,
+    featureCategory
   })
 
   const [reject, { isLoading: isRejecting }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'reject',
     cacheQueryKey,
-    listingType
+    listingType,
+    featureCategory
   })
 
   const view = () =>
@@ -73,20 +80,20 @@ export const Actions = (props: ActionsProps): JSX.Element => {
           `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
         )
       : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
-  console.log(
-    category,
-    listingType,
-    userId,
-    id,
-    status,
-    'category,listingType,userId, id,status'
-  )
+  //   console.log(
+  //     category,
+  //     listingType,
+  //     userId,
+  //     id,
+  //     status,
+  //     'category,listingType,userId, id,status'
+  //   )
   const isUnauthorized = item.status === 'Submitted' || 'Approved'
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
   return (
-    <Grid container wrap='nowrap' justifyContent='flex-end'>
-      <Grid item>
+    <Grid wrap='nowrap' justifyContent='flex-end'>
+      {/* <Grid item>
         <IconButton
           component={AppRouterLinkComponent}
           size='small'
@@ -113,10 +120,10 @@ export const Actions = (props: ActionsProps): JSX.Element => {
         >
           <LaunchIcon color='disabled' />
         </IconButton>
-      </Grid>
-      <Grid item>
+      </Grid> */}
+      {/* <Grid item>
         <Box px={1} />
-      </Grid>
+      </Grid> */}
       {isCommitment && item.fundStatus !== 'Funds on hold' ? (
         <Grid item style={{ minWidth: 26 }} />
       ) : (

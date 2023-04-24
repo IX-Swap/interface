@@ -37,7 +37,16 @@ export const identityURL = {
     submit: (id?: string) => `/identity/corporates/${id}/submit`,
     get: (userId?: string, identityId?: string) =>
       `/identity/corporates/${userId}/${identityId}`,
-    validateData: '/identity/corporates/check'
+    validateData: '/identity/corporates/check',
+    accreditation: {
+      create: (corporateId?: string) =>
+        `/identity/accreditation/corporate/${corporateId}`,
+      update: (corporateId?: string) =>
+        `/identity/accreditation/corporate/${corporateId}`,
+      submit: (id?: string) => `/identity/accreditation/corporate/${id}/submit`,
+      get: (identityId?: string) =>
+        `/identity/accreditation/corporate/${identityId}`
+    }
   },
   individuals: {
     create: (userId?: string) => `/identity/individuals/${userId}`,

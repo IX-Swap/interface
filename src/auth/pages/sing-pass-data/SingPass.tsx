@@ -45,7 +45,7 @@ export const SingPassPage = () => {
           marginBottom: '25px'
         }}
       >
-        {value.length > 0 ? value : '-'}
+        {value?.length > 0 ? value : '-'}
       </p>
     </div>
   )

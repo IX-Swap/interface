@@ -16,19 +16,22 @@ import { FieldContainer } from 'app/pages/identity/components/FieldContainer/Fie
 
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity
-  hideHeader?: boolean
+  hideAvatar?: boolean
+  showReview?: boolean
 }
 
 export const IndividualIdentityView = ({
   data,
-  hideHeader = false
+  hideAvatar = false,
+  showReview = false
 }: IndividualIdentityViewProps) => {
+  // const classes = useStyles()
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
         <FieldContainer>
           <Grid container direction={'column'} spacing={5}>
-            {!hideHeader && (
+            {showReview && (
               <Grid item>
                 <FormSectionHeader
                   title='Review Responses'
@@ -41,7 +44,7 @@ export const IndividualIdentityView = ({
               <FormSectionHeader title='Personal Information' />
             </Grid>
 
-            <IndividualInfoView data={data} hideAvatar={hideHeader} />
+            <IndividualInfoView data={data} hideAvatar={hideAvatar} />
           </Grid>
         </FieldContainer>
       </Grid>
@@ -70,27 +73,27 @@ export const IndividualIdentityView = ({
             </Grid>
           </Grid>
         </FieldContainer>
-      </Grid>
+      </Grid> */}
 
-      <NoticeOfAssessmentView />
+      {/* <NoticeOfAssessmentView /> */}
 
-      <Grid item className={privateClassNames()}>
+      {/* <Grid item className={privateClassNames()}>
         <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
       </Grid>
 
       <Grid item>
         <FatcaView data={data} />
-      </Grid>
+      </Grid> */}
 
-      <Grid item>
+      {/* <Grid item>
         <InvestorDeclarationView isCorporate={false} data={data} />
       </Grid>
 
       <Grid item>
         <OptInRequirementView data={data} />
-      </Grid>
+      </Grid> */}
 
-      <Grid item>
+      {/* <Grid item>
         <FieldContainer>
           <Grid item container direction={'column'} spacing={3}>
             <Grid item>

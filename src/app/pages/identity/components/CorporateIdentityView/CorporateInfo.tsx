@@ -6,6 +6,7 @@ import React from 'react'
 import { LEGAL_ENTITY_STATUS_LIST } from 'components/form/LegalEntityStatusSelect'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar_identity.svg'
+import { Status } from 'ui/Status/Status'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity
@@ -26,6 +27,28 @@ export const CorporateInfo = ({
   const declaredAs =
     typeof data?.declaredAs !== 'undefined' ? data.declaredAs : []
 
+  const InvestorStatus = ({ investorType }: { investorType: string }) => {
+    if (
+      typeof data.declaredAs !== 'undefined' &&
+      typeof data.declaredAsStatus !== 'undefined' &&
+      Boolean(data.declaredAs.includes(investorType)) &&
+      investorType in data.declaredAsStatus
+    ) {
+      const investorStatus =
+        data.declaredAsStatus[
+          investorType as keyof typeof data.declaredAsStatus
+        ]
+      return (
+        <Status
+          label={investorStatus}
+          type={String(investorStatus).toLowerCase()}
+        />
+      )
+    }
+
+    return <Status label='N/A' type='draft' />
+  }
+
   return (
     <Grid item container flexDirection={'column'} spacing={5}>
       {!hideAvatar && (
@@ -45,7 +68,7 @@ export const CorporateInfo = ({
         item
         sx={{
           display: 'grid',
-          gridTemplateColumns: { sx: '1fr', sm: '1fr 1fr' }
+          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }
         }}
         container
       >
@@ -87,7 +110,7 @@ export const CorporateInfo = ({
               <LabelledValue
                 isRedesigned
                 label='Issuer Application'
-                value='N/A'
+                value={<InvestorStatus investorType='issuer' />}
               />
             </Grid>
           ) : (
@@ -110,6 +133,7 @@ export const CorporateInfo = ({
           direction={'column'}
           justifyContent={'flex-end'}
           spacing={5}
+          sx={{ paddingTop: { xs: '40px', sm: 0 } }}
         >
           {!hideAvatar && <Grid item />}
 
@@ -133,7 +157,7 @@ export const CorporateInfo = ({
               <LabelledValue
                 isRedesigned
                 label='Tenant Owner Application'
-                value='N/A'
+                value={<InvestorStatus investorType='tenantOwner' s />}
               />
             </Grid>
           ) : (

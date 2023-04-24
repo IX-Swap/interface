@@ -10,6 +10,7 @@ export interface SubmitButtonProps extends ButtonProps {
   step: FormStepperStep
   submitText?: string
   customSchema?: any
+  statusFieldName?: string
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
@@ -20,12 +21,13 @@ export const SubmitButton = (props: SubmitButtonProps) => {
     fullWidth,
     size = 'large',
     submitText = 'Identity',
-    customSchema = undefined
+    customSchema = undefined,
+    statusFieldName = 'status'
   } = props
 
   const [save, { isLoading }] = mutation
-  const isSubmitted = data?.status === 'Submitted'
-  const isApproved = data?.status === 'Approved'
+  const isSubmitted = data?.[statusFieldName] === 'Submitted'
+  const isApproved = data?.[statusFieldName] === 'Approved'
 
   const [validating, setValidating] = useState(false)
   const [isValid, setIsValid] = useState(false)

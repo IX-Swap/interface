@@ -35,11 +35,34 @@ export const IdentityRoute = {
     'identityId',
     'view'
   ]),
-
   editCorporate: makeURL([
     'app',
     'identity',
     'corporateIdentity',
+    'userId',
+    'identityId',
+    'edit'
+  ]),
+  createCorporateAccreditation: makeURL([
+    'app',
+    'identity',
+    'corporateAccreditation',
+    'userId',
+    'identityId',
+    'create'
+  ]),
+  viewCorporateAccreditation: makeURL([
+    'app',
+    'identity',
+    'corporateAccreditation',
+    'userId',
+    'identityId',
+    'view'
+  ]),
+  editCorporateAccreditation: makeURL([
+    'app',
+    'identity',
+    'corporateAccreditation',
     'userId',
     'identityId',
     'edit'

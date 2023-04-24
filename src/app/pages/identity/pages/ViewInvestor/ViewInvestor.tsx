@@ -53,7 +53,8 @@ export const ViewInvestor = () => {
                     {/* <EditButton
                       fullWidth
                       variant={'contained'}
-                      link={editLinkMap[data.type]}
+                      //   link={editLinkMap[data.type]}
+                      link={editLinkMap.corporate}
                       params={{ identityId: data._id, userId: data.user._id }}
                     /> */}
                   </Paper>

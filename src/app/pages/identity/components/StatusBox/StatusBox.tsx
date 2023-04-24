@@ -32,6 +32,11 @@ export const StatusBox = (props: StatusBoxProps) => {
         : 'corporate'
       : 'financial'
 
+  const applicationStatus =
+    applicationType === 'accreditation' && status === 'Approved'
+      ? 'Accredited'
+      : status
+
   const defaultStatus = {
     status: 'Pending',
     image: PendingImage,
@@ -94,7 +99,7 @@ export const StatusBox = (props: StatusBoxProps) => {
     }
   ]
 
-  const filtered = statusList.find(x => x.status === status)
+  const filtered = statusList.find(x => x.status === applicationStatus)
   const alertStatus = typeof filtered !== 'undefined' ? filtered : defaultStatus
   const { image: Image, title, description, className } = alertStatus
 

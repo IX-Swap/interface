@@ -10,6 +10,8 @@ export interface AuthChipProps {
   compactChar: string
   compact: boolean
   isNewTheme: boolean
+  isNewKYCTheme?: boolean
+  newKYC: string
 }
 
 export const AuthChip = ({
@@ -18,7 +20,9 @@ export const AuthChip = ({
   status,
   compactChar,
   compact,
-  isNewTheme
+  isNewTheme,
+  isNewKYCTheme,
+  newKYC
 }: AuthChipProps) => {
   const classes = useStyles()
   return (
@@ -26,7 +30,9 @@ export const AuthChip = ({
       className={classNames(classes.authStatus, classname, {
         [classes.compact]: compact,
         [classes.authStatusNewTheme]: isNewTheme,
-        [newTheme]: isNewTheme
+        [newTheme]: isNewTheme,
+        [classes.kycTheme]: isNewKYCTheme,
+        [newKYC]: isNewKYCTheme
       })}
     >
       {compact ? compactChar : status}

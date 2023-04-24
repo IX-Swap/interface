@@ -29,6 +29,10 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
       uri: '/accounts/cash/withdrawals',
       listRoute: AuthorizerRoute.cashWithdrawals
     },
+    [AppFeature.CorporatesAccreditation]: {
+      uri: '/identity/corporate/accreditation/list',
+      listRoute: AuthorizerRoute.corporateAccreditations
+    },
     [AppFeature.Corporates]: {
       uri: '/identity/corporates/list',
       listRoute: AuthorizerRoute.corporateIdentities
