@@ -119,7 +119,6 @@ export function DropdownField<T>(props: Props<T>) {
     function handleClickOutside(event: Event) {
       if (!container.current?.contains(event.target as Node | null)) {
         setShowDropdown(false)
-        setOptionSearch('')
       }
     }
 
