@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { IdentityPreview } from 'app/pages/identity/components/IdentityPreview/IdentityPreview'
 import { IdentitySelectionView } from 'app/pages/identity/components/IdentitySelectionView/IdentiySelectionView'
@@ -6,6 +6,7 @@ import { useStyles } from 'app/pages/identity/pages/IdentitiesList/IdentitiesLis
 import { ReactComponent as Dot } from 'assets/icons/new/dot.svg'
 import React from 'react'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
+import { RootContainer } from 'ui/RootContainer'
 
 export const IdentitiesList: React.FC = () => {
   const { hasIdentity, identityLoaded, isLoadingIdentities } =
@@ -14,13 +15,14 @@ export const IdentitiesList: React.FC = () => {
 
   return (
     <AppContentWrapper container background='default'>
-      <Container className={classes.container}>
+      {/* <Container className={classes.container}> */}
+      <RootContainer>
         <Grid container className={classes.grid}>
           <Grid item container className={classes.nameIdentity}>
             {hasIdentity && (
               <>
                 <Grid item xs={12}>
-                  <Typography variant='h3'>
+                  <Typography variant='h3' sx={{ marginBottom: '5px' }}>
                     {identityLoaded.user.name}
                   </Typography>
                 </Grid>
@@ -37,6 +39,7 @@ export const IdentitiesList: React.FC = () => {
                 </Box>
               </>
             )}
+
             {!hasIdentity && !isLoadingIdentities && (
               <Grid item xs={12} className={classes.createIdentity}>
                 <Typography variant='h2' align='center'>
@@ -52,12 +55,13 @@ export const IdentitiesList: React.FC = () => {
               </Grid>
             )}
           </Grid>
+
           <Grid item xs={12}>
             {hasIdentity && <IdentityPreview />}
             {!hasIdentity && !isLoadingIdentities && <IdentitySelectionView />}
           </Grid>
         </Grid>
-      </Container>
+      </RootContainer>
     </AppContentWrapper>
   )
 }

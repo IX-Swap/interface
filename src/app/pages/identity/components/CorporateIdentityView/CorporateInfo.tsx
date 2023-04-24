@@ -9,9 +9,13 @@ import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar_identity.
 
 export interface CorporateInfoProps {
   data: CorporateIdentity
+  hideAvatar?: boolean
 }
 
-export const CorporateInfo = ({ data }: CorporateInfoProps) => {
+export const CorporateInfo = ({
+  data,
+  hideAvatar = false
+}: CorporateInfoProps) => {
   const getLegalEntityStatus = (value: string) => {
     const status = LEGAL_ENTITY_STATUS_LIST.find(
       item => item.value === value
@@ -24,16 +28,19 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
 
   return (
     <Grid item container flexDirection={'column'} spacing={5}>
-      <Grid item>
-        <Avatar
-          documentId={data.logo}
-          ownerId={data.user._id}
-          variant='square'
-          size={120}
-          borderRadius={16}
-          fallback={<AvatarPhoto />}
-        />
-      </Grid>
+      {!hideAvatar && (
+        <Grid item>
+          <Avatar
+            documentId={data.logo}
+            ownerId={data.user._id}
+            variant='square'
+            size={120}
+            borderRadius={16}
+            fallback={<AvatarPhoto />}
+          />
+        </Grid>
+      )}
+
       <Grid
         item
         sx={{
@@ -49,13 +56,15 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           justifyContent={'flex-end'}
           spacing={5}
         >
-          <Grid item>
-            <LabelledValue
-              isRedesigned
-              value={data.companyLegalName}
-              label='Company Name'
-            />
-          </Grid>
+          {!hideAvatar && (
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={data.companyLegalName}
+                label='Company Name'
+              />
+            </Grid>
+          )}
 
           <Grid item>
             <LabelledValue
@@ -73,6 +82,26 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
               value={getLegalEntityStatus(data.legalEntityStatus)}
             />
           </Grid>
+          {hideAvatar ? (
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                label='Issuer Application'
+                value='N/A'
+              />
+            </Grid>
+          ) : (
+            declaredAs.includes('issuer') && (
+              <Grid item>
+                <LabelledValue
+                  isRedesigned
+                  hasCheck
+                  label=''
+                  value='I declare that I am an Issuer.'
+                />
+              </Grid>
+            )
+          )}
         </Grid>
 
         <Grid
@@ -82,7 +111,7 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           justifyContent={'flex-end'}
           spacing={5}
         >
-          <Grid item />
+          {!hideAvatar && <Grid item />}
 
           <Grid item>
             <LabelledValue
@@ -98,35 +127,26 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
               label='Source of Funds'
             />
           </Grid>
-        </Grid>
 
-        <Grid
-          item
-          container
-          direction={'column'}
-          justifyContent={'flex-end'}
-          spacing={3}
-        >
-          <Grid item />
-          {declaredAs.includes('issuer') && (
+          {hideAvatar ? (
             <Grid item>
               <LabelledValue
                 isRedesigned
-                hasCheck
-                label=''
-                value='I declare that I am an Issuer.'
+                label='Tenant Owner Application'
+                value='N/A'
               />
             </Grid>
-          )}
-          {declaredAs.includes('tenantOwner') && (
-            <Grid item>
-              <LabelledValue
-                isRedesigned
-                hasCheck
-                label=''
-                value='I declare that I am an Tenant Owner.'
-              />
-            </Grid>
+          ) : (
+            declaredAs.includes('tenantOwner') && (
+              <Grid item>
+                <LabelledValue
+                  isRedesigned
+                  hasCheck
+                  label=''
+                  value='I declare that I am an Tenant Owner.'
+                />
+              </Grid>
+            )
           )}
         </Grid>
       </Grid>

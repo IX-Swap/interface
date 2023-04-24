@@ -10,10 +10,13 @@ import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar_identity.
 
 export interface IndividualInfoViewProps {
   data: ExtendedIdentityProfile
+  hideAvatar?: boolean
 }
 
-export const IndividualInfoView = (props: IndividualInfoViewProps) => {
-  const { data } = props
+export const IndividualInfoView = ({
+  data,
+  hideAvatar = false
+}: IndividualInfoViewProps) => {
   const email = data.email ?? '-'
 
   const extractGender = (gender: string) => {
@@ -24,16 +27,19 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
   }
 
   return (
-    <Grid container direction={'column'} spacing={5}>
-      <Grid item>
-        <Avatar
-          documentId={data.photo}
-          ownerId={data.user._id}
-          size={120}
-          borderRadius={16}
-          fallback={<AvatarPhoto />}
-        />
-      </Grid>
+    <Grid item container direction={'column'} spacing={5}>
+      {!hideAvatar && (
+        <Grid item>
+          <Avatar
+            documentId={data.photo}
+            ownerId={data.user._id}
+            size={120}
+            borderRadius={16}
+            fallback={<AvatarPhoto />}
+          />
+        </Grid>
+      )}
+
       <Grid
         item
         sx={{

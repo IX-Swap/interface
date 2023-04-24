@@ -3,6 +3,7 @@ import { Button } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { ButtonPropsVariantOverrides } from '@mui/material/Button/Button'
 import { OverridableStringUnion } from '@mui/types'
+import { ReactComponent as EditIcon } from 'assets/icons/kyc-accreditation/edit.svg'
 
 export interface EditButtonProps {
   link: string
@@ -13,6 +14,8 @@ export interface EditButtonProps {
     'text' | 'outlined' | 'contained',
     ButtonPropsVariantOverrides
   >
+  customLabel?: boolean
+  showIcon?: boolean
 }
 
 export const EditButton: React.FC<EditButtonProps> = ({
@@ -20,7 +23,11 @@ export const EditButton: React.FC<EditButtonProps> = ({
   params = {},
   replace = false,
   variant = 'outlined',
-  fullWidth = false
+  fullWidth = false,
+  customLabel = false,
+  showIcon = false,
+  children,
+  ...rest
 }) => (
   <Button
     component={AppRouterLinkComponent}
@@ -31,7 +38,9 @@ export const EditButton: React.FC<EditButtonProps> = ({
     replace={replace}
     disableElevation
     fullWidth={fullWidth}
+    {...rest}
   >
-    Edit
+    {showIcon && <EditIcon style={{ fill: '#fff', marginRight: '10px' }} />}
+    {customLabel ? children : 'Edit'}
   </Button>
 )
