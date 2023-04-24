@@ -16,13 +16,13 @@ import { FieldContainer } from 'app/pages/identity/components/FieldContainer/Fie
 
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity
-  hideHeader?: boolean
+  hideAvatar?: boolean
   showReview?: boolean
 }
 
 export const IndividualIdentityView = ({
   data,
-  hideHeader = false,
+  hideAvatar = false,
   showReview = false
 }: IndividualIdentityViewProps) => {
   // const classes = useStyles()
@@ -44,7 +44,7 @@ export const IndividualIdentityView = ({
               <FormSectionHeader title='Personal Information' />
             </Grid>
 
-            <IndividualInfoView data={data} hideAvatar={hideHeader} />
+            <IndividualInfoView data={data} hideAvatar={hideAvatar} />
           </Grid>
         </FieldContainer>
       </Grid>

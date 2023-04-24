@@ -122,7 +122,8 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
               //   fields={corporateIdentityFields}
               name={data.user.name}
               isIndividual={false}
-              status={data.status}
+              kycStatus={data.status}
+              accreditationStatus={data.accreditationStatus}
               identityType={data.type}
             />
           </Box>
@@ -179,7 +180,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
                 />
               )}
 
-              <CorporateIdentityView data={data} hideHeader />
+              <CorporateIdentityView data={data} hideAvatar />
             </>
           </TabPanel>
 

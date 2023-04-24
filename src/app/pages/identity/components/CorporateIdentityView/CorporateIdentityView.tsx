@@ -17,13 +17,13 @@ import { DirectorList } from 'app/pages/identity/components/CorporateIdentityVie
 
 export interface CorporateIdentityViewProps {
   data: CorporateIdentity
-  hideHeader?: boolean
+  hideAvatar?: boolean
   showReview?: boolean
 }
 
 export const CorporateIdentityView = ({
   data,
-  hideHeader = false,
+  hideAvatar = false,
   showReview = false
 }: CorporateIdentityViewProps) => {
   return (
@@ -39,13 +39,11 @@ export const CorporateIdentityView = ({
                 />
               </Grid>
             )}
-            {!hideHeader && (
-              <Grid item>
-                <FormSectionHeader title='Corporate Information' />
-              </Grid>
-            )}
+            <Grid item>
+              <FormSectionHeader title='Corporate Information' />
+            </Grid>
 
-            <CorporateInfo data={data} hideAvatar={hideHeader} />
+            <CorporateInfo data={data} hideAvatar={hideAvatar} />
           </Grid>
         </FieldContainer>
       </Grid>

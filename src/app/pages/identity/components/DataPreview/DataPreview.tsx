@@ -6,8 +6,7 @@ import { Avatar } from 'components/Avatar'
 import { Box, Typography, Grid, Container } from '@mui/material'
 // import { FieldsDisplay } from 'app/pages/identity/components/DataPreview/FieldDisplay'
 import { ReactComponent as ApprovedBadge } from 'assets/icons/kyc-accreditation/approved-badge.svg'
-// TODO: Do not remove, waiting for API to fetch accreditation application status
-// import { ReactComponent as AccreditedBadge } from 'assets/icons/kyc-accreditation/accredited-badge.svg'
+import { ReactComponent as AccreditedBadge } from 'assets/icons/kyc-accreditation/accredited-badge.svg'
 
 export interface DataPreviewProps {
   avatar?: string
@@ -15,7 +14,8 @@ export interface DataPreviewProps {
   //   fields?: Array<{ key: string; value?: string }>
   name?: string
   isIndividual: boolean
-  status: string
+  kycStatus: string
+  accreditationStatus?: string
   identityType?: string
 }
 
@@ -25,7 +25,8 @@ export const DataPreview = ({
   //   fields,
   name,
   isIndividual,
-  status,
+  kycStatus,
+  accreditationStatus,
   identityType
 }: DataPreviewProps) => {
   const classes = useStyles()
@@ -45,7 +46,7 @@ export const DataPreview = ({
   } = classes
 
   const userIdentity = isIndividual ? ' Individual ' : ' Corporate '
-  //   const typeStatus = status.toLowerCase()
+  //   const typeStatus = kycStatus.toLowerCase()
   const identityLabel =
     identityType === 'issuer' || identityType === 'investor'
       ? identityType[0].toUpperCase() + identityType.slice(1)
@@ -68,9 +69,12 @@ export const DataPreview = ({
           <Grid item className={isIndividualGrid}>
             <Box className={corporateName}>
               <Typography variant='h3'>{name}</Typography>
-              {status === 'Approved' && <ApprovedBadge />}
-              {/** TODO: Do not remove, waiting for API to fetch accreditation application status */}
-              {/* <AccreditedBadge /> */}
+              {kycStatus === 'Approved' &&
+                (accreditationStatus === 'Approved' ? (
+                  <AccreditedBadge />
+                ) : (
+                  <ApprovedBadge />
+                ))}
             </Box>
             <Box className={dataContainer}>
               <Box className={dataBox}>
