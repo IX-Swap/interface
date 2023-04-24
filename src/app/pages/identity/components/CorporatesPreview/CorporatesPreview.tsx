@@ -36,8 +36,6 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
   const accreditationSubmitted = false
   const accreditationApproved = data.accreditationStatus === 'Approved'
 
-  console.log(data)
-
   //   const corporateIdentityFields = [
   //     {
   //       key: 'Company Name',
@@ -165,7 +163,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             <>
               {data.status !== 'Draft' && (
                 <StatusBox
-                  status={data.status === 'Submitted' ? 'Pending' : data.status}
+                  status={data.status}
                   identityType='corporate'
                   applicationType='kyc'
                 />
@@ -204,11 +202,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
               <>
                 {data.accreditationStatus !== 'Draft' && (
                   <StatusBox
-                    status={
-                      data.accreditationStatus === 'Submitted'
-                        ? 'Pending'
-                        : data.accreditationStatus
-                    }
+                    status={data.accreditationStatus ?? 'Pending'}
                     identityType='corporate'
                     applicationType='accreditation'
                   />

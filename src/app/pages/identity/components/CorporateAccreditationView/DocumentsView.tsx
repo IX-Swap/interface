@@ -12,8 +12,6 @@ export interface DocumentsViewProps {
 export const DocumentsView = (props: DocumentsViewProps) => {
   const { data: documents } = props
 
-  console.log(documents)
-
   const corporateDocuments = documents.filter(
     doc => Object.values(doc).length > 0 && doc.type === 'Corporate Documents'
   )

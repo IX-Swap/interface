@@ -57,7 +57,7 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     icon: IndividualIcon
   },
   {
-    label: 'Corporate Identities',
+    label: 'Corporate KYC Applications',
     path: AuthorizerRoute.corporateIdentities,
     color: '#E65133',
     icon: CorporateIcon

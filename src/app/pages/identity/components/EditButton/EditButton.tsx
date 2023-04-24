@@ -16,6 +16,7 @@ export interface EditButtonProps {
   >
   customLabel?: boolean
   showIcon?: boolean
+  sx?: object
 }
 
 export const EditButton: React.FC<EditButtonProps> = ({
@@ -26,6 +27,7 @@ export const EditButton: React.FC<EditButtonProps> = ({
   fullWidth = false,
   customLabel = false,
   showIcon = false,
+  sx = {},
   children,
   ...rest
 }) => (
@@ -38,6 +40,7 @@ export const EditButton: React.FC<EditButtonProps> = ({
     replace={replace}
     disableElevation
     fullWidth={fullWidth}
+    sx={sx}
     {...rest}
   >
     {showIcon && <EditIcon style={{ fill: '#fff', marginRight: '10px' }} />}

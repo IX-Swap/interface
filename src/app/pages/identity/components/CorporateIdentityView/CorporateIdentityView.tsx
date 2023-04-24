@@ -18,29 +18,31 @@ import { DirectorList } from 'app/pages/identity/components/CorporateIdentityVie
 export interface CorporateIdentityViewProps {
   data: CorporateIdentity
   hideHeader?: boolean
+  showReview?: boolean
 }
 
 export const CorporateIdentityView = ({
   data,
-  hideHeader = false
+  hideHeader = false,
+  showReview = false
 }: CorporateIdentityViewProps) => {
   return (
     <Grid container spacing={2} direction='column'>
       <Grid item>
         <FieldContainer>
           <Grid container direction='column' spacing={5}>
+            {showReview && (
+              <Grid item>
+                <FormSectionHeader
+                  title='Review Responses'
+                  hasBottomBorder={true}
+                />
+              </Grid>
+            )}
             {!hideHeader && (
-              <>
-                <Grid item>
-                  <FormSectionHeader
-                    title='Review Responses'
-                    hasBottomBorder={true}
-                  />
-                </Grid>
-                <Grid item>
-                  <FormSectionHeader title='Corporate Information' />
-                </Grid>
-              </>
+              <Grid item>
+                <FormSectionHeader title='Corporate Information' />
+              </Grid>
             )}
 
             <CorporateInfo data={data} hideAvatar={hideHeader} />

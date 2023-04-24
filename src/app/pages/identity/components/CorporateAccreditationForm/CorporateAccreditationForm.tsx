@@ -68,6 +68,7 @@ export const CorporateAccreditationForm = ({
       <FormStepper
         data={data}
         // data={corporateData}
+        statusFieldName={'accreditationStatus'}
         createMutation={createMutation}
         editMutation={updateMutation}
         submitMutation={submitMutation}

@@ -1,7 +1,11 @@
 import React, { ReactElement } from 'react'
-import { Launch as LaunchIcon } from '@mui/icons-material'
-import { Grid, IconButton, Box } from '@mui/material'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
+// import { Launch as LaunchIcon } from '@mui/icons-material'
+import {
+  Grid
+  //  IconButton,
+  //   Box
+} from '@mui/material'
+// import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'helpers/strings'
 import { history } from 'config/history'
@@ -85,8 +89,8 @@ export const Actions = (props: ActionsProps): JSX.Element => {
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
   return (
-    <Grid container wrap='nowrap' justifyContent='flex-end'>
-      <Grid item>
+    <Grid wrap='nowrap' justifyContent='flex-end'>
+      {/* <Grid item>
         <IconButton
           component={AppRouterLinkComponent}
           size='small'
@@ -113,10 +117,10 @@ export const Actions = (props: ActionsProps): JSX.Element => {
         >
           <LaunchIcon color='disabled' />
         </IconButton>
-      </Grid>
-      <Grid item>
+      </Grid> */}
+      {/* <Grid item>
         <Box px={1} />
-      </Grid>
+      </Grid> */}
       {isCommitment && item.fundStatus !== 'Funds on hold' ? (
         <Grid item style={{ minWidth: 26 }} />
       ) : (

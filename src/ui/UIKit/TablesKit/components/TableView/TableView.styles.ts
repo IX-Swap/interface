@@ -12,7 +12,7 @@ export default makeStyles(theme => {
       height: 70,
       boxSizing: 'border-box',
       fontSize: 13,
-      whiteSpace: 'nowrap',
+      //   whiteSpace: 'nowrap',
       backgroundColor: tablePalette.rowBg,
       borderBottom: `1px solid ${tablePalette.border}`,
       '&:first-of-type': {

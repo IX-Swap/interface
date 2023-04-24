@@ -244,6 +244,7 @@ export interface CorporateFields {
   isIssuer?: boolean
   isTenantOwner?: boolean
   declaredAs?: string[]
+  declaredAsStatus?: object
   logo?: string
   email: string
   cynopsis?: Cynopsis
