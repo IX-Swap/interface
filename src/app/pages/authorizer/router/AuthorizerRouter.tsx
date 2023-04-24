@@ -2,6 +2,7 @@ import { AuthorizerBanksRouter } from 'app/pages/authorizer/pages/banks/router/A
 import { AuthorizerCashWithdrawalsRouter } from 'app/pages/authorizer/pages/cashWithdrawals/router/AuthorizerCashWithdrawalsRouter'
 import { AuthorizerCommitmentRouter } from 'app/pages/authorizer/pages/commitments/router/AuthorizerCommitmentRouter'
 import { AuthorizerCorporateIdentitiesRouter } from 'app/pages/authorizer/pages/corporateIdentities/router/AuthorizerCorporateIdentitiesRouter'
+import { AuthorizerCorporateAccreditationsRouter } from 'app/pages/authorizer/pages/corporateAccreditations/router/AuthorizerCorporateAccreditationsRouter'
 import { AuthorizerDSWithdrwalsRouter } from 'app/pages/authorizer/pages/dsWithdrawals/router/AuthorizerDSWithdrawalsRouter'
 import { AuthorizerIndividualIdentitiesRouter } from 'app/pages/authorizer/pages/individualIdentities/router/AuthorizerIndividualIdentitiesRouter'
 import { AuthorizerDSORouter } from 'app/pages/authorizer/pages/offerings/router/AuthorizerDSORouter'
@@ -47,6 +48,13 @@ export const AuthorizerRouter = () => {
         path={AuthorizerRoute.individualIdentities}
       >
         <AuthorizerIndividualIdentitiesRouter />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Corporate Accreditation Applications'
+        path={AuthorizerRoute.corporateAccreditations}
+      >
+        <AuthorizerCorporateAccreditationsRouter />
       </AppRoute>
 
       <AppRoute

@@ -208,13 +208,13 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
                   />
                 )}
                 {data.accreditationStatus === 'Rejected' && (
-                  <IdentityCTA
-                    link={details.editLink}
+                  <AccreditationCTA
+                    link={IdentityRoute.editCorporateAccreditation}
                     params={{
                       identityId: data._id,
-                      userId: data.user._id,
-                      label: data.companyLegalName
+                      userId: data.user._id
                     }}
+                    retry
                   />
                 )}
 

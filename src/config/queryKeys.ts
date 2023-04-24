@@ -79,6 +79,7 @@ export const authorizerQueryKeys = {
   getCashWithdrawals: 'authorizer-cash-withdrawals',
   getCommitmentsList: 'authorizer-commitments-list',
   getCorporateIdentities: 'authorizer-corporate-list',
+  getCorporateAccreditations: 'authorizer-corporate-accreditation-list',
   getSecurityWithdrawals: 'authorizer-security-withdrawals',
   getIndividualIdentityList: 'authorizer-individual-identitiesList',
   getDSOList: 'authorizer-dso-list',
