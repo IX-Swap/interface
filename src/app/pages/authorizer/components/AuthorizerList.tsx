@@ -27,7 +27,8 @@ export const AuthorizerList = <T,>(props: AuthorizerListProps<T>) => {
   const { location } = useHistory()
   return (
     <>
-      {location?.pathname?.includes('individuals') ? (
+      {location?.pathname?.includes('individuals') ||
+      location?.pathname?.includes('corporates') ? (
         <SelectionHelper
           itemComparator={props.itemComparator ?? defaultItemComparator}
         >

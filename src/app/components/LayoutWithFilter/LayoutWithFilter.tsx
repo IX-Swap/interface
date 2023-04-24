@@ -3,9 +3,8 @@ import { Grid } from '@mui/material'
 import { useStyles } from './LayoutWithFilter.styles'
 import { privateClassNames } from 'helpers/classnames'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-// import { SidebarWrapper } from 'ui/Sidebar/SidebarWrapper'
 import { RootContainer } from 'ui/RootContainer'
-
+import { SidebarWrapperKyc } from 'ui/Sidebar/SidebarWrapper'
 export interface LayoutWithFilterProps {
   title?: string
   filter: ComponentType<any>
@@ -14,12 +13,7 @@ export interface LayoutWithFilterProps {
 }
 
 export const LayoutWithFilter = (props: LayoutWithFilterProps) => {
-  const {
-    title,
-    // filter,
-    content,
-    secret = false
-  } = props
+  const { title, filter, content, secret = false } = props
   const classes = useStyles()
 
   const containerClass = secret
@@ -33,9 +27,9 @@ export const LayoutWithFilter = (props: LayoutWithFilterProps) => {
       </Grid>
       <RootContainer className={containerClass}>
         <Grid container direction='column'>
-          {/* <Grid item>
-            <SidebarWrapper>{createElement(filter)}</SidebarWrapper>
-          </Grid> */}
+          <Grid className={classes.content}>
+            <SidebarWrapperKyc>{createElement(filter)}</SidebarWrapperKyc>
+          </Grid>
           <Grid className={classes.content}>{createElement(content)}</Grid>
         </Grid>
       </RootContainer>

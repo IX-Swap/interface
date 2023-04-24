@@ -34,20 +34,19 @@ export const LayoutWithSidebar = (props: LayoutWithSidebarProps) => {
 
   return (
     <>
-      {location?.pathname?.includes('individuals') ? (
-        <RootContainer className={containerClass}>
-          <Grid container direction='column'>
-            <Grid item xs={12}>
-              <PageHeader title={title} />
-            </Grid>
-            <Grid item container className={classes.container}>
-              <Grid item>
-                <SidebarWrapperKyc>{createElement(sidebar)}</SidebarWrapperKyc>
-              </Grid>
-              <Grid className={classes.content}>{createElement(content)}</Grid>
-            </Grid>
+      {location?.pathname?.includes('individuals') ||
+      location?.pathname?.includes('corporates') ? (
+        <Grid container direction='column' style={{ display: 'table' }}>
+          <Grid item>
+            <PageHeader title={title} />
           </Grid>
-        </RootContainer>
+          <RootContainer className={containerClass}>
+            <Grid className={classes.content}>
+              <SidebarWrapperKyc>{createElement(sidebar)}</SidebarWrapperKyc>
+            </Grid>
+            <Grid className={classes.content}>{createElement(content)}</Grid>
+          </RootContainer>
+        </Grid>
       ) : (
         <RootContainer className={containerClass}>
           <Grid container direction='column'>
@@ -65,7 +64,9 @@ export const LayoutWithSidebar = (props: LayoutWithSidebarProps) => {
                   <SidebarWrapper>{createElement(sidebar)}</SidebarWrapper>
                 </Grid>
               )}
-              <Grid className={classes.content}>{createElement(content)}</Grid>
+              <Grid className={classes.content} width={'100%'}>
+                {createElement(content)}
+              </Grid>
             </Grid>
           </Grid>
         </RootContainer>
