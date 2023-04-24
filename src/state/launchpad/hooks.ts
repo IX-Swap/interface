@@ -179,6 +179,7 @@ interface GetSupportPayload {
   subject: string
   text: string
   offerId?: string
+  issuanceId?: number
 }
 
 export const useRequestSupport = () => {

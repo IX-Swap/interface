@@ -37,10 +37,18 @@ export const ContactForm: React.FC<Props> = (props) => {
 
   const onSubmit = React.useCallback(async (values: Payload) => {
     const offer = props.offerId && { offerId: props.offerId }
-    const issuance = props.issuanceId && { issuanceId: props.issuanceId }
+  
+    let issuanceId;
+    if(props.issuanceId) {
+      issuanceId = props.issuanceId;
+      if(typeof issuanceId === 'string') {
+        issuanceId = Number.parseInt(issuanceId)
+      }
+    }
+    
 
     try {
-      await getSupport({ ...values, ...offer, ...issuance })
+      await getSupport({ ...values, ...offer, issuanceId })
 
       props.onSubmit()
       addPopup({ info: { success: true, summary: `Your message has been sent successfully` } })
