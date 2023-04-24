@@ -10,20 +10,25 @@ export interface UseApproveOrRejectArgs {
   cacheQueryKey?: any
   payload?: Record<string, any>
   listingType?: any
+  featureCategory?: string
 }
 
 export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
-  const { action, cacheQueryKey, id, payload, listingType } = args
+  const { action, cacheQueryKey, id, payload, listingType, featureCategory } =
+    args
   // console.log(listingType,cacheQueryKey, payload, id, 'listingTypelistingType')
   const queryCache = useQueryCache()
-  const category = useAuthorizerCategory()
+  const categoryFromUrl = useAuthorizerCategory()
+  const category = featureCategory ?? categoryFromUrl
   const { uri, listRoute } = authorizerItemMap[category]
-  const _uri = uri.replace(/\/list$/, '')
+  const _uri: string = uri.replace(/\/list$/, '')
   // console.log(listingType, 'listing')
-  // console.log(category, 'category')
+  //   console.log(category, 'category')
   const url =
     category === 'virtual-accounts'
       ? `${_uri}/assign/${id}/${action}`
+      : category === 'corporates/accreditation'
+      ? `/identity/accreditation/corporate/${id}/${action}`
       : category === 'listings' && action === 'approve'
       ? // : listingType === 'OTC' || listingType === 'Exchange' || listingType === 'Exchange/OTC'
         `/exchange/listing/${id}/${action}`

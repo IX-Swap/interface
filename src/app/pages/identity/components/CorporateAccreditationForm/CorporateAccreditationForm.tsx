@@ -66,8 +66,8 @@ export const CorporateAccreditationForm = ({
     <>
       <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
       <FormStepper
-        data={data}
-        // data={corporateData}
+        // data={data}
+        data={corporateData}
         statusFieldName={'accreditationStatus'}
         createMutation={createMutation}
         editMutation={updateMutation}
@@ -76,6 +76,7 @@ export const CorporateAccreditationForm = ({
         defaultActiveStep={defaultActiveStep}
         formTitle={formTitle}
         nonLinear
+        submitText='Accreditation'
         createModeRedirect={IdentityRoute.editCorporateAccreditation}
       />
     </>

@@ -10,7 +10,7 @@ export const AuthorizerCorporateIdentitiesRouter = () => {
     <Switch>
       <AppRoute
         exact
-        breadcrumb='Individual Identity Details'
+        breadcrumb='Corporate Identity Details'
         path='/app/authorizer/corporates/:userId/:identityId/view'
       >
         <CorporateAuthorization />
