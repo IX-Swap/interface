@@ -339,6 +339,7 @@ export interface BaseIdentity {
   declarations: IdentityDeclarations
   step?: number
   createdBy: string
+  photo?: any
 }
 
 export interface DeclarationTemplate {

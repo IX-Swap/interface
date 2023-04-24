@@ -25,6 +25,7 @@ export const IndividualIdentityView = ({
   hideHeader = false,
   showReview = false
 }: IndividualIdentityViewProps) => {
+  // const classes = useStyles()
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
@@ -72,27 +73,27 @@ export const IndividualIdentityView = ({
             </Grid>
           </Grid>
         </FieldContainer>
-      </Grid>
+      </Grid> */}
 
-      <NoticeOfAssessmentView />
+      {/* <NoticeOfAssessmentView /> */}
 
-      <Grid item className={privateClassNames()}>
+      {/* <Grid item className={privateClassNames()}>
         <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
       </Grid>
 
       <Grid item>
         <FatcaView data={data} />
-      </Grid>
+      </Grid> */}
 
-      <Grid item>
+      {/* <Grid item>
         <InvestorDeclarationView isCorporate={false} data={data} />
       </Grid>
 
       <Grid item>
         <OptInRequirementView data={data} />
-      </Grid>
+      </Grid> */}
 
-      <Grid item>
+      {/* <Grid item>
         <FieldContainer>
           <Grid item container direction={'column'} spacing={3}>
             <Grid item>

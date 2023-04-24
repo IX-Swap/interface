@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+// import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { CorporatesPreview } from 'app/pages/identity/components/CorporatesPreview/CorporatesPreview'
@@ -9,6 +10,7 @@ import { IndividualPreview } from 'app/pages/identity/components/IndividualPrevi
 import { CreateDetailsOfIssuanceButton } from 'app/pages/identity/components/NoIdentityView/CreateDetailsOfIssuanceButton'
 import { CreateIssuerIdentityButton } from 'app/pages/identity/components/NoIdentityView/CreateIssuerIdentityButton'
 import React, { useState } from 'react'
+// import { TwoFAAlert } from '../../pages/SuccessPage/TwoFAAlert'
 export const IdentityPreview = () => {
   const {
     hasIdentity,
@@ -74,13 +76,16 @@ export const IdentityPreview = () => {
           )}
         </div>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={10}>
         {selectedIdentity === 'individual' ? (
           <IndividualPreview data={individualIdentity} />
         ) : (
           <CorporatesPreview data={corporateIdentities.list[0]} />
         )}
       </Grid>
+      {/* <Grid item xs={1}>
+      <TwoFAAlert />
+      </Grid> */}
     </Grid>
   )
 }

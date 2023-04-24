@@ -48,5 +48,39 @@ export const useStyles = makeStyles(theme => ({
     '& p': {
       paddingTop: theme.spacing(1)
     }
+  },
+
+  investorIdentity: {
+    color: '#3B4251',
+    fontSize: '14px',
+    lineHeight: '14px',
+    letterSpacing: '-0.01em;',
+    // marginTop: '25px',
+    textTransform: 'capitalize'
+  },
+  investorIdentitySub: {
+    color: '#778194',
+    fontSize: '14px',
+    lineHeight: '14px',
+    letterSpacing: '-0.01em;',
+    marginTop: '12px',
+    textTransform: 'capitalize'
+  },
+  bbox: {
+    display: 'grid',
+    gridTemplateColumns: 'auto auto auto',
+    gap: '10px',
+    padding: '10px',
+    width: 'inherit',
+    '& div': {
+      textAlign: 'center',
+      fontSize: '30px'
+    }
+  },
+  item1: {
+    gridRow: '1 / 4'
   }
+  // bbox > div {
+
+  // }
 }))
