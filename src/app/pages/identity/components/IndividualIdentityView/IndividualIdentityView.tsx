@@ -17,18 +17,20 @@ import { FieldContainer } from 'app/pages/identity/components/FieldContainer/Fie
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity
   hideHeader?: boolean
+  showReview?: boolean
 }
 
 export const IndividualIdentityView = ({
   data,
-  hideHeader = false
+  hideHeader = false,
+  showReview = false
 }: IndividualIdentityViewProps) => {
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
         <FieldContainer>
           <Grid container direction={'column'} spacing={5}>
-            {!hideHeader && (
+            {showReview && (
               <Grid item>
                 <FormSectionHeader
                   title='Review Responses'

@@ -1,7 +1,11 @@
 import React, { ReactElement } from 'react'
-import { Launch as LaunchIcon } from '@mui/icons-material'
-import { Grid, IconButton, Box } from '@mui/material'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
+// import { Launch as LaunchIcon } from '@mui/icons-material'
+import {
+  Grid
+  //  IconButton,
+  //   Box
+} from '@mui/material'
+// import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'helpers/strings'
 import { history } from 'config/history'
@@ -85,43 +89,38 @@ export const Actions = (props: ActionsProps): JSX.Element => {
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
   return (
-    <Grid container wrap='nowrap' justifyContent='flex-end'>
-      {location?.pathname?.includes('individuals') ? (
-        ''
-      ) : (
-        <Grid item>
-          <IconButton
-            component={AppRouterLinkComponent}
-            size='small'
-            data-testid='view-button'
-            to={
-              category === 'virtual-accounts'
-                ? `/app/authorizer/${category}/${id}/view`
-                : category === 'listings' && listingType === 'OTC'
-                ? `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
-                : (status === 'Approved' ||
-                    status === 'Rejected' ||
-                    status === 'Submitted') &&
-                  category === 'cash-withdrawals'
-                ? `/app/authorizer/${category}/${userId}/${id}/${status}/view`
-                : status === '' && category === 'cash-withdrawals'
-                ? `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
-                : `/app/authorizer/${category}/${userId}/${id}/view`
-            }
-            params={{
-              itemId: id,
-              cacheQueryKey,
-              listingType
-            }}
-          >
-            <LaunchIcon color='disabled' />
-          </IconButton>
-        </Grid>
-      )}
-
-      <Grid item>
+    <Grid wrap='nowrap' justifyContent='flex-end'>
+      {/* <Grid item>
+        <IconButton
+          component={AppRouterLinkComponent}
+          size='small'
+          data-testid='view-button'
+          to={
+            category === 'virtual-accounts'
+              ? `/app/authorizer/${category}/${id}/view`
+              : category === 'listings' && listingType === 'OTC'
+              ? `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
+              : (status === 'Approved' ||
+                  status === 'Rejected' ||
+                  status === 'Submitted') &&
+                category === 'cash-withdrawals'
+              ? `/app/authorizer/${category}/${userId}/${id}/${status}/view`
+              : status === '' && category === 'cash-withdrawals'
+              ? `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
+              : `/app/authorizer/${category}/${userId}/${id}/view`
+          }
+          params={{
+            itemId: id,
+            cacheQueryKey,
+            listingType
+          }}
+        >
+          <LaunchIcon color='disabled' />
+        </IconButton>
+      </Grid> */}
+      {/* <Grid item>
         <Box px={1} />
-      </Grid>
+      </Grid> */}
       {isCommitment && item.fundStatus !== 'Funds on hold' ? (
         <Grid item style={{ minWidth: 26 }} />
       ) : (

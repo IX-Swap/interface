@@ -244,6 +244,7 @@ export interface CorporateFields {
   isIssuer?: boolean
   isTenantOwner?: boolean
   declaredAs?: string[]
+  declaredAsStatus?: object
   logo?: string
   email: string
   cynopsis?: Cynopsis
@@ -330,6 +331,7 @@ export interface IdentityDeclarations {
 export interface BaseIdentity {
   _id: string
   status: AuthorizableStatus
+  accreditationStatus?: AuthorizableStatus
   user: User
   createdAt: string
   updatedAt: string

@@ -2,7 +2,7 @@ import React from 'react'
 import { useStyles } from 'app/pages/identity/components/DataPreview/DataPreview.styles'
 import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar.svg'
 import { Avatar } from 'components/Avatar'
-import { Status } from 'ui/Status/Status'
+// import { Status } from 'ui/Status/Status'
 import { Box, Typography, Grid, Container } from '@mui/material'
 // import { FieldsDisplay } from 'app/pages/identity/components/DataPreview/FieldDisplay'
 import { ReactComponent as ApprovedBadge } from 'assets/icons/kyc-accreditation/approved-badge.svg'
@@ -39,13 +39,13 @@ export const DataPreview = ({
     dataBox,
     dataLabel,
     dataValue,
-    approveButton,
+    // approveButton,
     emptyBox,
     whiteBackground
   } = classes
 
   const userIdentity = isIndividual ? ' Individual ' : ' Corporate '
-  const typeStatus = status.toLowerCase()
+  //   const typeStatus = status.toLowerCase()
   const identityLabel =
     identityType === 'issuer' || identityType === 'investor'
       ? identityType[0].toUpperCase() + identityType.slice(1)
@@ -98,9 +98,9 @@ export const DataPreview = ({
               </Box>
             </Box>
           </Grid>
-          <Grid item className={approveButton}>
+          {/* <Grid item className={approveButton}>
             <Status label={status} type={typeStatus} />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
       <Box className={emptyBox} />

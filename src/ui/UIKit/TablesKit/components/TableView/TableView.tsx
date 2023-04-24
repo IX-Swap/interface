@@ -40,6 +40,7 @@ export interface TableViewProps<T> {
   uri?: string
   queryEnabled?: boolean
   columns: Array<TableColumn<T>> | any
+  compactColumns?: Array<TableColumn<T>> | any
   bordered?: boolean
   filter?: BaseFilter
   hasStatus?: boolean

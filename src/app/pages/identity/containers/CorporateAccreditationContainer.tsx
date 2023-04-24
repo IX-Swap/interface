@@ -1,30 +1,34 @@
 import React, { ComponentType, createElement } from 'react'
-import { useCorporate } from 'app/pages/identity/hooks/useCorporate'
-import { CorporateIdentityView } from 'app/pages/identity/components/CorporateIdentityView/CorporateIdentityView'
+import { useCorporateAccreditation } from 'app/pages/identity/hooks/useCorporateAccreditation'
+import { CorporateAccreditationView } from 'app/pages/identity/components/CorporateAccreditationView/CorporateAccreditationView'
 import { useParams } from 'react-router-dom'
-import { CorporateIdentity } from '../types/forms'
+// import { CorporateAccreditation } from '../types/forms'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 
-export interface CorporateIdentityContainerProps {
-  component?: ComponentType<{ data: CorporateIdentity; type?: CorporateType }>
+export interface CorporateAccreditationContainerProps {
+  component?: ComponentType<{
+    // data: CorporateAccreditation
+    data: any
+    type?: CorporateType
+  }>
   loadingComponent?: ComponentType
   errorComponent?: ComponentType
   fallbackComponent?: ComponentType
   type?: CorporateType
 }
 
-export const CorporateIdentityContainer = ({
+export const CorporateAccreditationContainer = ({
   component,
   loadingComponent,
   errorComponent,
   fallbackComponent,
   type
-}: CorporateIdentityContainerProps) => {
-  const { userId, identityId } = useParams<{
+}: CorporateAccreditationContainerProps) => {
+  const { identityId } = useParams<{
     userId: string
     identityId: string
   }>()
-  const { data, isLoading, isError } = useCorporate({ userId, identityId })
+  const { data, isLoading, isError } = useCorporateAccreditation(identityId)
 
   if (isLoading) {
     return loadingComponent === undefined
@@ -46,7 +50,5 @@ export const CorporateIdentityContainer = ({
     return createElement(component, { data, type })
   }
 
-  const isIssuer = data.type === 'issuer'
-
-  return <CorporateIdentityView data={data} isIssuer={isIssuer} showReview />
+  return <CorporateAccreditationView data={data} />
 }
