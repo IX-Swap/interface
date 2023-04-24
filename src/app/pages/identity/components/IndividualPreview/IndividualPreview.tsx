@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useStyles } from 'app/pages/identity/components/IndividualPreview/IndividualPreview.styles'
-import { Box, Grid, Tabs, Tab } from '@mui/material'
+import { Box, Grid, Tabs, Tab, Paper } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 // import { Status } from 'ui/Status/Status'
@@ -27,6 +27,15 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
   if (data === undefined) {
     return null
   }
+
+  const onKycTab = selectedIdx === 0
+  //   const kycSubmitted = data.status === 'Submitted'
+  const kycSubmitted = false
+  const kycApproved = data.status === 'Approved'
+  const hasAccreditation = typeof data.accreditationStatus !== 'undefined'
+  //   const accreditationSubmitted = data.accreditationStatus === 'Submitted'
+  const accreditationSubmitted = false
+  const accreditationApproved = data.accreditationStatus === 'Approved'
 
   const individualName =
     !isEmptyString(data?.firstName) && !isEmptyString(data?.lastName)
@@ -77,7 +86,8 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
               // fields={individualIdentityFields}
               name={data.user.name}
               isIndividual={true}
-              status={data.status}
+              kycStatus={data.status}
+              accreditationStatus={data.accreditationStatus}
             />
           </Box>
         </Grid>
@@ -93,7 +103,8 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
             showIcon
             sx={{
               padding: '10px 30px !important',
-              width: '300px !important'
+              width: '300px !important',
+              visibility: 'hidden'
             }}
           >
             Edit {selectedIdx === 0 ? 'Personal' : 'Accreditation'} Information
@@ -116,8 +127,8 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
             <>
               {data.status !== 'Draft' && (
                 <StatusBox
-                  status={data.status === 'Submitted' ? 'Pending' : data.status}
-                  identityType='corporate'
+                  status={data.status}
+                  identityType='individual'
                   applicationType='kyc'
                 />
               )}
@@ -132,34 +143,85 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
                 />
               )}
 
-              <IndividualIdentityView data={data} hideHeader />
+              <IndividualIdentityView data={data} hideAvatar />
             </>
           </TabPanel>
 
           <TabPanel pt={0} value={selectedIdx} index={1}>
-            {data.status !== 'Approved' ? (
+            {!kycApproved ? (
               <StatusBox
                 status={'Locked'}
-                identityType='corporate'
+                identityType='individual'
                 applicationType='accreditation'
+              />
+            ) : !hasAccreditation ? (
+              <AccreditationCTA
+                link={IdentityRoute.createIndividual}
+                params={{
+                  identityId: data._id,
+                  userId: data.user._id
+                }}
               />
             ) : (
               <>
-                <AccreditationCTA
-                  link={IdentityRoute.editIndividual}
-                  params={{
-                    label: name,
-                    identityId: data._id,
-                    userId: data.user._id
-                  }}
-                />
-                {/** TODO: Accreditaion details */}
+                {data.accreditationStatus !== 'Draft' && (
+                  <StatusBox
+                    status={data.accreditationStatus ?? 'Pending'}
+                    identityType='corporate'
+                    applicationType='accreditation'
+                  />
+                )}
+                {data.accreditationStatus === 'Rejected' && (
+                  <AccreditationCTA
+                    link={IdentityRoute.editIndividual}
+                    params={{
+                      identityId: data._id,
+                      userId: data.user._id
+                    }}
+                    retry
+                  />
+                )}
+
+                {/* TODO: Individual Accreditation Details */}
               </>
             )}
           </TabPanel>
         </Grid>
         <Grid container item className={classes.rightBlock}>
           <Box position='sticky' top={90}>
+            {((onKycTab && !kycApproved && !kycSubmitted) ||
+              (!onKycTab &&
+                kycApproved &&
+                hasAccreditation &&
+                !accreditationApproved &&
+                !accreditationSubmitted)) && (
+              <Grid item xs={12}>
+                <Paper sx={{ p: 4, borderRadius: 2, mb: 2 }}>
+                  <EditButton
+                    fullWidth
+                    variant={'contained'}
+                    link={
+                      onKycTab
+                        ? IdentityRoute.editIndividual
+                        : IdentityRoute.editIndividual
+                    }
+                    params={{
+                      identityId: data._id,
+                      userId: data.user._id
+                    }}
+                    customLabel
+                    sx={{
+                      paddingLeft: '10px !important',
+                      paddingRight: '10px !important',
+                      width: '100% !important'
+                    }}
+                  >
+                    Edit {onKycTab ? 'Personal' : 'Accreditation'} Information
+                  </EditButton>
+                </Paper>
+              </Grid>
+            )}
+
             <Grid item xs={12}>
               <TwoFANotice />
             </Grid>
