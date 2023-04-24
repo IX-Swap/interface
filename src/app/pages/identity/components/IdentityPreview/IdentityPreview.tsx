@@ -76,16 +76,13 @@ export const IdentityPreview = () => {
           )}
         </div>
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={12}>
         {selectedIdentity === 'individual' ? (
           <IndividualPreview data={individualIdentity} />
         ) : (
           <CorporatesPreview data={corporateIdentities.list[0]} />
         )}
       </Grid>
-      {/* <Grid item xs={1}>
-      <TwoFAAlert />
-      </Grid> */}
     </Grid>
   )
 }
