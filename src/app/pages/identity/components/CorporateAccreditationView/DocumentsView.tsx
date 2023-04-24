@@ -10,45 +10,20 @@ export interface DocumentsViewProps {
 }
 
 export const DocumentsView = (props: DocumentsViewProps) => {
-  //   const { data: documents } = props
+  const { data: documents } = props
 
-  //   const corporateDocuments = documents.filter(
-  //     doc => Object.values(doc).length > 0 && doc.type === 'Corporate Documents'
-  //   )
-  //   const financialDocuments = documents.filter(
-  //     doc => Object.values(doc).length > 0 && doc.type === 'Financial Documents'
-  //   )
-  //   const evidenceDocuments = documents.filter(
-  //     doc =>
-  //       Object.values(doc).length > 0 && doc.type === 'Evidence of Accreditation'
-  //   )
+  console.log(documents)
 
-  const { data: declarations } = props
-
-  const corporateDocuments = declarations.investorsStatus.corporateDocuments
-    ?.map(doc => doc.value)
-    ?.filter(
-      doc =>
-        typeof doc !== 'undefined' &&
-        Object.values(doc).length > 0 &&
-        doc.type === 'Corporate Documents'
-    )
-  const financialDocuments = declarations.investorsStatus.financialDocuments
-    ?.map(doc => doc.value)
-    ?.filter(
-      doc =>
-        typeof doc !== 'undefined' &&
-        Object.values(doc).length > 0 &&
-        doc.type === 'Financial Documents'
-    )
-  const evidenceDocuments = declarations.investorsStatus.evidenceOfAccreditation
-    ?.map(doc => doc.value)
-    ?.filter(
-      doc =>
-        typeof doc !== 'undefined' &&
-        Object.values(doc).length > 0 &&
-        doc.type === 'Evidence of Accreditation'
-    )
+  const corporateDocuments = documents.filter(
+    doc => Object.values(doc).length > 0 && doc.type === 'Corporate Documents'
+  )
+  const financialDocuments = documents.filter(
+    doc => Object.values(doc).length > 0 && doc.type === 'Financial Documents'
+  )
+  const evidenceDocuments = documents.filter(
+    doc =>
+      Object.values(doc).length > 0 && doc.type === 'Evidence of Accreditation'
+  )
 
   return (
     <FieldContainer>

@@ -14,7 +14,7 @@ export const useCreateCorporateAccreditation = () => {
     const uri = identityURL.corporates.accreditation.create(params.identityId)
 
     values.step =
-      Number(typeof values.step !== 'undefined' ? values.step : 1) + 1
+      typeof values.step === 'undefined' || values.step < 2 ? 2 : values.step
 
     return await apiService.put<CorporateIdentity>(uri, {
       ...values

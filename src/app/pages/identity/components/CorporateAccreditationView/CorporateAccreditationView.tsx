@@ -38,8 +38,7 @@ export const CorporateAccreditationView = ({
       </Grid>
 
       <Grid item>
-        {/* <DocumentsView data={data.documents} /> */}
-        <DocumentsView data={data.declarations} />
+        <DocumentsView data={data.documents} />
       </Grid>
     </Grid>
   )

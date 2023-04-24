@@ -27,6 +27,15 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
     return null
   }
 
+  const onKycTab = selectedIdx === 0
+  //   const kycSubmitted = data.status === 'Submitted'
+  const kycSubmitted = false
+  const kycApproved = data.status === 'Approved'
+  const hasAccreditation = typeof data.accreditationStatus !== 'undefined'
+  //   const accreditationSubmitted = data.accreditationStatus === 'Submitted'
+  const accreditationSubmitted = false
+  const accreditationApproved = data.accreditationStatus === 'Approved'
+
   console.log(data)
 
   //   const corporateIdentityFields = [
@@ -136,7 +145,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
               visibility: 'hidden'
             }}
           >
-            Edit {selectedIdx === 0 ? 'Personal' : 'Accreditation'} Information
+            Edit {onKycTab ? 'Personal' : 'Accreditation'} Information
           </EditButton>
           {/* <Box mx={1} component='span' /> */}
           {/* <ViewButton
@@ -177,32 +186,44 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
           </TabPanel>
 
           <TabPanel pt={0} value={selectedIdx} index={1}>
-            {/* ! TEMPORARY WHILE WE DON'T HAVE ACCREDITATION STATUS FROM API */}
-            <AccreditationCTA
-              link={IdentityRoute.createCorporateAccreditation}
-              params={{
-                identityId: data._id,
-                userId: data.user._id
-              }}
-            />
-            {data.status !== 'Approved' ? (
+            {!kycApproved ? (
               <StatusBox
                 status={'Locked'}
                 identityType='corporate'
                 applicationType='accreditation'
               />
+            ) : !hasAccreditation ? (
+              <AccreditationCTA
+                link={IdentityRoute.createCorporateAccreditation}
+                params={{
+                  identityId: data._id,
+                  userId: data.user._id
+                }}
+              />
             ) : (
               <>
-                {/* TODO: if no accreditation exists */}
-                {/* <AccreditationCTA
-                  link={IdentityRoute.createCorporateAccreditation}
-                  params={{
-                    identityId: data._id,
-                    userId: data.user._id
-                  }}
-                /> */}
+                {data.accreditationStatus !== 'Draft' && (
+                  <StatusBox
+                    status={
+                      data.accreditationStatus === 'Submitted'
+                        ? 'Pending'
+                        : data.accreditationStatus
+                    }
+                    identityType='corporate'
+                    applicationType='accreditation'
+                  />
+                )}
+                {data.accreditationStatus === 'Rejected' && (
+                  <IdentityCTA
+                    link={details.editLink}
+                    params={{
+                      identityId: data._id,
+                      userId: data.user._id,
+                      label: data.companyLegalName
+                    }}
+                  />
+                )}
 
-                {/* TODO: else, show this */}
                 <CorporateAccreditationView data={data} />
               </>
             )}
@@ -210,33 +231,39 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
         </Grid>
         <Grid container item className={classes.rightBlock}>
           <Box position='sticky' top={90}>
-            <Grid item xs={12}>
-              {/* TODO: only show when an accreditation is already created, hide when approved? (submitted?) */}
-              <Paper sx={{ p: 4, borderRadius: 2, mb: 2 }}>
-                <EditButton
-                  fullWidth
-                  variant={'contained'}
-                  link={
-                    selectedIdx === 0
-                      ? details.editLink
-                      : IdentityRoute.editCorporateAccreditation
-                  }
-                  params={{
-                    identityId: data._id,
-                    userId: data.user._id
-                  }}
-                  customLabel
-                  sx={{
-                    paddingLeft: '10px !important',
-                    paddingRight: '10px !important',
-                    width: '100% !important'
-                  }}
-                >
-                  Edit {selectedIdx === 0 ? 'Personal' : 'Accreditation'}{' '}
-                  Information
-                </EditButton>
-              </Paper>
-            </Grid>
+            {((onKycTab && !kycApproved && !kycSubmitted) ||
+              (!onKycTab &&
+                kycApproved &&
+                hasAccreditation &&
+                !accreditationApproved &&
+                !accreditationSubmitted)) && (
+              <Grid item xs={12}>
+                <Paper sx={{ p: 4, borderRadius: 2, mb: 2 }}>
+                  <EditButton
+                    fullWidth
+                    variant={'contained'}
+                    link={
+                      onKycTab
+                        ? details.editLink
+                        : IdentityRoute.editCorporateAccreditation
+                    }
+                    params={{
+                      identityId: data._id,
+                      userId: data.user._id
+                    }}
+                    customLabel
+                    sx={{
+                      paddingLeft: '10px !important',
+                      paddingRight: '10px !important',
+                      width: '100% !important'
+                    }}
+                  >
+                    Edit {onKycTab ? 'Personal' : 'Accreditation'} Information
+                  </EditButton>
+                </Paper>
+              </Grid>
+            )}
+
             <Grid item xs={12}>
               <TwoFANotice />
             </Grid>

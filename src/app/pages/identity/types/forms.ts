@@ -330,6 +330,7 @@ export interface IdentityDeclarations {
 export interface BaseIdentity {
   _id: string
   status: AuthorizableStatus
+  accreditationStatus?: AuthorizableStatus
   user: User
   createdAt: string
   updatedAt: string

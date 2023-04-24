@@ -57,7 +57,7 @@ export const CorporateAccreditationForm = ({
   }
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
-    isSubmitted: corporateData?.status === 'Submitted',
+    isSubmitted: corporateData?.accreditationStatus === 'Submitted',
     lastStepIndex: corporateAccreditationFormSteps.length - 1,
     isJourneyCompleted: isCorporateJourneyCompleted
   })
