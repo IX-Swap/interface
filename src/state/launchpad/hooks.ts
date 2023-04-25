@@ -41,7 +41,10 @@ import {
   TeamMember,
   VideoLink,
 } from 'components/LaunchpadIssuance/IssuanceForm/Information/types'
-import { getInitialValues as getOfferInitialValues } from 'components/LaunchpadIssuance/IssuanceForm/Information/util'
+import {
+  getInitialValues as getOfferInitialValues,
+  isDefinedNumber,
+} from 'components/LaunchpadIssuance/IssuanceForm/Information/util'
 import { IssuanceFile } from 'components/LaunchpadIssuance/IssuanceForm/types'
 import { DirectorInfo, VettingFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/types'
 import { initialValues as vettingInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
@@ -1084,9 +1087,9 @@ export const useOfferFormInitialValues = (
 
         timeframe: payload.timeframe,
         tokenName: payload.tokenName ?? '',
-        decimals: payload.decimals ? Number(payload.decimals) : null,
+        decimals: payload.decimals,
         trusteeAddress: payload.trusteeAddress,
-        tokenPrice: payload.tokenPrice ? Number(payload.tokenPrice) : null,
+        tokenPrice: isDefinedNumber(payload.tokenPrice) ? Number(payload.tokenPrice) : null,
         tokenStandart: payload.tokenStandart,
         totalSupply: payload.totalSupply ?? '',
         tokenReceiverAddress: payload.tokenReceiverAddress ?? '',
@@ -1161,7 +1164,7 @@ export const useSubmitOffer = () => {
         tokenSymbol: payload.tokenTicker,
         investingTokenSymbol: payload.tokenType,
         tokenPrice: payload.tokenPrice?.toString(),
-        decimals: payload.decimals,
+        decimals: isDefinedNumber(payload.decimals) ? Number(payload.decimals) : null,
         tokenStandart: payload.tokenStandart,
 
         totalSupply: payload.totalSupply,
