@@ -5,6 +5,7 @@ import { Icon } from 'ui/Icons/Icon'
 import { AuthRoute } from 'auth/router/config'
 
 export const SingPassPage = () => {
+  console.log('singData Page')
   const { data } = useMyInfoAuthorize()
   console.log(data, 'singData')
   const onCancel = () => {

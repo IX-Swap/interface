@@ -58,11 +58,10 @@ export const Register: React.FC = observer(() => {
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
 
   console.log(data, 'singData 1')
-  const isMyInfo = getFilterValue('email') !== undefined
   if (data !== undefined && localStorage?.getItem('singpassPage') === null) {
     return <SingPassPage />
   }
-
+  const isMyInfo = getFilterValue('email') !== undefined
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
