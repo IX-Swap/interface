@@ -117,8 +117,11 @@ export function DropdownField<T>(props: Props<T>) {
 
   React.useEffect(() => {
     function handleClickOutside(event: Event) {
-      if (!container.current?.contains(event.target as Node | null)) {
+      const targetNode = event.target as Node | null
+      const isCorrectOption = options.find((opt) => opt.label === targetNode?.textContent)
+      if (!container.current?.contains(targetNode) && (!targetNode || targetNode.nodeValue) !== '' && !isCorrectOption) {
         setShowDropdown(false)
+        setOptionSearch('')
       }
     }
 
