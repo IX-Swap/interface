@@ -24,6 +24,11 @@ export const AuthorizerRoute = {
     'authorizer',
     'corporateAccreditation'
   ]),
+  individualAccreditations: makeURL([
+    'app',
+    'authorizer',
+    'individualAccreditation'
+  ]),
   offerings: makeURL(['app', 'authorizer', 'offerings']),
   commitments: makeURL(['app', 'authorizer', 'commitments']),
   withdrawalAddresses: makeURL(['app', 'authorizer', 'withdrawalAddresses']),

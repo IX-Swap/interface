@@ -114,7 +114,7 @@ export const FormStep = (props: FormStepProps) => {
   const isCurrentStep = activeStep === index
   const classes = useStyles()
   const history = useHistory()
-
+  console.log(props, 'akl')
   if (!isCurrentStep) {
     return null
   }

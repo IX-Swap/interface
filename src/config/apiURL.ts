@@ -53,7 +53,17 @@ export const identityURL = {
     update: (userId?: string) => `/identity/individuals/${userId}`,
     get: (userId?: string) => `/identity/individuals/${userId}`,
     submit: (id?: string) => `/identity/individuals/${id}/submit`,
-    getSingPassData: '/sing-pass/getuser'
+    getSingPassData: '/sing-pass/getuser',
+    accreditation: {
+      create: (individualId?: string) =>
+        `/identity/accreditation/individual/${individualId}`,
+      update: (individualId?: string) =>
+        `/identity/accreditation/individual/${individualId}`,
+      submit: (id?: string) =>
+        `/identity/accreditation/individual/${id}/submit`,
+      get: (identityId?: string) =>
+        `/identity/accreditation/individual/${identityId}`
+    }
   },
   detailsOfIssuance: {
     create: (userId?: string) => `/identity/issuance-detail/${userId}`,

@@ -7,6 +7,9 @@ import React from 'react'
 import { Switch } from 'react-router-dom'
 import { IdentityRoute } from './config'
 import { SuccessPage } from 'app/pages/identity/pages/SuccessPage/SuccessPage'
+import { CreateIndividualAccreditation } from '../pages/CreateIndividualAccreditation/CreateIndividualAccreditation'
+import { EditIndividualAccreditation } from '../pages/EditIndividualAccreditation/EditIndividualAccreditation'
+import { ViewIndividualAccreditation } from '../pages/ViewIndividualAccreditation/ViewIndividualAccreditation'
 
 export const IdentityRouter = () => {
   return (
@@ -30,9 +33,30 @@ export const IdentityRouter = () => {
       >
         <SuccessPage />
       </AppRoute>
-
       <AppRoute path={IdentityRoute.list}>
         <IdentitiesList />
+      </AppRoute>
+      <AppRoute
+        breadcrumb='Create Individual Investor Accreditation'
+        exact
+        path={IdentityRoute.createIndividualAccreditation}
+      >
+        <CreateIndividualAccreditation title='Create Individual Investor Accreditation' />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Edit Individual Investor Accreditation'
+        exact
+        path={IdentityRoute.editIndividualAccreditation}
+      >
+        <EditIndividualAccreditation />
+      </AppRoute>
+      <AppRoute
+        breadcrumb='View Individual Investor Accreditation'
+        exact
+        path={IdentityRoute.viewIndividualAccreditation}
+      >
+        <ViewIndividualAccreditation />
       </AppRoute>
     </Switch>
   )
