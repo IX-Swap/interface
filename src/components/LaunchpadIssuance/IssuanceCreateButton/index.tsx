@@ -164,7 +164,8 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
           color={props.color}
           padding="0 1.5rem"
         >
-          <Plus size="15" color={props.color ?? theme.launchpad.colors.primary} /> New Issuance
+          <Plus size="15" color={props.color ?? theme.launchpad.colors.primary} />{' '}
+          <NewIssuanceLabel>New Issuance</NewIssuanceLabel>
         </OutlineButton>
       </FlexVerticalCenter>
 
@@ -217,4 +218,9 @@ const PinContainer = styled.div`
 const ButtonLabel = styled.div`
   ${text1}
   color: ${(props) => props.theme.launchpad.colors.text.light};
+`
+
+const NewIssuanceLabel = styled.span`
+  ${text1}
+  color: ${(props) => props.theme.launchpad.colors.primary};
 `
