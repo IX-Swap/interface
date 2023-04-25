@@ -2,8 +2,6 @@ import React, { useCallback } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
-import { Eye } from 'react-feather'
-
 import { SortIcon } from '../utils/SortIcon'
 
 import { AbstractOrder, Issuance, OfferStatus } from 'state/launchpad/types'
@@ -21,6 +19,7 @@ import { IssuanceTable, TableHeader, IssuanceRow, Raw, Title } from 'components/
 import { useGetIssuances, useOnChangeOrder } from 'state/launchpad/hooks'
 import { IssuancePagination } from './IssuancePagination'
 import { ReactComponent as GearIcon } from 'assets/launchpad/svg/gear-icon.svg'
+import { ReactComponent as EyeIcon } from 'assets/launchpad/svg/eye-icon.svg'
 import { DiscreteInternalLink } from 'theme'
 import { useRole } from 'state/user/hooks'
 import { TitleBox } from './TitleBox'
@@ -184,7 +183,7 @@ export const IssuancesFull = () => {
                     height="34px"
                     onClick={() => selectIssuance(issuance)}
                   >
-                    View Application <Eye size="15" color={theme.launchpad.colors.primary} />
+                    View Application <EyeIcon />
                   </OutlineButton>
 
                   {isAdmin && !!issuance.isMine && (

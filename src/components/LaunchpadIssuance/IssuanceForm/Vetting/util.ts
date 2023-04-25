@@ -41,14 +41,11 @@ export const initialValues = {
 
 export const defaultValues = {
   applicantFullName: '',
-  beneficialOwners: [],
 
   companyName: '',
   companyWebsite: '',
 
   description: '',
-
-  directors: [],
 
   document: {
     pitchDeck: null,
@@ -65,6 +62,20 @@ export const defaultValues = {
     resolutionAuthorizedSignatory: null,
   },
   fundingDocuments: [],
+  beneficialOwners: [
+    {
+      fullName: '',
+      proofOfIdentity: null,
+      proofOfAddress: null,
+    },
+  ],
+  directors: [
+    {
+      fullName: '',
+      proofOfIdentity: null,
+      proofOfAddress: null,
+    },
+  ],
 
   email: '',
   smartContractStrategy: SMART_CONTRACT_STRATEGIES.original,
