@@ -16,6 +16,8 @@ export const SingPassPage = () => {
     localStorage.setItem('singpassPage', 'true')
   }
 
+  console.log(data, 'singData')
+
   const ChevronIcon = () => (
     <Icon
       name={'chevron-right'}
@@ -131,10 +133,10 @@ export const SingPassPage = () => {
               value={data?.noahistory?.noas
                 ?.map((data: any) =>
                   Object.keys(data)?.map(dataItem => {
-                    return ` ${dataItem}:${data[dataItem].value}`
+                    return ` ${dataItem}:${data[dataItem]?.value}`
                   })
                 )
-                .join()}
+                ?.join()}
             />
           </div>
           <div
