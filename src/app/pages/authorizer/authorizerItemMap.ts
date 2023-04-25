@@ -37,6 +37,10 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
       uri: '/identity/corporates/list',
       listRoute: AuthorizerRoute.corporateIdentities
     },
+    [AppFeature.Corporates + '/role']: {
+      uri: '/identity/corporates/list',
+      listRoute: AuthorizerRoute.corporateIdentities
+    },
     [AppFeature.IssuanceDetails]: {
       uri: '/identity/issuance-detail/list',
       listRoute: AuthorizerRoute.issuanceDetails

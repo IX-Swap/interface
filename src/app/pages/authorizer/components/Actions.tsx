@@ -18,6 +18,7 @@ export interface ActionsProps {
   item: any
   cacheQueryKey: any
   featureCategory?: string
+  investorRole?: string
 }
 
 export type ActionsType = (props: ActionsProps) => ReactElement
@@ -35,13 +36,17 @@ const getUserId = (item: any) => {
 }
 
 export const Actions = (props: ActionsProps): JSX.Element => {
-  const { item, cacheQueryKey, featureCategory } = props
+  const { item, cacheQueryKey, featureCategory, investorRole } = props
   const location = useLocation()
   const id: string = item._id
   const splitted = location.pathname.split('/')
   const status = location.search.split('=')[1]
 
-  const category = featureCategory ?? splitted[splitted.length - 1]
+  const category =
+    typeof featureCategory !== 'undefined' &&
+    featureCategory !== 'corporates/role'
+      ? featureCategory
+      : splitted[splitted.length - 1]
   const userId: string = getUserId(item)
   const listingType: string = item.listingType
   //   console.log(props.item, 'propsdpdppd')
@@ -50,7 +55,8 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     action: 'approve',
     cacheQueryKey,
     listingType,
-    featureCategory
+    featureCategory,
+    investorRole
   })
 
   const [reject, { isLoading: isRejecting }] = useApproveOrReject({
@@ -58,7 +64,8 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     action: 'reject',
     cacheQueryKey,
     listingType,
-    featureCategory
+    featureCategory,
+    investorRole
   })
 
   const view = () =>
