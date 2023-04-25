@@ -17,6 +17,7 @@ export interface DataPreviewProps {
   kycStatus: string
   accreditationStatus?: string
   identityType?: string
+  roles?: string
 }
 
 export const DataPreview = ({
@@ -27,7 +28,8 @@ export const DataPreview = ({
   isIndividual,
   kycStatus,
   accreditationStatus,
-  identityType
+  identityType,
+  roles
 }: DataPreviewProps) => {
   const classes = useStyles()
   const {
@@ -51,6 +53,26 @@ export const DataPreview = ({
     identityType === 'issuer' || identityType === 'investor'
       ? identityType[0].toUpperCase() + identityType.slice(1)
       : 'Investor'
+
+  const InvestorRole = () => {
+    if (typeof roles !== 'undefined') {
+      const userRoles = roles.split(',')
+
+      if (userRoles.includes('retail')) {
+        return 'Retail'
+      }
+
+      if (userRoles.includes('expert')) {
+        return 'Expert'
+      }
+
+      if (userRoles.includes('accredited')) {
+        return 'Accredited'
+      }
+    }
+
+    return '-'
+  }
 
   return (
     <>
@@ -97,7 +119,7 @@ export const DataPreview = ({
                   variant='subtitle1'
                   className={`${dataLabel} ${dataValue}`}
                 >
-                  -
+                  <InvestorRole />
                 </Typography>
               </Box>
             </Box>

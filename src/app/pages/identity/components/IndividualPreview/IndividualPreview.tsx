@@ -88,6 +88,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
               isIndividual={true}
               kycStatus={data.status}
               accreditationStatus={data.accreditationStatus}
+              roles={data.user.roles}
             />
           </Box>
         </Grid>
