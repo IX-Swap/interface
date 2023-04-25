@@ -56,17 +56,19 @@ export const Register: React.FC = observer(() => {
   }
 
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
+
+  console.log(data, 'singData 1')
   const isMyInfo = getFilterValue('email') !== undefined
-  if (data !== undefined && localStorage.getItem('singpassPage') === null) {
+  if (data !== undefined && localStorage?.getItem('singpassPage') === null) {
     return <SingPassPage />
   }
 
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
-        email: data !== undefined && data.email !== '' ? data.email : email,
+        email: data !== undefined && data?.email !== '' ? data?.email : email,
         phoneNumber:
-          data !== undefined && data.mobileno !== '' ? data.mobileno : mobile,
+          data !== undefined && data?.mobileno !== '' ? data?.mobileno : mobile,
         password: '',
         agree: true
       }
