@@ -21,7 +21,7 @@ const renderColumnWithApproval = (
       {typeof investorType !== 'undefined'
         ? renderInvestorStatus(status, investorType)
         : renderStatus(status)}
-      <Actions item={row} cacheQueryKey={''} />
+      {status === 'Submitted' && <Actions item={row} cacheQueryKey={''} />}
     </Box>
   )
 }
