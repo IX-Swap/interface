@@ -10,6 +10,8 @@ import {
 } from 'state/launchpad/types'
 import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 
+export const isDefinedNumber = (foo: any) => ![undefined, null, ''].includes(foo) && !Number.isNaN(foo)
+
 export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGIES) =>
   ({
     profilePicture: undefined,
