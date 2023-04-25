@@ -6,7 +6,7 @@ import { AuthRoute } from 'auth/router/config'
 
 export const SingPassPage = () => {
   const { data } = useMyInfoAuthorize()
-
+  console.log(data, 'singData')
   const onCancel = () => {
     window.location.href = AuthRoute.login
     localStorage.setItem('singpassPage', 'true')
