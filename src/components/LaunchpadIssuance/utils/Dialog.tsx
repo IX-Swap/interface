@@ -92,6 +92,7 @@ const DialogContainer = styled.div<{ height?: string; width?: string; padding?: 
   ${(props) => props.height && `height: ${props.height};`}
 
   max-height: 100vh;
+  overflow-y: scroll;
 `
 
 const Content = styled.div`
