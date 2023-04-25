@@ -1,11 +1,11 @@
+import React from 'react'
+import { Box } from '@mui/material'
 import { TableColumn } from 'types/util'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import React from 'react'
 import { renderRepresentativeName } from 'helpers/tables'
-import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { Status } from 'ui/Status/Status'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { Actions } from 'app/pages/authorizer/components/Actions'
-import { Box } from '@mui/material'
 
 const renderRiskReport = (rating?: string) => {
   return rating ?? 'Unknown'
@@ -14,32 +14,53 @@ const renderRiskReport = (rating?: string) => {
 const renderColumnWithApproval = (
   row: object,
   status: string,
-  investorType?: string
+  role?: string
 ) => {
   return (
     <Box display={'flex'} justifyContent={''}>
-      {typeof investorType !== 'undefined'
-        ? renderInvestorStatus(status, investorType)
-        : renderStatus(status)}
-      {status === 'Submitted' && <Actions item={row} cacheQueryKey={''} />}
+      {typeof role !== 'undefined'
+        ? renderRoleStatus(row, role)
+        : renderStatus(row, status)}
     </Box>
   )
 }
 
-const renderStatus = (status: string) => {
-  return <Status label={status} type={status.toLowerCase()} />
-}
+const renderRoleStatus = (row: any, role: string) => {
+  let label = 'N/A'
+  let status = 'Draft'
 
-const renderInvestorStatus = (row: any, investorType: string) => {
   if (
     typeof row.declaredAs !== 'undefined' &&
-    Boolean(row.declaredAs.includes(investorType))
+    Boolean(row.declaredAs.includes(role)) &&
+    typeof row.declaredAsStatus !== 'undefined' &&
+    Boolean(role in row.declaredAsStatus)
   ) {
-    return renderStatus(row.declaredAsStatus[investorType])
+    label = row.declaredAsStatus[role]
+    status = row.declaredAsStatus[role]
   }
 
-  return <Status label='N/A' type='draft' />
+  return renderStatus(row, status, label, 'corporates/role', role)
 }
+
+const renderStatus = (
+  row: object,
+  status: string,
+  label?: string,
+  featureCategory?: string,
+  role?: string
+) => (
+  <>
+    <Status label={label ?? status} type={status.toLowerCase()} />
+    {status === 'Submitted' && (
+      <Actions
+        item={row}
+        cacheQueryKey={''}
+        featureCategory={featureCategory}
+        investorRole={role}
+      />
+    )}
+  </>
+)
 
 const renderType = (type?: string) =>
   typeof type !== 'undefined' && type.charAt(0).toUpperCase() + type.slice(1)

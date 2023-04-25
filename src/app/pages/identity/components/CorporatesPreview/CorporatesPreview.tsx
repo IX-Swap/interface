@@ -125,6 +125,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
               kycStatus={data.status}
               accreditationStatus={data.accreditationStatus}
               identityType={data.type}
+              roles={data.user.roles}
             />
           </Box>
         </Grid>

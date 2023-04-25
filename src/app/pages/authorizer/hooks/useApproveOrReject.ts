@@ -11,11 +11,19 @@ export interface UseApproveOrRejectArgs {
   payload?: Record<string, any>
   listingType?: any
   featureCategory?: string
+  investorRole?: string
 }
 
 export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
-  const { action, cacheQueryKey, id, payload, listingType, featureCategory } =
-    args
+  const {
+    action,
+    cacheQueryKey,
+    id,
+    payload,
+    listingType,
+    featureCategory,
+    investorRole
+  } = args
   // console.log(listingType,cacheQueryKey, payload, id, 'listingTypelistingType')
   const queryCache = useQueryCache()
   const categoryFromUrl = useAuthorizerCategory()
@@ -29,12 +37,15 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
       ? `${_uri}/assign/${id}/${action}`
       : category === 'corporates/accreditation'
       ? `/identity/accreditation/corporate/${id}/${action}`
+      : category === 'corporates/role'
+      ? `/identity/corporates/${id}/role/${action}`
       : category === 'listings' && action === 'approve'
       ? // : listingType === 'OTC' || listingType === 'Exchange' || listingType === 'Exchange/OTC'
         `/exchange/listing/${id}/${action}`
       : category === 'listings' && action === 'reject' && listingType === 'OTC'
       ? `/otc/listing/${id}/${action}`
       : `${_uri}/${id}/${action}`
+  //   console.log(url, 'url')
 
   const { search } = useLocation()
   const { replace } = useHistory()
@@ -45,10 +56,20 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
     cacheQueryKey.length > 0
 
   const mutateFn = async () => {
+    let reqPayload = payload
+
     if (category === 'listings' && action === 'approve') {
-      return await apiService.put(url, { listingType: listingType })
+      reqPayload = { listingType: listingType }
     }
-    return await apiService.put(url, payload)
+
+    if (category === 'corporates/role' && typeof investorRole !== 'undefined') {
+      reqPayload = { role: investorRole }
+    }
+
+    console.log(investorRole)
+    console.log(reqPayload)
+
+    return await apiService.put(url, reqPayload)
   }
 
   return useMutation(mutateFn, {

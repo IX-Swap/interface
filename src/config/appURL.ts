@@ -52,6 +52,7 @@ export const urlFeature = {
   individualIdentity: `${AppFeature.Individuals}`,
   corporateIdentity: `${AppFeature.Corporates}`,
   corporateAccreditation: `${AppFeature.CorporatesAccreditation}`,
+  individualAccreditation: `${AppFeature.IndividualsAccreditation}`,
   offerings: `${AppFeature.Offerings}`,
   overview: 'overview',
   commitments: `${AppFeature.Commitments}`,

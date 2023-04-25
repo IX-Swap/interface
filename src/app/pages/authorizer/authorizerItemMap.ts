@@ -37,6 +37,10 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
       uri: '/identity/corporates/list',
       listRoute: AuthorizerRoute.corporateIdentities
     },
+    [AppFeature.Corporates + '/role']: {
+      uri: '/identity/corporates/list',
+      listRoute: AuthorizerRoute.corporateIdentities
+    },
     [AppFeature.IssuanceDetails]: {
       uri: '/identity/issuance-detail/list',
       listRoute: AuthorizerRoute.issuanceDetails
@@ -44,6 +48,10 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
     [AppFeature.Individuals]: {
       uri: '/identity/individuals/list',
       listRoute: AuthorizerRoute.individualIdentities
+    },
+    [AppFeature.IndividualsAccreditation]: {
+      uri: '/identity/individual/accreditation/list',
+      listRoute: AuthorizerRoute.individualAccreditations
     },
     [AppFeature.Commitments]: {
       uri: '/issuance/commitments/list',

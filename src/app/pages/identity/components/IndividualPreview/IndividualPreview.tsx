@@ -3,8 +3,6 @@ import { useStyles } from 'app/pages/identity/components/IndividualPreview/Indiv
 import { Box, Grid, Tabs, Tab, Paper } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import { IdentityRoute } from 'app/pages/identity/router/config'
-// import { Status } from 'ui/Status/Status'
-// import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
 import { IndividualIdentityView } from '../IndividualIdentityView/IndividualIdentityView'
@@ -13,7 +11,6 @@ import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityCTA } from '../IdentityCTA/IdentityCTA'
 import { AccreditationCTA } from '../AccreditationCTA/AccreditationCTA'
-// import { adjustIdentityOccupation } from 'app/pages/identity/utils/shared'
 import { isEmptyString } from 'helpers/strings'
 
 export interface IndividualPreviewProps {
@@ -88,6 +85,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
               isIndividual={true}
               kycStatus={data.status}
               accreditationStatus={data.accreditationStatus}
+              roles={data.user.roles}
             />
           </Box>
         </Grid>
@@ -156,7 +154,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
               />
             ) : !hasAccreditation ? (
               <AccreditationCTA
-                link={IdentityRoute.createIndividual}
+                link={IdentityRoute.createIndividualAccreditation}
                 params={{
                   identityId: data._id,
                   userId: data.user._id
@@ -167,13 +165,13 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
                 {data.accreditationStatus !== 'Draft' && (
                   <StatusBox
                     status={data.accreditationStatus ?? 'Pending'}
-                    identityType='corporate'
+                    identityType='individual'
                     applicationType='accreditation'
                   />
                 )}
                 {data.accreditationStatus === 'Rejected' && (
                   <AccreditationCTA
-                    link={IdentityRoute.editIndividual}
+                    link={IdentityRoute.editIndividualAccreditation}
                     params={{
                       identityId: data._id,
                       userId: data.user._id

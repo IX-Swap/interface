@@ -8,7 +8,10 @@ import {
   getDocumentsRequestPayload,
   getPersonalInfoRequestPayload
 } from 'app/pages/identity/utils/individual/requests'
-import { personalInfoSchema } from 'app/pages/identity/validation/individual'
+import {
+  individualInvestorValidationSchema,
+  personalInfoSchema
+} from 'app/pages/identity/validation/individual'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
@@ -118,7 +121,7 @@ export const individualInvestorFormSteps = [
         // ...getFinancialAndTaxDeclarationRequestPayload(data)
       }
     },
-    // validationSchema: individualInvestorValidationSchema,
+    validationSchema: individualInvestorValidationSchema,
     component: () => <IndividualIdentityContainer />
   }
 ]
