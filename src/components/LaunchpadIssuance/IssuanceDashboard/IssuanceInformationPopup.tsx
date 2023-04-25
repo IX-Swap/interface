@@ -68,7 +68,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   const deploy = useDeployOffer(offer?.id)
   const confirmFee = useConfirmFee(offer?.id)
 
-  const [issuanceFee, setIssuanceFee] = useState<number | undefined>()
+  const [issuanceFee, setIssuanceFee] = useState<number | undefined>(5)
   const [distributionAddress, setDistributionAddress] = useState<string>('')
   const [distributionError, setDistributionError] = useState<string>('')
   const [touchedFee, touchFee] = useState(false)
@@ -140,13 +140,12 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
     setShowConfirm(false)
     setIsLoading(true)
     try {
-      if(showDistributionAddress) {
+      if (showDistributionAddress) {
         await deploy(issuanceFee, distributionAddress)
-      }
-      else {
+      } else {
         await deploy(issuanceFee)
       }
-      
+
       showSuccess(`Offer #${offer?.id} - ${offer?.title} deployed successfully`)
     } catch (e: any) {
       showError(e?.message ?? '')
@@ -168,8 +167,8 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   }
 
   useEffect(() => {
-    if (offer) {
-      setIssuanceFee(offer.feeRate === null ? undefined : Number(offer.feeRate))
+    if (offer && offer.feeRate) {
+      setIssuanceFee(Number(offer.feeRate))
     }
   }, [offer])
 
