@@ -74,9 +74,11 @@ export const VettingForm = (props: Props) => {
 
   // methods
   const toSubmit = () => setShowConfirmDialog(true)
-  const onConfirmationClose = () => {
+  const onConfirmationClose = (hasError = false) => {
     setShowCloseDialog(false)
-    showError('Cannot save changes, please check the form for error messages')
+    if (hasError) {
+      showError('Cannot save changes, please check the form for error messages')
+    }
   }
   const onSubmit = async () => {
     const newErrors = await validateForm()
@@ -97,8 +99,8 @@ export const VettingForm = (props: Props) => {
       <CloseConfirmation
         isOpen={showCloseDialog}
         onDiscard={() => history.push(`/issuance/create?id=${issuanceId}`)}
-        onClose={onConfirmationClose}
-        onSave={() => (draftDisabled ? onConfirmationClose() : saveDraft(values))}
+        onClose={() => onConfirmationClose(false)}
+        onSave={() => (draftDisabled ? onConfirmationClose(true) : saveDraft(values))}
       />
 
       {isLoading && (
