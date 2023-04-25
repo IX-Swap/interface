@@ -29,6 +29,7 @@ import {
   standardOptions,
   distributionFrequencyOptions,
   investmentStructureOptions,
+  isDefinedNumber,
 } from './util'
 
 import { InformationFormValues } from './types'
@@ -355,10 +356,10 @@ export const InformationForm = (props: Props) => {
           />
           <FormField
             field="decimals"
-            setter={(field, value) => setFieldValue(field, Number(value))}
+            setter={(field, value) => setFieldValue(field, isDefinedNumber(value) ? Number(value) : null)}
             touch={setFieldTouched}
             label="Decimals"
-            placeholder="18"
+            placeholder="Decimals"
             inputFilter={integerNumberFilter}
             disabled={edit}
             value={values.decimals?.toString()}
