@@ -15,31 +15,62 @@ import { Box } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { BackhandIcon } from 'app/pages/authorizer/components/BackHandIcon'
-
+import { useHistory } from 'react-router-dom'
 export interface BaseStatusFilterProps {
   statusFilters: StatusFilterItemType[]
 }
 
 export const BaseStatusFilter = ({ statusFilters }: BaseStatusFilterProps) => {
+  const { location } = useHistory()
   return (
-    <SearchQueryFilter<'authorizationStatus'>
-      name='authorizationStatus'
-      defaultValue='Submitted'
-    >
-      {({ value, onChange }) => (
-        <Box>
-          {statusFilters.map((status, i) => (
-            <StatusFilterItem
-              key={i}
-              title={status.title}
-              isSelected={status.value === value}
-              onClick={() => onChange(status.value)}
-              icon={status.icon}
-            />
-          ))}
-        </Box>
+    <>
+      {location?.pathname?.includes('individuals') ||
+      location?.pathname?.includes('corporates') ? (
+        <SearchQueryFilter<'authorizationStatus'>
+          name='authorizationStatus'
+          defaultValue=''
+        >
+          {({ value, onChange }) => (
+            <Box
+              style={{
+                display: 'flex',
+                borderBottom: 'solid 1px #DBE2EC',
+                height: '60px'
+              }}
+            >
+              {statusFilters?.reverse()?.map((status, i) => (
+                <StatusFilterItem
+                  key={i}
+                  title={status.title}
+                  isSelected={status.value === value}
+                  onClick={() => onChange(status.value)}
+                  icon={status.icon}
+                />
+              ))}
+            </Box>
+          )}
+        </SearchQueryFilter>
+      ) : (
+        <SearchQueryFilter<'authorizationStatus'>
+          name='authorizationStatus'
+          defaultValue='Submitted'
+        >
+          {({ value, onChange }) => (
+            <Box>
+              {statusFilters.map((status, i) => (
+                <StatusFilterItem
+                  key={i}
+                  title={status.title}
+                  isSelected={status.value === value}
+                  onClick={() => onChange(status.value)}
+                  icon={status.icon}
+                />
+              ))}
+            </Box>
+          )}
+        </SearchQueryFilter>
       )}
-    </SearchQueryFilter>
+    </>
   )
 }
 

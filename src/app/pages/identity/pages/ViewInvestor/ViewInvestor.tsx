@@ -2,10 +2,10 @@ import React from 'react'
 import { Grid, Paper } from '@mui/material'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 import { CorporateIdentityView } from 'app/pages/identity/components/CorporateIdentityView/CorporateIdentityView'
-import { IdentityRoute } from 'app/pages/identity/router/config'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
-import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
+// import { IdentityRoute } from 'app/pages/identity/router/config'
+// import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { RootContainer } from 'ui/RootContainer'
 import { useStyles } from 'app/components/FormStepper/FormStepper.styles'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
@@ -20,14 +20,14 @@ export const getTitleText = (type: string) => {
 
 export const ViewInvestor = () => {
   const classes = useStyles()
-  const editLinkMap = {
-    investor: IdentityRoute.editCorporate,
-    corporate: IdentityRoute.editCorporate,
-    'Fund Manager': IdentityRoute.editFundManager,
-    'Fund Administrator': IdentityRoute.editFundAdmin,
-    'Portfolio Manager': IdentityRoute.editPortfolioManager,
-    issuer: IdentityRoute.editIssuer
-  }
+  //   const editLinkMap = {
+  //     investor: IdentityRoute.editCorporate,
+  //     corporate: IdentityRoute.editCorporate,
+  //     'Fund Manager': IdentityRoute.editFundManager,
+  //     'Fund Administrator': IdentityRoute.editFundAdmin,
+  //     'Portfolio Manager': IdentityRoute.editPortfolioManager,
+  //     issuer: IdentityRoute.editIssuer
+  //   }
 
   return (
     <CorporateIdentityContainer
@@ -49,12 +49,14 @@ export const ViewInvestor = () => {
               <Grid container item className={classes.rightBlock}>
                 <Grid item xs={12}>
                   <Paper sx={{ p: 4, borderRadius: 2 }}>
-                    <EditButton
+                    <pre>{data.type}</pre>
+                    {/* <EditButton
                       fullWidth
                       variant={'contained'}
-                      link={editLinkMap[data.type]}
+                      //   link={editLinkMap[data.type]}
+                      link={editLinkMap.corporate}
                       params={{ identityId: data._id, userId: data.user._id }}
-                    />
+                    /> */}
                   </Paper>
                 </Grid>
                 <Grid item xs={12}>

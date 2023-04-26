@@ -124,3 +124,12 @@ export const getCorporateSubmitPayload = (values: any) => {
     isInstitutionalInvestor: values.isInstitutionalInvestor
   }
 }
+
+export const getCorporateAccreditationSubmitPayload = (values: any) => {
+  return {
+    documents: values.documents.map((item: { _id: any }) => item._id),
+    declarations: values.declarations,
+    taxResidencies: values.taxResidencies,
+    isInstitutionalInvestor: values.isInstitutionalInvestor
+  }
+}

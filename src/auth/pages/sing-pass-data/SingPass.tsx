@@ -5,8 +5,9 @@ import { Icon } from 'ui/Icons/Icon'
 import { AuthRoute } from 'auth/router/config'
 
 export const SingPassPage = () => {
+  console.log('singData Page')
   const { data } = useMyInfoAuthorize()
-
+  console.log(data, 'singData')
   const onCancel = () => {
     window.location.href = AuthRoute.login
     localStorage.setItem('singpassPage', 'true')
@@ -15,6 +16,8 @@ export const SingPassPage = () => {
     window.location.href = `${AuthRoute.signup}?email=${email}&mobile=${mobileno}`
     localStorage.setItem('singpassPage', 'true')
   }
+
+  console.log(data, 'singData')
 
   const ChevronIcon = () => (
     <Icon
@@ -45,7 +48,7 @@ export const SingPassPage = () => {
           marginBottom: '25px'
         }}
       >
-        {value.length > 0 ? value : '-'}
+        {value?.length > 0 ? value : '-'}
       </p>
     </div>
   )
@@ -120,10 +123,10 @@ export const SingPassPage = () => {
                 ${data?.regadd?.postalCode}
             `}
               />
-              <InfoItem
+              {/* <InfoItem
                 label='Employment Sector'
                 value={data?.employmentsector}
-              />
+              /> */}
             </div>
 
             <InfoItem
@@ -131,10 +134,10 @@ export const SingPassPage = () => {
               value={data?.noahistory?.noas
                 ?.map((data: any) =>
                   Object.keys(data)?.map(dataItem => {
-                    return ` ${dataItem}:${data[dataItem].value}`
+                    return ` ${dataItem}:${data[dataItem]?.value}`
                   })
                 )
-                .join()}
+                ?.join()}
             />
           </div>
           <div

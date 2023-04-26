@@ -53,7 +53,7 @@ export const useStyles = makeStyles(theme => {
       width: '45%',
       paddingTop: theme.spacing(12.5),
       paddingBottom: theme.spacing(7.5),
-      backgroundColor: '#0E1F42',
+      backgroundColor: theme.palette.backgrounds.default,
       backgroundPosition: 'right center',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',

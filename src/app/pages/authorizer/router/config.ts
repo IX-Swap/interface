@@ -19,6 +19,16 @@ export const AuthorizerRoute = {
   dsWithdrawals: makeURL(['app', 'authorizer', 'dsWithdrawal']),
   individualIdentities: makeURL(['app', 'authorizer', 'individualIdentity']),
   corporateIdentities: makeURL(['app', 'authorizer', 'corporateIdentity']),
+  corporateAccreditations: makeURL([
+    'app',
+    'authorizer',
+    'corporateAccreditation'
+  ]),
+  individualAccreditations: makeURL([
+    'app',
+    'authorizer',
+    'individualAccreditation'
+  ]),
   offerings: makeURL(['app', 'authorizer', 'offerings']),
   commitments: makeURL(['app', 'authorizer', 'commitments']),
   withdrawalAddresses: makeURL(['app', 'authorizer', 'withdrawalAddresses']),
@@ -51,14 +61,20 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     icon: DSWithdrawalIcon
   },
   {
-    label: 'Individual Identities',
+    label: 'KYC Applications',
     path: AuthorizerRoute.individualIdentities,
     color: '#90A30F',
     icon: IndividualIcon
   },
   {
-    label: 'Corporate Identities',
+    label: 'Corporate KYC Applications',
     path: AuthorizerRoute.corporateIdentities,
+    color: '#E65133',
+    icon: CorporateIcon
+  },
+  {
+    label: 'Corporate Accreditation Applications',
+    path: AuthorizerRoute.corporateAccreditations,
     color: '#E65133',
     icon: CorporateIcon
   },

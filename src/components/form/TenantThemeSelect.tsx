@@ -36,12 +36,11 @@ export const TenantThemeSelect = ({
           return (
             <Box
               key={item.name}
-              sx={{ backgroundColor: item.hex }}
+              sx={{ backgroundImage: item.hex }}
               className={classnames(classes.button, {
                 [classes.active]: isActive
               })}
               onClick={() => onChangeValue(item.name)}
-              title={item.name}
             >
               <FormControlLabel
                 label={''}

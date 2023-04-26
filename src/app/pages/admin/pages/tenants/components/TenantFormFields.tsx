@@ -9,6 +9,7 @@ import { DataroomFileType } from 'config/dataroom'
 import { TenantFormValues } from 'types/tenants'
 import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { TenantStatusSelect } from 'components/form/TenantStatusSelect'
 import { TenantThemeSelect } from 'components/form/TenantThemeSelect'
 import { RichTextEditor } from 'components/form/RichTextEditor'
 import { wysiwygValueExtractor } from 'helpers/forms'
@@ -98,6 +99,19 @@ export const TenantFormFields = ({
                   </RteContainer>
                 </Grid>
               </Grid>
+              {tenant !== undefined && (
+                <Grid item container spacing={{ xs: 5, md: 3 }}>
+                  <Grid item xs={12} md={6}>
+                    <TypedField
+                      component={TenantStatusSelect}
+                      label='Status'
+                      name='status'
+                      control={control}
+                      helperText='Select Tenant Status'
+                    />
+                  </Grid>
+                </Grid>
+              )}
             </Grid>
           </Grid>
         </FieldContainer>
@@ -136,7 +150,8 @@ export const TenantFormFields = ({
                     valueExtractor={documentValueExtractor}
                     accept={DataroomFileType.image}
                     documentInfo={{
-                      type: 'Logo Light'
+                      type: 'Logo Light',
+                      feature: 'public-files'
                     }}
                   />
                 </Grid>
@@ -152,7 +167,8 @@ export const TenantFormFields = ({
                     valueExtractor={documentValueExtractor}
                     accept={DataroomFileType.image}
                     documentInfo={{
-                      type: 'Logo Dark'
+                      type: 'Logo Dark',
+                      feature: 'public-files'
                     }}
                   />
                 </Grid>
@@ -168,7 +184,8 @@ export const TenantFormFields = ({
                     valueExtractor={documentValueExtractor}
                     accept={DataroomFileType.image}
                     documentInfo={{
-                      type: 'Background Image'
+                      type: 'Background Image',
+                      feature: 'public-files'
                     }}
                   />
                 </Grid>

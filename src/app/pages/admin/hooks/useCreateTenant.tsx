@@ -11,6 +11,7 @@ export const useCreateTenant = () => {
   const url = tenantsURL.createTenant
 
   const createTenant = async (args: TenantFormValues) => {
+    delete args.status
     return await apiService.post(url, args)
   }
 

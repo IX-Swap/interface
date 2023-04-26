@@ -17,8 +17,10 @@ export const useStyles = makeStyles(theme => ({
   },
   sidebar: {},
   content: {
-    width: '100%',
-    padding: theme.spacing(2, 0)
+    padding: theme.spacing(2, 0),
+    [theme.breakpoints.up('lg')]: {
+      padding: theme.spacing(2, 3)
+    }
   },
   wrapper: {
     flexDirection: 'column',

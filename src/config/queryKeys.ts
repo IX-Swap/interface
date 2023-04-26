@@ -40,8 +40,21 @@ export const identityQueryKeys = {
     identityId
   ],
   getAllCorporate: 'all-corporate-identities',
+  getAllIndividual: 'all-individual-identities',
   getAllCorporateByUserId: (id?: string) =>
     generateQueryKey('all-corporate-identities', id),
+  getCorporateAccreditation: (identityId?: string) => [
+    'corporate-accreditation',
+    identityId
+  ],
+  getIndividualAccreditation: (identityId?: string) => [
+    'individual-accreditation',
+    identityId
+  ],
+  getAllCorporateAccreditation: 'all-corporate-accreditation',
+  getAllIndividualAccreditation: 'all-individual-accreditation',
+  getAllCorporateAccreditationById: (id?: string) =>
+    generateQueryKey('all-corporate-accreditation', id),
   getDetailsOfIssuance: (userId?: string) =>
     generateQueryKey('details-of-issuance', userId),
   getStats: 'admin-identity-stats',
@@ -72,6 +85,7 @@ export const authorizerQueryKeys = {
   getCashWithdrawals: 'authorizer-cash-withdrawals',
   getCommitmentsList: 'authorizer-commitments-list',
   getCorporateIdentities: 'authorizer-corporate-list',
+  getCorporateAccreditations: 'authorizer-corporate-accreditation-list',
   getSecurityWithdrawals: 'authorizer-security-withdrawals',
   getIndividualIdentityList: 'authorizer-individual-identitiesList',
   getDSOList: 'authorizer-dso-list',

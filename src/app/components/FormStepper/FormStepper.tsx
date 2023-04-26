@@ -51,6 +51,7 @@ export interface FormStepperProps {
     value: boolean
   }
   overRideStep?: boolean
+  statusFieldName?: string
 }
 
 export const FormStepper = (props: FormStepperProps) => {
@@ -74,7 +75,8 @@ export const FormStepper = (props: FormStepperProps) => {
     followDefaultMode = true,
     dataToCheck = undefined,
     isCreateMode = undefined,
-    overRideStep = false
+    overRideStep = false,
+    statusFieldName = 'status'
   } = props
 
   const { isMobile } = useAppBreakpoints()
@@ -144,7 +146,8 @@ export const FormStepper = (props: FormStepperProps) => {
   const getCompletedStatus = (lastStep: boolean, index: number) => {
     if (lastStep) {
       return data !== undefined
-        ? data?.status === 'Submitted' || data?.status === 'Approved'
+        ? data?.[statusFieldName] === 'Submitted' ||
+            data?.[statusFieldName] === 'Approved'
         : false
     }
 
@@ -153,7 +156,7 @@ export const FormStepper = (props: FormStepperProps) => {
 
   const getErrorStatus = (lastStep: boolean, index: number) => {
     if (lastStep) {
-      return data?.status === 'Rejected'
+      return data?.[statusFieldName] === 'Rejected'
     }
     return false
   }
@@ -198,6 +201,7 @@ export const FormStepper = (props: FormStepperProps) => {
             dataToCheck={dataToCheck}
             isCreateMode={isCreateMode}
             overRideStep={overRideStep}
+            statusFieldName={statusFieldName}
           />
         ))}
       </Grid>
@@ -217,6 +221,18 @@ export const FormStepper = (props: FormStepperProps) => {
                 }}
                 actions={
                   <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <SaveDraftButton
+                        isLastStep={activeStep === steps.length - 1}
+                        formId={`${
+                          steps[activeStep].formId ?? 'form'
+                        }-${activeStep}`}
+                        disabled={
+                          data?.[statusFieldName] === 'Submitted' ||
+                          data?.[statusFieldName] === 'Approved'
+                        }
+                      />
+                    </Grid>
                     {matches ? null : (
                       <Grid item xs={12}>
                         <SubmitButton
@@ -226,21 +242,10 @@ export const FormStepper = (props: FormStepperProps) => {
                           fullWidth
                           size='medium'
                           submitText={submitText}
+                          statusFieldName={statusFieldName}
                         />
                       </Grid>
                     )}
-                    <Grid item xs={12}>
-                      <SaveDraftButton
-                        isLastStep={activeStep === steps.length - 1}
-                        formId={`${
-                          steps[activeStep].formId ?? 'form'
-                        }-${activeStep}`}
-                        disabled={
-                          data?.status === 'Submitted' ||
-                          data?.status === 'Approved'
-                        }
-                      />
-                    </Grid>
                   </Grid>
                 }
               >

@@ -2,7 +2,7 @@ import { Button, Grid } from '@mui/material'
 import { SelectionIdentityCard } from 'app/pages/identity/components/SelectionIdentityCard/SelectionIdentityCard'
 import React from 'react'
 import { ReactComponent as CorporateImage } from 'assets/images/corporate.svg'
-import { ReactComponent as IssuerImage } from 'assets/images/issuer.svg'
+// import { ReactComponent as IssuerImage } from 'assets/images/issuer.svg'
 import { ReactComponent as IndividualImage } from 'assets/images/individual.svg'
 import { Icon } from 'ui/Icons/Icon'
 import { IdentityRoute } from 'app/pages/identity/router/config'
@@ -46,7 +46,7 @@ export const IdentitySelectionView = () => {
           }
         />
       </Grid>
-      <Grid item>
+      {/* <Grid item>
         <SelectionIdentityCard
           title='Issuer'
           description='Suitable for users who want to use platform for fundraising'
@@ -63,7 +63,7 @@ export const IdentitySelectionView = () => {
             </Button>
           }
         />
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }

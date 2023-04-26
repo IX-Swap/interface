@@ -10,26 +10,42 @@ export interface UseApproveOrRejectArgs {
   cacheQueryKey?: any
   payload?: Record<string, any>
   listingType?: any
+  featureCategory?: string
+  investorRole?: string
 }
 
 export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
-  const { action, cacheQueryKey, id, payload, listingType } = args
+  const {
+    action,
+    cacheQueryKey,
+    id,
+    payload,
+    listingType,
+    featureCategory,
+    investorRole
+  } = args
   // console.log(listingType,cacheQueryKey, payload, id, 'listingTypelistingType')
   const queryCache = useQueryCache()
-  const category = useAuthorizerCategory()
+  const categoryFromUrl = useAuthorizerCategory()
+  const category = featureCategory ?? categoryFromUrl
   const { uri, listRoute } = authorizerItemMap[category]
-  const _uri = uri.replace(/\/list$/, '')
+  const _uri: string = uri.replace(/\/list$/, '')
   // console.log(listingType, 'listing')
-  // console.log(category, 'category')
+  //   console.log(category, 'category')
   const url =
     category === 'virtual-accounts'
       ? `${_uri}/assign/${id}/${action}`
+      : category === 'corporates/accreditation'
+      ? `/identity/accreditation/corporate/${id}/${action}`
+      : category === 'corporates/role'
+      ? `/identity/corporates/${id}/role/${action}`
       : category === 'listings' && action === 'approve'
       ? // : listingType === 'OTC' || listingType === 'Exchange' || listingType === 'Exchange/OTC'
         `/exchange/listing/${id}/${action}`
       : category === 'listings' && action === 'reject' && listingType === 'OTC'
       ? `/otc/listing/${id}/${action}`
       : `${_uri}/${id}/${action}`
+  //   console.log(url, 'url')
 
   const { search } = useLocation()
   const { replace } = useHistory()
@@ -40,10 +56,20 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
     cacheQueryKey.length > 0
 
   const mutateFn = async () => {
+    let reqPayload = payload
+
     if (category === 'listings' && action === 'approve') {
-      return await apiService.put(url, { listingType: listingType })
+      reqPayload = { listingType: listingType }
     }
-    return await apiService.put(url, payload)
+
+    if (category === 'corporates/role' && typeof investorRole !== 'undefined') {
+      reqPayload = { role: investorRole }
+    }
+
+    console.log(investorRole)
+    console.log(reqPayload)
+
+    return await apiService.put(url, reqPayload)
   }
 
   return useMutation(mutateFn, {

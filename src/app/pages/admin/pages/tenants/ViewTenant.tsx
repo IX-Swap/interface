@@ -15,6 +15,7 @@ import { renderStringToHTML } from 'app/components/DSO/utils'
 import { DataroomImage } from 'ui/DataroomImage'
 import { useAppTheme } from 'hooks/useAppTheme'
 import { tenantThemes } from 'config/defaults'
+import { Status } from 'ui/Status/Status'
 
 export const ViewTenant = () => {
   const { tenantId } = useParams<{ tenantId: string; issuerId: string }>()
@@ -46,10 +47,32 @@ export const ViewTenant = () => {
     theme: themeName,
     logoDark,
     logoLight,
-    backgroundImage
+    backgroundImage,
+    status
   } = result?.data
 
   const selectedTheme = tenantThemes.find(t => t.name === themeName)
+
+  let statusType = 'approved'
+  let statusLabel = 'Live'
+
+  switch (status) {
+    case 'UNDER_REVIEW':
+      statusType = 'submitted'
+      statusLabel = 'Under Review'
+      break
+    case 'APPROVED':
+      statusType = 'passed'
+      statusLabel = 'Approved'
+      break
+    case 'DISABLED':
+      statusType = 'rejected'
+      statusLabel = 'Disabled'
+      break
+
+    default:
+      break
+  }
 
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
@@ -66,9 +89,10 @@ export const ViewTenant = () => {
                     photoId={
                       theme.palette.mode === 'light' ? logoLight : logoDark
                     }
-                    width={60}
-                    height={60}
-                    sx={{ borderRadius: '100%' }}
+                    alt='Logo'
+                    width={80}
+                    height={14}
+                    variant={'square'}
                   />
                 </Grid>
                 <Grid item>
@@ -80,13 +104,16 @@ export const ViewTenant = () => {
                     style={{
                       width: 30,
                       height: 30,
-                      backgroundColor:
+                      backgroundImage:
                         selectedTheme !== undefined
                           ? selectedTheme.hex
                           : '#000',
                       borderRadius: '5px'
                     }}
                   ></div>
+                </Grid>
+                <Grid item>
+                  <Status type={statusType} label={statusLabel} />
                 </Grid>
                 <Grid item marginLeft={'auto'}>
                   <Button

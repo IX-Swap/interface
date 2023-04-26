@@ -23,6 +23,7 @@ export interface AuthorizerViewProps<T> {
   title: string
   data: T & AuthorizableWithIdentity
   feature: typeof DataroomFeature[keyof typeof DataroomFeature]
+  statusFieldName?: string
 }
 
 const transactionalCategories = [
@@ -46,10 +47,12 @@ export const AuthorizerView = <T,>(
 ) => {
   const category = useAuthorizerCategory()
   const isTransaction = transactionalCategories.includes(category)
-  const { title, data, feature, children } = props
+  const { title, data, feature, children, statusFieldName = 'status' } = props
   const hasIdentity = data.identity !== undefined
   const documents = data.authorizationDocuments ?? []
-  const approvedOrRejected = ['Approved', 'Rejected'].includes(data.status)
+  const approvedOrRejected = ['Approved', 'Rejected'].includes(
+    data[statusFieldName as keyof typeof data]
+  )
   const showForm = !(isTransaction && approvedOrRejected)
   const styles = useStyles()
   // console.log(data, 'datadatadatadata')
@@ -94,7 +97,7 @@ export const AuthorizerView = <T,>(
                     <AuthorizableLevel level={data.level} compact={false} />
                     <Box px={0.5} />
                     <AuthorizableStatus
-                      status={data.status}
+                      status={data[statusFieldName as keyof typeof data]}
                       compact={false}
                       isNewTheme
                     />
@@ -130,7 +133,7 @@ export const AuthorizerView = <T,>(
                 {showForm && category !== 'token-deployment' && (
                   <Grid item style={{ marginTop: 20 }}>
                     <AuthorizerForm
-                      status={data.status}
+                      status={data[statusFieldName as keyof typeof data]}
                       itemId={data._id}
                       listingType={data?.listingType}
                     />

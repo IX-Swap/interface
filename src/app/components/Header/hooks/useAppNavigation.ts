@@ -1,5 +1,7 @@
 import {
   useIsAccredited,
+  useIsRetail,
+  useIsExpert,
   useIsAdmin,
   useIsAuthorizer,
   useIsFundManager,
@@ -30,8 +32,11 @@ export const useAppNavigation = () => {
   const isIssuer = useIsIssuer()
   const isAdmin = useIsAdmin()
   const isAccredited = useIsAccredited()
+  const isRetail = useIsRetail()
+  const isExpert = useIsExpert()
   const isFundManager = useIsFundManager()
   const isSuperUser = isAuthorizer || isAdmin
+  const isInvestor = isAccredited || isRetail || isExpert
   const educationCenterLabel = 'Education Centre'
   const issuanceLandingLinks: InternalRouteProps[] = [
     { label: 'Create New STO', path: IssuanceRoute.createNew },
@@ -131,7 +136,7 @@ export const useAppNavigation = () => {
 
   const isNavigationImpossibleWithoutCompletedIdentity = (link: string) => {
     return (
-      !isAccredited &&
+      !isInvestor &&
       !link.startsWith(AppPath.educationCentre) &&
       !link.startsWith(AppPath.identity) &&
       !link.startsWith(AppPath.security) &&

@@ -234,3 +234,11 @@ export const financialAndTaxDeclarationSchema = (data?: IndividualIdentity) =>
     ...financialInfoSchema(data).fields,
     ...taxDeclarationSchema.fields
   })
+
+export const individualAccreditationSchema = yup.object().shape<any>({
+  // ...financialInfoSchema(data).fields,
+  ...individualInvestorDocumentsSchema.fields,
+  ...individualInvestorStatusDeclarationSchema.fields,
+  // ...personalInfoSchema.fields,
+  ...taxDeclarationSchema.fields
+})

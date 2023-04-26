@@ -7,24 +7,25 @@ export const useStyles = makeStyles(theme => ({
   breadcrumbsLink: {
     color: theme.palette.breadcrumbs.link
   },
-  container: {
-    padding: theme.spacing(3),
-    maxWidth: theme.spacing(162.5),
-    backGroundColor: theme.palette.backgrounds.default,
-    [theme.breakpoints.down('md')]: {
-      padding: theme.spacing(0),
-      paddingTop: theme.spacing(1.25)
-    }
-  },
+  //   container: {
+  //     padding: theme.spacing(3),
+  //     maxWidth: theme.spacing(162.5),
+  //     backGroundColor: theme.palette.backgrounds.default,
+  //     [theme.breakpoints.down('md')]: {
+  //       padding: theme.spacing(0),
+  //       paddingTop: theme.spacing(1.25)
+  //     }
+  //   },
   nameIdentity: {
     zIndex: 5,
+    // paddingTop: theme.spacing(0.1),
     [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
   grid: {
     spacing: theme.spacing(4.2),
-    paddingTop: theme.spacing(2.7)
+    paddingTop: theme.spacing(1.7)
   },
   dot: {
     component: 'span',
@@ -47,5 +48,39 @@ export const useStyles = makeStyles(theme => ({
     '& p': {
       paddingTop: theme.spacing(1)
     }
+  },
+
+  investorIdentity: {
+    color: '#3B4251',
+    fontSize: '14px',
+    lineHeight: '14px',
+    letterSpacing: '-0.01em;',
+    // marginTop: '25px',
+    textTransform: 'capitalize'
+  },
+  investorIdentitySub: {
+    color: '#778194',
+    fontSize: '14px',
+    lineHeight: '14px',
+    letterSpacing: '-0.01em;',
+    marginTop: '12px',
+    textTransform: 'capitalize'
+  },
+  bbox: {
+    display: 'grid',
+    gridTemplateColumns: 'auto auto auto',
+    gap: '10px',
+    padding: '10px',
+    width: 'inherit',
+    '& div': {
+      textAlign: 'center',
+      fontSize: '30px'
+    }
+  },
+  item1: {
+    gridRow: '1 / 4'
   }
+  // bbox > div {
+
+  // }
 }))

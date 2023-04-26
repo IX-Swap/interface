@@ -7,58 +7,129 @@ import { SearchQueryFilterGroupApply } from 'components/SearchQueryFilter/Search
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { ClosedDSOsFilter } from 'app/pages/authorizer/components/ClosedDSOFilter'
+import { useHistory } from 'react-router-dom'
 
 export const SearchAndDateFilter = () => {
   const category = useAuthorizerCategory()
+  const { location } = useHistory()
   const isCommitments = category === 'commitments'
   return (
-    <SearchQueryFilterGroup>
-      <Grid container direction='column' spacing={3} style={{ paddingTop: 24 }}>
-        {isCommitments && (
-          <Grid item xs={12}>
-            <ClosedDSOsFilter />
+    <>
+      {location?.pathname?.includes('individuals') ||
+      location?.pathname?.includes('corporates') ? (
+        <SearchQueryFilterGroup>
+          <Grid container spacing={3}>
+            {isCommitments && (
+              <Grid item xs={12}>
+                <ClosedDSOsFilter />
+              </Grid>
+            )}
+            <Grid item xs={2}>
+              <GroupedDateTimeFilter
+                name='fromDate'
+                groupFilter
+                dateTimePickerProps={
+                  {
+                    // label: 'From'
+                  }
+                }
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <GroupedDateTimeFilter
+                name='toDate'
+                groupFilter
+                dateTimePickerProps={
+                  {
+                    // label: 'To'
+                  }
+                }
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <GroupedSearchFilter isCommitment={isCommitments} />
+            </Grid>
+            <Grid container style={{ height: 'fit-content' }} item xs={2}>
+              <SearchQueryFilterGroupReset
+                filters={['search', 'toDate', 'fromDate']}
+                variant='outlined'
+                size='small'
+                disableElevation
+                style={{ height: '52px' }}
+              >
+                Reset
+              </SearchQueryFilterGroupReset>
+              <Box mx={0.5} />
+              <SearchQueryFilterGroupApply
+                filters={['search', 'toDate', 'fromDate']}
+                color='primary'
+                variant='outlined'
+                disableElevation
+                style={{ height: '52px' }}
+              >
+                Submit
+              </SearchQueryFilterGroupApply>
+            </Grid>
           </Grid>
-        )}
-        <Grid item xs={12}>
-          <GroupedSearchFilter isCommitment={isCommitments} />
-        </Grid>
-        <Grid item xs={12}>
-          <GroupedDateTimeFilter
-            name='fromDate'
-            groupFilter
-            dateTimePickerProps={{
-              label: 'From'
-            }}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <GroupedDateTimeFilter
-            name='toDate'
-            groupFilter
-            dateTimePickerProps={{
-              label: 'To'
-            }}
-          />
-        </Grid>
-        <Grid container item xs={12} justifyContent='flex-end'>
-          <SearchQueryFilterGroupReset
-            filters={['search', 'toDate', 'fromDate']}
-            variant='contained'
-            size='small'
-            disableElevation
+        </SearchQueryFilterGroup>
+      ) : (
+        <SearchQueryFilterGroup>
+          <Grid
+            container
+            direction='column'
+            spacing={3}
+            style={{ paddingTop: 24 }}
           >
-            Reset
-          </SearchQueryFilterGroupReset>
-          <Box mx={0.5} />
-          <SearchQueryFilterGroupApply
-            color='primary'
-            variant='contained'
-            disableElevation
-          >
-            Submit
-          </SearchQueryFilterGroupApply>
-        </Grid>
-      </Grid>
-    </SearchQueryFilterGroup>
+            {isCommitments && (
+              <Grid item xs={12}>
+                <ClosedDSOsFilter />
+              </Grid>
+            )}
+            <Grid item xs={12}>
+              <GroupedSearchFilter isCommitment={isCommitments} />
+            </Grid>
+            <Grid item xs={12}>
+              <GroupedDateTimeFilter
+                name='fromDate'
+                groupFilter
+                dateTimePickerProps={{
+                  label: 'From'
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <GroupedDateTimeFilter
+                name='toDate'
+                groupFilter
+                dateTimePickerProps={{
+                  label: 'To'
+                }}
+              />
+            </Grid>
+            <Grid container item xs={12} justifyContent='flex-end'>
+              <SearchQueryFilterGroupReset
+                filters={['search', 'toDate', 'fromDate']}
+                variant='contained'
+                size='small'
+                disableElevation
+                style={{ height: '52px' }}
+              >
+                Reset
+              </SearchQueryFilterGroupReset>
+              <Box mx={0.5} />
+              <SearchQueryFilterGroupApply
+                filters={['search', 'toDate', 'fromDate']}
+                color='primary'
+                variant='contained'
+                disableElevation
+                style={{ height: '52px' }}
+              >
+                Submit
+              </SearchQueryFilterGroupApply>
+            </Grid>
+          </Grid>
+        </SearchQueryFilterGroup>
+      )}
+    </>
   )
 }

@@ -37,14 +37,33 @@ export const identityURL = {
     submit: (id?: string) => `/identity/corporates/${id}/submit`,
     get: (userId?: string, identityId?: string) =>
       `/identity/corporates/${userId}/${identityId}`,
-    validateData: '/identity/corporates/check'
+    validateData: '/identity/corporates/check',
+    accreditation: {
+      create: (corporateId?: string) =>
+        `/identity/accreditation/corporate/${corporateId}`,
+      update: (corporateId?: string) =>
+        `/identity/accreditation/corporate/${corporateId}`,
+      submit: (id?: string) => `/identity/accreditation/corporate/${id}/submit`,
+      get: (identityId?: string) =>
+        `/identity/accreditation/corporate/${identityId}`
+    }
   },
   individuals: {
     create: (userId?: string) => `/identity/individuals/${userId}`,
     update: (userId?: string) => `/identity/individuals/${userId}`,
     get: (userId?: string) => `/identity/individuals/${userId}`,
     submit: (id?: string) => `/identity/individuals/${id}/submit`,
-    getSingPassData: '/sing-pass/getuser'
+    getSingPassData: '/sing-pass/getuser',
+    accreditation: {
+      create: (individualId?: string) =>
+        `/identity/accreditation/individual/${individualId}`,
+      update: (individualId?: string) =>
+        `/identity/accreditation/individual/${individualId}`,
+      submit: (id?: string) =>
+        `/identity/accreditation/individual/${id}/submit`,
+      get: (identityId?: string) =>
+        `/identity/accreditation/individual/${identityId}`
+    }
   },
   detailsOfIssuance: {
     create: (userId?: string) => `/identity/issuance-detail/${userId}`,

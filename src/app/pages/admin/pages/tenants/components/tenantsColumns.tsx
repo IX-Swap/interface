@@ -34,7 +34,7 @@ export const columns: any[] = [
           sx={{
             width: 30,
             height: 30,
-            backgroundColor:
+            backgroundImage:
               selectedTheme !== undefined ? selectedTheme.hex : '#000',
             borderRadius: '5px'
           }}
@@ -44,15 +44,31 @@ export const columns: any[] = [
     }
   },
   {
-    key: 'active',
+    key: 'status',
     label: 'Status',
-    render: (row: boolean) => {
-      return (
-        <Status
-          type={row ? 'approved' : 'submitted'}
-          label={row ? 'Active' : 'Inactive'}
-        />
-      )
+    render: (status: boolean | string) => {
+      let statusType = 'approved'
+      let statusLabel = 'Live'
+
+      switch (status) {
+        case 'UNDER_REVIEW':
+          statusType = 'submitted'
+          statusLabel = 'Under Review'
+          break
+        case 'APPROVED':
+          statusType = 'passed'
+          statusLabel = 'Approved'
+          break
+        case 'DISABLED':
+          statusType = 'rejected'
+          statusLabel = 'Disabled'
+          break
+
+        default:
+          break
+      }
+
+      return <Status type={statusType} label={statusLabel} />
     }
   }
 ]
