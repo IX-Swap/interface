@@ -107,7 +107,7 @@ export const schema = yup.object().shape({
     .nullable()
     .min(STRING_MIN, getLongerThanOrEqual('Token symbol', STRING_MIN))
     .max(6, 'Token symbol should be at most 6 charachters')
-    .matches(/^[a-zA-Z0-9]+$/, { message: 'Please enter only letters' })
+    .matches(/^(?=.*[a-zA-Z])[a-zA-Z\d]+$/, { message: 'Please enter only letters and numbers, min 1 letter' })
     .required(REQUIRED),
   tokenPrice: yup
     .string()
