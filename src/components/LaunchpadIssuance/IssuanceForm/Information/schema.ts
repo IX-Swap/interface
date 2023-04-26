@@ -31,6 +31,11 @@ const limitedSizeFileSchema = fileSchema.test('fileSize', 'File is too large', (
 const requiredFileSchema = limitedSizeFileSchema.required(REQUIRED)
 
 const countryCodes = getCodes()
+const getStringNumberConstraint = (name: string): [string, string, any] => [
+  'numberStringConstraint',
+  `${name} should be a number!`,
+  (value: string) => (value ? !isNaN(+value) : true),
+]
 
 const checkMaxGreaterThanMinimum = function (minimum: string, maximum: string) {
   if (!maximum || !minimum) {
@@ -118,17 +123,16 @@ export const schema = yup.object().shape({
     .string()
     .when('tokenStandart', {
       is: OfferTokenStandart.erc20,
-      then: yup
-        .string()
-        .when('smartContractStrategy', {
-          is: SMART_CONTRACT_STRATEGIES.original,
-          then: yup.string()
+      then: yup.string().when('smartContractStrategy', {
+        is: SMART_CONTRACT_STRATEGIES.original,
+        then: yup
+          .string()
           .nullable()
           .test('addressConstraint', 'Please enter a valid address', function () {
             return !this.parent.tokenReceiverAddress || Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
           })
           .required(REQUIRED),
-        })
+      }),
     })
     .nullable(),
 
@@ -136,15 +140,14 @@ export const schema = yup.object().shape({
     .string()
     .when('tokenStandart', {
       is: OfferTokenStandart.erc20,
-      then: yup
-        .string()
-        .when('smartContractStrategy', {
-          is: SMART_CONTRACT_STRATEGIES.original,
-          then: yup.string()
+      then: yup.string().when('smartContractStrategy', {
+        is: SMART_CONTRACT_STRATEGIES.original,
+        then: yup
+          .string()
           .nullable()
           .matches(/[0-9]+/, 'Invalid value')
           .required(REQUIRED),
-        })
+      }),
     })
     .nullable(),
 
@@ -313,9 +316,15 @@ export const schema = yup.object().shape({
       .min(STRING_MIN, getLongerThanOrEqual('Investment Structure', STRING_MIN))
       .max(STRING_MAX, getHaveAtMost('Investment Structure', STRING_MAX))
       .required(REQUIRED),
-    dividentYield: yup.string().nullable(),
+    dividentYield: yup
+      .string()
+      .nullable()
+      .test(...getStringNumberConstraint('Divident Yield')),
     investmentPeriod: yup.number().nullable(),
-    grossIrr: yup.string().nullable(),
+    grossIrr: yup
+      .string()
+      .nullable()
+      .test(...getStringNumberConstraint('Gross IRR')),
     distributionFrequency: yup.string().nullable().oneOf(Object.values(OfferDistributionFrequency)),
   }),
 
