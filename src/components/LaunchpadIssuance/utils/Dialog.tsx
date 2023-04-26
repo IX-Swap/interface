@@ -24,15 +24,18 @@ export const IssuanceDialog: React.FC<React.PropsWithChildren<Props>> = (props) 
   return (
     <Portal>
       <DialogWrapper onScroll={(e) => e.stopPropagation()}>
-        <DialogContainer width={props.width} height={props.height} padding={props.padding}>
+        <OuterContainer >
           <DialogCloseButton onClick={props.onClose}>
             <X size={14} />
           </DialogCloseButton>
+
+          <DialogContainer width={props.width} height={props.height} padding={props.padding}>
 
           {props.title && <DialogTitle>{props.title}</DialogTitle>}
 
           <Content>{props.children}</Content>
         </DialogContainer>
+        </OuterContainer>
       </DialogWrapper>
     </Portal>
   )
@@ -79,7 +82,10 @@ const DialogCloseButton = styled.div`
     right: -2.7rem;
   }
 `
-
+const OuterContainer = styled.div`
+  position: relative;
+  max-height: 100vh;
+`
 const DialogContainer = styled.div<{ height?: string; width?: string; padding?: string }>`
   position: relative;
 
