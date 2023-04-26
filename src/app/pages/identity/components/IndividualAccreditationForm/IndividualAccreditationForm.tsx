@@ -35,6 +35,7 @@ export const IndividualAccreditationForm = ({
     params.identityId
   )
   const { location, replace } = useHistory()
+  console.log(data, 'individualData')
   useEffect(() => {
     if (!isLoading) {
       if (

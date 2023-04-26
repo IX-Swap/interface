@@ -5,6 +5,7 @@ import { IdentityRoute } from 'app/pages/identity/router/config'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
+import { getIndividualAccreditationSubmitPayload } from '../utils/individual/requests'
 
 export const useSubmitIndividualAccreditation = (callback?: () => void) => {
   const { snackbarService, apiService, storageService } = useServices()
@@ -37,8 +38,8 @@ export const useSubmitIndividualAccreditation = (callback?: () => void) => {
     }
   })
 }
-function getIndividualAccreditationSubmitPayload(
-  data: IndividualIdentity
-): any {
-  throw new Error('Function not implemented.')
-}
+// function getIndividualAccreditationSubmitPayload(
+//   data: IndividualIdentity
+// ): any {
+//   throw new Error('Function not implemented.')
+// }
