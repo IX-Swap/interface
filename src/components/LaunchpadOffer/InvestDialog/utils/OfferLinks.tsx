@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { Search, Copy, Plus } from 'react-feather'
 import MetamaskIcon from 'assets/images/metamask.png'
@@ -6,11 +6,12 @@ import { IconButton, Row } from 'components/LaunchpadMisc/styled'
 import { shortenAddress } from 'utils'
 import { OfferNetwork } from 'state/launchpad/types'
 import { useAddPopup } from 'state/application/hooks'
-import { NETWORK_NAMES, CHAIN_INFO, SupportedChainId } from 'constants/chains'
+import { NETWORK_NAMES, CHAIN_INFO, SupportedChainId, nameChainMap } from 'constants/chains'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
 import { DiscreteExternalLink } from 'theme'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { text10 } from 'components/LaunchpadMisc/typography'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface Props {
   network: OfferNetwork
@@ -22,7 +23,7 @@ interface Props {
 export const OfferLinks: React.FC<Props> = ({ network, address, symbol, decimals }) => {
   const theme = useTheme()
   const addPopup = useAddPopup()
-  const networkLogoUrl = React.useMemo(() => {
+  const networkLogoUrl = useMemo(() => {
     const networkId = Object.entries(NETWORK_NAMES).find(([, name]) => name === network)?.[0]
     if (!networkId) {
       return null
@@ -30,7 +31,17 @@ export const OfferLinks: React.FC<Props> = ({ network, address, symbol, decimals
     return CHAIN_INFO[Number(networkId)].logoUrl
   }, [])
 
-  const copyAddress = React.useCallback(async () => {
+  const { chainId } = useActiveWeb3React()
+  const explorerLink = useMemo(
+    () => {
+      const nameChainMapNetwork = chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[network]
+      return getExplorerLink(nameChainMapNetwork, address, ExplorerDataType.TOKEN)
+    },
+    
+    [network, address]
+  )
+
+  const copyAddress = useCallback(async () => {
     await navigator.clipboard.writeText(address)
     addPopup({ info: { success: true, summary: 'Copied to clipboard' } })
   }, [])
@@ -49,7 +60,7 @@ export const OfferLinks: React.FC<Props> = ({ network, address, symbol, decimals
 
       <OfferLink
         as={DiscreteExternalLink}
-        href={getExplorerLink(SupportedChainId.MATIC, address, ExplorerDataType.TOKEN)}
+        href={explorerLink}
       >
         <Search size="18" color={theme.launchpad.colors.text.bodyAlt} />
       </OfferLink>
