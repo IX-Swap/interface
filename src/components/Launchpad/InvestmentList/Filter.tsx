@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import { FilterDropdown, FilterOption } from './FilterDropdown'
@@ -17,38 +17,24 @@ export interface FilterConfig {
 }
 
 interface Props {
-  onFilter: (filter: FilterConfig) => void
+  onFilter: (updateFunction: (filter: FilterConfig) => FilterConfig) => void
   filter: FilterConfig
 }
 
 export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
-  const updateFilter = (newFilter: Partial<FilterConfig>) => onFilter({ ...filter, ...newFilter })
+  const updateFilter = (newFilter: Partial<FilterConfig>) => {
+    onFilter((oldFilter) => ({ ...oldFilter, ...newFilter } as FilterConfig))
+  }
 
-  const onSearchChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => updateFilter({ search: event.target.value }),
-    [updateFilter]
-  )
+  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateFilter({ search: event.target.value })
+  }
 
-  const onIndustrySelect = useCallback(
-    (options: FilterOption<string>[]) => {
-      updateFilter({ industry: options })
-    },
-    [updateFilter]
-  )
-
-  const onStageSelect = useCallback(
-    (options: FilterOption<string>[]) => {
-      updateFilter({ stage: options })
-    },
-    [updateFilter]
-  )
-
-  const onTypeSelect = useCallback(
-    (options: FilterOption<string>[]) => {
-      updateFilter({ type: options })
-    },
-    [updateFilter]
-  )
+  const handleDropdownSelect = (name: string) => {
+    return (options: FilterOption<string>[]) => {
+      updateFilter({ [name]: options })
+    }
+  }
 
   return (
     <FilterContainer>
@@ -56,9 +42,14 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
         selected={filter.industry}
         label="Industry"
         options={OFFER_INDUSTRY_LABELS}
-        onSelect={onIndustrySelect}
+        onSelect={handleDropdownSelect('industry')}
       />
-      <FilterDropdown selected={filter.stage} label="Stage" options={OFFER_STAGE_LABELS} onSelect={onStageSelect} />
+      <FilterDropdown
+        selected={filter.stage}
+        label="Stage"
+        options={OFFER_STAGE_LABELS}
+        onSelect={handleDropdownSelect('stage')}
+      />
 
       <FilterSearchField>
         <FilterSearchInput value={filter.search} onChange={onSearchChange} />
@@ -71,11 +62,11 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
         selected={filter.type}
         label="Type"
         options={OFFER_TYPE_LABELS}
-        onSelect={onTypeSelect}
+        onSelect={handleDropdownSelect('type')}
         disabled={true}
       />
 
-      <FilterButton type="button" onClick={() => onFilter(filter)} disabled={true}>
+      <FilterButton type="button" disabled={true}>
         <FilterIcon /> Filter
       </FilterButton>
     </FilterContainer>

@@ -16,7 +16,7 @@ interface Props {
 
   fetchMore: () => void
   filter: FilterConfig
-  onFilter: (filter: FilterConfig) => void
+  onFilter: (updateFunction: (filter: FilterConfig) => FilterConfig) => void
 }
 
 export const InvestmentList: React.FC<Props> = (props) => {
