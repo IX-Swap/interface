@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { InvestmentList } from 'components/Launchpad/InvestmentList'
 import { FilterConfig } from 'components/Launchpad/InvestmentList/Filter'
@@ -20,10 +20,9 @@ export const Offers = () => {
     return newFilter ? (JSON.parse(newFilter) as FilterConfig) : { search: '', industry: [], stage: [], type: [] }
   })
 
-  const onFilter = (newFilter: FilterConfig) => {
-    setFilter(newFilter)
-    localStorage.setItem('offersFilter', JSON.stringify(newFilter))
-  }
+  useEffect(() => {
+    localStorage.setItem('offersFilter', JSON.stringify(filter))
+  }, [filter])
 
   React.useEffect(() => {
     getOffers(1, filter)
@@ -61,7 +60,7 @@ export const Offers = () => {
       <InvestmentList
         offers={offers}
         filter={filter}
-        onFilter={onFilter}
+        onFilter={setFilter}
         fetchMore={fetchMore}
         isLoading={loading}
         hasMore={hasMore}
