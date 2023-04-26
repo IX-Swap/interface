@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
 import { useStyles } from 'app/pages/identity/components/IndividualPreview/IndividualPreview.styles'
-import { Box, Grid, Tabs, Tab, Paper } from '@mui/material'
+import { Box, Grid, Paper, Tab, Tabs } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import { IdentityRoute } from 'app/pages/identity/router/config'
+// import { Status } from 'ui/Status/Status'
+// import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
-import { IndividualIdentityView } from '../IndividualIdentityView/IndividualIdentityView'
 import { StatusBox } from 'app/pages/identity/components/StatusBox/StatusBox'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityCTA } from '../IdentityCTA/IdentityCTA'
 import { AccreditationCTA } from '../AccreditationCTA/AccreditationCTA'
-import { isEmptyString } from 'helpers/strings'
+import { IndividualAccreditationView } from '../IndividualAccreditationView/IndividualAccreditationView'
+import { IndividualIdentityView } from '../IndividualIdentityView/IndividualIdentityView'
 
 export interface IndividualPreviewProps {
   data?: IndividualIdentity
@@ -34,31 +36,36 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
   const accreditationSubmitted = false
   const accreditationApproved = data.accreditationStatus === 'Approved'
 
-  const individualName =
-    !isEmptyString(data?.firstName) && !isEmptyString(data?.lastName)
-      ? data.firstName + ' ' + data.lastName
-      : data?.user?.name ?? '-'
-  const name = `[${data.status}] ${individualName}`
-  //   const status = data.status.toLowerCase()
-
-  //   const individualIdentityFields = [
+  //   const corporateIdentityFields = [
   //     {
-  //       key: 'Full Name',
-  //       value: individualName
+  //       key: 'Company Name',
+  //       value: data.companyLegalName
   //     },
   //     {
-  //       key: 'Occupation',
-  //       value: adjustIdentityOccupation(data.occupation)
+  //       key: 'Company Registration Number',
+  //       value: data.registrationNumber
   //     },
   //     {
-  //       key: 'Email',
-  //       value: data.email
+  //       key: 'Email Address',
+  //       value: data.representatives?.[0].email
   //     },
   //     {
   //       key: 'Contact Number',
-  //       value: data.contactNumber
+  //       value: data.representatives?.[0].contactNumber
   //     }
   //   ]
+
+  //   const status = data.status.toLowerCase()
+
+  const getDetails = () => {
+    const details = {
+      editLink: IdentityRoute.editIndividual,
+      viewLink: IdentityRoute.viewIndividual,
+      title: 'Individual Investor'
+    }
+    return details
+  }
+  const details = getDetails()
 
   return (
     <>
@@ -78,44 +85,45 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
         <Grid item className={classes.profile}>
           <Box>
             <DataPreview
-              avatar={data.photo}
+              // avatar={data.logo}
               userId={data.user._id}
-              // fields={individualIdentityFields}
+              //   fields={corporateIdentityFields}
               name={data.user.name}
-              isIndividual={true}
+              isIndividual={false}
               kycStatus={data.status}
               accreditationStatus={data.accreditationStatus}
+              // identityType={data.type}
               roles={data.user.roles}
             />
           </Box>
         </Grid>
         <Grid item className={classes.buttonBox}>
           <EditButton
-            link={IdentityRoute.editIndividual}
+            link={details.editLink}
             params={{
-              label: name,
               identityId: data._id,
               userId: data.user._id
+              // label: data.companyLegalName
             }}
             customLabel
             showIcon
             sx={{
               padding: '10px 30px !important',
-              width: '300px !important',
+              width: '330px !important',
               visibility: 'hidden'
             }}
           >
-            Edit {selectedIdx === 0 ? 'Personal' : 'Accreditation'} Information
+            Edit {onKycTab ? 'Personal' : 'Accreditation'} Information
           </EditButton>
-          {/* <Box mx={1} component='span' />
-        <ViewButton
-          link={IdentityRoute.viewIndividual}
-          params={{
-            label: name,
-            identityId: data._id,
-            userId: data.user._id
-          }}
-        /> */}
+          {/* <Box mx={1} component='span' /> */}
+          {/* <ViewButton
+            link={details.viewLink}
+            params={{
+              identityId: data._id,
+              userId: data.user._id,
+              label: data.companyLegalName
+            }}
+          /> */}
         </Grid>
       </Grid>
 
@@ -132,11 +140,11 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
               )}
               {data.status === 'Rejected' && (
                 <IdentityCTA
-                  link={IdentityRoute.editIndividual}
+                  link={details.editLink}
                   params={{
-                    label: name,
                     identityId: data._id,
                     userId: data.user._id
+                    // label: data.companyLegalName
                   }}
                 />
               )}
@@ -180,7 +188,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
                   />
                 )}
 
-                {/* TODO: Individual Accreditation Details */}
+                <IndividualAccreditationView data={data} />
               </>
             )}
           </TabPanel>
@@ -200,8 +208,8 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
                     variant={'contained'}
                     link={
                       onKycTab
-                        ? IdentityRoute.editIndividual
-                        : IdentityRoute.editIndividual
+                        ? details.editLink
+                        : IdentityRoute.editIndividualAccreditation
                     }
                     params={{
                       identityId: data._id,
