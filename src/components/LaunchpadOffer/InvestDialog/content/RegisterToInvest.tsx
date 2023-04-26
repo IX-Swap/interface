@@ -28,6 +28,8 @@ interface FormValues {
 
 type ValueSetter = (field: string, value: any, shouldValidate?: boolean | undefined) => void
 
+type TouchSetter = (field: string, isTouched?: boolean | undefined, shouldValidate?: boolean | undefined) => void
+
 const initialValues: FormValues = {
   amount: undefined,
   isInterested: undefined,
@@ -75,14 +77,15 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     [submitState]
   )
 
-  const onChangeInterested = (value: any, setValue: ValueSetter) => {
+  const onChangeInterested = async (value: any, setValue: ValueSetter, setFieldTouched: TouchSetter) => {
     if (disableForm) {
       return
     }
 
-    setValue('isInterested', value)
+    await setValue('isInterested', value)
+    setFieldTouched('isInterested', true)
 
-    if(!value) {
+    if (!value) {
       setAmount("")
       setValue('amount', 0)
       setWarning("")
@@ -103,7 +106,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
 
   return (
     <Formik initialValues={initialValues} validationSchema={schema} onSubmit={submit}>
-      {({ errors, values, setFieldValue, submitForm }) => (
+      {({ errors, values, setFieldValue, submitForm, setFieldTouched }) => (
         <InvestFormContainer gap="1.5rem" padding="0 0 2rem 0">
           {whitelist.loading && (
             <Centered style={{ flexGrow: 1 }}>
@@ -119,14 +122,14 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
                 <ParticipationInterest>
                   <ParticipationInterestButton
                     active={values.isInterested === true}
-                    onClick={() => onChangeInterested(true, setFieldValue)}
+                    onClick={() => onChangeInterested(true, setFieldValue, setFieldTouched)}
                   >
                     Yes
                   </ParticipationInterestButton>
 
                   <ParticipationInterestButton
                     active={values.isInterested === false}
-                    onClick={() => onChangeInterested(false, setFieldValue)}
+                    onClick={() => onChangeInterested(false, setFieldValue, setFieldTouched)}
                   >
                     No
                   </ParticipationInterestButton>
