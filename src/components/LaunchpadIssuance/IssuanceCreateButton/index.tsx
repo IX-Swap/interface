@@ -222,5 +222,4 @@ const ButtonLabel = styled.div`
 
 const NewIssuanceLabel = styled.span`
   ${text1}
-  color: ${(props) => props.theme.launchpad.colors.primary};
 `

@@ -227,7 +227,11 @@ export const NewIssuanceForm = () => {
                   borderColor={theme.launchpad.colors.warn + '4d'}
                   width="320px"
                   as={DiscreteInternalLink}
-                  to={`/issuance/view/vetting?id=${issuance.data?.id}`}
+                  to={
+                    isAdmin
+                      ? `/issuance/create/vetting?id=${issuance.data?.id}`
+                      : `/issuance/view/vetting?id=${issuance.data?.id}`
+                  }
                 >
                   Pending approval
                 </OutlineButton>
