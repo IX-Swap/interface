@@ -20,6 +20,7 @@ import { useConfirmFee, useDeployOffer } from 'state/issuance/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { isEthChainAddress } from 'utils'
+import { useRole } from 'state/user/hooks'
 
 export interface IsssuanceApplicationPopupProps {
   issuance: Issuance | null
@@ -74,6 +75,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   const [touchedFee, touchFee] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { isAdmin } = useRole()
 
   const vettingStatus = useMemo(() => issuance?.vetting?.status, [issuance])
   const offerStatus = useMemo(() => issuance?.vetting?.offer?.status, [issuance])
@@ -117,11 +119,14 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
     if (!vettingStatus) {
       return ''
     }
-    if ([IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(vettingStatus)) {
+    if (
+      [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(vettingStatus) ||
+      (vettingStatus === IssuanceStatus.pendingApproval && isAdmin)
+    ) {
       return `/issuance/create/vetting?id=${issuance?.id}`
     }
     return `/issuance/view/vetting?id=${issuance?.id}`
-  }, [issuance?.id, vettingStatus])
+  }, [issuance?.id, vettingStatus, isAdmin])
 
   const informationLink = useMemo(() => {
     if (!offerStatus) {
