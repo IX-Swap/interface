@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { renderPriceWithCurrency } from 'app/pages/invest/components/DSOTable/columns'
 import { renderListingStatus } from 'helpers/tables'
 import { formatDateToMMDDYY } from 'helpers/dates'
 
@@ -24,8 +23,8 @@ export const columns = [
   },
 
   {
-    label: <Box>Company Name</Box>,
-    key: 'employer'
+    label: <Box>Profile Name</Box>,
+    key: 'user.name'
   },
 
   {
@@ -49,59 +48,47 @@ export const columns = [
     render: renderRiskReport
   },
 
-  // {
-  //   label: <Box ml={2}>Risk Report</Box>,
-  //   key: 'minimumInvestment'
-
-  // },
   {
     label: <Box>KYC Status</Box>,
     key: 'status',
     render: renderListingStatus
   }
-
-  // {
-  //   label: <Box ml={2}>Issuer Status</Box>,
-  //   key: 'status',
-  //   render: renderListingStatus
-  // },
-
-  // {
-  //   label: <Box ml={2}>Tenant Owner Status</Box>,
-  //   key: 'status',
-  //   render: renderListingStatus
-  // }
 ]
 
 export const compactColumns = [
   {
-    label: 'Pair',
-    key: '_id'
+    label: <Box ml={2}>Date</Box>,
+    key: 'createdAt',
+    render: formatDateToMMDDYY
+  },
+
+  {
+    label: <Box>Profile Name</Box>,
+    key: 'user.name'
+  },
+
+  {
+    label: <Box>Country</Box>,
+    key: 'nationality'
   },
   {
-    label: 'Name',
-    key: 'tokenName'
+    label: <Box>Representative</Box>,
+    key: 'nationality'
+  },
+
+  {
+    label: <Box>Type</Box>,
+    key: 'user.accountType'
+  },
+
+  {
+    label: <Box ml={1}>Risk Report</Box>,
+    key: 'cynopsis.riskRating',
+    render: renderRiskReport
   },
   {
-    key: 'pricePerUnit',
-    label: 'Price',
-    render: renderPriceWithCurrency
-  },
-  {
-    key: 'minimumInvestment',
-    label: 'Minimum',
-    render: renderPriceWithCurrency
-  },
-  {
-    key: 'capitalStructure',
-    label: 'Capital Structure'
-  },
-  {
-    key: 'distributionFrequency',
-    label: 'Distribution'
-  },
-  {
+    label: <Box>KYC Status</Box>,
     key: 'status',
-    label: 'Status'
+    render: renderListingStatus
   }
 ]

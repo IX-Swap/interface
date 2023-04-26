@@ -86,6 +86,7 @@ export const authorizerQueryKeys = {
   getCommitmentsList: 'authorizer-commitments-list',
   getCorporateIdentities: 'authorizer-corporate-list',
   getCorporateAccreditations: 'authorizer-corporate-accreditation-list',
+  getIndividualAccreditations: 'authorizer-individual-accreditation-list',
   getSecurityWithdrawals: 'authorizer-security-withdrawals',
   getIndividualIdentityList: 'authorizer-individual-identitiesList',
   getDSOList: 'authorizer-dso-list',
