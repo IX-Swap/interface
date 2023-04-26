@@ -23,22 +23,18 @@ interface Props {
 export const OfferLinks: React.FC<Props> = ({ network, address, symbol, decimals }) => {
   const theme = useTheme()
   const addPopup = useAddPopup()
-  const networkLogoUrl = useMemo(() => {
-    const networkId = Object.entries(NETWORK_NAMES).find(([, name]) => name === network)?.[0]
-    if (!networkId) {
-      return null
-    }
-    return CHAIN_INFO[Number(networkId)].logoUrl
-  }, [])
 
   const { chainId } = useActiveWeb3React()
+  const nameChainMapNetwork = chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[network]
+
+  const networkLogoUrl = CHAIN_INFO[nameChainMapNetwork].logoUrl
+
   const explorerLink = useMemo(
     () => {
-      const nameChainMapNetwork = chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[network]
       return getExplorerLink(nameChainMapNetwork, address, ExplorerDataType.TOKEN)
     },
     
-    [network, address]
+    [network, address, nameChainMapNetwork]
   )
 
   const copyAddress = useCallback(async () => {
