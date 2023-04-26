@@ -14,10 +14,6 @@ const getIsDisabled = (message?: string, isDraft?: boolean) => {
 }
 
 const getVisibleError = (errors: any, touched: any, isDraft: boolean) => {
-  // const notTouched = !Object.keys(touched).length
-  // if (notTouched) {
-  //   return true
-  // }
   const hasVisibleError = Object.entries(touched).some(([fieldName, value]: any) => {
     if (Array.isArray(value)) {
       return value.some((arrayItem, index) => {
