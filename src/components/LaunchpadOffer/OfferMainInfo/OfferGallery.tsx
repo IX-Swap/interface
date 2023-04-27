@@ -78,7 +78,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
 
       <SocialMediaLinks>
         <SocialMediaLink href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
-        <SocialMediaLink href={props.offer?.whitepaperUrl}>Whitepaper</SocialMediaLink>
+        {props.offer?.whitepaperUrl && <SocialMediaLink href={props.offer.whitepaperUrl}>Whitepaper</SocialMediaLink>}
 
         {socialMedialLinks
           .filter((link) => link.url)

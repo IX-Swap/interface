@@ -301,7 +301,7 @@ export const schema = yup.object().shape({
 
   email: yup.string().nullable().required(REQUIRED).email('Enter a valid email'),
   website: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),
-  whitepaper: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),
+  whitepaper: yup.string().nullable().url('Enter a valid URL'),
 
   allowOnlyAccredited: yup.boolean(),
   tokenomicsAgreement: yup.boolean().oneOf([true], REQUIRED).required(REQUIRED),
@@ -456,7 +456,7 @@ export const editSchema = yup.object().shape({
 
   email: yup.string().nullable().required(REQUIRED).email('Enter a valid email'),
   website: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),
-  whitepaper: yup.string().nullable().required(REQUIRED).url('Enter a valid URL'),
+  whitepaper: yup.string().nullable().url('Enter a valid URL'),
 
   allowOnlyAccredited: yup.boolean(),
   tokenomicsAgreement: yup.boolean().oneOf([true], REQUIRED).required(REQUIRED),
