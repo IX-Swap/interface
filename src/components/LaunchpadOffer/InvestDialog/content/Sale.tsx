@@ -108,12 +108,16 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     ]
   }, [availableToInvest, amountInvested, investingTokenSymbol, formatter, lastStatus])
 
-  const tooltipContent = <div>
-    <PresaleTooltipTitle>Pre-Sale Conditions</PresaleTooltipTitle>
-    <br/>
-    <PresaleTooltipText>These conditions are applicable only to the pre-sale round. 
-      For public sale conditions, please refer to the &quot;Deals&quot; page for more info.</PresaleTooltipText>
-  </div> as React.ReactNode
+  const tooltipContent = (
+    <div>
+      <PresaleTooltipTitle>Pre-Sale Conditions</PresaleTooltipTitle>
+      <br />
+      <PresaleTooltipText>
+        These conditions are applicable only to the pre-sale round. For public sale conditions, please refer to the
+        &quot;Deals&quot; page for more info.
+      </PresaleTooltipText>
+    </div>
+  ) as React.ReactNode
 
   const launchpadContract = useLaunchpadInvestmentContract()
   const tokenCurrency = useCurrency(offer.investingTokenAddress)
@@ -173,12 +177,16 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       <OfferLinks network={network} address={tokenAddress} symbol={tokenSymbol} decimals={decimals} />
 
       <InfoList
-        title={<InfoContainer>
-                <InfoListTitle>{isPresale ? 'Pre-Sale Conditions' : 'Public Sale Conditions'}</InfoListTitle>
-                {isPresale ? 
-                  <IssuanceTooltip tooltipContent={tooltipContent} /> : 
-                  <Info size="16" color={theme.launchpad.colors.text.caption} />}
-              </InfoContainer>}
+        title={
+          <InfoContainer>
+            <InfoListTitle>{isPresale ? 'Pre-Sale Conditions' : 'Public Sale Conditions'}</InfoListTitle>
+            {isPresale ? (
+              <IssuanceTooltip tooltipContent={tooltipContent} />
+            ) : (
+              <Info size="16" color={theme.launchpad.colors.text.caption} />
+            )}
+          </InfoContainer>
+        }
         fontSize="13px"
         lineHeight="32px"
         entries={conditions}
@@ -190,13 +198,17 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
         entries={investmentAllowance}
       />
 
-      <ConvertationField offer={offer} availableToInvest={availableToInvest} onChange={setAmount} setDisabled={setDisabled} />
+      <ConvertationField
+        offer={offer}
+        availableToInvest={availableToInvest}
+        onChange={setAmount}
+        setDisabled={setDisabled}
+      />
 
       <Agreement>
         <AgreementCheckbox state={agreed} toggle={() => setAgreed((state) => !state)} />
         <AgreementText>
-          I have read, fully understood, and agree to be bound by the terms of this{' '}
-          <AgreementTerms href="#">subscription form.</AgreementTerms>
+          I have read, fully understood, and agree to be bound by the terms of this Issuance
         </AgreementText>
       </Agreement>
 
@@ -236,7 +248,7 @@ const PresaleTooltipTitle = styled.b`
 
 const PresaleTooltipText = styled.p`
   color: ${(props) => props.theme.launchpad.colors.text.body};
-  font-weight: 400
+  font-weight: 400;
 `
 
 const InfoContainer = styled.div`
@@ -263,12 +275,6 @@ const AgreementText = styled.div`
   ${text11}
   max-width: 250px;
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
-`
-
-const AgreementTerms = styled.a`
-  ${text11}
-  text-decoration: none;
-  color: ${(props) => props.theme.launchpad.colors.primary};
 `
 
 const AgreementCheckbox = styled(BaseCheckbox)`
