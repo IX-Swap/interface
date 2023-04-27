@@ -43,7 +43,7 @@ const HEADERS = [
   { key: 'issuanceName', label: 'Issuances' },
   { key: 'countInvestors', label: 'Investors' },
   { key: 'commitment', label: 'Commitment' },
-  { key: 'progress', label: 'Progress' },
+  { key: 'progressPercent', label: 'Progress' },
   { key: 'hardCap', label: 'Total Funding' },
   { key: 'closeDate', label: 'Close Date' },
   { key: 'status', label: 'Stage' },
