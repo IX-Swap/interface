@@ -15,7 +15,7 @@ export interface OrderConfig {
   issuanceName?: string | null
   countInvestors?: string | null
   commitment?: string | null
-  progress?: string | null
+  progressPercent?: string | null
   hardCap?: string | null
   closeDate?: string | null
   softCapReached?: string | null
