@@ -4,7 +4,7 @@ import polygonLogoUrl from 'assets/images/polygon.svg'
 export const NetworkContextName = 'NETWORK'
 export enum SupportedChainId {
   MAINNET = 1,
-  GOERLI = 2,
+  GOERLI = 5,
   RINKEBY = 4,
   KOVAN = 42,
   MATIC = 137,
