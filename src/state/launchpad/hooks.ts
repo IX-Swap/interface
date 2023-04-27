@@ -1150,7 +1150,7 @@ export const useSubmitOffer = () => {
 
         contactUsEmail: payload.email,
         issuerWebsite: payload.website,
-        whitepaperUrl: payload.whitepaper,
+        whitepaperUrl: payload.whitepaper || null,
 
         profilePictureId: uploadedFiles.find((x) => x.name === 'profile')?.id || payload.profilePicture?.id || null,
         cardPictureId: uploadedFiles.find((x) => x.name === 'card')?.id || payload.cardPicture?.id || null,
@@ -1315,7 +1315,7 @@ export const useMinimalOfferEdit = () => {
 
       contactUsEmail: payload.email,
       issuerWebsite: payload.website,
-      whitepaperUrl: payload.whitepaper,
+      whitepaperUrl: payload.whitepaper || null,
 
       profilePictureId: files.find((x) => x.name === 'profile')?.id || payload.profilePicture?.id || null,
       cardPictureId: files.find((x) => x.name === 'card')?.id || payload.cardPicture?.id || null,
