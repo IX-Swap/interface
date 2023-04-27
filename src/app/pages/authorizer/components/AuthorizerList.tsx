@@ -7,8 +7,7 @@ import { AuthorizerTable } from './AuthorizerTable'
 import { FiltersToggle } from 'app/components/FiltersToggle'
 import { SelectionHelper } from 'components/SelectionHelper'
 import { AuthorizerSelectionActions } from 'app/pages/authorizer/components/SelectionAction/SelectionActions'
-import { useHistory } from 'react-router-dom'
-import { AuthorizerKycTable } from './AuthorizerKycTable'
+
 export interface AuthorizerListProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,
     Viewable<T> {
@@ -24,35 +23,17 @@ export const defaultItemComparator = (a: any, b: any) => {
 }
 
 export const AuthorizerList = <T,>(props: AuthorizerListProps<T>) => {
-  const { location } = useHistory()
   return (
-    <>
-      {location?.pathname?.includes('individuals') ||
-      location?.pathname?.includes('corporates') ? (
-        <SelectionHelper
-          itemComparator={props.itemComparator ?? defaultItemComparator}
-        >
-          <LayoutWithSidebar
-            title={props.title}
-            secret
-            sidebar={Filters}
-            sidebarToggle={FiltersToggle}
-            content={() => <AuthorizerKycTable {...props} />}
-          />
-        </SelectionHelper>
-      ) : (
-        <SelectionHelper
-          itemComparator={props.itemComparator ?? defaultItemComparator}
-        >
-          <LayoutWithSidebar
-            title={props.title}
-            secret
-            sidebar={Filters}
-            sidebarToggle={FiltersToggle}
-            content={() => <AuthorizerTable {...props} />}
-          />
-        </SelectionHelper>
-      )}
-    </>
+    <SelectionHelper
+      itemComparator={props.itemComparator ?? defaultItemComparator}
+    >
+      <LayoutWithSidebar
+        title={props.title}
+        secret
+        sidebar={Filters}
+        sidebarToggle={FiltersToggle}
+        content={() => <AuthorizerTable {...props} />}
+      />
+    </SelectionHelper>
   )
 }
