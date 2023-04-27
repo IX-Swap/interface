@@ -3,7 +3,7 @@ import React, { ErrorInfo } from 'react'
 import ReactGA from 'react-ga'
 import styled from 'styled-components/macro'
 import { TYPE } from '../../theme'
-import { AutoColumn, ColumnCenter } from '../Column'
+import { AutoColumn } from '../Column'
 import { AutoRow } from '../Row'
 
 const FallbackWrapper = styled.div`
