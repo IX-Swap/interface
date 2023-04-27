@@ -21,8 +21,10 @@ import { AuthorizerDealClosureRouter } from 'app/pages/authorizer/pages/DealClos
 import { AuthorizerLandingPage } from 'app/components/LandingPage/AuthorizerLandingPage'
 import { TokenDeploymentRouter } from 'app/pages/authorizer/pages/TokenDeployment/TokenDeploymentRouter'
 import { OTCTrades } from '../pages/otcTrades/OTCTrades'
+import { AuthorizerIndividualAccreditationsRouter } from 'app/pages/authorizer/pages/individualAccreditations/router/AuthorizerIndividualAccreditationsRouter'
 
 export const AuthorizerRouter = () => {
+  console.log('inside main auhtorisze router file')
   return (
     <Switch>
       <AppRoute breadcrumb='Bank Accounts' path={AuthorizerRoute.banks}>
@@ -42,12 +44,19 @@ export const AuthorizerRouter = () => {
       >
         <AuthorizerDSWithdrwalsRouter />
       </AppRoute>
-
       <AppRoute
-        breadcrumb='KYC Applications'
+        breadcrumb='Individual KYC Applications'
         path={AuthorizerRoute.individualIdentities}
+        exact
       >
         <AuthorizerIndividualIdentitiesRouter />
+      </AppRoute>
+      <AppRoute
+        breadcrumb='Individual Accreditation Applications'
+        path={AuthorizerRoute.individualAccreditations}
+        exact
+      >
+        <AuthorizerIndividualAccreditationsRouter />
       </AppRoute>
 
       <AppRoute
@@ -56,7 +65,6 @@ export const AuthorizerRouter = () => {
       >
         <AuthorizerCorporateAccreditationsRouter />
       </AppRoute>
-
       <AppRoute
         breadcrumb='Corporate KYC Applications'
         path={AuthorizerRoute.corporateIdentities}
