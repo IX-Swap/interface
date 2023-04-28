@@ -410,6 +410,7 @@ export interface ManagedOffer extends Offer {
   saleInvestment: number
   totalInvestment: number
   issuanceId: number
+  smartContractStrategy: SMART_CONTRACT_STRATEGIES
 }
 
 export type MiniOffer = Pick<Offer, 'id' | 'status' | 'timeframe' | 'hasPresale'>
