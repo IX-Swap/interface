@@ -13,37 +13,41 @@ export const SearchAndDateFilter = () => {
   const isCommitments = category === 'commitments'
   return (
     <SearchQueryFilterGroup>
-      <Grid container direction='column' spacing={3} style={{ paddingTop: 24 }}>
+      <Grid container spacing={3}>
         {isCommitments && (
           <Grid item xs={12}>
             <ClosedDSOsFilter />
           </Grid>
         )}
-        <Grid item xs={12}>
-          <GroupedSearchFilter isCommitment={isCommitments} />
-        </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={2}>
           <GroupedDateTimeFilter
             name='fromDate'
             groupFilter
-            dateTimePickerProps={{
-              label: 'From'
-            }}
+            dateTimePickerProps={
+              {
+                // label: 'From'
+              }
+            }
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={2}>
           <GroupedDateTimeFilter
             name='toDate'
             groupFilter
-            dateTimePickerProps={{
-              label: 'To'
-            }}
+            dateTimePickerProps={
+              {
+                // label: 'To'
+              }
+            }
           />
         </Grid>
-        <Grid container item xs={12} justifyContent='flex-end'>
+        <Grid item xs={6}>
+          <GroupedSearchFilter isCommitment={isCommitments} />
+        </Grid>
+        <Grid container style={{ height: 'fit-content' }} item xs={2}>
           <SearchQueryFilterGroupReset
             filters={['search', 'toDate', 'fromDate']}
-            variant='contained'
+            variant='outlined'
             size='small'
             disableElevation
             style={{ height: '52px' }}
@@ -54,7 +58,7 @@ export const SearchAndDateFilter = () => {
           <SearchQueryFilterGroupApply
             filters={['search', 'toDate', 'fromDate']}
             color='primary'
-            variant='contained'
+            variant='outlined'
             disableElevation
             style={{ height: '52px' }}
           >
