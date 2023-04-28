@@ -48,7 +48,8 @@ export const AuthorizerView = <T,>(
   const category = useAuthorizerCategory()
   const isTransaction = transactionalCategories.includes(category)
   const { title, data, feature, children, statusFieldName = 'status' } = props
-  const hasIdentity = data.identity !== undefined
+  const hasIdentity = false
+  //   const hasIdentity = data.identity !== undefined
   const documents = data.authorizationDocuments ?? []
   const approvedOrRejected = ['Approved', 'Rejected'].includes(
     data[statusFieldName as keyof typeof data]
