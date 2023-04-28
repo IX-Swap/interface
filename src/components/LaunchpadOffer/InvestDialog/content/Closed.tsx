@@ -90,7 +90,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
         addPopup({ info: { success: true, summary: 'Claimed successfully' } })
       }
     } catch (err: any) {
-      addPopup({ info: { success: false, summary: err?.message } })
+      addPopup({ info: { success: false, summary: 'Something went wrong. Please try again.' } })
     }
   }, [claimRefund, amount])
 
