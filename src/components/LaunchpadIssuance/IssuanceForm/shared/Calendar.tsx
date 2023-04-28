@@ -51,6 +51,9 @@ export const CalendarPicker: React.FC<Props> = (props) => {
       if (maxDate && selectedDate > maxDate) {
         return
       }
+      if (selectedRange.length === 1 && selectedRange[0].isSame(selectedDate)) {
+        return
+      }
 
       props.onSelect(selectedDate)
     },
@@ -151,9 +154,15 @@ const Day = styled.div<{ isSelected?: boolean; isDisabled?: boolean; isWithinRan
     `
     background: ${props.theme.launchpad.colors.primary};
     color: ${props.theme.launchpad.colors.text.light};
+    cursor: default;
   `}
 
   :hover {
-    background: ${(props) => props.theme.launchpad.colors.foreground};
+    ${(props) =>
+      !props.isSelected && `
+      background: ${props.theme.launchpad.colors.foreground};
+      `
+    }
+    
   }
 `
