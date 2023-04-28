@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 import { alpha } from '@material-ui/core/styles'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { OfferStatus } from 'state/launchpad/types'
+import { OfferStatus, OfferTokenStandart } from 'state/launchpad/types'
 import { OfferStatistics } from './Statistics'
 import { useGetManagedOffer, useTriggerIssuerClaim, useTriggerUserClaim } from 'state/launchpad/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
@@ -18,6 +18,7 @@ import { useRole } from 'state/user/hooks'
 import { ConfirmModal } from './shared/ConfirmModal'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 import { text53 } from 'components/LaunchpadMisc/typography'
+import { SMART_CONTRACT_STRATEGIES } from '../types'
 
 interface ManagedOfferPageParams {
   issuanceId: string
@@ -39,7 +40,6 @@ export const ManageOffer = () => {
   const { usersClaimed, issuerClaimed, status, softCapReached } = offer || {}
   const showError = useShowError()
 
-
   const triggerUserClaim = useTriggerUserClaim(offer?.id)
   const triggerIssuerClaim = useTriggerIssuerClaim(offer?.id)
 
@@ -60,6 +60,14 @@ export const ManageOffer = () => {
     }
     return ''
   }, [status, usersClaimed, canWithdraw])
+  const showWhitelistBtn = useMemo(
+    () =>
+      offer
+        ? offer.tokenStandart === OfferTokenStandart.xtokenlite &&
+          offer.smartContractStrategy === SMART_CONTRACT_STRATEGIES.original
+        : false,
+    [offer]
+  )
 
   const onClaimForUsers = useCallback(() => {
     if (triggerUserClaim.isLoading) return
@@ -120,7 +128,6 @@ export const ManageOffer = () => {
   }
   return (
     <Wrapper>
-
       <ConfirmModal isOpen={confirmClaim} setOpen={setConfirmClaim} onAccept={onClaim} />
 
       {isOpenWhitelisting && (
@@ -134,9 +141,11 @@ export const ManageOffer = () => {
           <FormTitle>{offer.title}</FormTitle>
         </HeaderItem>
         <HeaderItem>
-          <OutlineButton onClick={() => setOpenWhitelisting(true)}>
-            <ButtonLabel>Whitelist Wallet</ButtonLabel>
-          </OutlineButton>
+          {showWhitelistBtn && (
+            <OutlineButton onClick={() => setOpenWhitelisting(true)}>
+              <ButtonLabel>Whitelist Wallet</ButtonLabel>
+            </OutlineButton>
+          )}
           {claimBtnTitle && (
             <FilledButton style={{ marginLeft: '13px' }} onClick={() => setConfirmClaim(true)}>
               <ButtonLabel>{claimBtnTitle}</ButtonLabel>
