@@ -3,6 +3,7 @@ import { WalletAddress } from 'app/components/WalletAddress'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import React from 'react'
+import { stoClassifications } from 'components/form/STOClassificationSelect'
 
 export interface BasicOverviewProps {
   networkName: string
@@ -12,6 +13,7 @@ export interface BasicOverviewProps {
   decimals: string
   tokenAddress: string
   releaseDate: string
+  classification: string
 }
 
 export const BasicOverview = ({
@@ -21,8 +23,17 @@ export const BasicOverview = ({
   completionDate,
   decimals,
   tokenAddress,
-  releaseDate
+  releaseDate,
+  classification
 }: BasicOverviewProps) => {
+  const classificationObj = stoClassifications.find(
+    v => v.value === classification
+  )
+  const stoClassification =
+    typeof classificationObj !== 'undefined'
+      ? classificationObj?.label
+      : classification
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={6} md={4}>
@@ -43,20 +54,23 @@ export const BasicOverview = ({
           value={formatDateToMMDDYY(completionDate)}
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={8}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue
           label='Release Date'
           value={formatDateToMMDDYY(releaseDate)}
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} sm={6} md={8}>
         <LabelledValue label='Decimal' value={decimals} />
       </Grid>
-      <Grid item xs={12} sm={6} md={8}>
+      <Grid item xs={12} sm={6} md={4}>
         <LabelledValue
           label='Token Address'
           value={<WalletAddress address={tokenAddress} />}
         />
+      </Grid>
+      <Grid item xs={12} sm={6} md={8}>
+        <LabelledValue label='Classifcation' value={stoClassification} />
       </Grid>
     </Grid>
   )
