@@ -23,7 +23,6 @@ import { ExternalLink } from 'theme'
 import { text10, text33, text6, text9 } from 'components/LaunchpadMisc/typography'
 import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useTokenLoading } from 'hooks/Tokens'
 interface Props {
   offer: Offer
 }
@@ -41,13 +40,9 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const { amount: amountToClaim } = investedData
   const { status: whitelistedStatus } = useGetWhitelistStatus(props.offer.id)
   const { chainId } = useActiveWeb3React()
-  const nameChainMapNetwork = chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[props?.offer?.network]
-  const explorerLink = getExplorerLink(
-    nameChainMapNetwork,
-    props.offer.tokenAddress,
-    ExplorerDataType.TOKEN
-  )
-  const loading = useTokenLoading(props.offer.investingTokenAddress)
+  const nameChainMapNetwork =
+    chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[props?.offer?.network]
+  const explorerLink = getExplorerLink(nameChainMapNetwork, props.offer.tokenAddress, ExplorerDataType.TOKEN)
   const { addToken } = useAddTokenByDetailsToMetamask()
   const addToMetamask = () => {
     addToken({
@@ -215,12 +210,9 @@ type GeneralInfoProps = Partial<Pick<Offer, GeneralInfoFields>>
 export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
   const formatedValue = useFormatOfferValue()
 
-  const minTokenInvestment = React.useMemo(
-    () => {
-      return formatedValue(`${(Number(props.minInvestment) / Number(props.tokenPrice)).toFixed(2)}`) ?? 'N/A'
-    },
-    [props.minInvestment, props.tokenPrice]
-  )
+  const minTokenInvestment = React.useMemo(() => {
+    return formatedValue(`${(Number(props.minInvestment) / Number(props.tokenPrice)).toFixed(2)}`) ?? 'N/A'
+  }, [props.minInvestment, props.tokenPrice])
   const maxTokenInvestment = React.useMemo(
     () => formatedValue(`${(Number(props.maxInvestment) / Number(props.tokenPrice)).toFixed(2)}`) ?? 'N/A',
     [props.maxInvestment, props.tokenPrice]
