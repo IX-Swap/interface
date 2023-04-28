@@ -139,10 +139,8 @@ export default function App() {
   useAccount()
 
   useEffect(() => {
-    if (account && token) {
-      getMyKyc()
-    }
-  }, [account, token])
+    getMyKyc()
+  }, [account, token, getMyKyc])
 
   const clearLocaleStorage = () => {
     const cleared = localStorage.getItem('clearedLS-28-04-22')
