@@ -63,7 +63,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
 
   return (
     <Grid item container direction='column'>
-      <FieldContainer sx={{ marginTop: '15px', px: 2, py: 1 }}>
+      <FieldContainer sx={{ marginTop: '15px', px: 2, py: 1, borderRadius: 2 }}>
         <Tabs
           value={selectedIdx}
           onChange={(_, index) => setSelectedIdx(index)}

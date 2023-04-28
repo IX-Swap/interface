@@ -1,20 +1,19 @@
 import {
-  Grid,
-  Typography
+  Grid
   // Box
 } from '@mui/material'
 import React, { PropsWithChildren } from 'react'
 import { VSpacer } from 'components/VSpacer'
 // import { formatDateAndTime } from 'helpers/dates'
 import { AuthorizableWithIdentity, DataroomFeature } from 'types/authorizer'
-import { AuthorizationDocuments } from 'app/pages/authorizer/components/AuthorizationDocuments'
+
 import { AuthorizerForm } from 'app/pages/authorizer/components/AuthorizerForm'
 // import { AuthorizableLevel } from 'app/pages/authorizer/components/AuthorizableLevel'
 // import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { AuthorizerIdentities } from 'app/pages/authorizer/components/AuthorizerIdentities'
 import { PromotionSwitch } from 'app/pages/authorizer/components/PromotionSwitch'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { Form } from 'components/form/Form'
+
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { AuthorizerCategory } from 'types/app'
 import { privateClassNames } from 'helpers/classnames'
@@ -22,6 +21,7 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwitch'
 import { RootContainer } from 'ui/RootContainer'
 import { useStyles } from 'app/pages/authorizer/components/AuthorizerView.styles'
+import { AuthorizerActions } from './AuthorizerActions/AuthorizerActions'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -120,22 +120,11 @@ export const AuthorizerView = <T,>(
 
                 {category !== 'virtual-accounts' &&
                   category !== 'token-deployment' && (
-                    <Grid item>
-                      <Typography variant='h3'>
-                        Authorization Documents
-                      </Typography>
-                      <VSpacer size='small' />
-                      <Form
-                        defaultValues={{
-                          documents: documents.map(value => ({ value }))
-                        }}
-                      >
-                        <AuthorizationDocuments
-                          resourceId={data._id}
-                          feature={feature}
-                        />
-                      </Form>
-                    </Grid>
+                    <AuthorizerActions
+                      id={data._id}
+                      feature={feature}
+                      documents={documents}
+                    />
                   )}
 
                 {showForm && category !== 'token-deployment' && (
@@ -153,7 +142,7 @@ export const AuthorizerView = <T,>(
                     container
                     item
                     justifyContent='flex-end'
-                    style={{ marginBottom: 20 }}
+                    style={{ marginTop: 20 }}
                   >
                     <PromotionSwitch
                       dso={data as unknown as DigitalSecurityOffering}
