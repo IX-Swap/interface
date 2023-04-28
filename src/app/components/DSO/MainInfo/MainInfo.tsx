@@ -6,6 +6,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { stoClassifications } from 'components/form/STOClassificationSelect'
+import { productTypes } from 'components/form/ProductTypeSelect'
 
 export interface MainInfoProps {
   dso: DigitalSecurityOffering
@@ -23,6 +24,11 @@ export const MainInfo = ({ dso }: MainInfoProps) => {
       ? classificationObj?.label
       : classification
 
+  const productType = dso.productType ?? ''
+  const productTypeObj = productTypes.find(v => v.value === productType)
+  const stoProductType =
+    typeof productTypeObj !== 'undefined' ? productTypeObj?.label : productType
+
   const expandedComponent = () => (
     <>
       <Grid item xs={12}>
@@ -36,6 +42,9 @@ export const MainInfo = ({ dso }: MainInfoProps) => {
       </Grid>
       <Grid item xs={12}>
         <Info label='Classification' value={stoClassification} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Product Type' value={stoProductType} />
       </Grid>
       <Grid item xs={12}>
         <Info label='Launch Date' value={formatDateToMMDDYY(dso.launchDate)} />

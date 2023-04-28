@@ -19,14 +19,17 @@ export const Overview = ({ data }: OverviewProps) => {
           capitalStructure={data.capitalStructure}
           launchDate={data.launchDate}
           completionDate={data.completionDate}
+          releaseDate={data.dso?.releaseDate ?? ''}
           decimals={data.decimals}
           tokenAddress={data.dso?.deploymentInfo?.token ?? ''}
+          classification={data.dso?.classification ?? ''}
         />
       </Grid>
       <Grid item xs={12}>
         <MarketOverview
           availableMarket={data.marketType}
           markets={data.exchange.markets}
+          productType={data.dso?.productType ?? ''}
         />
       </Grid>
       <Grid item xs={12}>

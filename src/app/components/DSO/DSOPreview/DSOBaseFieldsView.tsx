@@ -6,6 +6,7 @@ import { LabelledValue } from 'components/LabelledValue'
 import { useStyles } from 'app/components/DSO/components/DSOInvestorViewHeader.styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { stoClassifications } from 'components/form/STOClassificationSelect'
+import { productTypes } from 'components/form/ProductTypeSelect'
 
 export interface DSOBaseFieldsViewProps {
   dso: DigitalSecurityOffering
@@ -25,6 +26,11 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
     typeof classificationObj !== 'undefined'
       ? classificationObj?.label
       : classification
+
+  const productType = dso.productType ?? ''
+  const productTypeObj = productTypes.find(v => v.value === productType)
+  const stoProductType =
+    typeof productTypeObj !== 'undefined' ? productTypeObj?.label : productType
 
   return (
     <Box className={boxContainer}>
@@ -191,6 +197,18 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
               <LabelledValue
                 label='Release Date'
                 value={dso?.releaseDate}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
+            </Grid>
+          </Grid>
+
+          <Grid item container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Product Type'
+                value={stoProductType}
                 labelColor={!isLightThemeActive ? 'dark' : 'default'}
                 isNewThemeOn={isLightThemeActive}
                 valueColor='rgb(255,255,255)'
