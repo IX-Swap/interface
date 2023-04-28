@@ -90,6 +90,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
     <FormGrid title="Gallery">
       <TitledContainer>
         <Title>Images</Title>
+        <Hint>{"File size should not exceed 10.0 MB. Supported file formats are PNG, JPG, JPEG, and SVG"}</Hint>
         <ImageFieldContainer ref={container}>
           {props.images.map((image, idx) => (
             <ImageFileCardContainer key={idx} url={urls[idx]}>
@@ -164,6 +165,12 @@ export const GalleryBlock: React.FC<Props> = (props) => {
     </FormGrid>
   )
 }
+
+const Hint = styled.div`
+  ${text19}
+
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+`
 
 const TitledContainer = styled(Column)`
   grid-column: span 2;
