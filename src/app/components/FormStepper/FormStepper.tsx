@@ -79,6 +79,8 @@ export const FormStepper = (props: FormStepperProps) => {
     statusFieldName = 'status'
   } = props
 
+  console.log(props, 'pppppp')
+
   const { isMobile } = useAppBreakpoints()
 
   const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
@@ -221,6 +223,19 @@ export const FormStepper = (props: FormStepperProps) => {
                 }}
                 actions={
                   <Grid container spacing={2}>
+                    {matches ? null : (
+                      <Grid item xs={12}>
+                        <SubmitButton
+                          mutation={submitMutation}
+                          data={data}
+                          step={steps[steps.length - 2]}
+                          fullWidth
+                          size='medium'
+                          submitText={submitText}
+                          statusFieldName={statusFieldName}
+                        />
+                      </Grid>
+                    )}
                     <Grid item xs={12}>
                       <SaveDraftButton
                         isLastStep={activeStep === steps.length - 1}
@@ -233,19 +248,6 @@ export const FormStepper = (props: FormStepperProps) => {
                         }
                       />
                     </Grid>
-                    {matches ? null : (
-                      <Grid item xs={12}>
-                        <SubmitButton
-                          mutation={submitMutation}
-                          data={data}
-                          step={steps[steps.length - 1]}
-                          fullWidth
-                          size='medium'
-                          submitText={submitText}
-                          statusFieldName={statusFieldName}
-                        />
-                      </Grid>
-                    )}
                   </Grid>
                 }
               >
