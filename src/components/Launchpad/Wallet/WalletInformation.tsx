@@ -82,6 +82,7 @@ const WalletInfoContainer = styled.div`
   gap: 0.5rem;
   border: 1.3px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
+  height: 48px;
 `
 
 const WalletBalance = styled.div`
