@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect'
 import { PhoneInput } from 'components/form/PhoneInput'

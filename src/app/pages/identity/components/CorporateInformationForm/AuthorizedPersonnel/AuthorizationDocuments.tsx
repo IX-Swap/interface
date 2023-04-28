@@ -3,7 +3,7 @@ import { Grid, Typography } from '@mui/material'
 import { PersonnelInformationProps } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/PersonnelInformation'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { pathToString } from 'helpers/forms'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { Divider } from 'ui/Divider'
 

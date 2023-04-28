@@ -1,12 +1,16 @@
-import { Grid, Typography, Box } from '@mui/material'
+import {
+  Grid,
+  Typography
+  // Box
+} from '@mui/material'
 import React, { PropsWithChildren } from 'react'
 import { VSpacer } from 'components/VSpacer'
-import { formatDateAndTime } from 'helpers/dates'
+// import { formatDateAndTime } from 'helpers/dates'
 import { AuthorizableWithIdentity, DataroomFeature } from 'types/authorizer'
 import { AuthorizationDocuments } from 'app/pages/authorizer/components/AuthorizationDocuments'
 import { AuthorizerForm } from 'app/pages/authorizer/components/AuthorizerForm'
-import { AuthorizableLevel } from 'app/pages/authorizer/components/AuthorizableLevel'
-import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
+// import { AuthorizableLevel } from 'app/pages/authorizer/components/AuthorizableLevel'
+// import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { AuthorizerIdentities } from 'app/pages/authorizer/components/AuthorizerIdentities'
 import { PromotionSwitch } from 'app/pages/authorizer/components/PromotionSwitch'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
@@ -63,8 +67,11 @@ export const AuthorizerView = <T,>(
         <PageHeader title={title} />
       </Grid>
 
-      <Grid item className={styles.wrapper}>
-        <RootContainer className={privateClassNames()} style={{ padding: 40 }}>
+      <Grid item className={styles.wrapper} style={{ paddingTop: 0 }}>
+        <RootContainer
+          className={privateClassNames()}
+          style={{ paddingTop: 0 }}
+        >
           <Grid container spacing={6} wrap='wrap-reverse'>
             {hasIdentity && (
               <Grid item xs={12} md={3}>
@@ -76,7 +83,7 @@ export const AuthorizerView = <T,>(
             )}
             <Grid item xs={12} md={hasIdentity ? 9 : 12}>
               <Grid container direction='column'>
-                <Grid item style={{ marginBottom: 5 }}>
+                {/* <Grid item style={{ marginBottom: 5 }}>
                   <Typography color='textSecondary'>
                     {formatDateAndTime(data.createdAt ?? data.assignedAt)}
                   </Typography>
@@ -103,7 +110,7 @@ export const AuthorizerView = <T,>(
                       isNewTheme
                     />
                   </Box>
-                </Grid>
+                </Grid> */}
 
                 <Grid item>{children}</Grid>
 

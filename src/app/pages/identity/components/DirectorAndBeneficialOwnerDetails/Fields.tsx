@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Button, IconButton, useMediaQuery } from '@mui/material'
 import { DocumentFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { Icon } from 'ui/Icons/Icon'
 import { useTheme } from '@mui/material/styles'
 import { Divider } from 'ui/Divider'

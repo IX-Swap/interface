@@ -12,6 +12,7 @@ export const PercentageNumber = ({ value }: PercentageNumberInterface) => {
       {...percentageNumberFormat}
       displayType='text'
       value={value !== undefined ? value : '-'}
+      style={{ color: '#778194' }}
     />
   )
 }

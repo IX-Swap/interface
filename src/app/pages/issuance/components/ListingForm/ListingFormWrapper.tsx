@@ -12,7 +12,7 @@ import {
   getIssuerIdFromDSOSelectValue
 } from 'app/pages/issuance/utils/utils'
 import { Listing } from 'app/pages/issuance/types/listings'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export interface ListingFormWrapperProps {
   data?: Listing

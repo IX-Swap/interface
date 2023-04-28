@@ -7,7 +7,7 @@ import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
 import { DSOChapterAddButton } from 'app/components/DSO/components/DSOChapterAddButton'
 import { DSOFAQItem } from 'app/components/DSO/components/DSOFAQItem'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { Divider } from 'ui/Divider'
 

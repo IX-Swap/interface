@@ -15,7 +15,7 @@ import {
   individualAccreditationSchema,
   individualInvestorStatusDeclarationSchema
 } from 'app/pages/identity/validation/individual'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { FinancialInformationForm } from '../FinancialInformationForm/FinancialInformationForm'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'

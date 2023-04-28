@@ -56,7 +56,7 @@ export const DSOScrollGuide = ({
 
   return (
     <>
-      <Typography variant='subtitle1'>Progress</Typography>
+      <Typography variant='subtitle1'>Contents</Typography>
       <VSpacer size='small' />
       <ScrollGuide>
         {actualDSOFromSection.map(([name, key]) => {

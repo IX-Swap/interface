@@ -67,6 +67,7 @@ export interface LabelledValueProps {
   isNewThemeOn?: boolean
   isRedesigned?: boolean
   hasCheck?: boolean
+  gap?: number
 }
 
 export const LabelledValue = (props: LabelledValueProps & GridProps) => {
@@ -85,6 +86,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     isNewThemeOn = false,
     isRedesigned = false,
     hasCheck = false,
+    gap = 0.75,
     ...rest
   } = props
   const direction = row ? 'row' : 'column'
@@ -139,7 +141,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         {row && !reverse && ':'}
       </Typography>
       {row ? <Box px={0.5} /> : null}
-      {!row && !reverse ? <Box py={isRedesigned ? 0.75 : 0.4} /> : null}
+      {!row && !reverse ? <Box py={isRedesigned ? gap : 0.4} /> : null}
       {React.isValidElement(last.text) ? (
         <Box
           style={{
