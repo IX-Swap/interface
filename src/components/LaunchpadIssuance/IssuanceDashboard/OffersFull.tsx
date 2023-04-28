@@ -169,7 +169,9 @@ export const OffersFull: React.FC<Props> = (props) => {
                 <Raw>{offer.issuanceName}</Raw>
                 <Raw>{offer.countInvestors}</Raw>
                 <Raw>
-                  {formatedValue(offer.commitment.toString())} {offer.investingTokenSymbol}
+                  {offer.commitment === null
+                    ? '-'
+                    : `${formatedValue(offer.commitment.toString())} ${offer.investingTokenSymbol}`}
                 </Raw>
                 <CountRow>
                   {offer.progressPercent}% - {formatedValue(offer.progress.toString())} {offer.investingTokenSymbol}
