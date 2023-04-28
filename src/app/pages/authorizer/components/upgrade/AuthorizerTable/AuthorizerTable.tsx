@@ -71,7 +71,8 @@ export const AuthorizerTable = <T,>(
           name={name}
           uri={uri}
           columns={columns}
-          //   actions={withExtraActions<T>()}
+          // hasStatus
+          // actions={withExtraActions<T>()}
           filter={mergedFilters}
           selectionHelper={selectable ? selectionHelperContext : undefined}
           paperProps={
@@ -88,7 +89,7 @@ export const AuthorizerTable = <T,>(
           noHeader={isTablet}
           paginationPlacement={isTablet ? 'both' : 'bottom'}
         >
-          {isTablet
+          {isTablet && typeof compactColumns !== 'undefined'
             ? (props: TableViewRendererProps<any>) => (
                 <CompactTable {...props} columns={compactColumns} />
               )
