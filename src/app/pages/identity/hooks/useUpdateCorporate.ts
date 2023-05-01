@@ -18,8 +18,6 @@ export const useUpdateCorporate = () => {
     const uri = identityURL.corporates.update(userId, params.identityId)
     const declaredAs = ['investor']
 
-    console.log(values)
-
     if (values.isIssuer === true) declaredAs.push('issuer')
     if (values.isTenantOwner === true) declaredAs.push('tenantOwner')
 
