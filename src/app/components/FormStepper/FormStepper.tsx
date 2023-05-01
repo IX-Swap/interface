@@ -79,8 +79,6 @@ export const FormStepper = (props: FormStepperProps) => {
     statusFieldName = 'status'
   } = props
 
-  console.log(props, 'pppppp')
-
   const { isMobile } = useAppBreakpoints()
 
   const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
@@ -228,7 +226,7 @@ export const FormStepper = (props: FormStepperProps) => {
                         <SubmitButton
                           mutation={submitMutation}
                           data={data}
-                          step={steps[steps.length - 2]}
+                          step={steps[steps.length - 1]}
                           fullWidth
                           size='medium'
                           submitText={submitText}
