@@ -1,9 +1,9 @@
 import React from 'react'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { DeclarationsListItem } from 'app/pages/identity/components/DeclarationsListItem/DeclarationsListItem'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { Grid } from '@mui/material'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
 
 export interface InstitutionalInvestorDeclarationViewProps {

@@ -1,16 +1,19 @@
-import { Grid, Typography, Box } from '@mui/material'
+import {
+  Grid
+  // Box
+} from '@mui/material'
 import React, { PropsWithChildren } from 'react'
 import { VSpacer } from 'components/VSpacer'
-import { formatDateAndTime } from 'helpers/dates'
+// import { formatDateAndTime } from 'helpers/dates'
 import { AuthorizableWithIdentity, DataroomFeature } from 'types/authorizer'
-import { AuthorizationDocuments } from 'app/pages/authorizer/components/AuthorizationDocuments'
+
 import { AuthorizerForm } from 'app/pages/authorizer/components/AuthorizerForm'
-import { AuthorizableLevel } from 'app/pages/authorizer/components/AuthorizableLevel'
-import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
+// import { AuthorizableLevel } from 'app/pages/authorizer/components/AuthorizableLevel'
+// import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { AuthorizerIdentities } from 'app/pages/authorizer/components/AuthorizerIdentities'
 import { PromotionSwitch } from 'app/pages/authorizer/components/PromotionSwitch'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { Form } from 'components/form/Form'
+
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { AuthorizerCategory } from 'types/app'
 import { privateClassNames } from 'helpers/classnames'
@@ -18,6 +21,9 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwitch'
 import { RootContainer } from 'ui/RootContainer'
 import { useStyles } from 'app/pages/authorizer/components/AuthorizerView.styles'
+import { AuthorizerActions } from './AuthorizerActions/AuthorizerActions'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -48,7 +54,8 @@ export const AuthorizerView = <T,>(
   const category = useAuthorizerCategory()
   const isTransaction = transactionalCategories.includes(category)
   const { title, data, feature, children, statusFieldName = 'status' } = props
-  const hasIdentity = data.identity !== undefined
+  const hasIdentity = false
+  //   const hasIdentity = data.identity !== undefined
   const documents = data.authorizationDocuments ?? []
   const approvedOrRejected = ['Approved', 'Rejected'].includes(
     data[statusFieldName as keyof typeof data]
@@ -62,8 +69,11 @@ export const AuthorizerView = <T,>(
         <PageHeader title={title} />
       </Grid>
 
-      <Grid item className={styles.wrapper}>
-        <RootContainer className={privateClassNames()} style={{ padding: 40 }}>
+      <Grid item className={styles.wrapper} style={{ paddingTop: 0 }}>
+        <RootContainer
+          className={privateClassNames()}
+          style={{ paddingTop: 0 }}
+        >
           <Grid container spacing={6} wrap='wrap-reverse'>
             {hasIdentity && (
               <Grid item xs={12} md={3}>
@@ -73,9 +83,10 @@ export const AuthorizerView = <T,>(
                 />
               </Grid>
             )}
+
             <Grid item xs={12} md={hasIdentity ? 9 : 12}>
               <Grid container direction='column'>
-                <Grid item style={{ marginBottom: 5 }}>
+                {/* <Grid item style={{ marginBottom: 5 }}>
                   <Typography color='textSecondary'>
                     {formatDateAndTime(data.createdAt ?? data.assignedAt)}
                   </Typography>
@@ -102,7 +113,7 @@ export const AuthorizerView = <T,>(
                       isNewTheme
                     />
                   </Box>
-                </Grid>
+                </Grid> */}
 
                 <Grid item>{children}</Grid>
 
@@ -110,52 +121,59 @@ export const AuthorizerView = <T,>(
                   <VSpacer size='medium' />
                 </Grid>
 
-                {category !== 'virtual-accounts' &&
-                  category !== 'token-deployment' && (
-                    <Grid item>
-                      <Typography variant='h3'>
-                        Authorization Documents
-                      </Typography>
-                      <VSpacer size='small' />
-                      <Form
-                        defaultValues={{
-                          documents: documents.map(value => ({ value }))
-                        }}
-                      >
-                        <AuthorizationDocuments
-                          resourceId={data._id}
-                          feature={feature}
-                        />
-                      </Form>
+                <Grid
+                  container
+                  direction='column'
+                  spacing={3}
+                  sx={{ paddingLeft: '25px' }}
+                >
+                  <FieldContainer>
+                    <Grid item container direction={'column'} spacing={5}>
+                      <Grid item>
+                        <FormSectionHeader title='Authorizer Action (Optional)' />
+                      </Grid>
+                      <Grid item>
+                        {category !== 'virtual-accounts' &&
+                          category !== 'token-deployment' && (
+                            <AuthorizerActions
+                              id={data._id}
+                              feature={feature}
+                              documents={documents}
+                            />
+                          )}
+
+                        {showForm && category !== 'token-deployment' && (
+                          <Grid item style={{ marginTop: 20 }}>
+                            <AuthorizerForm
+                              status={
+                                data[statusFieldName as keyof typeof data]
+                              }
+                              itemId={data._id}
+                              listingType={data?.listingType}
+                            />
+                          </Grid>
+                        )}
+
+                        {category === AuthorizerCategory.Offerings && (
+                          <Grid
+                            container
+                            item
+                            justifyContent='flex-end'
+                            style={{ marginTop: 20 }}
+                          >
+                            <PromotionSwitch
+                              dso={data as unknown as DigitalSecurityOffering}
+                            />
+
+                            <VisibilitySwitch
+                              dso={data as unknown as DigitalSecurityOffering}
+                            />
+                          </Grid>
+                        )}
+                      </Grid>
                     </Grid>
-                  )}
-
-                {showForm && category !== 'token-deployment' && (
-                  <Grid item style={{ marginTop: 20 }}>
-                    <AuthorizerForm
-                      status={data[statusFieldName as keyof typeof data]}
-                      itemId={data._id}
-                      listingType={data?.listingType}
-                    />
-                  </Grid>
-                )}
-
-                {category === AuthorizerCategory.Offerings && (
-                  <Grid
-                    container
-                    item
-                    justifyContent='flex-end'
-                    style={{ marginBottom: 20 }}
-                  >
-                    <PromotionSwitch
-                      dso={data as unknown as DigitalSecurityOffering}
-                    />
-
-                    <VisibilitySwitch
-                      dso={data as unknown as DigitalSecurityOffering}
-                    />
-                  </Grid>
-                )}
+                  </FieldContainer>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

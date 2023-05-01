@@ -19,6 +19,7 @@ export interface ActionsProps {
   cacheQueryKey: any
   featureCategory?: string
   investorRole?: string
+  statusFieldName?: string
 }
 
 export type ActionsType = (props: ActionsProps) => ReactElement
@@ -36,7 +37,13 @@ const getUserId = (item: any) => {
 }
 
 export const Actions = (props: ActionsProps): JSX.Element => {
-  const { item, cacheQueryKey, featureCategory, investorRole } = props
+  const {
+    item,
+    cacheQueryKey,
+    featureCategory,
+    investorRole,
+    statusFieldName = 'status'
+  } = props
   const location = useLocation()
   const id: string = item._id
   const splitted = location.pathname.split('/')
@@ -134,7 +141,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
       {isCommitment && item.fundStatus !== 'Funds on hold' ? (
         <Grid item style={{ minWidth: 26 }} />
       ) : (
-        <Grid item style={{ minWidth: 26 }}>
+        <Grid item>
           {(Boolean(isUnauthorized) || isCommitment) && (
             <Dropdown
               contentTheme='dark'
@@ -144,6 +151,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
               content={props => (
                 <ActionsDropdownContent
                   {...props}
+                  hideApproval={item[statusFieldName] !== 'Submitted'}
                   approve={approve}
                   reject={reject}
                   view={view}

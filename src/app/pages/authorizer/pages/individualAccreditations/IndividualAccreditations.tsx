@@ -1,8 +1,4 @@
 import React from 'react'
-// import {
-//   columns,
-//   compactColumns
-// } from 'app/pages/authorizer/pages/corporateAccreditations/columns'
 import { AuthorizerList } from 'app/pages/authorizer/components/upgrade/AuthorizerList/AuthorizerList'
 import { authorizerQueryKeys } from 'config/queryKeys'
 import { columns, compactColumns } from './columns'

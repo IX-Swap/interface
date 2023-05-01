@@ -11,7 +11,7 @@ import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { TextInput } from 'ui/TextInput/TextInput'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { ListingHiddenFields } from 'app/pages/issuance/components/ListingForm/ListingHiddenFields'
 
 export interface ListingBaseFieldsProps {

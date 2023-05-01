@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Paper, Typography, Box } from '@mui/material'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DeclarationsList } from 'app/pages/identity/components/DeclarationsList/DeclarationsList'
 import {
   corporateInvestorAgreementsMap,

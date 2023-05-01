@@ -1,6 +1,6 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { FundSourceSelect } from 'components/form/FundSourceSelect'
@@ -97,9 +97,9 @@ export const InformationFields = ({
             label={
               <Typography>
                 Upload logo{' '}
-                <Box component={'span'} style={{ color: '#778194' }}>
+                {/* <Box component={'span'} style={{ color: '#778194' }}>
                   (Optional)
-                </Box>
+                </Box> */}
               </Typography>
             }
             placeHolder='Upload File'

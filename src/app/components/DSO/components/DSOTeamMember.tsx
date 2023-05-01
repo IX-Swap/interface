@@ -12,7 +12,7 @@ import { useFormContext } from 'react-hook-form'
 import { DSOFormValues, DsoTeamMember } from 'types/dso'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { Divider } from 'ui/Divider'
 
 export interface DSOTeamMemberProps {

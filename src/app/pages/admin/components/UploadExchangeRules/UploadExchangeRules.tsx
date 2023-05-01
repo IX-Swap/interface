@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from '@mui/material'
 import { useGetExchangeRules } from 'app/pages/admin/hooks/useGetExchangeRules'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DataroomFileRow } from 'components/dataroom/DataroomFileRow'
 import { DataroomUploader } from 'components/dataroom/DataroomUploader'
 import { Form } from 'components/form/Form'

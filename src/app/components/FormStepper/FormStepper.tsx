@@ -174,6 +174,8 @@ export const FormStepper = (props: FormStepperProps) => {
     }
   }
 
+  const onLastStep = activeStep === steps.length - 1
+
   return (
     <Grid container direction={matches ? 'column-reverse' : 'row'}>
       <Grid item className={classes.content}>

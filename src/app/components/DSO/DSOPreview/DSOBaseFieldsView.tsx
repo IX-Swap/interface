@@ -1,21 +1,21 @@
 import React from 'react'
-import { Grid, Box, Typography } from '@mui/material'
+import { Grid, Paper, Typography } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
-import { LabelledValue } from 'components/LabelledValue'
 import { useStyles } from 'app/components/DSO/components/DSOInvestorViewHeader.styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { stoClassifications } from 'components/form/STOClassificationSelect'
+import { productTypes } from 'components/form/ProductTypeSelect'
+import { FieldGrid } from 'ui/FieldGrid/FieldGrid'
+import { Status } from 'ui/Status/Status'
 
 export interface DSOBaseFieldsViewProps {
   dso: DigitalSecurityOffering
 }
 
 export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
-  const { isMiniLaptop, theme } = useAppBreakpoints()
-  const isLightThemeActive = theme.palette.mode === 'light'
-  const { container, logoContainer, tokenName, corporateName, boxContainer } =
-    useStyles()
+  const { isMobile, theme } = useAppBreakpoints()
+  const { container, grid, logo, details } = useStyles()
 
   const classification = dso.classification ?? ''
   const classificationObj = stoClassifications.find(
@@ -26,179 +26,114 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
       ? classificationObj?.label
       : classification
 
+  const productType = dso.productType ?? ''
+  const productTypeObj = productTypes.find(v => v.value === productType)
+  const stoProductType =
+    typeof productTypeObj !== 'undefined' ? productTypeObj?.label : productType
+
+  const items = [
+    {
+      label: 'Token Name',
+      value: dso?.tokenName
+    },
+    {
+      label: 'Symbol',
+      value: dso?.tokenSymbol
+    },
+    {
+      label: 'Corporate',
+      value: dso?.corporate?.companyLegalName
+    },
+    {
+      label: 'Network',
+      value: dso?.network?.name
+    },
+    {
+      label: 'Capital Structure',
+      value: dso?.capitalStructure
+    },
+    {
+      label: 'Decimal',
+      value: dso?.decimalPlaces ?? dso?.decimals
+    },
+    {
+      label: 'Currency',
+      value: dso?.currency?.symbol
+    },
+    {
+      label: 'Classification',
+      value: stoClassification
+    },
+    {
+      label: 'Product Type',
+      value: stoProductType
+    },
+    {
+      label: 'Launch Date',
+      value: dso?.launchDate
+    },
+    {
+      label: 'Completion Date',
+      value: dso?.completionDate
+    },
+    {
+      label: 'Release Date',
+      value: dso?.releaseDate
+    },
+    {
+      label: 'Unique Identifier Code',
+      value: dso?.uniqueIdentifierCode
+    }
+  ]
+
   return (
-    <Box className={boxContainer}>
-      <Grid
-        container
-        className={container}
-        justifyContent='space-between'
-        spacing={isMiniLaptop ? 3 : 6}
-      >
-        <Grid
-          item
-          xs={12}
-          container
-          className={logoContainer}
-          alignItems='center'
-        >
+    <Paper className={container}>
+      <Grid container className={grid} spacing={isMobile ? 3 : 6}>
+        <Grid item xs={12} md={3} className={logo}>
+          <DSOLogo
+            dsoId={dso._id}
+            size={isMobile ? 48 : 124}
+            variant='circular'
+          />
+        </Grid>
+        <Grid item xs={12} md={9} container className={details} gap={5}>
           <Grid
             item
             container
-            alignItems='center'
-            wrap='nowrap'
-            xs={12}
-            spacing={isMiniLaptop ? 1 : 3}
+            sx={{ borderBottom: `1px solid ${theme.palette.divider}` }}
+            pb={5}
           >
-            <Grid item>
-              <DSOLogo
-                dsoId={dso._id}
-                size={isMiniLaptop ? 48 : 124}
-                variant='circular'
-              />
+            <Grid
+              item
+              xs={12}
+              md={9}
+              sx={{ textAlign: { xs: 'center', md: 'left' } }}
+            >
+              <Typography variant='h3' mb={1}>
+                {dso.tokenName} ({dso.tokenSymbol})
+              </Typography>
+              <Typography variant='h5' color={theme.palette.primary.main}>
+                {dso.corporate.companyLegalName}
+              </Typography>
             </Grid>
-
-            <Grid item container>
-              <Grid item xs={12}>
-                <Typography variant='h2' className={tokenName}>
-                  {dso.tokenName} ({dso.tokenSymbol})
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant='h6' className={corporateName}>
-                  {dso.corporate.companyLegalName}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          container
-          flexDirection={'column'}
-          xs={12}
-          spacing={{ xs: 2, sm: 0 }}
-        >
-          <Grid item container spacing={3}>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Token Name'
-                value={dso?.tokenName}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Symbol'
-                value={dso?.tokenSymbol}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Corporate'
-                value={dso?.corporate?.companyLegalName}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
+            <Grid
+              item
+              xs={12}
+              md={3}
+              display={'flex'}
+              sx={{
+                justifyContent: { xs: 'center', md: 'end' },
+                marginTop: { xs: '20px', md: 0 }
+              }}
+            >
+              <Status label={dso.status} type={dso.status} />
             </Grid>
           </Grid>
-
-          <Grid item container spacing={3}>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Network'
-                value={dso?.network?.name}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Capital Structure'
-                value={dso?.capitalStructure}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Decimal'
-                value={dso?.decimalPlaces ?? dso?.decimals}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-          </Grid>
-
-          <Grid item container spacing={3}>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Currency'
-                value={dso?.currency?.symbol}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Classification'
-                value={stoClassification}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Unique Identifier Code'
-                value={dso?.uniqueIdentifierCode}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-          </Grid>
-
-          <Grid item container spacing={3}>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Launch Date'
-                value={dso?.launchDate}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Completion Date'
-                value={dso?.completionDate}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Release Date'
-                value={dso?.releaseDate}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
+          <Grid xs={12} item>
+            <FieldGrid title={''} items={items} gridOnly />
           </Grid>
         </Grid>
       </Grid>
-    </Box>
+    </Paper>
   )
 }

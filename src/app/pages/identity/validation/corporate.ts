@@ -85,7 +85,7 @@ export const initialCorporateInvestorInfoSchema = (data?: CorporateIdentity) =>
 // TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)
 export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
   yup.object().shape<any>({
-    logo: yup.string(),
+    logo: yup.string().required('Logo is required'),
     companyLegalName: yup
       .string()
       .max(50, 'Maximum of 50 characters')
@@ -320,9 +320,9 @@ export const corporateInvestorAgreementsSchema = yup
 
 export const corporateInvestorSchema = yup.object().shape<any>({
   ...corporateInvestorInfoSchema().fields,
-  ...corporateTaxDeclarationSchema.fields,
-  ...directorsAndBeneficialOwnersSchema.fields,
-  ...corporateInvestorStatusDeclarationSchema.fields
+  //   ...corporateTaxDeclarationSchema.fields,
+  ...directorsAndBeneficialOwnersSchema.fields
+  //   ...corporateInvestorStatusDeclarationSchema.fields
 })
 
 export const corporateAccreditationSchema = yup.object().shape<any>({

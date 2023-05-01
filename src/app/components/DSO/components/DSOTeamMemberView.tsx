@@ -1,9 +1,10 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { DSOTeamMemberPhoto } from 'app/components/DSO/components/DSOTeamMemberPhoto'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { DsoTeamMember } from 'types/dso'
 import { Expandable } from 'app/components/Expandable/Expandable'
+import { LabelledValue } from 'components/LabelledValue'
 
 export interface DSOTeamMemberViewProps {
   dsoId: string
@@ -15,8 +16,9 @@ export const DSOTeamMemberView = (props: DSOTeamMemberViewProps) => {
 
   return (
     <Expandable
+      showArrow
       mainComponent={
-        <Grid container direction='row' alignItems='center' spacing={2}>
+        <Grid container direction='row' alignItems='center' spacing={2} p={1}>
           <Grid item>
             <DSOTeamMemberPhoto
               dsoId={dsoId}
@@ -25,12 +27,16 @@ export const DSOTeamMemberView = (props: DSOTeamMemberViewProps) => {
             />
           </Grid>
           <Grid item>
-            <Typography variant='h4'>{member.name}</Typography>
-            <Typography>{member.position}</Typography>
+            <LabelledValue
+              label={member.name}
+              value={member.position}
+              isRedesigned
+              gap={0.2}
+            />
           </Grid>
         </Grid>
       }
-      expandedComponent={<Box>{renderStringToHTML(member.about)}</Box>}
+      expandedComponent={<Box px={2}>{renderStringToHTML(member.about)}</Box>}
     />
   )
 }
