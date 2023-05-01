@@ -174,6 +174,8 @@ export const FormStepper = (props: FormStepperProps) => {
     }
   }
 
+  const onLastStep = activeStep === steps.length - 1
+
   return (
     <Grid container direction={matches ? 'column-reverse' : 'row'}>
       <Grid item className={classes.content}>
@@ -229,7 +231,8 @@ export const FormStepper = (props: FormStepperProps) => {
                         }-${activeStep}`}
                         disabled={
                           data?.[statusFieldName] === 'Submitted' ||
-                          data?.[statusFieldName] === 'Approved'
+                          data?.[statusFieldName] === 'Approved' ||
+                          onLastStep
                         }
                       />
                     </Grid>
