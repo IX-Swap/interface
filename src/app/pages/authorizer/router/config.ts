@@ -18,16 +18,16 @@ export const AuthorizerRoute = {
   cashWithdrawals: makeURL(['app', 'authorizer', 'cashWithdrawal']),
   dsWithdrawals: makeURL(['app', 'authorizer', 'dsWithdrawal']),
   individualIdentities: makeURL(['app', 'authorizer', 'individualIdentity']),
+  individualAccreditations: makeURL([
+    'app',
+    'authorizer',
+    'individualAccreditation'
+  ]),
   corporateIdentities: makeURL(['app', 'authorizer', 'corporateIdentity']),
   corporateAccreditations: makeURL([
     'app',
     'authorizer',
     'corporateAccreditation'
-  ]),
-  individualAccreditations: makeURL([
-    'app',
-    'authorizer',
-    'individualAccreditation'
   ]),
   offerings: makeURL(['app', 'authorizer', 'offerings']),
   commitments: makeURL(['app', 'authorizer', 'commitments']),
@@ -66,7 +66,6 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     color: '#90A30F',
     icon: IndividualIcon
   },
-
   {
     label: 'Individual Accreditation Applications',
     path: AuthorizerRoute.individualAccreditations,

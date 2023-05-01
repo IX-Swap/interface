@@ -18,8 +18,7 @@ export interface IndividualAccreditationViewProps {
 }
 
 export const IndividualAccreditationView = ({
-  data,
-  showReview = false
+  data
 }: IndividualAccreditationViewProps) => {
   return (
     <Grid container direction={'column'} spacing={2}>
