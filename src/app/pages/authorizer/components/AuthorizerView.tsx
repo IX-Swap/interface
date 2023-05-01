@@ -22,6 +22,8 @@ import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwit
 import { RootContainer } from 'ui/RootContainer'
 import { useStyles } from 'app/pages/authorizer/components/AuthorizerView.styles'
 import { AuthorizerActions } from './AuthorizerActions/AuthorizerActions'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -81,6 +83,7 @@ export const AuthorizerView = <T,>(
                 />
               </Grid>
             )}
+
             <Grid item xs={12} md={hasIdentity ? 9 : 12}>
               <Grid container direction='column'>
                 {/* <Grid item style={{ marginBottom: 5 }}>
@@ -118,41 +121,59 @@ export const AuthorizerView = <T,>(
                   <VSpacer size='medium' />
                 </Grid>
 
-                {category !== 'virtual-accounts' &&
-                  category !== 'token-deployment' && (
-                    <AuthorizerActions
-                      id={data._id}
-                      feature={feature}
-                      documents={documents}
-                    />
-                  )}
+                <Grid
+                  container
+                  direction='column'
+                  spacing={3}
+                  sx={{ paddingLeft: '25px' }}
+                >
+                  <FieldContainer>
+                    <Grid item container direction={'column'} spacing={5}>
+                      <Grid item>
+                        <FormSectionHeader title='Authorizer Action (Optional)' />
+                      </Grid>
+                      <Grid item>
+                        {category !== 'virtual-accounts' &&
+                          category !== 'token-deployment' && (
+                            <AuthorizerActions
+                              id={data._id}
+                              feature={feature}
+                              documents={documents}
+                            />
+                          )}
 
-                {showForm && category !== 'token-deployment' && (
-                  <Grid item style={{ marginTop: 20 }}>
-                    <AuthorizerForm
-                      status={data[statusFieldName as keyof typeof data]}
-                      itemId={data._id}
-                      listingType={data?.listingType}
-                    />
-                  </Grid>
-                )}
+                        {showForm && category !== 'token-deployment' && (
+                          <Grid item style={{ marginTop: 20 }}>
+                            <AuthorizerForm
+                              status={
+                                data[statusFieldName as keyof typeof data]
+                              }
+                              itemId={data._id}
+                              listingType={data?.listingType}
+                            />
+                          </Grid>
+                        )}
 
-                {category === AuthorizerCategory.Offerings && (
-                  <Grid
-                    container
-                    item
-                    justifyContent='flex-end'
-                    style={{ marginTop: 20 }}
-                  >
-                    <PromotionSwitch
-                      dso={data as unknown as DigitalSecurityOffering}
-                    />
+                        {category === AuthorizerCategory.Offerings && (
+                          <Grid
+                            container
+                            item
+                            justifyContent='flex-end'
+                            style={{ marginTop: 20 }}
+                          >
+                            <PromotionSwitch
+                              dso={data as unknown as DigitalSecurityOffering}
+                            />
 
-                    <VisibilitySwitch
-                      dso={data as unknown as DigitalSecurityOffering}
-                    />
-                  </Grid>
-                )}
+                            <VisibilitySwitch
+                              dso={data as unknown as DigitalSecurityOffering}
+                            />
+                          </Grid>
+                        )}
+                      </Grid>
+                    </Grid>
+                  </FieldContainer>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
