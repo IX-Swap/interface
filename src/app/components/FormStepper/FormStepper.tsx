@@ -223,19 +223,6 @@ export const FormStepper = (props: FormStepperProps) => {
                 }}
                 actions={
                   <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <SaveDraftButton
-                        isLastStep={activeStep === steps.length - 1}
-                        formId={`${
-                          steps[activeStep].formId ?? 'form'
-                        }-${activeStep}`}
-                        disabled={
-                          data?.[statusFieldName] === 'Submitted' ||
-                          data?.[statusFieldName] === 'Approved' ||
-                          onLastStep
-                        }
-                      />
-                    </Grid>
                     {matches ? null : (
                       <Grid item xs={12}>
                         <SubmitButton
@@ -249,6 +236,18 @@ export const FormStepper = (props: FormStepperProps) => {
                         />
                       </Grid>
                     )}
+                    <Grid item xs={12}>
+                      <SaveDraftButton
+                        isLastStep={activeStep === steps.length - 1}
+                        formId={`${
+                          steps[activeStep].formId ?? 'form'
+                        }-${activeStep}`}
+                        disabled={
+                          data?.[statusFieldName] === 'Submitted' ||
+                          data?.[statusFieldName] === 'Approved'
+                        }
+                      />
+                    </Grid>
                   </Grid>
                 }
               >

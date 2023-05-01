@@ -1,13 +1,7 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import {
-  getDocumentsFormValues,
-  getPersonalInfoFormValues
-} from 'app/pages/identity/utils/individual/forms'
-import {
-  getDocumentsRequestPayload,
-  getPersonalInfoRequestPayload
-} from 'app/pages/identity/utils/individual/requests'
+import { getPersonalInfoFormValues } from 'app/pages/identity/utils/individual/forms'
+import { getPersonalInfoRequestPayload } from 'app/pages/identity/utils/individual/requests'
 import {
   individualInvestorValidationSchema,
   personalInfoSchema
@@ -106,7 +100,7 @@ export const individualInvestorFormSteps = [
     label: 'Review & Submit',
     getFormValues: (data: any) => {
       const allData = {
-        ...getDocumentsFormValues(data),
+        // ...getDocumentsFormValues(data),
         // ...getInvestorDeclarationFormValues(data),
         ...getPersonalInfoFormValues(data)
         // ...getFinancialInfoFormValues(data)
@@ -115,7 +109,7 @@ export const individualInvestorFormSteps = [
     },
     getRequestPayload: (data: any) => {
       return {
-        ...getDocumentsRequestPayload(data),
+        // ...getDocumentsRequestPayload(data),
         // ...getInvestorDeclarationRequestPayload(data),
         ...getPersonalInfoRequestPayload(data)
         // ...getFinancialAndTaxDeclarationRequestPayload(data)
