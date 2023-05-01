@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { DeclarationsListItem } from 'app/pages/identity/components/DeclarationsListItem/DeclarationsListItem'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 
 export interface CorporateDeclarationsListProps {
   title?: string

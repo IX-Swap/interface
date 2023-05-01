@@ -1,7 +1,7 @@
 import { FormControlLabel, Grid, Typography } from '@mui/material'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useStyles } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect.styles'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import classnames from 'classnames'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'

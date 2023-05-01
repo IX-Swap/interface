@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import { DataroomFile } from 'types/dataroomFile'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
 
 export interface DocumentsViewProps {

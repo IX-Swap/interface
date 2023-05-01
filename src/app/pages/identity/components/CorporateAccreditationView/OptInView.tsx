@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material'
 import { DeclarationsList } from 'app/pages/identity/components/DeclarationsList/DeclarationsList'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import {
   CorporateIdentity,

@@ -11,6 +11,7 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { AuthorizableStatus } from 'types/util'
 import { TextInput } from 'ui/TextInput/TextInput'
+
 export interface AuthorizerFormFieldsProps {
   status: AuthorizableStatus
   itemId: string
@@ -37,7 +38,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
   const canShareComment = !isProcessing && hasComment
   const canApprove = !isProcessing && ['Submitted', 'Rejected'].includes(status)
   const canReject = !isProcessing && ['Submitted', 'Approved'].includes(status)
-  // console.log(props, 'last propspprprp')
+
   return (
     <>
       <TypedField
@@ -63,7 +64,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
         name='sharedWithUser'
       />
       <VSpacer size='medium' />
-      <Grid container>
+      <Grid container sx={{ display: 'flex', justifyContent: 'end' }}>
         <ApproveButton disabled={!canApprove} approve={approve} />
         <Box mx={1} />
         <RejectButton disabled={!canReject} reject={reject} />

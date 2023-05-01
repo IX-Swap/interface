@@ -8,7 +8,7 @@ import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
 import { DSOSubscriptionDocument } from 'app/components/DSO/components/DSOSubscriptionDocument'
 import { itemComparator, SelectedDocument } from 'helpers/dataroom'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DSODataroomUploader } from 'app/components/DSO/components/DSODataroomUploader'
 import { VSpacer } from 'components/VSpacer'
 

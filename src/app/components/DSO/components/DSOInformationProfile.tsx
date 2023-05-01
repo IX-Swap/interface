@@ -4,7 +4,7 @@ import { DSOIntroduction } from 'app/components/DSO/components/DSOIntroduction'
 import { DSOBusinessModel } from 'app/components/DSO/components/DSOBusinessModel'
 import { DSOUseOfProceeds } from 'app/components/DSO/components/DSOUseOfProceeds'
 import { DSOFundRaisingMilestone } from 'app/components/DSO/components/DSOFundRaisingMilestone'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 
 export const DSOInformationProfile = () => {
   return (

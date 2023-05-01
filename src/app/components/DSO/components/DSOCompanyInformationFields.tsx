@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { DSOInformationProfile } from 'app/components/DSO/components/DSOInformationProfile'
 import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
 

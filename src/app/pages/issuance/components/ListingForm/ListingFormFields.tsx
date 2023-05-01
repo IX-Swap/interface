@@ -1,7 +1,7 @@
 import React from 'react'
 import { ListingMarketInfo } from 'app/pages/issuance/components/ListingForm/ListingMarketInfo'
 import { ListingBaseFields } from 'app/pages/issuance/components/ListingForm/ListingBaseFields'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { Grid } from '@mui/material'
 
 export interface ListingFormFieldsProps {

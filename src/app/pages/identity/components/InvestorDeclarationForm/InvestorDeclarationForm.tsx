@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Grid, Typography } from '@mui/material'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DeclarationsListFields } from 'app/pages/identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
 import {
   OptInAgreements,
@@ -9,7 +9,7 @@ import {
 import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
 import { useFormContext } from 'react-hook-form'
 import { IdentityType } from 'app/pages/identity/utils/shared'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
 import { InstitutionalInvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorAgreements/InstitutionalInvestorAgreements'
 import { Divider } from 'ui/Divider'

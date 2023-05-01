@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { EvidenceOfAccreditationHelper } from 'app/pages/identity/components/UploadDocumentsForm/EvidenceOfAccreditationHelper'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from 'app/pages/identity/components/UploadDocumentsForm/styles'
 

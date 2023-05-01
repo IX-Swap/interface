@@ -5,8 +5,8 @@ import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
 import { formatMoney } from 'helpers/numbers'
 import { Divider } from 'ui/Divider'
 import { NOA } from 'app/pages/identity/components/FinancialInformationForm/NoticeOfAssesment/Breakdown'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 
 export const NoticeOfAssessmentView = () => {
   const { isSingPass, singPassData } = useIsSingPass()

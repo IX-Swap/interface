@@ -2,6 +2,8 @@ import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
 import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export interface DSODataroomViewProps {
   dso: DigitalSecurityOffering
@@ -17,45 +19,52 @@ export const DSODataroomView = ({ dso }: DSODataroomViewProps) => {
   )
 
   return (
-    <Grid container spacing={5}>
-      {dso.subscriptionDocument !== undefined && (
-        <Grid item xs={12} container spacing={3}>
-          <Grid item xs={12}>
-            <Typography variant='h5'>Subscription Document</Typography>
+    <Grid container direction='column' spacing={3}>
+      <FieldContainer>
+        <Grid item container direction={'column'} spacing={5}>
+          <Grid item>
+            <FormSectionHeader title='Documents' />
           </Grid>
-          <Grid item xs={12} container spacing={1}>
-            <Grid item xs={12}>
-              <Documents documents={[dso.subscriptionDocument]} />
+          {dso.subscriptionDocument !== undefined && (
+            <Grid item xs={12} container spacing={3}>
+              <Grid item xs={12}>
+                <Typography>Subscription Document</Typography>
+              </Grid>
+              <Grid item xs={12} container spacing={1}>
+                <Grid item xs={12}>
+                  <Documents documents={[dso.subscriptionDocument]} />
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-      )}
+          )}
 
-      {supportingDocuments.length > 0 && (
-        <Grid item xs={12} container spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant='h5'>Supporting Documents</Typography>
-          </Grid>
-          <Grid item xs={12} container spacing={1}>
-            <Grid item xs={12}>
-              <Documents documents={supportingDocuments} />
+          {supportingDocuments.length > 0 && (
+            <Grid item xs={12} container spacing={2}>
+              <Grid item xs={12}>
+                <Typography>Supporting Documents</Typography>
+              </Grid>
+              <Grid item xs={12} container spacing={1}>
+                <Grid item xs={12}>
+                  <Documents documents={supportingDocuments} />
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-      )}
+          )}
 
-      {otherDocuments.length > 0 && (
-        <Grid item xs={12} container spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant='h5'>Dataroom</Typography>
-          </Grid>
-          <Grid item xs={12} container spacing={1}>
-            <Grid item xs={12}>
-              <Documents documents={otherDocuments} />
+          {otherDocuments.length > 0 && (
+            <Grid item xs={12} container spacing={2}>
+              <Grid item xs={12}>
+                <Typography>Dataroom</Typography>
+              </Grid>
+              <Grid item xs={12} container spacing={1}>
+                <Grid item xs={12}>
+                  <Documents documents={otherDocuments} />
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </Grid>
-      )}
+      </FieldContainer>
     </Grid>
   )
 }

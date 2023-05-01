@@ -2,8 +2,8 @@ import { Grid } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import React from 'react'
 import { Personnel } from 'app/pages/identity/types/forms'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
 
 export interface PersonnelProps {

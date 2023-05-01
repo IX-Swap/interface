@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Grid, Typography, Tooltip, Paper } from '@mui/material'
 import { UsCitizenshipConfirmationFields } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmationFields'
 import { FatcaDialog } from 'app/pages/identity/components/TaxDeclarationForm/FatcaDialog/FatcaDialog'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import Info from 'assets/icons/info-tooltip.svg'
 import { useStyles } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclaration.styles'
 

@@ -26,6 +26,7 @@ export const DSOSubmitButton = (props: DSOSubmitButtonProps) => {
       disableElevation
       disabled={isLoading || dso?.status !== 'Draft'}
       onClick={handleClick}
+      fullWidth
     >
       Submit
     </Button>
