@@ -67,7 +67,13 @@ export const OffersFull: React.FC<Props> = (props) => {
   const [totalPages, setTotalPages] = React.useState(0)
   const [totalItems, setTotalItems] = React.useState(0)
   const [pageSize, setPageSize] = React.useState(10)
-  const [filter, setFilter] = React.useState<SearchConfig | undefined>()
+  const [filter, setFilter] = React.useState<SearchConfig>(() => {
+    const newFilter = localStorage.getItem('offersFullFilter')
+    return newFilter ? (JSON.parse(newFilter) as SearchConfig) : { search: '', onlyMine: 'false' }
+  })
+  React.useEffect(() => {
+    localStorage.setItem('offersFullFilter', JSON.stringify(filter))
+  }, [filter])
   const [order, setOrder] = React.useState<OrderConfig>({})
 
   const viewItem = React.useCallback((id: number) => history.push(`/offers/${id}`), [history])
@@ -125,8 +131,8 @@ export const OffersFull: React.FC<Props> = (props) => {
 
   const onSearch = useCallback(
     (search: string) => {
-      setFilter((state: SearchConfig | undefined) => ({
-        ...(state || {}),
+      setFilter((state: SearchConfig) => ({
+        ...state,
         search,
       }))
       if (page !== 1) {
@@ -138,8 +144,8 @@ export const OffersFull: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      <TitleBox title={props.type} setFilter={setFilter} />
-      <SearchFilter onFilter={onSearch} />
+      <TitleBox title={props.type} onlyMine={filter.onlyMine} setFilter={setFilter} />
+      <SearchFilter search={filter.search} onFilter={onSearch} />
 
       {!loading && offers?.length === 0 && <EmptyTable isSearch={Boolean(filter?.search)} />}
 

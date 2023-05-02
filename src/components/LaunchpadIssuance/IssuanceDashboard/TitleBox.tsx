@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { useRole } from 'state/user/hooks'
 import { BaseCheckbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
@@ -7,21 +7,19 @@ import { SearchConfig } from './SearchFilter'
 
 interface Props {
   title: string
-  setFilter: (filter: SearchConfig | ((prevState: SearchConfig | undefined) => SearchConfig)) => void
+  onlyMine: string
+  setFilter: (filter: SearchConfig | ((prevState: SearchConfig) => SearchConfig)) => void
 }
 
-export const TitleBox = ({ title, setFilter }: Props) => {
+export const TitleBox = ({ title, onlyMine, setFilter }: Props) => {
   const { isAdmin } = useRole()
-  const [showMine, setShowMine] = React.useState<boolean>(false)
 
-  const toggle = () => setShowMine((state) => !state)
-
-  useEffect(() => {
-    setFilter((state: SearchConfig | undefined) => ({
-      search: state?.search || '',
-      onlyMine: showMine.toString(),
+  const showMine = useMemo(() => onlyMine === 'true', [onlyMine])
+  const toggle = () =>
+    setFilter((state: SearchConfig) => ({
+      ...state,
+      onlyMine: onlyMine === 'true' ? 'false' : 'true',
     }))
-  }, [showMine])
 
   return (
     <Container>
