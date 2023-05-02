@@ -13,8 +13,9 @@ import { useEditTimeframe } from 'state/launchpad/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { useShowError } from 'state/application/hooks'
-import { getDaysAhead } from 'utils/time'
+import { getDaysAhead, isFutureDate } from 'utils/time'
 import { text1, text48 } from 'components/LaunchpadMisc/typography'
+import { getDaysAfter } from 'utils/time'
 
 interface Props {
   open: boolean
@@ -35,13 +36,17 @@ const getNextStage = (stage: string) => {
   const nextStatus = KEY_OFFER_STATUSES[currentIndex + 1]
   return nextStatus
 }
+const getPreviousStage = (stage: string) => {
+  const currentIndex = KEY_OFFER_STATUSES.findIndex((item) => item === stage)
+  const nextStatus = KEY_OFFER_STATUSES[currentIndex - 1]
+  return nextStatus
+}
 
 const getTomorrow = () => getDaysAhead(1)
 const getTwoDaysAhead = () => getDaysAhead(2)
 
 export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props) => {
   const { status, timeframe, id } = offer
-  const minDate = getTomorrow()
 
   /* state */
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -109,6 +114,21 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
     const second = statuses[nextStage]
     return `${first} to ${second}`
   }, [stage])
+
+  const minDate = useMemo(() => {
+    if (!stage || stage === OfferStatus.whitelist) {
+      return new Date()
+    }
+    const date = timeframe[getPreviousStage(stage) as keyof OfferTimeframe]
+    return isFutureDate(date) ? getDaysAfter(date, 1) : new Date()
+  }, [stage, timeframe])
+
+  const maxDate = useMemo(() => {
+    if (!stage || [OfferStatus.closed, OfferStatus.claim].includes(stage as OfferStatus)) {
+      return undefined
+    }
+    return timeframe[getNextStage(getNextStage(stage)) as keyof OfferTimeframe]
+  }, [stage, timeframe])
 
   /* callbacks */
   const setRange = useCallback(
@@ -185,6 +205,7 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
               label={label}
               field="timeframe"
               minDate={minDate}
+              maxDate={maxDate}
               value={rangeValue}
               onChange={onChangeRange}
               disabled={!stage}
