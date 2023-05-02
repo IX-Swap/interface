@@ -53,14 +53,18 @@ export const CorporateInfo = ({
     <Grid item container flexDirection={'column'} spacing={5}>
       {!hideAvatar && (
         <Grid item>
-          <Avatar
-            documentId={data.logo}
-            ownerId={data.user._id}
-            variant='square'
-            size={120}
-            borderRadius={16}
-            fallback={<AvatarPhoto />}
-          />
+          {typeof data.logo !== 'undefined' ? (
+            <Avatar
+              documentId={data.logo}
+              ownerId={data.user._id}
+              variant='square'
+              size={120}
+              borderRadius={16}
+              fallback={<AvatarPhoto />}
+            />
+          ) : (
+            <AvatarPhoto />
+          )}
         </Grid>
       )}
 
