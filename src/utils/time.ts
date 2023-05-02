@@ -99,3 +99,10 @@ export const getDaysBefore = (date: Date | undefined, daysAhead: number): Date |
   newMoment.set('hour', 0)
   return newMoment.toDate()
 }
+
+export const isFutureDate = (date: Date) => {
+  const now = dayjs().unix()
+  const unixDate = dayjs(date).unix()
+
+  return unixDate > now
+}
