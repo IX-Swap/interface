@@ -22,11 +22,11 @@ export const IndividualAccreditationContainer = ({
   fallbackComponent,
   type
 }: IndividualAccreditationContainerProps) => {
-  const { identityId } = useParams<{
+  const { individualId } = useParams<{
     userId: string
-    identityId: string
+    individualId: string
   }>()
-  const { data, isLoading, isError } = useIndividualAccreditation(identityId)
+  const { data, isLoading, isError } = useIndividualAccreditation(individualId)
 
   if (isLoading) {
     return loadingComponent === undefined
@@ -50,46 +50,3 @@ export const IndividualAccreditationContainer = ({
 
   return <IndividualAccreditationView data={data} />
 }
-
-// import React, { ComponentType, createElement, FC } from 'react'
-// import { IndividualIdentityView } from 'app/pages/identity/components/IndividualIdentityView/IndividualIdentityView'
-// import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
-// import { useParams } from 'react-router-dom'
-// import { IndividualIdentity } from '../types/forms'
-// import { IndividualAccreditationView } from '../components/IndividualAccreditationView/IndividualAccreditationView'
-
-// export interface IndividualAccreditationContainerProps {
-//   component?: ComponentType<{ data: IndividualIdentity }>
-//   loadingComponent?: ComponentType
-//   errorComponent?: ComponentType
-//   fallbackComponent?: ComponentType
-// }
-
-// export const IndividualAccreditationContainer: FC<
-// IndividualAccreditationContainerProps
-// > = ({ component, loadingComponent, errorComponent, fallbackComponent }) => {
-//   const { userId } = useParams<{ identityId: string; userId: string }>()
-//   const { data, isLoading, isError } = useIndividualIdentity(userId)
-
-//   if (isLoading) {
-//     return loadingComponent === undefined
-//       ? null
-//       : createElement(loadingComponent)
-//   }
-
-//   if (isError) {
-//     return errorComponent === undefined ? null : createElement(errorComponent)
-//   }
-
-//   if (data === undefined) {
-//     return fallbackComponent === undefined
-//       ? null
-//       : createElement(fallbackComponent)
-//   }
-
-//   if (component !== undefined) {
-//     return createElement(component, { data })
-//   }
-
-//   return <IndividualAccreditationView data={data} />
-// }
