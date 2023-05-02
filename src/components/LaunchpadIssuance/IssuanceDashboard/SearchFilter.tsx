@@ -5,7 +5,7 @@ import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.s
 
 export interface SearchConfig {
   search: string
-  onlyMine?: string
+  onlyMine: string
 }
 
 export interface OrderConfig {
@@ -22,22 +22,23 @@ export interface OrderConfig {
 }
 
 interface Props {
+  search: string
   onFilter: (search: string) => void
 }
 
-export const SearchFilter: React.FC<Props> = (props) => {
+export const SearchFilter: React.FC<Props> = ({ search, onFilter }) => {
   const onChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      props.onFilter(event.target.value || '')
+      onFilter(event.target.value || '')
     },
-    [props.onFilter]
+    [onFilter]
   )
 
   return (
     <FilterContainer>
       <FilterSearchField>
         <SearchIcon />
-        <FilterSearchInput placeholder="Search" onChange={onChange} />
+        <FilterSearchInput placeholder="Search" value={search} onChange={onChange} />
       </FilterSearchField>
 
       <Spacer />

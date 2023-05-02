@@ -44,5 +44,10 @@ export enum WhiteListType {
   AUTOMATED = 'automated',
 }
 
-export type WhitelistFilter = Partial<Record<'search' | 'type' | 'page' | 'offset', number | string>>
+export type WhitelistFilter = {
+  search?: string
+  type?: number | string
+  page?: number | string
+  offset?: number | string
+}
 export type IssuanceDataFilter = Partial<Record<'tab' | 'issuanceId' | 'page' | 'offset', number | string>>

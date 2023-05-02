@@ -28,6 +28,7 @@ export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: Launchpad
   const onCloseDialog = () => {
     setOpen(false)
     dispatch(resetWhitelistWalletErrors())
+    dispatch(setFilterValue({ filter: { search: '', page: 1 } }))
   }
 
   const getWhitelistedWallets = useGetWhitelisted()
@@ -84,7 +85,10 @@ export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: Launchpad
               </Tab>
             ))}
           </Tabs>
-          <SearchFilter onFilter={(search) => dispatch(setFilterValue({ filter: { search, page: 1 } }))} />
+          <SearchFilter
+            search={filter.search || ''}
+            onFilter={(search) => dispatch(setFilterValue({ filter: { search, page: 1 } }))}
+          />
         </FilterContainer>
         <WhitelistWalletTable loading={loadingGet} items={items} actions={Actions} onAction={onAction} />
         {getError && <ErrorText>{getError}</ErrorText>}

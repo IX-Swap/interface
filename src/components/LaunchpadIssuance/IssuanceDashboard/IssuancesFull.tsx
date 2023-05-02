@@ -49,12 +49,19 @@ export const IssuancesFull = () => {
   const [totalPages, setTotalPages] = React.useState(0)
   const [totalItems, setTotalItems] = React.useState(0)
   const [pageSize, setPageSize] = React.useState(10)
-  const [filter, setFilter] = React.useState<SearchConfig | undefined>()
   const [order, setOrder] = React.useState<OrderConfig>({})
   const [issuance, setIssuance] = React.useState<Issuance | null>(null)
   const [popUpOpen, setPopUpOpen] = React.useState(false)
   const { isAdmin, isOfferManager } = useRole()
   const history = useHistory()
+
+  const [filter, setFilter] = React.useState<SearchConfig>(() => {
+    const newFilter = localStorage.getItem('issuancesFullFilter')
+    return newFilter ? (JSON.parse(newFilter) as SearchConfig) : { search: '', onlyMine: 'false' }
+  })
+  React.useEffect(() => {
+    localStorage.setItem('issuancesFullFilter', JSON.stringify(filter))
+  }, [filter])
 
   const status = React.useCallback((issuance: Issuance) => {
     if (!issuance.vetting) {
@@ -120,8 +127,8 @@ export const IssuancesFull = () => {
 
   const onSearch = useCallback(
     (search: string) => {
-      setFilter((state: SearchConfig | undefined) => ({
-        ...(state || {}),
+      setFilter((state: SearchConfig) => ({
+        ...state,
         search,
       }))
       if (page !== 1) {
@@ -134,9 +141,9 @@ export const IssuancesFull = () => {
   return (
     <Container>
       {popUpOpen && <IssuanceApplicationPopup issuance={issuance} isOpen={popUpOpen} setOpen={setPopUpOpen} />}
-      <TitleBox title="Issuances" setFilter={setFilter} />
+      <TitleBox onlyMine={filter.onlyMine} title="Issuances" setFilter={setFilter} />
 
-      <SearchFilter onFilter={onSearch} />
+      <SearchFilter search={filter.search} onFilter={onSearch} />
 
       {!loading && issuances?.length === 0 && <EmptyTable isSearch={Boolean(filter?.search)} />}
 
