@@ -17,7 +17,10 @@ export interface Pair {
   otc?: any
 }
 
-export const useMarketList = (showFilter: boolean | undefined = false) => {
+export const useMarketList = (
+  showFilter: boolean | undefined = false,
+  limit: number = 25
+) => {
   const { location } = useHistory()
   const { apiService } = useServices()
   const { data: favorites } = useFavoritePairs()
@@ -33,7 +36,7 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     if (location?.pathname?.includes('trading')) {
       return await apiService.post<PaginatedData<Pair>>(exchangeURL.otcList, {
         skip: cursor,
-        limit: 25,
+        limit,
         listingKeyword,
         currency,
         sortBy,
@@ -44,7 +47,7 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
         exchangeURL.marketList,
         {
           skip: cursor,
-          limit: 25,
+          limit,
           listingKeyword,
           currency,
           sortBy,
