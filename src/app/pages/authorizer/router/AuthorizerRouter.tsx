@@ -24,7 +24,6 @@ import { OTCTrades } from '../pages/otcTrades/OTCTrades'
 import { AuthorizerIndividualAccreditationsRouter } from 'app/pages/authorizer/pages/individualAccreditations/router/AuthorizerIndividualAccreditationsRouter'
 
 export const AuthorizerRouter = () => {
-  console.log('inside main auhtorisze router file')
   return (
     <Switch>
       <AppRoute breadcrumb='Bank Accounts' path={AuthorizerRoute.banks}>
@@ -45,20 +44,17 @@ export const AuthorizerRouter = () => {
         <AuthorizerDSWithdrwalsRouter />
       </AppRoute>
       <AppRoute
-        breadcrumb='Individual KYC Applications'
-        path={AuthorizerRoute.individualIdentities}
-        exact
-      >
-        <AuthorizerIndividualIdentitiesRouter />
-      </AppRoute>
-      <AppRoute
         breadcrumb='Individual Accreditation Applications'
         path={AuthorizerRoute.individualAccreditations}
-        exact
       >
         <AuthorizerIndividualAccreditationsRouter />
       </AppRoute>
-
+      <AppRoute
+        breadcrumb='Individual KYC Applications'
+        path={AuthorizerRoute.individualIdentities}
+      >
+        <AuthorizerIndividualIdentitiesRouter />
+      </AppRoute>
       <AppRoute
         breadcrumb='Corporate Accreditation Applications'
         path={AuthorizerRoute.corporateAccreditations}

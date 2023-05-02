@@ -1,6 +1,7 @@
 import React from 'react'
 import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'
 import { AppFeature } from 'types/app'
+import { getPersonName } from 'helpers/strings'
 import { IndividualAccreditationView } from 'app/pages/identity/components/IndividualAccreditationView/IndividualAccreditationView'
 import { IndividualAccreditationContainer } from 'app/pages/identity/containers/IndividualAccreditationContainer'
 
@@ -9,7 +10,7 @@ export const IndividualAccreditationAuthorization = () => {
     <IndividualAccreditationContainer
       component={({ data }) => (
         <AuthorizerView
-          title={data.companyLegalName}
+          title={getPersonName(data)}
           data={data}
           feature={AppFeature.IndividualsAccreditation}
           statusFieldName='accreditationStatus'
