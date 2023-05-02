@@ -53,7 +53,7 @@ export const Market = () => {
   } = useCustodianWalletSubmit()
   const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
   const { pairId } = useParams<{ pairId: string }>()
-  const { data, isLoading } = useMarketList()
+  const { data, isLoading } = useMarketList(false, 500)
   const { symbol } = useSymbol(pairId, data)
   const { data: tokenBalance } = useTokenBalance(pairId)
 
