@@ -13,5 +13,6 @@ export const IndividualIdentities: React.FC = () => (
     name={authorizerQueryKeys.getIndividualIdentityList}
     columns={columns}
     compactColumns={compactColumns}
+    hasStatusWithActions={false}
   />
 )

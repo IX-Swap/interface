@@ -18,7 +18,10 @@ import { TableColumn, BaseFilter } from 'types/util'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'ui/UIKit/TablesKit/components/TableRows/TableRows'
-import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
+import {
+  statusColumn,
+  statusColumnWithActions
+} from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 import { NoData } from 'app/components/NoData/NoData'
 import useStyles from 'ui/UIKit/TablesKit/components/TableView/TableView.styles'
@@ -43,6 +46,7 @@ export interface TableViewProps<T> {
   compactColumns?: Array<TableColumn<T>> | any
   bordered?: boolean
   filter?: BaseFilter
+  hasStatusWithActions?: boolean
   hasStatus?: boolean
   actions?: ActionsType<T>
   children?: (props: TableViewRendererProps<T>) => JSX.Element
@@ -68,6 +72,7 @@ export const TableView = <T,>({
   filter,
   queryEnabled = true,
   columns: columnsProp = [],
+  hasStatusWithActions = false,
   hasStatus = false,
   bordered = true,
   actions,
@@ -115,7 +120,10 @@ export const TableView = <T,>({
     innerRef.current = { refresh: () => setPage(page) }
   }
   const headDisplay = noHeader ? 'none' : 'table-header-group'
-  let columns = hasStatus ? [...columnsProp, statusColumn] : columnsProp
+  let columns = columnsProp
+
+  if (hasStatus) columns = [...columns, statusColumn]
+  if (hasStatusWithActions) columns = [...columns, statusColumnWithActions]
 
   if (selectionHelper !== undefined) {
     const {
