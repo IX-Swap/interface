@@ -126,7 +126,8 @@ const IssuancesLink = styled(Link)`
   display: grid;
   place-content: center;
 
-  height: 48px;
+  height: 42px;
+  font-size: 13px;
 
   padding: 0 2rem;
 
