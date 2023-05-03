@@ -1,5 +1,4 @@
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { DetailsTab } from 'app/pages/issuance/components/ListingDetails/DetailsTab'
 import { ListingHeader } from 'app/pages/issuance/components/ListingDetails/ListingHeader'
 import { ListingStatusAndActions } from 'app/pages/issuance/components/ListingDetails/ListingStatusAndActions'
@@ -22,10 +21,6 @@ export const ListingDetails = ({
 
   return (
     <Grid container direction='column' spacing={4} style={{ display: 'table' }}>
-      <Grid item>
-        <PageHeader title={data.tokenName} showBreadcrumbs />
-      </Grid>
-
       <Grid item container justifyContent='flex-end' spacing={1} pl={4}>
         <RootContainer>
           <Grid item xs={12} sm={8}>
