@@ -30,6 +30,7 @@ import {
   distributionFrequencyOptions,
   investmentStructureOptions,
   isDefinedNumber,
+  ERC20Option,
 } from './util'
 
 import { InformationFormValues } from './types'
@@ -111,6 +112,9 @@ export const InformationForm = (props: Props) => {
       return '0'
     }
   }, [showSupplyHint, values.tokenPrice, values.hardCap])
+  const filteredStandardOptions = useMemo(() => {
+    return smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess ? [ERC20Option] : standardOptions
+  }, [smartContractStrategy])
 
   // states
   const [showReview, setShowReview] = useState(false)
@@ -455,7 +459,7 @@ export const InformationForm = (props: Props) => {
             field="tokenStandart"
             setter={(_, value: any) => onChangeTokenStandart(value)}
             touch={setFieldTouched}
-            options={standardOptions}
+            options={filteredStandardOptions}
             label="Token Standard"
             placeholder="Token Standard"
             disabled={edit}

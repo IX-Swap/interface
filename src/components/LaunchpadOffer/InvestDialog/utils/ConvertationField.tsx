@@ -76,7 +76,7 @@ export const useGetWarning = (offer: Offer) => {
       warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
     } else if (available < realValue) {
       warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
-    } 
+    }
     return warning
   }
 
