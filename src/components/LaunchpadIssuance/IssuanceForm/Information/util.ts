@@ -44,7 +44,10 @@ export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGI
     softCap: '',
 
     tokenPrice: null,
-    tokenStandart: undefined,
+    tokenStandart:
+      smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess
+        ? OfferTokenStandart.erc20
+        : undefined,
     totalSupply: '',
     tokenReceiverAddress: '',
 
@@ -123,10 +126,8 @@ export const networkOptions = [
   // { label: 'Kovan', value: OfferNetwork.kovan },
 ]
 
-export const standardOptions = [
-  { label: 'ERC20', value: OfferTokenStandart.erc20 },
-  { label: 'XTokenLite', value: OfferTokenStandart.xtokenlite },
-]
+export const ERC20Option = { label: 'ERC20', value: OfferTokenStandart.erc20 }
+export const standardOptions = [ERC20Option, { label: 'XTokenLite', value: OfferTokenStandart.xtokenlite }]
 
 export const structureOptions = [
   { label: 'ERC20', value: OfferTokenStandart.erc20 },
