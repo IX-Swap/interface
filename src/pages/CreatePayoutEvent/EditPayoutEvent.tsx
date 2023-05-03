@@ -50,7 +50,7 @@ const EditPayoutEventPage: FC = () => {
         history.push('/kyc')
       }
 
-      const data: PayoutEvent = await getPayoutItem(+id!)
+      const data: PayoutEvent = await getPayoutItem(Number(id))
 
       if (data) {
         setStatus(data.status)
@@ -82,7 +82,7 @@ const EditPayoutEventPage: FC = () => {
       setPayoutFormData({
         id: payout.id.toString(),
         description: payout.description,
-        endDate: payout.endDate!,
+        endDate: payout.endDate ?? '',
         startDate: payout.startDate,
         files: payout.attachments,
         recordDate: payout.recordDate,

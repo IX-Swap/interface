@@ -1,7 +1,6 @@
 import React, { lazy } from 'react'
 import { Redirect } from 'react-router-dom'
 
-// import { SupportedChainId } from 'constants/chains'
 import { routes } from 'utils/routes'
 
 import Faucet from 'pages/Faucet'
@@ -12,6 +11,7 @@ import { VestingTab } from 'pages/Farming/VestingTab'
 
 import { RedirectPathToSwapOnly, RedirectToSwap } from 'pages/Swap/redirects'
 import { RedirectDuplicateTokenIdsV2 } from 'pages/AddLiquidityV2/redirects'
+import { ROLES } from 'constants/roles'
 
 const Admin = lazy(() => import('pages/Admin'))
 const Swap = lazy(() => import('pages/Swap'))
@@ -45,9 +45,12 @@ const LaunchpadOffer = lazy(() => import('pages/LaunchpadOffer'))
 const LaunchpadIssuanceDashboard = lazy(() => import('pages/LaunchpadIssuance/Dashboard'))
 const LaunchpadIssuanceForm = lazy(() => import('pages/LaunchpadIssuance/Form'))
 const LaunchpadIssuanceVettingForm = lazy(() => import('pages/LaunchpadIssuance/VettingForm'))
+const LaunchpadIssuanceVettingFormView = lazy(() => import('pages/LaunchpadIssuance/VettingFormView'))
 const LaunchpadIssuanceInformationForm = lazy(() => import('pages/LaunchpadIssuance/InformationForm'))
 const LaunchpadIssuanceInformationEditForm = lazy(() => import('pages/LaunchpadIssuance/InformationEditForm'))
 const LaunchpadIssuanceInformationReview = lazy(() => import('pages/LaunchpadIssuance/InformationReview'))
+const ManageOffer = lazy(() => import('pages/LaunchpadIssuance/ManageOffer'))
+const LaunchpadIssuanceReport = lazy(() => import('pages/LaunchpadIssuance/Report'))
 
 export interface RouteMapEntry {
   path: string
@@ -58,12 +61,18 @@ export interface RouteMapEntry {
   conditions?: {
     chainId?: number
     chainIsSupported?: boolean
-
+    rolesSupported?: ROLES[]
     isWhitelisted?: boolean
     kycFormAccess?: string
+    isKycApproved?: boolean
   }
 }
-
+const onlyOfferManager = {
+  conditions: {
+    rolesSupported: [ROLES.OFFER_MANAGER, ROLES.ADMIN],
+    isKycApproved: true,
+  },
+}
 export const routeConfigs: RouteMapEntry[] = [
   { path: '/admin', render: () => <Redirect to={routes.admin('accreditation', null)} /> },
   { path: routes.admin(), component: Admin },
@@ -140,15 +149,38 @@ export const routeConfigs: RouteMapEntry[] = [
 
   { path: routes.staking, component: StakingTab },
   { path: routes.vesting, component: VestingTab },
-  { path: '/launchpad', component: Launchpad },
-  { path: '/offers/:offerId', component: LaunchpadOffer },
-  
-  { path: '/issuance', component: LaunchpadIssuanceDashboard },
 
-  { path: '/issuance/create', component: LaunchpadIssuanceForm },
-  { path: '/issuance/create/vetting', component: LaunchpadIssuanceVettingForm },
-
-  { path: '/issuance/create/information', component: LaunchpadIssuanceInformationForm },
-  { path: '/issuance/edit/information', component: LaunchpadIssuanceInformationEditForm },
-  { path: '/issuance/review/information', component: LaunchpadIssuanceInformationReview }
+  /* Launchpad routes */
+  { path: routes.launchpad, component: Launchpad },
+  { path: routes.offerPage, component: LaunchpadOffer },
+  /* Issuance routes */
+  {
+    path: routes.issuance,
+    component: LaunchpadIssuanceDashboard,
+    ...onlyOfferManager,
+  },
+  { path: routes.viewVetting, component: LaunchpadIssuanceVettingFormView, ...onlyOfferManager },
+  { path: routes.issuanceCreate, component: LaunchpadIssuanceForm, ...onlyOfferManager },
+  {
+    path: routes.createVetting,
+    component: LaunchpadIssuanceVettingForm,
+    ...onlyOfferManager,
+  },
+  {
+    path: routes.createOffer,
+    component: LaunchpadIssuanceInformationForm,
+    ...onlyOfferManager,
+  },
+  {
+    path: routes.editOffer,
+    component: LaunchpadIssuanceInformationEditForm,
+    ...onlyOfferManager,
+  },
+  { path: routes.reviewOffer, component: LaunchpadIssuanceInformationReview, ...onlyOfferManager },
+  {
+    path: routes.issuanceReport,
+    component: LaunchpadIssuanceReport,
+    ...onlyOfferManager,
+  },
+  { path: routes.manageOffer, component: ManageOffer, ...onlyOfferManager },
 ]

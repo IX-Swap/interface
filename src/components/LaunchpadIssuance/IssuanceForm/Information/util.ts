@@ -1,84 +1,106 @@
-import { InformationFormValues, OfferTokenType, SocialMediaType } from "./types"
+import React from 'react'
+import { InformationFormValues, OfferTokenType } from './types'
 
 import {
   OfferIndustry,
   OfferNetwork,
   OfferTokenStandart,
   OfferDistributionFrequency,
-  OfferInvestmentStructure
-} from "state/launchpad/types"
+  OfferInvestmentStructure,
+} from 'state/launchpad/types'
+import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 
+export const isDefinedNumber = (foo: any) => ![undefined, null, ''].includes(foo) && !Number.isNaN(foo)
 
-export const initialValues = {
-  profilePicture: undefined,
-  cardPicture: undefined,
+export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGIES) =>
+  ({
+    profilePicture: undefined,
+    cardPicture: undefined,
 
-  shortDescription: '',
-  longDescription: '',
+    shortDescription: '',
+    longDescription: '',
 
-  name: '',
+    title: '',
 
-  companyIdNumber: '',
-  title: '',
+    companyIdNumber: '',
 
-  industry: undefined,
+    investmentStructure: '',
+    issuerIdentificationNumber: '',
 
-  investmentStructure: '',
-  issuerIdentificationNumber: '',
+    industry: undefined,
+    investmentType: undefined,
 
-  country: '',
+    country: '',
 
-  tokenName: '',
-  tokenTicker: '',
-  tokenType: '',
+    tokenName: '',
+    tokenTicker: '',
+    decimals: null,
+    trusteeAddress: '',
+    tokenType: '',
 
-  network: undefined,
+    network: undefined,
 
-  hardCap: '',
-  softCap: '',
+    hardCap: '',
+    softCap: '',
 
-  pricePerToken: 0,
-  tokenPrice: 0,
-  tokenStandart: undefined,
+    tokenPrice: null,
+    tokenStandart:
+      smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess
+        ? OfferTokenStandart.erc20
+        : undefined,
+    totalSupply: '',
+    tokenReceiverAddress: '',
 
-  minInvestment: '',
-  maxInvestment: '',
+    minInvestment: '',
+    maxInvestment: '',
 
-  hasPresale: undefined,
-  presaleAlocated: '',
-  presaleMinInvestment: '',
-  presaleMaxInvestment: '',
-  
-  images: [],
-  videos: [{ id: 0 }],
-  additionalDocuments: [{ id: 0 }],
+    hasPresale: undefined,
+    presaleAlocated: '',
+    presaleMinInvestment: '',
+    presaleMaxInvestment: '',
 
-  members: [{ id: 0 }],
-  faq: [{ id: 0 }],
+    images: [],
+    videos: [{ url: null }],
 
-  allowOnlyAccredited: undefined,
+    additionalDocuments: [{ file: null }],
 
-  terms: {
-    investmentStructure: ""
-  },
+    members: [
+      {
+        photo: null,
+        name: '',
+        role: '',
+        about: '',
+      },
+    ],
+    faq: [
+      {
+        question: '',
+        answer: '',
+      },
+    ],
 
-  timeframe: {
-    whitelist: undefined,
-    presale: undefined,
-    sale: undefined,
-    closed: undefined,
-    claim: undefined
-  },
+    allowOnlyAccredited: undefined,
+    tokenomicsAgreement: undefined,
 
-  social: [
-    { type: '' }
-  ],
+    terms: {
+      investmentStructure: '',
+    },
 
-  website: '',
-  whitepaper: '',
-  email: '',
+    timeframe: {
+      whitelist: undefined,
+      presale: undefined,
+      sale: undefined,
+      closed: undefined,
+      claim: undefined,
+    },
 
-} as unknown as InformationFormValues
+    social: [],
+
+    website: '',
+    whitepaper: '',
+    email: '',
+    smartContractStrategy,
+  } as unknown as InformationFormValues)
 
 export const industryOptions = [
   { label: 'Blockchain', value: OfferIndustry.blockchain },
@@ -104,10 +126,8 @@ export const networkOptions = [
   // { label: 'Kovan', value: OfferNetwork.kovan },
 ]
 
-export const standardOptions = [
-  { label: 'ERC20', value: OfferTokenStandart.erc20 },
-  { label: 'XTokenLite', value: OfferTokenStandart.xtokenlite },
-]
+export const ERC20Option = { label: 'ERC20', value: OfferTokenStandart.erc20 }
+export const standardOptions = [ERC20Option, { label: 'XTokenLite', value: OfferTokenStandart.xtokenlite }]
 
 export const structureOptions = [
   { label: 'ERC20', value: OfferTokenStandart.erc20 },
@@ -122,7 +142,10 @@ export const tokenTypeOptions = [
   { label: 'USDC', value: OfferTokenType.USDC },
   { label: 'USDT', value: OfferTokenType.USDT },
 ]
-
+export const tokenDecimalsOnOptions = [
+  { label: 'On', value: true },
+  { label: 'Off', value: false },
+]
 export const distributionFrequencyOptions = [
   { label: 'Monthly', value: OfferDistributionFrequency.monthly },
   { label: 'Quarterly', value: OfferDistributionFrequency.quarterly },
@@ -131,3 +154,10 @@ export const distributionFrequencyOptions = [
   { label: 'N/A', value: OfferDistributionFrequency.notApplicable },
   { label: 'Other', value: OfferDistributionFrequency.other },
 ]
+
+export const getSetter = (onChange: (e: Partial<React.ChangeEvent<any>>) => void) => {
+  return (name: string, value: any) =>
+    onChange({
+      target: { name, value },
+    })
+}

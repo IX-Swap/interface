@@ -1,19 +1,15 @@
 import React from 'react'
-import styled from 'styled-components'
-
 import { object, string } from 'yup'
-
 import { TextField, TextAreaField } from './TextField'
 import { KYCPromptIconContainer, KYCPromptTitle, Caption, KYCButton } from './styled'
-
 import { ReactComponent as ContactUsIcon } from 'assets/launchpad/svg/contact-us-icon.svg'
 import { useRequestSupport } from 'state/launchpad/hooks'
-import { Formik, FormikHelpers, FormikValues } from 'formik'
+import { Formik } from 'formik'
 import { useAddPopup } from 'state/application/hooks'
 
 interface Props {
   offerId?: string
-  issuanceId?: number
+  issuanceId?: number | string
   onSubmit: () => void
 }
 
@@ -41,35 +37,39 @@ export const ContactForm: React.FC<Props> = (props) => {
 
   const onSubmit = React.useCallback(async (values: Payload) => {
     const offer = props.offerId && { offerId: props.offerId }
-    const issuance = props.issuanceId && { issuanceId: props.issuanceId }
+  
+    let issuanceId;
+    if(props.issuanceId) {
+      issuanceId = props.issuanceId;
+      if(typeof issuanceId === 'string') {
+        issuanceId = Number.parseInt(issuanceId)
+      }
+    }
+    
 
     try {
-      await getSupport({ ...values, ...offer, ...issuance })
+      await getSupport({ ...values, ...offer, issuanceId })
 
       props.onSubmit()
       addPopup({ info: { success: true, summary: `Your message has been sent successfully` } })
-    } catch (err: any)  {
+    } catch (err: any) {
       addPopup({ info: { success: false, summary: err.message } })
     }
-    
   }, [])
 
   return (
-    <Formik validationSchema={schema} initialValues={initialValues} onSubmit={onSubmit} >
+    <Formik validationSchema={schema} initialValues={initialValues} onSubmit={onSubmit}>
       {({ setFieldValue, errors, submitForm }) => (
         <>
           <KYCPromptIconContainer>
             <ContactUsIcon />
           </KYCPromptIconContainer>
 
-          <KYCPromptTitle>
-            Message us
-          </KYCPromptTitle>
+          <KYCPromptTitle>Message us</KYCPromptTitle>
 
           <TextField label="Subject" error={errors.subject} onChange={(v) => setFieldValue('subject', v)} />
           <TextField label="Email Address" error={errors.email} onChange={(v) => setFieldValue('email', v)} />
           <TextAreaField label="How can we help You?" error={errors.text} onChange={(v) => setFieldValue('text', v)} />
-
 
           <KYCButton type="submit" onClick={submitForm}>
             Send
@@ -81,5 +81,3 @@ export const ContactForm: React.FC<Props> = (props) => {
     </Formik>
   )
 }
-
-

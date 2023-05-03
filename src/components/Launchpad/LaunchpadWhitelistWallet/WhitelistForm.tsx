@@ -1,18 +1,18 @@
 import React from 'react'
+import { Formik, FormikProps } from 'formik'
+import { Plus } from 'react-feather'
+import { Box } from 'rebass'
+import { useTheme } from 'styled-components'
 
 import { ShortFormBody } from 'components/LaunchpadIssuance/IssuanceForm/shared/styled'
 import { IssuanceTextField } from 'components/LaunchpadIssuance/utils/TextField'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { Centered, ErrorText, Row } from 'components/LaunchpadMisc/styled'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { Formik, FormikProps } from 'formik'
-import { Plus } from 'react-feather'
-import { Box } from 'rebass'
 import { useAppSelector } from 'state/hooks'
 import { useWhitelistWallet } from 'state/issuance/hooks'
 import { initialValues, placeholders } from './constants'
 import { schema } from './validationSchema'
-import { useTheme } from 'styled-components'
 
 export interface WhitelistWalletFormValues {
   walletAddress: string
@@ -44,11 +44,12 @@ export const WhitelistForm = ({ offerId, onSuccess: callback }: WhitelistFormPro
         <>
           <ShortFormBody>
             <IssuanceTextField
-              label="Wallet"
+              label="Wallet Address"
               placeholder={placeholders.walletAddress}
               value={values.walletAddress}
               onChange={(v) => setFieldValue('walletAddress', v)}
               error={errors.walletAddress}
+              maxLength={64}
             />
             <IssuanceTextField
               label="Full Name"
@@ -65,7 +66,8 @@ export const WhitelistForm = ({ offerId, onSuccess: callback }: WhitelistFormPro
                     padding="0 1.5rem"
                     disabled={!values.fullName || !values.walletAddress}
                   >
-                    <Plus size="15" color={theme.launchpad.colors.primary} /> Add Wallet
+                    <Plus size="15" color={theme.launchpad.colors.primary} />
+                    <span style={{ fontWeight: 600 }}> Add Wallet</span>
                   </OutlineButton>
                 )}
                 {loadingSave && (

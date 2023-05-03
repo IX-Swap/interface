@@ -1,38 +1,42 @@
 import React from 'react'
-import styled from 'styled-components'
-
 import { Plus } from 'react-feather'
 import { capitalize } from 'lodash'
-import { FormikErrors } from 'formik'
-
+import { FormikErrors, FormikTouched } from 'formik'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
-
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
-
-
 import { FormGrid } from '../../shared/FormGrid'
 import { FormField } from '../../shared/fields/FormField'
 import { AddButton, DeleteButton } from '../../shared/styled'
 import { DropdownField } from '../../shared/fields/DropdownField'
-
 import { InformationFormValues, SocialMediaLink, SocialMediaType } from '../types'
-import { valueContainerCSS } from 'react-select/dist/declarations/src/components/containers'
-
+import { ErrorText } from 'components/LaunchpadMisc/styled'
+import { Flex } from 'rebass'
+import styled from 'styled-components'
 
 interface Props {
-  social: SocialMediaLink[]
   values: InformationFormValues
   errors: FormikErrors<InformationFormValues>
+  touched: FormikTouched<InformationFormValues>
+
   setter: (field: string, value: any) => void
+  touch: (field: string, touched: boolean) => void
 }
 
-export const AdditionalInformation: React.FC<Props> = (props) => {
+export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, errors, touched }) => {
   const [showAddSocial, setShowAddSocial] = React.useState(false)
-  const toggleDialog = React.useCallback(() => setShowAddSocial(state => !state), [])
+  const toggleDialog = React.useCallback(() => {
+    setShowAddSocial((state) => !state)
+    setAddedSocial(undefined)
+    setAddedSocialLink("")
+    setAddedSocialError("")
+    setAddedSocialLinkError("")
+  }, [])
 
   const [addedSocial, setAddedSocial] = React.useState<SocialMediaType>()
+  const [addedSocialError, setAddedSocialError] = React.useState<string>("")
   const [addedSocialLink, setAddedSocialLink] = React.useState<string>()
+  const [addedSocialLinkError, setAddedSocialLinkError] = React.useState<string>("")
 
   const socialOptions = React.useMemo(() => {
     const defaultLinks = [
@@ -46,115 +50,143 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
       { label: 'CoinGecko', value: SocialMediaType.coinGecko },
     ]
 
-    const selectedLinks = new Set(props.social.map(x => x.type))
+    const selectedLinks = new Set(values.social.map((x) => x.type))
 
-    return defaultLinks.filter(x => !selectedLinks.has(x.value))
-  }, [props.social])
+    return defaultLinks.filter((x) => !selectedLinks.has(x.value))
+  }, [values.social])
+
+  const onChangeAddedSocial = (value: SocialMediaType | undefined) => {
+    setAddedSocial(value);
+    if(!value) setAddedSocialError("Required")
+    else setAddedSocialError("")
+  }
+
+  const onChangeAddedSocialLink = (value: string) => {
+    setAddedSocialLink(value);
+    if(!value) setAddedSocialLinkError("Required")
+    else setAddedSocialLinkError("")
+  }
 
   const addSocialMedia = React.useCallback(() => {
-    console.log(addedSocial, addedSocialLink)
     if (!addedSocial || !addedSocialLink) {
-      return 
+      if(!addedSocial) setAddedSocialError("Required")
+      if(!addedSocialLink) setAddedSocialLinkError("Required")
+      return
     }
 
-    props.setter('social', props.social.concat({ type: addedSocial, url: addedSocialLink }))
-
-    setAddedSocial(undefined)
-    setAddedSocialLink(undefined)
+    const newIndex = values.social.length
+    setter('social', values.social.concat({ type: addedSocial, url: addedSocialLink }))
+    setTimeout(() => {
+      if (touch) touch(`social[${newIndex}]`, true)
+    })
 
     toggleDialog()
   }, [addedSocial, addedSocialLink])
 
-  const removeSocialMedia = React.useCallback((link: SocialMediaLink) => {
-    props.setter('social', props.social.filter(x => x.type !== link.type))
-  }, [props.social])
-
-  const getError = React.useCallback((link: SocialMediaLink) => {
-    const index = props.social.findIndex(x => x.type === link.type)
-    const errors = (props.errors.social as FormikErrors<SocialMediaLink>[])
-
-    if (index < 0 || errors.length < index) {
-      return
-    }
-
-    return errors[index]
-  }, [props.errors])
+  const removeSocialMedia = React.useCallback(
+    (link: SocialMediaLink) => {
+      setter(
+        'social',
+        values.social.filter((x) => x.type !== link.type)
+      )
+    },
+    [values.social]
+  )
 
   return (
     <FormGrid title="Additional Information">
-      <FormField 
+      <FormField
         label="Email Address (contact information for investors)"
-        placeholder='Email Address'
+        placeholder="Email Address"
         field="email"
-        setter={props.setter} 
-        value={props.values.email}
-        error={props.errors.email}
+        setter={setter}
+        touch={touch}
+        value={values.email}
+        error={(touched.email && errors.email) as string}
       />
 
-      <FormField 
+      <FormField
         label="Official Website"
-        placeholder='URL'
+        placeholder="URL"
         field="website"
-        setter={props.setter} 
-        value={props.values.website}
-        error={props.errors.website}
-      />
-      
-      <FormField 
-        label="Whitepaper"
-        placeholder='URL'
-        field="whitepaper"
-        setter={props.setter} 
-        value={props.values.whitepaper}
-        error={props.errors.whitepaper}
+        setter={setter}
+        touch={touch}
+        value={values.website}
+        error={(touched.website && errors.website) as string}
       />
 
-      {props.social.map((link, idx) => (
-        <FormField 
-          key={link.type}
-          label={`${capitalize(link.type)}`}
-          value={link.url}
-          placeholder='URL'
-          field={`social[${idx}].url`}
-          setter={props.setter} 
-          error={(props.errors.social?.[idx] as FormikErrors<SocialMediaLink> | undefined)?.url}
-          trailing={
-            <RemoveButton onClick={() => removeSocialMedia(link)}>
-              <Trash />
-            </RemoveButton>
-          }
-        />
+      <FormField
+        label="Whitepaper"
+        placeholder="URL"
+        field="whitepaper"
+        setter={setter}
+        touch={touch}
+        value={values.whitepaper}
+        error={(touched.whitepaper && errors.whitepaper) as string}
+      />
+
+      {values.social.map((link, idx) => (
+        <Flex flexDirection={'column'} key={idx}>
+          <FormField
+            key={link.type}
+            label={`${capitalize(link.type)}`}
+            value={link.url}
+            placeholder="URL"
+            field={`social[${idx}].url`}
+            setter={setter}
+            touch={touch}
+            error={
+              ((touched.social?.[idx] as FormikTouched<SocialMediaLink> | undefined) &&
+                (errors.social?.[idx] as FormikErrors<SocialMediaLink> | undefined)?.url) as string
+            }
+            trailing={
+              <DeleteButton onClick={() => removeSocialMedia(link)}>
+                <Trash />
+              </DeleteButton>
+            }
+          />
+        </Flex>
       ))}
 
       <AddButton onClick={toggleDialog}>
         <Plus /> Add Social
+        {touched.social && values.social.length === 0 && errors.social && (
+          <ErrorText>{JSON.stringify(errors.social).slice(1, -1)}</ErrorText>
+        )}
       </AddButton>
 
-      <IssuanceDialog show={showAddSocial} onClose={toggleDialog} width="480px">
-        <DropdownField 
-          label={'SocialMedia'}
-          placeholder='URL'
-          options={socialOptions}
-          field={''}
-          onChange={setAddedSocial}
-        />
-
-        <FormField 
-          label={`${capitalize(addedSocial)} Link`}
-          placeholder='URL'
-          field={''}
-          setter={(field, value) => setAddedSocialLink(value)} 
-        />
-
-
-        <FilledButton onClick={addSocialMedia}>Submit</FilledButton>
+      <IssuanceDialog show={showAddSocial} onClose={toggleDialog} width="480px" title="Add Social Link">
+        <SocialMediaContainer>
+            <DropdownField
+              label={'Social Media'}
+              placeholder="Choose Social Media"
+              options={socialOptions}
+              field={''}
+              onChange={onChangeAddedSocial}
+              wrapperStyle={{
+                marginTop: '16px',
+              }}
+              error={addedSocialError}
+            />
+            
+            <FormField
+              label={`${capitalize(addedSocial)} Link`}
+              placeholder="Social Media Link"
+              field={''}
+              setter={(field, value) => onChangeAddedSocialLink(value)}
+              touch={touch}
+              error={addedSocialLinkError}
+            />
+          <FilledButton onClick={addSocialMedia}>Submit</FilledButton>
+        </SocialMediaContainer>
       </IssuanceDialog>
-    </FormGrid>   
+    </FormGrid>
   )
 }
 
-const RemoveButton = styled(DeleteButton)`
-  position: absolute;
-
-  right: 1rem;
+const SocialMediaContainer = styled.div`
+  gap: 0.5rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 `

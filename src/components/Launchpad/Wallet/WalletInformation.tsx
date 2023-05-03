@@ -4,9 +4,8 @@ import styled from 'styled-components'
 import { useETHBalances } from 'state/wallet/hooks'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 
-import { CHAIN_INFO, NETWORK_LABELS } from 'constants/chains'
+import { CHAIN_INFO, NETWORK_LABELS, SupportedChainId } from 'constants/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-
 
 import { shortenAddress } from 'utils'
 import { formatAmount } from 'utils/formatCurrencyAmount'
@@ -19,19 +18,19 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { switchToNetwork } from 'hooks/switchToNetwork'
 
 import { ChevronDown } from 'react-feather'
-
+import { text10, text16, text8 } from 'components/LaunchpadMisc/typography'
 
 export const WalletInformation = () => {
   const { chainId, library, account } = useActiveWeb3React()
 
   const theme = useTheme()
-  
+
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const nativeCurrency = useNativeCurrency()
-  
+
   const [networkMenuOpen, setNetworkMenyOpen] = React.useState(false)
 
-  const toggleNetworkMenu = React.useCallback(() => setNetworkMenyOpen(state => !state), [])
+  const toggleNetworkMenu = React.useCallback(() => setNetworkMenyOpen((state) => !state), [])
 
   const onNetworkSelect = React.useCallback(
     (targetChain: number) => {
@@ -48,13 +47,11 @@ export const WalletInformation = () => {
       <WalletBalance>
         {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
       </WalletBalance>
-      <WalletAddress>
-        {shortenAddress(account!, 5)}
-      </WalletAddress>
-      
+      <WalletAddress>{shortenAddress(account ?? '', 5)}</WalletAddress>
+
       <NetworkSelector>
         <NetworkSelectorControls onClick={() => toggleNetworkMenu()}>
-          <Logo src={CHAIN_INFO[chainId!]?.logoUrl} />
+          <Logo src={CHAIN_INFO[chainId ?? SupportedChainId.MATIC]?.logoUrl} />
           <DropdownControl open={networkMenuOpen}>
             <ChevronDown size="20" color={theme.launchpad.colors.text.title} />
           </DropdownControl>
@@ -62,9 +59,7 @@ export const WalletInformation = () => {
 
         {networkMenuOpen && (
           <NetworkMenu>
-            <NetworkMenuHeader>
-              Select a network
-            </NetworkMenuHeader>
+            <NetworkMenuHeader>Select a network</NetworkMenuHeader>
 
             {(ENV_SUPPORTED_TGE_CHAINS || [42]).map((networkChainId) => (
               <NetworkOption key={networkChainId} onClick={() => onNetworkSelect(networkChainId)}>
@@ -82,43 +77,27 @@ export const WalletInformation = () => {
 
 const WalletInfoContainer = styled.div`
   display: flex;
-
   align-items: center;
-
   padding: 0.25rem 0.5rem;
-
   gap: 0.5rem;
-
-
-  border: 1.3px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1.3px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
 `
 
 const WalletBalance = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
+  ${text8}
 
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const WalletAddress = styled.div`
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 4px;
-
   padding: 0.25rem 0.75rem;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
+  ${text10}
 
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const NetworkSelector = styled.div`
@@ -146,60 +125,39 @@ const NetworkSelectorControls = styled(VioletCard)`
 
 const NetworkMenu = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
-
   padding: 1rem;
-
   position: absolute;
-
   top: 90px;
   right: 10%;
-
   width: 200px;
 `
 const NetworkMenuHeader = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
-
   text-align: center;
 
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text16}
 
-  color: ${props => props.theme.launchpad.colors.text.title};
-
+  color: ${(props) => props.theme.launchpad.colors.text.title};
   margin-bottom: 1rem;
 `
 
 const NetworkOption = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-
   gap: 0.5rem;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text8}
 
   padding: 1rem;
-
   cursor: pointer;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const NetworkLabel = styled.div`
@@ -228,7 +186,7 @@ const DropdownControl = styled.div<{ open?: boolean }>`
     height: 20px;
     min-width: 20px;
 
-    ${props => props.open && 'transform: rotate(180deg);' };
+    ${(props) => props.open && 'transform: rotate(180deg);'};
 
     transition: 0.4s;
   }

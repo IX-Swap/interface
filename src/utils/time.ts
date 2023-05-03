@@ -80,3 +80,29 @@ export function getDateShortTime(dateUnix: number) {
 export function getDateFullTime(dateUnix: number) {
   return new Date(dateUnix * 1000).toLocaleTimeString('en-GB')
 }
+
+export const getDaysAhead = (daysAhead: number): Date | undefined => {
+  const date = new Date()
+  return getDaysAfter(date, daysAhead)
+}
+
+export const getDaysAfter = (date: Date | undefined, daysAhead: number): Date | undefined => {
+  if (!date) return undefined
+  const newMoment = dayjs(date).add(dayjs.duration({ days: daysAhead }))
+  newMoment.set('hour', 0)
+  return newMoment.toDate()
+}
+
+export const getDaysBefore = (date: Date | undefined, daysAhead: number): Date | undefined => {
+  if (!date) return undefined
+  const newMoment = dayjs(date).subtract(dayjs.duration({ days: daysAhead }))
+  newMoment.set('hour', 0)
+  return newMoment.toDate()
+}
+
+export const isFutureDate = (date: Date) => {
+  const now = dayjs().unix()
+  const unixDate = dayjs(date).unix()
+
+  return unixDate > now
+}

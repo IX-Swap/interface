@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { Paperclip } from 'react-feather'
@@ -6,8 +6,11 @@ import { Paperclip } from 'react-feather'
 import { ReactComponent as CancelIcon } from 'assets/launchpad/svg/cancel-vector.svg'
 import { Column, ErrorText, Row, Spacer } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper, OptionalLabel } from '../styled'
-import { useDropzone } from 'react-dropzone'
+import { FileRejection, useDropzone } from 'react-dropzone'
 import { IssuanceFile } from '../../types'
+import { text19, text30 } from 'components/LaunchpadMisc/typography'
+import { useShowError } from 'state/application/hooks'
+import { documentTypes, imageTypes, MBinBytes, photoTypes } from '../constants'
 
 interface Props {
   label?: React.ReactNode
@@ -27,10 +30,15 @@ interface Props {
 
   field: string
   setter: (field: string, value: any) => void
+  touch?: (field: string, touched: boolean) => void
+  isImage?: boolean
+  isPhoto?: boolean
+  isDocument?: boolean
 }
 
 export const FileField: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const showError = useShowError()
 
   const input = React.useRef<HTMLInputElement>(null)
 
@@ -42,20 +50,64 @@ export const FileField: React.FC<Props> = (props) => {
 
   const onFileSelect = React.useCallback((files: File[]) => {
     props.setter(props.field, { file: files[0] })
+
+    if (props.touch) {
+      setTimeout(() => {
+        if (props.touch) props.touch(props.field, true)
+      })
+    }
+
     setValue(files[0])
   }, [])
 
   const onFileRemove = React.useCallback(() => {
     props.setter(props.field, props.value?.id ? null : undefined)
+
+    if (props.touch) {
+      setTimeout(() => {
+        if (props.touch) props.touch(props.field, true)
+      })
+    }
     setValue(undefined)
   }, [])
 
-  React.useEffect(()=> {
+  React.useEffect(() => {
     setValue(props.value?.file)
   }, [props.value])
-  
-  const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
 
+  const dropzoneOpts = useMemo(() => {
+    return {
+      ...(props.isPhoto && {
+        accept: photoTypes,
+        maxSize: 10 * MBinBytes,
+      }),
+      ...(props.isImage && {
+        accept: imageTypes,
+        maxSize: 10 * MBinBytes,
+      }),
+      ...(props.isDocument && {
+        accept: documentTypes,
+        maxSize: 5 * MBinBytes,
+      }),
+    }
+  }, [props.isPhoto, props.isDocument, props.isImage])
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: onFileSelect,
+    multiple: false,
+    onDropRejected: (fileRejections: FileRejection[]) => {
+      const error = fileRejections[0]?.errors[0]
+      if (error) {
+        let message = error.message
+        if (error.code === 'file-too-large' && dropzoneOpts.maxSize) {
+          const MB = dropzoneOpts.maxSize / MBinBytes
+          message = `File size should not exceed ${MB} MB`
+        }
+        showError(message)
+      }
+    },
+    ...dropzoneOpts,
+  })
 
   return (
     <FormFieldWrapper gap="1rem" span={props.span} error={props.error}>
@@ -74,20 +126,16 @@ export const FileField: React.FC<Props> = (props) => {
 
           {!value && <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>}
           {value && <Prompt>{value.name}</Prompt>}
-          
 
-          <input 
-            {...getInputProps()}
-            ref={input}
-            multiple={false} 
-            disabled={props.disabled} 
-          />
+          <input {...getInputProps()} ref={input} multiple={false} disabled={props.disabled} />
 
-          {value && <CancelIcon onClick={onFileRemove} title="remove" cursor="pointer" />}
+          {value && !props.disabled && <CancelIcon onClick={onFileRemove} title="remove" cursor="pointer" />}
 
           <Spacer />
 
-          <BrowseButton onClick={openFileBrowser}>Browse</BrowseButton>
+          <BrowseButton onClick={openFileBrowser} disabled={props.disabled}>
+            Browse
+          </BrowseButton>
         </Row>
 
         {props.trailing}
@@ -99,36 +147,23 @@ export const FileField: React.FC<Props> = (props) => {
 }
 
 const FieldLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  ${text30}
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const FieldHint = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
+  ${text19}
 
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldWrapper = styled.div<{ borderless?: boolean }>`
   display: flex;
-
   flex-flow: row nowrap;
   align-items: center;
-
   gap: 0.5rem;
   padding: 1.5rem 2rem;
 
-  ${props => !props.borderless && `border: 1px solid ${props.theme.launchpad.colors.border.default};`}
+  ${(props) => !props.borderless && `border: 1px solid ${props.theme.launchpad.colors.border.default};`}
   border-radius: 6px;
 
   > *:first-child {
@@ -137,27 +172,21 @@ const FieldWrapper = styled.div<{ borderless?: boolean }>`
 `
 
 const Prompt = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
-
+  ${text30}
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 200px;
 
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 const BrowseButton = styled.button`
   border: none;
   background: none;
 
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 
   font-weight: 600;
 
-  color: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.primary};
 `

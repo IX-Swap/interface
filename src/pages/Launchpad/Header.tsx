@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import { Wallet } from 'components/Launchpad/Wallet'
@@ -7,20 +7,26 @@ import { ReactComponent as Logo } from 'assets/launchpad/svg/logo.svg'
 import { routes } from 'utils/routes'
 import { Link } from 'react-router-dom'
 import { isDevelopment } from 'utils/isEnvMode'
-import { useUserState } from 'state/user/hooks'
-import { useKYCState } from 'state/kyc/hooks'
-import { ROLES } from 'constants/roles'
+import { useKyc, useRole } from 'state/user/hooks'
+import { text29, text57, text8 } from 'components/LaunchpadMisc/typography'
+import { useWeb3React } from '@web3-react/core'
 
 export const Header = () => {
-  const { kyc } = useKYCState()
-  const { me } = useUserState()
+  const { isCorporate, isApproved } = useKyc()
+  const { isOfferManager, isAdmin } = useRole()
+  const { account } = useWeb3React()
+
+  const showIssuance = useMemo(
+    () => account && (isAdmin || (isCorporate && isApproved && isOfferManager)),
+    [account, isAdmin, isCorporate, isApproved, isOfferManager]
+  )
 
   return (
     <HeaderContainer>
       <TitleSection to="/launchpad">
         <Logo />
-        <span className='bold-title'>IXS </span>
-        <span className='dimmed-title'>Launchpad</span>
+        <span className="bold-title">IXS </span>
+        <span className="dimmed-title">Launchpad</span>
       </TitleSection>
 
       <HeaderLinks>
@@ -29,10 +35,12 @@ export const Header = () => {
         <HeaderLink to={routes.pool}>Liquidity Pools</HeaderLink>
         <HeaderLink to={routes.launchpad}>IXS Launchpad</HeaderLink>
         <HeaderLink to={'#'}>Farming</HeaderLink>
-        <HeaderLink to={(isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home')}>Charts</HeaderLink>
+        <HeaderLink to={isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home'}>
+          Charts
+        </HeaderLink>
       </HeaderLinks>
 
-      {kyc?.corporate && me.role === ROLES.OFFER_MANAGER && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
+      {showIssuance && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
 
       <Wallet />
     </HeaderContainer>
@@ -88,44 +96,24 @@ const TitleSection = styled(Link)`
   transition: background 0.3s;
 
   :hover {
-    background: ${props => props.theme.launchpad.colors.foreground};
+    background: ${(props) => props.theme.launchpad.colors.foreground};
   }
 
   .bold-title {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-
-    line-height: 22px;
-    letter-spacing: -0.03em;
-
-    color: ${props => props.theme.launchpad.colors.text.title};
+    ${text57}
+    color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 
   .dimmed-title {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-
-    line-height: 22px;
-    letter-spacing: -0.02em;
-
-    color: ${props => props.theme.launchpad.colors.text.caption};
+    ${text29}
+    color: ${(props) => props.theme.launchpad.colors.text.caption};
   }
 `
 
-
 const HeaderLink = styled(Link)`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
+  ${text8}
   text-decoration: none;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 
   transition: transform 0.1s ease-in-out;
 
@@ -138,20 +126,21 @@ const IssuancesLink = styled(Link)`
   display: grid;
   place-content: center;
 
-  height: 48px;
+  height: 42px;
+  font-size: 13px;
 
   padding: 0 2rem;
 
   text-decoration: none;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.primary + '14'};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '14'};
   border-radius: 6px;
 
   transition: background 0.3s;
 
-  color: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.primary};
 
   :hover {
-    background: ${props => props.theme.launchpad.colors.primary + '10'};
+    background: ${(props) => props.theme.launchpad.colors.primary + '10'};
   }
 `

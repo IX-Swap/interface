@@ -1,35 +1,20 @@
 import React from 'react'
 import { Trans, t } from '@lingui/macro'
 import { useLocation } from 'react-router-dom'
-import { useCookies } from 'react-cookie'
-
 import ethereumIcon from 'assets/images/ethereum-clear-logo.svg'
 import polygonIcon from 'assets/images/polygon.svg'
 import { useActiveWeb3React } from 'hooks/web3'
 import { switchToNetwork } from 'hooks/switchToNetwork'
 import { SupportedChainId } from 'constants/chains'
-import { ButtonIXSGradient } from 'components/Button'
-import { useWalletModalToggle } from 'state/application/hooks'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-
-import {
-  Container,
-  Title,
-  Info,
-  NetworksRow,
-  NetworkCard,
-  InfoRows,
-  PlaygroundBadge,
-  ConnectWalletContainer,
-} from './styled'
+import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, PlaygroundBadge } from './styled'
 
 export const NetworkNotAvailable = () => {
-  const { chainId, library, account } = useActiveWeb3React()
+  const { chainId, library } = useActiveWeb3React()
   const { pathname } = useLocation()
-  const [cookies] = useCookies(['annoucementsSeen'])
+
   const { config } = useWhitelabelState()
-  const toggleWalletModal = useWalletModalToggle()
 
   const farming = ['/vesting', '/staking'].includes(pathname)
 
@@ -73,6 +58,12 @@ export const NetworkNotAvailable = () => {
             Polygon Mainnet
           </NetworkCard>
         )}
+        {chains.includes(SupportedChainId.MUMBAI) && (
+          <NetworkCard onClick={() => changeNetwork(SupportedChainId.MUMBAI)}>
+            <img src={polygonIcon} alt="polygonIcon" />
+            Mumbai Testnet
+          </NetworkCard>
+        )}
       </NetworksRow>
       <InfoRows>
         {(chains.includes(SupportedChainId.MAINNET) || farming) && (
@@ -98,6 +89,15 @@ export const NetworkNotAvailable = () => {
             <li>
               <Trans>
                 Switch to<b> Polygon Mainnet</b> to get full functionality
+              </Trans>
+            </li>
+          </Info>
+        )}
+        {chains.includes(SupportedChainId.MUMBAI) && (
+          <Info>
+            <li>
+              <Trans>
+                Switch to<b> Mumbai Testnet</b> to get full functionality
               </Trans>
             </li>
           </Info>

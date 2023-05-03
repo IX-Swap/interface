@@ -1,75 +1,47 @@
 import React from 'react'
-import styled from 'styled-components'
-
 import { Plus } from 'react-feather'
-import { FieldArray, FormikErrors } from 'formik'
+import { Field, FieldArray, FieldProps } from 'formik'
 
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
-
-import { Column, Separator } from 'components/LaunchpadMisc/styled'
-
-import { useGetFieldArrayId } from 'state/launchpad/hooks'
-
 import { AddButton, DeleteButton } from '../../shared/styled'
-import { FormField } from '../../shared/fields/FormField'
 import { FileField } from '../../shared/fields/FileField'
 import { FormGrid } from '../../shared/FormGrid'
-
-import { AdditionalDocument, InformationFormValues } from '../types'
+import { AdditionalDocument } from '../types'
+import { getSetter } from '../util'
 
 interface Props {
   documents: AdditionalDocument[]
-  errors: FormikErrors<InformationFormValues>
-  setter: (field: string, value: any) => void
 }
 
-export const UploadDocuments: React.FC<Props> = (props) => {
-  const getId = useGetFieldArrayId()
-
-  const documents = React.useMemo(() => props.documents as (AdditionalDocument & { id: number })[], [props.documents])
-
+export const UploadDocuments: React.FC<Props> = ({ documents }) => {
   return (
-    <FormGrid title="Upload Documents"> 
+    <FormGrid title="Upload Documents">
       <FieldArray name="additionalDocuments">
         {({ push, handleRemove }) => (
           <>
             {documents.map((document, idx) => (
-              <FieldContainer key={`additional-document-${document.id ?? document.file?.id}`}>
-                <FormField  
-                  borderless 
-                  label="Document Name"
-                  placeholder='Name'
-                  field={`additionalDocuments[${idx}].name`} 
-                  setter={props.setter}
-                  value={document.name}
-                  error={
-                    ((props.errors.additionalDocuments?.length ?? 0) > idx &&
-                    (props.errors.additionalDocuments?.[idx] as FormikErrors<AdditionalDocument>)?.name) as string
-                  }
-                  trailing={documents.length > 1 && (
-                    <RemoveButton onClick={handleRemove(idx)}>
-                      <Trash />
-                    </RemoveButton>
-                  )}
-                />
-
-                <Separator />
-
-                <FileField 
-                  borderless
-                  label={''} 
-                  field={`additionalDocuments[${idx}].file`} 
-                  setter={props.setter} 
-                  value={document.file}
-                  error={
-                    ((props.errors.additionalDocuments?.length ?? 0) > idx &&
-                    (props.errors.additionalDocuments?.[idx] as FormikErrors<AdditionalDocument>)?.file) as string
-                  }
-                />
-              </FieldContainer>
+              <Field name={`additionalDocuments[${idx}].file`} key={idx}>
+                {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                  <FileField
+                    label={''}
+                    field={name}
+                    setter={getSetter(onChange)}
+                    value={value}
+                    error={meta.error}
+                    isDocument
+                    trailing={
+                      documents.length > 1 && (
+                        <DeleteButton onClick={handleRemove(idx)}>
+                          <Trash />
+                        </DeleteButton>
+                      )
+                    }
+                  />
+                )}
+              </Field>
             ))}
 
-            <AddButton onClick={() => push({ id: getId()})}>
+            <AddButton onClick={() => push({ name: '', file: null })}>
               <Plus /> Add Document
             </AddButton>
           </>
@@ -78,16 +50,3 @@ export const UploadDocuments: React.FC<Props> = (props) => {
     </FormGrid>
   )
 }
-
-const FieldContainer = styled(Column)`
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
-  border-radius: 6px;
-
-  grid-column: span 2;
-`
-
-const RemoveButton = styled(DeleteButton)`
-  position: absolute;
-
-  right: 1rem;
-`

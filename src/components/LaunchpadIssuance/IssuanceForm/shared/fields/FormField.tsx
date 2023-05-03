@@ -3,7 +3,17 @@ import React from 'react'
 import { IssuanceTextField } from 'components/LaunchpadIssuance/utils/TextField'
 import { FormFieldWrapper } from '../styled'
 
-interface Props {
+interface StylingProps {
+  padding?: string
+  height?: string
+
+  fontSize?: string
+  lineHeight?: string
+
+  borderless?: boolean
+}
+
+interface Props extends StylingProps {
   label?: string
   placeholder?: string
 
@@ -22,24 +32,47 @@ interface Props {
 
   field: string
   setter: (field: string, value: string) => void
+  touch?: (field: string, touched: boolean) => void
 
   inputFilter?: (value?: string) => string
+
+  type?: React.HTMLInputTypeAttribute
+  maxLength?: number
 }
 
 export const FormField: React.FC<Props> = (props) => {
+  const onChange = React.useCallback(
+    (value: string) => {
+      props.setter(props.field, value)
+      if (props.touch) {
+        setTimeout(() => {
+          if (props.touch) props.touch(props.field, true)
+        })
+      }
+    },
+    [props.setter, props.touch, props.field]
+  )
+
   return (
     <FormFieldWrapper gap="0.5rem" span={props.span} className={props.className}>
-      <IssuanceTextField 
+      <IssuanceTextField
+        name={props.field}
         optional={props.optional}
         value={props.value}
         disabled={props.disabled}
-        label={props.label} 
+        label={props.label}
         error={props.error}
         trailing={props.trailing}
         borderless={props.borderless}
         placeholder={props.placeholder}
-        onChange={value => props.setter(props.field, value)}
-        inputFilter={props.inputFilter} 
+        onChange={onChange}
+        inputFilter={props.inputFilter}
+        padding={props.padding}
+        height={props.height}
+        fontSize={props.fontSize}
+        lineHeight={props.lineHeight}
+        type={props.type}
+        maxLength={props.maxLength}
       />
     </FormFieldWrapper>
   )

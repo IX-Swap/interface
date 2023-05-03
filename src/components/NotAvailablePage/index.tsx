@@ -104,6 +104,12 @@ export const NotAvailablePage = () => {
             Polygon Mainnet
           </NetworkCard>
         )}
+        {chains.includes(SupportedChainId.MUMBAI) && (
+          <NetworkCard onClick={() => changeNetwork(SupportedChainId.MUMBAI)}>
+            <img src={polygonIcon} alt="polygonIcon" />
+            Mumbai Testnet
+          </NetworkCard>
+        )}
       </NetworksRow>
       <InfoRows>
         {(chains.includes(SupportedChainId.MAINNET) || farming) && (
@@ -129,6 +135,15 @@ export const NotAvailablePage = () => {
             <li>
               <Trans>
                 Switch to<b> Polygon Mainnet</b> to get full functionality
+              </Trans>
+            </li>
+          </Info>
+        )}
+        {chains.includes(SupportedChainId.MUMBAI) && (
+          <Info>
+            <li>
+              <Trans>
+                Switch to<b> Mumbai Testnet</b> to get full functionality
               </Trans>
             </li>
           </Info>

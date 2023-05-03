@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import { OfferStatus } from 'state/launchpad/types'
@@ -6,12 +6,14 @@ import { OfferStatus } from 'state/launchpad/types'
 import { ReactComponent as HelpIcon } from 'assets/launchpad/svg/help-icon.svg'
 
 import { Separator, Spacer } from '../../LaunchpadMisc/styled'
+import { text10, text36 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   stage: OfferStatus
+  hasPresale: boolean
 }
 
-const labels = [
+const allLabels = [
   { label: 'Register To Invest', value: OfferStatus.whitelist },
   { label: 'Pre-Sale', value: OfferStatus.preSale },
   { label: 'Public Sale', value: OfferStatus.sale },
@@ -20,6 +22,14 @@ const labels = [
 ]
 
 export const InvestDialogSidebar: React.FC<Props> = (props) => {
+  const labels = useMemo(() => {
+    if (props.hasPresale) {
+      return allLabels
+    } else {
+      return allLabels.slice(2)
+    }
+  }, [props.hasPresale])
+
   return (
     <StageList>
       {labels.map((entry, idx) => (
@@ -31,23 +41,22 @@ export const InvestDialogSidebar: React.FC<Props> = (props) => {
           {idx < labels.length - 1 && <Separator key={`separator-${idx}`} />}
         </>
       ))}
-
       <Spacer />
-
-      <Help>
+      {/* Hide for now https://app.clickup.com/t/4733323/IXS-2508 */}
+      {/* <Help>
         <HelpIcon /> Help and Tips
-      </Help>
+      </Help> */}
     </StageList>
   )
 }
 
 const StageList = styled.div`
   display: flex;
-  
+
   flex-flow: column nowrap;
   align-items: stretch;
 
-  background: ${props => props.theme.launchpad.colors.foreground};
+  background: ${(props) => props.theme.launchpad.colors.foreground};
   border-radius: 16px 0 0 16px;
 
   height: 100%;
@@ -56,16 +65,10 @@ const StageList = styled.div`
 `
 
 const Stage = styled.div<{ active: boolean }>`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
+  ${text36}
 
-  line-height: 40px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.active 
-    ? props.theme.launchpad.colors.primary 
-    : props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) =>
+    props.active ? props.theme.launchpad.colors.primary : props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const Help = styled.div`
@@ -73,20 +76,12 @@ const Help = styled.div`
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: center;
-
   gap: 0.25rem;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
+  ${text10}
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
-
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
-
   padding: 0.5rem 1rem;
 `

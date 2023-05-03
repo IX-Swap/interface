@@ -1,5 +1,5 @@
-import { IssuanceFile } from "../types"
-import { IssuanceStatus } from "components/LaunchpadIssuance/types"
+import { IssuanceFile } from '../types'
+import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 
 export interface VettingFormValues {
   applicantFullName: string
@@ -12,13 +12,14 @@ export interface VettingFormValues {
 
   status: IssuanceStatus
 
+  reasonRequested?: string
   changesRequested?: string
 
   fundingDocuments: FundingDocument[]
 
   document: {
     pitchDeck: IssuanceFile
-    
+
     certificateOfIncorporation: IssuanceFile
     certificateOfIncumbency: IssuanceFile
 
@@ -33,6 +34,8 @@ export interface VettingFormValues {
 
   beneficialOwners: DirectorInfo[]
   directors: DirectorInfo[]
+
+  smartContractStrategy: SMART_CONTRACT_STRATEGIES
 }
 
 export interface FundingDocument {

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import Portal from '@reach/portal'
 
@@ -17,24 +17,30 @@ import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
 
 import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentTypeInfo } from './InvestmentTypeInfo'
+import { text1, text2, text4, text5, text58 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
 }
 
 const getStageLabel = (stage: OfferStatus) => {
-  return OFFER_STAGE_LABELS.find((x) => x.value === stage)!.label
+  return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
 }
 
 export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const checkKYC = useCheckKYC()
   const history = useHistory()
+  const theme = useTheme()
 
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
 
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
+
+  const canOpen = React.useMemo(() => {
+    return checkKYC(offer.allowOnlyAccredited, offer.status === OfferStatus.closed)
+  }, [offer?.status, offer?.allowOnlyAccredited])
 
   const isClosed = React.useMemo(() => [OfferStatus.closed, OfferStatus.claim].includes(offer.status), [offer])
 
@@ -44,21 +50,19 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     }
 
     if (offer?.closesSoon) {
-      return { label: 'Closes soon', color: '#FF6060' }
+      return { label: 'Closes soon', color: theme.launchpad.colors.text.error }
     }
 
     return null
   }, [offer])
 
   const onClick = React.useCallback(() => {
-    const canOpen = checkKYC(offer.allowOnlyAccredited, offer.status === OfferStatus.closed)
-
     if (canOpen) {
       history.push(`/offers/${offer.id}`)
     } else {
       toggleKYCModal()
     }
-  }, [checkKYC, toggleKYCModal])
+  }, [canOpen, toggleKYCModal])
 
   return (
     <>
@@ -156,7 +160,6 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
           </InvestmentCardFooter>
         </InvestmentCardInfoContainer>
       </InvestmentCardContainer>
-
       {showKYCModal && (
         <Portal>
           <KYCPrompt offerId={offer.id} allowOnlyAccredited={offer.allowOnlyAccredited} />
@@ -168,17 +171,13 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
 const InvestmentCardContainer = styled.article`
   position: relative;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
-
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-
   width: 380px;
-
   overflow: hidden;
 `
 
@@ -192,13 +191,10 @@ const InvestmentCardFooter = styled.footer`
 
 const InvestmentCardImage = styled.img`
   position: absolute;
-
   top: 0;
   left: 0;
-
   width: 380px;
   overflow-x: hidden;
-
   border-radius: 6px;
 `
 
@@ -206,50 +202,38 @@ const InvestmentCardTagsContainer = styled.header`
   position: absolute;
   top: 1rem;
   left: 1rem;
-
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-
   gap: 0.5rem;
 `
 
 const InvestmentCardInfoWrapper = styled.main`
   position: relative;
-
   margin-top: 295px;
   min-height: 270px;
 `
 
 const InvestmentCardInfoContainer = styled.div<{ expanded: boolean }>`
   position: absolute;
-
   bottom: 0;
-
   display: flex;
-
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-
   padding: 1rem 1.5rem;
   padding-top: 3rem;
-
   width: 100%;
   background: ${(props) => props.theme.launchpad.colors.background};
 `
 
 const InvestmentCardIcon = styled.img`
   position: absolute;
-
   top: -32px;
   left: 1rem;
-
   width: 64px;
   height: 64px;
-
   border-radius: 6px;
 `
 
@@ -258,27 +242,14 @@ const InvestmentCardDescriptionContainer = styled.div`
 `
 
 const InvestmentCardTitle = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-
-  line-height: 140%;
-  letter-spacing: -0.03em;
-
+  ${text58}
   font-family: ${(props) => props.theme.launchpad.font};
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const InvestmentCardDescription = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
+  ${text4}
   font-family: ${(props) => props.theme.launchpad.font};
-
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
@@ -302,66 +273,38 @@ const InvestmentCardDetailsEntry = styled.div`
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-
   padding: 0 1.5rem;
 `
 const InvestmentCardDetailsSeparator = styled.hr`
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   opacity: 0.8;
-
   margin: 0;
 `
 
 const InvestmentCardDetailsEntryLabel = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
-
+  ${text5}
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
 const InvestmentCardDetailsEntryValue = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
-
+  ${text2}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const InvestButton = styled.button`
   display: flex;
   flex-flow: row nowrap;
-
   justify-content: center;
   align-items: center;
-
   gap: 0.5rem;
-
   background: ${(props) => props.theme.launchpad.colors.background};
   color: ${(props) => props.theme.launchpad.colors.primary};
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
-
   padding: 0.75rem;
-
   cursor: pointer;
-
   width: 100%;
-
   text-align: center;
-
   font-family: ${(props) => props.theme.launchpad.font};
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text1}
 `

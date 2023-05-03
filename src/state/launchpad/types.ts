@@ -1,11 +1,12 @@
 import { OfferTokenType } from 'components/LaunchpadIssuance/IssuanceForm/Information/types'
-import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { User } from 'state/admin/actions'
 
 export enum OfferStatus {
   draft = 'draft',
-  pendingApproval = 'pendingApproval',
+  changesRequested = 'changesRequested',
   declined = 'declined',
+  pendingApproval = 'pendingApproval',
   approved = 'approved',
   whitelist = 'whitelist',
   preSale = 'preSale',
@@ -75,6 +76,14 @@ export enum OfferDistributionFrequency {
   annually = 'annually',
   other = 'other',
 }
+export const OfferDistributionFrequencyLabel = {
+  [OfferDistributionFrequency.notApplicable]: 'Not Applicable',
+  [OfferDistributionFrequency.monthly]: 'Monthly',
+  [OfferDistributionFrequency.quarterly]: 'Quarterly',
+  [OfferDistributionFrequency.semiAnnually]: 'Semi Annually',
+  [OfferDistributionFrequency.annually]: 'Annually',
+  [OfferDistributionFrequency.other]: 'Other',
+}
 
 export enum WhitelistStatus {
   pending = 'pending',
@@ -124,11 +133,12 @@ export interface OfferTerms {
   grossIrr: string
   dividentYield: string
   investmentStructure: string
-  investmentPeriod: number
+  investmentPeriod: number | string
   distributionFrequency: OfferDistributionFrequency
 }
 
 export interface OfferTeamMember {
+  id?: number
   avatar: Asset
   name: string
   title: string
@@ -238,11 +248,17 @@ export interface Offer {
   tokenStandart: OfferTokenStandart
   tokenType: OfferTokenType
 
+  totalSupply: string
+  tokenReceiverAddress: string
+
   investingTokenAddress: string
   investingTokenSymbol: string
 
-  decimals: number
+  contractSaleId: number
 
+  decimals: number
+  investingTokenDecimals: number
+  trusteeAddress: string
   softCap: string
   hardCap: string
 
@@ -261,6 +277,7 @@ export interface Offer {
 
   isMain: boolean
   allowOnlyAccredited: boolean
+  tokenomicsAgreement?: boolean
   closesSoon: boolean
   softCapReached: boolean
   hardCapReached: boolean
@@ -278,9 +295,9 @@ export interface Offer {
   timeframe: OfferTimeframe
   terms: OfferTerms
 
-  daysTillSale?: number
-  daysTillClosed?: number
-  hoursTillClosed?: number
+  daysTillSale: number
+  daysTillClosed: number
+  hoursTillClosed: number
   totalInvestment: number
 
   members: OfferTeamMember[]
@@ -298,6 +315,12 @@ export interface Offer {
   payments: OfferPayment[]
   subscriptions: OfferSubscription[]
   whitelists: OfferWhitelist[]
+
+  usersClaimed: boolean
+  issuerClaimed: boolean
+
+  countParticipants: number
+  feeRate?: number
 }
 
 export interface IssuanceVettingDocuments {
@@ -325,8 +348,9 @@ export interface IssuanceFundingDocument {
 
 export interface IssuanceOffer {
   id: number
-  status: IssuanceStatus
+  status: OfferStatus
   startDate: Date
+  contractSaleId: string
 }
 
 export interface IssuanceVetting {
@@ -348,6 +372,7 @@ export interface IssuanceVetting {
   offer?: IssuanceOffer
 
   changesRequested?: string
+  smartContractStrategy: SMART_CONTRACT_STRATEGIES
 }
 
 export interface Issuance {
@@ -355,6 +380,7 @@ export interface Issuance {
   name: string
 
   vetting?: IssuanceVetting
+  isMine?: boolean
 }
 
 export interface DashboardOffer {
@@ -375,3 +401,106 @@ export interface DashboardOffer {
 }
 
 export type IssuancePlain = Pick<Issuance, 'name' | 'id'>
+
+export interface ManagedOffer extends Offer {
+  preSaleParticipants: number
+  saleParticipants: number
+  totalParticipants: number
+  preSaleInvestment: number
+  saleInvestment: number
+  totalInvestment: number
+  issuanceId: number
+  smartContractStrategy: SMART_CONTRACT_STRATEGIES
+}
+
+export type MiniOffer = Pick<Offer, 'id' | 'status' | 'timeframe' | 'hasPresale'>
+
+export interface OfferPresaleStatistics {
+  applicants: number
+  agreedToInvest: number
+  wishInvestmentTotal: number
+  wishInvestmentAvg: number
+}
+
+export interface OfferPresaleWhitelist {
+  id: number
+  amount: number
+  createdAt: Date
+  name: string | null
+}
+
+export interface ManageOfferBody {
+  approveAll?: boolean
+  rejectAll?: boolean
+  approveIds?: number[]
+  rejectIds?: number[]
+}
+
+export enum OrderTypes {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
+export type OrderType = 'ASC' | 'DESC' | null
+export interface PresaleOrderConfig {
+  name?: OrderType
+  amount?: OrderType
+  createdAt?: OrderType
+}
+
+export interface ManagedOfferInvestment {
+  id: number
+  username: string | null
+  amount: number
+  tokenAmount: number
+  createdAt: Date
+}
+export interface MOInvestmentOrderConfig {
+  username?: OrderType
+  amount?: OrderType
+  tokenAmount?: OrderType
+  createdAt?: OrderType
+}
+
+export interface PaginationRes<T> {
+  items: T[]
+  hasMore: boolean
+  totalPages: number
+  totalItems: number
+}
+
+export enum InvestmentStagesFilter {
+  preSale = 'preSale',
+  sale = 'sale',
+  all = 'all',
+}
+
+export interface AbstractOrder {
+  [key: string]: OrderType
+}
+
+export interface PinnedOffer extends Offer {
+  issuanceId: number
+}
+
+export enum INVESTMENT_STATUSES {
+  pending = 'pending',
+  done = 'done',
+  failed = 'failed',
+}
+export const InvestmentStatusesLabels = {
+  [INVESTMENT_STATUSES.pending]: 'Pending',
+  [INVESTMENT_STATUSES.done]: 'Done',
+  [INVESTMENT_STATUSES.failed]: 'Failed',
+}
+export interface InvestedData {
+  amount: number
+  amountClaim: number
+  availableToInvest: number
+  lastStatus: INVESTMENT_STATUSES | null
+}
+
+export interface InvestedDataRes extends InvestedData {
+  error?: string
+  loading: boolean
+  load: () => void
+}

@@ -1,7 +1,13 @@
-import { IssuanceStatus } from "components/LaunchpadIssuance/types"
-import { OfferDistributionFrequency, OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart } from "state/launchpad/types"
-import { DateSchema } from "yup"
-import { IssuanceFile } from "../types"
+import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
+import {
+  Asset,
+  OfferDistributionFrequency,
+  OfferIndustry,
+  OfferInvestmentStructure,
+  OfferNetwork,
+  OfferTokenStandart,
+} from 'state/launchpad/types'
+import { IssuanceFile } from '../types'
 
 export enum OfferTokenType {
   WIXS = 'WIXS',
@@ -9,7 +15,7 @@ export enum OfferTokenType {
   WETH = 'WETH',
   MATIC = 'MATIC',
   USDC = 'USDC',
-  USDT = 'USDT'
+  USDT = 'USDT',
 }
 
 export enum SocialMediaType {
@@ -20,7 +26,7 @@ export enum SocialMediaType {
   reddit = 'reddit',
   youTube = 'youtube',
   coinMarketCap = 'coinmarketcap',
-  coinGecko = 'coingecko'
+  coinGecko = 'coingecko',
 }
 
 export interface VideoLink {
@@ -48,12 +54,18 @@ export interface InformationFormValues {
 
   tokenName: string
   tokenTicker: string
+  decimals: number | null
+  trusteeAddress: string
   tokenType: OfferTokenType
   tokenStandart: OfferTokenStandart
-  tokenPrice: number
-  
+  tokenPrice: number | null
+  totalSupply: string
+  tokenReceiverAddress: string
+
   tokenAddress?: string
   investingTokenAddress?: string
+  investingTokenSymbol?: string
+  investingTokenDecimals?: number
 
   network: OfferNetwork
 
@@ -61,6 +73,7 @@ export interface InformationFormValues {
   softCap: string
 
   allowOnlyAccredited: boolean
+  tokenomicsAgreement?: boolean
 
   minInvestment: string
   maxInvestment: string
@@ -88,7 +101,7 @@ export interface InformationFormValues {
   terms: {
     investmentStructure: string
     dividentYield: string
-    investmentPeriod: number
+    investmentPeriod: string
     grossIrr: string
     distributionFrequency: OfferDistributionFrequency
   }
@@ -102,6 +115,7 @@ export interface InformationFormValues {
   }
 
   social: SocialMediaLink[]
+  smartContractStrategy?: SMART_CONTRACT_STRATEGIES
 }
 
 export interface SocialMediaLink {
@@ -110,8 +124,8 @@ export interface SocialMediaLink {
 }
 
 export interface AdditionalDocument {
-  name: string
   file: IssuanceFile
+  asset?: Asset
 }
 
 export interface FAQEntry {

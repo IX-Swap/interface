@@ -3,8 +3,7 @@ import React from 'react'
 
 import { IssuancePageLayout } from './layout'
 
-
-export default function VettingFormPage(props: React.PropsWithChildren) {
+export default function VettingFormPage() {
   return (
     <IssuancePageLayout>
       <IssuanceVettingForm />

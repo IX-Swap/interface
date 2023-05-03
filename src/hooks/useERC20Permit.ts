@@ -50,6 +50,7 @@ const PERMITTABLE_TOKENS: {
   },
   [80001]: {
     [IXS[80001].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
+    [USDC[80001].address]: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
   },
   [137]: {
     [IXS[137].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },

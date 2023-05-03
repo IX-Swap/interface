@@ -217,7 +217,7 @@ export function theme(darkMode: boolean, config: Whitelabel | null): DefaultThem
       flex-flow: row nowrap;
     `,
 
-    launchpad: launchpadTheme()
+    launchpad: launchpadTheme(),
   }
 }
 
@@ -226,7 +226,7 @@ export function launchpadTheme() {
     font: 'Inter',
 
     content: {
-      maxWidth: '1180px'
+      maxWidth: '1180px',
     },
 
     colors: {
@@ -246,7 +246,7 @@ export function launchpadTheme() {
       border: {
         default: '#E6E6FF',
         success: '#0EC080',
-        error: '#FF8282'
+        error: '#FF8282',
       },
 
       text: {
@@ -256,7 +256,9 @@ export function launchpadTheme() {
         caption: '#B8B8CC',
         success: '#0EC080',
         warning: '#FF8282',
-        light: '#FFFFFF'
+        light: '#FFFFFF',
+        hint: '#8d8da3',
+        error: '#ff6060',
       },
     },
   }

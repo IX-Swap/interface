@@ -7,9 +7,10 @@ export const ITEM_ROWS = [
 ]
 
 export enum OFFER_STATUSES {
-  whitelist = 'Register to Invest',
+  whitelist = 'Register To Invest',
   preSale = 'Pre-Sale',
   sale = 'Public Sale',
   closed = 'Closed',
   claim = 'Token Claim',
 }
+export const KEY_OFFER_STATUSES = Object.keys(OFFER_STATUSES);

@@ -1,27 +1,55 @@
-import { VettingFormValues } from "./types";
+import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
+import { VettingFormValues } from './types'
 
 export const initialValues = {
-  document: {},
-  beneficialOwners: [],
-  directors: [],
-  fundingDocuments: []
+  smartContractStrategy: SMART_CONTRACT_STRATEGIES.original,
+  applicantFullName: null,
+  email: null,
+  companyName: null,
+  companyWebsite: null,
+  description: null,
+  document: {
+    pitchDeck: null,
+
+    certificateOfIncorporation: null,
+    certificateOfIncumbency: null,
+
+    shareDirectorRegistry: null,
+    auditedFinancials: null,
+
+    memorandumArticle: null,
+    ownershipStructure: null,
+
+    resolutionAuthorizedSignatory: null,
+  },
+  beneficialOwners: [
+    {
+      fullName: null,
+      proofOfIdentity: null,
+      proofOfAddress: null,
+    },
+  ],
+  directors: [
+    {
+      fullName: null,
+      proofOfIdentity: null,
+      proofOfAddress: null,
+    },
+  ],
+  fundingDocuments: [],
 } as unknown as VettingFormValues
 
 export const defaultValues = {
   applicantFullName: '',
-  beneficialOwners: [],
 
   companyName: '',
   companyWebsite: '',
-  
-  createdAt: new Date(),
+
   description: '',
 
-  directors: [],
-  
   document: {
     pitchDeck: null,
-    
+
     certificateOfIncorporation: null,
     certificateOfIncumbency: null,
 
@@ -34,7 +62,21 @@ export const defaultValues = {
     resolutionAuthorizedSignatory: null,
   },
   fundingDocuments: [],
-  
+  beneficialOwners: [
+    {
+      fullName: '',
+      proofOfIdentity: null,
+      proofOfAddress: null,
+    },
+  ],
+  directors: [
+    {
+      fullName: '',
+      proofOfIdentity: null,
+      proofOfAddress: null,
+    },
+  ],
+
   email: '',
-  reasonRequested: '',
+  smartContractStrategy: SMART_CONTRACT_STRATEGIES.original,
 } as unknown as VettingFormValues

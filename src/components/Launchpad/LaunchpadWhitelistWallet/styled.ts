@@ -1,3 +1,4 @@
+import { text8 } from 'components/LaunchpadMisc/typography'
 import styled from 'styled-components'
 
 export const Tabs = styled.div`
@@ -22,12 +23,10 @@ export const Tab = styled.div<{ active: boolean }>`
       : `
     border-bottom: 1px solid ${props.theme.launchpad.colors.border.default};
   `}
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
   width: 50%;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+
+  ${text8}
+
   color: ${(props) =>
     props.active ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.bodyAlt};
 `
@@ -35,6 +34,7 @@ export const DialogWrapper = styled.div`
   display: flex;
   flex-direction: column;
   max-height: 90vh;
+  overflow-y: auto;
 `
 export const FilterContainer = styled.div`
   display: flex;

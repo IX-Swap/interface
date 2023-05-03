@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Modal from 'components/Modal'
 
 import { ConnectionDialog } from './ConnectionDialog'
-
+import { text1, text15 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   onConnect: () => void
@@ -13,7 +13,7 @@ interface Props {
 export const ConnectPrompt: React.FC<Props> = (props: Props) => {
   const [showConnectModal, setShowConnectModal] = React.useState(false)
 
-  const toggleModal = React.useCallback(() => setShowConnectModal(state => !state), [])
+  const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
   return (
     <>
@@ -29,39 +29,23 @@ export const ConnectPrompt: React.FC<Props> = (props: Props) => {
   )
 }
 
-
 const ConnectButton = styled.button`
-  background: ${props => props.theme.launchpad.colors.primary};
+  background: ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
   border: none;
-
   height: 48px;
-
   padding: 0 3rem;
-
   text-align: center;
-
   cursor: pointer;
 
   .title {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 13px;
+    ${text1}
 
-    line-height: 16px;
-    letter-spacing: -0.02em;
-
-    color: ${props => props.theme.launchpad.colors.text.light};
+    color: ${(props) => props.theme.launchpad.colors.text.light};
   }
 
   .subtitle {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 10px;
-
-    line-height: 12px;
-    letter-spacing: -0.02em;
-
+    ${text15}
     color: rgba(255, 255, 255, 0.6);
   }
 `

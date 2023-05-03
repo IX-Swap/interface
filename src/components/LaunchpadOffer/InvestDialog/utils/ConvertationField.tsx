@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ArrowDown, ChevronDown } from 'react-feather'
 
-import { Offer } from 'state/launchpad/types'
+import { Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestTextField } from './InvestTextField'
 
 import { useActiveWeb3React } from 'hooks/web3'
@@ -12,22 +12,33 @@ import { useCurrency } from 'hooks/Tokens'
 
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useFormatOfferValue, useDerivedBalanceInfo } from 'state/launchpad/hooks'
-
+import { text35 } from 'components/LaunchpadMisc/typography'
+import CurrencyLogo from 'components/CurrencyLogo'
+import { Currency } from '@ixswap1/sdk-core'
+import Loader from 'components/Loader'
 
 interface Props {
   offer: Offer
   setDisabled: (value: boolean) => void
   onChange: (value: string) => void
+  availableToInvest?: number
 }
 
-const getTokenInfo = (address: string, options: Option[]) => {
-  const token = options
-    .find(x => 
-      address.toLowerCase() === x.address?.toLowerCase() || 
-      address.toLowerCase() === x.value.toString().toLowerCase())
+const getTokenInfo = (address: string, symbol: string, currency: Currency | null | undefined, options: Option[]) => {
+  if (!address) {
+    return
+  }
+  const token = options.find(
+    (x) =>
+      address.toLowerCase() === x.address?.toLowerCase() || address.toLowerCase() === x.value.toString().toLowerCase()
+  )
 
   if (!token) {
-    return
+    return {
+      name: symbol,
+      address,
+      icon: <CurrencyLogo currency={currency} />,
+    } as TokenOption
   }
 
   return {
@@ -37,130 +48,156 @@ const getTokenInfo = (address: string, options: Option[]) => {
   } as TokenOption
 }
 
+export const useGetWarning = (offer: Offer) => {
+  const { account } = useActiveWeb3React()
+  const inputCurrency = useCurrency(offer.investingTokenAddress)
+  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
+  const isSufficientBalance = useDerivedBalanceInfo(offer.id)
+
+  const getWarning = (value: string, availableToInvest?: number) => {
+    const isPresale = offer.status !== OfferStatus.sale
+    const realValue = value ? Number(value.replace(/,/g, '')) : 0
+    const min = isPresale ? offer.presaleMinInvestment : offer.minInvestment
+    const max = isPresale ? offer.presaleMaxInvestment : offer.maxInvestment
+    const total = isPresale ? offer.presaleAlocated : offer.hardCap
+    const available = +total - offer.totalInvestment
+
+    const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
+    let warning = ''
+    if (value === '') {
+      warning = ''
+    } else if (isInsufficientBalance) {
+      warning = `Insufficient balance`
+    } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
+      warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
+    } else if (Number(min) > realValue) {
+      warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
+    } else if (Number(max) < realValue) {
+      warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
+    } else if (available < realValue) {
+      warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
+    }
+    return warning
+  }
+
+  return getWarning
+}
+
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
-  const { account } = useActiveWeb3React()
+  const {
+    tokenPrice,
+    tokenAddress,
+    tokenSymbol,
+    investingTokenAddress,
+    investingTokenSymbol,
+    investingTokenDecimals,
+    decimals,
+  } = props.offer
 
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
-
+  const getWarning = useGetWarning(props.offer)
   const formatedValue = useFormatOfferValue()
-
-  const inputCurrency = useCurrency(props.offer.investingTokenAddress)
-  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
-
-  const isSufficientBalance = useDerivedBalanceInfo(props.offer.id)
 
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
 
-  const changeValue = React.useCallback((value: string) => {
+  const changeValue = (value: string) => {
     setInputValue(value)
 
-    const realValue = value ? +(value.replace(/,/g, '')) : 0
+    const newWarning = getWarning(value, props.availableToInvest)
+    setWarning(newWarning)
+    props.setDisabled(Boolean(newWarning) || !value)
 
-    const symbol = props.offer.investingTokenSymbol
-
-    const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
-    const isMinError = +props.offer.presaleMinInvestment > realValue
-    const isMaxError = +props.offer.presaleMaxInvestment < realValue
-    const isAvailableError = 9000 < realValue
-    
-    setWarning(
-      isMinError ? `Min.investment size ${props.offer.presaleMinInvestment} ${symbol}` :
-      isMaxError ? `Max.investment size ${props.offer.presaleMaxInvestment} ${symbol}` :
-      isInsufficientBalance ? `Insufficient balance` :
-      isAvailableError ? `Available to invest 9,000 ${symbol}`: ''
+    props.onChange(
+      value
+        .split('')
+        .filter((x) => /[0-9.]/.test(x))
+        .join('')
     )
-
-    props.setDisabled(isMinError || isMaxError || isAvailableError || isInsufficientBalance)
-    props.onChange(value.split('').filter(x => /[0-9.]/.test(x)).join(''))
-  }, [])
+  }
 
   const convertedValue = React.useMemo(() => {
     if (inputValue) {
-      const realValue = +(inputValue.replace(/,/g, ''))
-      const multiplier = (1 / +props.offer.tokenPrice).toFixed(4)
-      
+      const realValue = +inputValue.replace(/,/g, '')
+      const multiplier = (1 / +tokenPrice).toFixed(4)
+
       let result = `${realValue * +multiplier}`
 
       if (result.split('.')[1]?.length > 4) {
         result = (+result).toFixed(4)
       }
 
-      return formatedValue(result)
+      return formatedValue(result, decimals)
     }
 
     return inputValue
   }, [inputValue])
 
-  const offerToken = React.useMemo(() => getTokenInfo(props.offer.tokenAddress, mixedTokens), [mixedTokens])
-  const offerInvestmentToken = React.useMemo(() => getTokenInfo(props.offer.investingTokenAddress, mixedTokens), [mixedTokens])
+  const offerTokenCurrency = useCurrency(tokenAddress)
+  const offerInvestmentTokenCurrency = useCurrency(investingTokenAddress)
+
+  const offerToken = React.useMemo(
+    () => getTokenInfo(tokenAddress, tokenSymbol, offerTokenCurrency, mixedTokens),
+    [tokenAddress, tokenSymbol, offerTokenCurrency, mixedTokens]
+  )
+  const offerInvestmentToken = React.useMemo(
+    () => getTokenInfo(investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens),
+    [investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens]
+  )
 
   return (
     <ConvertationContainer>
-      <InvestTextField 
-        type='number'
+      <InvestTextField
+        type="number"
         onChange={changeValue}
-        
         trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
-
-        caption={warning}
+        caption={warning === 'Loading' ? <Loader /> : warning}
         height="90px"
-
-        fontSize='24px'
-        lineHeight='29px'
+        fontSize="24px"
+        lineHeight="29px"
+        decimalsLimit={investingTokenDecimals}
       />
-      
-      <InvestTextField 
-        type='number'
+
+      <InvestTextField
+        type="number"
         disabled
         value={convertedValue}
         onChange={() => null}
-
         trailing={<CurrencyDropdown disabled value={offerToken} />}
-        
-        // padding="2rem 1.5rem"
         height="90px"
-        
-        fontSize='24px'
-        lineHeight='29px'
+        fontSize="24px"
+        lineHeight="29px"
       />
 
       <ConvertationArrow>
         <ArrowDown color={theme.launchpad.colors.primary} size="18" />
       </ConvertationArrow>
     </ConvertationContainer>
-  ) 
+  )
 }
 
 const ConvertationContainer = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   align-items: stretch;
-
   gap: 1rem;
-
   position: relative;
 `
 
 const ConvertationArrow = styled.div`
   position: absolute;
-
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
   display: grid;
   place-content: center;
-
   width: 48px;
   height: 48px;
-
-  background: ${props => props.theme.launchpad.colors.foreground};
-  border: 8px solid ${props => props.theme.launchpad.colors.background};
+  background: ${(props) => props.theme.launchpad.colors.foreground};
+  border: 8px solid ${(props) => props.theme.launchpad.colors.background};
   border-radius: 16px;
 `
 
@@ -181,23 +218,30 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
   const [selected, setSelected] = React.useState<TokenOption | undefined>(props.value)
   const [showTokens, setShowTokens] = React.useState(false)
 
-  const onSelect = React.useCallback((token: TokenOption) => {
+  const onSelect = useCallback((token: TokenOption) => {
     setSelected(token)
     setShowTokens(false)
   }, [])
 
-  const options = React.useMemo(() => tokensOptions.map(token => ({ 
-    name: token.label, 
-    address: token.address, 
-    icon: token.icon 
-  } as TokenOption)), [tokensOptions])
+  const options = React.useMemo(
+    () =>
+      tokensOptions.map(
+        (token) =>
+          ({
+            name: token.label,
+            address: token.address,
+            icon: token.icon,
+          } as TokenOption)
+      ),
+    [tokensOptions]
+  )
 
-  const toggleShowTokens = React.useCallback(() => {
+  const toggleShowTokens = useCallback(() => {
     if (props.disabled) {
       return
     }
 
-    setShowTokens(state => !state)
+    setShowTokens((state) => !state)
   }, [])
 
   return (
@@ -209,13 +253,12 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
           </SelectedCurrency>
         )}
 
-
         {!props.disabled && <ChevronDown size="10" />}
       </DropdownButton>
 
       {showTokens && (
         <TokenList>
-          {options.map(token => (
+          {options.map((token) => (
             <TokenListEntry key={`token-${token.name}`} onClick={() => onSelect(token)}>
               {token.icon} {token.name}
             </TokenListEntry>
@@ -232,71 +275,51 @@ const DropdownWrapper = styled.div`
 
 const DropdownButton = styled.button`
   display: flex;
-
   flex-flow: row nowrap;
-  justiy-content: space-between;
+  justify-content: space-between;
   align-items: center;
-  
   gap: 0.5rem;
-
   padding: 0.5rem;
-
   min-width: 80px;
-
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
 `
 
 const SelectedCurrency = styled.div`
+  font-weight: bold;
   display: flex;
-
   flex-flow: row nowrap;
   align-items: center;
-  
   gap: 0.5rem;
 `
 
 const TokenList = styled.div`
   position: absolute;
-
   z-index: 40;
-
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
-
   gap: 0.5rem;
-
   max-height: 200px;
   overflow-y: scroll;
-
   padding: 1rem;
-  background: ${props => props.theme.launchpad.colors.background};
+  background: ${(props) => props.theme.launchpad.colors.background};
   border-radius: 8px;
 `
 
 const TokenListEntry = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   align-items: center;
-
   gap: 0.5rem;
   padding: 0.25rem 1rem;
-
   height: 20px;
 
-  font-style: normal;
-  font-weight: 700;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  ${text35}
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 
   :hover {
-    background: ${props => props.theme.launchpad.colors.foreground};
+    background: ${(props) => props.theme.launchpad.colors.foreground};
   }
 `

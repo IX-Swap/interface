@@ -1,32 +1,26 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-
 import { Plus } from 'react-feather'
-import { FieldArray, FormikErrors } from 'formik'
+import { Field, FieldArray, FieldProps } from 'formik'
 
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
-
 import { Column, ErrorText, Separator } from 'components/LaunchpadMisc/styled'
-
+import { text19, text30 } from 'components/LaunchpadMisc/typography'
 import { OfferFAQ } from 'state/launchpad/types'
-
 import { AddButton } from '../../shared/styled'
 import { FormGrid } from '../../shared/FormGrid'
-import { useGetFieldArrayId } from 'state/launchpad/hooks'
-
-import { FAQEntry, InformationFormValues } from '../types'
 
 interface Props {
   faq: OfferFAQ[]
-  errors: FormikErrors<InformationFormValues>
-  setter: (field: string, value: any) => void
 }
 
-export const FAQBlock: React.FC<Props> = (props) => {
+export const FAQBlock: React.FC<Props> = ({ faq }) => {
   const theme = useTheme()
-  const getId = useGetFieldArrayId()
-  
-  const faq = React.useMemo(() => props.faq as (OfferFAQ & { id: number })[], [props.faq])
+
+  const onChangeTouch = (name: string, e: Partial<React.ChangeEvent<any>>, onChange: any, onBlur: any) => {
+    onChange({ target: { name: name, value: e.target.value } })
+    onBlur({ target: { name: name, value: true } })
+  }
 
   return (
     <FormGrid title="FAQ">
@@ -34,39 +28,51 @@ export const FAQBlock: React.FC<Props> = (props) => {
         {({ push, handleRemove }) => (
           <>
             {faq.map((entry, idx) => (
-              <FieldWrapper key={`faq-${entry.id}`}>
-                <Question>
-                  <Label>Question</Label>
+              <FieldWrapper key={idx}>
+                <Field name={`faq[${idx}].question`}>
+                  {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
+                    <Question>
+                      <Label>Question</Label>
 
-                  <QuestionWrapper>
-                    <QuestionInput 
-                      placeholder='Question Title'
-                      value={entry.question}
-                      onChange={e => props.setter(`faq[${idx}].question`, e.target.value)} 
-                    />
-                  </QuestionWrapper>
-                  
-                  {(faq.length > 1 || idx > 0) && <RemoveButton onClick={handleRemove(idx)}><Trash /></RemoveButton>}
+                      <QuestionWrapper>
+                        <QuestionInput
+                          placeholder="Question Title"
+                          value={value}
+                          onChange={(e) => onChangeTouch(name, e, onChange, onBlur)}
+                        />
+                      </QuestionWrapper>
 
-                  <ErrorMessage>{(props.errors.faq as FormikErrors<FAQEntry>[])?.[idx]?.question}</ErrorMessage>
-                </Question>
+                      {(faq.length > 1 || idx > 0) && (
+                        <RemoveButton onClick={handleRemove(idx)}>
+                          <Trash />
+                        </RemoveButton>
+                      )}
+
+                      {meta.touched && meta.error && <ErrorMessage>{meta.error}</ErrorMessage>}
+                    </Question>
+                  )}
+                </Field>
 
                 <Separator />
 
-                <AnswerWrapper>
-                  <Label>Answer</Label>
-                  <AnswerInput 
-                    placeholder='Answer Description'
-                    value={entry.answer}
-                    onChange={e => props.setter(`faq[${idx}].answer`, e.target.value)}
-                  />
-                  
-                  <ErrorText>{(props.errors.faq as FormikErrors<FAQEntry>[])?.[idx]?.answer}</ErrorText>
-                </AnswerWrapper>
+                <Field name={`faq[${idx}].answer`}>
+                  {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
+                    <AnswerWrapper>
+                      <Label>Answer</Label>
+                      <AnswerInput
+                        placeholder="Answer Description"
+                        value={value}
+                        onChange={(e) => onChangeTouch(name, e, onChange, onBlur)}
+                      />
+
+                      {meta.touched && meta.error && <ErrorMessage>{meta.error}</ErrorMessage>}
+                    </AnswerWrapper>
+                  )}
+                </Field>
               </FieldWrapper>
             ))}
-            
-            <AddButton onClick={() => push({ id: getId() })}>
+
+            <AddButton onClick={() => push({ question: '', answer: '' })}>
               <Plus color={theme.launchpad.colors.primary} /> Add FAQ
             </AddButton>
           </>
@@ -77,71 +83,53 @@ export const FAQBlock: React.FC<Props> = (props) => {
 }
 
 const FieldWrapper = styled(Column)`
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
-
   grid-column: span 2;
-
   padding: 1rem;
 `
 
 const Question = styled.div`
   display: grid;
-
   grid-template-columns: 1fr 25px;
   grid-template-rows: minmax(auto, 20px) repeat(2, auto);
   grid-template-areas:
-    "label remove"
-    "input remove"
-    "error error";
+    'label remove'
+    'input remove'
+    'error error';
 
   gap: 0.25rem;
-
   margin: 1rem;
 `
 
 const QuestionWrapper = styled.div`
   grid-area: input;
-  
   display: flex;
-
   flex-flow: row nowrap;
   align-items: center;
   gap: 0.5rem;
-
 `
 const Label = styled.div`
   grid-area: label;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
+  ${text19}
 
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const QuestionInput = styled.input`
   flex-grow: 1;
-
   border: none;
   background: none;
   outline: none;
-
   height: 100%;
-
   align-self: flex-end;
-  
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
 
-  line-height: 17px;
-  letter-spacing: -0.01em;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  ${text30}
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+  ::placeholder {
+    color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  }
 `
 
 const AnswerWrapper = styled.div`
@@ -153,9 +141,13 @@ const AnswerInput = styled.textarea`
   background: none;
   outline: none;
   resize: none;
-
   width: 100%;
   min-height: 120px;
+  ${text30}
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+  ::placeholder {
+    color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  }
 `
 
 const RemoveButton = styled(AddButton)`
