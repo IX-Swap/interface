@@ -1,20 +1,7 @@
-import React from 'react'
 import { TableColumn } from 'types/util'
 import { DigitalSecurityOffering } from 'types/dso'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { renderAmount, renderMinimumInvestment } from 'helpers/tables'
-import { Box } from '@mui/material'
-import { Status } from 'ui/Status/Status'
-import { Actions } from 'app/pages/authorizer/components/Actions'
-
-const renderColumnWithApproval = (row: object, status: string) => {
-  return (
-    <Box display={'flex'} justifyContent={''}>
-      <Status label={status} type={status.toLowerCase()} />
-      <Actions item={row} cacheQueryKey={''} />
-    </Box>
-  )
-}
 
 export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
   {
@@ -43,10 +30,5 @@ export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
     key: 'minimumInvestment',
     label: 'Minimum Investment',
     render: renderMinimumInvestment
-  },
-  {
-    key: 'status',
-    label: 'Status',
-    render: (status, row) => renderColumnWithApproval(row, status)
   }
 ]

@@ -10,7 +10,7 @@ interface FieldGridItems {
 }
 
 interface FieldGridProps {
-  title: string
+  title?: string
   items: FieldGridItems[]
   columns?: number
   gridOnly?: boolean
@@ -48,9 +48,11 @@ export const FieldGrid = ({
     <Grid container direction='column' spacing={3}>
       <FieldContainer>
         <Grid item container direction={'column'} spacing={5}>
-          <Grid item>
-            <FormSectionHeader title={title} />
-          </Grid>
+          {typeof title !== 'undefined' && (
+            <Grid item>
+              <FormSectionHeader title={title} />
+            </Grid>
+          )}
           <Grid item>{gridItems}</Grid>
         </Grid>
       </FieldContainer>

@@ -13,5 +13,6 @@ export const CorporateAccreditations: React.FC = () => (
     name={authorizerQueryKeys.getCorporateAccreditations}
     columns={columns}
     compactColumns={compactColumns}
+    hasStatusWithActions={false}
   />
 )

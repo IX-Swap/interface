@@ -13,5 +13,6 @@ export const CorporateIdentities: React.FC = () => (
     name={authorizerQueryKeys.getCorporateIdentities}
     columns={columns}
     compactColumns={compactColumns}
+    hasStatusWithActions={false}
   />
 )

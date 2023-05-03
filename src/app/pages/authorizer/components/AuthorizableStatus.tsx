@@ -6,16 +6,10 @@ interface AuthorizableStatusProps {
   status?: string
   compact?: boolean
   isNewTheme?: boolean
-  isNewKYCTheme?: boolean
 }
 
 export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
-  const {
-    status,
-    compact = true,
-    isNewTheme = false,
-    isNewKYCTheme = false
-  } = props
+  const { status, compact = true, isNewTheme = false } = props
   const classes = useStyles()
   const compactStatus = status?.split(' ').pop()?.[0].toUpperCase() ?? ''
 
@@ -32,8 +26,6 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           compactChar={compactStatus}
           classname={classes.approved}
           newTheme={classes.approvedNewTheme}
-          isNewKYCTheme={isNewKYCTheme}
-          newKYC={classes.approvedNewKYCTheme}
         />
       )
     case 'Rejected':
@@ -48,8 +40,6 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           compactChar={compactStatus}
           classname={classes.rejected}
           newTheme={classes.rejectedNewTheme}
-          isNewKYCTheme={isNewKYCTheme}
-          newKYC={classes.approvedNewKYCTheme}
         />
       )
 
@@ -66,8 +56,6 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           compactChar={compactStatus}
           classname={classes.unauthorized}
           newTheme={classes.submittedNewTheme}
-          isNewKYCTheme={isNewKYCTheme}
-          newKYC={classes.approvedNewKYCTheme}
         />
       )
 
@@ -82,8 +70,6 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           compactChar={compactStatus}
           classname={classes.open}
           newTheme={classes.openNewTheme}
-          isNewKYCTheme={isNewKYCTheme}
-          newKYC={classes.approvedNewKYCTheme}
         />
       )
 
@@ -96,8 +82,6 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           compactChar={compactStatus}
           classname={classes.unknown}
           newTheme={classes.unknownNewTheme}
-          isNewKYCTheme={isNewKYCTheme}
-          newKYC={classes.approvedNewKYCTheme}
         />
       )
 

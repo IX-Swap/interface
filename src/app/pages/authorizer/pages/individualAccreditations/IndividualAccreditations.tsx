@@ -10,5 +10,6 @@ export const IndividualAccreditations: React.FC = () => (
     name={authorizerQueryKeys.getIndividualAccreditations}
     columns={columns}
     compactColumns={compactColumns}
+    hasStatusWithActions={false}
   />
 )
