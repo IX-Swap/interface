@@ -17,7 +17,6 @@ import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { useTokenBalance } from 'app/pages/invest/hooks/useTokenBalance'
 import { DisclosureDialog } from 'app/pages/invest/components/DisclosureDialog/DisclosureDialog'
 import { useGetSiteConfig } from 'app/pages/invest/hooks/useGetSiteConfig'
-import { ExchangeRulesLink } from 'app/pages/invest/components/ExchangeRulesLink/ExchangeRulesLink'
 import { MarketTabbedView } from 'app/pages/invest/components/Market/MarketTabbedView/MarketTabbedView'
 import { MarketGridView } from 'app/pages/invest/components/Market/MarketGridView'
 import { PlaceOrderFormDialog } from 'app/pages/invest/components/PlaceOrderForm/PlaceOrderFormDialog'
@@ -97,9 +96,9 @@ export const Market = () => {
         open={isOpenDeactivatedDialog}
         toggleOpen={toggleDeactivatedDialog}
       />
-      <Grid item container xs={12} justifyContent='flex-end'>
+      {/* <Grid item container xs={12} justifyContent='flex-end'>
         <ExchangeRulesLink />
-      </Grid>
+      </Grid> */}
       <Box my={2} />
       <Grid item xs={12} className={classes.colorGrid}>
         <FinancialSummary />

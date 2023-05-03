@@ -23,7 +23,14 @@ export const MoreDetails = () => {
   return (
     <>
       <Button color='primary' size='small' onClick={handleClick}>
-        <Box style={{ fontSize: 14, textTransform: 'capitalize' }}>
+        <Box
+          sx={{
+            fontSize: 14,
+            textTransform: 'capitalize',
+            // marginTop: '-19px',
+            whiteSpace: 'nowrap'
+          }}
+        >
           More Details
         </Box>
         <ArrowDropDown />
@@ -43,7 +50,7 @@ export const MoreDetails = () => {
       >
         <Paper
           elevation={3}
-          style={{
+          sx={{
             width: 280,
             padding: 16,
             maxHeight: 'calc(100vh - 140px)',
