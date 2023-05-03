@@ -18,7 +18,16 @@ export const ExchangeRulesLink = () => {
       action='view'
     >
       {({ download }) => (
-        <Link onClick={download} target='_blank' rel='noopener noreferrer'>
+        <Link
+          onClick={download}
+          sx={{
+            textDecoration: 'none',
+            whiteSpace: 'nowrap',
+            color: '#778194'
+          }}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           Exchange Rules
         </Link>
       )}

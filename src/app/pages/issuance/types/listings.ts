@@ -112,6 +112,7 @@ export interface Listing {
   promoted: boolean
   disabled: boolean
   listingType?: string | undefined
+  productType?: string
 }
 
 export interface ListingFormValuesForSubmit {

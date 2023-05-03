@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
         ? 'rgb(250, 250, 250)'
         : theme.palette.background.paper,
     width: '100%',
-    paddingTop: theme.spacing(5),
+    // paddingTop: theme.spacing(5),
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(3),
     paddingBottom: theme.spacing(5),
