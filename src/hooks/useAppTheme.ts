@@ -7,7 +7,7 @@ export const useAppTheme = () => {
   const savedTheme = storageService.get('app-theme', AppTheme.Light) as AppTheme
   const [themeType, setThemeType] = useState(savedTheme)
 
-  const handelThemeChange = (themeType: AppTheme) => {
+  const handleThemeChange = (themeType: AppTheme) => {
     setThemeType(themeType)
     storageService.set('app-theme', themeType)
   }
@@ -21,6 +21,6 @@ export const useAppTheme = () => {
   return {
     themeType,
     theme: themeMemo,
-    onChange: handelThemeChange
+    onChange: handleThemeChange
   }
 }

@@ -7,7 +7,7 @@ export interface TenantFormValues {
   url: string
   email: string
   description: string
-  status: string
+  status?: string
   theme: string
   logoLight: string | undefined
   logoDark: string | undefined
@@ -30,26 +30,34 @@ export const initialTenantFormValues: TenantFormValues = {
   description: ''
 }
 
-export const createTenantSchema = object()
+const validationSchema = {
+  companyName: string().required('Company Name is required'),
+  tenantCode: string().required('Tenant Code is required'),
+  url: string().url('This must be a valid URL').required('URL is required'),
+  email: string()
+    .email('This must be a valid email format')
+    .required('Email is required'),
+  description: string().required('Description is required'),
+  theme: string().required('Theme is required'),
+  logoLight: string().required('Logo Light is required'),
+  logoDark: string().required('Logo Dark is required'),
+  backgroundImage: string().required(
+    'Background Image is required'
+    // logoLight: object<DataroomFile>().required('Logo Light is required'),
+    // logoDark: object<DataroomFile>().required('Logo Dark is required'),
+    // backgroundImage: object<DataroomFile>().required(
+    //   'Background Image is required'
+  )
+}
+
+export const newTenantSchema = object()
+  .shape<TenantFormValues>(validationSchema)
+  .required()
+
+export const tenantValidationSchema = object()
   .shape<TenantFormValues>({
-    companyName: string().required('Company Name is required'),
-    tenantCode: string().required('Tenant Code is required'),
-    url: string().url('This must be a valid URL').required('URL is required'),
-    email: string()
-      .email('This must be a valid email format')
-      .required('Email is required'),
-    description: string().required('Description is required'),
-    status: string().required('Status is required'),
-    theme: string().required('Theme is required'),
-    logoLight: string().required('Logo Light is required'),
-    logoDark: string().required('Logo Dark is required'),
-    backgroundImage: string().required(
-      'Background Image is required'
-      // logoLight: object<DataroomFile>().required('Logo Light is required'),
-      // logoDark: object<DataroomFile>().required('Logo Dark is required'),
-      // backgroundImage: object<DataroomFile>().required(
-      //   'Background Image is required'
-    )
+    ...validationSchema,
+    status: string().required('Status is required')
   })
   .required()
 
