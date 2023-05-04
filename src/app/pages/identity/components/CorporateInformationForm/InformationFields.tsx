@@ -81,7 +81,7 @@ export const InformationFields = ({
                   <span>
                     I declare that I am a{' '}
                     <span style={{ color: theme.palette.primary.main }}>
-                      Client Space
+                      Client
                     </span>
                   </span>
                 }
