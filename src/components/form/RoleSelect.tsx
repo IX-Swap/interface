@@ -16,7 +16,7 @@ export const RoleSelect = (props: RoleSelectProps) => {
       return 'fund manager'
     }
     if (name === 'tenantOwner') {
-      return 'tenant owner'
+      return 'client'
     }
     return name
   }

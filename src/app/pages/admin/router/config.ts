@@ -103,7 +103,7 @@ export const adminLandingLinks: InternalRouteProps[] = [
     icon: CustodyManagementIcon
   },
   {
-    label: 'Tenants',
+    label: 'Client Spaces',
     path: AdminRoute.tenants,
     color: '#0FA3A3',
     icon: MasDisclosureIcon

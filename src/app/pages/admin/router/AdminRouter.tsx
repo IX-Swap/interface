@@ -101,7 +101,7 @@ export const AdminRouter = () => {
         <CustodyManagementRouter />
       </AppRoute>
 
-      <AppRoute breadcrumb='Tenants' path={AdminRoute.tenants}>
+      <AppRoute breadcrumb='Client Spaces' path={AdminRoute.tenants}>
         <TenantRouter />
       </AppRoute>
 

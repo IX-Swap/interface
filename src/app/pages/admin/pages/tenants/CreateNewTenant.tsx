@@ -8,7 +8,7 @@ export const CreateNewTenant = () => {
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='Create New Tenant' />
+        <PageHeader title='Create new Client Space ' />
       </Grid>
       <RootContainer>
         <Grid item>

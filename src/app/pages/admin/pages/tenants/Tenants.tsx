@@ -12,7 +12,7 @@ export const Tenants = () => {
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
         <PageHeader
-          title='Manage Tenants'
+          title='Manage Client Spaces'
           endComponent={
             <Grid container spacing={2} wrap={'nowrap'}>
               <Grid item minWidth={320} width={'100%'}>
@@ -31,7 +31,7 @@ export const Tenants = () => {
                   variant='contained'
                   to={AdminRoute.createTenant}
                 >
-                  Create New Tenant
+                  Create new Client Space
                 </Button>
               </Grid>
             </Grid>
