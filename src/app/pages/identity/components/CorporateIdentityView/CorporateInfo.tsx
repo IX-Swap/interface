@@ -156,7 +156,7 @@ export const CorporateInfo = ({
             <Grid item>
               <LabelledValue
                 isRedesigned
-                label='Client Space Owner Application'
+                label='Client Space Application'
                 value={<InvestorStatus investorType='tenantOwner' />}
               />
             </Grid>
@@ -167,7 +167,7 @@ export const CorporateInfo = ({
                   isRedesigned
                   hasCheck
                   label=''
-                  value='I declare that I am an Client Space Owner.'
+                  value='I declare that I am an Client Space.'
                 />
               </Grid>
             )

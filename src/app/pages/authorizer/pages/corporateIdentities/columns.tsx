@@ -106,7 +106,7 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
   },
   {
     key: 'declaredAsStatus',
-    label: 'Client Space Owner Status',
+    label: 'Client Space Status',
     render: (status, row) =>
       renderColumnWithApproval(row, status, 'tenantOwner')
   }
