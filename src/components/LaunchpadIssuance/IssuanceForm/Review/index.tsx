@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
-import { File, Eye, ArrowLeft, Mail, Download } from 'react-feather'
+import { File, ArrowLeft, Mail, Download } from 'react-feather'
 
 import { OfferTerms } from 'components/LaunchpadOffer/OfferSidebar/OfferTerms'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
@@ -13,6 +13,7 @@ import { useFormatOfferValue } from 'state/launchpad/hooks'
 import { InformationFormValues } from '../Information/types'
 import { ReviewSidebar } from './Sidebar'
 import { isDownload, isPreview } from 'components/LaunchpadOffer/util/files'
+import { EyeIcon } from 'assets/launchpad/svg/components/EyeIcon'
 
 interface Props {
   values: InformationFormValues
@@ -83,7 +84,6 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
         const hasAsset = !!doc.asset
         const isPreviewing = hasAsset && isPreview(doc.file.file.name)
         const isDownloading = hasAsset && !isPreviewing && isDownload(doc.file.file.name)
-        const ValueIcon = isPreviewing ? Eye : Download
         return {
           label: (
             <FileName>
@@ -92,7 +92,11 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
           ),
           value: (
             <span style={{ cursor: 'pointer' }}>
-              <ValueIcon size="14" stroke={theme.launchpad.colors.text.body} />
+              {isPreviewing ? (
+                <EyeIcon stroke={theme.launchpad.colors.text.caption} />
+              ) : (
+                <Download size="14" stroke={theme.launchpad.colors.text.caption} />
+              )}
             </span>
           ),
           file: doc.asset || doc.file.file,

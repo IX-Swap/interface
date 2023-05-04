@@ -19,13 +19,13 @@ import { IssuanceTable, TableHeader, IssuanceRow, Raw, Title } from 'components/
 import { useGetIssuances, useOnChangeOrder } from 'state/launchpad/hooks'
 import { IssuancePagination } from './IssuancePagination'
 import { ReactComponent as GearIcon } from 'assets/launchpad/svg/gear-icon.svg'
-import { ReactComponent as EyeIcon } from 'assets/launchpad/svg/eye-icon.svg'
 import { DiscreteInternalLink } from 'theme'
 import { useRole } from 'state/user/hooks'
 import { TitleBox } from './TitleBox'
 import { routes } from 'utils/routes'
 import { IssuanceApplicationPopup } from './IssuanceInformationPopup'
 import { useHistory } from 'react-router-dom'
+import { EyeIcon } from 'assets/launchpad/svg/components/EyeIcon'
 
 const getIssuanceManageUrl = ({ id, isMine, vetting }: Issuance) => {
   if (!isMine) return ''
