@@ -32,7 +32,7 @@ export const EditTenant = () => {
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='Edit Tenant' />
+        <PageHeader title='Edit Client Space ' />
       </Grid>
       <RootContainer>
         <Grid item>

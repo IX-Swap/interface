@@ -29,7 +29,7 @@ export const TenantFormFields = ({
           <Grid item>
             <Grid container direction='column' spacing={5}>
               <Grid item>
-                <FormSectionHeader title='Tenant Information' />
+                <FormSectionHeader title='Client Space Information' />
               </Grid>
               <Grid item container spacing={{ xs: 5, md: 3 }}>
                 <Grid item xs={12} md={6}>
@@ -45,8 +45,8 @@ export const TenantFormFields = ({
                 <Grid item xs={12} md={6}>
                   <TypedField
                     component={TextInput}
-                    label='Tenant Code'
-                    helperText='Tenant Code'
+                    label='Client Space Code'
+                    helperText='Client Space Code'
                     name='tenantCode'
                     control={control}
                     variant='outlined'
@@ -107,7 +107,7 @@ export const TenantFormFields = ({
                       label='Status'
                       name='status'
                       control={control}
-                      helperText='Select Tenant Status'
+                      helperText='Select Client Status'
                     />
                   </Grid>
                 </Grid>
@@ -132,7 +132,7 @@ export const TenantFormFields = ({
                     name='theme'
                     control={control}
                     onButtonClick={(data: string) => setValue('theme', data)}
-                    helperText='Select Tenant Theme'
+                    helperText='Select Client Theme'
                   />
                 </Grid>
               </Grid>
