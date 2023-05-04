@@ -37,7 +37,6 @@ export const CreateOrSaveListingButton = (
       : getIdFromObj(listing?.user) ?? listing?.createdBy ?? '',
     listing?.listingType
   )
-  // console.log(listing, 'list')
   const { dso, ...defaultFormValues } = watch()
   const payload = {
     // ...listing,
@@ -59,6 +58,8 @@ export const CreateOrSaveListingButton = (
     minimumTradeUnits: listing?.minimumTradeUnits,
     introduction: listing?.introduction,
     team: listing?.team,
+    productType: listing?.productType,
+
     // type: listingType when creating a new listing
     // type: listing?.listingType when eddting a listing
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions

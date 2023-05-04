@@ -35,6 +35,8 @@ export const useSaveTenant = ({ tenant, schema }: TenantFormActionsProps) => {
         )
 
         await updateTenant(updatedValues)
+
+        window.location.reload()
       }
     } catch (e: any) {
       const errors = e.inner

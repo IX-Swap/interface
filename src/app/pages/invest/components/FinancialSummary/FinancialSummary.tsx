@@ -1,15 +1,15 @@
 import { Box, Grid, Hidden } from '@mui/material'
-import { ChangeSummaryValue } from 'app/pages/invest/components/FinancialSummary/ChangeSummaryValue'
 import { MoreDetails } from 'app/pages/invest/components/FinancialSummary/MoreDetails'
 import { NumberSummaryValue } from 'app/pages/invest/components/FinancialSummary/NumberSummaryValue'
 import { SummaryItem } from 'app/pages/invest/components/FinancialSummary/SummaryItem'
 import { PairListDropdown } from 'app/pages/invest/components/PairListDropdown/PairListDropdown'
 import { useFinancialSummary } from 'app/pages/invest/hooks/useFinancialSummary'
 import { useMarket } from 'app/pages/invest/hooks/useMarket'
-import { useAssetById } from 'hooks/asset/useAssetById'
+// import { useAssetById } from 'hooks/asset/useAssetById'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { InvestRoute as paths } from 'app/pages/invest/router/config'
+import { ExchangeRulesLink } from '../ExchangeRulesLink/ExchangeRulesLink'
 
 export const FinancialSummary = () => {
   const { pairId } = useParams<{
@@ -17,9 +17,9 @@ export const FinancialSummary = () => {
   }>()
   const { data } = useFinancialSummary(pairId)
   const { data: marketData } = useMarket(pairId)
-  const { data: assetData } = useAssetById(
-    marketData?.listing?.markets[0]?.currency
-  )
+  // const { data: assetData } = useAssetById(
+  //   marketData?.listing?.markets[0]?.currency
+  // )
 
   return (
     <Grid container spacing={1}>
@@ -28,7 +28,7 @@ export const FinancialSummary = () => {
           display='flex'
           justifyContent={{ xs: 'space-between', md: 'flex-start' }}
           alignItems='flex-start'
-          padding={1}
+          padding={2}
         >
           {marketData !== undefined && (
             <Box flexGrow={1} width={{ xs: '50%', md: '100%' }}>
@@ -54,16 +54,17 @@ export const FinancialSummary = () => {
           </Hidden>
         </Box>
       </Grid>
-      <Grid item xs={12} md={7}>
+      <Grid item xs={7}>
         <Box
           padding={{ xs: 1, md: 0 }}
           display={{ xs: 'grid', md: 'flex' }}
-          justifyContent='space-between'
+          justifyContent={{ xs: 'space-between', md: 'flex-start' }}
           gridTemplateColumns='1fr 1fr 1fr'
           gap={8}
+          sx={{ marginTop: '21px' }}
         >
           <SummaryItem
-            label='Last Trade Price'
+            label='Last Price'
             value={
               <NumberSummaryValue
                 value={data?.latestPrice}
@@ -72,13 +73,9 @@ export const FinancialSummary = () => {
             }
           />
           <SummaryItem
-            label='24H Change'
-            value={
-              <ChangeSummaryValue
-                value={data?._24hChangePercentage}
-                isNegative={data?._24hChangePercentage < 0}
-              />
-            }
+            // label={`24H Volume (${assetData?.symbol ?? ''})`}
+            label='24H Volume'
+            value={<NumberSummaryValue value={data?._24h.volume} />}
           />
           <SummaryItem
             label='24H High'
@@ -88,24 +85,23 @@ export const FinancialSummary = () => {
             label='24H Low'
             value={<NumberSummaryValue value={data?._24h.low} />}
           />
-          <SummaryItem
-            label={`24H Volume (${assetData?.symbol ?? ''})`}
-            value={<NumberSummaryValue value={data?._24h.volume} />}
-          />
+          <Hidden mdDown>
+            {/* <Grid
+              item
+              container
+              xs={12}
+              md={2}
+              alignContent='center'
+              justifyContent='flex-end'
+            > */}
+            <MoreDetails />
+            {/* </Grid> */}
+          </Hidden>
+          <Grid sx={{ marginTop: '12px' }}>
+            <ExchangeRulesLink />
+          </Grid>
         </Box>
       </Grid>
-      <Hidden mdDown>
-        <Grid
-          item
-          container
-          xs={12}
-          md={2}
-          alignContent='center'
-          justifyContent='flex-end'
-        >
-          <MoreDetails />
-        </Grid>
-      </Hidden>
     </Grid>
   )
 }

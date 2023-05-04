@@ -10,7 +10,7 @@ export const SummaryItem = ({ label, value }: SummaryItemProps) => {
   return (
     <Grid container direction='column' spacing={0}>
       <Grid item>
-        <Typography variant='body1' noWrap>
+        <Typography sx={{ color: '#778194' }} variant='body1' noWrap>
           {label}
         </Typography>
       </Grid>
