@@ -141,6 +141,9 @@ const OfferBackgroundWrapper = styled.div`
   min-height: 100vh;
   font-family: ${(props) => props.theme.launchpad.font};
   background: ${(props) => props.theme.launchpad.colors.background};
+  * {
+    font-family: ${(props) => props.theme.launchpad.font};
+  }
 `
 
 const Centered = styled(OfferBackgroundWrapper)`
