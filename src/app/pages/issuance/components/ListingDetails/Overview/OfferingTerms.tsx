@@ -1,8 +1,6 @@
-import { Grid } from '@mui/material'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { PercentageNumber } from 'app/components/DSO/DSOPreview/PercentageNumber'
-import { LabelledValue } from 'components/LabelledValue'
 import React from 'react'
+import { FieldGrid } from 'ui/FieldGrid/FieldGrid'
 
 export interface OfferingTermsProps {
   investmentPeriod: number
@@ -30,72 +28,41 @@ export const OfferingTerms = ({
   const isDebt = capitalStructure === 'Debt'
   const isEquity = capitalStructure === 'Equity'
 
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <FormSectionHeader title='Offering Terms' />
-      </Grid>
+  const items = [
+    {
+      label: 'Investment Period',
+      value: `${investmentPeriod} months`
+    },
 
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          label='Investment Period'
-          value={`${investmentPeriod} months`}
-        />
-      </Grid>
+    !isDebt && {
+      label: 'Dividend Yield (%)',
+      value: <PercentageNumber value={dividendYield} />
+    },
+    !isDebt && {
+      label: 'Gross IRR (%)',
+      value: <PercentageNumber value={grossIrr} />
+    },
+    !isDebt && {
+      label: 'Equity Multiple',
+      value: <PercentageNumber value={equityMultiple} />
+    },
+    !isEquity && {
+      label: 'Interest Rate',
+      value: <PercentageNumber value={interestRate} />
+    },
+    !isEquity && {
+      label: 'Leverage',
+      value: <PercentageNumber value={leverage} />
+    },
+    {
+      label: 'Investment Structure',
+      value: investmentStructure
+    },
+    {
+      label: 'Distribution Frequency',
+      value: distributionFrequency
+    }
+  ]
 
-      {!isDebt ? (
-        <>
-          <Grid item xs={12} sm={6} md={4}>
-            <LabelledValue
-              label='Dividend Yield'
-              value={<PercentageNumber value={dividendYield} />}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <LabelledValue
-              label='Gross IRR (%)'
-              value={<PercentageNumber value={grossIrr} />}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <LabelledValue
-              label='Equity Multiple'
-              value={<PercentageNumber value={equityMultiple} />}
-            />
-          </Grid>
-        </>
-      ) : null}
-
-      {!isEquity ? (
-        <>
-          <Grid item xs={12} sm={6} md={4}>
-            <LabelledValue
-              label='Interest Rate'
-              value={<PercentageNumber value={interestRate} />}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <LabelledValue
-              label='Leverage'
-              value={<PercentageNumber value={leverage} />}
-            />
-          </Grid>
-        </>
-      ) : null}
-
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          label='Investment Structure'
-          value={investmentStructure}
-        />
-      </Grid>
-
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          label='Distribution Frequency'
-          value={distributionFrequency}
-        />
-      </Grid>
-    </Grid>
-  )
+  return <FieldGrid title={'Offering Terms'} items={items.filter(Boolean)} />
 }

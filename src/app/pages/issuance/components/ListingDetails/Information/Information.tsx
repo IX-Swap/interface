@@ -11,13 +11,15 @@ export interface InformationProps {
 
 export const Information = ({ data }: InformationProps) => {
   return (
-    <Grid container spacing={6} direction='column'>
-      <Profile profile={data?.introduction} />
-      <Grid item>
+    <Grid container spacing={5} direction='column'>
+      <Grid item xs={12}>
+        <Profile profile={data?.introduction} />
+      </Grid>
+      <Grid item xs={12}>
         <Documents data={data?.documents} title='Documents' />
       </Grid>
-      <Grid item>
-        <TeamMembers listingId={data?._id} teamMembers={data?.team} />
+      <Grid item xs={12}>
+        <TeamMembers teamMembers={data?.team} />
       </Grid>
     </Grid>
   )

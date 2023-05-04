@@ -1,10 +1,10 @@
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Grid, Box } from '@mui/material'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { LabelledValue } from 'components/LabelledValue'
 import { DsoTeamMember } from 'types/dso'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { TeamMemberPhoto } from 'app/pages/issuance/components/ListingDetails/Information/TeamMemberPhoto'
+import { Expandable } from 'app/components/Expandable/Expandable'
 
 export interface TeamMemberViewProps {
   member: DsoTeamMember
@@ -12,45 +12,26 @@ export interface TeamMemberViewProps {
 
 export const TeamMemberView = (props: TeamMemberViewProps) => {
   const { member } = props
-  const { isTablet } = useAppBreakpoints()
 
   return (
-    <Grid
-      container
-      alignItems='flex-start'
-      wrap={isTablet ? 'wrap' : 'nowrap'}
-      spacing={3}
-      direction='column'
-    >
-      <Grid item>
-        <Grid container spacing={3}>
+    <Expandable
+      showArrow
+      mainComponent={
+        <Grid container direction='row' alignItems='center' spacing={2} p={1}>
           <Grid item>
-            <TeamMemberPhoto
-              photoId={member.photo}
-              variant='square'
-              size={128}
+            <TeamMemberPhoto photoId={member.photo} size={48} />
+          </Grid>
+          <Grid item>
+            <LabelledValue
+              label={member.name}
+              value={member.position}
+              isRedesigned
+              gap={0.2}
             />
           </Grid>
-          <Grid item>
-            <Grid container spacing={3} direction='column'>
-              <Grid item>
-                <LabelledValue label='Name' value={member.name} />
-              </Grid>
-              <Grid item>
-                <LabelledValue label='Position' value={member.position} />
-              </Grid>
-            </Grid>
-          </Grid>
         </Grid>
-      </Grid>
-
-      <Grid item>
-        <LabelledValue
-          label='About'
-          value={renderStringToHTML(member.about)}
-          align='justify'
-        />
-      </Grid>
-    </Grid>
+      }
+      expandedComponent={<Box px={2}>{renderStringToHTML(member.about)}</Box>}
+    />
   )
 }

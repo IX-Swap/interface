@@ -1,9 +1,8 @@
-import { Grid } from '@mui/material'
 import { WalletAddress } from 'app/components/WalletAddress'
-import { LabelledValue } from 'components/LabelledValue'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import React from 'react'
 import { stoClassifications } from 'components/form/STOClassificationSelect'
+import { FieldGrid } from 'ui/FieldGrid/FieldGrid'
 
 export interface BasicOverviewProps {
   networkName: string
@@ -34,44 +33,40 @@ export const BasicOverview = ({
       ? classificationObj?.label
       : classification
 
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue label='Network' value={networkName} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue label='Capital Structure' value={capitalStructure} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          label='Launch Date'
-          value={formatDateToMMDDYY(launchDate)}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue
-          label='Completion Date'
-          value={formatDateToMMDDYY(completionDate)}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          label='Release Date'
-          value={formatDateToMMDDYY(releaseDate)}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue label='Decimal' value={decimals} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          label='Token Address'
-          value={<WalletAddress address={tokenAddress} />}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue label='Classifcation' value={stoClassification} />
-      </Grid>
-    </Grid>
-  )
+  const items = [
+    {
+      label: 'Network',
+      value: networkName
+    },
+    {
+      label: 'Capital Structure',
+      value: capitalStructure
+    },
+    {
+      label: 'Launch Date',
+      value: formatDateToMMDDYY(launchDate)
+    },
+    {
+      label: 'Completion Date',
+      value: formatDateToMMDDYY(completionDate)
+    },
+    {
+      label: 'Release Date',
+      value: formatDateToMMDDYY(releaseDate)
+    },
+    {
+      label: 'Decimal',
+      value: decimals
+    },
+    {
+      label: 'Token Address',
+      value: <WalletAddress address={tokenAddress} />
+    },
+    {
+      label: 'Classification',
+      value: stoClassification
+    }
+  ]
+
+  return <FieldGrid items={items} />
 }

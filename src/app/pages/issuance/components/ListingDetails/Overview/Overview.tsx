@@ -12,7 +12,7 @@ export interface OverviewProps {
 
 export const Overview = ({ data }: OverviewProps) => {
   return (
-    <Grid container spacing={6} direction='column'>
+    <Grid container spacing={5} direction='column'>
       <Grid item xs={12}>
         <BasicOverview
           networkName={data.network?.name}

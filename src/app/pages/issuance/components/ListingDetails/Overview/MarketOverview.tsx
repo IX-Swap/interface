@@ -1,10 +1,9 @@
-import { Grid, Typography } from '@mui/material'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-import { LabelledValue } from 'components/LabelledValue'
+import { Typography } from '@mui/material'
 import { useAssetById } from 'hooks/asset/useAssetById'
 import React from 'react'
 import { ExchangeMarket } from 'types/listing'
 import { productTypes } from 'components/form/ProductTypeSelect'
+import { FieldGrid } from 'ui/FieldGrid/FieldGrid'
 
 export interface DisplayMarketProps {
   assetId: string
@@ -48,23 +47,20 @@ export const MarketOverview = ({
   const stoProductType =
     typeof productTypeObj !== 'undefined' ? productTypeObj?.label : productType
 
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <FormSectionHeader title='Market' />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          label='Available Trading Pairs'
-          value={<TradingPairs markets={markets} />}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue label='Available Market' value={availableMarket} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue label='Product Type' value={stoProductType} />
-      </Grid>
-    </Grid>
-  )
+  const items = [
+    {
+      label: 'Available Trading Pairs',
+      value: <TradingPairs markets={markets} />
+    },
+    {
+      label: 'Available Market',
+      value: availableMarket
+    },
+    {
+      label: 'Product Type',
+      value: stoProductType
+    }
+  ]
+
+  return <FieldGrid title={'Market'} items={items} />
 }
