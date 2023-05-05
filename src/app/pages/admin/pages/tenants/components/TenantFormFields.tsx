@@ -132,7 +132,7 @@ export const TenantFormFields = ({
                     name='theme'
                     control={control}
                     onButtonClick={(data: string) => setValue('theme', data)}
-                    helperText='Select Space Client Theme'
+                    helperText='Select Client Space Theme'
                   />
                 </Grid>
               </Grid>
