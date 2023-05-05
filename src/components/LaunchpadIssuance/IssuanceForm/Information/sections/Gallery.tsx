@@ -90,7 +90,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
     <FormGrid title="Gallery">
       <TitledContainer>
         <Title>Images</Title>
-        <Hint>{"File size should not exceed 10.0 MB. Supported file formats are PNG, JPG, JPEG, and SVG"}</Hint>
+        <Hint>{'File size should not exceed 10.0 MB. Supported file formats are PNG, JPG, JPEG, and SVG'}</Hint>
         <ImageFieldContainer ref={container}>
           {props.images.map((image, idx) => (
             <ImageFileCardContainer key={idx} url={urls[idx]}>
@@ -120,12 +120,13 @@ export const GalleryBlock: React.FC<Props> = (props) => {
             <>
               {videos.map((video, idx) => (
                 <Field name={`videos[${idx}].url`} key={idx}>
-                  {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                  {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                     <FormField
                       label="Link Source"
                       placeholder="URL"
                       field={name}
                       setter={getSetter(onChange)}
+                      touch={getSetter(onBlur)}
                       value={value}
                       error={meta.error}
                       trailing={
