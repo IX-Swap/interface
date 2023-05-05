@@ -42,7 +42,7 @@ export const ListingActions = ({ data }: ListingActionsProps) => {
           Edit
         </Button>
       </Grid>
-      <Grid item>
+      <Grid item sx={{ paddingLeft: '10px' }}>
         <SubmitListingButton data={data} />
       </Grid>
     </Grid>
