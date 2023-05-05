@@ -107,7 +107,7 @@ export const TenantFormFields = ({
                       label='Status'
                       name='status'
                       control={control}
-                      helperText='Select Client Status'
+                      helperText='Select Client Space Status'
                     />
                   </Grid>
                 </Grid>
