@@ -73,7 +73,7 @@ export const adminLandingLinks: InternalRouteProps[] = [
     icon: BannerIcon
   },
   {
-    label: 'MAS Disclosure',
+    label: 'Disclosure',
     path: AdminRoute.masDisclosure,
     color: '#8B3DFF',
     icon: MasDisclosureIcon
@@ -103,7 +103,7 @@ export const adminLandingLinks: InternalRouteProps[] = [
     icon: CustodyManagementIcon
   },
   {
-    label: 'Tenants',
+    label: 'Client Spaces',
     path: AdminRoute.tenants,
     color: '#0FA3A3',
     icon: MasDisclosureIcon

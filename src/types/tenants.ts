@@ -33,7 +33,7 @@ export const initialTenantFormValues: TenantFormValues = {
 export const createTenantSchema = object()
   .shape<TenantFormValues>({
     companyName: string().required('Company Name is required'),
-    tenantCode: string().required('Tenant Code is required'),
+    tenantCode: string().required('Client Code is required'),
     url: string().url('This must be a valid URL').required('URL is required'),
     email: string()
       .email('This must be a valid email format')

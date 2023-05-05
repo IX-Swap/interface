@@ -20,7 +20,7 @@ export const SearchQueryFilterGroupReset = (
     )
   }
 
-  const hasValues = filters.some(filter => getHasValue(filter))
+  const hasValues = filters?.some(filter => getHasValue(filter))
 
   const resetFilterState = () => {
     filterGroupDispatch({

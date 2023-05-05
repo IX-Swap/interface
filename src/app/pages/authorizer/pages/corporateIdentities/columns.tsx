@@ -51,15 +51,14 @@ const renderStatus = (
 ) => (
   <>
     <Status label={label ?? status} type={status.toLowerCase()} />
-    <Actions
-      item={row}
-      cacheQueryKey={''}
-      featureCategory={featureCategory}
-      investorRole={role}
-      statusFieldName={
-        typeof role !== 'undefined' ? 'declaredAsStatus' : 'status'
-      }
-    />
+    {status === 'Submitted' && (
+      <Actions
+        item={row}
+        cacheQueryKey={''}
+        featureCategory={featureCategory}
+        investorRole={role}
+      />
+    )}
   </>
 )
 
@@ -107,7 +106,7 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
   },
   {
     key: 'declaredAsStatus',
-    label: 'Tenant Owner Status',
+    label: 'Client Status',
     render: (status, row) =>
       renderColumnWithApproval(row, status, 'tenantOwner')
   }

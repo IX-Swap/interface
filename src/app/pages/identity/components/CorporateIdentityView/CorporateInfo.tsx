@@ -53,18 +53,14 @@ export const CorporateInfo = ({
     <Grid item container flexDirection={'column'} spacing={5}>
       {!hideAvatar && (
         <Grid item>
-          {typeof data.logo !== 'undefined' ? (
-            <Avatar
-              documentId={data.logo}
-              ownerId={data.user._id}
-              variant='square'
-              size={120}
-              borderRadius={16}
-              fallback={<AvatarPhoto />}
-            />
-          ) : (
-            <AvatarPhoto />
-          )}
+          <Avatar
+            documentId={data.logo}
+            ownerId={data.user._id}
+            variant='square'
+            size={120}
+            borderRadius={16}
+            fallback={<AvatarPhoto />}
+          />
         </Grid>
       )}
 
@@ -160,8 +156,8 @@ export const CorporateInfo = ({
             <Grid item>
               <LabelledValue
                 isRedesigned
-                label='Tenant Owner Application'
-                value={<InvestorStatus investorType='tenantOwner' s />}
+                label='Client Application'
+                value={<InvestorStatus investorType='tenantOwner' />}
               />
             </Grid>
           ) : (
@@ -171,7 +167,7 @@ export const CorporateInfo = ({
                   isRedesigned
                   hasCheck
                   label=''
-                  value='I declare that I am an Tenant Owner.'
+                  value='I declare that I am an Client.'
                 />
               </Grid>
             )
