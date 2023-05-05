@@ -23,7 +23,6 @@ export interface DisclosureDialogProps {
   content: any
   isOpen: boolean
 }
-
 export const DisclosureDialog = ({
   content,
   isOpen
