@@ -20,7 +20,7 @@ export const SearchQueryFilterGroupApply = (
     )
   }
 
-  const hasValues = filters.some(filter => getHasValue(filter))
+  const hasValues = filters?.some(filter => getHasValue(filter))
 
   const handleClick = () => {
     updateFilters(filterGroupState)
