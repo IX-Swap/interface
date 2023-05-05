@@ -29,7 +29,7 @@ export const TenantFormFields = ({
           <Grid item>
             <Grid container direction='column' spacing={5}>
               <Grid item>
-                <FormSectionHeader title='Client Information' />
+                <FormSectionHeader title='Client Space Information' />
               </Grid>
               <Grid item container spacing={{ xs: 5, md: 3 }}>
                 <Grid item xs={12} md={6}>
