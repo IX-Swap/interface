@@ -3,7 +3,8 @@ import { Grid } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import {
-  createTenantSchema,
+  newTenantSchema,
+  tenantValidationSchema,
   initialTenantFormValues,
   TenantFormValues
 } from 'types/tenants'
@@ -17,16 +18,17 @@ export const TenantForm = ({
 }) => {
   const { isTablet } = useAppBreakpoints()
 
-  const newTenantSchema = createTenantSchema
-  delete newTenantSchema.fields.status
+  const isNewTenant = tenant === undefined
+  const defaultValues = isNewTenant ? initialTenantFormValues : tenant
+  const validationSchema = isNewTenant
+    ? newTenantSchema
+    : tenantValidationSchema
 
   return (
     <Form
       data-testid='tenant-form'
-      defaultValues={tenant === undefined ? initialTenantFormValues : tenant}
-      validationSchema={
-        tenant !== undefined ? createTenantSchema : newTenantSchema
-      }
+      defaultValues={defaultValues}
+      validationSchema={validationSchema}
       allowInvalid
       id={`tenantForm`}
     >
@@ -35,7 +37,7 @@ export const TenantForm = ({
           <TenantFormFields tenant={tenant} />
           <Grid item container justifyContent={'flex-end'}>
             <Grid item sx={{ marginTop: '15px' }}>
-              <SaveTenantButton tenant={tenant} schema={createTenantSchema} />
+              <SaveTenantButton tenant={tenant} schema={validationSchema} />
             </Grid>
           </Grid>
         </Grid>
