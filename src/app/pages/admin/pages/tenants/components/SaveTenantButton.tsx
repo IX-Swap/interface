@@ -19,7 +19,7 @@ export const SaveTenantButton = (props: SaveTenantButtonProps) => {
       onClick={onSubmit}
       disabled={isLoading}
     >
-      {tenant === undefined ? 'Create Client' : 'Save'}
+      {tenant === undefined ? 'Create Client Space' : 'Save'}
     </Button>
   )
 }
