@@ -34,10 +34,11 @@ export const TeamMembersBlock: React.FC<Props> = ({ members }) => {
                   )}
 
                   <Field name={`members.${idx}.photo`}>
-                    {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                    {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                       <FileField
                         field={name}
                         setter={getSetter(onChange)}
+                        touch={getSetter(onBlur)}
                         value={value}
                         error={meta.touched ? meta.error : ''}
                         label="Upload Photo"
@@ -51,10 +52,11 @@ export const TeamMembersBlock: React.FC<Props> = ({ members }) => {
                   </Field>
 
                   <Field name={`members.${idx}.name`}>
-                    {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                    {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                       <FormField
                         field={name}
                         setter={getSetter(onChange)}
+                        touch={getSetter(onBlur)}
                         value={value}
                         error={meta.touched ? meta.error : ''}
                         label="Full Name"
@@ -64,10 +66,11 @@ export const TeamMembersBlock: React.FC<Props> = ({ members }) => {
                   </Field>
 
                   <Field name={`members.${idx}.role`}>
-                    {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                    {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                       <FormField
                         field={name}
                         setter={getSetter(onChange)}
+                        touch={getSetter(onBlur)}
                         value={value}
                         error={meta.touched ? meta.error : ''}
                         label="Position"
@@ -77,10 +80,11 @@ export const TeamMembersBlock: React.FC<Props> = ({ members }) => {
                   </Field>
 
                   <Field name={`members.${idx}.about`}>
-                    {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                    {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                       <TextareaField
                         field={name}
                         setter={getSetter(onChange)}
+                        touch={getSetter(onBlur)}
                         value={value}
                         error={meta.touched ? meta.error : ''}
                         span={2}
