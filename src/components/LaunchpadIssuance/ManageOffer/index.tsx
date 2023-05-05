@@ -14,7 +14,6 @@ import { HeaderButtons } from './HeaderButtons'
 import { OFFER_STATUSES } from '../utils/constants'
 import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelistWallet'
 import { InvestmentsBlock } from './investments'
-import { useRole } from 'state/user/hooks'
 import { ConfirmModal } from './shared/ConfirmModal'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 import { text53 } from 'components/LaunchpadMisc/typography'
@@ -27,7 +26,6 @@ interface ManagedOfferPageParams {
 export const ManageOffer = () => {
   const theme = useTheme()
   const history = useHistory()
-  const { isOfferManager } = useRole()
   const goBack = useCallback(() => history.push('/issuance'), [history])
   const addPopup = useAddPopup()
 
@@ -37,17 +35,15 @@ export const ManageOffer = () => {
 
   const params = useParams<ManagedOfferPageParams>()
   const { loading, data: offer, load } = useGetManagedOffer(params.issuanceId)
-  const { usersClaimed, issuerClaimed, status, softCapReached } = offer || {}
+  const { usersClaimed, issuerClaimed, status, softCapReached, isOwner } = offer || {}
   const showError = useShowError()
 
   const triggerUserClaim = useTriggerUserClaim(offer?.id)
   const triggerIssuerClaim = useTriggerIssuerClaim(offer?.id)
 
   const showWhitelisting = useMemo(() => stage === OfferStatus.whitelist, [stage])
-  const canWithdraw = useMemo(
-    () => isOfferManager && usersClaimed && !issuerClaimed,
-    [isOfferManager, usersClaimed, issuerClaimed]
-  )
+  const canWithdraw = useMemo(() => isOwner && usersClaimed && !issuerClaimed, [isOwner, usersClaimed, issuerClaimed])
+
   const claimBtnTitle = useMemo(() => {
     if (!softCapReached || (status && status !== OfferStatus.claim)) {
       return ''
