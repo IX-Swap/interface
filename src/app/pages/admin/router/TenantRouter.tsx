@@ -14,15 +14,15 @@ export const TenantRouter = () => {
         <Tenants />
       </AppRoute>
 
-      <AppRoute breadcrumb='View Client' path={AdminRoute.viewTenant}>
+      <AppRoute breadcrumb='View Client Space' path={AdminRoute.viewTenant}>
         <ViewTenant />
       </AppRoute>
 
-      <AppRoute breadcrumb='Edit Client' path={AdminRoute.editTenant}>
+      <AppRoute breadcrumb='Edit Client Space' path={AdminRoute.editTenant}>
         <EditTenant />
       </AppRoute>
 
-      <AppRoute breadcrumb='Create Client' path={AdminRoute.createTenant}>
+      <AppRoute breadcrumb='Create Client Space' path={AdminRoute.createTenant}>
         <CreateNewTenant />
       </AppRoute>
     </Switch>
