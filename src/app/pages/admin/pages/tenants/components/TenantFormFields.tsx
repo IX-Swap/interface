@@ -45,8 +45,8 @@ export const TenantFormFields = ({
                 <Grid item xs={12} md={6}>
                   <TypedField
                     component={TextInput}
-                    label='Client Code'
-                    helperText='Client Code'
+                    label='Client Space Code'
+                    helperText='Client Space Code'
                     name='tenantCode'
                     control={control}
                     variant='outlined'
