@@ -77,7 +77,7 @@ export const ViewTenant = () => {
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='Client' />
+        <PageHeader title='Client Space' />
       </Grid>
       <RootContainer>
         <Grid container direction={isTablet ? 'column-reverse' : 'row'}>
