@@ -15,8 +15,8 @@ import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import {
   corporateInvestorInfoSchema,
   corporateInvestorSchema,
-  directorsAndBeneficialOwnersSchema,
   corporateTaxDeclarationSchema,
+  directorsAndBeneficialOwnersSchema,
   initialCorporateInvestorInfoSchema
 } from 'app/pages/identity/validation/corporate'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
@@ -34,20 +34,20 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
     formId: 'information'
   },
   {
-    label: 'Directors and Beneficial Owner Details',
-    getFormValues: getDirectorsAndBeneficialOwnersFormValues,
-    getRequestPayload: getDirectorsAndBeneficialOwnerRequestPayload,
-    validationSchema: directorsAndBeneficialOwnersSchema,
-    component: () => <DirectorsAndBeneficialOwnerDetails />,
-    formId: 'owner-details'
-  },
-  {
     label: 'Tax Declaration',
     getFormValues: getCorporateInvestorTaxDeclarationFormValues,
     getRequestPayload: getTaxDeclarationRequestPayload,
     validationSchema: corporateTaxDeclarationSchema,
     component: () => <TaxDeclarationForm identityType='corporate' />,
     formId: 'tax-declaration'
+  },
+  {
+    label: 'Directors and Beneficial Owner Details',
+    getFormValues: getDirectorsAndBeneficialOwnersFormValues,
+    getRequestPayload: getDirectorsAndBeneficialOwnerRequestPayload,
+    validationSchema: directorsAndBeneficialOwnersSchema,
+    component: () => <DirectorsAndBeneficialOwnerDetails />,
+    formId: 'owner-details'
   },
   {
     label: 'Review & Submit',
