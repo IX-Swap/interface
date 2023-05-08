@@ -300,7 +300,7 @@ const Participants = styled.div`
     gap: 0.5rem;
 
     ${text6}
-    color: ${(props) => props.theme.launchpad.colors.text.body};
+    color: ${(props) => props.theme.launchpad.colors.text.caption};
   }
 
   main {
@@ -358,7 +358,7 @@ const TokenInfoCard = styled.div`
   border-radius: 6px;
 
   .label {
-    color: ${(props) => props.theme.launchpad.colors.text.body};
+    color: ${(props) => props.theme.launchpad.colors.text.caption};
     margin-right: 0.5rem;
   }
 

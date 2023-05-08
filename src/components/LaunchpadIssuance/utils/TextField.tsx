@@ -204,7 +204,7 @@ const Input = styled.input<Pick<StylingProps, 'fontSize' | 'lineHeight'>>`
   }
 
   ::-webkit-autofill::first-line {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
   &[type='number'] {

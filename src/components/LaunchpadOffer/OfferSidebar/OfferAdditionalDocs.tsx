@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import { File, Eye, Download } from 'react-feather'
+import { File, Download } from 'react-feather'
+import { EyeIcon } from 'assets/launchpad/svg/components/EyeIcon'
 
 import { OfferFile, OfferFileType } from 'state/launchpad/types'
 import { InfoList } from '../util/InfoList'
@@ -22,7 +23,6 @@ export const OfferAdditionalDocs: React.FC<Props> = (props) => {
         .map(({ file }) => {
           const isPreviewing = isPreview(file.name)
           const isDownloading = !isPreviewing && isDownload(file.name)
-          const ValueIcon = isPreviewing ? Eye : Download
           return {
             label: (
               <FileName>
@@ -31,7 +31,11 @@ export const OfferAdditionalDocs: React.FC<Props> = (props) => {
             ),
             value: (
               <span style={{ cursor: 'pointer' }}>
-                <ValueIcon size="14" stroke={theme.launchpad.colors.text.body} />
+                {isPreviewing ? (
+                  <EyeIcon stroke={theme.launchpad.colors.text.caption} />
+                ) : (
+                  <Download size="14" stroke={theme.launchpad.colors.text.caption} />
+                )}
               </span>
             ),
             file: file,
@@ -42,7 +46,7 @@ export const OfferAdditionalDocs: React.FC<Props> = (props) => {
     [props.files, theme]
   )
 
-  return <InfoList title="Additional Document" entries={entries} placeholderText="There are no Documents to display" />
+  return <InfoList title="Additional Documents" entries={entries} placeholderText="There are no Documents to display" />
 }
 
 const FileName = styled.div`

@@ -21,11 +21,12 @@ export const UploadDocuments: React.FC<Props> = ({ documents }) => {
           <>
             {documents.map((document, idx) => (
               <Field name={`additionalDocuments[${idx}].file`} key={idx}>
-                {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                   <FileField
                     label={''}
                     field={name}
                     setter={getSetter(onChange)}
+                    touch={getSetter(onBlur)}
                     value={value}
                     error={meta.error}
                     isDocument
