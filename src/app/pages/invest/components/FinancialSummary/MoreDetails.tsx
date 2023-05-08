@@ -52,7 +52,7 @@ export const MoreDetails = () => {
           elevation={3}
           sx={{
             width: 280,
-            padding: 16,
+            padding: 5,
             maxHeight: 'calc(100vh - 140px)',
             overflow: 'scroll'
           }}
