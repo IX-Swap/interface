@@ -9,6 +9,7 @@ import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { OwnershipStructure } from 'app/pages/identity/components/CorporateIdentityView/OwnershipStructure'
 import { DirectorList } from 'app/pages/identity/components/CorporateIdentityView/DirectorList'
+import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 
 export interface CorporateIdentityViewProps {
   data: CorporateIdentity
@@ -69,6 +70,13 @@ export const CorporateIdentityView = ({
 
       <Grid item>
         <BeneficialOwnersList data={data} />
+      </Grid>
+
+      <Grid item>
+        <CountryTaxDeclaration
+          taxResidencies={data.taxResidencies}
+          showReview={showReview}
+        />
       </Grid>
     </Grid>
   )
