@@ -135,7 +135,7 @@ export const PairListDropdown = ({
 
                 {exchangeData?.listing?.productType === 'exemptProduct' ? (
                   <>
-                    <Button
+                    <Typography
                       sx={{
                         paddingBottom: '3px',
                         background: '#778194',
@@ -147,11 +147,12 @@ export const PairListDropdown = ({
                         letterSpacing: '0.02em',
                         lineHeight: '17px',
                         marginLeft: '5px ',
-                        marginRight: '12px '
+                        marginRight: '12px ',
+                        cursor: 'pointer'
                       }}
                     >
                       Exempt
-                    </Button>
+                    </Typography>
 
                     <Tooltip
                       sx={{ cursor: 'pointer' }}
