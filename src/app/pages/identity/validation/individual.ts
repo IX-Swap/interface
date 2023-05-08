@@ -222,11 +222,9 @@ export const individualInvestorAgreementsSchema = yup
 
 export const individualInvestorValidationSchema = (data?: IndividualIdentity) =>
   yup.object().shape<any>({
-    // ...financialInfoSchema(data).fields,
-    // ...individualInvestorDocumentsSchema.fields,
-    // ...individualInvestorStatusDeclarationSchema.fields,
-    ...personalInfoSchema.fields
-    // ...taxDeclarationSchema.fields
+    ...personalInfoSchema.fields,
+    ...financialInfoSchema(data).fields,
+    ...taxDeclarationSchema.fields
   })
 
 export const financialAndTaxDeclarationSchema = (data?: IndividualIdentity) =>
@@ -237,9 +235,6 @@ export const financialAndTaxDeclarationSchema = (data?: IndividualIdentity) =>
 
 export const individualAccreditationSchema = (data?: IndividualIdentity) =>
   yup.object().shape<any>({
-    ...financialInfoSchema(data).fields,
-    ...individualInvestorDocumentsSchema.fields,
     ...individualInvestorStatusDeclarationSchema.fields,
-    // ...personalInfoSchema.fields,
-    ...taxDeclarationSchema.fields
+    ...individualInvestorDocumentsSchema.fields
   })

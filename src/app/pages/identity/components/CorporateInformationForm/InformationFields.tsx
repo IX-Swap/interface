@@ -13,7 +13,7 @@ import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { Checkbox } from 'components/form/Checkbox'
 import { useTheme } from '@mui/material/styles'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 
 export interface InformationFieldsProps {
   type?: CorporateType

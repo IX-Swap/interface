@@ -320,12 +320,10 @@ export const corporateInvestorAgreementsSchema = yup
 
 export const corporateInvestorSchema = yup.object().shape<any>({
   ...corporateInvestorInfoSchema().fields,
-  //   ...corporateTaxDeclarationSchema.fields,
+  ...corporateTaxDeclarationSchema.fields,
   ...directorsAndBeneficialOwnersSchema.fields
-  //   ...corporateInvestorStatusDeclarationSchema.fields
 })
 
 export const corporateAccreditationSchema = yup.object().shape<any>({
-  ...corporateTaxDeclarationSchema.fields,
   ...corporateInvestorStatusDeclarationSchema.fields
 })
