@@ -15,7 +15,7 @@ export const TaxDeclarationForm = ({
   return (
     <Paper className={classes.container}>
       <Grid item className={classes.header}>
-        <FormSectionHeader title='Tax Declaration' />
+        <FormSectionHeader title='Tax Information' />
       </Grid>
       <Grid data-testid='taxDeclaration' container direction='column'>
         <Grid item className={classes.taxDeclaration}>

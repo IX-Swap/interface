@@ -52,7 +52,7 @@ export const AdminCorporateIdentityView = ({
         <BeneficialOwnersList data={identity} />
       </Grid>
       <Grid item>
-        <FormSectionHeader title='Tax Declaration' />
+        <FormSectionHeader title='Tax Information' />
         <CountryTaxDeclaration taxResidencies={identity.taxResidencies} />
       </Grid>
       {!isCorporateIssuerForm ? (
