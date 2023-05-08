@@ -30,7 +30,7 @@ export const PairTableRow = ({ item }: PairTableRowProps) => {
             <LastPrice value={item.latestPrice} isPositive={isPositive} />
           </PairTableCell>
           <PairTableCell align='right'>
-            <Change value={item._24hChangePercentage} isPositive={isPositive} />
+            <Change  value={item._24hChangePercentage} isPositive={isPositive} />
           </PairTableCell>
         </div>
       )}
