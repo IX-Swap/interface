@@ -31,7 +31,7 @@ export const ConfirmUnassignDialog = ({
   }
 
   return (
-    <UIDialog open={open}>
+    <UIDialog open={open} onClose={closeDialog}>
       <Box p={4}>
         <Typography variant='subtitle1' align='center'>
           Are You Sure You Want to Unassign This Virtual Account?
