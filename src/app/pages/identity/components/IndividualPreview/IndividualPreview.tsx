@@ -89,7 +89,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
               userId={data.user._id}
               //   fields={corporateIdentityFields}
               name={data.user.name}
-              isIndividual={false}
+              isIndividual={true}
               kycStatus={data.status}
               accreditationStatus={data.accreditationStatus}
               // identityType={data.type}

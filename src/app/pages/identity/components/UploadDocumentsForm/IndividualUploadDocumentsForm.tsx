@@ -11,12 +11,14 @@ export const IndividualUploadDocumentsForm = () => {
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <FormSectionHeader title={'Upload Documents'} />
+        <FormSectionHeader title={'Personal Documents'} />
         <Typography className={styles.text} mt={2}>
           Please upload the following documents. All account statements and
-          documents should be dated within 3 months. <br /> Type of document
-          format supported is jpg, jpeg, png, gif, tiff, webp, svg, apng, avif,
-          jfif, pjpeg, pjp, docx, xlsx, pdf, and odt.
+          documents should be dated within 3 months.{' '}
+        </Typography>
+        <Typography className={styles.text} mt={2}>
+          Type of document format supported is jpg, jpeg, png, gif, tiff, webp,
+          svg, apng, avif, jfif, pjpeg, pjp, docx, xlsx, pdf, and odt.
         </Typography>
         <VSpacer size='medium' />
       </Grid>

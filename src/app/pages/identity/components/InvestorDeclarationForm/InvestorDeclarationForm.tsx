@@ -26,10 +26,11 @@ export const InvestorDeclarationForm = ({
   identityType = 'individual',
   corporateType = 'issuer'
 }: InvestorDeclarationFormProps) => {
-  const isCorporate = identityType === 'corporate'
-  const title = `I declare that I am "${
-    isCorporate ? 'Corporate' : 'Individual'
-  } Accredited Investor"`
+  //   const isCorporate = identityType === 'corporate'
+  //   const title = `I declare that I am "${
+  //     isCorporate ? 'a Corporate' : 'an Individual'
+  //   } Accredited Investor."`
+  const title = `I declare that I am an Accredited Investor.`
   const { formState, trigger } = useFormContext()
 
   const getOptInData = (type: IdentityType) => {
@@ -133,7 +134,7 @@ export const InvestorDeclarationForm = ({
                 </Grid>
                 <Grid item>
                   <DeclarationsListFields
-                    title='I confirm to be treated as an “Accredited Investor” by InvestaX'
+                    // title='I confirm to be treated as an “Accredited Investor” by InvestaX'
                     data={getOptInData(identityType)}
                   />
                 </Grid>
