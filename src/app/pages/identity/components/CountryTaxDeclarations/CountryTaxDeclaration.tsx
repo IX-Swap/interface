@@ -95,7 +95,7 @@ export const CountryTaxDeclaration = ({
           </Grid>
         )}
         <Grid item>
-          <FormSectionHeader title='Tax Declaration' />
+          <FormSectionHeader title='Tax Information' />
         </Grid>
 
         {taxResidencies.map((it, i) => (

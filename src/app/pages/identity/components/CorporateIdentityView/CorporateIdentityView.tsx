@@ -65,18 +65,15 @@ export const CorporateIdentityView = ({
       </Grid>
 
       <Grid item>
+        <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
+      </Grid>
+
+      <Grid item>
         <DirectorList data={data} />
       </Grid>
 
       <Grid item>
         <BeneficialOwnersList data={data} />
-      </Grid>
-
-      <Grid item>
-        <CountryTaxDeclaration
-          taxResidencies={data.taxResidencies}
-          showReview={showReview}
-        />
       </Grid>
     </Grid>
   )
