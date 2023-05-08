@@ -36,7 +36,6 @@ export const Statistics = ({ statistics, count }: StatisticsProps) => {
         </>
       )}
       <OverflowRaw>-</OverflowRaw>
-      <OverflowRaw>-</OverflowRaw>
     </OverflowRow>
   )
 }
