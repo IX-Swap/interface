@@ -27,9 +27,9 @@ export const Overview = ({ data }: OverviewProps) => {
       </Grid>
       <Grid item xs={12}>
         <MarketOverview
-          availableMarket={data.marketType}
+          availableMarket={data?.listingType}
           markets={data.exchange.markets}
-          productType={data.dso?.productType ?? ''}
+          productType={data?.productType ?? ''}
         />
       </Grid>
       <Grid item xs={12}>
