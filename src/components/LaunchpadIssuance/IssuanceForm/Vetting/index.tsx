@@ -11,6 +11,8 @@ import { useSaveDraftVetting } from './useSaveDraftVetting'
 import { FormTitle } from '../shared/styled'
 import { schema } from './schema'
 import { VettingForm } from './VettingForm'
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { useRole } from 'state/user/hooks'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -21,6 +23,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const addPopup = useAddPopup()
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
   const [showCloseDialog, setShowCloseDialog] = useState(false)
+  const { isAdmin } = useRole()
 
   const {
     objectParams: { id: issuanceId },
@@ -77,6 +80,21 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
     return () => window.removeEventListener('beforeunload', listener)
   }, [])
+
+  useEffect(() => {
+    if (initialValues.data?.status) {
+      const status = initialValues.data?.status
+
+      if (
+        !(
+          [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(status) ||
+          (status === IssuanceStatus.pendingApproval && isAdmin)
+        )
+      ) {
+        history.replace(`/issuance/view/vetting?id=${issuanceId}`)
+      }
+    }
+  }, [initialValues.data?.status, isAdmin, issuanceId])
 
   if (!issuanceId) {
     return null
