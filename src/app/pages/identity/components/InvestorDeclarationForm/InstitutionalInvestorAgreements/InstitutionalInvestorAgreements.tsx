@@ -27,7 +27,7 @@ export const institutionalInvestorAgreements = [
     label: <InstitutionalInvestorAgreements type='Institutional' />
   },
   {
-    name: 'isImtermediaryInvestor',
+    name: 'isIntermediaryInvestor',
     label: <InstitutionalInvestorAgreements type='Intermediary' />
   }
 ]

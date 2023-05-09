@@ -56,12 +56,16 @@ export const CorporateDeclarationsList = ({
                     <DeclarationsListItem key={i} label={label} value={false} />
                   ))}
               </>
-            ) : (
+            ) : typeof Object.values(data)[0] !== 'undefined' ? (
               <DeclarationsListItem
                 key={0}
                 label={labelMap[Object.values(data)[0]]}
                 value={true}
               />
+            ) : (
+              Object.values(labelMap).map((label, i) => (
+                <DeclarationsListItem key={i} label={label} value={false} />
+              ))
             )}
           </Grid>
         </Grid>

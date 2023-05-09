@@ -111,8 +111,11 @@ export const InvestorDeclarationForm = ({
   } = formState.dirtyFields
 
   useEffect(() => {
-    radioButtonRef?.current?.children[0]?.click()
-  }, [])
+    const role = control.defaultValuesRef.current.applyingAs
+    const index = role === 'accredited' ? 0 : role === 'expert' ? 1 : 2
+
+    radioButtonRef?.current?.children[index]?.click()
+  }, [control])
 
   useEffect(() => {
     void trigger()

@@ -222,15 +222,38 @@ export const individualInvestorStatusDeclarationItemSchema = yup
     'oneOfInvestorStatusDeclarationValuesShouldBeTrue',
     'Please choose at least one option under "Investor Status Declaration" section',
     function () {
-      const parent = this.parent
-      return (
-        (parent.financialAsset as boolean) ||
-        (parent.income as boolean) ||
-        (parent.personalAssets as boolean) ||
-        (parent.jointlyHeldAccount as boolean)
-      )
+      const {
+        applyingAs,
+        financialAsset,
+        income,
+        personalAssets,
+        jointlyHeldAccount
+      } = this.parent
+
+      return applyingAs === 'accredited'
+        ? (financialAsset as boolean) ||
+            (income as boolean) ||
+            (personalAssets as boolean) ||
+            (jointlyHeldAccount as boolean)
+        : true
     }
   )
   .required(validationMessages.required)
 
 export const optInAgreementsDependentValueSchema = yup.bool()
+
+export const expertInvestorAgreementSchema = yup
+  .bool()
+  .oneOf([true, false])
+  .test(
+    'oneOfExpertInvestorAgreementsShouldBeTrue',
+    'Please choose at least one option under "Expert Investor Declaration" section',
+    function () {
+      const { applyingAs, expertInvestorAgreement } = this.parent
+
+      return applyingAs === 'expert'
+        ? typeof expertInvestorAgreement !== 'undefined'
+        : true
+    }
+  )
+  .required(validationMessages.required)

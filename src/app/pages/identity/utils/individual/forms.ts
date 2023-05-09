@@ -104,7 +104,7 @@ export const getInvestorDeclarationFormValues = (
   return {
     ...data?.declarations?.investorsStatus,
     ...getDocumentsFormValues(data),
-    applyingAs: 'expert'
+    applyingAs: data.applyingAs[0]
   }
 }
 
