@@ -11,7 +11,7 @@ export const AuthorizerIndividualAccreditationsRouter = () => {
       <AppRoute
         exact
         breadcrumb='Individual Accreditation Details'
-        path='/app/authorizer/individuals/accreditation/:userId/:individualId/view'
+        path='/app/authorizer/individuals/accreditation/:userId/:identityId/view'
       >
         <IndividualAccreditationAuthorization />
       </AppRoute>
