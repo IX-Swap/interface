@@ -202,15 +202,24 @@ export const investorStatusDeclarationItemSchema = yup
     'oneOfInvestorDeclarationFormValueShouldBeTrue',
     'Please choose at least one option under "Investor Status Declaration" section',
     function () {
-      const parent = this.parent
-      return (
-        (parent.assets as boolean) ||
-        (parent.trustee as boolean) ||
-        (parent.accreditedBeneficiaries as boolean) ||
-        (parent.accreditedSettlors as boolean) ||
-        (parent.accreditedShareholders as boolean) ||
-        (parent.partnership as boolean)
-      )
+      const {
+        applyingAs,
+        assets,
+        trustee,
+        accreditedBeneficiaries,
+        accreditedSettlors,
+        accreditedShareholders,
+        partnership
+      } = this.parent
+
+      return applyingAs === 'accredited'
+        ? (assets as boolean) ||
+            (trustee as boolean) ||
+            (accreditedBeneficiaries as boolean) ||
+            (accreditedSettlors as boolean) ||
+            (accreditedShareholders as boolean) ||
+            (partnership as boolean)
+        : true
     }
   )
   .required(validationMessages.required)
@@ -243,8 +252,7 @@ export const individualInvestorStatusDeclarationItemSchema = yup
 export const optInAgreementsDependentValueSchema = yup.bool()
 
 export const expertInvestorAgreementSchema = yup
-  .bool()
-  .oneOf([true, false])
+  .string()
   .test(
     'oneOfExpertInvestorAgreementsShouldBeTrue',
     'Please choose at least one option under "Expert Investor Declaration" section',
