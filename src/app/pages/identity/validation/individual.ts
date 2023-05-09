@@ -10,6 +10,7 @@ import {
   documentsSchema,
   individualInvestorStatusDeclarationItemSchema,
   optInAgreementsDependentValueSchema
+  //   expertInvestorAgreementSchema
 } from 'validation/shared'
 import {
   IndividualAgreementsFormValues,
@@ -151,6 +152,7 @@ export const individualInvestorStatusDeclarationSchema = yup
       income: individualInvestorStatusDeclarationItemSchema,
       personalAssets: individualInvestorStatusDeclarationItemSchema,
       jointlyHeldAccount: individualInvestorStatusDeclarationItemSchema,
+      //   expertInvestorAgreement: expertInvestorAgreementSchema,
 
       optInAgreementsOptOut: yup
         .bool()
@@ -184,20 +186,24 @@ export const individualInvestorStatusDeclarationSchema = yup
         return false
       }
 
-      const financialDeclarations = Object.entries(values)
-        .filter(([key]) => {
-          return (
-            key === 'financialAsset' ||
-            key === 'income' ||
-            key === 'personalAssets' ||
-            key === 'jointlyHeldAccount'
-          )
-        })
-        .map(([_key, value]) => value)
+      if (values.applyingAs === 'accredited') {
+        const financialDeclarations = Object.entries(values)
+          .filter(([key]) => {
+            return (
+              key === 'financialAsset' ||
+              key === 'income' ||
+              key === 'personalAssets' ||
+              key === 'jointlyHeldAccount'
+            )
+          })
+          .map(([_key, value]) => value)
 
-      const result = financialDeclarations.every(value => value === false)
+        const result = financialDeclarations.every(value => value === false)
 
-      return !result
+        return !result
+      }
+
+      return true
     }
   )
 
@@ -233,7 +239,7 @@ export const financialAndTaxDeclarationSchema = (data?: IndividualIdentity) =>
     ...taxDeclarationSchema.fields
   })
 
-export const individualAccreditationSchema = (data?: IndividualIdentity) =>
+export const individualAccreditationSchema = () =>
   yup.object().shape<any>({
     ...individualInvestorStatusDeclarationSchema.fields,
     ...individualInvestorDocumentsSchema.fields

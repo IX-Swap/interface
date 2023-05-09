@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@mui/material'
+import { Grid, Button } from '@mui/material'
 import { withStyles } from '@mui/styles'
 
 export interface CryptoHoldingActionProps {
@@ -23,8 +23,21 @@ export const CryptoHoldingAction: React.FC<CryptoHoldingActionProps> = ({
   })(Button)
 
   return (
-    <StyledButton color='primary' onClick={close} variant='contained'>
-      Ok
-    </StyledButton>
+    <Grid
+      container
+      sx={{ justifyContent: { xs: 'center', md: 'end' } }}
+      spacing={2}
+    >
+      <Grid item xs={6} md={2}>
+        <StyledButton
+          color='primary'
+          onClick={close}
+          variant='contained'
+          fullWidth
+        >
+          OK
+        </StyledButton>
+      </Grid>
+    </Grid>
   )
 }

@@ -17,12 +17,12 @@ export const InstitutionalInvestorInfoDialog = () => {
           Institutional Investor
         </Typography>
       }
-      title='Institutional Investor Means'
+      title='Institutional Investor'
       content={<InstitutionalInvestorInfoContent />}
       actions={<InstitutionalInvestorInfoAction />}
       fullWidth
       scroll='body'
-      maxWidth='xl'
+      maxWidth='md'
     />
   )
 }

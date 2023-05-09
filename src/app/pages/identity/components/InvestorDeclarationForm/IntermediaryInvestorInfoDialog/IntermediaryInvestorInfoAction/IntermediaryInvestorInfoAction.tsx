@@ -2,11 +2,11 @@ import React from 'react'
 import { Grid, Button } from '@mui/material'
 import { withStyles } from '@mui/styles'
 
-export interface InstitutionalInvestorInfoActionProps {
+export interface IntermediaryInvestorInfoActionProps {
   close?: () => void
 }
-export const InstitutionalInvestorInfoAction: React.FC<
-  InstitutionalInvestorInfoActionProps
+export const IntermediaryInvestorInfoAction: React.FC<
+  IntermediaryInvestorInfoActionProps
 > = ({ close }) => {
   const StyledButton = withStyles(theme => {
     return {

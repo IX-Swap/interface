@@ -91,7 +91,7 @@ export const InvestorDeclarationView: React.FC<
     <Grid container spacing={4}>
       <Grid item sx={{ width: '100%' }}>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
-          <FormSectionHeader title='Investor Status Declaration' />
+          <FormSectionHeader title='Investor Role Declaration' />
           <Box py={2} />
           <DeclarationsList
             title={`I declare that I am ${

@@ -103,7 +103,7 @@ export const getCorporateInvestorDeclarationFormValues = (
   data: CorporateIdentity | undefined
 ): Partial<CorporateInvestorDeclarationFormValues> => {
   const declarations = data?.declarations?.investorsStatus ?? {}
-  const isInstitutionalInvestor = data?.isInstitutionalInvestor
+  const { applyingAs, isInstitutionalInvestor, isIntermediaryInvestor } = data
 
   const documents = data?.documents.reduce((result: any, document) => {
     const {
@@ -157,7 +157,9 @@ export const getCorporateInvestorDeclarationFormValues = (
   return {
     ...declarations,
     ...documents,
-    isInstitutionalInvestor: isInstitutionalInvestor
+    applyingAs: applyingAs[0],
+    isInstitutionalInvestor,
+    isIntermediaryInvestor
   }
 }
 

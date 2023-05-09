@@ -320,7 +320,9 @@ export interface IdentityDeclarations {
   investorsStatus: IndividualInvestorStatus &
     CorporateInvestorStatus &
     OptInAgreements &
-    OptOutRequirements
+    OptOutRequirements & {
+      expertInvestorAgreement: boolean
+    }
   agreements: {
     investor: boolean
     custody: boolean
@@ -336,6 +338,7 @@ export interface BaseIdentity {
   createdAt: string
   updatedAt: string
   documents: DataroomFile[]
+  applyingAs: string[]
   declarations: IdentityDeclarations
   step?: number
   createdBy: string

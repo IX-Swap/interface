@@ -12,7 +12,7 @@ import {
 import {
   addressSchema,
   documentsSchema,
-  institutionalInvestorDocumentsSchema,
+  //   institutionalInvestorDocumentsSchema,
   emailSchema,
   investorStatusDeclarationItemSchema,
   optInAgreementsDependentValueSchema,
@@ -288,6 +288,7 @@ export const corporateInvestorStatusDeclarationSchema = yup
     partnership: investorStatusDeclarationItemSchema,
 
     isInstitutionalInvestor: yup.bool(),
+    isIntermediaryInvestor: yup.bool(),
 
     optInAgreements: yup
       .bool()
@@ -301,7 +302,7 @@ export const corporateInvestorStatusDeclarationSchema = yup
     digitalSecuritiesIssuance: optInAgreementsDependentValueSchema,
     // @ts-expect-error
     allServices: optInAgreementsDependentValueSchema,
-    institutionalInvestorDocuments: institutionalInvestorDocumentsSchema,
+    // institutionalInvestorDocuments: institutionalInvestorDocumentsSchema,
     // @ts-expect-error
     evidenceOfAccreditation: documentsSchema,
     // @ts-expect-error

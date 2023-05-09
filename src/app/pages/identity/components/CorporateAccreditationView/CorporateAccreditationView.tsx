@@ -25,13 +25,15 @@ export const CorporateAccreditationView = ({
         <OptInView data={data} />
       </Grid>
 
-      <Grid item>
-        <InstitutionalInvestorDeclarationView data={data} />
-      </Grid>
-
-      <Grid item>
-        <DocumentsView data={data.documents} />
-      </Grid>
+      {data.applyingAs[0] === 'institutional' ? (
+        <Grid item>
+          <InstitutionalInvestorDeclarationView data={data} />
+        </Grid>
+      ) : (
+        <Grid item>
+          <DocumentsView data={data.documents} />
+        </Grid>
+      )}
     </Grid>
   )
 }

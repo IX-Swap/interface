@@ -22,6 +22,7 @@ export const getIdentityDefaultActiveStep = (args: {
 }
 
 export type IdentityType = 'corporate' | 'individual'
+export type InvestorRole = 'accredited' | 'expert' | 'institutional'
 
 export type IdentityFormValues<T extends any> = T extends undefined
   ? never
