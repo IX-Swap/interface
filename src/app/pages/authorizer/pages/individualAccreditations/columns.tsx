@@ -2,6 +2,7 @@ import { TableColumn } from 'types/util'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import React from 'react'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
+import { renderIncome, renderLastName } from 'helpers/tables'
 import { Status } from 'ui/Status/Status'
 import { Actions } from 'app/pages/authorizer/components/Actions'
 import { Box } from '@mui/material'
@@ -18,13 +19,11 @@ const renderColumnWithApproval = (row: object, status: string) => {
         item={row}
         cacheQueryKey={''}
         featureCategory='individuals/accreditation'
+        statusFieldName={'accreditationStatus'}
       />
     </Box>
   )
 }
-
-const renderType = (type?: string) =>
-  typeof type !== 'undefined' && type.charAt(0).toUpperCase() + type.slice(1)
 
 export const columns: Array<TableColumn<IndividualIdentity>> = [
   {
@@ -33,22 +32,22 @@ export const columns: Array<TableColumn<IndividualIdentity>> = [
     render: formatDateToMMDDYY
   },
   {
-    key: 'companyLegalName',
-    label: 'Company Name'
+    key: 'firstName',
+    label: 'Name',
+    render: renderLastName
   },
   {
-    key: 'nationality',
+    key: 'address.country',
     label: 'Country'
   },
   {
-    key: 'nationality',
-    label: 'Representative'
-    // render: renderRepresentativeName
+    key: 'occupation',
+    label: 'Occupation'
   },
   {
-    key: 'user.accountType',
-    label: 'type',
-    render: renderType
+    key: 'annualIncome',
+    label: 'Annual Income',
+    render: renderIncome
   },
   {
     key: 'cynopsis.riskRating',

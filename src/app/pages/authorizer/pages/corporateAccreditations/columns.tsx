@@ -19,6 +19,7 @@ const renderColumnWithApproval = (row: object, status: string) => {
         item={row}
         cacheQueryKey={''}
         featureCategory='corporates/accreditation'
+        statusFieldName={'accreditationStatus'}
       />
     </Box>
   )
