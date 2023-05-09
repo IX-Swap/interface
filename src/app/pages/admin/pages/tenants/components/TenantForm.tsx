@@ -14,7 +14,7 @@ import { SaveTenantButton } from './SaveTenantButton'
 export const TenantForm = ({
   tenant
 }: {
-  tenant: TenantFormValues | undefined
+  tenant?: TenantFormValues | undefined
 }) => {
   const { isTablet } = useAppBreakpoints()
 

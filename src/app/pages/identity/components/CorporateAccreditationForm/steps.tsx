@@ -1,10 +1,6 @@
 import React from 'react'
-import {
-  getCorporateInvestorDeclarationFormValues,
-  getCorporateInvestorTaxDeclarationFormValues
-} from 'app/pages/identity/utils/corporate/forms'
+import { getCorporateInvestorDeclarationFormValues } from 'app/pages/identity/utils/corporate/forms'
 import { getCorporateInvestorDeclarationRequestPayload } from 'app/pages/identity/utils/corporate/requests'
-import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import {
   corporateAccreditationSchema,
@@ -30,13 +26,11 @@ export const getCorporateAccreditationFormSteps = () => [
     label: 'Review & Submit',
     getFormValues: (data: any) => {
       return {
-        ...getCorporateInvestorTaxDeclarationFormValues(data),
         ...getCorporateInvestorDeclarationFormValues(data)
       }
     },
     getRequestPayload: (data: any) => {
       return {
-        ...getTaxDeclarationRequestPayload(data),
         ...getCorporateInvestorDeclarationRequestPayload(data)
       }
     },

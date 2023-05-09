@@ -165,6 +165,7 @@ export const InvestorDeclarationForm = ({
                   name='applyingAs'
                   label=''
                   control={control}
+                  defaultValue={'accredited'}
                 >
                   <Grid
                     container
@@ -234,14 +235,15 @@ export const InvestorDeclarationForm = ({
                 </Grid>
               </FieldContainer>
             </Grid>
-            {isCorporate && (
+            {isCorporate ? (
               <CorporateDocuments corporateType={corporateType} />
+            ) : (
+              <Grid item xs={12}>
+                <FieldContainer>
+                  <IndividualUploadDocumentsForm />
+                </FieldContainer>
+              </Grid>
             )}
-            <Grid item xs={12}>
-              <FieldContainer>
-                <IndividualUploadDocumentsForm />
-              </FieldContainer>
-            </Grid>
           </>
         ) : (
           <Grid item xs={12}>
@@ -256,7 +258,8 @@ export const InvestorDeclarationForm = ({
                   <Grid item>
                     <UploadDocumentField
                       name='institutionalInvestorDocuments'
-                      label=''
+                      label='Institutional Investor Documents'
+                      hideLabel
                       helperElement={
                         <Typography
                           color={'text.secondary'}
