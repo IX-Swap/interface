@@ -6,6 +6,7 @@ import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { Grid, Typography } from '@mui/material'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DeclarationsListItem } from 'app/pages/identity/components/DeclarationsListItem/DeclarationsListItem'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface OptInRequirementViewProps {
   data: IndividualIdentity
@@ -16,6 +17,11 @@ export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
     data.declarations?.investorsStatus?.optInAgreementsSafeguards
   const optInAgreementsOptOut =
     data.declarations?.investorsStatus?.optInAgreementsOptOut
+  const { applyingAs } = data
+
+  const investorRole = capitalizeFirstLetter(
+    applyingAs.length > 0 ? applyingAs[0] : 'accredited'
+  )
 
   return (
     <FieldContainer>
@@ -26,17 +32,17 @@ export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
           </Grid>
           <Grid item>
             <Typography fontWeight={500} variant={'subtitle1'}>
-              I confirm to be treated as an “Accredited Investor” by InvestaX
+              {`I confirm to be treated as an “${investorRole} Investor” by InvestaX`}
             </Typography>
           </Grid>
 
           <Grid item container direction={'column'} spacing={2}>
             <DeclarationsListItem
-              label={<SafeguardAgreements />}
+              label={<SafeguardAgreements investorRole={investorRole} />}
               value={optInAgreementsSafeguards}
             />
             <DeclarationsListItem
-              label={<OptInAgreementsIndividual />}
+              label={<OptInAgreementsIndividual investorRole={investorRole} />}
               value={optInAgreementsOptOut}
             />
           </Grid>

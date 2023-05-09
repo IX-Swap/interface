@@ -264,6 +264,7 @@ export interface CorporateFields {
   businessActivity: string
   sourceOfFund: string
   isInstitutionalInvestor: boolean
+  isIntermediaryInvestor?: boolean
   type:
     | 'investor'
     | 'issuer'

@@ -20,8 +20,6 @@ export const InstitutionalInvestorDeclarationView: React.FC<
       doc.type === 'Institutional Investor Documents'
   )
 
-  console.log(institutionalInvestorDocuments)
-
   return (
     <FieldContainer>
       <Grid container direction={'column'} spacing={5}>

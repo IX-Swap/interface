@@ -20,6 +20,8 @@ export const CorporateDeclarationsList = ({
   type = 'checkbox'
 }: CorporateDeclarationsListProps) => {
   const WrapperComponent = title !== undefined ? FieldContainer : React.Fragment
+  const selected = Object.values(data)[0]
+
   return (
     <WrapperComponent>
       <Grid container spacing={5} direction={'column'}>
@@ -56,10 +58,10 @@ export const CorporateDeclarationsList = ({
                     <DeclarationsListItem key={i} label={label} value={false} />
                   ))}
               </>
-            ) : typeof Object.values(data)[0] !== 'undefined' ? (
+            ) : typeof selected !== 'undefined' ? (
               <DeclarationsListItem
                 key={0}
-                label={labelMap[Object.values(data)[0]]}
+                label={labelMap[selected as unknown as string]}
                 value={true}
               />
             ) : (
