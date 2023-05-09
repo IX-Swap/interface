@@ -175,8 +175,8 @@
     "@walletconnect/ethereum-provider": "1.6.5"
   },
   "scripts": {
-    "start": "set NODE_ENV=development && webpack serve --color --progress",
-    "build": "set NODE_ENV=production && webpack --color --progress",
+    "start": "NODE_ENV=development webpack serve --color --progress",
+    "build": "NODE_ENV=production webpack --color --progress",
     "test:e2e": "playwright test __tests__/tests --project chrome",
     "test:metamask": "xvfb-run playwright test __tests__/tests --project chrome-metamask --headed",
     "test": "jest --env=jest-environment-jsdom-sixteen --colors --silent",
