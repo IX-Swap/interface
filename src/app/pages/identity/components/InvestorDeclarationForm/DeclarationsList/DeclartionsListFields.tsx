@@ -24,7 +24,7 @@ export const DeclarationsListFields = ({
   data,
   type = 'checkbox'
 }: DeclarationsListFieldsProps) => {
-  const { control } = useFormContext()
+  const { control, watch } = useFormContext()
   const classes = useStyles()
 
   return (
@@ -67,10 +67,29 @@ export const DeclarationsListFields = ({
         >
           <Grid container direction='column'>
             {data.map(item => {
+              const selected = watch('expertInvestorAgreement')
               return (
-                <Grid item sx={{ padding: '12px 6px' }}>
+                <Grid item sx={{ padding: '0 6px' }}>
                   <FormControlLabel
-                    label={<Typography>{item.label}</Typography>}
+                    label={
+                      <Typography
+                        color={
+                          typeof control?.formStateRef?.current?.errors
+                            ?.expertInvestorAgreement !== 'undefined'
+                            ? 'error'
+                            : item.name === selected
+                            ? 'text.primary'
+                            : 'text.secondary'
+                        }
+                        sx={{
+                          marginTop: '15px',
+                          opacity: 0.8,
+                          lineHeight: 1.5
+                        }}
+                      >
+                        {item.label}
+                      </Typography>
+                    }
                     value={item.name}
                     control={<UIRadio />}
                   />

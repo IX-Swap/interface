@@ -19,24 +19,15 @@ export const getCorporateAccreditationFormSteps = () => [
         identityType='corporate'
         corporateType='investor'
       />
-    ),
-    formId: 'investor-declaration'
+    )
   },
   {
     label: 'Review & Submit',
-    getFormValues: (data: any) => {
-      return {
-        ...getCorporateInvestorDeclarationFormValues(data)
-      }
-    },
-    getRequestPayload: (data: any) => {
-      return {
-        ...getCorporateInvestorDeclarationRequestPayload(data)
-      }
-    },
+    getFormValues: (data: any) =>
+      getCorporateInvestorDeclarationFormValues(data),
+    getRequestPayload: (data: any) =>
+      getCorporateInvestorDeclarationRequestPayload(data),
     validationSchema: corporateAccreditationSchema,
-    component: () => <CorporateAccreditationContainer />,
-    // formId: 'submit'
-    formId: 'submit-accreditation'
+    component: () => <CorporateAccreditationContainer />
   }
 ]

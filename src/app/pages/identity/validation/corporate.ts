@@ -329,7 +329,16 @@ export const corporateInvestorStatusDeclarationSchema = yup
     isInstitutionalInvestor: yup.bool(),
     isIntermediaryInvestor: yup.bool(),
 
-    optInAgreements: yup.bool().oneOf([true], 'Opt-In Requirement is required'),
+    optInAgreements: yup.bool().when('applyingAs', {
+      is: value => {
+        // console.log(value, 'testetest')
+        return value === 'accredited' || value === 'expert'
+      },
+      then: yup
+        .bool()
+        .oneOf([true], 'Opt-In Requirement is required')
+        .required(validationMessages.required)
+    }),
     // @ts-expect-error
     primaryOfferingServices: optInAgreementsDependentValueSchema,
     // @ts-expect-error
@@ -347,7 +356,7 @@ export const corporateInvestorStatusDeclarationSchema = yup
     financialDocuments: corporateDocumentSchema
   })
   .test(
-    'investorDeclarations',
+    'investorDeclarationsCorporate',
     'Please choose at least one option under "Investor Role Declaration" section',
     investorDeclarationsTests
   )
@@ -366,13 +375,14 @@ export const corporateInvestorSchema = yup.object().shape<any>({
   ...directorsAndBeneficialOwnersSchema.fields
 })
 
-export const corporateAccreditationSchema = yup
-  .object()
-  .shape<any>({
-    ...corporateInvestorStatusDeclarationSchema.fields
-  })
-  .test(
-    'investorDeclarations',
-    'Please choose at least one option under "Investor Role Declaration" section',
-    investorDeclarationsTests
-  )
+export const corporateAccreditationSchema = () =>
+  yup
+    .object()
+    .shape<any>({
+      ...corporateInvestorStatusDeclarationSchema.fields
+    })
+    .test(
+      'investorDeclarationsCorporate',
+      'Please choose at least one option under "Investor Role Declaration" section',
+      investorDeclarationsTests
+    )
