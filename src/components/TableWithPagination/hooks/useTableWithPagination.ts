@@ -17,6 +17,10 @@ export interface UseTableWithPaginationReturnType<TData> {
   setRowsPerPage: (count: number) => void
   total: number
   refetch: () => void
+  sort: string
+  sortBy: string
+  setSort: (sort: string) => void
+  setSortBy: (sortBy: string) => void
 }
 
 interface UseTableWithPaginationParams {
@@ -46,6 +50,8 @@ export const useTableWithPagination = <TData>({
     defaultRowsPerPage !== undefined ? defaultRowsPerPage : 25
   )
   const filter = defaultFilter
+  const [sort, setSort] = useState('asc')
+  const [sortBy, setSortBy] = useState('createdAt')
 
   useEffect(() => {
     if (disabledUseEffect !== undefined && !disabledUseEffect) {
@@ -55,7 +61,14 @@ export const useTableWithPagination = <TData>({
   }, [filter, disabledUseEffect])
   const [totalPage, setTotalPage] = useState(0)
 
-  const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
+  const fetcher = async (
+    key: string,
+    p: number,
+    r: number,
+    f?: BaseFilter,
+    s?: string,
+    sBy?: string
+  ) => {
     const { isFavorite, isFavoriteCount }: Storage = localStorage
     if (
       isFavorite !== null &&
@@ -73,6 +86,8 @@ export const useTableWithPagination = <TData>({
     const payload: KeyValueMap<any> = {
       skip: p * r,
       limit: r,
+      sort: s,
+      sortBy: sBy,
       ...(filter ?? {})
     }
     const result =
@@ -91,9 +106,13 @@ export const useTableWithPagination = <TData>({
     isFetching,
     isLoading,
     isFetchingMore
-  } = useInfiniteQuery([queryKey, page, rowsPerPage, filter], fetcher, {
-    enabled: uri !== undefined && queryEnabled
-  })
+  } = useInfiniteQuery(
+    [queryKey, page, rowsPerPage, filter, sort, sortBy],
+    fetcher,
+    {
+      enabled: uri !== undefined && queryEnabled
+    }
+  )
 
   const data = useMemo(
     () => (_data !== undefined ? _data.filter(page => page !== undefined) : []),
@@ -164,6 +183,10 @@ export const useTableWithPagination = <TData>({
     rowsPerPage,
     status,
     isLoading: isActuallyLoading,
-    refetch
+    refetch,
+    sort,
+    sortBy,
+    setSort,
+    setSortBy
   }
 }
