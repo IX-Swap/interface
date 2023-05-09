@@ -23,3 +23,12 @@ export const individualInvestorAgreementsMap = {
   jointlyHeldAccount:
     'My jointly held account with my spouse/any individual meets any of the above'
 }
+
+export const expertInvestorAgreementsMap = {
+  capitalMarketExpert:
+    'I am a person whose business involves the acquisition and disposal, or the holding, of capital markets products, whether as principal or agent;',
+  trusteeExpert:
+    'I am a trustee of such trust as the Monetary Authority of Singapore may prescribe, when acting in that capacity or;',
+  prescribedExpert:
+    'I am a person prescribed to be an expert investor by the Monetary Authority of Singapore.'
+}

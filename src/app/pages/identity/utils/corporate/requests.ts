@@ -78,14 +78,21 @@ export const getCorporateInvestorDeclarationRequestPayload = (
     return result
   }, [])
 
-  const isInstitutionalInvestor = values.isInstitutionalInvestor
+  const {
+    applyingAs,
+    isInstitutionalInvestor,
+    isIntermediaryInvestor,
+    ...rest
+  } = values
 
   return {
+    applyingAs: [applyingAs],
     declarations: {
-      investorsStatus: values
+      investorsStatus: rest
     },
     documents: documents.filter(doc => doc !== undefined),
-    isInstitutionalInvestor: isInstitutionalInvestor
+    isInstitutionalInvestor,
+    isIntermediaryInvestor
   }
 }
 
@@ -129,7 +136,6 @@ export const getCorporateAccreditationSubmitPayload = (values: any) => {
   return {
     documents: values.documents.map((item: { _id: any }) => item._id),
     declarations: values.declarations,
-    taxResidencies: values.taxResidencies,
     isInstitutionalInvestor: values.isInstitutionalInvestor
   }
 }

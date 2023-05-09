@@ -9,13 +9,15 @@ export interface CorporateDeclarationsListProps {
   subtitle: string
   data: Record<string, boolean | undefined>
   labelMap: Record<string, React.ReactNode>
+  type?: 'checkbox' | 'radio'
 }
 
 export const CorporateDeclarationsList = ({
   title,
   subtitle,
   data,
-  labelMap
+  labelMap,
+  type = 'checkbox'
 }: CorporateDeclarationsListProps) => {
   const WrapperComponent = title !== undefined ? FieldContainer : React.Fragment
   return (
@@ -32,21 +34,35 @@ export const CorporateDeclarationsList = ({
             <Typography variant={'subtitle1'}>{subtitle}</Typography>
           </Grid>
           <Grid item container spacing={2}>
-            {Object.entries(data).map((item, index) => {
-              const key = labelMap[item[0]]
-              const value = item[1]
-              if (value === true) {
-                return (
-                  <DeclarationsListItem key={index} label={key} value={value} />
-                )
-              }
-              return null
-            })}
+            {type === 'checkbox' ? (
+              <>
+                {Object.entries(data).map((item, index) => {
+                  const key = labelMap[item[0]]
+                  const value = item[1]
+                  if (value === true) {
+                    return (
+                      <DeclarationsListItem
+                        key={index}
+                        label={key}
+                        value={value}
+                      />
+                    )
+                  }
+                  return null
+                })}
 
-            {Object.values(data).every(item => item !== true) &&
-              Object.values(labelMap).map((label, i) => (
-                <DeclarationsListItem key={i} label={label} value={false} />
-              ))}
+                {Object.values(data).every(item => item !== true) &&
+                  Object.values(labelMap).map((label, i) => (
+                    <DeclarationsListItem key={i} label={label} value={false} />
+                  ))}
+              </>
+            ) : (
+              <DeclarationsListItem
+                key={0}
+                label={labelMap[Object.values(data)[0]]}
+                value={true}
+              />
+            )}
           </Grid>
         </Grid>
       </Grid>

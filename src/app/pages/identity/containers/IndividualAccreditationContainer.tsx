@@ -1,32 +1,28 @@
 import React, { ComponentType, createElement } from 'react'
 import { useParams } from 'react-router-dom'
-import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { useIndividualAccreditation } from '../hooks/useIndividualAccreditation'
 import { IndividualAccreditationView } from '../components/IndividualAccreditationView/IndividualAccreditationView'
 
 export interface IndividualAccreditationContainerProps {
   component?: ComponentType<{
     data: any
-    type?: CorporateType
   }>
   loadingComponent?: ComponentType
   errorComponent?: ComponentType
   fallbackComponent?: ComponentType
-  type?: CorporateType
 }
 
 export const IndividualAccreditationContainer = ({
   component,
   loadingComponent,
   errorComponent,
-  fallbackComponent,
-  type
+  fallbackComponent
 }: IndividualAccreditationContainerProps) => {
-  const { individualId } = useParams<{
+  const { identityId } = useParams<{
     userId: string
-    individualId: string
+    identityId: string
   }>()
-  const { data, isLoading, isError } = useIndividualAccreditation(individualId)
+  const { data, isLoading, isError } = useIndividualAccreditation(identityId)
 
   if (isLoading) {
     return loadingComponent === undefined
@@ -45,7 +41,7 @@ export const IndividualAccreditationContainer = ({
   }
 
   if (component !== undefined) {
-    return createElement(component, { data, type })
+    return createElement(component, { data })
   }
 
   return <IndividualAccreditationView data={data} />

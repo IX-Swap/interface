@@ -13,7 +13,7 @@ import { DataroomFile } from 'types/dataroomFile'
 
 export interface UploadDocumentFieldProps {
   name: any
-  label: string
+  label?: string
   helperElement?: React.ReactNode
   tooltipContent?: any
   fieldId?: any
@@ -55,7 +55,7 @@ export const UploadDocumentField = ({
 
   return (
     <Grid container spacing={3}>
-      {label !== '' && (
+      {label !== '' ? (
         <Grid item xs={12}>
           <Box>
             <Grid item container alignItems='center'>
@@ -71,6 +71,12 @@ export const UploadDocumentField = ({
               ) : null}
             </Grid>
           </Box>
+          {helperElement !== undefined ? (
+            <Box mt={1}>{helperElement}</Box>
+          ) : null}
+        </Grid>
+      ) : (
+        <Grid item xs={12}>
           {helperElement !== undefined ? (
             <Box mt={1}>{helperElement}</Box>
           ) : null}

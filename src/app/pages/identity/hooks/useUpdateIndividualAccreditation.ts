@@ -16,6 +16,8 @@ export const useUpdateIndividualAccreditation = () => {
     values.step =
       typeof values.step === 'undefined' || values.step < 2 ? 2 : values.step
 
+    delete values._id
+
     return await apiService.put<IndividualIdentity>(uri, {
       ...values
     })

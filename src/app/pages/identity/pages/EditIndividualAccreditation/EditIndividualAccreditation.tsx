@@ -1,7 +1,6 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import {} from 'app/pages/identity/containers/CorporateAccreditationContainer'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { RootContainer } from 'ui/RootContainer'
 import { IndividualAccreditationForm } from '../../components/IndividualAccreditationForm/IndividualAccreditationForm'

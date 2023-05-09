@@ -1,8 +1,10 @@
 import React from 'react'
 import {
   corporateInvestorAgreementsMap,
-  individualInvestorAgreementsMap
+  individualInvestorAgreementsMap,
+  expertInvestorAgreementsMap
 } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/agreements'
+// import { institutionalInvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorAgreements/InstitutionalInvestorAgreements'
 import {
   CorporateIdentity,
   IndividualIdentity
@@ -18,6 +20,7 @@ export const InvestorDeclarationView = ({
   data,
   isCorporate = true
 }: InvestorDeclarationViewProps) => {
+  const { applyingAs } = data
   const {
     assets,
     trustee,
@@ -28,10 +31,15 @@ export const InvestorDeclarationView = ({
     personalAssets,
     income,
     financialAsset,
-    jointlyHeldAccount
+    jointlyHeldAccount,
+    expertInvestorAgreement
   } = data.declarations?.investorsStatus ?? {}
 
-  const corporateInvestorDeclaration = {
+  const expertInvestor = {
+    expertInvestorAgreement
+  }
+
+  const corporateAccreditedInvestor = {
     assets,
     trustee,
     accreditedShareholders,
@@ -47,24 +55,38 @@ export const InvestorDeclarationView = ({
     jointlyHeldAccount
   }
 
+  const investorRole: string =
+    typeof applyingAs !== 'undefined' && applyingAs.length > 0
+      ? applyingAs[0]
+      : 'accredited'
+  const role = investorRole.charAt(0).toUpperCase() + investorRole.slice(1)
+
+  let agreementsData
+  let agreementsMap
+
+  //   if (role === 'institutional') {
+  //     agreementsMap = institutionalInvestorAgreements
+  //   } else {
+  if (investorRole === 'accredited') {
+    agreementsData = isCorporate
+      ? corporateAccreditedInvestor
+      : individualAccreditedInvestor
+    agreementsMap = isCorporate
+      ? corporateInvestorAgreementsMap
+      : individualInvestorAgreementsMap
+  } else {
+    agreementsData = expertInvestor
+    agreementsMap = expertInvestorAgreementsMap
+  }
+  //   }
+
   return (
     <CorporateDeclarationsList
-      title={'Investor Status Declaration'}
-      subtitle={
-        isCorporate
-          ? 'I declare that I am "Corporate Accredited Investor"'
-          : 'I declare that I am "Individual Accredited Investor"'
-      }
-      data={
-        isCorporate
-          ? corporateInvestorDeclaration
-          : individualAccreditedInvestor
-      }
-      labelMap={
-        isCorporate
-          ? corporateInvestorAgreementsMap
-          : individualInvestorAgreementsMap
-      }
+      title={'Investor Role Declaration'}
+      subtitle={`I declare that I am an ${role} Investor`}
+      data={agreementsData}
+      type={investorRole === 'expert' ? 'radio' : 'checkbox'}
+      labelMap={agreementsMap}
     />
   )
 }
