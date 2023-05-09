@@ -173,7 +173,7 @@ export interface CorporateInvestorDocumentsFormValues {
   evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
   corporateDocuments: Array<FormArrayElement<DataroomFile>>
   financialDocuments: Array<FormArrayElement<DataroomFile>>
-  institutionalInvestorDocuments: Array<FormArrayElement<DataroomFile>>
+  institutionalInvestorDocuments?: Array<FormArrayElement<DataroomFile>>
 }
 export interface DocumentFieldArrayItemValue {
   value: DataroomFile
@@ -294,7 +294,7 @@ export interface OptOutRequirements {
 }
 
 export interface OptInAgreements {
-  optInAgreements: boolean
+  optInAgreements?: boolean
   optInAgreementsSafeguards: boolean
   optInAgreementsOptOut: boolean
 }

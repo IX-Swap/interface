@@ -12,7 +12,8 @@ import {
 import {
   addressSchema,
   documentsSchema,
-  //   institutionalInvestorDocumentsSchema,
+  corporateDocumentSchema,
+  institutionalInvestorDocumentsSchema,
   emailSchema,
   investorStatusDeclarationItemSchema,
   optInAgreementsDependentValueSchema,
@@ -328,10 +329,7 @@ export const corporateInvestorStatusDeclarationSchema = yup
     isInstitutionalInvestor: yup.bool(),
     isIntermediaryInvestor: yup.bool(),
 
-    optInAgreements: yup
-      .bool()
-      .oneOf([true], 'Opt-In Requirement is required')
-      .required(validationMessages.required),
+    optInAgreements: yup.bool().oneOf([true], 'Opt-In Requirement is required'),
     // @ts-expect-error
     primaryOfferingServices: optInAgreementsDependentValueSchema,
     // @ts-expect-error
@@ -340,13 +338,13 @@ export const corporateInvestorStatusDeclarationSchema = yup
     digitalSecuritiesIssuance: optInAgreementsDependentValueSchema,
     // @ts-expect-error
     allServices: optInAgreementsDependentValueSchema,
-    // institutionalInvestorDocuments: institutionalInvestorDocumentsSchema,
+    institutionalInvestorDocuments: institutionalInvestorDocumentsSchema,
     // @ts-expect-error
-    evidenceOfAccreditation: documentsSchema,
+    evidenceOfAccreditation: corporateDocumentSchema,
     // @ts-expect-error
-    corporateDocuments: documentsSchema,
+    corporateDocuments: corporateDocumentSchema,
     // @ts-expect-error
-    financialDocuments: documentsSchema
+    financialDocuments: corporateDocumentSchema
   })
   .test(
     'investorDeclarations',

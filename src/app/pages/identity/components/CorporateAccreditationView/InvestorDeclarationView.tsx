@@ -4,7 +4,7 @@ import {
   individualInvestorAgreementsMap,
   expertInvestorAgreementsMap
 } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/agreements'
-// import { institutionalInvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorAgreements/InstitutionalInvestorAgreements'
+import { institutionalInvestorAgreementsMap } from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorAgreements/InstitutionalInvestorAgreements'
 import {
   CorporateIdentity,
   IndividualIdentity
@@ -20,7 +20,7 @@ export const InvestorDeclarationView = ({
   data,
   isCorporate = true
 }: InvestorDeclarationViewProps) => {
-  const { applyingAs } = data
+  const { applyingAs, isInstitutionalInvestor, isIntermediaryInvestor } = data
   const {
     assets,
     trustee,
@@ -37,6 +37,11 @@ export const InvestorDeclarationView = ({
 
   const expertInvestor = {
     expertInvestorAgreement
+  }
+
+  const institutionalInvestor = {
+    isInstitutionalInvestor,
+    isIntermediaryInvestor
   }
 
   const corporateAccreditedInvestor = {
@@ -64,21 +69,22 @@ export const InvestorDeclarationView = ({
   let agreementsData
   let agreementsMap
 
-  //   if (role === 'institutional') {
-  //     agreementsMap = institutionalInvestorAgreements
-  //   } else {
-  if (investorRole === 'accredited') {
-    agreementsData = isCorporate
-      ? corporateAccreditedInvestor
-      : individualAccreditedInvestor
-    agreementsMap = isCorporate
-      ? corporateInvestorAgreementsMap
-      : individualInvestorAgreementsMap
+  if (investorRole === 'institutional') {
+    agreementsData = institutionalInvestor
+    agreementsMap = institutionalInvestorAgreementsMap
   } else {
-    agreementsData = expertInvestor
-    agreementsMap = expertInvestorAgreementsMap
+    if (investorRole === 'accredited') {
+      agreementsData = isCorporate
+        ? corporateAccreditedInvestor
+        : individualAccreditedInvestor
+      agreementsMap = isCorporate
+        ? corporateInvestorAgreementsMap
+        : individualInvestorAgreementsMap
+    } else {
+      agreementsData = expertInvestor
+      agreementsMap = expertInvestorAgreementsMap
+    }
   }
-  //   }
 
   return (
     <CorporateDeclarationsList

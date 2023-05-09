@@ -8,12 +8,10 @@ import { InstitutionalInvestorDeclarationView } from 'app/pages/identity/compone
 
 export interface CorporateAccreditationViewProps {
   data: CorporateIdentity
-  showReview?: boolean
 }
 
 export const CorporateAccreditationView = ({
-  data,
-  showReview = false
+  data
 }: CorporateAccreditationViewProps) => {
   return (
     <Grid container spacing={2} direction='column'>
@@ -21,18 +19,19 @@ export const CorporateAccreditationView = ({
         <InvestorDeclarationView data={data} />
       </Grid>
 
-      <Grid item>
-        <OptInView data={data} />
-      </Grid>
-
       {data.applyingAs[0] === 'institutional' ? (
         <Grid item>
           <InstitutionalInvestorDeclarationView data={data} />
         </Grid>
       ) : (
-        <Grid item>
-          <DocumentsView data={data.documents} />
-        </Grid>
+        <>
+          <Grid item>
+            <OptInView data={data} />
+          </Grid>
+          <Grid item>
+            <DocumentsView data={data.documents} />
+          </Grid>
+        </>
       )}
     </Grid>
   )

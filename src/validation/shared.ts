@@ -187,13 +187,20 @@ export const documentsSchema = yup
   )
   .required(validationMessages.required)
 
+export const corporateDocumentSchema = yup
+  .array<DocumentFieldArrayItemValue>()
+  .when('applyingAs', {
+    is: value => value === 'accredited' || value === 'expert',
+    then: documentsSchema
+  })
+
 export const institutionalInvestorDocumentsSchema = yup
   .array<DocumentFieldArrayItemValue>()
   .when('isInstitutionalInvestor', {
     is: true,
     then: documentsSchema
   })
-  .required(validationMessages.required)
+//   .required(validationMessages.required)
 
 export const investorStatusDeclarationItemSchema = yup
   .bool()
