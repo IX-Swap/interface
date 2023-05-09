@@ -17,6 +17,7 @@ import {
   investorStatusDeclarationItemSchema,
   optInAgreementsDependentValueSchema,
   taxIdentificationNumberSchema,
+  expertInvestorAgreementSchema,
   validationMessages
 } from 'validation/shared'
 import * as yup from 'yup'
@@ -274,6 +275,42 @@ export const corporateTaxDeclarationSchema = yup.object().shape({
   )
 })
 
+const investorDeclarationsTests = function (values: any) {
+  if (values === undefined || values === null) {
+    return false
+  }
+
+  if (values.applyingAs !== 'expert') {
+    values.expertInvestorAgreement = 'capitalMarketExpert'
+  }
+
+  if (values.applyingAs !== 'accredited') {
+    values.assets = false
+    values.trustee = false
+    values.accreditedBeneficiaries = false
+    values.accreditedSettlors = false
+    values.accreditedShareholders = false
+    values.partnership = false
+  } else {
+    const financialDeclarations = Object.entries(values)
+      .filter(([key]) => {
+        return (
+          key === 'assets' ||
+          key === 'trustee' ||
+          key === 'accreditedBeneficiaries' ||
+          key === 'accreditedSettlors' ||
+          key === 'accreditedShareholders' ||
+          key === 'partnership'
+        )
+      })
+      .map(([_key, value]) => value)
+    const result = financialDeclarations.every(value => value === false)
+    return !result
+  }
+
+  return true
+}
+
 export const corporateInvestorStatusDeclarationSchema = yup
   .object()
   .shape<
@@ -286,6 +323,7 @@ export const corporateInvestorStatusDeclarationSchema = yup
     accreditedSettlors: investorStatusDeclarationItemSchema,
     accreditedShareholders: investorStatusDeclarationItemSchema,
     partnership: investorStatusDeclarationItemSchema,
+    expertInvestorAgreement: expertInvestorAgreementSchema,
 
     isInstitutionalInvestor: yup.bool(),
     isIntermediaryInvestor: yup.bool(),
@@ -310,6 +348,11 @@ export const corporateInvestorStatusDeclarationSchema = yup
     // @ts-expect-error
     financialDocuments: documentsSchema
   })
+  .test(
+    'investorDeclarations',
+    'Please choose at least one option under "Investor Role Declaration" section',
+    investorDeclarationsTests
+  )
 
 export const corporateInvestorAgreementsSchema = yup
   .object()
@@ -325,6 +368,13 @@ export const corporateInvestorSchema = yup.object().shape<any>({
   ...directorsAndBeneficialOwnersSchema.fields
 })
 
-export const corporateAccreditationSchema = yup.object().shape<any>({
-  ...corporateInvestorStatusDeclarationSchema.fields
-})
+export const corporateAccreditationSchema = yup
+  .object()
+  .shape<any>({
+    ...corporateInvestorStatusDeclarationSchema.fields
+  })
+  .test(
+    'investorDeclarations',
+    'Please choose at least one option under "Investor Role Declaration" section',
+    investorDeclarationsTests
+  )

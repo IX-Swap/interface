@@ -112,7 +112,7 @@ export const InvestorDeclarationForm = ({
 
   useEffect(() => {
     const role = control.defaultValuesRef.current.applyingAs
-    const index = role === 'accredited' ? 0 : role === 'expert' ? 1 : 2
+    const index = role === 'expert' ? 1 : role === 'institutional' ? 2 : 0
 
     radioButtonRef?.current?.children[index]?.click()
   }, [control])
