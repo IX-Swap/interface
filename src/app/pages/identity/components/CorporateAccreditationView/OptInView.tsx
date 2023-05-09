@@ -8,17 +8,27 @@ import {
   IndividualIdentity
 } from 'app/pages/identity/types/forms'
 import React from 'react'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface OptInViewProps {
   data: IndividualIdentity | CorporateIdentity
 }
 
 export const OptInView: React.FC<OptInViewProps> = ({ data }) => {
-  const { optInAgreements } = data.declarations?.investorsStatus ?? {}
+  const {
+    applyingAs,
+    declarations: {
+      investorsStatus: { optInAgreements }
+    }
+  } = data
 
   const optInRequirement = {
     optInAgreements: optInAgreements ?? false
   }
+
+  const investorRole = capitalizeFirstLetter(
+    applyingAs.length > 0 ? applyingAs[0] : 'accredited'
+  )
 
   return (
     <FieldContainer>
@@ -29,10 +39,10 @@ export const OptInView: React.FC<OptInViewProps> = ({ data }) => {
           </Grid>
           <Grid item>
             <DeclarationsList
-              title='I confirm to be treated as an “Accredited Investor” by InvestaX'
+              title={`I confirm to be treated as an “${investorRole} Investor” by InvestaX`}
               data={optInRequirement}
               labelMap={{
-                optInAgreements: <OptInAgreements />
+                optInAgreements: <OptInAgreements investorRole={investorRole} />
               }}
             />
           </Grid>

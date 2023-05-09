@@ -11,7 +11,6 @@ import { useFormContext } from 'react-hook-form'
 import { IdentityType, InvestorRole } from 'app/pages/identity/utils/shared'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
-// import { Divider } from 'ui/Divider'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
@@ -20,6 +19,7 @@ import { useStyles } from 'app/pages/accounts/components/CurrencySelect/Currency
 import classnames from 'classnames'
 import { IndividualUploadDocumentsForm } from '../UploadDocumentsForm/IndividualUploadDocumentsForm'
 import { TypedField } from 'components/form/TypedField'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
@@ -32,36 +32,18 @@ export const InvestorDeclarationForm = ({
 }: InvestorDeclarationFormProps) => {
   const { formState, trigger, control, setValue } = useFormContext()
   const classes = useStyles()
+  const investorRoles = ['accredited', 'expert', 'institutional']
   const [investorRole, setInvestorRole] = useState('accredited')
   const isCorporate = identityType === 'corporate'
   const radioButtonRef = useRef<any>()
-  const radioButtonsList = [
-    {
-      label: 'Accredited Investor',
-      value: 'accredited'
-    },
-    {
-      label: 'Expert Investor',
-      value: 'expert'
-    },
-    {
-      label: 'Institutional Investor',
-      value: 'institutional'
-    }
-  ]
-  const getInvestorRole = (code: string) => {
-    const role = radioButtonsList.find(role => role.value === code)
-
-    return typeof role !== 'undefined' ? role.label : 'Accredited Investor'
-  }
 
   if (!isCorporate) {
-    radioButtonsList.pop()
+    investorRoles.pop()
   }
 
-  const declaredInvestorRole = `I declare that I am an ${getInvestorRole(
+  const declaredInvestorRole = `I declare that I am an ${capitalizeFirstLetter(
     investorRole
-  )}.`
+  )} Investor.`
 
   const hasDeclaredInstitutionalInvestor = investorRole === 'institutional'
 
@@ -70,11 +52,20 @@ export const InvestorDeclarationForm = ({
       return [
         {
           name: 'optInAgreementsSafeguards',
-          label: <SafeguardAgreements />
+          label: (
+            <SafeguardAgreements
+              investorRole={capitalizeFirstLetter(investorRole)}
+            />
+          )
         },
         {
           name: 'optInAgreementsOptOut',
-          label: <OptInAgreementsIndividual showOptOutDialog />
+          label: (
+            <OptInAgreementsIndividual
+              investorRole={capitalizeFirstLetter(investorRole)}
+              showOptOutDialog
+            />
+          )
         }
       ]
     }
@@ -82,7 +73,12 @@ export const InvestorDeclarationForm = ({
     return [
       {
         name: 'optInAgreements',
-        label: <OptInAgreements showOptOutDialog />
+        label: (
+          <OptInAgreements
+            investorRole={capitalizeFirstLetter(investorRole)}
+            showOptOutDialog
+          />
+        )
       }
     ]
   }
@@ -173,7 +169,7 @@ export const InvestorDeclarationForm = ({
                     gap={1.5}
                     ref={radioButtonRef}
                   >
-                    {radioButtonsList.map(({ label, value }) => {
+                    {investorRoles.map(role => {
                       return (
                         <Grid
                           item
@@ -181,16 +177,16 @@ export const InvestorDeclarationForm = ({
                           flexGrow={1}
                           flexBasis={0}
                           className={classnames(classes.button, {
-                            [classes.active]: investorRole === value
+                            [classes.active]: investorRole === role
                           })}
                           onClick={() => {
-                            setInvestorRole(value)
-                            setValue('applyingAs', value)
+                            setInvestorRole(role)
+                            setValue('applyingAs', role)
                           }}
                         >
                           <FormControlLabel
-                            label={label}
-                            value={value}
+                            label={`${capitalizeFirstLetter(role)} Investor`}
+                            value={role}
                             control={<UIRadio />}
                           />
                         </Grid>

@@ -10,6 +10,7 @@ import {
   IndividualIdentity
 } from 'app/pages/identity/types/forms'
 import { CorporateDeclarationsList } from 'app/pages/identity/components/CorporateIdentityView/CorporateDeclarationsList'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface InvestorDeclarationViewProps {
   data: IndividualIdentity | CorporateIdentity
@@ -35,15 +36,6 @@ export const InvestorDeclarationView = ({
     expertInvestorAgreement
   } = data.declarations?.investorsStatus ?? {}
 
-  const expertInvestor = {
-    expertInvestorAgreement
-  }
-
-  const institutionalInvestor = {
-    isInstitutionalInvestor,
-    isIntermediaryInvestor
-  }
-
   const corporateAccreditedInvestor = {
     assets,
     trustee,
@@ -60,36 +52,42 @@ export const InvestorDeclarationView = ({
     jointlyHeldAccount
   }
 
+  const expertInvestor = {
+    expertInvestorAgreement
+  }
+
+  const institutionalInvestor = {
+    isInstitutionalInvestor,
+    isIntermediaryInvestor
+  }
+
   const investorRole: string =
     typeof applyingAs !== 'undefined' && applyingAs.length > 0
       ? applyingAs[0]
       : 'accredited'
-  const role = investorRole.charAt(0).toUpperCase() + investorRole.slice(1)
 
-  let agreementsData
-  let agreementsMap
+  // * Accredited Investor Agreements
+  let agreementsData: Record<string, boolean | undefined> = isCorporate
+    ? corporateAccreditedInvestor
+    : individualAccreditedInvestor
+  let agreementsMap: Record<string, React.ReactNode> = isCorporate
+    ? corporateInvestorAgreementsMap
+    : individualInvestorAgreementsMap
 
-  if (investorRole === 'institutional') {
+  if (investorRole === 'expert') {
+    agreementsData = expertInvestor
+    agreementsMap = expertInvestorAgreementsMap
+  } else if (investorRole === 'institutional') {
     agreementsData = institutionalInvestor
     agreementsMap = institutionalInvestorAgreementsMap
-  } else {
-    if (investorRole === 'accredited') {
-      agreementsData = isCorporate
-        ? corporateAccreditedInvestor
-        : individualAccreditedInvestor
-      agreementsMap = isCorporate
-        ? corporateInvestorAgreementsMap
-        : individualInvestorAgreementsMap
-    } else {
-      agreementsData = expertInvestor
-      agreementsMap = expertInvestorAgreementsMap
-    }
   }
 
   return (
     <CorporateDeclarationsList
       title={'Investor Role Declaration'}
-      subtitle={`I declare that I am an ${role} Investor`}
+      subtitle={`I declare that I am an ${capitalizeFirstLetter(
+        investorRole
+      )} Investor`}
       data={agreementsData}
       type={investorRole === 'expert' ? 'radio' : 'checkbox'}
       labelMap={agreementsMap}

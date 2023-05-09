@@ -21,21 +21,22 @@ export const optOutRequirements = [
   }
 ]
 
-export const OptOutInfoContent = () => {
+export const OptOutInfoContent = ({ investorRole = 'Accredited' }) => {
   return (
     <>
       <Grid container justifyContent='center' spacing={2}>
         <Grid item>
           <Typography color={'text.secondary'} fontWeight={500}>
-            1. I/We (“Accredited Investor” or “AI”) wish to inform you that I/We
-            would like to withdraw my/our consent to be treated as an Accredited
+            1. I/We (“{investorRole} Investor” or “AI”) wish to inform you that
+            I/We would like to withdraw my/our consent to be treated as an{' '}
+            {investorRole}
             Investor (as defined in section 4A of the Securities and Future Act,
             Chapter 289 of Singapore) by InvestaX
           </Typography>
         </Grid>
         <Grid item>
           <Typography color={'text.secondary'} fontWeight={500}>
-            2. My/Our withdrawal of consent to be treated as an Accredited
+            2. My/Our withdrawal of consent to be treated as an {investorRole}
             Investor by InvestaX is in respect of the following services (please
             tick the applicable boxes)
           </Typography>
@@ -48,17 +49,19 @@ export const OptOutInfoContent = () => {
             3. I/We agree, understand and accept that this withdrawal of consent
             will be subject to a processing time of 30 business days from the
             date of receipt of this form by InvestaX. InvestaX will notify after
-            my/our status has been updated as Non-Accredited Investor (“NAI”) in
-            its records and I/we will be treated as an AI until InvestaX
-            notifies me/us of the updated status as NAI (“Effective Date”)
+            my/our status has been updated as Non-{investorRole} Investor (“N
+            {investorRole.charAt(0)}I”) in its records and I/we will be treated
+            as an AI until InvestaX notifies me/us of the updated status as N
+            {investorRole.charAt(0)}I (“Effective Date”)
           </Typography>
         </Grid>
         <Grid item>
           <Typography color={'text.secondary'} fontWeight={500}>
-            4. From the Effective Date, I/we shall be treated as NAI by InvestaX
-            for all or any of the services mentioned above. Any transactions
-            executed by me/us or Services/Products availed by me/us prior to the
-            Effective Date will not be affected by such withdrawal of consent.
+            4. From the Effective Date, I/we shall be treated as N
+            {investorRole.charAt(0)}I by InvestaX for all or any of the services
+            mentioned above. Any transactions executed by me/us or
+            Services/Products availed by me/us prior to the Effective Date will
+            not be affected by such withdrawal of consent.
           </Typography>
         </Grid>
       </Grid>

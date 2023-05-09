@@ -5,10 +5,12 @@ import { Typography } from '@mui/material'
 import useStyles from './OptInAgreements.style'
 
 export interface OptInAgreementsProps {
+  investorRole?: string
   showOptOutDialog?: boolean
 }
 
 export const OptInAgreements = ({
+  investorRole = 'Accredited',
   showOptOutDialog = false
 }: OptInAgreementsProps) => {
   const classes = useStyles()
@@ -16,31 +18,41 @@ export const OptInAgreements = ({
   return (
     <Fragment>
       <Typography className={classes.text}>
-        I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an
-        “Accredited Investor”.{' '}
+        I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “
+        {investorRole} Investor”.{' '}
       </Typography>
       <Typography className={classes.text}>
         I have been informed of and understand the consequences of my
-        qualification as an Accredited Investor, in particular the reduced
-        regulatory investor <SafeguardInfoDialog /> for Accredited Investors.{' '}
+        qualification as an {investorRole} Investor, in particular the reduced
+        regulatory investor <SafeguardInfoDialog /> for {investorRole}{' '}
+        Investors.{' '}
       </Typography>
       <Typography className={classes.text}>
         I have been informed of and understand my right to{' '}
-        {showOptOutDialog ? <OptOutInfoDialog /> : 'opt out'} of the Accredited
-        Investors status with InvestaX at any point in time.
+        {showOptOutDialog ? (
+          <OptOutInfoDialog investorRole={investorRole} />
+        ) : (
+          'opt out'
+        )}{' '}
+        of the {investorRole} Investor role with InvestaX at any point in time.
       </Typography>
     </Fragment>
   )
 }
 
 export const OptInAgreementsIndividual = ({
+  investorRole = 'Accredited',
   showOptOutDialog = false
 }: OptInAgreementsProps) => {
   return (
     <Typography fontWeight={400} lineHeight='160%' style={{ color: 'inherit' }}>
       I have been informed of and understand my right to{' '}
-      {showOptOutDialog ? <OptOutInfoDialog /> : 'opt out'} of the Accredited
-      Investors status
+      {showOptOutDialog ? (
+        <OptOutInfoDialog investorRole={investorRole} />
+      ) : (
+        'opt out'
+      )}{' '}
+      of the {investorRole} Investor role
     </Typography>
   )
 }
