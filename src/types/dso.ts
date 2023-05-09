@@ -105,6 +105,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   maximumTradeUnits?: number
   minimumTradeUnits?: number
   raisedAmount?: number
+  expectedReturn?: number
 }
 
 export interface NewBaseDigitalSecurityOffering
@@ -139,6 +140,7 @@ export interface NewBaseDigitalSecurityOffering
   step?: number
   isCampaign: boolean
   decimalPlaces: number
+  expectedReturn?: number
 }
 
 export interface DSOInsight {
@@ -154,6 +156,7 @@ export interface DSOInsight {
 }
 
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
+  expectedReturn: number
   promoted: boolean
   disabled: boolean
   isStarred: boolean
@@ -294,6 +297,7 @@ export type DSOTableColumn =
   | 'minimumInvestment'
   | 'distributionFrequency'
   | 'interestRate'
+  | 'expectedReturn'
 
 export interface DSOActivity {
   _id: string
