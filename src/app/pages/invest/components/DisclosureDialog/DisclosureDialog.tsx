@@ -23,7 +23,6 @@ export interface DisclosureDialogProps {
   content: any
   isOpen: boolean
 }
-
 export const DisclosureDialog = ({
   content,
   isOpen
@@ -65,8 +64,8 @@ export const DisclosureDialog = ({
                 }
                 label={
                   <>
-                    I agree, accept, acknowledge, and understand all the
-                    disclosures and the <ExchangeRulesLink />
+                    I agree, accept, acknowledge and understand all the
+                    disclosures. <ExchangeRulesLink />
                   </>
                 }
               />

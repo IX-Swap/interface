@@ -7,7 +7,6 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { OverridableComponent } from '@mui/material/OverridableComponent'
-import { useHistory } from 'react-router-dom'
 export interface StatusFilterItemProps {
   isSelected: boolean
   title: string
@@ -28,39 +27,24 @@ export const StatusFilterItem: React.FC<StatusFilterItemProps> = ({
   onClick
 }) => {
   const theme = useTheme()
-  const { location } = useHistory()
   return (
-    <>
-      {location?.pathname?.includes('individuals') ||
-      location?.pathname?.includes('corporates') ? (
-        <ListItem
-          style={{ width: '100px', background: 'none', textAlign: 'center' }}
-          button
-          selected={isSelected}
-          onClick={onClick}
-        >
-          <ListItemText>{title}</ListItemText>
-        </ListItem>
-      ) : (
-        <ListItem
-          style={{ padding: '2px 22px' }}
-          button
-          selected={isSelected}
-          onClick={onClick}
-        >
-          <ListItemIcon>
-            {createElement(icon, {
-              style: {
-                color: isSelected
-                  ? theme.palette.sidebar.activeColor
-                  : theme.palette.text.secondary
-              }
-            })}
-          </ListItemIcon>
+    <ListItem
+      style={{ padding: '2px 22px' }}
+      button
+      selected={isSelected}
+      onClick={onClick}
+    >
+      <ListItemIcon>
+        {createElement(icon, {
+          style: {
+            color: isSelected
+              ? theme.palette.sidebar.activeColor
+              : theme.palette.text.secondary
+          }
+        })}
+      </ListItemIcon>
 
-          <ListItemText>{title}</ListItemText>
-        </ListItem>
-      )}
-    </>
+      <ListItemText>{title}</ListItemText>
+    </ListItem>
   )
 }

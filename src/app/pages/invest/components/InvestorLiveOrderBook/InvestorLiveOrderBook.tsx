@@ -18,8 +18,8 @@ export const InvestorLiveOrderBook = () => {
     return null
   }
 
-  const bids = orderBookData.bids
-  const asks = orderBookData.asks
+  const bids = orderBookData?.bids
+  const asks = orderBookData?.asks
 
   return (
     <Grid
@@ -39,8 +39,12 @@ export const InvestorLiveOrderBook = () => {
         <Grid item>
           <Table>
             <OrderBookHeader
-              tokenSymbol={tradingPair?.listing.tokenSymbol}
-              currency={tradingPair?.listing?.markets[0]?.currency}
+              tokenSymbol={tradingPair?.listing?.tokenSymbol}
+              currency={
+                tradingPair?.listing?.markets?.length
+                  ? tradingPair?.listing?.markets[0]?.currency
+                  : ''
+              }
             />
           </Table>
         </Grid>
@@ -64,8 +68,12 @@ export const InvestorLiveOrderBook = () => {
           >
             <OrderBook
               data={asks.slice(0, 15)}
-              currency={tradingPair?.listing?.markets[0]?.currency}
-              tokenSymbol={tradingPair?.listing.tokenSymbol}
+              currency={
+                tradingPair?.listing?.markets?.length
+                  ? tradingPair?.listing?.markets[0]?.currency
+                  : ''
+              }
+              tokenSymbol={tradingPair?.listing?.tokenSymbol}
               transaction='sell'
               showHeader={isMiniLaptop}
             />
@@ -86,8 +94,12 @@ export const InvestorLiveOrderBook = () => {
           >
             <OrderBook
               data={bids.slice(0, 15)}
-              currency={tradingPair?.listing?.markets[0]?.currency}
-              tokenSymbol={tradingPair?.listing.tokenSymbol}
+              currency={
+                tradingPair?.listing?.markets?.length
+                  ? tradingPair?.listing?.markets[0]?.currency
+                  : ''
+              }
+              tokenSymbol={tradingPair?.listing?.tokenSymbol}
               transaction='buy'
               barOrigin={isMiniLaptop ? 'left' : 'right'}
               showHeader={isMiniLaptop}

@@ -45,13 +45,13 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
       uri: '/identity/issuance-detail/list',
       listRoute: AuthorizerRoute.issuanceDetails
     },
-    [AppFeature.Individuals]: {
-      uri: '/identity/individuals/list',
-      listRoute: AuthorizerRoute.individualIdentities
-    },
     [AppFeature.IndividualsAccreditation]: {
       uri: '/identity/individual/accreditation/list',
       listRoute: AuthorizerRoute.individualAccreditations
+    },
+    [AppFeature.Individuals]: {
+      uri: '/identity/individuals/list',
+      listRoute: AuthorizerRoute.individualIdentities
     },
     [AppFeature.Commitments]: {
       uri: '/issuance/commitments/list',

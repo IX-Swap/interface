@@ -61,7 +61,7 @@ export const AdminRouter = () => {
       <AppRoute
         exact
         path={AdminRoute.masDisclosure}
-        breadcrumb='MAS Disclosure'
+        breadcrumb='Disclosure'
       >
         <MasDisclosure />
       </AppRoute>

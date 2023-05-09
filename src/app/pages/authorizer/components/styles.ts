@@ -1,4 +1,4 @@
-import { themeColors } from 'themes/app/colors'
+// import { themeColors } from 'themes/app/colors'
 import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles((theme: any) => ({
@@ -27,22 +27,6 @@ export const useStyles = makeStyles((theme: any) => ({
     textTransform: 'uppercase',
     backgroundColor: '#F8F8FD'
   },
-
-  kycTheme: {
-    height: 28,
-    borderRadius: 14,
-    border: 'none',
-    paddingLeft: 10,
-    paddingRight: 10,
-    fontSize: 14,
-    display: 'inline-flex',
-    fontWeight: 600,
-    flexWrap: 'nowrap',
-    whiteSpace: 'nowrap',
-    textTransform: 'capitalize',
-    BorderColor: 'none',
-    color: '#778194'
-  },
   compact: {
     width: 24,
     height: 24,
@@ -55,11 +39,6 @@ export const useStyles = makeStyles((theme: any) => ({
   approvedNewTheme: {
     color: '#8DCA82',
     backgroundColor: '#EEF7F1'
-  },
-
-  approvedNewKYCTheme: {
-    BorderColor: 'none',
-    color: '#778194'
   },
   open: {
     color: '#EEE4FF',
@@ -86,10 +65,12 @@ export const useStyles = makeStyles((theme: any) => ({
     backgroundColor: '#F4CECE'
   },
   rejectedButton: {
-    backgroundColor: themeColors.error,
+    // backgroundColor: themeColors.error,
+    backgroundColor: '#F56283',
     color: '#ffffff',
     '&:hover': {
-      backgroundColor: themeColors.error,
+      //   backgroundColor: themeColors.error,
+      backgroundColor: '#F56283',
       opacity: 0.8
     }
   },

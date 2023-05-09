@@ -37,26 +37,25 @@ export const IndividualRouter = () => {
       </AppRoute>
 
       <AppRoute
+        breadcrumb='View Individual Investor Accreditation'
+        exact
+        path={IdentityRoute.viewIndividualAccreditation}
+      >
+        <ViewIndividualAccreditation />
+      </AppRoute>
+      <AppRoute
         breadcrumb='Create Individual Investor Accreditation'
         exact
         path={IdentityRoute.createIndividualAccreditation}
       >
         <CreateIndividualAccreditation title='Create Individual Investor Accreditation' />
       </AppRoute>
-
       <AppRoute
         breadcrumb='Edit Individual Investor Accreditation'
         exact
         path={IdentityRoute.editIndividualAccreditation}
       >
         <EditIndividualAccreditation />
-      </AppRoute>
-      <AppRoute
-        breadcrumb='View Individual Investor Accreditation'
-        exact
-        path={IdentityRoute.viewIndividualAccreditation}
-      >
-        <ViewIndividualAccreditation />
       </AppRoute>
     </Switch>
   )

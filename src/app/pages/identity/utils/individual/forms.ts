@@ -103,7 +103,8 @@ export const getInvestorDeclarationFormValues = (
 ): IndividualInvestorDeclarationFormValues => {
   return {
     ...data?.declarations?.investorsStatus,
-    ...getDocumentsFormValues(data)
+    ...getDocumentsFormValues(data),
+    applyingAs: data.applyingAs[0]
   }
 }
 

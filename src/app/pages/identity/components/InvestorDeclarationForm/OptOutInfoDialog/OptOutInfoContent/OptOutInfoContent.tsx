@@ -17,7 +17,7 @@ export const optOutRequirements = [
   },
   {
     name: 'allServices',
-    label: 'Any/all Services/Products offered by InvestaX'
+    label: 'Any/All Services/Products offered by InvestaX'
   }
 ]
 

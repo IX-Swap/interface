@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthorizerList } from 'app/pages/authorizer/components/AuthorizerList'
+import { AuthorizerList } from 'app/pages/authorizer/components/upgrade/AuthorizerList/AuthorizerList'
 import { columns } from 'app/pages/authorizer/pages/banks/columns'
 import { authorizerQueryKeys } from 'config/queryKeys'
 

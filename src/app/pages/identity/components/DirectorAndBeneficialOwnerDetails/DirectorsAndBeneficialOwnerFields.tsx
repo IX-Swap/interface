@@ -5,7 +5,7 @@ import { Fields } from 'app/pages/identity/components/DirectorAndBeneficialOwner
 import { FieldsArray } from 'components/form/FieldsArray'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export interface DirectorsAndBeneficialOwnerFieldsProps {
   name: string

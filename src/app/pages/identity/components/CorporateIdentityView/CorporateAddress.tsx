@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material'
 import React from 'react'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { AddressSection } from 'app/pages/identity/components/CorporateIdentityView/AddressSection'
 
 export interface CorporateAddressProps {

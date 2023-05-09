@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { fireEvent, getByTestId } from '@testing-library/react'
 import {
   Fields,

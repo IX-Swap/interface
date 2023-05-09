@@ -23,7 +23,7 @@ export const OptOutInfoDialog = () => {
       actions={<OptOutInfoAction />}
       fullWidth
       scroll='body'
-      maxWidth='sm'
+      maxWidth='md'
     />
   )
 }

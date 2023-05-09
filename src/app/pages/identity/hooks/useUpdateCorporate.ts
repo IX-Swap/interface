@@ -27,6 +27,8 @@ export const useUpdateCorporate = () => {
     delete values.isIssuer
     delete values.isTenantOwner
 
+    values.step = typeof values.step === 'undefined' ? 0 : values.step
+
     return await apiService.put<CorporateIdentity>(uri, {
       ...values
     })

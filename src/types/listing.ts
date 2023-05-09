@@ -63,6 +63,7 @@ export interface Listing {
 }
 
 export interface ListingView extends AuthorizableWithIdentity {
+  productType: string
   _id: string
   createdBy: string
   user: string

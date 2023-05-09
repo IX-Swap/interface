@@ -7,7 +7,7 @@ import {
   Typography
 } from '@mui/material'
 import { useStyles } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect.styles'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 import classnames from 'classnames'

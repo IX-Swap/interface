@@ -28,6 +28,8 @@ export const DSOPreviewActions = (props: DSOPreviewActionsProps) => {
             })
           )
         }
+        fullWidth
+        style={{ marginBottom: '10px' }}
       >
         Edit
       </Button>

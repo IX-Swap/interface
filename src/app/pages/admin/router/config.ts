@@ -73,7 +73,7 @@ export const adminLandingLinks: InternalRouteProps[] = [
     icon: BannerIcon
   },
   {
-    label: 'MAS Disclosure',
+    label: 'Disclosure',
     path: AdminRoute.masDisclosure,
     color: '#8B3DFF',
     icon: MasDisclosureIcon

@@ -1,6 +1,9 @@
 import { Box, Grid, Paper } from '@mui/material'
 import React, { useState } from 'react'
-import { Icon } from 'ui/Icons/Icon'
+import {
+  ArrowDropDown as DownArrow,
+  ArrowDropUp as UpArrow
+} from '@mui/icons-material'
 
 export interface ExpandableProps {
   mainComponent: React.ReactNode
@@ -27,6 +30,8 @@ export const Expandable = ({
     setExpanded(!expanded)
   }
 
+  const Icon = expanded ? UpArrow : DownArrow
+
   return (
     <Paper
       elevation={0}
@@ -47,13 +52,16 @@ export const Expandable = ({
               position='absolute'
               top={`calc(50% + ${spacing * 4}px )`}
               right={0}
-              width={24}
-              height={24}
+              width={30}
+              height={30}
               mt='-12px'
+              mr='12px'
             >
               <Icon
-                name={expanded ? 'chevron-down' : 'chevron-right'}
-                color={expanded ? '#4C88FF' : undefined}
+                sx={{
+                  color: expanded ? '#4C88FF' : undefined
+                }}
+                height={30}
               />
             </Box>
           )}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { useFormContext } from 'react-hook-form'
 import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { Grid } from '@mui/material'

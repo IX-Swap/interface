@@ -71,10 +71,6 @@ export const getWord = (index: number) => {
 export const InstitutionalInvestorInfoContent = () => {
   return (
     <Grid container direction={'column'} spacing={2}>
-      <Grid item>
-        <Divider />
-      </Grid>
-
       {mainContentList.map((item, i) => {
         if (i === 2 || i === 3) {
           const list =

@@ -10,7 +10,7 @@ import { tenantsQueryKeys } from 'config/queryKeys'
 import { useQuery } from 'react-query'
 import { AdminRoute } from '../../router/config'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { DataroomImage } from 'ui/DataroomImage'
 import { useAppTheme } from 'hooks/useAppTheme'
@@ -77,7 +77,7 @@ export const ViewTenant = () => {
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='Client Spaces' />
+        <PageHeader title='Client Space' />
       </Grid>
       <RootContainer>
         <Grid container direction={isTablet ? 'column-reverse' : 'row'}>

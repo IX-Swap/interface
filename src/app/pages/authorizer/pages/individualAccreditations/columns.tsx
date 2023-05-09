@@ -14,13 +14,11 @@ const renderColumnWithApproval = (row: object, status: string) => {
   return (
     <Box display={'flex'} justifyContent={''}>
       <Status label={status} type={status.toLowerCase()} />
-      {status === 'Submitted' && (
-        <Actions
-          item={row}
-          cacheQueryKey={''}
-          featureCategory='individuals/accreditation'
-        />
-      )}
+      <Actions
+        item={row}
+        cacheQueryKey={''}
+        featureCategory='individuals/accreditation'
+      />
     </Box>
   )
 }

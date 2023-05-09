@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import { LabelledValue } from 'components/LabelledValue'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { VirtualAccount } from 'types/virtualAccount'
+import { FieldGrid } from 'ui/FieldGrid/FieldGrid'
 
 export interface VirtualAccountPreviewProps {
   data: VirtualAccount
@@ -13,20 +13,25 @@ export const VirtualAccountPreview = (props: VirtualAccountPreviewProps) => {
 
   useSetPageTitle(data.accountNumber)
 
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={6}>
-        <LabelledValue
-          label='Requested Virtual Account'
-          value={data.accountNumber}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <LabelledValue label='Account Holder Name' value={data.user?.name} />
-      </Grid>
+  const items = [
+    {
+      label: 'Requested Virtual Account',
+      value: data.accountNumber
+    },
+    {
+      label: 'Account Holder Name',
+      value: data.user?.name
+    },
+    {
+      label: 'Currency',
+      value: data.currency
+    }
+  ]
 
-      <Grid item xs={6}>
-        <LabelledValue label='Currency' value={data.currency} />
+  return (
+    <Grid container pt={3} pl={3}>
+      <Grid item xs={12}>
+        <FieldGrid items={items} />
       </Grid>
     </Grid>
   )

@@ -12,21 +12,24 @@ export interface OverviewProps {
 
 export const Overview = ({ data }: OverviewProps) => {
   return (
-    <Grid container spacing={6} direction='column'>
+    <Grid container spacing={5} direction='column'>
       <Grid item xs={12}>
         <BasicOverview
           networkName={data.network?.name}
           capitalStructure={data.capitalStructure}
           launchDate={data.launchDate}
           completionDate={data.completionDate}
+          releaseDate={data.dso?.releaseDate ?? ''}
           decimals={data.decimals}
           tokenAddress={data.dso?.deploymentInfo?.token ?? ''}
+          classification={data.dso?.classification ?? ''}
         />
       </Grid>
       <Grid item xs={12}>
         <MarketOverview
-          availableMarket={data.marketType}
+          availableMarket={data?.listingType ?? ''}
           markets={data.exchange.markets}
+          productType={data?.productType ?? ''}
         />
       </Grid>
       <Grid item xs={12}>

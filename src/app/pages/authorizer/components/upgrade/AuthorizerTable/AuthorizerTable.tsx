@@ -25,6 +25,7 @@ interface AuthorizerViewProps<T>
   title: string
   selectable?: boolean
   selectionActions?: AuthorizerSelectionActions
+  hasStatusWithActions?: boolean
 }
 
 export const AuthorizerTable = <T,>(
@@ -40,7 +41,8 @@ export const AuthorizerTable = <T,>(
     name,
     uri,
     selectable = false,
-    selectionActions = {}
+    selectionActions = {},
+    hasStatusWithActions = true
   } = props
 
   const { filter: authFilter } = useAuthorizerFilter()
@@ -71,7 +73,9 @@ export const AuthorizerTable = <T,>(
           name={name}
           uri={uri}
           columns={columns}
-          //   actions={withExtraActions<T>()}
+          hasStatusWithActions={hasStatusWithActions}
+          // hasStatus
+          // actions={withExtraActions<T>()}
           filter={mergedFilters}
           selectionHelper={selectable ? selectionHelperContext : undefined}
           paperProps={
@@ -88,7 +92,7 @@ export const AuthorizerTable = <T,>(
           noHeader={isTablet}
           paginationPlacement={isTablet ? 'both' : 'bottom'}
         >
-          {isTablet
+          {isTablet && typeof compactColumns !== 'undefined'
             ? (props: TableViewRendererProps<any>) => (
                 <CompactTable {...props} columns={compactColumns} />
               )

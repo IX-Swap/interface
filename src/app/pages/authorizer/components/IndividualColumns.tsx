@@ -6,13 +6,7 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 
 const renderRiskReport = (rating?: string) => {
-  return (
-    <AuthorizableStatus
-      status={rating ?? 'UNKNOWN'}
-      compact={false}
-      isNewKYCTheme
-    />
-  )
+  return <AuthorizableStatus status={rating ?? 'UNKNOWN'} compact={false} />
 }
 
 export const columns = [

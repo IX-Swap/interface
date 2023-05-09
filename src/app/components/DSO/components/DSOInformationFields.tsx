@@ -7,7 +7,7 @@ import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
 import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export const DSOInformationFields = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()

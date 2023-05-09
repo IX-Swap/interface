@@ -2,8 +2,8 @@ import { Grid, Typography } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import React from 'react'
 import { TaxResidencies } from 'app/pages/identity/types/forms'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { Divider } from 'ui/Divider'
 import { Icon } from 'ui/Icons/Icon'
 
@@ -95,7 +95,7 @@ export const CountryTaxDeclaration = ({
           </Grid>
         )}
         <Grid item>
-          <FormSectionHeader title='Tax Declaration' />
+          <FormSectionHeader title='Tax Information' />
         </Grid>
 
         {taxResidencies.map((it, i) => (
