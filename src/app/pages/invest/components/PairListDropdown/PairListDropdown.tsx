@@ -180,7 +180,7 @@ export const PairListDropdown = ({
                           >
                             InvestaX Trading Platform is referred to as IX
                             Exchange and there are Exempt Products and Approved
-                            Products Listed on IX Exchange. Exempt Products
+                            Products listed on IX Exchange. Exempt Products
                             trading on IX Exchange are marked with a grey tag
                           </p>
                           <p
@@ -192,7 +192,7 @@ export const PairListDropdown = ({
                             }}
                           >
                             Exempt Products trading on IX Exchange are marked
-                            with a grey tag{' '}
+                            with a grey tag like this
                             <Button
                               style={{
                                 background: '#778194',
