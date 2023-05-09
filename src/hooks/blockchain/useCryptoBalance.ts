@@ -30,7 +30,6 @@ export const useCryptoBalance = (tokenAddress?: string) => {
   //   console.log('tokenAddress', tokenAddress)
   //   console.log('contract', contract)
   //   console.log('account', account)
-  //   console.log('balance', balance)
 
   return balance
 }
