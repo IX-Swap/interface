@@ -50,7 +50,7 @@ export const useTableWithPagination = <TData>({
     defaultRowsPerPage !== undefined ? defaultRowsPerPage : 25
   )
   const filter = defaultFilter
-  const [sortOrder, setSortOrder] = useState('asc')
+  const [sortOrder, setSortOrder] = useState('desc')
   const [sortField, setSortField] = useState('createdAt')
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export const useTableWithPagination = <TData>({
     const payload: KeyValueMap<any> = {
       skip: p * r,
       limit: r,
-      sortOrder: s,
+      sortOrder: s === 'asc' ? 1 : -1,
       sortField: sBy,
       ...(filter ?? {})
     }
