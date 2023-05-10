@@ -16,20 +16,28 @@ export interface AuthorizerFormFieldsProps {
   status: AuthorizableStatus
   itemId: string
   listingType: string
+  feature?: string
 }
 
 export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
-  const { itemId, status, listingType } = props
+  const { itemId, status, listingType, feature } = props
   const { control } = useFormContext<AuthorizerFormValues>()
-  const [approve, { isLoading: isApproving }] = useAuthorizerAction({
+  const actionParams = {
     id: itemId,
+    listingType
+  }
+
+  if (typeof feature !== 'undefined') {
+    actionParams.featureCategory = feature
+  }
+
+  const [approve, { isLoading: isApproving }] = useAuthorizerAction({
     action: 'approve',
-    listingType: listingType
+    ...actionParams
   })
   const [reject, { isLoading: isRejecting }] = useAuthorizerAction({
-    id: itemId,
     action: 'reject',
-    listingType: listingType
+    ...actionParams
   })
   const comment = control.watchInternal('comment') as string
   const hasComment = comment !== undefined && comment.trim().length > 0
