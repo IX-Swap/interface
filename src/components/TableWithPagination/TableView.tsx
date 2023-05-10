@@ -94,10 +94,10 @@ export const TableView = <T,>({
     setRowsPerPage,
     rowsPerPage,
     total,
-    sort,
-    sortBy,
-    setSort,
-    setSortBy
+    sortOrder,
+    sortField,
+    setSortOrder,
+    setSortField
   } = useTableWithPagination<T>({
     queryKey: name,
     uri: uri,
@@ -168,9 +168,9 @@ export const TableView = <T,>({
   }
 
   const handleSort = (column: string) => {
-    const isAsc = sortBy === column && sort === 'asc'
-    setSort(isAsc ? 'desc' : 'asc')
-    setSortBy(column)
+    const isAsc = sortField === column && sortOrder === 'asc'
+    setSortOrder(isAsc ? 'desc' : 'asc')
+    setSortField(column)
   }
 
   const renderHeadCell = ({ item, content }: RenderHeadCellArgs<T>) => (
@@ -180,9 +180,11 @@ export const TableView = <T,>({
       align={item?.headAlign ?? 'left'}
     >
       <TableSortLabel
-        active={sortBy === item?.key}
+        active={sortField === item?.key}
         direction={
-          sortBy === item?.key ? (sort as 'desc' | 'asc' | undefined) : 'asc'
+          sortField === item?.key
+            ? (sortOrder as 'desc' | 'asc' | undefined)
+            : 'asc'
         }
         onClick={() => handleSort(item !== undefined ? item?.key : 'createdAt')}
       >

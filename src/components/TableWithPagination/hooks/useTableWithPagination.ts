@@ -17,10 +17,10 @@ export interface UseTableWithPaginationReturnType<TData> {
   setRowsPerPage: (count: number) => void
   total: number
   refetch: () => void
-  sort: string
-  sortBy: string
-  setSort: (sort: string) => void
-  setSortBy: (sortBy: string) => void
+  sortOrder: string
+  sortField: string
+  setSortOrder: (sortOrder: string) => void
+  setSortField: (sortField: string) => void
 }
 
 interface UseTableWithPaginationParams {
@@ -50,8 +50,8 @@ export const useTableWithPagination = <TData>({
     defaultRowsPerPage !== undefined ? defaultRowsPerPage : 25
   )
   const filter = defaultFilter
-  const [sort, setSort] = useState('asc')
-  const [sortBy, setSortBy] = useState('createdAt')
+  const [sortOrder, setSortOrder] = useState('asc')
+  const [sortField, setSortField] = useState('createdAt')
 
   useEffect(() => {
     if (disabledUseEffect !== undefined && !disabledUseEffect) {
@@ -86,8 +86,8 @@ export const useTableWithPagination = <TData>({
     const payload: KeyValueMap<any> = {
       skip: p * r,
       limit: r,
-      sort: s,
-      sortBy: sBy,
+      sortOrder: s,
+      sortField: sBy,
       ...(filter ?? {})
     }
     const result =
@@ -107,7 +107,7 @@ export const useTableWithPagination = <TData>({
     isLoading,
     isFetchingMore
   } = useInfiniteQuery(
-    [queryKey, page, rowsPerPage, filter, sort, sortBy],
+    [queryKey, page, rowsPerPage, filter, sortOrder, sortField],
     fetcher,
     {
       enabled: uri !== undefined && queryEnabled
@@ -184,9 +184,9 @@ export const useTableWithPagination = <TData>({
     status,
     isLoading: isActuallyLoading,
     refetch,
-    sort,
-    sortBy,
-    setSort,
-    setSortBy
+    sortOrder,
+    sortField,
+    setSortOrder,
+    setSortField
   }
 }
