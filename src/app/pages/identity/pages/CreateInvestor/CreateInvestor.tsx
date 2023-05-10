@@ -24,10 +24,7 @@ export const CreateCorporateIdentity = ({
     <>
       {matches ? null : <PageHeader title={title} />}
       <RootContainer>
-        <CorporateInvestorForm
-          formTitle='Corporate Investor Identity'
-          type={type}
-        />
+        <CorporateInvestorForm formTitle='Corporate Identity' type={type} />
       </RootContainer>
     </>
   )

@@ -172,7 +172,7 @@ export interface CorporateInvestorDeclarationFormValues
 export interface CorporateInvestorDocumentsFormValues {
   evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
   corporateDocuments: Array<FormArrayElement<DataroomFile>>
-  financialDocuments: Array<FormArrayElement<DataroomFile>>
+  //   financialDocuments: Array<FormArrayElement<DataroomFile>>
   institutionalInvestorDocuments?: Array<FormArrayElement<DataroomFile>>
 }
 export interface DocumentFieldArrayItemValue {
@@ -322,7 +322,7 @@ export interface IdentityDeclarations {
     CorporateInvestorStatus &
     OptInAgreements &
     OptOutRequirements & {
-      expertInvestorAgreement: boolean
+      investorAgreement: boolean
     }
   agreements: {
     investor: boolean

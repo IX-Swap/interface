@@ -15,7 +15,7 @@ import {
   corporateDocumentSchema,
   institutionalInvestorDocumentsSchema,
   emailSchema,
-  investorStatusDeclarationItemSchema,
+  //   investorStatusDeclarationItemSchema,
   optInAgreementsDependentValueSchema,
   taxIdentificationNumberSchema,
   expertInvestorAgreementSchema,
@@ -282,31 +282,32 @@ const investorDeclarationsTests = function (values: any) {
   }
 
   if (values.applyingAs !== 'expert') {
-    values.expertInvestorAgreement = 'capitalMarketExpert'
+    values.investorAgreement = 'capitalMarketExpert'
   }
 
   if (values.applyingAs !== 'accredited') {
-    values.assets = false
-    values.trustee = false
-    values.accreditedBeneficiaries = false
-    values.accreditedSettlors = false
-    values.accreditedShareholders = false
-    values.partnership = false
-  } else {
-    const financialDeclarations = Object.entries(values)
-      .filter(([key]) => {
-        return (
-          key === 'assets' ||
-          key === 'trustee' ||
-          key === 'accreditedBeneficiaries' ||
-          key === 'accreditedSettlors' ||
-          key === 'accreditedShareholders' ||
-          key === 'partnership'
-        )
-      })
-      .map(([_key, value]) => value)
-    const result = financialDeclarations.every(value => value === false)
-    return !result
+    values.investorAgreement = 'assets'
+    //     values.assets = false
+    //     values.trustee = false
+    //     values.accreditedBeneficiaries = false
+    //     values.accreditedSettlors = false
+    //     values.accreditedShareholders = false
+    //     values.partnership = false
+    //   } else {
+    //     const financialDeclarations = Object.entries(values)
+    //       .filter(([key]) => {
+    //         return (
+    //           key === 'assets' ||
+    //           key === 'trustee' ||
+    //           key === 'accreditedBeneficiaries' ||
+    //           key === 'accreditedSettlors' ||
+    //           key === 'accreditedShareholders' ||
+    //           key === 'partnership'
+    //         )
+    //       })
+    //       .map(([_key, value]) => value)
+    //     const result = financialDeclarations.every(value => value === false)
+    //     return !result
   }
 
   return true
@@ -318,13 +319,13 @@ export const corporateInvestorStatusDeclarationSchema = yup
     CorporateInvestorDeclarationFormValues &
       CorporateInvestorDocumentsFormValues
   >({
-    assets: investorStatusDeclarationItemSchema,
-    trustee: investorStatusDeclarationItemSchema,
-    accreditedBeneficiaries: investorStatusDeclarationItemSchema,
-    accreditedSettlors: investorStatusDeclarationItemSchema,
-    accreditedShareholders: investorStatusDeclarationItemSchema,
-    partnership: investorStatusDeclarationItemSchema,
-    expertInvestorAgreement: expertInvestorAgreementSchema,
+    // assets: investorStatusDeclarationItemSchema,
+    // trustee: investorStatusDeclarationItemSchema,
+    // accreditedBeneficiaries: investorStatusDeclarationItemSchema,
+    // accreditedSettlors: investorStatusDeclarationItemSchema,
+    // accreditedShareholders: investorStatusDeclarationItemSchema,
+    // partnership: investorStatusDeclarationItemSchema,
+    investorAgreement: expertInvestorAgreementSchema,
 
     isInstitutionalInvestor: yup.bool(),
     isIntermediaryInvestor: yup.bool(),
@@ -349,9 +350,9 @@ export const corporateInvestorStatusDeclarationSchema = yup
     // @ts-expect-error
     evidenceOfAccreditation: corporateDocumentSchema,
     // @ts-expect-error
-    corporateDocuments: corporateDocumentSchema,
-    // @ts-expect-error
-    financialDocuments: corporateDocumentSchema
+    corporateDocuments: corporateDocumentSchema
+    // // @ts-expect-error
+    // financialDocuments: corporateDocumentSchema
   })
   .test(
     'investorDeclarationsCorporate',

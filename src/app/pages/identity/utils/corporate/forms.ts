@@ -108,7 +108,7 @@ export const getCorporateInvestorDeclarationFormValues = (
   const documents = data?.documents.reduce((result: any, document) => {
     const {
       evidenceOfAccreditation,
-      financialDocuments,
+      //   financialDocuments,
       corporateDocuments,
       institutionalInvestorDocuments
     } = result
@@ -122,14 +122,14 @@ export const getCorporateInvestorDeclarationFormValues = (
       }
     }
 
-    if (document.type === 'Financial Documents') {
-      return {
-        ...result,
-        financialDocuments: Array.isArray(financialDocuments)
-          ? [...financialDocuments, { value: document }]
-          : [{ value: document }]
-      }
-    }
+    // if (document.type === 'Financial Documents') {
+    //   return {
+    //     ...result,
+    //     financialDocuments: Array.isArray(financialDocuments)
+    //       ? [...financialDocuments, { value: document }]
+    //       : [{ value: document }]
+    //   }
+    // }
 
     if (document.type === 'Corporate Documents') {
       return {

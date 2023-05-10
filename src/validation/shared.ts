@@ -264,10 +264,11 @@ export const expertInvestorAgreementSchema = yup
     'oneOfExpertInvestorAgreementsShouldBeTrue',
     'Please choose at least one option under "Expert Investor Declaration" section',
     function () {
-      const { applyingAs, expertInvestorAgreement } = this.parent
+      const { applyingAs, investorAgreement } = this.parent
 
-      return applyingAs === 'expert'
-        ? typeof expertInvestorAgreement !== 'undefined'
+      //   return applyingAs === 'expert'
+      return applyingAs !== 'institutional'
+        ? typeof investorAgreement !== 'undefined'
         : true
     }
   )

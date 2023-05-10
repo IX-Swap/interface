@@ -16,9 +16,9 @@ export const DocumentsView = (props: DocumentsViewProps) => {
   const corporateDocuments = documents.filter(
     doc => Object.values(doc).length > 0 && doc.type === 'Corporate Documents'
   )
-  const financialDocuments = documents.filter(
-    doc => Object.values(doc).length > 0 && doc.type === 'Financial Documents'
-  )
+  //   const financialDocuments = documents.filter(
+  //     doc => Object.values(doc).length > 0 && doc.type === 'Financial Documents'
+  //   )
   const evidenceDocuments = documents.filter(
     doc => Object.values(doc).length > 0 && doc.type.startsWith('Evidence of ')
   )
@@ -36,7 +36,7 @@ export const DocumentsView = (props: DocumentsViewProps) => {
           </Grid>
         </Grid>
 
-        <Grid item container direction={'column'} spacing={3}>
+        {/* <Grid item container direction={'column'} spacing={3}>
           <Grid item>
             <FormSectionHeader title='Financial Documents' />
           </Grid>
@@ -44,7 +44,7 @@ export const DocumentsView = (props: DocumentsViewProps) => {
           <Grid item container direction={'column'} spacing={2}>
             <Documents documents={financialDocuments} />
           </Grid>
-        </Grid>
+        </Grid> */}
 
         <Grid item container direction={'column'} spacing={3}>
           <Grid item>
