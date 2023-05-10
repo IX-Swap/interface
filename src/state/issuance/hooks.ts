@@ -51,16 +51,19 @@ export interface UseDeleteWhitelistedArgs {
 }
 export const useDeleteWhitelisted = ({ onSuccess }: UseDeleteWhitelistedArgs) => {
   const dispatch = useDispatch<AppDispatch>()
-  return useCallback(async (offerId: string, walletAddress: string) => {
-    dispatch(deleteWhitelistedWallet.pending())
-    try {
-      await apiService.delete(whitelist.delete(offerId, walletAddress), undefined)
-      onSuccess?.()
-      dispatch(deleteWhitelistedWallet.fulfilled())
-    } catch (e) {
-      dispatch(deleteWhitelistedWallet.rejected({ errorMessage: (e as { message: string }).message }))
-    }
-  }, [])
+  return useCallback(
+    async (offerId: string, walletAddress: string) => {
+      dispatch(deleteWhitelistedWallet.pending())
+      try {
+        await apiService.delete(whitelist.delete(offerId, walletAddress), undefined)
+        onSuccess?.()
+        dispatch(deleteWhitelistedWallet.fulfilled())
+      } catch (e) {
+        dispatch(deleteWhitelistedWallet.rejected({ errorMessage: (e as { message: string }).message }))
+      }
+    },
+    [onSuccess]
+  )
 }
 
 export const useGetIssuancesReport = ({ page = '1', tab = '', offset = '11', issuanceId = '' }: IssuanceDataFilter) => {
@@ -128,7 +131,10 @@ export const useDeployOffer = (offerId?: string) => {
       if (!offerId) {
         return
       }
-      return apiService.post(`offers/blockchain/deploy/${offerId}`, { feeRate: Number(feeRate), distributionControllerAddress })
+      return apiService.post(`offers/blockchain/deploy/${offerId}`, {
+        feeRate: Number(feeRate),
+        distributionControllerAddress,
+      })
     },
     [offerId]
   )
