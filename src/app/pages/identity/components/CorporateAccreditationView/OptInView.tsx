@@ -27,7 +27,7 @@ export const OptInView: React.FC<OptInViewProps> = ({ data }) => {
   }
 
   const investorRole = capitalizeFirstLetter(
-    applyingAs.length > 0 ? applyingAs[0] : 'accredited'
+    applyingAs?.length > 0 ? applyingAs[0] : 'accredited'
   )
 
   return (
