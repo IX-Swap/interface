@@ -17,17 +17,17 @@ export const OptInAgreements = ({
 
   return (
     <Fragment>
-      <Typography className={classes.text}>
+      {/* <Typography className={classes.text}>
         I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “
         {investorRole} Investor”.{' '}
-      </Typography>
+      </Typography> */}
       <Typography className={classes.text}>
         I have been informed of and understand the consequences of my
         qualification as an {investorRole} Investor, in particular the reduced
         regulatory investor <SafeguardInfoDialog /> for {investorRole}{' '}
         Investors.{' '}
       </Typography>
-      <Typography className={classes.text}>
+      {/* <Typography className={classes.text}>
         I have been informed of and understand my right to{' '}
         {showOptOutDialog ? (
           <OptOutInfoDialog investorRole={investorRole} />
@@ -35,7 +35,7 @@ export const OptInAgreements = ({
           'opt out'
         )}{' '}
         of the {investorRole} Investor role with InvestaX at any point in time.
-      </Typography>
+      </Typography> */}
     </Fragment>
   )
 }

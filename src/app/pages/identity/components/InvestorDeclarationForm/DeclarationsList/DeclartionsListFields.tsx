@@ -69,7 +69,7 @@ export const DeclarationsListFields = ({
             {data.map(item => {
               const selected = watch('expertInvestorAgreement')
               return (
-                <Grid item sx={{ padding: '0 6px' }}>
+                <Grid item sx={{ padding: '6px', marginTop: '5px' }}>
                   <FormControlLabel
                     label={
                       <Typography
@@ -82,7 +82,6 @@ export const DeclarationsListFields = ({
                             : 'text.secondary'
                         }
                         sx={{
-                          marginTop: '15px',
                           opacity: 0.8,
                           lineHeight: 1.5
                         }}

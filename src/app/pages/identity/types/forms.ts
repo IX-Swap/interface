@@ -297,7 +297,7 @@ export interface OptOutRequirements {
 export interface OptInAgreements {
   optInAgreements?: boolean
   optInAgreementsSafeguards: boolean
-  optInAgreementsOptOut: boolean
+  optInAgreementsOptOut?: boolean
 }
 
 export interface IndividualInvestorStatus {

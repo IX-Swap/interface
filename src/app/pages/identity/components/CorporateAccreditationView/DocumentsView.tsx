@@ -7,10 +7,11 @@ import { Documents } from 'app/pages/identity/components/CorporateIdentityView/D
 
 export interface DocumentsViewProps {
   data: DataroomFile[]
+  investorRole?: string
 }
 
 export const DocumentsView = (props: DocumentsViewProps) => {
-  const { data: documents } = props
+  const { data: documents, investorRole = 'accredited' } = props
 
   const corporateDocuments = documents.filter(
     doc => Object.values(doc).length > 0 && doc.type === 'Corporate Documents'
@@ -48,7 +49,11 @@ export const DocumentsView = (props: DocumentsViewProps) => {
 
         <Grid item container direction={'column'} spacing={3}>
           <Grid item>
-            <FormSectionHeader title='Evidence of Accreditation' />
+            <FormSectionHeader
+              title={`Evidence of ${
+                investorRole !== 'expert' ? 'Accreditation' : 'Expertise'
+              }`}
+            />
           </Grid>
 
           <Grid item container direction={'column'} spacing={2}>

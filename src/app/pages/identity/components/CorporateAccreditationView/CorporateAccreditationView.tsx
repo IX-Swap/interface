@@ -13,6 +13,7 @@ export interface CorporateAccreditationViewProps {
 export const CorporateAccreditationView = ({
   data
 }: CorporateAccreditationViewProps) => {
+  const { applyingAs } = data
   return (
     <Grid container spacing={2} direction='column'>
       <Grid item>
@@ -29,7 +30,12 @@ export const CorporateAccreditationView = ({
             <OptInView data={data} />
           </Grid>
           <Grid item>
-            <DocumentsView data={data.documents} />
+            <DocumentsView
+              data={data.documents}
+              investorRole={
+                typeof applyingAs !== 'undefined' ? applyingAs[0] : 'accredited'
+              }
+            />
           </Grid>
         </>
       )}
