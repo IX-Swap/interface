@@ -20,8 +20,7 @@ export const IdentityDocumentsView = (props: DocumentsViewProps) => {
     doc => Object.values(doc).length > 0 && doc.type === 'Proof of Address'
   )
   const evidenceDocs = documents.filter(
-    doc =>
-      Object.values(doc).length > 0 && doc.type === 'Evidence of Accreditation'
+    doc => Object.values(doc).length > 0 && doc.type.startsWith('Evidence of ')
   )
 
   return (
