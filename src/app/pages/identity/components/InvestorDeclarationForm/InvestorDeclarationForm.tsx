@@ -2,10 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Grid, Typography, RadioGroup, FormControlLabel } from '@mui/material'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DeclarationsListFields } from 'app/pages/identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
-import {
-  OptInAgreements,
-  OptInAgreementsIndividual
-} from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
+import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
 import { useFormContext } from 'react-hook-form'
 import { IdentityType, InvestorRole } from 'app/pages/identity/utils/shared'
@@ -47,42 +44,28 @@ export const InvestorDeclarationForm = ({
 
   const hasDeclaredInstitutionalInvestor = investorRole === 'institutional'
 
-  const getOptInData = (type: IdentityType, role: InvestorRole) => {
-    let agreements = [
+  const getOptInData = (role: InvestorRole) => {
+    const agreements = [
       {
-        name: 'optInAgreements',
+        name: 'optInAgreementsSafeguards',
+        label: (
+          <SafeguardAgreements
+            investorRole={capitalizeFirstLetter(investorRole)}
+          />
+        )
+      }
+    ]
+
+    if (role === 'accredited') {
+      agreements.push({
+        name: 'optInAgreementsOptOut',
         label: (
           <OptInAgreements
             investorRole={capitalizeFirstLetter(investorRole)}
             showOptOutDialog
           />
         )
-      }
-    ]
-
-    if (type === 'individual') {
-      agreements = [
-        {
-          name: 'optInAgreementsSafeguards',
-          label: (
-            <SafeguardAgreements
-              investorRole={capitalizeFirstLetter(investorRole)}
-            />
-          )
-        }
-      ]
-
-      if (role === 'accredited') {
-        agreements.push({
-          name: 'optInAgreementsOptOut',
-          label: (
-            <OptInAgreementsIndividual
-              investorRole={capitalizeFirstLetter(investorRole)}
-              showOptOutDialog
-            />
-          )
-        })
-      }
+      })
     }
 
     return agreements
@@ -229,10 +212,7 @@ export const InvestorDeclarationForm = ({
                     </Grid>
                     <Grid item>
                       <DeclarationsListFields
-                        data={getOptInData(
-                          identityType,
-                          investorRole as InvestorRole
-                        )}
+                        data={getOptInData(investorRole as InvestorRole)}
                       />
                     </Grid>
                   </Grid>

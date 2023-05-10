@@ -6,10 +6,7 @@ import {
   corporateInvestorAgreementsMap,
   individualInvestorAgreementsMap
 } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/agreements'
-import {
-  OptInAgreements
-  //   OptInAgreementsIndividual
-} from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
+import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import {
   CorporateIdentity,
   IndividualIdentity
@@ -49,8 +46,8 @@ export const InvestorDeclarationView: React.FC<
     digitalSecuritiesIssuance,
 
     optInAgreements,
-    optInAgreementsSafeguards
-    // optInAgreementsOptOut
+    optInAgreementsSafeguards,
+    optInAgreementsOptOut
   } = data.declarations?.investorsStatus ?? {}
 
   const accreditedInvestorDeclaration = {
@@ -126,15 +123,15 @@ export const InvestorDeclarationView: React.FC<
               }}
             />
           )}
-          {/* {optInAgreementsOptOut !== undefined && (
+          {optInAgreementsOptOut !== undefined && (
             <DeclarationsList
               title=''
               data={{ optInAgreementsOptOut }}
               labelMap={{
-                optInAgreementsOptOut: <OptInAgreementsIndividual />
+                optInAgreementsOptOut: <OptInAgreements />
               }}
             />
-          )} */}
+          )}
           {optInAgreementsSafeguards !== undefined && (
             <DeclarationsList
               title=''

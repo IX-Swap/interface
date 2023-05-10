@@ -329,7 +329,8 @@ export const corporateInvestorStatusDeclarationSchema = yup
     isInstitutionalInvestor: yup.bool(),
     isIntermediaryInvestor: yup.bool(),
 
-    optInAgreements: yup.bool().when('applyingAs', {
+    // optInAgreements: yup.bool().when('applyingAs', {
+    optInAgreementsSafeguards: yup.bool().when('applyingAs', {
       is: value => value === 'accredited' || value === 'expert',
       then: yup
         .bool()
