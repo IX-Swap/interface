@@ -21,20 +21,26 @@ export const InvestorDeclarationView = ({
   data,
   isCorporate = true
 }: InvestorDeclarationViewProps) => {
-  const { applyingAs, isInstitutionalInvestor, isIntermediaryInvestor } = data
   const {
-    assets,
-    trustee,
-    accreditedShareholders,
-    partnership,
-    accreditedBeneficiaries,
-    accreditedSettlors,
-    personalAssets,
-    income,
-    financialAsset,
-    jointlyHeldAccount,
-    expertInvestorAgreement
-  } = data.declarations?.investorsStatus ?? {}
+    applyingAs,
+    isInstitutionalInvestor,
+    isIntermediaryInvestor,
+    declarations: {
+      investorsStatus: {
+        assets,
+        trustee,
+        accreditedShareholders,
+        partnership,
+        accreditedBeneficiaries,
+        accreditedSettlors,
+        personalAssets,
+        income,
+        financialAsset,
+        jointlyHeldAccount,
+        expertInvestorAgreement
+      }
+    }
+  } = data
 
   const corporateAccreditedInvestor = {
     assets,

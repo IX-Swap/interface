@@ -24,7 +24,7 @@ export const InstitutionalInvestorDeclarationView: React.FC<
     <FieldContainer>
       <Grid container direction={'column'} spacing={5}>
         <Grid item>
-          <FormSectionHeader title='Institutional Investor Status Declaration' />
+          <FormSectionHeader title='Institutional Investor Documents' />
         </Grid>
 
         <Grid item container direction={'column'} spacing={3}>

@@ -24,12 +24,10 @@ export const DeclarationsList = ({
         {Object.entries(data).map((item, index) => {
           const key = labelMap[item[0]]
           const value = item[1]
-          if (value === true) {
-            return (
-              <DeclarationsListItem key={index} label={key} value={value} />
-            )
-          }
-          return null
+          //   if (value === true) {
+          return <DeclarationsListItem key={index} label={key} value={value} />
+          //   }
+          //   return null
         })}
       </Grid>
     </Grid>

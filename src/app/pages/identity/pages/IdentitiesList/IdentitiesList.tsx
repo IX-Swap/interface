@@ -12,7 +12,6 @@ export const IdentitiesList: React.FC = () => {
   const { hasIdentity, identityLoaded, isLoadingIdentities } =
     useGetIdentities()
   const classes = useStyles()
-  console.log(identityLoaded, 'identityLoaded')
   return (
     <AppContentWrapper container background='default'>
       {/* <Container className={classes.container}> */}
