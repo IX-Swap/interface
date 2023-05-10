@@ -55,7 +55,7 @@ export const DataExtractTable = () => {
       .map(([key]) => key) as (keyof IssuanceDataExtract)[]
     extract({ fields, issuanceId, tab })
   }
-  const { header, fields, initialValues } = useFieldsByRole()
+  const { header, fields, initialValues } = useFieldsByRole(tab)
   const formik = useFormik({
     initialValues,
     onSubmit: sendExtractData,
@@ -64,10 +64,8 @@ export const DataExtractTable = () => {
   const columnCount = header.length
 
   const [gradientClass, setGradientClass] = useState('overlay-gradient')
-  const handleScroll = (elem: any) => {
-    const scrollLeft = elem.target.scrollLeft
-    const scrollWidth = elem.target.scrollWidth
-    const clientWidth = elem.target.clientWidth
+  const handleScroll = ({ target }: any) => {
+    const { scrollLeft, scrollWidth, clientWidth } = target
     const isScrolledRight = scrollLeft + clientWidth === scrollWidth
     const newClass = isScrolledRight ? 'hidden' : 'overlay-gradient'
     if (gradientClass !== newClass) setGradientClass(newClass)
@@ -116,7 +114,10 @@ export const DataExtractTable = () => {
               <OverflowIssuanceTable>
                 <OverflowRow count={columnCount}></OverflowRow>
                 {items?.map((investment: IssuanceDataExtract) => (
-                  <OverflowRow count={columnCount} key={investment.offerId + investment.offerInvestmentId + investment.walletAddress}>
+                  <OverflowRow
+                    count={columnCount}
+                    key={investment.offerId + investment.offerInvestmentId + investment.walletAddress}
+                  >
                     {fields.map((field) => (
                       <DataCell key={field} field={field} investment={investment} />
                     ))}

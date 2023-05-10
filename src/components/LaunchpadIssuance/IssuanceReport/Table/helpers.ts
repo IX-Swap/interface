@@ -1,14 +1,19 @@
 import { IssuanceDataExtract } from 'state/issuance/types'
 import { useRole } from 'state/user/hooks'
+import { IssuanceReportTab } from './types'
 
 export const adminOnlyFields: (keyof IssuanceDataExtract)[] = ['occupation', 'income', 'age']
 export const adminOnlyHead = ['Occupation', 'Income', 'Age']
 
 export type ExtractFieldsForm = { [K in keyof IssuanceDataExtract]: boolean }
 export type ExtractedFields = (keyof IssuanceDataExtract)[]
-const getFields = (isAdmin: boolean) => {
+const getFields = (isAdmin: boolean, tab: IssuanceReportTab) => {
   const extraHeads = isAdmin ? adminOnlyHead : []
+  const lastHead = tab === IssuanceReportTab.INVESTMENTS ? 'Investment round' : 'Wish investment amount'
+
   const extraFields = isAdmin ? adminOnlyFields : []
+  const lastField = tab === IssuanceReportTab.INVESTMENTS ? 'stage' : 'wishAmount'
+
   const header = [
     'Name',
     'Company Name',
@@ -21,8 +26,7 @@ const getFields = (isAdmin: boolean) => {
     'Accredited investor',
     'Email',
     ...extraHeads,
-    'Investment round',
-    'Wish investment amount',
+    lastHead,
   ]
   const fields: (keyof IssuanceDataExtract)[] = [
     'name',
@@ -36,15 +40,14 @@ const getFields = (isAdmin: boolean) => {
     'accredited',
     'email',
     ...extraFields,
-    'stage',
-    'wishAmount',
+    lastField,
   ]
   const initialValues = fields.reduce((acc, current) => ({ ...acc, [current]: true }), {} as ExtractFieldsForm)
 
   return { header, fields, initialValues }
 }
 
-export const useFieldsByRole = () => {
+export const useFieldsByRole = (tab: IssuanceReportTab) => {
   const { isAdmin } = useRole()
-  return { ...getFields(isAdmin) }
+  return { ...getFields(isAdmin, tab) }
 }

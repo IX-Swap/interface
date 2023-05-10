@@ -229,7 +229,7 @@ export const VettingForm = (props: Props) => {
             disabled={view}
             value={values.document.pitchDeck}
             error={(touched.document?.pitchDeck && errors.document?.pitchDeck) as string}
-            isImage
+            isDocument
           />
 
           <FieldArray name="fundingDocuments">
