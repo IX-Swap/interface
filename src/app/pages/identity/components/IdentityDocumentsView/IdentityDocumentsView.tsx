@@ -6,11 +6,12 @@ import { Documents } from 'app/pages/identity/components/CorporateIdentityView/D
 
 export interface DocumentsViewProps {
   data: DataroomFile[]
+  investorRole?: string
   type?: IdentityType
 }
 
 export const IdentityDocumentsView = (props: DocumentsViewProps) => {
-  const { data: documents } = props
+  const { data: documents, investorRole = 'accredited' } = props
 
   const proofOfIdentityDocs = documents.filter(
     doc => Object.values(doc).length > 0 && doc.type === 'Proof of Identity'
@@ -45,7 +46,10 @@ export const IdentityDocumentsView = (props: DocumentsViewProps) => {
 
       <Grid item container spacing={2} direction='column'>
         <Grid item>
-          <Typography>Evidence of Accreditation</Typography>
+          <Typography>
+            Evidence of{' '}
+            {investorRole !== 'expert' ? 'Accreditation' : 'Expertise'}
+          </Typography>
         </Grid>
         <Grid item>
           <Documents documents={evidenceDocs} />

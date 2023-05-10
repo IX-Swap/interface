@@ -3,8 +3,8 @@ import { Grid, Typography, RadioGroup, FormControlLabel } from '@mui/material'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DeclarationsListFields } from 'app/pages/identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
 import {
-  OptInAgreements,
-  OptInAgreementsIndividual
+  OptInAgreements
+  //   OptInAgreementsIndividual
 } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
 import { useFormContext } from 'react-hook-form'
@@ -57,16 +57,16 @@ export const InvestorDeclarationForm = ({
               investorRole={capitalizeFirstLetter(investorRole)}
             />
           )
-        },
-        {
-          name: 'optInAgreementsOptOut',
-          label: (
-            <OptInAgreementsIndividual
-              investorRole={capitalizeFirstLetter(investorRole)}
-              showOptOutDialog
-            />
-          )
         }
+        // {
+        //   name: 'optInAgreementsOptOut',
+        //   label: (
+        //     <OptInAgreementsIndividual
+        //       investorRole={capitalizeFirstLetter(investorRole)}
+        //       showOptOutDialog
+        //     />
+        //   )
+        // }
       ]
     }
 
@@ -232,11 +232,16 @@ export const InvestorDeclarationForm = ({
               </FieldContainer>
             </Grid>
             {isCorporate ? (
-              <CorporateDocuments corporateType={corporateType} />
+              <CorporateDocuments
+                corporateType={corporateType}
+                investorRole={investorRole as InvestorRole}
+              />
             ) : (
               <Grid item xs={12}>
                 <FieldContainer>
-                  <IndividualUploadDocumentsForm />
+                  <IndividualUploadDocumentsForm
+                    investorRole={investorRole as InvestorRole}
+                  />
                 </FieldContainer>
               </Grid>
             )}

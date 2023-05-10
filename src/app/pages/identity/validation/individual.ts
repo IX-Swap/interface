@@ -188,10 +188,10 @@ export const individualInvestorStatusDeclarationSchema = yup
       jointlyHeldAccount: individualInvestorStatusDeclarationItemSchema,
       expertInvestorAgreement: expertInvestorAgreementSchema,
 
-      optInAgreementsOptOut: yup
-        .bool()
-        .oneOf([true], 'Opt-In Requirement is required')
-        .required(validationMessages.required),
+      //   optInAgreementsOptOut: yup
+      //     .bool()
+      //     .oneOf([true], 'Opt-In Requirement is required')
+      //     .required(validationMessages.required),
       optInAgreementsSafeguards: yup
         .bool()
         .oneOf([true], 'Opt-In Requirement is required')
