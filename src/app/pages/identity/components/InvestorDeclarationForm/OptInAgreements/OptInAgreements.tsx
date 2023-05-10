@@ -27,15 +27,18 @@ export const OptInAgreements = ({
         regulatory investor <SafeguardInfoDialog /> for {investorRole}{' '}
         Investors.{' '}
       </Typography>
-      {/* <Typography className={classes.text}>
-        I have been informed of and understand my right to{' '}
-        {showOptOutDialog ? (
-          <OptOutInfoDialog investorRole={investorRole} />
-        ) : (
-          'opt out'
-        )}{' '}
-        of the {investorRole} Investor role with InvestaX at any point in time.
-      </Typography> */}
+      {investorRole === 'Accredited' && (
+        <Typography className={classes.text}>
+          I have been informed of and understand my right to{' '}
+          {showOptOutDialog ? (
+            <OptOutInfoDialog investorRole={investorRole} />
+          ) : (
+            'opt out'
+          )}{' '}
+          of the {investorRole} Investor role with InvestaX at any point in
+          time.
+        </Typography>
+      )}
     </Fragment>
   )
 }
