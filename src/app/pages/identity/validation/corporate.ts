@@ -330,10 +330,7 @@ export const corporateInvestorStatusDeclarationSchema = yup
     isIntermediaryInvestor: yup.bool(),
 
     optInAgreements: yup.bool().when('applyingAs', {
-      is: value => {
-        // console.log(value, 'testetest')
-        return value === 'accredited' || value === 'expert'
-      },
+      is: value => value === 'accredited' || value === 'expert',
       then: yup
         .bool()
         .oneOf([true], 'Opt-In Requirement is required')
