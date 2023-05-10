@@ -17,7 +17,7 @@ export const EvidenceOfAccreditationHelper = ({
         <>
           <span className={styles.blackText}>Net Personal Asset</span> Copy of
           latest investment portfolio holdings, e.g. bank, broker, <br /> fund
-          manager account statements, copy bank statement, CPF statement{' '}
+          manager account statements, copy bank statement, CPF statement,&nbsp;
           <CryptoHoldingDialog />
         </>
       ) : (
