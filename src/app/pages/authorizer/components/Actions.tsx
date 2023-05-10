@@ -13,6 +13,7 @@ import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsDropdownTrigger'
 import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsDropdownContent'
 import { useLocation } from 'react-router-dom'
+import { get } from 'lodash'
 
 export interface ActionsProps {
   item: any
@@ -151,7 +152,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
               content={props => (
                 <ActionsDropdownContent
                   {...props}
-                  hideApproval={item[statusFieldName] !== 'Submitted'}
+                  hideApproval={get(item, statusFieldName) !== 'Submitted'}
                   approve={approve}
                   reject={reject}
                   view={view}

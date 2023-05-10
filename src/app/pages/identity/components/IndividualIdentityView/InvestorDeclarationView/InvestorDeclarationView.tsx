@@ -6,10 +6,7 @@ import {
   corporateInvestorAgreementsMap,
   individualInvestorAgreementsMap
 } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/agreements'
-import {
-  OptInAgreements,
-  OptInAgreementsIndividual
-} from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
+import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import {
   CorporateIdentity,
   IndividualIdentity
@@ -131,7 +128,7 @@ export const InvestorDeclarationView: React.FC<
               title=''
               data={{ optInAgreementsOptOut }}
               labelMap={{
-                optInAgreementsOptOut: <OptInAgreementsIndividual />
+                optInAgreementsOptOut: <OptInAgreements />
               }}
             />
           )}

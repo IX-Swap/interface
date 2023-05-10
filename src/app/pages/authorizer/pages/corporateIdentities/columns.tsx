@@ -57,7 +57,7 @@ const renderStatus = (
       featureCategory={featureCategory}
       investorRole={role}
       statusFieldName={
-        typeof role !== 'undefined' ? 'declaredAsStatus' : 'status'
+        typeof role !== 'undefined' ? `declaredAsStatus.${role}` : 'status'
       }
     />
   </>

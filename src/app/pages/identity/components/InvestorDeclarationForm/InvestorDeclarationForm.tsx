@@ -2,16 +2,12 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Grid, Typography, RadioGroup, FormControlLabel } from '@mui/material'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DeclarationsListFields } from 'app/pages/identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
-import {
-  OptInAgreements,
-  OptInAgreementsIndividual
-} from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
+import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
 import { useFormContext } from 'react-hook-form'
 import { IdentityType, InvestorRole } from 'app/pages/identity/utils/shared'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
-// import { Divider } from 'ui/Divider'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
@@ -20,6 +16,7 @@ import { useStyles } from 'app/pages/accounts/components/CurrencySelect/Currency
 import classnames from 'classnames'
 import { IndividualUploadDocumentsForm } from '../UploadDocumentsForm/IndividualUploadDocumentsForm'
 import { TypedField } from 'components/form/TypedField'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
@@ -32,59 +29,46 @@ export const InvestorDeclarationForm = ({
 }: InvestorDeclarationFormProps) => {
   const { formState, trigger, control, setValue } = useFormContext()
   const classes = useStyles()
+  const investorRoles = ['accredited', 'expert', 'institutional']
   const [investorRole, setInvestorRole] = useState('accredited')
   const isCorporate = identityType === 'corporate'
   const radioButtonRef = useRef<any>()
-  const radioButtonsList = [
-    {
-      label: 'Accredited Investor',
-      value: 'accredited'
-    },
-    {
-      label: 'Expert Investor',
-      value: 'expert'
-    },
-    {
-      label: 'Institutional Investor',
-      value: 'institutional'
-    }
-  ]
-  const getInvestorRole = (code: string) => {
-    const role = radioButtonsList.find(role => role.value === code)
-
-    return typeof role !== 'undefined' ? role.label : 'Accredited Investor'
-  }
 
   if (!isCorporate) {
-    radioButtonsList.pop()
+    investorRoles.pop()
   }
 
-  const declaredInvestorRole = `I declare that I am an ${getInvestorRole(
+  const declaredInvestorRole = `I declare that I am an ${capitalizeFirstLetter(
     investorRole
-  )}.`
+  )} Investor.`
 
   const hasDeclaredInstitutionalInvestor = investorRole === 'institutional'
 
-  const getOptInData = (type: IdentityType) => {
-    if (type === 'individual') {
-      return [
-        {
-          name: 'optInAgreementsSafeguards',
-          label: <SafeguardAgreements />
-        },
-        {
-          name: 'optInAgreementsOptOut',
-          label: <OptInAgreementsIndividual showOptOutDialog />
-        }
-      ]
-    }
-
-    return [
+  const getOptInData = (role: InvestorRole) => {
+    const agreements = [
       {
-        name: 'optInAgreements',
-        label: <OptInAgreements showOptOutDialog />
+        name: 'optInAgreementsSafeguards',
+        label: (
+          <SafeguardAgreements
+            investorRole={capitalizeFirstLetter(investorRole)}
+          />
+        )
       }
     ]
+
+    if (role === 'accredited') {
+      agreements.push({
+        name: 'optInAgreementsOptOut',
+        label: (
+          <OptInAgreements
+            investorRole={capitalizeFirstLetter(investorRole)}
+            showOptOutDialog
+          />
+        )
+      })
+    }
+
+    return agreements
   }
 
   const {
@@ -105,7 +89,7 @@ export const InvestorDeclarationForm = ({
     income,
     personalAssets,
     jointlyHeldAccount,
-    expertInvestorAgreement,
+    investorAgreement,
     optInAgreementsOptOut,
     optInAgreementsSafeguards
   } = formState.dirtyFields
@@ -137,7 +121,7 @@ export const InvestorDeclarationForm = ({
     income,
     personalAssets,
     jointlyHeldAccount,
-    expertInvestorAgreement,
+    investorAgreement,
     optInAgreementsOptOut,
     optInAgreementsSafeguards,
     trigger
@@ -165,6 +149,7 @@ export const InvestorDeclarationForm = ({
                   name='applyingAs'
                   label=''
                   control={control}
+                  defaultValue={'accredited'}
                 >
                   <Grid
                     container
@@ -172,7 +157,7 @@ export const InvestorDeclarationForm = ({
                     gap={1.5}
                     ref={radioButtonRef}
                   >
-                    {radioButtonsList.map(({ label, value }) => {
+                    {investorRoles.map(role => {
                       return (
                         <Grid
                           item
@@ -180,16 +165,16 @@ export const InvestorDeclarationForm = ({
                           flexGrow={1}
                           flexBasis={0}
                           className={classnames(classes.button, {
-                            [classes.active]: investorRole === value
+                            [classes.active]: investorRole === role
                           })}
                           onClick={() => {
-                            setInvestorRole(value)
-                            setValue('applyingAs', value)
+                            setInvestorRole(role)
+                            setValue('applyingAs', role)
                           }}
                         >
                           <FormControlLabel
-                            label={label}
-                            value={value}
+                            label={`${capitalizeFirstLetter(role)} Investor`}
+                            value={role}
                             control={<UIRadio />}
                           />
                         </Grid>
@@ -227,21 +212,27 @@ export const InvestorDeclarationForm = ({
                     </Grid>
                     <Grid item>
                       <DeclarationsListFields
-                        data={getOptInData(identityType)}
+                        data={getOptInData(investorRole as InvestorRole)}
                       />
                     </Grid>
                   </Grid>
                 </Grid>
               </FieldContainer>
             </Grid>
-            {isCorporate && (
-              <CorporateDocuments corporateType={corporateType} />
+            {isCorporate ? (
+              <CorporateDocuments
+                corporateType={corporateType}
+                investorRole={investorRole as InvestorRole}
+              />
+            ) : (
+              <Grid item xs={12}>
+                <FieldContainer>
+                  <IndividualUploadDocumentsForm
+                    investorRole={investorRole as InvestorRole}
+                  />
+                </FieldContainer>
+              </Grid>
             )}
-            <Grid item xs={12}>
-              <FieldContainer>
-                <IndividualUploadDocumentsForm />
-              </FieldContainer>
-            </Grid>
           </>
         ) : (
           <Grid item xs={12}>
@@ -256,7 +247,8 @@ export const InvestorDeclarationForm = ({
                   <Grid item>
                     <UploadDocumentField
                       name='institutionalInvestorDocuments'
-                      label=''
+                      label='Institutional Investor Documents'
+                      hideLabel
                       helperElement={
                         <Typography
                           color={'text.secondary'}

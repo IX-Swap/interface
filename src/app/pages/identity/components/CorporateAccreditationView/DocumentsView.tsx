@@ -7,20 +7,20 @@ import { Documents } from 'app/pages/identity/components/CorporateIdentityView/D
 
 export interface DocumentsViewProps {
   data: DataroomFile[]
+  investorRole?: string
 }
 
 export const DocumentsView = (props: DocumentsViewProps) => {
-  const { data: documents } = props
+  const { data: documents, investorRole = 'accredited' } = props
 
   const corporateDocuments = documents.filter(
     doc => Object.values(doc).length > 0 && doc.type === 'Corporate Documents'
   )
-  const financialDocuments = documents.filter(
-    doc => Object.values(doc).length > 0 && doc.type === 'Financial Documents'
-  )
+  //   const financialDocuments = documents.filter(
+  //     doc => Object.values(doc).length > 0 && doc.type === 'Financial Documents'
+  //   )
   const evidenceDocuments = documents.filter(
-    doc =>
-      Object.values(doc).length > 0 && doc.type === 'Evidence of Accreditation'
+    doc => Object.values(doc).length > 0 && doc.type.startsWith('Evidence of ')
   )
 
   return (
@@ -36,7 +36,7 @@ export const DocumentsView = (props: DocumentsViewProps) => {
           </Grid>
         </Grid>
 
-        <Grid item container direction={'column'} spacing={3}>
+        {/* <Grid item container direction={'column'} spacing={3}>
           <Grid item>
             <FormSectionHeader title='Financial Documents' />
           </Grid>
@@ -44,11 +44,15 @@ export const DocumentsView = (props: DocumentsViewProps) => {
           <Grid item container direction={'column'} spacing={2}>
             <Documents documents={financialDocuments} />
           </Grid>
-        </Grid>
+        </Grid> */}
 
         <Grid item container direction={'column'} spacing={3}>
           <Grid item>
-            <FormSectionHeader title='Evidence of Accreditation' />
+            <FormSectionHeader
+              title={`Evidence of ${
+                investorRole !== 'expert' ? 'Accreditation' : 'Expertise'
+              }`}
+            />
           </Grid>
 
           <Grid item container direction={'column'} spacing={2}>

@@ -35,6 +35,8 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
   const url =
     category === 'virtual-accounts'
       ? `${_uri}/assign/${id}/${action}`
+      : category === 'individuals/accreditation'
+      ? `/identity/accreditation/individual/${id}/${action}`
       : category === 'corporates/accreditation'
       ? `/identity/accreditation/corporate/${id}/${action}`
       : category === 'corporates/role'

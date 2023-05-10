@@ -31,3 +31,12 @@ export const institutionalInvestorAgreements = [
     label: <InstitutionalInvestorAgreements type='Intermediary' />
   }
 ]
+
+export const institutionalInvestorAgreementsMap = {
+  isInstitutionalInvestor: (
+    <InstitutionalInvestorAgreements type='Institutional' />
+  ),
+  isIntermediaryInvestor: (
+    <InstitutionalInvestorAgreements type='Intermediary' />
+  )
+}

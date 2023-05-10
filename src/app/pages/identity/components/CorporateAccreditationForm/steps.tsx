@@ -1,10 +1,6 @@
 import React from 'react'
-import {
-  getCorporateInvestorDeclarationFormValues,
-  getCorporateInvestorTaxDeclarationFormValues
-} from 'app/pages/identity/utils/corporate/forms'
+import { getCorporateInvestorDeclarationFormValues } from 'app/pages/identity/utils/corporate/forms'
 import { getCorporateInvestorDeclarationRequestPayload } from 'app/pages/identity/utils/corporate/requests'
-import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import {
   corporateAccreditationSchema,
@@ -23,26 +19,15 @@ export const getCorporateAccreditationFormSteps = () => [
         identityType='corporate'
         corporateType='investor'
       />
-    ),
-    formId: 'investor-declaration'
+    )
   },
   {
     label: 'Review & Submit',
-    getFormValues: (data: any) => {
-      return {
-        ...getCorporateInvestorTaxDeclarationFormValues(data),
-        ...getCorporateInvestorDeclarationFormValues(data)
-      }
-    },
-    getRequestPayload: (data: any) => {
-      return {
-        ...getTaxDeclarationRequestPayload(data),
-        ...getCorporateInvestorDeclarationRequestPayload(data)
-      }
-    },
+    getFormValues: (data: any) =>
+      getCorporateInvestorDeclarationFormValues(data),
+    getRequestPayload: (data: any) =>
+      getCorporateInvestorDeclarationRequestPayload(data),
     validationSchema: corporateAccreditationSchema,
-    component: () => <CorporateAccreditationContainer />,
-    // formId: 'submit'
-    formId: 'submit-accreditation'
+    component: () => <CorporateAccreditationContainer />
   }
 ]

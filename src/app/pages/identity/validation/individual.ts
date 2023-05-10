@@ -8,7 +8,7 @@ import {
   taxIdentificationNumberSchema,
   validationMessages,
   documentsSchema,
-  individualInvestorStatusDeclarationItemSchema,
+  //   individualInvestorStatusDeclarationItemSchema,
   optInAgreementsDependentValueSchema,
   expertInvestorAgreementSchema
 } from 'validation/shared'
@@ -150,29 +150,30 @@ const investorDeclarationsTests = function (values: any) {
   }
 
   if (values.applyingAs !== 'expert') {
-    values.expertInvestorAgreement = 'capitalMarketExpert'
+    values.investorAgreement = 'capitalMarketExpert'
   }
 
   if (values.applyingAs !== 'accredited') {
-    values.financialAsset = false
-    values.income = false
-    values.personalAssets = false
-    values.jointlyHeldAccount = false
-  } else {
-    const financialDeclarations = Object.entries(values)
-      .filter(([key]) => {
-        return (
-          key === 'financialAsset' ||
-          key === 'income' ||
-          key === 'personalAssets' ||
-          key === 'jointlyHeldAccount'
-        )
-      })
-      .map(([_key, value]) => value)
+    values.investorAgreement = 'financialAsset'
+    //     values.financialAsset = false
+    //     values.income = false
+    //     values.personalAssets = false
+    //     values.jointlyHeldAccount = false
+    //   } else {
+    //     const financialDeclarations = Object.entries(values)
+    //       .filter(([key]) => {
+    //         return (
+    //           key === 'financialAsset' ||
+    //           key === 'income' ||
+    //           key === 'personalAssets' ||
+    //           key === 'jointlyHeldAccount'
+    //         )
+    //       })
+    //       .map(([_key, value]) => value)
 
-    const result = financialDeclarations.every(value => value === false)
+    //     const result = financialDeclarations.every(value => value === false)
 
-    return !result
+    //     return !result
   }
 
   return true
@@ -182,16 +183,16 @@ export const individualInvestorStatusDeclarationSchema = yup
   .object()
   .shape<IndividualInvestorDeclarationFormValues & IdentityDocumentsFormValues>(
     {
-      financialAsset: individualInvestorStatusDeclarationItemSchema,
-      income: individualInvestorStatusDeclarationItemSchema,
-      personalAssets: individualInvestorStatusDeclarationItemSchema,
-      jointlyHeldAccount: individualInvestorStatusDeclarationItemSchema,
-      expertInvestorAgreement: expertInvestorAgreementSchema,
+      //   financialAsset: individualInvestorStatusDeclarationItemSchema,
+      //   income: individualInvestorStatusDeclarationItemSchema,
+      //   personalAssets: individualInvestorStatusDeclarationItemSchema,
+      //   jointlyHeldAccount: individualInvestorStatusDeclarationItemSchema,
+      investorAgreement: expertInvestorAgreementSchema,
 
-      optInAgreementsOptOut: yup
-        .bool()
-        .oneOf([true], 'Opt-In Requirement is required')
-        .required(validationMessages.required),
+      //   optInAgreementsOptOut: yup
+      //     .bool()
+      //     .oneOf([true], 'Opt-In Requirement is required')
+      //     .required(validationMessages.required),
       optInAgreementsSafeguards: yup
         .bool()
         .oneOf([true], 'Opt-In Requirement is required')

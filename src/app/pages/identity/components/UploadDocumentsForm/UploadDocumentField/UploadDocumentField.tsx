@@ -19,6 +19,7 @@ export interface UploadDocumentFieldProps {
   fieldId?: any
   defaultValue?: any
   isDefaultEmpty?: boolean
+  hideLabel?: boolean
 }
 
 export const UploadDocumentField = ({
@@ -26,7 +27,8 @@ export const UploadDocumentField = ({
   label,
   helperElement,
   tooltipContent,
-  isDefaultEmpty = false
+  isDefaultEmpty = false,
+  hideLabel = false
 }: UploadDocumentFieldProps) => {
   const { control, watch, formState } = useFormContext()
 
@@ -55,33 +57,27 @@ export const UploadDocumentField = ({
 
   return (
     <Grid container spacing={3}>
-      {label !== '' ? (
-        <Grid item xs={12}>
-          <Box>
-            <Grid item container alignItems='center'>
+      <Grid item xs={12}>
+        <Box>
+          <Grid item container alignItems='center'>
+            {!hideLabel && (
               <Typography variant='subtitle1' color={'otpInput.color'}>
                 {label}
               </Typography>
-              <Box pr={1}></Box>
-              {tooltipContent !== undefined ? (
-                <Tooltip
-                  data-testid='upload-document-field-tooltip'
-                  title={tooltipContent}
-                />
-              ) : null}
-            </Grid>
-          </Box>
-          {helperElement !== undefined ? (
-            <Box mt={1}>{helperElement}</Box>
-          ) : null}
-        </Grid>
-      ) : (
-        <Grid item xs={12}>
-          {helperElement !== undefined ? (
-            <Box mt={1}>{helperElement}</Box>
-          ) : null}
-        </Grid>
-      )}
+            )}
+
+            <Box pr={1}></Box>
+            {tooltipContent !== undefined ? (
+              <Tooltip
+                data-testid='upload-document-field-tooltip'
+                title={tooltipContent}
+              />
+            ) : null}
+          </Grid>
+        </Box>
+        {helperElement !== undefined ? <Box mt={1}>{helperElement}</Box> : null}
+      </Grid>
+
       <Grid item xs={12}>
         <FieldsArray name={name} control={control}>
           {({ fields, append, remove }) => (

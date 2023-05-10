@@ -1,6 +1,5 @@
 import React from 'react'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
-import { DeclarationsListItem } from 'app/pages/identity/components/DeclarationsListItem/DeclarationsListItem'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
@@ -13,7 +12,7 @@ export interface InstitutionalInvestorDeclarationViewProps {
 export const InstitutionalInvestorDeclarationView: React.FC<
   InstitutionalInvestorDeclarationViewProps
 > = ({ data }) => {
-  const { isInstitutionalInvestor, documents } = data
+  const { documents } = data
 
   const institutionalInvestorDocuments = documents.filter(
     doc =>
@@ -25,15 +24,10 @@ export const InstitutionalInvestorDeclarationView: React.FC<
     <FieldContainer>
       <Grid container direction={'column'} spacing={5}>
         <Grid item>
-          <FormSectionHeader title='Institutional Investor Status Declaration' />
+          <FormSectionHeader title='Institutional Investor Documents' />
         </Grid>
 
         <Grid item container direction={'column'} spacing={3}>
-          <DeclarationsListItem
-            label={'I declare that I am "Corporate Accredited Investor"'}
-            value={isInstitutionalInvestor}
-          />
-
           <Grid item>
             <Documents documents={institutionalInvestorDocuments} />
           </Grid>
