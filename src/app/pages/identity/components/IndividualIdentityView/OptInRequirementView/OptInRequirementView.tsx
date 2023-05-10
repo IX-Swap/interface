@@ -21,7 +21,7 @@ export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
   } = data
 
   const investorRole = capitalizeFirstLetter(
-    applyingAs.length > 0 ? applyingAs[0] : 'accredited'
+    applyingAs?.length > 0 ? applyingAs[0] : 'accredited'
   )
 
   return (
