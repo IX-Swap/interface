@@ -61,21 +61,21 @@ export const DeclarationsListFields = ({
         <TypedField
           customRenderer
           component={RadioGroup}
-          name='expertInvestorAgreement'
+          name={'investorAgreement'}
           label=''
           control={control}
         >
           <Grid container direction='column'>
             {data.map(item => {
-              const selected = watch('expertInvestorAgreement')
+              const selected = watch(`investorAgreement`)
               return (
-                <Grid item sx={{ padding: '6px', marginTop: '5px' }}>
+                <Grid item sx={{ padding: '6px' }}>
                   <FormControlLabel
                     label={
                       <Typography
                         color={
                           typeof control?.formStateRef?.current?.errors
-                            ?.expertInvestorAgreement !== 'undefined'
+                            .investorAgreement !== 'undefined'
                             ? 'error'
                             : item.name === selected
                             ? 'text.primary'

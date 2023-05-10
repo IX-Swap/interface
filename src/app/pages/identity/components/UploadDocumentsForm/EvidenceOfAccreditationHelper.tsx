@@ -22,13 +22,16 @@ export const EvidenceOfAccreditationHelper = ({
         </>
       ) : (
         <>
-          Eg-: SGX trading member confirmation, recent custody or broker trading
-          statement, confirmation letter from broker/custodian for trading
-          activity for past 12 months, financial statement/reports showing
-          previous engagement or dealing in capital market products, trust deed
-          showing intended activities of the trust.
+          For Example: SGX trading member confirmation, recent custody or broker
+          trading statement, confirmation letter from broker/custodian for
+          trading activity for past 12 months, financial statement/reports
+          showing previous engagement or dealing in capital market products,
+          trust deed showing intended activities of the trust.
         </>
       )}
+      <Typography color={'text.secondary'} fontWeight={400} mt={2}>
+        *Note that the above list is not exhaustive.
+      </Typography>
     </Typography>
   )
 }

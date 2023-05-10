@@ -89,7 +89,7 @@ export const InvestorDeclarationForm = ({
     income,
     personalAssets,
     jointlyHeldAccount,
-    expertInvestorAgreement,
+    investorAgreement,
     optInAgreementsOptOut,
     optInAgreementsSafeguards
   } = formState.dirtyFields
@@ -121,7 +121,7 @@ export const InvestorDeclarationForm = ({
     income,
     personalAssets,
     jointlyHeldAccount,
-    expertInvestorAgreement,
+    investorAgreement,
     optInAgreementsOptOut,
     optInAgreementsSafeguards,
     trigger

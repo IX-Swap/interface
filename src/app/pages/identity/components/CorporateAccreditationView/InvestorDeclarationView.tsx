@@ -27,39 +27,39 @@ export const InvestorDeclarationView = ({
     isIntermediaryInvestor,
     declarations: {
       investorsStatus: {
-        assets,
-        trustee,
-        accreditedShareholders,
-        partnership,
-        accreditedBeneficiaries,
-        accreditedSettlors,
-        personalAssets,
-        income,
-        financialAsset,
-        jointlyHeldAccount,
-        expertInvestorAgreement
+        // assets,
+        // trustee,
+        // accreditedShareholders,
+        // partnership,
+        // accreditedBeneficiaries,
+        // accreditedSettlors,
+        // personalAssets,
+        // income,
+        // financialAsset,
+        // jointlyHeldAccount,
+        investorAgreement
       }
     }
   } = data
 
-  const corporateAccreditedInvestor = {
-    assets,
-    trustee,
-    accreditedShareholders,
-    partnership,
-    accreditedBeneficiaries,
-    accreditedSettlors
-  }
+  //   const corporateAccreditedInvestor = {
+  //     assets,
+  //     trustee,
+  //     accreditedShareholders,
+  //     partnership,
+  //     accreditedBeneficiaries,
+  //     accreditedSettlors
+  //   }
 
-  const individualAccreditedInvestor = {
-    personalAssets,
-    income,
-    financialAsset,
-    jointlyHeldAccount
-  }
+  //   const individualAccreditedInvestor = {
+  //     personalAssets,
+  //     income,
+  //     financialAsset,
+  //     jointlyHeldAccount
+  //   }
 
   const expertInvestor = {
-    expertInvestorAgreement
+    investorAgreement
   }
 
   const institutionalInvestor = {
@@ -73,9 +73,10 @@ export const InvestorDeclarationView = ({
       : 'accredited'
 
   // * Accredited Investor Agreements
-  let agreementsData: Record<string, boolean | undefined> = isCorporate
-    ? corporateAccreditedInvestor
-    : individualAccreditedInvestor
+  //   let agreementsData: Record<string, boolean | undefined> = isCorporate
+  //     ? corporateAccreditedInvestor
+  //     : individualAccreditedInvestor
+  let agreementsData: Record<string, boolean | undefined> = expertInvestor
   let agreementsMap: Record<string, React.ReactNode> = isCorporate
     ? corporateInvestorAgreementsMap
     : individualInvestorAgreementsMap
@@ -95,7 +96,8 @@ export const InvestorDeclarationView = ({
         investorRole
       )} Investor`}
       data={agreementsData}
-      type={investorRole === 'expert' ? 'radio' : 'checkbox'}
+      //   type={investorRole === 'expert' ? 'radio' : 'checkbox'}
+      type={investorRole !== 'institutional' ? 'radio' : 'checkbox'}
       labelMap={agreementsMap}
     />
   )
