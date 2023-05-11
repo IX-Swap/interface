@@ -34,8 +34,7 @@ export const getCorporateInfoFormValues = (
     }
   })
 
-  const declaredAs =
-    typeof data?.declaredAs !== 'undefined' ? data.declaredAs : []
+  const declaredAs = data?.declaredAs ?? []
 
   return {
     isIssuer: declaredAs.includes('issuer'),

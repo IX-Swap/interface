@@ -138,6 +138,7 @@ export interface IndividualAgreementsFormValues {
 export interface InvestorCorporateInfoFormValues {
   isIssuer?: boolean
   isTenantOwner?: boolean
+  declaredAs?: string[]
   logo?: DataroomFile | string
   companyLegalName: string
   registrationNumber: string
