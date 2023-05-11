@@ -36,7 +36,7 @@ import {
   MULTICALL2_ADDRESSES,
   PAYOUT_ADDRESS,
   SWAP_ROUTER_ADDRESS,
-  LAUNCHPAD_INVESTMENT_ADDRESS,
+  IXSALE_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
@@ -180,6 +180,6 @@ export function usePayoutContract(): Contract | null {
   return useContract(PAYOUT_ADDRESS, PAYOUT_ABI, true)
 }
 
-export function useLaunchpadInvestmentContract() {
-  return useContract(LAUNCHPAD_INVESTMENT_ADDRESS, LAUNCHPAD_INVESTMENT_ABI, true)
+export function useLaunchpadInvestmentContract(contractAddress: string) {
+  return useContract(contractAddress || IXSALE_ADDRESS, LAUNCHPAD_INVESTMENT_ABI, true)
 }
