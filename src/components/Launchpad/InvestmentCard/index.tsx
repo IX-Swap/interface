@@ -38,11 +38,13 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
+  const isClosed = React.useMemo(
+    () => !!offer.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status),
+    [offer?.status]
+  )
   const canOpen = React.useMemo(() => {
-    return checkKYC(offer.allowOnlyAccredited, offer.status === OfferStatus.closed)
-  }, [offer?.status, offer?.allowOnlyAccredited])
-
-  const isClosed = React.useMemo(() => [OfferStatus.closed, OfferStatus.claim].includes(offer.status), [offer])
+    return checkKYC(offer.allowOnlyAccredited, isClosed)
+  }, [isClosed, offer?.allowOnlyAccredited])
 
   const stage = React.useMemo(() => {
     if (offer?.hardCapReached) {
