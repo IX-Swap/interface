@@ -111,7 +111,7 @@ export const useCheckKYC = () => {
   const { isApproved, isAccredited } = useKyc()
   return React.useCallback(
     (allowOnlyAccredited: boolean, isClosed: boolean) => {
-      return account && isApproved && (isClosed || !allowOnlyAccredited || isAccredited)
+      return Boolean(account && isApproved && (isClosed || !allowOnlyAccredited || isAccredited))
     },
     [account, isApproved, isAccredited]
   )
