@@ -16,18 +16,21 @@ export const useUpdateCorporate = () => {
 
   const updateCorporate = async (values: any) => {
     const uri = identityURL.corporates.update(userId, params.identityId)
-    const declaredAs = ['investor']
 
-    if (values.isIssuer === true) declaredAs.push('issuer')
-    if (values.isTenantOwner === true) declaredAs.push('tenantOwner')
+    values.step = typeof values.step === 'undefined' ? 0 : values.step
 
-    values.declaredAs = declaredAs
+    if (values.step === 0) {
+      const declaredAs = ['investor']
+
+      if (values.isIssuer === true) declaredAs.push('issuer')
+      if (values.isTenantOwner === true) declaredAs.push('tenantOwner')
+
+      values.declaredAs = declaredAs
+    }
 
     delete values._id
     delete values.isIssuer
     delete values.isTenantOwner
-
-    values.step = typeof values.step === 'undefined' ? 0 : values.step
 
     return await apiService.put<CorporateIdentity>(uri, {
       ...values
