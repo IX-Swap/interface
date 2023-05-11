@@ -188,7 +188,7 @@ export const schema = yup.object().shape({
     .nullable()
     .matches(/[0-9]+/, 'Invalid value')
     .required(REQUIRED)
-    .test('softCapConstraint', 'Minimum amount to raise should be smaller than total amolunt', function ():
+    .test('softCapConstraint', 'Minimum amount to raise should be smaller than total amount to raise', function ():
       | boolean
       | yup.ValidationError {
       return checkMaxGreaterThanMinimum(this.parent.softCap, this.parent.hardCap)
