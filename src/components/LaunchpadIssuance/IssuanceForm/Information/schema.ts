@@ -155,20 +155,16 @@ export const schema = yup.object().shape({
   trusteeAddress: yup
     .string()
     .nullable()
-    .test('addressConstraint', 'Please enter a valid address', function () {
-      const { originalValue } = this as any
-      return !originalValue || Boolean(isEthChainAddress(originalValue))
-    })
     .when('smartContractStrategy', {
       is: SMART_CONTRACT_STRATEGIES.original,
-      then: yup
-        .string()
-        .nullable()
-        .test('addressConstraint', 'Please enter a valid address', function () {
-          const { originalValue } = this as any
-          return !originalValue || Boolean(isEthChainAddress(originalValue))
-        })
-        .required(REQUIRED),
+      then: yup.string().test('addressConstraint', 'Please enter a valid address', function () {
+        const { originalValue } = this as any
+        return !originalValue || Boolean(isEthChainAddress(originalValue))
+      }),
+    })
+    .when('tokenStandart', {
+      is: OfferTokenStandart.xtokenlite,
+      then: yup.string().required(REQUIRED),
     }),
 
   tokenAddress: yup
