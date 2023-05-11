@@ -67,7 +67,18 @@ export const ImageField: React.FC<Props> = (props) => {
     },
   })
 
-  const url = React.useMemo(() => props.image && URL.createObjectURL(props.image), [props.image])
+  const url = React.useMemo(() => {
+    if (props.image) {
+      let blob = props.image as any
+      if (props.image.type) {
+        blob = new Blob([props.image], { type: props.image.type })
+      } else if (props.image.name.endsWith('.svg')) {
+        blob = new Blob([props.image], { type: 'image/svg+xml' })
+      }
+      return URL.createObjectURL(blob)
+    }
+    return ''
+  }, [props.image])
 
   return (
     <Column gap="0.5rem">
