@@ -21,7 +21,7 @@ import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers } from 'ethers'
-import { LAUNCHPAD_INVESTMENT_ADDRESS } from 'constants/addresses'
+import { IXSALE_ADDRESS } from 'constants/addresses'
 
 interface Props {
   offer: Offer
@@ -43,6 +43,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
     investingTokenDecimals,
     investingTokenSymbol,
     contractSaleId,
+    contractAddress,
   } = props.offer
 
   const addPopup = useAddPopup()
@@ -57,7 +58,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const isSuccessfull = React.useMemo(() => softCapReached, [])
 
   const { amount, amountClaim, loading: amountLoading, error: amountError } = props.investedData
-  const launchpadContract = useLaunchpadInvestmentContract()
+  const launchpadContract = useLaunchpadInvestmentContract(contractAddress)
   const { chainId = 137, account } = useActiveWeb3React()
   const tokenCurrency = useCurrency(investingTokenAddress)
 
@@ -68,7 +69,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
           ethers.utils.parseUnits(amount?.toString(), investingTokenDecimals) as any
         )
       : undefined,
-    LAUNCHPAD_INVESTMENT_ADDRESS[chainId]
+    contractAddress || IXSALE_ADDRESS[chainId]
   )
 
   const onSubmit = React.useCallback(async () => {
