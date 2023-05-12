@@ -9,7 +9,8 @@ import {
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow
+  TableRow,
+  TableSortLabel
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { ThemeVariant } from '@mui/material/styles/overrides'
@@ -92,7 +93,11 @@ export const TableView = <T,>({
     setPage,
     setRowsPerPage,
     rowsPerPage,
-    total
+    total,
+    sortOrder,
+    sortField,
+    setSortOrder,
+    setSortField
   } = useTableWithPagination<T>({
     queryKey: name,
     uri: uri,
@@ -162,21 +167,37 @@ export const TableView = <T,>({
     ]
   }
 
+  const handleSort = (column: string) => {
+    const isAsc = sortField === column && sortOrder === 'asc'
+    setSortOrder(isAsc ? 'desc' : 'asc')
+    setSortField(column)
+  }
+
   const renderHeadCell = ({ item, content }: RenderHeadCellArgs<T>) => (
     <TableCell
       key={item?.key}
       style={{ borderBottom: 'none' }}
       align={item?.headAlign ?? 'left'}
     >
-      <b
-        style={{
-          color: ['primary', 'success', 'error'].includes(themeVariant)
-            ? theme.palette.slider.activeColor
-            : 'initial'
-        }}
+      <TableSortLabel
+        active={sortField === item?.key}
+        direction={
+          sortField === item?.key
+            ? (sortOrder as 'desc' | 'asc' | undefined)
+            : 'asc'
+        }
+        onClick={() => handleSort(item !== undefined ? item?.key : 'createdAt')}
       >
-        {item?.label ?? content}
-      </b>
+        <b
+          style={{
+            color: ['primary', 'success', 'error'].includes(themeVariant)
+              ? theme.palette.slider.activeColor
+              : 'initial'
+          }}
+        >
+          {item?.label ?? content}
+        </b>
+      </TableSortLabel>
     </TableCell>
   )
 
