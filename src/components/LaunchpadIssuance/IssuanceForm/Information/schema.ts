@@ -157,14 +157,17 @@ export const schema = yup.object().shape({
     .nullable()
     .when('smartContractStrategy', {
       is: SMART_CONTRACT_STRATEGIES.original,
-      then: yup.string().test('addressConstraint', 'Please enter a valid address', function () {
-        const { originalValue } = this as any
-        return !originalValue || Boolean(isEthChainAddress(originalValue))
-      }),
+      then: yup
+        .string()
+        .nullable()
+        .test('addressConstraint', 'Please enter a valid address', function () {
+          const { originalValue } = this as any
+          return !originalValue || Boolean(isEthChainAddress(originalValue))
+        }),
     })
     .when('tokenStandart', {
       is: OfferTokenStandart.xtokenlite,
-      then: yup.string().required(REQUIRED),
+      then: yup.string().nullable().required(REQUIRED),
     }),
 
   tokenAddress: yup

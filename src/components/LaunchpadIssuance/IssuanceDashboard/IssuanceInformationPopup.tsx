@@ -25,7 +25,7 @@ import { useRole } from 'state/user/hooks'
 export interface IsssuanceApplicationPopupProps {
   issuance: Issuance | null
   isOpen: boolean
-  setOpen: any
+  onClose: () => void
 }
 
 const ButtonBlock = ({ label, link, disabled = false }: { label: string; link: string; disabled?: boolean }) => {
@@ -59,7 +59,7 @@ const StatusBlock = ({ label, status }: { label: string; status?: IssuanceStatus
   )
 }
 
-export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: IsssuanceApplicationPopupProps) => {
+export const IssuanceApplicationPopup = ({ issuance, isOpen, onClose }: IsssuanceApplicationPopupProps) => {
   const { data: offer, loading: offerLoading, load: loadOffer } = useGetOffer(issuance?.vetting?.offer?.id)
 
   const theme = useTheme()
@@ -205,7 +205,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   }
 
   return (
-    <IssuanceDialog show={isOpen} title="Issuance Information" onClose={() => setOpen(false)} width="600px">
+    <IssuanceDialog show={isOpen} title="Issuance Information" onClose={onClose} width="600px">
       <PopupWrapper>
         <Column></Column>
         <Column>
