@@ -155,10 +155,6 @@ export const schema = yup.object().shape({
   trusteeAddress: yup
     .string()
     .nullable()
-    .test('addressConstraint', 'Please enter a valid address', function () {
-      const { originalValue } = this as any
-      return !originalValue || Boolean(isEthChainAddress(originalValue))
-    })
     .when('smartContractStrategy', {
       is: SMART_CONTRACT_STRATEGIES.original,
       then: yup
@@ -167,8 +163,11 @@ export const schema = yup.object().shape({
         .test('addressConstraint', 'Please enter a valid address', function () {
           const { originalValue } = this as any
           return !originalValue || Boolean(isEthChainAddress(originalValue))
-        })
-        .required(REQUIRED),
+        }),
+    })
+    .when('tokenStandart', {
+      is: OfferTokenStandart.xtokenlite,
+      then: yup.string().nullable().required(REQUIRED),
     }),
 
   tokenAddress: yup
@@ -192,7 +191,7 @@ export const schema = yup.object().shape({
     .nullable()
     .matches(/[0-9]+/, 'Invalid value')
     .required(REQUIRED)
-    .test('softCapConstraint', 'Minimum amount to raise should be smaller than total amolunt', function ():
+    .test('softCapConstraint', 'Minimum amount to raise should be smaller than total amount to raise', function ():
       | boolean
       | yup.ValidationError {
       return checkMaxGreaterThanMinimum(this.parent.softCap, this.parent.hardCap)

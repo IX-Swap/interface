@@ -53,6 +53,7 @@ import { useTokensList } from 'hooks/useTokensList'
 import apiService from 'services/apiService'
 import { useKyc } from 'state/user/hooks'
 import { PaginateResponse } from 'types/pagination'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface OfferPagination {
   page: number
@@ -106,12 +107,13 @@ export const useSetAllowOnlyAccredited = () => {
 }
 
 export const useCheckKYC = () => {
+  const { account } = useActiveWeb3React()
   const { isApproved, isAccredited } = useKyc()
   return React.useCallback(
     (allowOnlyAccredited: boolean, isClosed: boolean) => {
-      return isApproved && (isClosed || !allowOnlyAccredited || isAccredited)
+      return Boolean(account && isApproved && (isClosed || !allowOnlyAccredited || isAccredited))
     },
-    [isApproved, isAccredited]
+    [account, isApproved, isAccredited]
   )
 }
 

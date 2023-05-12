@@ -105,11 +105,11 @@ export const FACTORY_ROUTER_ADDRESS: { [key: number]: string } = {
   [137]: '0xc2D0e0bc81494adB71Ce9Aa350cC875DaE12D81D',
 }
 
-export const LAUNCHPAD_INVESTMENT_ADDRESS: { [key: number]: string } = {
+export const IXSALE_ADDRESS: { [key: number]: string } = {
   [1]: '',
   [42]: '',
-  [80001]: '0x53ff12870CEc7a5377F9e06Cbd47f9F224afee80',
-  [137]: '0x5b5d2DF10180D6084Cd388292717BDebf7Af17A6',
+  [80001]: process.env.REACT_APP_IXSALE_ADDRESS_MUMBAI || '',
+  [137]: process.env.REACT_APP_IXSALE_ADDRESS_POLYGON || '',
 }
 
 export const PAYOUT_ADDRESS = {

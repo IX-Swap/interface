@@ -67,7 +67,22 @@ export const GalleryBlock: React.FC<Props> = (props) => {
     [props.images]
   )
 
-  const urls = React.useMemo(() => props.images.map((x) => URL.createObjectURL(x.file)), [props.images])
+  const urls = React.useMemo(
+    () =>
+      props.images.map((x) => {
+        if (x.file) {
+          let blob = x.file as any
+          if (x.file.type) {
+            blob = new Blob([x.file], { type: x.file.type })
+          } else if (x.file.name.endsWith('.svg')) {
+            blob = new Blob([x.file], { type: 'image/svg+xml' })
+          }
+          return URL.createObjectURL(blob)
+        }
+        return ''
+      }),
+    [props.images]
+  )
   const videos = React.useMemo(() => props.videos as (VideoLink & { id: number })[], [props.videos])
 
   const { getRootProps, getInputProps } = useDropzone({

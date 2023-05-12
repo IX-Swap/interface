@@ -24,7 +24,7 @@ import { ethers } from 'ethers'
 import { useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
-import { LAUNCHPAD_INVESTMENT_ADDRESS } from 'constants/addresses'
+import { IXSALE_ADDRESS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/shared/fields/IssuanceTooltip'
 import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
@@ -50,6 +50,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     decimals,
     contractSaleId,
     investingTokenDecimals,
+    contractAddress,
   } = offer
   const { amount: amountInvested, availableToInvest, lastStatus } = investedData
   const theme = useTheme()
@@ -119,7 +120,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     </div>
   ) as React.ReactNode
 
-  const launchpadContract = useLaunchpadInvestmentContract()
+  const launchpadContract = useLaunchpadInvestmentContract(contractAddress)
   const tokenCurrency = useCurrency(offer.investingTokenAddress)
   const { chainId = 137, account } = useActiveWeb3React()
 
@@ -130,7 +131,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           ethers.utils.parseUnits(amount || '0', investingTokenDecimals) as any
         )
       : undefined,
-    LAUNCHPAD_INVESTMENT_ADDRESS[chainId]
+    contractAddress || IXSALE_ADDRESS[chainId]
   )
   const submitState = useInvestSubmitState()
 

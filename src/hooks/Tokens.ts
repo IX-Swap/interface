@@ -202,7 +202,7 @@ export function useTokenLoading(tokenAddress?: string): boolean {
   const symbol = useSingleCallResult(token ? undefined : tokenContract, 'symbol', undefined, NEVER_RELOAD)
   const decimals = useSingleCallResult(token ? undefined : tokenContract, 'decimals', undefined, NEVER_RELOAD)
 
-  return (decimals.loading || symbol.loading || tokenName.loading || !decimals.result)
+  return decimals.loading || symbol.loading || tokenName.loading || !decimals.result
 }
 
 export function useTokenFromMapOrNetwork(tokens: any, tokenAddress?: string | null): Token | null | undefined {
@@ -227,10 +227,11 @@ export function useCurrencyFromMap(tokens: any, currencyId?: string | null): Cur
 
   if (currencyId === null || currencyId === undefined) return currencyId
 
-  // this case so we use our builtin wrapped token instead of wrapped tokens on token lists
-  const wrappedNative = nativeCurrency?.wrapped
-  if (wrappedNative?.address?.toUpperCase() === currencyId?.toUpperCase()) return wrappedNative
-
+  // this case so we use our built-in wrapped token instead of wrapped tokens on token lists
+  try {
+    const wrappedNative = nativeCurrency?.wrapped
+    if (wrappedNative?.address?.toUpperCase() === currencyId?.toUpperCase()) return wrappedNative
+  } catch (_) {}
   return isNative ? nativeCurrency : token
 }
 

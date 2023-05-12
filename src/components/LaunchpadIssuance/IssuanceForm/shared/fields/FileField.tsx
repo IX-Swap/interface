@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { Paperclip } from 'react-feather'
+import { Download, Paperclip } from 'react-feather'
 
 import { ReactComponent as CancelIcon } from 'assets/launchpad/svg/cancel-vector.svg'
 import { Column, ErrorText, Row, Spacer } from 'components/LaunchpadMisc/styled'
@@ -11,6 +11,7 @@ import { IssuanceFile } from '../../types'
 import { text19, text30 } from 'components/LaunchpadMisc/typography'
 import { useShowError } from 'state/application/hooks'
 import { documentTypes, imageTypes, MBinBytes, photoTypes } from '../constants'
+import { downloadLocalFile } from 'components/LaunchpadOffer/util/files'
 
 interface Props {
   label?: React.ReactNode
@@ -109,6 +110,12 @@ export const FileField: React.FC<Props> = (props) => {
     ...dropzoneOpts,
   })
 
+  const onDownloadFile = () => {
+    if (value) {
+      downloadLocalFile(value)
+    }
+  }
+
   return (
     <FormFieldWrapper gap="1rem" span={props.span} error={props.error}>
       <Column gap="0.25rem">
@@ -124,18 +131,37 @@ export const FileField: React.FC<Props> = (props) => {
         <Row gap="0.5rem" {...getRootProps()}>
           {props.icon ?? <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />}
 
-          {!value && <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>}
+          {!value && (
+            <Prompt>{props.disabled ? 'Not uploaded' : props.showLabelInside ? props.label : 'Upload File'}</Prompt>
+          )}
           {value && <Prompt>{value.name}</Prompt>}
 
           <input {...getInputProps()} ref={input} multiple={false} disabled={props.disabled} />
 
           {value && !props.disabled && <CancelIcon onClick={onFileRemove} title="remove" cursor="pointer" />}
-
+          {value && !props.disabled && (
+            <Download
+              size="18"
+              stroke={theme.launchpad.colors.text.caption}
+              style={{ cursor: 'pointer' }}
+              onClick={onDownloadFile}
+            />
+          )}
           <Spacer />
 
-          <BrowseButton onClick={openFileBrowser} disabled={props.disabled}>
-            Browse
-          </BrowseButton>
+          {!props.disabled && (
+            <BrowseButton onClick={openFileBrowser} disabled={props.disabled}>
+              Browse
+            </BrowseButton>
+          )}
+          {value && props.disabled && (
+            <Download
+              size="14"
+              stroke={theme.launchpad.colors.text.caption}
+              style={{ cursor: 'pointer' }}
+              onClick={onDownloadFile}
+            />
+          )}
         </Row>
 
         {props.trailing}
