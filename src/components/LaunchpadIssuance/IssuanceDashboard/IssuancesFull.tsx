@@ -105,7 +105,7 @@ export const IssuancesFull = () => {
     setPage(pageNumber)
   }, [])
 
-  React.useEffect(() => {
+  const refreshList = React.useCallback(() => {
     setLoading(true)
 
     getIssuances(page, filter, order, pageSize)
@@ -116,6 +116,15 @@ export const IssuancesFull = () => {
       })
       .finally(() => setLoading(false))
   }, [filter, order, page, pageSize])
+
+  React.useEffect(() => {
+    refreshList()
+  }, [refreshList])
+
+  const onClosePopup = () => {
+    setPopUpOpen(false)
+    refreshList()
+  }
 
   const getManageUrl = useCallback(
     (issuance: Issuance) => {
@@ -140,7 +149,7 @@ export const IssuancesFull = () => {
 
   return (
     <Container>
-      {popUpOpen && <IssuanceApplicationPopup issuance={issuance} isOpen={popUpOpen} setOpen={setPopUpOpen} />}
+      {popUpOpen && <IssuanceApplicationPopup issuance={issuance} isOpen={popUpOpen} onClose={onClosePopup} />}
       <TitleBox onlyMine={filter.onlyMine} title="Issuances" setFilter={setFilter} />
 
       <SearchFilter search={filter.search} onFilter={onSearch} />
