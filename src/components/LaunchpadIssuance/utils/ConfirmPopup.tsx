@@ -11,7 +11,7 @@ interface Props {
   onAccept: () => void
   onDecline: () => void
   title?: string
-  subtitle?: string
+  subtitle?: any
   acceptText?: string
   declineText?: string
   type?: 'success' | 'error' | 'info'

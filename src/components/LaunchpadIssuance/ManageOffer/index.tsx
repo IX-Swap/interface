@@ -14,10 +14,10 @@ import { HeaderButtons } from './HeaderButtons'
 import { OFFER_STATUSES } from '../utils/constants'
 import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelistWallet'
 import { InvestmentsBlock } from './investments'
-import { ConfirmModal } from './shared/ConfirmModal'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 import { text53 } from 'components/LaunchpadMisc/typography'
 import { SMART_CONTRACT_STRATEGIES } from '../types'
+import { ConfirmClaimModal } from './ConfirmClaimModal'
 
 interface ManagedOfferPageParams {
   issuanceId: string
@@ -35,7 +35,15 @@ export const ManageOffer = () => {
 
   const params = useParams<ManagedOfferPageParams>()
   const { loading, data: offer, load } = useGetManagedOffer(params.issuanceId)
-  const { usersClaimed, issuerClaimed, status, softCapReached, isOwner } = offer || {}
+  const {
+    usersClaimed,
+    issuerClaimed,
+    status,
+    softCapReached,
+    isOwner,
+    smartContractStrategy,
+    distributionControllerAddress,
+  } = offer || {}
   const showError = useShowError()
 
   const triggerUserClaim = useTriggerUserClaim(offer?.id)
@@ -43,7 +51,6 @@ export const ManageOffer = () => {
 
   const showWhitelisting = useMemo(() => stage === OfferStatus.whitelist, [stage])
   const canWithdraw = useMemo(() => isOwner && usersClaimed && !issuerClaimed, [isOwner, usersClaimed, issuerClaimed])
-
   const claimBtnTitle = useMemo(() => {
     if (!softCapReached || (status && status !== OfferStatus.claim)) {
       return ''
@@ -124,7 +131,13 @@ export const ManageOffer = () => {
   }
   return (
     <Wrapper>
-      <ConfirmModal isOpen={confirmClaim} setOpen={setConfirmClaim} onAccept={onClaim} />
+      <ConfirmClaimModal
+        isOpen={confirmClaim}
+        onClose={() => setConfirmClaim(false)}
+        onAccept={onClaim}
+        distributionControllerAddress={distributionControllerAddress}
+        smartContractStrategy={smartContractStrategy}
+      />
 
       {isOpenWhitelisting && (
         <LaunchpadWhitelistWallet offerId={offer.id} isOpen={isOpenWhitelisting} setOpen={setOpenWhitelisting} />

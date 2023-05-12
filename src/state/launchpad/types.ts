@@ -411,6 +411,7 @@ export interface ManagedOffer extends Offer {
   totalInvestment: number
   issuanceId: number
   smartContractStrategy: SMART_CONTRACT_STRATEGIES
+  distributionControllerAddress: string
   isOwner: boolean
 }
 
