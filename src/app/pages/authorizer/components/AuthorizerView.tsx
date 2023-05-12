@@ -149,6 +149,7 @@ export const AuthorizerView = <T,>(
                                 data[statusFieldName as keyof typeof data]
                               }
                               itemId={data._id}
+                              feature={feature}
                               listingType={data?.listingType}
                             />
                           </Grid>

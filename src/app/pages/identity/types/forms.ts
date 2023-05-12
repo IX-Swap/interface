@@ -138,6 +138,7 @@ export interface IndividualAgreementsFormValues {
 export interface InvestorCorporateInfoFormValues {
   isIssuer?: boolean
   isTenantOwner?: boolean
+  declaredAs?: string[]
   logo?: DataroomFile | string
   companyLegalName: string
   registrationNumber: string
@@ -172,7 +173,7 @@ export interface CorporateInvestorDeclarationFormValues
 export interface CorporateInvestorDocumentsFormValues {
   evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
   corporateDocuments: Array<FormArrayElement<DataroomFile>>
-  financialDocuments: Array<FormArrayElement<DataroomFile>>
+  //   financialDocuments: Array<FormArrayElement<DataroomFile>>
   institutionalInvestorDocuments?: Array<FormArrayElement<DataroomFile>>
 }
 export interface DocumentFieldArrayItemValue {
@@ -297,7 +298,7 @@ export interface OptOutRequirements {
 export interface OptInAgreements {
   optInAgreements?: boolean
   optInAgreementsSafeguards: boolean
-  optInAgreementsOptOut: boolean
+  optInAgreementsOptOut?: boolean
 }
 
 export interface IndividualInvestorStatus {
@@ -322,7 +323,7 @@ export interface IdentityDeclarations {
     CorporateInvestorStatus &
     OptInAgreements &
     OptOutRequirements & {
-      expertInvestorAgreement: boolean
+      investorAgreement: boolean
     }
   agreements: {
     investor: boolean

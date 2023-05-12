@@ -15,7 +15,7 @@ export const getTitleText = (type: string) => {
     return 'View Corporate Issuer Identity'
   }
 
-  return 'View Corporate Investor Identity'
+  return 'View Corporate Identity'
 }
 
 export const ViewInvestor = () => {

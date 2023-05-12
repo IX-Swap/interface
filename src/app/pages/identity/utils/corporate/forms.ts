@@ -34,8 +34,7 @@ export const getCorporateInfoFormValues = (
     }
   })
 
-  const declaredAs =
-    typeof data?.declaredAs !== 'undefined' ? data.declaredAs : []
+  const declaredAs = data?.declaredAs ?? []
 
   return {
     isIssuer: declaredAs.includes('issuer'),
@@ -100,20 +99,20 @@ export const getCorporateInvestorTaxDeclarationFormValues = (
 }
 
 export const getCorporateInvestorDeclarationFormValues = (
-  data: CorporateIdentity | undefined
+  data: CorporateIdentity
 ): Partial<CorporateInvestorDeclarationFormValues> => {
-  const declarations = data?.declarations?.investorsStatus ?? {}
+  const declarations = data?.declarations?.investorsStatus
   const { applyingAs, isInstitutionalInvestor, isIntermediaryInvestor } = data
 
   const documents = data?.documents.reduce((result: any, document) => {
     const {
       evidenceOfAccreditation,
-      financialDocuments,
+      //   financialDocuments,
       corporateDocuments,
       institutionalInvestorDocuments
     } = result
 
-    if (document.type === 'Evidence of Accreditation') {
+    if (document.type.startsWith('Evidence of ')) {
       return {
         ...result,
         evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
@@ -122,14 +121,14 @@ export const getCorporateInvestorDeclarationFormValues = (
       }
     }
 
-    if (document.type === 'Financial Documents') {
-      return {
-        ...result,
-        financialDocuments: Array.isArray(financialDocuments)
-          ? [...financialDocuments, { value: document }]
-          : [{ value: document }]
-      }
-    }
+    // if (document.type === 'Financial Documents') {
+    //   return {
+    //     ...result,
+    //     financialDocuments: Array.isArray(financialDocuments)
+    //       ? [...financialDocuments, { value: document }]
+    //       : [{ value: document }]
+    //   }
+    // }
 
     if (document.type === 'Corporate Documents') {
       return {

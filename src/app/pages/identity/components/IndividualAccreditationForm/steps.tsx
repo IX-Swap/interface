@@ -1,5 +1,4 @@
 import React from 'react'
-import { Grid } from '@mui/material'
 import {
   getInvestorDeclarationFormValues,
   getDocumentsFormValues
@@ -12,7 +11,6 @@ import {
   individualInvestorStatusDeclarationSchema,
   individualAccreditationSchema
 } from 'app/pages/identity/validation/individual'
-import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { IndividualAccreditationContainer } from '../../containers/IndividualAccreditationContainer'
 
@@ -22,32 +20,18 @@ export const getIndividualAccreditationFormSteps = () => [
     getFormValues: getInvestorDeclarationFormValues,
     getRequestPayload: getInvestorDeclarationRequestPayload,
     validationSchema: individualInvestorStatusDeclarationSchema,
-    component: () => (
-      <>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <InvestorDeclarationForm />
-          </Grid>
-        </Grid>
-        <ValidateOnMount />
-      </>
-    )
+    component: () => <InvestorDeclarationForm />
   },
   {
     label: 'Review & Submit',
-    getFormValues: (data: any) => {
-      const allData = {
-        ...getInvestorDeclarationFormValues(data),
-        ...getDocumentsFormValues(data)
-      }
-      return allData
-    },
-    getRequestPayload: (data: any) => {
-      return {
-        ...getInvestorDeclarationRequestPayload(data),
-        ...getDocumentsRequestPayload(data)
-      }
-    },
+    getFormValues: (data: any) => ({
+      ...getInvestorDeclarationFormValues(data),
+      ...getDocumentsFormValues(data)
+    }),
+    getRequestPayload: (data: any) => ({
+      ...getInvestorDeclarationRequestPayload(data),
+      ...getDocumentsRequestPayload(data)
+    }),
     validationSchema: individualAccreditationSchema,
     component: () => <IndividualAccreditationContainer />
   }

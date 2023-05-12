@@ -122,7 +122,7 @@ export const getDocumentsFormValues = (
   return data.documents.reduce((result: any, document) => {
     const { evidenceOfAccreditation, proofOfAddress, proofOfIdentity } = result
 
-    if (document.type === 'Evidence of Accreditation') {
+    if (document.type.startsWith('Evidence of ')) {
       return {
         ...result,
         evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)

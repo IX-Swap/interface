@@ -1,7 +1,7 @@
 import React from 'react'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
-import { OptInAgreementsIndividual } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
+import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { Grid, Typography } from '@mui/material'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
@@ -13,14 +13,15 @@ export interface OptInRequirementViewProps {
 }
 
 export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
-  const optInAgreementsSafeguards =
-    data.declarations?.investorsStatus?.optInAgreementsSafeguards
-  const optInAgreementsOptOut =
-    data.declarations?.investorsStatus?.optInAgreementsOptOut
-  const { applyingAs } = data
+  const {
+    applyingAs,
+    declarations: {
+      investorsStatus: { optInAgreementsSafeguards, optInAgreementsOptOut }
+    }
+  } = data
 
   const investorRole = capitalizeFirstLetter(
-    applyingAs.length > 0 ? applyingAs[0] : 'accredited'
+    applyingAs?.length > 0 ? applyingAs[0] : 'accredited'
   )
 
   return (
@@ -41,10 +42,12 @@ export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
               label={<SafeguardAgreements investorRole={investorRole} />}
               value={optInAgreementsSafeguards}
             />
-            <DeclarationsListItem
-              label={<OptInAgreementsIndividual investorRole={investorRole} />}
-              value={optInAgreementsOptOut}
-            />
+            {investorRole === 'Accredited' && (
+              <DeclarationsListItem
+                label={<OptInAgreements investorRole={investorRole} />}
+                value={optInAgreementsOptOut}
+              />
+            )}
           </Grid>
         </Grid>
       </Grid>

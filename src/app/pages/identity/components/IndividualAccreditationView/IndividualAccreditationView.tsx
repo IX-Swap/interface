@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
-
+// import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 import { InvestorDeclarationView } from 'app/pages/identity/components/CorporateAccreditationView/InvestorDeclarationView'
 
 import { FieldContainer } from '../../../../../ui/FieldContainer/FieldContainer'
@@ -18,6 +18,7 @@ export interface IndividualAccreditationViewProps {
 export const IndividualAccreditationView = ({
   data
 }: IndividualAccreditationViewProps) => {
+  const { applyingAs } = data
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
@@ -35,7 +36,15 @@ export const IndividualAccreditationView = ({
               <FormSectionHeader title='Documents' />
             </Grid>
             <Grid item>
-              <IdentityDocumentsView data={data.documents} type='individual' />
+              <IdentityDocumentsView
+                data={data.documents}
+                type='individual'
+                investorRole={
+                  typeof applyingAs !== 'undefined'
+                    ? applyingAs[0]
+                    : 'accredited'
+                }
+              />
             </Grid>
           </Grid>
         </FieldContainer>

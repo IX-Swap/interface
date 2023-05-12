@@ -37,7 +37,9 @@ export const InvestorAgreements = ({ type, role }: InvestorAgreementsProps) => {
   return (
     <DeclarationsListFields
       data={agreements}
-      type={role === 'expert' ? 'radio' : 'checkbox'}
+      //   type={role === 'expert' ? 'radio' : 'checkbox'}
+      type={role !== 'institutional' ? 'radio' : 'checkbox'}
+      //   role={role}
     />
   )
 }

@@ -56,7 +56,7 @@ export const InformationFields = ({
               <TypedField
                 customRenderer
                 component={Checkbox}
-                defaultValue={isIssuer ?? true}
+                defaultValue={isIssuer ?? false}
                 control={control}
                 valueExtractor={booleanValueExtractor}
                 name='isIssuer'
@@ -74,7 +74,7 @@ export const InformationFields = ({
               <TypedField
                 customRenderer
                 component={Checkbox}
-                defaultValue={isTenantOwner ?? true}
+                defaultValue={isTenantOwner ?? false}
                 control={control}
                 valueExtractor={booleanValueExtractor}
                 name='isTenantOwner'

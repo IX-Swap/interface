@@ -3,11 +3,17 @@ import { Grid, Typography } from '@mui/material'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { EvidenceOfAccreditationHelper } from 'app/pages/identity/components/UploadDocumentsForm/EvidenceOfAccreditationHelper'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
-import { VSpacer } from 'components/VSpacer'
 import { useStyles } from 'app/pages/identity/components/UploadDocumentsForm/styles'
+import { InvestorRole } from '../../utils/shared'
 
-export const IndividualUploadDocumentsForm = () => {
+export const IndividualUploadDocumentsForm = ({
+  investorRole = 'accredited'
+}: {
+  investorRole: InvestorRole
+}) => {
   const styles = useStyles()
+  const isExpert = investorRole === 'expert'
+
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
@@ -16,11 +22,11 @@ export const IndividualUploadDocumentsForm = () => {
           Please upload the following documents. All account statements and
           documents should be dated within 3 months.{' '}
         </Typography>
-        <Typography className={styles.text} mt={2}>
+        {/* <Typography className={styles.text} mt={2}>
           Type of document format supported is jpg, jpeg, png, gif, tiff, webp,
           svg, apng, avif, jfif, pjpeg, pjp, docx, xlsx, pdf, and odt.
-        </Typography>
-        <VSpacer size='medium' />
+        </Typography> */}
+        {/* <VSpacer size='medium' /> */}
       </Grid>
       <Grid item>
         <UploadDocumentField
@@ -49,8 +55,10 @@ export const IndividualUploadDocumentsForm = () => {
       <Grid item>
         <UploadDocumentField
           name='evidenceOfAccreditation'
-          label='Evidence of Accreditation'
-          helperElement={<EvidenceOfAccreditationHelper />}
+          label={`Evidence of ${!isExpert ? 'Accreditation' : 'Expertise'}`}
+          helperElement={
+            <EvidenceOfAccreditationHelper investorRole={investorRole} />
+          }
         />
       </Grid>
     </Grid>

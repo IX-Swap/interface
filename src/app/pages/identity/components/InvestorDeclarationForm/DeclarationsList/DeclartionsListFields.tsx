@@ -24,7 +24,7 @@ export const DeclarationsListFields = ({
   data,
   type = 'checkbox'
 }: DeclarationsListFieldsProps) => {
-  const { control } = useFormContext()
+  const { control, watch } = useFormContext()
   const classes = useStyles()
 
   return (
@@ -61,16 +61,34 @@ export const DeclarationsListFields = ({
         <TypedField
           customRenderer
           component={RadioGroup}
-          name='expertInvestorAgreement'
+          name={'investorAgreement'}
           label=''
           control={control}
         >
           <Grid container direction='column'>
             {data.map(item => {
+              const selected = watch(`investorAgreement`)
               return (
-                <Grid item sx={{ padding: '12px 6px' }}>
+                <Grid item sx={{ padding: '6px' }}>
                   <FormControlLabel
-                    label={<Typography>{item.label}</Typography>}
+                    label={
+                      <Typography
+                        color={
+                          typeof control?.formStateRef?.current?.errors
+                            .investorAgreement !== 'undefined'
+                            ? 'error'
+                            : item.name === selected
+                            ? 'text.primary'
+                            : 'text.secondary'
+                        }
+                        sx={{
+                          opacity: 0.8,
+                          lineHeight: 1.5
+                        }}
+                      >
+                        {item.label}
+                      </Typography>
+                    }
                     value={item.name}
                     control={<UIRadio />}
                   />
