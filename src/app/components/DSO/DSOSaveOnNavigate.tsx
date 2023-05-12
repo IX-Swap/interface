@@ -41,7 +41,7 @@ export const DSOSaveOnNavigate = ({
 }: SaveOnNavigateProps) => {
   const { watch, errors, trigger } = useFormContext()
   const { stepValues, setStepValues } = useDSOFormContext()
-  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { dsoId } = useParams<{ dsoId: string; issuerId: string }>()
   const location = useLocation()
 
   const values = watch()
@@ -78,22 +78,7 @@ export const DSOSaveOnNavigate = ({
       '+'
     )}`
     setCompleted()
-    if (!isEmpty(obj)) {
-      if (dsoId !== undefined && issuerId !== undefined) {
-        const redirect: string = redirectFunction(
-          location.pathname.includes('/create'),
-          dsoId
-        )
-        history.replace(
-          generatePath(`${redirect}${search}`, {
-            issuerId,
-            dsoId
-          })
-        )
-      } else {
-        history.replace(generatePath(`${location.pathname}${search}`))
-      }
-    } else {
+    if (isEmpty(obj)) {
       return await save(
         {
           ...payload
@@ -149,7 +134,6 @@ export const DSOSaveOnNavigate = ({
       color='primary'
       onClick={() => {
         void handleSave()
-        nextCallback(getNewActiveStep())
       }}
       size='large'
       // disabled={checkData()}

@@ -54,7 +54,7 @@ export const DSOForm = () => {
       editMutation={editMutation}
       submitMutation={submitMutation}
       steps={dsoFormSteps}
-      nonLinear
+      nonLinear={false}
       formTitle={'Create STO'}
       redirectFunction={getCreateModeRedirect}
       submitText='STO'
