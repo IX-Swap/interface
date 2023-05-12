@@ -4,7 +4,7 @@ import polygonLogoUrl from 'assets/images/polygon.svg'
 export const NetworkContextName = 'NETWORK'
 export enum SupportedChainId {
   MAINNET = 1,
-  ROPSTEN = 3,
+  GOERLI = 5,
   RINKEBY = 4,
   KOVAN = 42,
   MATIC = 137,
@@ -14,7 +14,7 @@ export enum SupportedChainId {
 export const NETWORK_LABELS: { [chainId: number]: string } = {
   1: 'Ethereum',
   4: 'Rinkeby',
-  3: 'Ropsten',
+  5: 'Goerli',
   42: 'Kovan',
   80001: 'Polygon Mumbai',
   137: 'Polygon'
@@ -22,7 +22,7 @@ export const NETWORK_LABELS: { [chainId: number]: string } = {
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
-  SupportedChainId.ROPSTEN,
+  SupportedChainId.GOERLI,
   SupportedChainId.KOVAN,
   SupportedChainId.MATIC,
   SupportedChainId.MUMBAI
@@ -54,10 +54,10 @@ export const CHAIN_INFO: ChainInfoMap = {
     logoUrl: ethereumLogoUrl,
     gasTrackerUrl: ethereumGasTracker
   },
-  [SupportedChainId.ROPSTEN]: {
-    blockExplorerUrls: ['https://ropsten.etherscan.io/'],
-    chainName: 'Ropsten',
-    nativeCurrency: { name: 'Kovan ETH', symbol: 'kovETH', decimals: 18 },
+  [SupportedChainId.GOERLI]: {
+    blockExplorerUrls: ['https://goerli.etherscan.io/'],
+    chainName: 'Goerli',
+    nativeCurrency: { name: 'Goerli ETH', symbol: 'kovETH', decimals: 18 },
     logoUrl: ethereumLogoUrl,
     gasTrackerUrl: ethereumGasTracker
   },

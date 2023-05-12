@@ -35,7 +35,6 @@ export const IdentityRoute = {
     'identityId',
     'view'
   ]),
-
   editCorporate: makeURL([
     'app',
     'identity',
@@ -44,6 +43,56 @@ export const IdentityRoute = {
     'identityId',
     'edit'
   ]),
+  createCorporateAccreditation: makeURL([
+    'app',
+    'identity',
+    'corporateAccreditation',
+    'userId',
+    'identityId',
+    'create'
+  ]),
+  viewCorporateAccreditation: makeURL([
+    'app',
+    'identity',
+    'corporateAccreditation',
+    'userId',
+    'identityId',
+    'view'
+  ]),
+  editCorporateAccreditation: makeURL([
+    'app',
+    'identity',
+    'corporateAccreditation',
+    'userId',
+    'identityId',
+    'edit'
+  ]),
+
+  createIndividualAccreditation: makeURL([
+    'app',
+    'identity',
+    'individualAccreditation',
+    'userId',
+    'identityId',
+    'create'
+  ]),
+  viewIndividualAccreditation: makeURL([
+    'app',
+    'identity',
+    'individualAccreditation',
+    'userId',
+    'identityId',
+    'view'
+  ]),
+  editIndividualAccreditation: makeURL([
+    'app',
+    'identity',
+    'individualAccreditation',
+    'userId',
+    'identityId',
+    'edit'
+  ]),
+
   identitySuccess: makeURL(['app', 'identity', 'success']),
   createIssuer: '/app/identity/corporates/create-issuer',
   viewIssuer: '/app/identity/corporates/:userId/:identityId/view-issuer',

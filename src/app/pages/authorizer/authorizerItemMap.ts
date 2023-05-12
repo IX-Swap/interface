@@ -21,7 +21,7 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
       uri: '/issuance/closure/list',
       listRoute: AuthorizerRoute.dealClosure
     },
-    [AppFeature.DigitalSecurityWithdrawals]: {
+    [AppFeature.SecurityTokenWithdrawals]: {
       uri: '/accounts/security/withdrawals',
       listRoute: AuthorizerRoute.dsWithdrawals
     },
@@ -29,13 +29,25 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
       uri: '/accounts/cash/withdrawals',
       listRoute: AuthorizerRoute.cashWithdrawals
     },
+    [AppFeature.CorporatesAccreditation]: {
+      uri: '/identity/corporate/accreditation/list',
+      listRoute: AuthorizerRoute.corporateAccreditations
+    },
     [AppFeature.Corporates]: {
+      uri: '/identity/corporates/list',
+      listRoute: AuthorizerRoute.corporateIdentities
+    },
+    [AppFeature.Corporates + '/role']: {
       uri: '/identity/corporates/list',
       listRoute: AuthorizerRoute.corporateIdentities
     },
     [AppFeature.IssuanceDetails]: {
       uri: '/identity/issuance-detail/list',
       listRoute: AuthorizerRoute.issuanceDetails
+    },
+    [AppFeature.IndividualsAccreditation]: {
+      uri: '/identity/individual/accreditation/list',
+      listRoute: AuthorizerRoute.individualAccreditations
     },
     [AppFeature.Individuals]: {
       uri: '/identity/individuals/list',

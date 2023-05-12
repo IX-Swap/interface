@@ -2,23 +2,31 @@ import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { EvidenceOfAccreditationHelper } from 'app/pages/identity/components/UploadDocumentsForm/EvidenceOfAccreditationHelper'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { VSpacer } from 'components/VSpacer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { useStyles } from 'app/pages/identity/components/UploadDocumentsForm/styles'
+import { InvestorRole } from '../../utils/shared'
 
-export const IndividualUploadDocumentsForm = () => {
+export const IndividualUploadDocumentsForm = ({
+  investorRole = 'accredited'
+}: {
+  investorRole: InvestorRole
+}) => {
   const styles = useStyles()
+  const isExpert = investorRole === 'expert'
+
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <FormSectionHeader title={'Upload Documents'} />
+        <FormSectionHeader title={'Personal Documents'} />
         <Typography className={styles.text} mt={2}>
           Please upload the following documents. All account statements and
-          documents should be dated within 3 months. <br /> Type of document
-          format supported is jpg, jpeg, png, gif, tiff, webp, svg, apng, avif,
-          jfif, pjpeg, pjp, docx, xlsx, pdf, and odt.
+          documents should be dated within 3 months.{' '}
         </Typography>
-        <VSpacer size='medium' />
+        {/* <Typography className={styles.text} mt={2}>
+          Type of document format supported is jpg, jpeg, png, gif, tiff, webp,
+          svg, apng, avif, jfif, pjpeg, pjp, docx, xlsx, pdf, and odt.
+        </Typography> */}
+        {/* <VSpacer size='medium' /> */}
       </Grid>
       <Grid item>
         <UploadDocumentField
@@ -47,8 +55,10 @@ export const IndividualUploadDocumentsForm = () => {
       <Grid item>
         <UploadDocumentField
           name='evidenceOfAccreditation'
-          label='Evidence of Accreditation'
-          helperElement={<EvidenceOfAccreditationHelper />}
+          label={`Evidence of ${!isExpert ? 'Accreditation' : 'Expertise'}`}
+          helperElement={
+            <EvidenceOfAccreditationHelper investorRole={investorRole} />
+          }
         />
       </Grid>
     </Grid>

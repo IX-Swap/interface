@@ -11,24 +11,33 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { AuthorizableStatus } from 'types/util'
 import { TextInput } from 'ui/TextInput/TextInput'
+
 export interface AuthorizerFormFieldsProps {
   status: AuthorizableStatus
   itemId: string
   listingType: string
+  feature?: string
 }
 
 export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
-  const { itemId, status, listingType } = props
+  const { itemId, status, listingType, feature } = props
   const { control } = useFormContext<AuthorizerFormValues>()
-  const [approve, { isLoading: isApproving }] = useAuthorizerAction({
+  const actionParams = {
     id: itemId,
+    listingType
+  }
+
+  if (typeof feature !== 'undefined') {
+    actionParams.featureCategory = feature
+  }
+
+  const [approve, { isLoading: isApproving }] = useAuthorizerAction({
     action: 'approve',
-    listingType: listingType
+    ...actionParams
   })
   const [reject, { isLoading: isRejecting }] = useAuthorizerAction({
-    id: itemId,
     action: 'reject',
-    listingType: listingType
+    ...actionParams
   })
   const comment = control.watchInternal('comment') as string
   const hasComment = comment !== undefined && comment.trim().length > 0
@@ -37,7 +46,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
   const canShareComment = !isProcessing && hasComment
   const canApprove = !isProcessing && ['Submitted', 'Rejected'].includes(status)
   const canReject = !isProcessing && ['Submitted', 'Approved'].includes(status)
-  // console.log(props, 'last propspprprp')
+
   return (
     <>
       <TypedField
@@ -63,7 +72,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
         name='sharedWithUser'
       />
       <VSpacer size='medium' />
-      <Grid container>
+      <Grid container sx={{ display: 'flex', justifyContent: 'end' }}>
         <ApproveButton disabled={!canApprove} approve={approve} />
         <Box mx={1} />
         <RejectButton disabled={!canReject} reject={reject} />

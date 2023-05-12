@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Grid, GridProps, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { formatDateToMMDDYY } from 'helpers/dates'
+import { ReactComponent as CompletedIcon } from 'assets/icons/completed-icon.svg'
 
 const isDateTime = (value: string) => {
   return (
@@ -65,6 +66,8 @@ export interface LabelledValueProps {
   valueColor?: string
   isNewThemeOn?: boolean
   isRedesigned?: boolean
+  hasCheck?: boolean
+  gap?: number
 }
 
 export const LabelledValue = (props: LabelledValueProps & GridProps) => {
@@ -82,6 +85,8 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     valueColor,
     isNewThemeOn = false,
     isRedesigned = false,
+    hasCheck = false,
+    gap = 0.75,
     ...rest
   } = props
   const direction = row ? 'row' : 'column'
@@ -136,7 +141,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         {row && !reverse && ':'}
       </Typography>
       {row ? <Box px={0.5} /> : null}
-      {!row && !reverse ? <Box py={isRedesigned ? 0.75 : 0.4} /> : null}
+      {!row && !reverse ? <Box py={isRedesigned ? gap : 0.4} /> : null}
       {React.isValidElement(last.text) ? (
         <Box
           style={{
@@ -148,13 +153,16 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
           {last.text}
         </Box>
       ) : (
-        <Typography
-          style={last.styles}
-          align={align}
-          color={isRedesigned ? 'text.secondary' : undefined}
-        >
-          {last.text}
-        </Typography>
+        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+          {hasCheck && <CompletedIcon />}
+          <Typography
+            style={last.styles}
+            align={align}
+            color={isRedesigned ? 'text.secondary' : undefined}
+          >
+            {last.text}
+          </Typography>
+        </Box>
       )}
     </Grid>
   )

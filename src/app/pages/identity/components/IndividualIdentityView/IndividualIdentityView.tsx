@@ -1,37 +1,47 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { privateClassNames } from 'helpers/classnames'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { IndividualInfoView } from './IndividualInfoView/IndividualInfoView'
 import { AddressView } from './AddressView/AddressView'
-import { FinancialView } from './FinancialView/FinancialView'
 import { IndividualIdentity } from '../../types/forms'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
-import { FatcaView } from 'app/pages/identity/components/IndividualIdentityView/FatcaView/FatcaViewView'
-import { InvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/InvestorDeclarationView'
-import { OptInRequirementView } from 'app/pages/identity/components/IndividualIdentityView/OptInRequirementView/OptInRequirementView'
-import { NoticeOfAssessmentView } from 'app/pages/identity/components/IndividualIdentityView/NoticeOfAssessment/NoticeOfAssessmentView'
+import { FatcaView } from '../IndividualIdentityView/FatcaView/FatcaViewView'
+import { FinancialView } from '../IndividualIdentityView/FinancialView/FinancialView'
+import { NoticeOfAssessmentView } from '../IndividualIdentityView/NoticeOfAssessment/NoticeOfAssessmentView'
 
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity
+  hideAvatar?: boolean
+  showReview?: boolean
 }
 
 export const IndividualIdentityView = ({
-  data
+  data,
+  hideAvatar = false,
+  showReview = false
 }: IndividualIdentityViewProps) => {
+  // const classes = useStyles()
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
         <FieldContainer>
-          <Grid item container direction={'column'} spacing={5}>
+          <Grid container direction={'column'} spacing={5}>
+            {showReview && (
+              <Grid item>
+                <FormSectionHeader
+                  title='Review Responses'
+                  hasBottomBorder={true}
+                />
+              </Grid>
+            )}
+
             <Grid item>
               <FormSectionHeader title='Personal Information' />
             </Grid>
-            <Grid item>
-              <IndividualInfoView data={data} />
-            </Grid>
+
+            <IndividualInfoView data={data} hideAvatar={hideAvatar} />
           </Grid>
         </FieldContainer>
       </Grid>
@@ -70,27 +80,6 @@ export const IndividualIdentityView = ({
 
       <Grid item>
         <FatcaView data={data} />
-      </Grid>
-
-      <Grid item>
-        <InvestorDeclarationView isCorporate={false} data={data} />
-      </Grid>
-
-      <Grid item>
-        <OptInRequirementView data={data} />
-      </Grid>
-
-      <Grid item>
-        <FieldContainer>
-          <Grid item container direction={'column'} spacing={3}>
-            <Grid item>
-              <FormSectionHeader title='Documents' />
-            </Grid>
-            <Grid item>
-              <IdentityDocumentsView data={data.documents} type='individual' />
-            </Grid>
-          </Grid>
-        </FieldContainer>
       </Grid>
     </Grid>
   )

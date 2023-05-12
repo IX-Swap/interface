@@ -50,7 +50,9 @@ export const urlFeature = {
   transactions: 'transactions',
   digitalSecurity: 'digital-security',
   individualIdentity: `${AppFeature.Individuals}`,
+  individualAccreditation: `${AppFeature.IndividualsAccreditation}`,
   corporateIdentity: `${AppFeature.Corporates}`,
+  corporateAccreditation: `${AppFeature.CorporatesAccreditation}`,
   offerings: `${AppFeature.Offerings}`,
   overview: 'overview',
   commitments: `${AppFeature.Commitments}`,
@@ -80,7 +82,7 @@ export const appURL = {
   cashDeposit: `${AppFeature.CashDeposits}`,
   cashWithdrawal: `${AppFeature.CashWithdrawals}`,
   dsDeposit: `${AppFeature.DigitalSecurityDeposits}`,
-  dsWithdrawal: `${AppFeature.DigitalSecurityWithdrawals}`
+  dsWithdrawal: `${AppFeature.SecurityTokenWithdrawals}`
 }
 
 export const makeURL = (paths: Array<keyof typeof appURL>) => {

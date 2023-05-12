@@ -1,6 +1,6 @@
 import React from 'react'
 import { columns } from 'app/pages/authorizer/pages/withdrawalAddresses/columns'
-import { AuthorizerList } from 'app/pages/authorizer/components/AuthorizerList'
+import { AuthorizerList } from 'app/pages/authorizer/components/upgrade/AuthorizerList/AuthorizerList'
 
 export const WithdrawalAddresses: React.FC = () => (
   <AuthorizerList

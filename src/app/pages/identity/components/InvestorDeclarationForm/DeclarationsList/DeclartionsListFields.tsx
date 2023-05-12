@@ -1,26 +1,30 @@
 import React from 'react'
-import { Grid, Typography } from '@mui/material'
+import { FormControlLabel, Grid, Typography } from '@mui/material'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
+import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import useStyles from './DeclarationsListFields.style'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export interface DeclarationsListItem {
-  label: string | JSX.Element
+  label: string | JSX.Element | Element
   name: string
 }
 
 export interface DeclarationsListFieldsProps {
   title?: string
   data: DeclarationsListItem[]
+  type?: 'checkbox' | 'radio'
 }
 
 export const DeclarationsListFields = ({
   title,
-  data
+  data,
+  type = 'checkbox'
 }: DeclarationsListFieldsProps) => {
-  const { control } = useFormContext()
+  const { control, watch } = useFormContext()
   const classes = useStyles()
 
   return (
@@ -36,21 +40,64 @@ export const DeclarationsListFields = ({
           </Typography>
         </Grid>
       )}
-      {data.map(item => {
-        return (
-          <Grid item xs={12} key={item.name}>
-            <TypedField
-              customRenderer
-              valueExtractor={booleanValueExtractor}
-              component={Checkbox}
-              control={control}
-              label={item.label as any}
-              name={item.name}
-              defaultValue={false}
-            />
+
+      {type === 'checkbox' ? (
+        data.map(item => {
+          return (
+            <Grid item xs={12} key={item.name}>
+              <TypedField
+                customRenderer
+                valueExtractor={booleanValueExtractor}
+                component={Checkbox}
+                control={control}
+                label={item.label as any}
+                name={item.name}
+                defaultValue={false}
+              />
+            </Grid>
+          )
+        })
+      ) : (
+        <TypedField
+          customRenderer
+          component={RadioGroup}
+          name={'investorAgreement'}
+          label=''
+          control={control}
+        >
+          <Grid container direction='column'>
+            {data.map(item => {
+              const selected = watch(`investorAgreement`)
+              return (
+                <Grid item sx={{ padding: '6px' }}>
+                  <FormControlLabel
+                    label={
+                      <Typography
+                        color={
+                          typeof control?.formStateRef?.current?.errors
+                            .investorAgreement !== 'undefined'
+                            ? 'error'
+                            : item.name === selected
+                            ? 'text.primary'
+                            : 'text.secondary'
+                        }
+                        sx={{
+                          opacity: 0.8,
+                          lineHeight: 1.5
+                        }}
+                      >
+                        {item.label}
+                      </Typography>
+                    }
+                    value={item.name}
+                    control={<UIRadio />}
+                  />
+                </Grid>
+              )
+            })}
           </Grid>
-        )
-      })}
+        </TypedField>
+      )}
     </Grid>
   )
 }

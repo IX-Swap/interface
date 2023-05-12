@@ -17,9 +17,9 @@ export const getCorporateInfoFormValues = (
     LEGAL_ENTITY_STATUS_LIST.every(
       ({ value }) => value !== data.legalEntityStatus
     )
-  const otherLegalEntityStatus = isCustomLegalEntityStatus
-    ? data?.legalEntityStatus
-    : undefined
+  // const otherLegalEntityStatus = isCustomLegalEntityStatus
+  //   ? data?.legalEntityStatus
+  //   : undefined
 
   const legalEntityStatus = isCustomLegalEntityStatus
     ? last(LEGAL_ENTITY_STATUS_LIST)?.value
@@ -34,12 +34,16 @@ export const getCorporateInfoFormValues = (
     }
   })
 
+  const declaredAs = data?.declaredAs ?? []
+
   return {
+    isIssuer: declaredAs.includes('issuer'),
+    isTenantOwner: declaredAs.includes('tenantOwner'),
     logo: data?.logo,
     companyLegalName: data?.companyLegalName,
     registrationNumber: data?.registrationNumber,
     legalEntityStatus,
-    otherLegalEntityStatus,
+    otherLegalEntityStatus: data?.numberOfBusinessOwners,
     countryOfFormation: data?.countryOfFormation,
     companyAddress: data?.companyAddress,
     representatives: representatives,
@@ -95,20 +99,20 @@ export const getCorporateInvestorTaxDeclarationFormValues = (
 }
 
 export const getCorporateInvestorDeclarationFormValues = (
-  data: CorporateIdentity | undefined
+  data: CorporateIdentity
 ): Partial<CorporateInvestorDeclarationFormValues> => {
-  const declarations = data?.declarations?.investorsStatus ?? {}
-  const isInstitutionalInvestor = data?.isInstitutionalInvestor
+  const declarations = data?.declarations?.investorsStatus
+  const { applyingAs, isInstitutionalInvestor, isIntermediaryInvestor } = data
 
   const documents = data?.documents.reduce((result: any, document) => {
     const {
       evidenceOfAccreditation,
-      financialDocuments,
+      //   financialDocuments,
       corporateDocuments,
       institutionalInvestorDocuments
     } = result
 
-    if (document.type === 'Evidence of Accreditation') {
+    if (document.type.startsWith('Evidence of ')) {
       return {
         ...result,
         evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
@@ -117,14 +121,14 @@ export const getCorporateInvestorDeclarationFormValues = (
       }
     }
 
-    if (document.type === 'Financial Documents') {
-      return {
-        ...result,
-        financialDocuments: Array.isArray(financialDocuments)
-          ? [...financialDocuments, { value: document }]
-          : [{ value: document }]
-      }
-    }
+    // if (document.type === 'Financial Documents') {
+    //   return {
+    //     ...result,
+    //     financialDocuments: Array.isArray(financialDocuments)
+    //       ? [...financialDocuments, { value: document }]
+    //       : [{ value: document }]
+    //   }
+    // }
 
     if (document.type === 'Corporate Documents') {
       return {
@@ -152,7 +156,9 @@ export const getCorporateInvestorDeclarationFormValues = (
   return {
     ...declarations,
     ...documents,
-    isInstitutionalInvestor: isInstitutionalInvestor
+    applyingAs: applyingAs[0],
+    isInstitutionalInvestor,
+    isIntermediaryInvestor
   }
 }
 

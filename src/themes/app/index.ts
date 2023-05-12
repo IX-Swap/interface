@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createTheme } from '@mui/material/styles'
 import { darkTheme } from 'themes/app/dark'
 import { getThemeOverrides } from 'themes/app/overrides'
@@ -22,15 +23,22 @@ const breakpoints = {
 
 export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
   const baseTheme =
-    themeType === AppTheme.System
-      ? prefersDarkMode
-        ? darkTheme
-        : lightTheme
-      : themeType === AppTheme.Dark
+    (themeType === AppTheme.System && prefersDarkMode) ||
+    themeType === AppTheme.Dark
       ? darkTheme
       : lightTheme
 
-  const theme = createTheme({ ...baseTheme, typography, breakpoints })
+  const tenantThemeName = sessionStorage.getItem('tenantThemeName')
+  const themeName =
+    tenantThemeName !== 'undefined' && JSON.parse(tenantThemeName) in darkTheme
+      ? JSON.parse(tenantThemeName)
+      : 'default'
+
+  const theme = createTheme({
+    ...baseTheme[themeName],
+    typography,
+    breakpoints
+  })
 
   const defaultProps = {
     defaultProps: {

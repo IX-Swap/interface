@@ -7,11 +7,16 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { OverridableComponent } from '@mui/material/OverridableComponent'
-
 export interface StatusFilterItemProps {
   isSelected: boolean
   title: string
   icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>
+  onClick: (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+}
+
+export interface StatusFilterKycItemProps {
+  isSelected: boolean
+  title: string
   onClick: (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
@@ -38,6 +43,7 @@ export const StatusFilterItem: React.FC<StatusFilterItemProps> = ({
           }
         })}
       </ListItemIcon>
+
       <ListItemText>{title}</ListItemText>
     </ListItem>
   )

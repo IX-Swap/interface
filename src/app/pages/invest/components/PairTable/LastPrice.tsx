@@ -11,7 +11,7 @@ export interface LastPriceProps {
 export const LastPrice = ({ value, isPositive }: LastPriceProps) => {
   const { trendColor } = useStyles({ isPositive })
   return (
-    <Box component='span' className={trendColor}>
+    <Box style={{marginLeft: '20px'}} component='span' className={trendColor}>
       {formatAmount(value)}
     </Box>
   )

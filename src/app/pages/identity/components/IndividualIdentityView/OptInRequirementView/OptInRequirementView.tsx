@@ -1,21 +1,28 @@
 import React from 'react'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
-import { OptInAgreementsIndividual } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
+import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { Grid, Typography } from '@mui/material'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DeclarationsListItem } from 'app/pages/identity/components/DeclarationsListItem/DeclarationsListItem'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface OptInRequirementViewProps {
   data: IndividualIdentity
 }
 
 export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
-  const optInAgreementsSafeguards =
-    data.declarations?.investorsStatus?.optInAgreementsSafeguards
-  const optInAgreementsOptOut =
-    data.declarations?.investorsStatus?.optInAgreementsOptOut
+  const {
+    applyingAs,
+    declarations: {
+      investorsStatus: { optInAgreementsSafeguards, optInAgreementsOptOut }
+    }
+  } = data
+
+  const investorRole = capitalizeFirstLetter(
+    applyingAs?.length > 0 ? applyingAs[0] : 'accredited'
+  )
 
   return (
     <FieldContainer>
@@ -26,19 +33,21 @@ export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
           </Grid>
           <Grid item>
             <Typography fontWeight={500} variant={'subtitle1'}>
-              I confirm to be treated as an “Accredited Investor” by InvestaX
+              {`I confirm to be treated as an “${investorRole} Investor” by InvestaX`}
             </Typography>
           </Grid>
 
           <Grid item container direction={'column'} spacing={2}>
             <DeclarationsListItem
-              label={<SafeguardAgreements />}
+              label={<SafeguardAgreements investorRole={investorRole} />}
               value={optInAgreementsSafeguards}
             />
-            <DeclarationsListItem
-              label={<OptInAgreementsIndividual />}
-              value={optInAgreementsOptOut}
-            />
+            {investorRole === 'Accredited' && (
+              <DeclarationsListItem
+                label={<OptInAgreements investorRole={investorRole} />}
+                value={optInAgreementsOptOut}
+              />
+            )}
           </Grid>
         </Grid>
       </Grid>

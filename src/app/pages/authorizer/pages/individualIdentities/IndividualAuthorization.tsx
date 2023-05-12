@@ -10,9 +10,10 @@ export const IndividualAuthorization = () => {
     <IndividualIdentityContainer
       component={({ data }) => (
         <AuthorizerView
-          title={getPersonName(data) as string}
+          title={getPersonName(data)}
           data={data}
-          feature={AppFeature.IndividualsAuthorization}
+          //   feature={AppFeature.IndividualsAuthorization}
+          feature={AppFeature.Individuals}
         >
           <IndividualIdentityView data={data} />
         </AuthorizerView>

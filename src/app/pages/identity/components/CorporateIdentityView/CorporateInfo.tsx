@@ -6,12 +6,17 @@ import React from 'react'
 import { LEGAL_ENTITY_STATUS_LIST } from 'components/form/LegalEntityStatusSelect'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar_identity.svg'
+import { Status } from 'ui/Status/Status'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity
+  hideAvatar?: boolean
 }
 
-export const CorporateInfo = ({ data }: CorporateInfoProps) => {
+export const CorporateInfo = ({
+  data,
+  hideAvatar = false
+}: CorporateInfoProps) => {
   const getLegalEntityStatus = (value: string) => {
     const status = LEGAL_ENTITY_STATUS_LIST.find(
       item => item.value === value
@@ -19,23 +24,55 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
     return status ?? value
   }
 
+  const declaredAs =
+    typeof data?.declaredAs !== 'undefined' ? data.declaredAs : []
+
+  const InvestorStatus = ({ investorType }: { investorType: string }) => {
+    if (
+      typeof data.declaredAs !== 'undefined' &&
+      typeof data.declaredAsStatus !== 'undefined' &&
+      Boolean(data.declaredAs.includes(investorType)) &&
+      investorType in data.declaredAsStatus
+    ) {
+      const investorStatus =
+        data.declaredAsStatus[
+          investorType as keyof typeof data.declaredAsStatus
+        ]
+      return (
+        <Status
+          label={investorStatus}
+          type={String(investorStatus).toLowerCase()}
+        />
+      )
+    }
+
+    return <Status label='N/A' type='draft' />
+  }
+
   return (
     <Grid item container flexDirection={'column'} spacing={5}>
-      <Grid item>
-        <Avatar
-          documentId={data.logo}
-          ownerId={data.user._id}
-          variant='square'
-          size={120}
-          borderRadius={16}
-          fallback={<AvatarPhoto />}
-        />
-      </Grid>
+      {!hideAvatar && (
+        <Grid item>
+          {typeof data.logo !== 'undefined' ? (
+            <Avatar
+              documentId={data.logo}
+              ownerId={data.user._id}
+              variant='square'
+              size={120}
+              borderRadius={16}
+              fallback={<AvatarPhoto />}
+            />
+          ) : (
+            <AvatarPhoto />
+          )}
+        </Grid>
+      )}
+
       <Grid
         item
         sx={{
           display: 'grid',
-          gridTemplateColumns: { sx: '1fr', sm: '1fr 1fr' }
+          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }
         }}
         container
       >
@@ -46,13 +83,15 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           justifyContent={'flex-end'}
           spacing={5}
         >
-          <Grid item>
-            <LabelledValue
-              isRedesigned
-              value={data.companyLegalName}
-              label='Company Name'
-            />
-          </Grid>
+          {!hideAvatar && (
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={data.companyLegalName}
+                label='Company Name'
+              />
+            </Grid>
+          )}
 
           <Grid item>
             <LabelledValue
@@ -65,10 +104,31 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           <Grid item>
             <LabelledValue
               isRedesigned
-              value={data.sourceOfFund}
-              label='Source of Funds'
+              label='Legal Entity'
+              className={privateClassNames()}
+              value={getLegalEntityStatus(data.legalEntityStatus)}
             />
           </Grid>
+          {hideAvatar ? (
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                label='Issuer Application'
+                value={<InvestorStatus investorType='issuer' />}
+              />
+            </Grid>
+          ) : (
+            declaredAs.includes('issuer') && (
+              <Grid item>
+                <LabelledValue
+                  isRedesigned
+                  hasCheck
+                  label=''
+                  value='I declare that I am an Issuer.'
+                />
+              </Grid>
+            )
+          )}
         </Grid>
 
         <Grid
@@ -77,8 +137,10 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           direction={'column'}
           justifyContent={'flex-end'}
           spacing={5}
+          sx={{ paddingTop: { xs: '40px', sm: 0 } }}
         >
-          <Grid item />
+          {!hideAvatar && <Grid item />}
+
           <Grid item>
             <LabelledValue
               isRedesigned
@@ -89,11 +151,31 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           <Grid item>
             <LabelledValue
               isRedesigned
-              label='Legal Entity'
-              className={privateClassNames()}
-              value={getLegalEntityStatus(data.legalEntityStatus)}
+              value={data.sourceOfFund}
+              label='Source of Funds'
             />
           </Grid>
+
+          {hideAvatar ? (
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                label='Client Application'
+                value={<InvestorStatus investorType='tenantOwner' />}
+              />
+            </Grid>
+          ) : (
+            declaredAs.includes('tenantOwner') && (
+              <Grid item>
+                <LabelledValue
+                  isRedesigned
+                  hasCheck
+                  label=''
+                  value='I declare that I am an Client.'
+                />
+              </Grid>
+            )
+          )}
         </Grid>
       </Grid>
     </Grid>

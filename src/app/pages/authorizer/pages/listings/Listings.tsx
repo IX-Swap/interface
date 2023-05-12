@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthorizerList } from '../../components/AuthorizerList'
+import { AuthorizerList } from 'app/pages/authorizer/components/upgrade/AuthorizerList/AuthorizerList'
 import { columns } from './columns'
 
 export const Listings = () => {

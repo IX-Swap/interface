@@ -10,20 +10,22 @@ export const DSOList = () => {
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='My STOs' />
+        <PageHeader
+          title='My STOs'
+          endComponent={
+            <Button
+              component={AppRouterLinkComponent}
+              size='large'
+              color='primary'
+              variant='contained'
+              to={IssuanceRoute.create}
+            >
+              Create STO
+            </Button>
+          }
+        />
       </Grid>
       <RootContainer>
-        <Grid item container justifyContent='flex-end'>
-          <Button
-            component={AppRouterLinkComponent}
-            size='large'
-            color='primary'
-            variant='contained'
-            to={IssuanceRoute.create}
-          >
-            Add
-          </Button>
-        </Grid>
         <Grid item>
           <MyDSOsTable />
         </Grid>

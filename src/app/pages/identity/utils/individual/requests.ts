@@ -81,13 +81,19 @@ export const getFinancialAndTaxDeclarationRequestPayload = (
 export const getInvestorDeclarationRequestPayload = (
   values: IndividualInvestorDeclarationFormValues & IdentityDocumentsFormValues
 ) => {
-  const { evidenceOfAccreditation, proofOfIdentity, proofOfAddress, ...rest } =
-    values
+  const {
+    applyingAs,
+    evidenceOfAccreditation,
+    proofOfIdentity,
+    proofOfAddress,
+    ...rest
+  } = values
 
   const getDocuments = (documents: Array<FormArrayElement<DataroomFile>>) =>
     documents?.map(doc => doc.value._id).filter(doc => doc !== undefined)
 
   return {
+    applyingAs: [applyingAs],
     declarations: {
       investorsStatus: rest
     },
@@ -127,5 +133,12 @@ export const getAgreementsRequestPayload = (
     declarations: {
       agreements: values
     }
+  }
+}
+
+export const getIndividualAccreditationSubmitPayload = (values: any) => {
+  return {
+    documents: values.documents.map((item: { _id: any }) => item._id),
+    declarations: values.declarations
   }
 }

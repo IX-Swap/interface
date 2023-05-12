@@ -50,7 +50,7 @@ export const useStyles = makeStyles(theme => {
       top: 12.5
     },
     iconOpen: {
-      fill: '#4C88FF!important'
+      fill: `${theme.palette.primary.main}!important`
     },
     filled: {
       paddingTop: theme.spacing(1.25),

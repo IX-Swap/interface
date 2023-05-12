@@ -1,16 +1,19 @@
 import { Box, Grid, Typography } from '@mui/material'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+// import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { FundSourceSelect } from 'components/form/FundSourceSelect'
 import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect'
 import { TypedField } from 'components/form/TypedField'
-import { plainValueExtractor } from 'helpers/forms'
+import { plainValueExtractor, booleanValueExtractor } from 'helpers/forms'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
+import { Checkbox } from 'components/form/Checkbox'
+import { useTheme } from '@mui/material/styles'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 
 export interface InformationFieldsProps {
   type?: CorporateType
@@ -21,6 +24,10 @@ export const InformationFields = ({
 }: InformationFieldsProps) => {
   const { control, watch, clearErrors } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
+
+  const isIssuer: boolean = watch('isIssuer', false)
+  const isTenantOwner: boolean = watch('isTenantOwner', false)
+  const theme = useTheme()
 
   useEffect(() => {
     if (legalEntityStatus !== 'others') {
@@ -43,6 +50,46 @@ export const InformationFields = ({
         <Grid item xs={12}>
           <FormSectionHeader title={corporateInformationLabelMap[type]} />
         </Grid>
+        {type === 'corporate' && (
+          <>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                customRenderer
+                component={Checkbox}
+                defaultValue={isIssuer ?? false}
+                control={control}
+                valueExtractor={booleanValueExtractor}
+                name='isIssuer'
+                label={
+                  <span>
+                    I declare that I am an{' '}
+                    <span style={{ color: theme.palette.primary.main }}>
+                      Issuer
+                    </span>
+                  </span>
+                }
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                customRenderer
+                component={Checkbox}
+                defaultValue={isTenantOwner ?? false}
+                control={control}
+                valueExtractor={booleanValueExtractor}
+                name='isTenantOwner'
+                label={
+                  <span>
+                    I declare that I am a{' '}
+                    <span style={{ color: theme.palette.primary.main }}>
+                      Client
+                    </span>
+                  </span>
+                }
+              />
+            </Grid>
+          </>
+        )}
         <Grid item xs={12}>
           <TypedField
             customRenderer

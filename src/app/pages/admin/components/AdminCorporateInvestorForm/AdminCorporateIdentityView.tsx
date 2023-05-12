@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { PersonnelList } from 'app/pages/identity/components/CorporateIdentityView/PersonnelList'
 import { BeneficialOwnersList } from 'app/pages/identity/components/CorporateIdentityView/BeneficialOwnersList'
 import { CorporateAddress } from 'app/pages/identity/components/CorporateIdentityView/CorporateAddress'
@@ -52,7 +52,7 @@ export const AdminCorporateIdentityView = ({
         <BeneficialOwnersList data={identity} />
       </Grid>
       <Grid item>
-        <FormSectionHeader title='Tax Declaration' />
+        <FormSectionHeader title='Tax Information' />
         <CountryTaxDeclaration taxResidencies={identity.taxResidencies} />
       </Grid>
       {!isCorporateIssuerForm ? (

@@ -1,8 +1,6 @@
-import { Grid } from '@mui/material'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-import { LabelledValue } from 'components/LabelledValue'
 import { formatAmount } from 'helpers/numbers'
 import React from 'react'
+import { FieldGrid } from 'ui/FieldGrid/FieldGrid'
 
 export interface PricingOverviewProps {
   minTradeAmount: number
@@ -15,29 +13,20 @@ export const PricingOverview = ({
   maxTradeAmount,
   raisedAmount
 }: PricingOverviewProps) => {
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <FormSectionHeader title='Pricing' />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          label='Min Trade Amount'
-          value={formatAmount(minTradeAmount)}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue
-          label='Max Trade Amount'
-          value={formatAmount(maxTradeAmount)}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          label='Raised Amount'
-          value={formatAmount(raisedAmount)}
-        />
-      </Grid>
-    </Grid>
-  )
+  const items = [
+    {
+      label: 'Min Trade Amount',
+      value: formatAmount(minTradeAmount)
+    },
+    {
+      label: 'Max Trade Amount',
+      value: formatAmount(maxTradeAmount)
+    },
+    {
+      label: 'Raised Amount',
+      value: formatAmount(raisedAmount)
+    }
+  ]
+
+  return <FieldGrid title={'Pricing'} items={items} />
 }

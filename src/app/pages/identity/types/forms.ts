@@ -136,6 +136,9 @@ export interface IndividualAgreementsFormValues {
 }
 
 export interface InvestorCorporateInfoFormValues {
+  isIssuer?: boolean
+  isTenantOwner?: boolean
+  declaredAs?: string[]
   logo?: DataroomFile | string
   companyLegalName: string
   registrationNumber: string
@@ -170,8 +173,8 @@ export interface CorporateInvestorDeclarationFormValues
 export interface CorporateInvestorDocumentsFormValues {
   evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
   corporateDocuments: Array<FormArrayElement<DataroomFile>>
-  financialDocuments: Array<FormArrayElement<DataroomFile>>
-  institutionalInvestorDocuments: Array<FormArrayElement<DataroomFile>>
+  //   financialDocuments: Array<FormArrayElement<DataroomFile>>
+  institutionalInvestorDocuments?: Array<FormArrayElement<DataroomFile>>
 }
 export interface DocumentFieldArrayItemValue {
   value: DataroomFile
@@ -239,6 +242,10 @@ export interface IdentityFinancials {
 }
 
 export interface CorporateFields {
+  isIssuer?: boolean
+  isTenantOwner?: boolean
+  declaredAs?: string[]
+  declaredAsStatus?: object
   logo?: string
   email: string
   cynopsis?: Cynopsis
@@ -258,6 +265,7 @@ export interface CorporateFields {
   businessActivity: string
   sourceOfFund: string
   isInstitutionalInvestor: boolean
+  isIntermediaryInvestor?: boolean
   type:
     | 'investor'
     | 'issuer'
@@ -288,9 +296,9 @@ export interface OptOutRequirements {
 }
 
 export interface OptInAgreements {
-  optInAgreements: boolean
+  optInAgreements?: boolean
   optInAgreementsSafeguards: boolean
-  optInAgreementsOptOut: boolean
+  optInAgreementsOptOut?: boolean
 }
 
 export interface IndividualInvestorStatus {
@@ -314,7 +322,9 @@ export interface IdentityDeclarations {
   investorsStatus: IndividualInvestorStatus &
     CorporateInvestorStatus &
     OptInAgreements &
-    OptOutRequirements
+    OptOutRequirements & {
+      investorAgreement: boolean
+    }
   agreements: {
     investor: boolean
     custody: boolean
@@ -325,13 +335,16 @@ export interface IdentityDeclarations {
 export interface BaseIdentity {
   _id: string
   status: AuthorizableStatus
+  accreditationStatus?: AuthorizableStatus
   user: User
   createdAt: string
   updatedAt: string
   documents: DataroomFile[]
+  applyingAs: string[]
   declarations: IdentityDeclarations
   step?: number
   createdBy: string
+  photo?: any
 }
 
 export interface DeclarationTemplate {

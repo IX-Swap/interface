@@ -5,12 +5,15 @@ import { IdentityRoute } from 'app/pages/identity/router/config'
 import { ViewInvestor } from 'app/pages/identity/pages/ViewInvestor/ViewInvestor'
 import { CreateCorporateIdentity } from 'app/pages/identity/pages/CreateInvestor/CreateInvestor'
 import { EditInvestor } from 'app/pages/identity/pages/EditInvestor/EditInvestor'
+import { CreateCorporateAccreditation } from 'app/pages/identity/pages/CreateCorporateAccreditation/CreateCorporateAccreditation'
+import { EditCorporateAccreditation } from 'app/pages/identity/pages/EditCorporateAccreditation/EditCorporateAccreditation'
+import { ViewCorporateAccreditation } from 'app/pages/identity/pages/ViewCorporateAccreditation/ViewCorporateAccreditation'
 
 export const CorporateRouter = () => {
   return (
     <Switch>
       <AppRoute
-        breadcrumb='View Corporate Investor Identity'
+        breadcrumb='View Corporate Identity'
         exact
         path={IdentityRoute.viewCorporate}
       >
@@ -18,15 +21,15 @@ export const CorporateRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Create Corporate Investor Identity'
+        breadcrumb='Create Corporate Identity'
         exact
         path={IdentityRoute.createCorporate}
       >
-        <CreateCorporateIdentity title='Create Corporate Investor Identity' />
+        <CreateCorporateIdentity title='Create Corporate Identity' />
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Edit Corporate Investor Identity'
+        breadcrumb='Edit Corporate Identity'
         exact
         path={IdentityRoute.editCorporate}
       >
@@ -139,6 +142,30 @@ export const CorporateRouter = () => {
         path={IdentityRoute.viewPortfolioManager}
       >
         <ViewInvestor />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='View Corporate Investor Accreditation'
+        exact
+        path={IdentityRoute.viewCorporateAccreditation}
+      >
+        <ViewCorporateAccreditation />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Create Corporate Investor Accreditation'
+        exact
+        path={IdentityRoute.createCorporateAccreditation}
+      >
+        <CreateCorporateAccreditation title='Create Corporate Investor Accreditation' />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Edit Corporate Investor Accreditation'
+        exact
+        path={IdentityRoute.editCorporateAccreditation}
+      >
+        <EditCorporateAccreditation />
       </AppRoute>
     </Switch>
   )

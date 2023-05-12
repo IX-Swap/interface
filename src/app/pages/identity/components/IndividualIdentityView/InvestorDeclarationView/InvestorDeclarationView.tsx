@@ -1,15 +1,12 @@
 import React from 'react'
 import { Grid, Paper, Typography, Box } from '@mui/material'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DeclarationsList } from 'app/pages/identity/components/DeclarationsList/DeclarationsList'
 import {
   corporateInvestorAgreementsMap,
   individualInvestorAgreementsMap
 } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/agreements'
-import {
-  OptInAgreements,
-  OptInAgreementsIndividual
-} from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
+import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import {
   CorporateIdentity,
   IndividualIdentity
@@ -91,7 +88,7 @@ export const InvestorDeclarationView: React.FC<
     <Grid container spacing={4}>
       <Grid item sx={{ width: '100%' }}>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
-          <FormSectionHeader title='Investor Status Declaration' />
+          <FormSectionHeader title='Investor Role Declaration' />
           <Box py={2} />
           <DeclarationsList
             title={`I declare that I am ${
@@ -131,7 +128,7 @@ export const InvestorDeclarationView: React.FC<
               title=''
               data={{ optInAgreementsOptOut }}
               labelMap={{
-                optInAgreementsOptOut: <OptInAgreementsIndividual />
+                optInAgreementsOptOut: <OptInAgreements />
               }}
             />
           )}

@@ -18,6 +18,9 @@ import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
 import { Redirect } from 'react-router-dom'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import { history } from 'config/history'
+import { SingPassPage } from '../sing-pass-data/SingPass'
+import { useTenant } from 'auth/hooks/useTenant'
+import { useServices } from 'hooks/useServices'
 
 export const registerFormInitialValues = {
   isMyInfo: false,
@@ -32,7 +35,10 @@ export const Register: React.FC = observer(() => {
   const { title, question, link } = useStyles({})
   const { updateFilter, getFilterValue } = useQueryFilter()
   const identity = getFilterValue('identityType')
+  const email = getFilterValue('email')
+  const mobile = getFilterValue('mobile')
   const isIndividual = identity === 'individual'
+  const { sessionService } = useServices()
 
   useEffect(() => {
     if (identity === undefined || identity === '') {
@@ -50,42 +56,56 @@ export const Register: React.FC = observer(() => {
   }
 
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
-  const isMyInfo = data !== undefined && getFilterValue('code') !== undefined
 
+  console.log(data, 'singData 1')
+  if (data !== undefined && localStorage?.getItem('singpassPage') === null) {
+    return <SingPassPage />
+  }
+  const isMyInfo = getFilterValue('email') !== undefined
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
-        email: data?.email,
-        phoneNumber: data?.mobileno,
+        email: data !== undefined && data?.email !== '' ? data?.email : email,
+        phoneNumber:
+          data !== undefined && data?.mobileno !== '' ? data?.mobileno : mobile,
         password: '',
         agree: true
       }
     : registerFormInitialValues
 
-  const handleSubmit = async (values: SignupArgs) => {
-    await signup(
-      {
-        name: values.name ?? 'Singpass User',
-        email: values.email,
-        singPassLogin: isMyInfo,
-        mobileNo: values.phoneNumber,
-        password: values.password,
-        accountType: identity?.toLocaleUpperCase(),
-        uinfin: data?.uinfin
-      },
-      isMyInfo
-        ? {
-            onError: (error: any) => {
-              if (
-                error?.message ===
-                'Sorry but this email address is already taken'
-              ) {
-                history.push(`${AuthRoute.myinfoError}?errorType=email`)
+  const useSubmit = () => {
+    useTenant()
+    return async (values: SignupArgs) =>
+      await signup(
+        {
+          tenantId: sessionService.get('tenantId'),
+          name: values.name ?? 'Singpass User',
+          email: values.email,
+          singPassLogin: isMyInfo,
+          mobileNo: values.phoneNumber,
+          password: values.password,
+          accountType: identity?.toLocaleUpperCase(),
+          uinfin: data?.uinfin
+        },
+        isMyInfo
+          ? {
+              onError: (error: any) => {
+                if (
+                  error?.message ===
+                  'Sorry but this email address is already taken'
+                ) {
+                  history.push(`${AuthRoute.myinfoError}?errorType=email`)
+                }
               }
             }
-          }
-        : undefined
-    )
+          : undefined
+      )
+  }
+
+  const submitSignup = useSubmit()
+
+  const handleSubmit = async (values: SignupArgs) => {
+    await submitSignup(values)
   }
 
   if (authorizeLoading) {

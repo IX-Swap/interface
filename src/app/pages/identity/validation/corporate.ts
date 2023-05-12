@@ -12,11 +12,13 @@ import {
 import {
   addressSchema,
   documentsSchema,
+  corporateDocumentSchema,
   institutionalInvestorDocumentsSchema,
   emailSchema,
-  investorStatusDeclarationItemSchema,
+  //   investorStatusDeclarationItemSchema,
   optInAgreementsDependentValueSchema,
   taxIdentificationNumberSchema,
+  expertInvestorAgreementSchema,
   validationMessages
 } from 'validation/shared'
 import * as yup from 'yup'
@@ -85,7 +87,7 @@ export const initialCorporateInvestorInfoSchema = (data?: CorporateIdentity) =>
 // TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)
 export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
   yup.object().shape<any>({
-    logo: yup.string(),
+    logo: yup.string().required('Logo is required'),
     companyLegalName: yup
       .string()
       .max(50, 'Maximum of 50 characters')
@@ -274,25 +276,68 @@ export const corporateTaxDeclarationSchema = yup.object().shape({
   )
 })
 
+const investorDeclarationsTests = function (values: any) {
+  if (values === undefined || values === null) {
+    return false
+  }
+
+  if (values.applyingAs !== 'expert') {
+    values.investorAgreement = 'capitalMarketExpert'
+  }
+
+  if (values.applyingAs !== 'accredited') {
+    values.investorAgreement = 'assets'
+    //     values.assets = false
+    //     values.trustee = false
+    //     values.accreditedBeneficiaries = false
+    //     values.accreditedSettlors = false
+    //     values.accreditedShareholders = false
+    //     values.partnership = false
+    //   } else {
+    //     const financialDeclarations = Object.entries(values)
+    //       .filter(([key]) => {
+    //         return (
+    //           key === 'assets' ||
+    //           key === 'trustee' ||
+    //           key === 'accreditedBeneficiaries' ||
+    //           key === 'accreditedSettlors' ||
+    //           key === 'accreditedShareholders' ||
+    //           key === 'partnership'
+    //         )
+    //       })
+    //       .map(([_key, value]) => value)
+    //     const result = financialDeclarations.every(value => value === false)
+    //     return !result
+  }
+
+  return true
+}
+
 export const corporateInvestorStatusDeclarationSchema = yup
   .object()
   .shape<
     CorporateInvestorDeclarationFormValues &
       CorporateInvestorDocumentsFormValues
   >({
-    assets: investorStatusDeclarationItemSchema,
-    trustee: investorStatusDeclarationItemSchema,
-    accreditedBeneficiaries: investorStatusDeclarationItemSchema,
-    accreditedSettlors: investorStatusDeclarationItemSchema,
-    accreditedShareholders: investorStatusDeclarationItemSchema,
-    partnership: investorStatusDeclarationItemSchema,
+    // assets: investorStatusDeclarationItemSchema,
+    // trustee: investorStatusDeclarationItemSchema,
+    // accreditedBeneficiaries: investorStatusDeclarationItemSchema,
+    // accreditedSettlors: investorStatusDeclarationItemSchema,
+    // accreditedShareholders: investorStatusDeclarationItemSchema,
+    // partnership: investorStatusDeclarationItemSchema,
+    investorAgreement: expertInvestorAgreementSchema,
 
     isInstitutionalInvestor: yup.bool(),
+    isIntermediaryInvestor: yup.bool(),
 
-    optInAgreements: yup
-      .bool()
-      .oneOf([true], 'Opt-In Requirement is required')
-      .required(validationMessages.required),
+    // optInAgreements: yup.bool().when('applyingAs', {
+    optInAgreementsSafeguards: yup.bool().when('applyingAs', {
+      is: value => value === 'accredited' || value === 'expert',
+      then: yup
+        .bool()
+        .oneOf([true], 'Opt-In Requirement is required')
+        .required(validationMessages.required)
+    }),
     // @ts-expect-error
     primaryOfferingServices: optInAgreementsDependentValueSchema,
     // @ts-expect-error
@@ -303,12 +348,17 @@ export const corporateInvestorStatusDeclarationSchema = yup
     allServices: optInAgreementsDependentValueSchema,
     institutionalInvestorDocuments: institutionalInvestorDocumentsSchema,
     // @ts-expect-error
-    evidenceOfAccreditation: documentsSchema,
+    evidenceOfAccreditation: corporateDocumentSchema,
     // @ts-expect-error
-    corporateDocuments: documentsSchema,
-    // @ts-expect-error
-    financialDocuments: documentsSchema
+    corporateDocuments: corporateDocumentSchema
+    // // @ts-expect-error
+    // financialDocuments: corporateDocumentSchema
   })
+  .test(
+    'investorDeclarationsCorporate',
+    'Please choose at least one option under "Investor Role Declaration" section',
+    investorDeclarationsTests
+  )
 
 export const corporateInvestorAgreementsSchema = yup
   .object()
@@ -321,6 +371,17 @@ export const corporateInvestorAgreementsSchema = yup
 export const corporateInvestorSchema = yup.object().shape<any>({
   ...corporateInvestorInfoSchema().fields,
   ...corporateTaxDeclarationSchema.fields,
-  ...directorsAndBeneficialOwnersSchema.fields,
-  ...corporateInvestorStatusDeclarationSchema.fields
+  ...directorsAndBeneficialOwnersSchema.fields
 })
+
+export const corporateAccreditationSchema = () =>
+  yup
+    .object()
+    .shape<any>({
+      ...corporateInvestorStatusDeclarationSchema.fields
+    })
+    .test(
+      'investorDeclarationsCorporate',
+      'Please choose at least one option under "Investor Role Declaration" section',
+      investorDeclarationsTests
+    )

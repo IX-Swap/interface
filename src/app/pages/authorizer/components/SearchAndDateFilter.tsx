@@ -46,14 +46,17 @@ export const SearchAndDateFilter = () => {
             variant='contained'
             size='small'
             disableElevation
+            style={{ height: '52px' }}
           >
             Reset
           </SearchQueryFilterGroupReset>
           <Box mx={0.5} />
           <SearchQueryFilterGroupApply
+            filters={['search', 'toDate', 'fromDate']}
             color='primary'
             variant='contained'
             disableElevation
+            style={{ height: '52px' }}
           >
             Submit
           </SearchQueryFilterGroupApply>

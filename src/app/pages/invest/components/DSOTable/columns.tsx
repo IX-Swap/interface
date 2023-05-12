@@ -52,7 +52,7 @@ export const renderExpectedReturn = (
     dso !== undefined && dso.capitalStructure === 'Debt'
       ? dso.interestRate ?? 0
       : dso.grossIRR ?? 0
-  return (result * 100).toFixed(2).toString().concat('%')
+  return result.toFixed(2).toString().concat('%')
 }
 
 export const columns: Array<
@@ -96,7 +96,7 @@ export const columns: Array<
     label: 'Distribution Frequency'
   },
   {
-    key: 'interestRate',
+    key: 'expectedReturn',
     label: 'Expected Return',
     render: renderExpectedReturn
   }
@@ -111,7 +111,8 @@ export const defaultSelectedColumns: Record<DSOTableColumn, boolean> = {
   minimumInvestment: true,
   pricePerUnit: true,
   totalFundraisingAmount: true,
-  interestRate: true
+  interestRate: true,
+  expectedReturn: false
 }
 
 export const compactColumns: Array<
@@ -132,7 +133,7 @@ export const compactColumns: Array<
     align: 'left'
   },
   {
-    key: 'interestRate',
+    key: 'expectedReturn',
     label: 'Expected Return',
     render: renderExpectedReturn
   },

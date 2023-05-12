@@ -8,7 +8,7 @@ export const accountsTab = {
   ASSET_BALANCES_PAGE: '[href="/app/accounts/balances"]',
   DIGITAL_SECURITIES: '[href="/app/accounts/digital-security"]',
   TRANSACTIONS: '[href="/app/accounts/transactions"]',
-  BLOCKCHAIN_ADDRESSES: '[href="/app/accounts/withdrawal-addresses"]',
+  BLOCKCHAIN_ADDRESSES: '[href="/app/accounts/blockchain-addresses"]',
   BLOCKCHAIN_FORM: '[data-testid="blockchain-address-form"]',
   DASHBOARD_PAGE: '[href="/app/accounts/dashboard"]',
   MY_REPORTS_PAGE: '[href="/app/accounts/reports"]',
@@ -18,7 +18,7 @@ export const accountsTab = {
   buttons: {
     VIEW_REPORT: '[data-testid="table"] >> text="View Report"',
     PRIMARY_MARKET: 'text="primary market"',
-    ADD_ADDRESS: '[href="/app/accounts/withdrawal-addresses/create"]',
+    ADD_ADDRESS: '[href="/app/accounts/blockchain-addresses/create"]',
     SGD: "//*[contains(text(),'(SGD)')]",
     ADD_BANK_ACCOUNT: '[href="/app/accounts/bank-accounts/create"]',
     MORE: '[data-testid="more-button"]',

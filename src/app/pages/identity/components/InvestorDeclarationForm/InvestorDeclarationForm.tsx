@@ -1,21 +1,22 @@
-import React, { useEffect } from 'react'
-import { Grid, Typography } from '@mui/material'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import React, { useState, useEffect, useRef } from 'react'
+import { Grid, Typography, RadioGroup, FormControlLabel } from '@mui/material'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DeclarationsListFields } from 'app/pages/identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
-import {
-  OptInAgreements,
-  OptInAgreementsIndividual
-} from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
+import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
 import { useFormContext } from 'react-hook-form'
-import { IdentityType } from 'app/pages/identity/utils/shared'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { IdentityType, InvestorRole } from 'app/pages/identity/utils/shared'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
-import { InstitutionalInvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorAgreements/InstitutionalInvestorAgreements'
-import { Divider } from 'ui/Divider'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
+import { UIRadio } from 'components/UIRadio/UIRadio'
+import { useStyles } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect.styles'
+import classnames from 'classnames'
+import { IndividualUploadDocumentsForm } from '../UploadDocumentsForm/IndividualUploadDocumentsForm'
+import { TypedField } from 'components/form/TypedField'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
@@ -26,32 +27,48 @@ export const InvestorDeclarationForm = ({
   identityType = 'individual',
   corporateType = 'issuer'
 }: InvestorDeclarationFormProps) => {
+  const { formState, trigger, control, setValue } = useFormContext()
+  const classes = useStyles()
+  const investorRoles = ['accredited', 'expert', 'institutional']
+  const [investorRole, setInvestorRole] = useState('accredited')
   const isCorporate = identityType === 'corporate'
-  const title = `I declare that I am "${
-    isCorporate ? 'Corporate' : 'Individual'
-  } Accredited Investor"`
-  const { formState, trigger } = useFormContext()
+  const radioButtonRef = useRef<any>()
 
-  const getOptInData = (type: IdentityType) => {
-    if (type === 'individual') {
-      return [
-        {
-          name: 'optInAgreementsSafeguards',
-          label: <SafeguardAgreements />
-        },
-        {
-          name: 'optInAgreementsOptOut',
-          label: <OptInAgreementsIndividual showOptOutDialog />
-        }
-      ]
-    }
+  if (!isCorporate) {
+    investorRoles.pop()
+  }
 
-    return [
+  const declaredInvestorRole = `I declare that I am an ${capitalizeFirstLetter(
+    investorRole
+  )} Investor.`
+
+  const hasDeclaredInstitutionalInvestor = investorRole === 'institutional'
+
+  const getOptInData = (role: InvestorRole) => {
+    const agreements = [
       {
-        name: 'optInAgreements',
-        label: <OptInAgreements showOptOutDialog />
+        name: 'optInAgreementsSafeguards',
+        label: (
+          <SafeguardAgreements
+            investorRole={capitalizeFirstLetter(investorRole)}
+          />
+        )
       }
     ]
+
+    if (role === 'accredited') {
+      agreements.push({
+        name: 'optInAgreementsOptOut',
+        label: (
+          <OptInAgreements
+            investorRole={capitalizeFirstLetter(investorRole)}
+            showOptOutDialog
+          />
+        )
+      })
+    }
+
+    return agreements
   }
 
   const {
@@ -67,13 +84,22 @@ export const InvestorDeclarationForm = ({
     digitalSecuritiesIssuance,
     allServices,
     isInstitutionalInvestor,
+    isIntermediaryInvestor,
     financialAsset,
     income,
     personalAssets,
     jointlyHeldAccount,
+    investorAgreement,
     optInAgreementsOptOut,
     optInAgreementsSafeguards
   } = formState.dirtyFields
+
+  useEffect(() => {
+    const role = control.defaultValuesRef.current.applyingAs
+    const index = role === 'expert' ? 1 : role === 'institutional' ? 2 : 0
+
+    radioButtonRef?.current?.children[index]?.click()
+  }, [control])
 
   useEffect(() => {
     void trigger()
@@ -90,10 +116,12 @@ export const InvestorDeclarationForm = ({
     digitalSecuritiesIssuance,
     allServices,
     isInstitutionalInvestor,
+    isIntermediaryInvestor,
     financialAsset,
     income,
     personalAssets,
     jointlyHeldAccount,
+    investorAgreement,
     optInAgreementsOptOut,
     optInAgreementsSafeguards,
     trigger
@@ -112,88 +140,133 @@ export const InvestorDeclarationForm = ({
           <FieldContainer>
             <Grid container spacing={3} direction={'column'}>
               <Grid item>
-                <FormSectionHeader title='Investor Status Declaration' />
+                <FormSectionHeader title='Investor Role Declaration' />
               </Grid>
               <Grid item>
-                <Typography>{title}</Typography>
+                <TypedField
+                  customRenderer
+                  component={RadioGroup}
+                  name='applyingAs'
+                  label=''
+                  control={control}
+                  defaultValue={'accredited'}
+                >
+                  <Grid
+                    container
+                    display={'flex'}
+                    gap={1.5}
+                    ref={radioButtonRef}
+                  >
+                    {investorRoles.map(role => {
+                      return (
+                        <Grid
+                          item
+                          data-testid={'buttonWrapper'}
+                          flexGrow={1}
+                          flexBasis={0}
+                          className={classnames(classes.button, {
+                            [classes.active]: investorRole === role
+                          })}
+                          onClick={() => {
+                            setInvestorRole(role)
+                            setValue('applyingAs', role)
+                          }}
+                        >
+                          <FormControlLabel
+                            label={`${capitalizeFirstLetter(role)} Investor`}
+                            value={role}
+                            control={<UIRadio />}
+                          />
+                        </Grid>
+                      )
+                    })}
+                  </Grid>
+                </TypedField>
               </Grid>
-              <Grid item>
-                <InvestorAgreements type={identityType} />
-              </Grid>
-            </Grid>
-          </FieldContainer>
-        </Grid>
 
-        <Grid item xs={12}>
-          <FieldContainer>
-            <Grid container direction={'column'} spacing={5}>
-              <Grid item container spacing={3} direction={'column'}>
+              {!hasDeclaredInstitutionalInvestor && (
                 <Grid item>
-                  <FormSectionHeader title={'Opt-In Requirement'} />
+                  <Typography>{declaredInvestorRole}</Typography>
                 </Grid>
-                <Grid item>
-                  <DeclarationsListFields
-                    title='I confirm to be treated as an “Accredited Investor” by InvestaX'
-                    data={getOptInData(identityType)}
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-          </FieldContainer>
-        </Grid>
-      </Grid>
-
-      {identityType !== 'individual' && (
-        <Grid item xs={12}>
-          <FieldContainer>
-            <Grid item container direction={'column'}>
-              <Grid item>
-                <FormSectionHeader title='Institutional Investor Status Declaration' />
-              </Grid>
+              )}
 
               <Grid item>
-                <DeclarationsListFields
-                  title=''
-                  data={[
-                    {
-                      name: 'isInstitutionalInvestor',
-                      label: <InstitutionalInvestorAgreements />
-                    }
-                  ]}
+                <InvestorAgreements
+                  type={identityType}
+                  role={investorRole as InvestorRole}
                 />
               </Grid>
-
-              <Grid item mt={3} mb={3}>
-                <Divider />
-              </Grid>
-
-              <Grid item>
-                <Grid item>
-                  <UploadDocumentField
-                    name='institutionalInvestorDocuments'
-                    label='Institutional Investor Documents'
-                    helperElement={
-                      <Typography
-                        color={'text.secondary'}
-                        mt={1.5}
-                        fontWeight={400}
-                      >
-                        Institutional Investor Documents - License issued by
-                        Regulator
-                      </Typography>
-                    }
-                  />
-                </Grid>
-              </Grid>
             </Grid>
           </FieldContainer>
         </Grid>
-      )}
 
-      {identityType !== 'individual' && (
-        <CorporateDocuments corporateType={corporateType} />
-      )}
-
+        {!hasDeclaredInstitutionalInvestor ? (
+          <>
+            {' '}
+            <Grid item xs={12}>
+              <FieldContainer>
+                <Grid container direction={'column'} spacing={5}>
+                  <Grid item container spacing={3} direction={'column'}>
+                    <Grid item>
+                      <FormSectionHeader title={'Opt-In Requirement'} />
+                    </Grid>
+                    <Grid item>
+                      <DeclarationsListFields
+                        data={getOptInData(investorRole as InvestorRole)}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </FieldContainer>
+            </Grid>
+            {isCorporate ? (
+              <CorporateDocuments
+                corporateType={corporateType}
+                investorRole={investorRole as InvestorRole}
+              />
+            ) : (
+              <Grid item xs={12}>
+                <FieldContainer>
+                  <IndividualUploadDocumentsForm
+                    investorRole={investorRole as InvestorRole}
+                  />
+                </FieldContainer>
+              </Grid>
+            )}
+          </>
+        ) : (
+          <Grid item xs={12}>
+            <FieldContainer>
+              <Grid item container direction={'column'}>
+                <Grid item>
+                  <FormSectionHeader
+                    title={'Institutional Investor Documents'}
+                  />
+                </Grid>
+                <Grid item>
+                  <Grid item>
+                    <UploadDocumentField
+                      name='institutionalInvestorDocuments'
+                      label='Institutional Investor Documents'
+                      hideLabel
+                      helperElement={
+                        <Typography
+                          color={'text.secondary'}
+                          mt={1.5}
+                          fontWeight={400}
+                        >
+                          Institutional Investor Documents - License issued by
+                          Regulator
+                        </Typography>
+                      }
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </FieldContainer>
+          </Grid>
+        )}
+      </Grid>
       <ValidateOnMount />
     </Grid>
   )

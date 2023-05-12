@@ -15,6 +15,7 @@ import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
 import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
 import { BlockchainSettings } from 'app/pages/admin/pages/BlockchainSettings'
 import { CustodyManagementRouter } from 'app/pages/admin/router/CustodyManagementRouter'
+import { TenantRouter } from './TenantRouter'
 
 export const AdminRouter = () => {
   return (
@@ -60,7 +61,7 @@ export const AdminRouter = () => {
       <AppRoute
         exact
         path={AdminRoute.masDisclosure}
-        breadcrumb='MAS Disclosure'
+        breadcrumb='Disclosure'
       >
         <MasDisclosure />
       </AppRoute>
@@ -98,6 +99,10 @@ export const AdminRouter = () => {
         breadcrumb='Custody Management'
       >
         <CustodyManagementRouter />
+      </AppRoute>
+
+      <AppRoute breadcrumb='Client Spaces' path={AdminRoute.tenants}>
+        <TenantRouter />
       </AppRoute>
 
       <AppRoute path={AdminRoute.landing}>

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { VSpacer } from 'components/VSpacer'
@@ -17,6 +17,8 @@ import { Tabs, Tab, Grid } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
 import { DSOPreviewActions } from 'app/components/DSO/components/DSOPreviewActions'
+import { useStyles } from './DSOPreview.styles'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export interface DSOPreviewProps {
   data: DigitalSecurityOffering
@@ -27,6 +29,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
   const { data, showSidebar = false } = props
   const [selectedIdx, setSelectedIdx] = useState(0)
   const [showStatusBar, setShowStatusBar] = useState(showSidebar)
+  const { tabs } = useStyles()
 
   useEffect(() => {
     setShowStatusBar(selectedIdx === 0)
@@ -59,69 +62,80 @@ export const DSOPreview = (props: DSOPreviewProps) => {
   }
 
   return (
-    <>
-      <Grid container>
-        <Grid item lg={showStatusBar ? 9 : 12} container direction='column'>
-          <Tabs
-            value={selectedIdx}
-            onChange={(_, index) => setSelectedIdx(index)}
-            indicatorColor='primary'
-            textColor='primary'
-          >
-            <Tab label='Overview' />
-            <Tab label='Commitments' />
-            <Tab label='CapTable' />
-          </Tabs>
+    <Grid item container direction='column'>
+      <FieldContainer sx={{ marginTop: '15px', px: 2, py: 1, borderRadius: 2 }}>
+        <Tabs
+          value={selectedIdx}
+          onChange={(_, index) => setSelectedIdx(index)}
+          indicatorColor='primary'
+          textColor='primary'
+          className={tabs}
+        >
+          <Tab label='Overview' />
+          <Tab label='Commitments' />
+          <Tab label='CapTable' />
+        </Tabs>
+      </FieldContainer>
 
-          <TabPanel value={selectedIdx} index={0}>
-            <Grid container spacing={9}>
-              <Grid item xs={12}>
-                <Element name={DSOFormSection.Pricing}>
-                  <DSOPricingViewCompact dso={data} />
-                </Element>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Element name={DSOFormSection['Offering Terms']}>
-                  <DSOTermsViewCompact dso={data} />
-                </Element>
-              </Grid>
+      <TabPanel
+        value={selectedIdx}
+        index={0}
+        sx={{ paddingLeft: '25px', marginTop: '-8px' }}
+      >
+        <Grid container>
+          <Grid container spacing={5} item md={showStatusBar ? 9 : 12}>
+            <Grid item xs={12}>
+              <Element name={DSOFormSection.Pricing}>
+                <DSOPricingViewCompact dso={data} />
+              </Element>
             </Grid>
 
-            <Element name={DSOFormSection.Information}>
-              <VSpacer size='large' />
-              <DSOInformationView dso={data} isNewThemeOn />
-            </Element>
+            <Grid item xs={12}>
+              <Element name={DSOFormSection['Offering Terms']}>
+                <DSOTermsViewCompact dso={data} />
+              </Element>
+            </Grid>
 
-            <Element name={DSOFormSection['Team Members']}>
-              <VSpacer size='large' />
-              <DSOTeamView dso={data} isNewThemeOn />
-            </Element>
+            <Grid item xs={12}>
+              <Element name={DSOFormSection.Information}>
+                <DSOInformationView dso={data} />
+              </Element>
+            </Grid>
 
-            <Element name={DSOFormSection.Documents}>
-              <VSpacer size='large' />
-              <DSODataroomView dso={data} />
-            </Element>
+            <Grid item xs={12}>
+              <Element name={DSOFormSection['Team Members']}>
+                <DSOTeamView dso={data} isNewThemeOn />
+              </Element>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Element name={DSOFormSection.Documents}>
+                <DSODataroomView dso={data} />
+              </Element>
+            </Grid>
 
             {renderVideosFormSection()}
             {renderFAQsFormSection()}
-          </TabPanel>
-
-          <TabPanel value={selectedIdx} index={1}>
-            <Commitments />
-          </TabPanel>
-
-          <TabPanel value={selectedIdx} index={2}>
-            <CapTable />
-          </TabPanel>
-        </Grid>
-
-        {showStatusBar && (
-          <Grid item lg={3}>
-            <DSOSidebar dso={data} footer={<DSOPreviewActions dso={data} />} />
           </Grid>
-        )}
-      </Grid>
-    </>
+
+          {showStatusBar && (
+            <Grid item md={3} sx={{ display: { xs: 'none', md: 'block' } }}>
+              <DSOSidebar
+                dso={data}
+                footer={<DSOPreviewActions dso={data} />}
+              />
+            </Grid>
+          )}
+        </Grid>
+      </TabPanel>
+
+      <TabPanel value={selectedIdx} index={1}>
+        <Commitments />
+      </TabPanel>
+
+      <TabPanel value={selectedIdx} index={2}>
+        <CapTable />
+      </TabPanel>
+    </Grid>
   )
 }

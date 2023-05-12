@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { Box, Grid, Typography } from '@mui/material'
 import { DirectorsInformationFieldsProps } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'

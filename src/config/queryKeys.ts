@@ -21,6 +21,11 @@ export const bannersQueryKeys = {
   getBannersList: 'banners-list'
 }
 
+export const tenantsQueryKeys = {
+  getTenantsList: 'tenants',
+  getTenantById: 'tenant-by-id'
+}
+
 export const assetsQueryKeys = {
   getById: 'asset-by-id',
   getData: 'assets',
@@ -35,8 +40,21 @@ export const identityQueryKeys = {
     identityId
   ],
   getAllCorporate: 'all-corporate-identities',
+  getAllIndividual: 'all-individual-identities',
   getAllCorporateByUserId: (id?: string) =>
     generateQueryKey('all-corporate-identities', id),
+  getCorporateAccreditation: (identityId?: string) => [
+    'corporate-accreditation',
+    identityId
+  ],
+  getIndividualAccreditation: (identityId?: string) => [
+    'individual-accreditation',
+    identityId
+  ],
+  getAllCorporateAccreditation: 'all-corporate-accreditation',
+  getAllIndividualAccreditation: 'all-individual-accreditation',
+  getAllCorporateAccreditationById: (id?: string) =>
+    generateQueryKey('all-corporate-accreditation', id),
   getDetailsOfIssuance: (userId?: string) =>
     generateQueryKey('details-of-issuance', userId),
   getStats: 'admin-identity-stats',
@@ -59,7 +77,7 @@ export const authorizerQueryKeys = {
   [AppFeature.Commitments]: 'issuance-commitments-list',
   [AppFeature.Corporates]: 'identity-corporates-list',
   [AppFeature.Individuals]: 'identity-individuals-list',
-  [AppFeature.DigitalSecurityWithdrawals]: 'accounts-security-withdrawals',
+  [AppFeature.SecurityTokenWithdrawals]: 'accounts-security-withdrawals',
   [AppFeature.Offerings]: 'issuance-dso-list',
   authorizerFilter: 'authorizer-filter',
   getBankList: 'authorizer-banks-list',
@@ -67,6 +85,8 @@ export const authorizerQueryKeys = {
   getCashWithdrawals: 'authorizer-cash-withdrawals',
   getCommitmentsList: 'authorizer-commitments-list',
   getCorporateIdentities: 'authorizer-corporate-list',
+  getCorporateAccreditations: 'authorizer-corporate-accreditation-list',
+  getIndividualAccreditations: 'authorizer-individual-accreditation-list',
   getSecurityWithdrawals: 'authorizer-security-withdrawals',
   getIndividualIdentityList: 'authorizer-individual-identitiesList',
   getDSOList: 'authorizer-dso-list',

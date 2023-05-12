@@ -1,8 +1,8 @@
-import { Grid } from '@mui/material'
 import { WalletAddress } from 'app/components/WalletAddress'
-import { LabelledValue } from 'components/LabelledValue'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import React from 'react'
+import { stoClassifications } from 'components/form/STOClassificationSelect'
+import { FieldGrid } from 'ui/FieldGrid/FieldGrid'
 
 export interface BasicOverviewProps {
   networkName: string
@@ -12,6 +12,7 @@ export interface BasicOverviewProps {
   decimals: string
   tokenAddress: string
   releaseDate: string
+  classification: string
 }
 
 export const BasicOverview = ({
@@ -21,43 +22,51 @@ export const BasicOverview = ({
   completionDate,
   decimals,
   tokenAddress,
-  releaseDate
+  releaseDate,
+  classification
 }: BasicOverviewProps) => {
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue label='Network' value={networkName} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue label='Capital Structure' value={capitalStructure} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue
-          label='Launch Date'
-          value={formatDateToMMDDYY(launchDate)}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue
-          label='Completion Date'
-          value={formatDateToMMDDYY(completionDate)}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue
-          label='Release Date'
-          value={formatDateToMMDDYY(releaseDate)}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue label='Decimal' value={decimals} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={8}>
-        <LabelledValue
-          label='Token Address'
-          value={<WalletAddress address={tokenAddress} />}
-        />
-      </Grid>
-    </Grid>
+  const classificationObj = stoClassifications.find(
+    v => v.value === classification
   )
+  const stoClassification =
+    typeof classificationObj !== 'undefined'
+      ? classificationObj?.label
+      : classification
+
+  const items = [
+    {
+      label: 'Network',
+      value: networkName
+    },
+    {
+      label: 'Capital Structure',
+      value: capitalStructure
+    },
+    {
+      label: 'Launch Date',
+      value: formatDateToMMDDYY(launchDate)
+    },
+    {
+      label: 'Completion Date',
+      value: formatDateToMMDDYY(completionDate)
+    },
+    {
+      label: 'Release Date',
+      value: formatDateToMMDDYY(releaseDate)
+    },
+    {
+      label: 'Decimal',
+      value: decimals
+    },
+    {
+      label: 'Token Address',
+      value: <WalletAddress address={tokenAddress} />
+    },
+    {
+      label: 'Classification',
+      value: stoClassification
+    }
+  ]
+
+  return <FieldGrid items={items} />
 }

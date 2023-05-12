@@ -40,7 +40,7 @@ export const corporateIssuerFormSteps = [
     component: () => <DirectorsAndBeneficialOwnerDetails />
   },
   {
-    label: 'Tax Declaration',
+    label: 'Tax Information',
     getFormValues: getCorporateInvestorTaxDeclarationFormValues,
     getRequestPayload: getTaxDeclarationRequestPayload,
     validationSchema: corporateTaxDeclarationSchema,

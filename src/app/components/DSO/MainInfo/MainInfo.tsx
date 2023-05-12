@@ -5,6 +5,8 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
+import { stoClassifications } from 'components/form/STOClassificationSelect'
+import { productTypes } from 'components/form/ProductTypeSelect'
 
 export interface MainInfoProps {
   dso: DigitalSecurityOffering
@@ -12,6 +14,20 @@ export interface MainInfoProps {
 
 export const MainInfo = ({ dso }: MainInfoProps) => {
   const { isTablet } = useAppBreakpoints()
+
+  const classification = dso.classification ?? ''
+  const classificationObj = stoClassifications.find(
+    v => v.value === classification
+  )
+  const stoClassification =
+    typeof classificationObj !== 'undefined'
+      ? classificationObj?.label
+      : classification
+
+  const productType = dso.productType ?? ''
+  const productTypeObj = productTypes.find(v => v.value === productType)
+  const stoProductType =
+    typeof productTypeObj !== 'undefined' ? productTypeObj?.label : productType
 
   const expandedComponent = () => (
     <>
@@ -23,6 +39,12 @@ export const MainInfo = ({ dso }: MainInfoProps) => {
       </Grid>
       <Grid item xs={12}>
         <Info label='Capital Structure' value={dso.capitalStructure} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Classification' value={stoClassification} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Product Type' value={stoProductType} />
       </Grid>
       <Grid item xs={12}>
         <Info label='Launch Date' value={formatDateToMMDDYY(dso.launchDate)} />

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { DSODataroom } from 'app/components/DSO/components/DSODataroom'
 import { DSOVideoLinks } from 'app/components/DSO/components/DSOVideoLinks'
 import { DSOFAQs } from 'app/components/DSO/components/DSOFAQs'

@@ -11,7 +11,7 @@ export const MasDisclosure = () => {
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='MAS Disclosure' />
+        <PageHeader title='Disclosure' />
       </Grid>
       <RootContainer>
         <Grid item>

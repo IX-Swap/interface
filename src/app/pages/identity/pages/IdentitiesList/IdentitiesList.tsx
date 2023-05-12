@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { IdentityPreview } from 'app/pages/identity/components/IdentityPreview/IdentityPreview'
 import { IdentitySelectionView } from 'app/pages/identity/components/IdentitySelectionView/IdentiySelectionView'
@@ -6,21 +6,22 @@ import { useStyles } from 'app/pages/identity/pages/IdentitiesList/IdentitiesLis
 import { ReactComponent as Dot } from 'assets/icons/new/dot.svg'
 import React from 'react'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
+import { RootContainer } from 'ui/RootContainer'
 
 export const IdentitiesList: React.FC = () => {
   const { hasIdentity, identityLoaded, isLoadingIdentities } =
     useGetIdentities()
   const classes = useStyles()
-
   return (
     <AppContentWrapper container background='default'>
-      <Container className={classes.container}>
+      {/* <Container className={classes.container}> */}
+      <RootContainer>
         <Grid container className={classes.grid}>
           <Grid item container className={classes.nameIdentity}>
             {hasIdentity && (
               <>
                 <Grid item xs={12}>
-                  <Typography variant='h3'>
+                  <Typography variant='h3' sx={{ marginBottom: '5px' }}>
                     {identityLoaded.user.name}
                   </Typography>
                 </Grid>
@@ -35,8 +36,72 @@ export const IdentitiesList: React.FC = () => {
                     Identity
                   </Typography>
                 </Box>
+                {/* <div className={classes.bbox}>
+                  <div className={classes.item1}>
+                    <Avatar
+                      documentId={identityLoaded.photo}
+                      ownerId={identityLoaded.user._id}
+                      size={120}
+                      borderRadius={50}
+                      fallback={<AvatarPhoto xs={8} />}
+                    />
+                  </div>
+                </div> */}
+
+                {/* <Grid item xs={12}>
+                  <Grid item xs={12} style={{ textAlign: 'center' }}>
+                    <Typography variant='h3'>
+                      {identityLoaded.user.name}
+                    </Typography>
+                  </Grid>
+                  <div>
+                  <Grid item xs={8}>
+                    <Avatar
+                      documentId={identityLoaded.photo}
+                      ownerId={identityLoaded.user._id}
+                      size={120}
+                      borderRadius={50}
+                      fallback={<AvatarPhoto xs={8} />}
+                    />
+                  </Grid>
+                  </div>
+                  <Grid
+                    xs={12}
+                    style={{
+                      textAlign: 'center',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      gap: '30px'
+                    }}
+                  >
+                    <Typography className={classes.investorIdentity}>
+                      Investor Identity
+                    </Typography>
+                    <Typography className={classes.investorIdentity}>
+                      Investor Role
+                    </Typography>
+                  </Grid>
+
+                  <Grid
+                    xs={12}
+                    style={{
+                      textAlign: 'center',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      gap: '30px'
+                    }}
+                  >
+                    <Typography className={classes.investorIdentitySub}>
+                      {identityLoaded.user.accountType}
+                    </Typography>
+                    <Typography className={classes.investorIdentitySub}>
+                      {identityLoaded.user.roles}
+                    </Typography>
+                  </Grid>
+                </Grid> */}
               </>
             )}
+
             {!hasIdentity && !isLoadingIdentities && (
               <Grid item xs={12} className={classes.createIdentity}>
                 <Typography variant='h2' align='center'>
@@ -47,17 +112,18 @@ export const IdentitiesList: React.FC = () => {
                   align='center'
                   color='textSecondary'
                 >
-                  Choose the type of Identity
+                  Choose between the 2 types below.
                 </Typography>
               </Grid>
             )}
           </Grid>
+
           <Grid item xs={12}>
             {hasIdentity && <IdentityPreview />}
             {!hasIdentity && !isLoadingIdentities && <IdentitySelectionView />}
           </Grid>
         </Grid>
-      </Container>
+      </RootContainer>
     </AppContentWrapper>
   )
 }

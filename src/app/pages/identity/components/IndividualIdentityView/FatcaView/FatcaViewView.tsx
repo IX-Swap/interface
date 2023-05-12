@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Typography } from '@mui/material'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { DeclarationsListItem } from 'app/pages/identity/components/DeclarationsListItem/DeclarationsListItem'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 

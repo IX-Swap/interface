@@ -1,7 +1,11 @@
 import React, { ReactElement } from 'react'
-import { Launch as LaunchIcon } from '@mui/icons-material'
-import { Grid, IconButton, Box } from '@mui/material'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
+// import { Launch as LaunchIcon } from '@mui/icons-material'
+import {
+  Grid
+  //  IconButton,
+  //   Box
+} from '@mui/material'
+// import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'helpers/strings'
 import { history } from 'config/history'
@@ -9,10 +13,14 @@ import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsDropdownTrigger'
 import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsDropdownContent'
 import { useLocation } from 'react-router-dom'
+import { get } from 'lodash'
 
 export interface ActionsProps {
   item: any
   cacheQueryKey: any
+  featureCategory?: string
+  investorRole?: string
+  statusFieldName?: string
 }
 
 export type ActionsType = (props: ActionsProps) => ReactElement
@@ -30,28 +38,42 @@ const getUserId = (item: any) => {
 }
 
 export const Actions = (props: ActionsProps): JSX.Element => {
-  const { item, cacheQueryKey } = props
+  const {
+    item,
+    cacheQueryKey,
+    featureCategory,
+    investorRole,
+    statusFieldName = 'status'
+  } = props
   const location = useLocation()
   const id: string = item._id
   const splitted = location.pathname.split('/')
   const status = location.search.split('=')[1]
 
-  const category = splitted[splitted.length - 1]
+  const category =
+    typeof featureCategory !== 'undefined' &&
+    featureCategory !== 'corporates/role'
+      ? featureCategory
+      : splitted[splitted.length - 1]
   const userId: string = getUserId(item)
   const listingType: string = item.listingType
-  console.log(props.item, 'propsdpdppd')
+  //   console.log(props.item, 'propsdpdppd')
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'approve',
     cacheQueryKey,
-    listingType
+    listingType,
+    featureCategory,
+    investorRole
   })
 
   const [reject, { isLoading: isRejecting }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'reject',
     cacheQueryKey,
-    listingType
+    listingType,
+    featureCategory,
+    investorRole
   })
 
   const view = () =>
@@ -73,20 +95,20 @@ export const Actions = (props: ActionsProps): JSX.Element => {
           `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
         )
       : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
-  console.log(
-    category,
-    listingType,
-    userId,
-    id,
-    status,
-    'category,listingType,userId, id,status'
-  )
+  //   console.log(
+  //     category,
+  //     listingType,
+  //     userId,
+  //     id,
+  //     status,
+  //     'category,listingType,userId, id,status'
+  //   )
   const isUnauthorized = item.status === 'Submitted' || 'Approved'
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
   return (
-    <Grid container wrap='nowrap' justifyContent='flex-end'>
-      <Grid item>
+    <Grid wrap='nowrap' justifyContent='flex-end'>
+      {/* <Grid item>
         <IconButton
           component={AppRouterLinkComponent}
           size='small'
@@ -113,14 +135,14 @@ export const Actions = (props: ActionsProps): JSX.Element => {
         >
           <LaunchIcon color='disabled' />
         </IconButton>
-      </Grid>
-      <Grid item>
+      </Grid> */}
+      {/* <Grid item>
         <Box px={1} />
-      </Grid>
+      </Grid> */}
       {isCommitment && item.fundStatus !== 'Funds on hold' ? (
         <Grid item style={{ minWidth: 26 }} />
       ) : (
-        <Grid item style={{ minWidth: 26 }}>
+        <Grid item>
           {(Boolean(isUnauthorized) || isCommitment) && (
             <Dropdown
               contentTheme='dark'
@@ -130,6 +152,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
               content={props => (
                 <ActionsDropdownContent
                   {...props}
+                  hideApproval={get(item, statusFieldName) !== 'Submitted'}
                   approve={approve}
                   reject={reject}
                   view={view}

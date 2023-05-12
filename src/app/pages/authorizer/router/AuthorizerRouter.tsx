@@ -2,6 +2,7 @@ import { AuthorizerBanksRouter } from 'app/pages/authorizer/pages/banks/router/A
 import { AuthorizerCashWithdrawalsRouter } from 'app/pages/authorizer/pages/cashWithdrawals/router/AuthorizerCashWithdrawalsRouter'
 import { AuthorizerCommitmentRouter } from 'app/pages/authorizer/pages/commitments/router/AuthorizerCommitmentRouter'
 import { AuthorizerCorporateIdentitiesRouter } from 'app/pages/authorizer/pages/corporateIdentities/router/AuthorizerCorporateIdentitiesRouter'
+import { AuthorizerCorporateAccreditationsRouter } from 'app/pages/authorizer/pages/corporateAccreditations/router/AuthorizerCorporateAccreditationsRouter'
 import { AuthorizerDSWithdrwalsRouter } from 'app/pages/authorizer/pages/dsWithdrawals/router/AuthorizerDSWithdrawalsRouter'
 import { AuthorizerIndividualIdentitiesRouter } from 'app/pages/authorizer/pages/individualIdentities/router/AuthorizerIndividualIdentitiesRouter'
 import { AuthorizerDSORouter } from 'app/pages/authorizer/pages/offerings/router/AuthorizerDSORouter'
@@ -20,6 +21,7 @@ import { AuthorizerDealClosureRouter } from 'app/pages/authorizer/pages/DealClos
 import { AuthorizerLandingPage } from 'app/components/LandingPage/AuthorizerLandingPage'
 import { TokenDeploymentRouter } from 'app/pages/authorizer/pages/TokenDeployment/TokenDeploymentRouter'
 import { OTCTrades } from '../pages/otcTrades/OTCTrades'
+import { AuthorizerIndividualAccreditationsRouter } from 'app/pages/authorizer/pages/individualAccreditations/router/AuthorizerIndividualAccreditationsRouter'
 
 export const AuthorizerRouter = () => {
   return (
@@ -41,16 +43,26 @@ export const AuthorizerRouter = () => {
       >
         <AuthorizerDSWithdrwalsRouter />
       </AppRoute>
-
       <AppRoute
-        breadcrumb='Individual Identities'
+        breadcrumb='Individual Accreditation Applications'
+        path={AuthorizerRoute.individualAccreditations}
+      >
+        <AuthorizerIndividualAccreditationsRouter />
+      </AppRoute>
+      <AppRoute
+        breadcrumb='Individual KYC Applications'
         path={AuthorizerRoute.individualIdentities}
       >
         <AuthorizerIndividualIdentitiesRouter />
       </AppRoute>
-
       <AppRoute
-        breadcrumb='Corporates Identities'
+        breadcrumb='Corporate Accreditation Applications'
+        path={AuthorizerRoute.corporateAccreditations}
+      >
+        <AuthorizerCorporateAccreditationsRouter />
+      </AppRoute>
+      <AppRoute
+        breadcrumb='Corporate KYC Applications'
         path={AuthorizerRoute.corporateIdentities}
       >
         <AuthorizerCorporateIdentitiesRouter />

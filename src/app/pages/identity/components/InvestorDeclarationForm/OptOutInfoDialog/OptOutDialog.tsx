@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 import { OptOutInfoContent } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoContent/OptOutInfoContent'
 import { OptOutInfoAction } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoAction/OptOutInfoAction'
 
-export const OptOutInfoDialog = () => {
+export const OptOutInfoDialog = ({ investorRole = 'Accredited' }) => {
   return (
     <Dialog
       keepMounted
@@ -18,12 +18,12 @@ export const OptOutInfoDialog = () => {
           opt out
         </Typography>
       }
-      title='Accredited Investor Opt-Out Form'
-      content={<OptOutInfoContent />}
+      title={`${investorRole} Investor Opt-Out Form`}
+      content={<OptOutInfoContent investorRole={investorRole} />}
       actions={<OptOutInfoAction />}
       fullWidth
       scroll='body'
-      maxWidth='sm'
+      maxWidth='md'
     />
   )
 }

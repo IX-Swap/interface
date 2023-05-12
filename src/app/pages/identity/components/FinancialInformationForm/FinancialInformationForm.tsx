@@ -3,8 +3,8 @@ import { Grid } from '@mui/material'
 import { EmploymentField } from 'app/pages/identity/components/FinancialInformationForm/EmploymentFields'
 import { NoticeOfAssesment } from 'app/pages/identity/components/FinancialInformationForm/NoticeOfAssesment/NoticeOfAssesment'
 import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export const FinancialInformationForm = () => {
   const { isSingPass, singPassData } = useIsSingPass()

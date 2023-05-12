@@ -17,7 +17,7 @@ export const SafeguardInfoDialog = () => {
           safeguards
         </Typography>
       }
-      title='Accredited Investors and Their Special Treatment'
+      title='Disclosures'
       content={<SafeguardInfoContent />}
       actions={<SafeguardInfoAction />}
       fullWidth

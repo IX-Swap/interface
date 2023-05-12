@@ -25,9 +25,15 @@ export const getCorporateInfoRequestPayload = (
     documents: rep.documents?.map(doc => ({ ...doc.value }))
   }))
 
+  //   console.table({
+  //     declaredAs: data.declaredAs,
+  //     isIssuer: data.isIssuer,
+  //     isTenantOwner: data.isTenantOwner
+  //   })
+
   return {
     ...rest,
-    logo: (logo as DataroomFile)?._id,
+    logo: typeof logo === 'string' ? logo : (logo as DataroomFile)?._id,
     representatives: representativesTransformed,
     legalEntityStatus: customLegalEntityStatus
       ? otherLegalEntityStatus
@@ -78,14 +84,21 @@ export const getCorporateInvestorDeclarationRequestPayload = (
     return result
   }, [])
 
-  const isInstitutionalInvestor = values.isInstitutionalInvestor
+  const {
+    applyingAs,
+    isInstitutionalInvestor,
+    isIntermediaryInvestor,
+    ...rest
+  } = values
 
   return {
+    applyingAs: [applyingAs],
     declarations: {
-      investorsStatus: values
+      investorsStatus: rest
     },
     documents: documents.filter(doc => doc !== undefined),
-    isInstitutionalInvestor: isInstitutionalInvestor
+    isInstitutionalInvestor,
+    isIntermediaryInvestor
   }
 }
 
@@ -121,6 +134,14 @@ export const getCorporateSubmitPayload = (values: any) => {
     documents: values.documents.map((item: { _id: any }) => item._id),
     declarations: values.declarations,
     taxResidencies: values.taxResidencies,
+    isInstitutionalInvestor: values.isInstitutionalInvestor
+  }
+}
+
+export const getCorporateAccreditationSubmitPayload = (values: any) => {
+  return {
+    documents: values.documents.map((item: { _id: any }) => item._id),
+    declarations: values.declarations,
     isInstitutionalInvestor: values.isInstitutionalInvestor
   }
 }

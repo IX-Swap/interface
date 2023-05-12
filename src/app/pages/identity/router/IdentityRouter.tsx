@@ -30,7 +30,6 @@ export const IdentityRouter = () => {
       >
         <SuccessPage />
       </AppRoute>
-
       <AppRoute path={IdentityRoute.list}>
         <IdentitiesList />
       </AppRoute>

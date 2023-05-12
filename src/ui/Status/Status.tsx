@@ -7,6 +7,7 @@ export type StatusType =
   | 'submitted'
   | 'rejected'
   | 'draft'
+  | 'passed'
   | string
 
 export interface StatusProps {
@@ -30,6 +31,7 @@ export const Status = ({ label, type }: StatusProps) => {
       label={label}
       color={'success'}
       variant={getChipVariant(type)}
+      sx={{ width: '140px' }}
     />
   )
 }

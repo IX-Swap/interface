@@ -28,6 +28,8 @@ import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined'
+import { STOClassificationSelect } from 'components/form/STOClassificationSelect'
+import { ProductTypeSelect } from 'components/form/ProductTypeSelect'
 export interface DSOBaseFieldsProps {
   isNew: boolean
   // isLive: boolean
@@ -117,7 +119,17 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3} pt={2}>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={STOClassificationSelect}
+                label='Classification'
+                name='classification'
+                control={control}
+                placeHolder='Select classification'
+                variant='outlined'
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
               <TypedField
                 control={control}
                 component={CapitalStructureSelect}
@@ -259,14 +271,12 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
-                component={TextInput}
-                label='Unique Identifier Code'
-                name='uniqueIdentifierCode'
-                disabled={status === 'Approved'}
+                component={ProductTypeSelect}
+                label='Product Type'
+                name='productType'
                 control={control}
-                helperText='ISIN or CUSIP number'
+                placeHolder='Select product type'
                 variant='outlined'
-                isOptional
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -364,17 +374,18 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 optionalText='(Securities will be locked for n days)'
                 // onAccept={async () => await trigger('launchDate')}
               />
-              {/* <span>
-              <Tooltip
-                title='No. of units that will be deployed.'
-                placement='right'
-                arrow
-              >
-                <Icon >
-                  <ErrorOutlineRoundedIcon color='disabled' />
-                </Icon>
-              </Tooltip>
-              </span> */}
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={TextInput}
+                label='Unique Identifier Code'
+                name='uniqueIdentifierCode'
+                disabled={status === 'Approved'}
+                control={control}
+                helperText='ISIN or CUSIP number'
+                variant='outlined'
+                isOptional
+              />
             </Grid>
             <VSpacer size='small' />
           </Grid>

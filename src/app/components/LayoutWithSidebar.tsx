@@ -47,7 +47,9 @@ export const LayoutWithSidebar = (props: LayoutWithSidebarProps) => {
               <SidebarWrapper>{createElement(sidebar)}</SidebarWrapper>
             </Grid>
           )}
-          <Grid className={classes.content}>{createElement(content)}</Grid>
+          <Grid className={classes.content} width={'100%'}>
+            {createElement(content)}
+          </Grid>
         </Grid>
       </Grid>
     </RootContainer>

@@ -1,4 +1,4 @@
-import { themeColors } from 'themes/app/colors'
+// import { themeColors } from 'themes/app/colors'
 import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles((theme: any) => ({
@@ -49,7 +49,7 @@ export const useStyles = makeStyles((theme: any) => ({
     backgroundColor: '#EEE4FF'
   },
   unknown: {
-    color: '#EEE4FF',
+    color: '#778194',
     borderColor: '#0BBE12'
   },
   unknownNewTheme: {
@@ -65,10 +65,12 @@ export const useStyles = makeStyles((theme: any) => ({
     backgroundColor: '#F4CECE'
   },
   rejectedButton: {
-    backgroundColor: themeColors.error,
+    // backgroundColor: themeColors.error,
+    backgroundColor: '#F56283',
     color: '#ffffff',
     '&:hover': {
-      backgroundColor: themeColors.error,
+      //   backgroundColor: themeColors.error,
+      backgroundColor: '#F56283',
       opacity: 0.8
     }
   },

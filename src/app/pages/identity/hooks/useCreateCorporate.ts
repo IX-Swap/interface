@@ -6,7 +6,7 @@ import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
-export const useCreateCorporate = (corporateType: string) => {
+export const useCreateCorporate = () => {
   const { snackbarService, apiService } = useServices()
   const queryCache = useQueryCache()
   const { user } = useAuth()
@@ -14,9 +14,23 @@ export const useCreateCorporate = (corporateType: string) => {
 
   const createCorporate = async (values: any) => {
     const uri = identityURL.corporates.create(userId)
+
+    values.step = typeof values.step === 'undefined' ? 0 : values.step
+
+    if (values.step === 0) {
+      const declaredAs = ['investor']
+
+      if (values.isIssuer === true) declaredAs.push('issuer')
+      if (values.isTenantOwner === true) declaredAs.push('tenantOwner')
+
+      values.declaredAs = declaredAs
+    }
+
+    delete values.isIssuer
+    delete values.isTenantOwner
+
     return await apiService.post<CorporateIdentity>(uri, {
-      ...values,
-      type: corporateType
+      ...values
     })
   }
 

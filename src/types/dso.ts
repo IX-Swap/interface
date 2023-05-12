@@ -62,6 +62,8 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   issuerName: string
   launchDate: string
   releaseDate: string
+  classification: string
+  productType: string
   completionDate: string
   corporate: CorporateIdentity
   logo: string
@@ -103,6 +105,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   maximumTradeUnits?: number
   minimumTradeUnits?: number
   raisedAmount?: number
+  expectedReturn?: number
 }
 
 export interface NewBaseDigitalSecurityOffering
@@ -119,6 +122,8 @@ export interface NewBaseDigitalSecurityOffering
   minimumInvestment: number | null
   launchDate: string
   releaseDate: string
+  classification: string
+  productType: string
   completionDate: string
   pricePerUnit: number
   totalFundraisingAmount: number | null
@@ -135,6 +140,7 @@ export interface NewBaseDigitalSecurityOffering
   step?: number
   isCampaign: boolean
   decimalPlaces: number
+  expectedReturn?: number
 }
 
 export interface DSOInsight {
@@ -150,6 +156,7 @@ export interface DSOInsight {
 }
 
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
+  expectedReturn: number
   promoted: boolean
   disabled: boolean
   isStarred: boolean
@@ -290,6 +297,7 @@ export type DSOTableColumn =
   | 'minimumInvestment'
   | 'distributionFrequency'
   | 'interestRate'
+  | 'expectedReturn'
 
 export interface DSOActivity {
   _id: string

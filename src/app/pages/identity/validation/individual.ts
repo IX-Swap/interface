@@ -8,8 +8,9 @@ import {
   taxIdentificationNumberSchema,
   validationMessages,
   documentsSchema,
-  individualInvestorStatusDeclarationItemSchema,
-  optInAgreementsDependentValueSchema
+  //   individualInvestorStatusDeclarationItemSchema,
+  optInAgreementsDependentValueSchema,
+  expertInvestorAgreementSchema
 } from 'validation/shared'
 import {
   IndividualAgreementsFormValues,
@@ -143,19 +144,55 @@ export const taxDeclarationSchema = yup
       .required(validationMessages.required)
   })
 
+const investorDeclarationsTests = function (values: any) {
+  if (values === undefined || values === null) {
+    return false
+  }
+
+  if (values.applyingAs !== 'expert') {
+    values.investorAgreement = 'capitalMarketExpert'
+  }
+
+  if (values.applyingAs !== 'accredited') {
+    values.investorAgreement = 'financialAsset'
+    //     values.financialAsset = false
+    //     values.income = false
+    //     values.personalAssets = false
+    //     values.jointlyHeldAccount = false
+    //   } else {
+    //     const financialDeclarations = Object.entries(values)
+    //       .filter(([key]) => {
+    //         return (
+    //           key === 'financialAsset' ||
+    //           key === 'income' ||
+    //           key === 'personalAssets' ||
+    //           key === 'jointlyHeldAccount'
+    //         )
+    //       })
+    //       .map(([_key, value]) => value)
+
+    //     const result = financialDeclarations.every(value => value === false)
+
+    //     return !result
+  }
+
+  return true
+}
+
 export const individualInvestorStatusDeclarationSchema = yup
   .object()
   .shape<IndividualInvestorDeclarationFormValues & IdentityDocumentsFormValues>(
     {
-      financialAsset: individualInvestorStatusDeclarationItemSchema,
-      income: individualInvestorStatusDeclarationItemSchema,
-      personalAssets: individualInvestorStatusDeclarationItemSchema,
-      jointlyHeldAccount: individualInvestorStatusDeclarationItemSchema,
+      //   financialAsset: individualInvestorStatusDeclarationItemSchema,
+      //   income: individualInvestorStatusDeclarationItemSchema,
+      //   personalAssets: individualInvestorStatusDeclarationItemSchema,
+      //   jointlyHeldAccount: individualInvestorStatusDeclarationItemSchema,
+      investorAgreement: expertInvestorAgreementSchema,
 
-      optInAgreementsOptOut: yup
-        .bool()
-        .oneOf([true], 'Opt-In Requirement is required')
-        .required(validationMessages.required),
+      //   optInAgreementsOptOut: yup
+      //     .bool()
+      //     .oneOf([true], 'Opt-In Requirement is required')
+      //     .required(validationMessages.required),
       optInAgreementsSafeguards: yup
         .bool()
         .oneOf([true], 'Opt-In Requirement is required')
@@ -178,27 +215,8 @@ export const individualInvestorStatusDeclarationSchema = yup
   )
   .test(
     'investorDeclarations',
-    'Please choose at least one option under "Investor Status Declaration" section',
-    function (values) {
-      if (values === undefined || values === null) {
-        return false
-      }
-
-      const financialDeclarations = Object.entries(values)
-        .filter(([key]) => {
-          return (
-            key === 'financialAsset' ||
-            key === 'income' ||
-            key === 'personalAssets' ||
-            key === 'jointlyHeldAccount'
-          )
-        })
-        .map(([_key, value]) => value)
-
-      const result = financialDeclarations.every(value => value === false)
-
-      return !result
-    }
+    'Please choose at least one option under "Investor Role Declaration" section',
+    investorDeclarationsTests
   )
 
 export const individualInvestorDocumentsSchema = yup
@@ -222,10 +240,8 @@ export const individualInvestorAgreementsSchema = yup
 
 export const individualInvestorValidationSchema = (data?: IndividualIdentity) =>
   yup.object().shape<any>({
-    ...financialInfoSchema(data).fields,
-    ...individualInvestorDocumentsSchema.fields,
-    ...individualInvestorStatusDeclarationSchema.fields,
     ...personalInfoSchema.fields,
+    ...financialInfoSchema(data).fields,
     ...taxDeclarationSchema.fields
   })
 
@@ -234,3 +250,16 @@ export const financialAndTaxDeclarationSchema = (data?: IndividualIdentity) =>
     ...financialInfoSchema(data).fields,
     ...taxDeclarationSchema.fields
   })
+
+export const individualAccreditationSchema = () =>
+  yup
+    .object()
+    .shape<any>({
+      ...individualInvestorStatusDeclarationSchema.fields,
+      ...individualInvestorDocumentsSchema.fields
+    })
+    .test(
+      'investorDeclarations',
+      'Please choose at least one option under "Investor Role Declaration" section',
+      investorDeclarationsTests
+    )

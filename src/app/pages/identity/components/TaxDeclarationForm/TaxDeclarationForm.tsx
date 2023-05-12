@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Paper } from '@mui/material'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { TaxResidencyFieldArray } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxRecidencyFieldArray'
 import { TaxDeclarationInfo } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfo/TaxDeclarationInfo'
 import useStyles from './TaxDeclarationForm.style'
@@ -15,7 +15,7 @@ export const TaxDeclarationForm = ({
   return (
     <Paper className={classes.container}>
       <Grid item className={classes.header}>
-        <FormSectionHeader title='Tax Declaration' />
+        <FormSectionHeader title='Tax Information' />
       </Grid>
       <Grid data-testid='taxDeclaration' container direction='column'>
         <Grid item className={classes.taxDeclaration}>

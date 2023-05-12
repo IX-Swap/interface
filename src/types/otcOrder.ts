@@ -18,12 +18,12 @@ export interface OTCIdentity {
 }
 export interface BaseOTCOrder {
   _id: string
-  price: number
-  amount: number
+  price: string
+  amount: string
   ethAddress: string
   pair: OTCMarket
   orderType: OrderType
-  availableAmount: number
+  availableAmount: string
   status: OTCOrderStatus
   createdAt: string
   user: string
@@ -42,21 +42,21 @@ export interface ColumnOTCMatch extends OTCMatch {
   createdAt: string
   orderType: OrderType
   parentOrder: string
-  parentAmount: number
+  parentAmount: string
 }
 export interface OTCMatch {
   _id: string
   order: string
   ethAddress: string
-  matchedAmount: number
-  matchedPrice: number
+  matchedAmount: string
+  matchedPrice: string
   status: OTCOrderStatus
   user: string
   identity?: OTCIdentity
   matchedOrder?: {
     _id: string
-    amount: number
-    availableAmount: number
+    amount: string
+    availableAmount: string
   }
 }
 

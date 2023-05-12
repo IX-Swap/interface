@@ -1,39 +1,80 @@
 import React from 'react'
-import { DigitalSecurityOffering } from 'types/dso'
-import { TableColumn } from 'types/util'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
-import { Grid } from '@mui/material'
+import { Grid, Box } from '@mui/material'
 import { renderPriceWithCurrency } from 'app/pages/invest/components/DSOTable/columns'
+import { HeadCellWithSort } from 'ui/UIKit/TablesKit/components/HeadCellWithSort/HeadCellWithSort'
+import { renderListingStatus } from 'helpers/tables'
 
 export const renderDSOLogo = (dsoId: string) => (
   <Grid container justifyContent='center' alignItems='center'>
     <DSOLogo dsoId={dsoId} size={70} />
   </Grid>
 )
-export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
+
+export const columns = [
   {
+    label: <Box ml={2}>Logo</Box>,
     key: '_id',
-    label: '',
-    render: renderDSOLogo,
-    align: 'center'
+    render: renderDSOLogo
+  },
+
+  {
+    label: <HeadCellWithSort label={'Name'} field={'tokenName'} />,
+    key: 'tokenName'
   },
   {
-    key: 'tokenName',
-    label: 'Name'
+    key: 'pricePerUnit',
+    label: <HeadCellWithSort label={'Price'} field={'pricePerUnit'} />,
+    render: renderPriceWithCurrency
+  },
+  {
+    key: 'minimumInvestment',
+    label: <HeadCellWithSort label={'Minimum'} field={'minimumInvestment'} />,
+    render: renderPriceWithCurrency
+  },
+  {
+    key: 'capitalStructure',
+    label: (
+      <HeadCellWithSort
+        label={'Capital Structure'}
+        field={'capitalStructure'}
+      />
+    )
+  },
+  {
+    key: 'distributionFrequency',
+    label: (
+      <HeadCellWithSort
+        label={'Distribution'}
+        field={'distributionFrequency'}
+      />
+    )
+  },
+  {
+    key: 'status',
+    label: <HeadCellWithSort label={'Status'} field={'status'} />,
+    render: renderListingStatus
+  }
+]
+
+export const compactColumns = [
+  {
+    label: 'Pair',
+    key: '_id'
+  },
+  {
+    label: 'Name',
+    key: 'tokenName'
   },
   {
     key: 'pricePerUnit',
     label: 'Price',
-    render: renderPriceWithCurrency,
-    headAlign: 'right',
-    align: 'right'
+    render: renderPriceWithCurrency
   },
   {
     key: 'minimumInvestment',
     label: 'Minimum',
-    render: renderPriceWithCurrency,
-    headAlign: 'right',
-    align: 'right'
+    render: renderPriceWithCurrency
   },
   {
     key: 'capitalStructure',
@@ -41,7 +82,7 @@ export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
   },
   {
     key: 'distributionFrequency',
-    label: 'Distribution Frequency'
+    label: 'Distribution'
   },
   {
     key: 'status',

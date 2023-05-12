@@ -14,7 +14,7 @@ export const step = (theme: Theme) => {
           paddingBottom: theme.spacing(2.5),
 
           '&.Mui-active': {
-            borderBottom: '1px solid #4C88FF'
+            borderBottom: `1px solid ${theme.palette.primary.main}`
           },
           '&.Mui-completed': {
             color: theme.palette.text.secondary
@@ -60,7 +60,7 @@ export const step = (theme: Theme) => {
               }
             },
             '&.active': {
-              '&::before': { backgroundColor: '#4C88FF' }
+              '&::before': { backgroundColor: theme.palette.primary.main }
             }
           }
         }
@@ -87,7 +87,7 @@ export const step = (theme: Theme) => {
               left: 0,
               width: 1,
               height: '100%',
-              background: '#4C88FF'
+              background: theme.palette.primary.main
             }
           },
           '&.Mui-completed': {

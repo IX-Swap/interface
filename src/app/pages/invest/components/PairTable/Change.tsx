@@ -12,7 +12,7 @@ export const Change = ({ value, isPositive }: LastPriceProps) => {
   const { trendColor } = useStyles({ isPositive })
 
   return (
-    <Box component='span' className={trendColor}>
+    <Box style={{marginLeft: '90px'}} component='span' className={trendColor}>
       {isPositive === true ? '+' : ''}
       {formatAmount(value)} %
     </Box>

@@ -4,7 +4,7 @@ import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.s
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
 import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
-import { ReactComponent as IssuanceDetailsIcon } from 'assets/icons/navigation/issuance-details.svg'
+// import { ReactComponent as IssuanceDetailsIcon } from 'assets/icons/navigation/issuance-details.svg'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as OfferingIcon } from 'assets/icons/navigation/offering.svg'
@@ -18,7 +18,17 @@ export const AuthorizerRoute = {
   cashWithdrawals: makeURL(['app', 'authorizer', 'cashWithdrawal']),
   dsWithdrawals: makeURL(['app', 'authorizer', 'dsWithdrawal']),
   individualIdentities: makeURL(['app', 'authorizer', 'individualIdentity']),
+  individualAccreditations: makeURL([
+    'app',
+    'authorizer',
+    'individualAccreditation'
+  ]),
   corporateIdentities: makeURL(['app', 'authorizer', 'corporateIdentity']),
+  corporateAccreditations: makeURL([
+    'app',
+    'authorizer',
+    'corporateAccreditation'
+  ]),
   offerings: makeURL(['app', 'authorizer', 'offerings']),
   commitments: makeURL(['app', 'authorizer', 'commitments']),
   withdrawalAddresses: makeURL(['app', 'authorizer', 'withdrawalAddresses']),
@@ -51,14 +61,26 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     icon: DSWithdrawalIcon
   },
   {
-    label: 'Individual Identities',
+    label: 'Individual KYC Applications',
     path: AuthorizerRoute.individualIdentities,
     color: '#90A30F',
     icon: IndividualIcon
   },
   {
-    label: 'Corporate Identities',
+    label: 'Individual Accreditation Applications',
+    path: AuthorizerRoute.individualAccreditations,
+    color: '#E65133',
+    icon: IndividualIcon
+  },
+  {
+    label: 'Corporate KYC Applications',
     path: AuthorizerRoute.corporateIdentities,
+    color: '#E65133',
+    icon: CorporateIcon
+  },
+  {
+    label: 'Corporate Accreditation Applications',
+    path: AuthorizerRoute.corporateAccreditations,
     color: '#E65133',
     icon: CorporateIcon
   },
@@ -68,12 +90,12 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     color: '#11BB93',
     icon: OfferingIcon
   },
-  {
-    label: 'Deal Closure',
-    path: AuthorizerRoute.dealClosure,
-    color: '#11BB93',
-    icon: CommitmentIcon
-  },
+  // {
+  //   label: 'Deal Closure',
+  //   path: AuthorizerRoute.dealClosure,
+  //   color: '#11BB93',
+  //   icon: CommitmentIcon
+  // },
   {
     label: 'OTC Trades',
     path: AuthorizerRoute.otcTrades,
@@ -92,12 +114,12 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     color: '#e6d200',
     icon: WithdrawalAddressIcon
   },
-  {
-    label: 'Proposed Fundraising Details',
-    path: AuthorizerRoute.issuanceDetails,
-    color: '#11BB93',
-    icon: IssuanceDetailsIcon
-  },
+  // {
+  //   label: 'Proposed Fundraising Details',
+  //   path: AuthorizerRoute.issuanceDetails,
+  //   color: '#11BB93',
+  //   icon: IssuanceDetailsIcon
+  // },
   {
     label: 'Listings',
     path: AuthorizerRoute.listings,
