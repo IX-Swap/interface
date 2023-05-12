@@ -44,14 +44,10 @@ export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
     setCopied(tokenAddress)
   }
   const { chainId } = useActiveWeb3React()
-  const explorerLink = useMemo(
-    () => {
-      const nameChainMapNetwork = chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[network]
-      return getExplorerLink(nameChainMapNetwork, tokenAddress, ExplorerDataType.TOKEN)
-    },
-    
-    [network, tokenAddress]
-  )
+  const explorerLink = useMemo(() => {
+    const nameChainMapNetwork = chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[network]
+    return getExplorerLink(nameChainMapNetwork, tokenAddress, ExplorerDataType.TOKEN)
+  }, [network, tokenAddress])
   const editLink = useMemo(() => `/issuance/edit/information?id=${issuanceId}`, [issuanceId])
 
   return (
@@ -72,7 +68,7 @@ export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
             alignItems: 'center',
             height: '40px',
             width: '180px',
-            paddingLeft: '12px'
+            paddingLeft: '12px',
           }}
         />
         <BtnContainer onClick={onCopy}>

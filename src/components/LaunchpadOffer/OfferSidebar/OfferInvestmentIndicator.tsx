@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ChevronDown, ChevronUp, Info } from 'react-feather'
@@ -12,17 +12,17 @@ interface Props {
 }
 
 export const OfferInvestmentIndicator: React.FC<Props> = (props) => {
+  const { totalInvestment, hardCap, hasPresale, softCap, presaleAlocated } = props.offer
   const theme = useTheme()
 
-  const investmentPercentage = React.useMemo(
-    () => (Number(props.offer.totalInvestment) / Number(props.offer.hardCap)) * 100,
-    []
+  const investmentPercentage = useMemo(
+    () => (Number(totalInvestment) / Number(hardCap)) * 100,
+    [totalInvestment, hardCap]
   )
-
-  const softCapPercentage = React.useMemo(() => (Number(props.offer.softCap) / Number(props.offer.hardCap)) * 100, [])
-  const presalePercentage = React.useMemo(
-    () => (Number(props.offer.presaleAlocated) / Number(props.offer.hardCap)) * 100,
-    []
+  const softCapPercentage = useMemo(() => (Number(softCap) / Number(hardCap)) * 100, [softCap, hardCap])
+  const presalePercentage = useMemo(
+    () => (hasPresale ? (Number(presaleAlocated) / Number(hardCap)) * 100 : 0),
+    [hasPresale, presaleAlocated, hardCap]
   )
 
   return (
@@ -42,29 +42,31 @@ export const OfferInvestmentIndicator: React.FC<Props> = (props) => {
         <ChevronDown fill={theme.launchpad.colors.primary} stroke={theme.launchpad.colors.primary} />
       </SoftcapMarker>
 
-      <PreSaleGoalMarker percentage={presalePercentage}>
-        <ChevronUp fill={theme.launchpad.colors.primary} stroke={theme.launchpad.colors.primary} />
-        <div>
-          Pre-Sale Goal
-          <Tooltip
-            title="Pre-Sale Goal"
-            body={
-              <div>
-                Deal issuers can divide the funding round by adding a &quot;pre-sale&quot; round and allocating it a
-                part of the total funding.
-                <br />
-                <br />
-                The pre-sale round is only available for investors approved in the investment registration stage.
-                <br />
-                <br />
-                Pre-sale is on a first come first serve basis.
-              </div>
-            }
-          >
-            <Info size="10" />
-          </Tooltip>
-        </div>
-      </PreSaleGoalMarker>
+      {hasPresale && (
+        <PreSaleGoalMarker percentage={presalePercentage}>
+          <ChevronUp fill={theme.launchpad.colors.primary} stroke={theme.launchpad.colors.primary} />
+          <div>
+            Pre-Sale Goal
+            <Tooltip
+              title="Pre-Sale Goal"
+              body={
+                <div>
+                  Deal issuers can divide the funding round by adding a &quot;pre-sale&quot; round and allocating it a
+                  part of the total funding.
+                  <br />
+                  <br />
+                  The pre-sale round is only available for investors approved in the investment registration stage.
+                  <br />
+                  <br />
+                  Pre-sale is on a first come first serve basis.
+                </div>
+              }
+            >
+              <Info size="10" />
+            </Tooltip>
+          </div>
+        </PreSaleGoalMarker>
+      )}
     </IndicatorContainer>
   )
 }
