@@ -19,7 +19,6 @@ const Content = ({ distributionControllerAddress }: { distributionControllerAddr
       </div>
       <BtnContainer onClick={() => setControllerCopied(distributionControllerAddress)}>
         {shortenAddress(distributionControllerAddress, 5)}
-
         {controllerCopied ? (
           <CheckCircle stroke={theme.launchpad.colors.text.body} size="18" />
         ) : (
