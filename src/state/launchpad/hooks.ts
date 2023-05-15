@@ -1218,7 +1218,7 @@ export const useSubmitOffer = () => {
           ...payload.additionalDocuments
             .map((x, idx) => ({
               type: OfferFileType.document,
-              fileId: findDoc('document', idx) ?? initial.additionalDocuments[idx].file?.id,
+              fileId: findDoc('document', idx) ?? null,
             }))
             .filter((x) => x.fileId),
 
@@ -1275,15 +1275,7 @@ export const useSubmitOffer = () => {
       }
 
       data = filter(data)
-      if (Object.keys(data.terms).length === 0) {
-        delete data.terms
-      }
-      if (Object.keys(data.socialMedia).length === 0) {
-        delete data.socialMedia
-      }
-      if (Object.keys(data.timeframe).length === 0) {
-        delete data.timeframe
-      }
+      console.log('avocado data 2', data.files)
       if (offerId) {
         delete data.offerId
         delete data.vettingId
