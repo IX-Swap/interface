@@ -22,6 +22,7 @@ interface IssuanceButtonsProps {
   draftDisabled: boolean
   offerId?: string
   status: OfferStatus
+  isReset: boolean
 }
 
 export const IssuanceActionButtons = ({
@@ -33,6 +34,7 @@ export const IssuanceActionButtons = ({
   draftDisabled,
   status,
   offerId,
+  isReset,
 }: IssuanceButtonsProps) => {
   const theme = useTheme()
   const { isAdmin } = useRole()
@@ -162,7 +164,7 @@ export const IssuanceActionButtons = ({
           )}
 
           <OutlineButton onClick={onReview}>Review</OutlineButton>
-          {!isRejected && (
+          {(!isRejected || isReset) && (
             <FilledButton disabled={submitDisabled} onClick={onSubmit}>
               Submit
             </FilledButton>
