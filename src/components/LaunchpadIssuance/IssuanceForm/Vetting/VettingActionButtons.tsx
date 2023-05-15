@@ -21,6 +21,7 @@ export interface VettingActionButtonsProps {
   submitDisabled: boolean
   vettingId: string
   status?: IssuanceStatus
+  isReset: boolean
 }
 export const VettingActionButtons = ({
   onSaveDraft,
@@ -30,6 +31,7 @@ export const VettingActionButtons = ({
   submitDisabled,
   vettingId,
   status,
+  isReset,
 }: VettingActionButtonsProps) => {
   const theme = useTheme()
   const { isAdmin } = useRole()
@@ -149,7 +151,7 @@ export const VettingActionButtons = ({
               Save Draft
             </OutlineButton>
 
-            {!isRejected && (
+            {(!isRejected || isReset) && (
               <FilledButton disabled={submitDisabled} onClick={onSubmit}>
                 Submit
               </FilledButton>
