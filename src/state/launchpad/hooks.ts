@@ -654,7 +654,7 @@ const useUploadVettingFiles = () => {
 
         if (
           !initial.directors[idx]?.proofOfIdentity ||
-          initial.directors[idx]?.proofOfIdentity.id !== entry.proofOfIdentity.id
+          initial.directors[idx]?.proofOfIdentity.id !== entry.proofOfIdentity?.id
         )
           files.push({ name: `directors.${idx}.proofOfIdentityId`, file: entry.proofOfIdentity?.file })
       })
@@ -667,7 +667,7 @@ const useUploadVettingFiles = () => {
           files.push({ name: `beneficialOwners.${idx}.proofOfAddressId`, file: entry.proofOfAddress?.file })
         if (
           !initial.beneficialOwners[idx]?.proofOfIdentity ||
-          initial.beneficialOwners[idx]?.proofOfIdentity.id !== entry.proofOfIdentity.id
+          initial.beneficialOwners[idx]?.proofOfIdentity.id !== entry.proofOfIdentity?.id
         )
           files.push({ name: `beneficialOwners.${idx}.proofOfIdentityId`, file: entry.proofOfIdentity?.file })
       })
@@ -777,7 +777,6 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
           }
           return [key, value]
         })
-
         .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
 
       if (vettingId) {
