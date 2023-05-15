@@ -138,7 +138,6 @@ export const ManageOffer = () => {
         distributionControllerAddress={distributionControllerAddress}
         smartContractStrategy={smartContractStrategy}
       />
-
       {isOpenWhitelisting && (
         <LaunchpadWhitelistWallet offerId={offer.id} isOpen={isOpenWhitelisting} setOpen={setOpenWhitelisting} />
       )}
