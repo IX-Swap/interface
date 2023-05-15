@@ -77,6 +77,7 @@ export const ManageOffer = () => {
     triggerUserClaim.load(undefined, () => {
       addPopup({ info: { success: true, summary: 'User claim has been triggered succesfully!' } })
       load()
+      setConfirmClaim(false)
     })
   }, [triggerUserClaim.isLoading, triggerUserClaim.load, load])
 
@@ -85,6 +86,7 @@ export const ManageOffer = () => {
     triggerIssuerClaim.load(undefined, () => {
       addPopup({ info: { success: true, summary: 'Funds have been withdrawn succesfully!' } })
       load()
+      setConfirmClaim(false)
     })
   }, [triggerIssuerClaim.isLoading, triggerIssuerClaim.load, load])
 
@@ -138,7 +140,6 @@ export const ManageOffer = () => {
         distributionControllerAddress={distributionControllerAddress}
         smartContractStrategy={smartContractStrategy}
       />
-
       {isOpenWhitelisting && (
         <LaunchpadWhitelistWallet offerId={offer.id} isOpen={isOpenWhitelisting} setOpen={setOpenWhitelisting} />
       )}
