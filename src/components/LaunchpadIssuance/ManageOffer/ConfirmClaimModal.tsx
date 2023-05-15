@@ -30,7 +30,8 @@ const Content = ({ distributionControllerAddress }: { distributionControllerAddr
 }
 
 export const ConfirmClaimModal = (props: any) => {
-  const { isOpen, onClose, onClaim, smartContractStrategy, distributionControllerAddress } = props
+  const { isOpen, onClose, onAccept, smartContractStrategy, distributionControllerAddress } = props
+
   return (
     <ConfirmPopup
       subtitle={
@@ -40,7 +41,7 @@ export const ConfirmClaimModal = (props: any) => {
       }
       isOpen={isOpen}
       onDecline={onClose}
-      onAccept={onClaim}
+      onAccept={onAccept}
     />
   )
 }
