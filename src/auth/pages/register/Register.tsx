@@ -78,12 +78,12 @@ export const Register: React.FC = observer(() => {
     return async (values: SignupArgs) =>
       await signup(
         {
-          tenantId: sessionService.get('tenantId'),
-          name: values.name ?? 'Singpass User',
-          email: values.email,
+          tenantId: sessionService?.get('tenantId'),
+          name: values?.name ?? 'Singpass User',
+          email: values?.email,
           singPassLogin: isMyInfo,
-          mobileNo: values.phoneNumber,
-          password: values.password,
+          mobileNo: values?.phoneNumber,
+          password: values?.password,
           accountType: identity?.toLocaleUpperCase(),
           uinfin: data?.uinfin
         },
