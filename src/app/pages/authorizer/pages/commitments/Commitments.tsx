@@ -1,6 +1,6 @@
 import React from 'react'
 import { columns } from 'app/pages/authorizer/pages/commitments/columns'
-import { AuthorizerList } from 'app/pages/authorizer/components/AuthorizerList'
+import { AuthorizerList } from 'app/pages/authorizer/components/upgrade/AuthorizerList/AuthorizerList'
 import { authorizerQueryKeys } from 'config/queryKeys'
 import { Commitment } from 'types/commitment'
 import { AuthorizerSelectionActions } from 'app/pages/authorizer/components/SelectionAction/SelectionActions'
@@ -29,11 +29,11 @@ export const Commitments: React.FC = () => {
 
   return (
     <AuthorizerList<Commitment>
-      title='Authorize Commitment'
+      title='Authorize Commitments'
       uri='/issuance/commitments/list'
       name={authorizerQueryKeys.getCommitmentsList}
       columns={columns}
-      hasStatus={false}
+      hasStatusWithActions={false}
       selectable={fundStatus === 'Funds on hold'}
       selectionActions={selectionActions}
     />

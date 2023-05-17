@@ -231,7 +231,7 @@ export const TableView = <T,>({
   return (
     <Grid container direction='column'>
       {['top', 'both'].includes(paginationPlacement) && renderPagination()}
-      <Grid item>
+      <Grid item zIndex={2}>
         {renderTableLoading()}
         <Paper style={{ backgroundColor: 'inherit' }} {...paperProps}>
           <TableContainer style={{ overflow: 'visible' }}>

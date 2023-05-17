@@ -1,6 +1,5 @@
 import React from 'react'
-import { Grid } from '@mui/material'
-import { LabelledValue } from 'components/LabelledValue'
+import { Box } from '@mui/material'
 import { Commitment } from 'types/commitment'
 import { formatDateAndTime } from 'helpers/dates'
 import { DSOLink } from 'app/components/DSOLink'
@@ -9,9 +8,9 @@ import { SubscriptionDocument } from 'app/components/SubscriptionDocument'
 import { Maybe } from 'types/util'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getOfferingName } from 'helpers/strings'
-import { privateClassNames } from 'helpers/classnames'
 import { CommitmentIssuance } from 'app/components/CommitmentIssuance/CommitmentIssuance'
 import { CommitmentWithdrawalAddress } from 'app/components/CommitmentWithdrawalAddress'
+import { FieldGrid } from 'ui/FieldGrid/FieldGrid'
 
 export interface CommitmentPreviewProps {
   data: Maybe<Commitment>
@@ -31,74 +30,56 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
 
   const showTokenIssuance = !isUserView && data.status !== 'Rejected'
 
+  const items = [
+    {
+      label: 'Company Name',
+      value: data.dso.corporate.companyLegalName
+    },
+    {
+      label: 'Issued By',
+      value: data.dso.issuerName
+    },
+    {
+      label: 'Issued Date',
+      value: formatDateAndTime(data.dso.createdAt)
+    },
+    {
+      label: 'Security Token',
+      value: <DSOLink dso={data.dso} />
+    },
+    {
+      label: 'Price Per Unit',
+      value: formatMoney(data.dso.pricePerUnit, data.currency.symbol)
+    },
+    {
+      label: 'Number Of Units',
+      value: data.numberOfUnits
+    },
+    {
+      label: 'Investment Structure',
+      value: data.dso.investmentStructure
+    },
+    {
+      label: 'Total Amount',
+      value: formatMoney(data.totalAmount, data.currency.symbol)
+    },
+    {
+      label: 'Blockchain Address',
+      value: (
+        <CommitmentWithdrawalAddress
+          address={data.withdrawalAddress?.address}
+        />
+      )
+    }
+  ]
+
   return (
-    <Grid container spacing={4} className={privateClassNames()}>
-      <Grid item container spacing={4}>
-        <Grid item xs={12} sm={6} md={4}>
-          <LabelledValue
-            label='Company Name'
-            value={data.dso.corporate.companyLegalName}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <LabelledValue label='Issued By' value={data.dso.issuerName} />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <LabelledValue
-            label='Issued Date'
-            value={formatDateAndTime(data.dso.createdAt)}
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={4}>
-        <Grid item xs={12} sm={6} md={4}>
-          <LabelledValue
-            label='Security Token'
-            value={<DSOLink dso={data.dso} />}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <LabelledValue
-            label='Price Per Unit'
-            value={formatMoney(data.dso.pricePerUnit, data.currency.symbol)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <LabelledValue label='Number Of Units' value={data.numberOfUnits} />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={4}>
-        <Grid item xs={12} sm={6} md={4}>
-          <LabelledValue
-            label='Investment Structure'
-            value={data.dso.investmentStructure}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <LabelledValue
-            label='Total Amount'
-            value={formatMoney(data.totalAmount, data.currency.symbol)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <LabelledValue
-            label='Blockchain Address'
-            value={
-              <CommitmentWithdrawalAddress
-                address={data.withdrawalAddress?.address}
-              />
-            }
-          />
-        </Grid>
-      </Grid>
+    <>
+      <Box ml={3} mt={3}>
+        <FieldGrid items={items} />
+      </Box>
       {showTokenIssuance && <CommitmentIssuance data={data} />}
-      <Grid item container spacing={4}>
-        <Grid item xs={12}>
-          <SubscriptionDocument document={data.signedSubscriptionDocument} />
-        </Grid>
-      </Grid>
-    </Grid>
+      <SubscriptionDocument document={data.signedSubscriptionDocument} />
+    </>
   )
 }

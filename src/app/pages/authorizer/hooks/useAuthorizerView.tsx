@@ -29,7 +29,12 @@ export const renderStatusColumnWithApproval = (row: object, status: string) => {
 }
 
 export const renderDealStatus = (status: string): JSX.Element => {
-  return <AuthorizableStatus status={status} isNewTheme compact={false} />
+  // return <AuthorizableStatus status={status} isNewTheme compact={false} />
+  return typeof status !== 'undefined' ? (
+    <Status label={status} type={status.toLowerCase()} />
+  ) : (
+    <></>
+  )
 }
 
 export const statusColumn: TableColumn<any> = {

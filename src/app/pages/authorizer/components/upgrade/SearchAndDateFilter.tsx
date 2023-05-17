@@ -6,7 +6,7 @@ import { GroupedDateTimeFilter } from 'app/pages/authorizer/components/GroupedFr
 import { SearchQueryFilterGroupApply } from 'components/SearchQueryFilter/SearchQueryFilterGroupApply'
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
-import { ClosedDSOsFilter } from 'app/pages/authorizer/components/ClosedDSOFilter'
+// import { ClosedDSOsFilter } from 'app/pages/authorizer/components/ClosedDSOFilter'
 
 export const SearchAndDateFilter = () => {
   const category = useAuthorizerCategory()
@@ -14,11 +14,11 @@ export const SearchAndDateFilter = () => {
   return (
     <SearchQueryFilterGroup>
       <Grid container spacing={3}>
-        {isCommitments && (
+        {/* {isCommitments && (
           <Grid item xs={12}>
             <ClosedDSOsFilter />
           </Grid>
-        )}
+        )} */}
         <Grid item xs={2}>
           <GroupedDateTimeFilter
             name='fromDate'
