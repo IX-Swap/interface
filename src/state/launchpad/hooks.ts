@@ -1201,18 +1201,16 @@ export const useSubmitOffer = () => {
           claim: payload.timeframe.claim,
         },
 
-        faq: payload.faq
-          .filter((m) => Object.values(m).some(Boolean))
-          .map((x) => ({ question: x.question, answer: x.answer })),
+        faq: payload.faq.filter((x) => x.question || x.answer).map((x) => ({ question: x.question, answer: x.answer })),
 
         members: payload.members
-          .filter((m) => Object.values(m).some(Boolean))
           .map((x, idx) => ({
-            avatarId: findDoc('member.photo', idx) ?? initial.members[idx].photo?.id,
+            avatarId: findDoc('member.photo', idx) || x.photo?.id || null,
             name: x.name,
             title: x.role,
             description: x.about,
-          })),
+          }))
+          .filter((x) => x.avatarId || x.name || x.title || x.description),
 
         files: [
           ...payload.additionalDocuments
@@ -1275,7 +1273,6 @@ export const useSubmitOffer = () => {
       }
 
       data = filter(data)
-      console.log('avocado data 2', data.files)
       if (offerId) {
         delete data.offerId
         delete data.vettingId
@@ -1313,23 +1310,25 @@ export const useMinimalOfferEdit = () => {
       profilePictureId: files.find((x) => x.name === 'profile')?.id || payload.profilePicture?.id || null,
       cardPictureId: files.find((x) => x.name === 'card')?.id || payload.cardPicture?.id || null,
 
-      faq: payload.faq.map((faq) => ({
-        id: faq.id,
-        question: faq.question,
-        answer: faq.answer,
-      })),
+      faq: payload.faq
+        .filter((x) => x.question || x.answer)
+        .map((faq) => ({
+          id: faq.id,
+          question: faq.question,
+          answer: faq.answer,
+        })),
 
       socialMedia: payload.social.reduce((acc, e) => ({ ...acc, [e.type]: e.url }), {}),
 
       members: payload.members
-        .filter((m) => Object.entries(m).some(([key, value]) => !!value && key !== 'id'))
         .map((member, idx) => ({
           id: member.id && member.id >= 0 ? member.id : undefined,
-          avatarId: find('member.photo', idx) ?? initial.members[idx].photo?.id,
+          avatarId: find('member.photo', idx) || member.photo?.id || null,
           name: member.name,
           title: member.role,
           description: member.about,
-        })),
+        }))
+        .filter((x) => x.avatarId || x.name || x.title || x.description),
 
       files: [
         ...payload.additionalDocuments
