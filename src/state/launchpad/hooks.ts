@@ -1194,11 +1194,11 @@ export const useSubmitOffer = () => {
         },
 
         timeframe: {
-          whitelist: payload.timeframe.whitelist,
-          preSale: payload.timeframe.preSale,
-          sale: payload.timeframe.sale,
-          closed: payload.timeframe.closed,
-          claim: payload.timeframe.claim,
+          whitelist: payload.timeframe.whitelist || null,
+          preSale: payload.timeframe.preSale || null,
+          sale: payload.timeframe.sale || null,
+          closed: payload.timeframe.closed || null,
+          claim: payload.timeframe.claim || null,
         },
 
         faq: payload.faq.filter((x) => x.question || x.answer).map((x) => ({ question: x.question, answer: x.answer })),
@@ -1249,7 +1249,7 @@ export const useSubmitOffer = () => {
         }
 
         if (typeof filterData === 'object' && filterData.length !== undefined) {
-          return filterData.map(filter).filter((x: any) => !!x)
+          return filterData.map(filter).filter((x: any) => x !== undefined)
         }
 
         if (typeof filterData !== 'object' || filterData instanceof Date) {
