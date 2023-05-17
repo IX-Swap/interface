@@ -1216,14 +1216,14 @@ export const useSubmitOffer = () => {
           ...payload.additionalDocuments
             .map((x, idx) => ({
               type: OfferFileType.document,
-              fileId: findDoc('document', idx) ?? null,
+              fileId: findDoc('document', idx) || x.file?.id || null,
             }))
             .filter((x) => x.fileId),
 
           ...payload.images
             .map((x, idx) => ({
               type: OfferFileType.image,
-              fileId: findDoc('image', idx) ?? initial.images[idx]?.id,
+              fileId: findDoc('image', idx) || x.id || null,
             }))
             .filter((x) => x.fileId),
 
@@ -1334,14 +1334,14 @@ export const useMinimalOfferEdit = () => {
         ...payload.additionalDocuments
           .map((x, idx) => ({
             type: OfferFileType.document,
-            fileId: find('document', idx) ?? initial.additionalDocuments[idx].file?.id,
+            fileId: find('document', idx) || x.file?.id || null,
           }))
           .filter((x) => x.fileId),
 
         ...payload.images
           .map((x, idx) => ({
             type: OfferFileType.image,
-            fileId: find('image', idx) ?? initial.images[idx]?.id,
+            fileId: find('image', idx) || x.id || null,
           }))
           .filter((x) => x.fileId),
 
