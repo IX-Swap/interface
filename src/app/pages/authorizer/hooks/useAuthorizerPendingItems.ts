@@ -24,7 +24,6 @@ const categoryMap = {
 }
 
 export const useAuthorizerPendingItems = (category: AuthorizerCategory) => {
-  console.log(category)
   const isCommitment = category === AuthorizerCategory.Commitments
   const data = useTableWithPagination<any>({
     queryKey: `pending-${category}`,
