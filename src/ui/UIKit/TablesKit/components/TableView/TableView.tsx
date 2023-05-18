@@ -7,7 +7,6 @@ import {
   TableCell,
   Paper,
   Grid,
-  Checkbox,
   FormControlLabel,
   Typography,
   Box,
@@ -22,6 +21,7 @@ import {
   statusColumn,
   statusColumnWithActions
 } from 'app/pages/authorizer/hooks/useAuthorizerView'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 import { NoData } from 'app/components/NoData/NoData'
 import useStyles from 'ui/UIKit/TablesKit/components/TableView/TableView.styles'
@@ -142,7 +142,7 @@ export const TableView = <T,>({
         label: (
           <FormControlLabel
             control={
-              <Checkbox
+              <UICheckbox
                 checked={getIsItemsSelected(_items)}
                 indeterminate={getIsIndeterminate(_items)}
                 onClick={() => toggleAll(_items)}
@@ -156,7 +156,7 @@ export const TableView = <T,>({
         render: (val: any, item: T) => (
           <FormControlLabel
             control={
-              <Checkbox
+              <UICheckbox
                 checked={getIsItemSelected(item)}
                 onClick={() => toggle(item)}
               />

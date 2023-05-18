@@ -1,5 +1,6 @@
 import React from 'react'
 import { columns } from 'app/pages/authorizer/pages/commitments/columns'
+// import { AuthorizerList } from 'app/pages/authorizer/components/AuthorizerList'
 import { AuthorizerList } from 'app/pages/authorizer/components/upgrade/AuthorizerList/AuthorizerList'
 import { authorizerQueryKeys } from 'config/queryKeys'
 import { Commitment } from 'types/commitment'
