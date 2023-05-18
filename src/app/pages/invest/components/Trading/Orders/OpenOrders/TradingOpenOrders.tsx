@@ -1,3 +1,4 @@
+import { Grid } from '@mui/material'
 import {
   columns,
   compactColumns
@@ -15,12 +16,12 @@ import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { OpenOTCOrder } from 'types/otcOrder'
+import { CompactOpenOTCOrder } from './CompactOpenOTCOrder'
+import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
+import { OpenOTCTableBody } from './OpenOTCTableBody'
 import { LeavePageContextWrapper } from 'app/pages/issuance/context/LeavePageContext'
 import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
-import { Listing } from 'types/listing'
-import { CompactTable } from 'ui/CompactTable/CompactTable'
-import { MobileMenu } from 'ui/CompactTable/MobileMenu'
-import { MobileActions } from 'app/pages/issuance/components/SecondaryListingsTable/MobileActions'
 
 export const TradingOpenOrders = () => {
   const { user } = useAuth()
@@ -28,37 +29,39 @@ export const TradingOpenOrders = () => {
   const { pairId } = useParams<{ pairId: string }>()
   const { isTablet } = useAppBreakpoints()
   const { account } = useActiveWeb3React()
-
   return (
     <LeavePageContextWrapper>
       <ActiveElementContextWrapper>
-        <TableView<Listing>
-          name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId, account)}
-          uri={trading.getMyOrdersList(account)}
-          columns={columns}
-          size='small'
-          defaultRowsPerPage={5}
-          noHeader={isTablet}
-          actions={OTCOrderActions}
-        >
-          {isTablet
-            ? (props: TableViewRendererProps<any>) => (
-                <CompactTable
-                  {...props}
-                  columns={compactColumns}
-                  menu={
-                    <MobileMenu
-                      items={props.items}
-                      actions={(item: Listing) => <MobileActions item={item} />}
-                      titleExtractor={function (item: Listing): string {
-                        throw new Error('Function not implemented.')
-                      }}
-                    />
+        <Grid>
+          <TableView<OpenOTCOrder>
+            name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId, account)}
+            uri={trading.getMyOrdersList(account)}
+            size='small'
+            columns={columns}
+            noHeader={isTablet}
+            // themeVariant={'primary'}
+            // hasActions
+            bordered={false}
+            noDataComponent={<OpenOrdersEmptyState />}
+            actions={OTCOrderActions}
+            paperProps={
+              isTablet
+                ? {
+                    variant: 'elevation',
+                    elevation: 0
                   }
-                />
-              )
-            : undefined}
-        </TableView>
+                : undefined
+            }
+          >
+            {isTablet
+              ? (props: TableViewRendererProps<OpenOTCOrder>) => (
+                  <CompactOpenOTCOrder {...props} columns={compactColumns} />
+                )
+              : (props: TableViewRendererProps<OpenOTCOrder>) => (
+                  <OpenOTCTableBody {...props} columns={columns} />
+                )}
+          </TableView>
+        </Grid>
       </ActiveElementContextWrapper>
     </LeavePageContextWrapper>
   )

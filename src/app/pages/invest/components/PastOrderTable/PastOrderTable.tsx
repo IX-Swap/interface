@@ -6,7 +6,7 @@ import { VSpacer } from 'components/VSpacer'
 import {
   TableView,
   TableViewRendererProps
-} from 'components/TableWithPagination/TableView'
+} from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import {
   columns,
   pastOrderCompactColumns
