@@ -17,34 +17,42 @@ export interface ActionsDropdownContentProps extends DropdownContentProps {
   reject: () => void
   view: () => void
   hideApproval?: boolean
+  hideRejection?: boolean
 }
 
 export const ActionsDropdownContent = (props: ActionsDropdownContentProps) => {
-  const { approve, reject, view, injectedProps, hideApproval = false } = props
+  const {
+    approve,
+    reject,
+    view,
+    injectedProps,
+    hideApproval = false,
+    hideRejection = false
+  } = props
   const theme = useTheme()
 
   return (
     <List data-testid='dropdown' onClick={injectedProps.close}>
       {!hideApproval && (
-        <>
-          {' '}
-          <Action
-            label='Approve'
-            icon={ApproveIcon}
-            onClick={approve}
-            style={{
-              borderBottom: `1px solid ${theme.palette.table.border}`
-            }}
-          />
-          <Action
-            label='Reject'
-            icon={RejectIcon}
-            onClick={reject}
-            style={{
-              borderBottom: `1px solid ${theme.palette.table.border}`
-            }}
-          />
-        </>
+        <Action
+          label='Approve'
+          icon={ApproveIcon}
+          onClick={approve}
+          style={{
+            borderBottom: `1px solid ${theme.palette.table.border}`
+          }}
+        />
+      )}
+
+      {!hideRejection && (
+        <Action
+          label='Reject'
+          icon={RejectIcon}
+          onClick={reject}
+          style={{
+            borderBottom: `1px solid ${theme.palette.table.border}`
+          }}
+        />
       )}
 
       <Action label='View Application' icon={LaunchIcon} onClick={view} />
