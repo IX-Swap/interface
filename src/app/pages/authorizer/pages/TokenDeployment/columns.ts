@@ -2,7 +2,7 @@ import { TableColumn } from 'types/util'
 import { DigitalSecurityOffering } from 'types/dso'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { renderAmount, renderMinimumInvestment } from 'helpers/tables'
-import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
+import { renderStatusColumnWithApproval } from 'app/pages/authorizer/hooks/useAuthorizerView'
 
 export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
   {
@@ -39,6 +39,6 @@ export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
   {
     key: 'deploymentStatus',
     label: 'Status',
-    render: renderStatusColumn
+    render: (status, row) => renderStatusColumnWithApproval(row, status)
   }
 ]

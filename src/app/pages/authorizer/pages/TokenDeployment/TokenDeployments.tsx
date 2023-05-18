@@ -1,4 +1,4 @@
-import { AuthorizerList } from 'app/pages/authorizer/components/AuthorizerList'
+import { AuthorizerList } from 'app/pages/authorizer/components/upgrade/AuthorizerList/AuthorizerList'
 import { columns } from 'app/pages/authorizer/pages/TokenDeployment/columns'
 import { authorizerQueryKeys } from 'config/queryKeys'
 import React from 'react'
@@ -11,7 +11,7 @@ export const TokenDeployments = () => {
       name={authorizerQueryKeys.getDSOList}
       columns={columns}
       themeVariant='primary'
-      hasStatus={false}
+      hasStatusWithActions={false}
     />
   )
 }
