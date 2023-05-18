@@ -142,6 +142,7 @@ export const VettingForm = (props: Props) => {
           submitDisabled={submitDisabled}
           vettingId={String(vettingId)}
           status={initialValues?.status}
+          isReset={isReset}
         />
       </FormSideBar>
 
@@ -414,12 +415,11 @@ export const VettingForm = (props: Props) => {
           <OutlineButton width="280px" onClick={goBack}>
             Back
           </OutlineButton>
-          {!view ||
-            (![IssuanceStatus.approved, IssuanceStatus.declined].includes(initialValues?.status as IssuanceStatus) && (
-              <FilledButton width="280px" onClick={toSubmit} disabled={submitDisabled}>
-                Submit
-              </FilledButton>
-            ))}
+          {!view && IssuanceStatus.approved !== initialValues?.status && (
+            <FilledButton width="280px" onClick={toSubmit} disabled={submitDisabled}>
+              Submit
+            </FilledButton>
+          )}
         </Row>
       </FormBody>
     </FormContainer>

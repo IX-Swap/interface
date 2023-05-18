@@ -32,6 +32,7 @@ interface Props<T> {
   onChange?: (value?: T) => void
   wrapperStyle?: React.CSSProperties
   containerStyle?: React.CSSProperties
+  uncontrolled?: boolean
 }
 
 export function DropdownField<T>(props: Props<T>) {
@@ -119,7 +120,11 @@ export function DropdownField<T>(props: Props<T>) {
     function handleClickOutside(event: Event) {
       const targetNode = event.target as Node | null
       const isCorrectOption = options.find((opt) => opt.label === targetNode?.textContent)
-      if (!container.current?.contains(targetNode) && (!targetNode || targetNode.nodeValue) !== '' && !isCorrectOption) {
+      if (
+        !container.current?.contains(targetNode) &&
+        (!targetNode || targetNode.nodeValue) !== '' &&
+        !isCorrectOption
+      ) {
         setShowDropdown(false)
         setOptionSearch('')
       }
@@ -134,12 +139,15 @@ export function DropdownField<T>(props: Props<T>) {
     }
   }, [showDropdown, container])
   React.useEffect(() => {
-    if (props.value && !selectedValue) {
+    if (!props.uncontrolled && selectedValue?.value !== props.value) {
       // handle case for select done outside the component
       const newSelectedValue = options.find((opt) => opt.value === props.value)
       if (newSelectedValue) {
         setSelectedValue(newSelectedValue)
         setOptionSearch(newSelectedValue.label)
+      } else {
+        setSelectedValue(undefined)
+        setOptionSearch('')
       }
     }
   }, [props.value, selectedValue, options])

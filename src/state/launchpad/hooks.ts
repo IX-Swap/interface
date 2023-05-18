@@ -654,7 +654,7 @@ const useUploadVettingFiles = () => {
 
         if (
           !initial.directors[idx]?.proofOfIdentity ||
-          initial.directors[idx]?.proofOfIdentity.id !== entry.proofOfIdentity.id
+          initial.directors[idx]?.proofOfIdentity.id !== entry.proofOfIdentity?.id
         )
           files.push({ name: `directors.${idx}.proofOfIdentityId`, file: entry.proofOfIdentity?.file })
       })
@@ -667,7 +667,7 @@ const useUploadVettingFiles = () => {
           files.push({ name: `beneficialOwners.${idx}.proofOfAddressId`, file: entry.proofOfAddress?.file })
         if (
           !initial.beneficialOwners[idx]?.proofOfIdentity ||
-          initial.beneficialOwners[idx]?.proofOfIdentity.id !== entry.proofOfIdentity.id
+          initial.beneficialOwners[idx]?.proofOfIdentity.id !== entry.proofOfIdentity?.id
         )
           files.push({ name: `beneficialOwners.${idx}.proofOfIdentityId`, file: entry.proofOfIdentity?.file })
       })
@@ -777,7 +777,6 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
           }
           return [key, value]
         })
-
         .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
 
       if (vettingId) {
@@ -1195,38 +1194,36 @@ export const useSubmitOffer = () => {
         },
 
         timeframe: {
-          whitelist: payload.timeframe.whitelist,
-          preSale: payload.timeframe.preSale,
-          sale: payload.timeframe.sale,
-          closed: payload.timeframe.closed,
-          claim: payload.timeframe.claim,
+          whitelist: payload.timeframe.whitelist || null,
+          preSale: payload.timeframe.preSale || null,
+          sale: payload.timeframe.sale || null,
+          closed: payload.timeframe.closed || null,
+          claim: payload.timeframe.claim || null,
         },
 
-        faq: payload.faq
-          .filter((m) => Object.values(m).some(Boolean))
-          .map((x) => ({ question: x.question, answer: x.answer })),
+        faq: payload.faq.filter((x) => x.question || x.answer).map((x) => ({ question: x.question, answer: x.answer })),
 
         members: payload.members
-          .filter((m) => Object.values(m).some(Boolean))
           .map((x, idx) => ({
-            avatarId: findDoc('member.photo', idx) ?? initial.members[idx].photo?.id,
+            avatarId: findDoc('member.photo', idx) || x.photo?.id || null,
             name: x.name,
             title: x.role,
             description: x.about,
-          })),
+          }))
+          .filter((x) => x.avatarId || x.name || x.title || x.description),
 
         files: [
           ...payload.additionalDocuments
             .map((x, idx) => ({
               type: OfferFileType.document,
-              fileId: findDoc('document', idx) ?? initial.additionalDocuments[idx].file?.id,
+              fileId: findDoc('document', idx) || x.file?.id || null,
             }))
             .filter((x) => x.fileId),
 
           ...payload.images
             .map((x, idx) => ({
               type: OfferFileType.image,
-              fileId: findDoc('image', idx) ?? initial.images[idx]?.id,
+              fileId: findDoc('image', idx) || x.id || null,
             }))
             .filter((x) => x.fileId),
 
@@ -1252,7 +1249,7 @@ export const useSubmitOffer = () => {
         }
 
         if (typeof filterData === 'object' && filterData.length !== undefined) {
-          return filterData.map(filter).filter((x: any) => !!x)
+          return filterData.map(filter).filter((x: any) => x !== undefined)
         }
 
         if (typeof filterData !== 'object' || filterData instanceof Date) {
@@ -1276,15 +1273,6 @@ export const useSubmitOffer = () => {
       }
 
       data = filter(data)
-      if (Object.keys(data.terms).length === 0) {
-        delete data.terms
-      }
-      if (Object.keys(data.socialMedia).length === 0) {
-        delete data.socialMedia
-      }
-      if (Object.keys(data.timeframe).length === 0) {
-        delete data.timeframe
-      }
       if (offerId) {
         delete data.offerId
         delete data.vettingId
@@ -1322,36 +1310,38 @@ export const useMinimalOfferEdit = () => {
       profilePictureId: files.find((x) => x.name === 'profile')?.id || payload.profilePicture?.id || null,
       cardPictureId: files.find((x) => x.name === 'card')?.id || payload.cardPicture?.id || null,
 
-      faq: payload.faq.map((faq) => ({
-        id: faq.id,
-        question: faq.question,
-        answer: faq.answer,
-      })),
+      faq: payload.faq
+        .filter((x) => x.question || x.answer)
+        .map((faq) => ({
+          id: faq.id,
+          question: faq.question,
+          answer: faq.answer,
+        })),
 
       socialMedia: payload.social.reduce((acc, e) => ({ ...acc, [e.type]: e.url }), {}),
 
       members: payload.members
-        .filter((m) => Object.entries(m).some(([key, value]) => !!value && key !== 'id'))
         .map((member, idx) => ({
           id: member.id && member.id >= 0 ? member.id : undefined,
-          avatarId: find('member.photo', idx) ?? initial.members[idx].photo?.id,
+          avatarId: find('member.photo', idx) || member.photo?.id || null,
           name: member.name,
           title: member.role,
           description: member.about,
-        })),
+        }))
+        .filter((x) => x.avatarId || x.name || x.title || x.description),
 
       files: [
         ...payload.additionalDocuments
           .map((x, idx) => ({
             type: OfferFileType.document,
-            fileId: find('document', idx) ?? initial.additionalDocuments[idx].file?.id,
+            fileId: find('document', idx) || x.file?.id || null,
           }))
           .filter((x) => x.fileId),
 
         ...payload.images
           .map((x, idx) => ({
             type: OfferFileType.image,
-            fileId: find('image', idx) ?? initial.images[idx]?.id,
+            fileId: find('image', idx) || x.id || null,
           }))
           .filter((x) => x.fileId),
 

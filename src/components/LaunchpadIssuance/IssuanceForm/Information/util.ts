@@ -14,8 +14,8 @@ export const isDefinedNumber = (foo: any) => ![undefined, null, ''].includes(foo
 
 export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGIES) =>
   ({
-    profilePicture: undefined,
-    cardPicture: undefined,
+    profilePicture: null,
+    cardPicture: null,
 
     shortDescription: '',
     longDescription: '',
@@ -27,40 +27,38 @@ export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGI
     investmentStructure: '',
     issuerIdentificationNumber: '',
 
-    industry: undefined,
-    investmentType: undefined,
+    industry: null,
+    investmentType: null,
 
     country: '',
 
     tokenName: '',
     tokenTicker: '',
-    decimals: null,
+    decimals: '',
     trusteeAddress: '',
     tokenType: '',
 
-    network: undefined,
+    network: null,
 
     hardCap: '',
     softCap: '',
 
-    tokenPrice: null,
+    tokenPrice: '',
     tokenStandart:
-      smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess
-        ? OfferTokenStandart.erc20
-        : undefined,
+      smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess ? OfferTokenStandart.erc20 : null,
     totalSupply: '',
     tokenReceiverAddress: '',
 
     minInvestment: '',
     maxInvestment: '',
 
-    hasPresale: undefined,
+    hasPresale: false,
     presaleAlocated: '',
     presaleMinInvestment: '',
     presaleMaxInvestment: '',
 
     images: [],
-    videos: [{ url: null }],
+    videos: [{ url: '' }],
 
     additionalDocuments: [{ file: null }],
 
@@ -79,19 +77,23 @@ export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGI
       },
     ],
 
-    allowOnlyAccredited: undefined,
-    tokenomicsAgreement: undefined,
+    allowOnlyAccredited: false,
+    tokenomicsAgreement: false,
 
     terms: {
       investmentStructure: '',
+      dividentYield: '',
+      investmentPeriod: '',
+      grossIrr: '',
+      distributionFrequency: '',
     },
 
     timeframe: {
-      whitelist: undefined,
-      presale: undefined,
-      sale: undefined,
-      closed: undefined,
-      claim: undefined,
+      whitelist: null,
+      preSale: null,
+      sale: null,
+      closed: null,
+      claim: null,
     },
 
     social: [],
