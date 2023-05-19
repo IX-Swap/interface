@@ -254,7 +254,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
                       width: '100% !important'
                     }}
                   >
-                    Edit {onKycTab ? 'Personal' : 'Accreditation'} Information
+                    Edit {onKycTab ? 'Corporate' : 'Accreditation'} Information
                   </EditButton>
                 </Paper>
               </Grid>
