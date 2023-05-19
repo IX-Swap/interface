@@ -12,7 +12,6 @@ export const IndividualAuthorization = () => {
         <AuthorizerView
           title={getPersonName(data)}
           data={data}
-          //   feature={AppFeature.IndividualsAuthorization}
           feature={AppFeature.Individuals}
         >
           <IndividualIdentityView data={data} />

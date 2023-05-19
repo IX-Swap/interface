@@ -3,7 +3,7 @@ import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { IdentityPreview } from 'app/pages/identity/components/IdentityPreview/IdentityPreview'
 import { IdentitySelectionView } from 'app/pages/identity/components/IdentitySelectionView/IdentiySelectionView'
 import { useStyles } from 'app/pages/identity/pages/IdentitiesList/IdentitiesList.styles'
-import { ReactComponent as Dot } from 'assets/icons/new/dot.svg'
+// import { ReactComponent as Dot } from 'assets/icons/new/dot.svg'
 import React from 'react'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 import { RootContainer } from 'ui/RootContainer'
@@ -29,12 +29,12 @@ export const IdentitiesList: React.FC = () => {
                   <Typography className={classes.breadcrumbsLink}>
                     Profile
                   </Typography>
-                  <Box className={classes.dot}>
+                  {/* <Box className={classes.dot}>
                     <Dot />
                   </Box>
                   <Typography className={classes.breadcrumbs}>
                     Identity
-                  </Typography>
+                  </Typography> */}
                 </Box>
                 {/* <div className={classes.bbox}>
                   <div className={classes.item1}>
