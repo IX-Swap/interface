@@ -7,10 +7,13 @@ import { useDisable2fa } from 'app/pages/security/hooks/useDisable2fa'
 
 export interface ActionsProps {
   enable2fa: boolean | undefined
-  handleClose: () => void
+  handleClose?: () => void
 }
 
-export const Actions = ({ handleClose, enable2fa }: ActionsProps) => {
+export const Actions = ({
+  handleClose = () => null,
+  enable2fa
+}: ActionsProps) => {
   const [disable2fa] = useDisable2fa()
   const { push } = useHistory()
   const classes = useStyles()

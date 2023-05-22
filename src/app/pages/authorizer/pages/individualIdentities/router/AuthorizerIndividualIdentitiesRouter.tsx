@@ -10,7 +10,7 @@ export const AuthorizerIndividualIdentitiesRouter = () => {
     <Switch>
       <AppRoute
         exact
-        breadcrumb='Individual Identity Details'
+        breadcrumb='Individual KYC Details'
         path='/app/authorizer/individuals/:userId/:individualId/view'
       >
         <IndividualAuthorization />

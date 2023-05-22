@@ -49,7 +49,7 @@ export const SuccessPage = () => {
               disableElevation
               className={classes.button}
             >
-              View Identity
+              View KYC
             </Button>
           </Grid>
         </Box>
