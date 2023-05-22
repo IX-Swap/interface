@@ -27,7 +27,7 @@ const getTooltip = (type: OfferTimeframeType) => {
     case OfferTimeframeType.sale:
       return { 
         title: 'Public Sale ', 
-        body: 'Public sale is open to everyone and will close on the date scheduled or earlier once the funding amount is reached.'  
+        body: 'Public sale is open to everyone and will close on the date scheduled or as otherwise determinated by the issuer.'  
       }
       
     case OfferTimeframeType.closed:
