@@ -86,8 +86,8 @@ export const useTableWithPagination = <TData>({
     const payload: KeyValueMap<any> = {
       skip: p * r,
       limit: r,
-      //   sortOrder: s === 'asc' ? 1 : -1,
-      //   sortField: sBy,
+      sortOrder: s === 'asc' ? 1 : -1,
+      sortField: sBy,
       ...(filter ?? {})
     }
     const result =
