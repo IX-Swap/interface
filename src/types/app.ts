@@ -1,7 +1,7 @@
 export enum AppService {
   Authentication = 'authentication',
   Accounts = 'accounts',
-  Identity = 'identity',
+  Identity = 'profile',
   Issuance = 'issuance',
   IssuanceDetails = 'issuance-details',
   Invest = 'invest',
@@ -25,7 +25,6 @@ export enum AppFeature {
   Holdings = 'holdings',
   Individuals = 'individuals',
   IndividualsAccreditation = 'individuals/accreditation',
-  //   IndividualsAuthorization = 'authorization/identity/individuals',
   IssuanceDetails = 'issuance-details',
   Commitments = 'commitments',
   Market = 'market',

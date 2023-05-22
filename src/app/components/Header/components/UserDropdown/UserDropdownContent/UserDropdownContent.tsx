@@ -29,7 +29,7 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
           <Box className={classes.border} />
           <UserDropdownItem
             icon={AccountCircleOutlined}
-            label='Identity'
+            label='Profile'
             link={IdentityRoute.list}
             onClose={handleClose}
           />

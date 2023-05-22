@@ -41,7 +41,7 @@ export const AppRouter = () => {
         <EducationCentreRoot />
       </AppRoute>
 
-      <AppRoute breadcrumb='Identity' path={AppPath.identity}>
+      <AppRoute breadcrumb='Profile' path={AppPath.identity}>
         <IdentityRoot />
       </AppRoute>
 

@@ -33,7 +33,7 @@ export const urlModule = {
 
 export const urlService = {
   accounts: `${AppService.Accounts}`,
-  identity: `${AppService.Identity}`,
+  profile: `${AppService.Identity}`,
   issuance: `${AppService.Issuance}`,
   issuanceDetails: `${AppService.IssuanceDetails}`,
   invest: `${AppService.Invest}`,

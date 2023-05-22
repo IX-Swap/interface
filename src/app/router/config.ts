@@ -1,7 +1,7 @@
 export const AppRoute = {
   home: '/app/home',
   authorizer: '/app/authorizer',
-  identity: '/app/identity',
+  identity: '/app/profile',
   accounts: '/app/accounts',
   issuance: '/app/issuance',
   invest: '/app/invest',
