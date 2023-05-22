@@ -51,7 +51,7 @@ export const OfferInvestmentIndicator: React.FC<Props> = (props) => {
               title="Pre-Sale Goal"
               body={
                 <div>
-                  Deal issuers can divide the funding round by adding a &quot;pre-sale&quot; round and allocating it a
+                  Deal issuers can divide the funding round by adding a &quot;pre-sale&quot; round and allocating it as a
                   part of the total funding.
                   <br />
                   <br />
