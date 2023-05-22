@@ -110,7 +110,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             indicatorColor='primary'
             textColor='primary'
           >
-            <Tab label='Identity' />
+            <Tab label='KYC' />
             <Tab label='Accreditation' />
           </Tabs>
         </Grid>
@@ -207,6 +207,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
                     status={data.accreditationStatus ?? 'Pending'}
                     identityType='corporate'
                     applicationType='accreditation'
+                    investorRole={data.applyingAs}
                   />
                 )}
                 {data.accreditationStatus === 'Rejected' && (

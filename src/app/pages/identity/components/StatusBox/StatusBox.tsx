@@ -6,11 +6,13 @@ import { ReactComponent as ApprovedImage } from 'assets/images/kyc-accreditation
 import { ReactComponent as LockedImage } from 'assets/images/kyc-accreditation-status/locked.svg'
 import { ReactComponent as AccreditedImage } from 'assets/images/kyc-accreditation-status/accredited.svg'
 import { useStyles } from './StatusBox.styles'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface StatusBoxProps {
   status: 'Pending' | 'Rejected' | 'Approved' | 'Locked' | 'Accredited' | string
   identityType: 'individual' | 'corporate'
   applicationType: 'kyc' | 'accreditation'
+  investorRole?: string[]
 }
 interface Status {
   status: string
@@ -21,10 +23,10 @@ interface Status {
 }
 
 export const StatusBox = (props: StatusBoxProps) => {
-  const { status, identityType, applicationType } = props
+  const { status, identityType, applicationType, investorRole } = props
   const { container, pending, rejected, approved, locked, accredited } =
     useStyles()
-  const application = applicationType === 'kyc' ? 'Identity' : 'Accreditation'
+  const application = applicationType === 'kyc' ? 'KYC' : 'Accreditation'
   const infoType =
     applicationType === 'kyc'
       ? identityType === 'individual'
@@ -67,8 +69,7 @@ export const StatusBox = (props: StatusBoxProps) => {
       description: (
         <>
           Your {infoType} information has been approved. <br />
-          You may proceed to the Accreditation tab to apply to become an
-          Accredited Investor.
+          Please proceed to the Accreditation tab to verify your accreditation.
         </>
       )
     },
@@ -93,7 +94,11 @@ export const StatusBox = (props: StatusBoxProps) => {
       description: (
         <>
           Your financial information has been approved. <br />
-          You are now an Accredited Investor.
+          You are now an{' '}
+          {typeof investorRole !== 'undefined' && investorRole.length > 0
+            ? capitalizeFirstLetter(investorRole[0])
+            : 'Accredited'}{' '}
+          Investor.
         </>
       )
     }

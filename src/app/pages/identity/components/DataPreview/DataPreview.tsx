@@ -54,13 +54,9 @@ export const DataPreview = ({
       ? identityType[0].toUpperCase() + identityType.slice(1)
       : 'Investor'
 
-  const InvestorRole = () => {
+  const investorRole = () => {
     if (typeof roles !== 'undefined') {
       const userRoles = roles.split(',')
-
-      if (userRoles.includes('retail')) {
-        return 'Retail'
-      }
 
       if (userRoles.includes('expert')) {
         return 'Expert'
@@ -68,6 +64,10 @@ export const DataPreview = ({
 
       if (userRoles.includes('accredited')) {
         return 'Accredited'
+      }
+
+      if (userRoles.includes('retail')) {
+        return 'Retail'
       }
     }
 
@@ -119,7 +119,7 @@ export const DataPreview = ({
                   variant='subtitle1'
                   className={`${dataLabel} ${dataValue}`}
                 >
-                  <InvestorRole />
+                  {investorRole()}
                 </Typography>
               </Box>
             </Box>
