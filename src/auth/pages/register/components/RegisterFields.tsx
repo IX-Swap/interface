@@ -1,9 +1,9 @@
 import React from 'react'
 import {
   Grid,
-  InputAdornment,
+  //   InputAdornment,
   Link,
-  TextField,
+  //   TextField,
   Typography
 } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
@@ -13,7 +13,7 @@ import { PasswordField } from 'components/form/PasswordField'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { useStyles } from 'auth/pages/register/Register.styles'
-import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
+// import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { SingPass } from 'auth/pages/register/components/SingPass/SingPass'
 import { EmailField } from 'auth/pages/register/components/EmailField'
@@ -65,7 +65,7 @@ export const RegisterFields = ({ isMyInfo = false }: RegisterFieldsProps) => {
 
   const { control, errors } = useFormContext<SignupArgs>()
   const { bottomBlock, topBlock } = useStyles({})
-  const nameErrors = errors.name
+  //   const nameErrors = errors.name
   const agreeErrors = errors.agree
 
   const renderSingPassButton = () => {
@@ -75,16 +75,16 @@ export const RegisterFields = ({ isMyInfo = false }: RegisterFieldsProps) => {
     return <SingPass />
   }
 
-  const getLabel = () => {
-    if (isIndividual) {
-      return 'Full Name'
-    }
-    return 'Corporate Name'
-  }
+  //   const getLabel = () => {
+  //     if (isIndividual) {
+  //       return 'Full Name'
+  //     }
+  //     return 'Corporate Name'
+  //   }
   return (
     <Grid container spacing={6} direction='column'>
       <Grid item>{isIndividual ? renderSingPassButton() : null}</Grid>
-      {!isMyInfo ? (
+      {/* {!isMyInfo ? (
         <Grid item>
           <TypedField
             control={control}
@@ -106,7 +106,7 @@ export const RegisterFields = ({ isMyInfo = false }: RegisterFieldsProps) => {
             }}
           />
         </Grid>
-      ) : null}
+      ) : null} */}
 
       <Grid item>
         <EmailField isMyInfo={isMyInfo} />

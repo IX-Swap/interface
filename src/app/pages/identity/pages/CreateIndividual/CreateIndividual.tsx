@@ -9,7 +9,7 @@ export const CreateIndividual: React.FC = () => {
   const { isMobile } = useAppBreakpoints()
   return (
     <>
-      {!isMobile && <PageHeader title='Create Individual Identity' />}
+      {!isMobile && <PageHeader title='Create Individual KYC' />}
       <RootContainer>
         <Grid container>
           <Grid item xs={12}>

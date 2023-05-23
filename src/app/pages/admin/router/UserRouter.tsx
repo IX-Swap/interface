@@ -26,7 +26,7 @@ export const UserRouter = () => {
       <AppRoute
         exact
         path={AdminRoute.createIndividualIdentity}
-        breadcrumb={'Create Individual Identity'}
+        breadcrumb={'Create Individual KYC'}
       >
         <CreateIndividualAsAdmin />
       </AppRoute>
@@ -34,7 +34,7 @@ export const UserRouter = () => {
       <AppRoute
         exact
         path={AdminRoute.createCorporateIdentity}
-        breadcrumb={'Create Corporate Identity'}
+        breadcrumb={'Create Corporate KYC'}
       >
         <CreateCorporateAsAdmin />
       </AppRoute>
@@ -42,7 +42,7 @@ export const UserRouter = () => {
       <AppRoute
         exact
         path={AdminRoute.createIssuerIdentity}
-        breadcrumb={'Create Issuer Identity'}
+        breadcrumb={'Create Issuer KYC'}
       >
         <CreateIssuerAsAdmin />
       </AppRoute>
