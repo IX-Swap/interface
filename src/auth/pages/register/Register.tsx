@@ -57,7 +57,6 @@ export const Register: React.FC = observer(() => {
 
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
 
-  console.log(data, 'singData 1')
   if (data !== undefined && localStorage?.getItem('singpassPage') === null) {
     return <SingPassPage />
   }
@@ -79,7 +78,8 @@ export const Register: React.FC = observer(() => {
       await signup(
         {
           tenantId: sessionService?.get('tenantId'),
-          name: values?.name ?? 'Singpass User',
+          //   name: values?.name ?? 'Singpass User',
+          name: isMyInfo ? 'Singpass User' : 'User',
           email: values?.email,
           singPassLogin: isMyInfo,
           mobileNo: values?.phoneNumber,

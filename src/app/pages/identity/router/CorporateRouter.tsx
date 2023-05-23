@@ -13,7 +13,7 @@ export const CorporateRouter = () => {
   return (
     <Switch>
       <AppRoute
-        breadcrumb='View Corporate Identity'
+        breadcrumb='View Corporate KYC'
         exact
         path={IdentityRoute.viewCorporate}
       >
@@ -21,15 +21,15 @@ export const CorporateRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Create Corporate Identity'
+        breadcrumb='Create Corporate KYC'
         exact
         path={IdentityRoute.createCorporate}
       >
-        <CreateCorporateIdentity title='Create Corporate Identity' />
+        <CreateCorporateIdentity title='Create Corporate KYC' />
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Edit Corporate Identity'
+        breadcrumb='Edit Corporate KYC'
         exact
         path={IdentityRoute.editCorporate}
       >
@@ -37,7 +37,7 @@ export const CorporateRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='View Corporate Issuer Identity'
+        breadcrumb='View Corporate Issuer KYC'
         exact
         path={IdentityRoute.viewIssuer}
       >
@@ -51,7 +51,7 @@ export const CorporateRouter = () => {
       >
         <CreateCorporateIdentity
           type='issuer'
-          title='Create Corporate Issuer Identity'
+          title='Create Corporate Issuer KYC'
         />
       </AppRoute>
 
@@ -70,7 +70,7 @@ export const CorporateRouter = () => {
       >
         <CreateCorporateIdentity
           type='Fund Manager'
-          title='Create Fund Manager Identity'
+          title='Create Fund Manager KYC'
         />
       </AppRoute>
 
@@ -81,7 +81,7 @@ export const CorporateRouter = () => {
       >
         <CreateCorporateIdentity
           type='Fund Administrator'
-          title='Create Fund Admin Identity'
+          title='Create Fund Admin KYC'
         />
       </AppRoute>
 
@@ -92,7 +92,7 @@ export const CorporateRouter = () => {
       >
         <CreateCorporateIdentity
           type='Portfolio Manager'
-          title='Create Portfolio Manager Identity'
+          title='Create Portfolio Manager KYC'
         />
       </AppRoute>
 
