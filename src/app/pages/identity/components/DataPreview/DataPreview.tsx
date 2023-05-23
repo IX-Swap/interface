@@ -42,7 +42,6 @@ export const DataPreview = ({
     dataBox,
     dataLabel,
     dataValue,
-    // approveButton,
     emptyBox,
     whiteBackground
   } = classes
@@ -73,6 +72,35 @@ export const DataPreview = ({
 
     return '-'
   }
+
+  const userRole = () => {
+    if (typeof roles !== 'undefined') {
+      const parsedRoles = ['User']
+      const userRoles = roles.split(',')
+
+      if (userRoles.includes('tenantowner')) {
+        parsedRoles.unshift('Client')
+      }
+
+      if (userRoles.includes('issuer')) {
+        parsedRoles.unshift('Issuer')
+      }
+
+      if (userRoles.includes('authorizer')) {
+        parsedRoles.unshift('Authorizer')
+      }
+
+      if (userRoles.includes('admin')) {
+        parsedRoles.unshift('Admin')
+      }
+
+      return parsedRoles.join(', ')
+    }
+
+    return '-'
+  }
+
+  console.log(roles)
 
   return (
     <>
@@ -122,11 +150,20 @@ export const DataPreview = ({
                   {investorRole()}
                 </Typography>
               </Box>
+
+              <Box className={dataBox}>
+                <Typography variant='subtitle1' className={dataLabel}>
+                  User Role
+                </Typography>
+                <Typography
+                  variant='subtitle1'
+                  className={`${dataLabel} ${dataValue}`}
+                >
+                  {userRole()}
+                </Typography>
+              </Box>
             </Box>
           </Grid>
-          {/* <Grid item className={approveButton}>
-            <Status label={status} type={typeStatus} />
-          </Grid> */}
         </Grid>
       </Container>
       <Box className={emptyBox} />
