@@ -18,11 +18,10 @@ export const Description = ({ enable2Fa = false }: DescriptionProps) => {
 
   return (
     <>
-      {enable2Fa && (
-        <Typography variant={'h5'} color={'otpInput.color'} mb={2}>
-          Account Protected
-        </Typography>
-      )}
+      <Typography variant={'h5'} className={classes.description} mb={2}>
+        {enable2Fa ? 'Account Protected' : 'Protect Your Account'}
+      </Typography>
+
       <Typography variant='body1' className={classes.description}>
         {getDescription(enable2Fa)}
       </Typography>

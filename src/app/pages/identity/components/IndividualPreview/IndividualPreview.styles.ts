@@ -35,6 +35,7 @@ export const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(14.2),
     display: 'flex',
     justifyContent: 'flex-end',
+    width: '300px',
     '& a': {
       width: theme.spacing(12.5),
       height: theme.spacing(6.1)

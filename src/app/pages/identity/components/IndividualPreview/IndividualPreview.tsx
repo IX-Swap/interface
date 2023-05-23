@@ -3,17 +3,15 @@ import { useStyles } from 'app/pages/identity/components/IndividualPreview/Indiv
 import { Box, Grid, Paper, Tab, Tabs } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import { IdentityRoute } from 'app/pages/identity/router/config'
-// import { Status } from 'ui/Status/Status'
-// import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
 import { StatusBox } from 'app/pages/identity/components/StatusBox/StatusBox'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
-import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityCTA } from '../IdentityCTA/IdentityCTA'
 import { AccreditationCTA } from '../AccreditationCTA/AccreditationCTA'
 import { IndividualAccreditationView } from '../IndividualAccreditationView/IndividualAccreditationView'
 import { IndividualIdentityView } from '../IndividualIdentityView/IndividualIdentityView'
+import { EditApplication } from '../EditApplication/EditApplication'
 
 export interface IndividualPreviewProps {
   data?: IndividualIdentity
@@ -28,34 +26,11 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
   }
 
   const onKycTab = selectedIdx === 0
-  //   const kycSubmitted = data.status === 'Submitted'
-  const kycSubmitted = false
-  const kycApproved = data.status === 'Approved'
+  const isKycSubmitted = data.status === 'Submitted'
+  const isKycApproved = data.status === 'Approved'
   const hasAccreditation = typeof data.accreditationStatus !== 'undefined'
-  //   const accreditationSubmitted = data.accreditationStatus === 'Submitted'
-  const accreditationSubmitted = false
-  const accreditationApproved = data.accreditationStatus === 'Approved'
-
-  //   const corporateIdentityFields = [
-  //     {
-  //       key: 'Company Name',
-  //       value: data.companyLegalName
-  //     },
-  //     {
-  //       key: 'Company Registration Number',
-  //       value: data.registrationNumber
-  //     },
-  //     {
-  //       key: 'Email Address',
-  //       value: data.representatives?.[0].email
-  //     },
-  //     {
-  //       key: 'Contact Number',
-  //       value: data.representatives?.[0].contactNumber
-  //     }
-  //   ]
-
-  //   const status = data.status.toLowerCase()
+  const isAccreditationSubmitted = data.accreditationStatus === 'Submitted'
+  const isAccreditationApproved = data.accreditationStatus === 'Approved'
 
   const getDetails = () => {
     const details = {
@@ -71,7 +46,6 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
     <>
       <Grid container className={classes.container}>
         <Grid item className={classes.tabs}>
-          {/* <Status label={data.status} type={status} /> */}
           <Tabs
             value={selectedIdx}
             onChange={(_, index) => setSelectedIdx(index)}
@@ -87,44 +61,15 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
             <DataPreview
               avatar={data.photo}
               userId={data.user._id}
-              //   fields={corporateIdentityFields}
               name={data.user.name}
               isIndividual={true}
               kycStatus={data.status}
               accreditationStatus={data.accreditationStatus}
-              // identityType={data.type}
               roles={data.user.roles}
             />
           </Box>
         </Grid>
-        <Grid item className={classes.buttonBox}>
-          <EditButton
-            link={details.editLink}
-            params={{
-              identityId: data._id,
-              userId: data.user._id
-              // label: data.companyLegalName
-            }}
-            customLabel
-            showIcon
-            sx={{
-              padding: '10px 30px !important',
-              width: '330px !important',
-              visibility: 'hidden'
-            }}
-          >
-            Edit {onKycTab ? 'Personal' : 'Accreditation'} Information
-          </EditButton>
-          {/* <Box mx={1} component='span' /> */}
-          {/* <ViewButton
-            link={details.viewLink}
-            params={{
-              identityId: data._id,
-              userId: data.user._id,
-              label: data.companyLegalName
-            }}
-          /> */}
-        </Grid>
+        <Grid item className={classes.buttonBox}></Grid>
       </Grid>
 
       <Grid container className={classes.wrapper}>
@@ -144,7 +89,6 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
                   params={{
                     identityId: data._id,
                     userId: data.user._id
-                    // label: data.companyLegalName
                   }}
                 />
               )}
@@ -154,7 +98,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
           </TabPanel>
 
           <TabPanel pt={0} value={selectedIdx} index={1}>
-            {!kycApproved ? (
+            {!isKycApproved ? (
               <StatusBox
                 status={'Locked'}
                 identityType='individual'
@@ -196,35 +140,25 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
         </Grid>
         <Grid container item className={classes.rightBlock}>
           <Box position='sticky' top={90}>
-            {((onKycTab && !kycApproved && !kycSubmitted) ||
+            {((onKycTab && !isKycApproved && !isKycSubmitted) ||
               (!onKycTab &&
-                kycApproved &&
+                isKycApproved &&
                 hasAccreditation &&
-                !accreditationApproved &&
-                !accreditationSubmitted)) && (
+                !isAccreditationApproved &&
+                !isAccreditationSubmitted)) && (
               <Grid item xs={12}>
                 <Paper sx={{ p: 4, borderRadius: 2, mb: 2 }}>
-                  <EditButton
-                    fullWidth
-                    variant={'contained'}
+                  <EditApplication
+                    applicationType={onKycTab ? 'kyc' : 'accreditation'}
+                    identityType='individual'
+                    identityId={data._id}
+                    userId={data.user._id}
                     link={
                       onKycTab
                         ? details.editLink
                         : IdentityRoute.editIndividualAccreditation
                     }
-                    params={{
-                      identityId: data._id,
-                      userId: data.user._id
-                    }}
-                    customLabel
-                    sx={{
-                      paddingLeft: '10px !important',
-                      paddingRight: '10px !important',
-                      width: '100% !important'
-                    }}
-                  >
-                    Edit {onKycTab ? 'Personal' : 'Accreditation'} Information
-                  </EditButton>
+                  />
                 </Paper>
               </Grid>
             )}
