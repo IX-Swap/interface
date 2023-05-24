@@ -9,13 +9,15 @@ import { RootContainer } from 'ui/RootContainer'
 import { RedirectToDefaultPage } from 'app/RedirectToDefaultPage'
 
 export const IdentitiesList: React.FC = () => {
-  const { hasIdentity, identityLoaded, isLoadingIdentities } =
-    useGetIdentities()
+  const {
+    hasIdentity,
+    identityLoaded
+    // isLoadingIdentities
+  } = useGetIdentities()
   const classes = useStyles()
 
-  console.log('test')
-
-  if (!hasIdentity && !isLoadingIdentities) {
+  if (!hasIdentity) {
+    //   if (!hasIdentity && !isLoadingIdentities) {
     return <RedirectToDefaultPage />
   }
 
