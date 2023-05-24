@@ -20,7 +20,9 @@ export const RedirectToDefaultPage = () => {
   }
 
   const { storageService } = useServices()
+  console.log('test')
   const user: any = storageService.get('user')
+  console.log(user)
   const isIndividual = user.accountType === 'INDIVIDUAL'
   const createKYCRoute = isIndividual
     ? '/individuals/create'
