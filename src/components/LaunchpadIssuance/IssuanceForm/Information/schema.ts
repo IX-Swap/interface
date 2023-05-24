@@ -128,7 +128,7 @@ export const schema = yup.object().shape({
         then: yup
           .string()
           .nullable()
-          .test('addressConstraint', 'Please enter a valid address', function () {
+          .test('addressConstraint', 'Required', function () {
             return !this.parent.tokenReceiverAddress || Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
           })
           .required(REQUIRED),
@@ -151,7 +151,7 @@ export const schema = yup.object().shape({
     })
     .nullable(),
 
-  decimals: yup.number().min(0).max(50).required(REQUIRED).nullable(),
+  decimals: yup.number().label('Decimals').min(0).max(50).required(REQUIRED).nullable(),
   trusteeAddress: yup
     .string()
     .nullable()
@@ -160,7 +160,7 @@ export const schema = yup.object().shape({
       then: yup
         .string()
         .nullable()
-        .test('addressConstraint', 'Please enter a valid address', function () {
+        .test('addressConstraint', 'Required', function () {
           const { originalValue } = this as any
           return !originalValue || Boolean(isEthChainAddress(originalValue))
         }),
@@ -179,7 +179,7 @@ export const schema = yup.object().shape({
       then: yup
         .string()
         .nullable()
-        .test('addressConstraint', 'Please enter a valid address', function () {
+        .test('addressConstraint', 'Required', function () {
           return Boolean(isEthChainAddress(this.parent.tokenAddress))
         })
         .required(REQUIRED),
@@ -391,7 +391,7 @@ export const schema = yup.object().shape({
       whitelist: yup.date().nullable().required(REQUIRED),
       preSale: yup.date().nullable().required(REQUIRED),
       // using custom messages because we have two fields in one
-      sale: yup.date().nullable().required('Public sale date required'),
+      sale: yup.date().nullable().required('Public sale date required - '),
       closed: yup.date().nullable().required('Closed date required'),
       claim: yup.date().nullable().required(REQUIRED),
     }),
@@ -399,7 +399,7 @@ export const schema = yup.object().shape({
       whitelist: yup.date().nullable(),
       preSale: yup.date().nullable(),
 
-      sale: yup.date().nullable().required('Public sale date required'),
+      sale: yup.date().nullable().required('Public sale date required - '),
       closed: yup.date().nullable().required('Closed date required'),
       claim: yup.date().nullable().required(REQUIRED),
     }),
