@@ -8,11 +8,13 @@ import { useDisable2fa } from 'app/pages/security/hooks/useDisable2fa'
 export interface ActionsProps {
   enable2fa: boolean | undefined
   handleClose?: () => void
+  hideSecondButton?: boolean
 }
 
 export const Actions = ({
   handleClose = () => null,
-  enable2fa
+  enable2fa,
+  hideSecondButton = false
 }: ActionsProps) => {
   const [disable2fa] = useDisable2fa()
   const { push } = useHistory()
@@ -38,21 +40,23 @@ export const Actions = ({
       {enable2fa !== true && (
         <Button
           data-testid='first-button'
-          variant={'contained'}
-          className={classes.firstButton}
+          variant={!hideSecondButton ? 'contained' : 'outlined'}
           onClick={handleFirstButtonClick}
         >
           Enable 2FA
         </Button>
       )}
 
-      <Button
-        data-testid='second-button'
-        variant={'outlined'}
-        onClick={handleSecondButtonClick}
-      >
-        {enable2fa === true ? 'Update 2FA' : 'Later'}
-      </Button>
+      {!hideSecondButton && (
+        <Button
+          data-testid='second-button'
+          variant={'outlined'}
+          className={classes.secondButton}
+          onClick={handleSecondButtonClick}
+        >
+          {enable2fa === true ? 'Update 2FA' : 'Later'}
+        </Button>
+      )}
     </Grid>
   )
 }

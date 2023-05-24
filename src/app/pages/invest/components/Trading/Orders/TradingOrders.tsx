@@ -1,4 +1,5 @@
 import { Grid, Tab, Tabs } from '@mui/material'
+import { StatusFilter } from 'app/pages/authorizer/components/StatusFilter'
 import { TabPanel } from 'components/TabPanel'
 import React, { useState } from 'react'
 import { TradingOpenOrders } from './OpenOrders/TradingOpenOrders'
@@ -20,6 +21,7 @@ export const TradingOrders = () => {
       </Tabs>
 
       <TabPanel pt={3} value={selectedIdx} index={0}>
+        <StatusFilter />
         <TradingOpenOrders />
       </TabPanel>
 

@@ -19,7 +19,7 @@ export const useCreateDSO = () => {
       void snackbarService.showSnackbar('Success', 'success')
     },
     onError: (error: any) => {
-      if (error.message === 'Invalid DSO') {
+      if (error.message === 'Invalid STO') {
       } else {
         void snackbarService.showSnackbar(error.message, 'error')
       }
