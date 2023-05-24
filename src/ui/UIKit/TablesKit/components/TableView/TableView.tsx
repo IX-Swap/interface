@@ -11,7 +11,8 @@ import {
   Typography,
   Box,
   CircularProgress,
-  PaperProps
+  PaperProps,
+  TableSortLabel
 } from '@mui/material'
 import { TableColumn, BaseFilter } from 'types/util'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
@@ -101,7 +102,11 @@ export const TableView = <T,>({
     setPage,
     setRowsPerPage,
     rowsPerPage,
-    total
+    total,
+    sortOrder,
+    sortField,
+    setSortOrder,
+    setSortField
   } = useTableWithPagination<T>({
     uri: uri,
     queryKey: name,
@@ -170,15 +175,31 @@ export const TableView = <T,>({
     ]
   }
 
+  const handleSort = (column: string) => {
+    const isAsc = sortField === column && sortOrder === 'asc'
+    setSortOrder(isAsc ? 'desc' : 'asc')
+    setSortField(column)
+  }
+
   const renderHeadCell = ({ item, content }: RenderHeadCellArgs<T>) => (
     <TableCell
       key={item?.key}
       className={classes.headCell}
       align={item?.headAlign ?? 'left'}
     >
-      <Typography variant={'body2'} className={classes.headText}>
-        {item?.label ?? content}
-      </Typography>
+      <TableSortLabel
+        active={sortField === item?.key}
+        direction={
+          sortField === item?.key
+            ? (sortOrder as 'desc' | 'asc' | undefined)
+            : 'asc'
+        }
+        onClick={() => handleSort(item !== undefined ? item?.key : 'createdAt')}
+      >
+        <Typography variant={'body2'} className={classes.headText}>
+          {item?.label ?? content}
+        </Typography>
+      </TableSortLabel>
     </TableCell>
   )
 
