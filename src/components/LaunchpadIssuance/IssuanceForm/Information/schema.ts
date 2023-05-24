@@ -128,10 +128,10 @@ export const schema = yup.object().shape({
         then: yup
           .string()
           .nullable()
-          .test('addressConstraint', 'Required', function () {
+          .required(REQUIRED)
+          .test('addressConstraint', 'Please enter a valid address', function () {
             return !this.parent.tokenReceiverAddress || Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
-          })
-          .required(REQUIRED),
+          }),
       }),
     })
     .nullable(),
@@ -160,7 +160,8 @@ export const schema = yup.object().shape({
       then: yup
         .string()
         .nullable()
-        .test('addressConstraint', 'Required', function () {
+        .required(REQUIRED)
+        .test('addressConstraint', 'Please enter a valid address', function () {
           const { originalValue } = this as any
           return !originalValue || Boolean(isEthChainAddress(originalValue))
         }),
@@ -179,10 +180,10 @@ export const schema = yup.object().shape({
       then: yup
         .string()
         .nullable()
-        .test('addressConstraint', 'Required', function () {
+        .required(REQUIRED)
+        .test('addressConstraint', 'Please enter a valid address', function () {
           return Boolean(isEthChainAddress(this.parent.tokenAddress))
-        })
-        .required(REQUIRED),
+        }),
     })
     .nullable(),
 
