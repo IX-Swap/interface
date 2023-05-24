@@ -382,6 +382,9 @@ export const InformationForm = (props: Props) => {
               value={values.trusteeAddress}
               error={(touched.trusteeAddress && errors.trusteeAddress) as string}
               maxLength={64}
+              trailing={
+                <IssuanceTooltip tooltipContent={'The trustee wallet is a "super admin" and has the power to change the owner of the wallet in case of unforeseen or unavoidable situations. '} />
+              }
             />
           )}
 
