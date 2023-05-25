@@ -9,6 +9,7 @@ export enum AppRole {
   ACCREDITED = 'accredited',
   RETAIL = 'retail',
   EXPERT = 'expert',
+  CLIENT = 'client',
   // TODO backend api always return lowercase
   FUND_MANAGER = 'fundmanager',
   TENANT_OWNER = 'tenantOwner'
@@ -46,6 +47,14 @@ export const useIsAuthorizer = () => {
   if (user === undefined) return false
 
   return hasRole(user.roles, AppRole.AUTHORIZER)
+}
+
+export const useIsClient = () => {
+  const user = useCachedUser()
+
+  if (user === undefined) return false
+
+  return hasRole(user.roles, AppRole.CLIENT)
 }
 
 export const useIsFundManager = () => {
