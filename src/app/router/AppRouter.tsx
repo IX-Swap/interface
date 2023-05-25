@@ -20,6 +20,7 @@ import {
   useIsIssuer
 } from 'helpers/acl'
 import { HomeRoot } from 'app/pages/home/HomeRoot'
+import { ClientRouter } from 'app/pages/admin/router/ClietRouter'
 
 export const AppRouter = () => {
   const isAuthorizer = useIsAuthorizer()
@@ -55,6 +56,10 @@ export const AppRouter = () => {
 
       <AppRoute path={AppPath.notifications}>
         <NotificationsRoot />
+      </AppRoute>
+
+      <AppRoute breadcrumb='Edit Client Space' path={AppPath.editClientSpace}>
+        <ClientRouter />
       </AppRoute>
 
       {isIssuer && (
