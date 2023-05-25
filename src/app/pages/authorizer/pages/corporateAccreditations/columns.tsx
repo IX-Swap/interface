@@ -1,15 +1,11 @@
 import { TableColumn } from 'types/util'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import React from 'react'
-import { renderRepresentativeName } from 'helpers/tables'
+import { renderRepresentativeName, renderRiskReport } from 'helpers/tables'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { Status } from 'ui/Status/Status'
 import { Actions } from 'app/pages/authorizer/components/Actions'
 import { Box } from '@mui/material'
-
-const renderRiskReport = (rating?: string) => {
-  return rating ?? 'Unknown'
-}
 
 const renderColumnWithApproval = (row: object, status: string) => {
   return (
@@ -53,7 +49,7 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
     render: renderType
   },
   {
-    key: 'cynopsis.riskRating',
+    key: 'companyLegalName',
     label: 'Risk Report',
     render: renderRiskReport
   },

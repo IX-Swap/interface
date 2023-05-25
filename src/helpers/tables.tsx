@@ -1,4 +1,4 @@
-import { Box, Theme, Typography } from '@mui/material'
+import { Box, Theme, Typography, Link } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { ThemeVariant } from '@mui/material/styles/overrides'
 import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
@@ -79,6 +79,17 @@ export const renderLastName = (val: string, row: RenderLastNameRow): string => {
   }
 
   return `${val} ${lastName}`
+}
+
+export const renderRiskReport = (val: string, row: RenderLastNameRow) => {
+  const query = renderLastName(val, row)
+  const href = `https://investaxdigital.artemisuat.cynopsis.co/app/customers?searchString=${query}`
+
+  return (
+    <Link href={href} target='_blank'>
+      View
+    </Link>
+  )
 }
 
 export const getIndividualLastName = (
