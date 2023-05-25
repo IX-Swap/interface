@@ -457,6 +457,9 @@ export const InformationForm = (props: Props) => {
             disabled={edit}
             value={values.tokenPrice?.toString()}
             error={(touched.tokenPrice && errors.tokenPrice) as string}
+            trailing={
+              <IssuanceTooltip tooltipContent={'The price input is based on the denominated currency selected under "Investment Currency". For example, if you select USDC as the base currency, the price input will be in USDC.'} />
+            }
             maxLength={64}
           />
           <DropdownField

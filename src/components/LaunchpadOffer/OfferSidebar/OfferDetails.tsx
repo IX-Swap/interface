@@ -223,7 +223,7 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
       entries={[
         { label: 'Issuer', value: props.issuerName || 'N/A' },
         { label: 'Country', value: props.country || 'N/A' },
-        { label: 'Investment Type', value: props.investmentType ?? 'N/A' },
+        { label: 'Investment Type', value: props.investmentType?.replace(/\b\w/g, (match) => match.toUpperCase()) ?? 'N/A' },
         {
           label: 'Token Price',
           value: `${props.investingTokenSymbol}  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}`,
