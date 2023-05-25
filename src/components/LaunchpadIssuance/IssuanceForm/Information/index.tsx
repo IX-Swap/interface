@@ -193,7 +193,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
         onSubmit={submit}
         validationSchema={validationSchema}
         enableReinitialize={true}
-        context={{ account }}
       >
         {(formikProps) => {
           return (
