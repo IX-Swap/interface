@@ -22,7 +22,7 @@ export const DataCell = ({ investment, field }: DataCellProps) => {
     )
   }
   let value = fieldValue
-  if (field === 'investmentAmount') value = formatCurrency(fieldValue, '$')
+  if (field === 'investmentAmount') value = formatCurrency(fieldValue, '')
   if (field === 'stage') value = fieldValue === 'sale' ? 'Sale' : 'Pre-Sale'
   if (field === 'accredited') value = fieldValue === '1' ? 'Yes' : 'No'
   return (
