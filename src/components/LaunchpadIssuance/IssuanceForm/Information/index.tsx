@@ -21,9 +21,10 @@ import { LoaderContainer } from 'components/LaunchpadMisc/styled'
 import { InformationForm } from './InformationForm'
 import { InformationFormValues } from './types'
 import { FormContainer, FormHeader, FormTitle } from '../shared/styled'
-import { schema, editSchema } from './schema'
+import { createValidationSchema, editSchema } from './schema'
 import { getInitialValues } from './util'
 import { useQueryParams } from 'hooks/useParams'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface Props {
   edit?: boolean
@@ -34,7 +35,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const history = useHistory()
   const addPopup = useAddPopup()
   const { isAdmin } = useRole()
-
+  const { account } = useActiveWeb3React();
   const loader = useLoader(false)
 
   const form = React.useRef<FormikProps<InformationFormValues>>(null)
@@ -50,6 +51,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const offer = useOfferFormInitialValues(issuanceId, smartContractStrategy)
   const initialValues = useMemo(() => getInitialValues(smartContractStrategy), [smartContractStrategy])
 
+  const schema = createValidationSchema(account)
   const validationSchema = useMemo(() => (props.edit ? editSchema : schema), [props.edit])
 
   const submitOffer = useSubmitOffer()
