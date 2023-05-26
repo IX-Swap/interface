@@ -3,7 +3,6 @@ import { Redirect, useLocation } from 'react-router-dom'
 import { AppRoute } from 'app/router/config'
 import { useUncompletedIdentityDialog } from 'app/components/UncompletedIdentityDialog/hook/useUncompletedIdentityDialog'
 import { useIsAccredited, useIsRetail, useIsExpert } from 'helpers/acl'
-import { useServices } from 'hooks/useServices'
 
 export const RedirectToDefaultPage = () => {
   const { pathname } = useLocation()
@@ -19,16 +18,5 @@ export const RedirectToDefaultPage = () => {
     showUncompletedIdentityDialog()
   }
 
-  const { storageService } = useServices()
-  const user: any = storageService.get('user')
-  const isIndividual = user.accountType === 'INDIVIDUAL'
-  const createKYCRoute = isIndividual
-    ? '/individuals/create'
-    : '/corporates/create'
-
-  return (
-    <Redirect
-      to={isInvestor ? AppRoute.home : AppRoute.identity + createKYCRoute}
-    />
-  )
+  return <Redirect to={isInvestor ? AppRoute.home : AppRoute.identity} />
 }

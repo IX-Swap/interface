@@ -9,7 +9,7 @@ export const NotificationsVirtualizedList = () => {
   return (
     <VirtualizedList
       itemData={data}
-      itemCount={data.length}
+      itemCount={data?.length}
       width='100%'
       itemComponent={NotificationsVirtualizedItem}
     />
