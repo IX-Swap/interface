@@ -41,7 +41,7 @@ export const columns: Array<TableColumn<IndividualIdentity>> = [
     render: renderIncome
   },
   {
-    key: 'firstName',
+    key: 'cynopsis',
     label: 'Risk Report',
     render: renderRiskReport
   },

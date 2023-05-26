@@ -81,15 +81,19 @@ export const renderLastName = (val: string, row: RenderLastNameRow): string => {
   return `${val} ${lastName}`
 }
 
-export const renderRiskReport = (val: string, row: RenderLastNameRow) => {
-  const query = renderLastName(val, row)
-  const href = `https://investaxdigital.artemisuat.cynopsis.co/app/customers?searchString=${query}`
+export const renderRiskReport = (val: object) => {
+  if ('customerId' in val) {
+    const href = `https://investaxdigital.artemisuat.cynopsis.co/app/customers/${
+      val.customerId as string
+    }`
+    return (
+      <Link href={href} target='_blank'>
+        View
+      </Link>
+    )
+  }
 
-  return (
-    <Link href={href} target='_blank'>
-      View
-    </Link>
-  )
+  return 'N/A'
 }
 
 export const getIndividualLastName = (
