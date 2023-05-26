@@ -22,7 +22,7 @@ import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
 import { OpenOTCTableBody } from './OpenOTCTableBody'
 import { LeavePageContextWrapper } from 'app/pages/issuance/context/LeavePageContext'
 import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
-// import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const TradingOpenOrders = () => {
   const { user } = useAuth()
@@ -30,12 +30,12 @@ export const TradingOpenOrders = () => {
   const { pairId } = useParams<{ pairId: string }>()
   const { isTablet } = useAppBreakpoints()
   const { account } = useActiveWeb3React()
-  // const { getFilterValue } = useQueryFilter()
-  // const filter = {
-  //   sortField: getFilterValue('sortBy'),
-  //   sortOrder: getFilterValue('orderBy') === 'ASC' ? 1 : -1,
-  //   status: getFilterValue('tradingStatus')
-  // }
+  const { getFilterValue } = useQueryFilter()
+  const filter = {
+    sortField: getFilterValue('sortBy'),
+    sortOrder: getFilterValue('orderBy') === 'ASC' ? 1 : -1,
+    status: getFilterValue('tradingStatus')
+  }
   return (
     <LeavePageContextWrapper>
       <ActiveElementContextWrapper>
@@ -47,11 +47,11 @@ export const TradingOpenOrders = () => {
             columns={columns}
             actionHeader={'Actions'}
             noHeader={isTablet}
-            // filter={
-            //   {
-            //     ...filter
-            //   } as any
-            // }
+            filter={
+              {
+                ...filter
+              } as any
+            }
             bordered={false}
             noDataComponent={<OpenOrdersEmptyState />}
             actions={OTCOrderActions}

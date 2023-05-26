@@ -21,7 +21,7 @@ export const columns = [
     render: formatDateToMMDDYY
   },
   {
-    label: <HeadCellWithSort label={'Pair'} field={'pair.name'} />,
+    label: <HeadCellWithSort label={'Pair'} field={'name'} />,
     key: 'pair.name',
     render: renderTicker
   },
@@ -66,7 +66,7 @@ export const compactColumns = [
     render: formatDateToMMDDYY
   },
   {
-    label: <HeadCellWithSort label={'Pair'} field={'pair.name'} />,
+    label: <HeadCellWithSort label={'Pair'} field={'name'} />,
     key: 'pair.name',
     render: renderTicker
   },
