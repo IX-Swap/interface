@@ -87,7 +87,7 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
     render: renderType
   },
   {
-    key: 'companyLegalName',
+    key: 'cynopsis',
     label: 'Risk Report',
     render: renderRiskReport
   },
