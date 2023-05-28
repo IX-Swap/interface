@@ -4,7 +4,7 @@ import { Info } from 'react-feather'
 import styled, { useTheme } from 'styled-components'
 
 interface IssuanceTooltipProps {
-    tooltipContent: string | React.ReactNode
+  tooltipContent: string | React.ReactNode
 }
 
 export const IssuanceTooltip = ({ tooltipContent }: IssuanceTooltipProps) => {
@@ -18,6 +18,7 @@ export const IssuanceTooltip = ({ tooltipContent }: IssuanceTooltipProps) => {
         backgroundColor: `${theme.white}`,
         color: `${theme.launchpad.colors.text.hint}`,
         border: `1px solid ${theme.launchpad.colors.border.default}`,
+        whiteSpace: "pre-wrap"
       }}
     >
       <InfoIcon />

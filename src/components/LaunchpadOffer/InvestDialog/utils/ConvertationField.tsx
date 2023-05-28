@@ -49,11 +49,6 @@ const getTokenInfo = (address: string, symbol: string, currency: Currency | null
 }
 
 export const useGetWarning = (offer: Offer) => {
-  const { account } = useActiveWeb3React()
-  const inputCurrency = useCurrency(offer.investingTokenAddress)
-  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
-  const isSufficientBalance = useDerivedBalanceInfo(offer.id)
-
   const getWarning = (value: string, availableToInvest?: number) => {
     const isPresale = offer.status !== OfferStatus.sale
     const realValue = value ? Number(value.replace(/,/g, '')) : 0
@@ -62,12 +57,9 @@ export const useGetWarning = (offer: Offer) => {
     const total = isPresale ? offer.presaleAlocated : offer.hardCap
     const available = +total - offer.totalInvestment
 
-    const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
     let warning = ''
     if (value === '') {
       warning = ''
-    } else if (isInsufficientBalance) {
-      warning = `Insufficient balance`
     } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
       warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
     } else if (Number(min) > realValue) {
@@ -227,11 +219,11 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
     () =>
       tokensOptions.map(
         (token) =>
-          ({
-            name: token.label,
-            address: token.address,
-            icon: token.icon,
-          } as TokenOption)
+        ({
+          name: token.label,
+          address: token.address,
+          icon: token.icon,
+        } as TokenOption)
       ),
     [tokensOptions]
   )
