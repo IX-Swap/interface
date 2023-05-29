@@ -32,8 +32,6 @@ export const TradingOpenOrders = () => {
   const { account } = useActiveWeb3React()
   const { getFilterValue } = useQueryFilter()
   const filter = {
-    sortField: getFilterValue('sortBy'),
-    sortOrder: getFilterValue('orderBy') === 'ASC' ? 1 : -1,
     status: getFilterValue('tradingStatus')
   }
   return (
