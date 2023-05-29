@@ -126,7 +126,7 @@ export const FileUpload = (props: FileUploadProps) => {
 
   const hasValue =
     value !== undefined &&
-    (value as DataroomFile).originalFileName !== undefined
+    (value as DataroomFile)?.originalFileName !== undefined
 
   const isFileTooLarge =
     fileRejections.length > 0 && fileRejections[0].file.size > _maxSize
