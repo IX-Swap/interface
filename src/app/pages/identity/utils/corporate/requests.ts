@@ -33,7 +33,7 @@ export const getCorporateInfoRequestPayload = (
 
   return {
     ...rest,
-    logo: typeof logo === 'string' ? logo : (logo as DataroomFile)?._id,
+    logo: typeof logo === 'string' ? logo : (logo as DataroomFile)?._id ?? null,
     representatives: representativesTransformed,
     legalEntityStatus: customLegalEntityStatus
       ? otherLegalEntityStatus
