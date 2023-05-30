@@ -19,7 +19,10 @@ export const useUpdateCorporate = () => {
 
     values.step = typeof values.step === 'undefined' ? 0 : values.step
 
-    if (values.step === 0) {
+    if (
+      typeof values.declaredAs === 'undefined' ||
+      values.declaredAs.length < 1
+    ) {
       const declaredAs = ['investor']
 
       if (values.isIssuer === true) declaredAs.push('issuer')
