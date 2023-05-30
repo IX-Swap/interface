@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   registerFormValidationSchema,
   singpassFormValidationSchema
@@ -40,11 +40,11 @@ export const Register: React.FC = observer(() => {
   const isIndividual = identity === 'individual'
   const { sessionService } = useServices()
 
-  useEffect(() => {
-    if (identity === undefined || identity === '') {
-      updateFilter('identityType', 'individual')
-    }
-  }, [identity, updateFilter])
+  // useEffect(() => {
+  //   if (identity === undefined || identity === '') {
+  //     updateFilter('identityType', 'individual')
+  //   }
+  // }, [identity, updateFilter])
 
   const handleIdentityChange = () => {
     if (isIndividual) {
