@@ -163,7 +163,7 @@ export const IssuanceActionButtons = ({
             </OutlineButton>
           )}
 
-          <OutlineButton onClick={onReview}>Review</OutlineButton>
+          {submitDisabled && <OutlineButton onClick={onReview}>Review</OutlineButton>}
           {(!isRejected || isReset) && (
             <FilledButton disabled={submitDisabled} onClick={onSubmit}>
               Submit
