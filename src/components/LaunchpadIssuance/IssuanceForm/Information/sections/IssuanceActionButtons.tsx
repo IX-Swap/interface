@@ -83,7 +83,7 @@ export const IssuanceActionButtons = ({
     }
   }
 
-  const { isApproved, isRejected, showReviewButtons } = useMemo(
+  const { isApproved, isRejected, showReviewButtons, showReviewButton } = useMemo(
     () => ({
       isApproved: status === OfferStatus.approved,
       isRejected: status === OfferStatus.declined,
@@ -95,6 +95,7 @@ export const IssuanceActionButtons = ({
         OfferStatus.closed,
         OfferStatus.claim,
       ].includes(status),
+      showReviewButton: status !== undefined && status !== OfferStatus.draft
     }),
     [status]
   )
@@ -163,7 +164,7 @@ export const IssuanceActionButtons = ({
             </OutlineButton>
           )}
 
-          {submitDisabled && <OutlineButton onClick={onReview}>Review</OutlineButton>}
+          {showReviewButton && <OutlineButton onClick={onReview}>Review</OutlineButton>}
           {(!isRejected || isReset) && (
             <FilledButton disabled={submitDisabled} onClick={onSubmit}>
               Submit
