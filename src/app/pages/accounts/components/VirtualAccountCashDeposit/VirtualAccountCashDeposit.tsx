@@ -1,5 +1,5 @@
 import { Box, Grid, Typography, Tabs } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { RadioTabButton } from 'app/pages/accounts/components/VirtualAccountCashDeposit/RadioTabButton'
 import { Fast } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
 import { Meps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Meps'
@@ -17,10 +17,14 @@ export const VirtualAccountCashDeposit = ({
   virtualAccountDetails
 }: VirtualAccountCashDepositProps) => {
   const { tabStyle } = useStyles()
+  const currencyIsSGD = virtualAccountDetails.currency === 'SGD'
   const [activeTab, setActiveTab] = useState(0)
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setActiveTab(newValue)
   }
+
+  useEffect(() => setActiveTab(0), [currencyIsSGD])
+
   return (
     <Grid container direction='column'>
       <Grid item>
@@ -38,38 +42,42 @@ export const VirtualAccountCashDeposit = ({
             variant='fullWidth'
             className={tabStyle}
           >
-            <RadioTabButton disableRipple label='FAST' />
+            {!currencyIsSGD && <RadioTabButton disableRipple label='FAST' />}
             <RadioTabButton disableRipple label='ACH Credit' />
             <RadioTabButton disableRipple label='TT' />
-            <RadioTabButton disableRipple label='MEPS' />
+            {!currencyIsSGD && <RadioTabButton disableRipple label='MEPS' />}
           </Tabs>
         </Box>
       </Grid>
       <Grid item>
-        <TabPanel value={activeTab} index={0} pt={0}>
-          <Fast
-            accountId={virtualAccountDetails.accountNumber}
-            currency={virtualAccountDetails.currency}
-          />
-        </TabPanel>
-        <TabPanel value={activeTab} index={1} pt={0}>
+        {!currencyIsSGD && (
+          <TabPanel value={activeTab} index={0} pt={0}>
+            <Fast
+              accountId={virtualAccountDetails.accountNumber}
+              currency={virtualAccountDetails.currency}
+            />
+          </TabPanel>
+        )}
+        <TabPanel value={activeTab} index={currencyIsSGD ? 0 : 1} pt={0}>
           <AchCredits
             accountId={virtualAccountDetails.accountNumber}
             currency={virtualAccountDetails.currency}
           />
         </TabPanel>
-        <TabPanel value={activeTab} index={2} pt={0}>
+        <TabPanel value={activeTab} index={currencyIsSGD ? 1 : 2} pt={0}>
           <Tt
             accountId={virtualAccountDetails.accountNumber}
             currency={virtualAccountDetails.currency}
           />
         </TabPanel>
-        <TabPanel value={activeTab} index={3} pt={0}>
-          <Meps
-            accountId={virtualAccountDetails.accountNumber}
-            currency={virtualAccountDetails.currency}
-          />
-        </TabPanel>
+        {!currencyIsSGD && (
+          <TabPanel value={activeTab} index={3} pt={0}>
+            <Meps
+              accountId={virtualAccountDetails.accountNumber}
+              currency={virtualAccountDetails.currency}
+            />
+          </TabPanel>
+        )}
       </Grid>
     </Grid>
   )
