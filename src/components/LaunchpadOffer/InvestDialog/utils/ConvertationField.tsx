@@ -126,11 +126,8 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
       let result = `${realValue * +multiplier}`
 
-      if (result.split('.')[1]?.length > 4) {
-        result = (+result).toFixed(4)
-      }
-
-      return formatedValue(result, decimals)
+      result = (+result).toFixed(4)
+      return parseFloat(result).toString()
     }
 
     return inputValue
