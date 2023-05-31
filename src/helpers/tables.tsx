@@ -23,6 +23,9 @@ import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { Status } from 'ui/Status/Status'
 import { FirstTableItem } from 'ui/UIKit/TablesKit/FirstTable/FirstTable'
 import { PersonName } from './types'
+import LaunchIcon from '@mui/icons-material/Launch'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -88,7 +91,11 @@ export const renderRiskReport = (val: object) => {
     }`
     return (
       <Link href={href} target='_blank'>
-        View
+        <Tooltip title='View Risk Report'>
+          <IconButton>
+            <LaunchIcon />
+          </IconButton>
+        </Tooltip>
       </Link>
     )
   }

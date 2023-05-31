@@ -19,7 +19,7 @@ const renderColumnWithApproval = (row: object, status: string) => {
 export const columns: Array<TableColumn<IndividualIdentity>> = [
   {
     key: 'createdAt',
-    label: 'Date of Application',
+    label: 'Date',
     render: formatDateToMMDDYY
   },
   {
