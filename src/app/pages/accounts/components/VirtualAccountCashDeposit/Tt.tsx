@@ -35,7 +35,7 @@ export const Tt = ({ accountId, currency }: DepositInfoProps) => {
     },
     {
       label: 'Time Estimation for Deposit:',
-      value: '2-5 Business Days'
+      value: '2-3 Business Days'
     }
   ]
   return (
