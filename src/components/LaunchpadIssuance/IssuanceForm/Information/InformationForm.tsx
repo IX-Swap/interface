@@ -791,7 +791,7 @@ export const InformationForm = (props: Props) => {
             </OutlineButton>
           )}
 
-          <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
+          {offerData?.status !== undefined && offerData?.status !== IssuanceStatus.draft && <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>}
           {(offerData?.status !== IssuanceStatus.declined || isReset) && (
             <FilledButton onClick={toSubmit} disabled={submitDisabled}>
               Submit
