@@ -42,15 +42,15 @@ export const VirtualAccountCashDeposit = ({
             variant='fullWidth'
             className={tabStyle}
           >
-            {!currencyIsSGD && <RadioTabButton disableRipple label='FAST' />}
+            {currencyIsSGD && <RadioTabButton disableRipple label='FAST' />}
             <RadioTabButton disableRipple label='ACH Credit' />
             <RadioTabButton disableRipple label='TT' />
-            {!currencyIsSGD && <RadioTabButton disableRipple label='MEPS' />}
+            {currencyIsSGD && <RadioTabButton disableRipple label='MEPS' />}
           </Tabs>
         </Box>
       </Grid>
       <Grid item>
-        {!currencyIsSGD && (
+        {currencyIsSGD && (
           <TabPanel value={activeTab} index={0} pt={0}>
             <Fast
               accountId={virtualAccountDetails.accountNumber}
@@ -58,19 +58,19 @@ export const VirtualAccountCashDeposit = ({
             />
           </TabPanel>
         )}
-        <TabPanel value={activeTab} index={currencyIsSGD ? 0 : 1} pt={0}>
+        <TabPanel value={activeTab} index={!currencyIsSGD ? 0 : 1} pt={0}>
           <AchCredits
             accountId={virtualAccountDetails.accountNumber}
             currency={virtualAccountDetails.currency}
           />
         </TabPanel>
-        <TabPanel value={activeTab} index={currencyIsSGD ? 1 : 2} pt={0}>
+        <TabPanel value={activeTab} index={!currencyIsSGD ? 1 : 2} pt={0}>
           <Tt
             accountId={virtualAccountDetails.accountNumber}
             currency={virtualAccountDetails.currency}
           />
         </TabPanel>
-        {!currencyIsSGD && (
+        {currencyIsSGD && (
           <TabPanel value={activeTab} index={3} pt={0}>
             <Meps
               accountId={virtualAccountDetails.accountNumber}
