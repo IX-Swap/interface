@@ -1,4 +1,4 @@
-import { Box, Theme, Typography } from '@mui/material'
+import { Box, Theme, Typography, Link } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { ThemeVariant } from '@mui/material/styles/overrides'
 import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
@@ -23,6 +23,9 @@ import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { Status } from 'ui/Status/Status'
 import { FirstTableItem } from 'ui/UIKit/TablesKit/FirstTable/FirstTable'
 import { PersonName } from './types'
+import LaunchIcon from '@mui/icons-material/Launch'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -79,6 +82,25 @@ export const renderLastName = (val: string, row: RenderLastNameRow): string => {
   }
 
   return `${val} ${lastName}`
+}
+
+export const renderRiskReport = (val: object) => {
+  if ('customerId' in val) {
+    const href = `https://investaxdigital.artemisuat.cynopsis.co/app/customers/${
+      val.customerId as string
+    }`
+    return (
+      <Link href={href} target='_blank'>
+        <Tooltip title='View Risk Report'>
+          <IconButton>
+            <LaunchIcon />
+          </IconButton>
+        </Tooltip>
+      </Link>
+    )
+  }
+
+  return 'N/A'
 }
 
 export const getIndividualLastName = (

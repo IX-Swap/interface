@@ -106,6 +106,8 @@ export const Actions = (props: ActionsProps): JSX.Element => {
   const isUnauthorized = item.status === 'Submitted' || 'Approved'
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
+  const statusField = get(item, statusFieldName)
+
   return (
     <Grid wrap='nowrap' justifyContent='flex-end'>
       {/* <Grid item>
@@ -152,7 +154,12 @@ export const Actions = (props: ActionsProps): JSX.Element => {
               content={props => (
                 <ActionsDropdownContent
                   {...props}
-                  hideApproval={get(item, statusFieldName) !== 'Submitted'}
+                  hideApproval={
+                    !['Submitted', 'PENDING', 'Rejected'].includes(statusField)
+                  }
+                  hideRejection={
+                    !['Submitted', 'PENDING', 'Approved'].includes(statusField)
+                  }
                   approve={approve}
                   reject={reject}
                   view={view}

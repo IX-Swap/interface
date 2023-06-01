@@ -5,6 +5,7 @@ import { CommitmentIssuanceForm } from 'app/components/CommitmentIssuance/Commit
 import { CommitmentIssuanceFields } from 'app/components/CommitmentIssuance/CommitmentIssuanceFields'
 import { Commitment } from 'types/commitment'
 import { convertISOToDate } from 'helpers/dates'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export interface CommitmentIssuanceProps {
   data: Commitment
@@ -26,18 +27,20 @@ export const CommitmentIssuance = (props: CommitmentIssuanceProps) => {
 
   return (
     <Grid item container spacing={4}>
-      <Grid item xs={12}>
-        <CommitmentIssuanceForm defaultValues={initialValues}>
-          <Grid container direction='column'>
-            <CommitmentIssuanceFields amount={amount} />
+      <Grid item xs={12} mt={2}>
+        <FieldContainer>
+          <CommitmentIssuanceForm defaultValues={initialValues}>
+            <Grid container direction='column'>
+              <CommitmentIssuanceFields amount={amount} />
 
-            <Grid item>
-              <Submit color='primary' variant='outlined' size='large'>
-                Update
-              </Submit>
+              <Grid item>
+                <Submit color='primary' variant='outlined' size='large'>
+                  Update
+                </Submit>
+              </Grid>
             </Grid>
-          </Grid>
-        </CommitmentIssuanceForm>
+          </CommitmentIssuanceForm>
+        </FieldContainer>
       </Grid>
     </Grid>
   )

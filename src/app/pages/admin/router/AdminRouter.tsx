@@ -34,14 +34,14 @@ export const AdminRouter = () => {
 
       <AppRoute
         path={AdminRoute.viewIndividualIdentity}
-        breadcrumb='View Individual Identity'
+        breadcrumb='View Individual KYC'
       >
         <ViewIndividualIdentity />
       </AppRoute>
 
       <AppRoute
         path={AdminRoute.viewCorporateIdentity}
-        breadcrumb='View Corporate Identity'
+        breadcrumb='View Corporate KYC'
       >
         <ViewCorporateIdentity />
       </AppRoute>
@@ -58,11 +58,7 @@ export const AdminRouter = () => {
         <VirtualAccounts />
       </AppRoute>
 
-      <AppRoute
-        exact
-        path={AdminRoute.masDisclosure}
-        breadcrumb='Disclosure'
-      >
+      <AppRoute exact path={AdminRoute.masDisclosure} breadcrumb='Disclosure'>
         <MasDisclosure />
       </AppRoute>
 

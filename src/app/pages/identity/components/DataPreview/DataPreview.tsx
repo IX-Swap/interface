@@ -42,7 +42,6 @@ export const DataPreview = ({
     dataBox,
     dataLabel,
     dataValue,
-    // approveButton,
     emptyBox,
     whiteBackground
   } = classes
@@ -54,13 +53,9 @@ export const DataPreview = ({
       ? identityType[0].toUpperCase() + identityType.slice(1)
       : 'Investor'
 
-  const InvestorRole = () => {
+  const investorRole = () => {
     if (typeof roles !== 'undefined') {
       const userRoles = roles.split(',')
-
-      if (userRoles.includes('retail')) {
-        return 'Retail'
-      }
 
       if (userRoles.includes('expert')) {
         return 'Expert'
@@ -69,10 +64,43 @@ export const DataPreview = ({
       if (userRoles.includes('accredited')) {
         return 'Accredited'
       }
+
+      if (userRoles.includes('retail')) {
+        return 'Retail'
+      }
     }
 
     return '-'
   }
+
+  const userRole = () => {
+    if (typeof roles !== 'undefined') {
+      const parsedRoles = ['User']
+      const userRoles = roles.split(',')
+
+      if (userRoles.includes('tenantowner')) {
+        parsedRoles.unshift('Client')
+      }
+
+      if (userRoles.includes('issuer')) {
+        parsedRoles.unshift('Issuer')
+      }
+
+      if (userRoles.includes('authorizer')) {
+        parsedRoles.unshift('Authorizer')
+      }
+
+      if (userRoles.includes('admin')) {
+        parsedRoles.unshift('Admin')
+      }
+
+      return parsedRoles.join(', ')
+    }
+
+    return '-'
+  }
+
+  console.log(roles)
 
   return (
     <>
@@ -119,14 +147,23 @@ export const DataPreview = ({
                   variant='subtitle1'
                   className={`${dataLabel} ${dataValue}`}
                 >
-                  <InvestorRole />
+                  {investorRole()}
+                </Typography>
+              </Box>
+
+              <Box className={dataBox}>
+                <Typography variant='subtitle1' className={dataLabel}>
+                  User Role
+                </Typography>
+                <Typography
+                  variant='subtitle1'
+                  className={`${dataLabel} ${dataValue}`}
+                >
+                  {userRole()}
                 </Typography>
               </Box>
             </Box>
           </Grid>
-          {/* <Grid item className={approveButton}>
-            <Status label={status} type={typeStatus} />
-          </Grid> */}
         </Grid>
       </Container>
       <Box className={emptyBox} />

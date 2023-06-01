@@ -141,7 +141,7 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
   return (
     <Tooltip
       title={
-        !isValid && !isApproved && !isSubmitted ? (
+        disabled && !isEdit ? (
           <Typography color='error'>
             Please fill in all the required steps
           </Typography>

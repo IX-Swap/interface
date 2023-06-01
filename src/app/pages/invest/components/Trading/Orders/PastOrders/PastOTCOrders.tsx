@@ -7,7 +7,7 @@ import { CompactBody } from 'components/TableWithPagination/CompactBody'
 import {
   TableView,
   TableViewRendererProps
-} from 'components/TableWithPagination/TableView'
+} from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { trading } from 'config/apiURL'
 import { tradingQueryKeys } from 'config/queryKeys'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
@@ -25,7 +25,6 @@ export const PastOTCOrders = () => {
           name={tradingQueryKeys.pastOrders}
           uri={trading.getMyPastOrders}
           columns={columns}
-          themeVariant={'primary'}
           noHeader={isTablet}
           noDataComponent={
             <EmptyState

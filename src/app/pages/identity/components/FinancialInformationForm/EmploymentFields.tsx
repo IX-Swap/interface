@@ -15,8 +15,7 @@ export const EmploymentField = () => {
   const { control } = useFormContext()
   const { isSingPass, singPassData, individualIdentity } = useIsSingPass()
 
-  const occupationIsSingPass =
-    isSingPass && hasValue(singPassData?.employmentsector)
+  const occupationIsSingPass = isSingPass && hasValue(singPassData?.occupation)
 
   const statusIsSingPass =
     isSingPass && hasValue(singPassData?.employmentstatus)

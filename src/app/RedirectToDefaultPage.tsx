@@ -11,7 +11,6 @@ export const RedirectToDefaultPage = () => {
   const isExpert = useIsExpert()
 
   const isInvestor = isAccredited || isRetail || isExpert
-
   const { showUncompletedIdentityDialog } =
     useUncompletedIdentityDialog(pathname)
 

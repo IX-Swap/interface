@@ -1,18 +1,13 @@
 import { makeURL } from 'config/appURL'
 
 export const IdentityRoute = {
-  list: makeURL(['app', 'identity']),
-  individual: makeURL(['app', 'identity', 'individualIdentity']),
-  corporate: makeURL(['app', 'identity', 'corporateIdentity']),
-  createIndividual: makeURL([
-    'app',
-    'identity',
-    'individualIdentity',
-    'create'
-  ]),
+  list: makeURL(['app', 'profile']),
+  individual: makeURL(['app', 'profile', 'individualIdentity']),
+  corporate: makeURL(['app', 'profile', 'corporateIdentity']),
+  createIndividual: makeURL(['app', 'profile', 'individualIdentity', 'create']),
   viewIndividual: makeURL([
     'app',
-    'identity',
+    'profile',
     'individualIdentity',
     'userId',
     'identityId',
@@ -20,16 +15,16 @@ export const IdentityRoute = {
   ]),
   editIndividual: makeURL([
     'app',
-    'identity',
+    'profile',
     'individualIdentity',
     'userId',
     'identityId',
     'edit'
   ]),
-  createCorporate: makeURL(['app', 'identity', 'corporateIdentity', 'create']),
+  createCorporate: makeURL(['app', 'profile', 'corporateIdentity', 'create']),
   viewCorporate: makeURL([
     'app',
-    'identity',
+    'profile',
     'corporateIdentity',
     'userId',
     'identityId',
@@ -37,7 +32,7 @@ export const IdentityRoute = {
   ]),
   editCorporate: makeURL([
     'app',
-    'identity',
+    'profile',
     'corporateIdentity',
     'userId',
     'identityId',
@@ -45,7 +40,7 @@ export const IdentityRoute = {
   ]),
   createCorporateAccreditation: makeURL([
     'app',
-    'identity',
+    'profile',
     'corporateAccreditation',
     'userId',
     'identityId',
@@ -53,7 +48,7 @@ export const IdentityRoute = {
   ]),
   viewCorporateAccreditation: makeURL([
     'app',
-    'identity',
+    'profile',
     'corporateAccreditation',
     'userId',
     'identityId',
@@ -61,7 +56,7 @@ export const IdentityRoute = {
   ]),
   editCorporateAccreditation: makeURL([
     'app',
-    'identity',
+    'profile',
     'corporateAccreditation',
     'userId',
     'identityId',
@@ -70,7 +65,7 @@ export const IdentityRoute = {
 
   createIndividualAccreditation: makeURL([
     'app',
-    'identity',
+    'profile',
     'individualAccreditation',
     'userId',
     'identityId',
@@ -78,7 +73,7 @@ export const IdentityRoute = {
   ]),
   viewIndividualAccreditation: makeURL([
     'app',
-    'identity',
+    'profile',
     'individualAccreditation',
     'userId',
     'identityId',
@@ -86,30 +81,30 @@ export const IdentityRoute = {
   ]),
   editIndividualAccreditation: makeURL([
     'app',
-    'identity',
+    'profile',
     'individualAccreditation',
     'userId',
     'identityId',
     'edit'
   ]),
 
-  identitySuccess: makeURL(['app', 'identity', 'success']),
-  createIssuer: '/app/identity/corporates/create-issuer',
-  viewIssuer: '/app/identity/corporates/:userId/:identityId/view-issuer',
-  editIssuer: '/app/identity/corporates/:userId/:identityId/edit-issuer',
-  issuance: '/app/identity/issuance',
-  createDetailsOfIssuance: '/app/identity/issuance/create-details-of-issuance',
-  createFundManager: '/app/identity/corporates/fund-manager',
-  createFundAdmin: '/app/identity/corporates/fund-admin',
-  createPortfolioManager: '/app/identity/corporates/portfolio-manager',
+  identitySuccess: makeURL(['app', 'profile', 'success']),
+  createIssuer: '/app/profile/corporates/create-issuer',
+  viewIssuer: '/app/profile/corporates/:userId/:identityId/view-issuer',
+  editIssuer: '/app/profile/corporates/:userId/:identityId/edit-issuer',
+  issuance: '/app/profile/issuance',
+  createDetailsOfIssuance: '/app/profile/issuance/create-details-of-issuance',
+  createFundManager: '/app/profile/corporates/fund-manager',
+  createFundAdmin: '/app/profile/corporates/fund-admin',
+  createPortfolioManager: '/app/profile/corporates/portfolio-manager',
   editFundManager:
-    '/app/identity/corporates/:userId/:identityId/edit-fund-manager',
-  editFundAdmin: '/app/identity/corporates/:userId/:identityId/edit-fund-admin',
+    '/app/profile/corporates/:userId/:identityId/edit-fund-manager',
+  editFundAdmin: '/app/profile/corporates/:userId/:identityId/edit-fund-admin',
   editPortfolioManager:
-    '/app/identity/corporates/:userId/:identityId/edit-portfolio-manager',
+    '/app/profile/corporates/:userId/:identityId/edit-portfolio-manager',
   viewFundManager:
-    '/app/identity/corporates/:userId/:identityId/view-fund-manager',
-  viewFundAdmin: '/app/identity/corporates/:userId/:identityId/view-fund-admin',
+    '/app/profile/corporates/:userId/:identityId/view-fund-manager',
+  viewFundAdmin: '/app/profile/corporates/:userId/:identityId/view-fund-admin',
   viewPortfolioManager:
-    '/app/identity/corporates/:userId/:identityId/view-portfolio-manager'
+    '/app/profile/corporates/:userId/:identityId/view-portfolio-manager'
 }

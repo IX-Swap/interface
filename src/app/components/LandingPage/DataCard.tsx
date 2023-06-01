@@ -11,6 +11,7 @@ import { getCurrentLocationData } from 'hooks/location/utils'
 import { safeGeneratePath } from 'helpers/router'
 import { VSpacer } from 'components/VSpacer'
 import { useAuthorizerPendingItems } from 'app/pages/authorizer/hooks/useAuthorizerPendingItems'
+import { AppFeature } from 'types/app'
 
 export const dataCardBgList = [
   `url("${OrangeEllipse}") no-repeat bottom right, linear-gradient(180deg, #E94D3E 0%, #EAA140 100%)`,
@@ -25,7 +26,17 @@ export const DataCard = (props: LandingPageItemProps) => {
     link: { path, label },
     variant = 1
   } = props
-  const category = getCurrentLocationData(safeGeneratePath(path, {})).feature
+  let { feature: category, params } = getCurrentLocationData(
+    safeGeneratePath(path, {})
+  )
+
+  if (params.includes('accreditation')) {
+    if (category === AppFeature.Individuals)
+      category = AppFeature.IndividualsAccreditation
+    if (category === AppFeature.Corporates)
+      category = AppFeature.CorporatesAccreditation
+  }
+
   const { total, status } = useAuthorizerPendingItems(category as any)
 
   return (

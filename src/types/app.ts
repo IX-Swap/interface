@@ -1,7 +1,7 @@
 export enum AppService {
   Authentication = 'authentication',
   Accounts = 'accounts',
-  Identity = 'identity',
+  Identity = 'profile',
   Issuance = 'issuance',
   IssuanceDetails = 'issuance-details',
   Invest = 'invest',
@@ -25,7 +25,6 @@ export enum AppFeature {
   Holdings = 'holdings',
   Individuals = 'individuals',
   IndividualsAccreditation = 'individuals/accreditation',
-  //   IndividualsAuthorization = 'authorization/identity/individuals',
   IssuanceDetails = 'issuance-details',
   Commitments = 'commitments',
   Market = 'market',
@@ -62,6 +61,24 @@ export enum NotificationFilterFeatures {
   IssuanceDetails = 'issuance-details'
 }
 
+export enum NotificationFilterFeaturesIssuer {
+  BankAccounts = 'bank-accounts',
+  Deposits = 'deposits',
+  Withdrawals = 'withdrawals',
+  SecurityTokenWithdrawals = 'security-token-withdrawals',
+  Corporates = 'corporates',
+  CorporatesAccreditation = 'corporates/accreditation',
+  Deployments = 'deployments'
+}
+
+export enum NotificationFilterInvestor {
+  BankAccounts = 'bank-accounts',
+  Deposits = 'deposits',
+  Withdrawals = 'withdrawals',
+  Commitments = 'commitments',
+  Offerings = 'offerings'
+}
+
 export enum AuthorizerCategory {
   BankAccounts = 'bank-accounts',
   CashWithdrawals = 'cash-withdrawals',
@@ -77,5 +94,13 @@ export enum AuthorizerCategory {
   Listings = 'listings',
   VirtualAccounts = 'virtual-accounts',
   DealClosure = 'closure',
-  TokenDeployment = 'token-deployment'
+  TokenDeployment = 'token-deployment',
+  Trading = 'trading'
+}
+
+export const RoleSidebarMapping: any = {
+  admin: NotificationFilterFeatures,
+  authorizer: NotificationFilterFeatures,
+  issuer: NotificationFilterFeaturesIssuer,
+  investor: NotificationFilterInvestor
 }
