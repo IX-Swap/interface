@@ -56,6 +56,9 @@ export const BankForm: React.FC<BankFormProps> = props => {
             <Grid item container direction='column' spacing={3}>
               <Grid item xs={12}>
                 <Typography variant='h5'>Bank Address</Typography>
+                <Typography variant='body2' color={'#778194'} mt={1}>
+                  Full address required for recipient bank
+                </Typography>
               </Grid>
               <Grid container item direction='column'>
                 <AddressFields />
