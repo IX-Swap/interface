@@ -22,7 +22,7 @@ export const BankFields = () => {
             label={
               <LabelWithTooltip
                 label={'Bank Name'}
-                tooltipTitle='Special characters like space, comma, full stop and parenthesis are allowed'
+                tooltipTitle='Special characters like space, comma, full stop and parenthesis are allowed.'
               />
             }
             placeholder='Bank Name'
