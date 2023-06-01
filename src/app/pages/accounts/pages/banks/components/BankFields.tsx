@@ -79,11 +79,23 @@ export const BankFields = () => {
             name='swiftCode'
             label={
               <LabelWithTooltip
-                label={'Swift Code'}
-                tooltipTitle={`All SWIFT codes consist of 8 or 11 characters. An 11 digit code refers to a specific branch, while an 8 digit code refers to the bank's head office. If your SWIFT/BIC code has 8 characters, please input “XXX” at the end. Example: UOVBSGSGXXX`}
+                label={'SWIFT Code'}
+                tooltipTitle={
+                  <div>
+                    <p style={{ marginTop: 0 }}>
+                      All SWIFT codes consist of 8 or 11 characters. An 11 digit
+                      code refers to a specific branch, while an 8 digit code
+                      refers to the bank's head office. If your SWIFT/BIC code
+                      has 8 characters, please input “XXX” at the end.
+                    </p>
+                    <span>
+                      <strong>Example:</strong> UOVBSGSGXXX
+                    </span>
+                  </div>
+                }
               />
             }
-            placeholder='Swift Code'
+            placeholder='SWIFT Code'
             hideIcon
           />
         </Grid>

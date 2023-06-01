@@ -5,7 +5,7 @@ import { Tooltip } from 'ui/Tooltip/Tooltip'
 
 interface LabelWithTooltipProps {
   label: any
-  tooltipTitle: string
+  tooltipTitle: any
 }
 
 export const LabelWithTooltip = ({
