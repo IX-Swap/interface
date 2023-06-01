@@ -19,7 +19,12 @@ export const BankFields = () => {
             control={control}
             component={TextInput}
             name='bankName'
-            label='Bank Name'
+            label={
+              <LabelWithTooltip
+                label={'Bank Name'}
+                tooltipTitle='Special characters like space, comma, full stop and parenthesis are allowed.'
+              />
+            }
             placeholder='Bank Name'
             hideIcon
           />

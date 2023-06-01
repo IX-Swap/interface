@@ -31,7 +31,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label={
             <LabelWithTooltip
               label={'Line 1'}
-              tooltipTitle='Maximum 70 characters'
+              tooltipTitle='Maximum 70 characters. Special characters like space, comma, full stop and parenthesis are allowed.'
             />
           }
           variant='outlined'
@@ -51,7 +51,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label={
             <LabelWithTooltip
               label={<OptionalLabel label='Line 2' />}
-              tooltipTitle='Maximum 70 characters'
+              tooltipTitle='Maximum 70 characters. Special characters like space, comma, full stop and parenthesis are allowed.'
             />
           }
           variant='outlined'
