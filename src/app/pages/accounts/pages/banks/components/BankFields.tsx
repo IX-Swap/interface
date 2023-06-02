@@ -6,6 +6,7 @@ import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 import { BankFormValues } from 'app/pages/accounts/types'
 import { privateClassNames } from 'helpers/classnames'
 import { TextInput } from 'ui/TextInput/TextInput'
+import { LabelWithTooltip } from 'ui/LabelWithTooltip/LabelWithTooltip'
 
 export const BankFields = () => {
   const { control } = useFormContext<BankFormValues>()
@@ -18,7 +19,12 @@ export const BankFields = () => {
             control={control}
             component={TextInput}
             name='bankName'
-            label='Bank Name'
+            label={
+              <LabelWithTooltip
+                label={'Bank Name'}
+                tooltipTitle='Except for space, comma, full stop and parenthesis, other special characters are not allowed.'
+              />
+            }
             placeholder='Bank Name'
             hideIcon
           />
@@ -30,7 +36,12 @@ export const BankFields = () => {
             control={control}
             component={TextInput}
             name='accountHolderName'
-            label='Account Holder Name'
+            label={
+              <LabelWithTooltip
+                label={'Account Holder Name'}
+                tooltipTitle='Maximum 70 characters'
+              />
+            }
             placeholder='Account Holder Name'
             hideIcon
           />
@@ -41,7 +52,12 @@ export const BankFields = () => {
             control={control}
             component={TextInput}
             name='bankAccountNumber'
-            label='Bank Account Number'
+            label={
+              <LabelWithTooltip
+                label={'Bank Account Number'}
+                tooltipTitle='No spacing or dashes.'
+              />
+            }
             placeholder='Bank Account Number'
             hideIcon
           />
@@ -66,8 +82,25 @@ export const BankFields = () => {
             control={control}
             component={TextInput}
             name='swiftCode'
-            label='Swift Code'
-            placeholder='Swift Code'
+            label={
+              <LabelWithTooltip
+                label={'SWIFT Code'}
+                tooltipTitle={
+                  <div>
+                    <p style={{ marginTop: 0 }}>
+                      All SWIFT codes consist of 8 or 11 characters. 11 digit
+                      code refers to a specific branch, while 8 digit code
+                      refers to the bank's head office. If your SWIFT/BIC code
+                      has 8 characters, please input “XXX” at the end.
+                    </p>
+                    <span>
+                      <strong>Example:</strong> UOVBSGSGXXX
+                    </span>
+                  </div>
+                }
+              />
+            }
+            placeholder='SWIFT Code'
             hideIcon
           />
         </Grid>
