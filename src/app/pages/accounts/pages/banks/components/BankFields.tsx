@@ -88,8 +88,8 @@ export const BankFields = () => {
                 tooltipTitle={
                   <div>
                     <p style={{ marginTop: 0 }}>
-                      All SWIFT codes consist of 8 or 11 characters. An 11 digit
-                      code refers to a specific branch, while an 8 digit code
+                      All SWIFT codes consist of 8 or 11 characters. 11 digit
+                      code refers to a specific branch, while 8 digit code
                       refers to the bank's head office. If your SWIFT/BIC code
                       has 8 characters, please input “XXX” at the end.
                     </p>
