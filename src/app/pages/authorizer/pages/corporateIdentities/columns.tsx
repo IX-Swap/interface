@@ -95,18 +95,18 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
     key: 'status',
     label: 'KYC Status',
     render: (status, row) => renderColumnWithApproval(row, status)
-  },
-  {
-    key: 'declaredAsStatus',
-    label: 'Issuer Status',
-    render: (status, row) => renderColumnWithApproval(row, status, 'issuer')
-  },
-  {
-    key: 'declaredAsStatus',
-    label: 'Client Status',
-    render: (status, row) =>
-      renderColumnWithApproval(row, status, 'tenantOwner')
   }
+  //   {
+  //     key: 'declaredAsStatus',
+  //     label: 'Issuer Status',
+  //     render: (status, row) => renderColumnWithApproval(row, status, 'issuer')
+  //   },
+  //   {
+  //     key: 'declaredAsStatus',
+  //     label: 'Client Status',
+  //     render: (status, row) =>
+  //       renderColumnWithApproval(row, status, 'tenantOwner')
+  //   }
 ]
 
 export const compactColumns = [...columns.slice(1)]
