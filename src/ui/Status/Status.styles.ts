@@ -12,11 +12,13 @@ export const useStyles = makeStyles(theme => {
       case 'funds transferred':
       case 'deployed':
       case 'low':
+      case 'Enable':
         return theme.palette.success.main
       case 'submitted':
       case 'closed':
       case 'settlement in progress':
       case 'medium':
+      case 'Pendig':
         return theme.palette.warning.dark
       case 'rejected':
       case 'funds on hold':
@@ -41,11 +43,13 @@ export const useStyles = makeStyles(theme => {
       case 'funds transferred':
       case 'deployed':
       case 'low':
+      case 'Enable':
         return theme.palette.success.light
       case 'submitted':
       case 'closed':
       case 'settlement in progress':
       case 'medium':
+      case 'Pendig':
         return theme.palette.warning.light
       case 'rejected':
       case 'funds on hold':
