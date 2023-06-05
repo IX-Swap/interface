@@ -13,7 +13,7 @@ import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
 import { Banner } from 'app/pages/admin/pages/Banner'
 import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
 import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
-import { BlockchainSettings } from 'app/pages/admin/pages/BlockchainSettings'
+// import { BlockchainSettings } from 'app/pages/admin/pages/BlockchainSettings'
 import { CustodyManagementRouter } from 'app/pages/admin/router/CustodyManagementRouter'
 import { TenantRouter } from './TenantRouter'
 
@@ -82,13 +82,13 @@ export const AdminRouter = () => {
         <VirtualAccountAudit />
       </AppRoute>
 
-      <AppRoute
+      {/* <AppRoute
         exact
         path={AdminRoute.blockchainSettings}
         breadcrumb='Blockchain Settings'
       >
         <BlockchainSettings />
-      </AppRoute>
+      </AppRoute> */}
 
       <AppRoute
         path={AdminRoute.custodyManagement}
