@@ -74,9 +74,10 @@ export const columns: Array<TableColumn<User>> = [
   //   render: (a: boolean) => renderBoolean(a, ['Verified', 'Email Sent'])
   // },
   {
-    key: 'identity',
-    label: 'Investor Identity',
-    render: (a: boolean) => renderidentity(a)
+    key: 'accountType',
+    // key: 'identity',
+    label: 'Investor Identity'
+    // render: (a: boolean) => renderidentity(a)
   },
   {
     key: 'declaredAsStatus',
