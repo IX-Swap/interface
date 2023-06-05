@@ -11,7 +11,7 @@ export const ViewUserColumn = ({ userId }: ViewUserColumnProps) => {
   return (
     <IconButton
       component={AppRouterLinkComponent}
-      size='small'
+      size='medium'
       to={AdminRoute.view}
       params={{ userId: userId }}
     >
