@@ -8,7 +8,6 @@ import { ReactComponent as BannerIcon } from 'assets/icons/navigation/banner.svg
 import { ReactComponent as MasDisclosureIcon } from 'assets/icons/navigation/mas-disclosure.svg'
 import { ReactComponent as VAAuditIcon } from 'assets/icons/navigation/va-audit.svg'
 import { ReactComponent as VATransactionsIcon } from 'assets/icons/navigation/va-transactions.svg'
-// import { ReactComponent as BlockchainSettingsIcon } from 'assets/icons/navigation/blockchain-settings.svg'
 import { ReactComponent as CustodyManagementIcon } from 'assets/icons/navigation/custody-management.svg'
 
 export const AdminRoute = {
@@ -28,7 +27,6 @@ export const AdminRoute = {
   masDisclosure: '/app/admin/masDisclosure',
   virtualAccountAudit: '/app/admin/virtualAccountAudit',
   virtualAccountTransactions: '/app/admin/virtualAccountTransactions',
-  blockchainSettings: '/app/admin/blockchainSettings',
   custodyManagement: '/app/admin/custody-management',
   tenants: '/app/admin/tenants',
   createTenant: '/app/admin/tenants/create',
@@ -90,12 +88,6 @@ export const adminLandingLinks: InternalRouteProps[] = [
     color: '#246D97',
     icon: VAAuditIcon
   },
-  // {
-  //   label: 'Blockchain Settings',
-  //   path: AdminRoute.blockchainSettings,
-  //   color: '#BEAA74',
-  //   icon: BlockchainSettingsIcon
-  // },
   {
     label: 'Custody Management',
     path: AdminRoute.custodyManagement,
