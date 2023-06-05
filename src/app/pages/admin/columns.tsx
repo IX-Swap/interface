@@ -3,19 +3,31 @@ import { TableColumn } from 'types/util'
 import User from 'types/user'
 import {
   BooleanColumn,
-  ColorType
+  ColorType,
+  TwoFaColumn,
+  VerifierFaColumn
 } from 'app/pages/admin/components/BooleanColumn'
 import { ViewUserColumn } from 'app/pages/admin/components/ViewUserColumn'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { renderActions, renderUserActions } from './pages/Users'
+import { renderUserActions } from './pages/Users'
 
 export const renderViewUser = (id: string) => <ViewUserColumn userId={id} />
+
+export const renderidentity = (identity: any) => {
+  const asArray = Object.entries(identity)
+  const filtered = asArray.filter(([key, value]) => value === true)
+  return filtered
+}
 
 export const renderBoolean = (
   a: boolean,
   labels?: [string, string],
   colors?: [ColorType, ColorType]
 ) => <BooleanColumn value={a} labels={labels} colors={colors} />
+
+export const twoFa = (a: boolean) => <TwoFaColumn value={a} />
+
+export const renderVerified = (a: boolean) => <VerifierFaColumn value={a} />
 
 export const columns: Array<TableColumn<User>> = [
   {
@@ -35,13 +47,12 @@ export const columns: Array<TableColumn<User>> = [
   {
     key: 'twoFactorAuth',
     label: '2FA Status',
-    render: (a: boolean) =>
-      renderBoolean(a, ['Enabled', 'Pending'], ['textPrimary', 'primary'])
+    render: (a: boolean) => twoFa(a)
   },
   {
-    key: 'enabled',
+    key: 'verified',
     label: 'Verification Status',
-    render: (a: boolean) => renderBoolean(a, ['Enabled', 'Disabled'])
+    render: (a: boolean) => renderVerified(a)
   },
   {
     key: '_id',
@@ -54,15 +65,15 @@ export const columns: Array<TableColumn<User>> = [
   //   render: (a: boolean) => renderBoolean(a, ['Verified', 'Email Sent'])
   // },
   {
-    key: '',
+    key: 'identity',
     label: 'Investor Identity',
-    render: (a: boolean) => renderBoolean(a, ['Verified', 'Email Sent'])
+    render: (a: boolean) => renderidentity(a)
   },
-    {
-      key: 'declaredAsStatus',
-      label: 'User Roles',
-      render: (status, row) => renderUserActions(row, status,)
-    },
+  {
+    key: 'declaredAsStatus',
+    label: 'User Roles',
+    render: (status, row) => renderUserActions(row, status)
+  }
 ]
 
 export default columns

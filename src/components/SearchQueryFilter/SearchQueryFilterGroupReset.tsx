@@ -10,10 +10,10 @@ export interface SearchQueryFilterGroupResetProps extends ButtonProps {
 export const SearchQueryFilterGroupReset = (
   props: SearchQueryFilterGroupResetProps
 ) => {
-  const { filters, children, ...rest } = props
+  const { pageType, filters, children, ...rest } = props
   const filterGroupDispatch = useContext(SearchQueryFilterGroupDispatchContext)
   const { removeFilters, getHasValue } = useQueryFilter()
-
+  console.log(props, 'ppppp')
   if (filterGroupDispatch === undefined) {
     throw new Error(
       'SearchQueryFilterGroupResetAll must be a descendant of SearchQueryFilterGroupProvider'
@@ -30,7 +30,7 @@ export const SearchQueryFilterGroupReset = (
     removeFilters(filters)
   }
 
-  return hasValues ? (
+  return hasValues || pageType === 'user' ? (
     <Button {...rest} onClick={resetFilterState}>
       {children}
     </Button>
