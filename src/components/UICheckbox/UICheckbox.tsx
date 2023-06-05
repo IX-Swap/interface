@@ -35,5 +35,18 @@ export const UICheckbox = ({
     return <EnabledSuccessIcon style={styles} />
   }
 
-  return <Checkbox {...props} checkedIcon={getCheckedIcon()} />
+  return (
+    <Checkbox
+      sx={{
+        '& .MuiSvgIcon-root': {
+          fontSize: 70,
+          background: 'rgba(26, 57, 124, 0.4)',
+          border: '1px solid rgba(255, 255, 255, 0.1)'
+        }
+      }}
+      disableRipple
+      {...props}
+      checkedIcon={getCheckedIcon()}
+    />
+  )
 }
