@@ -16,12 +16,7 @@ export interface OptInViewProps {
 }
 
 export const OptInView: React.FC<OptInViewProps> = ({ data }) => {
-  const {
-    applyingAs,
-    declarations: {
-      investorsStatus: { optInAgreementsSafeguards, optInAgreementsOptOut }
-    }
-  } = data
+  const { applyingAs } = data
 
   const investorRole = capitalizeFirstLetter(
     applyingAs?.length > 0 ? applyingAs[0] : 'accredited'
@@ -43,12 +38,16 @@ export const OptInView: React.FC<OptInViewProps> = ({ data }) => {
           <Grid item container direction={'column'} spacing={2}>
             <DeclarationsListItem
               label={<SafeguardAgreements investorRole={investorRole} />}
-              value={optInAgreementsSafeguards}
+              value={
+                data?.declarations?.investorsStatus?.optInAgreementsSafeguards
+              }
             />
             {investorRole === 'Accredited' && (
               <DeclarationsListItem
                 label={<OptInAgreements investorRole={investorRole} />}
-                value={optInAgreementsOptOut}
+                value={
+                  data?.declarations?.investorsStatus?.optInAgreementsOptOut
+                }
               />
             )}
           </Grid>

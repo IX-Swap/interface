@@ -24,22 +24,22 @@ export const InvestorDeclarationView = ({
   const {
     applyingAs,
     isInstitutionalInvestor,
-    isIntermediaryInvestor,
-    declarations: {
-      investorsStatus: {
-        // assets,
-        // trustee,
-        // accreditedShareholders,
-        // partnership,
-        // accreditedBeneficiaries,
-        // accreditedSettlors,
-        // personalAssets,
-        // income,
-        // financialAsset,
-        // jointlyHeldAccount,
-        investorAgreement
-      }
-    }
+    isIntermediaryInvestor
+    // declarations: {
+    //   investorsStatus: {
+    //     // assets,
+    //     // trustee,
+    //     // accreditedShareholders,
+    //     // partnership,
+    //     // accreditedBeneficiaries,
+    //     // accreditedSettlors,
+    //     // personalAssets,
+    //     // income,
+    //     // financialAsset,
+    //     // jointlyHeldAccount,
+    //     investorAgreement
+    //   }
+    // }
   } = data
 
   //   const corporateAccreditedInvestor = {
@@ -57,7 +57,8 @@ export const InvestorDeclarationView = ({
   //     financialAsset,
   //     jointlyHeldAccount
   //   }
-
+  const investorAgreement =
+    data?.declarations?.investorsStatus?.investorAgreement
   const expertInvestor = {
     investorAgreement
   }
@@ -76,7 +77,7 @@ export const InvestorDeclarationView = ({
   //   let agreementsData: Record<string, boolean | undefined> = isCorporate
   //     ? corporateAccreditedInvestor
   //     : individualAccreditedInvestor
-  let agreementsData: Record<string, boolean | undefined> = expertInvestor
+  let agreementsData: Record<string, boolean | undefined> = expertInvestor ?? []
   let agreementsMap: Record<string, React.ReactNode> = isCorporate
     ? corporateInvestorAgreementsMap
     : individualInvestorAgreementsMap
