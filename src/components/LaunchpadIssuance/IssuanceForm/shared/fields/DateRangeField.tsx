@@ -43,16 +43,16 @@ export const DateRangeField: React.FC<Props> = (props) => {
   }, [props.disabled])
 
   const onSelect = React.useCallback(
-    (value: moment.Moment) => {
+    (value: moment.Moment[]) => {
       let selectedRange: DateRange
 
       if (props.mode === 'single') {
-        selectedRange = [value]
+        selectedRange = value
       } else if (range.length === 1) {
         const first = range[0]
-        selectedRange = first.isBefore(value) ? [first, value] : [value, first]
+        selectedRange = first.isBefore(value[1]) ? [first, value[1]] : [value[0], first]
       } else {
-        selectedRange = [value]
+        selectedRange = value
       }
 
       if (props.field && props.setter) {
