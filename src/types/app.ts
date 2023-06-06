@@ -68,7 +68,8 @@ export enum NotificationFilterFeaturesIssuer {
   SecurityTokenWithdrawals = 'security-token-withdrawals',
   Corporates = 'corporates',
   CorporatesAccreditation = 'corporates/accreditation',
-  Deployments = 'deployments'
+  Deployments = 'deployments',
+  Accreditation = 'accreditation'
 }
 
 export enum NotificationFilterInvestor {
@@ -100,7 +101,7 @@ export enum AuthorizerCategory {
 
 export const RoleSidebarMapping: any = {
   admin: NotificationFilterFeatures,
-  authorizer: NotificationFilterFeatures,
-  issuer: NotificationFilterFeaturesIssuer,
-  investor: NotificationFilterInvestor
+  authorizer: NotificationFilterFeatures
+  // issuer: NotificationFilterFeaturesIssuer,
+  // investor: NotificationFilterInvestor
 }
