@@ -38,7 +38,7 @@ export const SingPassPage = () => {
     <div>
       <ChevronIcon />
       <span style={{ fontSize: '12px' }}>{label} </span>
-      <p
+      {/* <p
         style={{
           fontSize: '14px',
           color: '#FFFFFF',
@@ -49,7 +49,7 @@ export const SingPassPage = () => {
         }}
       >
         {value?.length > 0 ? value : '-'}
-      </p>
+      </p> */}
     </div>
   )
 
