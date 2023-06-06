@@ -59,10 +59,6 @@ export const Register: React.FC = observer(() => {
 
   const isMyInfo = email !== undefined
 
-  if (data !== undefined && localStorage.getItem('singpassPage') === null) {
-    console.log(data, 'inside if condition')
-    return <SingPassPage />
-  }
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
@@ -122,7 +118,12 @@ export const Register: React.FC = observer(() => {
     return <Redirect to={`${AuthRoute.myinfoError}?errorType=connection`} />
   }
 
-  return (
+  const shouldRenderSingPassPage =
+    data !== undefined && localStorage.getItem('singpassPage') === null
+
+  return shouldRenderSingPassPage ? (
+    <SingPassPage data={data} />
+  ) : (
     <Form
       data-testid='register-form'
       defaultValues={defaultFormValues}
