@@ -5,19 +5,17 @@ import { Icon } from 'ui/Icons/Icon'
 import { AuthRoute } from 'auth/router/config'
 
 export const SingPassPage = () => {
-  console.log('singData Page')
   const { data } = useMyInfoAuthorize()
-  console.log(data, 'singData')
+
   const onCancel = () => {
     window.location.href = AuthRoute.login
     localStorage.setItem('singpassPage', 'true')
   }
+
   const onAgree = (email: string, mobileno: string) => {
     window.location.href = `${AuthRoute.signup}?email=${email}&mobile=${mobileno}`
     localStorage.setItem('singpassPage', 'true')
   }
-
-  console.log(data, 'singData')
 
   const ChevronIcon = () => (
     <Icon
@@ -38,7 +36,7 @@ export const SingPassPage = () => {
     <div>
       <ChevronIcon />
       <span style={{ fontSize: '12px' }}>{label} </span>
-      {/* <p
+      <p
         style={{
           fontSize: '14px',
           color: '#FFFFFF',
@@ -49,7 +47,7 @@ export const SingPassPage = () => {
         }}
       >
         {value?.length > 0 ? value : '-'}
-      </p> */}
+      </p>
     </div>
   )
 
@@ -180,7 +178,6 @@ export const SingPassPage = () => {
         <button
           onClick={onCancel}
           style={{
-            // marginRight: '10%',
             width: '230px',
             marginLeft: '18px',
             color: '#FFFFFF',
