@@ -4,6 +4,7 @@ import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import columns from 'app/pages/admin/columns'
 import { Actions } from 'app/pages/admin/components/Actions'
+// import { RoleActions } from '../components/RoleActions'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { userURL } from 'config/apiURL'
 import { usersQueryKeys } from 'config/queryKeys'
@@ -65,11 +66,9 @@ export const Users = () => {
                 uri={userURL.getAll}
                 name={usersQueryKeys.getList}
                 columns={columns}
-                actions={({ item }) => (
-                  renderActions(item, ref), renderUserActions(item, ref)
-                )}
+                actions={({ item }) => renderActions(item, ref)}
                 filter={filter}
-                actionHeader='Inverstor Roles'
+                actionHeader='User Roles'
               />
             </Grid>
           </Grid>
@@ -80,9 +79,5 @@ export const Users = () => {
 }
 
 export const renderActions = (item: User, ref: any) => (
-  <Actions user={item} ref={ref} />
-)
-
-export const renderUserActions = (item: User, ref: any) => (
   <Actions user={item} ref={ref} />
 )

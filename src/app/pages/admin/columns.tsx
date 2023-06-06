@@ -9,7 +9,16 @@ import {
 } from 'app/pages/admin/components/BooleanColumn'
 import { ViewUserColumn } from 'app/pages/admin/components/ViewUserColumn'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { renderUserActions } from './pages/Users'
+// import { Actions } from 'app/pages/admin/components/Actions'
+import { RoleActions } from './components/RoleActions'
+
+// export const renderActions = (item: User, ref: any) => (
+//   <Actions user={item} ref={ref} />
+// )
+
+export const renderUserActions = (item: User, ref: any) => (
+  <RoleActions user={item} ref={ref} />
+)
 
 export const renderViewUser = (id: string) => <ViewUserColumn userId={id} />
 
@@ -65,15 +74,21 @@ export const columns: Array<TableColumn<User>> = [
   //   render: (a: boolean) => renderBoolean(a, ['Verified', 'Email Sent'])
   // },
   {
-    key: 'identity',
-    label: 'Investor Identity',
-    render: (a: boolean) => renderidentity(a)
+    key: 'accountType',
+    // key: 'identity',
+    label: 'Investor Identity'
+    // render: (a: boolean) => renderidentity(a)
   },
   {
     key: 'declaredAsStatus',
-    label: 'User Roles',
+    label: 'Investor Role',
     render: (status, row) => renderUserActions(row, status)
   }
+  // {
+  //   key: 'declaredAsStatus',
+  //   label: 'User Roles',
+  //   render: (status, row) => renderActions(row, status)
+  // },
 ]
 
 export default columns

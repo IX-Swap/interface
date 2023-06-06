@@ -1,35 +1,30 @@
 import React from 'react'
 import { ListItemText, SelectProps } from '@mui/material'
-import { ROLES } from 'config/roles'
-import { UICheckbox } from 'components/UICheckbox/UICheckbox'
+import { INVESTORROLES } from 'config/roles'
+// import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export interface RoleSelectProps extends SelectProps {
   value: string[]
   roles: string[]
 }
 
-export const RoleSelect = (props: RoleSelectProps) => {
+export const InvestorRoleSelect = (props: RoleSelectProps) => {
   // TODO: Need to fix TypeScript error for BackdropProps
   const getName = (name: string) => {
-    if (name === 'fundmanager') {
-      return 'fund manager'
+    if (name === 'retail') {
+      return 'Retail'
     }
-    if (name === 'tenantOwner') {
-      return 'Client'
+    if (name === 'accredited') {
+      return 'Accredited'
     }
-    if (name === 'none') {
-      return 'None'
+    if (name === 'expert') {
+      return 'Expert'
     }
-    if (name === 'admin') {
-      return 'Admin'
-    }
-    if (name === 'issuer') {
-      return 'Issuer'
-    }
-    if (name === 'authorizer') {
-      return 'Authorizer'
+    if (name === 'institutional') {
+      return 'Enstitutional'
     }
     return name
   }
@@ -41,18 +36,18 @@ export const RoleSelect = (props: RoleSelectProps) => {
       MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } as any }}
       renderValue={selected => (selected as string[]).join(', ')}
     >
-      {ROLES.map(name => (
+      {INVESTORROLES.map(name => (
         <SelectItem
           key={name}
           value={name}
           disabled={name === 'user'}
           sx={{ padding: '5px !important' }}
         >
-          <UICheckbox checked={props.value.includes(name)} />
+          <UIRadio checked={props.value.includes(name)} />
           <ListItemText primary={getName(name)} />
         </SelectItem>
       ))}
     </Select>
   )
 }
-RoleSelect.displayName = 'Select_RoleSelect'
+InvestorRoleSelect.displayName = 'Select_RoleSelect'
