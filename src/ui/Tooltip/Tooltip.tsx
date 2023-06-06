@@ -1,23 +1,25 @@
 import React from 'react'
-import MuiTooltip, { TooltipProps } from '@mui/material/Tooltip'
+import { IconButton, Tooltip as MuiTooltip, TooltipProps } from '@mui/material'
 import InfoIcon from '@mui/icons-material/InfoOutlined'
-import { useStyles } from 'app/pages/identity/components/UploadDocumentsForm/Tooltip/Tooltip.styles'
+import { useStyles } from 'ui/Tooltip/Tooltip.styles'
 
 export const Tooltip = ({
   title = '',
   placement = 'right-start',
   ...rest
 }: Partial<TooltipProps>) => {
-  const classes = useStyles()
+  const { iconButton } = useStyles()
   return (
     <MuiTooltip
       {...rest}
       title={title}
       arrow
       placement={placement}
-      classes={classes}
+      enterTouchDelay={0}
     >
-      <InfoIcon color='disabled' />
+      <IconButton color='primary' className={iconButton} size='large'>
+        <InfoIcon color='disabled' />
+      </IconButton>
     </MuiTooltip>
   )
 }

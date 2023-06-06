@@ -7,6 +7,7 @@ import { privateClassNames } from 'helpers/classnames'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { TextInput } from 'ui/TextInput/TextInput'
+import { LabelWithTooltip } from 'ui/LabelWithTooltip/LabelWithTooltip'
 
 export interface AddressFieldsProps {
   rootName?: string
@@ -27,7 +28,12 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           control={control}
           rootName={rootName}
           name='line1'
-          label='Line 1'
+          label={
+            <LabelWithTooltip
+              label={'Line 1'}
+              tooltipTitle='Maximum 70 characters. Except for space, comma, full stop and parenthesis, other special characters are not allowed.'
+            />
+          }
           variant='outlined'
           defaultValue={defaultValue?.line1 ?? ''}
           disabled={disabledFields.includes('line1')}
@@ -42,7 +48,12 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           control={control}
           rootName={rootName}
           name='line2'
-          label={<OptionalLabel label='Line 2' />}
+          label={
+            <LabelWithTooltip
+              label={<OptionalLabel label='Line 2' />}
+              tooltipTitle='Maximum 70 characters. Except for space, comma, full stop and parenthesis, other special characters are not allowed.'
+            />
+          }
           variant='outlined'
           defaultValue={defaultValue?.line2 ?? ''}
           disabled={disabledFields.includes('line2')}
