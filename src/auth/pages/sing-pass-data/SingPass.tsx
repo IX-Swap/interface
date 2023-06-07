@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react'
-import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
 import { Icon } from 'ui/Icons/Icon'
 import { AuthRoute } from 'auth/router/config'
 
-export const SingPassPage = () => {
-  const { data } = useMyInfoAuthorize()
+interface SingPassPageProps {
+  data: any
+}
+
+export const SingPassPage = (props: SingPassPageProps) => {
+  const { data } = props
 
   const onCancel = () => {
     window.location.href = AuthRoute.login

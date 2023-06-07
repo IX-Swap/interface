@@ -10,10 +10,7 @@ export interface DownloadDocumentButtonProps {
 export const DownloadDocumentButton = ({
   dso
 }: DownloadDocumentButtonProps) => {
-  const isCampaign = dso.isCampaign === true
-  const downloadButton = isCampaign
-    ? 'Download Investment Agreement'
-    : 'Download Subscription Document'
+  const downloadButton = 'Download Subscription Document'
 
   return (
     <DownloadDSOSubscriptionDocument

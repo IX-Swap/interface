@@ -18,7 +18,6 @@ import {
 import { AppRoute as AppPath, AppRoute } from 'app/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
-import { educationCentreLinks } from 'app/pages/educationCentre/router/config'
 import { investLandingLinks, InvestRoute } from 'app/pages/invest/router/config'
 import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
@@ -37,7 +36,6 @@ export const useAppNavigation = () => {
   const isFundManager = useIsFundManager()
   const isSuperUser = isAuthorizer || isAdmin
   const isInvestor = isAccredited || isRetail || isExpert
-  const educationCenterLabel = 'Education Centre'
   const issuanceLandingLinks: InternalRouteProps[] = [
     { label: 'Create New STO', path: IssuanceRoute.createNew },
     { label: 'View STO Listings', path: IssuanceRoute.list },
@@ -78,11 +76,6 @@ export const useAppNavigation = () => {
     })
   }
 
-  links.push({
-    label: educationCenterLabel,
-    link: AppRoute.educationCentre
-  } as any)
-
   if (isSuperUser) {
     links.push({
       label: 'Authorizer',
@@ -100,8 +93,6 @@ export const useAppNavigation = () => {
 
   const dropdownLinksItems = (name: string) => {
     switch (name) {
-      case educationCenterLabel:
-        return educationCentreLinks
       case 'Authorizer':
         return [
           {
@@ -126,8 +117,7 @@ export const useAppNavigation = () => {
       label === 'Accounts' ||
       label === 'Authorizer' ||
       label === 'Invest' ||
-      label === 'Issuance' ||
-      label === educationCenterLabel
+      label === 'Issuance'
     ) {
       return true
     }
@@ -137,7 +127,6 @@ export const useAppNavigation = () => {
   const isNavigationImpossibleWithoutCompletedIdentity = (link: string) => {
     return (
       !isInvestor &&
-      !link.startsWith(AppPath.educationCentre) &&
       !link.startsWith(AppPath.identity) &&
       !link.startsWith(AppPath.security) &&
       !link.startsWith(AppPath.notifications) &&
