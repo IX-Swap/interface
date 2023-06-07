@@ -61,29 +61,29 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     icon: DSWithdrawalIcon
   },
   {
-    label: 'Individual KYC Applications',
+    label: 'Individual Investor Applications',
     path: AuthorizerRoute.individualIdentities,
     color: '#90A30F',
     icon: IndividualIcon
   },
+  //   {
+  //     label: 'Individual Accreditation Applications',
+  //     path: AuthorizerRoute.individualAccreditations,
+  //     color: '#E65133',
+  //     icon: IndividualIcon
+  //   },
   {
-    label: 'Individual Accreditation Applications',
-    path: AuthorizerRoute.individualAccreditations,
-    color: '#E65133',
-    icon: IndividualIcon
-  },
-  {
-    label: 'Corporate KYC Applications',
+    label: 'Corporate Investor Applications',
     path: AuthorizerRoute.corporateIdentities,
     color: '#E65133',
     icon: CorporateIcon
   },
-  {
-    label: 'Corporate Accreditation Applications',
-    path: AuthorizerRoute.corporateAccreditations,
-    color: '#E65133',
-    icon: CorporateIcon
-  },
+  //   {
+  //     label: 'Corporate Accreditation Applications',
+  //     path: AuthorizerRoute.corporateAccreditations,
+  //     color: '#E65133',
+  //     icon: CorporateIcon
+  //   },
   {
     label: 'Issuance Offerings',
     path: AuthorizerRoute.offerings,

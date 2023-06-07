@@ -85,14 +85,14 @@ export const renderLastName = (val: string, row: RenderLastNameRow): string => {
 }
 
 export const renderRiskReport = (val: object) => {
-  if ('customerId' in val) {
+  if (typeof val !== 'undefined' && 'customerId' in val) {
     const href = `https://investaxdigital.artemisuat.cynopsis.co/app/customers/${
       val.customerId as string
     }`
     return (
       <Link href={href} target='_blank'>
         <Tooltip title='View Risk Report'>
-          <IconButton>
+          <IconButton sx={{ padding: 0 }}>
             <LaunchIcon />
           </IconButton>
         </Tooltip>

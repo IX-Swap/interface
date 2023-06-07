@@ -27,6 +27,8 @@ export interface QueryFilters {
   country: string | undefined
   protocol: string | undefined
   status: string | undefined
+  filterByKYCStatus: boolean
+  filterByAccreditationStatus: boolean
   network: string | undefined
   isPriceAscending: string | undefined
   category: string | undefined

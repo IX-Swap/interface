@@ -135,6 +135,10 @@ export const StatusFilter = () => {
     )
   }
 
+  if (category === 'corporates' || category === 'individuals') {
+    return <BaseStatusFilter statusFilters={investorStatusFilter} />
+  }
+
   return <BaseStatusFilter statusFilters={[...allFilter, ...statusFilters]} />
 }
 
@@ -175,6 +179,16 @@ export const statusFilters: StatusFilterItemType[] = [
     icon: RejectedIcon,
     value: 'Rejected',
     title: 'Rejected'
+  }
+]
+
+export const investorStatusFilter: StatusFilterItemType[] = [
+  ...allFilter,
+  ...statusFilters,
+  {
+    icon: RejectedIcon,
+    value: 'Draft',
+    title: 'Draft'
   }
 ]
 

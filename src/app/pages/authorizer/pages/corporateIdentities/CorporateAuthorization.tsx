@@ -10,7 +10,7 @@ export const CorporateAuthorization = () => {
     <CorporateIdentityContainer
       component={({ data }) => (
         <AuthorizerView
-          title={data.companyLegalName}
+          title={data.companyLegalName ?? data.user.name}
           data={data}
           feature={AppFeature.Corporates}
         >

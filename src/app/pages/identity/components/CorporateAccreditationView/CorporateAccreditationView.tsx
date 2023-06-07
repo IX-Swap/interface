@@ -10,7 +10,7 @@ import { Element } from 'react-scroll'
 export enum CorporateAccreditationSections {
   'Investor Role Declaration' = 'investor-role-declaration',
   'Opt-In Requirement' = 'opt-in-requirement',
-  'Corporate Documents' = 'registered-mailing-address'
+  'Corporate Documents' = 'corporate-documents'
 }
 
 export interface CorporateAccreditationViewProps {

@@ -5,14 +5,14 @@ import { TabPanel } from 'components/TabPanel'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
-import {
-  CorporateKYCSections,
-  CorporateIdentityView
-} from '../CorporateIdentityView/CorporateIdentityView'
 import { StatusBox } from 'app/pages/identity/components/StatusBox/StatusBox'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { IdentityCTA } from '../IdentityCTA/IdentityCTA'
 import { AccreditationCTA } from '../AccreditationCTA/AccreditationCTA'
+import {
+  CorporateKYCSections,
+  CorporateIdentityView
+} from '../CorporateIdentityView/CorporateIdentityView'
 import {
   CorporateAccreditationSections,
   CorporateAccreditationView
@@ -20,6 +20,7 @@ import {
 import { EditApplication } from '../EditApplication/EditApplication'
 import { ScrollSpy } from 'ui/ScrollGuide/ScrollSpy'
 import { Divider } from 'ui/Divider'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export interface CorporatesPreviewProps {
   data?: CorporateIdentity
@@ -31,7 +32,9 @@ export const CorporatesPreview = ({
   isForAuthorizer = false
 }: CorporatesPreviewProps) => {
   const classes = useStyles()
-  const [selectedIdx, setSelectedIdx] = useState(0)
+  const { getFilterValue } = useQueryFilter()
+  const defaultTab = getFilterValue('tab') === 'accreditation' ? 1 : 0
+  const [selectedIdx, setSelectedIdx] = useState(defaultTab)
 
   if (data === undefined) {
     return null
@@ -50,6 +53,8 @@ export const CorporatesPreview = ({
       hasAccreditation &&
       !isAccreditationApproved &&
       !isAccreditationSubmitted)
+  const hasContent =
+    onKycTab || (!onKycTab && isKycApproved && hasAccreditation)
 
   const sections = Object.entries(
     onKycTab ? CorporateKYCSections : CorporateAccreditationSections
@@ -204,7 +209,7 @@ export const CorporatesPreview = ({
         </Grid>
         <Grid container item className={classes.rightBlock}>
           <Box position='sticky' top={90}>
-            {(isForAuthorizer || isAllowedToEdit) && (
+            {hasContent && (
               <Paper
                 sx={{
                   p: 4,
@@ -213,19 +218,23 @@ export const CorporatesPreview = ({
                 }}
               >
                 <ScrollSpy sections={sections} />
-                <Divider sx={{ margin: '25px 0' }} />
-                <EditApplication
-                  applicationType={onKycTab ? 'kyc' : 'accreditation'}
-                  identityType='corporate'
-                  identityId={data._id}
-                  userId={data.user._id}
-                  link={
-                    onKycTab
-                      ? details.editLink
-                      : IdentityRoute.editCorporateAccreditation
-                  }
-                  buttonOnly
-                />
+                {(isForAuthorizer || isAllowedToEdit) && (
+                  <>
+                    <Divider sx={{ margin: '25px 0' }} />
+                    <EditApplication
+                      applicationType={onKycTab ? 'kyc' : 'accreditation'}
+                      identityType='corporate'
+                      identityId={data._id}
+                      userId={data.user._id}
+                      link={
+                        onKycTab
+                          ? details.editLink
+                          : IdentityRoute.editCorporateAccreditation
+                      }
+                      buttonOnly
+                    />
+                  </>
+                )}
               </Paper>
             )}
 

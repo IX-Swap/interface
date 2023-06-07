@@ -33,9 +33,10 @@ export const IdentitiesList: React.FC = () => {
           <Grid item container className={classes.nameIdentity}>
             <Grid item xs={12}>
               <Typography variant='h3' sx={{ marginBottom: '5px' }}>
-                {isIndividual
-                  ? identityLoaded?.user.name
-                  : identityLoaded?.companyLegalName}
+                {!isIndividual &&
+                typeof identityLoaded?.companyLegalName !== 'undefined'
+                  ? identityLoaded.companyLegalName
+                  : identityLoaded?.user.name}
               </Typography>
             </Grid>
             <Box className={classes.box}>

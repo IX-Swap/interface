@@ -4,7 +4,7 @@ import { QueryFilter, useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useContext } from 'react'
 
 export interface SearchQueryFilterGroupResetProps extends ButtonProps {
-  pageType: string
+  pageType?: string
   filters: QueryFilter[]
 }
 
