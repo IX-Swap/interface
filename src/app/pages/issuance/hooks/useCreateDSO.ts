@@ -8,7 +8,11 @@ import { issuanceURL } from 'config/apiURL'
 export const useCreateDSO = () => {
   const { apiService, snackbarService } = useServices()
   const { user } = useAuth()
-  const url = issuanceURL.dso.create(getIdFromObj(user))
+  const issuerId: any = sessionStorage.getItem('issuerId')
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+  const url = issuerId
+    ? issuanceURL.dso.create(issuerId)
+    : issuanceURL.dso.create(getIdFromObj(user))
 
   const createDSO = async (args: DSORequestArgsStep1) => {
     return await apiService.post(url, args)

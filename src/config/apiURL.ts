@@ -183,6 +183,7 @@ export const issuanceURL = {
   dso: {
     getAllPromoted: '/issuance/dso/promoted/list',
     getAllApproved: '/issuance/dso/approved/list',
+    getIssuerList: '/identity/corporate/issuerList',
     favorite: (dsoId?: string) => `/issuance/dso/favorites/${dsoId}`,
     topCountries: (dsoId?: string) =>
       `/issuance/dso/${dsoId}/charts/top-countries`,
