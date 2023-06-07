@@ -138,7 +138,6 @@ export interface NewBaseDigitalSecurityOffering
   leverage?: number
   productSpecification?: string
   step?: number
-  isCampaign: boolean
   decimalPlaces: number
   expectedReturn?: number
 }
@@ -164,8 +163,6 @@ export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   currency: Asset
   insight: DSOInsight
   network?: Network
-  isCampaign?: boolean
-  disableInvestInCampaign?: boolean
 }
 
 export interface NewDigitalSecurityOffering
@@ -177,8 +174,6 @@ export interface NewDigitalSecurityOffering
   currency: Asset
   insight: DSOInsight
   network?: Network
-  isCampaign?: boolean
-  disableInvestInCampaign?: boolean
 }
 
 export type DSOFormValues = Omit<
