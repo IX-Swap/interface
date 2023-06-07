@@ -5,6 +5,7 @@ import { InvestorDeclarationView } from 'app/pages/identity/components/Corporate
 import { OptInView } from 'app/pages/identity/components/CorporateAccreditationView/OptInView'
 import { DocumentsView } from 'app/pages/identity/components/CorporateAccreditationView/DocumentsView'
 import { InstitutionalInvestorDeclarationView } from 'app/pages/identity/components/CorporateAccreditationView/InstitutionalInvestorDeclarationView'
+import { isNonEmptyArray } from 'helpers/arrays'
 
 export interface CorporateAccreditationViewProps {
   data: CorporateIdentity
@@ -20,7 +21,8 @@ export const CorporateAccreditationView = ({
         <InvestorDeclarationView data={data} />
       </Grid>
 
-      {data.applyingAs[0] === 'institutional' ? (
+      {isNonEmptyArray(data.applyingAs) &&
+      data.applyingAs[0] === 'institutional' ? (
         <Grid item>
           <InstitutionalInvestorDeclarationView data={data} />
         </Grid>
