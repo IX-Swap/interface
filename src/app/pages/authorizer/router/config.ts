@@ -24,11 +24,14 @@ export const AuthorizerRoute = {
     'individualAccreditation'
   ]),
   corporateIdentities: makeURL(['app', 'authorizer', 'corporateIdentity']),
+  editCorporateIdentity: '/app/authorizer/corporates/:userId/:identityId/edit',
   corporateAccreditations: makeURL([
     'app',
     'authorizer',
     'corporateAccreditation'
   ]),
+  editCorporateAccreditation:
+    '/app/authorizer/corporates/accreditation/:userId/:identityId/edit',
   offerings: makeURL(['app', 'authorizer', 'offerings']),
   commitments: makeURL(['app', 'authorizer', 'commitments']),
   withdrawalAddresses: makeURL(['app', 'authorizer', 'withdrawalAddresses']),

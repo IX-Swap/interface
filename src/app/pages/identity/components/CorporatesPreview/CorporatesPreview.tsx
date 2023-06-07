@@ -3,6 +3,7 @@ import { useStyles } from 'app/pages/identity/components/IndividualPreview/Indiv
 import { Box, Grid, Paper, Tab, Tabs } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import { IdentityRoute } from 'app/pages/identity/router/config'
+import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
 import { StatusBox } from 'app/pages/identity/components/StatusBox/StatusBox'
@@ -21,6 +22,7 @@ import { EditApplication } from '../EditApplication/EditApplication'
 import { ScrollSpy } from 'ui/ScrollGuide/ScrollSpy'
 import { Divider } from 'ui/Divider'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { isEmptyString } from 'helpers/strings'
 
 export interface CorporatesPreviewProps {
   data?: CorporateIdentity
@@ -62,7 +64,9 @@ export const CorporatesPreview = ({
 
   const getDetails = () => {
     let details = {
-      editLink: IdentityRoute.editCorporate,
+      editLink: !isForAuthorizer
+        ? IdentityRoute.editCorporate
+        : AuthorizerRoute.editCorporateIdentity,
       viewLink: IdentityRoute.viewCorporate,
       title: 'Corporate Investor'
     }
@@ -121,7 +125,11 @@ export const CorporatesPreview = ({
             <DataPreview
               avatar={data.logo}
               userId={data.user._id}
-              name={data.companyLegalName ?? data.user.name}
+              name={
+                !isEmptyString(data.companyLegalName)
+                  ? data.companyLegalName
+                  : data.user.name
+              }
               isIndividual={false}
               kycStatus={data.status}
               accreditationStatus={data.accreditationStatus}
@@ -134,117 +142,138 @@ export const CorporatesPreview = ({
       </Grid>
 
       <Grid container className={classes.wrapper}>
-        <Grid item className={classes.content}>
-          <TabPanel pt={0} value={selectedIdx} index={0}>
-            <>
-              {/* TODO: display message for empty tabs */}
-              {data.status !== 'Draft' && (
-                <StatusBox
-                  isForAuthorizer={isForAuthorizer}
-                  status={data.status}
-                  identityType='corporate'
-                  applicationType='kyc'
-                />
-              )}
-              {data.status === 'Rejected' && !isForAuthorizer && (
-                <IdentityCTA
-                  link={details.editLink}
-                  params={{
-                    identityId: data._id,
-                    userId: data.user._id,
-                    label: data.companyLegalName
-                  }}
-                />
-              )}
+        {!hasContent ? (
+          <Paper
+            sx={{
+              p: 4,
+              borderRadius: 2,
+              width: '100%'
+            }}
+          >
+            This user has not started their Accreditation application, or their
+            KYC application has not been approved yet.
+          </Paper>
+        ) : (
+          <>
+            <Grid item className={classes.content}>
+              <TabPanel pt={0} value={selectedIdx} index={0}>
+                <>
+                  {/* TODO: display message for empty tabs */}
+                  {data.status !== 'Draft' && (
+                    <StatusBox
+                      isForAuthorizer={isForAuthorizer}
+                      status={data.status}
+                      identityType='corporate'
+                      applicationType='kyc'
+                    />
+                  )}
+                  {data.status === 'Rejected' && !isForAuthorizer && (
+                    <IdentityCTA
+                      link={details.editLink}
+                      params={{
+                        identityId: data._id,
+                        userId: data.user._id,
+                        label: data.companyLegalName
+                      }}
+                    />
+                  )}
 
-              <CorporateIdentityView data={data} hideAvatar />
-            </>
-          </TabPanel>
+                  <CorporateIdentityView data={data} hideAvatar />
+                </>
+              </TabPanel>
 
-          <TabPanel pt={0} value={selectedIdx} index={1}>
-            {/* TODO: display message for empty tabs */}
-            {isForAuthorizer && (!isKycApproved || !hasAccreditation) && <></>}
+              <TabPanel pt={0} value={selectedIdx} index={1}>
+                {/* TODO: display message for empty tabs */}
+                {isForAuthorizer && (!isKycApproved || !hasAccreditation) && (
+                  <></>
+                )}
 
-            {!isKycApproved ? (
-              <StatusBox
-                isForAuthorizer={isForAuthorizer}
-                status={'Locked'}
-                identityType='corporate'
-                applicationType='accreditation'
-              />
-            ) : !hasAccreditation && !isForAuthorizer ? (
-              <AccreditationCTA
-                link={IdentityRoute.createCorporateAccreditation}
-                params={{
-                  identityId: data._id,
-                  userId: data.user._id
-                }}
-              />
-            ) : (
-              <>
-                {data.accreditationStatus !== 'Draft' && (
+                {!isKycApproved ? (
                   <StatusBox
                     isForAuthorizer={isForAuthorizer}
-                    status={data.accreditationStatus ?? 'Pending'}
+                    status={'Locked'}
                     identityType='corporate'
                     applicationType='accreditation'
-                    investorRole={data.applyingAs}
                   />
-                )}
-                {data.accreditationStatus === 'Rejected' && (
+                ) : !hasAccreditation && !isForAuthorizer ? (
                   <AccreditationCTA
-                    link={IdentityRoute.editCorporateAccreditation}
+                    link={IdentityRoute.createCorporateAccreditation}
                     params={{
                       identityId: data._id,
                       userId: data.user._id
                     }}
-                    retry
                   />
-                )}
-
-                <CorporateAccreditationView data={data} />
-              </>
-            )}
-          </TabPanel>
-        </Grid>
-        <Grid container item className={classes.rightBlock}>
-          <Box position='sticky' top={90}>
-            {hasContent && (
-              <Paper
-                sx={{
-                  p: 4,
-                  borderRadius: 2,
-                  mb: 2
-                }}
-              >
-                <ScrollSpy sections={sections} />
-                {(isForAuthorizer || isAllowedToEdit) && (
+                ) : (
                   <>
-                    <Divider sx={{ margin: '25px 0' }} />
-                    <EditApplication
-                      applicationType={onKycTab ? 'kyc' : 'accreditation'}
-                      identityType='corporate'
-                      identityId={data._id}
-                      userId={data.user._id}
-                      link={
-                        onKycTab
-                          ? details.editLink
-                          : IdentityRoute.editCorporateAccreditation
-                      }
-                      buttonOnly
-                    />
+                    {data.accreditationStatus !== 'Draft' && (
+                      <StatusBox
+                        isForAuthorizer={isForAuthorizer}
+                        status={data.accreditationStatus ?? 'Pending'}
+                        identityType='corporate'
+                        applicationType='accreditation'
+                        investorRole={data.applyingAs}
+                      />
+                    )}
+                    {data.accreditationStatus === 'Rejected' &&
+                      !isForAuthorizer && (
+                        <AccreditationCTA
+                          link={IdentityRoute.editCorporateAccreditation}
+                          params={{
+                            identityId: data._id,
+                            userId: data.user._id
+                          }}
+                          retry
+                        />
+                      )}
+                    {hasAccreditation && (
+                      <CorporateAccreditationView data={data} />
+                    )}
                   </>
                 )}
-              </Paper>
-            )}
+              </TabPanel>
+            </Grid>
+            <Grid container item className={classes.rightBlock}>
+              <Box position='sticky' top={90}>
+                {hasContent && (
+                  <Paper
+                    sx={{
+                      p: 4,
+                      borderRadius: 2,
+                      mb: 2
+                    }}
+                  >
+                    <ScrollSpy sections={sections} />
+                    {(isForAuthorizer || isAllowedToEdit) && (
+                      <>
+                        <Divider sx={{ margin: '25px 0' }} />
+                        <EditApplication
+                          applicationType={onKycTab ? 'kyc' : 'accreditation'}
+                          identityType='corporate'
+                          identityId={data._id}
+                          userId={data.user._id}
+                          link={
+                            onKycTab
+                              ? details.editLink
+                              : !isForAuthorizer
+                              ? IdentityRoute.editCorporateAccreditation
+                              : AuthorizerRoute.editCorporateAccreditation
+                          }
+                          buttonOnly
+                        />
+                      </>
+                    )}
+                  </Paper>
+                )}
 
-            {!isForAuthorizer && (
-              <Box sx={{ display: 'flex', justifyContent: 'stretch' }}>
-                <TwoFANotice />
+                {!isForAuthorizer && (
+                  <Box sx={{ display: 'flex', justifyContent: 'stretch' }}>
+                    <TwoFANotice />
+                  </Box>
+                )}
               </Box>
-            )}
-          </Box>
-        </Grid>
+            </Grid>
+          </>
+        )}
       </Grid>
     </>
   )

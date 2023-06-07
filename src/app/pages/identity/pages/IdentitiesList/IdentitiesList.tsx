@@ -9,6 +9,7 @@ import { RootContainer } from 'ui/RootContainer'
 import { Redirect } from 'react-router-dom'
 import { AppRoute } from 'app/router/config'
 import { useServices } from 'hooks/useServices'
+import { isEmptyString } from 'helpers/strings'
 
 export const IdentitiesList: React.FC = () => {
   const { hasIdentity, identityLoaded, isLoadingIdentities } =
@@ -34,7 +35,7 @@ export const IdentitiesList: React.FC = () => {
             <Grid item xs={12}>
               <Typography variant='h3' sx={{ marginBottom: '5px' }}>
                 {!isIndividual &&
-                typeof identityLoaded?.companyLegalName !== 'undefined'
+                !isEmptyString(identityLoaded?.companyLegalName)
                   ? identityLoaded.companyLegalName
                   : identityLoaded?.user.name}
               </Typography>
