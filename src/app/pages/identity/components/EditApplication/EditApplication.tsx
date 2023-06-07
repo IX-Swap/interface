@@ -9,6 +9,7 @@ export interface EditApplicationProps {
   identityId: string
   userId: string
   link: string
+  buttonOnly?: boolean
 }
 
 export const EditApplication: React.FC<EditApplicationProps> = ({
@@ -16,39 +17,44 @@ export const EditApplication: React.FC<EditApplicationProps> = ({
   identityType,
   identityId,
   userId,
-  link
+  link,
+  buttonOnly = false
 }) => {
   const application = applicationType === 'kyc' ? 'KYC' : 'Accreditation'
   const identity = capitalizeFirstLetter(identityType)
 
   return (
     <>
-      <Typography
-        variant={'h5'}
-        color={'text.primary'}
-        textAlign={'center'}
-        mb={4}
-      >
-        {`Edit ${identity} ${application}`}
-      </Typography>
-      <Typography
-        variant={'body1'}
-        color={'text.primary'}
-        textAlign={'center'}
-        mb={4}
-      >
-        You may edit your {identityType}{' '}
-        {applicationType === 'kyc'
-          ? applicationType.toUpperCase()
-          : applicationType}{' '}
-        at any point after the submission of the application, and the resulting
-        changes will be subject to approval.
-      </Typography>
+      {!buttonOnly && (
+        <>
+          <Typography
+            variant={'h5'}
+            color={'text.primary'}
+            textAlign={'center'}
+            mb={4}
+          >
+            {`Edit ${identity} ${application}`}
+          </Typography>
+          <Typography
+            variant={'body1'}
+            color={'text.primary'}
+            textAlign={'center'}
+            mb={4}
+          >
+            You may edit your {identityType}{' '}
+            {applicationType === 'kyc'
+              ? applicationType.toUpperCase()
+              : applicationType}{' '}
+            at any point after the submission of the application, and the
+            resulting changes will be subject to approval.
+          </Typography>
+        </>
+      )}
 
       <EditButton
         showIcon
         fullWidth
-        variant={'contained'}
+        variant={'outlined'}
         link={link}
         params={{
           identityId,

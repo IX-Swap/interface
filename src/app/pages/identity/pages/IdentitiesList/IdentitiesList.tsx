@@ -15,10 +15,10 @@ export const IdentitiesList: React.FC = () => {
     useGetIdentities()
   const classes = useStyles()
   const { storageService } = useServices()
+  const user: any = storageService.get('user')
+  const isIndividual = user.accountType === 'INDIVIDUAL'
 
   if (!hasIdentity && !isLoadingIdentities) {
-    const user: any = storageService.get('user')
-    const isIndividual = user.accountType === 'INDIVIDUAL'
     const createKYCRoute = isIndividual
       ? '/individuals/create'
       : '/corporates/create'
@@ -33,7 +33,9 @@ export const IdentitiesList: React.FC = () => {
           <Grid item container className={classes.nameIdentity}>
             <Grid item xs={12}>
               <Typography variant='h3' sx={{ marginBottom: '5px' }}>
-                {identityLoaded?.user.name}
+                {isIndividual
+                  ? identityLoaded?.user.name
+                  : identityLoaded?.companyLegalName}
               </Typography>
             </Grid>
             <Box className={classes.box}>

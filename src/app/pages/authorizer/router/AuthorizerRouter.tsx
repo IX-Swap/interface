@@ -62,7 +62,7 @@ export const AuthorizerRouter = () => {
         <AuthorizerCorporateAccreditationsRouter />
       </AppRoute>
       <AppRoute
-        breadcrumb='Corporate KYC Applications'
+        breadcrumb='Corporate Investor Applications'
         path={AuthorizerRoute.corporateIdentities}
       >
         <AuthorizerCorporateIdentitiesRouter />

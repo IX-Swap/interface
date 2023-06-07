@@ -14,7 +14,7 @@ export const Breadcrumbs = () => {
   const classes = useStyles()
 
   return (
-    <MuiBreadcrumbs>
+    <MuiBreadcrumbs sx={{ zIndex: 2 }}>
       {links.map(({ label, path }) => (
         <AppRouterLink key={path} to={path} params={params}>
           {label}
