@@ -8,7 +8,7 @@ import {
   DsoVideo
 } from 'types/dso'
 import { corporateName, lettersOrSpaces } from 'validation/regexes'
-import { array, boolean, number, object, string } from 'yup'
+import { array, number, object, string } from 'yup'
 import { dateSchema, validationMessages } from './shared'
 import {
   isBeforeDate,
@@ -151,7 +151,6 @@ export const dsoInformationValidationSchemaStep1: any = {
       "Corporate must include only letters, numbers and these special characters . , - ; & '"
     ),
   currency: string().required('Currency is required'),
-  isCampaign: boolean(),
   issuerName: string().required('Issuer Name is required'),
   launchDate: dateSchema
     .required('Launch Date is required')
