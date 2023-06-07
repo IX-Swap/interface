@@ -163,7 +163,6 @@ export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   currency: Asset
   insight: DSOInsight
   network?: Network
-  disableInvestInCampaign?: boolean
 }
 
 export interface NewDigitalSecurityOffering
@@ -175,7 +174,6 @@ export interface NewDigitalSecurityOffering
   currency: Asset
   insight: DSOInsight
   network?: Network
-  disableInvestInCampaign?: boolean
 }
 
 export type DSOFormValues = Omit<
