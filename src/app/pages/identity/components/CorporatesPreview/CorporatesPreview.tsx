@@ -142,7 +142,7 @@ export const CorporatesPreview = ({
       </Grid>
 
       <Grid container className={classes.wrapper}>
-        {!hasContent ? (
+        {!hasContent && isForAuthorizer ? (
           <Paper
             sx={{
               p: 4,

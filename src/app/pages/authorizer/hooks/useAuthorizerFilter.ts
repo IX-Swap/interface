@@ -32,7 +32,7 @@ export const useAuthorizerFilter = () => {
   const onlyAccreditationIsChecked = !isKYCChecked && isAccreditationChecked
   const bothAreChecked = isKYCChecked && isAccreditationChecked
   const statusFilterQueryValue = bothAreChecked
-    ? 'BOTH'
+    ? 'ALL'
     : onlyKYCIsChecked
     ? 'KYC'
     : onlyAccreditationIsChecked
