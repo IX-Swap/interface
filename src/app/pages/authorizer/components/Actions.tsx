@@ -24,13 +24,22 @@ export interface ActionsProps {
 
 export type ActionsType = (props: ActionsProps) => ReactElement
 
-const getUserId = (item: any) => {
-  if (typeof item.user === 'string') {
-    return item.user
-  }
+const getUserId = (item: any, category: string) => {
+  if (
+    ![
+      'individuals',
+      'individuals/accreditation',
+      'corporates',
+      'corporates/accreditation'
+    ].includes(category)
+  ) {
+    if (typeof item.user === 'string') {
+      return item.user
+    }
 
-  if (typeof item.createdBy === 'string') {
-    return item.createdBy
+    if (typeof item.createdBy === 'string') {
+      return item.createdBy
+    }
   }
 
   return item.user?._id
@@ -52,7 +61,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     typeof featureCategory !== 'undefined'
       ? featureCategory
       : splitted[splitted.length - 1]
-  const userId: string = getUserId(item)
+  const userId: string = getUserId(item, category)
   const listingType: string = item.listingType
   //   console.log(props.item, 'propsdpdppd')
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
