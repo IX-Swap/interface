@@ -49,6 +49,7 @@ export const RoleActions = forwardRef(
         />
         <FormControl className={classes.formControl}>
           <InvestorRoleSelect
+            investorIdentity={user.accountType}
             value={newRoles}
             roles={roles}
             onClose={onClose}
