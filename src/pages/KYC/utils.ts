@@ -66,7 +66,6 @@ export const corporateTransformKycDto = (values: any) => {
     taxCountry,
     beneficialOwners,
     incorporationDate,
-    incorporationExpiryDate,
   } = values
 
   return {
@@ -74,10 +73,6 @@ export const corporateTransformKycDto = (values: any) => {
     ...(!isUSTaxPayer && { usTin: '' }),
     incorporationDate:
       typeof incorporationDate === 'string' ? incorporationDate : incorporationDate.format('MM/DD/YYYY'),
-    incorporationExpiryDate:
-      typeof incorporationExpiryDate === 'string'
-        ? incorporationExpiryDate
-        : incorporationExpiryDate.format('MM/DD/YYYY'),
     typeOfLegalEntity: typeOfLegalEntity.label,
     sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
     countryOfIncorporation: countryOfIncorporation.label,

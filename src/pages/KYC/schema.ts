@@ -111,7 +111,6 @@ export const corporateErrorsSchema = yup.object().shape({
 
   registrationNumber: yup.string().required('Required'),
   incorporationDate: yup.mixed().nullable().required('Required'),
-  incorporationExpiryDate: yup.mixed().nullable().required('Required'),
   inFatfJurisdiction: yup.string().required('Required'),
 
   personnelName: yup.string().required('Required'),

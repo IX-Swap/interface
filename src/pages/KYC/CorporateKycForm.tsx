@@ -312,7 +312,6 @@ export default function CorporateKycForm() {
                 !errors.businessActivity &&
                 !errors.registrationNumber &&
                 !errors.incorporationDate &&
-                !errors.incorporationExpiryDate &&
                 !errors.inFatfJurisdiction
               const authorizedPersonnelFilled =
                 shouldValidate &&
@@ -406,17 +405,6 @@ export default function CorporateKycForm() {
                                 validationSeen('incorporationDate')
                               }}
                               maxDate={new Date()}
-                            />
-                            <DateInput
-                              label="Date of Incorporation Expiry"
-                              maxHeight={60}
-                              error={errors.incorporationExpiryDate}
-                              value={values.incorporationExpiryDate}
-                              onChange={(value) => {
-                                setFieldValue('incorporationExpiryDate', value, false)
-                                validationSeen('incorporationExpiryDate')
-                              }}
-                              minDate={new Date()}
                             />
                           </FormGrid>
                           <FormGrid columns={1}>
