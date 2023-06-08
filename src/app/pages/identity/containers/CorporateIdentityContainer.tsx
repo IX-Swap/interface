@@ -46,7 +46,5 @@ export const CorporateIdentityContainer = ({
     return createElement(component, { data, type })
   }
 
-  const isIssuer = data.type === 'issuer'
-
-  return <CorporateIdentityView data={data} isIssuer={isIssuer} showReview />
+  return <CorporateIdentityView data={data} showReview />
 }

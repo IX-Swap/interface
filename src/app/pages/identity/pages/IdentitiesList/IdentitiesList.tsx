@@ -9,16 +9,17 @@ import { RootContainer } from 'ui/RootContainer'
 import { Redirect } from 'react-router-dom'
 import { AppRoute } from 'app/router/config'
 import { useServices } from 'hooks/useServices'
+import { isEmptyString } from 'helpers/strings'
 
 export const IdentitiesList: React.FC = () => {
   const { hasIdentity, identityLoaded, isLoadingIdentities } =
     useGetIdentities()
   const classes = useStyles()
   const { storageService } = useServices()
+  const user: any = storageService.get('user')
+  const isIndividual = user.accountType === 'INDIVIDUAL'
 
   if (!hasIdentity && !isLoadingIdentities) {
-    const user: any = storageService.get('user')
-    const isIndividual = user.accountType === 'INDIVIDUAL'
     const createKYCRoute = isIndividual
       ? '/individuals/create'
       : '/corporates/create'
@@ -33,7 +34,10 @@ export const IdentitiesList: React.FC = () => {
           <Grid item container className={classes.nameIdentity}>
             <Grid item xs={12}>
               <Typography variant='h3' sx={{ marginBottom: '5px' }}>
-                {identityLoaded?.user.name}
+                {!isIndividual &&
+                !isEmptyString(identityLoaded?.companyLegalName)
+                  ? identityLoaded.companyLegalName
+                  : identityLoaded?.user.name}
               </Typography>
             </Grid>
             <Box className={classes.box}>

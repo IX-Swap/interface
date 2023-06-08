@@ -10,32 +10,27 @@ import { Actions } from 'app/pages/authorizer/components/Actions'
 const renderColumnWithApproval = (
   row: object,
   status: string,
-  role?: string
+  isAccreditation: boolean = false
 ) => {
   return (
     <Box display={'flex'} justifyContent={''}>
-      {typeof role !== 'undefined'
-        ? renderRoleStatus(row, role)
+      {isAccreditation
+        ? renderAccreditationStatus(row)
         : renderStatus(row, status)}
     </Box>
   )
 }
 
-const renderRoleStatus = (row: any, role: string) => {
+const renderAccreditationStatus = (row: any) => {
   let label = 'N/A'
   let status = 'Draft'
 
-  if (
-    typeof row.declaredAs !== 'undefined' &&
-    Boolean(row.declaredAs.includes(role)) &&
-    typeof row.declaredAsStatus !== 'undefined' &&
-    Boolean(role in row.declaredAsStatus)
-  ) {
-    label = row.declaredAsStatus[role]
-    status = row.declaredAsStatus[role]
+  if (typeof row.accreditationStatus !== 'undefined') {
+    label = row.accreditationStatus
+    status = row.accreditationStatus
   }
 
-  return renderStatus(row, status, label, 'corporates/role', role)
+  return renderStatus(row, status, label, 'corporates/accreditation', true)
 }
 
 const renderStatus = (
@@ -43,7 +38,7 @@ const renderStatus = (
   status: string,
   label?: string,
   featureCategory?: string,
-  role?: string
+  isAccreditation: boolean = false
 ) => (
   <>
     <Status label={label ?? status} type={status.toLowerCase()} />
@@ -51,16 +46,13 @@ const renderStatus = (
       item={row}
       cacheQueryKey={''}
       featureCategory={featureCategory}
-      investorRole={role}
-      statusFieldName={
-        typeof role !== 'undefined' ? `declaredAsStatus.${role}` : 'status'
-      }
+      statusFieldName={isAccreditation ? 'accreditationStatus' : 'status'}
     />
   </>
 )
 
-const renderType = (type?: string) =>
-  typeof type !== 'undefined' && type.charAt(0).toUpperCase() + type.slice(1)
+// const renderType = (type?: string) =>
+//   typeof type !== 'undefined' && type.charAt(0).toUpperCase() + type.slice(1)
 
 export const columns: Array<TableColumn<CorporateIdentity>> = [
   {
@@ -73,6 +65,10 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
     label: 'Company Name'
   },
   {
+    key: 'user.email',
+    label: 'Email'
+  },
+  {
     key: 'companyAddress.country',
     label: 'Country'
   },
@@ -81,11 +77,11 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
     label: 'Representative',
     render: renderRepresentativeName
   },
-  {
-    key: 'type',
-    label: 'Type',
-    render: renderType
-  },
+  //   {
+  //     key: 'type',
+  //     label: 'Type',
+  //     render: renderType
+  //   },
   {
     key: 'cynopsis',
     label: 'Risk Report',
@@ -95,18 +91,12 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
     key: 'status',
     label: 'KYC Status',
     render: (status, row) => renderColumnWithApproval(row, status)
+  },
+  {
+    key: 'accreditationStatus',
+    label: 'Accreditation Status',
+    render: (status, row) => renderColumnWithApproval(row, status, true)
   }
-  //   {
-  //     key: 'declaredAsStatus',
-  //     label: 'Issuer Status',
-  //     render: (status, row) => renderColumnWithApproval(row, status, 'issuer')
-  //   },
-  //   {
-  //     key: 'declaredAsStatus',
-  //     label: 'Client Status',
-  //     render: (status, row) =>
-  //       renderColumnWithApproval(row, status, 'tenantOwner')
-  //   }
 ]
 
 export const compactColumns = [...columns.slice(1)]

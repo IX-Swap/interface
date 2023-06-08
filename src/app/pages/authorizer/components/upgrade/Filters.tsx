@@ -2,6 +2,7 @@ import React from 'react'
 import { SidebarSection } from 'ui/Sidebar/SidebarSection'
 import { StatusFilter } from './StatusFilter'
 import { SearchAndDateFilter } from './SearchAndDateFilter'
+import { Form } from 'components/form/Form'
 
 export const Filters = () => {
   return (
@@ -11,7 +12,9 @@ export const Filters = () => {
       </SidebarSection>
 
       <SidebarSection padded>
-        <SearchAndDateFilter />
+        <Form>
+          <SearchAndDateFilter />
+        </Form>
       </SidebarSection>
     </>
   )

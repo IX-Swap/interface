@@ -26,6 +26,8 @@ export const useCorporate = (args: UseCorporateArgs) => {
     { enabled: !isEmptyString(userId) && !isEmptyString(identityId) }
   )
 
+  console.log(data)
+
   return {
     ...rest,
     data: data?.data

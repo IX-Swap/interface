@@ -11,19 +11,11 @@ export interface UseApproveOrRejectArgs {
   payload?: Record<string, any>
   listingType?: any
   featureCategory?: string
-  investorRole?: string
 }
 
 export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
-  const {
-    action,
-    cacheQueryKey,
-    id,
-    payload,
-    listingType,
-    featureCategory,
-    investorRole
-  } = args
+  const { action, cacheQueryKey, id, payload, listingType, featureCategory } =
+    args
   // console.log(listingType,cacheQueryKey, payload, id, 'listingTypelistingType')
   const queryCache = useQueryCache()
   const categoryFromUrl = useAuthorizerCategory()
@@ -39,8 +31,6 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
       ? `/identity/accreditation/individual/${id}/${action}`
       : category === 'corporates/accreditation'
       ? `/identity/accreditation/corporate/${id}/${action}`
-      : category === 'corporates/role'
-      ? `/identity/corporates/${id}/role/${action}`
       : category === 'listings' && action === 'approve'
       ? // : listingType === 'OTC' || listingType === 'Exchange' || listingType === 'Exchange/OTC'
         `/exchange/listing/${id}/${action}`
@@ -63,13 +53,6 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
     if (category === 'listings' && action === 'approve') {
       reqPayload = { listingType: listingType }
     }
-
-    if (category === 'corporates/role' && typeof investorRole !== 'undefined') {
-      reqPayload = { role: investorRole }
-    }
-
-    console.log(investorRole)
-    console.log(reqPayload)
 
     return await apiService.put(url, reqPayload)
   }

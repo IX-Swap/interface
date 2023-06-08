@@ -4,6 +4,7 @@ import { QueryFilter, useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useContext } from 'react'
 
 export interface SearchQueryFilterGroupResetProps extends ButtonProps {
+  pageType?: string
   filters: QueryFilter[]
 }
 
@@ -13,7 +14,7 @@ export const SearchQueryFilterGroupReset = (
   const { pageType, filters, children, ...rest } = props
   const filterGroupDispatch = useContext(SearchQueryFilterGroupDispatchContext)
   const { removeFilters, getHasValue } = useQueryFilter()
-  console.log(props, 'ppppp')
+
   if (filterGroupDispatch === undefined) {
     throw new Error(
       'SearchQueryFilterGroupResetAll must be a descendant of SearchQueryFilterGroupProvider'

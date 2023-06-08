@@ -19,7 +19,6 @@ export interface ActionsProps {
   item: any
   cacheQueryKey: any
   featureCategory?: string
-  investorRole?: string
   statusFieldName?: string
 }
 
@@ -42,7 +41,6 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     item,
     cacheQueryKey,
     featureCategory,
-    investorRole,
     statusFieldName = 'status'
   } = props
   const location = useLocation()
@@ -51,8 +49,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
   const status = location.search.split('=')[1]
 
   const category =
-    typeof featureCategory !== 'undefined' &&
-    featureCategory !== 'corporates/role'
+    typeof featureCategory !== 'undefined'
       ? featureCategory
       : splitted[splitted.length - 1]
   const userId: string = getUserId(item)
@@ -63,8 +60,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     action: 'approve',
     cacheQueryKey,
     listingType,
-    featureCategory,
-    investorRole
+    featureCategory
   })
 
   const [reject, { isLoading: isRejecting }] = useApproveOrReject({
@@ -72,8 +68,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     action: 'reject',
     cacheQueryKey,
     listingType,
-    featureCategory,
-    investorRole
+    featureCategory
   })
 
   const view = () =>
@@ -93,6 +88,14 @@ export const Actions = (props: ActionsProps): JSX.Element => {
       : status === '' && category === 'cash-withdrawals'
       ? history.push(
           `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
+        )
+      : category === 'individuals/accreditation'
+      ? history.push(
+          `/app/authorizer/individuals/${userId}/${id}/view?tab=accreditation`
+        )
+      : category === 'corporates/accreditation'
+      ? history.push(
+          `/app/authorizer/corporates/${userId}/${id}/view?tab=accreditation`
         )
       : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
   //   console.log(
