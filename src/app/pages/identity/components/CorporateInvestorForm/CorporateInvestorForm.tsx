@@ -41,6 +41,7 @@ export const CorporateInvestorForm = ({
   const { isCorporateJourneyCompleted } = useOnboardingJourneys()
   const { data: corporateData, isLoading } = useAllCorporates({})
   const { location, replace } = useHistory()
+
   useEffect(() => {
     if (!isLoading) {
       if (
