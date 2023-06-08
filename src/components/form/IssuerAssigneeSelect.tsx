@@ -1,31 +1,38 @@
 import * as React from 'react'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
-import { useIssuerAssignee } from 'app/pages/issuance/hooks/UseIssuerAssignee'
+import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 
 interface Assignee {
-  name: string
-  _id: string
+  companyLegalName: string
 }
 
 export const IssuerAssigneeSelect = (props: any) => {
-  const { data } = useIssuerAssignee()
+  // const { data } = useIssuerAssignee()
+  const { data } = useAllCorporates({ all: true, status: 'Approved' })
 
   const setIssuerValue = (event: any, value: any) => {
-    sessionStorage.setItem('issuerId', value._id)
+    console.log(value)
+    sessionStorage.setItem('issuerId', value?.user?._id)
   }
+
+  const renderdOptions = data.list.map(data => {
+    return data
+  })
 
   return (
     <Autocomplete
+      disablePortal
       id='Select_IssuerAssigneeSelect'
-      options={data?.data}
-      getOptionLabel={(option: Assignee) => option.name}
+      options={renderdOptions}
+      getOptionLabel={(option: Assignee) => option.companyLegalName}
       onChange={setIssuerValue}
       ListboxProps={{
         style: {
           boxShadow: '0px 80px 80px rgba(162, 172, 191, 0.16)',
           border: '1px solid #EDF2FA',
-          borderRadius: '8px'
+          borderRadius: '8px',
+          fontSize: '16px'
         }
       }}
       renderInput={params => (
@@ -34,7 +41,8 @@ export const IssuerAssigneeSelect = (props: any) => {
           label='Issuer Assignee'
           placeholder='Select Issuer Assignee'
           InputProps={{
-            ...params.InputProps
+            ...params.InputProps,
+            disableUnderline: false
           }}
         />
       )}
