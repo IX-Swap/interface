@@ -12,12 +12,20 @@ import { useServices } from 'hooks/useServices'
 import { isEmptyString } from 'helpers/strings'
 
 export const IdentitiesList: React.FC = () => {
-  const { hasIdentity, identityLoaded, isLoadingIdentities } =
-    useGetIdentities()
+  const {
+    // hasIdentity,
+    identityLoaded,
+    isLoadingIdentities,
+    individualIdentity,
+    corporateIdentities
+  } = useGetIdentities()
   const classes = useStyles()
   const { storageService } = useServices()
   const user: any = storageService.get('user')
   const isIndividual = user.accountType === 'INDIVIDUAL'
+  const hasIdentity =
+    (isIndividual && individualIdentity !== undefined) ||
+    (!isIndividual && corporateIdentities.list.length > 0)
 
   if (!hasIdentity && !isLoadingIdentities) {
     const createKYCRoute = isIndividual

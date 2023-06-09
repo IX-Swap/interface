@@ -1,5 +1,5 @@
+import React from 'react'
 import { Grid } from '@mui/material'
-// import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { IndividualPreview } from 'app/pages/identity/components/IndividualPreview/IndividualPreview'
@@ -9,8 +9,7 @@ import { CorporatesPreview } from 'app/pages/identity/components/CorporatesPrevi
 // import { IssuerIdentityButton } from 'app/pages/identity/components/IdentityPreview/IssuerIdentityButton'
 // import { CreateDetailsOfIssuanceButton } from 'app/pages/identity/components/NoIdentityView/CreateDetailsOfIssuanceButton'
 // import { CreateIssuerIdentityButton } from 'app/pages/identity/components/NoIdentityView/CreateIssuerIdentityButton'
-import React from 'react'
-// import { TwoFAAlert } from '../../pages/SuccessPage/TwoFAAlert'
+import { useServices } from 'hooks/useServices'
 export const IdentityPreview = () => {
   const {
     hasIdentity,
@@ -19,7 +18,10 @@ export const IdentityPreview = () => {
     corporateIdentities
     // detailsOfIssuance
   } = useGetIdentities()
-  const hasIndividual = individualIdentity !== undefined
+  const { storageService } = useServices()
+  const user: any = storageService.get('user')
+  const isIndividual = user.accountType === 'INDIVIDUAL'
+  //   const hasIndividual = individualIdentity !== undefined
   //   const hasCorporate =
   //     corporateIdentities !== undefined && corporateIdentities.list.length > 0
   //   const hasDetailsOfIssuance = detailsOfIssuance !== undefined
@@ -78,7 +80,7 @@ export const IdentityPreview = () => {
         </div>
       </Grid> */}
       <Grid item xs={12}>
-        {hasIndividual ? (
+        {isIndividual ? (
           <IndividualPreview data={individualIdentity} />
         ) : (
           <CorporatesPreview data={corporateIdentities.list[0]} />
