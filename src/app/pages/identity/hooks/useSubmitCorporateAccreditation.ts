@@ -9,7 +9,7 @@ import { getCorporateAccreditationSubmitPayload } from 'app/pages/identity/utils
 
 export const useSubmitCorporateAccreditation = (callback?: () => void) => {
   const { snackbarService, apiService, storageService } = useServices()
-  const params = useParams<{ identityId: string }>()
+  const params = useParams<{ userId: string; identityId: string }>()
   const queryCache = useQueryCache()
   const { location, replace } = useHistory()
 
@@ -33,9 +33,7 @@ export const useSubmitCorporateAccreditation = (callback?: () => void) => {
 
       if (location.pathname.includes('authorizer')) {
         replace(
-          `/app/authorizer/corporates/${String(params.userId)}/${
-            params.identityId
-          }/view?tab=accreditation`
+          `/app/authorizer/corporates/${params.userId}/${params.identityId}/view?tab=accreditation`
         )
       } else {
         replace(IdentityRoute.identitySuccess)

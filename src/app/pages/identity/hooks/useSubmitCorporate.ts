@@ -9,7 +9,7 @@ import { getCorporateSubmitPayload } from 'app/pages/identity/utils/corporate/re
 
 export const useSubmitCorporate = (callback?: () => void) => {
   const { snackbarService, apiService, storageService } = useServices()
-  const params = useParams<{ identityId: string }>()
+  const params = useParams<{ userId: string; identityId: string }>()
   const queryCache = useQueryCache()
   const { location, replace } = useHistory()
 
@@ -33,9 +33,7 @@ export const useSubmitCorporate = (callback?: () => void) => {
 
       if (location.pathname.includes('authorizer')) {
         replace(
-          `/app/authorizer/corporates/${String(params.userId)}/${
-            params.identityId
-          }/view`
+          `/app/authorizer/corporates/${params.userId}/${params.identityId}/view`
         )
       } else {
         replace(IdentityRoute.identitySuccess)

@@ -1,7 +1,7 @@
-import { useServices } from 'hooks/useServices'
-import { useAuth } from 'hooks/auth/useAuth'
 import { useMutation, useQueryCache } from 'react-query'
-import { getIdFromObj } from 'helpers/strings'
+import { useServices } from 'hooks/useServices'
+// import { useAuth } from 'hooks/auth/useAuth'
+// import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { useParams } from 'react-router-dom'
@@ -9,13 +9,13 @@ import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 export const useUpdateCorporate = () => {
   const { snackbarService, apiService } = useServices()
-  const { user } = useAuth()
-  const userId = getIdFromObj(user)
-  const params = useParams<{ identityId: string }>()
+  //   const { user } = useAuth()
+  //   const userId = getIdFromObj(user)
+  const params = useParams<{ userId: string; identityId: string }>()
   const queryCache = useQueryCache()
 
   const updateCorporate = async (values: any) => {
-    const uri = identityURL.corporates.update(userId, params.identityId)
+    const uri = identityURL.corporates.update(params.userId, params.identityId)
 
     values.step = typeof values.step === 'undefined' ? 0 : values.step
 
@@ -31,7 +31,7 @@ export const useUpdateCorporate = () => {
       void snackbarService.showSnackbar(data.message, 'success')
       void queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
       await queryCache.invalidateQueries([
-        identityQueryKeys.getCorporate(userId, data.data?._id)
+        identityQueryKeys.getCorporate(params.userId, data.data?._id)
       ])
     },
     onError: (error: any) => {
