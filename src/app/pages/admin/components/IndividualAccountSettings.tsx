@@ -1,11 +1,9 @@
 import React from 'react'
-import { Tabs, Tab, Box } from '@mui/material'
-import { TabPanel } from 'app/pages/admin/components/TabPanel'
+import { Tabs, Tab, Box, Grid } from '@mui/material'
+import { TabPanel } from 'components/TabPanel'
 import { AccountLoginHistory } from 'app/pages/admin/components/AccountLoginHistory'
-import { VSpacer } from 'components/VSpacer'
 import { useIndividualAccountSettings } from 'app/pages/admin/hooks/useIndividualAccountSettings'
-import { RoleManagement } from 'app/pages/admin/components/RoleManagement'
-import { useStyles } from 'app/pages/admin/components/IndividualAccountSettings.style'
+import { useStyles } from './UserDetails.styles'
 import { RevokeAccess } from 'app/pages/admin/components/RevokeAccess'
 
 export interface IndividualAccountSettingsProps {
@@ -16,33 +14,34 @@ export const IndividualAccountSettings = ({
   activeRoles
 }: IndividualAccountSettingsProps) => {
   const { value, handleChange } = useIndividualAccountSettings(0)
-
-  const { tab } = useStyles()
+  const classes = useStyles()
+  const { tabBarStyle, gridPadding } = classes
 
   return (
-    <Box paddingY={10}>
+    <Box>
       <Tabs
         value={value}
         onChange={handleChange}
         indicatorColor='primary'
         textColor='primary'
-        variant='fullWidth'
-        className={tab}
+        className={tabBarStyle}
       >
         <Tab label='Login History' />
         <Tab label='Revoke Access' />
-        <Tab label='Role Management' />
+        {/* <Tab label='Role Management' /> */}
       </Tabs>
-      <VSpacer size='medium' />
-      <TabPanel value={value} index={0}>
-        <AccountLoginHistory />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <RevokeAccess />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <RoleManagement activeRoles={activeRoles} />
-      </TabPanel>
+      {/* <VSpacer size='medium' /> */}
+      <Grid className={gridPadding}>
+        <TabPanel value={value} index={0}>
+          <AccountLoginHistory />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <RevokeAccess />
+        </TabPanel>
+        {/* <TabPanel value={value} index={2}>
+          <RoleManagement activeRoles={activeRoles} />
+        </TabPanel> */}
+      </Grid>
     </Box>
   )
 }

@@ -16,7 +16,9 @@ const containsText = (text: any, searchText: string) =>
 
 export const IssuerAssigneeSelect = () => {
   const { data } = useAllCorporates({ all: true, status: 'Approved' })
-  const [selectedOption, setSelectedOption] = useState()
+  const [selectedOption, setSelectedOption] = useState(
+    data?.list[0]?.companyLegalName
+  )
   const [searchText, setSearchText] = useState('')
 
   const renderdOptions = data.list.map(data => {

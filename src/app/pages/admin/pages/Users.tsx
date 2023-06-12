@@ -14,14 +14,18 @@ import User from 'types/user'
 import { RootContainer } from 'ui/RootContainer'
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
 import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQueryFilterGroup/SearchQueryFilterGroup'
+import { useStyles } from '../components/UserDetails.styles'
 export const Users = () => {
   const { getFilterValue } = useQueryFilter()
   useSetPageTitle('User Roles')
 
   const ref = useRef(null)
+
   const filter = {
     search: getFilterValue('search')
   }
+  const classes = useStyles()
+  const { searchStyle } = classes
 
   return (
     <Grid container direction='column' spacing={3} style={{ display: 'table' }}>
@@ -31,15 +35,7 @@ export const Users = () => {
       <RootContainer>
         <SearchQueryFilterGroup>
           <Grid container direction='column'>
-            <Grid
-              style={{
-                display: 'flex',
-                padding: '20px',
-                background: 'white',
-                marginBottom: '10px'
-              }}
-              gap={3}
-            >
+            <Grid className={searchStyle} gap={3}>
               <Grid xs={11}>
                 <TextInputSearchFilter
                   fullWidth
