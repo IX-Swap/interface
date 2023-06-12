@@ -4,14 +4,16 @@ import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import columns from 'app/pages/admin/columns'
 import { Actions } from 'app/pages/admin/components/Actions'
-import { TableView } from 'components/TableWithPagination/TableView'
+// import { RoleActions } from '../components/RoleActions'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { userURL } from 'config/apiURL'
 import { usersQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useRef } from 'react'
 import User from 'types/user'
 import { RootContainer } from 'ui/RootContainer'
-
+import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
+import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQueryFilterGroup/SearchQueryFilterGroup'
 export const Users = () => {
   const { getFilterValue } = useQueryFilter()
   useSetPageTitle('User Roles')
@@ -27,27 +29,50 @@ export const Users = () => {
         <PageHeader title='Users' />
       </Grid>
       <RootContainer>
-        <Grid container direction='column' spacing={3}>
-          <Grid item xs={12} md={6} lg={4}>
-            <TextInputSearchFilter
-              fullWidth
-              placeholder='Search'
-              inputAdornmentPosition='end'
-            />
+        <SearchQueryFilterGroup>
+          <Grid container direction='column'>
+            <Grid
+              style={{
+                display: 'flex',
+                padding: '20px',
+                background: 'white',
+                marginBottom: '10px'
+              }}
+              gap={3}
+            >
+              <Grid xs={11}>
+                <TextInputSearchFilter
+                  fullWidth
+                  placeholder='Search'
+                  inputAdornmentPosition='start'
+                />
+              </Grid>
+              <Grid>
+                <SearchQueryFilterGroupReset
+                  filters={['search']}
+                  variant='outlined'
+                  size='small'
+                  disableElevation
+                  style={{ height: '52px' }}
+                  pageType={'user'}
+                >
+                  Reset
+                </SearchQueryFilterGroupReset>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <TableView<User>
+                innerRef={ref}
+                uri={userURL.getAll}
+                name={usersQueryKeys.getList}
+                columns={columns}
+                actions={({ item }) => renderActions(item, ref)}
+                filter={filter}
+                actionHeader='User Roles'
+              />
+            </Grid>
           </Grid>
-          <Grid item>
-            <TableView<User>
-              innerRef={ref}
-              uri={userURL.getAll}
-              name={usersQueryKeys.getList}
-              columns={columns}
-              hasActions
-              actions={({ item }) => renderActions(item, ref)}
-              filter={filter}
-              actionHeader='Roles'
-            />
-          </Grid>
-        </Grid>
+        </SearchQueryFilterGroup>
       </RootContainer>
     </Grid>
   )

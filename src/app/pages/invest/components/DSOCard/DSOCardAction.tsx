@@ -38,7 +38,7 @@ export const DSOCardAction = ({ data, type }: DSOCardActionProps) => {
         to={link}
         params={params}
         data-testid='otc-card-link'
-        disabled={isDisabled || data?.disableInvestInCampaign === true}
+        disabled={isDisabled}
         style={{ fontSize: 16, marginTop: 24 }}
       >
         {type !== 'OTC' ? 'Invest' : 'Trade'}

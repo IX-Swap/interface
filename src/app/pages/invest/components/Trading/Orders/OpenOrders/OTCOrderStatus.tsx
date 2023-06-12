@@ -61,7 +61,7 @@ export default function OTCOrderStatus({
 }) {
   const value = parseFloat(percentageFilled)
 
-  let status = 'Approval Pending'
+  let status = 'Open Order'
 
   switch (true) {
     case value === 100:

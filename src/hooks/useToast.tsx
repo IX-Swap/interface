@@ -106,7 +106,7 @@ export const useToast = (): ToastService => {
       }
 
       if (notification.feature === AppFeature.Individuals) {
-        url = `/app/identity/${notification.feature}/view`
+        url = `/app/profile/${notification.feature}/view`
       }
 
       if (

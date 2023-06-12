@@ -43,7 +43,7 @@ export const EditButton: React.FC<EditButtonProps> = ({
     sx={sx}
     {...rest}
   >
-    {showIcon && <EditIcon style={{ fill: '#fff', marginRight: '10px' }} />}
+    {showIcon && <EditIcon style={{ fill: '#4C88FF', marginRight: '10px' }} />}
     {customLabel ? children : 'Edit'}
   </Button>
 )

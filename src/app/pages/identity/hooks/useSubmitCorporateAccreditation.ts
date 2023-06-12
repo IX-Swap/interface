@@ -9,9 +9,9 @@ import { getCorporateAccreditationSubmitPayload } from 'app/pages/identity/utils
 
 export const useSubmitCorporateAccreditation = (callback?: () => void) => {
   const { snackbarService, apiService, storageService } = useServices()
-  const params = useParams<{ identityId: string }>()
+  const params = useParams<{ userId: string; identityId: string }>()
   const queryCache = useQueryCache()
-  const { replace } = useHistory()
+  const { location, replace } = useHistory()
 
   const submitCorporate = async (data: CorporateIdentity) => {
     const uri = identityURL.corporates.accreditation.submit(params.identityId)
@@ -31,7 +31,13 @@ export const useSubmitCorporateAccreditation = (callback?: () => void) => {
         storageService.set(data.data._id, data.data.type)
       }
 
-      replace(IdentityRoute.identitySuccess)
+      if (location.pathname.includes('authorizer')) {
+        replace(
+          `/app/authorizer/corporates/${params.userId}/${params.identityId}/view?tab=accreditation`
+        )
+      } else {
+        replace(IdentityRoute.identitySuccess)
+      }
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

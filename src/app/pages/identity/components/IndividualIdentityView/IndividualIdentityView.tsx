@@ -10,6 +10,15 @@ import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxD
 import { FatcaView } from '../IndividualIdentityView/FatcaView/FatcaViewView'
 import { FinancialView } from '../IndividualIdentityView/FinancialView/FinancialView'
 import { NoticeOfAssessmentView } from '../IndividualIdentityView/NoticeOfAssessment/NoticeOfAssessmentView'
+import { Element } from 'react-scroll'
+
+export enum IndividualKYCSections {
+  'Personal Information' = 'personal-information',
+  'Address' = 'address',
+  'Financial Information' = 'financial-information',
+  'Tax Information' = 'tax-information',
+  'FATCA' = 'fatca'
+}
 
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity
@@ -26,60 +35,70 @@ export const IndividualIdentityView = ({
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
-        <FieldContainer>
-          <Grid container direction={'column'} spacing={5}>
-            {showReview && (
+        <Element name={IndividualKYCSections['Personal Information']}>
+          <FieldContainer>
+            <Grid container direction={'column'} spacing={5}>
+              {showReview && (
+                <Grid item>
+                  <FormSectionHeader
+                    title='Review Responses'
+                    hasBottomBorder={true}
+                  />
+                </Grid>
+              )}
+
               <Grid item>
-                <FormSectionHeader
-                  title='Review Responses'
-                  hasBottomBorder={true}
-                />
+                <FormSectionHeader title='Personal Information' />
               </Grid>
-            )}
 
-            <Grid item>
-              <FormSectionHeader title='Personal Information' />
+              <IndividualInfoView data={data} hideAvatar={hideAvatar} />
             </Grid>
-
-            <IndividualInfoView data={data} hideAvatar={hideAvatar} />
-          </Grid>
-        </FieldContainer>
+          </FieldContainer>
+        </Element>
       </Grid>
 
       <Grid item className={privateClassNames()}>
-        <FieldContainer>
-          <Grid item container direction={'column'} spacing={5}>
-            <Grid item>
-              <FormSectionHeader title='Address' />
+        <Element name={IndividualKYCSections.Address}>
+          <FieldContainer>
+            <Grid item container direction={'column'} spacing={5}>
+              <Grid item>
+                <FormSectionHeader title='Address' />
+              </Grid>
+              <Grid item>
+                <AddressView data={data.address} />
+              </Grid>
             </Grid>
-            <Grid item>
-              <AddressView data={data.address} />
-            </Grid>
-          </Grid>
-        </FieldContainer>
+          </FieldContainer>
+        </Element>
       </Grid>
 
       <Grid item className={privateClassNames()}>
-        <FieldContainer>
-          <Grid item container direction={'column'} spacing={5}>
-            <Grid item>
-              <FormSectionHeader title='Financial Information' />
+        <Element name={IndividualKYCSections['Financial Information']}>
+          <FieldContainer>
+            <Grid item container direction={'column'} spacing={5}>
+              <Grid item>
+                <FormSectionHeader title='Financial Information' />
+              </Grid>
+              <Grid item>
+                <FinancialView data={data} />
+              </Grid>
             </Grid>
-            <Grid item>
-              <FinancialView data={data} />
-            </Grid>
-          </Grid>
-        </FieldContainer>
+          </FieldContainer>
+        </Element>
       </Grid>
 
       <NoticeOfAssessmentView />
 
       <Grid item className={privateClassNames()}>
-        <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
+        <Element name={IndividualKYCSections['Tax Information']}>
+          <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
+        </Element>
       </Grid>
 
       <Grid item>
-        <FatcaView data={data} />
+        <Element name={IndividualKYCSections.FATCA}>
+          <FatcaView data={data} />
+        </Element>
       </Grid>
     </Grid>
   )

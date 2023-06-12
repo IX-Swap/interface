@@ -8,7 +8,7 @@ import { authorizerQueryKeys } from 'config/queryKeys'
 
 export const CorporateIdentities: React.FC = () => (
   <AuthorizerList
-    title='Authorize Corporate KYC Applications'
+    title='Authorize Corporate Investor Applications'
     uri='/identity/corporates/list'
     name={authorizerQueryKeys.getCorporateIdentities}
     columns={columns}

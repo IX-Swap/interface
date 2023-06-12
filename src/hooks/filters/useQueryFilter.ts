@@ -1,6 +1,6 @@
 import { useSearchQuery } from 'hooks/useSearchQuery'
 import { useHistory } from 'react-router-dom'
-import { AuthorizableStatus } from 'types/util'
+import { AuthorizableStatus, TradingStatus } from 'types/util'
 
 export interface QueryFilters {
   search: string | undefined
@@ -11,6 +11,7 @@ export interface QueryFilters {
   secondaryMarketSearch: string | undefined
   capitalStructure: string | undefined
   authorizationStatus: AuthorizableStatus | undefined
+  tradingStatus: TradingStatus | undefined
   fromDate: string | undefined
   toDate: string | undefined
   currentSlide: string | undefined
@@ -26,6 +27,8 @@ export interface QueryFilters {
   country: string | undefined
   protocol: string | undefined
   status: string | undefined
+  filterByKYCStatus: boolean
+  filterByAccreditationStatus: boolean
   network: string | undefined
   isPriceAscending: string | undefined
   category: string | undefined
@@ -48,9 +51,9 @@ export interface QueryFilters {
   account: string | undefined
   isFavorite: string | undefined
   sortField: 'price' | 'minimumInvestment' | undefined
-  sortOrder: '1' | '-1' | undefined,
-  email: string | undefined,
-  mobile: string | undefined,
+  sortOrder: '1' | '-1' | undefined
+  email: string | undefined
+  mobile: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

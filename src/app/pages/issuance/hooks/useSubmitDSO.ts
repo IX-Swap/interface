@@ -11,9 +11,14 @@ import { IssuanceRoute } from 'app/pages/issuance/router/config'
 export const useSubmitDSO = (dsoId: string) => {
   const { apiService, snackbarService } = useServices()
   const params = useParams<{ dsoId: string; issuerId: string }>()
+  const issuerId: any = sessionStorage.getItem('issuerId')
   const { replace } = useHistory()
   const { user } = useAuth()
-  const url = issuanceURL.dso.submit(getIdFromObj(user), dsoId)
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+  const url = issuerId
+    ? issuanceURL.dso.submit(issuerId, dsoId)
+    : issuanceURL.dso.submit(getIdFromObj(user), dsoId)
+  // const url = issuanceURL.dso.submit(getIdFromObj(user), dsoId)
   const queryCache = useQueryCache()
   const submitDSO = async (data: any) => {
     return await apiService.patch<DigitalSecurityOffering>(url, data)
@@ -27,6 +32,7 @@ export const useSubmitDSO = (dsoId: string) => {
       void queryCache.invalidateQueries(
         investQueryKeys.getDSOById(dsoId, params.issuerId)
       )
+      sessionStorage.removeItem('issuerId')
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

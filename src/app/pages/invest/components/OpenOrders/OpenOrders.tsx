@@ -3,7 +3,7 @@ import { Grid } from '@mui/material'
 import {
   TableView,
   TableViewRendererProps
-} from 'components/TableWithPagination/TableView'
+} from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import {
   columns,
   compactColumns

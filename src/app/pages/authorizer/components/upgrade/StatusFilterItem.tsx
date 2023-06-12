@@ -21,7 +21,7 @@ export const StatusFilterItem: React.FC<StatusFilterItemProps> = ({
 }) => {
   return (
     <ListItem
-      style={{ width: '100px', background: 'none', textAlign: 'center' }}
+      style={{ width: 'auto', background: 'none', textAlign: 'center' }}
       button
       selected={isSelected}
       onClick={onClick}

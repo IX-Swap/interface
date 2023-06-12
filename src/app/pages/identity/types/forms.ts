@@ -136,9 +136,6 @@ export interface IndividualAgreementsFormValues {
 }
 
 export interface InvestorCorporateInfoFormValues {
-  isIssuer?: boolean
-  isTenantOwner?: boolean
-  declaredAs?: string[]
   logo?: DataroomFile | string
   companyLegalName: string
   registrationNumber: string
@@ -242,10 +239,6 @@ export interface IdentityFinancials {
 }
 
 export interface CorporateFields {
-  isIssuer?: boolean
-  isTenantOwner?: boolean
-  declaredAs?: string[]
-  declaredAsStatus?: object
   logo?: string
   email: string
   cynopsis?: Cynopsis

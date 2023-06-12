@@ -121,20 +121,20 @@ export const AuthorizerView = <T,>(
                   <VSpacer size='medium' />
                 </Grid>
 
-                <Grid
-                  container
-                  direction='column'
-                  spacing={3}
-                  sx={{ paddingLeft: '25px' }}
-                >
-                  <FieldContainer>
-                    <Grid item container direction={'column'} spacing={5}>
-                      <Grid item>
-                        <FormSectionHeader title='Authorizer Action (Optional)' />
-                      </Grid>
-                      <Grid item>
-                        {category !== 'virtual-accounts' &&
-                          category !== 'token-deployment' && (
+                {category !== 'token-deployment' && (
+                  <Grid
+                    container
+                    direction='column'
+                    spacing={3}
+                    sx={{ paddingLeft: '25px' }}
+                  >
+                    <FieldContainer>
+                      <Grid item container direction={'column'} spacing={5}>
+                        <Grid item>
+                          <FormSectionHeader title='Authorizer Action (Optional)' />
+                        </Grid>
+                        <Grid item>
+                          {category !== 'virtual-accounts' && (
                             <AuthorizerActions
                               id={data._id}
                               feature={feature}
@@ -142,39 +142,40 @@ export const AuthorizerView = <T,>(
                             />
                           )}
 
-                        {showForm && category !== 'token-deployment' && (
-                          <Grid item style={{ marginTop: 20 }}>
-                            <AuthorizerForm
-                              status={
-                                data[statusFieldName as keyof typeof data]
-                              }
-                              itemId={data._id}
-                              feature={feature}
-                              listingType={data?.listingType}
-                            />
-                          </Grid>
-                        )}
+                          {showForm && (
+                            <Grid item style={{ marginTop: 20 }}>
+                              <AuthorizerForm
+                                status={
+                                  data[statusFieldName as keyof typeof data]
+                                }
+                                itemId={data._id}
+                                feature={feature}
+                                listingType={data?.listingType}
+                              />
+                            </Grid>
+                          )}
 
-                        {category === AuthorizerCategory.Offerings && (
-                          <Grid
-                            container
-                            item
-                            justifyContent='flex-end'
-                            style={{ marginTop: 20 }}
-                          >
-                            <PromotionSwitch
-                              dso={data as unknown as DigitalSecurityOffering}
-                            />
+                          {category === AuthorizerCategory.Offerings && (
+                            <Grid
+                              container
+                              item
+                              justifyContent='flex-end'
+                              style={{ marginTop: 20 }}
+                            >
+                              <PromotionSwitch
+                                dso={data as unknown as DigitalSecurityOffering}
+                              />
 
-                            <VisibilitySwitch
-                              dso={data as unknown as DigitalSecurityOffering}
-                            />
-                          </Grid>
-                        )}
+                              <VisibilitySwitch
+                                dso={data as unknown as DigitalSecurityOffering}
+                              />
+                            </Grid>
+                          )}
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </FieldContainer>
-                </Grid>
+                    </FieldContainer>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>

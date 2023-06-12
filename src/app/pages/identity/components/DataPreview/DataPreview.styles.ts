@@ -57,8 +57,10 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(3.5)
   },
   dataContainer: {
+    width: '100%',
     display: 'flex',
     gap: 80,
+    justifyContent: 'between',
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
       gap: 20
@@ -68,9 +70,13 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
+    textAlign: 'left',
     gap: 10,
     [theme.breakpoints.down('md')]: {
       alignItems: 'center'
+    },
+    [theme.breakpoints.up('lg')]: {
+      whiteSpace: 'nowrap'
     }
   },
   dataLabel: {

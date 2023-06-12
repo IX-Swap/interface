@@ -135,7 +135,6 @@ export const transformDSOToFormValuesStep1 = (
       dividendYield: '',
       investmentPeriod: '',
       productSpecification: '',
-      isCampaign: false,
       decimalPlaces: 18
     } as any
   }
@@ -166,7 +165,6 @@ export const transformDSOToFormValuesStep1 = (
     classification: dso?.classification ?? null,
     productType: dso?.productType ?? null,
     completionDate: dso.completionDate ?? null,
-    isCampaign: dso.isCampaign,
     decimalPlaces: dso.decimalPlaces
   }
 }
@@ -264,7 +262,6 @@ export const getDSOInformationFormValues = (data: any) => {
     corporate: data.corporate,
     currency: getIdFromObj({ _id: data.currency }),
     uniqueIdentifierCode: data.uniqueIdentifierCode,
-    isCampaign: data.isCampaign,
     network: data.network,
     dividendYield: data.dividendYield,
     grossIRR: data.grossIRR,

@@ -19,7 +19,7 @@ export const loginFormValidationSchema = yup.object<LoginArgs>({
 })
 
 export const registerFormValidationSchema = yup.object<SignupArgs>({
-  name: yup.string().required(validationMessages.required),
+  //   name: yup.string().required(validationMessages.required),
   email: emailSchema.required(validationMessages.required),
   password: passwordSchema.required(validationMessages.required),
   agree: yup

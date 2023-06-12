@@ -13,7 +13,6 @@ import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
 import { Banner } from 'app/pages/admin/pages/Banner'
 import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
 import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
-import { BlockchainSettings } from 'app/pages/admin/pages/BlockchainSettings'
 import { CustodyManagementRouter } from 'app/pages/admin/router/CustodyManagementRouter'
 import { TenantRouter } from './TenantRouter'
 
@@ -34,14 +33,14 @@ export const AdminRouter = () => {
 
       <AppRoute
         path={AdminRoute.viewIndividualIdentity}
-        breadcrumb='View Individual Identity'
+        breadcrumb='View Individual KYC'
       >
         <ViewIndividualIdentity />
       </AppRoute>
 
       <AppRoute
         path={AdminRoute.viewCorporateIdentity}
-        breadcrumb='View Corporate Identity'
+        breadcrumb='View Corporate KYC'
       >
         <ViewCorporateIdentity />
       </AppRoute>
@@ -58,11 +57,7 @@ export const AdminRouter = () => {
         <VirtualAccounts />
       </AppRoute>
 
-      <AppRoute
-        exact
-        path={AdminRoute.masDisclosure}
-        breadcrumb='Disclosure'
-      >
+      <AppRoute exact path={AdminRoute.masDisclosure} breadcrumb='Disclosure'>
         <MasDisclosure />
       </AppRoute>
 
@@ -84,14 +79,6 @@ export const AdminRouter = () => {
         breadcrumb='VA Audit'
       >
         <VirtualAccountAudit />
-      </AppRoute>
-
-      <AppRoute
-        exact
-        path={AdminRoute.blockchainSettings}
-        breadcrumb='Blockchain Settings'
-      >
-        <BlockchainSettings />
       </AppRoute>
 
       <AppRoute

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Typography } from '@mui/material'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { ScrollGuideLink } from 'ui/ScrollGuide/ScrollGuideLink'
 import { ScrollGuide } from 'ui/ScrollGuide/ScrollGuide'
 import { VSpacer } from 'components/VSpacer'
@@ -56,7 +56,7 @@ export const DSOScrollGuide = ({
 
   return (
     <>
-      <Typography variant='subtitle1'>Contents</Typography>
+      <FormSectionHeader title='Contents' />
       <VSpacer size='small' />
       <ScrollGuide>
         {actualDSOFromSection.map(([name, key]) => {

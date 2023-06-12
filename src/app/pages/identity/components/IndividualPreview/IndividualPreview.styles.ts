@@ -35,6 +35,7 @@ export const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(14.2),
     display: 'flex',
     justifyContent: 'flex-end',
+    width: '300px',
     '& a': {
       width: theme.spacing(12.5),
       height: theme.spacing(6.1)
@@ -71,38 +72,5 @@ export const useStyles = makeStyles(theme => ({
       gap: 0,
       marginBottom: theme.spacing(2)
     }
-  },
-  hourglassImage: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: '40px'
-  },
-  approvalText: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    color: '#D3A701',
-    fontWeight: 600,
-    fontSize: '18px',
-    textAlign: 'center',
-    lineHeight: '140%',
-    paddingTop: '22px !important'
-  },
-  approvalSubText: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    textAlign: 'center',
-    marginTop: '0px',
-    paddingTop: '22px !important',
-    color: '#D3A701',
-    fontWeight: 400,
-    fontSize: '14px',
-    lineHeight: '20px'
-  },
-  backgroud: {
-    backgroundColor: '#FFF5CD',
-    border: 'solid 1px #FFC900',
-    height: '289px',
-    marginTop: '60px',
-    paddingLeft: '16px'
   }
 }))

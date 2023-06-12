@@ -21,7 +21,7 @@ export const GroupedDateTimeFilter = (props: GroupedDateTimeFilterProps) => {
       {({ value, onChange }) => (
         <DateTimePickerComponent
           {...dateTimePickerProps}
-          value={value ?? new Date()}
+          value={value ?? ''}
           onChange={date => {
             try {
               onChange(convertDateToISO(date as Date))

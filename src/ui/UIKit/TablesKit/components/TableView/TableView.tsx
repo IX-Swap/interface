@@ -7,12 +7,12 @@ import {
   TableCell,
   Paper,
   Grid,
-  Checkbox,
   FormControlLabel,
   Typography,
   Box,
   CircularProgress,
-  PaperProps
+  PaperProps,
+  TableSortLabel
 } from '@mui/material'
 import { TableColumn, BaseFilter } from 'types/util'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
@@ -22,6 +22,7 @@ import {
   statusColumn,
   statusColumnWithActions
 } from 'app/pages/authorizer/hooks/useAuthorizerView'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 import { NoData } from 'app/components/NoData/NoData'
 import useStyles from 'ui/UIKit/TablesKit/components/TableView/TableView.styles'
@@ -101,7 +102,11 @@ export const TableView = <T,>({
     setPage,
     setRowsPerPage,
     rowsPerPage,
-    total
+    total,
+    sortOrder,
+    sortField,
+    setSortOrder,
+    setSortField
   } = useTableWithPagination<T>({
     uri: uri,
     queryKey: name,
@@ -142,7 +147,7 @@ export const TableView = <T,>({
         label: (
           <FormControlLabel
             control={
-              <Checkbox
+              <UICheckbox
                 checked={getIsItemsSelected(_items)}
                 indeterminate={getIsIndeterminate(_items)}
                 onClick={() => toggleAll(_items)}
@@ -156,7 +161,7 @@ export const TableView = <T,>({
         render: (val: any, item: T) => (
           <FormControlLabel
             control={
-              <Checkbox
+              <UICheckbox
                 checked={getIsItemSelected(item)}
                 onClick={() => toggle(item)}
               />
@@ -170,15 +175,31 @@ export const TableView = <T,>({
     ]
   }
 
+  const handleSort = (column: string) => {
+    const isAsc = sortField === column && sortOrder === 'asc'
+    setSortOrder(isAsc ? 'desc' : 'asc')
+    setSortField(column)
+  }
+
   const renderHeadCell = ({ item, content }: RenderHeadCellArgs<T>) => (
     <TableCell
       key={item?.key}
       className={classes.headCell}
       align={item?.headAlign ?? 'left'}
     >
-      <Typography variant={'body2'} className={classes.headText}>
-        {item?.label ?? content}
-      </Typography>
+      <TableSortLabel
+        active={sortField === item?.key}
+        direction={
+          sortField === item?.key
+            ? (sortOrder as 'desc' | 'asc' | undefined)
+            : 'asc'
+        }
+        onClick={() => handleSort(item !== undefined ? item?.key : 'createdAt')}
+      >
+        <Typography variant={'body2'} className={classes.headText}>
+          {item?.label ?? content}
+        </Typography>
+      </TableSortLabel>
     </TableCell>
   )
 
@@ -231,7 +252,7 @@ export const TableView = <T,>({
   return (
     <Grid container direction='column'>
       {['top', 'both'].includes(paginationPlacement) && renderPagination()}
-      <Grid item>
+      <Grid item zIndex={2}>
         {renderTableLoading()}
         <Paper style={{ backgroundColor: 'inherit' }} {...paperProps}>
           <TableContainer style={{ overflow: 'visible' }}>

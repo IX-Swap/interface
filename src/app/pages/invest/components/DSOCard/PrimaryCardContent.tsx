@@ -113,25 +113,23 @@ export const PrimaryCardContent = (props: PrimaryCardContentProps) => {
           />
         </Grid>
 
-        {data.isCampaign !== true && (
-          <Grid item>
-            <LabelledValue
-              align={'right'}
-              isRedesigned
-              item
-              reverse
-              labelColor={'gray'}
-              valueFontSize={14}
-              labelFontSize={14}
-              label={'Total Fundraising'}
-              value={renderAmount(
-                data.totalFundraisingAmount,
-                data.currency.symbol,
-                isOverflow
-              )}
-            />
-          </Grid>
-        )}
+        <Grid item>
+          <LabelledValue
+            align={'right'}
+            isRedesigned
+            item
+            reverse
+            labelColor={'gray'}
+            valueFontSize={14}
+            labelFontSize={14}
+            label={'Total Fundraising'}
+            value={renderAmount(
+              data.totalFundraisingAmount,
+              data.currency.symbol,
+              isOverflow
+            )}
+          />
+        </Grid>
       </Grid>
     </Grid>
   )

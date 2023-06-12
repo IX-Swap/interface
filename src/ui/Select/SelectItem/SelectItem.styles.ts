@@ -1,5 +1,5 @@
 import makeStyles from '@mui/styles/makeStyles'
-import InfoIcon from 'assets/icons/item-checked.svg'
+// import InfoIcon from 'assets/icons/item-checked.svg'
 
 export const useStyles = makeStyles(theme => {
   const selectPalette = theme.palette.select
@@ -27,8 +27,8 @@ export const useStyles = makeStyles(theme => {
           width: 14,
           height: 10,
           top: 'calc(50% - 5px)',
-          right: 0,
-          backgroundImage: `url(${InfoIcon})`
+          right: 0
+          // backgroundImage: `url(${InfoIcon})`
         }
       }
     },
