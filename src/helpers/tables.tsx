@@ -23,9 +23,10 @@ import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { Status } from 'ui/Status/Status'
 import { FirstTableItem } from 'ui/UIKit/TablesKit/FirstTable/FirstTable'
 import { PersonName } from './types'
-import LaunchIcon from '@mui/icons-material/Launch'
+import { ReactComponent as ViewIcon } from 'app/pages/issuance/components/SecondaryListingsTable/icons/view.svg'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
+import useStyles from 'app/pages/issuance/components/SecondaryListingsTable/Actions/Actions.styles'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -94,15 +95,19 @@ export const ViewButton = ({
   title?: string
   target?: string
   sx?: object
-}) => (
-  <Link href={href} target={target}>
-    <Tooltip title={title}>
-      <IconButton>
-        <LaunchIcon sx={sx} />
-      </IconButton>
-    </Tooltip>
-  </Link>
-)
+}) => {
+  const { button } = useStyles()
+
+  return (
+    <Link href={href} target={target}>
+      <Tooltip title={title}>
+        <IconButton className={button}>
+          <ViewIcon sx={sx} />
+        </IconButton>
+      </Tooltip>
+    </Link>
+  )
+}
 
 export const renderRiskReport = (val: object) => {
   if (typeof val !== 'undefined' && 'customerId' in val) {
@@ -119,7 +124,7 @@ export const renderRiskReport = (val: object) => {
     )
   }
 
-  return 'N/A'
+  return <Box px={1}>N/A</Box>
 }
 
 export const getIndividualLastName = (

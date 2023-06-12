@@ -72,7 +72,6 @@ export interface BaseFilter {
   network?: string
   isPriceAscending?: boolean
   fundStatus?: string
-  reportType?: string
   isFavorite?: string
   sortField?: string
   sortOrder?: string
