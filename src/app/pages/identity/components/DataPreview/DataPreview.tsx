@@ -52,18 +52,16 @@ export const DataPreview = ({
     if (typeof roles !== 'undefined') {
       const userRoles = roles.split(',')
 
-      console.log(userRoles)
-
       if (userRoles.includes('institutional')) {
         return 'Institutional'
       }
 
-      if (userRoles.includes('expert')) {
-        return 'Expert'
-      }
-
       if (userRoles.includes('accredited')) {
         return 'Accredited'
+      }
+
+      if (userRoles.includes('expert')) {
+        return 'Expert'
       }
 
       if (userRoles.includes('retail')) {
