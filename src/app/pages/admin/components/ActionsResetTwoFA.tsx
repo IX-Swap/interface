@@ -5,11 +5,11 @@ import { ManagedUser } from 'types/user'
 import { isResetActive } from 'helpers/isResetActive'
 import { Button } from '@mui/material'
 
-export interface ActionResetPasswordProps {
+export interface ActionResetTwoFAProps {
   data: ManagedUser
 }
 
-export const ActionResetPassword = ({ data }: ActionResetPasswordProps) => {
+export const ActionResetTwoFA = ({ data }: ActionResetTwoFAProps) => {
   const { resetPasswordOpen, closeResetPassword, openResetPassword } =
     useUserActionsDialog()
 
@@ -24,13 +24,13 @@ export const ActionResetPassword = ({ data }: ActionResetPasswordProps) => {
   return (
     <>
       <Button
-        sx={{ height: '53px' }}
+        sx={{ height: '53px', width: '159px' }}
         onClick={handleOpenResetPassword}
         variant='contained'
         color='primary'
         disableElevation
       >
-        Reset Password
+        Reset 2FA
       </Button>
       <DialogResetPassword
         email={data.email}

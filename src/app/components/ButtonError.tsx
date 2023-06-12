@@ -8,7 +8,7 @@ import tinycolor from 'tinycolor2'
 const styles: (theme: Theme) => any = theme => {
   return {
     root: {
-      backgroundColor: themeColors.error,
+      backgroundColor: '#F56283',
       color: theme.palette.error.contrastText,
       '&:hover': {
         backgroundColor: tinycolor(themeColors.error).darken(10).toHexString()
@@ -24,5 +24,5 @@ export const ButtonError = withStyles(styles)((props: ButtonProps) => {
   const { ...rest } = props
   const classes = props.classes ?? {}
 
-  return <Button {...rest} className={`${classes.root ?? ''}`} />
+  return <Button   sx={{ height: '53px' }} {...rest} className={`${classes.root ?? ''}`} />
 })

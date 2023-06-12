@@ -19,8 +19,9 @@ export const ActionEnableToggle = ({ enabled }: ActionEnableToggleProps) => {
           onClick={openEnabledToggle}
           variant='contained'
           disableElevation
+          
         >
-          DISABLE THIS USER
+          Disable Account
         </ButtonError>
       ) : (
         <ButtonTransparent
@@ -29,7 +30,7 @@ export const ActionEnableToggle = ({ enabled }: ActionEnableToggleProps) => {
           disableElevation
           color='primary'
         >
-          ENABLE THIS USER
+          Enable Account
         </ButtonTransparent>
       )}
       <DialogEnabledToggle
