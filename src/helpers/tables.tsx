@@ -84,19 +84,38 @@ export const renderLastName = (val: string, row: RenderLastNameRow): string => {
   return `${val} ${lastName}`
 }
 
+export const ViewButton = ({
+  href = '#',
+  title = 'View',
+  target = '',
+  sx = {}
+}: {
+  href?: string
+  title?: string
+  target?: string
+  sx?: object
+}) => (
+  <Link href={href} target={target}>
+    <Tooltip title={title}>
+      <IconButton>
+        <LaunchIcon sx={sx} />
+      </IconButton>
+    </Tooltip>
+  </Link>
+)
+
 export const renderRiskReport = (val: object) => {
   if (typeof val !== 'undefined' && 'customerId' in val) {
     const href = `https://investaxdigital.artemisuat.cynopsis.co/app/customers/${
       val.customerId as string
     }`
     return (
-      <Link href={href} target='_blank'>
-        <Tooltip title='View Risk Report'>
-          <IconButton sx={{ padding: 0 }}>
-            <LaunchIcon />
-          </IconButton>
-        </Tooltip>
-      </Link>
+      <ViewButton
+        href={href}
+        title='View Risk Report'
+        target='_blank'
+        sx={{ padding: 0 }}
+      />
     )
   }
 

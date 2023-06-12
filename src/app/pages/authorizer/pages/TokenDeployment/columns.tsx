@@ -2,19 +2,34 @@ import React from 'react'
 import { TableColumn } from 'types/util'
 import { DigitalSecurityOffering } from 'types/dso'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { renderAmount, renderMinimumInvestment } from 'helpers/tables'
+import {
+  renderAmount,
+  renderMinimumInvestment,
+  ViewButton
+} from 'helpers/tables'
 import { Status } from 'ui/Status/Status'
-import { Actions } from 'app/pages/authorizer/components/Actions'
 import { Box } from '@mui/material'
+import { useLocation } from 'react-router-dom'
 
-const renderColumnWithApproval = (row: object, status: string) => {
+const View = ({
+  tokenId,
+  userId,
+  status
+}: {
+  tokenId: string
+  userId: string
+  status: string
+}) => {
+  const location = useLocation()
+  const splitted = location.pathname.split('/')
+  const category = splitted[splitted.length - 1]
+
   return (
-    <Box display={'flex'} justifyContent={''}>
+    <Box display={'flex'} gap={1}>
       <Status label={status} type={status.toLowerCase()} />
-      <Actions
-        item={row}
-        cacheQueryKey={''}
-        statusFieldName={'deploymentStatus'}
+      <ViewButton
+        href={`/app/authorizer/${category}/${userId}/${tokenId}/view`}
+        title='View Token'
       />
     </Box>
   )
@@ -55,6 +70,8 @@ export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
   {
     key: 'deploymentStatus',
     label: 'Status',
-    render: (status, row) => renderColumnWithApproval(row, status)
+    render: (status, row) => (
+      <View tokenId={row._id} userId={row.user} status={status} key={row._id} />
+    )
   }
 ]
