@@ -59,7 +59,6 @@ export const urlFeature = {
   withdrawalAddresses: `${AppFeature.WithdrawalAddresses}`,
   deployments: 'deployments',
   users: AppFeature.Users,
-  accessReports: 'access-reports',
   holdings: `${AppFeature.Holdings}`,
   market: `${AppFeature.Market}`,
   listings: `${AppFeature.Listings}`,

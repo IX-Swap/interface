@@ -7,11 +7,9 @@ export const apiURL = {
 }
 
 export const homeURL = {
-  getAccessReports: '/dataroom/reports-and-newsletters/list',
   getNewsList: '/resources/news',
   getTopIssuers: '/issuance/top-issuers',
-  getTopCorporates: '/issuance/top-corporates',
-  getAtlasOneAccessReports: '/resources/reports'
+  getTopCorporates: '/issuance/top-corporates'
 }
 
 export const authorizerURL = {
@@ -274,10 +272,7 @@ export const documentsURL = {
     userId === undefined
       ? `/dataroom/${fileId}`
       : `/dataroom/${userId}/${fileId}`,
-  deleteBySuperUser: (fileId?: string) => `/dataroom/${fileId}`,
-  uploadAccessReport: '/dataroom/reports-and-newsletters',
-  getAccessReport: (fileId?: string) =>
-    `/dataroom/reports-and-newsletters/${fileId}`
+  deleteBySuperUser: (fileId?: string) => `/dataroom/${fileId}`
 }
 
 export const bannerURL = {

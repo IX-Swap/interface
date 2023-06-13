@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch } from 'react-router-dom'
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
-import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { adminLandingLinks, AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { Identities } from 'app/pages/admin/pages/Identities'
@@ -21,14 +20,6 @@ export const AdminRouter = () => {
     <Switch>
       <AppRoute breadcrumb='Users' path={AdminRoute.users}>
         <UserRouter />
-      </AppRoute>
-
-      <AppRoute
-        breadcrumb='Access Reports'
-        exact
-        path={AdminRoute.accessReports}
-      >
-        <AccessReports />
       </AppRoute>
 
       <AppRoute
