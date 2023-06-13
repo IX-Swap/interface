@@ -50,20 +50,16 @@ export const individualErrorsSchema = yup.object().shape({
       yup.object().shape({
         isAdditional: yup.bool(),
         country: yup.object().shape({ label: yup.string() }).nullable().required('Required'),
-        idNumber: yup
-          .string()
-          .when('isAdditional', {
-            is: true,
-            then: yup.string().nullable(),
-            otherwise: yup.string().required('Required'),
-          }),
-        reason: yup
-          .string()
-          .when('isAdditional', {
-            is: true,
-            then: yup.string().required('Required'),
-            otherwise: yup.string().nullable(),
-          }),
+        idNumber: yup.string().when('isAdditional', {
+          is: true,
+          then: yup.string().nullable(),
+          otherwise: yup.string().required('Required'),
+        }),
+        reason: yup.string().when('isAdditional', {
+          is: true,
+          then: yup.string().required('Required'),
+          otherwise: yup.string().nullable(),
+        }),
       })
     )
     .min(1, 'Add at least 1 tax declaration')
@@ -143,8 +139,19 @@ export const corporateErrorsSchema = yup.object().shape({
     then: yup.string().required('Required'),
     otherwise: yup.string(),
   }),
-  taxCountry: yup.object().nullable().required('Required'),
-  taxNumber: yup.string().required('Required'),
+  taxCountry: yup
+    .object()
+    .nullable()
+    .when('taxIdAvailable', {
+      is: true,
+      then: yup.object().required('Required'),
+      otherwise: yup.object().nullable(),
+    }),
+  taxNumber: yup.string().when('taxIdAvailable', {
+    is: true,
+    then: yup.string().required('Required'),
+    otherwise: yup.string(),
+  }),
   beneficialOwners: yup
     .array()
     .of(
