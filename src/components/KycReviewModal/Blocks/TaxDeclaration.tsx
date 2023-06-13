@@ -11,13 +11,6 @@ interface Props {
 }
 
 export const TaxDeclaration: FC<Props> = ({ data }: Props) => {
-  if (!data.taxNumber) {
-    return (
-      <Block title="Tax Declaration">
-        <span>TIN Is Not Available</span>
-      </Block>
-    )
-  }
   return (
     <Block title="Tax Declaration">
       <GridContainer spacing={30}>

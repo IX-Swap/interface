@@ -185,6 +185,10 @@ export const taxDeclarationKeys = [
     key: 'taxNumber',
     label: 'Tax Indentification Number',
   },
+  {
+    key: 'reason',
+    label: 'Reason',
+  },
 ]
 
 export const IndividualTaxDeclarationKeys = [
