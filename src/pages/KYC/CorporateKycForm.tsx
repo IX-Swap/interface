@@ -761,13 +761,13 @@ export default function CorporateKycForm() {
                               isRadio
                               checked={values.reason === 'B'}
                               onClick={() => onSelectChange('reason', 'B', setFieldValue)}
-                              label="Reason B - The Account Holder is otherwise unable to obtain a TIN or equivalent number"
+                              label="Reason B - The Account Holder is otherwise unable to obtain a TIN or equivalent number (Please explain why your are unable to obtain a TIN in the below table if you have selected this reason)"
                             />
                             <Checkbox
                               isRadio
                               checked={values.reason === 'C'}
                               onClick={() => onSelectChange('reason', 'C', setFieldValue)}
-                              label="Reason c - No TIN is required."
+                              label="Reason C - No TIN is required. (Note. Only select this reason if the domestic law of the relevant jurisdiction does not require the collection of the TIN issued by such jurisdiction)"
                             />
                           </FormGrid>
                         </Column>
