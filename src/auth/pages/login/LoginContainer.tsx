@@ -8,6 +8,7 @@ import { OTPFields } from 'auth/pages/login/components/OTPFields'
 import { Recaptcha } from 'auth/pages/login/components/Recaptcha'
 import { RECAPTCHA_KEY } from 'config'
 import { Locked } from 'auth/pages/login/components/Locked'
+import { useServices } from 'hooks/useServices'
 
 export const loginFormInitialValues = {
   email: '',
@@ -25,8 +26,13 @@ export const LoginContainer = () => {
     email
   } = useLogin()
 
+  const { sessionService } = useServices()
+
   const handleSubmit = async (values: LoginArgs) => {
-    await login(values)
+    await login({
+      ...values,
+      tenantId: sessionService?.get('tenantId')
+    })
   }
 
   const isOtpStep = step === 'otp'
