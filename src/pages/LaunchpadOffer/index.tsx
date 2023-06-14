@@ -109,7 +109,7 @@ export default function LaunchpadOffer() {
     <OfferBackgroundWrapper>
       <OfferContainer>
         <div className="back-button">
-          <BackButton as={DiscreteInternalLink} to={routes.launchpad}>
+          <BackButton as={DiscreteInternalLink} onClick={() => history.goBack()}>
             <ArrowLeft color={theme.launchpad.colors.primary} />
           </BackButton>
         </div>

@@ -54,6 +54,7 @@ export default function CorporateKycForm() {
   const updateCorporateKYC = useUpdateCorporateKYC()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
+  const [isTaxNumberDisabled, setIsTaxNumberDisabled] = useState<boolean>(false)
 
   const isLoggedIn = !!token && !!account
 
@@ -257,6 +258,9 @@ export default function CorporateKycForm() {
                 .then(async () => {
                   canLeavePage.current = true
                   setCanSubmit(false)
+                  if (values.taxIdAvailable === false) {
+                    values.taxNumber = ''
+                  }
                   const body = corporateTransformKycDto(values)
                   let data: any = null
 
@@ -303,6 +307,11 @@ export default function CorporateKycForm() {
             }}
           >
             {({ values, setFieldValue, dirty, handleSubmit }) => {
+              if (values.taxIdAvailable === undefined)
+                values.taxIdAvailable = true
+              if (!values.reason)
+                values.reason = 'A'
+
               const shouldValidate = dirty && isSubmittedOnce
               const infoFilled =
                 shouldValidate &&
@@ -312,7 +321,6 @@ export default function CorporateKycForm() {
                 !errors.businessActivity &&
                 !errors.registrationNumber &&
                 !errors.incorporationDate &&
-                !errors.incorporationExpiryDate &&
                 !errors.inFatfJurisdiction
               const authorizedPersonnelFilled =
                 shouldValidate &&
@@ -332,7 +340,7 @@ export default function CorporateKycForm() {
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
               const investorFilled = shouldValidate && !errors.accredited
-              const taxDeclarationFilled = shouldValidate && !errors.taxCountry && !errors.taxNumber
+              const taxDeclarationFilled = values.taxIdAvailable ? shouldValidate && !errors.taxCountry && !errors.taxNumber : shouldValidate
               const filesFilled = shouldValidate && !errors.financialDocuments && !errors.corporateDocuments
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
@@ -406,17 +414,6 @@ export default function CorporateKycForm() {
                                 validationSeen('incorporationDate')
                               }}
                               maxDate={new Date()}
-                            />
-                            <DateInput
-                              label="Date of Incorporation Expiry"
-                              maxHeight={60}
-                              error={errors.incorporationExpiryDate}
-                              value={values.incorporationExpiryDate}
-                              onChange={(value) => {
-                                setFieldValue('incorporationExpiryDate', value, false)
-                                validationSeen('incorporationExpiryDate')
-                              }}
-                              minDate={new Date()}
                             />
                           </FormGrid>
                           <FormGrid columns={1}>
@@ -740,6 +737,7 @@ export default function CorporateKycForm() {
                             <TextInput
                               value={values.taxNumber}
                               label="Tax Indentification Number"
+                              disabled={isTaxNumberDisabled}
                               onChange={(e: any) =>
                                 onChangeInput('taxNumber', e.currentTarget.value, values, setFieldValue)
                               }
@@ -747,6 +745,50 @@ export default function CorporateKycForm() {
                             />
                           </FormGrid>
                         </Column>
+
+                        <Column style={{ gap: '20px', marginTop: 20 }}>
+                          <FormGrid columns={1}>
+                            <Checkbox
+                              checked={!values.taxIdAvailable}
+                              onClick={() => {
+                                if (values.taxIdAvailable === true) {
+                                  setFieldValue('taxNumber', '', false)
+                                  setIsTaxNumberDisabled(true)
+                                } else {
+                                  setIsTaxNumberDisabled(false)
+                                }
+                                onChangeInput('taxIdAvailable', !values.taxIdAvailable, values, setFieldValue)
+                              }
+                              }
+                              label="TIN Is Not Available"
+                            />
+                          </FormGrid>
+                        </Column>
+
+                        {!values.taxIdAvailable &&
+                          <Column style={{ gap: '20px', marginTop: 20 }}>
+                            <FormGrid columns={1}>
+                              <Checkbox
+                                isRadio
+                                checked={values.reason === 'A'}
+                                onClick={() => onSelectChange('reason', 'A', setFieldValue)}
+                                label={`Reason A - The country/jurisdiction where the Account Holder is resident does not issue TINs to its residents`}
+                              />
+                              <Checkbox
+                                isRadio
+                                checked={values.reason === 'B'}
+                                onClick={() => onSelectChange('reason', 'B', setFieldValue)}
+                                label="Reason B - The Account Holder is otherwise unable to obtain a TIN or equivalent number (Please explain why your are unable to obtain a TIN in the below table if you have selected this reason)"
+                              />
+                              <Checkbox
+                                isRadio
+                                checked={values.reason === 'C'}
+                                onClick={() => onSelectChange('reason', 'C', setFieldValue)}
+                                label="Reason C - No TIN is required. (Note. Only select this reason if the domestic law of the relevant jurisdiction does not require the collection of the TIN issued by such jurisdiction)"
+                              />
+                            </FormGrid>
+                          </Column>
+                        }
                       </FormCard>
 
                       <FormCard id="beneficial-owners">

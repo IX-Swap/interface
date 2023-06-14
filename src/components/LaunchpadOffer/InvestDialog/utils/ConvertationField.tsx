@@ -48,7 +48,7 @@ const getTokenInfo = (address: string, symbol: string, currency: Currency | null
   } as TokenOption
 }
 
-export const useGetWarning = (offer: Offer) => {
+export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
   const { account } = useActiveWeb3React()
   const inputCurrency = useCurrency(offer.investingTokenAddress)
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
@@ -62,7 +62,7 @@ export const useGetWarning = (offer: Offer) => {
     const total = isPresale ? offer.presaleAlocated : offer.hardCap
     const available = +total - offer.totalInvestment
 
-    const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
+    const isInsufficientBalance = isCheckBalance ? !isSufficientBalance(value, inputCurrency, balance) : false
     let warning = ''
     if (value === '') {
       warning = ''
@@ -98,7 +98,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
-  const getWarning = useGetWarning(props.offer)
+  const getWarning = useGetWarning(props.offer, true)
   const formatedValue = useFormatOfferValue()
 
   const [inputValue, setInputValue] = React.useState('')
@@ -126,11 +126,8 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
       let result = `${realValue * +multiplier}`
 
-      if (result.split('.')[1]?.length > 4) {
-        result = (+result).toFixed(4)
-      }
-
-      return formatedValue(result, decimals)
+      result = (+result).toFixed(4)
+      return parseFloat(result).toString()
     }
 
     return inputValue
@@ -227,11 +224,11 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
     () =>
       tokensOptions.map(
         (token) =>
-          ({
-            name: token.label,
-            address: token.address,
-            icon: token.icon,
-          } as TokenOption)
+        ({
+          name: token.label,
+          address: token.address,
+          icon: token.icon,
+        } as TokenOption)
       ),
     [tokensOptions]
   )

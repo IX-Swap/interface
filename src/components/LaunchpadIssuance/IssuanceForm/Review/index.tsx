@@ -52,15 +52,15 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
   const stageEntries = React.useMemo(() => {
     const entries = [
       values.hasPresale &&
-        values.timeframe.whitelist && {
-          label: <StageLabel>Register To Invest</StageLabel>,
-          value: <Nowrap>{formatDateRange(values.timeframe.whitelist, values.timeframe.preSale)}</Nowrap>,
-        },
+      values.timeframe.whitelist && {
+        label: <StageLabel>Register To Invest</StageLabel>,
+        value: <Nowrap>{formatDateRange(values.timeframe.whitelist, values.timeframe.preSale)}</Nowrap>,
+      },
       values.hasPresale &&
-        values.timeframe.preSale && {
-          label: <StageLabel>Pre-sale</StageLabel>,
-          value: <Nowrap>{formatDateRange(values.timeframe.preSale, values.timeframe.sale)}</Nowrap>,
-        },
+      values.timeframe.preSale && {
+        label: <StageLabel>Pre-sale</StageLabel>,
+        value: <Nowrap>{formatDateRange(values.timeframe.preSale, values.timeframe.sale)}</Nowrap>,
+      },
       values.timeframe.sale && {
         label: <StageLabel>Public Sale</StageLabel>,
         value: <Nowrap>{formatDateRange(values.timeframe.sale, values.timeframe.closed)}</Nowrap>,
@@ -172,7 +172,7 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
             entries={[
               { label: 'Issuer', value: values.issuerIdentificationNumber || 'N/A' },
               { label: 'Country', value: values.country || 'N/A' },
-              { label: 'Investment Type', value: values.investmentType ?? 'N/A' },
+              { label: 'Investment Type', value: values.investmentType.replace(/\b\w/g, (match) => match.toUpperCase()) ?? 'N/A' },
 
               {
                 label: 'Token Price',
@@ -256,8 +256,8 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
                 <EntryValue>
                   {values.presaleMaxInvestment
                     ? `${values.tokenType} ${formatedValue(
-                        numberFormatter.format(Number(values.presaleMaxInvestment))
-                      )}`
+                      numberFormatter.format(Number(values.presaleMaxInvestment))
+                    )}`
                     : 'N/A'}
                 </EntryValue>
               </SaleAllocationEntry>
@@ -269,8 +269,8 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
                 <EntryValue>
                   {values.presaleMinInvestment
                     ? `${values.tokenType} ${formatedValue(
-                        numberFormatter.format(Number(values.presaleMinInvestment))
-                      )}`
+                      numberFormatter.format(Number(values.presaleMinInvestment))
+                    )}`
                     : 'N/A'}
                 </EntryValue>
               </SaleAllocationEntry>

@@ -382,6 +382,9 @@ export const InformationForm = (props: Props) => {
               value={values.trusteeAddress}
               error={(touched.trusteeAddress && errors.trusteeAddress) as string}
               maxLength={64}
+              trailing={
+                <IssuanceTooltip tooltipContent={'The trustee wallet is a "super admin" and has the power to change the owner of the wallet in case of unforeseen or unavoidable situations. '} />
+              }
             />
           )}
 
@@ -454,6 +457,9 @@ export const InformationForm = (props: Props) => {
             disabled={edit}
             value={values.tokenPrice?.toString()}
             error={(touched.tokenPrice && errors.tokenPrice) as string}
+            trailing={
+              <IssuanceTooltip tooltipContent={'The price input is based on the denominated currency selected under "Investment Currency".\nFor example, if you select USDC as the base currency, the price input will be in USDC.'} />
+            }
             maxLength={64}
           />
           <DropdownField
@@ -785,7 +791,7 @@ export const InformationForm = (props: Props) => {
             </OutlineButton>
           )}
 
-          <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
+          {offerData?.status !== undefined && offerData?.status !== IssuanceStatus.draft && <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>}
           {(offerData?.status !== IssuanceStatus.declined || isReset) && (
             <FilledButton onClick={toSubmit} disabled={submitDisabled}>
               Submit

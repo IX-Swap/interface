@@ -149,8 +149,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
       {canClaim && (
         <Column gap="0.5rem">
           <CanClaimNotice>
-            Once claimed, you can find your tokens in your wallet. Please make sure to add the token address to your
-            wallet to see the token on your wallet feed.
+            The funding round has reached its conclusion, and once the issuer initiates the batch distribution, the designated tokens will be sent to your wallet. To view and manage these tokens in your web3 wallet, please ensure that the correct token address has been added.
           </CanClaimNotice>
 
           <OfferLinks

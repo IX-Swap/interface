@@ -20,7 +20,7 @@ export const Statistics = ({ statistics, count }: StatisticsProps) => {
         <JoinedCell>{statistics.nameCount}</JoinedCell>
       </SpreadColumn>
       <OverflowRaw>{statistics.companyNameCount}</OverflowRaw>
-      <OverflowRaw>{formatCurrency(statistics.totalInvestmentAmount ?? 0, '$')}</OverflowRaw>
+      <OverflowRaw>{statistics.totalInvestmentAmount ?? 0}</OverflowRaw>
       <OverflowRaw>{statistics.totalTokenAmount}</OverflowRaw>
       <OverflowRaw>-</OverflowRaw>
       <OverflowRaw>-</OverflowRaw>
