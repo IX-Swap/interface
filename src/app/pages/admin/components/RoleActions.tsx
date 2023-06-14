@@ -54,7 +54,10 @@ export const RoleActions = forwardRef(
             roles={roles}
             onClose={onClose}
             onChange={(ev: SelectChangeEvent<unknown>) =>
-              handleRoleChange(ev.target.value as string[])
+              handleRoleChange(
+                ev.target.value as string[],
+                'investorRole' as string
+              )
             }
             variant='outlined'
           />

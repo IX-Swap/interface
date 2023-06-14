@@ -9,12 +9,12 @@ import {
 } from 'app/pages/admin/components/BooleanColumn'
 import { ViewUserColumn } from 'app/pages/admin/components/ViewUserColumn'
 import { formatDateToMMDDYY } from 'helpers/dates'
-// import { Actions } from 'app/pages/admin/components/Actions'
+import { Actions } from 'app/pages/admin/components/Actions'
 import { RoleActions } from './components/RoleActions'
 
-// export const renderActions = (item: User, ref: any) => (
-//   <Actions user={item} ref={ref} />
-// )
+export const renderActions = (item: User, ref: any) => (
+  <Actions user={item} ref={ref} />
+)
 
 export const renderUserActions = (item: User, ref: any) => (
   <RoleActions user={item} ref={ref} />
@@ -68,27 +68,20 @@ export const columns: Array<TableColumn<User>> = [
     label: '',
     render: renderViewUser
   },
-  // {
-  //   key: ' Investor Identity',
-  //   label: 'Verification',
-  //   render: (a: boolean) => renderBoolean(a, ['Verified', 'Email Sent'])
-  // },
   {
     key: 'accountType',
-    // key: 'identity',
     label: 'Investor Identity'
-    // render: (a: boolean) => renderidentity(a)
   },
   {
     key: 'declaredAsStatus',
     label: 'Investor Role',
     render: (status, row) => renderUserActions(row, status)
+  },
+  {
+    key: 'declaredAsStatus',
+    label: 'User Role',
+    render: (status, row) => renderActions(row, status)
   }
-  // {
-  //   key: 'declaredAsStatus',
-  //   label: 'User Roles',
-  //   render: (status, row) => renderActions(row, status)
-  // },
 ]
 
 export default columns
