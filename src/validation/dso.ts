@@ -7,7 +7,8 @@ import {
   DsoTeamMember,
   DsoVideo
 } from 'types/dso'
-import { corporateName, lettersOrSpaces } from 'validation/regexes'
+// import { corporateName, lettersOrSpaces } from 'validation/regexes'
+import { lettersOrSpaces } from 'validation/regexes'
 import { array, number, object, string } from 'yup'
 import { dateSchema, validationMessages } from './shared'
 import {
@@ -64,13 +65,13 @@ export const dsoVideoLinkSchema = object().shape<DsoVideo>(
 export const dsoFormBaseValidationSchema = {
   businessModel: string().required('Business Model is required'),
   capitalStructure: string().required('Capital Structure is required'),
-  corporate: string()
-    .max(50, 'Maximum of 50 characters')
-    .required('Corporate is required')
-    .matches(
-      corporateName,
-      "Corporate must include only letters, numbers and these special characters . , - ; & '"
-    ),
+  // corporate: string()
+  //   .max(50, 'Maximum of 50 characters')
+  //   .required('Corporate is required')
+  //   .matches(
+  //     corporateName,
+  //     "Corporate must include only letters, numbers and these special characters . , - ; & '"
+  //   ),
   currency: string().required('Currency is required'),
   investmentPeriod: number()
     .transform(numberTransformer)
@@ -143,13 +144,13 @@ export const dsoFormBaseValidationSchema = {
 export const dsoInformationValidationSchemaStep1: any = {
   logo: string().required('Logo is required'),
   capitalStructure: string().required('Capital Structure is required'),
-  corporate: string()
-    .max(50, 'Maximum of 50 characters')
-    .required('Corporate is required')
-    .matches(
-      corporateName,
-      "Corporate must include only letters, numbers and these special characters . , - ; & '"
-    ),
+  // corporate: string()
+  //   .max(50, 'Maximum of 50 characters')
+  //   .required('Corporate is required')
+  //   .matches(
+  //     corporateName,
+  //     "Corporate must include only letters, numbers and these special characters . , - ; & '"
+  //   ),
   currency: string().required('Currency is required'),
   issuerName: string().required('Issuer Name is required'),
   launchDate: dateSchema
