@@ -22,8 +22,8 @@ export const GroupedSearchFilter = ({
           onChange={event => onChange(event.target.value)}
           size='small'
           InputProps={{
-            endAdornment: (
-              <InputAdornment position='end'>
+            startAdornment: (
+              <InputAdornment position='start'>
                 <SearchIcon color='disabled' />
               </InputAdornment>
             )

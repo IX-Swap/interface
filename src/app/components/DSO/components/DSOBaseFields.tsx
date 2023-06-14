@@ -389,22 +389,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             </Grid>
             <VSpacer size='small' />
           </Grid>
-          {/* Hiding this field for now as per https://investax.atlassian.net/browse/IPD1-549 */}
-          {/* <Grid container spacing={3} mt={1}>
-            <Grid item xs={12}>
-              <TypedField
-                customRenderer
-                defaultValue={false}
-                valueExtractor={booleanValueExtractor}
-                component={Checkbox}
-                control={control}
-                label={'Is this a campaign?'}
-                name='isCampaign'
-                data-testid='is-campaign'
-              />
-            </Grid>
-
-          </Grid> */}
         </Grid>
       </Grid>
     </Grid>

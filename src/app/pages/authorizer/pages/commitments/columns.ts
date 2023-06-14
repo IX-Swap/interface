@@ -4,7 +4,7 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import { renderAmount } from 'helpers/tables'
 import {
   renderDealStatus,
-  renderStatusColumn
+  renderStatusColumnWithApproval
 } from 'app/pages/authorizer/hooks/useAuthorizerView'
 
 export const columns: Array<TableColumn<Commitment>> = [
@@ -36,6 +36,6 @@ export const columns: Array<TableColumn<Commitment>> = [
   {
     key: 'fundStatus',
     label: 'Status',
-    render: renderStatusColumn
+    render: (status, row) => renderStatusColumnWithApproval(row, status)
   }
 ]

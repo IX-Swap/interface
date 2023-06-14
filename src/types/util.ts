@@ -42,6 +42,8 @@ export type FundStatus =
   | 'Failed'
   | ''
 
+export type TradingStatus = 'Pending' | 'Matched' | 'Filled' | ''
+
 export type DeploymentStatus = 'DEPLOYED' | 'PENDING' | ''
 export interface NumberFormat {
   currency: string
@@ -70,7 +72,6 @@ export interface BaseFilter {
   network?: string
   isPriceAscending?: boolean
   fundStatus?: string
-  reportType?: string
   isFavorite?: string
   sortField?: string
   sortOrder?: string

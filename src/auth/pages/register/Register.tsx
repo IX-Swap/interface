@@ -57,11 +57,8 @@ export const Register: React.FC = observer(() => {
 
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
 
-  console.log(data, 'singData 1')
-  if (data !== undefined && localStorage?.getItem('singpassPage') === null) {
-    return <SingPassPage />
-  }
-  const isMyInfo = getFilterValue('email') !== undefined
+  const isMyInfo = email !== undefined
+
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
@@ -78,12 +75,13 @@ export const Register: React.FC = observer(() => {
     return async (values: SignupArgs) =>
       await signup(
         {
-          tenantId: sessionService.get('tenantId'),
-          name: values.name ?? 'Singpass User',
-          email: values.email,
+          tenantId: sessionService?.get('tenantId'),
+          //   name: values?.name ?? 'Singpass User',
+          name: isMyInfo ? 'Singpass User' : 'User',
+          email: values?.email,
           singPassLogin: isMyInfo,
-          mobileNo: values.phoneNumber,
-          password: values.password,
+          mobileNo: values?.phoneNumber,
+          password: values?.password,
           accountType: identity?.toLocaleUpperCase(),
           uinfin: data?.uinfin
         },
@@ -120,7 +118,12 @@ export const Register: React.FC = observer(() => {
     return <Redirect to={`${AuthRoute.myinfoError}?errorType=connection`} />
   }
 
-  return (
+  const shouldRenderSingPassPage =
+    data !== undefined && localStorage.getItem('singpassPage') === null
+
+  return shouldRenderSingPassPage ? (
+    <SingPassPage data={data} />
+  ) : (
     <Form
       data-testid='register-form'
       defaultValues={defaultFormValues}

@@ -13,12 +13,15 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: 8
   },
   tabStyle: {
+    '& .MuiButtonBase-root': {
+      padding: 0
+    },
     '& .Mui-selected': {
       color: theme.palette.dialog.color
-    },
-    '& .MuiTabs-indicator': {
-      maxWidth: 103
     }
+    // '& .MuiTabs-indicator': {
+    //   maxWidth: 103
+    // }
   },
   infoMessage: {
     marginBottom: '1rem'

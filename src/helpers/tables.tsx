@@ -1,4 +1,4 @@
-import { Box, Theme, Typography } from '@mui/material'
+import { Box, Theme, Typography, Link } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { ThemeVariant } from '@mui/material/styles/overrides'
 import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
@@ -23,6 +23,10 @@ import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { Status } from 'ui/Status/Status'
 import { FirstTableItem } from 'ui/UIKit/TablesKit/FirstTable/FirstTable'
 import { PersonName } from './types'
+import { ReactComponent as ViewIcon } from 'app/pages/issuance/components/SecondaryListingsTable/icons/view.svg'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+import useStyles from 'app/pages/issuance/components/SecondaryListingsTable/Actions/Actions.styles'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -79,6 +83,48 @@ export const renderLastName = (val: string, row: RenderLastNameRow): string => {
   }
 
   return `${val} ${lastName}`
+}
+
+export const ViewButton = ({
+  href = '#',
+  title = 'View',
+  target = '',
+  sx = {}
+}: {
+  href?: string
+  title?: string
+  target?: string
+  sx?: object
+}) => {
+  const { button } = useStyles()
+
+  return (
+    <Link href={href} target={target}>
+      <Tooltip title={title}>
+        <IconButton className={button}>
+          <ViewIcon sx={sx} />
+        </IconButton>
+      </Tooltip>
+    </Link>
+  )
+}
+
+export const renderRiskReport = (val: object) => {
+  if (typeof val !== 'undefined' && 'customerId' in val) {
+    const href = `https://investaxdigital.artemisuat.cynopsis.co/app/customers/${
+      val.customerId as string
+    }`
+    return (
+      <ViewButton
+        href={href}
+        title='View Risk Report'
+        target='_blank'
+        sx={{ padding: 0 }}
+      />
+    )
+  }
+
+  return <Box px={1}>N/A</Box>
 }
 
 export const getIndividualLastName = (

@@ -24,12 +24,13 @@ export const ActionResetPassword = ({ data }: ActionResetPasswordProps) => {
   return (
     <>
       <Button
+        sx={{ height: '53px' }}
         onClick={handleOpenResetPassword}
-        variant='outlined'
+        variant='contained'
         color='primary'
         disableElevation
       >
-        START PASSWORD RESET
+        Reset Password
       </Button>
       <DialogResetPassword
         email={data.email}

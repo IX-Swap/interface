@@ -34,12 +34,8 @@ export const getCorporateInfoFormValues = (
     }
   })
 
-  const declaredAs = data?.declaredAs ?? []
-
   return {
-    isIssuer: declaredAs.includes('issuer'),
-    isTenantOwner: declaredAs.includes('tenantOwner'),
-    logo: data?.logo,
+    logo: data?.logo === null ? undefined : data?.logo,
     companyLegalName: data?.companyLegalName,
     registrationNumber: data?.registrationNumber,
     legalEntityStatus,

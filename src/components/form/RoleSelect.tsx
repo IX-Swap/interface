@@ -1,12 +1,14 @@
 import React from 'react'
 import { ListItemText, SelectProps } from '@mui/material'
-import { ROLES } from 'config/roles'
+import { CORPORATE_USER, INDIVISUAL_USER } from 'config/roles'
 import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface RoleSelectProps extends SelectProps {
   value: string[]
+  roles: string[]
+  investorIdentity: any
 }
 
 export const RoleSelect = (props: RoleSelectProps) => {
@@ -16,30 +18,64 @@ export const RoleSelect = (props: RoleSelectProps) => {
       return 'fund manager'
     }
     if (name === 'tenantOwner') {
-      return 'client'
+      return 'Client'
+    }
+    if (name === 'none') {
+      return 'None'
+    }
+    if (name === 'admin') {
+      return 'Admin'
+    }
+    if (name === 'issuer') {
+      return 'Issuer'
+    }
+    if (name === 'authorizer') {
+      return 'Authorizer'
     }
     return name
   }
-
   return (
-    <Select
-      {...props}
-      multiple
-      MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } as any }}
-      renderValue={selected => (selected as string[]).join(', ')}
-    >
-      {ROLES.map(name => (
-        <SelectItem
-          key={name}
-          value={name}
-          disabled={name === 'user'}
-          sx={{ padding: '5px !important' }}
+    <>
+      {props?.investorIdentity === 'INDIVIDUAL' ? (
+        <Select
+          {...props}
+          multiple
+          MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } as any }}
+          renderValue={selected => (selected as string[]).join(', ')}
         >
-          <UICheckbox checked={props.value.includes(name)} />
-          <ListItemText primary={getName(name)} />
-        </SelectItem>
-      ))}
-    </Select>
+          {INDIVISUAL_USER.map(name => (
+            <SelectItem
+              key={name}
+              value={name}
+              disabled={name === 'user'}
+              sx={{ padding: '5px !important' }}
+            >
+              <UICheckbox checked={props.value.includes(name)} />
+              <ListItemText primary={getName(name)} />
+            </SelectItem>
+          ))}
+        </Select>
+      ) : (
+        <Select
+          {...props}
+          multiple
+          MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } as any }}
+          renderValue={selected => (selected as string[]).join(', ')}
+        >
+          {CORPORATE_USER.map(name => (
+            <SelectItem
+              key={name}
+              value={name}
+              disabled={name === 'user'}
+              sx={{ padding: '5px !important' }}
+            >
+              <UICheckbox checked={props.value.includes(name)} />
+              <ListItemText primary={getName(name)} />
+            </SelectItem>
+          ))}
+        </Select>
+      )}
+    </>
   )
 }
 RoleSelect.displayName = 'Select_RoleSelect'

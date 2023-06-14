@@ -7,6 +7,7 @@ import { AuthRoute } from 'auth/router/config'
 import { useStyles } from './Login.styles'
 import { VSpacer } from 'components/VSpacer'
 import { MAX_LOGIN_ATTEMPTS } from 'types/auth'
+import { useTenant } from 'auth/hooks/useTenant'
 
 export interface LoginProps {
   hidden: boolean
@@ -15,6 +16,7 @@ export interface LoginProps {
 }
 
 export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
+  useTenant()
   const { title, link, text } = useStyles()
 
   return (

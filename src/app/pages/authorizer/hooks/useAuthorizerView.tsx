@@ -4,6 +4,7 @@ import { AuthorizableStatus } from 'app/pages/authorizer/components/Authorizable
 import { Box } from '@mui/material'
 import { Status } from 'ui/Status/Status'
 import { Actions } from 'app/pages/authorizer/components/Actions'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface AuthorizerViewReturnValue<T> {
   item: T | undefined
@@ -22,14 +23,22 @@ export const renderStatusColumn = (s: string): JSX.Element => (
 export const renderStatusColumnWithApproval = (row: object, status: string) => {
   return (
     <Box display={'flex'} justifyContent={''}>
-      <Status label={status} type={status.toLowerCase()} />
+      <Status
+        label={capitalizeFirstLetter(status)}
+        type={status.toLowerCase()}
+      />
       <Actions item={row} cacheQueryKey={''} />
     </Box>
   )
 }
 
 export const renderDealStatus = (status: string): JSX.Element => {
-  return <AuthorizableStatus status={status} isNewTheme compact={false} />
+  // return <AuthorizableStatus status={status} isNewTheme compact={false} />
+  return typeof status !== 'undefined' ? (
+    <Status label={status} type={status.toLowerCase()} />
+  ) : (
+    <></>
+  )
 }
 
 export const statusColumn: TableColumn<any> = {

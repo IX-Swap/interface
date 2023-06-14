@@ -13,7 +13,7 @@ export const IndividualRouter = () => {
   return (
     <Switch>
       <AppRoute
-        breadcrumb='View Individual Investor Identity'
+        breadcrumb='View Individual KYC'
         exact
         path={IdentityRoute.viewIndividual}
       >
@@ -21,7 +21,7 @@ export const IndividualRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Create Individual Investor Identity'
+        breadcrumb='Create Individual KYC'
         exact
         path={IdentityRoute.createIndividual}
       >
@@ -29,7 +29,7 @@ export const IndividualRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Edit Individual Investor Identity'
+        breadcrumb='Edit Individual KYC'
         exact
         path={IdentityRoute.editIndividual}
       >
@@ -37,21 +37,21 @@ export const IndividualRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='View Individual Investor Accreditation'
+        breadcrumb='View Individual Accreditation'
         exact
         path={IdentityRoute.viewIndividualAccreditation}
       >
         <ViewIndividualAccreditation />
       </AppRoute>
       <AppRoute
-        breadcrumb='Create Individual Investor Accreditation'
+        breadcrumb='Create Individual Accreditation'
         exact
         path={IdentityRoute.createIndividualAccreditation}
       >
-        <CreateIndividualAccreditation title='Create Individual Investor Accreditation' />
+        <CreateIndividualAccreditation title='Create Individual Accreditation' />
       </AppRoute>
       <AppRoute
-        breadcrumb='Edit Individual Investor Accreditation'
+        breadcrumb='Edit Individual Accreditation'
         exact
         path={IdentityRoute.editIndividualAccreditation}
       >

@@ -7,14 +7,23 @@ export const useStyles = makeStyles(theme => {
       : theme.palette.error.main
 
   return {
+    overlay: {
+      backgroundColor: '#C6C8CE60',
+      backdropFilter: 'blur(4px)',
+      display: 'flex',
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      zIndex: 2
+    },
     container: {
+      position: 'relative',
       backgroundColor:
         theme.palette.mode === 'light'
           ? theme.palette.backgrounds.alternativeLight
           : '#292929',
       paddingBottom: theme.spacing(3)
     },
-
     tab: {
       color: theme.palette.text.primary,
       minWidth: 80,

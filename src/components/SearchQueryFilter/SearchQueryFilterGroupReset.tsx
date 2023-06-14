@@ -4,13 +4,14 @@ import { QueryFilter, useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useContext } from 'react'
 
 export interface SearchQueryFilterGroupResetProps extends ButtonProps {
+  pageType?: string
   filters: QueryFilter[]
 }
 
 export const SearchQueryFilterGroupReset = (
   props: SearchQueryFilterGroupResetProps
 ) => {
-  const { filters, children, ...rest } = props
+  const { pageType, filters, children, ...rest } = props
   const filterGroupDispatch = useContext(SearchQueryFilterGroupDispatchContext)
   const { removeFilters, getHasValue } = useQueryFilter()
 
@@ -30,7 +31,7 @@ export const SearchQueryFilterGroupReset = (
     removeFilters(filters)
   }
 
-  return hasValues ? (
+  return hasValues || pageType === 'user' ? (
     <Button {...rest} onClick={resetFilterState}>
       {children}
     </Button>

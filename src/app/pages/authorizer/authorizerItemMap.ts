@@ -30,8 +30,10 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
       listRoute: AuthorizerRoute.cashWithdrawals
     },
     [AppFeature.CorporatesAccreditation]: {
-      uri: '/identity/corporate/accreditation/list',
-      listRoute: AuthorizerRoute.corporateAccreditations
+      //   uri: '/identity/corporate/accreditation/list',
+      //   listRoute: AuthorizerRoute.corporateAccreditations
+      uri: '/identity/corporates/list',
+      listRoute: AuthorizerRoute.corporateIdentities
     },
     [AppFeature.Corporates]: {
       uri: '/identity/corporates/list',
@@ -46,8 +48,10 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
       listRoute: AuthorizerRoute.issuanceDetails
     },
     [AppFeature.IndividualsAccreditation]: {
-      uri: '/identity/individual/accreditation/list',
-      listRoute: AuthorizerRoute.individualAccreditations
+      //   uri: '/identity/individual/accreditation/list',
+      //   listRoute: AuthorizerRoute.individualAccreditations
+      uri: '/identity/individuals/list',
+      listRoute: AuthorizerRoute.individualIdentities
     },
     [AppFeature.Individuals]: {
       uri: '/identity/individuals/list',

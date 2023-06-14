@@ -3,8 +3,6 @@ import { AppRouterLink } from 'components/AppRouterLink'
 import React, { createElement } from 'react'
 import { useStyles } from 'app/components/Header/components/UserDropdown/UserDropdownItem/UserDropdownItem.styles'
 import { useLocation } from 'react-router-dom'
-import { AdminRoute } from 'app/pages/admin/router/config'
-import { AppRoute } from 'app/router/config'
 
 export interface UserDropdownItemProps {
   icon: any
@@ -15,12 +13,6 @@ export interface UserDropdownItemProps {
 }
 
 export const getIsLinkActive = (link: string, pathname: string) => {
-  if (pathname.startsWith(AppRoute.admin)) {
-    if (pathname === AdminRoute.accessReports) {
-      return link === pathname
-    }
-  }
-
   return pathname.startsWith(link)
 }
 

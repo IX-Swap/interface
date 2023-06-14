@@ -5,7 +5,7 @@ import { useCurrencyBalance } from 'app/pages/invest/hooks/useCurrencyBalance'
 import { PlaceOrderArgs } from 'app/pages/invest/types/form'
 import { TradingOrders } from 'app/pages/invest/components/Trading/Orders/TradingOrders'
 import { PlaceOrderSuffix } from 'app/pages/invest/components/Trading/PlaceOrderSuffix'
-import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
+// import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
 import { useCreateOTCOrder } from 'app/pages/invest/hooks/useCreateOTCOrder'
 // import { useFeaturedPairNames } from 'app/pages/invest/hooks/useFeaturedPairNames'
 import { useSelectedPairNames } from 'app/pages/invest/hooks/useSelectedPairNames'
@@ -19,7 +19,7 @@ import React from 'react'
 import { OtcLiveOrderBook } from '../OtcLiveOrderBook/OtcLiveOrderBook'
 
 export const TradingBody = () => {
-  const classes = useStyles()
+  // const classes = useStyles()
   const { address } = usePairTokenAddressNetwork()
   const balance = useCryptoBalance(address)
   const { account } = useActiveWeb3React()
@@ -58,9 +58,12 @@ export const TradingBody = () => {
       <Grid item xs={12} lg={2}>
         <OtcLiveOrderBook />
       </Grid>
-      <Grid item className={classes.colorGrid} minHeight={325} xs={12} lg={8}>
+      <Grid xs={12} lg={8}>
         <TradingOrders />
       </Grid>
+      {/* <Grid item className={classes.colorGrid} minHeight={325} xs={12} lg={8}>
+        <TradingOrders />
+      </Grid> */}
 
       {!isMiniLaptop && (
         <Grid item container xs={12} lg={2}>

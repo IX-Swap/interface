@@ -20,7 +20,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
     step,
     fullWidth,
     size = 'large',
-    submitText = 'Identity',
+    submitText = 'KYC',
     customSchema = undefined,
     statusFieldName = 'status'
   } = props

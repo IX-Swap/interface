@@ -15,8 +15,7 @@ export const DSOInvestButton = ({ dso }: DSOInvestButtonProps) => {
   const { user } = useAuth()
   const { isTablet } = useAppBreakpoints()
   const params = { dsoId: dso._id, issuerId: dso.user }
-  const isInvestButtonDisabled =
-    dso.createdBy === user?._id || dso?.disableInvestInCampaign === true
+  const isInvestButtonDisabled = dso.createdBy === user?._id
   const classes = useStyles()
   return (
     <TwoFADialogWrapper>

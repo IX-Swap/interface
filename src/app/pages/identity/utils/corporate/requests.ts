@@ -25,15 +25,9 @@ export const getCorporateInfoRequestPayload = (
     documents: rep.documents?.map(doc => ({ ...doc.value }))
   }))
 
-  //   console.table({
-  //     declaredAs: data.declaredAs,
-  //     isIssuer: data.isIssuer,
-  //     isTenantOwner: data.isTenantOwner
-  //   })
-
   return {
     ...rest,
-    logo: typeof logo === 'string' ? logo : (logo as DataroomFile)?._id,
+    logo: typeof logo === 'string' ? logo : (logo as DataroomFile)?._id ?? null,
     representatives: representativesTransformed,
     legalEntityStatus: customLegalEntityStatus
       ? otherLegalEntityStatus

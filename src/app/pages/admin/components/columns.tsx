@@ -3,7 +3,7 @@ import { TableColumn } from 'types/util'
 import { LoginHistory } from 'types/user'
 import { Grid, Link, Typography, Tooltip } from '@mui/material'
 import { getTimeFromNow } from 'helpers/dates'
-import { Launch } from '@mui/icons-material'
+import { ReactComponent as LaunchIcon } from 'app/pages/issuance/components/SecondaryListingsTable/icons/view.svg'
 import withStyles from '@mui/styles/withStyles'
 
 const UserAgentTooltip = withStyles(theme => ({
@@ -29,7 +29,7 @@ const renderIp = (ip: string, loginHistory: LoginHistory) => (
           loginHistory.geolocation.country
         ].join(', ')} )`}
       </Typography>
-      <Launch color='primary' />
+      <LaunchIcon />
     </Grid>
   </Link>
 )

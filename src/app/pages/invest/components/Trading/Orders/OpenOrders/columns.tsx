@@ -3,12 +3,14 @@ import {
   formatMoney,
   formatRoundedAmount,
   getOrderCurrency,
+  getRoundedPercentage,
   renderTotal
 } from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { renderTicker } from 'helpers/tables'
 import React from 'react'
 import { OpenOTCOrder, OTCOrder, ColumnOTCMatch } from 'types/otcOrder'
+import { TableColumn } from 'types/util'
 import { HeadCellWithSort } from 'ui/UIKit/TablesKit/components/HeadCellWithSort/HeadCellWithSort'
 import { renderOpenOrderStatus } from './helpers'
 
@@ -19,7 +21,7 @@ export const columns = [
     render: formatDateToMMDDYY
   },
   {
-    label: <HeadCellWithSort label={'Pair'} field={'pair.name'} />,
+    label: <HeadCellWithSort label={'Pair'} field={'name'} />,
     key: 'pair.name',
     render: renderTicker
   },
@@ -64,7 +66,7 @@ export const compactColumns = [
     render: formatDateToMMDDYY
   },
   {
-    label: <HeadCellWithSort label={'Pair'} field={'pair.name'} />,
+    label: <HeadCellWithSort label={'Pair'} field={'name'} />,
     key: 'pair.name',
     render: renderTicker
   },
@@ -102,47 +104,47 @@ export const compactColumns = [
   }
 ]
 
-// export const nestedcolumns: Array<TableColumn<ColumnOTCMatch>> = [
-//   {
-//     key: 'createdAt',
-//     label: 'Date',
-//     render: formatDateToMMDDYY
-//   },
-//   {
-//     label: 'Pair',
-//     key: 'pair.name',
-//     render: renderTicker
-//   },
-//   {
-//     key: 'orderType',
-//     label: 'Side',
-//     render: value => capitalizeFirstLetter(value)
-//   },
-//   {
-//     key: 'matchedPrice',
-//     label: 'Price',
-//     render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
-//   },
-//   {
-//     key: 'matchedAmount',
-//     label: 'Quantity',
-//     align: 'center',
-//     // render: (_, row) => formatRoundedAmount(row?.matchedAmount ?? 0)
-//     render: (_, row) => row?.matchedAmount ?? 0
-//   },
-//   {
-//     key: 'user',
-//     label: 'Total',
-//     render: (_, row) =>
-//       renderTotal({ amount: row.matchedAmount, price: row.matchedPrice, row })
-//   },
-//   {
-//     key: '_id',
-//     label: 'Status',
-//     render: (_, row) =>
-//       getRoundedPercentage({
-//         amount: +row.parentAmount,
-//         matchedAmount: +row.matchedAmount ?? 0
-//       })
-//   }
-// ]
+export const nestedcolumns: Array<TableColumn<ColumnOTCMatch>> = [
+  {
+    key: 'createdAt',
+    label: 'Date',
+    render: formatDateToMMDDYY
+  },
+  {
+    label: 'Pair',
+    key: 'pair.name',
+    render: renderTicker
+  },
+  {
+    key: 'orderType',
+    label: 'Side',
+    render: value => capitalizeFirstLetter(value)
+  },
+  {
+    key: 'matchedPrice',
+    label: 'Price',
+    render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
+  },
+  {
+    key: 'matchedAmount',
+    label: 'Quantity',
+    align: 'center',
+    // render: (_, row) => formatRoundedAmount(row?.matchedAmount ?? 0)
+    render: (_, row) => row?.matchedAmount ?? 0
+  },
+  {
+    key: 'user',
+    label: 'Total',
+    render: (_, row) =>
+      renderTotal({ amount: row.matchedAmount, price: row.matchedPrice, row })
+  },
+  {
+    key: '_id',
+    label: 'Status',
+    render: (_, row) =>
+      getRoundedPercentage({
+        amount: +row.parentAmount,
+        matchedAmount: +row.matchedAmount ?? 0
+      })
+  }
+]

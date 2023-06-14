@@ -14,10 +14,10 @@ export interface UserIdentitySelectProps {
 type IdentityType = 'no identity' | 'individual' | 'investors' | 'issuers'
 
 const labelMap: { [key in IdentityType]: string } = {
-  'no identity': 'No Identity Created Yet',
-  individual: 'Individual Investor',
-  investors: 'Corporate Investor',
-  issuers: 'Issuer (Raise Capital)'
+  'no identity': 'No Identity',
+  individual: 'Individual',
+  investors: 'Corporate',
+  issuers: 'Issuer'
 }
 export const UserIdentitySelect = ({
   userIdentities,
@@ -63,18 +63,19 @@ export const UserIdentitySelect = ({
   }
 
   return (
-    <Grid container spacing={1} justifyContent='flex-start' alignItems='center'>
-      <Grid item xs={7}>
+    <Grid sx={{ display: 'flex' }} gap={2}>
+      <Grid item>
         <FormControl>
           <InputLabel>Identity Status</InputLabel>
           <Select
+            style={{ paddingRight: '11px' }}
             value={identity}
             MenuProps={{
               PaperProps: {
                 style: {
                   maxHeight: 300,
-                  width: 250,
-                  paddingRight: 15
+                  width: 280,
+                  paddingRight: 40
                 }
               }
             }}
@@ -107,12 +108,13 @@ export const UserIdentitySelect = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12}>
+      <Grid style={{ marginTop: '27px' }} item>
         <Button
+          sx={{ height: '53px' }}
           component={AppRouterLinkComponent}
           to={getPath()}
           params={{ userId }}
-          variant='outlined'
+          variant='contained'
           color='primary'
           disabled={getDisabled()}
         >
