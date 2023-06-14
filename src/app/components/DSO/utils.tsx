@@ -211,7 +211,6 @@ export const transformDSOToFormValues = (
       subscriptionDocument: undefined
     } as any
   }
-
   return {
     capitalStructure: dso.capitalStructure,
     totalFundraisingAmount: dso.totalFundraisingAmount,
@@ -233,7 +232,7 @@ export const transformDSOToFormValues = (
     tokenSymbol: dso.tokenSymbol,
     minimumInvestment: dso.minimumInvestment,
     issuerName: dso.issuerName,
-    corporate: dso.corporate?._id,
+    corporate: dso?.identity?.corporates[0]?._id,
     investmentStructure: dso.investmentStructure,
     currency: getIdFromObj(dso.currency),
     network: getIdFromObj(dso.network),

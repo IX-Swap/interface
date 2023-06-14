@@ -68,7 +68,7 @@ export const useAppNavigation = () => {
     } as any)
   }
 
-  if (isIssuer) {
+  if (isIssuer || isSuperUser) {
     links.push({
       label: 'Issuance',
       link: IssuanceRoute.dashboard,
@@ -84,7 +84,7 @@ export const useAppNavigation = () => {
     })
   }
 
-  if (isFundManager) {
+  if (isFundManager || isSuperUser) {
     issuanceLandingLinks.unshift({
       label: 'Overview',
       path: IssuanceRoute.insight

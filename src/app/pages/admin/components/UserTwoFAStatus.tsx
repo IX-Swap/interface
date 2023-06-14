@@ -11,7 +11,12 @@ export interface UserVerificationStatusProps {
 export const UserTwoFAStatus = ({ data }: UserVerificationStatusProps) => {
   const { twoFactorAuth } = data
   const classes = useStyles()
-  const { enableChipText, enableChipBackground } = classes
+  const {
+    enableChipText,
+    enableChipBackground,
+    pendingChipBackground,
+    pendingChipText
+  } = classes
 
   return (
     <Grid sx={{ display: 'flex' }} gap={1}>
@@ -24,7 +29,14 @@ export const UserTwoFAStatus = ({ data }: UserVerificationStatusProps) => {
               className={enableChipBackground}
             />
           </Grid>
-        ) : null}
+        ) : (
+          <Grid style={{ marginTop: '11px' }} item>
+            <Chip
+              label={<Box className={pendingChipText}>Pending</Box>}
+              className={pendingChipBackground}
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid style={{ marginTop: '27px' }} item>

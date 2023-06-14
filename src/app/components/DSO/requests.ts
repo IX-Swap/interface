@@ -1,7 +1,15 @@
 import _ from 'lodash'
+import { getIdFromObj } from 'helpers/strings'
+import { useAuth } from 'hooks/auth/useAuth'
+import { UseCorporateUserId } from 'app/pages/identity/hooks/useCorporateUserId'
 
 export const getDSOInformationRequestPayload = (data: any) => {
+  const issuerId: any = sessionStorage.getItem('issuerId')
+  const { user } = useAuth()
+  const userId = getIdFromObj(user)
+  const { corporateData } = UseCorporateUserId({ userId })
   const dsoTermDefaults = {
+    corporate: issuerId ? issuerId : corporateData?.data[0]?._id,
     investmentPeriod: data.investmentPeriod === '' ? 0 : data.investmentPeriod,
     dividendYield: data.dividendYield === '' ? 0 : data.dividendYield,
     interestRate: data.interestRate === '' ? 0 : data.interestRate,
@@ -15,7 +23,6 @@ export const getDSOInformationRequestPayload = (data: any) => {
     uniqueIdentifierCode:
       data.uniqueIdentifierCode === '' ? null : data.uniqueIdentifierCode
   }
-
   return {
     ...data,
     ...dsoTermDefaults,

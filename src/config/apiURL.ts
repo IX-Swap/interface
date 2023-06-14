@@ -35,6 +35,7 @@ export const identityURL = {
     submit: (id?: string) => `/identity/corporates/${id}/submit`,
     get: (userId?: string, identityId?: string) =>
       `/identity/corporates/${userId}/${identityId}`,
+    getByUserId: (userId?: string) => `/identity/corporate/${userId}`,
     validateData: '/identity/corporates/check',
     accreditation: {
       create: (corporateId?: string) =>

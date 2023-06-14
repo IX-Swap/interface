@@ -4,7 +4,7 @@ import { documentValueExtractor } from 'app/components/DSO/utils'
 import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 // import { Checkbox } from 'components/form/Checkbox'
-import { CorporateSelect } from 'components/form/CorporateSelect'
+// import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
 import { TypedField } from 'components/form/TypedField'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
@@ -281,21 +281,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             </Grid>
             <Grid item xs={12} md={6}>
               <TypedField
-                component={CorporateSelect}
-                label='Corporate'
-                name='corporate'
-                control={control}
-                placeHolder='Select corporate'
-                variant='outlined'
-              />
-            </Grid>
-          </Grid>
-          <VSpacer size='small' />
-        </Grid>
-        <Grid item>
-          <Grid container spacing={3} pt={2}>
-            <Grid item xs={12} md={6}>
-              <TypedField
                 component={TextInput}
                 label='Issuer Name'
                 name='issuerName'
@@ -304,6 +289,21 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
+            {/* <Grid item xs={12} md={6}>
+              <TypedField
+                component={CorporateSelect}
+                label='Corporate'
+                name='corporate'
+                control={control}
+                placeHolder='Select corporate'
+                variant='outlined'
+              />
+            </Grid> */}
+          </Grid>
+          <VSpacer size='small' />
+        </Grid>
+        <Grid item>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 assetType='Currency'
@@ -315,11 +315,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-          </Grid>
-          <VSpacer size='small' />
-        </Grid>
-        <Grid item>
-          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={DateTimePicker}
@@ -333,12 +328,17 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 defaultValue={null}
                 helperText='mm/dd/yyyy'
                 placeholder='mm/dd/yyyy'
-                inputVariant='outlined'
+                inputVariant='outlined' 
                 withIcon
                 disablePast
                 onAccept={async () => await trigger('completionDate')}
               />
             </Grid>
+          </Grid>
+          <VSpacer size='small' />
+        </Grid>
+        <Grid item>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={DateTimePicker}

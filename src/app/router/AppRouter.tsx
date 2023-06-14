@@ -26,6 +26,7 @@ export const AppRouter = () => {
   const isAdmin = useIsAdmin()
   const isIssuer = useIsIssuer()
   const isFundManager = useIsFundManager()
+  const isSuperUser = isAuthorizer || isAdmin
 
   return (
     <Switch>
@@ -57,11 +58,11 @@ export const AppRouter = () => {
         <ClientRouter />
       </AppRoute>
 
-      {isIssuer && (
+      {isIssuer || isSuperUser ? (
         <AppRoute breadcrumb='Issuance' path={AppPath.issuance}>
           <IssuanceRoot />
         </AppRoute>
-      )}
+      ) : null}
 
       {isAdmin && (
         <AppRoute breadcrumb='Admin' path={AppPath.admin}>
