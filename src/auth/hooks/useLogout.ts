@@ -10,6 +10,7 @@ export const useLogout = () => {
     } finally {
       storageService.remove('user')
       sessionStorage.removeItem('issuerId')
+      sessionStorage.removeItem('corporateId')
       storageService.remove('visitedUrl')
       storageService.remove('notificationFilter')
       socketService.disconnect()
