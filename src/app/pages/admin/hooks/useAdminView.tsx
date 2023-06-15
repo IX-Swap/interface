@@ -6,6 +6,7 @@ export const useAdminView = (user: User, refresh: Function) => {
   console.log(user, refresh, 'jjjj')
   const [open, setOpen] = useState(false)
   const [roles, setRoles] = useState<string[]>(user.roles.split(','))
+  const [roleType, setRoleType] = useState()
   const [requestUpdateRoles] = useSetRoles({})
 
   const updateRoles = useCallback(() => {
@@ -18,7 +19,8 @@ export const useAdminView = (user: User, refresh: Function) => {
     updateRoles()
   }, [updateRoles])
 
-  const handleRoleChange = (value: string[]) => {
+  const handleRoleChange = (value: string[], roleType: any) => {
+    setRoleType(roleType)
     setRoles(value)
   }
 
@@ -31,12 +33,29 @@ export const useAdminView = (user: User, refresh: Function) => {
   }
 
   const handleConfirm = async () => {
-    await requestUpdateRoles({ userId: user._id, roles: roles.join(',') })
+    // await requestUpdateRoles({
+    //   userId: user._id,
+    //   type: roleType,
+    //   roles: roles.join(',')
 
+    // })
+    const payload: any = {
+      userId: user._id,
+      type: roleType
+    }
+    const tempRoleType: string =
+      roleType === 'investorRole' ? 'newInvestorRoles' : 'newUserRoles'
+    payload[tempRoleType] = roles.join(',')
+
+    const emptyRoleType: string =
+      roleType !== 'investorRole' ? 'newInvestorRoles' : 'newUserRoles'
+    payload[emptyRoleType] = ''
+
+    await requestUpdateRoles(payload)
     if (typeof refresh === 'function') {
       refresh()
     }
-
+    window.location.reload()
     setOpen(false)
   }
 

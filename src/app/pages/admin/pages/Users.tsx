@@ -3,7 +3,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import columns from 'app/pages/admin/columns'
-import { Actions } from 'app/pages/admin/components/Actions'
+// import { Actions } from 'app/pages/admin/components/Actions'
 // import { RoleActions } from '../components/RoleActions'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { userURL } from 'config/apiURL'
@@ -15,6 +15,7 @@ import { RootContainer } from 'ui/RootContainer'
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
 import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQueryFilterGroup/SearchQueryFilterGroup'
 import { useStyles } from '../components/UserDetails.styles'
+// import { RoleActions } from '../components/RoleActions'
 export const Users = () => {
   const { getFilterValue } = useQueryFilter()
   useSetPageTitle('User Roles')
@@ -62,9 +63,9 @@ export const Users = () => {
                 uri={userURL.getAll}
                 name={usersQueryKeys.getList}
                 columns={columns}
-                actions={({ item }) => renderActions(item, ref)}
+                // actions={({ item }) => renderActions(item, ref)}
                 filter={filter}
-                actionHeader='User Roles'
+                // actionHeader='User Roles'
               />
             </Grid>
           </Grid>
@@ -74,6 +75,6 @@ export const Users = () => {
   )
 }
 
-export const renderActions = (item: User, ref: any) => (
-  <Actions user={item} ref={ref} />
-)
+// export const renderActions = (item: User, ref: any) => (
+//   <Actions user={item} ref={ref} />
+// )

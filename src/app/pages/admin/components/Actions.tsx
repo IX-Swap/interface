@@ -49,7 +49,7 @@ export const Actions = forwardRef(({ user }: ActionsProps, ref: any) => {
           value={newRoles}
           onClose={onClose}
           onChange={(ev: SelectChangeEvent<unknown>) =>
-            handleRoleChange(ev.target.value as string[])
+            handleRoleChange(ev.target.value as string[], 'userRole' as string)
           }
           variant='outlined'
           roles={[]}
