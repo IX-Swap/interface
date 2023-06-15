@@ -3,9 +3,8 @@ import User from 'types/user'
 import { useSetRoles } from 'app/pages/admin/hooks/useSetRoles'
 
 export const useAdminView = (user: User, refresh: Function) => {
-  console.log(user, refresh, 'jjjj')
   const [open, setOpen] = useState(false)
-  const [roles, setRoles] = useState<string[]>(user.roles.split(','))
+  const [roles, setRoles] = useState<any>(user.roles.split(','))
   const [roleType, setRoleType] = useState()
   const [requestUpdateRoles] = useSetRoles({})
 
@@ -45,7 +44,8 @@ export const useAdminView = (user: User, refresh: Function) => {
     }
     const tempRoleType: string =
       roleType === 'investorRole' ? 'newInvestorRoles' : 'newUserRoles'
-    payload[tempRoleType] = roles.join(',')
+    payload[tempRoleType] =
+      roleType === 'investorRole' ? roles : roles.join(',')
 
     const emptyRoleType: string =
       roleType !== 'investorRole' ? 'newInvestorRoles' : 'newUserRoles'
@@ -55,8 +55,8 @@ export const useAdminView = (user: User, refresh: Function) => {
     if (typeof refresh === 'function') {
       refresh()
     }
-    window.location.reload()
     setOpen(false)
+    window.location.reload()
   }
 
   return {
