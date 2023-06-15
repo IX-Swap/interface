@@ -36,6 +36,8 @@ export const IssuerAssigneeSelect = () => {
   const setIssuerValue = (event: any, value: any) => {
     setSelectedOption(value?.props?.children)
     sessionStorage.setItem('issuerId', value?.props?.value)
+    const index = value?.key.split('$')[1]
+    sessionStorage.setItem('corporateId', data?.list[index]?._id)
   }
   return (
     <Box>

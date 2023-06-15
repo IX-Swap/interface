@@ -33,6 +33,7 @@ export const useSubmitDSO = (dsoId: string) => {
         investQueryKeys.getDSOById(dsoId, params.issuerId)
       )
       sessionStorage.removeItem('issuerId')
+      sessionStorage.removeItem('corporateId')
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')
