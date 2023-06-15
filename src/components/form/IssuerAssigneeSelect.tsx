@@ -11,14 +11,19 @@ import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import SearchIcon from '@mui/icons-material/Search'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { useLocation } from 'react-router-dom'
 const containsText = (text: any, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1
 
 export const IssuerAssigneeSelect = () => {
+  const location = useLocation()
+  const isEdit: boolean = location.pathname.includes('edit')
   const { data } = useAllCorporates({ all: true, status: 'Approved' })
+  const corporateIdIndex: any = sessionStorage.getItem('corporateIdIndex')
   const [selectedOption, setSelectedOption] = useState(
-    data?.list[0]?.companyLegalName
+    data?.list[corporateIdIndex ? corporateIdIndex : 0]?.companyLegalName
   )
+
   const [searchText, setSearchText] = useState('')
 
   const renderdOptions = data.list.map(data => {
@@ -38,6 +43,7 @@ export const IssuerAssigneeSelect = () => {
     sessionStorage.setItem('issuerId', value?.props?.value)
     const index = value?.key.split('$')[1]
     sessionStorage.setItem('corporateId', data?.list[index]?._id)
+    sessionStorage.setItem('corporateIdIndex', index)
   }
   return (
     <Box>
@@ -46,6 +52,7 @@ export const IssuerAssigneeSelect = () => {
           Issuer Assignee
         </InputLabel>
         <Select
+          disabled={isEdit}
           MenuProps={{ autoFocus: false }}
           labelId='search-select-label'
           placeholder='Select Issuer Assignee'
