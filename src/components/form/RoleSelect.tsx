@@ -9,6 +9,7 @@ export interface RoleSelectProps extends SelectProps {
   value: string[]
   roles: string[]
   investorIdentity: any
+  verificationStatus: boolean
 }
 
 export const RoleSelect = (props: RoleSelectProps) => {
@@ -38,6 +39,7 @@ export const RoleSelect = (props: RoleSelectProps) => {
     <>
       {props?.investorIdentity === 'INDIVIDUAL' ? (
         <Select
+          disabled={!props?.verificationStatus}
           {...props}
           multiple
           MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } as any }}
@@ -57,6 +59,7 @@ export const RoleSelect = (props: RoleSelectProps) => {
         </Select>
       ) : (
         <Select
+          disabled={!props?.verificationStatus}
           {...props}
           multiple
           MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } as any }}
