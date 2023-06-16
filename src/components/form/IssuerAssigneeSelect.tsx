@@ -20,13 +20,18 @@ export const IssuerAssigneeSelect = () => {
   const isEdit: boolean = location.pathname.includes('edit')
   const { data } = useAllCorporates({ all: true, status: 'Approved' })
   const corporateIdIndex: any = sessionStorage.getItem('corporateIdIndex')
-  const [selectedOption, setSelectedOption] = useState(
+  
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+  const listData: any = `${
     data?.list[corporateIdIndex ? corporateIdIndex : 0]?.companyLegalName
-  )
+  } - ${
+    data?.list[corporateIdIndex ? corporateIdIndex : 0]?.registrationNumber
+  } - ${data?.list[corporateIdIndex ? corporateIdIndex : 0]?.user?.email}`
+  const [selectedOption, setSelectedOption] = useState(listData)
 
   const [searchText, setSearchText] = useState('')
 
-  const renderdOptions = data.list.map(data => {
+  const renderdOptions = data?.list?.map(data => {
     return data
   })
 
@@ -84,7 +89,8 @@ export const IssuerAssigneeSelect = () => {
           </ListSubheader>
           {displayedOptions?.map((option, i) => (
             <SelectItem key={i} value={option?.user?._id}>
-              {option?.companyLegalName}
+              {`${option?.companyLegalName} - ${option?.registrationNumber} - ${option?.user?.email}`}
+              {/* {option?.companyLegalName} */}
             </SelectItem>
           ))}
         </Select>
