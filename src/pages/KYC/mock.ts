@@ -230,7 +230,6 @@ export const corporateFormInitialValues: IFormInitial = {
   countryOfIncorporation: null,
   businessActivity: '',
   incorporationDate: null,
-  incorporationExpiryDate: null,
   inFatfJurisdiction: false,
   personnelName: '',
   designation: '',

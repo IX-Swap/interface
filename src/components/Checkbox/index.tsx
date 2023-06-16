@@ -36,7 +36,7 @@ export const Checkbox: FC<Props> = ({
 }: Props) => {
   const style = { transform: `scale(${scaleSize})` }
   const checkedImage = isRadio ? <StyledRadioChecked style={style} /> : <StyledChecked style={style} />
-  const notCheckedImage = isRadio ? <StyledRadioNotChecked style={style} id={id}/> : <StyledNotChecked style={style} />
+  const notCheckedImage = isRadio ? <StyledRadioNotChecked style={style} id={id} /> : <StyledNotChecked style={style} />
 
   return (
     <ButtonText
@@ -72,6 +72,9 @@ const StyledChecked = styled(Checked)`
         fill: white;
       }
     `}
+
+  min-width: 20px;
+  min-height: 20px;
 `
 
 const StyledNotChecked = styled(NotChecked)`
@@ -85,6 +88,9 @@ const StyledNotChecked = styled(NotChecked)`
         fill: white;
       }
     `}
+
+  min-width: 20px;
+  min-height: 20px;
 `
 
 const StyledRadioChecked = styled(RadioChecked)`
@@ -98,6 +104,9 @@ const StyledRadioChecked = styled(RadioChecked)`
         fill: white;
       }
     `}
+
+  min-width: 20px;
+  min-height: 20px;
 `
 
 const StyledRadioNotChecked = styled(RadioNotChecked)`
@@ -108,4 +117,7 @@ const StyledRadioNotChecked = styled(RadioNotChecked)`
         fill: ${theme.config.elements?.main};
       }
     `}
+
+  min-width: 20px;
+  min-height: 20px;
 `
