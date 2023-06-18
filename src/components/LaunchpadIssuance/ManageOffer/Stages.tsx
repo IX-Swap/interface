@@ -64,7 +64,7 @@ export const OfferStages = ({ offer, refreshOffer }: Props) => {
           <Title>Investment Stage</Title>
           <Tooltip
             title="Investments Stages"
-            body="Stages are in chronological order. One step has to be done before the deal will move on to the next step. For further clarification, please reach out to your account manager."
+            body="Stages are in chronological order. One step has to be done before the deal will move on to the next step. For further clarification, please reach out to your account manager. The time provided is based on the UTC +0 time zone."
           >
             <Info size="14" color={theme.launchpad.colors.text.caption} />
           </Tooltip>
