@@ -2,29 +2,42 @@ import _ from 'lodash'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { UseCorporateUserId } from 'app/pages/identity/hooks/useCorporateUserId'
+import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 
-export const getDSOInformationRequestPayload = (data: any) => {
+export const getDSOInformationRequestPayload = (payloadData: any) => {
   const corporateId: any = sessionStorage.getItem('corporateId')
+  const corporateIdIndex: any = sessionStorage.getItem('corporateIdIndex')
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { corporateData } = UseCorporateUserId({ userId })
+  const { data } = useAllCorporates({ all: true, status: 'Approved' })
+  let issuerName = data?.list[corporateIdIndex]?.companyLegalName
   const dsoTermDefaults = {
+    issuerName: issuerName
+      ? issuerName
+      : corporateData?.data[0]?.companyLegalName,
     corporate: corporateId ? corporateId : corporateData?.data[0]?._id,
-    investmentPeriod: data.investmentPeriod === '' ? 0 : data.investmentPeriod,
-    dividendYield: data.dividendYield === '' ? 0 : data.dividendYield,
-    interestRate: data.interestRate === '' ? 0 : data.interestRate,
-    grossIRR: data.grossIRR === '' ? 0 : data.grossIRR,
-    leverage: data.leverage === '' ? 0 : data.leverage,
-    equityMultiple: data.equityMultiple === '' ? 0 : data.equityMultiple,
+    investmentPeriod:
+      payloadData.investmentPeriod === '' ? 0 : payloadData.investmentPeriod,
+    dividendYield:
+      payloadData.dividendYield === '' ? 0 : payloadData.dividendYield,
+    interestRate:
+      payloadData.interestRate === '' ? 0 : payloadData.interestRate,
+    grossIRR: payloadData.grossIRR === '' ? 0 : payloadData.grossIRR,
+    leverage: payloadData.leverage === '' ? 0 : payloadData.leverage,
+    equityMultiple:
+      payloadData.equityMultiple === '' ? 0 : payloadData.equityMultiple,
     distributionFrequency:
-      data.distributionFrequency === ''
+      payloadData.distributionFrequency === ''
         ? 'Not Applicable'
-        : data.distributionFrequency,
+        : payloadData.distributionFrequency,
     uniqueIdentifierCode:
-      data.uniqueIdentifierCode === '' ? null : data.uniqueIdentifierCode
+      payloadData.uniqueIdentifierCode === ''
+        ? null
+        : payloadData.uniqueIdentifierCode
   }
   return {
-    ...data,
+    ...payloadData,
     ...dsoTermDefaults,
     step: 1
   }
