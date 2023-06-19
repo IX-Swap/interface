@@ -281,6 +281,17 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             </Grid>
             <Grid item xs={12} md={6}>
               <TypedField
+                assetType='Currency'
+                component={AssetSelect}
+                label='Currency'
+                name='currency'
+                control={control}
+                placeHolder='Preferred currency'
+                variant='outlined'
+              />
+            </Grid>
+            {/* <Grid item xs={12} md={6}>
+              <TypedField
                 component={TextInput}
                 label='Issuer Name'
                 name='issuerName'
@@ -288,7 +299,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 helperText='Issuer'
                 variant='outlined'
               />
-            </Grid>
+            </Grid> */}
             {/* <Grid item xs={12} md={6}>
               <TypedField
                 component={CorporateSelect}
@@ -306,17 +317,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
-                assetType='Currency'
-                component={AssetSelect}
-                label='Currency'
-                name='currency'
-                control={control}
-                placeHolder='Preferred currency'
-                variant='outlined'
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TypedField
                 component={DateTimePicker}
                 customRenderer
                 label='Launch Date'
@@ -332,6 +332,23 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 withIcon
                 disablePast
                 onAccept={async () => await trigger('completionDate')}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={DateTimePicker}
+                customRenderer
+                label='Completion Date'
+                name='completionDate'
+                control={control}
+                valueExtractor={dateTimeValueExtractor}
+                // @ts-expect-error
+                defaultValue={null}
+                helperText='mm/dd/yyyy'
+                inputVariant='outlined'
+                withIcon
+                disablePast
+                onAccept={async () => await trigger('launchDate')}
               />
             </Grid>
           </Grid>

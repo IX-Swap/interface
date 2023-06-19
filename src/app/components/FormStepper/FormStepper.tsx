@@ -246,6 +246,7 @@ export const FormStepper = (props: FormStepperProps) => {
                           size='medium'
                           submitText={submitText}
                           statusFieldName={statusFieldName}
+                          isLastStep={activeStep === steps.length - 1}
                         />
                       </Grid>
                     )}

@@ -87,6 +87,7 @@ export const SaveOnNavigate = ({
   const [saveForm] = useMutation(handleSave)
 
   const saveOnNavigate = (location: Location<unknown>, action: Action) => {
+    console.log('saveOnNavigate')
     setNextLocation(location)
 
     if (isRedirecting && isCreateMode) {
@@ -94,6 +95,7 @@ export const SaveOnNavigate = ({
     }
 
     if (!isRedirecting) {
+      console.log('saveForm')
       void saveForm()
     }
 

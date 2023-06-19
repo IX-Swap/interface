@@ -56,7 +56,6 @@ export const useAdminView = (user: User, refresh: Function) => {
       refresh()
     }
     setOpen(false)
-    window.location.reload()
   }
 
   return {
