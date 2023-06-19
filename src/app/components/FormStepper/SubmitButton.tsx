@@ -11,6 +11,7 @@ export interface SubmitButtonProps extends ButtonProps {
   submitText?: string
   customSchema?: any
   statusFieldName?: string
+  isLastStep?: boolean
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
@@ -22,7 +23,8 @@ export const SubmitButton = (props: SubmitButtonProps) => {
     size = 'large',
     submitText = 'KYC',
     customSchema = undefined,
-    statusFieldName = 'status'
+    statusFieldName = 'status',
+    isLastStep = false
   } = props
 
   const [save, { isLoading }] = mutation
@@ -96,7 +98,12 @@ export const SubmitButton = (props: SubmitButtonProps) => {
           color='primary'
           onClick={async () => await handleSave()}
           disabled={
-            isApproved || isLoading || isSubmitted || validating || !isValid
+            isApproved ||
+            isLoading ||
+            isSubmitted ||
+            validating ||
+            !isValid ||
+            !isLastStep
           }
           disableElevation
           fullWidth={fullWidth}
