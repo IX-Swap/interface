@@ -6,6 +6,7 @@ import User from 'types/user'
 import { useAdminView } from '../hooks/useAdminView'
 // import { RoleSelect } from 'components/form/RoleSelect'
 import { InvestorRoleSelect } from 'components/form/InvestorRoleSelect'
+import { isArray } from 'lodash'
 // import { INVESTORROLES } from 'config/roles'
 
 export interface RoleActionsProps {
@@ -15,6 +16,7 @@ export interface RoleActionsProps {
 export const RoleActions = forwardRef(
   ({ user }: RoleActionsProps, ref: any) => {
     const classes = useStyles()
+    let newRoles: any
     const {
       open,
       handleClose,
@@ -24,37 +26,44 @@ export const RoleActions = forwardRef(
       handleRoleChange
     } = useAdminView(user, ref?.current?.refresh)
     const onClose = () => {
-      if (roles.join(',') !== user.roles) {
-        handleChange(roles.join(','))
+      if (roles !== user.roles) {
+        handleChange(roles)
       }
     }
 
-    const newRoles = roles.filter((role: string) => {
-      return (
-        role !== 'user' &&
-        role !== 'issuer' &&
-        role !== 'tenantOwner' &&
-        role !== 'admin' &&
-        role !== 'authorizer'
-      )
-    })
+    if (isArray(roles)) {
+      newRoles = roles?.filter((role: string) => {
+        return (
+          role !== 'user' &&
+          role !== 'issuer' &&
+          role !== 'tenantowner' &&
+          role !== 'admin' &&
+          role !== 'authorizer'
+        )
+      })
+    }
     return (
       <>
         <DialogConfirmRoleChange
           open={open}
           handleClose={handleClose}
           user={user}
-          newRole={roles.join(',')}
+          newRole={roles}
           handleConfirm={handleConfirm}
         />
         <FormControl className={classes.formControl}>
           <InvestorRoleSelect
             investorIdentity={user.accountType}
-            value={newRoles}
+            // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+            value={newRoles || roles}
+            verificationStatus={user?.verified}
             roles={roles}
             onClose={onClose}
             onChange={(ev: SelectChangeEvent<unknown>) =>
-              handleRoleChange(ev.target.value as string[])
+              handleRoleChange(
+                ev.target.value as string[],
+                'investorRole' as string
+              )
             }
             variant='outlined'
           />

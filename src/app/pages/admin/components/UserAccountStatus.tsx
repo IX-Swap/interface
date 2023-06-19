@@ -1,11 +1,6 @@
 import { ManagedUser } from 'types/user'
 import React from 'react'
-import {
-  Grid,
-  Typography,
-  Box,
-  Chip
-} from '@mui/material'
+import { Grid, Typography, Box, Chip } from '@mui/material'
 import { ActionEnableToggle } from './ActionEnableToggle'
 import { useStyles } from './UserDetails.styles'
 
@@ -14,22 +9,34 @@ export interface UserVerificationStatusProps {
 }
 
 export const UserAccountStatus = ({ data }: UserVerificationStatusProps) => {
-  const { twoFactorAuth } = data
+  const { isResetActive } = data
   const classes = useStyles()
-  const { enableChipText, enableChipBackground } = classes
+  const {
+    enableChipText,
+    enableChipBackground,
+    pendingChipBackground,
+    pendingChipText
+  } = classes
 
   return (
     <Grid sx={{ display: 'flex' }} gap={1}>
       <Grid item>
-        <Typography>2FA Status</Typography>
-        {!twoFactorAuth ? (
+        <Typography>Account Status</Typography>
+        {!isResetActive ? (
           <Grid style={{ marginTop: '11px' }} item>
             <Chip
               label={<Box className={enableChipText}>Enabled</Box>}
               className={enableChipBackground}
             />
           </Grid>
-        ) : null}
+        ) : (
+          <Grid style={{ marginTop: '11px' }} item>
+            <Chip
+              label={<Box className={pendingChipText}>Pending</Box>}
+              className={pendingChipBackground}
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid style={{ marginTop: '27px' }} item>

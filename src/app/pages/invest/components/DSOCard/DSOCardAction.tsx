@@ -21,7 +21,7 @@ export const DSOCardAction = ({ data, type }: DSOCardActionProps) => {
   const params =
     type !== 'OTC'
       ? {
-          issuerId: data.createdBy,
+          issuerId: data.user,
           dsoId: data._id
         }
       : {

@@ -47,9 +47,10 @@ export const Actions = forwardRef(({ user }: ActionsProps, ref: any) => {
         <RoleSelect
           investorIdentity={user.accountType}
           value={newRoles}
+          verificationStatus={user?.verified}
           onClose={onClose}
           onChange={(ev: SelectChangeEvent<unknown>) =>
-            handleRoleChange(ev.target.value as string[])
+            handleRoleChange(ev.target.value as string[], 'userRole' as string)
           }
           variant='outlined'
           roles={[]}

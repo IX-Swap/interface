@@ -85,7 +85,6 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
       value: dso?.uniqueIdentifierCode
     }
   ]
-
   return (
     <Paper className={container}>
       <Grid container className={grid} spacing={isMobile ? 3 : 6}>
@@ -113,7 +112,9 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                 {dso.tokenName} ({dso.tokenSymbol})
               </Typography>
               <Typography variant='h5' color={theme.palette.primary.main}>
-                {dso.corporate.companyLegalName}
+                {dso?.corporate?.companyLegalName
+                  ? dso?.corporate?.companyLegalName
+                  : dso?.identity?.corporates[0]?.companyLegalName}
               </Typography>
             </Grid>
             <Grid

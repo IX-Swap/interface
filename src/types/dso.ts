@@ -206,7 +206,7 @@ export type DSOFormValues = Omit<
   status?: string
   currency: string
   network?: string
-  corporate: string
+  corporate: any
   documents: FormArray<DataroomFile>
   team: DsoTeamMember[]
   faqs: DsoFAQItem[]

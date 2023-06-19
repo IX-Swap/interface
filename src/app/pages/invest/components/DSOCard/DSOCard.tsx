@@ -22,7 +22,7 @@ export const DSOCard = (props: DSOCardProps) => {
   const typeWithLogo = ['OTC', 'TopOffers']
 
   const { data, viewURL, type, refetch } = props
-
+console.log(data, 'datatatat')
   return (
     <Card
       data-testid='primaryDsoCard'
@@ -77,7 +77,7 @@ export const DSOCard = (props: DSOCardProps) => {
           params={
             type === 'OTC'
               ? { dsoId: data.dso, issuerId: data.user }
-              : { dsoId: data._id, issuerId: data.createdBy }
+              : { dsoId: data._id, issuerId: data.user }
           }
           variant='text'
           color='primary'
