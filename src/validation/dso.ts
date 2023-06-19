@@ -82,7 +82,7 @@ export const dsoFormBaseValidationSchema = {
         .transform(numberTransformer)
         .required('Investment Period is required')
     }),
-  issuerName: string().required('Issuer Name is required'),
+  // issuerName: string().required('Issuer Name is required'),
   network: string().required('Network is required'),
   launchDate: dateSchema
     .required('Launch Date is is required')
@@ -152,7 +152,7 @@ export const dsoInformationValidationSchemaStep1: any = {
   //     "Corporate must include only letters, numbers and these special characters . , - ; & '"
   //   ),
   currency: string().required('Currency is required'),
-  issuerName: string().required('Issuer Name is required'),
+  // issuerName: string().required('Issuer Name is required'),
   launchDate: dateSchema
     .required('Launch Date is required')
     .test(
