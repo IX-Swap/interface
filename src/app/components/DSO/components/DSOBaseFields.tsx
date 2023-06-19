@@ -328,7 +328,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 defaultValue={null}
                 helperText='mm/dd/yyyy'
                 placeholder='mm/dd/yyyy'
-                inputVariant='outlined' 
+                inputVariant='outlined'
                 withIcon
                 disablePast
                 onAccept={async () => await trigger('completionDate')}
@@ -356,7 +356,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3} pt={2}>
-            <Grid item xs={12} md={6}>
+            {/* <Grid item xs={12} md={6}>
               <TypedField
                 component={DateTimePicker}
                 customRenderer
@@ -372,7 +372,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 disablePast
                 onAccept={async () => await trigger('launchDate')}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} md={6}>
               <TypedField
                 component={DateTimePicker}
