@@ -46,7 +46,7 @@ const getTooltip = (type: OfferTimeframeType) => {
 }
 
 const format = (from: Date, to?: Date) =>
-  moment(from).format('Do MMM, HH:mm') + (to ? ` - ${moment(to).format('Do MMM')}` : '')
+  moment(from).format('Do MMM, HH:mm') + (to ? ` - ${moment(to).format('Do MMM, HH:mm')}` : '')
 
 const hasStarted = (date: Date) => date ? Date.parse(date.toString()) <= Date.now() : false
 
