@@ -356,23 +356,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3} pt={2}>
-            {/* <Grid item xs={12} md={6}>
-              <TypedField
-                component={DateTimePicker}
-                customRenderer
-                label='Completion Date'
-                name='completionDate'
-                control={control}
-                valueExtractor={dateTimeValueExtractor}
-                // @ts-expect-error
-                defaultValue={null}
-                helperText='mm/dd/yyyy'
-                inputVariant='outlined'
-                withIcon
-                disablePast
-                onAccept={async () => await trigger('launchDate')}
-              />
-            </Grid> */}
             <Grid item xs={12} md={6}>
               <TypedField
                 component={DateTimePicker}
