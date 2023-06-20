@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { TypedField } from 'components/form/TypedField'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
@@ -18,6 +19,13 @@ export const STODates = (props: STODatesProps) => {
   return (
     <Grid item>
       <Grid container spacing={2} direction='column'>
+        <Grid item>
+          <FormSectionHeader
+            hasBorderBottom={false}
+            title='STO Dates'
+            variant='h5'
+          />
+        </Grid>
         <Grid item>
           <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>

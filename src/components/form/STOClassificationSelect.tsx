@@ -10,7 +10,7 @@ export interface STOClassificationSelectProps {
 
 export const stoClassifications = [
   {
-    label: 'Accredited Investor (AI)',
+    label: 'Accredited Investor (AI) and Institutional Investor (II)',
     value: 'AI'
   },
   {
