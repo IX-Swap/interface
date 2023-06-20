@@ -201,24 +201,6 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
               actions={
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <DSOSubmitButton
-                      rawData={rawData}
-                      mainConditions={mainConditions}
-                      setStepValues={setStepValues}
-                      stepValues={stepValues}
-                      activeStep={activeStep}
-                      removeComplete={removeComplete}
-                      mutation={submitMutation}
-                      data={getSubmitDSOPayload(data)}
-                      customSchema={dsoFormBaseValidationSchema}
-                      step={steps[steps.length - 1]}
-                      fullWidth
-                      size='medium'
-                      submitText={submitText}
-                      completed={completed}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
                     <SaveDraftButton
                       isLastStep={activeStep === steps.length - 1}
                       formId={`${
@@ -240,6 +222,24 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                       removeComplete={removeComplete}
                       completed={completed}
                       setCreateComplete={setCreateComplete}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <DSOSubmitButton
+                      rawData={rawData}
+                      mainConditions={mainConditions}
+                      setStepValues={setStepValues}
+                      stepValues={stepValues}
+                      activeStep={activeStep}
+                      removeComplete={removeComplete}
+                      mutation={submitMutation}
+                      data={getSubmitDSOPayload(data)}
+                      customSchema={dsoFormBaseValidationSchema}
+                      step={steps[steps.length - 1]}
+                      fullWidth
+                      size='medium'
+                      submitText={submitText}
+                      completed={completed}
                     />
                   </Grid>
                 </Grid>

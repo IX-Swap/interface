@@ -11,8 +11,9 @@ import { numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
+import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 
-export const DSOPricing = () => {
+export const Pricing = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
@@ -29,16 +30,34 @@ export const DSOPricing = () => {
           <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
+                assetType='Currency'
+                component={AssetSelect}
+                label='Currency'
+                name='currency'
+                control={control}
+                placeHolder='Select Currency'
+                variant='outlined'
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TypedField
                 control={control}
                 component={NumericInput}
                 label='Unit Price'
                 name='pricePerUnit'
                 numberFormat={moneyNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='Offering base price'
+                helperText='Offering Base Price'
+                isOptional
+                optionalText='(Offering Base Price)'
                 variant='outlined'
               />
             </Grid>
+          </Grid>
+          <VSpacer size='small' />
+        </Grid>
+        <Grid item>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
@@ -50,12 +69,7 @@ export const DSOPricing = () => {
                 helperText='Amount to raise'
               />
             </Grid>
-          </Grid>
-          <VSpacer size='small' />
-        </Grid>
-        <Grid item>
-          <Grid container spacing={3} pt={2}>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
                 component={MinimumInvesmentField}
@@ -63,7 +77,9 @@ export const DSOPricing = () => {
                 name='minimumInvestment'
                 numberFormat={moneyNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='Number of tokens'
+                helperText='Number of Tokens'
+                isOptional
+                optionalText='(Number of Tokens)'
                 variant='outlined'
               />
             </Grid>

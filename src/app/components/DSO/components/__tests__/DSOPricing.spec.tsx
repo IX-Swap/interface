@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
+import { DSOPricing } from 'app/components/DSO/components/fields/Pricing'
 import { DSOMinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
 import { DSOTotalUnits } from 'app/components/DSO/components/DSOTotalUnits'
 import { Form } from 'components/form/Form'

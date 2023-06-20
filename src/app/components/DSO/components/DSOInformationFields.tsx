@@ -1,15 +1,16 @@
 import React, { Fragment } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
-import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
+import { STOInformation } from 'app/components/DSO/components/fields/STOInformation'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-// import { isDSOLive } from 'app/components/DSO/utils'
 import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
-import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
-import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
+import { Pricing } from 'app/components/DSO/components/fields/Pricing'
+import { OfferingTerms } from 'app/components/DSO/components/fields/OfferingTerms'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { STOAssign } from './STOAssign'
 import { useIsAdmin, useIsAuthorizer } from 'helpers/acl'
+import { BlockchainInformation } from './fields/BlockchainInformation'
+import { STODates } from './fields/STODates'
 
 export const DSOInformationFields = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
@@ -18,8 +19,8 @@ export const DSOInformationFields = () => {
   const isAuthorizer = useIsAuthorizer()
   const isAdmin = useIsAdmin()
   const isSuperUser = isAuthorizer || isAdmin
-  // const isLive = isDSOLive(data)
   const isNew = pathname.includes('/create')
+
   return (
     <Fragment>
       {isSuperUser && (
@@ -37,11 +38,7 @@ export const DSOInformationFields = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FieldContainer>
-            <DSOBaseFields
-              status={data?.status}
-              isNew={isNew}
-              // isLive={isLive}
-            />
+            <STOInformation status={data?.status} />
           </FieldContainer>
         </Grid>
       </Grid>
@@ -49,7 +46,7 @@ export const DSOInformationFields = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FieldContainer>
-            <DSOPricing />
+            <BlockchainInformation status={data?.status} isNew={isNew} />
           </FieldContainer>
         </Grid>
       </Grid>
@@ -57,7 +54,23 @@ export const DSOInformationFields = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FieldContainer>
-            <DSOTerms />
+            <Pricing />
+          </FieldContainer>
+        </Grid>
+      </Grid>
+      <VSpacer size='small' />
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <FieldContainer>
+            <STODates status={data?.status} />
+          </FieldContainer>
+        </Grid>
+      </Grid>
+      <VSpacer size='small' />
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <FieldContainer>
+            <OfferingTerms />
           </FieldContainer>
         </Grid>
       </Grid>
