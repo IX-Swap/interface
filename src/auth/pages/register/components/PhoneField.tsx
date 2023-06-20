@@ -20,7 +20,7 @@ export const PhoneField = () => {
       label='Phone Number'
       valueExtractor={plainValueExtractor}
       fullWidth
-      defaultValue={''}
+      // defaultValue={''}
       InputProps={{
         sx: {
           paddingRight: 0,
