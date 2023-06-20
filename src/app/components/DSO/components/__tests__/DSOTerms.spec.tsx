@@ -3,8 +3,8 @@ import { render } from 'test-utils'
 import { fireEvent } from '@testing-library/dom'
 import { Form } from 'components/form/Form'
 import { TypedField } from 'components/form/TypedField'
-import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
-import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
+import { DSOTerms } from 'app/components/DSO/components/fields/OfferingTerms'
+import { DSOBaseFields } from 'app/components/DSO/components/fields/STOInformation'
 import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 
 jest.mock('components/form/TypedField', () => ({
