@@ -177,6 +177,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
           onChange={onTimeChanged}
           minutesStep={10}
           okText='Ok'
+          toolbarTitle='SELECT TIME (UTC +00:00)'
         ></StaticTimePicker>
 
         {props.showButton && (

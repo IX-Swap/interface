@@ -3,7 +3,7 @@ import styled, { useTheme } from 'styled-components'
 import { ChevronRight, Edit3, Info } from 'react-feather'
 import { MiniOffer, OfferStatus } from 'state/launchpad/types'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
-import { formatDates } from './utils'
+import { formatDateRange } from './utils'
 import { KEY_OFFER_STATUSES } from '../utils/constants'
 import { useRole } from 'state/user/hooks'
 import { EditTimeframeModal } from './edit'
@@ -79,30 +79,30 @@ export const OfferStages = ({ offer, refreshOffer }: Props) => {
       {hasPresale && (
         <DateBlock
           title="Register To Invest"
-          subtitle={formatDates(timeframe.whitelist, timeframe.preSale)}
+          subtitle={formatDateRange(timeframe.whitelist, timeframe.preSale)}
           isCurrent={highlightedStatuses.includes(OfferStatus.whitelist)}
         />
       )}
       {hasPresale && (
         <DateBlock
           title="Pre-Sale"
-          subtitle={formatDates(timeframe.preSale, timeframe.sale)}
+          subtitle={formatDateRange(timeframe.preSale, timeframe.sale)}
           isCurrent={highlightedStatuses.includes(OfferStatus.preSale)}
         />
       )}
       <DateBlock
         title="Public Sale"
-        subtitle={formatDates(timeframe.sale, timeframe.closed)}
+        subtitle={formatDateRange(timeframe.sale, timeframe.closed)}
         isCurrent={highlightedStatuses.includes(OfferStatus.sale)}
       />
       <DateBlock
         title="Closed"
-        subtitle={formatDates(timeframe.closed, timeframe.claim)}
+        subtitle={formatDateRange(timeframe.closed, timeframe.claim)}
         isCurrent={highlightedStatuses.includes(OfferStatus.closed)}
       />
       <DateBlock
         title="Token Claim"
-        subtitle={formatDates(timeframe.claim)}
+        subtitle={formatDateRange(timeframe.claim)}
         isCurrent={highlightedStatuses.includes(OfferStatus.claim)}
         hideBottomBorder
       />
