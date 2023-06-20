@@ -81,6 +81,7 @@ export const Register: React.FC = observer(() => {
           email: values?.email,
           singPassLogin: isMyInfo,
           mobileNo: values?.phoneNumber,
+          // mobileNo: `+${values?.phoneNumber?.replace(/ /g, '')}`,
           password: values?.password,
           accountType: identity?.toLocaleUpperCase(),
           uinfin: data?.uinfin
