@@ -15,6 +15,7 @@ import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
 import { STOClassificationSelect } from 'components/form/STOClassificationSelect'
 import { ProductTypeSelect } from 'components/form/ProductTypeSelect'
+import { LabelWithTooltip } from 'ui/LabelWithTooltip/LabelWithTooltip'
 
 export interface STOInformationProps {
   status?: string
@@ -60,7 +61,40 @@ export const STOInformation = (props: STOInformationProps) => {
             <Grid item xs={12} md={6}>
               <TypedField
                 component={STOClassificationSelect}
-                label='Classification'
+                label={
+                  <LabelWithTooltip
+                    label={'Classification'}
+                    tooltipTitle={
+                      <div>
+                        <p style={{ marginTop: 0 }}>
+                          <strong>Classification</strong> refers to what type of
+                          investors you classify this STO for.
+                        </p>
+                        <p>
+                          If you select the{' '}
+                          <strong>
+                            Accredited Investor (AI) and Institutional Investor
+                            (II)
+                          </strong>{' '}
+                          classification, this means this STO is only available
+                          for AI and II.
+                        </p>
+                        <p>
+                          If you select the{' '}
+                          <strong>Expert Investor (EI)</strong> classification,
+                          this means this STO is only available for AI, II, and
+                          EI.
+                        </p>
+                        <p>
+                          If you select the{' '}
+                          <strong>Retail Investor (RI)</strong> classification,
+                          this means this STO is available for AI, II, EI, and
+                          RI.
+                        </p>
+                      </div>
+                    }
+                  />
+                }
                 name='classification'
                 control={control}
                 placeHolder='Select classification'
