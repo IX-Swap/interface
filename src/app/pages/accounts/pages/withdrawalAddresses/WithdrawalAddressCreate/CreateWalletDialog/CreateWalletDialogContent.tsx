@@ -3,10 +3,10 @@ import useStyles from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAd
 import DialogContent from '@mui/material/DialogContent'
 import { Grid, Link, Typography } from '@mui/material'
 import { CreateWalletLink } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletLink'
-import AlgorandIcon from 'assets/images/algorand.png'
+// import AlgorandIcon from 'assets/images/algorand.png'
 import MetamaskIcon from 'assets/images/metamask.png'
-import HederaIcon from 'assets/images/hedera.png'
-import TezosIcon from 'assets/images/tezos.png'
+// import HederaIcon from 'assets/images/hedera.png'
+// import TezosIcon from 'assets/images/tezos.png'
 
 export const links = [
   {
@@ -14,25 +14,25 @@ export const links = [
     icon: MetamaskIcon,
     href: 'https://metamask.io',
     disabled: false
-  },
-  {
-    label: 'Install Hedera Wallet',
-    icon: HederaIcon,
-    href: 'https://myhbarwallet.com',
-    disabled: true
-  },
-  {
-    label: 'Install Temple (Tezos) Wallet',
-    icon: TezosIcon,
-    href: 'https://templewallet.com',
-    disabled: true
-  },
-  {
-    label: 'Access MyAlgo Wallet',
-    icon: AlgorandIcon,
-    href: 'https://wallet.myalgo.com/',
-    disabled: true
   }
+  //   {
+  //     label: 'Install Hedera Wallet',
+  //     icon: HederaIcon,
+  //     href: 'https://myhbarwallet.com',
+  //     disabled: true
+  //   },
+  //   {
+  //     label: 'Install Temple (Tezos) Wallet',
+  //     icon: TezosIcon,
+  //     href: 'https://templewallet.com',
+  //     disabled: true
+  //   },
+  //   {
+  //     label: 'Access MyAlgo Wallet',
+  //     icon: AlgorandIcon,
+  //     href: 'https://wallet.myalgo.com/',
+  //     disabled: true
+  //   }
 ]
 
 export const CreateWalletDialogContent: React.FC = () => {
