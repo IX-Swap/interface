@@ -169,7 +169,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
         )}
       </IssuanceDialog>
 
-      <IssuanceDialog show={showTimePicker} onClose={() => {setShowTimePicker(false)}} width='600px'>
+      <IssuanceDialog show={showTimePicker} onClose={() => { setShowTimePicker(false) }} width='600px'>
         <StaticTimePicker
           renderInput={() => <span>Text sample</span>}
           orientation="landscape"
@@ -178,6 +178,8 @@ export const DateRangeField: React.FC<Props> = (props) => {
           minutesStep={10}
           okText='Ok'
           toolbarTitle='SELECT TIME (UTC +00:00)'
+          minTime={props.minDate}
+          maxTime={props.maxDate}
         ></StaticTimePicker>
 
         {props.showButton && (

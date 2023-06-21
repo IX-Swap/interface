@@ -100,6 +100,18 @@ export const getDaysBefore = (date: Date | undefined, daysAhead: number): Date |
   return newMoment.toDate()
 }
 
+export const getMinutesAfter = (date: Date | undefined, minutesAhead: number): Date | undefined => {
+  if (!date) return undefined
+  const newMoment = dayjs(date).add(dayjs.duration({ minutes: minutesAhead }))
+  return newMoment.toDate()
+}
+
+export const getMinutesBefore = (date: Date | undefined, minutesAhead: number): Date | undefined => {
+  if (!date) return undefined
+  const newMoment = dayjs(date).subtract(dayjs.duration({ minutes: minutesAhead }))
+  return newMoment.toDate()
+}
+
 export const isFutureDate = (date: Date) => {
   const now = dayjs().unix()
   const unixDate = dayjs(date).unix()

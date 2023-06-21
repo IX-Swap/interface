@@ -159,10 +159,10 @@ const Day = styled.div<{ isSelected?: boolean; isDisabled?: boolean; isWithinRan
 
   :hover {
     ${(props) =>
-      !props.isSelected && `
+    !props.isSelected && `
       background: ${props.theme.launchpad.colors.foreground};
       `
-    }
+  }
     
   }
 `
