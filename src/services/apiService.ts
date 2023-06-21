@@ -157,8 +157,7 @@ const apiService = {
 
   _prepareHeaders(data: any) {
     const headers: KeyValueMap = {
-      'custom-origin': window.location.host.split('.')[1],
-      // 'custom-origin': 'investax',
+      'custom-origin': window.location.host,
     }
     const { auth, user } = store.getState()
 
