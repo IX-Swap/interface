@@ -629,7 +629,7 @@ export const InformationForm = (props: Props) => {
             setter={setFieldValue}
             value={values.timeframe.whitelist}
             disabled={edit || !values.hasPresale}
-            minDate={getMinutesAfter(new Date(), 20)}
+            minDate={moment().subtract(1, 'minute').toDate()}
             maxDate={values?.timeframe?.preSale ? getMinutesBefore(values?.timeframe?.preSale, 20) : undefined}
             error={(touched.timeframe?.whitelist && (touched.timeframe && errors.timeframe)?.whitelist) as string}
           />
