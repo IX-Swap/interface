@@ -53,7 +53,7 @@ export const CommitmentIssuanceFields = (
       </Grid>
 
       <Grid item md={4}>
-        <Typography variant='subtitle1'>Free-to-trade Date</Typography>
+        <Typography variant='subtitle1'>Free-to-Trade Date</Typography>
         <Box py={0.4} />
         <TypedField
           name='releaseDate'

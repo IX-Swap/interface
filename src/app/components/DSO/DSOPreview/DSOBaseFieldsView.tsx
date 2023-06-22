@@ -77,7 +77,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
       value: dso?.completionDate
     },
     {
-      label: 'Free-to-trade Date',
+      label: 'Free-to-Trade Date',
       value: dso?.releaseDate
     },
     {
