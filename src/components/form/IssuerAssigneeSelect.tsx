@@ -19,8 +19,8 @@ export type IssuerAssigneeSelectProps = {
 }
 
 export const IssuerAssigneeSelect = (props: IssuerAssigneeSelectProps) => {
-  const location = useLocation()
-  const isEdit: boolean = location.pathname.includes('edit')
+  // const location = useLocation()
+  // const isEdit: boolean = location.pathname.includes('edit')
   const corporateIdIndex = parseFloat(
     sessionStorage.getItem('corporateIdIndex')
   )
@@ -72,7 +72,7 @@ export const IssuerAssigneeSelect = (props: IssuerAssigneeSelectProps) => {
           Issuer Assignee
         </InputLabel>
         <Select
-          disabled={isEdit}
+          // disabled={isEdit}
           MenuProps={{ autoFocus: false }}
           labelId='search-select-label'
           placeholder='Select Issuer Assignee'
