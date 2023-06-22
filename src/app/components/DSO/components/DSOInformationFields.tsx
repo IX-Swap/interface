@@ -11,7 +11,7 @@ import { STOAssign } from './STOAssign'
 import { useIsAdmin, useIsAuthorizer } from 'helpers/acl'
 import { BlockchainInformation } from './fields/BlockchainInformation'
 import { STODates } from './fields/STODates'
-import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
+// import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 
 export const DSOInformationFields = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
@@ -22,7 +22,7 @@ export const DSOInformationFields = () => {
   const isSuperUser = isAuthorizer || isAdmin
   const isNew = pathname.includes('/create')
   const corporateData = useAllCorporates({ all: true, status: 'Approved' })
-  console.log(corporateData?.data, 'khjhjhjhjh')
+  console.log(data, 'khjhjhjhjh')
   return (
     <Fragment>
       {isSuperUser && (
@@ -30,7 +30,10 @@ export const DSOInformationFields = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FieldContainer>
-                <STOAssign corporateData={corporateData?.data} />
+                <STOAssign
+                  editableData={data}
+                  corporateData={corporateData?.data}
+                />
               </FieldContainer>
             </Grid>
           </Grid>
