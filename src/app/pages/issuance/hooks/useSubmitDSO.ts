@@ -34,6 +34,7 @@ export const useSubmitDSO = (dsoId: string) => {
       )
       sessionStorage.removeItem('issuerId')
       sessionStorage.removeItem('corporateId')
+      sessionStorage.removeItem('corpoName')
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')
