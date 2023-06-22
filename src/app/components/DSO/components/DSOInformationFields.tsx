@@ -29,7 +29,10 @@ export const DSOInformationFields = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FieldContainer>
-                <STOAssign corporateData={corporateData?.data} />
+                <STOAssign
+                  editableData={data}
+                  corporateData={corporateData?.data}
+                />
               </FieldContainer>
             </Grid>
           </Grid>

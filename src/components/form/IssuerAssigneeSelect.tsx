@@ -12,7 +12,7 @@ import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import SearchIcon from '@mui/icons-material/Search'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { useLocation } from 'react-router-dom'
-const containsText = (text: string, searchText: string) =>
+const containsText = (text: any, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1
 
 export type IssuerAssigneeSelectProps = {
@@ -22,7 +22,7 @@ export type IssuerAssigneeSelectProps = {
 export const IssuerAssigneeSelect = (props: IssuerAssigneeSelectProps) => {
   const location = useLocation()
   const isEdit: boolean = location.pathname.includes('edit')
-  const [selectedOption, setSelectedOption] = useState<string | null>()
+  const [selectedOption, setSelectedOption] = useState('')
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     if (isEdit) {
