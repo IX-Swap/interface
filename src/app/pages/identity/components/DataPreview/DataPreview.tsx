@@ -77,7 +77,7 @@ export const DataPreview = ({
       const parsedRoles = ['User']
       const userRoles = roles.split(',')
 
-      if (userRoles.includes('tenantowner')) {
+      if (userRoles.includes('tenantOwner')) {
         parsedRoles.unshift('Client')
       }
 

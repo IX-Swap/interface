@@ -40,7 +40,9 @@ export const Actions = forwardRef(({ user }: ActionsProps, ref: any) => {
         open={open}
         handleClose={handleClose}
         user={user}
-        newRole={roles.join(',')}
+        newRole={roles
+          .map(x => (x === 'tenantOwner' ? 'client' : x))
+          .join(', ')}
         handleConfirm={handleConfirm}
       />
       <FormControl className={classes.formControl}>
