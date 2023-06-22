@@ -10,7 +10,6 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 
 export const STOAssign = (props: any) => {
   const { control } = useFormContext<DSOFormValues>()
-
   return (
     <Grid item>
       <Grid container spacing={2} direction='column'>

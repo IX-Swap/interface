@@ -14,7 +14,6 @@ export interface RoleSelectProps extends SelectProps {
 }
 
 export const InvestorRoleSelect = (props: RoleSelectProps) => {
-  //   console.log(props.verificationStatus, 'pppppppppp')
   // TODO: Need to fix TypeScript error for BackdropProps
   const getName = (name: string) => {
     if (name === 'retail') {
