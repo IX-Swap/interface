@@ -45,7 +45,8 @@ export const STOAssign = (props: any) => {
                 component={IssuerAssigneeSelect}
                 label='Issuer Assignee'
                 InputProps={{
-                  data: props?.corporateData
+                  data: props?.corporateData,
+                  editableData: props.editableData
                 }}
                 name=''
                 valueExtractor={numericValueExtractor}

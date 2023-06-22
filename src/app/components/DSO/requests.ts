@@ -2,16 +2,14 @@ import _ from 'lodash'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { UseCorporateUserId } from 'app/pages/identity/hooks/useCorporateUserId'
-import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
+// import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 
 export const getDSOInformationRequestPayload = (payloadData: any) => {
   const corporateId: any = sessionStorage.getItem('corporateId')
-  const corporateIdIndex: any = sessionStorage.getItem('corporateIdIndex')
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { corporateData } = UseCorporateUserId({ userId })
-  const { data } = useAllCorporates({ all: true, status: 'Approved' })
-  let issuerName = data?.list[corporateIdIndex]?.companyLegalName
+  let issuerName: string | undefined = sessionStorage?.getItem('corpoName')?.split('-')[0]
   const dsoTermDefaults = {
     issuerName: issuerName
       ? issuerName

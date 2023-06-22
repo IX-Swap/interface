@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useState, useMemo, useEffect } from 'react'
 import {
   Box,
@@ -11,7 +12,7 @@ import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import SearchIcon from '@mui/icons-material/Search'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { useLocation } from 'react-router-dom'
-const containsText = (text: any, searchText: string) =>
+const containsText = (text: string, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1
 
 export type IssuerAssigneeSelectProps = {
@@ -19,26 +20,34 @@ export type IssuerAssigneeSelectProps = {
 }
 
 export const IssuerAssigneeSelect = (props: IssuerAssigneeSelectProps) => {
-  // const location = useLocation()
-  // const isEdit: boolean = location.pathname.includes('edit')
-  const corporateIdIndex = parseFloat(
-    sessionStorage.getItem('corporateIdIndex')
-  )
-  const [selectedOption, setSelectedOption] = useState('')
+  const location = useLocation()
+  const isEdit: boolean = location.pathname.includes('edit')
+  const [selectedOption, setSelectedOption] = useState<string | null>()
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    setSelectedOption(
-      `${
-        props.InputProps?.data?.list[corporateIdIndex ? corporateIdIndex : 0]
-          ?.companyLegalName
-      } - ${
-        props?.InputProps?.data?.list[corporateIdIndex ? corporateIdIndex : 0]
-          ?.registrationNumber
-      } - ${
-        props?.InputProps?.data?.list[corporateIdIndex ? corporateIdIndex : 0]
-          ?.user?.email
-      }`
-    )
+    if (isEdit) {
+      setSelectedOption(
+        `${
+          props?.InputProps?.editableData?.corporate?.companyLegalName
+            ? props?.InputProps?.editableData?.corporate?.companyLegalName
+            : ''
+        } - ${
+          props?.InputProps?.editableData?.corporate?.companyLegalName
+            ? props?.InputProps?.editableData?.corporate?.registrationNumber
+            : ''
+        } - ${
+          props?.InputProps?.editableData?.corporate?.companyLegalName
+            ? props?.InputProps?.editableData?.corporate?.email
+            : ''
+        }`
+      )
+    } else {
+      setSelectedOption(
+        `${sessionStorage?.getItem('corpoName')?.split('-')[0]} - ${
+          sessionStorage?.getItem('corpoName')?.split('-')[1]
+        } - ${sessionStorage?.getItem('corpoName')?.split('-')[2]}`
+      )
+    }
   }, [props.InputProps?.data?.list])
 
   const [searchText, setSearchText] = useState('')
@@ -56,14 +65,12 @@ export const IssuerAssigneeSelect = (props: IssuerAssigneeSelectProps) => {
   )
 
   const setIssuerValue = (event: any, value: any) => {
+    console.log(value, 'vavavav')
     setSelectedOption(value?.props?.children)
     sessionStorage.setItem('issuerId', value?.props?.value)
-    const index = value?.key.split('$')[1]
-    sessionStorage.setItem(
-      'corporateId',
-      props?.InputProps?.data?.list[index]?._id
-    )
-    sessionStorage.setItem('corporateIdIndex', index)
+    sessionStorage.setItem('corpoName', value?.props?.children)
+    const corporateId = value?.key.split('$')[1]
+    sessionStorage.setItem('corporateId', corporateId)
   }
   return (
     <Box>
@@ -105,6 +112,7 @@ export const IssuerAssigneeSelect = (props: IssuerAssigneeSelectProps) => {
           {displayedOptions?.map(
             (
               option: {
+                _id: string
                 user: {
                   _id: string | number | readonly string[] | undefined
                   email: string
@@ -114,9 +122,8 @@ export const IssuerAssigneeSelect = (props: IssuerAssigneeSelectProps) => {
               },
               i: React.Key | null | undefined
             ) => (
-              <SelectItem key={i} value={option?.user?._id}>
+              <SelectItem key={option?._id} value={option?.user?._id}>
                 {`${option?.companyLegalName} - ${option?.registrationNumber} - ${option?.user?.email}`}
-                {/* {option?.companyLegalName} */}
               </SelectItem>
             )
           )}
