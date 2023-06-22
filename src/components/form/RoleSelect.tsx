@@ -43,7 +43,12 @@ export const RoleSelect = (props: RoleSelectProps) => {
           {...props}
           multiple
           MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } as any }}
-          renderValue={selected => (selected as string[]).join(', ')}
+          renderValue={selected => {
+            console.log(selected)
+            return (selected as string[])
+              .map(x => (x === 'tenantOwner' ? 'client' : x))
+              .join(', ')
+          }}
         >
           {INDIVISUAL_USER.map(name => (
             <SelectItem
@@ -63,7 +68,12 @@ export const RoleSelect = (props: RoleSelectProps) => {
           {...props}
           multiple
           MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } as any }}
-          renderValue={selected => (selected as string[]).join(', ')}
+          renderValue={selected => {
+            console.log(selected)
+            return (selected as string[])
+              .map(x => (x === 'tenantOwner' ? 'client' : x))
+              .join(', ')
+          }}
         >
           {CORPORATE_USER.map(name => (
             <SelectItem

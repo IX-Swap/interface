@@ -54,7 +54,7 @@ export const useIsClient = () => {
 
   if (user === undefined) return false
 
-  return hasRole(user.roles, AppRole.CLIENT)
+  return hasRole(user.roles, AppRole.TENANT_OWNER)
 }
 
 export const useIsFundManager = () => {

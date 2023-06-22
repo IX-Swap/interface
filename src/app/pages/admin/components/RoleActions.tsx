@@ -36,7 +36,7 @@ export const RoleActions = forwardRef(
         return (
           role !== 'user' &&
           role !== 'issuer' &&
-          role !== 'tenantowner' &&
+          role !== 'tenantOwner' &&
           role !== 'admin' &&
           role !== 'authorizer'
         )
