@@ -77,7 +77,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
       value: dso?.completionDate
     },
     {
-      label: 'Release Date',
+      label: 'Free-to-trade Date',
       value: dso?.releaseDate
     },
     {
@@ -112,7 +112,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                 {dso.tokenName} ({dso.tokenSymbol})
               </Typography>
               <Typography variant='h5' color={theme.palette.primary.main}>
-                {dso?.corporate?.companyLegalName
+                {typeof dso?.corporate?.companyLegalName !== 'undefined'
                   ? dso?.corporate?.companyLegalName
                   : dso?.identity?.corporates[0]?.companyLegalName}
               </Typography>

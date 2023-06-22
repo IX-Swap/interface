@@ -51,7 +51,7 @@ export const MainInfo = ({ dso }: MainInfoProps) => {
       </Grid>
       <Grid item xs={12}>
         <Info
-          label='Release Date'
+          label='Free-to-trade Date'
           value={formatDateToMMDDYY(dso?.releaseDate)}
         />
       </Grid>

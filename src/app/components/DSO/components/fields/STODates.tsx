@@ -67,14 +67,14 @@ export const STODates = (props: STODatesProps) => {
                 customRenderer
                 label={
                   <LabelWithTooltip
-                    label={
-                      'Release Date (Securities will be locked for n days)'
-                    }
+                    label={'Free-to-trade Date (Optional)'}
                     tooltipTitle={
                       <span>
-                        <strong>Release Date</strong> is the date when STOs can
-                        be traded freely between investors. This date should not
-                        be earlier than launch date.
+                        <strong>Free-to-trade Date</strong> is the date when
+                        STOs can be traded freely between investors. This date
+                        should not be earlier than launch date. In between the
+                        Launch Date and Free-to-trade Date, the STOs won’t be
+                        available for secondary trades on OTC and IX Exchange.
                       </span>
                     }
                   />
