@@ -51,7 +51,7 @@ export const BasicOverview = ({
       value: formatDateToMMDDYY(completionDate)
     },
     {
-      label: 'Release Date',
+      label: 'Free-to-Trade Date',
       value: formatDateToMMDDYY(releaseDate)
     },
     {
