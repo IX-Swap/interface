@@ -1,6 +1,8 @@
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import utc from 'dayjs/plugin/utc'
+import moment from 'moment'
+import { Moment } from 'moment'
 
 dayjs.extend(utc)
 dayjs.extend(duration)
@@ -100,9 +102,41 @@ export const getDaysBefore = (date: Date | undefined, daysAhead: number): Date |
   return newMoment.toDate()
 }
 
+export const getMinutesAfter = (date: Date | undefined, minutesAhead: number): Date | undefined => {
+  if (!date) return undefined
+  const newMoment = dayjs(date).add(dayjs.duration({ minutes: minutesAhead }))
+  return newMoment.toDate()
+}
+
+export const getMinutesBefore = (date: Date | undefined, minutesAhead: number): Date | undefined => {
+  if (!date) return undefined
+  const newMoment = dayjs(date).subtract(dayjs.duration({ minutes: minutesAhead }))
+  return newMoment.toDate()
+}
+
 export const isFutureDate = (date: Date) => {
   const now = dayjs().unix()
   const unixDate = dayjs(date).unix()
 
   return unixDate > now
+}
+
+export const isBeforeWithSameTime = (from: Moment, to: Moment | null) => {
+  if (!to) to = moment()
+  const newFrom = from.set({
+    hour: to?.get('hour') || moment().get('hour'),
+    minute: to?.get('minute') + 1 || moment().get('minute'),
+    second: to?.get('second') || moment().get('second'),
+  })
+  return newFrom.isBefore(to)
+}
+
+export const isAfterWithSameTime = (from: Moment, to: Moment | null) => {
+  if (!to) return false
+  const newFrom = from.set({
+    hour: to?.get('hour') || moment().get('hour'),
+    minute: to?.get('minute') - 1 || moment().get('minute'),
+    second: to?.get('second') || moment().get('second'),
+  })
+  return newFrom.isAfter(to)
 }
