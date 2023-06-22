@@ -112,9 +112,9 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
     const obj = errors
+    const search: string = `?step=${steps[index].label.replace(' ', '+')}`
     setCompleted()
     if (!isEmpty(obj)) {
-      const search: string = `?step=${steps[index].label.replace(' ', '+')}`
       if (dsoId !== undefined && issuerId !== undefined) {
         const redirect: string = redirectFunction(
           pathname.includes('/create'),
@@ -143,29 +143,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                   pathname.includes('/create'),
                   data.data._id
                 )
-                const search: string = `?step=${steps[activeStep].label.replace(
-                  ' ',
-                  '+'
-                )}`
-                history.replace(
-                  generatePath(`${redirect}${search}`, {
-                    issuerId:
-                      typeof data.data.user === 'string'
-                        ? data.data.user
-                        : getIdFromObj(data.data.user),
-                    dsoId: data.data._id
-                  })
-                )
-              } else {
-                const redirect: string = redirectFunction(
-                  pathname.includes('/create'),
-                  data.data._id
-                )
-                const newActiveStep = index
-                const search: string = `?step=${steps[
-                  newActiveStep
-                ].label.replace(' ', '+')}`
-
+                // const search: string = `?step=${steps[activeStep].label.replace(
+                //   ' ',
+                //   '+'
+                // )}`
                 history.replace(
                   generatePath(`${redirect}${search}`, {
                     issuerId:
@@ -176,6 +157,27 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                   })
                 )
               }
+
+              // else {
+              //   const redirect: string = redirectFunction(
+              //     pathname.includes('/create'),
+              //     data.data._id
+              //   )
+              //   const newActiveStep = index
+              //   const search: string = `?step=${steps[
+              //     newActiveStep
+              //   ].label.replace(' ', '+')}`
+
+              //   history.replace(
+              //     generatePath(`${redirect}${search}`, {
+              //       issuerId:
+              //         typeof data.data.user === 'string'
+              //           ? data.data.user
+              //           : getIdFromObj(data.data.user),
+              //       dsoId: data.data._id
+              //     })
+              //   )
+              // }
             }
           }
         }
