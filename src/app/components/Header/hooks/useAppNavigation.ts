@@ -2,10 +2,11 @@ import {
   useIsAccredited,
   useIsRetail,
   useIsExpert,
-  useIsAdmin,
+  useIsInstitutional,
+  useIsIssuer,
   useIsAuthorizer,
   useIsFundManager,
-  useIsIssuer
+  useIsAdmin
 } from 'helpers/acl'
 import {
   accountsLandingLinks,
@@ -33,9 +34,10 @@ export const useAppNavigation = () => {
   const isAccredited = useIsAccredited()
   const isRetail = useIsRetail()
   const isExpert = useIsExpert()
+  const isInstitutional = useIsInstitutional()
   const isFundManager = useIsFundManager()
   const isSuperUser = isAuthorizer || isAdmin
-  const isInvestor = isAccredited || isRetail || isExpert
+  const isInvestor = isAccredited || isRetail || isExpert || isInstitutional
   const issuanceLandingLinks: InternalRouteProps[] = [
     { label: 'Create New STO', path: IssuanceRoute.createNew },
     { label: 'View STO Listings', path: IssuanceRoute.list },
