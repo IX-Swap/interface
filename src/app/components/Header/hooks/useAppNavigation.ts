@@ -44,7 +44,14 @@ export const useAppNavigation = () => {
     { label: 'Financial Reports', path: IssuanceRoute.financialReports }
   ]
 
-  const links = [
+  interface NavigationMenuItem {
+    label: string
+    link: string
+    icon?: any
+    isExternalUrl?: boolean
+  }
+
+  const links: NavigationMenuItem[] = [
     {
       label: 'Home',
       link: AppRoute.home
@@ -90,6 +97,12 @@ export const useAppNavigation = () => {
       path: IssuanceRoute.insight
     })
   }
+
+  links.push({
+    label: 'Knowledge Center',
+    link: 'https://investax.io/knowledge-center',
+    isExternalUrl: true
+  })
 
   const dropdownLinksItems = (name: string) => {
     switch (name) {

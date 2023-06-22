@@ -14,6 +14,7 @@ export interface TopbarLinkProps {
   disabled?: boolean
   placement?: 'topbar' | 'dropdown' | 'mobileDropdown'
   active?: boolean
+  isExternalUrl?: boolean
   onClick?: () => void
 }
 
@@ -24,6 +25,7 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
     disabled = false,
     placement = 'dropdown',
     active = false,
+    isExternalUrl = false,
     onClick
   } = props
   const { pathname } = useLocation()
@@ -69,7 +71,12 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
         link === IssuanceRoute.create || link === IssuanceRoute.createListing
       }
     >
-      <Link to={link} className={classes.wrapper} onClick={handleClick}>
+      <Link
+        to={!isExternalUrl ? link : { pathname: link }}
+        className={classes.wrapper}
+        target={!isExternalUrl ? '' : '_blank'}
+        onClick={handleClick}
+      >
         <Typography className={classes.text} variant={'body1'}>
           {label}
         </Typography>
