@@ -12,6 +12,7 @@ export const useLogout = () => {
       sessionStorage.removeItem('issuerId')
       sessionStorage.removeItem('corporateId')
       sessionStorage.removeItem('corporateIdIndex')
+      sessionStorage.removeItem('corpoName')
       storageService.remove('visitedUrl')
       storageService.remove('notificationFilter')
       socketService.disconnect()

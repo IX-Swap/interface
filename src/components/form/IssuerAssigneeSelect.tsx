@@ -24,6 +24,7 @@ export const IssuerAssigneeSelect = (props: IssuerAssigneeSelectProps) => {
   const isEdit: boolean = location.pathname.includes('edit')
   const [selectedOption, setSelectedOption] = useState('')
   useEffect(() => {
+    console.log(props?.InputProps?.data?.list[0]?.companyLegalName, 'tetstst')
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     if (isEdit) {
       setSelectedOption(
@@ -43,9 +44,19 @@ export const IssuerAssigneeSelect = (props: IssuerAssigneeSelectProps) => {
       )
     } else {
       setSelectedOption(
-        `${sessionStorage?.getItem('corpoName')?.split('-')[0]} - ${
+        `${
+          sessionStorage?.getItem('corpoName')?.split('-')[0]
+            ? sessionStorage?.getItem('corpoName')?.split('-')[0]
+            : props?.InputProps?.data?.list[0]?.companyLegalName
+        } - ${
           sessionStorage?.getItem('corpoName')?.split('-')[1]
-        } - ${sessionStorage?.getItem('corpoName')?.split('-')[2]}`
+            ? sessionStorage?.getItem('corpoName')?.split('-')[1]
+            : props?.InputProps?.data?.list[0]?.registrationNumber
+        } - ${
+          sessionStorage?.getItem('corpoName')?.split('-')[2]
+            ? sessionStorage?.getItem('corpoName')?.split('-')[2]
+            : props?.InputProps?.data?.list[0]?.email
+        }`
       )
     }
   }, [props.InputProps?.data?.list])
