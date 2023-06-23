@@ -6,11 +6,12 @@ import { SignupArgs } from 'types/auth'
 import { useInputFocus } from 'auth/pages/register/hooks/useInputFocus'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { plainValueExtractor } from 'helpers/forms'
+import { FocusButton } from './FocusButton'
 
 export const PhoneField = () => {
   const { control } = useFormContext<SignupArgs>()
 
-  const { inputDisabled } = useInputFocus()
+  const { inputDisabled, handelInputFocus } = useInputFocus()
 
   return (
     <TypedField
@@ -27,8 +28,8 @@ export const PhoneField = () => {
           input: {
             marginRight: '-45px'
           }
-        }
-        // endAdornment: <FocusButton onClick={handelInputFocus} />
+        },
+        endAdornment: <FocusButton onClick={handelInputFocus} />
       }}
       disabled={inputDisabled}
     />
