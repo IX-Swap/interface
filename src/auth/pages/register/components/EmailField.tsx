@@ -6,6 +6,7 @@ import { SignupArgs } from 'types/auth'
 import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
 // import { FocusButton } from 'auth/pages/register/components/FocusButton'
 import { useInputFocus } from 'auth/pages/register/hooks/useInputFocus'
+import { FocusButton } from './FocusButton'
 
 export interface EmailFieldProps {
   isMyInfo?: boolean
@@ -15,7 +16,7 @@ export const EmailField = ({ isMyInfo = false }: EmailFieldProps) => {
   const { control, errors } = useFormContext<SignupArgs>()
   const emailErrors = errors.email
 
-  const { inputRef, inputDisabled } = useInputFocus()
+  const { inputRef, inputDisabled, handelInputFocus } = useInputFocus()
 
   return (
     <TypedField
@@ -46,8 +47,7 @@ export const EmailField = ({ isMyInfo = false }: EmailFieldProps) => {
             </InputAdornment>
           ) : null
         ) : (
-          ''
-          // <FocusButton onClick={handelInputFocus} />
+          <FocusButton onClick={handelInputFocus} />
         )
       }}
       disabled={isMyInfo ? inputDisabled : false}
