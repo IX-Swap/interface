@@ -18,7 +18,8 @@ export const useOutlinedInputStyles = makeStyles(theme => ({
 
 export const OverviewPageFilters = () => {
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
-  const selectOptions = ['All Markets', 'Primary', 'OTC', 'Secondary']
+  //   const selectOptions = ['All Markets', 'Primary', 'OTC', 'Secondary']
+  const selectOptions = ['All Markets', 'Primary', 'OTC']
   const searchFilterValue = getFilterValue('search')
   const primaryOfferingFilterValue = getFilterValue('primaryOfferingSearch')
   const otcMarketFilterValue = getFilterValue('otcMarketSearch')
