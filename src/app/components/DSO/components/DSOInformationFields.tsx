@@ -8,7 +8,7 @@ import { Pricing } from 'app/components/DSO/components/fields/Pricing'
 import { OfferingTerms } from 'app/components/DSO/components/fields/OfferingTerms'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { STOAssign } from './STOAssign'
-import { useIsAdmin, useIsAuthorizer } from 'helpers/acl'
+import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'helpers/acl'
 import { BlockchainInformation } from './fields/BlockchainInformation'
 import { STODates } from './fields/STODates'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
@@ -20,11 +20,12 @@ export const DSOInformationFields = () => {
   const isAuthorizer = useIsAuthorizer()
   const isAdmin = useIsAdmin()
   const isSuperUser = isAuthorizer || isAdmin
+  const isIssuer = useIsIssuer()
   const isNew = pathname.includes('/create')
   const corporateData = useAllCorporates({ all: true, status: 'Approved' })
   return (
     <Fragment>
-      {isSuperUser && (
+      {isSuperUser && isIssuer && (
         <>
           <Grid container spacing={2}>
             <Grid item xs={12}>
