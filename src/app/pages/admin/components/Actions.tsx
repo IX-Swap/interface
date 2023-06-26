@@ -41,7 +41,7 @@ export const Actions = forwardRef(({ user }: ActionsProps, ref: any) => {
         handleClose={handleClose}
         user={user}
         newRole={roles
-          .map(x => (x === 'tenantOwner' ? 'client' : x))
+          .map((x: string) => (x === 'tenantOwner' ? 'client' : x))
           .join(', ')}
         handleConfirm={handleConfirm}
       />
