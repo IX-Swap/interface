@@ -976,135 +976,132 @@ export const useOfferFormInitialValues = (
     }
   }, [offer.loading, offer.data, smartContractStrategy])
 
-  const transform = React.useCallback(
-    async (payload: Offer): Promise<InformationFormValues> => {
-      const initialValues = getOfferInitialValues(smartContractStrategy)
-      const files = await Promise.all([
-        ...payload.members.map((x) => getFile(x.avatar)),
-        ...payload.files.filter((x) => x.type !== OfferFileType.video).map((x) => getFile(x.file)),
+  const transform = async (payload: Offer): Promise<InformationFormValues> => {
+    const initialValues = getOfferInitialValues(smartContractStrategy)
+    const files = await Promise.all([
+      ...payload.members.map((x) => getFile(x.avatar)),
+      ...payload.files.filter((x) => x.type !== OfferFileType.video).map((x) => getFile(x.file)),
 
-        getFile(payload.cardPicture),
-        getFile(payload.profilePicture),
-      ])
-        .then((res) => res.filter((x) => !!x))
-        .then((res) => res as { id: number; file: File }[])
+      getFile(payload.cardPicture),
+      getFile(payload.profilePicture),
+    ])
+      .then((res) => res.filter((x) => !!x))
+      .then((res) => res as { id: number; file: File }[])
 
-      const {
-        images = [],
-        videos = [],
-        documents = [],
-      } = payload.files?.reduce(
-        (accum: any, item) => {
-          if (item.type === OfferFileType.image) {
-            accum.images.push(item)
-          } else if (item.type === OfferFileType.video) {
-            accum.videos.push(item)
-          } else if (item.type === OfferFileType.document) {
-            accum.documents.push(item)
-          }
-          return accum
-        },
-        { images: [], videos: [], documents: [] }
-      )
+    const {
+      images = [],
+      videos = [],
+      documents = [],
+    } = payload.files?.reduce(
+      (accum: any, item) => {
+        if (item.type === OfferFileType.image) {
+          accum.images.push(item)
+        } else if (item.type === OfferFileType.video) {
+          accum.videos.push(item)
+        } else if (item.type === OfferFileType.document) {
+          accum.documents.push(item)
+        }
+        return accum
+      },
+      { images: [], videos: [], documents: [] }
+    )
 
-      const res = {
-        id: payload?.id,
-        status: payload?.status as unknown as IssuanceStatus,
-        title: payload.title,
+    const res = {
+      id: payload?.id,
+      status: payload?.status as unknown as IssuanceStatus,
+      title: payload.title,
 
-        shortDescription: payload.shortDescription,
-        longDescription: payload.longDescription,
+      shortDescription: payload.shortDescription,
+      longDescription: payload.longDescription,
 
-        cardPicture: files.find((x) => x.id === payload.cardPicture?.id) as IssuanceFile,
-        profilePicture: files.find((x) => x.id === payload.profilePicture?.id) as IssuanceFile,
+      cardPicture: files.find((x) => x.id === payload.cardPicture?.id) as IssuanceFile,
+      profilePicture: files.find((x) => x.id === payload.profilePicture?.id) as IssuanceFile,
 
-        allowOnlyAccredited: payload.allowOnlyAccredited,
-        tokenomicsAgreement: payload.tokenomicsAgreement,
+      allowOnlyAccredited: payload.allowOnlyAccredited,
+      tokenomicsAgreement: payload.tokenomicsAgreement,
 
-        country: payload.country,
-        email: payload.contactUsEmail,
-        website: payload.issuerWebsite,
-        whitepaper: payload.whitepaperUrl,
+      country: payload.country,
+      email: payload.contactUsEmail,
+      website: payload.issuerWebsite,
+      whitepaper: payload.whitepaperUrl,
 
-        hardCap: payload.hardCap,
-        softCap: payload.softCap,
+      hardCap: payload.hardCap,
+      softCap: payload.softCap,
 
-        faq: payload.faq?.length ? payload.faq : initialValues.faq,
-        members: payload.members?.length
-          ? payload.members.map(
-              (member) =>
-                ({
-                  id: member.id,
-                  name: member.name,
-                  role: member.title,
-                  about: member.description,
-                  photo: files.find((x) => x.id === member.avatar?.id),
-                } as TeamMember)
-            )
-          : initialValues.members,
+      faq: payload.faq?.length ? payload.faq : initialValues.faq,
+      members: payload.members?.length
+        ? payload.members.map(
+            (member) =>
+              ({
+                id: member.id,
+                name: member.name,
+                role: member.title,
+                about: member.description,
+                photo: files.find((x) => x.id === member.avatar?.id),
+              } as TeamMember)
+          )
+        : initialValues.members,
 
-        social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
-          type: name as SocialMediaType,
-          url: link,
-        })),
+      social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
+        type: name as SocialMediaType,
+        url: link,
+      })),
 
-        images: images.map((image: any) => files.find((x) => x.id === image.file?.id) as IssuanceFile),
+      images: images.map((image: any) => files.find((x) => x.id === image.file?.id) as IssuanceFile),
 
-        videos: videos.length
-          ? videos.map((video: any) => ({ url: video.videoUrl, id: video.id } as VideoLink))
-          : initialValues.videos,
+      videos: videos.length
+        ? videos.map((video: any) => ({ url: video.videoUrl, id: video.id } as VideoLink))
+        : initialValues.videos,
 
-        additionalDocuments: documents.length
-          ? documents.map((document: any) => {
-              const file = files.find((x) => x.id === document.file?.id)
+      additionalDocuments: documents.length
+        ? documents.map((document: any) => {
+            const file = files.find((x) => x.id === document.file?.id)
 
-              return { file: file, asset: document?.file } as AdditionalDocument
-            })
-          : initialValues.additionalDocuments,
+            return { file: file, asset: document?.file } as AdditionalDocument
+          })
+        : initialValues.additionalDocuments,
 
-        hasPresale: payload.hasPresale,
-        presaleAlocated: payload.presaleAlocated,
-        presaleMaxInvestment: payload.presaleMaxInvestment,
-        presaleMinInvestment: payload.presaleMinInvestment,
+      hasPresale: payload.hasPresale,
+      presaleAlocated: payload.presaleAlocated,
+      presaleMaxInvestment: payload.presaleMaxInvestment,
+      presaleMinInvestment: payload.presaleMinInvestment,
 
-        industry: payload.industry,
-        investmentType: payload.investmentType,
-        issuerIdentificationNumber: payload.issuerIdentificationNumber,
-        maxInvestment: payload.maxInvestment,
-        minInvestment: payload.minInvestment,
+      industry: payload.industry,
+      investmentType: payload.investmentType,
+      issuerIdentificationNumber: payload.issuerIdentificationNumber,
+      maxInvestment: payload.maxInvestment,
+      minInvestment: payload.minInvestment,
 
-        changesRequested: payload.changesRequested,
-        reasonRequested: payload.reasonRequested,
+      changesRequested: payload.changesRequested,
+      reasonRequested: payload.reasonRequested,
 
-        terms: {
-          distributionFrequency: payload.terms.distributionFrequency ?? '',
-          dividentYield: payload.terms.dividentYield ?? '',
-          grossIrr: payload.terms.grossIrr ?? '',
-          investmentPeriod: payload.terms.investmentPeriod ? String(payload.terms.investmentPeriod) : '',
-          investmentStructure: payload.terms.investmentStructure ?? '',
-        },
+      terms: {
+        distributionFrequency: payload.terms.distributionFrequency ?? '',
+        dividentYield: payload.terms.dividentYield ?? '',
+        grossIrr: payload.terms.grossIrr ?? '',
+        investmentPeriod: payload.terms.investmentPeriod ? String(payload.terms.investmentPeriod) : '',
+        investmentStructure: payload.terms.investmentStructure ?? '',
+      },
 
-        network: payload.network,
+      network: payload.network,
 
-        timeframe: payload.timeframe,
-        tokenName: payload.tokenName ?? '',
-        decimals: payload.decimals,
-        trusteeAddress: payload.trusteeAddress,
-        tokenPrice: isDefinedNumber(payload.tokenPrice) ? Number(payload.tokenPrice) : null,
-        tokenStandart: payload.tokenStandart,
-        totalSupply: payload.totalSupply ?? '',
-        tokenReceiverAddress: payload.tokenReceiverAddress ?? '',
-        // mapping: tokenTicker, tokenType. server to frontend fields
-        tokenTicker: payload.tokenSymbol,
-        tokenType: payload.investingTokenSymbol as OfferTokenType,
-        tokenAddress: payload.tokenAddress,
-        investingTokenAddress: payload.investingTokenAddress,
-        smartContractStrategy,
-      }
-      return res
-    },
-    [offer.data?.status, smartContractStrategy]
-  )
+      timeframe: payload.timeframe,
+      tokenName: payload.tokenName ?? '',
+      decimals: payload.decimals,
+      trusteeAddress: payload.trusteeAddress,
+      tokenPrice: isDefinedNumber(payload.tokenPrice) ? Number(payload.tokenPrice) : null,
+      tokenStandart: payload.tokenStandart,
+      totalSupply: payload.totalSupply ?? '',
+      tokenReceiverAddress: payload.tokenReceiverAddress ?? '',
+      // mapping: tokenTicker, tokenType. server to frontend fields
+      tokenTicker: payload.tokenSymbol,
+      tokenType: payload.investingTokenSymbol as OfferTokenType,
+      tokenAddress: payload.tokenAddress,
+      investingTokenAddress: payload.investingTokenAddress,
+      smartContractStrategy,
+    }
+    return res
+  }
 
   return {
     data: values,
