@@ -138,7 +138,7 @@ export const transformDSOToFormValuesStep1 = (
       decimalPlaces: 18
     } as any
   }
-
+  console.log(dso?.corporate, 'aaaccc')
   return {
     capitalStructure: dso.capitalStructure,
     logo: dso.logo,
@@ -211,6 +211,7 @@ export const transformDSOToFormValues = (
       subscriptionDocument: undefined
     } as any
   }
+  console.log(sessionStorage.getItem('corporateId'), 'aaa')
   return {
     capitalStructure: dso.capitalStructure,
     totalFundraisingAmount: dso.totalFundraisingAmount,
@@ -232,7 +233,7 @@ export const transformDSOToFormValues = (
     tokenSymbol: dso.tokenSymbol,
     minimumInvestment: dso.minimumInvestment,
     issuerName: dso.issuerName,
-    corporate: dso?.identity?.corporates[0]?._id,
+    corporate: sessionStorage.getItem('corporateId'),
     investmentStructure: dso.investmentStructure,
     currency: getIdFromObj(dso.currency),
     network: getIdFromObj(dso.network),
@@ -252,6 +253,7 @@ export const transformDSOToFormValues = (
 }
 
 export const getDSOInformationFormValues = (data: any) => {
+  console.log(data?.corporate, 'aaabbb')
   return {
     capitalStructure: data.capitalStructure,
     logo: data.logo,

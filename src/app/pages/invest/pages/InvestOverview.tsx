@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Button, Typography } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { SecondaryMarketTable } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketTable'
+// import { SecondaryMarketTable } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketTable'
 import { OverviewPageFilters } from 'app/pages/invest/components/OverviwPageFilters'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
 import { OTCMarket } from 'app/pages/invest/components/OTCMarkets'
@@ -89,14 +89,14 @@ export const InvestOverview = () => {
             <OTCMarket />
           </Grid>
 
-          <Grid item container direction='column' spacing={4}>
+          {/* <Grid item container direction='column' spacing={4}>
             <Grid item>
               <Typography variant='h4'>Secondary Market</Typography>
             </Grid>
             <Grid item style={{ maxWidth: '100%' }}>
               <SecondaryMarketTable />
             </Grid>
-          </Grid>
+          </Grid> */}
 
           <Grid item>
             <img

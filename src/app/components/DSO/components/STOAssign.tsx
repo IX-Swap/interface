@@ -8,9 +8,8 @@ import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 
-export const STOAssign = () => {
+export const STOAssign = (props: any) => {
   const { control } = useFormContext<DSOFormValues>()
-
   return (
     <Grid item>
       <Grid container spacing={2} direction='column'>
@@ -44,6 +43,10 @@ export const STOAssign = () => {
                 control={control}
                 component={IssuerAssigneeSelect}
                 label='Issuer Assignee'
+                InputProps={{
+                  data: props?.corporateData,
+                  editableData: props.editableData
+                }}
                 name=''
                 valueExtractor={numericValueExtractor}
                 helperText='Select Issuer Assignee'

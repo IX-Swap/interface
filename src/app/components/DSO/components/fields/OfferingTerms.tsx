@@ -12,7 +12,7 @@ import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 import { TextInput } from 'ui/TextInput/TextInput'
 
-export const DSOTerms = () => {
+export const OfferingTerms = () => {
   const { control, watch, setValue } = useFormContext<DSOFormValues>()
 
   const capitalStructure = watch('capitalStructure')
@@ -64,7 +64,9 @@ export const DSOTerms = () => {
                 name='investmentPeriod'
                 numberFormat={monthsNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='In months'
+                helperText='In Months'
+                isOptional
+                optionalText='(In Months)'
                 variant='outlined'
               />
             </Grid>
@@ -74,7 +76,9 @@ export const DSOTerms = () => {
                 component={NumericInput}
                 name='dividendYield'
                 label='Dividend Yield'
-                helperText='In percent'
+                helperText='In Percent'
+                isOptional
+                optionalText='(In Percent)'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
                 variant='outlined'
@@ -91,7 +95,9 @@ export const DSOTerms = () => {
                 control={control}
                 component={NumericInput}
                 label='Interest Rate'
-                helperText='In percent'
+                helperText='In Percent'
+                isOptional
+                optionalText='(In Percent)'
                 name='interestRate'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
@@ -105,7 +111,9 @@ export const DSOTerms = () => {
                 component={NumericInput}
                 name='grossIRR'
                 label='Gross IRR'
-                helperText='In percent'
+                helperText='In Percent'
+                isOptional
+                optionalText='(In Percent)'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
                 variant='outlined'
@@ -124,7 +132,9 @@ export const DSOTerms = () => {
                 label='Investment Structure'
                 name='investmentStructure'
                 variant='outlined'
-                helperText='Holding structure'
+                helperText='Holding Structure'
+                isOptional
+                optionalText='(Holding Structure)'
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -151,7 +161,9 @@ export const DSOTerms = () => {
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
                 variant='outlined'
-                helperText='In percent'
+                helperText='In Percent'
+                isOptional
+                optionalText='(In Percent)'
                 disabled={isEquity}
               />
             </Grid>
@@ -164,7 +176,9 @@ export const DSOTerms = () => {
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
                 variant='outlined'
-                helperText='In percent'
+                helperText='In Percent'
+                isOptional
+                optionalText='(In Percent)'
                 disabled={isDebt}
               />
             </Grid>

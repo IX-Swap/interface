@@ -32,7 +32,7 @@ export const singpassFormValidationSchema = yup.object<SignupArgs>({
   email: emailSchema.required(validationMessages.required),
   phoneNumber: yup
     .string()
-    .phone(undefined, 'Must be a valid phone number')
+    // .phone(undefined, 'Must be a valid phone number')
     .required(validationMessages.required),
   password: passwordSchema.required(validationMessages.required)
 })

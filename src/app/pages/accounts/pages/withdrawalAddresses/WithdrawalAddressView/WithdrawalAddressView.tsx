@@ -12,7 +12,7 @@ export const WithdrawalAddressView = () => {
 
   return (
     <WADialog open>
-      <WADialogTitle label='View Blockchain Address' />
+      <WADialogTitle label='View Wallet Address' />
       <WADialogContent>
         <WAViewContent />
       </WADialogContent>

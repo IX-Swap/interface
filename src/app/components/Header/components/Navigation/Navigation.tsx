@@ -26,6 +26,7 @@ export const Navigation = () => {
             />
           )
         }
+
         return (
           <TopbarLinkContainer
             placement={'topbar'}

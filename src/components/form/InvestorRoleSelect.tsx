@@ -14,7 +14,6 @@ export interface RoleSelectProps extends SelectProps {
 }
 
 export const InvestorRoleSelect = (props: RoleSelectProps) => {
-  console.log(props.verificationStatus, 'pppppppppp')
   // TODO: Need to fix TypeScript error for BackdropProps
   const getName = (name: string) => {
     if (name === 'retail') {
@@ -40,7 +39,10 @@ export const InvestorRoleSelect = (props: RoleSelectProps) => {
           {...props}
           // multiple
           MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } as any }}
-          renderValue={selected => selected as string[]}
+          renderValue={selected => {
+            // console.log(selected)
+            return selected as string[]
+          }}
         >
           {INDIVISUAL_INVESTOR.map(name => (
             <SelectItem

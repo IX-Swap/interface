@@ -11,7 +11,7 @@ export const getDSOInformationRequestPayload = (payloadData: any) => {
   const userId = getIdFromObj(user)
   const { corporateData } = UseCorporateUserId({ userId })
   const { data } = useAllCorporates({ all: true, status: 'Approved' })
-  let issuerName = data?.list[corporateIdIndex]?.companyLegalName
+  let issuerName =  sessionStorage?.getItem('corpoName')?.split('-')[0]
   const dsoTermDefaults = {
     issuerName: issuerName
       ? issuerName

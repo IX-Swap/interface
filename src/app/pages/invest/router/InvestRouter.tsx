@@ -1,5 +1,5 @@
 import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
-import { Market } from 'app/pages/invest/pages/market/Market'
+// import { Market } from 'app/pages/invest/pages/market/Market'
 import { ViewListing } from 'app/pages/invest/pages/ViewListing'
 import { CommitmentsRouter } from 'app/pages/invest/router/CommitmentsRouter'
 import { InvestRoute } from 'app/pages/invest/router/config'
@@ -24,9 +24,9 @@ export const InvestRouter = () => {
         <InvestDSORouter />
       </AppRoute>
 
-      <AppRoute breadcrumb='Exchange' exact path={InvestRoute.exchange}>
+      {/* <AppRoute breadcrumb='Exchange' exact path={InvestRoute.exchange}>
         <Market />
-      </AppRoute>
+      </AppRoute> */}
 
       <AppRoute path={InvestRoute.viewListing}>
         <RootContainer>

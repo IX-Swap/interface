@@ -19,7 +19,7 @@ export enum AppFeature {
   DigitalSecurity = 'digital-security',
   DigitalSecurityDeposits = 'digital-security-deposits',
   SecurityTokenWithdrawals = 'security-token-withdrawals',
-  WithdrawalAddresses = 'blockchain-addresses',
+  WithdrawalAddresses = 'wallet-addresses',
   Corporates = 'corporates',
   CorporatesAccreditation = 'corporates/accreditation',
   Holdings = 'holdings',

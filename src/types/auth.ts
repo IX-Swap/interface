@@ -24,6 +24,7 @@ export interface CompletePasswordResetArgs {
   email: string
   resetToken: string
   newPassword: string
+  tenantId?: string
 }
 
 export interface GetUserArgs extends BaseArgs {

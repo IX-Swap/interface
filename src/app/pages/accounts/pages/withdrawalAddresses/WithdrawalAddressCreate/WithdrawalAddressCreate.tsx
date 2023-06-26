@@ -27,7 +27,7 @@ export const WithdrawalAddressCreate = () => {
           root: classes.dialog
         }}
       >
-        <WADialogTitle label='Add blockchain address' />
+        <WADialogTitle label='Add Wallet Address' />
         <WADialogContent>
           <WithdrawalAddressForm hint={hint} />
         </WADialogContent>

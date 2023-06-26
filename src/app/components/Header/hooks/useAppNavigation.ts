@@ -2,10 +2,11 @@ import {
   useIsAccredited,
   useIsRetail,
   useIsExpert,
-  useIsAdmin,
+  useIsInstitutional,
+  useIsIssuer,
   useIsAuthorizer,
   useIsFundManager,
-  useIsIssuer
+  useIsAdmin
 } from 'helpers/acl'
 import {
   accountsLandingLinks,
@@ -33,9 +34,10 @@ export const useAppNavigation = () => {
   const isAccredited = useIsAccredited()
   const isRetail = useIsRetail()
   const isExpert = useIsExpert()
+  const isInstitutional = useIsInstitutional()
   const isFundManager = useIsFundManager()
   const isSuperUser = isAuthorizer || isAdmin
-  const isInvestor = isAccredited || isRetail || isExpert
+  const isInvestor = isAccredited || isRetail || isExpert || isInstitutional
   const issuanceLandingLinks: InternalRouteProps[] = [
     { label: 'Create New STO', path: IssuanceRoute.createNew },
     { label: 'View STO Listings', path: IssuanceRoute.list },
@@ -44,7 +46,14 @@ export const useAppNavigation = () => {
     // { label: 'Financial Reports', path: IssuanceRoute.financialReports }
   ]
 
-  const links = [
+  interface NavigationMenuItem {
+    label: string
+    link: string
+    icon?: any
+    isExternalUrl?: boolean
+  }
+
+  const links: NavigationMenuItem[] = [
     {
       label: 'Home',
       link: AppRoute.home
@@ -90,6 +99,12 @@ export const useAppNavigation = () => {
       path: IssuanceRoute.insight
     })
   }
+
+  links.push({
+    label: 'Knowledge Center',
+    link: 'https://investax.io/knowledge-center',
+    isExternalUrl: true
+  })
 
   const dropdownLinksItems = (name: string) => {
     switch (name) {

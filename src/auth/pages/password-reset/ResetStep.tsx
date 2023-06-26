@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 import { CompletePasswordResetArgs } from 'types/auth'
 import { completePasswordResetValidationSchema } from 'validation/auth'
 import { useStyles } from './RequestStep.styles'
+import { useServices } from 'hooks/useServices'
 
 export type CompletePasswordResetFormValues = Omit<
   CompletePasswordResetArgs,
@@ -27,12 +28,15 @@ export const ResetStep: React.FC = () => {
   const [completeReset] = useCompletePasswordReset()
   const { email, token, reset } = usePasswordResetStore()
   const { title } = useStyles()
+  const { sessionService } = useServices()
+
   const handleSubmit = async (
     values: CompletePasswordResetFormValues
   ): Promise<void> => {
     await completeReset({
       ...values,
-      resetToken: token as string
+      resetToken: token as string,
+      tenantId: sessionService?.get('tenantId')
     })
   }
 

@@ -33,7 +33,11 @@ export default function DialogConfirmRoleChange({
       <DialogTitle>Confirm Role Change</DialogTitle>
       <DialogContent data-testid='dialog-content'>
         Are you sure you want to change {user.email}&apos;s <br /> role from{' '}
-        {user.roles} to {newRole}?
+        {user.roles
+          .split(',')
+          .map(x => (x === 'tenantOwner' ? 'client' : x))
+          .join(', ')}{' '}
+        to {newRole}?
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color='primary'>

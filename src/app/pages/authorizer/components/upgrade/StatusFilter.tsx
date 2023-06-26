@@ -135,7 +135,11 @@ export const StatusFilter = () => {
     )
   }
 
-  if (category === 'corporates' || category === 'individuals') {
+  if (
+    category === 'corporates' ||
+    category === 'individuals' ||
+    category === 'offerings'
+  ) {
     return <BaseStatusFilter statusFilters={investorStatusFilter} />
   }
 
