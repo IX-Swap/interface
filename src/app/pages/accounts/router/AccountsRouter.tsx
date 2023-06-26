@@ -34,7 +34,7 @@ export const AccountsRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='My Blockchain Addresses'
+        breadcrumb='My Wallet Addresses'
         path={AccountsRoute.withdrawalAddresses}
       >
         <WithdrawalAddressesRouter />
