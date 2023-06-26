@@ -71,17 +71,15 @@ export const PrimaryOfferings = ({
     defaultRowsPerPage: 6,
     disabledUseEffect: true
   })
-  // useEffect(() => {
-  //   refetch()
-  // }, [refetch])
+  //   useEffect(() => {
+  //     refetch()
+  //   }, [refetch])
   const handleChangePage = (_: any, newPage: number) => {
     setPage(newPage - 1)
-    refetch()
   }
 
   const handleChangePageZeroBased = (_: any, newPage: number) => {
     setPage(newPage)
-    refetch()
   }
 
   const handleChangeRowsPerPage = (
@@ -89,7 +87,6 @@ export const PrimaryOfferings = ({
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
-    refetch()
   }
 
   const renderContent = () => {
