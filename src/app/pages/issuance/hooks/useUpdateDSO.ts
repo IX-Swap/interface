@@ -19,8 +19,8 @@ export const useUpdateDSO = (
 
   const url = issuanceURL.dso.update(issuerId ?? userId, dsoId)
   const updateDSO = async (args: DSORequestArgs) => {
-    const { network, ...rest } = args
-    return await apiService.put<DigitalSecurityOffering>(url, rest)
+    // const { network, ...rest } = args
+    return await apiService.put<DigitalSecurityOffering>(url, args)
   }
 
   return useMutation(updateDSO, {
