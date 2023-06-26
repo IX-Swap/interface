@@ -1,5 +1,6 @@
 import React from 'react'
-import { TableView } from 'components/TableWithPagination/TableView'
+// import { TableView } from 'components/TableWithPagination/TableView'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { columns } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressesTable/columns'
 import { Actions } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressesTable/Actions'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -17,7 +18,7 @@ export const WithdrawalAddressesTable: React.FC = () => {
       uri={`/accounts/withdrawal-addresses/list/${userId}`}
       name={withdrawalAddressQueryKeys.getByUserId(userId)}
       columns={columns}
-      hasActions
+      //   hasActions
       actions={Actions}
       noDataComponent={<NoWithdrawalAddressData />}
     />
