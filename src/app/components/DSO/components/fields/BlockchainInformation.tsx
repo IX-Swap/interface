@@ -65,9 +65,14 @@ export const increment = (props: DSOIncrementProps) => {
 }
 
 export const BlockchainInformation = (props: BlockchainInformationProps) => {
-  const { isNew, status } = props
+  const {
+    // isNew
+    status
+  } = props
   const { control } = useFormContext<DSOFormValues>()
   const classes = useStyles()
+
+  const isApproved = status === 'Approved'
 
   return (
     <Grid item>
@@ -115,7 +120,8 @@ export const BlockchainInformation = (props: BlockchainInformationProps) => {
                 component={NetworkSelect}
                 label='Blockchain Network'
                 name='network'
-                disabled={!isNew}
+                // disabled={!isNew}
+                disabled={isApproved}
                 control={control}
                 placeHolder='Select Blockchain Network'
                 variant='outlined'
