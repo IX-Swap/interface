@@ -9,8 +9,8 @@ import {
   useIsAdmin
 } from 'helpers/acl'
 import {
-  accountsLandingLinks,
-  AccountsRoute
+  accountsLandingLinks
+  // AccountsRoute
 } from 'app/pages/accounts/router/config'
 import {
   authorizerLandingLinks,
@@ -21,7 +21,7 @@ import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
 import { investLandingLinks, InvestRoute } from 'app/pages/invest/router/config'
 import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
-import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
+// import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 
@@ -58,11 +58,11 @@ export const useAppNavigation = () => {
       label: 'Home',
       link: AppRoute.home
     },
-    {
-      label: 'Accounts',
-      link: AccountsRoute.landing,
-      icon: AccountsIcon
-    },
+    // {
+    //   label: 'Accounts',
+    //   link: AccountsRoute.landing,
+    //   icon: AccountsIcon
+    // },
     {
       label: 'Invest',
       link: InvestRoute.overview,
