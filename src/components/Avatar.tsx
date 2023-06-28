@@ -16,6 +16,7 @@ export interface AvatarProps extends MUIAvatarProps {
   maxWidth?: number | string
   fallback?: Element | JSX.Element
   children?: ReactNode
+  imageValue?: boolean | null
 }
 
 export const Avatar = (props: AvatarProps) => {
@@ -29,10 +30,12 @@ export const Avatar = (props: AvatarProps) => {
     variant = 'circular',
     fallback,
     children,
-    maxWidth = 'initial'
+    maxWidth = 'initial',
+    imageValue
   } = props
   const width = Array.isArray(size) ? size[0] : size
-  const height = Array.isArray(size) ? size[1] : size
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+  const height = imageValue ? 200 : Array.isArray(size) ? size[1] : size
 
   const style = { width, height, border, borderRadius, maxWidth }
 

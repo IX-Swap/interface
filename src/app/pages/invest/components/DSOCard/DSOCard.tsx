@@ -22,7 +22,6 @@ export const DSOCard = (props: DSOCardProps) => {
   const typeWithLogo = ['OTC', 'TopOffers']
 
   const { data, viewURL, type, refetch } = props
-console.log(data, 'datatatat')
   return (
     <Card
       data-testid='primaryDsoCard'
