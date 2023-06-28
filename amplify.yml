@@ -1,0 +1,24 @@
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+        - cat .npmrc
+        - yarn install
+    build:
+      commands:
+        - if [ "${AWS_BRANCH}" = "development" ]; then cp -fv .env.development .env.production; fi
+        - if [ "${AWS_BRANCH}" = "investax-dev" ]; then cp -fv .env.development .env.production; fi
+        - if [ "${AWS_BRANCH}" = "staging" ]; then cp -fv .env.staging .env.production; fi
+        - if [ "${AWS_BRANCH}" = "staging" ]; then cp -fv .env.staging .env.test; fi
+        - if [ "${AWS_BRANCH}" = "clientspace" ]; then cp -fv .env.staging .env.production; fi
+        - if [ "${AWS_BRANCH}" = "clientspace" ]; then cp -fv .env.staging .env.test; fi
+        - yarn run build
+  artifacts:
+    baseDirectory: build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
