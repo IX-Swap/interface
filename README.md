@@ -3,7 +3,7 @@
 [![RELEASE - AWS build & deploy](https://github.com/IX-Swap/interface/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/IX-Swap/interface/actions/workflows/release.yaml) 
 [![Unit Tests](https://github.com/IX-Swap/interface/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/unit-tests.yaml)
 [![Integration Tests](https://github.com/IX-Swap/interface/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/integration-tests.yaml)
----------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------
 - Website: [ixswap.io](https://ixswap.io)
 - Interface: [app.ixswap.io](https://app.ixswap.io)
 - Telegram: [ixswapofficial](https://t.me/ixswapofficial)
