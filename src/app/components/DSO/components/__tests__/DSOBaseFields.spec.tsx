@@ -1,7 +1,7 @@
 import {
   DSOBaseFields,
   DSOBaseFieldsProps
-} from 'app/components/DSO/components/DSOBaseFields'
+} from 'app/components/DSO/components/fields/STOInformation'
 import { Form } from 'components/form/Form'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'

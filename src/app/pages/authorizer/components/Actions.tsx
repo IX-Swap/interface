@@ -19,19 +19,27 @@ export interface ActionsProps {
   item: any
   cacheQueryKey: any
   featureCategory?: string
-  investorRole?: string
   statusFieldName?: string
 }
 
 export type ActionsType = (props: ActionsProps) => ReactElement
 
-const getUserId = (item: any) => {
-  if (typeof item.user === 'string') {
-    return item.user
-  }
+const getUserId = (item: any, category: string) => {
+  if (
+    ![
+      'individuals',
+      'individuals/accreditation',
+      'corporates',
+      'corporates/accreditation'
+    ].includes(category)
+  ) {
+    if (typeof item.user === 'string') {
+      return item.user
+    }
 
-  if (typeof item.createdBy === 'string') {
-    return item.createdBy
+    if (typeof item.createdBy === 'string') {
+      return item.createdBy
+    }
   }
 
   return item.user?._id
@@ -42,7 +50,6 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     item,
     cacheQueryKey,
     featureCategory,
-    investorRole,
     statusFieldName = 'status'
   } = props
   const location = useLocation()
@@ -51,11 +58,10 @@ export const Actions = (props: ActionsProps): JSX.Element => {
   const status = location.search.split('=')[1]
 
   const category =
-    typeof featureCategory !== 'undefined' &&
-    featureCategory !== 'corporates/role'
+    typeof featureCategory !== 'undefined'
       ? featureCategory
       : splitted[splitted.length - 1]
-  const userId: string = getUserId(item)
+  const userId: string = getUserId(item, category)
   const listingType: string = item.listingType
   //   console.log(props.item, 'propsdpdppd')
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
@@ -63,8 +69,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     action: 'approve',
     cacheQueryKey,
     listingType,
-    featureCategory,
-    investorRole
+    featureCategory
   })
 
   const [reject, { isLoading: isRejecting }] = useApproveOrReject({
@@ -72,8 +77,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     action: 'reject',
     cacheQueryKey,
     listingType,
-    featureCategory,
-    investorRole
+    featureCategory
   })
 
   const view = () =>
@@ -94,6 +98,14 @@ export const Actions = (props: ActionsProps): JSX.Element => {
       ? history.push(
           `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
         )
+      : category === 'individuals/accreditation'
+      ? history.push(
+          `/app/authorizer/individuals/${userId}/${id}/view?tab=accreditation`
+        )
+      : category === 'corporates/accreditation'
+      ? history.push(
+          `/app/authorizer/corporates/${userId}/${id}/view?tab=accreditation`
+        )
       : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
   //   console.log(
   //     category,
@@ -106,6 +118,8 @@ export const Actions = (props: ActionsProps): JSX.Element => {
   const isUnauthorized = item.status === 'Submitted' || 'Approved'
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
+  const statusField = get(item, statusFieldName)
+
   return (
     <Grid wrap='nowrap' justifyContent='flex-end'>
       {/* <Grid item>
@@ -152,7 +166,12 @@ export const Actions = (props: ActionsProps): JSX.Element => {
               content={props => (
                 <ActionsDropdownContent
                   {...props}
-                  hideApproval={get(item, statusFieldName) !== 'Submitted'}
+                  hideApproval={
+                    !['Submitted', 'PENDING', 'Rejected'].includes(statusField)
+                  }
+                  hideRejection={
+                    !['Submitted', 'PENDING', 'Approved'].includes(statusField)
+                  }
                   approve={approve}
                   reject={reject}
                   view={view}

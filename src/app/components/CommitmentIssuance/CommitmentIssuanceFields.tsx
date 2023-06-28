@@ -7,6 +7,7 @@ import { convertDateToISO } from 'helpers/dates'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { CommitmentIssuanceFormValues } from 'types/commitment'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 export interface CommitmentIssuanceFieldsProps {
   amount: string
 }
@@ -18,9 +19,9 @@ export const CommitmentIssuanceFields = (
   const { control } = useFormContext<CommitmentIssuanceFormValues>()
 
   return (
-    <React.Fragment>
+    <>
       <Grid item>
-        <Typography variant='h3'>Token Issuance</Typography>
+        <FormSectionHeader title='Token Issuance' />
       </Grid>
 
       <Grid item className={classes.spacedTop}>
@@ -52,7 +53,7 @@ export const CommitmentIssuanceFields = (
       </Grid>
 
       <Grid item md={4}>
-        <Typography variant='subtitle1'>Release Date</Typography>
+        <Typography variant='subtitle1'>Free-to-Trade Date</Typography>
         <Box py={0.4} />
         <TypedField
           name='releaseDate'
@@ -76,6 +77,6 @@ export const CommitmentIssuanceFields = (
           over.
         </Typography>
       </Grid>
-    </React.Fragment>
+    </>
   )
 }

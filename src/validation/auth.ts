@@ -19,7 +19,7 @@ export const loginFormValidationSchema = yup.object<LoginArgs>({
 })
 
 export const registerFormValidationSchema = yup.object<SignupArgs>({
-  name: yup.string().required(validationMessages.required),
+  //   name: yup.string().required(validationMessages.required),
   email: emailSchema.required(validationMessages.required),
   password: passwordSchema.required(validationMessages.required),
   agree: yup
@@ -32,7 +32,7 @@ export const singpassFormValidationSchema = yup.object<SignupArgs>({
   email: emailSchema.required(validationMessages.required),
   phoneNumber: yup
     .string()
-    .phone(undefined, 'Must be a valid phone number')
+    // .phone(undefined, 'Must be a valid phone number')
     .required(validationMessages.required),
   password: passwordSchema.required(validationMessages.required)
 })

@@ -4,7 +4,7 @@ import { AuthorizerList } from 'app/pages/authorizer/components/upgrade/Authoriz
 
 export const WithdrawalAddresses: React.FC = () => (
   <AuthorizerList
-    title='Authorize Blockchain Addresses'
+    title='Authorize Wallet Addresses'
     uri='/accounts/withdrawal-addresses/list'
     name='authorizerWithdrawalAddressesList'
     columns={columns}

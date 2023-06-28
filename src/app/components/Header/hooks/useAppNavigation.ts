@@ -2,10 +2,11 @@ import {
   useIsAccredited,
   useIsRetail,
   useIsExpert,
-  useIsAdmin,
+  useIsInstitutional,
+  useIsIssuer,
   useIsAuthorizer,
   useIsFundManager,
-  useIsIssuer
+  useIsAdmin
 } from 'helpers/acl'
 import {
   accountsLandingLinks,
@@ -18,7 +19,6 @@ import {
 import { AppRoute as AppPath, AppRoute } from 'app/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
-import { educationCentreLinks } from 'app/pages/educationCentre/router/config'
 import { investLandingLinks, InvestRoute } from 'app/pages/invest/router/config'
 import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
@@ -34,19 +34,26 @@ export const useAppNavigation = () => {
   const isAccredited = useIsAccredited()
   const isRetail = useIsRetail()
   const isExpert = useIsExpert()
+  const isInstitutional = useIsInstitutional()
   const isFundManager = useIsFundManager()
   const isSuperUser = isAuthorizer || isAdmin
-  const isInvestor = isAccredited || isRetail || isExpert
-  const educationCenterLabel = 'Education Centre'
+  const isInvestor = isAccredited || isRetail || isExpert || isInstitutional
   const issuanceLandingLinks: InternalRouteProps[] = [
     { label: 'Create New STO', path: IssuanceRoute.createNew },
     { label: 'View STO Listings', path: IssuanceRoute.list },
     { label: 'Create Secondary Listing', path: IssuanceRoute.createListing },
-    { label: 'View Secondary Listings', path: IssuanceRoute.secondaryListings },
-    { label: 'Financial Reports', path: IssuanceRoute.financialReports }
+    { label: 'View Secondary Listings', path: IssuanceRoute.secondaryListings }
+    // { label: 'Financial Reports', path: IssuanceRoute.financialReports }
   ]
 
-  const links = [
+  interface NavigationMenuItem {
+    label: string
+    link: string
+    icon?: any
+    isExternalUrl?: boolean
+  }
+
+  const links: NavigationMenuItem[] = [
     {
       label: 'Home',
       link: AppRoute.home
@@ -70,18 +77,13 @@ export const useAppNavigation = () => {
     } as any)
   }
 
-  if (isIssuer) {
+  if (isIssuer || isSuperUser) {
     links.push({
       label: 'Issuance',
       link: IssuanceRoute.dashboard,
       icon: IssuanceIcon
     })
   }
-
-  links.push({
-    label: educationCenterLabel,
-    link: AppRoute.educationCentre
-  } as any)
 
   if (isSuperUser) {
     links.push({
@@ -91,17 +93,21 @@ export const useAppNavigation = () => {
     })
   }
 
-  if (isFundManager) {
+  if (isFundManager || isSuperUser) {
     issuanceLandingLinks.unshift({
       label: 'Overview',
       path: IssuanceRoute.insight
     })
   }
 
+  links.push({
+    label: 'Knowledge Center',
+    link: 'https://investax.io/knowledge-center',
+    isExternalUrl: true
+  })
+
   const dropdownLinksItems = (name: string) => {
     switch (name) {
-      case educationCenterLabel:
-        return educationCentreLinks
       case 'Authorizer':
         return [
           {
@@ -126,8 +132,7 @@ export const useAppNavigation = () => {
       label === 'Accounts' ||
       label === 'Authorizer' ||
       label === 'Invest' ||
-      label === 'Issuance' ||
-      label === educationCenterLabel
+      label === 'Issuance'
     ) {
       return true
     }
@@ -137,7 +142,6 @@ export const useAppNavigation = () => {
   const isNavigationImpossibleWithoutCompletedIdentity = (link: string) => {
     return (
       !isInvestor &&
-      !link.startsWith(AppPath.educationCentre) &&
       !link.startsWith(AppPath.identity) &&
       !link.startsWith(AppPath.security) &&
       !link.startsWith(AppPath.notifications) &&

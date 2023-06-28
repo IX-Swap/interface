@@ -1,4 +1,4 @@
-import { Grid, Tab, Tabs } from '@mui/material'
+import { Grid, Tab, Tabs, Typography, Box } from '@mui/material'
 import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 import { PlaceOrderFields } from 'app/pages/invest/components/PlaceOrderFields/PlaceOrderFields'
 import { useStyles } from 'app/pages/invest/components/PlaceOrderForm/PlaceOrderForm.styles'
@@ -16,7 +16,9 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { OrderSide } from 'types/order'
 import { PlaceOrderFormSubmitButton } from './PlaceOrderFormSubmitButton'
-// import { PairName } from '../PairListDropdown/PairName'
+import { useAuth } from 'hooks/auth/useAuth'
+import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
+import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 export type ActiveTabName = 'BUY' | 'SELL'
 
 export interface PlaceOrderFormProps {
@@ -44,15 +46,30 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   onSubmit,
   defaultActiveTab = 0
 }) => {
+  const { user } = useAuth()
+
+  const roles = user?.roles?.split(',')
+  const isRetailInvestor = roles?.includes('retail') ?? false
+  const isCorporateInvestor = user?.accountType === 'CORPORATE'
+  const { data: individualData } = useIndividualIdentity()
+  const { data: corporateData } = useAllCorporates({})
+  const residencies = !isCorporateInvestor
+    ? individualData?.taxResidencies
+    : corporateData?.list[0]?.taxResidencies
+  const isSingaporeResident =
+    typeof residencies?.find(x => x.countryOfResidence === 'Singapore') !==
+    'undefined'
+  const isExchangeEnabled = !(isRetailInvestor && isSingaporeResident)
+
   const tabs = ['BUY', 'SELL']
   const [activeTabNameIdx, setActiveTabNameIdx] = useState(defaultActiveTab)
   const classes = useStyles(activeTabNameIdx)
   const balance = activeTabNameIdx === 0 ? currencyBalance : tokenBalance
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
-  //   const pairName = localStorage.getItem('pairName')
+
   const handleSubmit = async (values: PlaceOrderFormValues) => {
-    if (isEmptyString(pairId)) {
+    if (isEmptyString(pairId) || !isExchangeEnabled) {
       return
     }
 
@@ -64,10 +81,24 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
       )
     )
   }
-  // console.log(PairName, 'PairNamePairName');
+
   return (
     <Form onSubmit={handleSubmit} resetAfterSubmit>
       <Grid container direction={'column'} className={classes.container}>
+        {!isExchangeEnabled && (
+          <Grid item className={classes.overlay}>
+            <Box m={'auto'} p={4} textAlign={'center'}>
+              <Typography color='#778194' variant='subtitle2'>
+                Exchange Trading Not Available
+              </Typography>
+              <Typography color='#778194' fontSize={'12px'} mt={1}>
+                This service is not available for retail investors with tax
+                residence in Singapore.
+              </Typography>
+            </Box>
+          </Grid>
+        )}
+
         <Grid item>
           <Tabs
             value={activeTabNameIdx}

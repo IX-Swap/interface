@@ -7,6 +7,11 @@ export const useAuthorizerFilter = () => {
     'authorizationStatus',
     'Submitted'
   ) as AuthorizableStatus
+  const isKYCStatusChecked = getFilterValue('filterByKYCStatus', false)
+  const isAccreditationStatusChecked = getFilterValue(
+    'filterByAccreditationStatus',
+    false
+  )
   const fundStatusQueryValue = getFilterValue(
     'fundStatus',
     undefined
@@ -18,11 +23,28 @@ export const useAuthorizerFilter = () => {
   const searchTokenNameQueryValue = getFilterValue('searchTokenName', undefined)
   const deploymentStatus = getFilterValue('deploymentStatus', undefined)
 
+  const isKYCChecked =
+    typeof isKYCStatusChecked !== 'undefined' && isKYCStatusChecked === 'true'
+  const isAccreditationChecked =
+    typeof isAccreditationStatusChecked !== 'undefined' &&
+    isAccreditationStatusChecked === 'true'
+  const onlyKYCIsChecked = isKYCChecked && !isAccreditationChecked
+  const onlyAccreditationIsChecked = !isKYCChecked && isAccreditationChecked
+  const bothAreChecked = isKYCChecked && isAccreditationChecked
+  const statusFilterQueryValue = bothAreChecked
+    ? 'ALL'
+    : onlyKYCIsChecked
+    ? 'KYC'
+    : onlyAccreditationIsChecked
+    ? 'ACCREDITATION'
+    : undefined
+
   return {
     filter: {
       search: searchQueryValue,
       searchTokenName: searchTokenNameQueryValue,
       status: statusQueryValue,
+      statusFilter: statusFilterQueryValue,
       fundStatus: fundStatusQueryValue,
       to: toDateQueryValue,
       from: fromDateQueryValue,

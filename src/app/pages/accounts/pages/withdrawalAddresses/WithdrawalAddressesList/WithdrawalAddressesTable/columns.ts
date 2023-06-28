@@ -17,7 +17,7 @@ export const columns = [
   },
   {
     key: 'address',
-    label: 'Blockchain Address',
+    label: 'Wallet Address',
     render: renderAddressColumn
   },
   {

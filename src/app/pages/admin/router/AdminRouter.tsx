@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch } from 'react-router-dom'
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
-import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { adminLandingLinks, AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { Identities } from 'app/pages/admin/pages/Identities'
@@ -13,7 +12,6 @@ import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
 import { Banner } from 'app/pages/admin/pages/Banner'
 import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
 import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
-import { BlockchainSettings } from 'app/pages/admin/pages/BlockchainSettings'
 import { CustodyManagementRouter } from 'app/pages/admin/router/CustodyManagementRouter'
 import { TenantRouter } from './TenantRouter'
 
@@ -25,23 +23,15 @@ export const AdminRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Access Reports'
-        exact
-        path={AdminRoute.accessReports}
-      >
-        <AccessReports />
-      </AppRoute>
-
-      <AppRoute
         path={AdminRoute.viewIndividualIdentity}
-        breadcrumb='View Individual Identity'
+        breadcrumb='View Individual KYC'
       >
         <ViewIndividualIdentity />
       </AppRoute>
 
       <AppRoute
         path={AdminRoute.viewCorporateIdentity}
-        breadcrumb='View Corporate Identity'
+        breadcrumb='View Corporate KYC'
       >
         <ViewCorporateIdentity />
       </AppRoute>
@@ -58,11 +48,7 @@ export const AdminRouter = () => {
         <VirtualAccounts />
       </AppRoute>
 
-      <AppRoute
-        exact
-        path={AdminRoute.masDisclosure}
-        breadcrumb='Disclosure'
-      >
+      <AppRoute exact path={AdminRoute.masDisclosure} breadcrumb='Disclosure'>
         <MasDisclosure />
       </AppRoute>
 
@@ -84,14 +70,6 @@ export const AdminRouter = () => {
         breadcrumb='VA Audit'
       >
         <VirtualAccountAudit />
-      </AppRoute>
-
-      <AppRoute
-        exact
-        path={AdminRoute.blockchainSettings}
-        breadcrumb='Blockchain Settings'
-      >
-        <BlockchainSettings />
       </AppRoute>
 
       <AppRoute

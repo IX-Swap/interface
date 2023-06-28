@@ -6,11 +6,14 @@ import { ReactComponent as ApprovedImage } from 'assets/images/kyc-accreditation
 import { ReactComponent as LockedImage } from 'assets/images/kyc-accreditation-status/locked.svg'
 import { ReactComponent as AccreditedImage } from 'assets/images/kyc-accreditation-status/accredited.svg'
 import { useStyles } from './StatusBox.styles'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface StatusBoxProps {
   status: 'Pending' | 'Rejected' | 'Approved' | 'Locked' | 'Accredited' | string
   identityType: 'individual' | 'corporate'
   applicationType: 'kyc' | 'accreditation'
+  investorRole?: string[]
+  isForAuthorizer?: boolean
 }
 interface Status {
   status: string
@@ -21,16 +24,23 @@ interface Status {
 }
 
 export const StatusBox = (props: StatusBoxProps) => {
-  const { status, identityType, applicationType } = props
+  const {
+    status,
+    identityType,
+    applicationType,
+    investorRole,
+    isForAuthorizer = false
+  } = props
   const { container, pending, rejected, approved, locked, accredited } =
     useStyles()
-  const application = applicationType === 'kyc' ? 'Identity' : 'Accreditation'
-  const infoType =
-    applicationType === 'kyc'
-      ? identityType === 'individual'
-        ? 'personal'
-        : 'corporate'
-      : 'financial'
+  const application = applicationType === 'kyc' ? 'KYC' : 'Accreditation'
+  const identity = capitalizeFirstLetter(identityType)
+  //   const infoType =
+  //     applicationType === 'kyc'
+  //       ? identityType === 'individual'
+  //         ? 'personal'
+  //         : 'corporate'
+  //       : 'financial'
 
   const applicationStatus =
     applicationType === 'accreditation' && status === 'Approved'
@@ -41,11 +51,16 @@ export const StatusBox = (props: StatusBoxProps) => {
     status: 'Pending',
     image: PendingImage,
     className: pending,
-    title: `${application} Pending Approval`,
-    description: (
+    title: `${identity} ${application} Pending Approval`,
+    description: !isForAuthorizer ? (
       <>
-        Your {infoType} information has not been approved yet. <br />
+        Your {`${identity} ${application}`} has not been approved yet. <br />
         Please check back later.
+      </>
+    ) : (
+      <>
+        You have not approved the {`${identity} ${application}`} of this user
+        yet.
       </>
     )
   }
@@ -56,19 +71,19 @@ export const StatusBox = (props: StatusBoxProps) => {
       status: 'Rejected',
       image: RejectedImage,
       className: rejected,
-      title: `${application} Application Rejected`,
-      description: `Your ${infoType} information has been rejected.`
+      title: `${identity} ${application} Application Rejected`,
+      description: `Your ${identity} ${application} has been rejected.`
     },
     {
       status: 'Approved',
       image: ApprovedImage,
       className: approved,
-      title: `${application} Application Approved`,
+      title: `${identity} ${application} Application Approved`,
       description: (
         <>
-          Your {infoType} information has been approved. <br />
-          You may proceed to the Accreditation tab to apply to become an
-          Accredited Investor.
+          Your {`${identity} ${application}`} has been approved. <br />
+          You may proceed to the Accreditation tab to apply for corporate
+          accreditation.
         </>
       )
     },
@@ -76,11 +91,12 @@ export const StatusBox = (props: StatusBoxProps) => {
       status: 'Locked',
       image: LockedImage,
       className: locked,
-      title: 'Application for Investor Accreditation Locked',
+      title: `Application for ${identity} Accreditation Locked`,
       description: (
         <>
-          You cannot apply to become an Accredited Investor at the moment as
-          your personal information has not been approved yet. <br />
+          {`You cannot apply for ${identity} accreditation at the moment as your
+          ${identity} KYC has not been approved yet.`}
+          <br />
           Please try again later.
         </>
       )
@@ -89,11 +105,15 @@ export const StatusBox = (props: StatusBoxProps) => {
       status: 'Accredited',
       image: AccreditedImage,
       className: accredited,
-      title: 'Accreditation Application Approved',
+      title: `${identity} Accreditation Approved`,
       description: (
         <>
-          Your financial information has been approved. <br />
-          You are now an Accredited Investor.
+          Your {identity} Accreditation has been approved. <br />
+          You are now an{' '}
+          {typeof investorRole !== 'undefined' && investorRole.length > 0
+            ? capitalizeFirstLetter(investorRole[0])
+            : 'Accredited'}{' '}
+          Investor.
         </>
       )
     }
@@ -103,11 +123,11 @@ export const StatusBox = (props: StatusBoxProps) => {
   const alertStatus = typeof filtered !== 'undefined' ? filtered : defaultStatus
   const { image: Image, title, description, className } = alertStatus
 
-  return (
+  return !isForAuthorizer || status === 'Submitted' ? (
     <Box className={[container, className].join(' ')}>
       <Image />
       <Typography variant='h5'>{title}</Typography>
       <Typography>{description}</Typography>
     </Box>
-  )
+  ) : null
 }

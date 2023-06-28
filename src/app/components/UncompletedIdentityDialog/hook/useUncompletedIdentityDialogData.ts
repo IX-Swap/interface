@@ -11,7 +11,7 @@ export const useUncompletedIdentityDialogData = () => {
 
   const getRedirectPath = () => {
     if (isIdentitiesLoaded && individualIdentity !== undefined) {
-      return `/app/identity/individualIdentity/${individualIdentity?.user._id}/${individualIdentity?._id}/edit`
+      return `/app/profile/individualIdentity/${individualIdentity?.user._id}/${individualIdentity?._id}/edit`
     }
 
     if (
@@ -20,7 +20,7 @@ export const useUncompletedIdentityDialogData = () => {
       corporateIdentities.length > 0 &&
       corporateIdentities[0].type === 'investor'
     ) {
-      return `/app/identity/corporates/${corporateIdentities[0].user._id}/${corporateIdentities[0]._id}/edit`
+      return `/app/profile/corporates/${corporateIdentities[0].user._id}/${corporateIdentities[0]._id}/edit`
     }
 
     if (
@@ -29,7 +29,7 @@ export const useUncompletedIdentityDialogData = () => {
       corporateIdentities.length > 0 &&
       corporateIdentities[0].type === 'issuer'
     ) {
-      return `/app/identity/corporates/${corporateIdentities[0].user._id}/${corporateIdentities[0]._id}/edit-issuer`
+      return `/app/profile/corporates/${corporateIdentities[0].user._id}/${corporateIdentities[0]._id}/edit-issuer`
     }
 
     return '/'

@@ -141,7 +141,7 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
   return (
     <Tooltip
       title={
-        !isValid && !isApproved && !isSubmitted ? (
+        disabled && !isEdit ? (
           <Typography color='error'>
             Please fill in all the required steps
           </Typography>
@@ -161,7 +161,7 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
               return await handleSave()
             }
           }}
-          disabled={disabled && !isEdit} // draft mode dso button enable
+          disabled={activeStep !== 2 || disabled && !isEdit } // draft mode dso button enable
           disableElevation
           fullWidth={fullWidth}
           size={size}

@@ -1,7 +1,10 @@
+const getTenantId: any = sessionStorage.getItem('tenantId')
+const tenantId: number = JSON.parse(getTenantId)
+
 export const AppRoute = {
   home: '/app/home',
   authorizer: '/app/authorizer',
-  identity: '/app/identity',
+  identity: '/app/profile',
   accounts: '/app/accounts',
   issuance: '/app/issuance',
   invest: '/app/invest',
@@ -9,6 +12,6 @@ export const AppRoute = {
   OTCMarket: '/app/OTCMarket',
   security: '/app/settings',
   notifications: '/app/notifications',
-  educationCentre: '/app/education-centre',
-  fundsManagement: '/app/funds-management'
+  fundsManagement: '/app/funds-management',
+  editClientSpace: `/app/admin/tenants/${tenantId}/edit`
 }

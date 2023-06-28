@@ -11,6 +11,7 @@ import { Submit } from 'components/form/Submit'
 import { AuthRoute } from 'auth/router/config'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from './RequestStep.styles'
+import { useServices } from 'hooks/useServices'
 
 export const requestPasswordResetInitialValues = {
   email: ''
@@ -20,12 +21,16 @@ export const RequestStep: React.FC = () => {
   const { title } = useStyles()
   const [requestReset] = useRequestPasswordReset()
   const { setEmail } = usePasswordResetStore()
+  const { sessionService } = useServices()
 
   const handleSubmit = async (
     values: RequestPasswordResetArgs
   ): Promise<void> => {
     setEmail(values.email)
-    await requestReset(values)
+    await requestReset({
+      ...values,
+      tenantId: sessionService?.get('tenantId')
+    })
   }
 
   return (

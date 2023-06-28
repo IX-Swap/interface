@@ -7,11 +7,9 @@ export const apiURL = {
 }
 
 export const homeURL = {
-  getAccessReports: '/dataroom/reports-and-newsletters/list',
   getNewsList: '/resources/news',
   getTopIssuers: '/issuance/top-issuers',
-  getTopCorporates: '/issuance/top-corporates',
-  getAtlasOneAccessReports: '/resources/reports'
+  getTopCorporates: '/issuance/top-corporates'
 }
 
 export const authorizerURL = {
@@ -37,6 +35,7 @@ export const identityURL = {
     submit: (id?: string) => `/identity/corporates/${id}/submit`,
     get: (userId?: string, identityId?: string) =>
       `/identity/corporates/${userId}/${identityId}`,
+    getByUserId: (userId?: string) => `/identity/corporate/${userId}`,
     validateData: '/identity/corporates/check',
     accreditation: {
       create: (corporateId?: string) =>
@@ -183,6 +182,7 @@ export const issuanceURL = {
   dso: {
     getAllPromoted: '/issuance/dso/promoted/list',
     getAllApproved: '/issuance/dso/approved/list',
+    getIssuerList: '/identity/corporate/issuerList',
     favorite: (dsoId?: string) => `/issuance/dso/favorites/${dsoId}`,
     topCountries: (dsoId?: string) =>
       `/issuance/dso/${dsoId}/charts/top-countries`,
@@ -273,10 +273,7 @@ export const documentsURL = {
     userId === undefined
       ? `/dataroom/${fileId}`
       : `/dataroom/${userId}/${fileId}`,
-  deleteBySuperUser: (fileId?: string) => `/dataroom/${fileId}`,
-  uploadAccessReport: '/dataroom/reports-and-newsletters',
-  getAccessReport: (fileId?: string) =>
-    `/dataroom/reports-and-newsletters/${fileId}`
+  deleteBySuperUser: (fileId?: string) => `/dataroom/${fileId}`
 }
 
 export const bannerURL = {

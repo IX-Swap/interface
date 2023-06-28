@@ -17,6 +17,10 @@ export interface UseTableWithPaginationReturnType<TData> {
   setRowsPerPage: (count: number) => void
   total: number
   refetch: () => void
+  sortOrder: string
+  sortField: string
+  setSortOrder: (sortOrder: string) => void
+  setSortField: (sortField: string) => void
 }
 
 interface UseTableWithPaginationParams {
@@ -46,6 +50,8 @@ export const useTableWithPagination = <TData>({
     defaultRowsPerPage !== undefined ? defaultRowsPerPage : 25
   )
   const filter = defaultFilter
+  const [sortOrder, setSortOrder] = useState('desc')
+  const [sortField, setSortField] = useState('createdAt')
 
   useEffect(() => {
     if (disabledUseEffect !== undefined && !disabledUseEffect) {
@@ -55,7 +61,14 @@ export const useTableWithPagination = <TData>({
   }, [filter, disabledUseEffect])
   const [totalPage, setTotalPage] = useState(0)
 
-  const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
+  const fetcher = async (
+    key: string,
+    p: number,
+    r: number,
+    f?: BaseFilter,
+    s?: string,
+    sBy?: string
+  ) => {
     const { isFavorite, isFavoriteCount }: Storage = localStorage
     if (
       isFavorite !== null &&
@@ -73,6 +86,8 @@ export const useTableWithPagination = <TData>({
     const payload: KeyValueMap<any> = {
       skip: p * r,
       limit: r,
+      sortOrder: s === 'asc' ? 1 : -1,
+      sortField: sBy,
       ...(filter ?? {})
     }
     const result =
@@ -91,9 +106,13 @@ export const useTableWithPagination = <TData>({
     isFetching,
     isLoading,
     isFetchingMore
-  } = useInfiniteQuery([queryKey, page, rowsPerPage, filter], fetcher, {
-    enabled: uri !== undefined && queryEnabled
-  })
+  } = useInfiniteQuery(
+    [queryKey, page, rowsPerPage, filter, sortOrder, sortField],
+    fetcher,
+    {
+      enabled: uri !== undefined && queryEnabled
+    }
+  )
 
   const data = useMemo(
     () => (_data !== undefined ? _data.filter(page => page !== undefined) : []),
@@ -164,6 +183,10 @@ export const useTableWithPagination = <TData>({
     rowsPerPage,
     status,
     isLoading: isActuallyLoading,
-    refetch
+    refetch,
+    sortOrder,
+    sortField,
+    setSortOrder,
+    setSortField
   }
 }

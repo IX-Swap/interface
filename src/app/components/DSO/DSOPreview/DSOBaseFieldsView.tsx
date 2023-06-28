@@ -77,7 +77,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
       value: dso?.completionDate
     },
     {
-      label: 'Release Date',
+      label: 'Free-to-Trade Date',
       value: dso?.releaseDate
     },
     {
@@ -85,7 +85,6 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
       value: dso?.uniqueIdentifierCode
     }
   ]
-
   return (
     <Paper className={container}>
       <Grid container className={grid} spacing={isMobile ? 3 : 6}>
@@ -113,7 +112,9 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                 {dso.tokenName} ({dso.tokenSymbol})
               </Typography>
               <Typography variant='h5' color={theme.palette.primary.main}>
-                {dso.corporate.companyLegalName}
+                {typeof dso?.corporate?.companyLegalName !== 'undefined'
+                  ? dso?.corporate?.companyLegalName
+                  : dso?.identity?.corporates[0]?.companyLegalName}
               </Typography>
             </Grid>
             <Grid

@@ -29,7 +29,8 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: 24,
-    height: 29
+    height: 29,
+    zIndex: 2
   },
   crumbs: {
     height: 24

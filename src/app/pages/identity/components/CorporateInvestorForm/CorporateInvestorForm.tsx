@@ -41,6 +41,7 @@ export const CorporateInvestorForm = ({
   const { isCorporateJourneyCompleted } = useOnboardingJourneys()
   const { data: corporateData, isLoading } = useAllCorporates({})
   const { location, replace } = useHistory()
+
   useEffect(() => {
     if (!isLoading) {
       if (
@@ -84,7 +85,8 @@ export const CorporateInvestorForm = ({
     <>
       <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
       <FormStepper
-        data={corporateData?.list[0]}
+        // data={corporateData?.list[0]}
+        data={data}
         createMutation={createMutation}
         editMutation={updateMutation}
         submitMutation={submitMutation}

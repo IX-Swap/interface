@@ -20,7 +20,7 @@ export const NotificationGoToItem = (props: NotificationGoToItemProps) => {
   }
 
   if (data.feature === AppFeature.Individuals) {
-    url = `/app/identity/${data.feature}/view`
+    url = `/app/profile/${data.feature}/view`
   }
 
   if (

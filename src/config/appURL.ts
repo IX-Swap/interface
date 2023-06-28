@@ -33,7 +33,7 @@ export const urlModule = {
 
 export const urlService = {
   accounts: `${AppService.Accounts}`,
-  identity: `${AppService.Identity}`,
+  profile: `${AppService.Identity}`,
   issuance: `${AppService.Issuance}`,
   issuanceDetails: `${AppService.IssuanceDetails}`,
   invest: `${AppService.Invest}`,
@@ -59,7 +59,6 @@ export const urlFeature = {
   withdrawalAddresses: `${AppFeature.WithdrawalAddresses}`,
   deployments: 'deployments',
   users: AppFeature.Users,
-  accessReports: 'access-reports',
   holdings: `${AppFeature.Holdings}`,
   market: `${AppFeature.Market}`,
   listings: `${AppFeature.Listings}`,

@@ -61,7 +61,13 @@ export const BaseFundStatusFilter = ({
       defaultValue='Funds on hold'
     >
       {({ value, onChange }) => (
-        <Box>
+        <Box
+          style={{
+            display: 'flex',
+            borderBottom: 'solid 1px #DBE2EC',
+            height: '60px'
+          }}
+        >
           {statusFilters.map((status, i) => (
             <StatusFilterItem
               key={i}
@@ -90,7 +96,13 @@ export const DeploymentStatusFilter = ({
       defaultValue=''
     >
       {({ value, onChange }) => (
-        <Box>
+        <Box
+          style={{
+            display: 'flex',
+            borderBottom: 'solid 1px #DBE2EC',
+            height: '60px'
+          }}
+        >
           {statusFilters.map((status, i) => (
             <StatusFilterItem
               key={i}
@@ -108,13 +120,29 @@ export const DeploymentStatusFilter = ({
 
 export const StatusFilter = () => {
   const category = useAuthorizerCategory()
+
   if (category === 'commitments') {
-    return <BaseFundStatusFilter statusFilters={fundStatusFilters} />
+    return (
+      <BaseFundStatusFilter statusFilters={[...fundStatusFilters].reverse()} />
+    )
   }
 
   if (category === 'token-deployment') {
-    return <DeploymentStatusFilter statusFilters={deploymentStatusFilter} />
+    return (
+      <DeploymentStatusFilter
+        statusFilters={[...deploymentStatusFilter].reverse()}
+      />
+    )
   }
+
+  if (
+    category === 'corporates' ||
+    category === 'individuals' ||
+    category === 'offerings'
+  ) {
+    return <BaseStatusFilter statusFilters={investorStatusFilter} />
+  }
+
   return <BaseStatusFilter statusFilters={[...allFilter, ...statusFilters]} />
 }
 
@@ -155,6 +183,16 @@ export const statusFilters: StatusFilterItemType[] = [
     icon: RejectedIcon,
     value: 'Rejected',
     title: 'Rejected'
+  }
+]
+
+export const investorStatusFilter: StatusFilterItemType[] = [
+  ...allFilter,
+  ...statusFilters,
+  {
+    icon: RejectedIcon,
+    value: 'Draft',
+    title: 'Draft'
   }
 ]
 

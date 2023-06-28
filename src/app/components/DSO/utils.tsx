@@ -135,11 +135,10 @@ export const transformDSOToFormValuesStep1 = (
       dividendYield: '',
       investmentPeriod: '',
       productSpecification: '',
-      isCampaign: false,
       decimalPlaces: 18
     } as any
   }
-
+  console.log(dso?.corporate, 'aaaccc')
   return {
     capitalStructure: dso.capitalStructure,
     logo: dso.logo,
@@ -166,7 +165,6 @@ export const transformDSOToFormValuesStep1 = (
     classification: dso?.classification ?? null,
     productType: dso?.productType ?? null,
     completionDate: dso.completionDate ?? null,
-    isCampaign: dso.isCampaign,
     decimalPlaces: dso.decimalPlaces
   }
 }
@@ -213,7 +211,7 @@ export const transformDSOToFormValues = (
       subscriptionDocument: undefined
     } as any
   }
-
+  console.log(sessionStorage.getItem('corporateId'), 'aaa')
   return {
     capitalStructure: dso.capitalStructure,
     totalFundraisingAmount: dso.totalFundraisingAmount,
@@ -235,7 +233,7 @@ export const transformDSOToFormValues = (
     tokenSymbol: dso.tokenSymbol,
     minimumInvestment: dso.minimumInvestment,
     issuerName: dso.issuerName,
-    corporate: dso.corporate?._id,
+    corporate: sessionStorage.getItem('corporateId'),
     investmentStructure: dso.investmentStructure,
     currency: getIdFromObj(dso.currency),
     network: getIdFromObj(dso.network),
@@ -255,6 +253,7 @@ export const transformDSOToFormValues = (
 }
 
 export const getDSOInformationFormValues = (data: any) => {
+  console.log(data?.corporate, 'aaabbb')
   return {
     capitalStructure: data.capitalStructure,
     logo: data.logo,
@@ -264,7 +263,6 @@ export const getDSOInformationFormValues = (data: any) => {
     corporate: data.corporate,
     currency: getIdFromObj({ _id: data.currency }),
     uniqueIdentifierCode: data.uniqueIdentifierCode,
-    isCampaign: data.isCampaign,
     network: data.network,
     dividendYield: data.dividendYield,
     grossIRR: data.grossIRR,

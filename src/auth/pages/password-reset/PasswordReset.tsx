@@ -8,9 +8,12 @@ import {
 import { PasswordResetStep } from 'auth/context/password-reset/types'
 import { observer } from 'mobx-react'
 import { useSearchQuery } from 'hooks/useSearchQuery'
+import { useTenant } from 'auth/hooks/useTenant'
 
 export const PasswordReset: React.FC = observer(() => {
   const { currentStep, setToken } = usePasswordResetStore()
+
+  useTenant()
   const query = useSearchQuery()
   let element
 

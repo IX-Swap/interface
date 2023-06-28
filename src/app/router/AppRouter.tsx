@@ -2,7 +2,6 @@ import React from 'react'
 import { AppRoute as AppPath } from 'app/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { Switch } from 'react-router-dom'
-import { EducationCentreRoot } from 'app/pages/educationCentre/EducationCentreRoot'
 import { IssuanceRoot } from 'app/pages/issuance/IssuanceRoot'
 import { SecurityRoot } from 'app/pages/security/SecurityRoot'
 import { NotificationsRoot } from 'app/pages/notifications/NotificationsRoot'
@@ -20,12 +19,14 @@ import {
   useIsIssuer
 } from 'helpers/acl'
 import { HomeRoot } from 'app/pages/home/HomeRoot'
+import { ClientRouter } from 'app/pages/admin/router/ClietRouter'
 
 export const AppRouter = () => {
   const isAuthorizer = useIsAuthorizer()
   const isAdmin = useIsAdmin()
   const isIssuer = useIsIssuer()
   const isFundManager = useIsFundManager()
+  const isSuperUser = isAuthorizer || isAdmin
 
   return (
     <Switch>
@@ -37,11 +38,7 @@ export const AppRouter = () => {
         <AccountsRoot />
       </AppRoute>
 
-      <AppRoute path={AppPath.educationCentre}>
-        <EducationCentreRoot />
-      </AppRoute>
-
-      <AppRoute breadcrumb='Identity' path={AppPath.identity}>
+      <AppRoute breadcrumb='Profile' path={AppPath.identity}>
         <IdentityRoot />
       </AppRoute>
 
@@ -57,11 +54,15 @@ export const AppRouter = () => {
         <NotificationsRoot />
       </AppRoute>
 
-      {isIssuer && (
+      <AppRoute breadcrumb='Edit Client Space' path={AppPath.editClientSpace}>
+        <ClientRouter />
+      </AppRoute>
+
+      {isIssuer || isSuperUser ? (
         <AppRoute breadcrumb='Issuance' path={AppPath.issuance}>
           <IssuanceRoot />
         </AppRoute>
-      )}
+      ) : null}
 
       {isAdmin && (
         <AppRoute breadcrumb='Admin' path={AppPath.admin}>

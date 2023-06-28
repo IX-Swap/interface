@@ -5,14 +5,15 @@ import DesktopDateTimePicker, {
 import MobileDateTimePicker, {
   MobileDateTimePickerProps
 } from '@mui/lab/MobileDateTimePicker'
-import { FormHelperText } from '@mui/material'
+import { FormHelperText, InputAdornment } from '@mui/material'
 import { useFormError } from 'hooks/useFormError'
 import React from 'react'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { DateTimeComponent } from './_DateTimePickerComponent'
+import { DateRange as CalendarIcon } from '@mui/icons-material'
 
 export const DateTimePickerComponent = (
-  props: MobileDateTimePickerProps & { error: boolean }
+  props: MobileDateTimePickerProps & { error: boolean; placeholder: string }
 ) => {
   return (
     <MobileDateTimePicker
@@ -23,11 +24,18 @@ export const DateTimePickerComponent = (
         <TextInput
           variant='outlined'
           fullWidth
-          placeholder='mm/dd/yyyy'
+          placeholder={props?.placeholder ?? 'mm/dd/yyyy'}
           label='Date'
           {...inputProps}
           // Override error from inputProps to show red outline error
           error={props.error}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <CalendarIcon color='disabled' />
+              </InputAdornment>
+            )
+          }}
         />
       )}
     />

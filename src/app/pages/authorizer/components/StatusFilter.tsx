@@ -1,5 +1,4 @@
 import React from 'react'
-import { StatusFilterItem } from 'app/pages/authorizer/components/StatusFilterItem'
 import {
   Assignment as AllIcon,
   AssignmentTurnedIn as ApprovedIcon,
@@ -10,12 +9,18 @@ import {
   SwapHoriz as TransferredIcon,
   SvgIconComponent
 } from '@mui/icons-material'
-import { AuthorizableStatus, DeploymentStatus, FundStatus } from 'types/util'
+import {
+  AuthorizableStatus,
+  DeploymentStatus,
+  FundStatus,
+  TradingStatus
+} from 'types/util'
 import { Box } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { BackhandIcon } from 'app/pages/authorizer/components/BackHandIcon'
 import { useHistory } from 'react-router-dom'
+import { StatusFilterItem } from './upgrade/StatusFilterItem'
 export interface BaseStatusFilterProps {
   statusFilters: StatusFilterItemType[]
 }
@@ -25,7 +30,8 @@ export const BaseStatusFilter = ({ statusFilters }: BaseStatusFilterProps) => {
   return (
     <>
       {location?.pathname?.includes('individuals') ||
-      location?.pathname?.includes('corporates') ? (
+      location?.pathname?.includes('corporates') ||
+      location?.pathname?.includes('trading') ? (
         <SearchQueryFilter<'authorizationStatus'>
           name='authorizationStatus'
           defaultValue=''
@@ -41,10 +47,10 @@ export const BaseStatusFilter = ({ statusFilters }: BaseStatusFilterProps) => {
               {statusFilters?.reverse()?.map((status, i) => (
                 <StatusFilterItem
                   key={i}
-                  title={status.title}
-                  isSelected={status.value === value}
+                  title={status?.title}
+                  isSelected={status?.value === value}
                   onClick={() => onChange(status.value)}
-                  icon={status.icon}
+                  icon={status?.icon}
                 />
               ))}
             </Box>
@@ -132,14 +138,44 @@ export const DeploymentStatusFilter = ({
   )
 }
 
+export interface TradingStatusFilterProps {
+  statusFilters: TradingStatusFilterItemType[]
+}
+
+export const TradingStatusFilter = ({
+  statusFilters
+}: TradingStatusFilterProps) => {
+  return (
+    <SearchQueryFilter<'tradingStatus'> name='tradingStatus' defaultValue=''>
+      {({ value, onChange }) => (
+        <Box style={{ display: 'flex', marginBottom: '10px' }}>
+          {statusFilters?.map((status, i) => (
+            <StatusFilterItem
+              key={i}
+              title={status?.title}
+              isSelected={status?.value === value}
+              onClick={() => onChange(status?.value)}
+              icon={status.icon}
+            />
+          ))}
+        </Box>
+      )}
+    </SearchQueryFilter>
+  )
+}
+
 export const StatusFilter = () => {
   const category = useAuthorizerCategory()
+  console.log(category, 'catttt')
   if (category === 'commitments') {
     return <BaseFundStatusFilter statusFilters={fundStatusFilters} />
   }
 
   if (category === 'token-deployment') {
     return <DeploymentStatusFilter statusFilters={deploymentStatusFilter} />
+  }
+  if (category === 'trading') {
+    return <TradingStatusFilter statusFilters={tradingStatusFilter} />
   }
   return <BaseStatusFilter statusFilters={[...statusFilters, ...allFilter]} />
 }
@@ -160,6 +196,12 @@ interface DeploymentStatusFilterItemType {
   icon: SvgIconComponent
   title: string
   value: DeploymentStatus
+}
+
+interface TradingStatusFilterItemType {
+  icon: SvgIconComponent
+  title: string
+  value: TradingStatus
 }
 
 export const allFilter: StatusFilterItemType[] = [
@@ -229,4 +271,23 @@ export const deploymentStatusFilter: DeploymentStatusFilterItemType[] = [
     title: 'Pending'
   },
   { icon: AllIcon, value: '', title: 'All' }
+]
+
+export const tradingStatusFilter: TradingStatusFilterItemType[] = [
+  { icon: UnauthorizedIcon, value: '', title: 'All' },
+  {
+    icon: UnauthorizedIcon,
+    value: 'Pending',
+    title: 'Pending Approval'
+  },
+  {
+    icon: UnauthorizedIcon,
+    value: 'Matched',
+    title: 'Matched'
+  },
+  {
+    icon: UnauthorizedIcon,
+    value: 'Filled',
+    title: 'Filled'
+  }
 ]

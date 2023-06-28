@@ -2,16 +2,13 @@ import React from 'react'
 import { useStyles } from 'app/pages/identity/components/DataPreview/DataPreview.styles'
 import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar.svg'
 import { Avatar } from 'components/Avatar'
-// import { Status } from 'ui/Status/Status'
 import { Box, Typography, Grid, Container } from '@mui/material'
-// import { FieldsDisplay } from 'app/pages/identity/components/DataPreview/FieldDisplay'
 import { ReactComponent as ApprovedBadge } from 'assets/icons/kyc-accreditation/approved-badge.svg'
 import { ReactComponent as AccreditedBadge } from 'assets/icons/kyc-accreditation/accredited-badge.svg'
 
 export interface DataPreviewProps {
   avatar?: string
   userId?: string
-  //   fields?: Array<{ key: string; value?: string }>
   name?: string
   isIndividual: boolean
   kycStatus: string
@@ -23,7 +20,6 @@ export interface DataPreviewProps {
 export const DataPreview = ({
   avatar,
   userId,
-  //   fields,
   name,
   isIndividual,
   kycStatus,
@@ -42,19 +38,17 @@ export const DataPreview = ({
     dataBox,
     dataLabel,
     dataValue,
-    // approveButton,
     emptyBox,
     whiteBackground
   } = classes
 
   const userIdentity = isIndividual ? ' Individual ' : ' Corporate '
-  //   const typeStatus = kycStatus.toLowerCase()
   const identityLabel =
     identityType === 'issuer' || identityType === 'investor'
       ? identityType[0].toUpperCase() + identityType.slice(1)
       : 'Investor'
 
-  const InvestorRole = () => {
+  const investorRole = () => {
     if (typeof roles !== 'undefined') {
       const userRoles = roles.split(',')
 
@@ -73,6 +67,33 @@ export const DataPreview = ({
       if (userRoles.includes('retail')) {
         return 'Retail'
       }
+    }
+
+    return '-'
+  }
+
+  const userRole = () => {
+    if (typeof roles !== 'undefined') {
+      const parsedRoles = ['User']
+      const userRoles = roles.split(',')
+
+      if (userRoles.includes('tenantOwner')) {
+        parsedRoles.unshift('Client')
+      }
+
+      if (userRoles.includes('issuer')) {
+        parsedRoles.unshift('Issuer')
+      }
+
+      if (userRoles.includes('authorizer')) {
+        parsedRoles.unshift('Authorizer')
+      }
+
+      if (userRoles.includes('admin')) {
+        parsedRoles.unshift('Admin')
+      }
+
+      return parsedRoles.join(', ')
     }
 
     return '-'
@@ -123,18 +144,26 @@ export const DataPreview = ({
                   variant='subtitle1'
                   className={`${dataLabel} ${dataValue}`}
                 >
-                  <InvestorRole />
+                  {investorRole()}
+                </Typography>
+              </Box>
+
+              <Box className={dataBox}>
+                <Typography variant='subtitle1' className={dataLabel}>
+                  User Role
+                </Typography>
+                <Typography
+                  variant='subtitle1'
+                  className={`${dataLabel} ${dataValue}`}
+                >
+                  {userRole()}
                 </Typography>
               </Box>
             </Box>
           </Grid>
-          {/* <Grid item className={approveButton}>
-            <Status label={status} type={typeStatus} />
-          </Grid> */}
         </Grid>
       </Container>
       <Box className={emptyBox} />
-      {/* <FieldsDisplay fields={fields} /> */}
       <div className={whiteBackground}></div>
     </>
   )

@@ -13,12 +13,18 @@ export interface DescriptionProps {
   enable2Fa: boolean | undefined
 }
 
-export const Description = ({ enable2Fa }: DescriptionProps) => {
+export const Description = ({ enable2Fa = false }: DescriptionProps) => {
   const classes = useStyles({ enable2Fa: enable2Fa })
 
   return (
-    <Typography variant='body1' className={classes.description}>
-      {getDescription(enable2Fa)}
-    </Typography>
+    <>
+      <Typography variant={'h5'} className={classes.description} mb={2}>
+        {enable2Fa ? 'Account Protected' : 'Protect Your Account'}
+      </Typography>
+
+      <Typography variant='body1' className={classes.description}>
+        {getDescription(enable2Fa)}
+      </Typography>
+    </>
   )
 }

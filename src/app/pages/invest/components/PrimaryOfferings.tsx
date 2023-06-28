@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { Button, Grid, Typography } from '@mui/material'
 import { useStyles } from 'app/pages/invest/components/styles/OTCMarket.style'
@@ -71,9 +71,9 @@ export const PrimaryOfferings = ({
     defaultRowsPerPage: 6,
     disabledUseEffect: true
   })
-  useEffect(() => {
-    refetch()
-  }, [refetch])
+  //   useEffect(() => {
+  //     refetch()
+  //   }, [refetch])
   const handleChangePage = (_: any, newPage: number) => {
     setPage(newPage - 1)
   }

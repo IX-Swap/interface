@@ -1,38 +1,31 @@
 import React, { Fragment } from 'react'
-import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
+import { STOInformation } from 'app/components/DSO/components/fields/STOInformation'
 import { DSODataroom } from 'app/components/DSO/components/DSODataroom'
 import { DSOInformationProfile } from 'app/components/DSO/components/DSOInformationProfile'
-import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
+import { Pricing } from 'app/components/DSO/components/fields/Pricing'
 import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
-import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
+import { OfferingTerms } from 'app/components/DSO/components/fields/OfferingTerms'
 import { DSOFormSection } from 'app/components/DSO/DSOScrollGuide'
 import { VSpacer } from 'components/VSpacer'
 import { Element } from 'react-scroll'
 import { DSOFAQs } from 'app/components/DSO/components/DSOFAQs'
 import { DSOVideoLinks } from 'app/components/DSO/components/DSOVideoLinks'
 
-export interface DSOFormFieldsProps {
-  isNew: boolean
-  isLive: boolean
-}
-
-export const DSOFormFields = (props: DSOFormFieldsProps) => {
-  const { isNew, isLive } = props
-
+export const DSOFormFields = () => {
   return (
     <Fragment>
       <Element name={DSOFormSection['STO Information']}>
-        <DSOBaseFields isNew={isNew} isLive={isLive} />
+        <STOInformation />
       </Element>
 
       <Element name={DSOFormSection.Pricing}>
         <VSpacer size='large' />
-        <DSOPricing />
+        <Pricing />
       </Element>
 
       <Element name={DSOFormSection['Offering Terms']}>
         <VSpacer size='large' />
-        <DSOTerms />
+        <OfferingTerms />
       </Element>
 
       <Element name={DSOFormSection.Information}>

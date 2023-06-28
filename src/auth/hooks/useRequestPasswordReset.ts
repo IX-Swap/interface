@@ -11,7 +11,7 @@ export const useRequestPasswordReset = () => {
   const { replace } = useHistory()
   const url = authURL.resetPassword
   const mutateFn = async (args: RequestPasswordResetArgs) => {
-    return await apiService.post<{ email: string }>(url, args)
+    return await apiService.post<{ email: string; tenantId: string }>(url, args)
   }
 
   return useMutation(mutateFn, {

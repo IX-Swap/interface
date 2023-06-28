@@ -169,7 +169,6 @@ export const baseDSOFormValues: DSOBaseFormValues = {
   currency: '5f732c5b8a568b50914d8373',
   corporate: '5f898a64aa141c6d0d358ce1',
   capitalStructure: 'Good',
-  isCampaign: true,
   decimalPlaces: 18
 }
 
@@ -195,7 +194,6 @@ export const DSOInformation: DSOBaseFormValues = {
   currency: '5f732c5b8a568b50914d8373',
   corporate: '5f898a64aa141c6d0d358ce1',
   capitalStructure: 'Good',
-  isCampaign: true,
   decimalPlaces: 18,
   step: 1
 }

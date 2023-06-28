@@ -26,23 +26,36 @@ export const Actions = forwardRef(({ user }: ActionsProps, ref: any) => {
     }
   }
 
+  const newRoles = roles.filter((role: string) => {
+    return (
+      role !== 'retail' &&
+      role !== 'accredited' &&
+      role !== 'expert' &&
+      role !== 'institutional'
+    )
+  })
   return (
     <>
       <DialogConfirmRoleChange
         open={open}
         handleClose={handleClose}
         user={user}
-        newRole={roles.join(',')}
+        newRole={roles
+          .map((x: string) => (x === 'tenantOwner' ? 'client' : x))
+          .join(', ')}
         handleConfirm={handleConfirm}
       />
       <FormControl className={classes.formControl}>
         <RoleSelect
-          value={roles}
+          investorIdentity={user.accountType}
+          value={newRoles}
+          verificationStatus={user?.verified}
           onClose={onClose}
           onChange={(ev: SelectChangeEvent<unknown>) =>
-            handleRoleChange(ev.target.value as string[])
+            handleRoleChange(ev.target.value as string[], 'userRole' as string)
           }
           variant='outlined'
+          roles={[]}
         />
       </FormControl>
     </>

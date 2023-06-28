@@ -15,12 +15,6 @@ export interface BlockchainNetwork {
   reserveBalance?: string
 }
 
-export interface BlockchainSettings {
-  networks: BlockchainNetwork[]
-  metaDataFields: MetaDataField[] | null
-  decimal: number
-}
-
 export enum BlockchainNetworks {
   ETH = 'Ethereum',
   XTZ = 'Tezos',
