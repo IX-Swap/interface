@@ -118,6 +118,7 @@ export const transformDSOToFormValuesStep1 = (
       network: '',
       corporate: '',
       logo: undefined,
+      coverImg: undefined,
       issuerName: '',
       uniqueIdentifierCode: '',
       minimumInvestment: '',
@@ -142,6 +143,7 @@ export const transformDSOToFormValuesStep1 = (
   return {
     capitalStructure: dso.capitalStructure,
     logo: dso.logo,
+    coverImg: dso.coverImg ?? '',
     tokenName: dso.tokenName,
     tokenSymbol: dso.tokenSymbol,
     issuerName: dso.issuerName,
@@ -208,7 +210,8 @@ export const transformDSOToFormValues = (
       classification: '',
       productType: '',
       completionDate: '',
-      subscriptionDocument: undefined
+      subscriptionDocument: undefined,
+      coverImg: undefined
     } as any
   }
   console.log(sessionStorage.getItem('corporateId'), 'aaa')
@@ -248,7 +251,8 @@ export const transformDSOToFormValues = (
     videos: dso.videos.map(({ _id, ...video }) => video),
     uniqueIdentifierCode: dso.uniqueIdentifierCode,
     decimalPlaces: dso.decimalPlaces,
-    step: dso.step
+    step: dso.step,
+    coverImg: dso.coverImg
   }
 }
 
@@ -257,6 +261,7 @@ export const getDSOInformationFormValues = (data: any) => {
   return {
     capitalStructure: data.capitalStructure,
     logo: data.logo,
+    coverImg: data.coverImg,
     tokenName: data.tokenName,
     tokenSymbol: data.tokenSymbol,
     issuerName: data.issuerName,
