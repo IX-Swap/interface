@@ -157,6 +157,7 @@ export interface DSOInsight {
 }
 
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
+  investable: boolean
   expectedReturn: number
   promoted: boolean
   disabled: boolean
