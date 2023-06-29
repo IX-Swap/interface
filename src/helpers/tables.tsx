@@ -111,9 +111,12 @@ export const ViewButton = ({
 
 export const renderRiskReport = (val: object) => {
   if (typeof val !== 'undefined' && 'customerId' in val) {
-    const href = `https://investaxdigital.artemisuat.cynopsis.co/app/customers/${
-      val.customerId as string
-    }`
+    const cynopsisUrl =
+      process.env.CYNOPSIS_URL ??
+      'https://investaxdigital.artemisuat.cynopsis.co'
+    const customerId = val.customerId as string
+    const href = `${cynopsisUrl}/app/customers/${customerId}`
+
     return (
       <ViewButton
         href={href}
