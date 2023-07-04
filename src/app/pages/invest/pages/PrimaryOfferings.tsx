@@ -1,10 +1,10 @@
 import { Box, Grid } from '@mui/material'
-import { BackLink } from 'app/components/BackLink/BackLink'
+// import { BackLink } from 'app/components/BackLink/BackLink'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { PrimaryOfferings as PrimaryOfferingsList } from 'app/pages/invest/components/PrimaryOfferings'
 import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
-import { InvestRoute } from '../router/config'
+// import { InvestRoute } from '../router/config'
 
 export const PrimaryOfferings = () => {
   return (
@@ -13,9 +13,9 @@ export const PrimaryOfferings = () => {
         <Grid item xs={12}>
           <PageHeader
             title='Primary Offerings'
-            endComponent={
-              <BackLink to={InvestRoute.overview} title='Back to Overview' />
-            }
+            // endComponent={
+            //   <BackLink to={InvestRoute.overview} title='Back to Overview' />
+            // }
           />
         </Grid>
         <Grid item xs={12}>

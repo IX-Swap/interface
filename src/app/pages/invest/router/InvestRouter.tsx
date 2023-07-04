@@ -9,7 +9,8 @@ import React from 'react'
 import { Redirect, Switch } from 'react-router-dom'
 import { RootContainer } from 'ui/RootContainer'
 import { Trading } from '../pages/Trading'
-import { OverviewRouter } from './OverviewRouter'
+// import { OverviewRouter } from './OverviewRouter'
+import { PrimaryOfferings } from 'app/pages/invest/pages/PrimaryOfferings'
 
 export const InvestRouter = () => {
   return (
@@ -38,8 +39,14 @@ export const InvestRouter = () => {
           <InvestLanding />
         </RootContainer>
       </AppRoute>
-      <AppRoute path={InvestRoute.overview} breadcrumb='Overview'>
+      {/* <AppRoute path={InvestRoute.overview} breadcrumb='Overview'>
         <OverviewRouter />
+      </AppRoute> */}
+      <AppRoute
+        breadcrumb='Primary Offerings'
+        path={InvestRoute.primaryOfferings}
+      >
+        <PrimaryOfferings />
       </AppRoute>
       <AppRoute
         exact
