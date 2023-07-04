@@ -33,7 +33,8 @@ export const getPersonalInfoFormValues = (
       postalCode: data?.address?.postalCode,
       country,
       city: data?.address?.city
-    }
+    },
+    ...getDocumentsFormValues(data)
   }
 }
 
@@ -110,7 +111,7 @@ export const getInvestorDeclarationFormValues = (
 
 export const getDocumentsFormValues = (
   data: IndividualIdentity
-): IdentityDocumentsFormValues => {
+): Partial<IdentityDocumentsFormValues> => {
   if (data === undefined || isEmpty(data)) {
     return {
       evidenceOfAccreditation: [],

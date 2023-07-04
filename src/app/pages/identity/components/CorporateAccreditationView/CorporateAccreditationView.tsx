@@ -11,7 +11,7 @@ import { isNonEmptyArray } from 'helpers/arrays'
 export enum CorporateAccreditationSections {
   'Investor Role Declaration' = 'investor-role-declaration',
   'Opt-In Requirement' = 'opt-in-requirement',
-  'Corporate Documents' = 'corporate-documents'
+  'Accreditation Documents' = 'accreditation-documents'
 }
 
 export interface CorporateAccreditationViewProps {
@@ -48,7 +48,7 @@ export const CorporateAccreditationView = ({
           </Grid>
           <Grid item>
             <Element
-              name={CorporateAccreditationSections['Corporate Documents']}
+              name={CorporateAccreditationSections['Accreditation Documents']}
             >
               <DocumentsView
                 data={data.documents}

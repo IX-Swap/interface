@@ -6,6 +6,7 @@ import { AuthorizedPersonnelFields } from 'app/pages/identity/components/Corpora
 import { OwnershipStructureFields } from 'app/pages/identity/components/CorporateInformationForm/OwnershipStructureFields'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
+import { CorporateDocuments } from './CorporateDocuments/CorporateDocuments'
 
 export interface CorporateInformationFormProps {
   type?: CorporateType
@@ -20,6 +21,9 @@ export const CorporateInformationForm = ({
         <FieldContainer>
           <InformationFields type={type} />
         </FieldContainer>
+      </Grid>
+      <Grid item xs={12}>
+        <CorporateDocuments />
       </Grid>
       <Grid item xs={12}>
         <FieldContainer>

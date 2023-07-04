@@ -15,6 +15,9 @@ export const getCorporateInfoRequestPayload = (
     legalEntityStatus,
     logo,
     representatives,
+    corporateDocuments,
+    evidenceOfAccreditation,
+    institutionalInvestorDocuments,
     ...rest
   } = data
   const customLegalEntityStatus =
@@ -25,9 +28,21 @@ export const getCorporateInfoRequestPayload = (
     documents: rep.documents?.map(doc => ({ ...doc.value }))
   }))
 
+  const documents = Object.values(data).reduce<Array<{ value: DataroomFile }>>(
+    (result, docs) => {
+      if (Array.isArray(docs)) {
+        return [...result, ...docs.map(document => document.value?._id)]
+      }
+
+      return result
+    },
+    []
+  )
+
   return {
     ...rest,
     logo: typeof logo === 'string' ? logo : (logo as DataroomFile)?._id ?? null,
+    documents: documents.filter(doc => doc !== undefined),
     representatives: representativesTransformed,
     legalEntityStatus: customLegalEntityStatus
       ? otherLegalEntityStatus
