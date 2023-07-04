@@ -16,7 +16,7 @@ import {
   authorizerLandingLinks,
   AuthorizerRoute
 } from 'app/pages/authorizer/router/config'
-import { AppRoute as AppPath, AppRoute } from 'app/router/config'
+import { AppRoute as AppPath } from 'app/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
 import { investLandingLinks, InvestRoute } from 'app/pages/invest/router/config'
@@ -54,10 +54,10 @@ export const useAppNavigation = () => {
   }
 
   const links: NavigationMenuItem[] = [
-    {
-      label: 'Home',
-      link: AppRoute.home
-    },
+    // {
+    //   label: 'Home',
+    //   link: AppRoute.home
+    // },
     // {
     //   label: 'Accounts',
     //   link: AccountsRoute.landing,
@@ -65,7 +65,7 @@ export const useAppNavigation = () => {
     // },
     {
       label: 'Invest',
-      link: InvestRoute.overview,
+      link: InvestRoute.primaryOfferings,
       icon: InvestIcon
     }
   ]
