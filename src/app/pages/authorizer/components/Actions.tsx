@@ -170,7 +170,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
                     !['Submitted', 'PENDING', 'Rejected'].includes(statusField)
                   }
                   hideRejection={
-                    !['Submitted', 'PENDING', 'Approved'].includes(statusField)
+                    !['Submitted', 'PENDING'].includes(statusField)
                   }
                   approve={approve}
                   reject={reject}
