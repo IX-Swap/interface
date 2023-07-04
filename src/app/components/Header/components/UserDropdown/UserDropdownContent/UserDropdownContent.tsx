@@ -7,13 +7,13 @@ import { useIsAdmin, useIsClient, useIsAuthorizer } from 'helpers/acl'
 import {
   AccountCircleOutlined,
   PowerSettingsNewOutlined,
-  SettingsOutlined,
-  Payment,
-  Token,
-  ReceiptLong,
-  AccountBalanceWallet,
-  SummarizeOutlined,
-  CurrencyExchangeRounded
+  SettingsOutlined
+  //   Payment,
+  //   Token,
+  //   ReceiptLong,
+  //   AccountBalanceWallet,
+  //   SummarizeOutlined,
+  //   CurrencyExchangeRounded
 } from '@mui/icons-material'
 import { Box, List } from '@mui/material'
 import { UserDropdownItem } from 'app/components/Header/components/UserDropdown/UserDropdownItem/UserDropdownItem'
@@ -42,16 +42,15 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
             link={IdentityRoute.list}
             onClose={handleClose}
           />
-          <Box className={classes.border} />
           {isAdmin && (
             <>
+              <Box className={classes.border} />
               <UserDropdownItem
                 icon={AccountCircleOutlined}
                 label='Admin'
                 link={AdminRoute.landing}
                 onClose={handleClose}
               />
-              <Box className={classes.border} />
             </>
           )}
           {isAdmin || isClient || isAuthorizer ? (
@@ -69,6 +68,12 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
           )}
           <Box className={classes.border} />
           <UserDropdownItem
+            icon={AccountCircleOutlined}
+            label='Accounts'
+            link={AccountsRoute.landing}
+            onClose={handleClose}
+          />
+          {/* <UserDropdownItem
             icon={Payment}
             label='Cash'
             link={AccountsRoute.cash}
@@ -115,7 +120,7 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
             label='My Exchanges Holdings'
             link={AccountsRoute.myHoldings}
             onClose={handleClose}
-          />
+          /> */}
           <Box className={classes.border} />
           <UserDropdownItem
             icon={SettingsOutlined}
