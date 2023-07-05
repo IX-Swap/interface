@@ -8,7 +8,9 @@ import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { text19, text30, text40 } from 'components/LaunchpadMisc/typography'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
 import { RowEnd } from 'components/Row'
-import { StaticTimePicker } from '@material-ui/pickers'
+import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers'
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import useStateRef from 'react-usestateref'
 
 type DateRange = moment.Moment[]
 type DateRangeValue = Date[]
@@ -32,13 +34,61 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
   const [range, setRange] = React.useState<DateRange>([])
+  const [selectedRange, setSelectedRange, selectedRangeRef] = useStateRef<DateRange>([])
   const [showPicker, setShowPicker] = React.useState(false)
-  const [showTimePicker, setShowTimePicker] = React.useState(false)
-  const [selectedDate, setSelectedDate] = useState<Moment>(moment(null))
-  const [time, setTime] = useState<Moment | null>(null)
+  const [startTime, setStartTime, startTimeRef] = useStateRef<Moment | null>()
+  const [endTime, setEndTime, endTimeRef] = useStateRef<Moment | null | undefined>()
 
   const [currentMonth, setCurrentMonth] = React.useState(moment())
   const nextMonth = React.useMemo(() => currentMonth.clone().month(currentMonth.get('month') + 1), [currentMonth])
+
+  const copyTime = (date: moment.Moment, time: moment.Moment): moment.Moment => {
+    return date.set({
+      hour: time.get('hour'),
+      minute: time.get('minute'),
+      second: time.get('second'),
+    })
+  }
+
+  const callPropsOnChange = () => {
+    if (props.field && props.setter && selectedRangeRef.current) {
+      props.setter(
+        props.field,
+        props.mode === 'single' ? selectedRangeRef.current[0].toDate() : selectedRangeRef.current.map((x) => x.toDate())
+      )
+    }
+
+    if (props.onChange) {
+      props.onChange(selectedRangeRef.current.map((x) => x.toDate()))
+    }
+  }
+
+  const onStartTimeChanged = (value: moment.Moment | null) => {
+    if (value) {
+      setStartTime(value)
+      if (props.mode === 'single') {
+        setSelectedRange([copyTime(selectedRangeRef.current[0], value)])
+      } else {
+        setSelectedRange([copyTime(selectedRangeRef.current[0], value), selectedRangeRef.current[1]])
+      }
+
+      callPropsOnChange()
+    }
+  }
+
+  const onEndTimeChanged = (value: moment.Moment | null) => {
+    if (value) {
+      setEndTime(value)
+      if (props.mode === 'range') {
+        if (range.length === 1) {
+          selectedRangeRef.current[1] = selectedRangeRef.current[0].clone()
+        }
+        setSelectedRange([selectedRangeRef.current[0], copyTime(selectedRangeRef.current[1], value)])
+      }
+
+      callPropsOnChange()
+    }
+  }
 
   const toggle = React.useCallback(() => {
     if (!props.disabled) {
@@ -48,46 +98,34 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   const onSelect = React.useCallback(
     (value: moment.Moment) => {
+      if (props.mode === 'single') {
+        if (startTimeRef.current) {
+          value = copyTime(value, startTimeRef.current)
+        }
+        setSelectedRange([value])
+      } else if (range.length === 1) {
+        let first = range[0]
+        if (first.isBefore(value)) {
+          if (startTimeRef.current && endTimeRef.current) {
+            first = copyTime(first, startTimeRef.current)
+            value = copyTime(value, endTimeRef.current)
+          }
+          setSelectedRange([first, value])
+        } else {
+          if (startTimeRef.current && endTimeRef.current) {
+            value = copyTime(value, startTimeRef.current)
+            first = copyTime(first, endTimeRef.current)
+          }
+          setSelectedRange([value, first])
+        }
+      } else {
+        setSelectedRange([value])
+      }
 
-      setSelectedDate(value)
-      setShowTimePicker(true)
+      callPropsOnChange()
     },
-    [range]
+    [range, selectedRange, startTime, endTime]
   )
-
-  const onTimeChanged = (date: Moment | null) => {
-    setTime(date)
-  }
-
-  const onTimeClose = () => {
-    const value = selectedDate.set({
-      hour: time?.get('hour'),
-      minute: time?.get('minute'),
-      second: time?.get('second')
-    })
-    let selectedRange: DateRange
-
-    if (props.mode === 'single') {
-      selectedRange = [value]
-    } else if (range.length === 1) {
-      const first = range[0]
-      selectedRange = first.isBefore(value) ? [first, value] : [value, first]
-    } else {
-      selectedRange = [value]
-    }
-
-    if (props.field && props.setter) {
-      props.setter(
-        props.field,
-        props.mode === 'single' ? selectedRange[0].toDate() : selectedRange.map((x) => x.toDate())
-      )
-    }
-
-    if (props.onChange) {
-      props.onChange(selectedRange.map((x) => x.toDate()))
-    }
-    setShowTimePicker(false)
-  }
 
   const moveMonthBack = React.useCallback(
     () => setCurrentMonth((state) => state.clone().month(state.get('month') - 1)),
@@ -101,7 +139,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
     const dateFormat = props.dateFormat || 'MM/DD/YYYY hh:mm'
     const hasEmptyState = range.length === 0 || range.some((date) => !date.isValid())
     if (hasEmptyState) {
-      return `mm/dd/yyyy  hh:mm ${props.mode === 'range' ? ` - ${dateFormat.toLowerCase()}` : ''}`
+      return `mm/dd/yyyy hh:mm ${props.mode === 'range' ? ` - ${dateFormat.toLowerCase()}` : ''}`
     }
     return range.map((date) => date.format(dateFormat)).join(' - ')
   }, [range, props.mode, props.dateFormat])
@@ -128,68 +166,69 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
         <FieldValue isPlaceholder={formattedDate.startsWith('m')}>{formattedDate}</FieldValue>
       </FieldContainer>
-
       <IssuanceDialog show={showPicker} onClose={toggle}>
-        <DatePicker>
-          <DatePickerHeader area="current-header">
-            <ChangeMonthButton onClick={moveMonthBack}>
-              <ChevronLeft color={theme.launchpad.colors.primary} />
-            </ChangeMonthButton>
-            <DatePickerTitle>{currentMonth.format('MMMM YYYY')}</DatePickerTitle>
-          </DatePickerHeader>
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <DatePicker>
+            <DatePickerHeader area="current-header">
+              <ChangeMonthButton onClick={moveMonthBack}>
+                <ChevronLeft color={theme.launchpad.colors.primary} />
+              </ChangeMonthButton>
+              <DatePickerTitle>{currentMonth.format('MMMM YYYY')}</DatePickerTitle>
+            </DatePickerHeader>
 
-          <CalendarPicker
-            current={currentMonth}
-            selectedRange={range}
-            onSelect={onSelect}
-            {...(props.minDate && { minDate: props.minDate })}
-            {...(props.maxDate && { maxDate: props.maxDate })}
-          />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <CalendarPicker
+                current={currentMonth}
+                selectedRange={range}
+                onSelect={onSelect}
+                {...(props.minDate && { minDate: props.minDate })}
+                {...(props.maxDate && { maxDate: props.maxDate })}
+              />
+              <TimePicker
+                label="Select Time"
+                minutesStep={10}
+                value={startTime}
+                onChange={onStartTimeChanged}
+                disablePast={true}
+              />
+            </div>
 
-          <DatePickerHeader area="next-header">
-            <DatePickerTitle>{nextMonth.format('MMMM YYYY')}</DatePickerTitle>
-            <ChangeMonthButton onClick={moveMonthForward}>
-              <ChevronRight color={theme.launchpad.colors.primary} />
-            </ChangeMonthButton>
-          </DatePickerHeader>
+            <DatePickerHeader area="next-header">
+              <DatePickerTitle>{nextMonth.format('MMMM YYYY')}</DatePickerTitle>
+              <ChangeMonthButton onClick={moveMonthForward}>
+                <ChevronRight color={theme.launchpad.colors.primary} />
+              </ChangeMonthButton>
+            </DatePickerHeader>
 
-          <CalendarPicker
-            current={nextMonth}
-            selectedRange={range}
-            onSelect={onSelect}
-            {...(props.minDate && { minDate: props.minDate })}
-            {...(props.maxDate && { maxDate: props.maxDate })}
-          />
-        </DatePicker>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <CalendarPicker
+                current={nextMonth}
+                selectedRange={range}
+                onSelect={onSelect}
+                {...(props.minDate && { minDate: props.minDate })}
+                {...(props.maxDate && { maxDate: props.maxDate })}
+              />
 
+              {props.mode === 'range' && (
+                <TimePicker
+                  label="Select Time"
+                  minutesStep={10}
+                  value={endTime}
+                  onChange={onEndTimeChanged}
+                  disablePast={true}
+                />
+              )}
+            </div>
+          </DatePicker>
+        </LocalizationProvider>
+        <SelectedDateText>Selected Date: {formattedDate}</SelectedDateText>
         {props.showButton && (
           <RowEnd>
             <FilledButton onClick={toggle}>Confirm</FilledButton>
           </RowEnd>
         )}
       </IssuanceDialog>
-
-      <IssuanceDialog show={showTimePicker} onClose={() => { setShowTimePicker(false) }} width='600px'>
-        <StaticTimePicker
-          renderInput={() => <span>Text sample</span>}
-          orientation="landscape"
-          value={time}
-          onChange={onTimeChanged}
-          minutesStep={10}
-          okText='Ok'
-          toolbarTitle='SELECT TIME (UTC +00:00)'
-          minTime={props.minDate}
-          maxTime={props.maxDate}
-        ></StaticTimePicker>
-
-        {props.showButton && (
-          <RowEnd>
-            <FilledButton onClick={onTimeClose}>Ok</FilledButton>
-          </RowEnd>
-        )}
-      </IssuanceDialog>
-
-      {props.error && <ErrorText>{props.error}</ErrorText>}
+      {props.error && <ErrorText>{props.error}</ErrorText>}ff
     </Column>
   )
 }
@@ -224,6 +263,11 @@ const FieldIcon = styled.div`
   display: grid;
   place-content: center;
   margin-right: 8px;
+`
+
+const SelectedDateText = styled.div`
+  ${text30}
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldLabel = styled.div`
