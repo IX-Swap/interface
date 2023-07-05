@@ -10,7 +10,7 @@ import { FilledButton } from 'components/LaunchpadMisc/buttons'
 import { RowEnd } from 'components/Row'
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
-import { time } from 'console'
+import useStateRef from 'react-usestateref'
 
 type DateRange = moment.Moment[]
 type DateRangeValue = Date[]
@@ -34,9 +34,10 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
   const [range, setRange] = React.useState<DateRange>([])
+  const [selectedRange, setSelectedRange, selectedRangeRef] = useStateRef<DateRange>([])
   const [showPicker, setShowPicker] = React.useState(false)
-  const [startTime, setStartTime] = useState<Moment | null>(moment(props.minDate).add(20, 'minute'))
-  const [endTime, setEndTime] = useState<Moment | null>(moment(props.minDate).add(40, 'minute'))
+  const [startTime, setStartTime, startTimeRef] = useStateRef<Moment | null>()
+  const [endTime, setEndTime, endTimeRef] = useStateRef<Moment | null | undefined>()
 
   const [currentMonth, setCurrentMonth] = React.useState(moment())
   const nextMonth = React.useMemo(() => currentMonth.clone().month(currentMonth.get('month') + 1), [currentMonth])
@@ -49,8 +50,47 @@ export const DateRangeField: React.FC<Props> = (props) => {
     })
   }
 
+  const callPropsOnChange = () => {
+    if (props.field && props.setter && selectedRangeRef.current) {
+      props.setter(
+        props.field,
+        props.mode === 'single' ? selectedRangeRef.current[0].toDate() : selectedRangeRef.current.map((x) => x.toDate())
+      )
+    }
+
+    if (props.onChange) {
+      props.onChange(selectedRangeRef.current.map((x) => x.toDate()))
+    }
+  }
+
+  const onStartTimeChanged = (value: moment.Moment | null) => {
+    if (value) {
+      setStartTime(value)
+      if (props.mode === 'single') {
+        setSelectedRange([copyTime(selectedRangeRef.current[0], value)])
+      } else {
+        setSelectedRange([copyTime(selectedRangeRef.current[0], value), selectedRangeRef.current[1]])
+      }
+
+      callPropsOnChange()
+    }
+  }
+
+  const onEndTimeChanged = (value: moment.Moment | null) => {
+    if (value) {
+      setEndTime(value)
+      if (props.mode === 'range') {
+        if (range.length === 1) {
+          selectedRangeRef.current[1] = selectedRangeRef.current[0].clone()
+        }
+        setSelectedRange([selectedRangeRef.current[0], copyTime(selectedRangeRef.current[1], value)])
+      }
+
+      callPropsOnChange()
+    }
+  }
+
   const toggle = React.useCallback(() => {
-    alert(`time ${startTime}`)
     if (!props.disabled) {
       setShowPicker((state) => !state)
     }
@@ -58,44 +98,33 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   const onSelect = React.useCallback(
     (value: moment.Moment) => {
-      let selectedRange: DateRange
-
       if (props.mode === 'single') {
-        if (startTime) {
-          value = copyTime(value, startTime)
+        if (startTimeRef.current) {
+          value = copyTime(value, startTimeRef.current)
         }
-        selectedRange = [value]
+        setSelectedRange([value])
       } else if (range.length === 1) {
         let first = range[0]
         if (first.isBefore(value)) {
-          if (startTime && endTime) {
-            first = copyTime(first, startTime)
-            value = copyTime(value, endTime)
+          if (startTimeRef.current && endTimeRef.current) {
+            first = copyTime(first, startTimeRef.current)
+            value = copyTime(value, endTimeRef.current)
           }
-          selectedRange = [first, value]
+          setSelectedRange([first, value])
         } else {
-          if (startTime && endTime) {
-            value = copyTime(value, startTime)
-            first = copyTime(first, endTime)
+          if (startTimeRef.current && endTimeRef.current) {
+            value = copyTime(value, startTimeRef.current)
+            first = copyTime(first, endTimeRef.current)
           }
-          selectedRange = [value, first]
+          setSelectedRange([value, first])
         }
       } else {
-        selectedRange = [value]
+        setSelectedRange([value])
       }
 
-      if (props.field && props.setter) {
-        props.setter(
-          props.field,
-          props.mode === 'single' ? selectedRange[0].toDate() : selectedRange.map((x) => x.toDate())
-        )
-      }
-
-      if (props.onChange) {
-        props.onChange(selectedRange.map((x) => x.toDate()))
-      }
+      callPropsOnChange()
     },
-    [range]
+    [range, selectedRange, startTime, endTime]
   )
 
   const moveMonthBack = React.useCallback(
@@ -147,7 +176,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
               <DatePickerTitle>{currentMonth.format('MMMM YYYY')}</DatePickerTitle>
             </DatePickerHeader>
 
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <CalendarPicker
                 current={currentMonth}
                 selectedRange={range}
@@ -155,7 +184,13 @@ export const DateRangeField: React.FC<Props> = (props) => {
                 {...(props.minDate && { minDate: props.minDate })}
                 {...(props.maxDate && { maxDate: props.maxDate })}
               />
-              <TimePicker label="Select Time" minutesStep={10} value={startTime} onChange={setStartTime} />
+              <TimePicker
+                label="Select Time"
+                minutesStep={10}
+                value={startTime}
+                onChange={onStartTimeChanged}
+                disablePast={true}
+              />
             </div>
 
             <DatePickerHeader area="next-header">
@@ -165,7 +200,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
               </ChangeMonthButton>
             </DatePickerHeader>
 
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <CalendarPicker
                 current={nextMonth}
                 selectedRange={range}
@@ -175,11 +210,18 @@ export const DateRangeField: React.FC<Props> = (props) => {
               />
 
               {props.mode === 'range' && (
-                <TimePicker label="Select Time" minutesStep={10} value={endTime} onChange={setEndTime} />
+                <TimePicker
+                  label="Select Time"
+                  minutesStep={10}
+                  value={endTime}
+                  onChange={onEndTimeChanged}
+                  disablePast={true}
+                />
               )}
             </div>
           </DatePicker>
         </LocalizationProvider>
+        <SelectedDateText>Selected Date: {formattedDate}</SelectedDateText>
         {props.showButton && (
           <RowEnd>
             <FilledButton onClick={toggle}>Confirm</FilledButton>
@@ -221,6 +263,11 @@ const FieldIcon = styled.div`
   display: grid;
   place-content: center;
   margin-right: 8px;
+`
+
+const SelectedDateText = styled.div`
+  ${text30}
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldLabel = styled.div`
