@@ -2,7 +2,7 @@ const getTenantId: any = sessionStorage.getItem('tenantId')
 const tenantId: number = JSON.parse(getTenantId)
 
 export const AppRoute = {
-  home: '/app/home',
+  //   home: '/app/home',
   dashboard: '/app/dashboard',
   authorizer: '/app/authorizer',
   identity: '/app/profile',

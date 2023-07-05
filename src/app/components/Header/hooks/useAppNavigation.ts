@@ -144,8 +144,8 @@ export const useAppNavigation = () => {
       !isInvestor &&
       !link.startsWith(AppPath.identity) &&
       !link.startsWith(AppPath.security) &&
-      !link.startsWith(AppPath.notifications) &&
-      !link.startsWith(AppPath.home)
+      !link.startsWith(AppPath.notifications)
+      //   !link.startsWith(AppPath.home)
     )
   }
 
