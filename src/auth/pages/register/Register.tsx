@@ -37,6 +37,8 @@ export const Register: React.FC = observer(() => {
   const identity = getFilterValue('identityType')
   const email = getFilterValue('email')
   const mobile = getFilterValue('mobile')
+  const uinfin = getFilterValue('uinfin')
+
   const isIndividual = identity === 'individual'
   const { sessionService } = useServices()
 
@@ -85,7 +87,7 @@ export const Register: React.FC = observer(() => {
           // mobileNo: `+${values?.phoneNumber?.replace(/ /g, '')}`,
           password: values?.password,
           accountType: identity?.toLocaleUpperCase(),
-          uinfin: data?.uinfin
+          uinfin: uinfin
         },
         isMyInfo
           ? {

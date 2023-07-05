@@ -16,7 +16,7 @@ export const SingPassPage = (props: SingPassPageProps) => {
   }
 
   const onAgree = (email: string, mobileno: string) => {
-    window.location.href = `${AuthRoute.signup}?email=${email}&mobile=${mobileno}`
+    window.location.href = `${AuthRoute.signup}?email=${email}&mobile=${mobileno}&uinfin=${data?.uinfin}`
     localStorage.setItem('singpassPage', 'true')
   }
 
