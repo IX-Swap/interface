@@ -4,7 +4,10 @@ import { DataroomFile } from 'types/dataroomFile'
 import { tenantsURL } from 'config/apiURL'
 import { tenantsQueryKeys } from 'config/queryKeys'
 
-export const useDeleteTenant = (tenantId: string) => {
+export const useDeleteTenant = (
+  tenantId: string,
+  succesHandler: () => void
+) => {
   const { snackbarService, apiService } = useServices()
   const url = tenantsURL.deleteTenant(tenantId)
   const queryCache = useQueryCache()
@@ -17,6 +20,7 @@ export const useDeleteTenant = (tenantId: string) => {
     onSuccess: async () => {
       void snackbarService.showSnackbar('Success', 'success')
       await queryCache.invalidateQueries(tenantsQueryKeys.getTenantsList)
+      succesHandler()
     },
     onError: () => snackbarService.showSnackbar('Error', 'error')
   })

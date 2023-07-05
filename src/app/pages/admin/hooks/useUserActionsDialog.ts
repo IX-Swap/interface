@@ -6,6 +6,7 @@ export const useUserActionsDialog = () => {
   const [reset2FAOpen, setOpen2FA] = useState(false)
   const [enabledToggleOpen, setEnabledToggleOpen] = useState(false)
   const [resetPasswordOpen, setResetPasswordOpen] = useState(false)
+  const [deleteTenantOpen, setDeleteTenantOpen] = useState(false)
 
   const open2FADialog = () => {
     setOpen2FA(true)
@@ -13,6 +14,14 @@ export const useUserActionsDialog = () => {
 
   const close2FADialog = () => {
     setOpen2FA(false)
+  }
+
+  const openDeleteTenant = () => {
+    setDeleteTenantOpen(true)
+  }
+
+  const closeDeleteTenant = () => {
+    setDeleteTenantOpen(false)
   }
 
   const openEnabledToggle = () => {
@@ -44,6 +53,9 @@ export const useUserActionsDialog = () => {
     closeEnabledToggle,
     openResetPassword,
     closeResetPassword,
-    resetPasswordOpen
+    resetPasswordOpen,
+    deleteTenantOpen,
+    openDeleteTenant,
+    closeDeleteTenant
   }
 }
