@@ -35,7 +35,7 @@ export const AppLogo = () => {
     )
 
   return (
-    <Link to={AppRoute.home} className={classes.wrapper}>
+    <Link to={AppRoute.dashboard} className={classes.wrapper}>
       {Logo}
     </Link>
   )
