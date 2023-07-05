@@ -18,7 +18,7 @@ import {
   useIsFundManager,
   useIsIssuer
 } from 'helpers/acl'
-import { HomeRoot } from 'app/pages/home/HomeRoot'
+import { Dashboard } from 'app/pages/dashboard/Dashboard'
 import { ClientRouter } from 'app/pages/admin/router/ClietRouter'
 
 export const AppRouter = () => {
@@ -30,8 +30,8 @@ export const AppRouter = () => {
 
   return (
     <Switch>
-      <AppRoute path={AppPath.home}>
-        <HomeRoot />
+      <AppRoute breadcrumb='Dashboard' path={AppPath.dashboard}>
+        <Dashboard />
       </AppRoute>
 
       <AppRoute breadcrumb='Accounts' path={AppPath.accounts}>
