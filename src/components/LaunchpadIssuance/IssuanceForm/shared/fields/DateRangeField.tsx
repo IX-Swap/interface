@@ -38,6 +38,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const [showPicker, setShowPicker] = React.useState(false)
   const [startTime, setStartTime, startTimeRef] = useStateRef<Moment | null>()
   const [endTime, setEndTime, endTimeRef] = useStateRef<Moment | null | undefined>()
+  const [dateErrorText, setDateErrorText] = useState<string>()
 
   const [currentMonth, setCurrentMonth] = React.useState(moment())
   const nextMonth = React.useMemo(() => currentMonth.clone().month(currentMonth.get('month') + 1), [currentMonth])
@@ -92,6 +93,16 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   const toggle = React.useCallback(() => {
     if (!props.disabled) {
+      if (props.mode === 'range' && selectedRangeRef.current.length === 2) {
+        const duration = moment.duration(selectedRangeRef.current[1].diff(selectedRangeRef.current[0]))
+        const minutes = duration.asMinutes()
+        if (minutes < 20) {
+          setDateErrorText('Closed Date should be later than Sale Date at least 20 minutes')
+          return
+        } else {
+          setDateErrorText('')
+        }
+      }
       setShowPicker((state) => !state)
     }
   }, [props.disabled])
@@ -222,13 +233,14 @@ export const DateRangeField: React.FC<Props> = (props) => {
           </DatePicker>
         </LocalizationProvider>
         <SelectedDateText>Selected Date: {formattedDate}</SelectedDateText>
+        {dateErrorText && <ErrorText>{dateErrorText}</ErrorText>}
         {props.showButton && (
           <RowEnd>
             <FilledButton onClick={toggle}>Confirm</FilledButton>
           </RowEnd>
         )}
       </IssuanceDialog>
-      {props.error && <ErrorText>{props.error}</ErrorText>}ff
+      {props.error && <ErrorText>{props.error}</ErrorText>}
     </Column>
   )
 }
