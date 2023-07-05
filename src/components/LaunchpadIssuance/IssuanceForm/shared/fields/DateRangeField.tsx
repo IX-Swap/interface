@@ -11,6 +11,7 @@ import { RowEnd } from 'components/Row'
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import useStateRef from 'react-usestateref'
+import { formatDateRange } from 'components/LaunchpadIssuance/ManageOffer/utils'
 
 type DateRange = moment.Moment[]
 type DateRangeValue = Date[]
@@ -147,12 +148,12 @@ export const DateRangeField: React.FC<Props> = (props) => {
     []
   )
   const formattedDate = React.useMemo(() => {
-    const dateFormat = props.dateFormat || 'MM/DD/YYYY hh:mm'
+    const dateFormat = props.dateFormat || 'Do MMM, HH:mm'
     const hasEmptyState = range.length === 0 || range.some((date) => !date.isValid())
     if (hasEmptyState) {
-      return `mm/dd/yyyy hh:mm ${props.mode === 'range' ? ` - ${dateFormat.toLowerCase()}` : ''}`
+      return `Do MMM, HH:mm ${props.mode === 'range' ? ` - ${dateFormat.toLowerCase()}` : ''}`
     }
-    return range.map((date) => date.format(dateFormat)).join(' - ')
+    return formatDateRange(range[0]?.toDate(), range[1]?.toDate())
   }, [range, props.mode, props.dateFormat])
 
   React.useEffect(() => {
@@ -201,6 +202,9 @@ export const DateRangeField: React.FC<Props> = (props) => {
                 value={startTime}
                 onChange={onStartTimeChanged}
                 disablePast={true}
+                ampm={false}
+                format="HH:mm"
+                minTime={moment(props.minDate)}
               />
             </div>
 
@@ -227,6 +231,9 @@ export const DateRangeField: React.FC<Props> = (props) => {
                   value={endTime}
                   onChange={onEndTimeChanged}
                   disablePast={true}
+                  ampm={false}
+                  format="HH:mm"
+                  minTime={moment(props.minDate)}
                 />
               )}
             </div>
