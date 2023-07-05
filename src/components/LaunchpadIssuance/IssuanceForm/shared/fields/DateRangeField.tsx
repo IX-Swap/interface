@@ -36,7 +36,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   const [range, setRange] = React.useState<DateRange>([])
   const [selectedRange, setSelectedRange, selectedRangeRef] = useStateRef<DateRange>([])
-  const [showPicker, setShowPicker] = React.useState(false)
+  const [showPicker, setShowPicker, showPickerRef] = useStateRef(false)
   const [startTime, setStartTime, startTimeRef] = useStateRef<Moment | null>()
   const [endTime, setEndTime, endTimeRef] = useStateRef<Moment | null | undefined>()
   const [dateErrorText, setDateErrorText] = useState<string>()
@@ -94,6 +94,17 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   const toggle = React.useCallback(() => {
     if (!props.disabled) {
+      if (
+        showPickerRef.current &&
+        selectedRangeRef.current &&
+        ((selectedRangeRef.current[0] && selectedRangeRef.current[0].get('minute')) % 10 !== 0 ||
+          (selectedRangeRef.current[1] && selectedRangeRef.current[1].get('minute')) % 10 !== 0)
+      ) {
+        setDateErrorText('The minute must be divisible by 10')
+        return
+      } else {
+        setDateErrorText('')
+      }
       if (props.mode === 'range' && selectedRangeRef.current.length === 2) {
         const duration = moment.duration(selectedRangeRef.current[1].diff(selectedRangeRef.current[0]))
         const minutes = duration.asMinutes()
