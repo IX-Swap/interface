@@ -36,12 +36,12 @@ const Content = ({
 }
 
 export const ConfirmClaimModal = (props: any) => {
-  const { isOpen, onClose, onAccept, smartContractStrategy, distributionControllerAddress, title } = props
+  const { isOpen, onClose, onAccept, smartContractStrategy, distributionControllerAddress, title, canWithdraw } = props
 
   return (
     <ConfirmPopup
       subtitle={
-        smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess ? (
+        smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess && !canWithdraw ? (
           <Content distributionControllerAddress={distributionControllerAddress} title={title} />
         ) : null
       }
