@@ -94,14 +94,14 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   const toggle = React.useCallback(() => {
     if (!props.disabled) {
-      if (
-        showPickerRef.current &&
-        selectedRangeRef.current &&
-        ((selectedRangeRef.current[0] && selectedRangeRef.current[0].get('minute')) % 10 !== 0 ||
-          (selectedRangeRef.current[1] && selectedRangeRef.current[1].get('minute')) % 10 !== 0)
-      ) {
-        setDateErrorText('The minute must be divisible by 10')
-        return
+      if (showPickerRef.current && selectedRangeRef.current) {
+        if (
+          (selectedRangeRef.current[0] && selectedRangeRef.current[0].get('minute') % 10 !== 0) ||
+          (selectedRangeRef.current[1] && selectedRangeRef.current[1].get('minute') % 10 !== 0)
+        ) {
+          setDateErrorText('The minute must be divisible by 10')
+          return
+        }
       } else {
         setDateErrorText('')
       }
@@ -212,7 +212,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
                 minutesStep={10}
                 value={startTime}
                 onChange={onStartTimeChanged}
-                disablePast={true}
                 ampm={false}
                 format="HH:mm"
                 minTime={moment(props.minDate)}
@@ -241,7 +240,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
                   minutesStep={10}
                   value={endTime}
                   onChange={onEndTimeChanged}
-                  disablePast={true}
                   ampm={false}
                   format="HH:mm"
                   minTime={moment(props.minDate)}
