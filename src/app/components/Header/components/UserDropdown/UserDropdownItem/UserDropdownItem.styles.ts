@@ -1,6 +1,7 @@
 import makeStyles from '@mui/styles/makeStyles'
 
 export const LIST_HORIZONTAL_PADDING = 24
+export const LIST_TOPBOTTOM_PADDING = 13
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -8,8 +9,8 @@ export const useStyles = makeStyles(theme => ({
     marginRight: -LIST_HORIZONTAL_PADDING,
     paddingLeft: LIST_HORIZONTAL_PADDING,
     paddingRight: LIST_HORIZONTAL_PADDING,
-    paddingTop: LIST_HORIZONTAL_PADDING,
-    paddingBottom: LIST_HORIZONTAL_PADDING,
+    paddingTop: LIST_TOPBOTTOM_PADDING,
+    paddingBottom: LIST_TOPBOTTOM_PADDING,
     backgroundColor: theme.palette.background.paper,
     '&:last-child': {
       borderBottomLeftRadius: 8,
