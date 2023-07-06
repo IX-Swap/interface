@@ -8,7 +8,7 @@ import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { text19, text30, text40 } from 'components/LaunchpadMisc/typography'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
 import { RowEnd } from 'components/Row'
-import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers'
+import { LocalizationProvider, TimePicker, TimeValidationError } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import useStateRef from 'react-usestateref'
 import { formatDateRange } from 'components/LaunchpadIssuance/ManageOffer/utils'
@@ -40,6 +40,8 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const [startTime, setStartTime, startTimeRef] = useStateRef<Moment | null>()
   const [endTime, setEndTime, endTimeRef] = useStateRef<Moment | null | undefined>()
   const [dateErrorText, setDateErrorText] = useState<string>()
+  const [startTimeError, setStartTimeError, startTimeErrorRef] = useStateRef<TimeValidationError>()
+  const [endTimeError, setEndTimeError, endTimeErrorRef] = useStateRef<TimeValidationError>()
 
   const [currentMonth, setCurrentMonth] = React.useState(moment())
   const nextMonth = React.useMemo(() => currentMonth.clone().month(currentMonth.get('month') + 1), [currentMonth])
@@ -92,6 +94,14 @@ export const DateRangeField: React.FC<Props> = (props) => {
     }
   }
 
+  const onStartTimeError = (error: TimeValidationError, value: moment.Moment | null) => {
+    setStartTimeError(error)
+  }
+
+  const onEndTimeError = (error: TimeValidationError, value: moment.Moment | null) => {
+    setEndTimeError(error)
+  }
+
   const toggle = React.useCallback(() => {
     if (!props.disabled) {
       if (showPickerRef.current && selectedRangeRef.current) {
@@ -101,10 +111,13 @@ export const DateRangeField: React.FC<Props> = (props) => {
         ) {
           setDateErrorText('The minute must be divisible by 10')
           return
+        } else {
+          setDateErrorText('')
         }
       } else {
         setDateErrorText('')
       }
+
       if (props.mode === 'range' && selectedRangeRef.current.length === 2) {
         const duration = moment.duration(selectedRangeRef.current[1].diff(selectedRangeRef.current[0]))
         const minutes = duration.asMinutes()
@@ -114,6 +127,11 @@ export const DateRangeField: React.FC<Props> = (props) => {
         } else {
           setDateErrorText('')
         }
+      }
+
+      if (startTimeErrorRef.current || endTimeErrorRef.current) {
+        setDateErrorText('Should be later than the current date and the previous stage at least 20 minutes')
+        return
       }
       setShowPicker((state) => !state)
     }
@@ -215,6 +233,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
                 ampm={false}
                 format="HH:mm"
                 minTime={moment(props.minDate)}
+                onError={onStartTimeError}
               />
             </div>
 
@@ -243,6 +262,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
                   ampm={false}
                   format="HH:mm"
                   minTime={moment(props.minDate)}
+                  onError={onEndTimeError}
                 />
               )}
             </div>
