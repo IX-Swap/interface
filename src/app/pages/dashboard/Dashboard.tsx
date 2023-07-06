@@ -4,6 +4,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { RootContainer } from 'ui/RootContainer'
 import { AccountActions } from './AccountActions/AccountActions'
 import { TotalStats } from './TotalStats/TotalStats'
+import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
 
 export const Dashboard = () => {
   return (
@@ -12,13 +13,17 @@ export const Dashboard = () => {
         <PageHeader title={'Dashboard'} />
       </Grid>
       <RootContainer>
-        <Grid container direction='column' spacing={6}>
+        <Grid container direction='column' spacing={2}>
           <Grid item>
             <AccountActions />
           </Grid>
+          <Grid item>
+            <TotalStats />
+          </Grid>
+          <Grid item>
+            <PrimaryOfferings />
+          </Grid>
         </Grid>
-
-        <TotalStats />
       </RootContainer>
     </Grid>
   )

@@ -19,6 +19,7 @@ export const Stats = ({ title, stats, increase }: StatsProps) => {
         color={'primary'}
         textAlign={'right'}
         fontWeight={'bold'}
+        mt={1}
       >
         {stats}
       </Typography>
