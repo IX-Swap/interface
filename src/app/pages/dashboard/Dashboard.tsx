@@ -3,6 +3,7 @@ import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { RootContainer } from 'ui/RootContainer'
 import { AccountActions } from './AccountActions/AccountActions'
+import { TotalStats } from './TotalStats/TotalStats'
 
 export const Dashboard = () => {
   return (
@@ -16,6 +17,8 @@ export const Dashboard = () => {
             <AccountActions />
           </Grid>
         </Grid>
+
+        <TotalStats />
       </RootContainer>
     </Grid>
   )
