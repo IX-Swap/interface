@@ -153,6 +153,7 @@ export const ManageOffer = () => {
         onAccept={onClaim}
         distributionControllerAddress={distributionControllerAddress}
         smartContractStrategy={smartContractStrategy}
+        canWithdraw={canWithdraw}
         title={claimTitleText}
       />
       {isOpenWhitelisting && (
