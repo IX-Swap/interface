@@ -16,6 +16,10 @@ export const TotalStats = () => {
     return <LoadingIndicator />
   }
 
+  if (typeof data === 'undefined') {
+    return null
+  }
+
   return (
     <Grid container gap={2} mt={2}>
       <Grid item xs>
