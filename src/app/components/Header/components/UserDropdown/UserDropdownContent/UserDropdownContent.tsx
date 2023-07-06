@@ -3,7 +3,7 @@ import { IdentityRoute } from 'app/pages/identity/router/config'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { useLogout } from 'auth/hooks/useLogout'
-import { useIsAdmin, useIsClient, useIsAuthorizer } from 'helpers/acl'
+import { useIsAdmin, useIsClient } from 'helpers/acl'
 import {
   AccountCircleOutlined,
   PowerSettingsNewOutlined,
@@ -28,7 +28,7 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
   const logout = useLogout()
   const isAdmin = useIsAdmin()
   const isClient = useIsClient()
-  const isAuthorizer = useIsAuthorizer()
+  //   const isAuthorizer = useIsAuthorizer()
   const handleClose = props.injectedProps.close
   return (
     <Fragment>
@@ -53,7 +53,7 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
               />
             </>
           )}
-          {isAdmin || isClient || isAuthorizer ? (
+          {isClient ? (
             <>
               <Box className={classes.border} />
               <UserDropdownItem

@@ -1,7 +1,8 @@
+import React from 'react'
 import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
+import { AccountActions } from './AccountActions/AccountActions'
 
 export const Dashboard = () => {
   return (
@@ -11,7 +12,9 @@ export const Dashboard = () => {
       </Grid>
       <RootContainer>
         <Grid container direction='column' spacing={6}>
-          <Grid item></Grid>
+          <Grid item>
+            <AccountActions />
+          </Grid>
         </Grid>
       </RootContainer>
     </Grid>
