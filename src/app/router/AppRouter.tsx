@@ -16,7 +16,8 @@ import {
   useIsAdmin,
   useIsAuthorizer,
   useIsFundManager,
-  useIsIssuer
+  useIsIssuer,
+  useIsClient
 } from 'helpers/acl'
 import { Dashboard } from 'app/pages/dashboard/Dashboard'
 import { ClientRouter } from 'app/pages/admin/router/ClietRouter'
@@ -26,6 +27,7 @@ export const AppRouter = () => {
   const isAdmin = useIsAdmin()
   const isIssuer = useIsIssuer()
   const isFundManager = useIsFundManager()
+  const isClient = useIsClient()
   const isSuperUser = isAuthorizer || isAdmin
 
   return (
@@ -54,9 +56,11 @@ export const AppRouter = () => {
         <NotificationsRoot />
       </AppRoute>
 
-      <AppRoute breadcrumb='Edit Client Space' path={AppPath.editClientSpace}>
-        <ClientRouter />
-      </AppRoute>
+      {isClient && (
+        <AppRoute breadcrumb='Edit Client Space' path={AppPath.editClientSpace}>
+          <ClientRouter />
+        </AppRoute>
+      )}
 
       {isIssuer || isSuperUser ? (
         <AppRoute breadcrumb='Issuance' path={AppPath.issuance}>
