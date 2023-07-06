@@ -75,8 +75,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
       } else {
         setSelectedRange([copyTime(selectedRangeRef.current[0], value), selectedRangeRef.current[1]])
       }
-
-      callPropsOnChange()
     }
   }
 
@@ -84,13 +82,11 @@ export const DateRangeField: React.FC<Props> = (props) => {
     if (value) {
       setEndTime(value)
       if (props.mode === 'range') {
-        if (range.length === 1) {
+        if (!selectedRangeRef.current[1]) {
           selectedRangeRef.current[1] = selectedRangeRef.current[0].clone()
         }
         setSelectedRange([selectedRangeRef.current[0], copyTime(selectedRangeRef.current[1], value)])
       }
-
-      callPropsOnChange()
     }
   }
 
@@ -103,6 +99,12 @@ export const DateRangeField: React.FC<Props> = (props) => {
   }
 
   const toggle = React.useCallback(() => {
+    if (!props.disabled) {
+      setShowPicker((state) => !state)
+    }
+  }, [props.disabled])
+
+  const onConfirmTime = React.useCallback(() => {
     if (!props.disabled) {
       if (showPickerRef.current && selectedRangeRef.current) {
         if (
@@ -118,6 +120,14 @@ export const DateRangeField: React.FC<Props> = (props) => {
         setDateErrorText('')
       }
 
+      if (
+        selectedRangeRef.current[0] &&
+        (selectedRangeRef.current[0].isBefore(moment(props.minDate)) || selectedRangeRef.current[0].isBefore(moment()))
+      ) {
+        setDateErrorText('Should be later than the current date and the previous stage at least 20 minutes')
+        return
+      }
+
       if (props.mode === 'range' && selectedRangeRef.current.length === 2) {
         const duration = moment.duration(selectedRangeRef.current[1].diff(selectedRangeRef.current[0]))
         const minutes = duration.asMinutes()
@@ -130,9 +140,16 @@ export const DateRangeField: React.FC<Props> = (props) => {
       }
 
       if (startTimeErrorRef.current || endTimeErrorRef.current) {
-        setDateErrorText('Should be later than the current date and the previous stage at least 20 minutes')
+        setDateErrorText('Invalid time')
         return
       }
+
+      if (props.mode === 'range' && !selectedRangeRef.current[1]) {
+        setDateErrorText('Please select both start and end date')
+        return
+      }
+
+      callPropsOnChange()
       setShowPicker((state) => !state)
     }
   }, [props.disabled])
@@ -144,8 +161,8 @@ export const DateRangeField: React.FC<Props> = (props) => {
           value = copyTime(value, startTimeRef.current)
         }
         setSelectedRange([value])
-      } else if (range.length === 1) {
-        let first = range[0]
+      } else if (selectedRangeRef.current.length === 1) {
+        let first = selectedRangeRef.current[0]
         if (first.isBefore(value)) {
           if (startTimeRef.current && endTimeRef.current) {
             first = copyTime(first, startTimeRef.current)
@@ -162,10 +179,8 @@ export const DateRangeField: React.FC<Props> = (props) => {
       } else {
         setSelectedRange([value])
       }
-
-      callPropsOnChange()
     },
-    [range, selectedRange, startTime, endTime]
+    [selectedRangeRef.current, selectedRange, startTime, endTime]
   )
 
   const moveMonthBack = React.useCallback(
@@ -189,11 +204,14 @@ export const DateRangeField: React.FC<Props> = (props) => {
     if (props.value !== undefined) {
       if (props.mode === 'single') {
         setRange([moment(props.value as Date)])
+        setSelectedRange([moment(props.value as Date)])
       } else {
         setRange(props.value as DateRange)
+        setSelectedRange(props.value as DateRange)
       }
     } else {
       setRange([])
+      setSelectedRange([])
     }
   }, [props.value])
 
@@ -220,7 +238,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <CalendarPicker
                 current={currentMonth}
-                selectedRange={range}
+                selectedRange={selectedRange}
                 onSelect={onSelect}
                 {...(props.minDate && { minDate: props.minDate })}
                 {...(props.maxDate && { maxDate: props.maxDate })}
@@ -232,7 +250,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
                 onChange={onStartTimeChanged}
                 ampm={false}
                 format="HH:mm"
-                minTime={moment(props.minDate)}
+                // minTime={moment(props.minDate)}
                 onError={onStartTimeError}
               />
             </div>
@@ -247,7 +265,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <CalendarPicker
                 current={nextMonth}
-                selectedRange={range}
+                selectedRange={selectedRange}
                 onSelect={onSelect}
                 {...(props.minDate && { minDate: props.minDate })}
                 {...(props.maxDate && { maxDate: props.maxDate })}
@@ -261,18 +279,20 @@ export const DateRangeField: React.FC<Props> = (props) => {
                   onChange={onEndTimeChanged}
                   ampm={false}
                   format="HH:mm"
-                  minTime={moment(props.minDate)}
+                  // minTime={moment(props.minDate)}
                   onError={onEndTimeError}
                 />
               )}
             </div>
           </DatePicker>
         </LocalizationProvider>
-        <SelectedDateText>Selected Date: {formattedDate}</SelectedDateText>
+        <SelectedDateText>
+          Selected Date: {formatDateRange(selectedRangeRef.current[0]?.toDate(), selectedRangeRef.current[1]?.toDate())}
+        </SelectedDateText>
         {dateErrorText && <ErrorText>{dateErrorText}</ErrorText>}
         {props.showButton && (
           <RowEnd>
-            <FilledButton onClick={toggle}>Confirm</FilledButton>
+            <FilledButton onClick={onConfirmTime}>Confirm</FilledButton>
           </RowEnd>
         )}
       </IssuanceDialog>
