@@ -104,52 +104,47 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   const toggle = React.useCallback(() => {
     if (!props.disabled) {
-      if (showPickerRef.current && selectedRangeRef.current) {
-        if (
-          (selectedRangeRef.current[0] && selectedRangeRef.current[0].get('minute') % 10 !== 0) ||
-          (selectedRangeRef.current[1] && selectedRangeRef.current[1].get('minute') % 10 !== 0)
-        ) {
+      if (showPicker && range) {
+        if (props.mode === 'range' && !range[1]) {
+          setDateErrorText('Please select both start and end date')
+          return
+        }
+
+        if ((range[0] && range[0].get('minute') % 10 !== 0) || (range[1] && range[1].get('minute') % 10 !== 0)) {
           setDateErrorText('The minute must be divisible by 10')
           return
-        } else {
-          setDateErrorText('')
         }
-      } else {
+
+        if (range[0] && (range[0].isBefore(moment(props.minDate)) || range[0].isBefore(moment()))) {
+          setDateErrorText('Should be later than the current date and the previous stage at least 20 minutes')
+          return
+        }
+
+        if (props.mode === 'range' && range.length === 2) {
+          const duration = moment.duration(range[1].diff(range[0]))
+          const minutes = duration.asMinutes()
+          if (minutes < 20) {
+            setDateErrorText('The end date should be later than the start date at least 20 minutes')
+            return
+          }
+        }
+
+        if (startTimeError || endTimeError) {
+          setDateErrorText('Invalid time')
+          return
+        }
+
+        if (props.mode === 'range' && !range[1]) {
+          setDateErrorText('Please select both start and end date')
+          return
+        }
+
         setDateErrorText('')
       }
 
-      if (
-        selectedRangeRef.current[0] &&
-        (selectedRangeRef.current[0].isBefore(moment(props.minDate)) || selectedRangeRef.current[0].isBefore(moment()))
-      ) {
-        setDateErrorText('Should be later than the current date and the previous stage at least 20 minutes')
-        return
-      }
-
-      if (props.mode === 'range' && selectedRangeRef.current.length === 2) {
-        const duration = moment.duration(selectedRangeRef.current[1].diff(selectedRangeRef.current[0]))
-        const minutes = duration.asMinutes()
-        if (minutes < 20) {
-          setDateErrorText('The end date should be later than the start date at least 20 minutes')
-          return
-        } else {
-          setDateErrorText('')
-        }
-      }
-
-      if (startTimeErrorRef.current || endTimeErrorRef.current) {
-        setDateErrorText('Invalid time')
-        return
-      }
-
-      // if (props.mode === 'range' && !selectedRangeRef.current[1]) {
-      //   setDateErrorText('Please select both start and end date')
-      //   return
-      // }
-
       setShowPicker((state) => !state)
     }
-  }, [props.disabled])
+  }, [props.disabled, showPicker, range, props.minDate, startTimeError, endTimeError])
 
   const onSelect = React.useCallback(
     (value: moment.Moment) => {
