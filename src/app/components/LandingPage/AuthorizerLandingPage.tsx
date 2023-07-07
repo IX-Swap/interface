@@ -3,7 +3,8 @@ import { Grid } from '@mui/material'
 import { InternalRouteProps } from 'types/util'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { RootContainer } from 'ui/RootContainer'
-import { DataCard } from 'app/components/LandingPage/DataCard'
+// import { DataCard } from 'app/components/LandingPage/DataCard'
+import { LandingPageItem } from './LandingPageItem'
 
 export interface LandingPageProps extends Partial<InternalRouteProps> {
   title?: string
@@ -17,16 +18,9 @@ export const AuthorizerLandingPage = (props: LandingPageProps) => {
     <>
       <PageHeader title={title} showBreadcrumbs={false} />
       <RootContainer>
-        <Grid
-          container
-          justifyContent='center'
-          alignItems='flex-start'
-          spacing={3}
-        >
+        <Grid item container justifyContent='center' alignItems='flex-start'>
           {links.map((link, index) => (
-            <Grid item key={index}>
-              <DataCard link={link} variant={index % 5} />
-            </Grid>
+            <LandingPageItem key={index} link={link} />
           ))}
         </Grid>
       </RootContainer>
