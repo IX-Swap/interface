@@ -174,10 +174,6 @@ export const createValidationSchema = (account: string | null | undefined) => {
               return !originalValue || !this.options.context || originalValue !== account
             }
           ),
-      })
-      .when('tokenStandart', {
-        is: OfferTokenStandart.xtokenlite,
-        then: yup.string().nullable().required(REQUIRED),
       }),
 
     tokenAddress: yup
