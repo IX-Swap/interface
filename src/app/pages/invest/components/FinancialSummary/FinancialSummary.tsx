@@ -1,5 +1,4 @@
-import { Box, Grid, Hidden } from '@mui/material'
-import { MoreDetails } from 'app/pages/invest/components/FinancialSummary/MoreDetails'
+import { Box, Grid } from '@mui/material'
 import { NumberSummaryValue } from 'app/pages/invest/components/FinancialSummary/NumberSummaryValue'
 import { SummaryItem } from 'app/pages/invest/components/FinancialSummary/SummaryItem'
 import { PairListDropdown } from 'app/pages/invest/components/PairListDropdown/PairListDropdown'
@@ -42,16 +41,6 @@ export const FinancialSummary = () => {
               />
             </Box>
           )}
-          <Hidden mdUp>
-            <Box
-              flexGrow={1}
-              width='50%'
-              display='flex'
-              justifyContent='flex-end'
-            >
-              <MoreDetails />
-            </Box>
-          </Hidden>
         </Box>
       </Grid>
       <Grid item xs={7}>
@@ -85,18 +74,6 @@ export const FinancialSummary = () => {
             label='24H Low'
             value={<NumberSummaryValue value={data?._24h.low} />}
           />
-          <Hidden mdDown>
-            {/* <Grid
-              item
-              container
-              xs={12}
-              md={2}
-              alignContent='center'
-              justifyContent='flex-end'
-            > */}
-            <MoreDetails />
-            {/* </Grid> */}
-          </Hidden>
           <Grid sx={{ marginTop: '12px' }}>
             <ExchangeRulesLink />
           </Grid>
