@@ -11,7 +11,6 @@ import { AuthorizerForm } from 'app/pages/authorizer/components/AuthorizerForm'
 // import { AuthorizableLevel } from 'app/pages/authorizer/components/AuthorizableLevel'
 // import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { AuthorizerIdentities } from 'app/pages/authorizer/components/AuthorizerIdentities'
-import { PromotionSwitch } from 'app/pages/authorizer/components/PromotionSwitch'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
@@ -162,10 +161,6 @@ export const AuthorizerView = <T,>(
                               justifyContent='flex-end'
                               style={{ marginTop: 20 }}
                             >
-                              <PromotionSwitch
-                                dso={data as unknown as DigitalSecurityOffering}
-                              />
-
                               <VisibilitySwitch
                                 dso={data as unknown as DigitalSecurityOffering}
                               />
