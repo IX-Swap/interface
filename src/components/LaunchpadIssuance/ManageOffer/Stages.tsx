@@ -3,7 +3,7 @@ import styled, { useTheme } from 'styled-components'
 import { ChevronRight, Edit3, Info } from 'react-feather'
 import { MiniOffer, OfferStatus } from 'state/launchpad/types'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
-import { formatDates } from './utils'
+import { formatDateRange } from './utils'
 import { KEY_OFFER_STATUSES } from '../utils/constants'
 import { useRole } from 'state/user/hooks'
 import { EditTimeframeModal } from './edit'
@@ -64,7 +64,7 @@ export const OfferStages = ({ offer, refreshOffer }: Props) => {
           <Title>Investment Stage</Title>
           <Tooltip
             title="Investments Stages"
-            body="Stages are in chronological order. One step has to be done before the deal will move on to the next step. For further clarification, please reach out to your account manager."
+            body="Stages are in chronological order. One step has to be done before the deal will move on to the next step. For further clarification, please reach out to your account manager. The time provided is based on the UTC +0 time zone."
           >
             <Info size="14" color={theme.launchpad.colors.text.caption} />
           </Tooltip>
@@ -79,30 +79,30 @@ export const OfferStages = ({ offer, refreshOffer }: Props) => {
       {hasPresale && (
         <DateBlock
           title="Register To Invest"
-          subtitle={formatDates(timeframe.whitelist, timeframe.preSale)}
+          subtitle={formatDateRange(timeframe.whitelist, timeframe.preSale)}
           isCurrent={highlightedStatuses.includes(OfferStatus.whitelist)}
         />
       )}
       {hasPresale && (
         <DateBlock
           title="Pre-Sale"
-          subtitle={formatDates(timeframe.preSale, timeframe.sale)}
+          subtitle={formatDateRange(timeframe.preSale, timeframe.sale)}
           isCurrent={highlightedStatuses.includes(OfferStatus.preSale)}
         />
       )}
       <DateBlock
         title="Public Sale"
-        subtitle={formatDates(timeframe.sale, timeframe.closed)}
+        subtitle={formatDateRange(timeframe.sale, timeframe.closed)}
         isCurrent={highlightedStatuses.includes(OfferStatus.sale)}
       />
       <DateBlock
         title="Closed"
-        subtitle={formatDates(timeframe.closed, timeframe.claim)}
+        subtitle={formatDateRange(timeframe.closed, timeframe.claim)}
         isCurrent={highlightedStatuses.includes(OfferStatus.closed)}
       />
       <DateBlock
         title="Token Claim"
-        subtitle={formatDates(timeframe.claim)}
+        subtitle={formatDateRange(timeframe.claim)}
         isCurrent={highlightedStatuses.includes(OfferStatus.claim)}
         hideBottomBorder
       />

@@ -8,15 +8,21 @@ import { SMART_CONTRACT_STRATEGIES } from '../types'
 import { ConfirmPopup } from '../utils/ConfirmPopup'
 import { shortenAddress } from 'utils'
 
-const Content = ({ distributionControllerAddress }: { distributionControllerAddress: string }) => {
+const Content = ({
+  distributionControllerAddress,
+  title,
+}: {
+  distributionControllerAddress: string
+  title?: string
+}) => {
   const theme = useTheme()
   const [controllerCopied, setControllerCopied] = useCopyClipboard()
+  const titleText =
+    title ||
+    'Before starting the Claim process please make sure the corresponding amount of Security Tokens has been transferred to this address'
   return (
     <ContentContainer>
-      <div>
-        Before starting the Claim process please make sure the corresponding amount of Security Tokens has been
-        transferred to this address
-      </div>
+      <div>{titleText}</div>
       <BtnContainer onClick={() => setControllerCopied(distributionControllerAddress)}>
         {shortenAddress(distributionControllerAddress, 5)}
         {controllerCopied ? (
@@ -30,13 +36,13 @@ const Content = ({ distributionControllerAddress }: { distributionControllerAddr
 }
 
 export const ConfirmClaimModal = (props: any) => {
-  const { isOpen, onClose, onAccept, smartContractStrategy, distributionControllerAddress } = props
+  const { isOpen, onClose, onAccept, smartContractStrategy, distributionControllerAddress, title, canWithdraw } = props
 
   return (
     <ConfirmPopup
       subtitle={
-        smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess ? (
-          <Content distributionControllerAddress={distributionControllerAddress} />
+        smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess && !canWithdraw ? (
+          <Content distributionControllerAddress={distributionControllerAddress} title={title} />
         ) : null
       }
       isOpen={isOpen}
