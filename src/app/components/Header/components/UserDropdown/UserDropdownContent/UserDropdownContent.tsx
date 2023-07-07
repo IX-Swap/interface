@@ -3,17 +3,12 @@ import { IdentityRoute } from 'app/pages/identity/router/config'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { useLogout } from 'auth/hooks/useLogout'
-import { useIsAdmin, useIsClient } from 'helpers/acl'
+import { useIsAdmin, useIsAuthorizer, useIsClient } from 'helpers/acl'
 import {
   AccountCircleOutlined,
   PowerSettingsNewOutlined,
-  SettingsOutlined
-  //   Payment,
-  //   Token,
-  //   ReceiptLong,
-  //   AccountBalanceWallet,
-  //   SummarizeOutlined,
-  //   CurrencyExchangeRounded
+  SettingsOutlined,
+  AdminPanelSettingsOutlined
 } from '@mui/icons-material'
 import { Box, List } from '@mui/material'
 import { UserDropdownItem } from 'app/components/Header/components/UserDropdown/UserDropdownItem/UserDropdownItem'
@@ -22,13 +17,15 @@ import { DropdownContentProps } from 'app/components/Header/components/Dropdown/
 import { useStyles } from 'app/components/Header/components/UserDropdown/UserDropdownContent/UserDropdownContent.styles'
 import { AppRoute } from 'app/router/config'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
+import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 
 export const UserDropdownContent = (props: DropdownContentProps) => {
   const classes = useStyles()
   const logout = useLogout()
   const isAdmin = useIsAdmin()
   const isClient = useIsClient()
-  //   const isAuthorizer = useIsAuthorizer()
+  const isAuthorizer = useIsAuthorizer()
+  const isSuperUser = isAuthorizer || isAdmin
   const handleClose = props.injectedProps.close
   return (
     <Fragment>
@@ -49,6 +46,18 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
                 icon={AccountCircleOutlined}
                 label='Admin'
                 link={AdminRoute.landing}
+                onClose={handleClose}
+              />
+            </>
+          )}
+
+          {isSuperUser && (
+            <>
+              <Box className={classes.border} />
+              <UserDropdownItem
+                icon={AdminPanelSettingsOutlined}
+                label='Authorizer'
+                link={AuthorizerRoute.landing}
                 onClose={handleClose}
               />
             </>
