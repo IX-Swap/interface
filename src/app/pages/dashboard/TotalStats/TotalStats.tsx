@@ -21,15 +21,15 @@ export const TotalStats = () => {
   }
 
   return (
-    <Grid container gap={2} mt={2}>
-      <Grid item xs>
+    <Grid container gap={2}>
+      <Grid item xs={12} md>
         <Stats
           title={'Total Investment'}
           stats={`$${totalInvestment}`}
           increase={`$${totalInvestmentIncrease}`}
         />
       </Grid>
-      <Grid item xs>
+      <Grid item xs={12} md>
         <Stats
           title={'Total STOs'}
           stats={formatDecimal(data?.issuance?.total)}
