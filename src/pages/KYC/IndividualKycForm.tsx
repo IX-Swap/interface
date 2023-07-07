@@ -574,11 +574,7 @@ export default function IndividualKycForm() {
               const statusDeclarationFilled = shouldValidate && isFilled('accredited')
 
               const identityDocumentFilled =
-                shouldValidate &&
-                isFilled('idType') &&
-                isFilled('idNumber') &&
-                isFilled('idIssueDate') &&
-                isFilled('idExpiryDate')
+                shouldValidate && isFilled('idType') && isFilled('idNumber') && isFilled('idIssueDate')
 
               const addressFilled =
                 shouldValidate &&
@@ -812,14 +808,13 @@ export default function IndividualKycForm() {
                               maxDate={new Date()}
                             />
                             <DateInput
-                              label="ID Expiration Date"
+                              label="ID Expiration Date (Optional)"
                               id="documentExpiryDateButton"
                               maxHeight={60}
                               error={errors.idExpiryDate}
                               value={values.idExpiryDate}
                               onChange={(value) => {
                                 setFieldValue('idExpiryDate', dayjs(value).local().format('YYYY-MM-DD'), false)
-                                validationSeen('idExpiryDate')
                               }}
                               minDate={new Date()}
                             />

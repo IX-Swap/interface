@@ -25,7 +25,6 @@ export const individualErrorsSchema = yup.object().shape({
   idType: yup.object().nullable().required('Required'),
   idNumber: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   idIssueDate: yup.mixed().nullable().required('Required'),
-  idExpiryDate: yup.mixed().nullable().required('Required'),
 
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
   proofOfAddress: yup.array().min(1, 'Required').nullable(),
