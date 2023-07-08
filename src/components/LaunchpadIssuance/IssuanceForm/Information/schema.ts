@@ -156,8 +156,13 @@ export const createValidationSchema = (account: string | null | undefined) => {
     trusteeAddress: yup
       .string()
       .nullable()
-      .when('smartContractStrategy', {
-        is: SMART_CONTRACT_STRATEGIES.original,
+      .when(['smartContractStrategy', 'tokenStandart'], {
+        is: (smartContractStrategy: SMART_CONTRACT_STRATEGIES, tokenStandart: OfferTokenStandart) => {
+          return (
+            smartContractStrategy === SMART_CONTRACT_STRATEGIES.original &&
+            tokenStandart === OfferTokenStandart.xtokenlite
+          )
+        },
         then: yup
           .string()
           .nullable()
@@ -174,10 +179,6 @@ export const createValidationSchema = (account: string | null | undefined) => {
               return !originalValue || !this.options.context || originalValue !== account
             }
           ),
-      })
-      .when('tokenStandart', {
-        is: OfferTokenStandart.xtokenlite,
-        then: yup.string().nullable().required(REQUIRED),
       }),
 
     tokenAddress: yup
