@@ -24,6 +24,7 @@ export const Tooltip = ({
         disableRipple
         sx={{
           '& .MuiSvgIcon-root': {
+            background: 'none',
             fill: 'currentColor'
           }
         }}
