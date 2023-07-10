@@ -52,12 +52,6 @@ const HeaderPopover = () => {
         <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
           <Trans>Live Pools</Trans>
         </SubMenuExternalLink>
-
-        {isAllowed(routes.staking) && (
-          <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
-            <Trans>Legacy Pools (Closed)</Trans>
-          </SubMenuLink>
-        )}
       </Column>
 
       <Row style={{ padding: '0', margin: '5px 0' }}>
