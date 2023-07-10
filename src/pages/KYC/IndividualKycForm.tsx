@@ -95,7 +95,7 @@ export default function IndividualKycForm() {
   const [showSafeguardModal, setShowSafeguardModal] = useState(false)
   const [showOptoutModal, setShowOptoutModal] = useState(false)
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
-
+  const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
   const openConfirmationModal = useCallback(() => {
     setShowOptoutModal(false)
     setShowOptoutConfirmationModal(true)
@@ -506,7 +506,6 @@ export default function IndividualKycForm() {
             onSubmit={async (values) => {
               try {
                 await individualErrorsSchema.validate(values, { abortEarly: false })
-
                 canLeavePage.current = true
 
                 setCanSubmit(false)
@@ -781,7 +780,17 @@ export default function IndividualKycForm() {
                               label="ID Type"
                               selectedItem={values.idType}
                               items={idTypes}
-                              onSelect={(idType) => onSelectChange('idType', idType, setFieldValue)}
+                              onSelect={(idType) => {
+                                onSelectChange('idType', idType, setFieldValue)
+                                if (
+                                  idType.label === IdentityDocumentType.NATIONAL_ID ||
+                                  idType.label === IdentityDocumentType.OTHERS
+                                ) {
+                                  setIdExpiryDateLabel('ID Expiration Date (Optional)')
+                                } else {
+                                  setIdExpiryDateLabel('ID Expiration Date')
+                                }
+                              }}
                             />
                             <TextInput
                               onChange={(e: any) =>
@@ -808,7 +817,7 @@ export default function IndividualKycForm() {
                               maxDate={new Date()}
                             />
                             <DateInput
-                              label="ID Expiration Date (Optional)"
+                              label={idExpiryDateLabel}
                               id="documentExpiryDateButton"
                               maxHeight={60}
                               error={errors.idExpiryDate}

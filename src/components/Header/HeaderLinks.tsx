@@ -52,12 +52,6 @@ const HeaderPopover = () => {
         <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
           <Trans>Live Pools</Trans>
         </SubMenuExternalLink>
-
-        {isAllowed(routes.staking) && (
-          <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
-            <Trans>Legacy Pools (Closed)</Trans>
-          </SubMenuLink>
-        )}
       </Column>
 
       <Row style={{ padding: '0', margin: '5px 0' }}>
@@ -209,7 +203,7 @@ export const HeaderLinks = () => {
         <MenuExternalLink
           disabled={!isApproved}
           target="_self"
-          href={config?.chartsUrl || (isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home')}
+          href={config?.chartsUrl || 'https://info.ixswap.io/home'}
         >
           <Trans>Charts</Trans>
         </MenuExternalLink>

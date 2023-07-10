@@ -102,12 +102,6 @@ export const Menu = ({ close }: Props) => {
             </ExternalListItem>
           )}
 
-          {isAllowed(routes.staking) && (
-            <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
-              <Trans>Legacy Pools (Closed)</Trans>
-            </MenuListItem>
-          )}
-
           {isAllowed(routes.vesting) && (
             <MenuListItem activeClassName="active-item" id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
               <Trans>Token Sale Distribution</Trans>
