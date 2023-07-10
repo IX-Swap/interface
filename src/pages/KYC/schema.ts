@@ -33,7 +33,7 @@ export const individualErrorsSchema = yup.object().shape({
       is: (idType: any) => {
         return idType.label !== IdentityDocumentType.NATIONAL_ID && idType.label !== IdentityDocumentType.OTHERS
       },
-      then: yup.object().nullable().required('Required'),
+      then: yup.mixed().nullable().required('Required'),
     }),
 
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
