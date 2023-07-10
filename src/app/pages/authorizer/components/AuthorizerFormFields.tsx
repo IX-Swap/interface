@@ -44,8 +44,10 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
   const isProcessing = isApproving || isRejecting
 
   const canShareComment = !isProcessing && hasComment
-  const canApprove = !isProcessing && ['Submitted', 'Rejected'].includes(status)
-  const canReject = !isProcessing && ['Submitted', 'Approved'].includes(status)
+  //   const canApprove = !isProcessing && ['Submitted', 'Rejected'].includes(status)
+  //   const canReject = !isProcessing && ['Submitted', 'Approved'].includes(status)
+  const canApprove = !isProcessing && ['Submitted'].includes(status)
+  const canReject = !isProcessing && ['Submitted'].includes(status)
 
   return (
     <>

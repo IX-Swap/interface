@@ -5,7 +5,7 @@ import { NetworkFilter } from 'app/pages/invest/components/DSOTable/NetworkFilte
 import { PriceFilter } from 'app/pages/invest/components/DSOTable/PriceFilter'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
-import { FavoriteFilter } from 'app/pages/invest/components/DSOTable/FavoriteFilter'
+// import { FavoriteFilter } from 'app/pages/invest/components/DSOTable/FavoriteFilter'
 import { CurrencyFilter } from 'app/pages/invest/components/DSOTable/CurrencyFilter'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 export interface FiltersFavProps {
@@ -96,9 +96,9 @@ export const DSOTableFilters = (props: FiltersFavProps) => {
                   <NetworkFilter setPage={setPage} />
                 </Grid>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <FavoriteFilter setPage={setPage} />
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
         </Paper>

@@ -18,9 +18,14 @@ export const CorporateAuthorization = () => {
           }
           data={data}
           feature={AppFeature.Corporates}
+          hideActions
         >
           <Box sx={{ marginTop: '-42px' }}>
-            <CorporatesPreview data={data} isForAuthorizer />
+            <CorporatesPreview
+              data={data}
+              isForAuthorizer
+              feature={AppFeature.Corporates}
+            />
           </Box>
         </AuthorizerView>
       )}
