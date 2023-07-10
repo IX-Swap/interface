@@ -203,7 +203,7 @@ export const HeaderLinks = () => {
         <MenuExternalLink
           disabled={!isApproved}
           target="_self"
-          href={config?.chartsUrl || (isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home')}
+          href={config?.chartsUrl || 'https://info.ixswap.io/home'}
         >
           <Trans>Charts</Trans>
         </MenuExternalLink>
