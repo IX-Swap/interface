@@ -824,7 +824,6 @@ export default function IndividualKycForm() {
                               value={values.idExpiryDate}
                               onChange={(value) => {
                                 setFieldValue('idExpiryDate', dayjs(value).local().format('YYYY-MM-DD'), false)
-                                validationSeen('idExpiryDate')
                               }}
                               minDate={new Date()}
                             />
