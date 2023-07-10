@@ -14,9 +14,14 @@ export const IndividualAuthorization = () => {
           title={getPersonName(data)}
           data={data}
           feature={AppFeature.Individuals}
+          hideActions
         >
           <Box sx={{ marginTop: '-42px' }}>
-            <IndividualPreview data={data} isForAuthorizer />
+            <IndividualPreview
+              data={data}
+              isForAuthorizer
+              feature={AppFeature.Individuals}
+            />
           </Box>
         </AuthorizerView>
       )}
