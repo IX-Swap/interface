@@ -31,7 +31,7 @@ export const individualErrorsSchema = yup.object().shape({
     .nullable()
     .when('idType', {
       is: (idType: any) => {
-        return idType.label !== IdentityDocumentType.NATIONAL_ID
+        return idType.label !== IdentityDocumentType.NATIONAL_ID && idType.label !== IdentityDocumentType.OTHERS
       },
       then: yup.object().nullable().required('Required'),
     }),
