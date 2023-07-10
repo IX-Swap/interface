@@ -19,12 +19,13 @@ export const Stats = ({ title, stats, increase }: StatsProps) => {
         color={'primary'}
         textAlign={'right'}
         fontWeight={'bold'}
+        mt={1}
       >
         {stats}
       </Typography>
       <Box display={'flex'} justifyContent={'end'} gap={1} mt={1}>
         <Typography color={'#6ABC10'} fontWeight={'bold'}>
-          + {increase}
+          +{increase}
         </Typography>
         <Typography color={'text.secondary'}>since last week</Typography>
       </Box>

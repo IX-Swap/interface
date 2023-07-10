@@ -17,6 +17,7 @@ export interface AvatarProps extends MUIAvatarProps {
   fallback?: Element | JSX.Element
   children?: ReactNode
   imageValue?: boolean | null
+  cursor?: string
 }
 
 export const Avatar = (props: AvatarProps) => {
@@ -31,13 +32,14 @@ export const Avatar = (props: AvatarProps) => {
     fallback,
     children,
     maxWidth = 'initial',
-    imageValue
+    imageValue,
+    cursor = 'pointer'
   } = props
   const width = Array.isArray(size) ? size[0] : size
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   const height = imageValue ? 200 : Array.isArray(size) ? size[1] : size
 
-  const style = { width, height, border, borderRadius, maxWidth }
+  const style = { width, height, border, borderRadius, maxWidth, cursor }
 
   const fallbackElement = (
     <Fragment>

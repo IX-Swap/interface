@@ -23,7 +23,7 @@ import { investLandingLinks, InvestRoute } from 'app/pages/invest/router/config'
 import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
 // import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
-import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
+// import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 
 import { InternalRouteProps } from 'types/util'
 
@@ -85,13 +85,13 @@ export const useAppNavigation = () => {
     })
   }
 
-  if (isSuperUser) {
-    links.push({
-      label: 'Authorizer',
-      link: AuthorizerRoute.landing,
-      icon: AuthorizerIcon
-    })
-  }
+  // if (isSuperUser) {
+  //   links.push({
+  //     label: 'Authorizer',
+  //     link: AuthorizerRoute.landing,
+  //     icon: AuthorizerIcon
+  //   })
+  // }
 
   if (isFundManager || isSuperUser) {
     issuanceLandingLinks.unshift({
