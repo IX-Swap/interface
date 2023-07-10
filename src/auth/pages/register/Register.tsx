@@ -6,7 +6,7 @@ import {
 import { SignupArgs } from 'types/auth'
 import { observer } from 'mobx-react'
 import { useSignup } from 'auth/hooks/useSignup'
-import { Box, Button, Divider, Grid, Typography } from '@mui/material'
+import { Box, Divider, Grid, Typography } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { RegisterFields } from 'auth/pages/register/components/RegisterFields'
 import { Submit } from 'components/form/Submit'
@@ -21,6 +21,8 @@ import { history } from 'config/history'
 import { SingPassPage } from '../sing-pass-data/SingPass'
 import { useTenant } from 'auth/hooks/useTenant'
 import { useServices } from 'hooks/useServices'
+// import { ButtonToggle } from './components/IdentityTypeSelection/ButtonToggle'
+import { RadioToggle } from './components/IdentityTypeSelection/RadioToggle'
 
 export const registerFormInitialValues = {
   isMyInfo: false,
@@ -143,28 +145,10 @@ export const Register: React.FC = observer(() => {
             Sign up
           </Typography>
           {!isMyInfo ? (
-            <Typography
-              align='center'
-              sx={{ color: 'rgba(255, 255, 255, .5)' }}
-            >
-              Creating {isIndividual ? 'a ' : 'an '}
-              <Button
-                variant='text'
-                onClick={handleIdentityChange}
-                disableRipple
-                sx={{
-                  textTransform: 'capitalize',
-                  color: 'rgba(255,255,255,1)',
-                  padding: 0,
-                  ':hover': {
-                    backgroundColor: 'transparent'
-                  }
-                }}
-              >
-                {isIndividual ? 'Corporate' : 'Individual'} Account
-              </Button>{' '}
-              ?
-            </Typography>
+            <RadioToggle
+              isIndividual={isIndividual}
+              onChange={handleIdentityChange}
+            />
           ) : null}
         </Grid>
         <Grid item xs={12}>

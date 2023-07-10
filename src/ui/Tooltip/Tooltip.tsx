@@ -17,7 +17,17 @@ export const Tooltip = ({
       placement={placement}
       enterTouchDelay={0}
     >
-      <IconButton color='primary' className={iconButton} size='large'>
+      <IconButton
+        color='primary'
+        className={iconButton}
+        size='large'
+        disableRipple
+        sx={{
+          '& .MuiSvgIcon-root': {
+            fill: 'currentColor'
+          }
+        }}
+      >
         <InfoIcon color='disabled' />
       </IconButton>
     </MuiTooltip>

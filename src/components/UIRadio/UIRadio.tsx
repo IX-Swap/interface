@@ -35,5 +35,20 @@ export const UIRadio = ({
     return <CheckedIcon style={styles} />
   }
 
-  return <Radio {...props} checkedIcon={getCheckedIcon()} />
+  return (
+    <Radio
+      {...props}
+      checkedIcon={getCheckedIcon()}
+      disableRipple
+      sx={{
+        '&:hover': {
+          backgroundColor: 'transparent !important'
+        },
+        '& .MuiSvgIcon-root': {
+          background: 'rgba(26, 57, 124, 0.4)',
+          borderRadius: '100%'
+        }
+      }}
+    />
+  )
 }
