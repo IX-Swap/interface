@@ -782,7 +782,10 @@ export default function IndividualKycForm() {
                               items={idTypes}
                               onSelect={(idType) => {
                                 onSelectChange('idType', idType, setFieldValue)
-                                if (idType.label === IdentityDocumentType.NATIONAL_ID) {
+                                if (
+                                  idType.label === IdentityDocumentType.NATIONAL_ID ||
+                                  idType.label === IdentityDocumentType.OTHERS
+                                ) {
                                   setIdExpiryDateLabel('ID Expiration Date (Optional)')
                                 } else {
                                   setIdExpiryDateLabel('ID Expiration Date')
