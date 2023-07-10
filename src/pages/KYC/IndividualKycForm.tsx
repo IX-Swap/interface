@@ -95,7 +95,7 @@ export default function IndividualKycForm() {
   const [showSafeguardModal, setShowSafeguardModal] = useState(false)
   const [showOptoutModal, setShowOptoutModal] = useState(false)
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
-
+  const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
   const openConfirmationModal = useCallback(() => {
     setShowOptoutModal(false)
     setShowOptoutConfirmationModal(true)
@@ -506,7 +506,6 @@ export default function IndividualKycForm() {
             onSubmit={async (values) => {
               try {
                 await individualErrorsSchema.validate(values, { abortEarly: false })
-
                 canLeavePage.current = true
 
                 setCanSubmit(false)
@@ -574,11 +573,7 @@ export default function IndividualKycForm() {
               const statusDeclarationFilled = shouldValidate && isFilled('accredited')
 
               const identityDocumentFilled =
-                shouldValidate &&
-                isFilled('idType') &&
-                isFilled('idNumber') &&
-                isFilled('idIssueDate') &&
-                isFilled('idExpiryDate')
+                shouldValidate && isFilled('idType') && isFilled('idNumber') && isFilled('idIssueDate')
 
               const addressFilled =
                 shouldValidate &&
@@ -785,7 +780,14 @@ export default function IndividualKycForm() {
                               label="ID Type"
                               selectedItem={values.idType}
                               items={idTypes}
-                              onSelect={(idType) => onSelectChange('idType', idType, setFieldValue)}
+                              onSelect={(idType) => {
+                                onSelectChange('idType', idType, setFieldValue)
+                                if (idType.label === IdentityDocumentType.NATIONAL_ID) {
+                                  setIdExpiryDateLabel('ID Expiration Date (Optional)')
+                                } else {
+                                  setIdExpiryDateLabel('ID Expiration Date')
+                                }
+                              }}
                             />
                             <TextInput
                               onChange={(e: any) =>
@@ -812,14 +814,13 @@ export default function IndividualKycForm() {
                               maxDate={new Date()}
                             />
                             <DateInput
-                              label="ID Expiration Date"
+                              label={idExpiryDateLabel}
                               id="documentExpiryDateButton"
                               maxHeight={60}
                               error={errors.idExpiryDate}
                               value={values.idExpiryDate}
                               onChange={(value) => {
                                 setFieldValue('idExpiryDate', dayjs(value).local().format('YYYY-MM-DD'), false)
-                                validationSeen('idExpiryDate')
                               }}
                               minDate={new Date()}
                             />
