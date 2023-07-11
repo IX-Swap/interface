@@ -122,7 +122,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const convertedValue = React.useMemo(() => {
     if (inputValue) {
       const realValue = +inputValue.replace(/,/g, '')
-      const multiplier = (1 / +tokenPrice).toFixed(4)
+      const multiplier = (1 / +tokenPrice).toFixed(6)
 
       let result = `${realValue * +multiplier}`
 

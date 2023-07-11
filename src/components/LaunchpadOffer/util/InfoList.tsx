@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import { Separator } from '../../LaunchpadMisc/styled'
 import { Attachment } from './Attachment'
 
 import { Asset } from 'state/launchpad/types'
+import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
+import { Info } from 'react-feather'
 
 export interface InfoEntry {
   label: React.ReactNode
@@ -35,10 +37,24 @@ export const InfoList: React.FC<Props> = ({
   placeholderText = 'There is no information to display',
 }) => {
   const getIsLast = useCallback((idx: number) => entries.length === idx + 1, [entries])
+  const theme = useTheme()
 
   return (
     <Container>
-      {title && <Title fontWeight={titleFontWeight}>{title}</Title>}
+      {title &&
+        <Title fontWeight={titleFontWeight}>
+          <StageLabel>
+            <div>{title}</div>
+            {title === 'Investment Stage' &&
+              <Tooltip
+                title={title}
+                body="The time provided is based on the UTC +0 time zone."
+              >
+                <Info size="14" color={theme.launchpad.colors.text.caption} />
+              </Tooltip>}
+          </StageLabel>
+        </Title>
+      }
 
       <Separator />
 
@@ -84,4 +100,18 @@ const Title = styled.div<{ fontWeight?: string }>`
 const Placeholder = styled.div`
   font-size: 14px;
   padding: 8px 0;
+`
+
+const Nowrap = styled.div`
+  white-space: nowrap;
+`
+
+const StageLabel = styled(Nowrap)`
+  display: flex;
+
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 0.25rem;
 `

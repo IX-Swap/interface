@@ -63,6 +63,20 @@ export const ManageOffer = () => {
     }
     return ''
   }, [status, usersClaimed, canWithdraw])
+
+  const claimTitleText = useMemo(() => {
+    if (!softCapReached || (status && status !== OfferStatus.claim)) {
+      return ''
+    } else if (!usersClaimed) {
+      // admin and offer manager can do
+      return 'Before starting the Claim process please make sure the corresponding amount of Security Tokens has been transferred to this address'
+    } else if (canWithdraw) {
+      // offer manager can do
+      return 'Before starting the Withdraw Funds process please make sure the corresponding amount of Security Tokens has been transferred to this address'
+    }
+    return ''
+  }, [status, usersClaimed, canWithdraw])
+
   const showWhitelistBtn = useMemo(
     () =>
       offer
@@ -139,6 +153,8 @@ export const ManageOffer = () => {
         onAccept={onClaim}
         distributionControllerAddress={distributionControllerAddress}
         smartContractStrategy={smartContractStrategy}
+        canWithdraw={canWithdraw}
+        title={claimTitleText}
       />
       {isOpenWhitelisting && (
         <LaunchpadWhitelistWallet offerId={offer.id} isOpen={isOpenWhitelisting} setOpen={setOpenWhitelisting} />

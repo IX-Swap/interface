@@ -9,7 +9,7 @@ import { FormikProps, setNestedObjectValues } from 'formik'
 import { useShowError } from 'state/application/hooks'
 import { OfferReview } from '../Review'
 import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
-import { getDaysAfter, getDaysBefore } from 'utils/time'
+import { getMinutesAfter, getMinutesBefore } from 'utils/time'
 import { text1, text44 } from 'components/LaunchpadMisc/typography'
 import { filterNumberWithDecimals, integerNumberFilter, numberFilter, uppercaseFilter } from 'utils/input'
 import { isDraftDisabled, isSubmitDisabled } from 'components/LaunchpadIssuance/utils/form'
@@ -629,8 +629,8 @@ export const InformationForm = (props: Props) => {
             setter={setFieldValue}
             value={values.timeframe.whitelist}
             disabled={edit || !values.hasPresale}
-            minDate={new Date()}
-            maxDate={values?.timeframe?.preSale ? getDaysBefore(values?.timeframe?.preSale, 1) : undefined}
+            minDate={moment().subtract(1, 'minute').toDate()}
+            maxDate={values?.timeframe?.preSale ? getMinutesBefore(values?.timeframe?.preSale, 20) : undefined}
             error={(touched.timeframe?.whitelist && (touched.timeframe && errors.timeframe)?.whitelist) as string}
           />
 
@@ -642,8 +642,8 @@ export const InformationForm = (props: Props) => {
             setter={setFieldValue}
             value={values.timeframe.preSale}
             disabled={edit || !values.hasPresale || !values.timeframe.whitelist}
-            minDate={getDaysAfter(values?.timeframe?.whitelist, 1)}
-            maxDate={values?.timeframe?.sale ? getDaysBefore(values?.timeframe?.sale, 1) : undefined}
+            minDate={getMinutesAfter(values?.timeframe?.whitelist, 20)}
+            maxDate={values?.timeframe?.sale ? getMinutesBefore(values?.timeframe?.sale, 20) : undefined}
             error={(touched.timeframe?.preSale && (touched.timeframe && errors.timeframe)?.preSale) as string}
           />
 
@@ -654,8 +654,8 @@ export const InformationForm = (props: Props) => {
             field="timeframe.sale"
             value={[values.timeframe.sale, values.timeframe.closed].filter((x) => !!x).map((x) => moment(x))}
             disabled={edit || (values.hasPresale && !values.timeframe.preSale)}
-            minDate={values.hasPresale ? getDaysAfter(values.timeframe.preSale, 1) : new Date()}
-            maxDate={values?.timeframe?.claim ? getDaysBefore(values?.timeframe?.claim, 1) : undefined}
+            minDate={values.hasPresale ? getMinutesAfter(values.timeframe.preSale, 20) : new Date()}
+            maxDate={values?.timeframe?.claim ? getMinutesBefore(values?.timeframe?.claim, 20) : undefined}
             onChange={([start, end]) => {
               setFieldTouched('timeframe.sale')
               setFieldTouched('timeframe.closed')
@@ -673,7 +673,7 @@ export const InformationForm = (props: Props) => {
             field="timeframe.claim"
             setter={setFieldValue}
             disabled={edit || !values.timeframe.closed}
-            minDate={getDaysAfter(values.timeframe.closed, 1)}
+            minDate={getMinutesAfter(values.timeframe.closed, 20)}
             value={values.timeframe.claim}
             error={(touched.timeframe?.claim && (touched.timeframe && errors.timeframe)?.claim) as string}
           />

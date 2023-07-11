@@ -35,9 +35,7 @@ export const Header = () => {
         <HeaderLink to={routes.pool}>Liquidity Pools</HeaderLink>
         <HeaderLink to={routes.launchpad}>IXS Launchpad</HeaderLink>
         <HeaderLink to={'#'}>Farming</HeaderLink>
-        <HeaderLink to={isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home'}>
-          Charts
-        </HeaderLink>
+        <HeaderExternalLink href="https://info.ixswap.io/home">Charts</HeaderExternalLink>
       </HeaderLinks>
 
       {showIssuance && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
@@ -111,6 +109,18 @@ const TitleSection = styled(Link)`
 `
 
 const HeaderLink = styled(Link)`
+  ${text8}
+  text-decoration: none;
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+
+  transition: transform 0.1s ease-in-out;
+
+  :hover {
+    transform: scale(1.02);
+  }
+`
+
+const HeaderExternalLink = styled.a`
   ${text8}
   text-decoration: none;
   color: ${(props) => props.theme.launchpad.colors.text.title};

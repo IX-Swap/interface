@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 import { text30, text45 } from 'components/LaunchpadMisc/typography'
+import { isAfterWithSameTime, isBeforeWithSameTime } from 'utils/time'
 
 interface Props {
   current: moment.Moment
@@ -45,10 +46,10 @@ export const CalendarPicker: React.FC<Props> = (props) => {
     (day: number) => {
       const selectedDate = props.current.clone().date(day)
 
-      if (minDate && selectedDate < minDate) {
+      if (minDate && isBeforeWithSameTime(selectedDate, minDate)) {
         return
       }
-      if (maxDate && selectedDate > maxDate) {
+      if (maxDate && isAfterWithSameTime(selectedDate, maxDate)) {
         return
       }
       if (selectedRange.length === 1 && selectedRange[0].isSame(selectedDate)) {
@@ -105,7 +106,7 @@ export const CalendarPicker: React.FC<Props> = (props) => {
           isSelected={isSelected(day)}
           isWithinRange={isWithinRange(day)}
           isDisabled={
-            props.current.clone().date(day).isBefore(minDate) || props.current.clone().date(day).isAfter(maxDate)
+            isBeforeWithSameTime(props.current.clone().date(day), minDate) || isAfterWithSameTime(props.current.clone().date(day), maxDate)
           }
         >
           {day}
@@ -159,10 +160,10 @@ const Day = styled.div<{ isSelected?: boolean; isDisabled?: boolean; isWithinRan
 
   :hover {
     ${(props) =>
-      !props.isSelected && `
+    !props.isSelected && `
       background: ${props.theme.launchpad.colors.foreground};
       `
-    }
+  }
     
   }
 `

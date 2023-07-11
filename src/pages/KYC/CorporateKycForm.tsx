@@ -74,6 +74,11 @@ export default function CorporateKycForm() {
       if (data) {
         const transformedData = corporateTransformApiData(data)
         setFormData(transformedData)
+
+        // Disable tax number text box if TIN is N/A
+        if (!data.taxIdAvailable) {
+          setIsTaxNumberDisabled(true)
+        }
       }
     }
 
@@ -260,6 +265,8 @@ export default function CorporateKycForm() {
                   setCanSubmit(false)
                   if (values.taxIdAvailable === false) {
                     values.taxNumber = ''
+                  } else {
+                    values.reason = ''
                   }
                   const body = corporateTransformKycDto(values)
                   let data: any = null

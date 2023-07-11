@@ -169,6 +169,8 @@
     "@date-io/dayjs": "1.x",
     "@material-ui/core": "^4.12.3",
     "@material-ui/pickers": "4.0.0-alpha.12",
+    "@mui/material": "^5.13.6",
+    "@mui/x-date-pickers": "^6.9.1",
     "async-wait-until": "^2.0.7",
     "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
@@ -180,6 +182,7 @@
     "react-phone-input-2": "^2.15.0",
     "react-select": "^5.2.2",
     "react-sticky-box": "^0.9.3",
+    "react-usestateref": "^1.0.8",
     "truffle-privatekey-provider": "^1.2.0",
     "use-draggable-scroll": "^0.1.0",
     "web3": "^1.4.0"
