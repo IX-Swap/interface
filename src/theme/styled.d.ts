@@ -115,6 +115,47 @@ export interface Grids {
   lg: number
 }
 
+export interface LaunchpadTheme {
+  font: string
+
+  content: {
+    maxWidth: string
+  }
+
+  colors: {
+    primary: string
+    accent: string
+
+    success: string
+    error: string
+    info: string
+    warn: string
+
+    disabled: string
+
+    background: string
+    foreground: string
+
+    border: {
+      default: string
+      success: string
+      error: string
+    }
+
+    text: {
+      title: string
+      body: string
+      bodyAlt: string
+      caption: string
+      success: string
+      warning: string
+      light: string
+      hint: string
+      error: string
+    }
+  }
+}
+
 declare module 'styled-components' {
   export interface DefaultTheme extends Colors {
     grids: Grids
@@ -134,5 +175,7 @@ declare module 'styled-components' {
     // css snippets
     flexColumnNoWrap: FlattenSimpleInterpolation
     flexRowNoWrap: FlattenSimpleInterpolation
+
+    launchpad: LaunchpadTheme
   }
 }

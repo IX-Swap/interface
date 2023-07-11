@@ -47,6 +47,12 @@ export interface ChainInfo {
 
 export type ChainInfoMap = { readonly [chainId: number]: ChainInfo }
 
+export const nameChainMap = {
+  polygon: SupportedChainId.MATIC,
+  kovan: SupportedChainId.KOVAN,
+  ethereum: SupportedChainId.MAINNET,
+}
+
 export const CHAIN_INFO: ChainInfoMap = {
   [SupportedChainId.MAINNET]: {
     blockExplorerUrls: ['https://etherscan.io/'],

@@ -5,7 +5,6 @@ import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 import useScrollPosition from '@react-hook/window-scroll'
-
 import useLightBackground from 'components/AppBackground/useLightBackground'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { useKYCState } from 'state/kyc/hooks'
@@ -16,9 +15,6 @@ import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
 import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
-import { useUserState } from 'state/user/hooks'
-import { ROLES } from 'constants/roles'
-
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
 import { MobileMenu } from '../Mobile-Menu'
@@ -29,6 +25,7 @@ import { Announcement } from 'components/Announcement'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { useRole } from 'state/user/hooks'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -205,8 +202,7 @@ export default function Header() {
   const scrollY = useScrollPosition()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
-  const { me } = useUserState()
-
+  const { isTokenManager } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
   const isAllowed = useCallback(
@@ -234,7 +230,7 @@ export default function Header() {
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
-            {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && me?.role === ROLES.TOKEN_MANAGER && (
+            {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
               <IconWrapper>
                 <HeaderElement>
                   <NavLink

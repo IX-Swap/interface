@@ -1,7 +1,12 @@
 import { IdentityDocumentType } from './enum'
 import { legalEntityTypes } from './mock'
 
-const filterFields = ['investorDeclarationStatus', 'investorDeclarationId', 'acceptOfQualification', 'acceptRefusalRight']
+const filterFields = [
+  'investorDeclarationStatus',
+  'investorDeclarationId',
+  'acceptOfQualification',
+  'acceptRefusalRight',
+]
 
 export const corporateTransformApiData = (data: any) => {
   const {
@@ -66,7 +71,6 @@ export const corporateTransformKycDto = (values: any) => {
     taxCountry,
     beneficialOwners,
     incorporationDate,
-    incorporationExpiryDate,
   } = values
 
   return {
@@ -74,16 +78,12 @@ export const corporateTransformKycDto = (values: any) => {
     ...(!isUSTaxPayer && { usTin: '' }),
     incorporationDate:
       typeof incorporationDate === 'string' ? incorporationDate : incorporationDate.format('MM/DD/YYYY'),
-    incorporationExpiryDate:
-      typeof incorporationExpiryDate === 'string'
-        ? incorporationExpiryDate
-        : incorporationExpiryDate.format('MM/DD/YYYY'),
     typeOfLegalEntity: typeOfLegalEntity.label,
     sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
     countryOfIncorporation: countryOfIncorporation.label,
     country: country.label,
     residentialAddressCountry: residentialAddressCountry.label,
-    taxCountry: taxCountry.label,
+    taxCountry: taxCountry?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
     beneficialOwners: JSON.stringify(
       beneficialOwners.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
@@ -120,7 +120,9 @@ export const individualTransformApiData = (data: any) => {
   return {
     ...data,
     middleName: data.middleName ?? '',
-    sourceOfFunds: (otherFunds?.length ? [...funds.split(', '), 'Others'] : funds.split(', ')).filter((x: string) => x.length > 0),
+    sourceOfFunds: (otherFunds?.length ? [...funds.split(', '), 'Others'] : funds.split(', ')).filter(
+      (x: string) => x.length > 0
+    ),
     isUSTaxPayer: usTin ? 1 : 0,
     otherFunds,
     address: address?.address,
@@ -139,7 +141,6 @@ export const individualTransformApiData = (data: any) => {
     income: income && { value: 0, label: income },
     removedDocuments: [],
 
-
     taxDeclarations: data.taxDeclarations.map((t: any) => ({ ...t, country: { label: t.country } })),
 
     investorDeclarationIsFilled: [
@@ -147,7 +148,7 @@ export const individualTransformApiData = (data: any) => {
       data.investorDeclaration?.isAnnualIncome,
       data.investorDeclaration?.isFinancialAssets,
       data.investorDeclaration?.isJointIncome,
-    ].some(x => !!x),
+    ].some((x) => !!x),
 
     isTotalAssets: data.investorDeclaration?.isTotalAssets,
     isAnnualIncome: data.investorDeclaration?.isAnnualIncome,
@@ -155,7 +156,7 @@ export const individualTransformApiData = (data: any) => {
     isJointIncome: data.investorDeclaration?.isJointIncome,
 
     acceptOfQualification: data.investorDeclaration?.acceptOfQualification,
-    acceptRefusalRight: data.investorDeclaration?.acceptRefusalRight
+    acceptRefusalRight: data.investorDeclaration?.acceptRefusalRight,
   }
 }
 
@@ -175,59 +176,60 @@ export const individualTransformKycDto = (values: any) => {
     idIssueDate,
     idExpiryDate,
     idType,
-    taxDeclarations
+    taxDeclarations,
   } = values
 
   const isLabel = sourceOfFunds.some((x: any) => x.label)
   const emptyInvestorDeclaration = {
     status: null,
-    confirmStatusDeclaration: false
+    confirmStatusDeclaration: false,
   }
 
   const result = {
     ...values,
 
     gender: gender?.label,
-    dateOfBirth: typeof dateOfBirth === 'string'
-      ? dateOfBirth
-      : dateOfBirth?.format('MM/DD/YYYY'),
+    dateOfBirth: typeof dateOfBirth === 'string' ? dateOfBirth : dateOfBirth?.format('MM/DD/YYYY'),
 
     nationality: nationality?.label,
     citizenship: citizenship?.label,
-    
+
     declarationAcknowledgement: 'offers-acknowledgement',
-    
+
     idType: idType?.label?.toUpperCase(),
     idIssueDate: typeof idIssueDate === 'string' ? idIssueDate : idIssueDate?.format('MM/DD/YYYY'),
     idExpiryDate: typeof idExpiryDate === 'string' ? idExpiryDate : idExpiryDate?.format('MM/DD/YYYY'),
 
-    sourceOfFunds: [...sourceOfFunds.map((x: any) => isLabel ? x.label : x), ...(sourceOfFunds.some((x: any) => isLabel ? x.label === 'Others' : x === 'Others') ? [otherFunds] : [])].join(', '),
+    sourceOfFunds: [
+      ...sourceOfFunds.map((x: any) => (isLabel ? x.label : x)),
+      ...(sourceOfFunds.some((x: any) => (isLabel ? x.label === 'Others' : x === 'Others')) ? [otherFunds] : []),
+    ].join(', '),
 
     occupation: occupation?.label,
     employmentStatus: employmentStatus?.label,
     income: income?.label,
-    
+
     ...(!isUSTaxPayer && { usTin: '' }),
     country: country?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
 
-    investorDeclaration: values?.accredited ? 
-    {
-      ...values.investorDeclaration,
+    investorDeclaration: values?.accredited
+      ? {
+          ...values.investorDeclaration,
 
-      isTotalAssets: values.isTotalAssets,
-      isAnnualIncome: values.isAnnualIncome,
-      isFinancialAssets: values.isFinancialAssets,
-      isJointIncome: values.isJointIncome,
+          isTotalAssets: values.isTotalAssets,
+          isAnnualIncome: values.isAnnualIncome,
+          isFinancialAssets: values.isFinancialAssets,
+          isJointIncome: values.isJointIncome,
 
-      acceptOfQualification: values?.acceptOfQualification,
-      acceptRefusalRight: values?.acceptRefusalRight,
-    } : emptyInvestorDeclaration,
+          acceptOfQualification: values?.acceptOfQualification,
+          acceptRefusalRight: values?.acceptRefusalRight,
+        }
+      : emptyInvestorDeclaration,
 
-    taxDeclarations: taxDeclarations
-      ?.map((t: any, idx: number) => ({ ...t, country: t?.country?.label, })),
+    taxDeclarations: taxDeclarations?.map((t: any, idx: number) => ({ ...t, country: t?.country?.label })),
 
-    removedTaxDeclarations: values.removedTaxDeclarations
+    removedTaxDeclarations: values.removedTaxDeclarations,
   }
 
   for (const tax of result.taxDeclarations) {
@@ -237,14 +239,10 @@ export const individualTransformKycDto = (values: any) => {
   }
 
   for (const entry of filterFields) {
-    delete result[entry];
+    delete result[entry]
   }
 
   return Object.entries(result)
-    .filter(([key, value]) =>
-      value !== '' && 
-      value !== null &&
-      value !== undefined
-    )
+    .filter(([, value]) => value !== '' && value !== null && value !== undefined)
     .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {} as Record<string, any>)
 }

@@ -250,6 +250,17 @@ export function ExternalLink({
   return <StyledLink target={target} rel={rel} href={href} onClick={handleClickExternalLink} {...rest} />
 }
 
+export const DiscreteExternalLink = styled(ExternalLink)`
+  :hover {
+    text-decoration: none;
+  }
+
+  :focus {
+    outline: none;
+    text-decoration: none;
+  }
+`
+
 export function ExternalLinkIcon({
   target = '_blank',
   href,
@@ -355,6 +366,28 @@ export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
   `};
   user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
 `
+
+export const ModalLightBlurWrapper = styled.span<{ touchable?: boolean }>`
+  border-radius: 45px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  display: flex;
+  min-width: 622px;
+  z-index: 5;
+  backdrop-filter: blur(20px);
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0;
+    min-width: 100%;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+  `};
+  user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
+`
+
 export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
   color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
   width: 0;

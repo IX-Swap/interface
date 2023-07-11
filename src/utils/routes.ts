@@ -34,4 +34,16 @@ export const routes = {
   tokenManager: (tab?: string, id?: number | null) =>
     `/token-manager/${tab || ':tab'}${id !== null ? `/${id || ':id?'}` : ''}`,
   admin: (tab?: string, id?: number | null) => `/admin/${tab || ':tab'}${id !== null ? `/${id || ':id?'}` : ''}`,
+
+  launchpad: '/launchpad',
+  offerPage: '/offers/:offerId',
+  issuance: '/issuance',
+  issuanceCreate: '/issuance/create',
+  createVetting: '/issuance/create/vetting',
+  viewVetting: '/issuance/view/vetting',
+  createOffer: '/issuance/create/information',
+  editOffer: '/issuance/edit/information',
+  reviewOffer: '/issuance/review/information',
+  issuanceReport: `/issuance/extract/:issuanceId`,
+  manageOffer: `/issuance/manage/:issuanceId`,
 }

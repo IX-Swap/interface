@@ -26,8 +26,8 @@ import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
 import DarkModeQueryParamReader from 'theme/DarkModeQueryParamReader'
 
 import { useAuthState } from 'state/auth/hooks'
-import { useModalOpen } from 'state/application/hooks'
-import { useAccount, useGetMe } from 'state/user/hooks'
+import { useHideHeader, useModalOpen } from 'state/application/hooks'
+import { useAccount, useGetMe, useRawRole } from 'state/user/hooks'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
 
@@ -35,20 +35,20 @@ import { ApplicationModal, clearStore } from 'state/application/actions'
 
 import { routeConfigs, RouteMapEntry } from './AppRoutes'
 import { routes } from 'utils/routes'
+import { ROLES } from 'constants/roles'
 
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
   align-items: flex-start;
   position: relative;
-  /* overflow-x: hidden; */
 `
 
-const BodyWrapper = styled.div`
+const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 120px;
+  ${(props) => !props.hideHeader && 'margin-top: 120px;'}
   align-items: center;
   flex: 1;
   z-index: 1;
@@ -58,10 +58,12 @@ const BodyWrapper = styled.div`
   `};
 `
 
-const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
+const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: boolean }>`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   min-height: calc(100vh - 120px);
-  padding-bottom: 48px;
+
+  ${(props) => !props.hideHeader && 'padding-bottom: 48px;'}
+
   ${({ theme }) => theme.mediaWidth.upToSmall`
     min-height: calc(100vh - 64px);
   `}
@@ -80,6 +82,7 @@ export default function App() {
   const dispatch = useDispatch()
   const getWitelabelConfig = useGetWihitelabelConfig()
   const { config } = useWhitelabelState()
+  const hideHeader = useHideHeader()
 
   const { kyc } = useKYCState()
 
@@ -116,8 +119,9 @@ export default function App() {
   )
 
   const defaultPage = useMemo(() => {
+    const defaultPath = [routes.launchpad, routes.issuance].includes(pathname) ? routes.launchpad : routes.kyc
     if (isAllowed({ path: routes.kyc }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
-      return routes.kyc
+      return defaultPath
     }
     if (
       isAllowed({ path: routes.securityTokens('tokens') }) &&
@@ -129,16 +133,14 @@ export default function App() {
       return routes.securityTokens('tokens')
     }
 
-    return (config?.pages ?? []).length > 0 ? config?.pages[0] : routes.kyc
+    return (config?.pages ?? []).length > 0 ? config?.pages[0] : defaultPath
   }, [kyc, account, chainId, isWhitelisted, chains])
 
   useAccount()
 
   useEffect(() => {
-    if (account && token) {
-      getMyKyc()
-    }
-  }, [account, token])
+    getMyKyc()
+  }, [account, token, getMyKyc])
 
   const clearLocaleStorage = () => {
     const cleared = localStorage.getItem('clearedLS-28-04-22')
@@ -174,27 +176,38 @@ export default function App() {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
 
+  const userRole = useRawRole()
+
   const routeGenerator = useCallback(
     (route: RouteMapEntry) => {
+      const roleGuard =
+        route.conditions?.rolesSupported !== undefined &&
+        !(route.conditions?.rolesSupported.includes(userRole) && account)
       const guards = [
         !isAllowed(route),
         route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
         route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
         route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
         route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
+        route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
+        roleGuard,
       ]
 
       if (guards.some((guard) => guard === true)) {
+        if (roleGuard) {
+          return (
+            <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
+          )
+        }
         return null
       }
 
       return <Route exact strict path={route.path} component={route.component} render={route.render} />
     },
-    [isAllowed, canAccessKycForm, chainId, isWhitelisted]
+    [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
   )
 
   const useRedirect = account ? kyc !== null : true
-
   if (!config) {
     return <LoadingIndicator isLoading />
   }
@@ -207,8 +220,12 @@ export default function App() {
       <AppBackground />
       <Popups />
       <AppWrapper>
-        {!isAdminKyc && <Header />}
-        <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
+        {!isAdminKyc && !hideHeader && <Header />}
+        <ToggleableBody
+          isVisible={visibleBody}
+          {...(isAdminKyc && { style: { marginTop: 26 } })}
+          hideHeader={hideHeader}
+        >
           <IXSBalanceModal />
           <Web3ReactManager>
             <Suspense
@@ -230,7 +247,7 @@ export default function App() {
             </Suspense>
           </Web3ReactManager>
         </ToggleableBody>
-        <Footer />
+        {!hideHeader && <Footer />}
       </AppWrapper>
     </ErrorBoundary>
   )

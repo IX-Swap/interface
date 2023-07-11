@@ -29,8 +29,6 @@ import { PayoutHistory } from './History'
 import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutTimeline } from './Timeline/PayoutTimeline'
-import dayjs from 'dayjs'
-import { useAccount } from 'state/user/hooks'
 
 export interface MyAmounts {
   poolTokens: number
@@ -56,25 +54,19 @@ export default function PayoutItemForUser({
 
   const [myAmount, handleMyAmount] = useState(0)
 
-  const getPayoutItem = useCallback(
-    async () => {
-      const data = await getPayoutItemById(+payoutId)
-      if (data?.id) {
-        setPayout(data)
-      }
-    },
-    [payoutId]
-  )
+  const getPayoutItem = useCallback(async () => {
+    const data = await getPayoutItemById(+payoutId)
+    if (data?.id) {
+      setPayout(data)
+    }
+  }, [payoutId])
 
-  const getMyAmount = useCallback(
-    async () => {
-      const data = await getMyPayoutAmount(+payoutId)
-      if (data) {
-        handleMyAmount(+data.poolTokens + +data.walletTokens)
-      }
-    },
-    [payoutId]
-  )
+  const getMyAmount = useCallback(async () => {
+    const data = await getMyPayoutAmount(+payoutId)
+    if (data) {
+      handleMyAmount(+data.poolTokens + +data.walletTokens)
+    }
+  }, [payoutId])
 
   useEffect(() => {
     getPayoutItem()
@@ -137,8 +129,8 @@ const MorePayoutEvents = ({ payoutId }: { payoutId: number }) => {
     element.scrollBy({ left: 600, behavior: 'smooth' })
 
     window.requestAnimationFrame(() => {
-      const child = element.lastElementChild!
-
+      const child = element.lastElementChild
+      if (!child) return
       const boxElement = element.getBoundingClientRect()
       const boxChild = child.getBoundingClientRect()
 
@@ -160,8 +152,8 @@ const MorePayoutEvents = ({ payoutId }: { payoutId: number }) => {
     element.scrollBy({ left: -600, behavior: 'smooth' })
 
     window.requestAnimationFrame(() => {
-      const child = element.firstElementChild!
-
+      const child = element.firstElementChild
+      if (!child) return
       const boxElement = element.getBoundingClientRect()
       const boxChild = child.getBoundingClientRect()
 

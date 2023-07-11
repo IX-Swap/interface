@@ -10,6 +10,7 @@ import {
   setShowFakeApproval,
   setBrokerDealerData,
   setPendingSign,
+  setHideHeader as setHideHeader,
 } from './actions'
 
 type PopupList = Array<{ key: string; show: boolean; content: PopupContent; removeAfterMs: number | null }>
@@ -28,6 +29,7 @@ export interface ApplicationState {
   readonly showFakeApproval: boolean
   readonly brokerDealerData: any
   pendingSign: boolean
+  hideHeader: boolean
 }
 
 const initialState: ApplicationState = {
@@ -40,6 +42,7 @@ const initialState: ApplicationState = {
   showFakeApproval: false,
   brokerDealerData: {},
   pendingSign: false,
+  hideHeader: false
 }
 
 export default createReducer(initialState, (builder) =>
@@ -60,6 +63,9 @@ export default createReducer(initialState, (builder) =>
       state.modalType = modalType
       state.modalTitle = modalTitle
       state.modalMessage = modalMessage
+    })
+    .addCase(setHideHeader, (state, { payload }) => {
+      state.hideHeader = payload.hideHeader
     })
     .addCase(addPopup, (state, { payload: { content, key, removeAfterMs = 25000 } }) => {
       state.popupList = (key ? state.popupList.filter((popup) => popup.key !== key) : state.popupList).concat([

@@ -138,7 +138,7 @@
   "scripts": {
     "compile-contract-types": "yarn compile-external-abi-types",
     "compile-external-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types \"./src/abis/**/*.json\"",
-    "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-scripts --max_old_space_size=8192 build",
+    "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-scripts --no-warnings --optimize_for_size --max_old_space_size=6144 build",
     "i18n:extract": "lingui extract --locale en-US",
     "i18n:compile": "lingui compile",
     "integration-test": "cd e2e_tests && xvfb-run npx playwright test",
@@ -169,6 +169,8 @@
     "@date-io/dayjs": "1.x",
     "@material-ui/core": "^4.12.3",
     "@material-ui/pickers": "4.0.0-alpha.12",
+    "@mui/material": "^5.13.6",
+    "@mui/x-date-pickers": "^6.9.1",
     "async-wait-until": "^2.0.7",
     "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
@@ -180,7 +182,9 @@
     "react-phone-input-2": "^2.15.0",
     "react-select": "^5.2.2",
     "react-sticky-box": "^0.9.3",
+    "react-usestateref": "^1.0.8",
     "truffle-privatekey-provider": "^1.2.0",
+    "use-draggable-scroll": "^0.1.0",
     "web3": "^1.4.0"
   }
 }

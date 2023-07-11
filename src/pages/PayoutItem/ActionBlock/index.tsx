@@ -6,7 +6,6 @@ import { PayoutEvent } from 'state/token-manager/types'
 
 import { ManagerView } from './ManagerView'
 import { UserView } from './UserView'
-import { useAccount } from 'state/user/hooks'
 
 interface Props {
   payout: PayoutEvent
@@ -23,7 +22,7 @@ export const PayoutActionBlock: FC<Props> = ({ payout, isMyPayout, myAmount, onU
       {isMyPayout ? (
         <ManagerView payout={payout} payoutToken={payoutToken} onUpdate={onUpdate} />
       ) : (
-        <UserView payout={payout} payoutToken={payoutToken} myAmount={myAmount}  />
+        <UserView payout={payout} payoutToken={payoutToken} myAmount={myAmount} />
       )}
     </Box>
   )

@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { string } from 'yup/lib/locale'
+import { IdentityDocumentType } from './enum'
 
 export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
@@ -17,7 +17,7 @@ export const individualErrorsSchema = yup.object().shape({
     .required('Required')
     .min(10, 'Must be valid phone number')
     .max(15, 'Must be valid phone number'),
-    
+
   address: yup.string().required('Required'),
   postalCode: yup.string().required('Required'),
   country: yup.object().nullable().required('Required'),
@@ -26,8 +26,16 @@ export const individualErrorsSchema = yup.object().shape({
   idType: yup.object().nullable().required('Required'),
   idNumber: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   idIssueDate: yup.mixed().nullable().required('Required'),
-  idExpiryDate: yup.mixed().nullable().required('Required'),
-  
+  idExpiryDate: yup
+    .mixed()
+    .nullable()
+    .when('idType', {
+      is: (idType: any) => {
+        return idType.label !== IdentityDocumentType.NATIONAL_ID && idType.label !== IdentityDocumentType.OTHERS
+      },
+      then: yup.mixed().nullable().required('Required'),
+    }),
+
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
   proofOfAddress: yup.array().min(1, 'Required').nullable(),
 
@@ -36,7 +44,8 @@ export const individualErrorsSchema = yup.object().shape({
   employer: yup.string().required('Required'),
   income: yup.object().nullable().required('Required'),
 
-  investorDeclarationIsFilled: yup.boolean()
+  investorDeclarationIsFilled: yup
+    .boolean()
     .when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
 
   isTotalAssets: yup.boolean(),
@@ -44,18 +53,30 @@ export const individualErrorsSchema = yup.object().shape({
   isFinancialAssets: yup.boolean(),
   isJointIncome: yup.boolean(),
 
-  taxDeclarations: yup.array().of(
-    yup.object().shape({ 
-      isAdditional: yup.bool(),
-      country: yup.object().shape({ label: yup.string() }).nullable().required('Required'), 
-      idNumber: yup.string().when('isAdditional', { is: true, then: yup.string().nullable(), otherwise: yup.string().required('Required') }),
-      reason: yup.string().when('isAdditional', { is: true, then: yup.string().required('Required'), otherwise: yup.string().nullable() })
-    })
-  )
+  taxDeclarations: yup
+    .array()
+    .of(
+      yup.object().shape({
+        isAdditional: yup.bool(),
+        country: yup.object().shape({ label: yup.string() }).nullable().required('Required'),
+        idNumber: yup.string().when('isAdditional', {
+          is: true,
+          then: yup.string().nullable(),
+          otherwise: yup.string().required('Required'),
+        }),
+        reason: yup.string().when('isAdditional', {
+          is: true,
+          then: yup.string().required('Required'),
+          otherwise: yup.string().nullable(),
+        }),
+      })
+    )
     .min(1, 'Add at least 1 tax declaration')
     .required('Required'),
 
-  taxIdentification: yup.string().when('taxCountry', { is: (country: any) => !!country, then: yup.string().required('Required') }),
+  taxIdentification: yup
+    .string()
+    .when('taxCountry', { is: (country: any) => !!country, then: yup.string().required('Required') }),
   taxIdentificationReason: yup.string().when('taxisAdditional', { is: true, then: yup.string().required('Required') }),
 
   sourceOfFunds: yup.array().min(1, 'Choose one').required('Required'),
@@ -64,7 +85,7 @@ export const individualErrorsSchema = yup.object().shape({
     then: yup.string().required('Required'),
     otherwise: yup.string(),
   }),
-  
+
   isUSTaxPayer: yup.number().min(0).max(1),
   usTin: yup.string().when('isUSTaxPayer', {
     is: 1,
@@ -76,15 +97,15 @@ export const individualErrorsSchema = yup.object().shape({
   acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
   acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
   evidenceOfAccreditation: yup.array().when('accredited', {
-    is: 1, 
+    is: 1,
     then: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
-    otherwise: yup.array().nullable()
+    otherwise: yup.array().nullable(),
   }),
   confirmStatusDeclaration: yup.boolean().when('accredited', {
     is: 1,
     then: yup.boolean().isTrue('Required').required('Required'),
-    otherwise: yup.boolean().nullable()
-  })
+    otherwise: yup.boolean().nullable(),
+  }),
 })
 
 export const corporateErrorsSchema = yup.object().shape({
@@ -95,7 +116,6 @@ export const corporateErrorsSchema = yup.object().shape({
 
   registrationNumber: yup.string().required('Required'),
   incorporationDate: yup.mixed().nullable().required('Required'),
-  incorporationExpiryDate: yup.mixed().nullable().required('Required'),
   inFatfJurisdiction: yup.string().required('Required'),
 
   personnelName: yup.string().required('Required'),
@@ -128,8 +148,19 @@ export const corporateErrorsSchema = yup.object().shape({
     then: yup.string().required('Required'),
     otherwise: yup.string(),
   }),
-  taxCountry: yup.object().nullable().required('Required'),
-  taxNumber: yup.string().required('Required'),
+  taxCountry: yup
+    .object()
+    .nullable()
+    .when('taxIdAvailable', {
+      is: true,
+      then: yup.object().required('Required'),
+      otherwise: yup.object().nullable(),
+    }),
+  taxNumber: yup.string().when('taxIdAvailable', {
+    is: true,
+    then: yup.string().required('Required'),
+    otherwise: yup.string(),
+  }),
   beneficialOwners: yup
     .array()
     .of(

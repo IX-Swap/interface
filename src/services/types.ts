@@ -37,3 +37,17 @@ export interface PaginationArgs {
   skip: number
   limit: number
 }
+
+export enum WhiteListType {
+  ALL = 'all',
+  MANUAL = 'manual',
+  AUTOMATED = 'automated',
+}
+
+export type WhitelistFilter = {
+  search?: string
+  type?: number | string
+  page?: number | string
+  offset?: number | string
+}
+export type IssuanceDataFilter = Partial<Record<'tab' | 'issuanceId' | 'page' | 'offset', number | string>>

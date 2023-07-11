@@ -50,6 +50,7 @@ export const updateBlockNumber = createAction<{ chainId: number; blockNumber: nu
 export const setOpenModal = createAction<ApplicationModal | null>('application/setOpenModal')
 export const setShowFakeApproval = createAction<{ showValue: boolean }>('application/setShowFakeApproval')
 export const setBrokerDealerData = createAction<{ newData: any }>('application/setBrokerDealerData')
+export const setHideHeader = createAction<{ hideHeader: boolean }>('application/setShowHeader')
 export const addPopup = createAction<{ key?: string; removeAfterMs?: number | null; content: PopupContent }>(
   'application/addPopup'
 )

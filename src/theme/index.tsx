@@ -216,6 +216,51 @@ export function theme(darkMode: boolean, config: Whitelabel | null): DefaultThem
       display: flex;
       flex-flow: row nowrap;
     `,
+
+    launchpad: launchpadTheme(),
+  }
+}
+
+export function launchpadTheme() {
+  return {
+    font: 'Inter',
+
+    content: {
+      maxWidth: '1180px',
+    },
+
+    colors: {
+      primary: '#6666FF',
+      accent: '#E6E6FF',
+
+      success: '#1DC78A',
+      error: '#FF8282',
+      info: '#FFC93F',
+      warn: '#FFC632',
+
+      disabled: '#DCDCF0',
+
+      background: '#FFFFFF',
+      foreground: '#F7F7FF',
+
+      border: {
+        default: '#E6E6FF',
+        success: '#0EC080',
+        error: '#FF8282',
+      },
+
+      text: {
+        title: '#292933',
+        body: '#666680',
+        bodyAlt: '#8F8FB2',
+        caption: '#B8B8CC',
+        success: '#0EC080',
+        warning: '#FF8282',
+        light: '#FFFFFF',
+        hint: '#8d8da3',
+        error: '#ff6060',
+      },
+    },
   }
 }
 

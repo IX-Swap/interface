@@ -9,7 +9,13 @@ import Column from 'components/Column'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { PayoutEvent } from 'state/token-manager/types'
 import { routes } from 'utils/routes'
-import { getClaimBackAuthorization, useGetRemainingTokens, useGetTotalClaims, useGetUserClaim, useSaveManagerClaimBack } from 'state/payout/hooks'
+import {
+  getClaimBackAuthorization,
+  useGetRemainingTokens,
+  useGetTotalClaims,
+  useGetUserClaim,
+  useSaveManagerClaimBack,
+} from 'state/payout/hooks'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
 import { formatDate } from '../utils'
@@ -19,14 +25,12 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { UserClaim } from './dto'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { FetchingBalance } from './FetchingBalance'
-import { utils } from 'ethers'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 
 interface Props {
   payout: PayoutEvent
-  payoutToken: any,
+  payoutToken: any
   onUpdate?: () => void
 }
 
@@ -37,23 +41,18 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
 
   const { account } = useActiveWeb3React()
   const { status, isPaid, secToken, tokenAmount, recordDate, id, startDate, contractPayoutId, paidTxHash } = payout
-  const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)
 
   const [totalClaims, handleTotalClaims] = useState(0)
   const [remaining, setRemaining] = useState<string | undefined>(undefined)
   const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
   const [isLoading, handleIsLoading] = useState(false)
-  
+
   const getUserClaim = useGetUserClaim()
   const saveManagerClaimBack = useSaveManagerClaimBack()
 
-
   useEffect(() => {
     const fetch = async () => {
-      const [res, remainingTokens] = await Promise.all([
-        getTotalClaims(id),
-        getRemainingTokens(id)
-      ])
+      const [res, remainingTokens] = await Promise.all([getTotalClaims(id), getRemainingTokens(id)])
 
       setRemaining(remainingTokens)
       handleTotalClaims(res)
@@ -67,55 +66,47 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   const goToEdit = () => {
     history.push(routes.editPayoutEvent(id))
   }
-  
-  
-  const statuses = [custodianStatus, brokerDealerStatus]
-  
-  
+
   const balance = useCurrencyBalance(account ?? undefined, ({ ...secToken, isToken: true } as any) ?? undefined)
   const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
   const payoutContract = usePayoutContract()
 
   const addTransaction = useTransactionAdder()
-  
-  const claimBack = useCallback(
-    async () => {
-      try {
-        handleIsLoading(true)
-        const nonce = await payoutContract?.nonce(contractPayoutId, account)
 
-        const authorization = await getClaimBackAuthorization({
-          id,
-          token: payoutToken.address,
-          deadline: dayjs().add(1, 'hour').toISOString(),
-          nonce,
+  const claimBack = useCallback(async () => {
+    try {
+      handleIsLoading(true)
+      const nonce = await payoutContract?.nonce(contractPayoutId, account)
+
+      const authorization = await getClaimBackAuthorization({
+        id,
+        token: payoutToken.address,
+        deadline: dayjs().add(1, 'hour').toISOString(),
+        nonce,
+      })
+
+      const tx = await payoutContract?.claim(authorization)
+
+      handleIsLoading(false)
+
+      await saveManagerClaimBack({ payoutEventId: id, secToken: secToken.id, txHash: tx.hash })
+      const res = await getUserClaim(id)
+      handleClaimStatus(res)
+
+      if (tx.hash) {
+        addTransaction(tx, {
+          summary: `Claim Back was successful. Waiting for system confirmation.`,
         })
 
-        const amount = utils.formatEther(authorization.amount)
-        const tx = await payoutContract?.claim(authorization)
-
-        handleIsLoading(false)
-
-        await saveManagerClaimBack({ payoutEventId: id, secToken: secToken.id, txHash: tx.hash })
-        const res = await getUserClaim(id)
-        handleClaimStatus(res)
-
-        if (tx.hash) {
-          addTransaction(tx, {
-            summary: `Claim Back was successful. Waiting for system confirmation.`,
-          })
-
-          if (onUpdate) {
-            onUpdate()
-          }
+        if (onUpdate) {
+          onUpdate()
         }
-      } catch (e: any) {
-        handleIsLoading(false)
       }
-    },
-    []
-  )
-  
+    } catch (e: any) {
+      handleIsLoading(false)
+    }
+  }, [])
+
   if (secTokenBalance === '-') return <FetchingBalance />
 
   const getContentByStatus = () => {
@@ -142,10 +133,8 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
         ) : !isPaid && paidTxHash ? (
           <>
             <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
-              <Box
-                marginRight="4px"
-                fontSize="20px"
-                lineHeight="30px">{t`Paid was successful. Waiting for system confirmation.`}
+              <Box marginRight="4px" fontSize="20px" lineHeight="30px">
+                {t`Paid was successful. Waiting for system confirmation.`}
               </Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
               <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
@@ -193,19 +182,16 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
               <Flex alignItems="center">
                 <CurrencyLogo currency={payoutToken} size="24px" />
                 <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>
-                  {`${payoutToken?.symbol ?? 'Payout Token'} ${remaining}`}</Box>
+                  {`${payoutToken?.symbol ?? 'Payout Token'} ${remaining}`}
+                </Box>
               </Flex>
             </Column>
             <LoadingIndicator isLoading={isLoading} />
             {!isLoading && (
               <StyledButtonIXSGradient onClick={claimBack}>
-                <Box marginX="8px">
-                  {t`Claim Back `}
-                </Box>
+                <Box marginX="8px">{t`Claim Back `}</Box>
                 <CurrencyLogo currency={payoutToken} size="24px" />
-                <Box marginX="2px">
-                  {payoutToken?.symbol}
-                </Box>
+                <Box marginX="2px">{payoutToken?.symbol}</Box>
               </StyledButtonIXSGradient>
             )}
           </>

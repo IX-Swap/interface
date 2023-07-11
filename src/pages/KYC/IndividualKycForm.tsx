@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
-import { ErrorMessage, FieldArray, Formik } from 'formik'
+import { FieldArray, Formik } from 'formik'
 import { Prompt, useHistory } from 'react-router-dom'
 import moment from 'moment'
 import dayjs from 'dayjs'
@@ -9,8 +9,8 @@ import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
 
 import usePrevious from 'hooks/usePrevious'
-import Column, { AutoColumn } from 'components/Column'
-import { ButtonGradient, ButtonGradientBorder, ButtonIXSGradient, ButtonText } from 'components/Button'
+import Column from 'components/Column'
+import { ButtonGradientBorder, ButtonIXSGradient, ButtonText } from 'components/Button'
 import { LinkStyledButton, TYPE } from 'theme'
 import { ReactComponent as TrashIcon } from 'assets/svg/trash-icon.svg'
 import { GradientText } from 'pages/CustodianV2/styleds'
@@ -30,7 +30,7 @@ import { countriesList } from 'constants/countriesList'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
-import { KycInputLabel, KycSelect as Select, KycTextInput as TextInput, Uploader } from './common'
+import { KycSelect as Select, KycTextInput as TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import {
   empleymentStatuses,
@@ -53,10 +53,9 @@ import { Plus } from 'react-feather'
 import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
 import { KYCValidationErrors } from './KYCValidationErrors'
 
-
-type FormSubmitHanderArgs = { 
-  createFn: (body: any) => any,
-  updateFn: (id: number, body: any) => any, 
+type FormSubmitHanderArgs = {
+  createFn: (body: any) => any
+  updateFn: (id: number, body: any) => any
   validate: boolean
 }
 
@@ -96,7 +95,7 @@ export default function IndividualKycForm() {
   const [showSafeguardModal, setShowSafeguardModal] = useState(false)
   const [showOptoutModal, setShowOptoutModal] = useState(false)
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
-
+  const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
   const openConfirmationModal = useCallback(() => {
     setShowOptoutModal(false)
     setShowOptoutConfirmationModal(true)
@@ -126,9 +125,10 @@ export default function IndividualKycForm() {
       const data = await getIndividualProgress()
       if (data) {
         const transformedData = individualTransformApiData(data)
-        const taxDeclarations = transformedData.taxDeclarations?.length === 0
-          ? [{ country: null, idNumber: '' }]
-          : transformedData.taxDeclarations
+        const taxDeclarations =
+          transformedData.taxDeclarations?.length === 0
+            ? [{ country: null, idNumber: '' }]
+            : transformedData.taxDeclarations
 
         const formData = { ...transformedData, taxDeclarations }
 
@@ -141,10 +141,9 @@ export default function IndividualKycForm() {
       }
     }
 
-    if ([KYCStatuses.CHANGES_REQUESTED, KYCStatuses.DRAFT].some(s => s === kyc?.status)) {
+    if (kyc && [KYCStatuses.CHANGES_REQUESTED, KYCStatuses.DRAFT].includes(kyc.status)) {
       getProgress()
-      setUpdateKycId(kyc!.id)
-
+      setUpdateKycId(kyc.id)
     } else {
       setFormData(individualFormInitialValues)
     }
@@ -169,17 +168,17 @@ export default function IndividualKycForm() {
     if (form.current.values[key] === value) {
       return
     }
-    
+
     try {
       let root = { [key]: value }
 
       if (key.startsWith('taxDeclarations[')) {
-        const match = /taxDeclarations\[([0-9]+)\]\.(\w+)/.exec(key)!
-
+        const match = /taxDeclarations\[([0-9]+)\]\.(\w+)/.exec(key)
+        if (!match) return
         const index = match[1]
         const field = match[2]
 
-        const declaration = { ...form.current.values.taxDeclarations[index], [field]: value } 
+        const declaration = { ...form.current.values.taxDeclarations[index], [field]: value }
 
         root = form.current.values
 
@@ -197,7 +196,7 @@ export default function IndividualKycForm() {
     } catch (err: any) {
       setErrors(Object.assign(errors, { [key]: err.message }))
       form.current.setFieldError(key, err.message)
-    } 
+    }
 
     form.current.setFieldTouched(key, true)
   }
@@ -209,7 +208,6 @@ export default function IndividualKycForm() {
       setErrors(newErrors)
     }
 
-    
     setCanSubmit(true)
   }
 
@@ -226,14 +224,13 @@ export default function IndividualKycForm() {
 
     root.taxDeclarations[index] = declaration
 
-
     const fields = [
       `taxDeclarations[${index}].isAdditional`,
       `taxDeclarations[${index}].idNumber`,
-      `taxDeclarations[${index}].reason`
+      `taxDeclarations[${index}].reason`,
     ]
 
-    const validationErrors: Record<string, string> = { }
+    const validationErrors: Record<string, string> = {}
 
     for (const field of fields) {
       try {
@@ -264,7 +261,7 @@ export default function IndividualKycForm() {
       setErrors(prunedErrors)
       form.current.setErrors(prunedErrors)
     }
-    
+
     setFieldValue(`taxDeclarations[${index}].isAdditional`, declaration.isAdditional, false)
     setFieldValue(`taxDeclarations[${index}].idNumber`, declaration.idNumber, false)
     setFieldValue(`taxDeclarations[${index}].reason`, declaration.reason, false)
@@ -301,7 +298,7 @@ export default function IndividualKycForm() {
         'acceptOfQualification',
         'acceptRefusalRight',
         'confirmStatusDeclaration',
-        'evidenceOfAccreditation'
+        'evidenceOfAccreditation',
       ]
 
       setFieldValue('investorDeclarationIsFilled', individualFormInitialValues.investorDeclarationIsFilled)
@@ -324,36 +321,37 @@ export default function IndividualKycForm() {
   const onInvestorDeclarationChange = (field: string, value: boolean, values: any, setFieldValue: any) => {
     onChangeInput(field, value, values, setFieldValue)
 
-    const relevantField = [
-      'isTotalAssets',
-      'isAnnualIncome',
-      'isFinancialAssets',
-      'isJointIncome',
-    ]
+    const relevantField = ['isTotalAssets', 'isAnnualIncome', 'isFinancialAssets', 'isJointIncome']
 
-    const atLeastOneFieldIsFilled = relevantField.some(f => f === field ? value : values[f])
+    const atLeastOneFieldIsFilled = relevantField.some((f) => (f === field ? value : values[f]))
 
     // Check whether any of investor declaration fields are checked
     setFieldValue('investorDeclarationIsFilled', atLeastOneFieldIsFilled, false)
-    
+
     validateValue('investorDeclarationIsFilled', value)
     validationSeen('investorDeclarationIsFilled')
   }
 
-  const onSourceOfFundsChange = (source: {value: string, label: string}[], fields: any[], setFieldValue: any) => {
-    const oldSources = new Set(fields.map(x => x.value))
-    const newSources = new Set(source.map(x => x.value))
+  const onSourceOfFundsChange = (source: { value: string; label: string }[], fields: any[], setFieldValue: any) => {
+    const oldSources = new Set(fields.map((x) => x.value))
+    const newSources = new Set(source.map((x) => x.value))
 
-    const addedSources = new Set(source.filter(x => !oldSources.has(x.value)).map(x => x.value))
-    const removedSources = new Set(fields.filter(x => !newSources.has(x.value)).map(x => x.value))
-    
-    
+    const addedSources = new Set(source.filter((x) => !oldSources.has(x.value)).map((x) => x.value))
+    const removedSources = new Set(fields.filter((x) => !newSources.has(x.value)).map((x) => x.value))
+
     const result = fields
-      .filter(x => !removedSources.has(x.value))
-      .concat(source.filter(x => addedSources.has(x.value)))
-      
-    if (result.length > 1 && result.some(x => x.label === 'Others')) {
-      result.push(result.splice(result.findIndex(x => x.label === 'Others'), 1).pop())
+      .filter((x) => !removedSources.has(x.value))
+      .concat(source.filter((x) => addedSources.has(x.value)))
+
+    if (result.length > 1 && result.some((x) => x.label === 'Others')) {
+      result.push(
+        result
+          .splice(
+            result.findIndex((x) => x.label === 'Others'),
+            1
+          )
+          .pop()
+      )
     }
 
     setFieldValue('sourceOfFunds', result, false)
@@ -367,7 +365,10 @@ export default function IndividualKycForm() {
 
   const removeTaxDeclaration = (values: any, index: number, setFieldValues: any, callback: (idx: number) => void) => {
     if (values.taxDeclarations[index]?.id) {
-      setFieldValues('removedTaxDeclarations', [...(values.removedTaxDeclarations ?? []), values.taxDeclarations[index]?.id])
+      setFieldValues('removedTaxDeclarations', [
+        ...(values.removedTaxDeclarations ?? []),
+        values.taxDeclarations[index]?.id,
+      ])
     }
 
     callback(index)
@@ -423,7 +424,7 @@ export default function IndividualKycForm() {
         if (validate) {
           await individualErrorsSchema.validate(values, { abortEarly: false })
         }
-        
+
         canLeavePage.current = true
         setCanSubmit(false)
         const body = individualTransformKycDto(values)
@@ -463,11 +464,11 @@ export default function IndividualKycForm() {
 
   const saveProgress = useCallback(
     async (values: any) => {
-      await formSubmitHandler(values, { 
+      await formSubmitHandler(values, {
         createFn: (body) => createIndividualKYC(body, true),
-        updateFn: (id, body) => updateIndividualKYC(id, body, true), 
-        validate: false 
-      });
+        updateFn: (id, body) => updateIndividualKYC(id, body, true),
+        validate: false,
+      })
     },
     [formSubmitHandler]
   )
@@ -505,7 +506,6 @@ export default function IndividualKycForm() {
             onSubmit={async (values) => {
               try {
                 await individualErrorsSchema.validate(values, { abortEarly: false })
-
                 canLeavePage.current = true
 
                 setCanSubmit(false)
@@ -542,10 +542,10 @@ export default function IndividualKycForm() {
           >
             {({ values, handleSubmit, setFieldValue, dirty, initialValues }) => {
               const hasNoErrors = (name: string) => !errors[name]
-              const isFilled = (name: string): boolean => 
-                values[name] !== null && 
+              const isFilled = (name: string): boolean =>
+                values[name] !== null &&
                 values[name] !== undefined &&
-                values[name] !== initialValues[name] && 
+                values[name] !== initialValues[name] &&
                 hasNoErrors(name)
 
               const shouldValidate = dirty
@@ -562,8 +562,6 @@ export default function IndividualKycForm() {
                 isFilled('phoneNumber') &&
                 isFilled('email')
 
-              const referralFilled = !!values.referralCode
-
               const financialFilled =
                 shouldValidate &&
                 isFilled('occupation') &&
@@ -572,20 +570,10 @@ export default function IndividualKycForm() {
                 isFilled('income') &&
                 isFilled('sourceOfFunds')
 
-              const statusDeclarationFilled =
-                shouldValidate &&
-                isFilled('accredited')
+              const statusDeclarationFilled = shouldValidate && isFilled('accredited')
 
               const identityDocumentFilled =
-                shouldValidate &&
-                isFilled('idType') &&
-                isFilled('idNumber') &&
-                isFilled('idIssueDate') &&
-                isFilled('idExpiryDate')
-
-              const taxDeclarationFilled =
-                shouldValidate &&
-                isFilled('taxDeclaration')
+                shouldValidate && isFilled('idType') && isFilled('idNumber') && isFilled('idIssueDate')
 
               const addressFilled =
                 shouldValidate &&
@@ -595,14 +583,12 @@ export default function IndividualKycForm() {
                 isFilled('city')
 
               const fatcaFilled = shouldValidate && isFilled('usTin') && isFilled('isUSTaxPayer')
-              const filesFilled = shouldValidate && 
-                isFilled('proofOfIdentity') &&
-                isFilled('proofOfAddress')
+              const filesFilled = shouldValidate && isFilled('proofOfIdentity') && isFilled('proofOfAddress')
 
               const investorStatusAcknowledgementFilled = shouldValidate && isFilled('confirmStatusDeclaration')
 
               const personalPassed = personalFilled && addressFilled && filesFilled && identityDocumentFilled
-              const personalFailed = (!personalFilled || !addressFilled || !filesFilled)
+              const personalFailed = !personalFilled || !addressFilled || !filesFilled
 
               const financialFailed = !financialFilled
               const statusDeclarationFailed = !statusDeclarationFilled
@@ -617,7 +603,7 @@ export default function IndividualKycForm() {
                             <Trans>Personal Information</Trans>
                           </TYPE.title6>
                           {personalPassed && <StyledBigPassed />}
-                          {personalFailed && <InvalidFormInputIcon /> }
+                          {personalFailed && <InvalidFormInputIcon />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
@@ -626,21 +612,27 @@ export default function IndividualKycForm() {
                               label="First Name:"
                               value={values.firstName}
                               error={errors.firstName}
-                              onChange={(e: any) => onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)
+                              }
                             />
                             <TextInput
                               id="middleNameInput"
                               label="Middle Name:"
                               value={values.middleName}
                               error={errors.middleName}
-                              onChange={(e: any) => onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)
+                              }
                             />
                             <TextInput
                               id="lastNameInput"
                               label="Last Name:"
                               value={values.lastName}
                               error={errors.lastName}
-                              onChange={(e: any) => onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)
+                              }
                             />
                           </FormGrid>
 
@@ -701,7 +693,9 @@ export default function IndividualKycForm() {
                               label="Email address:"
                               value={values.email}
                               error={errors.email}
-                              onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('email', e.currentTarget.value, values, setFieldValue)
+                              }
                             />
                           </FormGrid>
                         </Column>
@@ -720,14 +714,18 @@ export default function IndividualKycForm() {
                               id="addressField"
                               value={values.address}
                               error={errors.address}
-                              onChange={(e: any) => onChangeInput('address', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('address', e.currentTarget.value, values, setFieldValue)
+                              }
                             />
                             <TextInput
                               label="Postal Code"
                               id="postalCodeField"
                               value={values.postalCode}
                               error={errors.postalCode}
-                              onChange={(e: any) => onChangeInput('postalCode', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('postalCode', e.currentTarget.value, values, setFieldValue)
+                              }
                             />
                           </FormGrid>
 
@@ -753,7 +751,7 @@ export default function IndividualKycForm() {
                             />
                           </FormGrid>
                         </Column>
-                        
+
                         <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Referral</Trans>
@@ -764,7 +762,7 @@ export default function IndividualKycForm() {
                         <TextInput
                           label="Referral code"
                           value={values.referralCode}
-                          onChange={e => onChangeInput('referralCode', e.currentTarget.value, values, setFieldValue)}
+                          onChange={(e) => onChangeInput('referralCode', e.currentTarget.value, values, setFieldValue)}
                         />
 
                         <RowBetween marginBottom="32px" marginTop="64px">
@@ -782,7 +780,17 @@ export default function IndividualKycForm() {
                               label="ID Type"
                               selectedItem={values.idType}
                               items={idTypes}
-                              onSelect={(idType) => onSelectChange('idType', idType, setFieldValue)}
+                              onSelect={(idType) => {
+                                onSelectChange('idType', idType, setFieldValue)
+                                if (
+                                  idType.label === IdentityDocumentType.NATIONAL_ID ||
+                                  idType.label === IdentityDocumentType.OTHERS
+                                ) {
+                                  setIdExpiryDateLabel('ID Expiration Date (Optional)')
+                                } else {
+                                  setIdExpiryDateLabel('ID Expiration Date')
+                                }
+                              }}
                             />
                             <TextInput
                               onChange={(e: any) =>
@@ -809,20 +817,19 @@ export default function IndividualKycForm() {
                               maxDate={new Date()}
                             />
                             <DateInput
-                              label="ID Expiration Date"
+                              label={idExpiryDateLabel}
                               id="documentExpiryDateButton"
                               maxHeight={60}
                               error={errors.idExpiryDate}
                               value={values.idExpiryDate}
                               onChange={(value) => {
                                 setFieldValue('idExpiryDate', dayjs(value).local().format('YYYY-MM-DD'), false)
-                                validationSeen('idExpiryDate')
                               }}
                               minDate={new Date()}
                             />
                           </FormGrid>
                         </Column>
-                        
+
                         <RowBetween marginBottom="10px" marginTop="64px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Upload Documents</Trans>
@@ -831,8 +838,8 @@ export default function IndividualKycForm() {
                         </RowBetween>
 
                         <TYPE.description3>
-                          Please upload the following documents. All account statements and documents should be dated within the last 3 months.
-                          Type of document format supported is PDF, JPEG, JPG, DOCX and PNG. 
+                          Please upload the following documents. All account statements and documents should be dated
+                          within the last 3 months. Type of document format supported is PDF, JPEG, JPG, DOCX and PNG.
                         </TYPE.description3>
 
                         <Column style={{ gap: '40px', marginTop: '32px' }}>
@@ -858,7 +865,12 @@ export default function IndividualKycForm() {
                             error={errors.proofOfAddress}
                             files={values.proofOfAddress}
                             onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
-                            handleDeleteClick={handleImageDelete(values, 'proofOfAddress', values.removedDocuments, setFieldValue)}
+                            handleDeleteClick={handleImageDelete(
+                              values,
+                              'proofOfAddress',
+                              values.removedDocuments,
+                              setFieldValue
+                            )}
                           />
                         </Column>
                       </FormCard>
@@ -869,7 +881,7 @@ export default function IndividualKycForm() {
                             <Trans>Financial Information</Trans>
                           </TYPE.title6>
                           {financialFilled && <StyledBigPassed />}
-                          {financialFailed && <InvalidFormInputIcon /> }
+                          {financialFailed && <InvalidFormInputIcon />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={2}>
@@ -897,7 +909,9 @@ export default function IndividualKycForm() {
                               id="employerField"
                               value={values.employer}
                               error={errors.employer}
-                              onChange={(e: any) => onChangeInput('employer', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('employer', e.currentTarget.value, values, setFieldValue)
+                              }
                             />
                             <Select
                               label="Total Income (in SGD) in the Last 12 Months"
@@ -918,16 +932,18 @@ export default function IndividualKycForm() {
                             items={sourceOfFunds}
                             value={values.sourceOfFunds}
                             error={errors.sourceOfFunds}
-                            onSelect={item => onSourceOfFundsChange(item, values.sourceOfFunds, setFieldValue)}
+                            onSelect={(item) => onSourceOfFundsChange(item, values.sourceOfFunds, setFieldValue)}
                           />
-                          
+
                           {values.sourceOfFunds.some((x: any) => x.label === 'Others' || x === 'Others') && (
                             <TextInput
                               style={{ marginTop: 20 }}
                               placeholder="Other Source of Funds...."
                               value={values.otherFunds}
                               error={errors.otherFunds}
-                              onChange={(e: any) => onChangeInput('otherFunds', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('otherFunds', e.currentTarget.value, values, setFieldValue)
+                              }
                             />
                           )}
                           {errors.sourceOfFunds && (
@@ -936,40 +952,45 @@ export default function IndividualKycForm() {
                             </TYPE.small>
                           )}
                         </Column>
-                        
+
                         <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Tax Declaration</Trans>
                           </TYPE.title6>
                           {fatcaFilled && <StyledBigPassed />}
                         </RowBetween>
-                        
+
                         <ExtraInfoCard>
                           <RowBetween>
                             <TYPE.buttonMuted>Why We Need Your Tax Declaration?</TYPE.buttonMuted>
-                            <LinkButton type="button" onClick={() => setShowTaxModal(true)}>Learn More</LinkButton>
+                            <LinkButton type="button" onClick={() => setShowTaxModal(true)}>
+                              Learn More
+                            </LinkButton>
 
                             <Modal isOpen={showTaxModal} onDismiss={() => setShowTaxModal(false)}>
                               <FormCard>
                                 <Column style={{ alignItems: 'stretch' }}>
                                   <TYPE.mediumHeader>Why We Need Your Tax Declaration?</TYPE.mediumHeader>
-                                  
+
                                   <br />
 
                                   <TYPE.description2>
-                                    Foreign Account Tax Compliance Act aims to collect information on United States (US) 
-                                    Tax residents using foreign accounts. It requires Financial Institutions outside the US to report 
-                                    customers who are US tax residents to the US tax authorities.
-
+                                    Foreign Account Tax Compliance Act aims to collect information on United States (US)
+                                    Tax residents using foreign accounts. It requires Financial Institutions outside the
+                                    US to report customers who are US tax residents to the US tax authorities.
                                     <br />
                                     <br />
-
-                                    IX Swap is collecting information regarding tax residency status of each Account holder in order 
-                                    to comply with Income Tax Act and Singapore Income Tax (International Tax Compliance Agreements)
-                                    (Common Reporting Standard) Regulations 2016.
+                                    IX Swap is collecting information regarding tax residency status of each Account
+                                    holder in order to comply with Income Tax Act and Singapore Income Tax
+                                    (International Tax Compliance Agreements) (Common Reporting Standard) Regulations
+                                    2016.
                                   </TYPE.description2>
 
-                                  <ButtonIXSGradient type="button" onClick={() => setShowTaxModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                  <ButtonIXSGradient
+                                    type="button"
+                                    onClick={() => setShowTaxModal(false)}
+                                    style={{ width: '100%', marginTop: '32px' }}
+                                  >
                                     OK
                                   </ButtonIXSGradient>
                                 </Column>
@@ -979,11 +1000,16 @@ export default function IndividualKycForm() {
                         </ExtraInfoCard>
 
                         <FieldArray name="taxDeclarations">
-                          {({ insert, remove, push }) => (
+                          {({ remove, push }) => (
                             <>
                               {values.taxDeclarations?.map((tax: any, index: number) => (
                                 <>
-                                  <RowBetween key={`tax-${tax.country}`} width="100%" style={{ padding: '1rem' }} alignItems="center">
+                                  <RowBetween
+                                    key={`tax-${tax.country}`}
+                                    width="100%"
+                                    style={{ padding: '1rem' }}
+                                    alignItems="center"
+                                  >
                                     <FormGrid columns={2} style={{ flexGrow: 1 }}>
                                       <div>
                                         <Select
@@ -993,9 +1019,14 @@ export default function IndividualKycForm() {
                                           selectedItem={values.taxDeclarations[index].country}
                                           items={countries.filter(
                                             ({ label }) =>
-                                              !['United States of America', 'United States Minor Outlying Islands'].includes(label)
+                                              ![
+                                                'United States of America',
+                                                'United States Minor Outlying Islands',
+                                              ].includes(label)
                                           )}
-                                          onSelect={(country) => onSelectChange(`taxDeclarations[${index}].country`, country, setFieldValue)}
+                                          onSelect={(country) =>
+                                            onSelectChange(`taxDeclarations[${index}].country`, country, setFieldValue)
+                                          }
                                           error={errors[`taxDeclarations[${index}].country`]}
                                         />
 
@@ -1007,13 +1038,20 @@ export default function IndividualKycForm() {
                                       </div>
 
                                       <div>
-                                        <TextInput 
+                                        <TextInput
                                           label="Tax Identification Number (TIN)"
                                           id="taxIdentificationNumberField"
-                                          value={values.taxDeclarations[index].idNumber} 
+                                          value={values.taxDeclarations[index].idNumber}
                                           error={errors[`taxDeclarations[${index}].idNumber`]}
                                           disabled={values.taxDeclarations[index].isAdditional}
-                                          onChange={e => onChangeInput(`taxDeclarations[${index}].idNumber`, e.currentTarget.value, values, setFieldValue)} 
+                                          onChange={(e) =>
+                                            onChangeInput(
+                                              `taxDeclarations[${index}].idNumber`,
+                                              e.currentTarget.value,
+                                              values,
+                                              setFieldValue
+                                            )
+                                          }
                                         />
                                         {errors[`taxDeclarations[${index}].idNumber`] && (
                                           <TYPE.small marginTop="8px" color={'red1'}>
@@ -1022,10 +1060,10 @@ export default function IndividualKycForm() {
                                         )}
                                       </div>
                                     </FormGrid>
-                                    
+
                                     {index > 0 && (
-                                      <IconButton 
-                                        onClick={() => removeTaxDeclaration(values, index, setFieldValue, remove)} 
+                                      <IconButton
+                                        onClick={() => removeTaxDeclaration(values, index, setFieldValue, remove)}
                                         style={{ padding: '0 1rem', marginTop: '2rem' }}
                                       >
                                         <TrashIcon />
@@ -1035,23 +1073,32 @@ export default function IndividualKycForm() {
                                   <br />
 
                                   <LabeledCheckBox>
-                                    <Checkbox 
-                                      label={''} 
+                                    <Checkbox
+                                      label={''}
                                       checked={values.taxDeclarations[index].isAdditional}
                                       onClick={() => onIsAdditionalChange(index, setFieldValue)}
                                     />
 
-                                    <TYPE.description3>TIN is not available (please indicate reason):</TYPE.description3>
+                                    <TYPE.description3>
+                                      TIN is not available (please indicate reason):
+                                    </TYPE.description3>
                                   </LabeledCheckBox>
 
                                   {values.taxDeclarations[index].isAdditional && (
                                     <>
-                                      <TextInput 
+                                      <TextInput
                                         label="Reason"
                                         value={values.taxDeclarations[index].reason}
-                                        onChange={e => onChangeInput(`taxDeclarations[${index}].reason`, e.currentTarget.value, values, setFieldValue)} 
+                                        onChange={(e) =>
+                                          onChangeInput(
+                                            `taxDeclarations[${index}].reason`,
+                                            e.currentTarget.value,
+                                            values,
+                                            setFieldValue
+                                          )
+                                        }
                                       />
-                                      
+
                                       {errors[`taxDeclarations[${index}].reason`] && (
                                         <TYPE.small marginTop="8px" color={'red1'}>
                                           {errors[`taxDeclarations[${index}].reason`]}
@@ -1061,13 +1108,13 @@ export default function IndividualKycForm() {
                                   )}
                                 </>
                               ))}
-                              
+
                               <HrLine />
 
-                              <LinkButton 
+                              <LinkButton
                                 type="button"
-                                onClick={() => push({ country: null, idNumber: '', isAdditional: false})} 
-                                style={{ marginTop: "32px", width: "100%" }}
+                                onClick={() => push({ country: null, idNumber: '', isAdditional: false })}
+                                style={{ marginTop: '32px', width: '100%' }}
                               >
                                 <ExtraInfoCard>
                                   <RowBetween>
@@ -1076,7 +1123,7 @@ export default function IndividualKycForm() {
                                   </RowBetween>
                                 </ExtraInfoCard>
                               </LinkButton>
-                              
+
                               {errors.taxDeclarations && (
                                 <TYPE.small marginTop="8px" color={'red1'}>
                                   {errors.taxDeclarations}
@@ -1085,7 +1132,7 @@ export default function IndividualKycForm() {
                             </>
                           )}
                         </FieldArray>
-                        
+
                         <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>FATCA</Trans>
@@ -1096,25 +1143,32 @@ export default function IndividualKycForm() {
                         <ExtraInfoCard>
                           <RowBetween>
                             <TYPE.buttonMuted>Declaration of US Citizenship or US residence for FATCA</TYPE.buttonMuted>
-                            <LinkButton type="button" onClick={() => setShowFATCAModal(true)}>Learn More</LinkButton>
+                            <LinkButton type="button" onClick={() => setShowFATCAModal(true)}>
+                              Learn More
+                            </LinkButton>
 
                             <Modal isOpen={showFATCAModal} onDismiss={() => setShowFATCAModal(false)}>
                               <FormCard>
                                 <Column style={{ alignItems: 'stretch' }}>
-                                  <TYPE.mediumHeader>Under FATCA, You are Citizen Of The United States Of America if:</TYPE.mediumHeader>
+                                  <TYPE.mediumHeader>
+                                    Under FATCA, You are Citizen Of The United States Of America if:
+                                  </TYPE.mediumHeader>
 
                                   <br />
 
                                   <TYPE.description2>
                                     You were born in US, Puerto Rico, Guam or the US Virgin Islands;
-
                                     <ol>
                                       <li>Your parent is a US citizen;</li>
                                       <li>You have been naturalized as a US citizen.</li>
                                     </ol>
                                   </TYPE.description2>
 
-                                  <ButtonIXSGradient type="button" onClick={() => setShowFATCAModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                  <ButtonIXSGradient
+                                    type="button"
+                                    onClick={() => setShowFATCAModal(false)}
+                                    style={{ width: '100%', marginTop: '32px' }}
+                                  >
                                     OK
                                   </ButtonIXSGradient>
                                 </Column>
@@ -1165,7 +1219,7 @@ export default function IndividualKycForm() {
                             <Trans>Investor Status Declaration</Trans>
                           </TYPE.title6>
                           {statusDeclarationFilled && <StyledBigPassed />}
-                          {statusDeclarationFailed && <InvalidFormInputIcon /> }
+                          {statusDeclarationFailed && <InvalidFormInputIcon />}
                         </RowBetween>
 
                         <Column style={{ gap: '34px' }}>
@@ -1179,7 +1233,7 @@ export default function IndividualKycForm() {
                                 label={`I declare I am an Individual Accredited Investor`}
                               />
                             </BorderBox>
-                            
+
                             <BorderBox active={values.accredited === 0}>
                               <Checkbox
                                 name="accredited"
@@ -1191,7 +1245,7 @@ export default function IndividualKycForm() {
                               />
                             </BorderBox>
                           </Row>
-                          
+
                           {errors.accredited && (
                             <TYPE.small marginTop="-4px" color={'red1'}>
                               <Trans>Choose one</Trans>
@@ -1209,16 +1263,24 @@ export default function IndividualKycForm() {
                               </TYPE.title6>
                             </RowBetween>
 
-                            <Column style={{ margin: '1rem', marginLeft: 0, gap: "1rem" }}>
+                            <Column style={{ margin: '1rem', marginLeft: 0, gap: '1rem' }}>
                               <LabeledCheckBox>
                                 <Checkbox
                                   name=""
                                   label=""
                                   checked={values.isTotalAssets}
-                                  onClick={() => onInvestorDeclarationChange('isTotalAssets', !values.isTotalAssets, values, setFieldValue)}
+                                  onClick={() =>
+                                    onInvestorDeclarationChange(
+                                      'isTotalAssets',
+                                      !values.isTotalAssets,
+                                      values,
+                                      setFieldValue
+                                    )
+                                  }
                                 />
                                 <TYPE.description3>
-                                  My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million
+                                  My total net personal assets (including up to SGD 1 million of your primary residence)
+                                  exceed SGD 2 million
                                 </TYPE.description3>
                               </LabeledCheckBox>
 
@@ -1227,10 +1289,18 @@ export default function IndividualKycForm() {
                                   name=""
                                   label=""
                                   checked={values.isAnnualIncome}
-                                  onClick={() => onInvestorDeclarationChange('isAnnualIncome', !values.isAnnualIncome, values, setFieldValue)}
+                                  onClick={() =>
+                                    onInvestorDeclarationChange(
+                                      'isAnnualIncome',
+                                      !values.isAnnualIncome,
+                                      values,
+                                      setFieldValue
+                                    )
+                                  }
                                 />
                                 <TYPE.description3>
-                                  My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)
+                                  My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent
+                                  in a foreign currency)
                                 </TYPE.description3>
                               </LabeledCheckBox>
 
@@ -1239,28 +1309,39 @@ export default function IndividualKycForm() {
                                   name=""
                                   label=""
                                   checked={values.isFinancialAssets}
-                                  onClick={() => onInvestorDeclarationChange('isFinancialAssets', !values.isFinancialAssets, values, setFieldValue)}
+                                  onClick={() =>
+                                    onInvestorDeclarationChange(
+                                      'isFinancialAssets',
+                                      !values.isFinancialAssets,
+                                      values,
+                                      setFieldValue
+                                    )
+                                  }
                                 />
                                 <TYPE.description3>
-                                  My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or 
-                                  its equivalent (or its equivalent in foreign currency)
+                                  My personal financial asset (e.g. deposits and investment product) exceed SGD 1
+                                  million or its equivalent (or its equivalent in foreign currency)
                                 </TYPE.description3>
                               </LabeledCheckBox>
-                              
+
                               <LabeledCheckBox>
                                 <Checkbox
                                   name=""
                                   label=""
                                   checked={values.isJointIncome}
-                                  onClick={() => onInvestorDeclarationChange('isJointIncome', !values.isJointIncome, values, setFieldValue)}
+                                  onClick={() =>
+                                    onInvestorDeclarationChange(
+                                      'isJointIncome',
+                                      !values.isJointIncome,
+                                      values,
+                                      setFieldValue
+                                    )
+                                  }
                                 />
                                 <TYPE.description3>
                                   My jointly held account with my spouse/any individual meets any of the above
                                 </TYPE.description3>
                               </LabeledCheckBox>
-                              
-                              
-                              
                             </Column>
 
                             {errors.investorDeclarationIsFilled && (
@@ -1268,7 +1349,7 @@ export default function IndividualKycForm() {
                                 <Trans>{errors.investorDeclarationIsFilled}</Trans>
                               </TYPE.small>
                             )}
-                            
+
                             <RowBetween marginTop="64px">
                               <TYPE.title7 style={{ textTransform: 'uppercase' }}>
                                 <Trans>Opt-in requirement</Trans>
@@ -1276,102 +1357,102 @@ export default function IndividualKycForm() {
                             </RowBetween>
 
                             <Column style={{ gap: '1rem' }}>
-                              <TYPE.body3>
-                                I confirm to be treated as an “Accredited Investor” by InvestaX
-                              </TYPE.body3>
+                              <TYPE.body3>I confirm to be treated as an “Accredited Investor” by InvestaX</TYPE.body3>
 
                               <LabeledCheckBox>
-                                <Checkbox 
-                                  label={''} 
-                                  checked={values.acceptOfQualification} 
-                                  onClick={() => onChangeInput('acceptOfQualification', !values.acceptOfQualification, values, setFieldValue)}
+                                <Checkbox
+                                  label={''}
+                                  checked={values.acceptOfQualification}
+                                  onClick={() =>
+                                    onChangeInput(
+                                      'acceptOfQualification',
+                                      !values.acceptOfQualification,
+                                      values,
+                                      setFieldValue
+                                    )
+                                  }
                                 />
 
                                 <TYPE.description3>
-                                  I have been informed of and understand the consequences of my qualification as an Accredited Investor, 
-                                  in particular the reduced regulatory investor 
-                                  <InlineLinkButton type="button" onClick={() => setShowSafeguardModal(true)}>safeguards</InlineLinkButton> 
+                                  I have been informed of and understand the consequences of my qualification as an
+                                  Accredited Investor, in particular the reduced regulatory investor
+                                  <InlineLinkButton type="button" onClick={() => setShowSafeguardModal(true)}>
+                                    safeguards
+                                  </InlineLinkButton>
                                   for Accredited Investors.
                                 </TYPE.description3>
 
                                 <Modal isOpen={showSafeguardModal} onDismiss={() => setShowSafeguardModal(false)}>
                                   <FormCard>
                                     <Column style={{ alignItems: 'stretch' }}>
-                                      <TYPE.mediumHeader>Accredited Investors And Their Special Treatment</TYPE.mediumHeader>
-                                      
+                                      <TYPE.mediumHeader>
+                                        Accredited Investors And Their Special Treatment
+                                      </TYPE.mediumHeader>
+
                                       <br />
 
                                       <TYPE.description2 style={{ overflowY: 'scroll', maxHeight: '50vh' }}>
-                                        Accredited investors are considered to be sophisticated investors and hence eligible to enjoy more 
-                                        flexible and swift investments not available to the general public. Accredited investors are expected 
-                                        to understand more sophisticated investment products and the risks associated with them, and have the 
-                                        ability to conduct their own due diligence, therefore, allowing for reduced investor disclosures and 
-                                        safeguards, including the following:
-
+                                        Accredited investors are considered to be sophisticated investors and hence
+                                        eligible to enjoy more flexible and swift investments not available to the
+                                        general public. Accredited investors are expected to understand more
+                                        sophisticated investment products and the risks associated with them, and have
+                                        the ability to conduct their own due diligence, therefore, allowing for reduced
+                                        investor disclosures and safeguards, including the following:
                                         <br />
                                         <br />
-
-                                        - We may provide you preliminary documents, and oral or written information in their regard or regarding 
-                                        the prospectus, on securities, such as shares and debentures, units in business trusts and collective 
-                                        investment schemes (commonly referred to as mutual funds or investment funds) (“Investment Products”) 
-                                        before the prospectus or profile statement is registered with the Monetary Authority of Singapore 
-                                        (sec. 25(3) and (4)(a), 300(2A) and (2B)(a) SFA). You may thus receive information that may not meet 
-                                        regulatory requirements for public distribution.
-                                        
+                                        - We may provide you preliminary documents, and oral or written information in
+                                        their regard or regarding the prospectus, on securities, such as shares and
+                                        debentures, units in business trusts and collective investment schemes (commonly
+                                        referred to as mutual funds or investment funds) (“Investment Products”) before
+                                        the prospectus or profile statement is registered with the Monetary Authority of
+                                        Singapore (sec. 25(3) and (4)(a), 300(2A) and (2B)(a) SFA). You may thus receive
+                                        information that may not meet regulatory requirements for public distribution.
                                         <br />
                                         <br />
-
-
-                                        - We may offer you Investment Products without a prospectus, i.e. without the full disclosures and 
-                                        warnings required for public offerings, or with lesser periodic reporting as determined by the issuers 
-                                        of the Investment Products in their sole discretion (sec. 275(1), 305, 305A(1)(b), (2)(i)(A) and 
-                                        (3)(i)(A) SFA). Conversely, you may purchase Investment Products offered under these limited disclosure 
-                                        requirements without additional requirements (sec. 276(1)(b), (2)(b), (3)(i)(A) and (3)(i)(A)SFA).
-                                        
+                                        - We may offer you Investment Products without a prospectus, i.e. without the
+                                        full disclosures and warnings required for public offerings, or with lesser
+                                        periodic reporting as determined by the issuers of the Investment Products in
+                                        their sole discretion (sec. 275(1), 305, 305A(1)(b), (2)(i)(A) and (3)(i)(A)
+                                        SFA). Conversely, you may purchase Investment Products offered under these
+                                        limited disclosure requirements without additional requirements (sec. 276(1)(b),
+                                        (2)(b), (3)(i)(A) and (3)(i)(A)SFA).
                                         <br />
                                         <br />
-
-
-                                        - We do not hold any investment funds on your behalf, you will not be entitled to any compensation 
-                                        for any monetary loss of funds from misappropriation of funds in any Investment Products from us. 
-                                        (sec. 186(1) SFA, reg. 7(3) SF(LCB) R).
-                                        
+                                        - We do not hold any investment funds on your behalf, you will not be entitled
+                                        to any compensation for any monetary loss of funds from misappropriation of
+                                        funds in any Investment Products from us. (sec. 186(1) SFA, reg. 7(3) SF(LCB)
+                                        R).
                                         <br />
                                         <br />
-
-
-                                        - We may market and sell Investment Products to you without prior due diligence to ascertain its 
-                                        suitability for targeted clients (reg. 18B(9) FAR). We may even expressly or implicity make a 
-                                        recommendation with respect to any investment product to you without ascertaining that the investment 
-                                        product meets your investment objectives, financial situation and particular needs. When making a 
-                                        recommendation to you without such consideration, we will however disclose this fact to you 
-                                        (re. 34(1)(a), (2) FAR).
-                                        
+                                        - We may market and sell Investment Products to you without prior due diligence
+                                        to ascertain its suitability for targeted clients (reg. 18B(9) FAR). We may even
+                                        expressly or implicity make a recommendation with respect to any investment
+                                        product to you without ascertaining that the investment product meets your
+                                        investment objectives, financial situation and particular needs. When making a
+                                        recommendation to you without such consideration, we will however disclose this
+                                        fact to you (re. 34(1)(a), (2) FAR).
                                         <br />
                                         <br />
-
-
-                                        - We provide you research reports and analysis from 3rd party research houses, we are not 
-                                        required to accept legal responsibility for the content of such report or analysis (32C(1)(d) FAR).
-                                        
+                                        - We provide you research reports and analysis from 3rd party research houses,
+                                        we are not required to accept legal responsibility for the content of such
+                                        report or analysis (32C(1)(d) FAR).
                                         <br />
                                         <br />
-
-
-                                        - We are not required to disclose our interests from investment or underwriting of the 
-                                        respective Investment Product, when we offer or recommend such Investment Products to you 
-                                        (47A(3)(a)(i)SF(LCB)R).
-                                        
+                                        - We are not required to disclose our interests from investment or underwriting
+                                        of the respective Investment Product, when we offer or recommend such Investment
+                                        Products to you (47A(3)(a)(i)SF(LCB)R).
                                         <br />
-                                        <br />
-
-
-                                        - A suitable representative of our Company may interact with you on his/her own without 
-                                        passing all the examinations required by the Monetary Authority of Singapore for representative 
-                                        retail clients (reg. 3A(5)(c)-(e) and (7) SF(LCB)R; reg. 4A(6) FAR.
+                                        <br />- A suitable representative of our Company may interact with you on
+                                        his/her own without passing all the examinations required by the Monetary
+                                        Authority of Singapore for representative retail clients (reg. 3A(5)(c)-(e) and
+                                        (7) SF(LCB)R; reg. 4A(6) FAR.
                                       </TYPE.description2>
 
-                                      <ButtonIXSGradient type="button" onClick={() => setShowSafeguardModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                      <ButtonIXSGradient
+                                        type="button"
+                                        onClick={() => setShowSafeguardModal(false)}
+                                        style={{ width: '100%', marginTop: '32px' }}
+                                      >
                                         OK
                                       </ButtonIXSGradient>
                                     </Column>
@@ -1384,18 +1465,26 @@ export default function IndividualKycForm() {
                                   <Trans>{errors.acceptOfQualification}</Trans>
                                 </TYPE.small>
                               )}
-                              
-                              
+
                               <LabeledCheckBox>
-                                <Checkbox 
-                                  label={''} 
+                                <Checkbox
+                                  label={''}
                                   checked={values.acceptRefusalRight}
-                                  onClick={() => onChangeInput('acceptRefusalRight', !values.acceptRefusalRight, values, setFieldValue)}
+                                  onClick={() =>
+                                    onChangeInput(
+                                      'acceptRefusalRight',
+                                      !values.acceptRefusalRight,
+                                      values,
+                                      setFieldValue
+                                    )
+                                  }
                                 />
 
                                 <TYPE.description3>
-                                  I have been informed of and understand my right to 
-                                  <InlineLinkButton type="button" onClick={() => setShowOptoutModal(true)}>opt out</InlineLinkButton> 
+                                  I have been informed of and understand my right to
+                                  <InlineLinkButton type="button" onClick={() => setShowOptoutModal(true)}>
+                                    opt out
+                                  </InlineLinkButton>
                                   of the Accredited Investors status
                                 </TYPE.description3>
 
@@ -1403,69 +1492,85 @@ export default function IndividualKycForm() {
                                   <FormCard>
                                     <Column style={{ alignItems: 'stretch' }}>
                                       <TYPE.mediumHeader>Accredited Investor Opt-Out Form</TYPE.mediumHeader>
-                                      
+
                                       <br />
 
                                       <TYPE.description2>
-                                        I/We (“Accredited Investor” or “AI”) wish to inform that I/WE would like to withdraw 
-                                        my/our consent to be treated as an Accredited Investor (as defined in section 4A of 
-                                        the Securities and Future Act, Chapter 289 of Singaport) by IX Swap
-
+                                        I/We (“Accredited Investor” or “AI”) wish to inform that I/WE would like to
+                                        withdraw my/our consent to be treated as an Accredited Investor (as defined in
+                                        section 4A of the Securities and Future Act, Chapter 289 of Singaport) by IX
+                                        Swap
                                         <br />
                                         <br />
-                                        
-                                        I/We agree, understand and accept that this withdrawal of consent will be subject 
-                                        to a processing time of 30 business days from the date of receipt of this form by 
-                                        IX Swap will notify after my/our status has been updated as Non-Accredited Investor 
-                                        (“NAI”) in its records and I/we will be treated as an AI until InvestaX notifies 
-                                        me/us of the updated status as NAI (“Effective Date”)
-                                        
+                                        I/We agree, understand and accept that this withdrawal of consent will be
+                                        subject to a processing time of 30 business days from the date of receipt of
+                                        this form by IX Swap will notify after my/our status has been updated as
+                                        Non-Accredited Investor (“NAI”) in its records and I/we will be treated as an AI
+                                        until InvestaX notifies me/us of the updated status as NAI (“Effective Date”)
                                         <br />
                                         <br />
-
-                                        From the Effective Date, I/we shall be treated as NAI by IX Swap for all or any 
-                                        of the services mentioned above. Any transactions executed by me/us or Services/Products 
-                                        availed by me/us prior to the Effective Date will not be affected by such withdrawal of consent.
+                                        From the Effective Date, I/we shall be treated as NAI by IX Swap for all or any
+                                        of the services mentioned above. Any transactions executed by me/us or
+                                        Services/Products availed by me/us prior to the Effective Date will not be
+                                        affected by such withdrawal of consent.
                                       </TYPE.description2>
 
                                       <FormGrid columns={2}>
-                                        <ButtonGradientBorder type="button" onClick={() => setShowOptoutModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                        <ButtonGradientBorder
+                                          type="button"
+                                          onClick={() => setShowOptoutModal(false)}
+                                          style={{ width: '100%', marginTop: '32px' }}
+                                        >
                                           Cancel
                                         </ButtonGradientBorder>
 
-                                        <ButtonIXSGradient type="button" onClick={openConfirmationModal} style={{ 'width': '100%', marginTop: '32px' }}>
+                                        <ButtonIXSGradient
+                                          type="button"
+                                          onClick={openConfirmationModal}
+                                          style={{ width: '100%', marginTop: '32px' }}
+                                        >
                                           Opt Out
                                         </ButtonIXSGradient>
-                                        
                                       </FormGrid>
                                     </Column>
                                   </FormCard>
                                 </Modal>
 
-                                <Modal isOpen={showOptoutConfirmationModal} onDismiss={() => setShowOptoutConfirmationModal(false)}>
+                                <Modal
+                                  isOpen={showOptoutConfirmationModal}
+                                  onDismiss={() => setShowOptoutConfirmationModal(false)}
+                                >
                                   <FormCard>
                                     <Column style={{ alignItems: 'stretch' }}>
                                       <TYPE.mediumHeader>
-                                        If you choose to opt-out of the Accredited Investor status, please proceed with KYC by declaring a different investor status.
+                                        If you choose to opt-out of the Accredited Investor status, please proceed with
+                                        KYC by declaring a different investor status.
                                       </TYPE.mediumHeader>
-                                      
+
                                       <br />
 
                                       <FormGrid columns={2}>
-                                        <ButtonGradientBorder type="button" onClick={() => setShowOptoutConfirmationModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                        <ButtonGradientBorder
+                                          type="button"
+                                          onClick={() => setShowOptoutConfirmationModal(false)}
+                                          style={{ width: '100%', marginTop: '32px' }}
+                                        >
                                           Cancel
                                         </ButtonGradientBorder>
 
-                                        <ButtonIXSGradient type="button" onClick={() => confirmOptOut(setFieldValue)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                        <ButtonIXSGradient
+                                          type="button"
+                                          onClick={() => confirmOptOut(setFieldValue)}
+                                          style={{ width: '100%', marginTop: '32px' }}
+                                        >
                                           Ok
                                         </ButtonIXSGradient>
-                                        
                                       </FormGrid>
                                     </Column>
                                   </FormCard>
                                 </Modal>
                               </LabeledCheckBox>
-                              
+
                               {errors.acceptRefusalRight && (
                                 <TYPE.small marginTop="-4px" color={'red1'}>
                                   <Trans>{errors.acceptRefusalRight}</Trans>
@@ -1473,7 +1578,6 @@ export default function IndividualKycForm() {
                               )}
                             </Column>
 
-                            
                             <RowBetween marginTop="64px">
                               <TYPE.title7 style={{ textTransform: 'uppercase' }}>
                                 <Trans>Evidence of Accreditation</Trans>
@@ -1482,20 +1586,27 @@ export default function IndividualKycForm() {
 
                             <Column>
                               <TYPE.body3>
-                                Net Personal Asset Copy of latest investment portfolio holdings, e.g. bank, broker, 
-                                fund manager account statements, copy bank statement, CPF statement
+                                Net Personal Asset Copy of latest investment portfolio holdings, e.g. bank, broker, fund
+                                manager account statements, copy bank statement, CPF statement
                               </TYPE.body3>
 
                               <Uploader
                                 title={''}
                                 error={errors.evidenceOfAccreditation}
                                 files={values.evidenceOfAccreditation}
-                                onDrop={(file) => handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)}
-                                handleDeleteClick={handleImageDelete(values, 'evidenceOfAccreditation', values.removedDocuments, setFieldValue)}
+                                onDrop={(file) =>
+                                  handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
+                                }
+                                handleDeleteClick={handleImageDelete(
+                                  values,
+                                  'evidenceOfAccreditation',
+                                  values.removedDocuments,
+                                  setFieldValue
+                                )}
                               />
                             </Column>
                           </FormCard>
-                          
+
                           <FormCard id="acknowledgement">
                             <RowBetween marginBottom="32px">
                               <TYPE.title6 style={{ textTransform: 'uppercase' }}>
@@ -1505,17 +1616,25 @@ export default function IndividualKycForm() {
                             </RowBetween>
 
                             <LabeledCheckBox>
-                              <Checkbox 
-                                label={''} 
+                              <Checkbox
+                                label={''}
                                 checked={values.confirmStatusDeclaration}
-                                onClick={() => onChangeInput('confirmStatusDeclaration', !values.confirmStatusDeclaration, values, setFieldValue)}
+                                onClick={() =>
+                                  onChangeInput(
+                                    'confirmStatusDeclaration',
+                                    !values.confirmStatusDeclaration,
+                                    values,
+                                    setFieldValue
+                                  )
+                                }
                               />
 
                               <TYPE.description3>
-                                I understand and acknowledge that any offer made to me via IX Swap is an exempt offer of securities in
-                                accordance with Section 275 of the Securities and Futures Act 2001 of Singapore and is not accompanied by a
-                                prospectus that is reviewed or vetted by the Monetary Authority of Singapore. I am interested in receiving and
-                                participating in such offers.
+                                I understand and acknowledge that any offer made to me via IX Swap is an exempt offer of
+                                securities in accordance with Section 275 of the Securities and Futures Act 2001 of
+                                Singapore and is not accompanied by a prospectus that is reviewed or vetted by the
+                                Monetary Authority of Singapore. I am interested in receiving and participating in such
+                                offers.
                               </TYPE.description3>
                             </LabeledCheckBox>
 
@@ -1538,9 +1657,24 @@ export default function IndividualKycForm() {
                       // disabled={!(dirty && Object.keys(errors).length === 0)}
                       disabled={!canSubmit || Object.keys(errors).length !== 0}
                       topics={[
-                        { title: 'Personal Information', href: 'personal', passed: personalPassed, failed: personalFailed },
-                        { title: 'Financial Information', href: 'financial', passed: financialFilled, failed: financialFailed },
-                        { title: 'Investor Status Declaration', href: 'status-declaration', passed: statusDeclarationFilled, failed: statusDeclarationFailed },
+                        {
+                          title: 'Personal Information',
+                          href: 'personal',
+                          passed: personalPassed,
+                          failed: personalFailed,
+                        },
+                        {
+                          title: 'Financial Information',
+                          href: 'financial',
+                          passed: financialFilled,
+                          failed: financialFailed,
+                        },
+                        {
+                          title: 'Investor Status Declaration',
+                          href: 'status-declaration',
+                          passed: statusDeclarationFilled,
+                          failed: statusDeclarationFailed,
+                        },
                         // { title: 'Investor Declaration', href: 'investor-declaration', passed: investorFilled },
                         // { title: 'Acknowledgement', href: 'acknowledgement', passed: investorStatusAcknowledgementFilled },
                       ]}
@@ -1573,11 +1707,14 @@ const BorderBox = styled.div<{ active: boolean }>`
   :before {
     content: '';
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: -1;
     margin: -3px; /* !importanté */
     border-radius: inherit;
-    background: ${({ active }) => active ? 'linear-gradient(86.36deg, #6B2EE6 29.09%, #FF0080 107.32%)' : 'none'};
+    background: ${({ active }) => (active ? 'linear-gradient(86.36deg, #6B2EE6 29.09%, #FF0080 107.32%)' : 'none')};
   }
 `
 
@@ -1590,9 +1727,9 @@ const LabeledCheckBox = styled.div`
 `
 
 const LinkButton = styled(LinkStyledButton)`
-  color: #4C88FF;
+  color: #4c88ff;
 `
 
 const InlineLinkButton = styled(LinkStyledButton)`
-  color: #AC83FF;
+  color: #ac83ff;
 `

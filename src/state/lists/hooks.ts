@@ -50,7 +50,7 @@ export function listToTokenMapArray(list: TokenList): Record<string, any[]> {
         [token.chainId]: [...tokenMap[token.chainId], token],
       }
     },
-    { 1: [], 42: [], 137: [] }
+    { 1: [], 42: [], 80001: [], 137: [] }
   )
 
   return map

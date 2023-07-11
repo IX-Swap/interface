@@ -38,12 +38,6 @@ export const corporateInfoKeys = [
     width: { xs: 12, sm: 6 },
     format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
   },
-  {
-    key: 'incorporationExpiryDate',
-    label: 'Date of Incorporation Expiry',
-    width: { xs: 12, sm: 6 },
-    format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
-  },
 ] as KycTypes
 
 export const personalInfoKeys = [
@@ -190,6 +184,10 @@ export const taxDeclarationKeys = [
   {
     key: 'taxNumber',
     label: 'Tax Indentification Number',
+  },
+  {
+    key: 'reason',
+    label: 'Reason',
   },
 ]
 

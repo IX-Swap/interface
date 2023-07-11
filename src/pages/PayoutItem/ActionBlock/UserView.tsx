@@ -23,7 +23,6 @@ import { LoadingIndicator } from 'components/LoadingIndicator'
 import { FetchingBalance } from './FetchingBalance'
 import { Claimed } from './Claimed'
 import { UserClaim } from './dto'
-import { useAccount } from 'state/user/hooks'
 
 interface Props {
   payout: PayoutEvent
@@ -63,8 +62,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
     }
   }, [id, account])
 
-
-  const amountToClaim = +tokenAmount * (+secTokenAmount > 0 ? (myAmount / +secTokenAmount) : myAmount)
+  const amountToClaim = +tokenAmount * (+secTokenAmount > 0 ? myAmount / +secTokenAmount : myAmount)
 
   const decimals = tokenInfo?.decimals < 7 ? tokenInfo.decimals : 6
 
@@ -172,7 +170,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
         return null
     }
   }, [status, payoutToken, claimStatus, secPayoutToken])
-  
+
   if (secTokenBalance === '-') return <FetchingBalance />
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
   if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.catalogId} />
@@ -197,7 +195,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   )
 }
 
-const NotTokenHoldersView: FC<{ payoutToken: any, status: PAYOUT_STATUS }> = ({ payoutToken, status }) => {
+const NotTokenHoldersView: FC<{ payoutToken: any; status: PAYOUT_STATUS }> = ({ payoutToken, status }) => {
   const history = useHistory()
 
   const onBuyClick = () => {
@@ -211,7 +209,9 @@ const NotTokenHoldersView: FC<{ payoutToken: any, status: PAYOUT_STATUS }> = ({ 
           <Flex marginBottom="24px">
             <Box marginX="4px">{t`Add`}</Box>
             <CurrencyLogo currency={payoutToken} size="24px" />
-            <Box marginX="4px" fontWeight="bold">{payoutToken.symbol} </Box>
+            <Box marginX="4px" fontWeight="bold">
+              {payoutToken.symbol}{' '}
+            </Box>
             <Box>{t`to increase possible payout.`}</Box>
           </Flex>
         )

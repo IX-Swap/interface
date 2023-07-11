@@ -50,7 +50,7 @@ export const payout = {
   totalAmount: (tokenId: number, recordDate: any) => `payout/total-amount/${tokenId}?recordDate=${recordDate}`,
   deleteDraft: (id: number) => `payout/draft/${id}`,
   payoutAuthorization: '/payout/init',
-  paidPayout:(id: number) => `/payout/pay/${id}`,
+  paidPayout: (id: number) => `/payout/pay/${id}`,
   getMyPayoutAmount: (id: number) => `/payout/my-amount/${id}`,
   claimAuthorization: (id: number) => `/payout/init/claim/${id}`,
   claimBackAuthorization: (id: number) => `/payout/init/claim-back/${id}`,
@@ -58,7 +58,7 @@ export const payout = {
   saveManagerClaimBack: 'payout/claim-back',
   getUserClaim: (id: number) => `payout/claim/${id}`,
   getTotalClaims: (id: number) => `payout/claims/total/${id}`,
-  getRemainingTokens: (id: number) => `payout/remain/${id}`
+  getRemainingTokens: (id: number) => `payout/remain/${id}`,
 }
 
 export const kyc = {
@@ -168,6 +168,12 @@ export const eventLog = {
   },
 }
 
+export const whitelist = {
+  add: (offerId: string) => `/offers/${offerId}/token-whitelists`,
+  get: (offerId: string) => `/offers/${offerId}/token-whitelists`,
+  delete: (offerId: string, walletAddress: string) => `/offers/${offerId}/token-whitelists/${walletAddress}`,
+}
+
 const getQueryParam = ({
   param,
   value,
@@ -179,6 +185,7 @@ const getQueryParam = ({
 }) => {
   return param ? `${isFirst ? '' : '&'}${queryParams[param]}=${value}` : ''
 }
+
 const queryParams: { [key: string]: string } = {
   page: 'page',
   tokenId: 'tokenId',

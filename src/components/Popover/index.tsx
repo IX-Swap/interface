@@ -1,6 +1,7 @@
 import { CSSProperties } from '@material-ui/core/styles/withStyles'
 import { Placement } from '@popperjs/core'
 import Portal from '@reach/portal'
+import { TOOLTIP_ARROW_TYPE } from 'constants/enums'
 import { transparentize } from 'polished'
 import React, { useCallback, useState } from 'react'
 import { usePopper } from 'react-popper'
@@ -30,7 +31,7 @@ const Shadow = styled.div`
   z-index: 100;
 `
 
-const Arrow = styled.div`
+const CommonStyledOfArrow = styled.div`
   width: 8px;
   height: 8px;
   z-index: 9998;
@@ -43,7 +44,6 @@ const Arrow = styled.div`
 
     content: '';
     transform: rotate(45deg);
-    background: ${({ theme }) => theme.bg7};
   }
 
   &.arrow-top {
@@ -80,6 +80,22 @@ const Arrow = styled.div`
   }
 `
 
+const Arrow = styled(CommonStyledOfArrow)`
+  ::before {
+    background: ${({ theme }) => theme.bg7};
+  }
+`
+
+const ArrowVetting = styled(CommonStyledOfArrow)`
+  ::before {
+    top: -3px;
+    background: ${({ theme }) => theme.white};
+    border: 1px solid ${({ theme }) => theme.launchpad.colors.accent};
+    border-top: none;
+    border-left: none;
+  }
+`
+
 export interface PopoverProps {
   content: React.ReactNode
   show: boolean
@@ -91,6 +107,7 @@ export interface PopoverProps {
   close?: () => void
   hideShadow?: boolean
   hideArrow?: boolean
+  customArrowType?: TOOLTIP_ARROW_TYPE
 }
 
 export default function Popover({
@@ -104,6 +121,7 @@ export default function Popover({
   close,
   hideArrow = false,
   hideShadow = false, // used for tooltips
+  customArrowType 
 }: PopoverProps) {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
@@ -120,6 +138,25 @@ export default function Popover({
     update && update()
   }, [update])
   useInterval(updateCallback, show ? 100 : null)
+
+  let arrowStyle;
+  switch(customArrowType) {
+    case TOOLTIP_ARROW_TYPE.VETTING:
+      arrowStyle = <ArrowVetting
+        className={`arrow-${attributes.popper?.['data-popper-placement'] ?? ''}`}
+        ref={setArrowElement as any}
+        style={styles.arrow}
+        {...attributes.arrow}
+      />
+      break;
+    default: 
+      arrowStyle = <Arrow
+        className={`arrow-${attributes.popper?.['data-popper-placement'] ?? ''}`}
+        ref={setArrowElement as any}
+        style={styles.arrow}
+        {...attributes.arrow}
+      />
+  }
 
   return (
     <>
@@ -139,14 +176,7 @@ export default function Popover({
           {...attributes.popper}
         >
           {content}
-          {!hideArrow && (
-            <Arrow
-              className={`arrow-${attributes.popper?.['data-popper-placement'] ?? ''}`}
-              ref={setArrowElement as any}
-              style={styles.arrow}
-              {...attributes.arrow}
-            />
-          )}
+          {!hideArrow && arrowStyle}
         </PopoverContainer>
       </Portal>
     </>
