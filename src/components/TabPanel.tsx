@@ -7,6 +7,7 @@ export interface TabPanelProps extends BoxProps {
   value: number
   pt?: any
   withoutSpacing?: boolean
+  type?: string
 }
 
 export const TabPanel = (props: TabPanelProps) => {
@@ -16,14 +17,19 @@ export const TabPanel = (props: TabPanelProps) => {
     index,
     pt = 6,
     withoutSpacing = false,
+    type,
     ...rest
   } = props
-
+  console.log(props, 'props')
   return (
     <div role='tabpanel' hidden={value !== index}>
       {value === index &&
         (withoutSpacing ? (
-          <Box {...rest} pt={pt} style={{ paddingTop: 'initial' }}>
+          <Box
+            {...rest}
+            pt={pt}
+            style={{ paddingTop: type === 'OTC' ? '10px' : 'initial' }}
+          >
             {children}
           </Box>
         ) : (

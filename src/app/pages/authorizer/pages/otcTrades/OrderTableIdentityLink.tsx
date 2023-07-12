@@ -1,8 +1,8 @@
-import { Launch } from '@mui/icons-material'
 import { Box } from '@mui/material'
 import { AuthorizerIdentityLink } from 'app/components/AuthorizerIdentityLink'
 import React from 'react'
 import { OrderType, OTCIdentity, OTCOrder } from 'types/otcOrder'
+import { ReactComponent as LaunchIcon } from 'app/pages/issuance/components/SecondaryListingsTable/icons/view.svg'
 export interface OrderTableLinkParams {
   userId: string
   identityId: string
@@ -87,7 +87,7 @@ export const OrderTableIdentityLink = ({
         alignItems='center'
       >
         <Box>{name}</Box>
-        <Launch color='primary' />
+        <LaunchIcon color='disabled' />
       </Box>
     </AuthorizerIdentityLink>
   )

@@ -10,7 +10,12 @@ import {
   SwapHoriz as TransferredIcon,
   SvgIconComponent
 } from '@mui/icons-material'
-import { AuthorizableStatus, DeploymentStatus, FundStatus } from 'types/util'
+import {
+  AuthorizableStatus,
+  DeploymentStatus,
+  FundStatus,
+  OtcTradesStatus
+} from 'types/util'
 import { Box } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
@@ -120,7 +125,7 @@ export const DeploymentStatusFilter = ({
 
 export const StatusFilter = () => {
   const category = useAuthorizerCategory()
-
+  console.log(category, 'catatatat')
   if (category === 'commitments') {
     return (
       <BaseFundStatusFilter statusFilters={[...fundStatusFilters].reverse()} />
@@ -133,6 +138,10 @@ export const StatusFilter = () => {
         statusFilters={[...deploymentStatusFilter].reverse()}
       />
     )
+  }
+
+  if (category === 'otc-trades') {
+    return <BaseStatusFilter statusFilters={otcTradesStatusFilter} />
   }
 
   if (
@@ -162,6 +171,12 @@ interface DeploymentStatusFilterItemType {
   icon: SvgIconComponent
   title: string
   value: DeploymentStatus
+}
+
+interface OtcTradesStatusFilterItemType {
+  icon: SvgIconComponent
+  title: string
+  value: OtcTradesStatus
 }
 
 export const allFilter: StatusFilterItemType[] = [
@@ -241,4 +256,24 @@ export const deploymentStatusFilter: DeploymentStatusFilterItemType[] = [
     title: 'Pending'
   },
   { icon: AllIcon, value: '', title: 'All' }
+]
+
+export const otcTradesStatusFilter: OtcTradesStatusFilterItemType[] = [
+  { icon: AllIcon, value: '', title: 'All' },
+  {
+    icon: UnauthorizedIcon,
+    value: 'NEW',
+    title: 'Confirmed'
+  },
+  {
+    icon: ApprovedIcon,
+    value: 'COMPLETED',
+    title: 'Settled'
+  },
+
+  {
+    icon: UnauthorizedIcon,
+    value: 'REJECTED',
+    title: 'Rejected'
+  }
 ]
