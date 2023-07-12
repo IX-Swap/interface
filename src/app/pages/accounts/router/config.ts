@@ -24,7 +24,7 @@ export const AccountsRoute = {
   ]),
   commitments: makeURL(['app', 'accounts', 'commitments']),
   dashboard: makeURL(['app', 'accounts', 'dashboard']),
-  reports: '/app/accounts/reports',
+  //   reports: '/app/accounts/reports',
   myHoldings: '/app/accounts/holdings',
   cash: '/app/accounts/cash'
 }
@@ -66,12 +66,10 @@ export const accountsLandingLinks: InternalRouteProps[] = [
   //     color: '#e6d200',
   //     icon: WithdrawalAddressIcon
   //   },
-  {
-    label: 'My Reports',
-    path: AccountsRoute.reports,
-    color: '#e6d200',
-    icon: ReportsIcon
-  },
+  //     label: 'My Reports',
+  //     path: AccountsRoute.reports,
+  //     color: '#e6d200'
+  //   },
   {
     label: 'My Exchange Holdings',
     path: AccountsRoute.myHoldings,

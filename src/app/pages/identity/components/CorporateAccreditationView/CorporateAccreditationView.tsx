@@ -6,6 +6,7 @@ import { OptInView } from 'app/pages/identity/components/CorporateAccreditationV
 import { DocumentsView } from 'app/pages/identity/components/CorporateAccreditationView/DocumentsView'
 import { InstitutionalInvestorDeclarationView } from 'app/pages/identity/components/CorporateAccreditationView/InstitutionalInvestorDeclarationView'
 import { Element } from 'react-scroll'
+import { isNonEmptyArray } from 'helpers/arrays'
 
 export enum CorporateAccreditationSections {
   'Investor Role Declaration' = 'investor-role-declaration',
@@ -31,7 +32,8 @@ export const CorporateAccreditationView = ({
         </Element>
       </Grid>
 
-      {typeof data.applyingAs !== 'undefined' &&
+
+      {isNonEmptyArray(data.applyingAs) &&
       data.applyingAs[0] === 'institutional' ? (
         <Grid item>
           <InstitutionalInvestorDeclarationView data={data} />

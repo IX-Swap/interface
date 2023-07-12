@@ -12,7 +12,7 @@ import { DSODataroomView } from 'app/components/DSO/components/DSODataroomView'
 import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
 import { DSOVideoLinksView } from 'app/components/DSO/components/DSOVideoLinksView'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
-import { CapTable } from 'app/pages/issuance/pages/CapTable'
+// import { CapTable } from 'app/pages/issuance/pages/CapTable'
 import { Tabs, Tab, Grid } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
@@ -73,7 +73,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
         >
           <Tab label='Overview' />
           <Tab label='Commitments' />
-          <Tab label='CapTable' />
+          {/* <Tab label='CapTable' /> */}
         </Tabs>
       </FieldContainer>
 
@@ -133,9 +133,9 @@ export const DSOPreview = (props: DSOPreviewProps) => {
         <Commitments />
       </TabPanel>
 
-      <TabPanel value={selectedIdx} index={2}>
+      {/* <TabPanel value={selectedIdx} index={2}>
         <CapTable />
-      </TabPanel>
+      </TabPanel> */}
     </Grid>
   )
 }

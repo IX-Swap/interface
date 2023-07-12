@@ -3,7 +3,7 @@ import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/C
 // import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
 import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurities/router/DigitalSecuritiesRouter'
 import { MyHoldings } from 'app/pages/accounts/pages/holdings/MyHoldings'
-import { ReportsRouter } from 'app/pages/accounts/pages/reports/router/ReportsRouter'
+// import { ReportsRouter } from 'app/pages/accounts/pages/reports/router/ReportsRouter'
 import { Transactions } from 'app/pages/accounts/pages/transactions/Transactions'
 import { WithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router/WithdrawalAddressesRouter'
 import {
@@ -46,9 +46,9 @@ export const AccountsRouter = () => {
         </RootContainer>
       </AppRoute> */}
 
-      <AppRoute breadcrumb='My Reports' path={AccountsRoute.reports}>
+      {/* <AppRoute breadcrumb='My Reports' path={AccountsRoute.reports}>
         <ReportsRouter />
-      </AppRoute>
+      </AppRoute> */}
 
       <AppRoute
         breadcrumb='My Exchange Holdings'
