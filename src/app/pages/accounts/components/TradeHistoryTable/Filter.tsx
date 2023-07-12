@@ -6,7 +6,7 @@ import { BaseFilters } from 'app/components/BaseFilters/BaseFilters'
 export const Filters = () => {
   return (
     <BaseFilters>
-      <Grid item>
+      <Grid item xs>
         <PairFilter />
       </Grid>
     </BaseFilters>

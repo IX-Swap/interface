@@ -1,13 +1,15 @@
 import { Box, Grid } from '@mui/material'
 import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { columns } from 'app/pages/accounts/components/CurrentHoldingsTable/columns'
-import { TableView } from 'components/TableWithPagination/TableView'
+// import { TableView } from 'components/TableWithPagination/TableView'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { exchange as exchangeUrl } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React from 'react'
+import { useTheme } from '@mui/styles'
 
 export interface Holding {
   _id: string
@@ -19,6 +21,7 @@ export interface Holding {
 }
 
 export const CurrentHoldingsTable = () => {
+  const theme = useTheme()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { getFilterValue } = useQueryFilter()
@@ -28,25 +31,25 @@ export const CurrentHoldingsTable = () => {
   }
 
   return (
-    <Grid container direction='column' spacing={2}>
-      <Grid item style={{ maxHeight: 70 }}>
-        <Grid
-          container
-          justifyContent='space-between'
-          style={{ paddingLeft: 24, paddingRight: 24 }}
-        >
-          <Grid item xs={12} md={6}>
-            <Box width={350}>
-              <TextInputSearchFilter
-                fullWidth
-                placeholder='Search'
-                inputAdornmentPosition='end'
-              />
-            </Box>
-          </Grid>
-        </Grid>
-      </Grid>
+    <Grid container direction='column'>
       <Grid item>
+        <Box
+          p={3}
+          bgcolor={theme.palette.backgrounds.light}
+          sx={{
+            borderTop: `1px solid ${theme.palette.divider}`,
+            borderBottomLeftRadius: '10px',
+            borderBottomRightRadius: '10px'
+          }}
+        >
+          <TextInputSearchFilter
+            fullWidth
+            placeholder='Search'
+            inputAdornmentPosition='start'
+          />
+        </Box>
+      </Grid>
+      <Grid item mt={5}>
         <TableView<Holding>
           uri={exchangeUrl.currentHoldings(userId)}
           name={exchangeQueryKeys.userHoldings(userId)}
