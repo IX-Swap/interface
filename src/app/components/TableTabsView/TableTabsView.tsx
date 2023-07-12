@@ -66,7 +66,7 @@ export const TableTabsView = ({
                 index={index}
                 key={index}
                 value={Number(value)}
-                withoutSpacing={variant !== 'primary'}
+                withoutSpacing
               >
                 {tab.panel}
               </TabPanel>

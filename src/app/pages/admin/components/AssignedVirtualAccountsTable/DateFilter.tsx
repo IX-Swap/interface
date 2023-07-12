@@ -6,19 +6,27 @@ import { QueryFilter } from 'hooks/filters/useQueryFilter'
 
 export interface DateFilterProps {
   name: QueryFilter
-  label: string
+  label?: string
   width?: number | string
+  // TODO: fix type when pickers updated
+  dateTimePickerProps?: any
 }
 
-export const DateFilter = ({ name, label, width = 150 }: DateFilterProps) => {
+export const DateFilter = ({
+  name,
+  label,
+  width = 150,
+  dateTimePickerProps = {}
+}: DateFilterProps) => {
   return (
     <SearchQueryFilter name={name}>
       {({ value, onChange, onClear }) => (
         <DatePickerComponent
+          {...dateTimePickerProps}
           name={name}
+          label={label}
           value={value ?? null}
           className='denseAdornments'
-          label={label}
           clearable
           InputProps={{
             fullWidth: false,

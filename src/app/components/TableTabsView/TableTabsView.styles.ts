@@ -2,7 +2,11 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => {
   const tabsRootStyleMap: any = {
-    primary: { marginLeft: 0 },
+    primary: {
+      backgroundColor: theme.palette.backgrounds.light,
+      borderTop: `1px solid ${theme.palette.divider}`,
+      marginLeft: 0
+    },
     secondary: {
       marginLeft: 1,
       minHeight: 30
@@ -11,15 +15,16 @@ export default makeStyles(theme => {
 
   const tabRootStyleMap: any = {
     primary: {
-      border: `1px solid ${theme.palette.divider}`,
-      borderBottom: `1px solid transparent`,
+      borderBottom: `1px solid ${theme.palette.backgrounds.light}`,
+      textTransform: 'capitalize',
       backgroundColor: theme.palette.backgrounds.light,
-      minHeight: 37,
-      paddingTop: 6,
-      paddingBottom: 6,
-      '&:last-child': {
-        borderLeft: 'none'
-      }
+      minWidth: 45,
+      minHeight: 80,
+      marginLeft: 24,
+      padding: '0 6px'
+      //   '&:last-child': {
+      //     borderLeft: 'none'
+      //   }
     },
     secondary: {
       backgroundColor: '#F5EEFF',
@@ -33,9 +38,10 @@ export default makeStyles(theme => {
 
   const tabRootSelectedStylesMap: any = {
     primary: {
-      borderBottom: `1px solid ${theme.palette.common.white}`,
-      backgroundColor: theme.palette.common.white,
-      marginBottom: -1
+      color: '#343A47 !important',
+      borderBottom: `1px solid ${theme.palette.primary.main}`,
+      backgroundColor: theme.palette.common.white
+      //   marginBottom: -1
     },
     secondary: {
       backgroundColor: '#141272',
@@ -46,12 +52,12 @@ export default makeStyles(theme => {
 
   const contentStyleMap: any = {
     primary: {
-      border: `1px solid ${theme.palette.divider}`,
+      //   border: `1px solid ${theme.palette.divider}`,
       borderTop: 'none',
       position: 'relative',
-      top: -5,
-      minHeight: 80,
-      boxShadow: '1px 2px 3px rgba(0, 0, 0, 0.1)'
+      //   top: -5,
+      minHeight: 80
+      //   boxShadow: '1px 2px 3px rgba(0, 0, 0, 0.1)'
     },
     secondary: {}
   }

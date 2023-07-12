@@ -20,14 +20,14 @@ export const HoldingsTables = ({ setHeaderContent }: HoldingsTablesProps) => {
     {
       panel: <CurrentHoldingsTable />,
       label: 'Current Holdings',
-      headerTitle: 'Holdings',
+      headerTitle: 'Current Holdings',
       description:
         'View, manage and track the value of your private company shares and stock options over time. Receive insights, and investment and liquidity opportunities specific to your holdings.'
     },
     {
       panel: <TradeHistoryTable />,
       label: 'Trade History',
-      headerTitle: 'Trades',
+      headerTitle: 'Trade History',
       description:
         'View, manage and filter all the transactions you have made on the secondary market.'
     },
