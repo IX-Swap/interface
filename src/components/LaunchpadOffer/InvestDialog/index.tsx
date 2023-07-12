@@ -29,7 +29,6 @@ enum StageForm {
 
 export const InvestDialog: React.FC<Props> = (props) => {
   const theme = useTheme()
-  const loading = useTokenLoading(props.offer.investingTokenAddress)
 
   const stage = useMemo(() => {
     switch (props.offer.status) {
@@ -56,39 +55,30 @@ export const InvestDialog: React.FC<Props> = (props) => {
 
   return (
     <>
-      {loading &&
+      <Portal>
         <ModalWrapper>
-          <Centered width="100%">
-            <Loader />
-          </Centered>
+          <DialogContainer>
+            <aside>
+              <InvestDialogSidebar stage={props.offer.status} hasPresale={props.offer.hasPresale} />
+            </aside>
+
+            <header>
+              <DialogHeader>
+                <DialogHeaderTitle>Dashboard</DialogHeaderTitle>
+                <DialogHeaderExit onClick={props.onClose}>
+                  <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
+                </DialogHeaderExit>
+              </DialogHeader>
+            </header>
+
+            <main>
+              {stage === StageForm.register && <RegisterToInvestStage {...props} />}
+              {stage === StageForm.sale && <SaleStage {...props} />}
+              {stage === StageForm.closed && <ClosedStage {...props} />}
+            </main>
+          </DialogContainer>
         </ModalWrapper>
-      }
-      {!loading &&
-        <Portal>
-          <ModalWrapper>
-            <DialogContainer>
-              <aside>
-                <InvestDialogSidebar stage={props.offer.status} hasPresale={props.offer.hasPresale} />
-              </aside>
-
-              <header>
-                <DialogHeader>
-                  <DialogHeaderTitle>Dashboard</DialogHeaderTitle>
-                  <DialogHeaderExit onClick={props.onClose}>
-                    <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
-                  </DialogHeaderExit>
-                </DialogHeader>
-              </header>
-
-              <main>
-                {stage === StageForm.register && <RegisterToInvestStage {...props} />}
-                {stage === StageForm.sale && <SaleStage {...props} />}
-                {stage === StageForm.closed && <ClosedStage {...props} />}
-              </main>
-            </DialogContainer>
-          </ModalWrapper>
-        </Portal>
-      }
+      </Portal>
     </>
   )
 }
