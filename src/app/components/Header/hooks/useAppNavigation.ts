@@ -9,21 +9,21 @@ import {
   useIsAdmin
 } from 'helpers/acl'
 import {
-  accountsLandingLinks,
-  AccountsRoute
+  accountsLandingLinks
+  // AccountsRoute
 } from 'app/pages/accounts/router/config'
 import {
   authorizerLandingLinks,
   AuthorizerRoute
 } from 'app/pages/authorizer/router/config'
-import { AppRoute as AppPath, AppRoute } from 'app/router/config'
+import { AppRoute as AppPath } from 'app/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
 import { investLandingLinks, InvestRoute } from 'app/pages/invest/router/config'
 import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
-import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
+// import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
-import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
+// import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 
 import { InternalRouteProps } from 'types/util'
 
@@ -54,18 +54,18 @@ export const useAppNavigation = () => {
   }
 
   const links: NavigationMenuItem[] = [
-    {
-      label: 'Home',
-      link: AppRoute.home
-    },
-    {
-      label: 'Accounts',
-      link: AccountsRoute.landing,
-      icon: AccountsIcon
-    },
+    // {
+    //   label: 'Home',
+    //   link: AppRoute.home
+    // },
+    // {
+    //   label: 'Accounts',
+    //   link: AccountsRoute.landing,
+    //   icon: AccountsIcon
+    // },
     {
       label: 'Invest',
-      link: InvestRoute.overview,
+      link: InvestRoute.primaryOfferings,
       icon: InvestIcon
     }
   ]
@@ -85,13 +85,13 @@ export const useAppNavigation = () => {
     })
   }
 
-  if (isSuperUser) {
-    links.push({
-      label: 'Authorizer',
-      link: AuthorizerRoute.landing,
-      icon: AuthorizerIcon
-    })
-  }
+  // if (isSuperUser) {
+  //   links.push({
+  //     label: 'Authorizer',
+  //     link: AuthorizerRoute.landing,
+  //     icon: AuthorizerIcon
+  //   })
+  // }
 
   if (isFundManager || isSuperUser) {
     issuanceLandingLinks.unshift({
@@ -144,8 +144,8 @@ export const useAppNavigation = () => {
       !isInvestor &&
       !link.startsWith(AppPath.identity) &&
       !link.startsWith(AppPath.security) &&
-      !link.startsWith(AppPath.notifications) &&
-      !link.startsWith(AppPath.home)
+      !link.startsWith(AppPath.notifications)
+      //   !link.startsWith(AppPath.home)
     )
   }
 

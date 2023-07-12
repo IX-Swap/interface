@@ -1,6 +1,6 @@
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/CommitmentsRouter'
-import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
+// import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
 import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurities/router/DigitalSecuritiesRouter'
 import { MyHoldings } from 'app/pages/accounts/pages/holdings/MyHoldings'
 // import { ReportsRouter } from 'app/pages/accounts/pages/reports/router/ReportsRouter'
@@ -13,7 +13,7 @@ import {
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router-dom'
-import { RootContainer } from 'ui/RootContainer'
+// import { RootContainer } from 'ui/RootContainer'
 import { CashRouter } from '../pages/cash/router/CashRouter'
 
 export const AccountsRouter = () => {
@@ -40,11 +40,11 @@ export const AccountsRouter = () => {
         <WithdrawalAddressesRouter />
       </AppRoute>
 
-      <AppRoute breadcrumb='Dashboard' path={AccountsRoute.dashboard}>
+      {/* <AppRoute breadcrumb='Dashboard' path={AccountsRoute.dashboard}>
         <RootContainer>
           <Dashboard />
         </RootContainer>
-      </AppRoute>
+      </AppRoute> */}
 
       {/* <AppRoute breadcrumb='My Reports' path={AccountsRoute.reports}>
         <ReportsRouter />

@@ -1,35 +1,39 @@
-import { Grid, Typography } from '@mui/material'
+import { Grid, Typography, Box } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { HoldingsTables } from 'app/pages/accounts/components/HoldingsTables/HoldingsTables'
 import { VSpacer } from 'components/VSpacer'
 import React, { useState } from 'react'
 import { RootContainer } from 'ui/RootContainer'
+import { useTheme } from '@mui/styles'
 
 export const MyHoldings = () => {
+  const theme = useTheme()
   const [headerContent, setHeaderContent] = useState<{
     title: string
     subtitle: string
   }>({
-    title: 'Holdings',
+    title: 'Current Holdings',
     subtitle:
       'View, manage and track the value of your private company shares and stock options over time. Receive insights, and investment and liquidity opportunities specific to your holdings.'
   })
   return (
     <Grid container direction='column' spacing={3} style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='My Holdings' showBreadcrumbs />
+        <PageHeader title='My Exchange Holdings' showBreadcrumbs />
       </Grid>
-
-      <Grid item>
-        <RootContainer>
-          <Typography variant='h3'>{headerContent.title}</Typography>
-          <VSpacer size='small' />
-          <Typography variant='body1'>{headerContent.subtitle}</Typography>
-        </RootContainer>
-      </Grid>
-      <Grid item>
-        <RootContainer>
-          <VSpacer size='small' />
+      <Grid item marginTop={-1}>
+        <RootContainer padding={0}>
+          <Box
+            p={3}
+            bgcolor={theme.palette.backgrounds.light}
+            sx={{ borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}
+          >
+            <Typography variant='h5'>{headerContent.title}</Typography>
+            <VSpacer size='small' />
+            <Typography variant='body1' color={'text.secondary'}>
+              {headerContent.subtitle}
+            </Typography>
+          </Box>
           <HoldingsTables setHeaderContent={setHeaderContent} />
         </RootContainer>
       </Grid>

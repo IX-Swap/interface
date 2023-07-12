@@ -1,5 +1,4 @@
-import { Box, Grid, Hidden } from '@mui/material'
-import { MoreDetails } from 'app/pages/invest/components/FinancialSummary/MoreDetails'
+import { Box, Grid, Button } from '@mui/material'
 import { NumberSummaryValue } from 'app/pages/invest/components/FinancialSummary/NumberSummaryValue'
 import { SummaryItem } from 'app/pages/invest/components/FinancialSummary/SummaryItem'
 import { PairListDropdown } from 'app/pages/invest/components/PairListDropdown/PairListDropdown'
@@ -10,6 +9,8 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { InvestRoute as paths } from 'app/pages/invest/router/config'
 import { ExchangeRulesLink } from '../ExchangeRulesLink/ExchangeRulesLink'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
 
 export const FinancialSummary = () => {
   const { pairId } = useParams<{
@@ -42,19 +43,9 @@ export const FinancialSummary = () => {
               />
             </Box>
           )}
-          <Hidden mdUp>
-            <Box
-              flexGrow={1}
-              width='50%'
-              display='flex'
-              justifyContent='flex-end'
-            >
-              <MoreDetails />
-            </Box>
-          </Hidden>
         </Box>
       </Grid>
-      <Grid item xs={7}>
+      <Grid item xs={12} md={9}>
         <Box
           padding={{ xs: 1, md: 0 }}
           display={{ xs: 'grid', md: 'flex' }}
@@ -85,20 +76,19 @@ export const FinancialSummary = () => {
             label='24H Low'
             value={<NumberSummaryValue value={data?._24h.low} />}
           />
-          <Hidden mdDown>
-            {/* <Grid
-              item
-              container
-              xs={12}
-              md={2}
-              alignContent='center'
-              justifyContent='flex-end'
-            > */}
-            <MoreDetails />
-            {/* </Grid> */}
-          </Hidden>
-          <Grid sx={{ marginTop: '12px' }}>
+          <Grid item sx={{ marginTop: '12px' }}>
             <ExchangeRulesLink />
+          </Grid>
+          <Grid item xs={6} pb={3}>
+            <Button
+              component={AppRouterLinkComponent}
+              size='large'
+              color='primary'
+              variant='contained'
+              to={AccountsRoute.myHoldings}
+            >
+              My Exchange Holdings
+            </Button>
           </Grid>
         </Box>
       </Grid>

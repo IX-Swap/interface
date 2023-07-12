@@ -76,8 +76,8 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     value: val,
     row = false,
     reverse = false,
-    valueWeight = 'default',
-    labelWeight = 'normal',
+    valueWeight = 'thin',
+    labelWeight = 'thin',
     labelFontSize = 16,
     valueFontSize = 24,
     align = 'left',
@@ -106,7 +106,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     {
       text: label,
       styles: {
-        fontWeight: isRedesigned ? 500 : labelWeightMap[labelWeight],
+        fontWeight: labelWeightMap[labelWeight],
         fontSize: reverse ? labelFontSize : undefined,
         width: '100%',
         color: isNewThemeOn
@@ -118,7 +118,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     {
       text: formatValue(val),
       styles: {
-        fontWeight: isRedesigned ? 500 : valueWeightMap[valueWeight],
+        fontWeight: valueWeightMap[valueWeight],
         fontSize: reverse ? valueFontSize : undefined,
         color: valueColor ?? undefined,
         opacity: isNewThemeOn ? 0.6 : 1,

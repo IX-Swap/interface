@@ -5,7 +5,7 @@ export const InvestRoute = {
   landing: makeURL(['app', 'invest']),
   exchange: '/app/invest/exchange/:pairId',
   overview: '/app/invest/overview',
-  primaryOfferings: '/app/invest/overview/primary-offerings',
+  primaryOfferings: '/app/invest/primary-offerings',
   view: makeURL(['app', 'invest', 'offerings', 'issuerId', 'dsoId', 'view']),
   viewListing: makeURL([
     'app',
@@ -35,10 +35,10 @@ export const CommitmentRoute = {
 }
 
 export const investLandingLinks: InternalRouteProps[] = [
-  {
-    label: 'Overview',
-    path: InvestRoute.overview
-  },
+  //   {
+  //     label: 'Overview',
+  //     path: InvestRoute.overview
+  //   },
   {
     label: 'Primary',
     path: InvestRoute.primaryOfferings

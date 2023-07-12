@@ -106,6 +106,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   minimumTradeUnits?: number
   raisedAmount?: number
   expectedReturn?: number
+  coverImg?: string
 }
 
 export interface NewBaseDigitalSecurityOffering
@@ -140,6 +141,7 @@ export interface NewBaseDigitalSecurityOffering
   step?: number
   decimalPlaces: number
   expectedReturn?: number
+  coverImg?: string
 }
 
 export interface DSOInsight {
@@ -155,6 +157,7 @@ export interface DSOInsight {
 }
 
 export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
+  investable: boolean
   expectedReturn: number
   promoted: boolean
   disabled: boolean

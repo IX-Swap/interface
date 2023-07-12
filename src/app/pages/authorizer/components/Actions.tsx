@@ -166,11 +166,9 @@ export const Actions = (props: ActionsProps): JSX.Element => {
               content={props => (
                 <ActionsDropdownContent
                   {...props}
-                  hideApproval={
-                    !['Submitted', 'PENDING', 'Rejected'].includes(statusField)
-                  }
+                  hideApproval={!['Submitted', 'PENDING'].includes(statusField)}
                   hideRejection={
-                    !['Submitted', 'PENDING', 'Approved'].includes(statusField)
+                    !['Submitted', 'PENDING'].includes(statusField)
                   }
                   approve={approve}
                   reject={reject}

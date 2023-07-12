@@ -13,7 +13,6 @@ export interface DSOCardActionProps {
 
 export const DSOCardAction = ({ data, type }: DSOCardActionProps) => {
   const { user } = useAuth()
-
   const isDisabled = data.createdBy === user?._id
 
   const link = type !== 'OTC' ? InvestRoute.makeInvestment : InvestRoute.trading
@@ -27,6 +26,7 @@ export const DSOCardAction = ({ data, type }: DSOCardActionProps) => {
       : {
           pairId: data._id
         }
+  console.log(data, 'datatata')
 
   return (
     <TwoFADialogWrapper>
@@ -38,7 +38,7 @@ export const DSOCardAction = ({ data, type }: DSOCardActionProps) => {
         to={link}
         params={params}
         data-testid='otc-card-link'
-        disabled={isDisabled}
+        disabled={isDisabled || !data?.investable}
         style={{ fontSize: 16, marginTop: 24 }}
       >
         {type !== 'OTC' ? 'Invest' : 'Trade'}

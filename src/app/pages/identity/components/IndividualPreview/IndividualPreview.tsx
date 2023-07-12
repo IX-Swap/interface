@@ -21,15 +21,19 @@ import { EditApplication } from '../EditApplication/EditApplication'
 import { ScrollSpy } from 'ui/ScrollGuide/ScrollSpy'
 import { Divider } from 'ui/Divider'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { AuthorizerViewActions } from 'app/pages/authorizer/components/AuthorizerViewActions'
+import { DataroomFeature } from 'types/authorizer'
 
 export interface IndividualPreviewProps {
   data?: IndividualIdentity
   isForAuthorizer?: boolean
+  feature?: typeof DataroomFeature[keyof typeof DataroomFeature]
 }
 
 export const IndividualPreview = ({
   data,
-  isForAuthorizer = false
+  isForAuthorizer = false,
+  feature = ''
 }: IndividualPreviewProps) => {
   const classes = useStyles()
   const { getFilterValue } = useQueryFilter()
@@ -137,6 +141,13 @@ export const IndividualPreview = ({
                   )}
 
                   <IndividualIdentityView data={data} hideAvatar />
+
+                  {isForAuthorizer && (
+                    <>
+                      <Box mt={5} />
+                      <AuthorizerViewActions data={data} feature={feature} />
+                    </>
+                  )}
                 </>
               </TabPanel>
 
@@ -183,8 +194,22 @@ export const IndividualPreview = ({
                           retry
                         />
                       )}
+
                     {hasAccreditation && (
-                      <IndividualAccreditationView data={data} />
+                      <>
+                        <IndividualAccreditationView data={data} />
+
+                        {isForAuthorizer && (
+                          <>
+                            <Box mt={5} />
+                            <AuthorizerViewActions
+                              data={data}
+                              feature={feature}
+                              statusFieldName={'accreditationStatus'}
+                            />
+                          </>
+                        )}
+                      </>
                     )}
                   </>
                 )}

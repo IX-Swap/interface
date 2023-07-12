@@ -2,6 +2,12 @@ import { TableColumn } from 'types/util'
 import { Bank } from 'types/bank'
 import { formatDateToMMDDYY } from 'helpers/dates'
 
+export const renderName = (name: string) => {
+  if (!(name !== null && name !== undefined ? name : '')) {
+    return name?.substring(0, 20)
+  }
+}
+
 export const columns: Array<TableColumn<Bank>> = [
   {
     key: 'createdAt',
@@ -10,7 +16,8 @@ export const columns: Array<TableColumn<Bank>> = [
   },
   {
     key: 'accountHolderName',
-    label: 'Name'
+    label: 'Name',
+    render: renderName
   },
   {
     key: 'bankName',

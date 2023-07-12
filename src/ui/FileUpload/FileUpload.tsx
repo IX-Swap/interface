@@ -167,7 +167,7 @@ export const FileUpload = (props: FileUploadProps) => {
     value,
     completed: neverComplete ? 0 : completed,
     remove: handleRemove,
-    readonly
+    readonly,
   }
 
   if (fullWidth) {

@@ -44,6 +44,13 @@ export type FundStatus =
 
 export type TradingStatus = 'Pending' | 'Matched' | 'Filled' | ''
 
+export type OtcTradesStatus =
+  | 'Submitted'
+  | 'Confirmed'
+  | 'Settled'
+  | 'Rejected'
+  | ''
+
 export type DeploymentStatus = 'DEPLOYED' | 'PENDING' | ''
 export interface NumberFormat {
   currency: string

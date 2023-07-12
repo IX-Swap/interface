@@ -36,22 +36,44 @@ export const STOInformation = (props: STOInformationProps) => {
           />
         </Grid>
         <Grid item>
-          <TypedField
-            customRenderer
-            component={FileUpload}
-            name='logo'
-            label='Upload Photo'
-            placeHolder='Upload File'
-            control={control}
-            valueExtractor={documentValueExtractor}
-            accept={DataroomFileType.image}
-            documentInfo={{
-              type: 'STO Logo'
-            }}
-            isOptional
-            optionalText=' '
-            helperText='Upload Photo'
-          />
+          <Grid container spacing={3} pt={2}>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                customRenderer
+                component={FileUpload}
+                name='logo'
+                label='Upload Photo'
+                placeHolder='Upload File'
+                control={control}
+                valueExtractor={documentValueExtractor}
+                accept={DataroomFileType.image}
+                documentInfo={{
+                  type: 'STO Logo'
+                }}
+                isOptional
+                optionalText=' '
+                helperText='Upload Photo'
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                customRenderer
+                component={FileUpload}
+                name='coverImg'
+                label='Upload Cover Image'
+                placeHolder='Upload File'
+                control={control}
+                valueExtractor={documentValueExtractor}
+                accept={DataroomFileType.image}
+                documentInfo={{
+                  type: 'STO Cover'
+                }}
+                isOptional
+                optionalText=' '
+                helperText='Upload Cover'
+              />
+            </Grid>
+          </Grid>
 
           <VSpacer size='small' />
           <FormError name='logo' render={TextError} />
