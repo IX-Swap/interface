@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
 import { useConfirmMatchOrder } from 'app/pages/authorizer/hooks/useConfirmMatchOrder'
 import { useRejectMatchOrder } from 'app/pages/authorizer/hooks/useRejectMatchOrder'
-import { TableView } from 'components/TableWithPagination/TableView'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { trading } from 'config/apiURL'
 import { tradingQueryKeys } from 'config/queryKeys'
 import { capitalizeFirstLetter } from 'helpers/strings'
@@ -10,12 +10,12 @@ import React from 'react'
 import { OTCOrder } from 'types/otcOrder'
 import { columns } from './columns'
 import { styled } from '@mui/material/styles'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const Actions: ActionsType<OTCOrder> = ({ item }) => {
   const [confirmOrder, { isLoading: isConfirming }] = useConfirmMatchOrder()
   const [rejectOrder, { isLoading: isRejecting }] = useRejectMatchOrder()
   const isLoading = isConfirming || isRejecting
-
   if (item?.matches?.status === 'MATCH' && item.status !== 'REJECTED') {
     return (
       <Box display='flex' justifyContent={'flex-start'} columnGap={1}>
@@ -60,6 +60,14 @@ export const Actions: ActionsType<OTCOrder> = ({ item }) => {
   )
 }
 export const MatchedOrders = () => {
+  const { getFilterValue } = useQueryFilter()
+  // const hasStatusWithActions = true
+  const filter = {
+    search: getFilterValue('search'),
+    to: getFilterValue('toDate'),
+    from: getFilterValue('fromDate'),
+    status: getFilterValue('authorizationStatus')
+  }
   return (
     <>
       <TableView<OTCOrder>
@@ -67,8 +75,7 @@ export const MatchedOrders = () => {
         name={tradingQueryKeys.getMatchedOrders}
         columns={columns}
         actions={Actions}
-        hasActions
-        themeVariant={'primary'}
+        filter={filter}
       />
     </>
   )
