@@ -198,9 +198,20 @@ export function useTokenLoading(tokenAddress?: string): boolean {
   const tokenContractBytes32 = useBytes32TokenContract(address ? address : undefined, false)
   const token: Token | undefined = address ? tokens[address] : undefined
 
+  console.log('tokens', tokens)
+
+  console.log('tokenContract', tokenContract)
+
   const tokenName = useSingleCallResult(token ? undefined : tokenContract, 'name', undefined, NEVER_RELOAD)
   const symbol = useSingleCallResult(token ? undefined : tokenContract, 'symbol', undefined, NEVER_RELOAD)
   const decimals = useSingleCallResult(token ? undefined : tokenContract, 'decimals', undefined, NEVER_RELOAD)
+
+  console.log('token info', {
+    token,
+    tokenName,
+    decimals,
+    symbol,
+  })
 
   return decimals.loading || symbol.loading || tokenName.loading || !decimals.result
 }
