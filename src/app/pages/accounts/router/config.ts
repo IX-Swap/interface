@@ -1,4 +1,4 @@
-// import { ReactComponent as HoldingsIcon } from 'assets/icons/navigation/account.svg'
+import { ReactComponent as HoldingsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
@@ -24,7 +24,7 @@ export const AccountsRoute = {
   commitments: makeURL(['app', 'accounts', 'commitments']),
   dashboard: makeURL(['app', 'accounts', 'dashboard']),
   //   reports: '/app/accounts/reports',
-  //   myHoldings: '/app/accounts/holdings',
+  myHoldings: '/app/accounts/holdings',
   cash: '/app/accounts/cash'
 }
 
@@ -64,16 +64,16 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     path: AccountsRoute.dashboard,
     color: '#e6d200',
     icon: WithdrawalAddressIcon
-  }
+  },
   //   {
   //     label: 'My Reports',
   //     path: AccountsRoute.reports,
   //     color: '#e6d200'
   //   },
-  //   {
-  //     label: 'My Exchange Holdings',
-  //     path: AccountsRoute.myHoldings,
-  //     color: '#2B78FD',
-  //     icon: HoldingsIcon
-  //   }
+  {
+    label: 'My Exchange Holdings',
+    path: AccountsRoute.myHoldings,
+    color: '#2B78FD',
+    icon: HoldingsIcon
+  }
 ]
