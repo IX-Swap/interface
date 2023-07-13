@@ -21,7 +21,7 @@ export interface ActionsProps {
   cacheQueryKey: any
   featureCategory?: string
   statusFieldName?: string
-  // matchedStatusField?: string
+  matchedStatusField?: string
 }
 
 export type ActionsType = (props: ActionsProps) => ReactElement
