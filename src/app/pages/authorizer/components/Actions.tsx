@@ -14,12 +14,14 @@ import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsD
 import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsDropdownContent'
 import { useLocation } from 'react-router-dom'
 import { get } from 'lodash'
-
+// import { useConfirmMatchOrder } from 'app/pages/authorizer/hooks/useConfirmMatchOrder'
+// import { useRejectMatchOrder } from 'app/pages/authorizer/hooks/useRejectMatchOrder'
 export interface ActionsProps {
   item: any
   cacheQueryKey: any
   featureCategory?: string
   statusFieldName?: string
+  // matchedStatusField?: string
 }
 
 export type ActionsType = (props: ActionsProps) => ReactElement
@@ -30,7 +32,8 @@ const getUserId = (item: any, category: string) => {
       'individuals',
       'individuals/accreditation',
       'corporates',
-      'corporates/accreditation'
+      'corporates/accreditation',
+      'otc'
     ].includes(category)
   ) {
     if (typeof item.user === 'string') {
@@ -47,23 +50,26 @@ const getUserId = (item: any, category: string) => {
 
 export const Actions = (props: ActionsProps): JSX.Element => {
   const {
+    // matchedStatusField,
     item,
     cacheQueryKey,
     featureCategory,
     statusFieldName = 'status'
   } = props
+
   const location = useLocation()
   const id: string = item._id
   const splitted = location.pathname.split('/')
   const status = location.search.split('=')[1]
-
+  // const [confirmOrder, { isLoading: isConfirming }] = useConfirmMatchOrder()
+  // const [rejectOrder, { isLoading: isRejectingMatched }] = useRejectMatchOrder()
+  // const isLoadingMatched = isConfirming || isRejectingMatched
   const category =
     typeof featureCategory !== 'undefined'
       ? featureCategory
       : splitted[splitted.length - 1]
   const userId: string = getUserId(item, category)
   const listingType: string = item.listingType
-  //   console.log(props.item, 'propsdpdppd')
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'approve',
@@ -79,6 +85,11 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     listingType,
     featureCategory
   })
+
+  // confirmOrder({
+  //   orderId: item._id,
+  //   matchedOrderId: item.matches?.order ?? ''
+  // })
 
   const view = () =>
     category === 'virtual-accounts'
@@ -119,6 +130,9 @@ export const Actions = (props: ActionsProps): JSX.Element => {
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
   const statusField = get(item, statusFieldName)
+  // const matchedStatusField = get(item?.matches, statusFieldName)
+
+  // console.log(statusField, matchedStatusField, 'statusField')
 
   return (
     <Grid wrap='nowrap' justifyContent='flex-end'>
@@ -166,10 +180,13 @@ export const Actions = (props: ActionsProps): JSX.Element => {
               content={props => (
                 <ActionsDropdownContent
                   {...props}
-                  hideApproval={!['Submitted', 'PENDING'].includes(statusField)}
-                  hideRejection={
-                    !['Submitted', 'PENDING'].includes(statusField)
+                  hideApproval={
+                    !['Submitted', 'PENDING', 'NEW'].includes(statusField)
                   }
+                  hideRejection={
+                    !['Submitted', 'PENDING', 'NEW'].includes(statusField)
+                  }
+                  hideView={!['completed', 'new'].includes(statusField)}
                   approve={approve}
                   reject={reject}
                   view={view}
