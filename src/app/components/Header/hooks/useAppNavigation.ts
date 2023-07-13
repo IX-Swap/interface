@@ -39,10 +39,10 @@ export const useAppNavigation = () => {
   const isSuperUser = isAuthorizer || isAdmin
   const isInvestor = isAccredited || isRetail || isExpert || isInstitutional
   const issuanceLandingLinks: InternalRouteProps[] = [
-    { label: 'Create New STO', path: IssuanceRoute.createNew },
-    { label: 'View STO Listings', path: IssuanceRoute.list },
-    { label: 'Create Secondary Listing', path: IssuanceRoute.createListing },
-    { label: 'View Secondary Listings', path: IssuanceRoute.secondaryListings }
+    // { label: 'Create New STO', path: IssuanceRoute.createNew },
+    { label: 'My Primary Listings', path: IssuanceRoute.list },
+    // { label: 'Create Secondary Listing', path: IssuanceRoute.createListing },
+    { label: 'My Secondary Listings', path: IssuanceRoute.secondaryListings }
     // { label: 'Financial Reports', path: IssuanceRoute.financialReports }
   ]
 
@@ -93,12 +93,12 @@ export const useAppNavigation = () => {
   //   })
   // }
 
-  if (isFundManager || isSuperUser) {
-    issuanceLandingLinks.unshift({
-      label: 'Overview',
-      path: IssuanceRoute.insight
-    })
-  }
+  // if (isFundManager || isSuperUser) {
+  //   issuanceLandingLinks.unshift({
+  //     label: 'Overview',
+  //     path: IssuanceRoute.insight
+  //   })
+  // }
 
   links.push({
     label: 'Knowledge Center',
