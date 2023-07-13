@@ -5,8 +5,20 @@ import { RootContainer } from 'ui/RootContainer'
 import { AccountActions } from './AccountActions/AccountActions'
 import { TotalStats } from './TotalStats/TotalStats'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
+import {
+  useIsAccredited,
+  useIsRetail,
+  useIsExpert,
+  useIsInstitutional
+} from 'helpers/acl'
 
 export const Dashboard = () => {
+  const isAccredited = useIsAccredited()
+  const isRetail = useIsRetail()
+  const isExpert = useIsExpert()
+  const isInstitutional = useIsInstitutional()
+  const isInvestor = isAccredited || isRetail || isExpert || isInstitutional
+
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
@@ -17,12 +29,16 @@ export const Dashboard = () => {
           <Grid item>
             <AccountActions />
           </Grid>
-          <Grid item>
-            <TotalStats />
-          </Grid>
-          <Grid item>
-            <PrimaryOfferings />
-          </Grid>
+          {isInvestor && (
+            <>
+              <Grid item>
+                <TotalStats />
+              </Grid>
+              <Grid item>
+                <PrimaryOfferings />
+              </Grid>
+            </>
+          )}
         </Grid>
       </RootContainer>
     </Grid>
