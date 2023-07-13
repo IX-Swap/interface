@@ -24,5 +24,5 @@ export const DSTabs = () => {
     }
   ]
 
-  return <TableTabsView tabs={tabs} variant='secondary' />
+  return <TableTabsView tabs={tabs} variant={'tabsOnly'} />
 }
