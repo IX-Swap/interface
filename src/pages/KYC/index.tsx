@@ -89,6 +89,7 @@ export default function KYC() {
 
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
+  const infoText = 'In order to make changes to your KYC please get in touch with us via c@ixswap.io'
 
   useEffect(() => {
     if (pendingSign) {
@@ -115,7 +116,11 @@ export default function KYC() {
               <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
                 <IndividualKYC />
                 <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
-                  <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px" data-testid="passKycAsIndividualButton">
+                  <ButtonIXSGradient
+                    style={{ padding: '16px 24px' }}
+                    marginTop="32px"
+                    data-testid="passKycAsIndividualButton"
+                  >
                     <Trans>Pass KYC as Individual</Trans>
                   </ButtonIXSGradient>
                 </Link>
@@ -124,7 +129,11 @@ export default function KYC() {
               <Flex flexDirection="column" alignItems="center">
                 <CorporateKYC />
                 <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
-                  <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px" data-testid="passKycAsCorporateButton">
+                  <ButtonGradientBorder
+                    style={{ padding: '16px 24px' }}
+                    marginTop="32px"
+                    data-testid="passKycAsCorporateButton"
+                  >
                     <Trans>Pass KYC as Corporate</Trans>
                   </ButtonGradientBorder>
                 </Link>
@@ -132,7 +141,7 @@ export default function KYC() {
             </Flex>
           </>
         )
-        
+
       case KYCStatuses.DRAFT:
         return (
           <>
@@ -172,14 +181,14 @@ export default function KYC() {
         return (
           <>
             <Description description={description} />
-            <DateInfo submittedDate={kyc?.createdAt} rejectedDate={kyc?.updatedAt} />
+            <DateInfo info={infoText} submittedDate={kyc?.createdAt} rejectedDate={kyc?.updatedAt} />
           </>
         )
       case KYCStatuses.PENDING:
         return (
           <>
             <Description description={getStatusDescription(status)} />
-            <DateInfo submittedDate={kyc?.updatedAt || kyc?.createdAt} />
+            <DateInfo info={infoText} submittedDate={kyc?.updatedAt || kyc?.createdAt} />
           </>
         )
       case KYCStatuses.CHANGES_REQUESTED:
@@ -188,7 +197,11 @@ export default function KYC() {
             <Description description={description} />
             <DateInfo submittedDate={kyc?.createdAt} changeRequestDate={kyc?.updatedAt} />
             <Link style={{ textDecoration: 'none ' }} to={`/kyc/${kyc?.corporateKycId ? 'corporate' : 'individual'}`}>
-              <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px" data-testid="makeChangesAndResendKycButton">
+              <ButtonIXSGradient
+                style={{ padding: '16px 24px' }}
+                marginTop="32px"
+                data-testid="makeChangesAndResendKycButton"
+              >
                 <Trans>Make changes and resend KYC</Trans>
               </ButtonIXSGradient>
             </Link>
@@ -198,11 +211,7 @@ export default function KYC() {
         return (
           <Flex flexDirection="column" alignItems="center" marginTop="40px">
             <ApprovedKYC />
-            <DateInfo
-              info="In order to make changes to your KYC please get in touch with us via kyc@ixswap.io"
-              submittedDate={kyc?.createdAt}
-              approvedDate={kyc?.updatedAt}
-            />
+            <DateInfo info={infoText} submittedDate={kyc?.createdAt} approvedDate={kyc?.updatedAt} />
           </Flex>
         )
       case KYCStatuses.DRAFT:
@@ -216,7 +225,14 @@ export default function KYC() {
         return (
           <>
             <Description description={getStatusDescription(status)} />
-            <DateInfo submittedDate={kyc?.updatedAt || kyc?.createdAt} />
+            <DateInfo info={infoText} submittedDate={kyc?.updatedAt || kyc?.createdAt} />
+          </>
+        )
+      case KYCStatuses.FAILED:
+        return (
+          <>
+            <Description description={getStatusDescription(status)} />
+            <DateInfo info={infoText} submittedDate={kyc?.updatedAt || kyc?.createdAt} />
           </>
         )
     }
