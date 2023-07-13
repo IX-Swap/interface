@@ -5,7 +5,6 @@ import { useRejectMatchOrder } from 'app/pages/authorizer/hooks/useRejectMatchOr
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { trading } from 'config/apiURL'
 import { tradingQueryKeys } from 'config/queryKeys'
-import { capitalizeFirstLetter } from 'helpers/strings'
 import React from 'react'
 import { OTCOrder } from 'types/otcOrder'
 import { columns } from './columns'
@@ -51,13 +50,13 @@ export const Actions: ActionsType<OTCOrder> = ({ item }) => {
     )
   }
 
-  return (
-    <Box textAlign={'left'} data-testid={'matchOrderStatus'}>
-      {capitalizeFirstLetter(
-        item.status === 'REJECTED' ? item.status : item?.matches?.status ?? ''
-      )}
-    </Box>
-  )
+  // return (
+  //   <Box textAlign={'left'} data-testid={'matchOrderStatus'}>
+  //     {capitalizeFirstLetter(
+  //       item.status === 'REJECTED' ? item.status : item?.matches?.status ?? ''
+  //     )}
+  //   </Box>
+  // )
 }
 export const MatchedOrders = () => {
   const { getFilterValue } = useQueryFilter()
@@ -74,7 +73,7 @@ export const MatchedOrders = () => {
         uri={trading.getMatchedOrders}
         name={tradingQueryKeys.getMatchedOrders}
         columns={columns}
-        actions={Actions}
+        // actions={Actions}
         filter={filter}
       />
     </>

@@ -76,5 +76,5 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
     [AppFeature.TokenDeployment]: {
       uri: '/issuance/dso/list',
       listRoute: AuthorizerRoute.tokenDeployment
-    }
+    },
   }
