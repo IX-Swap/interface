@@ -17,7 +17,8 @@ export const Dashboard = () => {
   const isRetail = useIsRetail()
   const isExpert = useIsExpert()
   const isInstitutional = useIsInstitutional()
-  const isInvestor = isAccredited || isRetail || isExpert || isInstitutional
+  const hasAccreditation = isAccredited || isExpert || isInstitutional
+  const isInvestor = isRetail || hasAccreditation
 
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
@@ -31,9 +32,11 @@ export const Dashboard = () => {
           </Grid>
           {isInvestor && (
             <>
-              <Grid item>
-                <TotalStats />
-              </Grid>
+              {hasAccreditation && (
+                <Grid item>
+                  <TotalStats />
+                </Grid>
+              )}
               <Grid item>
                 <PrimaryOfferings />
               </Grid>
