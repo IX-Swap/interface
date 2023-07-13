@@ -12,7 +12,7 @@ import { AppRoute } from 'components/AppRoute'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { useIsIssuer } from 'helpers/acl'
 import { CapTableRouter } from 'app/pages/issuance/router/CapTableRouter'
-import { FinancialReportsRouter } from 'app/pages/issuance/router/FinancialReportsRouter'
+// import { FinancialReportsRouter } from 'app/pages/issuance/router/FinancialReportsRouter'
 import { RootContainer } from 'ui/RootContainer'
 import { CreateListing } from 'app/pages/issuance/pages/CreateListing'
 import { MyListingsRouter } from 'app/pages/invest/router/MyListingsRouter'
@@ -123,14 +123,14 @@ export const IssuanceRouter = () => {
         </AppRoute>
       ) : null}
 
-      {isIssuer ? (
+      {/* {isIssuer ? (
         <AppRoute
           breadcrumb='Financial Reports'
           path={IssuanceRoute.financialReports}
         >
           <FinancialReportsRouter />
         </AppRoute>
-      ) : null}
+      ) : null} */}
     </Switch>
   )
 }

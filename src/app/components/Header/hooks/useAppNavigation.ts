@@ -42,8 +42,8 @@ export const useAppNavigation = () => {
     { label: 'Create New STO', path: IssuanceRoute.createNew },
     { label: 'View STO Listings', path: IssuanceRoute.list },
     { label: 'Create Secondary Listing', path: IssuanceRoute.createListing },
-    { label: 'View Secondary Listings', path: IssuanceRoute.secondaryListings },
-    { label: 'Financial Reports', path: IssuanceRoute.financialReports }
+    { label: 'View Secondary Listings', path: IssuanceRoute.secondaryListings }
+    // { label: 'Financial Reports', path: IssuanceRoute.financialReports }
   ]
 
   interface NavigationMenuItem {
@@ -144,8 +144,8 @@ export const useAppNavigation = () => {
       !isInvestor &&
       !link.startsWith(AppPath.identity) &&
       !link.startsWith(AppPath.security) &&
-      !link.startsWith(AppPath.notifications)
-      //   !link.startsWith(AppPath.home)
+      !link.startsWith(AppPath.notifications) &&
+      !link.startsWith(AppPath.dashboard)
     )
   }
 

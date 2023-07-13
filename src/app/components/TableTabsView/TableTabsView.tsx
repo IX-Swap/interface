@@ -14,7 +14,7 @@ export interface TabsContent {
 export interface TableTabsViewProps {
   tabs: TabsContent[]
   onChange?: (event: object, value: any) => void
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'tabsOnly'
 }
 
 export const TableTabsView = ({
@@ -46,7 +46,9 @@ export const TableTabsView = ({
           >
             {tabs.map(({ label, disabled, component }, index) =>
               component !== undefined ? (
-                <Box key={index}>{component}</Box>
+                <Box key={index} display={'flex'} alignItems={'center'}>
+                  {component}
+                </Box>
               ) : (
                 <Tab
                   key={index}
@@ -66,7 +68,7 @@ export const TableTabsView = ({
                 index={index}
                 key={index}
                 value={Number(value)}
-                withoutSpacing={variant !== 'primary'}
+                withoutSpacing
               >
                 {tab.panel}
               </TabPanel>

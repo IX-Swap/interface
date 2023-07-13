@@ -8,7 +8,7 @@ export interface SummaryItemProps {
 
 export const SummaryItem = ({ label, value }: SummaryItemProps) => {
   return (
-    <Grid container direction='column' spacing={0}>
+    <Grid xs={2} container direction='column' spacing={0}>
       <Grid item>
         <Typography sx={{ color: '#778194' }} variant='body1' noWrap>
           {label}
