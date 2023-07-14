@@ -47,7 +47,8 @@ export const TimeUnit: React.FC<TimeUnitProps> = ({
           align='center'
           style={{
             textTransform: 'uppercase',
-            fontSize: isNewThemeOn ? 12 : 'initial'
+            // fontSize: isNewThemeOn ? 12 : 'initial'
+            fontSize: 12
           }}
         >
           {label}

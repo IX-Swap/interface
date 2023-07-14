@@ -36,7 +36,7 @@ export const CountdownTimer = ({
         justifyContent='center'
         direction='column'
       >
-        <Typography style={{ fontWeight: isNewThemeOn ? 500 : 'initial' }}>
+        <Typography variant={'subtitle2'} color={'textSecondary'}>
           Time Remaining
         </Typography>
         <VSpacer size={'small'} />

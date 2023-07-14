@@ -1,14 +1,15 @@
 import React from 'react'
 import { Grid, Box } from '@mui/material'
-import { TableView } from 'components/TableWithPagination/TableView'
+// import { TableView } from 'components/TableWithPagination/TableView'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { issuanceURL } from 'config/apiURL'
 import { useTheme } from '@mui/material/styles'
 import { CommitmentTableFilter } from 'app/pages/issuance/components/Commitments/CommitmentTableFilters'
 import { columns } from 'app/pages/issuance/components/Commitments/columns'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { useParams } from 'react-router-dom'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 
 export const InvestorCommitmentTable = () => {
   const theme = useTheme()
@@ -21,13 +22,7 @@ export const InvestorCommitmentTable = () => {
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <PageHeader
-          styled={false}
-          title={'Investor Commitments'}
-          variant={'h3'}
-          showBreadcrumbs={false}
-          noMargin
-        />
+        <FormSectionHeader title={'Investor Commitments'} />
       </Grid>
       <Grid item>
         <CommitmentTableFilter />

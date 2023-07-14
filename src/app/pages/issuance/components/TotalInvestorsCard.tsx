@@ -3,7 +3,7 @@ import { Grid } from '@mui/material'
 import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartTitle'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
-import { VSpacer } from 'components/VSpacer'
+// import { VSpacer } from 'components/VSpacer'
 import { ReactComponent as PeopleIcon } from 'assets/icons/people_black_24dp.svg'
 import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
 
@@ -22,7 +22,7 @@ export const TotalInvestorsCard = ({
 }: TotalInvestorsCardProps) => {
   return (
     <ChartWrapper py={isNewThemeOn ? 2.5 : undefined}>
-      <Grid container justifyContent='space-between' alignItems='center'>
+      <Grid container justifyContent='space-between' alignItems='center' py={1}>
         <Grid item>
           <ChartTitle
             title='Total Investors'
@@ -36,7 +36,7 @@ export const TotalInvestorsCard = ({
               ) : undefined
             }
           />
-          {isNewThemeOn && <VSpacer size='extraSmall' />}
+          {/* {isNewThemeOn && <VSpacer size='extraSmall' />} */}
           <InsightValue value={total ?? 0} />
         </Grid>
       </Grid>
