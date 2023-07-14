@@ -5,8 +5,8 @@ import { useFormContext } from 'react-hook-form'
 import { SignupArgs } from 'types/auth'
 import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
 // import { FocusButton } from 'auth/pages/register/components/FocusButton'
-import { useInputFocus } from 'auth/pages/register/hooks/useInputFocus'
-import { FocusButton } from './FocusButton'
+// import { useInputFocus } from 'auth/pages/register/hooks/useInputFocus'
+// import { FocusButton } from './FocusButton'
 
 export interface EmailFieldProps {
   isMyInfo?: boolean
@@ -16,7 +16,7 @@ export const EmailField = ({ isMyInfo = false }: EmailFieldProps) => {
   const { control, errors } = useFormContext<SignupArgs>()
   const emailErrors = errors.email
 
-  const { inputRef, inputDisabled, handelInputFocus } = useInputFocus()
+  // const { inputRef, inputDisabled, handelInputFocus } = useInputFocus()
 
   return (
     <TypedField
@@ -39,18 +39,18 @@ export const EmailField = ({ isMyInfo = false }: EmailFieldProps) => {
               }
             }
           : null,
-        inputRef: inputRef,
+        // inputRef: inputRef,
         endAdornment: !isMyInfo ? (
           emailErrors !== undefined ? (
             <InputAdornment position='end'>
               <WarningIcon />
             </InputAdornment>
           ) : null
-        ) : (
-          <FocusButton onClick={handelInputFocus} />
-        )
+        ) : null
+        // <FocusButton onClick={handelInputFocus} />
       }}
-      disabled={isMyInfo ? inputDisabled : false}
+      disabled
+      // disabled={isMyInfo ? inputDisabled : false}
     />
   )
 }
