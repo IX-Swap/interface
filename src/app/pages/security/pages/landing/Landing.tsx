@@ -96,7 +96,7 @@ export const Landing = () => {
                       onClick={() => push(BanksRoute.list)}
                       size='large'
                     >
-                      Bank Accounts
+                      Update
                     </Button>
                   }
                 />

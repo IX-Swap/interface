@@ -20,10 +20,11 @@ export const Filters = (props: FilterProps) => {
         </SidebarSection>
       ) : (
         <>
-          <SidebarSection>
+          <SidebarSection padded>
             <StatusFilter />
           </SidebarSection>
-          <SidebarSection>
+
+          <SidebarSection padded>
             <Form>
               <SearchAndDateFilter />
             </Form>

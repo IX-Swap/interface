@@ -3,7 +3,7 @@ import { Bank } from 'types/bank'
 import { formatDateToMMDDYY } from 'helpers/dates'
 
 export const renderName = (name: string) => {
-  if (!(name !== null && name !== undefined ? name : '')) {
+  if ((name !== null && name !== undefined ? name : '')) {
     return name?.substring(0, 20)
   }
 }

@@ -22,6 +22,7 @@ export enum AppFeature {
   WithdrawalAddresses = 'wallet-addresses',
   Corporates = 'corporates',
   CorporatesAccreditation = 'corporates/accreditation',
+  OTCMached = 'otc/matched',
   Holdings = 'holdings',
   Individuals = 'individuals',
   IndividualsAccreditation = 'individuals/accreditation',
