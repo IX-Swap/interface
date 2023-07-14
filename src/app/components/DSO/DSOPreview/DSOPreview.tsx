@@ -72,7 +72,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
           className={tabs}
         >
           <Tab label='Overview' />
-          <Tab label='Commitments' />
+          <Tab label='Activities' />
           {/* <Tab label='CapTable' /> */}
         </Tabs>
       </FieldContainer>
