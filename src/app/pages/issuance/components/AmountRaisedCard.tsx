@@ -4,7 +4,7 @@ import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartT
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
 import { DonutChart } from 'app/pages/issuance/components/IssuanceLanding/DonutChart'
-import { VSpacer } from 'components/VSpacer'
+// import { VSpacer } from 'components/VSpacer'
 import { FundraiseTooltip } from 'app/pages/issuance/components/IssuanceLanding/FundraiseTooltip'
 import { ReactComponent as AmountsRaisedIcon } from 'assets/icons/payments_black_24dp.svg'
 import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
@@ -35,6 +35,7 @@ export const AmountRaisedCard = ({
         justifyContent='space-between'
         alignItems='center'
         wrap='nowrap'
+        py={1}
       >
         <Grid item>
           <ChartTitle
@@ -53,7 +54,7 @@ export const AmountRaisedCard = ({
               ) : undefined
             }
           />
-          {isNewThemeOn ? <VSpacer size={'extraSmall'} /> : null}
+          {/* {isNewThemeOn ? <VSpacer size={'extraSmall'} /> : null} */}
           <InsightValue value={value} />
         </Grid>
         <Grid item>

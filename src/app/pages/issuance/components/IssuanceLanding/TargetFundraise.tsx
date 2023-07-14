@@ -5,7 +5,7 @@ import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/Char
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
 import { LOADING_TEXT } from 'components/form/renderUtils'
 import { useParams } from 'react-router-dom'
-import { VSpacer } from 'components/VSpacer'
+// import { VSpacer } from 'components/VSpacer'
 
 export interface TargetFundraiseProps {
   isNewThemeOn?: boolean
@@ -37,9 +37,9 @@ export const TargetFundraise = ({
     <ChartWrapper
       title='Target Fundraise'
       small
-      py={isNewThemeOn ? 2.5 : undefined}
+      py={isNewThemeOn ? 3.5 : undefined}
     >
-      {isNewThemeOn ? <VSpacer size={'extraSmall'} /> : null}
+      {/* {isNewThemeOn ? <VSpacer size={'extraSmall'} /> : null} */}
       <InsightValue value={value} />
     </ChartWrapper>
   )
