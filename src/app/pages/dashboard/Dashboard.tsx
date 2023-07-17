@@ -5,11 +5,13 @@ import { RootContainer } from 'ui/RootContainer'
 import { AccountActions } from './AccountActions/AccountActions'
 import { TotalStats } from './TotalStats/TotalStats'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
+import { IssuerSTOs } from 'app/pages/invest/components/IssuerSTOs'
 import {
   useIsAccredited,
   useIsRetail,
   useIsExpert,
-  useIsInstitutional
+  useIsInstitutional,
+  useIsIssuer
 } from 'helpers/acl'
 
 export const Dashboard = () => {
@@ -19,6 +21,7 @@ export const Dashboard = () => {
   const isInstitutional = useIsInstitutional()
   const hasAccreditation = isAccredited || isExpert || isInstitutional
   const isInvestor = isRetail || hasAccreditation
+  const isIssuer = useIsIssuer()
 
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
@@ -41,6 +44,11 @@ export const Dashboard = () => {
                 <PrimaryOfferings />
               </Grid>
             </>
+          )}
+          {isIssuer && (
+            <Grid item>
+              <IssuerSTOs />
+            </Grid>
           )}
         </Grid>
       </RootContainer>

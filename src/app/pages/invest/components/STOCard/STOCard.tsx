@@ -18,9 +18,8 @@ export interface STOCardProps {
 export const STOCard = (props: STOCardProps) => {
   const classes = useStyles()
   const typeWithLogo = ['OTC', 'TopOffers']
-
   const { data, viewURL, type } = props
-  console.log(data.coverImg)
+
   return (
     <Card
       data-testid='primaryDsoCard'
@@ -76,7 +75,7 @@ export const STOCard = (props: STOCardProps) => {
             variant='outlined'
             color='primary'
           >
-            Learn More
+            {data.status === 'Approved' ? 'Learn More' : 'Complete STO'}
           </Button>
         </Grid>
       </Box>
