@@ -6,11 +6,12 @@ import { DataroomFileType } from 'config/dataroom'
 import { Tooltip } from 'ui/Tooltip/Tooltip'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { FieldsArray } from 'components/form/FieldsArray'
-import { plainValueExtractor } from 'helpers/forms'
+import { plainValueExtractor, pathToString } from 'helpers/forms'
 import { Icon } from 'ui/Icons/Icon'
 import { AddDocumentButton } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/AddDocumentButton'
 import { DataroomFile } from 'types/dataroomFile'
 import { ProofOfIdentityTypeSelect } from 'components/form/ProofOfIdentityTypeSelect'
+import { UploadDocumentInfo } from 'hooks/useUploadFile'
 
 export interface ProofOfIdentityFieldProps {
   name: any
@@ -84,44 +85,113 @@ export const ProofOfIdentityField = ({
           {({ fields, append, remove }) => (
             <Grid container spacing={2}>
               {fields.map((field, index) => {
+                const identityType = pathToString([name, index, 'identityType'])
+                const identityTypeValue = watch(identityType)
+                const idsWithFrontAndBack = ['NATIONAL ID', 'DRIVING LICENSE']
+                const hasFrontAndBack =
+                  idsWithFrontAndBack.includes(identityTypeValue)
+
+                console.log('identityType', identityTypeValue)
+                console.log('field', field)
+
+                const documentInfo: UploadDocumentInfo = {
+                  type: label,
+                  title: identityTypeValue
+                }
+
                 return (
                   <Grid item xs={12} key={field.id}>
                     <Grid item xs={6} mb={2}>
                       <TypedField
                         component={ProofOfIdentityTypeSelect}
                         control={control}
-                        name='identityType'
+                        name={[name, index, 'identityType']}
                         variant='outlined'
                         customRenderer
                         placeholder='Select Identity Type'
+                        defaultValue={field.value.title}
                       />
                     </Grid>
-                    <Grid item xs={12}>
-                      <TypedField
-                        customRenderer
-                        name={[name, index, 'value']}
-                        control={control}
-                        component={FileUpload}
-                        isValid={
-                          formState.isValid ? true : uploadedFiles.length > 0
-                        }
-                        label='Upload File'
-                        valueExtractor={plainValueExtractor}
-                        accept={DataroomFileType.document}
-                        fullWidth
-                        maxSize={10}
-                        documentInfo={{
-                          type: label,
-                          title: label
-                        }}
-                        remove={() => {
-                          remove(index)
-                        }}
-                        onSuccessUploadCallback={handleSuccessFileUpload}
-                        onRemoveCallback={handleRemoveFile}
-                        defaultValue={field.value}
-                      />
-                    </Grid>
+                    {hasFrontAndBack ? (
+                      <Grid item container spacing={3}>
+                        <Grid item xs={12} md={6}>
+                          <TypedField
+                            customRenderer
+                            name={[name, index, 'value']}
+                            control={control}
+                            component={FileUpload}
+                            isValid={
+                              formState.isValid
+                                ? true
+                                : uploadedFiles.length > 0
+                            }
+                            label='Front Picture'
+                            placeHolder='Upload Front Picture'
+                            valueExtractor={plainValueExtractor}
+                            accept={DataroomFileType.image}
+                            documentInfo={{
+                              ...documentInfo,
+                              feature: 'front'
+                            }}
+                            remove={() => {
+                              remove(index)
+                            }}
+                            onSuccessUploadCallback={handleSuccessFileUpload}
+                            onRemoveCallback={handleRemoveFile}
+                            isCover
+                            defaultValue={field.value}
+                          />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <TypedField
+                            customRenderer
+                            name={[name, index, 'value']}
+                            control={control}
+                            component={FileUpload}
+                            label='Back Picture'
+                            placeHolder='Upload Back Picture'
+                            valueExtractor={plainValueExtractor}
+                            accept={DataroomFileType.image}
+                            documentInfo={{
+                              ...documentInfo,
+                              feature: 'back'
+                            }}
+                            remove={() => {
+                              remove(index)
+                            }}
+                            onSuccessUploadCallback={handleSuccessFileUpload}
+                            onRemoveCallback={handleRemoveFile}
+                            isCover
+                            defaultValue={field.value}
+                            isOptional
+                          />
+                        </Grid>
+                      </Grid>
+                    ) : (
+                      <Grid item xs={12}>
+                        <TypedField
+                          customRenderer
+                          name={[name, index, 'value']}
+                          control={control}
+                          component={FileUpload}
+                          isValid={
+                            formState.isValid ? true : uploadedFiles.length > 0
+                          }
+                          label='Upload File'
+                          valueExtractor={plainValueExtractor}
+                          accept={DataroomFileType.document}
+                          fullWidth
+                          maxSize={10}
+                          documentInfo={documentInfo}
+                          remove={() => {
+                            remove(index)
+                          }}
+                          onSuccessUploadCallback={handleSuccessFileUpload}
+                          onRemoveCallback={handleRemoveFile}
+                          defaultValue={field.value}
+                        />
+                      </Grid>
+                    )}
                   </Grid>
                 )
               })}
