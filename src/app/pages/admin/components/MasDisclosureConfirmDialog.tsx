@@ -20,7 +20,9 @@ export const MasDisclosureConfirmDialog = ({
   const [createOrUpdateMasDisclosure] = useCreateOrUpdateMASDisclosure()
   const handleSubmit = async () => {
     onClose()
-    await createOrUpdateMasDisclosure({ content: content })
+    await createOrUpdateMasDisclosure({
+      content: content?.toString()?.replace(/_self/g, '_blank')
+    })
   }
 
   return (
