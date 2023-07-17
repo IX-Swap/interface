@@ -188,14 +188,14 @@ export default function KYC() {
         return (
           <>
             <Description description={getStatusDescription(status)} />
-            <DateInfo info={infoText} submittedDate={kyc?.updatedAt || kyc?.createdAt} />
+            <DateInfo submittedDate={kyc?.updatedAt || kyc?.createdAt} />
           </>
         )
       case KYCStatuses.CHANGES_REQUESTED:
         return (
           <>
             <Description description={description} />
-            <DateInfo submittedDate={kyc?.createdAt} changeRequestDate={kyc?.updatedAt} />
+            <DateInfo info={infoText} submittedDate={kyc?.createdAt} changeRequestDate={kyc?.updatedAt} />
             <Link style={{ textDecoration: 'none ' }} to={`/kyc/${kyc?.corporateKycId ? 'corporate' : 'individual'}`}>
               <ButtonIXSGradient
                 style={{ padding: '16px 24px' }}
