@@ -247,15 +247,13 @@ const KYCStatusDescription = {
   [KYCStatuses.PENDING]:
     'Your KYC application has been received and will be processed by the team. Thank you for your patience.',
   [KYCStatuses.APPROVED]: null,
-  [KYCStatuses.NOT_SUBMITTED]:
-    'To sign up to the IXSwap Platform you have to pass KYC',
+  [KYCStatuses.NOT_SUBMITTED]: 'To sign up to the IXSwap Platform you have to pass KYC',
   [KYCStatuses.CHANGES_REQUESTED]:
     'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.',
   [KYCStatuses.REJECTED]:
     'Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.',
-  [KYCStatuses.DRAFT]:
-    'Your KYC application draft has been saved',
-  [KYCStatuses.FAILED]: 'FAILED to submit kyc. Please contact support.',
+  [KYCStatuses.DRAFT]: 'Your KYC application draft has been saved',
+  [KYCStatuses.FAILED]: 'FAILED to submit KYC. Please contact support.',
   [KYCStatuses.IN_PROGRESS]:
     'Your KYC application has been received and will be processed by the team. Thank you for your patience.',
 }
