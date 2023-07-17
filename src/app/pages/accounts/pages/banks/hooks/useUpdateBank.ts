@@ -8,9 +8,9 @@ import { accountsURL } from 'config/apiURL'
 import { useHistory } from 'react-router-dom'
 import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 
-export const useUpdateBank = () => {
+export const useUpdateBank = (callback?: () => void) => {
   const { user } = useAuth()
-  const { apiService } = useServices()
+  const { apiService, snackbarService } = useServices()
   const history = useHistory()
 
   const updateBank = async (args: UpdateBankArgs) => {
@@ -22,6 +22,10 @@ export const useUpdateBank = () => {
   return useMutation(updateBank, {
     onSuccess: () => {
       history.push(BanksRoute.list)
+    },
+    onError: async (error: any) => {
+      snackbarService.showSnackbar(error.message, 'error')
+      callback?.()
     }
   })
 }
