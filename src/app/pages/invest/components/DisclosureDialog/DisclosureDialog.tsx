@@ -47,7 +47,9 @@ export const DisclosureDialog = ({
     >
       <DialogTitle classes={{ root: classes.title }}>Disclosures</DialogTitle>
       <DialogContentText classes={{ root: classes.content }}>
-        <Box className={classes.scrollable}>{renderStringToHTML(content)}</Box>
+        <Box className={classes.scrollable}>
+          {renderStringToHTML(content, { ADD_ATTR: ['target'] })}
+        </Box>
         <VSpacer size={'medium'} />
         <Divider />
       </DialogContentText>

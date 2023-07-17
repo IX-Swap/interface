@@ -15,13 +15,13 @@ export const MasDisclosureConfirmDialog = ({
   open
 }: MasDisclosureConfirmDialogProps) => {
   const { watch } = useFormContext()
-  const content = watch('content')?.replace('_self', '_blank')
+  const content = watch('content')
 
   const [createOrUpdateMasDisclosure] = useCreateOrUpdateMASDisclosure()
   const handleSubmit = async () => {
     onClose()
     await createOrUpdateMasDisclosure({
-      content: content?.toString()?.replace('_self', '_blank')
+      content: content?.toString()?.replace(/_self/g, '_blank')
     })
   }
 
