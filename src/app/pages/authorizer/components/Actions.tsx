@@ -9,13 +9,13 @@ import {
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'helpers/strings'
 import { history } from 'config/history'
-import { Dropdown } from 'app/components/Dropdown/Dropdown'
+import {
+  Dropdown,
+} from 'app/components/Dropdown/Dropdown'
 import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsDropdownTrigger'
 import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsDropdownContent'
 import { useLocation } from 'react-router-dom'
 import { get } from 'lodash'
-// import { useConfirmMatchOrder } from 'app/pages/authorizer/hooks/useConfirmMatchOrder'
-// import { useRejectMatchOrder } from 'app/pages/authorizer/hooks/useRejectMatchOrder'
 export interface ActionsProps {
   item: any
   cacheQueryKey: any
@@ -57,12 +57,12 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     statusFieldName = 'status'
   } = props
 
+
   const location = useLocation()
   const id: string = item._id
   const splitted = location.pathname.split('/')
   const status = location.search.split('=')[1]
-  // const [confirmOrder, { isLoading: isConfirming }] = useConfirmMatchOrder()
-  // const [rejectOrder, { isLoading: isRejectingMatched }] = useRejectMatchOrder()
+
   // const isLoadingMatched = isConfirming || isRejectingMatched
   const category =
     typeof featureCategory !== 'undefined'
@@ -75,7 +75,8 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     action: 'approve',
     cacheQueryKey,
     listingType,
-    featureCategory
+    featureCategory,
+    item
   })
 
   const [reject, { isLoading: isRejecting }] = useApproveOrReject({
@@ -83,13 +84,9 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     action: 'reject',
     cacheQueryKey,
     listingType,
-    featureCategory
+    featureCategory,
+    item
   })
-
-  // confirmOrder({
-  //   orderId: item._id,
-  //   matchedOrderId: item.matches?.order ?? ''
-  // })
 
   const view = () =>
     category === 'virtual-accounts'
@@ -118,21 +115,14 @@ export const Actions = (props: ActionsProps): JSX.Element => {
           `/app/authorizer/corporates/${userId}/${id}/view?tab=accreditation`
         )
       : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
-  //   console.log(
-  //     category,
-  //     listingType,
-  //     userId,
-  //     id,
-  //     status,
-  //     'category,listingType,userId, id,status'
-  //   )
+
   const isUnauthorized = item.status === 'Submitted' || 'Approved'
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
   const statusField = get(item, statusFieldName)
-  // const matchedStatusField = get(item?.matches, statusFieldName)
 
-  // console.log(statusField, matchedStatusField, 'statusField')
+
+
 
   return (
     <Grid wrap='nowrap' justifyContent='flex-end'>
@@ -186,7 +176,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
                   hideRejection={
                     !['Submitted', 'PENDING', 'NEW'].includes(statusField)
                   }
-                  hideView={['completed', 'new'].includes(statusField)}
+                  hideView={category === 'otc/matched'}
                   approve={approve}
                   reject={reject}
                   view={view}
