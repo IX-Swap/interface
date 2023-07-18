@@ -11,12 +11,19 @@ export interface UseApproveOrRejectArgs {
   payload?: Record<string, any>
   listingType?: any
   featureCategory?: string
+  item?: any
 }
 
 export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
-  const { action, cacheQueryKey, id, payload, listingType, featureCategory } =
-    args
-  // console.log(listingType,cacheQueryKey, payload, id, 'listingTypelistingType')
+  const {
+    action,
+    cacheQueryKey,
+    id,
+    payload,
+    listingType,
+    featureCategory,
+    item
+  } = args
   const queryCache = useQueryCache()
   const categoryFromUrl = useAuthorizerCategory()
   const category = featureCategory ?? categoryFromUrl
@@ -36,6 +43,10 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
         `/exchange/listing/${id}/${action}`
       : category === 'listings' && action === 'reject' && listingType === 'OTC'
       ? `/otc/listing/${id}/${action}`
+      : category === 'otc/matched'
+      ? `otc/order/${action === 'approve' ? 'confirm' : 'reject'}/${
+          item?._id
+        }/${item?.matches?.order}`
       : `${_uri}/${id}/${action}`
   //   console.log(url, 'url')
 
@@ -52,6 +63,10 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
 
     if (category === 'listings' && action === 'approve') {
       reqPayload = { listingType: listingType }
+    }
+
+    if (category === 'otc/matched' && action === 'approve') {
+      return await apiService.post(url, reqPayload)
     }
 
     return await apiService.put(url, reqPayload)

@@ -33,7 +33,7 @@ export const OTCTrades = () => {
             >
               Matched Orders
             </Typography>
-            <Grid style={{ background: 'white', padding: '40px' }}>
+            <Grid style={{ background: 'white' }}>
               <Filters />
             </Grid>
           </Grid>
@@ -55,7 +55,11 @@ export const OTCTrades = () => {
               <Tabs
                 value={value}
                 onChange={handleChange}
-                indicatorColor='primary'
+                TabIndicatorProps={{
+                  style: {
+                    backgroundColor: value === 0 ? '#1FBC2F' : ''
+                  }
+                }}
                 textColor='primary'
                 className={tabBarStyle}
               >

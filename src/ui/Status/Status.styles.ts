@@ -13,24 +13,33 @@ export const useStyles = makeStyles(theme => {
       case 'deployed':
       case 'low':
       case 'Enable':
+      case 'Confirmed':
+      case 'new-confirmed':
         return theme.palette.success.main
       case 'submitted':
       case 'closed':
       case 'settlement in progress':
       case 'medium':
       case 'Pendig':
+      case 'new-match':
         return theme.palette.warning.dark
       case 'rejected':
       case 'funds on hold':
       case 'failed':
       case 'high':
+      case 'rejected-match':
+      case 'rejected-confirmed':  
         return theme.palette.error.dark
       case 'draft':
       case 'open':
       case 'not funded':
       case 'pending':
+      case 'new-settled':
+      case 'completed-confirmed':  
         return theme.palette.info.light
       case 'passed':
+        return '#4C88FF'
+      case 'completed-settled':
         return '#4C88FF'
       default:
         return '#ffffff'
@@ -44,25 +53,35 @@ export const useStyles = makeStyles(theme => {
       case 'deployed':
       case 'low':
       case 'Enable':
+      case 'Confirmed':
+      case 'new-confirmed':
         return theme.palette.success.light
       case 'submitted':
       case 'closed':
       case 'settlement in progress':
       case 'medium':
       case 'Pendig':
+      case 'new-match':
         return theme.palette.warning.light
       case 'rejected':
       case 'funds on hold':
       case 'failed':
       case 'high':
+      case 'rejected-match':
+      case 'rejected-confirmed':    
         return theme.palette.error.light
       case 'draft':
       case 'open':
       case 'not funded':
       case 'pending':
+      case 'new-settled':
+      case 'completed-confirmed':
         return theme.palette.info.dark
       case 'passed':
         return '#4C88FF20'
+
+      case 'completed-settled':
+        return '#e9f0ff'
       default:
         return '#ffffff'
     }

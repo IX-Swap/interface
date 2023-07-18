@@ -1,5 +1,6 @@
 import { Box, Button, Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { ThemeSelector } from 'app/pages/security/pages/landing/components/ThemeSelector'
 import useStyles from 'app/pages/security/pages/landing/Landing.styles'
 import { SecurityRoute } from 'app/pages/security/router/config'
@@ -80,6 +81,23 @@ export const Landing = () => {
                   name={isDesktop ? 'Application Theme' : 'Dark Mode'}
                   action={
                     isDesktop ? <ThemeSelector /> : <ThemeSelectorMobile />
+                  }
+                />
+              </Grid>
+              <Box className={classes.divider} />
+
+              <Grid item>
+                <SettingsRow
+                  name='Bank Accounts'
+                  action={
+                    <Button
+                      variant='text'
+                      color='primary'
+                      onClick={() => push(BanksRoute.list)}
+                      size='large'
+                    >
+                      Update
+                    </Button>
                   }
                 />
               </Grid>

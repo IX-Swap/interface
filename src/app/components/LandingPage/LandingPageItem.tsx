@@ -58,7 +58,7 @@ export const LandingPageItem = (props: LandingPageItemProps) => {
                     fontSize: '10px',
                     left: '50px',
                     position: 'absolute',
-                    top: '0px',
+                    top: '-5px',
                     background: 'red',
                     borderRadius: total <= 100 ? '20px' : '200px',
                     padding:

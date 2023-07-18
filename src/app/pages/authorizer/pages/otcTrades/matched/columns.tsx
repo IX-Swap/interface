@@ -1,4 +1,5 @@
 import { formatDateToMMDDYY } from 'helpers/dates'
+import React from 'react'
 import {
   formatMoney,
   //   formatRoundedAmount,
@@ -9,6 +10,37 @@ import {
 import { OTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
 import { renderIdentityLink } from '../OrderTableIdentityLink'
+import { Status } from 'ui/Status/Status'
+import { Actions } from 'app/pages/authorizer/components/Actions'
+import { Box } from '@mui/material'
+import { get } from 'lodash'
+
+const renderColumnWithApproval = (row: object, status: string) => {
+  const statusField = get(row, 'status')
+  const matchedStatusField = get(row?.matches, 'status')
+
+  return (
+    <Box display={'flex'} justifyContent={''}>
+      <Status
+        matchedStatus={matchedStatusField}
+        label={status}
+        // type={status.toLowerCase()}
+        type={`${status}-${matchedStatusField}`}
+      />
+      {statusField !== 'REJECTED' && matchedStatusField === 'MATCH' ? (
+        <Actions
+          item={row}
+          cacheQueryKey={''}
+          featureCategory='otc/matched'
+          statusFieldName={'status'}
+          matchedStatusField={matchedStatusField}
+        />
+      ) : (
+        ''
+      )}
+    </Box>
+  )
+}
 
 export const columns: Array<TableColumn<OTCOrder>> = [
   {
@@ -70,5 +102,10 @@ export const columns: Array<TableColumn<OTCOrder>> = [
         price: row?.matches?.matchedPrice ?? 0,
         row
       })
+  },
+  {
+    key: 'status',
+    label: 'Status',
+    render: (status, row) => renderColumnWithApproval(row, status)
   }
 ]

@@ -325,8 +325,8 @@ export const getDSOStats = (dso: DigitalSecurityOffering) => {
   return { status, percentRaised, color }
 }
 
-export const renderStringToHTML = (value: string) => {
-  return <div dangerouslySetInnerHTML={{ __html: sanitize(value) }} />
+export const renderStringToHTML = (value: string, config: object = {}) => {
+  return <div dangerouslySetInnerHTML={{ __html: sanitize(value, config) }} />
 }
 
 export const isDSOLive = (dso: DigitalSecurityOffering | undefined) => {

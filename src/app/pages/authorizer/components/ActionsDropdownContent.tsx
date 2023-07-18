@@ -18,6 +18,7 @@ export interface ActionsDropdownContentProps extends DropdownContentProps {
   view: () => void
   hideApproval?: boolean
   hideRejection?: boolean
+  hideView?: boolean
 }
 
 export const ActionsDropdownContent = (props: ActionsDropdownContentProps) => {
@@ -27,7 +28,8 @@ export const ActionsDropdownContent = (props: ActionsDropdownContentProps) => {
     view,
     injectedProps,
     hideApproval = false,
-    hideRejection = false
+    hideRejection = false,
+    hideView = false
   } = props
   const theme = useTheme()
 
@@ -55,7 +57,9 @@ export const ActionsDropdownContent = (props: ActionsDropdownContentProps) => {
         />
       )}
 
-      <Action label='View Application' icon={LaunchIcon} onClick={view} />
+      {!hideView && (
+        <Action label='View Application' icon={LaunchIcon} onClick={view} />
+      )}
     </List>
   )
 }
