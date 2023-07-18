@@ -22,8 +22,13 @@ export const useMakeWithdrawalAddress = () => {
   }
 
   return useMutation(mutateFn, {
-    onSuccess: () => {
-      void snackbarService.showSnackbar('Success', 'success')
+    onSuccess: (res: any) => {
+      if (typeof res.message !== 'undefined') {
+        void snackbarService.showSnackbar(res.message, 'info')
+      } else {
+        void snackbarService.showSnackbar('Success', 'success')
+      }
+
       replace(WithdrawalAddressesRoute.list)
       void queryCache.invalidateQueries(
         withdrawalAddressQueryKeys.getByUserId(getIdFromObj(user))
