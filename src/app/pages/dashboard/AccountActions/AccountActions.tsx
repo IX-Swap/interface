@@ -24,8 +24,8 @@ export const AccountActions = () => {
   const identity = isIndividual
     ? individualIdentity
     : corporateIdentities.list[0]
-  const hasSubmittedKYC =
-    identity?.status === 'Submitted' || identity?.status === 'Approved'
+  const hasApprovedKYC = identity?.status === 'Approved'
+  const hasSubmittedKYC = identity?.status === 'Submitted' || hasApprovedKYC
   const hasStartedAccreditation =
     typeof identity?.accreditationStatus !== 'undefined'
   const hasSubmittedAccreditation =
@@ -59,7 +59,7 @@ export const AccountActions = () => {
             </Grid>
           )}
 
-          {hasSubmittedKYC && !hasSubmittedAccreditation && (
+          {hasApprovedKYC && !hasSubmittedAccreditation && (
             <Grid item xs borderRight={1} borderColor={'#DBE2EC'}>
               <Accreditation
                 hasStarted={hasStartedAccreditation}
