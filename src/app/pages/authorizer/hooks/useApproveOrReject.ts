@@ -11,18 +11,24 @@ export interface UseApproveOrRejectArgs {
   payload?: Record<string, any>
   listingType?: any
   featureCategory?: string
+  item?: any
 }
 
 export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
-  const { action, cacheQueryKey, id, payload, listingType, featureCategory } =
-    args
-  // console.log(listingType,cacheQueryKey, payload, id, 'listingTypelistingType')
+  const {
+    action,
+    cacheQueryKey,
+    id,
+    payload,
+    listingType,
+    featureCategory,
+    item
+  } = args
   const queryCache = useQueryCache()
   const categoryFromUrl = useAuthorizerCategory()
   const category = featureCategory ?? categoryFromUrl
   const { uri, listRoute } = authorizerItemMap[category]
   const _uri: string = uri.replace(/\/list$/, '')
-  // console.log(listingType, 'listing')
   //   console.log(category, 'category')
   const url =
     category === 'virtual-accounts'
@@ -36,6 +42,10 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
         `/exchange/listing/${id}/${action}`
       : category === 'listings' && action === 'reject' && listingType === 'OTC'
       ? `/otc/listing/${id}/${action}`
+      : category === 'otc/matched'
+      ? `otc/order/${action === 'approve' ? 'confirm' : 'reject'}/${
+          item?._id
+        }/${item?.matches?.order}`
       : `${_uri}/${id}/${action}`
   //   console.log(url, 'url')
 
@@ -54,17 +64,21 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
       reqPayload = { listingType: listingType }
     }
 
+    if (category === 'otc/matched' && action === 'approve') {
+      return await apiService.post(url, reqPayload)
+    }
+
     return await apiService.put(url, reqPayload)
   }
 
   return useMutation(mutateFn, {
+
     onSuccess: data => {
       if (canInvalidate) {
         void queryCache.invalidateQueries(cacheQueryKey[0])
       }
-
       void snackbarService.showSnackbar(data.message, 'success')
-      replace({ pathname: listRoute, search })
+      replace({ pathname: listRoute })
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

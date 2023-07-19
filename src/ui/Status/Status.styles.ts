@@ -28,12 +28,14 @@ export const useStyles = makeStyles(theme => {
       case 'failed':
       case 'high':
       case 'rejected-match':
+      case 'rejected-confirmed':  
         return theme.palette.error.dark
       case 'draft':
       case 'open':
       case 'not funded':
       case 'pending':
       case 'new-settled':
+      case 'completed-confirmed':  
         return theme.palette.info.light
       case 'passed':
         return '#4C88FF'
@@ -66,12 +68,14 @@ export const useStyles = makeStyles(theme => {
       case 'failed':
       case 'high':
       case 'rejected-match':
+      case 'rejected-confirmed':    
         return theme.palette.error.light
       case 'draft':
       case 'open':
       case 'not funded':
       case 'pending':
       case 'new-settled':
+      case 'completed-confirmed':
         return theme.palette.info.dark
       case 'passed':
         return '#4C88FF20'
