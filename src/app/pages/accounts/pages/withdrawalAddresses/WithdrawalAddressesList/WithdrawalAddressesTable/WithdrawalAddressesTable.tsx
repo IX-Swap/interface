@@ -9,7 +9,11 @@ import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { withdrawalAddressQueryKeys } from 'config/queryKeys'
 import { NoWithdrawalAddressData } from './NoWithdrawalAddressData'
 
-export const WithdrawalAddressesTable: React.FC = () => {
+export const WithdrawalAddressesTable = ({
+  limitRows = 0
+}: {
+  limitRows?: number
+}) => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
 
@@ -18,6 +22,8 @@ export const WithdrawalAddressesTable: React.FC = () => {
       uri={`/accounts/withdrawal-addresses/list/${userId}`}
       name={withdrawalAddressQueryKeys.getByUserId(userId)}
       columns={columns}
+      limitRows={limitRows}
+      defaultRowsPerPage={3}
       //   hasActions
       actions={Actions}
       noDataComponent={<NoWithdrawalAddressData />}

@@ -1,11 +1,5 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { RootContainer } from 'ui/RootContainer'
-import { AccountActions } from './AccountActions/AccountActions'
-import { TotalStats } from './TotalStats/TotalStats'
-import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
-import { IssuerSTOs } from 'app/pages/invest/components/IssuerSTOs'
 import {
   useIsAccredited,
   useIsRetail,
@@ -13,6 +7,13 @@ import {
   useIsInstitutional,
   useIsIssuer
 } from 'helpers/acl'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { RootContainer } from 'ui/RootContainer'
+import { AccountActions } from './AccountActions/AccountActions'
+import { TotalStats } from './TotalStats/TotalStats'
+import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
+import { IssuerSTOs } from 'app/pages/invest/components/IssuerSTOs'
+import { WalletAddresses } from './WalletAddresses/WalletAddresses'
 
 export const Dashboard = () => {
   const isAccredited = useIsAccredited()
@@ -50,6 +51,9 @@ export const Dashboard = () => {
               <IssuerSTOs />
             </Grid>
           )}
+          <Grid item>
+            <WalletAddresses />
+          </Grid>
         </Grid>
       </RootContainer>
     </Grid>
