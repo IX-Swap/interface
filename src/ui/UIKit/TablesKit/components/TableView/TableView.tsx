@@ -259,7 +259,7 @@ export const TableView = <T,>({
         <Paper style={{ backgroundColor: 'inherit' }} {...paperProps}>
           <TableContainer style={{ overflow: 'visible' }}>
             <Table aria-label='table' data-testid='table' size={size}>
-              {columns.length > 0 ? (
+              {columns.length > 0 && _items.length > 0 ? (
                 <TableHead
                   style={{
                     display: headDisplay

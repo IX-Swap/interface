@@ -8,6 +8,20 @@ import { WithdrawalAddressTooltip } from 'app/pages/accounts/pages/withdrawalAdd
 import { RootContainer } from 'ui/RootContainer'
 import { Add } from '@mui/icons-material'
 
+export const AddWalletAddressButton = () => (
+  <Button
+    component={AppRouterLinkComponent}
+    to={WithdrawalAddressesRoute.create}
+    size='large'
+    color='primary'
+    variant='contained'
+    disableElevation
+  >
+    <Add sx={{ marginRight: 1 }} />
+    <span>Add Wallet Address</span>
+  </Button>
+)
+
 export const WithdrawalAddressesList: React.FC = () => {
   return (
     <>
@@ -25,17 +39,7 @@ export const WithdrawalAddressesList: React.FC = () => {
                 alignItems='center'
               >
                 <Grid item>
-                  <Button
-                    component={AppRouterLinkComponent}
-                    to={WithdrawalAddressesRoute.create}
-                    size='large'
-                    color='primary'
-                    variant='contained'
-                    disableElevation
-                  >
-                    <Add sx={{ marginRight: 1 }} />
-                    <span>Add Wallet Address</span>
-                  </Button>
+                  <AddWalletAddressButton />
                 </Grid>
                 <Grid item>
                   <WithdrawalAddressTooltip />
