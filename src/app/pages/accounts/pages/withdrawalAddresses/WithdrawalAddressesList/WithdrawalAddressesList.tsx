@@ -6,6 +6,7 @@ import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAdd
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { WithdrawalAddressTooltip } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressTooltip'
 import { RootContainer } from 'ui/RootContainer'
+import { Add } from '@mui/icons-material'
 
 export const WithdrawalAddressesList: React.FC = () => {
   return (
@@ -32,7 +33,8 @@ export const WithdrawalAddressesList: React.FC = () => {
                     variant='contained'
                     disableElevation
                   >
-                    Add Wallet Address
+                    <Add sx={{ marginRight: 1 }} />
+                    <span>Add Wallet Address</span>
                   </Button>
                 </Grid>
                 <Grid item>

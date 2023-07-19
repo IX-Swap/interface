@@ -40,7 +40,7 @@ export const WalletAddresses = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <WithdrawalAddressesTable />
+          <WithdrawalAddressesTable limitRows={3} />
         </Grid>
       </Grid>
     </FieldContainer>

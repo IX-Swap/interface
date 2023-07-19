@@ -65,6 +65,7 @@ export interface TableViewProps<T> {
   labelRowsPerPage?: React.ReactNode
   activeSortLabel?: string
   paperProps?: PaperProps
+  limitRows?: number
 }
 
 export const TableView = <T,>({
@@ -91,7 +92,8 @@ export const TableView = <T,>({
   paginationPlacement = 'bottom',
   labelRowsPerPage,
   activeSortLabel,
-  paperProps
+  paperProps,
+  limitRows = 0
 }: TableViewProps<T>): JSX.Element => {
   const hasActions = actions !== undefined
   const {
@@ -279,7 +281,7 @@ export const TableView = <T,>({
                 })
               ) : (
                 <TableRows
-                  items={_items}
+                  items={limitRows === 0 ? _items : _items.slice(0, limitRows)}
                   bordered={bordered}
                   name={name}
                   size={size}
@@ -296,7 +298,9 @@ export const TableView = <T,>({
           </TableContainer>
         </Paper>
       </Grid>
-      {['bottom', 'both'].includes(paginationPlacement) && renderPagination()}
+      {limitRows === 0 &&
+        ['bottom', 'both'].includes(paginationPlacement) &&
+        renderPagination()}
     </Grid>
   )
 }
