@@ -60,7 +60,7 @@ export const InvestorLiveOrderBook = () => {
           alignContent='space-between'
         >
           <Box
-            height={{ xs: 'auto', md: 'calc(50% - 26px)' }}
+            height={{ xs: 'auto', md: 'calc(0% - 0px)' }}
             overflow='hidden'
             flexShrink={1}
             flexGrow={1}
@@ -86,7 +86,7 @@ export const InvestorLiveOrderBook = () => {
           </Hidden>
 
           <Box
-            height={{ xs: 'auto', md: 'calc(50% - 26px)' }}
+            height={{ xs: 'auto', md: 'calc(100% - 0px)' }}
             overflow='hidden'
             flexGrow={0}
             flexShrink={1}

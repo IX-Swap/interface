@@ -23,7 +23,7 @@ export const Actions = ({ item }: ActionsProps) => {
       className={classes.button}
     >
       {user?.roles.split(',').map(role => {
-        if (role === 'admin') {
+        if (role === 'admin' || role === 'issuer') {
           return <LaunchIcon color='disabled' />
         }
       })}
