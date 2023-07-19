@@ -23,7 +23,6 @@ export const WithdrawalAddressesTable = ({
       name={withdrawalAddressQueryKeys.getByUserId(userId)}
       columns={columns}
       limitRows={limitRows}
-      defaultRowsPerPage={3}
       //   hasActions
       actions={Actions}
       noDataComponent={<NoWithdrawalAddressData />}
