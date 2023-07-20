@@ -5,28 +5,31 @@ import { IconButton } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import useStyles from 'app/pages/issuance/components/SecondaryListingsTable/Actions/Actions.styles'
-import { useAuth } from 'hooks/auth/useAuth'
+import { useIsAuthorizer, useIsAdmin, useIsIssuer } from 'helpers/acl'
 export interface ActionsProps {
   item: DigitalSecurityOffering
 }
 
 export const Actions = ({ item }: ActionsProps) => {
   const classes = useStyles()
-  const { user } = useAuth()
+  const isAuthorizer = useIsAuthorizer()
+  const isAdmin = useIsAdmin()
+  const isIssuer = useIsIssuer()
+  const isSuperUser = isAuthorizer || isAdmin
   return (
-    <IconButton
-      component={AppRouterLinkComponent}
-      size='medium'
-      data-testid='view-button'
-      to={IssuanceRoute.view}
-      params={{ issuerId: item.user, dsoId: item._id }}
-      className={classes.button}
-    >
-      {user?.roles.split(',').map(role => {
-        if (role === 'admin' || role === 'issuer') {
-          return <LaunchIcon color='disabled' />
-        }
-      })}
-    </IconButton>
+    <>
+      {isIssuer || isSuperUser ? (
+        <IconButton
+          component={AppRouterLinkComponent}
+          size='medium'
+          data-testid='view-button'
+          to={IssuanceRoute.view}
+          params={{ issuerId: item.user, dsoId: item._id }}
+          className={classes.button}
+        >
+          <LaunchIcon color='disabled' />
+        </IconButton>
+      ) : null}
+    </>
   )
 }
