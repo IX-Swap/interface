@@ -19,7 +19,7 @@ export const CashRouter = () => {
       <AppRoute breadcrumb='Deposit' path={AccountsRoute.deposit}>
         <Deposit />
       </AppRoute>
-      <AppRoute breadcrumb='Bank Accounts' path={AccountsRoute.banks}>
+      <AppRoute breadcrumb='Cash Accounts' path={AccountsRoute.banks}>
         <BanksRouter />
       </AppRoute>
     </Switch>

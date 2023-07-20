@@ -1,5 +1,8 @@
 import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
-import { Actions } from 'app/pages/accounts/pages/banks/pages/BanksList/Actions'
+import {
+  Actions,
+  ActionsProps
+} from 'app/pages/accounts/pages/banks/pages/BanksList/Actions'
 import {
   columns,
   compactColumns
@@ -20,8 +23,9 @@ import { Form } from 'components/form/Form'
 import { OTPDialog } from 'app/pages/accounts/components/OTPDialog/OTPDialog'
 import { Typography, useTheme } from '@mui/material'
 import { useRemoveBank } from 'app/pages/accounts/pages/banks/hooks/useRemoveBank'
+import { NoData } from './NoData'
 
-export const Table: React.FC = () => {
+export const Table = ({ limitRows = 0 }: { limitRows?: number }) => {
   const theme = useTheme()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
@@ -75,7 +79,7 @@ export const Table: React.FC = () => {
         uri={`/accounts/banks/list/${userId}`}
         name={banksQueryKeys.getListByUserId(userId)}
         columns={columns}
-        actions={props => (
+        actions={(props: ActionsProps) => (
           <Actions
             {...props}
             isLoading={isLoading}
@@ -83,12 +87,14 @@ export const Table: React.FC = () => {
           />
         )}
         noHeader={isTablet}
-        paperProps={{
-          style: {
-            position: 'relative',
-            zIndex: 1
-          }
-        }}
+        // paperProps={{
+        //   style: {
+        //     position: 'relative',
+        //     zIndex: 1
+        //   }
+        // }}
+        limitRows={limitRows}
+        noDataComponent={<NoData />}
       >
         {isTablet
           ? (props: TableViewRendererProps<Bank>) => (

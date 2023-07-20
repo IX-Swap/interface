@@ -13,6 +13,7 @@ import { AccountActions } from './AccountActions/AccountActions'
 import { TotalStats } from './TotalStats/TotalStats'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
 import { IssuerSTOs } from 'app/pages/invest/components/IssuerSTOs'
+import { CashAccounts } from './CashAccounts/CashAccounts'
 import { WalletAddresses } from './WalletAddresses/WalletAddresses'
 
 export const Dashboard = () => {
@@ -51,6 +52,9 @@ export const Dashboard = () => {
               <IssuerSTOs />
             </Grid>
           )}
+          <Grid item>
+            <CashAccounts />
+          </Grid>
           <Grid item>
             <WalletAddresses />
           </Grid>

@@ -20,7 +20,7 @@ export const BankDetailsDialog = ({
   const theme = useTheme()
   return (
     <UIDialog open={open} maxWidth='md' fullWidth onClose={close}>
-      <DialogTitle>Bank Account Information</DialogTitle>
+      <DialogTitle>Cash Account Information</DialogTitle>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Grid

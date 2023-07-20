@@ -12,7 +12,7 @@ export const AddWalletAddressButton = () => (
   <Button
     component={AppRouterLinkComponent}
     to={WithdrawalAddressesRoute.create}
-    size='large'
+    size='medium'
     color='primary'
     variant='contained'
     disableElevation

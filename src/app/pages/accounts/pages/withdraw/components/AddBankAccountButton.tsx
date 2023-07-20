@@ -3,6 +3,7 @@ import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
+import { Add } from '@mui/icons-material'
 
 interface AddBankAccountButtonProps extends ButtonProps {
   variant: 'outlined' | 'contained'
@@ -11,7 +12,7 @@ interface AddBankAccountButtonProps extends ButtonProps {
 
 export const AddBankAccountButton = ({
   variant,
-  title = 'Add Bank Account',
+  title = 'Add Cash Account',
   ...rest
 }: AddBankAccountButtonProps) => {
   const { isTablet } = useAppBreakpoints()
@@ -24,10 +25,11 @@ export const AddBankAccountButton = ({
       disableElevation
       fullWidth={isTablet}
       to={BanksRoute.create}
-      size={isTablet ? 'large' : 'medium'}
+      size='medium'
       {...rest}
     >
-      Add Bank Account
+      <Add sx={{ marginRight: 1 }} />
+      <span>Add Cash Account</span>
     </Button>
   )
 }
