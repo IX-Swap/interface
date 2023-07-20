@@ -541,6 +541,10 @@ export default function IndividualKycForm() {
             }}
           >
             {({ values, handleSubmit, setFieldValue, dirty, initialValues }) => {
+              if (values.accredited === -1) {
+                onAccreditedChange(0, setFieldValue)
+              }
+
               const hasNoErrors = (name: string) => !errors[name]
               const isFilled = (name: string): boolean =>
                 values[name] !== null &&
@@ -1224,16 +1228,6 @@ export default function IndividualKycForm() {
 
                         <Column style={{ gap: '34px' }}>
                           <Row style={{ gap: '12px' }} justifyContent="space-evenly">
-                            <BorderBox active={values.accredited === 1}>
-                              <Checkbox
-                                name="accredited"
-                                isRadio
-                                checked={values.accredited === 1}
-                                onClick={() => onAccreditedChange(1, setFieldValue)}
-                                label={`I declare I am an Individual Accredited Investor`}
-                              />
-                            </BorderBox>
-
                             <BorderBox active={values.accredited === 0}>
                               <Checkbox
                                 name="accredited"
@@ -1242,6 +1236,15 @@ export default function IndividualKycForm() {
                                 checked={values.accredited === 0}
                                 onClick={() => onAccreditedChange(0, setFieldValue)}
                                 label="I declare I am a Retail Investor"
+                              />
+                            </BorderBox>
+                            <BorderBox active={values.accredited === 1}>
+                              <Checkbox
+                                name="accredited"
+                                isRadio
+                                checked={values.accredited === 1}
+                                onClick={() => onAccreditedChange(1, setFieldValue)}
+                                label={`I declare I am an Individual Accredited Investor`}
                               />
                             </BorderBox>
                           </Row>
