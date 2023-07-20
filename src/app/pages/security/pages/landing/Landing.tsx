@@ -88,7 +88,7 @@ export const Landing = () => {
 
               <Grid item>
                 <SettingsRow
-                  name='Bank Accounts'
+                  name='Cash Accounts'
                   action={
                     <Button
                       variant='text'

@@ -3,7 +3,7 @@ import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asse
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
 import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
-import { ReactComponent as ReportsIcon } from 'assets/icons/navigation/mas-disclosure.svg'
+// import { ReactComponent as ReportsIcon } from 'assets/icons/navigation/mas-disclosure.svg'
 import { makeURL } from 'config/appURL'
 import { InternalRouteProps } from 'types/util'
 
