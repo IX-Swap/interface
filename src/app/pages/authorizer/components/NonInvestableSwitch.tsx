@@ -1,15 +1,18 @@
 import React from 'react'
 import { FormControlLabel, Switch, Tooltip, Typography } from '@mui/material'
-import { usePromoteDSO } from 'app/pages/authorizer/hooks/usePromoteDSO'
-import { DigitalSecurityOffering } from 'types/dso'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-export interface PromotionSwitchProps {
+import { DigitalSecurityOffering } from 'types/dso'
+import { useNonInvestable } from '../hooks/useNonInvestable'
+
+export interface NonInvestableSwitchProps {
   dso: DigitalSecurityOffering
 }
 
-export const PromotionSwitch = (props: PromotionSwitchProps) => {
+export const NonInvestableSwitch = (props: NonInvestableSwitchProps) => {
   const { dso } = props
-  const [promoteDSO, { isSuccess, data: updatedData }] = usePromoteDSO(dso._id)
+  const [nonInvestableDSO, { isSuccess, data: updatedData }] = useNonInvestable(
+    dso._id
+  )
 
   const isPromoted = isSuccess
     ? updatedData?.data.promoted ?? false
@@ -21,19 +24,19 @@ export const PromotionSwitch = (props: PromotionSwitchProps) => {
         <Switch
           name='promoted'
           defaultChecked={isPromoted}
-          onChange={async (_, checked) => await promoteDSO(checked)}
+          onChange={async (_, checked) => await nonInvestableDSO(checked)}
         />
       }
       label={
         <Tooltip
-          arrow
-          placement='right'
           title={
             <Typography>
-              When promoted (switched on), this STO will be shown in the "Top
-              Offers" carousel on the invest page
+              Non-Investable tooltip text: When switched on, this STO can only
+              be viewed by investors but it cannot be invested by investors.
             </Typography>
           }
+          arrow
+          placement='right'
         >
           <div style={{ display: 'flex' }}>
             <Typography
@@ -41,7 +44,7 @@ export const PromotionSwitch = (props: PromotionSwitchProps) => {
               style={{ fontWeight: isPromoted ? 600 : 400, marginTop: '3px' }}
               color={isPromoted ? 'primary' : 'textPrimary'}
             >
-              Promoted
+              Non-Investable
             </Typography>
 
             <InfoOutlinedIcon
