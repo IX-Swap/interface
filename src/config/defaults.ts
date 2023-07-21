@@ -10,9 +10,9 @@ export const MIN_INVESTMENT_AMOUNT = 1000
 export const capitalStructures = [
   'Equity',
   'Debt',
-  'Others'
-  // 'Fund - Standalone',
-  // 'Fund - Feeder/Sub-Fund'
+  'Hybrid',
+  'Fund - Standalone',
+  'Fund - Feeder/Sub-Fund'
 ]
 
 export const tenantThemes = [
