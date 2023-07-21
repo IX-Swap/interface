@@ -9,9 +9,7 @@ import {
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'helpers/strings'
 import { history } from 'config/history'
-import {
-  Dropdown,
-} from 'app/components/Dropdown/Dropdown'
+import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsDropdownTrigger'
 import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsDropdownContent'
 import { useLocation } from 'react-router-dom'
@@ -56,7 +54,6 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     featureCategory,
     statusFieldName = 'status'
   } = props
-
 
   const location = useLocation()
   const id: string = item._id
@@ -120,9 +117,6 @@ export const Actions = (props: ActionsProps): JSX.Element => {
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
   const statusField = get(item, statusFieldName)
-
-
-
 
   return (
     <Grid wrap='nowrap' justifyContent='flex-end'>

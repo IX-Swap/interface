@@ -11,6 +11,8 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { RootContainer } from 'ui/RootContainer'
 import { AccountActions } from './AccountActions/AccountActions'
 import { TotalStats } from './TotalStats/TotalStats'
+import { MostPopularSTOs } from './STOs/MostPopularSTOs'
+import { UpcomingSTOs } from './STOs/UpcomingSTOs'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
 import { IssuerSTOs } from 'app/pages/invest/components/IssuerSTOs'
 import { CashAccounts } from './CashAccounts/CashAccounts'
@@ -38,9 +40,19 @@ export const Dashboard = () => {
           {isInvestor && (
             <>
               {hasAccreditation && (
-                <Grid item>
-                  <TotalStats />
-                </Grid>
+                <>
+                  <Grid item>
+                    <TotalStats />
+                  </Grid>
+                  <Grid item container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                      <MostPopularSTOs />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <UpcomingSTOs />
+                    </Grid>
+                  </Grid>
+                </>
               )}
               <Grid item>
                 <PrimaryOfferings />

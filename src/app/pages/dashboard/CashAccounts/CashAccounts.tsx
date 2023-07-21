@@ -28,7 +28,6 @@ export const CashAccounts = () => {
               variant='outlined'
               to={AccountsRoute.banks}
               data-testid='invest-link'
-              // sx={{ px: 0 }}
             >
               View All Cash Accounts
             </Button>

@@ -32,7 +32,7 @@ export interface TableViewRendererProps<T> {
   items: T[]
   columns: Array<TableColumn<T>>
   hasActions: boolean
-  actions?: ActionsType<T>
+  actions?: ActionsType
   cacheQueryKey: any
 }
 export interface RenderHeadCellArgs<T> {
@@ -49,7 +49,7 @@ export interface TableViewProps<T> {
   filter?: BaseFilter
   hasStatusWithActions?: boolean
   hasStatus?: boolean
-  actions?: ActionsType<T>
+  actions?: ActionsType
   children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
   fakeLoading?: boolean
