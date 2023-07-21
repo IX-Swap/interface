@@ -3,19 +3,19 @@ import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
 import { DigitalSecurityOffering } from 'types/dso'
 
-export const useDisableDSO = (dsoId: string) => {
+export const useNonInvestable = (dsoId: string) => {
   const { apiService, snackbarService } = useServices()
 
-  const disableDSO = async (disabled: boolean) => {
+  const nonInvestableDSO = async (investable: boolean) => {
     return await apiService.post<DigitalSecurityOffering>(
       issuanceURL.dso.disable(dsoId),
       {
-        disabled
+        investable
       }
     )
   }
 
-  return useMutation(disableDSO, {
+  return useMutation(nonInvestableDSO, {
     onSuccess: data => {
       void snackbarService.showSnackbar(data.message, 'success')
     },
