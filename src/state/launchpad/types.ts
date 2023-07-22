@@ -321,6 +321,7 @@ export interface Offer {
 
   countParticipants: number
   feeRate?: number
+  ethAddress: string
 }
 
 export interface IssuanceVettingDocuments {

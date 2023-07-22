@@ -49,7 +49,8 @@ export default function LaunchpadOffer() {
   React.useEffect(() => {
     if (offer.data) {
       setIsAllowed(
-        checkKYC(offer.data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(offer.data.status))
+        checkKYC(offer.data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(offer.data.status)) ||
+          account === offer.data.ethAddress
       )
     }
   }, [offer])
