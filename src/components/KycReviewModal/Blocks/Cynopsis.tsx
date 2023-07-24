@@ -20,10 +20,10 @@ export const Cynopsis: FC<Props> = ({ riskJSON }: Props) => {
       }
     >
       <Content>
-        {Object.keys(riskJSON.componentScore).map((key) => (
+        {Object.keys(riskJSON.risk.component_score).map((key) => (
           <RowWithCheck
             key={key}
-            text={`${key.toLocaleUpperCase()} - ${riskJSON.componentScore[key].toFixed(2)}`}
+            text={`${key.toLocaleUpperCase()} - ${riskJSON.risk.component_score[key].toFixed(2)}`}
             isDone={true}
           />
         ))}
