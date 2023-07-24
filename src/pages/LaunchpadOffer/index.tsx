@@ -50,7 +50,7 @@ export default function LaunchpadOffer() {
     if (offer.data) {
       setIsAllowed(
         checkKYC(offer.data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(offer.data.status)) ||
-          account === offer.data.ethAddress
+          account?.toLowerCase() === offer.data.ethAddress.toLowerCase()
       )
     }
   }, [offer])
