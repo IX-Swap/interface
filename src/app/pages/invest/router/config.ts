@@ -40,7 +40,7 @@ export const investLandingLinks: InternalRouteProps[] = [
   //     path: InvestRoute.overview
   //   },
   {
-    label: 'Primary',
+    label: 'Invest',
     path: InvestRoute.primaryOfferings
   },
   {
