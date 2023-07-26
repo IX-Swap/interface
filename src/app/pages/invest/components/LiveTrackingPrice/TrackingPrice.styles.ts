@@ -5,7 +5,7 @@ export interface Props {
 }
 
 export const useStyles = makeStyles(theme => ({
-  root: { paddingLeft: 16, fontSize: 12 },
+  root: { paddingLeft: 80, fontSize: 20, marginBottom: 20 },
   colorStyle: {
     color: (props: Props) =>
       props.trend === 'up'
@@ -13,7 +13,8 @@ export const useStyles = makeStyles(theme => ({
         : theme.palette.error.main
   },
   arrow: {
-    fontSize: 14,
-    marginTop: 2
+    fontSize: 20,
+    marginTop: 2,
+    marginBottom: 20
   }
 }))
