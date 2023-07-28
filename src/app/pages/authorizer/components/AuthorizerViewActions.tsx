@@ -4,8 +4,8 @@ import { AuthorizableWithIdentity, DataroomFeature } from 'types/authorizer'
 import { AuthorizerForm } from 'app/pages/authorizer/components/AuthorizerForm'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { AuthorizerCategory } from 'types/app'
-import { DigitalSecurityOffering } from 'types/dso'
-import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwitch'
+// import { DigitalSecurityOffering } from 'types/dso'
+// import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwitch'
 import { AuthorizerActions } from './AuthorizerActions/AuthorizerActions'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
@@ -69,7 +69,7 @@ export const AuthorizerViewActions = <T,>(
               </Grid>
             )}
 
-            {category === AuthorizerCategory.Offerings && (
+            {/* {category === AuthorizerCategory.Offerings && (
               <Grid
                 container
                 item
@@ -80,7 +80,7 @@ export const AuthorizerViewActions = <T,>(
                   dso={data as unknown as DigitalSecurityOffering}
                 />
               </Grid>
-            )}
+            )} */}
           </Grid>
         </Grid>
       </FieldContainer>

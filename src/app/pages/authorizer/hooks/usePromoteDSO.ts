@@ -6,11 +6,11 @@ import { DigitalSecurityOffering } from 'types/dso'
 export const usePromoteDSO = (dsoId: string) => {
   const { apiService, snackbarService } = useServices()
 
-  const promoteDSO = async (isPromoted: boolean) => {
-    return await apiService.patch<DigitalSecurityOffering>(
+  const promoteDSO = async (promoted: boolean) => {
+    return await apiService.post<DigitalSecurityOffering>(
       issuanceURL.dso.promote(dsoId),
       {
-        isPromoted
+        promoted
       }
     )
   }

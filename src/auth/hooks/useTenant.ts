@@ -39,6 +39,7 @@ export const useTenant = () => {
   sessionService.set('logoLight', logoLight)
   sessionService.set('logoDark', logoDark)
   sessionService.set('backgroundImage', backgroundImage)
+  sessionService.set('mobileMode', true)
 
   return null
 }

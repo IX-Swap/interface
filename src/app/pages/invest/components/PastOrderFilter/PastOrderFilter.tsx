@@ -1,25 +1,25 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Box, Grid } from '@mui/material'
 import { GroupedDateTimeFilter } from 'app/pages/authorizer/components/GroupedFromDateFilter'
-import { AppRouterLink } from 'components/AppRouterLink'
+// import { AppRouterLink } from 'components/AppRouterLink'
 import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQueryFilterGroup/SearchQueryFilterGroup'
 import { SearchQueryFilterGroupApply } from 'components/SearchQueryFilter/SearchQueryFilterGroupApply'
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
-import { isEmptyString } from 'helpers/strings'
-import { AccountsRoute } from 'app/pages/accounts/router/config'
+// import { isEmptyString } from 'helpers/strings'
+// import { AccountsRoute } from 'app/pages/accounts/router/config'
 
 interface PastOrderFilterProps {
   pairId?: string
 }
 export const PastOrderFilter = ({ pairId }: PastOrderFilterProps) => {
-  const redirectLink = useMemo(() => {
-    let link = `${AccountsRoute.myHoldings}?tab=1`
-    if (!isEmptyString(pairId)) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      link += `&pair=${pairId!}`
-    }
-    return link
-  }, [pairId])
+  // const redirectLink = useMemo(() => {
+  //   let link = `${AccountsRoute.myHoldings}?tab=1`
+  //   if (!isEmptyString(pairId)) {
+  //     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  //     link += `&pair=${pairId!}`
+  //   }
+  //   return link
+  // }, [pairId])
 
   return (
     <SearchQueryFilterGroup>
@@ -61,7 +61,7 @@ export const PastOrderFilter = ({ pairId }: PastOrderFilterProps) => {
             Filter
           </SearchQueryFilterGroupApply>
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <AppRouterLink
             style={{ whiteSpace: 'nowrap' }}
             to={redirectLink}
@@ -73,7 +73,7 @@ export const PastOrderFilter = ({ pairId }: PastOrderFilterProps) => {
           >
             View History
           </AppRouterLink>
-        </Grid>
+        </Grid> */}
       </Grid>
     </SearchQueryFilterGroup>
   )

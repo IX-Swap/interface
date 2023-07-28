@@ -15,10 +15,11 @@ export const DSOList = () => {
           endComponent={
             <Button
               component={AppRouterLinkComponent}
+              to={IssuanceRoute.create}
               size='large'
               color='primary'
               variant='contained'
-              to={IssuanceRoute.create}
+              disableElevation
             >
               Create STO
             </Button>

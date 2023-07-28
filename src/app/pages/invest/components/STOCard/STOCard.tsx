@@ -7,6 +7,7 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { STODetails } from 'app/pages/invest/components/STOCard/STODetails'
 import { Avatar } from 'components/Avatar'
+import { DSOInvestButton } from 'app/components/DSO/components/DSOInvestButton'
 
 export interface STOCardProps {
   type: 'Primary' | 'OTC' | 'TopOffers'
@@ -18,9 +19,8 @@ export interface STOCardProps {
 export const STOCard = (props: STOCardProps) => {
   const classes = useStyles()
   const typeWithLogo = ['OTC', 'TopOffers']
-
   const { data, viewURL, type } = props
-  console.log(data.coverImg)
+
   return (
     <Card
       data-testid='primaryDsoCard'
@@ -63,6 +63,18 @@ export const STOCard = (props: STOCardProps) => {
           item
           justifyContent='space-between'
           alignItems={'center'}
+          marginTop='20px'
+        >
+          {/* <Box display='flex' width='100%' justifyContent='flex-end'> */}
+          <DSOInvestButton dso={data} />
+          {/* </Box> */}
+        </Grid>
+
+        <Grid
+          container
+          item
+          justifyContent='space-between'
+          alignItems={'center'}
         >
           <Button
             className={classes.link}
@@ -76,7 +88,7 @@ export const STOCard = (props: STOCardProps) => {
             variant='outlined'
             color='primary'
           >
-            Learn More
+            {data.status === 'Approved' ? 'Learn More' : 'Complete STO'}
           </Button>
         </Grid>
       </Box>

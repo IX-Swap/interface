@@ -8,6 +8,20 @@ export const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(5),
     borderRadius: 10
   },
+
+  header: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+    // borderRadius: 10,
+    position: 'absolute',
+    marginTop: '0px',
+    top: 0,
+    width: '100%',
+    
+  },
+
   title: {
     fontSize: 24,
     fontWeight: 600,
@@ -28,7 +42,7 @@ export const useStyles = makeStyles(theme => ({
   },
   box: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'top'
   },
   scrollable: {
     overflowY: 'scroll',

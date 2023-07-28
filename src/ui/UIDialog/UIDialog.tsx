@@ -5,12 +5,14 @@ import { Icon } from 'ui/Icons/Icon'
 
 export interface UIDialogProps extends DialogProps {
   showIconClose?: boolean
+  isMobile?: boolean
 }
 
 export const UIDialog = ({
   onClose,
   children,
   showIconClose = true,
+  isMobile,
   ...rest
 }: UIDialogProps) => {
   const classes = useStyles()
@@ -19,7 +21,7 @@ export const UIDialog = ({
     <Dialog onClose={onClose} {...rest}>
       {showIconClose && (
         <Icon
-          className={classes.iconWrapper}
+          className={isMobile ? classes.mobileWrapper : classes.iconWrapper}
           name='close'
           onClick={() => onClose?.({}, 'escapeKeyDown')}
         />
