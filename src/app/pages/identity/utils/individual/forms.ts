@@ -120,38 +120,61 @@ export const getDocumentsFormValues = (
     }
   }
 
-  return data.documents.reduce((result: any, document) => {
-    const { evidenceOfAccreditation, proofOfAddress, proofOfIdentity } = result
+  return data.documents.reduce(
+    (result: any, document, index, documentsArray) => {
+      const { evidenceOfAccreditation, proofOfAddress, proofOfIdentity } =
+        result
 
-    if (document.type.startsWith('Evidence of ')) {
-      return {
-        ...result,
-        evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
-          ? [...evidenceOfAccreditation, { value: document }]
-          : [{ value: document }]
+      if (document.type.startsWith('Evidence of ')) {
+        return {
+          ...result,
+          evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
+            ? [...evidenceOfAccreditation, { value: document }]
+            : [{ value: document }]
+        }
       }
-    }
 
-    if (document.type === 'Proof of Address') {
-      return {
-        ...result,
-        proofOfAddress: Array.isArray(proofOfAddress)
-          ? [...proofOfAddress, { value: document }]
-          : [{ value: document }]
+      if (document.type === 'Proof of Address') {
+        return {
+          ...result,
+          proofOfAddress: Array.isArray(proofOfAddress)
+            ? [...proofOfAddress, { value: document }]
+            : [{ value: document }]
+        }
       }
-    }
 
-    if (document.type === 'Proof of Identity') {
-      return {
-        ...result,
-        proofOfIdentity: Array.isArray(proofOfIdentity)
-          ? [...proofOfIdentity, { value: document }]
-          : [{ value: document }]
+      if (document.type === 'Proof of Identity') {
+        interface DocumentItem {
+          value?: object
+          front?: object
+          back?: object
+        }
+        const documentItem: DocumentItem = {}
+
+        if (document.feature === 'back') {
+          return result
+        } else if (document.feature === 'front') {
+          documentItem.front = document
+
+          if (documentsArray[index + 1]?.feature === 'back') {
+            documentItem.back = documentsArray[index + 1]
+          }
+        } else {
+          documentItem.value = document
+        }
+
+        return {
+          ...result,
+          proofOfIdentity: Array.isArray(proofOfIdentity)
+            ? [...proofOfIdentity, documentItem]
+            : [documentItem]
+        }
       }
-    }
 
-    return result
-  }, {})
+      return result
+    },
+    {}
+  )
 }
 
 export const getAgreementsAndDisclosuresFormValues = (

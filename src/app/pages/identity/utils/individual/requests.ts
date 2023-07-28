@@ -22,11 +22,32 @@ export const getPersonalInfoRequestPayload = (
     Array<{ value: DataroomFile }>
   >((result, docs) => {
     if (Array.isArray(docs)) {
-      return [...result, ...docs.map(document => document.value?._id)]
+      //   return [...result, ...docs.map(document => document.value?._id)]
+      return [
+        ...result,
+        ...docs.flatMap(document => {
+          if ('value' in document) {
+            return document.value?._id
+          } else {
+            const docs = []
+            if ('front' in document) {
+              docs.push(document.front?._id)
+            }
+            if ('back' in document) {
+              docs.push(document.back?._id)
+            }
+
+            return docs
+          }
+        })
+      ]
     }
 
     return result
   }, [])
+
+  //   console.log('proofOfIdentity', proofOfIdentity)
+  //   console.log('documents', documents)
 
   return {
     ...rest,

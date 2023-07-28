@@ -91,7 +91,7 @@ export const ProofOfIdentityField = ({
                 const hasFrontAndBack =
                   idsWithFrontAndBack.includes(identityTypeValue)
 
-                console.log('identityType', identityTypeValue)
+                // console.log('identityType', identityTypeValue)
                 console.log('field', field)
 
                 const documentInfo: UploadDocumentInfo = {
@@ -109,7 +109,11 @@ export const ProofOfIdentityField = ({
                         variant='outlined'
                         customRenderer
                         placeholder='Select Identity Type'
-                        defaultValue={field.value.title}
+                        defaultValue={
+                          'front' in field
+                            ? field.front?.title
+                            : field.value?.title
+                        }
                       />
                     </Grid>
                     {hasFrontAndBack ? (
@@ -117,7 +121,7 @@ export const ProofOfIdentityField = ({
                         <Grid item xs={12} md={6}>
                           <TypedField
                             customRenderer
-                            name={[name, index, 'value']}
+                            name={[name, index, 'front']}
                             control={control}
                             component={FileUpload}
                             isValid={
@@ -139,13 +143,13 @@ export const ProofOfIdentityField = ({
                             onSuccessUploadCallback={handleSuccessFileUpload}
                             onRemoveCallback={handleRemoveFile}
                             isCover
-                            defaultValue={field.value}
+                            defaultValue={field.front}
                           />
                         </Grid>
                         <Grid item xs={12} md={6}>
                           <TypedField
                             customRenderer
-                            name={[name, index, 'value']}
+                            name={[name, index, 'back']}
                             control={control}
                             component={FileUpload}
                             label='Back Picture'
@@ -162,7 +166,7 @@ export const ProofOfIdentityField = ({
                             onSuccessUploadCallback={handleSuccessFileUpload}
                             onRemoveCallback={handleRemoveFile}
                             isCover
-                            defaultValue={field.value}
+                            defaultValue={field.back}
                             isOptional
                           />
                         </Grid>
