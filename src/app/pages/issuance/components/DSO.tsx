@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { DSOForm } from 'app/components/DSO/DSOForm'
+// import { DSOForm } from 'app/components/DSO/DSOForm'
+import { STOForm } from 'app/components/STO/STOForm'
 import { DSOView } from 'app/components/DSO/DSOView'
 
 export interface DSOProps {
@@ -35,5 +36,10 @@ export const DSO: React.FC<DSOProps> = (props: DSOProps) => {
     )
   }
 
-  return <DSOForm />
+  return (
+    <>
+      {/* <DSOForm /> */}
+      <STOForm />
+    </>
+  )
 }

@@ -8,18 +8,26 @@ import {
   getDSOCompanyInformationSchema,
   getDSODocumentschema
 } from 'validation/dso'
-import { getDSOInformationFormValues } from './utils'
+import {
+  getCompanyInformationFormValues,
+  getDocumentsFormValues,
+  getSTOInformationFormValues
+} from './utils'
 import {
   getDSOCompanyInformationPayload,
   getDSODocumentsPayload,
   getDSOInformationRequestPayload
 } from './requests'
-import { isEqual } from 'lodash'
 
 export const dsoFormSteps = [
   {
     label: 'STO Information',
-    getFormValues: getDSOInformationFormValues,
+    getFormValues: (data: DSOFormValues) => {
+      return {
+        ...getSTOInformationFormValues(data),
+        step: 1
+      }
+    },
     getRequestPayload: getDSOInformationRequestPayload,
     validationSchema: getDSOInformationSchema,
     component: () => <DSOInformationFields />
@@ -28,11 +36,7 @@ export const dsoFormSteps = [
     label: 'Company Information',
     getFormValues: (data: DSOFormValues) => {
       return {
-        team: data.team.length > 0 ? [...data.team] : [{}],
-        introduction: data.introduction ?? '',
-        businessModel: data.businessModel ?? '',
-        useOfProceeds: data.useOfProceeds ?? '',
-        fundraisingMilestone: data.fundraisingMilestone ?? '',
+        ...getCompanyInformationFormValues(data),
         step: 2
       }
     },
@@ -44,20 +48,8 @@ export const dsoFormSteps = [
   {
     label: 'Documents',
     getFormValues: (data: DSOFormValues) => {
-      const videos: any[] = []
-      const faqs: any[] = []
-
-      data.videos.forEach(item => {
-        if (!isEqual(item, {})) videos.push(item)
-      })
-      data.faqs.forEach(item => {
-        if (!isEqual(item, {})) faqs.push(item)
-      })
       return {
-        subscriptionDocument: data.subscriptionDocument,
-        documents: data.documents,
-        videos: videos.length > 0 ? [...videos] : [{}, {}],
-        faqs: faqs.length > 0 ? [...faqs] : [{}, {}],
+        ...getDocumentsFormValues(data),
         step: 3
       }
     },
