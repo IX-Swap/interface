@@ -186,5 +186,6 @@
     "truffle-privatekey-provider": "^1.2.0",
     "use-draggable-scroll": "^0.1.0",
     "web3": "^1.4.0"
-  }
+  },
+  "version": "0.0.0"
 }
