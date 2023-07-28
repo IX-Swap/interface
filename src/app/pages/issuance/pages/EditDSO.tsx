@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import { VSpacer } from 'components/VSpacer'
+// import { VSpacer } from 'components/VSpacer'
 import { useParams } from 'react-router-dom'
 import { DSO } from 'app/pages/issuance/components/DSO'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
@@ -21,9 +21,9 @@ export const EditDSO = () => {
         <PageHeader title={data.tokenName} />
       </Grid>
       <RootContainer>
-        <Grid item>
+        {/* <Grid item>
           <VSpacer size='medium' />
-        </Grid>
+        </Grid> */}
 
         <Grid item>
           <DSO dsoId={dsoId} issuerId={issuerId} isEditing />

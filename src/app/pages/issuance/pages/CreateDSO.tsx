@@ -1,5 +1,6 @@
 import React from 'react'
-import { DSOForm } from 'app/components/DSO/DSOForm'
+// import { DSOForm } from 'app/components/DSO/DSOForm'
+import { STOForm } from 'app/components/STO/STOForm'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { useParams } from 'react-router-dom'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
@@ -23,7 +24,8 @@ export const CreateDSO = () => {
       </Grid>
       <RootContainer>
         <Grid item>
-          <DSOForm />
+          {/* <DSOForm /> */}
+          <STOForm />
         </Grid>
       </RootContainer>
     </Grid>

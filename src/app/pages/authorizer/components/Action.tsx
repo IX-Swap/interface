@@ -10,7 +10,7 @@ import {
 interface ActionProps {
   label: string
   color?: string
-  icon: SvgIconComponent
+  icon?: SvgIconComponent
   onClick: () => void
   style?: object
 }
@@ -28,9 +28,12 @@ export const Action: React.FC<ActionProps> = props => {
         padding: '12px 5px'
       }}
     >
-      <ListItemIcon style={{ minWidth: '40px', color: color }}>
-        {React.createElement(icon)}
-      </ListItemIcon>
+      {icon && (
+        <ListItemIcon style={{ minWidth: '40px', color: color }}>
+          {React.createElement(icon)}
+        </ListItemIcon>
+      )}
+
       {/* <ListItemText>{label}</ListItemText> */}
       <Typography sx={{ color: '#778194' }}>{label}</Typography>
     </ListItem>

@@ -203,40 +203,47 @@ export const dsoInformationValidationSchemaStep1: any = {
   step: number()
 }
 
-export const createDSOInformationSchema = object()
-  .shape<DSOBaseFormValues>({
-    network: string().required('Network is required'),
-    ...dsoInformationValidationSchemaStep1
-  })
-  .required()
+export const createDSOInformationSchema: DSOBaseFormValues = {
+  network: string().required('Network is required'),
+  ...dsoInformationValidationSchemaStep1
+}
 
-export const editDSOValidationSchemaStep1 = object()
-  .shape<DSOBaseFormValues>({
-    network: string(),
-    ...dsoInformationValidationSchemaStep1
-  })
-  .required()
+export const editDSOValidationSchemaStep1: DSOBaseFormValues = {
+  network: string(),
+  ...dsoInformationValidationSchemaStep1
+}
 
-export const editLiveDSOValidationSchemaStep1 = object()
-  .shape<DSOBaseFormValues>({
-    ...dsoInformationValidationSchemaStep1,
-    network: string(),
-    launchDate: string().required(validationMessages.required),
-    completionDate: string().required(validationMessages.required)
-  })
-  .required()
+export const editLiveDSOValidationSchemaStep1: DSOBaseFormValues = {
+  ...dsoInformationValidationSchemaStep1,
+  network: string(),
+  launchDate: string().required(validationMessages.required),
+  completionDate: string().required(validationMessages.required)
+}
 
-export const getDSOInformationSchema = (data: any) => {
+const requiredSchema = (fields: object) =>
+  object()
+    .shape({
+      ...fields
+    })
+    .required()
+
+export const getDSOInformationSchema = (
+  data: any,
+  fieldsOnly: boolean = false
+) => {
   const isNew = _.isEqual(data, transformDSOToFormValues())
   const isLive = isDSOLive(data)
+  let fields = {}
 
   if (isNew) {
-    return createDSOInformationSchema
+    fields = createDSOInformationSchema
+  } else {
+    fields = isLive
+      ? editLiveDSOValidationSchemaStep1
+      : editDSOValidationSchemaStep1
   }
 
-  return isLive
-    ? editLiveDSOValidationSchemaStep1
-    : editDSOValidationSchemaStep1
+  return fieldsOnly ? fields : requiredSchema(fields)
 }
 
 export const getDSOCompanyInformationSchema = object().shape<any>({
@@ -267,14 +274,24 @@ export const getDSOCompanyInformationSchema = object().shape<any>({
   step: number()
 })
 
-export const getDSODocumentschema = object().shape<any>({
-  subscriptionDocument: object<DataroomFile>()
-    .required('Subscription Document is required')
-    .nullable(),
-  documents: array<FormArrayElement<DataroomFile>>()
-    .ensure()
-    .required('Documents are required'),
-  faqs: array<DsoFAQItem>().of(dsoFAQItemSchema),
-  videos: array<DsoVideo>().of(dsoVideoLinkSchema),
-  step: number()
-})
+export const getDSODocumentschema = (fieldsOnly: boolean = false) => {
+  const fields = {
+    subscriptionDocument: object<DataroomFile>()
+      .required('Subscription Document is required')
+      .nullable(),
+    documents: array<FormArrayElement<DataroomFile>>()
+      .ensure()
+      .required('Documents are required'),
+    faqs: array<DsoFAQItem>().of(dsoFAQItemSchema),
+    videos: array<DsoVideo>().of(dsoVideoLinkSchema),
+    step: number()
+  }
+  return fieldsOnly ? fields : object().shape<any>(fields)
+}
+
+export const getSTOFormSchema = (data: any) => {
+  return requiredSchema({
+    ...getDSOInformationSchema(data, true),
+    ...getDSODocumentschema(true)
+  })
+}

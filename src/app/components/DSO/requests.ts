@@ -11,7 +11,7 @@ export const getDSOInformationRequestPayload = (payloadData: any) => {
   const userId = getIdFromObj(user)
   const { corporateData } = UseCorporateUserId({ userId })
   const { data } = useAllCorporates({ all: true, status: 'Approved' })
-  let issuerName =  sessionStorage?.getItem('corpoName')?.split('-')[0]
+  let issuerName = sessionStorage?.getItem('corpoName')?.split('-')[0]
   const dsoTermDefaults = {
     issuerName: issuerName
       ? issuerName
@@ -36,6 +36,7 @@ export const getDSOInformationRequestPayload = (payloadData: any) => {
         ? null
         : payloadData.uniqueIdentifierCode
   }
+
   return {
     ...payloadData,
     ...dsoTermDefaults,
@@ -43,7 +44,10 @@ export const getDSOInformationRequestPayload = (payloadData: any) => {
   }
 }
 
-export const getDSOCompanyInformationPayload = (data: any) => {
+export const getDSOCompanyInformationPayload = (
+  data: any,
+  payloadOnly: boolean = false
+) => {
   const dsoTeamDefaults = {
     photo: undefined,
     name: '',
@@ -57,6 +61,8 @@ export const getDSOCompanyInformationPayload = (data: any) => {
     })
   }
 
+  if (payloadOnly) return team
+
   return {
     ...data,
     step: 2,
@@ -64,7 +70,10 @@ export const getDSOCompanyInformationPayload = (data: any) => {
   }
 }
 
-export const getDSODocumentsPayload = (data: any) => {
+export const getDSODocumentsPayload = (
+  data: any,
+  payloadOnly: boolean = false
+) => {
   const videosDefaults = { title: '', link: '' }
   const faqsDefaults = { question: '', answer: '' }
 
@@ -87,11 +96,17 @@ export const getDSODocumentsPayload = (data: any) => {
     })
   }
 
-  return {
+  const payload = {
     subscriptionDocument: data.subscriptionDocument?._id,
     documents,
-    step: 3,
     videos,
     faqs
+  }
+
+  if (payloadOnly) return payload
+
+  return {
+    ...payload,
+    step: 3
   }
 }
