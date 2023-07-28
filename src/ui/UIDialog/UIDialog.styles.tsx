@@ -11,6 +11,13 @@ export const useStyles = makeStyles(theme => {
       top: 45.25,
       marginLeft: 20,
       cursor: 'pointer'
+    },
+    mobileWrapper: {
+      position: 'absolute',
+      right: 36.25,
+      top: 23.25,
+      marginLeft: 20,
+      cursor: 'pointer'
     }
   }
 })
