@@ -93,7 +93,7 @@ export const individualErrorsSchema = yup.object().shape({
     otherwise: yup.string().nullable(),
   }),
 
-  accredited: yup.number().min(0).max(1),
+  // accredited: yup.number().min(0).max(1),
   acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
   acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
   evidenceOfAccreditation: yup.array().when('accredited', {
@@ -141,7 +141,7 @@ export const corporateErrorsSchema = yup.object().shape({
     then: yup.string().required('Required'),
     otherwise: yup.string(),
   }),
-  accredited: yup.number().min(0).max(1),
+  // accredited: yup.number().min(0).max(1),
   isUSTaxPayer: yup.number().min(0).max(1),
   usTin: yup.string().when('isUSTaxPayer', {
     is: 1,
