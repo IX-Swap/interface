@@ -26,7 +26,9 @@ export const SaveDraftButton = ({
   const { pathname } = useLocation<{ pathname: string }>()
   const { watch, errors, trigger } = useFormContext()
   const values = watch()
+  console.log('values', values)
   const payload = transformData(values)
+  console.log('transform', payload)
 
   const handleSave = async () => {
     await trigger()

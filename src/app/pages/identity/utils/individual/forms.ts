@@ -8,6 +8,7 @@ import {
 } from 'app/pages/identity/types/forms'
 import { titleCase } from 'app/pages/identity/utils/shared'
 import { isEmpty } from 'lodash'
+import { DataroomFile } from 'types/dataroomFile'
 
 export const getPersonalInfoFormValues = (
   data: IndividualIdentity
@@ -145,9 +146,9 @@ export const getDocumentsFormValues = (
 
       if (document.type === 'Proof of Identity') {
         interface DocumentItem {
-          value?: object
-          front?: object
-          back?: object
+          value?: DataroomFile
+          front?: DataroomFile
+          back?: DataroomFile
         }
         const documentItem: DocumentItem = {}
 
