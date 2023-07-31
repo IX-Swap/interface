@@ -9,8 +9,58 @@ import {
   Personnel
 } from '../../types/forms'
 
+const reduceCorporateDocuments = (documents: any) =>
+  documents?.reduce((result: any, document: any) => {
+    const {
+      //   financialDocuments,
+      corporateDocuments,
+      evidenceOfAccreditation,
+      institutionalInvestorDocuments
+    } = result
+
+    // if (document.type === 'Financial Documents') {
+    //   return {
+    //     ...result,
+    //     financialDocuments: Array.isArray(financialDocuments)
+    //       ? [...financialDocuments, { value: document }]
+    //       : [{ value: document }]
+    //   }
+    // }
+
+    if (document.type === 'Corporate Documents') {
+      return {
+        ...result,
+        corporateDocuments: Array.isArray(corporateDocuments)
+          ? [...corporateDocuments, { value: document }]
+          : [{ value: document }]
+      }
+    }
+
+    if (String(document.type).startsWith('Evidence of ')) {
+      return {
+        ...result,
+        evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
+          ? [...evidenceOfAccreditation, { value: document }]
+          : [{ value: document }]
+      }
+    }
+
+    if (document.type === 'Institutional Investor Documents') {
+      return {
+        ...result,
+        institutionalInvestorDocuments: Array.isArray(
+          institutionalInvestorDocuments
+        )
+          ? [...institutionalInvestorDocuments, { value: document }]
+          : [{ value: document }]
+      }
+    }
+
+    return result
+  }, {})
+
 export const getCorporateInfoFormValues = (
-  data: CorporateIdentity | undefined
+  data: CorporateIdentity
 ): Partial<InvestorCorporateInfoFormValues> => {
   const isCustomLegalEntityStatus =
     data?.legalEntityStatus !== undefined &&
@@ -25,6 +75,10 @@ export const getCorporateInfoFormValues = (
     ? last(LEGAL_ENTITY_STATUS_LIST)?.value
     : data?.legalEntityStatus
 
+  const documents =
+    typeof data.documents !== 'undefined' &&
+    reduceCorporateDocuments(data.documents)
+
   const representatives = data?.representatives.map(item => {
     return {
       ...item,
@@ -37,17 +91,18 @@ export const getCorporateInfoFormValues = (
   return {
     logo: data?.logo === null ? undefined : data?.logo,
     companyLegalName: data?.companyLegalName,
+    countryOfFormation: data?.countryOfFormation,
     registrationNumber: data?.registrationNumber,
     legalEntityStatus,
     otherLegalEntityStatus: data?.numberOfBusinessOwners,
-    countryOfFormation: data?.countryOfFormation,
+    sourceOfFund: data?.sourceOfFund,
+    ...documents,
     companyAddress: data?.companyAddress,
-    representatives: representatives,
-    mailingAddress: data?.mailingAddress,
     isMailingAddressSame: data?.isMailingAddressSame,
+    mailingAddress: data?.mailingAddress,
     numberOfBusinessOwners: data?.numberOfBusinessOwners,
     businessActivity: data?.businessActivity,
-    sourceOfFund: data?.sourceOfFund
+    representatives: representatives
   }
 }
 
@@ -100,54 +155,9 @@ export const getCorporateInvestorDeclarationFormValues = (
   const declarations = data?.declarations?.investorsStatus
   const { applyingAs, isInstitutionalInvestor, isIntermediaryInvestor } = data
 
-  const documents = data?.documents.reduce((result: any, document) => {
-    const {
-      evidenceOfAccreditation,
-      //   financialDocuments,
-      corporateDocuments,
-      institutionalInvestorDocuments
-    } = result
-
-    if (document.type.startsWith('Evidence of ')) {
-      return {
-        ...result,
-        evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
-          ? [...evidenceOfAccreditation, { value: document }]
-          : [{ value: document }]
-      }
-    }
-
-    // if (document.type === 'Financial Documents') {
-    //   return {
-    //     ...result,
-    //     financialDocuments: Array.isArray(financialDocuments)
-    //       ? [...financialDocuments, { value: document }]
-    //       : [{ value: document }]
-    //   }
-    // }
-
-    if (document.type === 'Corporate Documents') {
-      return {
-        ...result,
-        corporateDocuments: Array.isArray(corporateDocuments)
-          ? [...corporateDocuments, { value: document }]
-          : [{ value: document }]
-      }
-    }
-
-    if (document.type === 'Institutional Investor Documents') {
-      return {
-        ...result,
-        institutionalInvestorDocuments: Array.isArray(
-          institutionalInvestorDocuments
-        )
-          ? [...institutionalInvestorDocuments, { value: document }]
-          : [{ value: document }]
-      }
-    }
-
-    return result
-  }, {})
+  const documents =
+    typeof data.documents !== 'undefined' &&
+    reduceCorporateDocuments(data.documents)
 
   return {
     ...declarations,

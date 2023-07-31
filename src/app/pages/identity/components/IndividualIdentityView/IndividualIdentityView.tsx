@@ -11,10 +11,14 @@ import { FatcaView } from '../IndividualIdentityView/FatcaView/FatcaViewView'
 import { FinancialView } from '../IndividualIdentityView/FinancialView/FinancialView'
 import { NoticeOfAssessmentView } from '../IndividualIdentityView/NoticeOfAssessment/NoticeOfAssessmentView'
 import { Element } from 'react-scroll'
+import { ProofOfAddress } from '../IdentityDocumentsView/ProofOfAddress'
+import { ProofOfIdentity } from '../IdentityDocumentsView/ProofOfIdentity'
 
 export enum IndividualKYCSections {
   'Personal Information' = 'personal-information',
+  'Proof of Identity' = 'proof-of-identity',
   'Address' = 'address',
+  'Proof of Address' = 'proof-of-address',
   'Financial Information' = 'financial-information',
   'Tax Information' = 'tax-information',
   'FATCA' = 'fatca'
@@ -31,7 +35,6 @@ export const IndividualIdentityView = ({
   hideAvatar = false,
   showReview = false
 }: IndividualIdentityViewProps) => {
-  // const classes = useStyles()
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
@@ -57,6 +60,12 @@ export const IndividualIdentityView = ({
         </Element>
       </Grid>
 
+      <Grid item>
+        <Element name={IndividualKYCSections['Proof of Identity']}>
+          <ProofOfIdentity data={data.documents} type='individual' />
+        </Element>
+      </Grid>
+
       <Grid item className={privateClassNames()}>
         <Element name={IndividualKYCSections.Address}>
           <FieldContainer>
@@ -69,6 +78,12 @@ export const IndividualIdentityView = ({
               </Grid>
             </Grid>
           </FieldContainer>
+        </Element>
+      </Grid>
+
+      <Grid item>
+        <Element name={IndividualKYCSections['Proof of Address']}>
+          <ProofOfAddress data={data.documents} type='individual' />
         </Element>
       </Grid>
 

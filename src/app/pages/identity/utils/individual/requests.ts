@@ -7,17 +7,52 @@ import {
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues
 } from 'app/pages/identity/types/forms'
-import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
+import { DataroomFile } from 'types/dataroomFile'
 
 export const getPersonalInfoRequestPayload = (
   values: IndividualPersonalInfoFormValues
 ) => {
+  const { proofOfIdentity, proofOfAddress, evidenceOfAccreditation, ...rest } =
+    values
   if (values.dob === null || values.dob === undefined) {
     delete values.dob
   }
+
+  const documents = Object.values(values).reduce<
+    Array<{ value: DataroomFile }>
+  >((result, docs) => {
+    if (Array.isArray(docs)) {
+      //   return [...result, ...docs.map(document => document.value?._id)]
+      return [
+        ...result,
+        ...docs.flatMap(document => {
+          if ('value' in document) {
+            return document.value?._id
+          } else {
+            const docs = []
+            if ('front' in document) {
+              docs.push(document.front?._id)
+            }
+            if ('back' in document) {
+              docs.push(document.back?._id)
+            }
+
+            return docs
+          }
+        })
+      ]
+    }
+
+    return result
+  }, [])
+
+  //   console.log('proofOfIdentity', proofOfIdentity)
+  //   console.log('documents', documents)
+
   return {
-    ...values,
-    nric: values.nationality === 'Singapore' ? values.nric : undefined
+    ...rest,
+    nric: values.nationality === 'Singapore' ? values.nric : undefined,
+    documents: documents.filter(doc => doc !== undefined)
   }
 }
 
@@ -89,25 +124,22 @@ export const getInvestorDeclarationRequestPayload = (
     ...rest
   } = values
 
-  const getDocuments = (documents: Array<FormArrayElement<DataroomFile>>) =>
-    documents?.map(doc => doc.value._id).filter(doc => doc !== undefined)
+  const documents = Object.values(values).reduce<
+    Array<{ value: DataroomFile }>
+  >((result, docs) => {
+    if (Array.isArray(docs)) {
+      return [...result, ...docs.map(document => document.value?._id)]
+    }
+
+    return result
+  }, [])
 
   return {
     applyingAs: [applyingAs],
     declarations: {
       investorsStatus: rest
     },
-    documents: [
-      getDocuments(evidenceOfAccreditation) !== undefined
-        ? getDocuments(evidenceOfAccreditation)
-        : undefined,
-      getDocuments(proofOfAddress) !== undefined
-        ? getDocuments(proofOfAddress)
-        : [],
-      getDocuments(proofOfIdentity) !== undefined
-        ? getDocuments(proofOfIdentity)
-        : []
-    ]
+    documents: documents.filter(doc => doc !== undefined)
   }
 }
 

@@ -21,7 +21,8 @@ export const Avatar = ({
   inputProps,
   disabled = false,
   value,
-  readonly = false
+  readonly = false,
+  isCover = false
 }: FileProps) => {
   const { setValue } = useFormContext()
 
@@ -29,10 +30,11 @@ export const Avatar = ({
   const [imageValue, setImageValue] = useState(false)
 
   useEffect(() => {
-    if (inputProps?.ref?.current?.id === 'coverImg') {
+    if (inputProps?.ref?.current?.id === 'coverImg' || isCover === true) {
       setImageValue(true)
     }
     setCurrentValue(value)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   const handleRemove = () => {
@@ -42,7 +44,9 @@ export const Avatar = ({
   return (
     <Box>
       {label !== undefined && isString(label) && (
-        <InputLabel>{label}</InputLabel>
+        <Box pb={0.5}>
+          <InputLabel>{label}</InputLabel>
+        </Box>
       )}
       {label !== undefined && !isString(label) && <Box pb={1}>{label}</Box>}
       {imageValue ? (
@@ -52,6 +56,7 @@ export const Avatar = ({
             isFileTooLarge,
             hasValue
           })}
+          height={isCover === true ? '400px' : '150px'}
         >
           <Box
             {...rootProps}

@@ -4,14 +4,14 @@ import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { InvestorDeclarationView } from 'app/pages/identity/components/CorporateAccreditationView/InvestorDeclarationView'
 import { FieldContainer } from '../../../../../ui/FieldContainer/FieldContainer'
 import { FormSectionHeader } from '../../../../../ui/FormSectionHeader/FormSectionHeader'
-import { IdentityDocumentsView } from '../IdentityDocumentsView/IdentityDocumentsView'
+import { IndividualAccreditationDocuments } from '../IdentityDocumentsView/IndividualAccreditationDocuments'
 import { OptInRequirementView } from '../IndividualIdentityView/OptInRequirementView/OptInRequirementView'
 import { Element } from 'react-scroll'
 
 export enum IndividualAccreditationSections {
   'Investor Role Declaration' = 'investor-role-declaration',
   'Opt-In Requirement' = 'opt-in-requirement',
-  'Personal Documents' = 'personal-documents'
+  'Accreditation Documents' = 'accreditation-documents'
 }
 
 export interface IndividualAccreditationViewProps {
@@ -40,14 +40,16 @@ export const IndividualAccreditationView = ({
       </Grid>
 
       <Grid item>
-        <Element name={IndividualAccreditationSections['Personal Documents']}>
+        <Element
+          name={IndividualAccreditationSections['Accreditation Documents']}
+        >
           <FieldContainer>
             <Grid item container direction={'column'} spacing={3}>
               <Grid item>
-                <FormSectionHeader title='Personal Documents' />
+                <FormSectionHeader title='Accreditation Documents' />
               </Grid>
               <Grid item>
-                <IdentityDocumentsView
+                <IndividualAccreditationDocuments
                   data={data.documents}
                   type='individual'
                   investorRole={
