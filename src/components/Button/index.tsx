@@ -198,6 +198,37 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   background-color: ${({ theme }) => theme.config.primary?.main || theme.bg3};
   background: ${({ theme }) => theme.config.primary?.main || theme.bgG3};
 `
+
+export const MobileViewButton = styled(ButtonPrimary)<{ confirmed?: boolean; disabled?: boolean }>`
+  color: #EDCEFF;
+  min-height: 54px;
+  opacity: ${({ confirmed }) => (confirmed ? 0.5 : 1)};
+  width: fit-content;
+  position: relative;
+  cursor: pointer;
+  border: none;
+
+  :hover {
+    @media (min-width: 1000px) {
+      opacity: 0.8;
+    }
+  }
+  :active {
+    opacity: 0.9;
+  }
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  background-color: #1f1129;
+  background: #1f1129;
+  margin-top: 28px;
+  padding: 10px 30px;
+  font-size: 16px;
+`
+
+
+
 export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   background-color: transparent;
   background: transparent;

@@ -26,6 +26,8 @@ import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { useRole } from 'state/user/hooks'
+import { isMobile } from 'react-device-detect'
+import { MobileModal } from 'components/MobileModal'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -219,7 +221,8 @@ export default function Header() {
   return (
     <>
       <HeaderWrapper>
-        {!cookies.annoucementsSeen && <Announcement />}
+        {/* {!cookies.annoucementsSeen && <Announcement />} */}
+        {isMobile && <MobileModal />}
         <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
           <HeaderRow>
             <Title href={config?.defaultUrl || '.'}>
