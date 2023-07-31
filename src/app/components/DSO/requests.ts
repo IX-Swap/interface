@@ -61,7 +61,10 @@ export const getDSOCompanyInformationPayload = (
     })
   }
 
-  if (payloadOnly) return team
+  if (payloadOnly)
+    return {
+      team
+    }
 
   return {
     ...data,
