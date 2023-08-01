@@ -86,3 +86,10 @@ export const generateSingPassAuthorizeUrl = () => {
 
   return `${url}?client_id=${clientId}&attributes=${attributes}&purpose=${purpose}&state=${state}&redirect_uri=${redirectUrl}`
 }
+
+export const isUpdatedAtMoreThanAYear = (updatedAt: Date) => {
+  const oldDate = new Date(updatedAt)
+  const todayDate = new Date()
+
+  return (todayDate - oldDate) / (1000 * 3600 * 24 * 365) > 1
+}
