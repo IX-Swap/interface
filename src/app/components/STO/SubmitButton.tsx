@@ -28,15 +28,17 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   } = props
 
   const location = useLocation()
-  const [save, { isLoading }] = mutation
+  const [save, { isLoading: isSubmitting }] = mutation
   const [disabled, setDisabled] = useState(true)
   const { trigger, errors } = useFormContext()
-  const [validating, setValidating] = useState(false)
+  const [isValidating, setIsValidating] = useState(false)
   const [, setIsValid] = useState(false)
   const isEdit = location.pathname.includes('/edit')
 
+  const isDraft = rawData?.status === 'Draft'
   const isSubmitted = rawData?.status === 'Submitted'
   const isApproved = rawData?.status === 'Approved'
+  console.log('rawData', rawData)
   const getButtonText = () => {
     if (isApproved) return 'Approved'
     if (isSubmitted) return 'Submitted'
@@ -46,7 +48,11 @@ export const SubmitButton = (props: SubmitButtonProps) => {
 
   useEffect(() => {
     const disable =
-      isApproved || isLoading || isSubmitted || validating || !isEmpty(errors)
+      isValidating ||
+      !(isDraft && isEmpty(errors)) ||
+      isSubmitting ||
+      isSubmitted ||
+      isApproved
 
     setDisabled(disable)
   }, [data, errors]) // eslint-disable-line
@@ -62,7 +68,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
         : customSchema
       : null
 
-    setValidating(true)
+    setIsValidating(true)
 
     try {
       const isFormDataValid = await schema?.isValid(getFormValues(data))
@@ -71,7 +77,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
     } catch (error) {
       console.log(error)
     } finally {
-      setValidating(false)
+      setIsValidating(false)
     }
   }
 
