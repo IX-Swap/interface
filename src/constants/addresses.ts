@@ -78,13 +78,13 @@ export const IXS_STAKING_V1_ADDRESS: { [key: number]: string } = {
 export const SWAP_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
   [42]: '0x1b44F01C0abEd5C4dF8b55B2d33cEf46b0CAcc95',
-  [80001]: '',
+  [80001]: '0x2182cbd3911183aEBDd334AdaA7F2e41bB14A124',
   [137]: '0x72f54BEbabE8A26794B8BFeA832b65B7Bd88da37',
 }
 export const LIQUIDITY_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
   [42]: '0xC4D56138b73D53Ff55313FC251053B735BA1cfA1',
-  [80001]: '',
+  [80001]: '0x84bb01821Bec8173be51bab99dDEB4123496304c',
   [137]: '0x342172484664093B1F15Eb10B91721ba3e3DC97A',
 }
 export const V2_CORE_FACTORY_ADDRESSES = constructSameAddressMap(FACTORY_ADDRESS as string)
@@ -101,7 +101,7 @@ export const ENS_REGISTRAR_ADDRESSES = {
 export const FACTORY_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
   [42]: '0x4983b160a8E0De9Cf6a055bd8750847DE3E14eE6',
-  [80001]: '',
+  [80001]: '0xF8E10Dc0BEf764E0889F539b58fbDA00f7d9a2FD',
   [137]: '0xc2D0e0bc81494adB71Ce9Aa350cC875DaE12D81D',
 }
 
