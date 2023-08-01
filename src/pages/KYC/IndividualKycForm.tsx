@@ -1216,7 +1216,7 @@ export default function IndividualKycForm() {
                           )}
                         </Column>
                       </FormCard>
-
+{/* 
                       <FormCard id="status-declaration">
                         <RowBetween marginBottom="32px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
@@ -1255,7 +1255,7 @@ export default function IndividualKycForm() {
                             </TYPE.small>
                           )}
                         </Column>
-                      </FormCard>
+                      </FormCard> */}
 
                       {values.accredited === 1 && (
                         <>
@@ -1672,12 +1672,12 @@ export default function IndividualKycForm() {
                           passed: financialFilled,
                           failed: financialFailed,
                         },
-                        {
-                          title: 'Investor Status Declaration',
-                          href: 'status-declaration',
-                          passed: statusDeclarationFilled,
-                          failed: statusDeclarationFailed,
-                        },
+                        // {
+                        //   title: 'Investor Status Declaration',
+                        //   href: 'status-declaration',
+                        //   passed: statusDeclarationFilled,
+                        //   failed: statusDeclarationFailed,
+                        // },
                         // { title: 'Investor Declaration', href: 'investor-declaration', passed: investorFilled },
                         // { title: 'Acknowledgement', href: 'acknowledgement', passed: investorStatusAcknowledgementFilled },
                       ]}
