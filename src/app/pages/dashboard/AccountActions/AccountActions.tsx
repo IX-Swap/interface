@@ -7,14 +7,21 @@ import { TwoFactorAuthentication } from './TwoFactorAuthentication'
 import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { useServices } from 'hooks/useServices'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { useAuth } from 'hooks/auth/useAuth'
+import { isUpdatedAtMoreThanAYear } from 'hooks/utils'
 
 export const AccountActions = () => {
+  const { user = { enable2Fa: undefined } } = useAuth()
+  const { enable2Fa, updatedAt } = user
+  const hasEnabled = enable2Fa ?? false
+  const isMoreThanAYear = isUpdatedAtMoreThanAYear(updatedAt)
+
   const { isLoadingIdentities, individualIdentity, corporateIdentities } =
     useGetIdentities()
 
   const { storageService } = useServices()
-  const user: any = storageService.get('user')
-  const isIndividual = user.accountType === 'INDIVIDUAL'
+  const userAccount: any = storageService.get('user')
+  const isIndividual = userAccount.accountType === 'INDIVIDUAL'
   const hasIdentity =
     (isIndividual && individualIdentity !== undefined) ||
     (!isIndividual && corporateIdentities.list.length > 0)
@@ -36,45 +43,55 @@ export const AccountActions = () => {
     return <LoadingIndicator />
   }
 
-  return (
-    <FieldContainer>
-      <Grid container direction='column' spacing={6}>
-        <Grid item>
-          <Typography variant='h5' color={'otpInput.color'}>
-            Account Actions
-          </Typography>
-          <Typography color={'text.secondary'} mt={2}>
-            Complete the following actions to optimize platform experience.
-          </Typography>
-        </Grid>
-        <Grid item container>
-          {!hasSubmittedKYC && (
-            <Grid item xs borderRight={1} borderColor={'#DBE2EC'}>
-              <KnowYourCustomer
-                hasStarted={hasStartedKYC}
-                identityType={identityType}
-                identityId={identity?._id}
-                userId={identity?.user._id}
-              />
-            </Grid>
-          )}
+  const showKYC = !hasSubmittedKYC
+  const showAccreditation = hasApprovedKYC && !hasSubmittedAccreditation
+  const show2FA = !hasEnabled || isMoreThanAYear
 
-          {hasApprovedKYC && !hasSubmittedAccreditation && (
-            <Grid item xs borderRight={1} borderColor={'#DBE2EC'}>
-              <Accreditation
-                hasStarted={hasStartedAccreditation}
-                identityType={identityType}
-                identityId={identity?._id}
-                userId={identity?.user._id}
-              />
-            </Grid>
-          )}
+  return showKYC || showAccreditation || show2FA ? (
+    <Grid item>
+      <FieldContainer>
+        <Grid container direction='column' spacing={6}>
+          <Grid item>
+            <Typography variant='h5' color={'otpInput.color'}>
+              Account Actions
+            </Typography>
+            <Typography color={'text.secondary'} mt={2}>
+              Complete the following actions to optimize platform experience.
+            </Typography>
+          </Grid>
+          <Grid item container>
+            {showKYC && (
+              <Grid item xs borderRight={1} borderColor={'#DBE2EC'}>
+                <KnowYourCustomer
+                  hasStarted={hasStartedKYC}
+                  identityType={identityType}
+                  identityId={identity?._id}
+                  userId={identity?.user._id}
+                />
+              </Grid>
+            )}
 
-          <Grid item xs>
-            <TwoFactorAuthentication />
+            {showAccreditation && (
+              <Grid item xs borderRight={1} borderColor={'#DBE2EC'}>
+                <Accreditation
+                  hasStarted={hasStartedAccreditation}
+                  identityType={identityType}
+                  identityId={identity?._id}
+                  userId={identity?.user._id}
+                />
+              </Grid>
+            )}
+
+            {show2FA && (
+              <Grid item xs>
+                <TwoFactorAuthentication hasEnabled={hasEnabled} />
+              </Grid>
+            )}
           </Grid>
         </Grid>
-      </Grid>
-    </FieldContainer>
+      </FieldContainer>
+    </Grid>
+  ) : (
+    <></>
   )
 }

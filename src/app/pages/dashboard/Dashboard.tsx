@@ -50,9 +50,7 @@ export const Dashboard = () => {
         </Grid>
         <RootContainer>
           <Grid container direction='column' spacing={2}>
-            <Grid item>
-              <AccountActions />
-            </Grid>
+            <AccountActions />
             {isInvestor && (
               <>
                 {hasAccreditation && (

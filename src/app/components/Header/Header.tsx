@@ -7,9 +7,15 @@ import { UserDropdown } from 'app/components/Header/components/UserDropdown/User
 import { NotificationsDropdown } from 'app/components/Header/components/Notifications/NotificationsDropdown/NotificationsDropdown'
 import { NavDrawerToggle } from 'app/components/Header/components/Navigation/NavDrawerToggle/NavDrawerToggle'
 import { TwoFADropdown } from 'app/components/Header/components/TwoFADropdown/TwoFADropdown'
+import { useAuth } from 'hooks/auth/useAuth'
+import { isUpdatedAtMoreThanAYear } from 'hooks/utils'
 
 export const Header = () => {
   const classes = useStyles()
+  const { user = { enable2Fa: undefined } } = useAuth()
+  const { enable2Fa, updatedAt } = user
+  const hasEnabled = enable2Fa ?? false
+  const isMoreThanAYear = isUpdatedAtMoreThanAYear(updatedAt)
 
   return (
     <AppBar position='fixed' elevation={0} className={classes.wrapper}>
@@ -19,7 +25,7 @@ export const Header = () => {
         <Box className={classes.emptySpace} />
         <Navigation />
         <Box className={classes.emptySpace} />
-        <TwoFADropdown />
+        {(!hasEnabled || isMoreThanAYear) && <TwoFADropdown />}
         <NotificationsDropdown />
         <UserDropdown />
       </Toolbar>
