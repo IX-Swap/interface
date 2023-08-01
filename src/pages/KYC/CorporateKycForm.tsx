@@ -346,7 +346,7 @@ export default function CorporateKycForm() {
                 !errors.residentialAddressCity
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
-              const investorFilled = shouldValidate && !errors.accredited
+              // const investorFilled = shouldValidate && !errors.accredited
               const taxDeclarationFilled = values.taxIdAvailable ? shouldValidate && !errors.taxCountry && !errors.taxNumber : shouldValidate
               const filesFilled = shouldValidate && !errors.financialDocuments && !errors.corporateDocuments
               const beneficialOwnersFilled =
@@ -637,7 +637,7 @@ export default function CorporateKycForm() {
                         )}
                       </FormCard>
 
-                      <FormCard id="corporate">
+                      {/* <FormCard id="corporate">
                         <RowBetween marginBottom="32px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Investor Status Declaration</Trans>
@@ -668,7 +668,7 @@ export default function CorporateKycForm() {
                             )}
                           </Column>
                         </Column>
-                      </FormCard>
+                      </FormCard> */}
 
                       <FormCard id="fatca">
                         <RowBetween marginBottom="32px">
