@@ -61,7 +61,7 @@ export const AccountActions = () => {
           </Grid>
           <Grid item container>
             {showKYC && (
-              <Grid item xs borderRight={1} borderColor={'#DBE2EC'}>
+              <Grid item xs>
                 <KnowYourCustomer
                   hasStarted={hasStartedKYC}
                   identityType={identityType}
@@ -72,7 +72,7 @@ export const AccountActions = () => {
             )}
 
             {showAccreditation && (
-              <Grid item xs borderRight={1} borderColor={'#DBE2EC'}>
+              <Grid item xs>
                 <Accreditation
                   hasStarted={hasStartedAccreditation}
                   identityType={identityType}
@@ -83,7 +83,14 @@ export const AccountActions = () => {
             )}
 
             {show2FA && (
-              <Grid item xs>
+              <Grid
+                item
+                xs
+                sx={{
+                  borderLeft: showKYC || showAccreditation ? 1 : 0,
+                  borderColor: '#DBE2EC'
+                }}
+              >
                 <TwoFactorAuthentication hasEnabled={hasEnabled} />
               </Grid>
             )}

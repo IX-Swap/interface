@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { ReactComponent as AddCashAccountImage } from 'assets/add-cash-account.svg'
 import { AddBankAccountButton } from '../../../withdraw/components/AddBankAccountButton'
+import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 
 export const NoData = () => {
   return (
@@ -21,7 +22,9 @@ export const NoData = () => {
           </Typography>
         </Grid>
         <Grid item xs>
-          <AddBankAccountButton variant={'contained'} />
+          <TwoFADialogWrapper>
+            <AddBankAccountButton variant={'contained'} />
+          </TwoFADialogWrapper>
         </Grid>
       </Grid>
     </Grid>
