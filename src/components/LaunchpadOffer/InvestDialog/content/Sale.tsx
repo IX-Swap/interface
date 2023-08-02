@@ -212,7 +212,8 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           I have read, fully understood and agree to be bound by the&nbsp;
           <a
             style={{
-              color: '#8F8FB2',
+              textDecoration: 'none',
+              color: '#6667FF',
             }}
             href="https://drive.google.com/file/d/1IyTwpKXXX2akqYimUstvwfcfFEPuOGBa/view?usp=sharing"
             target="_blank"
@@ -223,7 +224,8 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           ,&nbsp;
           <a
             style={{
-              color: '#8F8FB2',
+              textDecoration: 'none',
+              color: '#6667FF',
             }}
             href="https://drive.google.com/file/d/1cpYhcSYbxodNWB_OpvyjbFLwnHgGF6lj/view?usp=sharing"
             target="_blank"
@@ -234,7 +236,8 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           ,&nbsp;
           <a
             style={{
-              color: '#8F8FB2',
+              textDecoration: 'none',
+              color: '#6667FF',
             }}
             href="https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing"
             target="_blank"
