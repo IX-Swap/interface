@@ -220,7 +220,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           >
             Purchase Agreement
           </a>
-          ,
+          ,&nbsp;
           <a
             style={{
               color: '#8F8FB2',
@@ -231,7 +231,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           >
             Investment Memorandum
           </a>
-          ,
+          ,&nbsp;
           <a
             style={{
               color: '#8F8FB2',
@@ -307,7 +307,6 @@ const Agreement = styled.div`
 const AgreementText = styled.div`
   flex-grow: 1;
   ${text11}
-  max-width: 250px;
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
