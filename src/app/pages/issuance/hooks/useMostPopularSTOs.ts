@@ -7,7 +7,7 @@ export const useMostPopularSTOs = (limit: number = 0) => {
   const { apiService } = useServices()
   const url = issuanceURL.sto.mostPopular
 
-  const fetchMostPopularSTOs = async () => await apiService.get(url)
+  const fetchMostPopularSTOs = async () => await apiService.post(url, { limit })
   const { data, ...rest } = useQuery(
     [issuanceQueryKeys.mostPopular],
     fetchMostPopularSTOs

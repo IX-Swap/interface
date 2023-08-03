@@ -8,7 +8,8 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Box
+  Box,
+  Link
 } from '@mui/material'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { useUpcomingSTOs } from 'app/pages/issuance/hooks/useUpcomingSTOs'
@@ -17,8 +18,12 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import { renderListingStatus } from 'helpers/tables'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { useTheme } from '@emotion/react'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 interface UpcomingSTO {
+  _id: string
+  user: string
   logo: string
   tokenName: string
   tokenSymbol: string
@@ -71,17 +76,23 @@ export const UpcomingSTOs = () => {
               <TableRow sx={tableCellStyles} key={sto.tokenSymbol}>
                 <TableCell sx={tableCellStyles}>
                   <Box display={'flex'} gap={1} alignItems={'center'}>
-                    <DSOLogo
-                      size={36}
-                      uri={'/dataroom/raw/'}
-                      dsoId={sto.logo}
-                      variant='circular'
-                      sx={{
-                        border: `1px solid ${
-                          theme.palette.menu.border as string
-                        }`
-                      }}
-                    />
+                    <Link
+                      component={AppRouterLinkComponent}
+                      to={IssuanceRoute.view}
+                      params={{ dsoId: sto._id, issuerId: sto.user }}
+                    >
+                      <DSOLogo
+                        size={36}
+                        uri={'/dataroom/raw/'}
+                        dsoId={sto.logo}
+                        variant='circular'
+                        sx={{
+                          border: `1px solid ${
+                            theme.palette.menu.border as string
+                          }`
+                        }}
+                      />
+                    </Link>
                     <Typography color={'otpInput.color'} ml={1}>
                       {sto.tokenName}
                     </Typography>
