@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@web3-react/core'
 import { darken } from 'polished'
 import { Activity } from 'react-feather'
 import styled, { css } from 'styled-components'
@@ -118,10 +118,10 @@ function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
 }
 
 // eslint-disable-next-line react/prop-types
-function StatusIcon({ connector }: { connector: AbstractConnector }) {
+function StatusIcon({ connector }: { connector: any }) {
   if (connector === injected) {
     return <Identicon />
-  } else if (connector === walletconnect) {
+  } else {
     return (
       <IconWrapper size={16}>
         <img src={WalletConnectIcon} alt={'WalletConnect'} />
@@ -152,7 +152,7 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
 }
 
 function Web3StatusInner() {
-  const { account, connector, error } = useWeb3React()
+  const { account, connector } = useWeb3React()
 
   const { ENSName } = useENSName(account ?? undefined)
 
@@ -190,15 +190,15 @@ function Web3StatusInner() {
         {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
       </Web3StatusConnected>
     )
-  } else if (error) {
-    return (
-      <Web3StatusError onClick={toggleWalletModal}>
-        <NetworkIcon />
-        <Text style={{ margin: '4px 0px 4px 13px' }}>
-          {error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}
-        </Text>
-      </Web3StatusError>
-    )
+  // } else if (error) {
+  //   return (
+  //     <Web3StatusError onClick={toggleWalletModal}>
+  //       <NetworkIcon />
+  //       <Text style={{ margin: '4px 0px 4px 13px' }}>
+  //         {error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}
+  //       </Text>
+  //     </Web3StatusError>
+  //   )
   } else {
     return (
       <Web3StatusConnect id="connect-wallet" onClick={connectWallet} faded={!account}>
@@ -212,8 +212,7 @@ function Web3StatusInner() {
 }
 
 export default function Web3Status() {
-  const { active, account } = useWeb3React()
-  const contextNetwork = useWeb3React(NetworkContextName)
+  const { isActive, account } = useWeb3React()
 
   const { ENSName } = useENSName(account ?? undefined)
 
@@ -227,7 +226,7 @@ export default function Web3Status() {
   const pending = sortedRecentTransactions.filter((tx) => !tx.receipt).map((tx) => tx.hash)
   const confirmed = sortedRecentTransactions.filter((tx) => tx.receipt).map((tx) => tx.hash)
 
-  if (!contextNetwork.active && !active) {
+  if (!isActive) {
     return null
   }
 

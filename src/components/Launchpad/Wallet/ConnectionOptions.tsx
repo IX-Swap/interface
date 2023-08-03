@@ -14,7 +14,7 @@ interface ConnectionOptionsProps {
 
 export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
   const theme = useTheme()
-  const { connector } = useWeb3React()
+  const { connector, isActive } = useWeb3React()
 
   const isMetaMask = window.ethereum && window.ethereum.isMetaMask
 
@@ -31,8 +31,8 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
             <Option
               key={key}
               id={`connect-${key}`}
-              active={option.connector && option.connector === connector}
-              onClick={() => option.connector !== connector && !option.href && props.onSelect(option)}
+              active={isActive}
+              onClick={() => option.href && props.onSelect(option)}
               color={option.color}
               link={option.href}
               header={option.name}
@@ -76,7 +76,7 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
                 //   : !option.href && tryActivation(option.connector)
               }}
               key={key}
-              active={option.connector === connector}
+              active={isActive}
               color={option.color}
               link={option.href}
               header={option.name}

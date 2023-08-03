@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Trans } from '@lingui/macro'
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import { useWeb3React } from '@web3-react/core'
+import { WalletConnect } from '@web3-react/walletconnect-v2'
 import ReactGA from 'react-ga'
 import { isMobile } from 'react-device-detect'
 
@@ -52,7 +52,7 @@ export default function WalletModal({
   ENSName?: string
 }) {
   // important that these are destructed from the account-specific web3-react context
-  const { active, account, connector, activate, error } = useWeb3React()
+  const { account, connector, isActive } = useWeb3React()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -81,55 +81,46 @@ export default function WalletModal({
   }, [walletModalOpen])
 
   // close modal when a connection is successful
-  const activePrevious = usePrevious(active)
   const connectorPrevious = usePrevious(connector)
   useEffect(() => {
-    if (walletModalOpen && ((active && !activePrevious) || (connector && connector !== connectorPrevious && !error))) {
+    if (walletModalOpen && ((connector && connector !== connectorPrevious))) {
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
-  }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
+  }, [setWalletView, connector, walletModalOpen, connectorPrevious])
 
-  const tryActivation = useCallback(
-    async (connector: AbstractConnector | undefined) => {
-      let name = ''
-      Object.keys(SUPPORTED_WALLETS).map((key) => {
-        if (connector === SUPPORTED_WALLETS[key].connector) {
-          return (name = SUPPORTED_WALLETS[key].name)
-        }
-        return true
-      })
-      // log selected wallet
-
-      const { ym } = window
-      ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
-
-      ReactGA.event({
-        category: 'Wallet',
-        action: 'Change Wallet',
-        label: name,
-      })
-      setPendingWallet(connector) // set wallet for pending view
-      setWalletView(WALLET_VIEWS.PENDING)
-
-      // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
-      if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
-        connector.walletConnectProvider = undefined
+  const tryActivation = async (connector: AbstractConnector | undefined) => {
+    let name = ''
+    Object.keys(SUPPORTED_WALLETS).map((key) => {
+      if (connector === SUPPORTED_WALLETS[key].connector) {
+        return (name = SUPPORTED_WALLETS[key].name)
       }
-      if (connector) {
-        try {
-          await activate(connector, undefined, true)
-        } catch (error) {
-          if (error instanceof UnsupportedChainIdError) {
-            activate(connector) // a little janky...can't use setError because the connector isn't set
-          } else {
-            activate(connector) // a little janky...can't use setError because the connector isn't set
-            setPendingError(true)
-          }
-        }
+      return true
+    })
+    // log selected wallet
+
+    const { ym } = window
+    ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
+
+    ReactGA.event({
+      category: 'Wallet',
+      action: 'Change Wallet',
+      label: name,
+    })
+    setPendingWallet(connector) // set wallet for pending view
+    setWalletView(WALLET_VIEWS.PENDING)
+
+    // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
+    if (connector instanceof WalletConnect && connector.provider?.rpcUrl) {
+      connector.provider = undefined
+    }
+    if (connector) {
+      try {
+        await connector.activate()
+      } catch (error) {
+        setPendingError(true)
       }
-    },
-    [activate]
-  )
+    }
+  }
 
   // useEffect(() => {
   //   const isWalletConnect = localStorage.getItem('walletconnect')
@@ -214,12 +205,12 @@ export default function WalletModal({
         <Option
           id={`connect-${key}`}
           onClick={() => {
-            option.connector === connector
+            isActive
               ? setWalletView(WALLET_VIEWS.ACCOUNT)
               : !option.href && tryActivation(option.connector)
           }}
           key={key}
-          active={option.connector === connector}
+          active={isActive}
           color={option.color}
           link={option.href}
           header={option.name}
@@ -232,9 +223,6 @@ export default function WalletModal({
   }
 
   function getModalContent() {
-    if (error) {
-      return <ErrorSection error={error} toggleWalletModal={toggleWalletModal} />
-    }
     return (
       <UpperSection>
         <CloseIcon onClick={toggleWalletModal}>
