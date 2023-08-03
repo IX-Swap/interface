@@ -11,11 +11,13 @@ import { OwnershipStructure } from 'app/pages/identity/components/CorporateIdent
 import { DirectorList } from 'app/pages/identity/components/CorporateIdentityView/DirectorList'
 import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 import { Element } from 'react-scroll'
+import { CorporateDocuments } from './CorporateDocuments'
 
 export enum CorporateKYCSections {
   'Corporate Information' = 'corporate-information',
-  'Ownership Structure Layers' = 'ownership-structure-layers',
+  'Corporate Documents' = 'corporate-documents',
   'Registered & Mailing Address' = 'registered-mailing-address',
+  'Ownership Structure Layers' = 'ownership-structure-layers',
   'Company Authorized Personnel' = 'company-authorized-personnel',
   'Tax Information' = 'tax-information',
   'Directors/Partners/People with Executive Authority' = 'directors',
@@ -58,6 +60,18 @@ export const CorporateIdentityView = ({
       </Grid>
 
       <Grid item>
+        <Element name={CorporateKYCSections['Corporate Documents']}>
+          <CorporateDocuments data={data.documents} />
+        </Element>
+      </Grid>
+
+      <Grid item>
+        <Element name={CorporateKYCSections['Registered & Mailing Address']}>
+          <CorporateAddress data={data} />
+        </Element>
+      </Grid>
+
+      <Grid item>
         <Element name={CorporateKYCSections['Ownership Structure Layers']}>
           <FieldContainer>
             <Grid container direction='column' spacing={5}>
@@ -68,12 +82,6 @@ export const CorporateIdentityView = ({
               <OwnershipStructure data={data} />
             </Grid>
           </FieldContainer>
-        </Element>
-      </Grid>
-
-      <Grid item>
-        <Element name={CorporateKYCSections['Registered & Mailing Address']}>
-          <CorporateAddress data={data} />
         </Element>
       </Grid>
 

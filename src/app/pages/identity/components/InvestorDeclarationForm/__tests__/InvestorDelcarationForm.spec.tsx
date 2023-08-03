@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { InvestorDeclarationForm } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorDeclarationForm'
-import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
+import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateAccreditationDocuments/CorporateAccreditationDocuments'
 import { Form } from 'components/form/Form'
 
 jest.mock(

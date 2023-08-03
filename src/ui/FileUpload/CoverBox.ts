@@ -10,9 +10,10 @@ export const CoverBox = styled(Box)(
   justify-content: center;
   align-items: center;
   height: 150px;
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   border: 1px solid ${theme.palette.toggledInputs?.border ?? ''};
-  border-radius: 2px;
+  border-radius: 8px;
   &:hover {
     border-color: ${theme.palette.toggledInputs?.borderHover ?? ''};
     background-color: transparent;

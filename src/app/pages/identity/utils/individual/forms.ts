@@ -8,6 +8,7 @@ import {
 } from 'app/pages/identity/types/forms'
 import { titleCase } from 'app/pages/identity/utils/shared'
 import { isEmpty } from 'lodash'
+import { DataroomFile } from 'types/dataroomFile'
 
 export const getPersonalInfoFormValues = (
   data: IndividualIdentity
@@ -33,7 +34,8 @@ export const getPersonalInfoFormValues = (
       postalCode: data?.address?.postalCode,
       country,
       city: data?.address?.city
-    }
+    },
+    ...getDocumentsFormValues(data)
   }
 }
 
@@ -110,7 +112,7 @@ export const getInvestorDeclarationFormValues = (
 
 export const getDocumentsFormValues = (
   data: IndividualIdentity
-): IdentityDocumentsFormValues => {
+): Partial<IdentityDocumentsFormValues> => {
   if (data === undefined || isEmpty(data)) {
     return {
       evidenceOfAccreditation: [],
@@ -119,38 +121,61 @@ export const getDocumentsFormValues = (
     }
   }
 
-  return data.documents.reduce((result: any, document) => {
-    const { evidenceOfAccreditation, proofOfAddress, proofOfIdentity } = result
+  return data.documents.reduce(
+    (result: any, document, index, documentsArray) => {
+      const { evidenceOfAccreditation, proofOfAddress, proofOfIdentity } =
+        result
 
-    if (document.type.startsWith('Evidence of ')) {
-      return {
-        ...result,
-        evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
-          ? [...evidenceOfAccreditation, { value: document }]
-          : [{ value: document }]
+      if (document.type.startsWith('Evidence of ')) {
+        return {
+          ...result,
+          evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
+            ? [...evidenceOfAccreditation, { value: document }]
+            : [{ value: document }]
+        }
       }
-    }
 
-    if (document.type === 'Proof of Address') {
-      return {
-        ...result,
-        proofOfAddress: Array.isArray(proofOfAddress)
-          ? [...proofOfAddress, { value: document }]
-          : [{ value: document }]
+      if (document.type === 'Proof of Address') {
+        return {
+          ...result,
+          proofOfAddress: Array.isArray(proofOfAddress)
+            ? [...proofOfAddress, { value: document }]
+            : [{ value: document }]
+        }
       }
-    }
 
-    if (document.type === 'Proof of Identity') {
-      return {
-        ...result,
-        proofOfIdentity: Array.isArray(proofOfIdentity)
-          ? [...proofOfIdentity, { value: document }]
-          : [{ value: document }]
+      if (document.type === 'Proof of Identity') {
+        interface DocumentItem {
+          value?: DataroomFile
+          front?: DataroomFile
+          back?: DataroomFile
+        }
+        const documentItem: DocumentItem = {}
+
+        if (document.feature === 'back') {
+          return result
+        } else if (document.feature === 'front') {
+          documentItem.front = document
+
+          if (documentsArray[index + 1]?.feature === 'back') {
+            documentItem.back = documentsArray[index + 1]
+          }
+        } else {
+          documentItem.value = document
+        }
+
+        return {
+          ...result,
+          proofOfIdentity: Array.isArray(proofOfIdentity)
+            ? [...proofOfIdentity, documentItem]
+            : [documentItem]
+        }
       }
-    }
 
-    return result
-  }, {})
+      return result
+    },
+    {}
+  )
 }
 
 export const getAgreementsAndDisclosuresFormValues = (

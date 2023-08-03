@@ -9,6 +9,7 @@ import {
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { InvestorRole } from 'app/pages/identity/utils/shared'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 
 export interface ListItemProps {
   children: React.ReactNode
@@ -21,12 +22,14 @@ export const ListItem = ({ children }: ListItemProps) => (
   </MuiListItem>
 )
 
-export interface CorporateDocumentsProps {
+export interface CorporateAccreditationDocumentsProps {
   corporateType?: 'investor' | 'issuer'
   investorRole?: InvestorRole
 }
 
-export const CorporateDocuments = (props: CorporateDocumentsProps) => {
+export const CorporateAccreditationDocuments = (
+  props: CorporateAccreditationDocumentsProps
+) => {
   const { corporateType = 'issuer', investorRole = 'accredited' } = props
   const isIssuer = corporateType === 'issuer'
   const isExpert = investorRole === 'expert'
@@ -36,18 +39,7 @@ export const CorporateDocuments = (props: CorporateDocumentsProps) => {
       <FieldContainer>
         <Grid container direction={'column'} spacing={5}>
           <Grid item>
-            <UploadDocumentField
-              name='corporateDocuments'
-              label='Corporate Documents'
-              helperElement={
-                <Typography color={'text.secondary'} mt={1.5} fontWeight={400}>
-                  Company registry profile, certificate of incorporation,
-                  memorandum and articles of association, company organization
-                  chart, register of shareholders and directors, partnership
-                  deed and trust deed
-                </Typography>
-              }
-            />
+            <FormSectionHeader title={'Accreditation Documents'} />
           </Grid>
           {/* <Grid item>
             <UploadDocumentField
@@ -123,6 +115,14 @@ export const CorporateDocuments = (props: CorporateDocumentsProps) => {
               />
             </Grid>
           )}
+
+          {/* Hidden upload field for documents in Corporate KYC. This is to preserve their value in the `documents` field */}
+          <Grid item hidden>
+            <UploadDocumentField
+              name='corporateDocuments'
+              label='Corporate Documents'
+            />
+          </Grid>
         </Grid>
       </FieldContainer>
     </Grid>

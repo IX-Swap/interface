@@ -241,7 +241,8 @@ export const FormStepper = (props: FormStepperProps) => {
                         <SubmitButton
                           mutation={submitMutation}
                           data={data}
-                          step={steps[steps.length - 1]}
+                          //   step={steps[steps.length - 1]}
+                          step={steps[activeStep]}
                           fullWidth
                           size='medium'
                           submitText={submitText}

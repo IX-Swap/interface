@@ -4,6 +4,7 @@ export interface DataroomFile {
   type: string
   user: string
   originalFileName: string
+  feature?: string
   url?: string
   createdAt: string
   updatedAt: string

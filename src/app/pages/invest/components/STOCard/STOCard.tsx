@@ -7,6 +7,7 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { STODetails } from 'app/pages/invest/components/STOCard/STODetails'
 import { Avatar } from 'components/Avatar'
+import { DSOInvestButton } from 'app/components/DSO/components/DSOInvestButton'
 
 export interface STOCardProps {
   type: 'Primary' | 'OTC' | 'TopOffers'
@@ -56,6 +57,18 @@ export const STOCard = (props: STOCardProps) => {
         </Grid>
 
         <STODetails data={data} />
+
+        <Grid
+          container
+          item
+          justifyContent='space-between'
+          alignItems={'center'}
+          marginTop='20px'
+        >
+          {/* <Box display='flex' width='100%' justifyContent='flex-end'> */}
+          <DSOInvestButton dso={data} />
+          {/* </Box> */}
+        </Grid>
 
         <Grid
           container

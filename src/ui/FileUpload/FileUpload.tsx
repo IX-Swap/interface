@@ -36,6 +36,7 @@ export interface FileUploadProps {
   onRemoveCallback?: (value: any) => void
   readonly?: boolean
   neverComplete?: boolean
+  isCover?: boolean
 }
 
 export const FileUpload = (props: FileUploadProps) => {
@@ -55,7 +56,8 @@ export const FileUpload = (props: FileUploadProps) => {
     maxSize = 10,
     remove,
     readonly = false,
-    neverComplete = false
+    neverComplete = false,
+    isCover = false
   } = props
   const { watch } = useFormContext()
 
@@ -168,6 +170,7 @@ export const FileUpload = (props: FileUploadProps) => {
     completed: neverComplete ? 0 : completed,
     remove: handleRemove,
     readonly,
+    isCover
   }
 
   if (fullWidth) {
