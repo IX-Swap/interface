@@ -9,7 +9,7 @@
     "@ixswap1/sdk-core": "^1.0.0",
     "@ixswap1/v2-core": "^1.0.11",
     "@ixswap1/v2-periphery": "^1.0.10",
-    "@ixswap1/v2-sdk": "^1.0.7",
+    "@ixswap1/v2-sdk": "1.3.3",
     "@lingui/cli": "^3.9.0",
     "@lingui/loader": "^3.9.0",
     "@lingui/macro": "^3.9.0",
@@ -143,7 +143,7 @@
     "i18n:compile": "lingui compile",
     "integration-test": "cd e2e_tests && xvfb-run npx playwright test",
     "postinstall": "yarn compile-contract-types",
-    "start": "yarn compile-contract-types && react-scripts start",
+    "start": "GENERATE_SOURCEMAP=true yarn compile-contract-types && react-scripts start",
     "test": "react-scripts test --env=jsdom"
   },
   "eslintConfig": {

@@ -76,21 +76,20 @@ export const SwapButtons = ({
   const isAccredited = (currency: any): boolean => {
     const currencyId = currency?.address
 
-    return currency?.isSecToken === false ? true : 
-      Boolean(
-        (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.brokerDealerStatus ===
-          AccreditationStatusEnum.APPROVED &&
-        (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.custodianStatus ===
-          AccreditationStatusEnum.APPROVED)
+    return currency?.isSecToken === true
+      ? Boolean(
+          (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.brokerDealerStatus ===
+            AccreditationStatusEnum.APPROVED &&
+            (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.custodianStatus ===
+              AccreditationStatusEnum.APPROVED
+        )
+      : true
   }
 
   const onClick = useCallback(async () => {
     if (trade && account) {
       try {
-        if (
-          !isAccredited(trade.inputAmount.currency) ||
-          !isAccredited(trade.outputAmount.currency)
-        ) {
+        if (!isAccredited(trade.inputAmount.currency) || !isAccredited(trade.outputAmount.currency)) {
           showError('There is no accreditation for the token')
           return
         }
