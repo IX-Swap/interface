@@ -97,6 +97,8 @@ export const getCorporateInvestorDeclarationRequestPayload = (
     applyingAs,
     isInstitutionalInvestor,
     isIntermediaryInvestor,
+    evidenceOfAccreditation,
+    corporateDocuments,
     ...rest
   } = values
 

@@ -92,7 +92,7 @@ export const ProofOfIdentityField = ({
                   idsWithFrontAndBack.includes(identityTypeValue)
 
                 // console.log('identityType', identityTypeValue)
-                console.log('field', field)
+                // console.log('field', field)
 
                 const documentInfo: UploadDocumentInfo = {
                   type: label,

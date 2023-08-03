@@ -128,7 +128,25 @@ export const getInvestorDeclarationRequestPayload = (
     Array<{ value: DataroomFile }>
   >((result, docs) => {
     if (Array.isArray(docs)) {
-      return [...result, ...docs.map(document => document.value?._id)]
+      //   return [...result, ...docs.map(document => document.value?._id)]
+      return [
+        ...result,
+        ...docs.flatMap(document => {
+          if ('value' in document) {
+            return document.value?._id
+          } else {
+            const docs = []
+            if ('front' in document) {
+              docs.push(document.front?._id)
+            }
+            if ('back' in document) {
+              docs.push(document.back?._id)
+            }
+
+            return docs
+          }
+        })
+      ]
     }
 
     return result
@@ -149,12 +167,31 @@ export const getDocumentsRequestPayload = (
   const documents = {
     documents: Object.values(values).reduce<string[]>((result, documents) => {
       if (Array.isArray(documents)) {
-        return [...result, ...documents.map(document => document.value?._id)]
+        // return [...result, ...documents.map(document => document.value?._id)]
+        return [
+          ...result,
+          ...documents.flatMap(document => {
+            if ('value' in document) {
+              return document.value?._id
+            } else {
+              const documents = []
+              if ('front' in document) {
+                documents.push(document.front?._id)
+              }
+              if ('back' in document) {
+                documents.push(document.back?._id)
+              }
+
+              return documents
+            }
+          })
+        ]
       }
 
       return result
     }, [])
   }
+
   return documents.documents.length > 0 ? documents : {}
 }
 
