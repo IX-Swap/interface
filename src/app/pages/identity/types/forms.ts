@@ -178,6 +178,7 @@ export interface CorporateInvestorDeclarationFormValues
 
 export interface CorporateInvestorDocumentsFormValues {
   //   financialDocuments: Array<FormArrayElement<DataroomFile>>
+  corporateDocuments: Array<FormArrayElement<DataroomFile>>
   evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
   institutionalInvestorDocuments?: Array<FormArrayElement<DataroomFile>>
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
+import { ProofOfIdentityField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/ProofOfIdentityField'
 import { EvidenceOfAccreditationHelper } from 'app/pages/identity/components/UploadDocumentsForm/EvidenceOfAccreditationHelper'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
@@ -37,7 +38,11 @@ export const IndividualAccreditationDocumentsForm = ({
           </Grid>
           {/* Hidden upload field for documents in Individual KYC. This is to preserve their value in the `documents` field */}
           <Grid item hidden>
-            <UploadDocumentField
+            {/* <UploadDocumentField
+              name='proofOfIdentity'
+              label='Proof of Identity'
+            /> */}
+            <ProofOfIdentityField
               name='proofOfIdentity'
               label='Proof of Identity'
             />
