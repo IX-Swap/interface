@@ -6,7 +6,10 @@ export const FieldContainer: React.FunctionComponent<{}> = ({
   ...rest
 }) => {
   return (
-    <Paper sx={{ borderRadius: 2, p: { xs: 2.5, md: 5 } }} {...rest}>
+    <Paper
+      sx={{ borderRadius: 2, p: { xs: 2.5, md: 5 }, height: '100%' }}
+      {...rest}
+    >
       {children}
     </Paper>
   )

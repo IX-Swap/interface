@@ -11,16 +11,23 @@ import {
   Box
 } from '@mui/material'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
+import { useMostPopularSTOs } from 'app/pages/issuance/hooks/useMostPopularSTOs'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { formatDecimal } from 'helpers/numbers'
+import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
+import { useTheme } from '@emotion/react'
 
-function createData(name: string, symbol: string, volume: number) {
-  return { name, symbol, volume }
+interface PopularSTO {
+  logo: string
+  tokenName: string
+  tokenSymbol: string
+  currency: {
+    symbol: symbol
+  }
+  insight: {
+    raisedTotal: number
+  }
 }
-
-const rows = [
-  createData('Avalanche', 'AVAX', 5.7),
-  createData('Terra', 'LUNA', 5.7),
-  createData('Polygon', 'MATIC', 5.7)
-]
 
 const tableCellStyles = {
   paddingLeft: 0,
@@ -30,6 +37,18 @@ const tableCellStyles = {
 }
 
 export const MostPopularSTOs = () => {
+  const LIMIT = 3
+  const { data, isLoading } = useMostPopularSTOs(LIMIT)
+  const theme = useTheme()
+
+  if (isLoading) {
+    return <LoadingIndicator />
+  }
+
+  if (typeof data === 'undefined') {
+    return null
+  }
+
   return (
     <FieldContainer>
       <Typography variant='h5' color={'otpInput.color'}>
@@ -39,22 +58,37 @@ export const MostPopularSTOs = () => {
         <Table aria-label='Most Popular STOs'>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ ...tableCellStyles }}>
+              <TableCell sx={tableCellStyles}>
                 <Typography color={'text.secondary'}>STO</Typography>
               </TableCell>
-              <TableCell align='right' sx={{ ...tableCellStyles }}>
-                <Typography color={'text.secondary'}>Volume (24h)</Typography>
+              <TableCell align='right' sx={tableCellStyles}>
+                <Typography color={'text.secondary'}>
+                  Total Raised Amount
+                </Typography>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
-              <TableRow sx={{ ...tableCellStyles }} key={row.symbol}>
-                <TableCell sx={{ ...tableCellStyles }}>
-                  <Box display={'flex'} gap={1}>
-                    <Typography color={'otpInput.color'}>{row.name}</Typography>
+            {data.map((sto: PopularSTO) => (
+              <TableRow sx={tableCellStyles} key={sto.tokenSymbol}>
+                <TableCell sx={tableCellStyles}>
+                  <Box display={'flex'} gap={1} alignItems={'center'}>
+                    <DSOLogo
+                      size={36}
+                      uri={'/dataroom/raw/'}
+                      dsoId={sto.logo}
+                      variant='circular'
+                      sx={{
+                        border: `1px solid ${
+                          theme.palette.menu.border as string
+                        }`
+                      }}
+                    />
+                    <Typography color={'otpInput.color'} ml={1}>
+                      {sto.tokenName}
+                    </Typography>
                     <Typography color={'#778194'} sx={{ opacity: 0.5 }}>
-                      {row.symbol}
+                      {sto.tokenSymbol}
                     </Typography>
                   </Box>
                 </TableCell>
@@ -62,7 +96,8 @@ export const MostPopularSTOs = () => {
                   align='right'
                   sx={{ ...tableCellStyles, color: '#6ABC10' }}
                 >
-                  {row.volume} %
+                  {formatDecimal(sto.insight.raisedTotal ?? 0)}{' '}
+                  {sto.currency.symbol}
                 </TableCell>
               </TableRow>
             ))}
