@@ -22,25 +22,7 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
     <OptionList>
       <PromptTitle>Connect Wallet </PromptTitle>
       {Object.entries(SUPPORTED_WALLETS).map(([key, option]) => {
-        if (isMobile) {
-          if (!(!window.web3 && !window.ethereum && option.mobile)) {
-            return null
-          }
 
-          return (
-            <Option
-              key={key}
-              id={`connect-${key}`}
-              active={option.connector && option.connector === connector}
-              onClick={() => option.connector !== connector && !option.href && props.onSelect(option)}
-              color={option.color}
-              link={option.href}
-              header={option.name}
-              subheader={null}
-              icon={option.iconURL}
-            />
-          )
-        }
 
         if (option.connector === injected) {
           if (!(window.web3 || window.ethereum)) {
@@ -65,25 +47,22 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
         }
 
         return (
-          !isMobile &&
-          !option.mobileOnly && (
-            <Option
-              id={`connect-${key}`}
-              onClick={() => {
-                props.onSelect(option)
-                // option.connector === connector
-                //   ? setWalletView(WALLET_VIEWS.ACCOUNT)
-                //   : !option.href && tryActivation(option.connector)
-              }}
-              key={key}
-              active={option.connector === connector}
-              color={option.color}
-              link={option.href}
-              header={option.name}
-              subheader={null} //use option.descriptio to bring back multi-line
-              icon={option.iconURL}
-            />
-          )
+          <Option
+            id={`connect-${key}`}
+            onClick={() => {
+              props.onSelect(option)
+              // option.connector === connector
+              //   ? setWalletView(WALLET_VIEWS.ACCOUNT)
+              //   : !option.href && tryActivation(option.connector)
+            }}
+            key={key}
+            active={option.connector === connector}
+            color={option.color}
+            link={option.href}
+            header={option.name}
+            subheader={null} //use option.descriptio to bring back multi-line
+            icon={option.iconURL}
+          />
         )
       })}
     </OptionList>
