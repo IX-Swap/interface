@@ -168,7 +168,9 @@ export const tenantsURL = {
 
 export const issuanceURL = {
   sto: {
-    totalStats: `/issuance/stats`
+    totalStats: `/issuance/stats`,
+    mostPopular: `/issuance/top-deals`,
+    upcoming: `/issuance/upcoming-deals`
   },
   commitments: {
     overrideById: (commitmentId?: string) =>

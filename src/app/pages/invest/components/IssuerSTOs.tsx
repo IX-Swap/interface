@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
-import { Button, Grid, Typography } from '@mui/material'
+import { Button, Grid, Typography, CircularProgress } from '@mui/material'
 import { useStyles } from 'app/pages/invest/components/styles/OTCMarket.style'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { dsoQueryKeys } from 'config/queryKeys'
@@ -17,7 +17,6 @@ import { DSOCardsCarousel } from 'app/pages/invest/components/DSOCardsCarousel/D
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { useIsAuthorizer } from 'helpers/acl'
-import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const IssuerSTOs = () => {
   const { user } = useAuth()
@@ -42,7 +41,19 @@ export const IssuerSTOs = () => {
 
   const renderContent = () => {
     if (status === 'loading' || isLoading) {
-      return <LoadingIndicator />
+      return (
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        </>
+      )
     }
 
     const renderItems = (items as DigitalSecurityOffering[]).slice(0, 3)

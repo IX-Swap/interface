@@ -32,7 +32,6 @@ export const WalletAddresses = () => {
               variant='outlined'
               to={WithdrawalAddressesRoute.list}
               data-testid='invest-link'
-              // sx={{ px: 0 }}
             >
               View All Wallet Address
             </Button>

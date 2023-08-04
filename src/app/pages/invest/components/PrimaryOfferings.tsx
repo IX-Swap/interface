@@ -1,6 +1,6 @@
 import React from 'react'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { Button, Grid, Typography } from '@mui/material'
+import { Button, Grid, Typography, CircularProgress } from '@mui/material'
 import { useStyles } from 'app/pages/invest/components/styles/OTCMarket.style'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { dsoQueryKeys } from 'config/queryKeys'
@@ -92,7 +92,19 @@ export const PrimaryOfferings = ({
 
   const renderContent = () => {
     if (status === 'loading') {
-      return null
+      return (
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        </>
+      )
     }
 
     const renderItems = (items as DigitalSecurityOffering[]).slice(0, 3)
