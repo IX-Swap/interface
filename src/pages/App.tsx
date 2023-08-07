@@ -222,43 +222,45 @@ export default function App() {
   }
 
   return (
-    <ErrorBoundary>
-      <Route component={GoogleAnalyticsReporter} />
-      <Route component={DarkModeQueryParamReader} />
-      <Route component={ApeModeQueryParamReader} />
-      <AppBackground />
-      <Popups />
-      <AppWrapper>
-        {countryCode === 'SG' && <RestrictedModal />}
-        {!isAdminKyc && !hideHeader && <Header />}
-        <ToggleableBody
-          isVisible={visibleBody}
-          {...(isAdminKyc && { style: { marginTop: 26 } })}
-          hideHeader={hideHeader}
-        >
-          <IXSBalanceModal />
-          <Web3ReactManager>
-            <Suspense
-              fallback={
-                <>
-                  <LoadingIndicator isLoading />
-                </>
-              }
-            >
-              <Switch>
-                {routeConfigs.map(routeGenerator).filter((route) => !!route)}
+    <>
+      {countryCode === 'SG' && <RestrictedModal />}
+      <ErrorBoundary>
+        <Route component={GoogleAnalyticsReporter} />
+        <Route component={DarkModeQueryParamReader} />
+        <Route component={ApeModeQueryParamReader} />
+        <AppBackground />
+        <Popups />
+        <AppWrapper>
+          {!isAdminKyc && !hideHeader && <Header />}
+          <ToggleableBody
+            isVisible={visibleBody}
+            {...(isAdminKyc && { style: { marginTop: 26 } })}
+            hideHeader={hideHeader}
+          >
+            <IXSBalanceModal />
+            <Web3ReactManager>
+              <Suspense
+                fallback={
+                  <>
+                    <LoadingIndicator isLoading />
+                  </>
+                }
+              >
+                <Switch>
+                  {routeConfigs.map(routeGenerator).filter((route) => !!route)}
 
-                {useRedirect && (
-                  <Route
-                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                  />
-                )}
-              </Switch>
-            </Suspense>
-          </Web3ReactManager>
-        </ToggleableBody>
-        {!hideHeader && <Footer />}
-      </AppWrapper>
-    </ErrorBoundary>
+                  {useRedirect && (
+                    <Route
+                      component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                    />
+                  )}
+                </Switch>
+              </Suspense>
+            </Web3ReactManager>
+          </ToggleableBody>
+          {!hideHeader && <Footer />}
+        </AppWrapper>
+      </ErrorBoundary>
+    </>
   )
 }

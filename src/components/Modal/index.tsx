@@ -47,10 +47,9 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, maxWidth, mobile, is
       ${
         mobile &&
         css`
-          width: 100vw;
           border-radius: 20px;
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
+          margin-left: 25px;
+          margin-top: 200px;
         `
       }
     `}
@@ -61,7 +60,7 @@ export default function Modal({
   onDismiss,
   minHeight = false,
   maxHeight = 90,
-  maxWidth = '420px',
+  maxWidth = '390px',
   initialFocusRef,
   children,
 }: ModalProps) {
