@@ -228,6 +228,8 @@ export default function CorporateKycForm() {
       validationSeen(key)
     }
 
+    console.log(errors, 'rororororo')
+
   return (
     <Loadable loading={!isLoggedIn}>
       <Prompt when={!canLeavePage.current} message={promptValue} />
