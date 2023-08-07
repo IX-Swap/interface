@@ -39,6 +39,8 @@ import { ROLES } from 'constants/roles'
 import { RestrictedModal } from './RestrictedModal'
 import axios from 'axios'
 import { ip } from 'services/apiUrls'
+import { isMobile } from 'react-device-detect'
+import { ConnectWalletModal } from './Connect Wallet Modal'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -223,6 +225,7 @@ export default function App() {
 
   return (
     <>
+      {isMobile && !window.ethereum && <ConnectWalletModal />}
       {countryCode === 'SG' && <RestrictedModal />}
       <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
