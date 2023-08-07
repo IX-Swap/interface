@@ -9,7 +9,7 @@ import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 
 // destructure to not pass custom props to Dialog DOM element
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const StyledDialogContent = styled(({ minHeight, maxHeight, maxWidth, mobile, isOpen, ...rest }) => (
+const StyledDialogContent = styled(({ minHeight, maxHeight, maxWidth, mobile, name, isOpen, ...rest }) => (
   <AnimatedDialogContent {...rest} />
 )).attrs({
   'aria-label': 'dialog',
@@ -42,10 +42,11 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, maxWidth, mobile, is
       width: 65vw;
       margin: 0;
     `}
-    ${({ theme, mobile }) => theme.mediaWidth.upToSmall`
+    ${({ theme, mobile, name }) => theme.mediaWidth.upToSmall`
       width:  85vw;
       ${
         mobile &&
+        name !== 'connectWallet' &&
         css`
           border-radius: 20px;
           margin-left: 25px;
@@ -53,6 +54,19 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, maxWidth, mobile, is
         `
       }
     `}
+
+    ${({ theme, mobile, name }) => theme.mediaWidth.upToSmall`
+    width:  85vw;
+    ${
+      mobile &&
+      name === 'connectWallet' &&
+      css`
+        border-radius: 20px;
+        margin-left: 25px;
+        margin-top: 80px;
+      `
+    }
+  `}
   }
 `
 export default function Modal({
@@ -63,6 +77,7 @@ export default function Modal({
   maxWidth = '390px',
   initialFocusRef,
   children,
+  name,
 }: ModalProps) {
   const fadeTransition = useTransition(isOpen, null, {
     config: { duration: 200 },
@@ -111,6 +126,7 @@ export default function Modal({
                 maxHeight={maxHeight}
                 maxWidth={maxWidth}
                 mobile={isMobile}
+                name={name}
               >
                 {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}
                 {!initialFocusRef && isMobile ? <div tabIndex={1} /> : null}
