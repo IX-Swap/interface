@@ -50,7 +50,7 @@ const errorLabelMap = [
   { field: 'isUSTaxPayer', label: 'FATCA' },
   { field: 'usTin', label: 'US TIN' },
 
-  { field: 'accredited', label: 'Investor Status Declaration' },
+  // { field: 'accredited', label: 'Investor Status Declaration' },
   { field: 'investorDeclarationIsFilled', label: 'Investor Declaration' },
   { field: 'acceptOfQualification', label: 'Qualification Confirmation' },
   { field: 'acceptRefusalRight', label: 'Opt-out Confirmation' },

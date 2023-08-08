@@ -5,7 +5,6 @@ import { Contract } from 'web3-eth-contract'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { Currency, TradeType } from '@ixswap1/sdk-core'
 
-
 // //  -----------------------------------------     PARAMETERS, CONSTANTS, HELPER FUNCTIONS   ------------------------------------------------------------------
 
 // // abis
@@ -27,7 +26,6 @@ let ERC20_FAUCET_ABI = require('abis/Erc20Custom.json')
 ERC20_FAUCET_ABI = ERC20_FAUCET_ABI.abi
 
 const Web3Global = require('web3')
-
 
 class Web3 {
   getUrl(chainId: number): any {
@@ -94,31 +92,34 @@ const sqrt = (value: BigNumber): BigNumber => {
   return y
 }
 
-
 // // ---------------------------------------------------- MITIGATION -----------------------------------------------------------------
 
-
 interface VerifySingleSwapOptions {
-  amountIn: BigNumber,
-  amountOut: BigNumber,
-  reserveOut: BigNumber,
-  canConsult: boolean,
-  oracleAmountOut: BigNumber,
-  isTokenInSec: boolean,
+  amountIn: BigNumber
+  amountOut: BigNumber
+  reserveOut: BigNumber
+  canConsult: boolean
+  oracleAmountOut: BigNumber
+  isTokenInSec: boolean
   mitigationEnabled: boolean
 }
 
+const verifyMitigation = (
+  amountIn: BigNumber,
+  amountOut: BigNumber,
+  reserveOutFinal: BigNumber,
+  oracleAmountOut: BigNumber
+) => {
+  if (amountIn.lte('0')) return
 
+  const sliceFactor = reserveOutFinal.gt(amountOut)
+    ? BigNumber.from('100').sub(reserveOutFinal.sub(amountOut).div(reserveOutFinal.div('100')))
+    : BigNumber.from('100') //todo: double check
 
-const verifyMitigation = (amountIn: BigNumber, amountOut: BigNumber, reserveOutFinal: BigNumber, oracleAmountOut: BigNumber) => {
-  if (amountIn.lte('0')) return;
-
-  const sliceFactor = reserveOutFinal.gt(amountOut) ? (BigNumber.from('100').sub(reserveOutFinal.sub(amountOut).div(reserveOutFinal.div('100')))) : BigNumber.from('100'); //todo: double check
-
-  let outAmountsDiff;
+  let outAmountsDiff
 
   if (oracleAmountOut.eq(amountOut)) {
-      outAmountsDiff = BigNumber.from('0')
+    outAmountsDiff = BigNumber.from('0')
   } else {
     const biggerAmount = max(oracleAmountOut, amountOut)
     const smallerAmount = min(oracleAmountOut, amountOut)
@@ -126,30 +127,39 @@ const verifyMitigation = (amountIn: BigNumber, amountOut: BigNumber, reserveOutF
     outAmountsDiff = biggerAmount.sub(smallerAmount).mul('100').div(biggerAmount.add(smallerAmount).div('2'))
   }
 
-  if (outAmountsDiff.lte('0')) return;
+  if (outAmountsDiff.lte('0')) return
 
   let sliceFactorCurve = sliceFactor.mul(sqrt(sliceFactor))
 
-  if (sliceFactorCurve.gt(PRICE_TOLLERANCE_THRESHOLD)) {  
-      sliceFactorCurve = PRICE_TOLLERANCE_THRESHOLD;
+  if (sliceFactorCurve.gt(PRICE_TOLLERANCE_THRESHOLD)) {
+    sliceFactorCurve = PRICE_TOLLERANCE_THRESHOLD
   }
 
   if (outAmountsDiff.gt(BigNumber.from('100').sub(sliceFactorCurve))) throw new Error(`Out value too far from Oracle`)
 }
 
-
-const getTokenReserve = async (token: string, pairContract: Contract, token0: string, token1: string): Promise<BigNumber> => { 
+const getTokenReserve = async (
+  token: string,
+  pairContract: Contract,
+  token0: string,
+  token1: string
+): Promise<BigNumber> => {
   const reserves = await pairContract.methods.getReserves().call()
 
-  if (utils.getAddress(token) == utils.getAddress(token0)) return BigNumber.from(reserves['0']) // todo: toLowerCase may be redundant, check
+  if (utils.getAddress(token) == utils.getAddress(token0))
+    return BigNumber.from(reserves['0']) // todo: toLowerCase may be redundant, check
   else if (utils.getAddress(token) == utils.getAddress(token1)) return BigNumber.from(reserves['1'])
 
   // shoudn't happen if passed correct params
   throw new Error(`Token ${token} not inside pair`)
-} 
+}
 
-
-const isPairTokenSec = async (token: string, pairContract: Contract, token0: string, token1: string): Promise<boolean> => {
+const isPairTokenSec = async (
+  token: string,
+  pairContract: Contract,
+  token0: string,
+  token1: string
+): Promise<boolean> => {
   let isTokenSec = false
 
   if (utils.getAddress(token) == utils.getAddress(token0)) {
@@ -161,17 +171,24 @@ const isPairTokenSec = async (token: string, pairContract: Contract, token0: str
     throw new Error(`Token ${token} not inside pair`)
   }
 
-  return isTokenSec;
+  return isTokenSec
 }
 
-
-const verifySingleSwap = ({ amountIn, amountOut, reserveOut, canConsult, oracleAmountOut, isTokenInSec, mitigationEnabled }: VerifySingleSwapOptions) => {
+const verifySingleSwap = ({
+  amountIn,
+  amountOut,
+  reserveOut,
+  canConsult,
+  oracleAmountOut,
+  isTokenInSec,
+  mitigationEnabled,
+}: VerifySingleSwapOptions) => {
   reserveOut = reserveOut.sub(amountOut)
 
   // substract system fee in case token_in is SEC token
-  const reserveOutFinal = isTokenInSec ? reserveOut.sub(amountOut.mul('40').div('10000')) : reserveOut;
+  const reserveOutFinal = isTokenInSec ? reserveOut.sub(amountOut.mul('40').div('10000')) : reserveOut
 
-  if (reserveOutFinal.lte('0')) { 
+  if (reserveOutFinal.lte('0')) {
     throw new Error('Insufficient liquidity')
   }
 
@@ -180,67 +197,77 @@ const verifySingleSwap = ({ amountIn, amountOut, reserveOut, canConsult, oracleA
   verifyMitigation(amountIn, amountOut, reserveOutFinal, oracleAmountOut)
 }
 
-
 export async function verifySwap(trade: V2Trade<Currency, Currency, TradeType>, chainID: number) {
-  const web3 = new Web3().getUrl(chainID)
-  
-  const factoryAddress = web3.utils.toChecksumAddress(FACTORY_ROUTER_ADDRESS[chainID])
-  const factoryContract = new web3.eth.Contract(FACTORY_ABI, factoryAddress)
-    
-  const swapRouterAddress = web3.utils.toChecksumAddress(SWAP_ROUTER_ADDRESS[chainID])
-  const routerContract = new web3.eth.Contract(SWAP_ROUTER_ABI, swapRouterAddress); 
+  try {
+    const web3 = new Web3().getUrl(chainID)
 
-  const path = [] // from addresses
-  const isSecs = []
-  const pairContracts = []
+    const factoryAddress = web3.utils.toChecksumAddress(FACTORY_ROUTER_ADDRESS[chainID])
+    const factoryContract = new web3.eth.Contract(FACTORY_ABI, factoryAddress)
 
-  for (let i = 0; i < trade.route.path.length; i++) {
-    const tokenAddress = utils.getAddress(trade.route.path[i].address)
-    const poolIndex = (i < trade.route.path.length - 1) ? i : trade.route.path.length - 2 // last 2 tokens inside the same pool
-    const poolAddress = web3.utils.toChecksumAddress(trade.route.pairs[poolIndex].liquidityToken.address)
-    const poolContract = new web3.eth.Contract(PAIR_ABI, poolAddress)
+    const swapRouterAddress = web3.utils.toChecksumAddress(SWAP_ROUTER_ADDRESS[chainID])
+    const routerContract = new web3.eth.Contract(SWAP_ROUTER_ABI, swapRouterAddress)
 
-    const isTokenInSec = await isPairTokenSec(tokenAddress, poolContract, trade.route.pairs[poolIndex].token0.address, trade.route.pairs[poolIndex].token1.address)
+    const path = [] // from addresses
+    const isSecs = []
+    const pairContracts = []
 
-    pairContracts.push(poolContract)
-    isSecs.push(isTokenInSec)
-    path.push(tokenAddress)
-  }
-  
-  const amountsOut:Array<BigNumber> = (await routerContract.methods.getAmountsOut(
-    utils.parseUnits(trade.inputAmount.toExact(), trade.inputAmount.currency.decimals),
-    path
-  ).call()).map((x: string) => BigNumber.from(x))
+    for (let i = 0; i < trade.route.path.length; i++) {
+      const tokenAddress = utils.getAddress(trade.route.path[i].address)
+      const poolIndex = i < trade.route.path.length - 1 ? i : trade.route.path.length - 2 // last 2 tokens inside the same pool
+      const poolAddress = web3.utils.toChecksumAddress(trade.route.pairs[poolIndex].liquidityToken.address)
+      const poolContract = new web3.eth.Contract(PAIR_ABI, poolAddress)
 
+      const isTokenInSec = await isPairTokenSec(
+        tokenAddress,
+        poolContract,
+        trade.route.pairs[poolIndex].token0.address,
+        trade.route.pairs[poolIndex].token1.address
+      )
 
-  // call verifySingleSwap for each pair inside the path
-  for (let i = 0; i < trade.route.pairs.length; i++) {
-    const tokenIn = utils.getAddress(trade.route.path[i].address)
-    const tokenOut = utils.getAddress(trade.route.path[i + 1].address)
-    const token0 = utils.getAddress(trade.route.pairs[i].token0.address)
-    const token1 = utils.getAddress(trade.route.pairs[i].token1.address)
-    const pairContract = pairContracts[i]
-    const amountIn = amountsOut[i]
-    const amountOut = amountsOut[i + 1]
-  
-    const canConsult = await factoryContract.methods.oracleCanConsult(tokenIn, tokenOut).call()
-    let oracleAmountOut = BigNumber.from('0')
-
-    if (canConsult) {
-      oracleAmountOut = BigNumber.from(await factoryContract.methods.oracleConsult(tokenIn, amountIn, tokenOut).call())
+      pairContracts.push(poolContract)
+      isSecs.push(isTokenInSec)
+      path.push(tokenAddress)
     }
 
-    const mitigationEnabled = await pairContract.methods.mitigationEnabled().call()
-    const reserveOut = await getTokenReserve(tokenOut, pairContract, token0, token1)
+    const amountsOut: Array<BigNumber> = (
+      await routerContract.methods
+        .getAmountsOut(utils.parseUnits(trade.inputAmount.toExact(), trade.inputAmount.currency.decimals), path)
+        .call()
+    ).map((x: string) => BigNumber.from(x))
 
-    verifySingleSwap({
-      amountIn: amountIn,
-      amountOut: amountOut,
-      reserveOut: reserveOut,
-      canConsult: canConsult,
-      oracleAmountOut: oracleAmountOut,
-      isTokenInSec: isSecs[i],
-      mitigationEnabled: mitigationEnabled,
-    })
+    // call verifySingleSwap for each pair inside the path
+    for (let i = 0; i < trade.route.pairs.length; i++) {
+      const tokenIn = utils.getAddress(trade.route.path[i].address)
+      const tokenOut = utils.getAddress(trade.route.path[i + 1].address)
+      const token0 = utils.getAddress(trade.route.pairs[i].token0.address)
+      const token1 = utils.getAddress(trade.route.pairs[i].token1.address)
+      const pairContract = pairContracts[i]
+      const amountIn = amountsOut[i]
+      const amountOut = amountsOut[i + 1]
+
+      const canConsult = await factoryContract.methods.oracleCanConsult(tokenIn, tokenOut).call()
+      let oracleAmountOut = BigNumber.from('0')
+
+      if (canConsult) {
+        oracleAmountOut = BigNumber.from(
+          await factoryContract.methods.oracleConsult(tokenIn, amountIn, tokenOut).call()
+        )
+      }
+
+      const mitigationEnabled = await pairContract.methods.mitigationEnabled().call()
+      const reserveOut = await getTokenReserve(tokenOut, pairContract, token0, token1)
+
+      verifySingleSwap({
+        amountIn: amountIn,
+        amountOut: amountOut,
+        reserveOut: reserveOut,
+        canConsult: canConsult,
+        oracleAmountOut: oracleAmountOut,
+        isTokenInSec: isSecs[i],
+        mitigationEnabled: mitigationEnabled,
+      })
+    }
+  } catch (err) {
+    console.error(err)
   }
 }

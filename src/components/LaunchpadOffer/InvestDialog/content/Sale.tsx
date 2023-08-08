@@ -209,7 +209,43 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       <Agreement>
         <AgreementCheckbox state={agreed} toggle={() => setAgreed((state) => !state)} />
         <AgreementText>
-          I have read, fully understood, and agree to be bound by the terms of this Issuance
+          I have read, fully understood and agree to be bound by the&nbsp;
+          <a
+            style={{
+              textDecoration: 'none',
+              color: '#6667FF',
+            }}
+            href="https://drive.google.com/file/d/1IyTwpKXXX2akqYimUstvwfcfFEPuOGBa/view?usp=sharing"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Purchase Agreement
+          </a>
+          ,&nbsp;
+          <a
+            style={{
+              textDecoration: 'none',
+              color: '#6667FF',
+            }}
+            href="https://drive.google.com/file/d/1cpYhcSYbxodNWB_OpvyjbFLwnHgGF6lj/view?usp=sharing"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Investment Memorandum
+          </a>
+          ,&nbsp;
+          <a
+            style={{
+              textDecoration: 'none',
+              color: '#6667FF',
+            }}
+            href="https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Amended Limited Liability Company Operating Agreement
+          </a>
+          &nbsp;and any other relevant agreements in respect of this token sale.
         </AgreementText>
       </Agreement>
 
@@ -274,7 +310,6 @@ const Agreement = styled.div`
 const AgreementText = styled.div`
   flex-grow: 1;
   ${text11}
-  max-width: 250px;
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 

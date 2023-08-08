@@ -26,6 +26,11 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
     justify-content: ${({ isright }) => (isright ? 'flex-end' : 'center')};
     flex-direction: ${({ flexcolumn }) => (flexcolumn ? 'column' : 'row')};
 
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+
     background-color: ${({ theme }) => theme.modalBG};
     ${({ tip }) =>
       tip &&

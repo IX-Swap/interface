@@ -12,4 +12,5 @@ export interface ModalProps {
   scrollable?: boolean
   tip?: string
   isLarge?: boolean
+  name?: string
 }
