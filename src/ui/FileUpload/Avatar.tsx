@@ -75,7 +75,7 @@ export const Avatar = ({
             {currentValue !== undefined ? (
               <AvatarComponent
                 imageValue={imageValue}
-                size={400}
+                size={['100%', '100%']}
                 documentId={getDataroomFileId(currentValue)}
               />
             ) : (
