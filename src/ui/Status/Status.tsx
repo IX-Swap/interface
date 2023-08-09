@@ -1,5 +1,5 @@
 import React from 'react'
-import { Chip } from '@mui/material'
+import { Box, Chip } from '@mui/material'
 import { useStyles } from 'ui/Status/Status.styles'
 import { startCase } from 'lodash'
 
@@ -17,6 +17,7 @@ export interface StatusProps {
   label: string
   type: StatusType
   matchedStatus?: string
+  size?: 'normal' | 'small'
 }
 
 export const getChipVariant = (type: StatusType) => {
@@ -26,8 +27,22 @@ export const getChipVariant = (type: StatusType) => {
   return 'filled'
 }
 
-export const Status = ({ label, type, matchedStatus }: StatusProps) => {
-  const classes = useStyles({ type  })
+export const Status = ({
+  label,
+  type,
+  matchedStatus,
+  size = 'normal'
+}: StatusProps) => {
+  const classes = useStyles({ type })
+
+  if (size === 'small') {
+    return (
+      <Box display={'flex'}>
+        <Box className={classes.small}>{label}</Box>
+      </Box>
+    )
+  }
+
   return (
     <Chip
       className={classes.wrapper}

@@ -23,7 +23,7 @@ export const Stats = ({ title, stats, increase }: StatsProps) => {
       >
         {stats}
       </Typography>
-      <Box display={'flex'} justifyContent={'end'} gap={1} mt={1}>
+      <Box display={'flex'} justifyContent={'end'} gap={0.5} mt={1}>
         <Typography color={'#6ABC10'} fontWeight={'bold'}>
           +{increase}
         </Typography>

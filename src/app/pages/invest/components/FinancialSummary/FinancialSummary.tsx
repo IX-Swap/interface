@@ -8,7 +8,7 @@ import { useMarket } from 'app/pages/invest/hooks/useMarket'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { InvestRoute as paths } from 'app/pages/invest/router/config'
-import { ExchangeRulesLink } from '../ExchangeRulesLink/ExchangeRulesLink'
+// import { ExchangeRulesLink } from '../ExchangeRulesLink/ExchangeRulesLink'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 
@@ -76,9 +76,9 @@ export const FinancialSummary = () => {
             label='24H Low'
             value={<NumberSummaryValue value={data?._24h.low} />}
           />
-          <Grid item sx={{ marginTop: '12px' }}>
+          {/* <Grid item sx={{ marginTop: '12px' }}>
             <ExchangeRulesLink />
-          </Grid>
+          </Grid> */}
           <Grid item xs={6} pb={3}>
             <Button
               component={AppRouterLinkComponent}

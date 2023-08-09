@@ -6,11 +6,11 @@ import { DigitalSecurityOffering } from 'types/dso'
 export const useDisableDSO = (dsoId: string) => {
   const { apiService, snackbarService } = useServices()
 
-  const disableDSO = async (isDisabled: boolean) => {
-    return await apiService.patch<DigitalSecurityOffering>(
+  const disableDSO = async (disabled: boolean) => {
+    return await apiService.post<DigitalSecurityOffering>(
       issuanceURL.dso.disable(dsoId),
       {
-        isDisabled
+        disabled
       }
     )
   }

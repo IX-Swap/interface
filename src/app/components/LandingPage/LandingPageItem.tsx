@@ -50,7 +50,8 @@ export const LandingPageItem = (props: LandingPageItemProps) => {
             }}
           >
             {status !== 'loading' &&
-              location?.pathname?.includes('authorizer') && (
+              location?.pathname?.includes('authorizer') &&
+              total > 0 && (
                 <Typography
                   variant='h6'
                   style={{

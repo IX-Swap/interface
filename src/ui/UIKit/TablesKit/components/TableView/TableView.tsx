@@ -32,7 +32,7 @@ export interface TableViewRendererProps<T> {
   items: T[]
   columns: Array<TableColumn<T>>
   hasActions: boolean
-  actions?: ActionsType<T>
+  actions?: ActionsType
   cacheQueryKey: any
 }
 export interface RenderHeadCellArgs<T> {
@@ -49,7 +49,7 @@ export interface TableViewProps<T> {
   filter?: BaseFilter
   hasStatusWithActions?: boolean
   hasStatus?: boolean
-  actions?: ActionsType<T>
+  actions?: ActionsType
   children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
   fakeLoading?: boolean
@@ -65,6 +65,7 @@ export interface TableViewProps<T> {
   labelRowsPerPage?: React.ReactNode
   activeSortLabel?: string
   paperProps?: PaperProps
+  limitRows?: number
 }
 
 export const TableView = <T,>({
@@ -91,7 +92,8 @@ export const TableView = <T,>({
   paginationPlacement = 'bottom',
   labelRowsPerPage,
   activeSortLabel,
-  paperProps
+  paperProps,
+  limitRows = 0
 }: TableViewProps<T>): JSX.Element => {
   const hasActions = actions !== undefined
   const {
@@ -257,7 +259,7 @@ export const TableView = <T,>({
         <Paper style={{ backgroundColor: 'inherit' }} {...paperProps}>
           <TableContainer style={{ overflow: 'visible' }}>
             <Table aria-label='table' data-testid='table' size={size}>
-              {columns.length > 0 ? (
+              {columns.length > 0 && _items.length > 0 ? (
                 <TableHead
                   style={{
                     display: headDisplay
@@ -279,7 +281,7 @@ export const TableView = <T,>({
                 })
               ) : (
                 <TableRows
-                  items={_items}
+                  items={limitRows === 0 ? _items : _items.slice(0, limitRows)}
                   bordered={bordered}
                   name={name}
                   size={size}
@@ -296,7 +298,9 @@ export const TableView = <T,>({
           </TableContainer>
         </Paper>
       </Grid>
-      {['bottom', 'both'].includes(paginationPlacement) && renderPagination()}
+      {limitRows === 0 &&
+        ['bottom', 'both'].includes(paginationPlacement) &&
+        renderPagination()}
     </Grid>
   )
 }

@@ -22,6 +22,8 @@ import { FinancialInformationForm } from '../FinancialInformationForm/FinancialI
 import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { UsCitizenshipConfirmation } from '../TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
+import { ProofOfAddressForm } from '../UploadDocumentsForm/ProofOfAddressForm'
+import { IndividualUploadDocumentsForm } from '../UploadDocumentsForm/IndividualUploadDocumentsForm'
 
 export const individualInvestorFormSteps = [
   {
@@ -44,6 +46,7 @@ export const individualInvestorFormSteps = [
               </Grid>
             </FieldContainer>
           </Grid>
+          <IndividualUploadDocumentsForm />
           <Grid item xs={12}>
             <FieldContainer>
               <Grid container spacing={5} direction={'column'}>
@@ -56,6 +59,7 @@ export const individualInvestorFormSteps = [
               </Grid>
             </FieldContainer>
           </Grid>
+          <ProofOfAddressForm />
         </Grid>
         <ValidateOnMount />
       </>

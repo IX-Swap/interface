@@ -10,6 +10,7 @@ export default interface User {
   totpConfirmed: boolean
   accessToken: string
   enable2Fa: boolean | undefined
+  updatedAt: Date
 }
 
 export interface CustomField {

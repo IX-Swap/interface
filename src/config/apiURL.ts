@@ -168,7 +168,9 @@ export const tenantsURL = {
 
 export const issuanceURL = {
   sto: {
-    totalStats: `/issuance/stats`
+    totalStats: `/issuance/stats`,
+    mostPopular: `/issuance/top-deals`,
+    upcoming: `/issuance/upcoming-deals`
   },
   commitments: {
     overrideById: (commitmentId?: string) =>
@@ -207,8 +209,9 @@ export const issuanceURL = {
       `/issuance/dso/${userId}/${dsoId}/submit`,
     getActivitiesList: (userId?: string, dsoId?: string) =>
       `/issuance/dso/${userId}/${dsoId}/activities/list`,
-    promote: (dsoId?: string) => `/issuance/dso/${dsoId}/promote`,
-    disable: (dsoId?: string) => `/issuance/dso/${dsoId}/disable`,
+    promote: (dsoId?: string) => `/issuance/dso/${dsoId}/settings`,
+    disable: (dsoId?: string) => `/issuance/dso/${dsoId}/settings`,
+    nonInvestable: (dsoId?: string) => `/issuance/dso/${dsoId}/settings`,
     capitalCall: (userId?: string, dsoId?: string) =>
       `/issuance/dso/${userId}/${dsoId}/capitalCall`,
     closeDeal: () => `/issuance/closure/create`,

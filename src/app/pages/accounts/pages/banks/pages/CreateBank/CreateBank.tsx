@@ -11,12 +11,12 @@ export const CreateBank: React.FC = () => {
   return (
     <Grid container direction='column' spacing={2} style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='Add Bank Account' />
+        <PageHeader title='Add Cash Account' />
       </Grid>
       <RootContainer>
         <Grid item>
           <BankForm
-            submitButtonLabel='Add Bank Account'
+            submitButtonLabel='Add Cash Account'
             onSubmit={createBank}
           />
         </Grid>

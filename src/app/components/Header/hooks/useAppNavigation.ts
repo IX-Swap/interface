@@ -145,6 +145,7 @@ export const useAppNavigation = () => {
       !link.startsWith(AppPath.identity) &&
       !link.startsWith(AppPath.security) &&
       !link.startsWith(AppPath.notifications) &&
+      !link.startsWith(AppPath.accounts) &&
       !link.startsWith(AppPath.dashboard)
     )
   }

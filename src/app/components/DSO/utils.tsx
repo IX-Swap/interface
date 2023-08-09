@@ -18,6 +18,7 @@ import { sanitize } from 'dompurify'
 import { generatePath } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { CreateModeRedirect } from '../FormStepper/FormStepper'
+import { isEqual } from 'lodash'
 
 export const redirectCallback = (
   createModeRedirect: CreateModeRedirect,
@@ -139,7 +140,7 @@ export const transformDSOToFormValuesStep1 = (
       decimalPlaces: 18
     } as any
   }
-  console.log(dso?.corporate, 'aaaccc')
+  //   console.log(dso?.corporate, 'aaaccc')
   return {
     capitalStructure: dso.capitalStructure,
     logo: dso.logo,
@@ -214,7 +215,7 @@ export const transformDSOToFormValues = (
       coverImg: undefined
     } as any
   }
-  console.log(sessionStorage.getItem('corporateId'), 'aaa')
+  //   console.log(sessionStorage.getItem('corporateId'), 'aaa')
   return {
     capitalStructure: dso.capitalStructure,
     totalFundraisingAmount: dso.totalFundraisingAmount,
@@ -256,8 +257,7 @@ export const transformDSOToFormValues = (
   }
 }
 
-export const getDSOInformationFormValues = (data: any) => {
-  console.log(data?.corporate, 'aaabbb')
+export const getSTOInformationFormValues = (data: DSOFormValues | any) => {
   return {
     capitalStructure: data.capitalStructure,
     logo: data.logo,
@@ -285,8 +285,35 @@ export const getDSOInformationFormValues = (data: any) => {
     classification: data.classification ?? null,
     productType: data.productType ?? null,
     completionDate: data.completionDate ?? null,
-    step: 1,
     decimalPlaces: data.decimalPlaces
+  }
+}
+
+export const getCompanyInformationFormValues = (data: DSOFormValues | any) => {
+  return {
+    team: data.team.length > 0 ? [...data.team] : [{}],
+    introduction: data.introduction ?? '',
+    businessModel: data.businessModel ?? '',
+    useOfProceeds: data.useOfProceeds ?? '',
+    fundraisingMilestone: data.fundraisingMilestone ?? ''
+  }
+}
+
+export const getDocumentsFormValues = (data: DSOFormValues | any) => {
+  const videos: any[] = []
+  const faqs: any[] = []
+
+  data.videos.forEach((item: any) => {
+    if (!isEqual(item, {})) videos.push(item)
+  })
+  data.faqs.forEach((item: any) => {
+    if (!isEqual(item, {})) faqs.push(item)
+  })
+  return {
+    subscriptionDocument: data.subscriptionDocument,
+    documents: data.documents,
+    videos: videos.length > 0 ? [...videos] : [{}, {}],
+    faqs: faqs.length > 0 ? [...faqs] : [{}, {}]
   }
 }
 

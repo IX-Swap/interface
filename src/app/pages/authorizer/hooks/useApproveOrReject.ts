@@ -29,7 +29,6 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
   const category = featureCategory ?? categoryFromUrl
   const { uri, listRoute } = authorizerItemMap[category]
   const _uri: string = uri.replace(/\/list$/, '')
-  // console.log(listingType, 'listing')
   //   console.log(category, 'category')
   const url =
     category === 'virtual-accounts'
@@ -73,13 +72,13 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
   }
 
   return useMutation(mutateFn, {
+
     onSuccess: data => {
       if (canInvalidate) {
         void queryCache.invalidateQueries(cacheQueryKey[0])
       }
-
       void snackbarService.showSnackbar(data.message, 'success')
-      replace({ pathname: listRoute, search })
+      replace({ pathname: listRoute })
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

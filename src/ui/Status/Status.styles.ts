@@ -28,14 +28,14 @@ export const useStyles = makeStyles(theme => {
       case 'failed':
       case 'high':
       case 'rejected-match':
-      case 'rejected-confirmed':  
+      case 'rejected-confirmed':
         return theme.palette.error.dark
       case 'draft':
       case 'open':
       case 'not funded':
       case 'pending':
       case 'new-settled':
-      case 'completed-confirmed':  
+      case 'completed-confirmed':
         return theme.palette.info.light
       case 'passed':
         return '#4C88FF'
@@ -68,7 +68,7 @@ export const useStyles = makeStyles(theme => {
       case 'failed':
       case 'high':
       case 'rejected-match':
-      case 'rejected-confirmed':    
+      case 'rejected-confirmed':
         return theme.palette.error.light
       case 'draft':
       case 'open':
@@ -90,6 +90,15 @@ export const useStyles = makeStyles(theme => {
   const getBorderColor = (type: StatusType) => getColor(type)
 
   return {
+    small: {
+      backgroundColor: ({ type }: Props) => getBg(type),
+      border: ({ type }: Props) => `1px solid ${getBorderColor(type)}`,
+      color: ({ type }: Props) => getColor(type),
+      borderRadius: '6px',
+      marginLeft: 'auto',
+      height: '32px',
+      padding: '6px 20px'
+    },
     wrapper: {
       backgroundColor: ({ type }: Props) => getBg(type),
       border: ({ type }: Props) => `1px solid ${getBorderColor(type)}`,

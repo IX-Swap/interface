@@ -5,7 +5,7 @@ import { authorizerQueryKeys } from 'config/queryKeys'
 
 export const Banks: React.FC = () => (
   <AuthorizerList
-    title='Authorize Bank Account(s)'
+    title='Authorize Cash Account(s)'
     uri='/accounts/banks/list'
     name={authorizerQueryKeys.getBankList}
     columns={columns}

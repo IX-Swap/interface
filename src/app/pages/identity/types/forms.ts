@@ -31,6 +31,9 @@ export interface IndividualPersonalInfoFormValues {
   address: Address
   gender: string
   nric?: string
+  proofOfIdentity?: Array<FormArrayElement<DataroomFile>>
+  proofOfAddress?: Array<FormArrayElement<DataroomFile>>
+  evidenceOfAccreditation?: Array<FormArrayElement<DataroomFile>>
 }
 
 export interface TaxResidency {
@@ -124,6 +127,7 @@ export interface IndividualInvestorDeclarationFormValues
     OptInAgreements {}
 
 export interface IdentityDocumentsFormValues {
+  applyingAs: string
   evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
   proofOfIdentity: Array<FormArrayElement<DataroomFile>>
   proofOfAddress: Array<FormArrayElement<DataroomFile>>
@@ -138,17 +142,20 @@ export interface IndividualAgreementsFormValues {
 export interface InvestorCorporateInfoFormValues {
   logo?: DataroomFile | string
   companyLegalName: string
+  countryOfFormation: string
   registrationNumber: string
   legalEntityStatus: string
-  countryOfFormation: string
-  companyAddress: Address
-  mailingAddress?: Address
-  isMailingAddressSame: boolean
-  representatives: RepresentativeFormValues[]
   otherLegalEntityStatus?: string
+  sourceOfFund: string
+  corporateDocuments?: Array<FormArrayElement<DataroomFile>>
+  evidenceOfAccreditation?: Array<FormArrayElement<DataroomFile>>
+  institutionalInvestorDocuments?: Array<FormArrayElement<DataroomFile>>
+  companyAddress: Address
+  isMailingAddressSame: boolean
+  mailingAddress?: Address
   numberOfBusinessOwners: string
   businessActivity: string
-  sourceOfFund: string
+  representatives: RepresentativeFormValues[]
 }
 
 export interface InvestorDirectorsAndBeneficialOwnersFormValues {
@@ -164,13 +171,15 @@ export interface CorporateInvestorDeclarationFormValues
   extends CorporateInvestorStatus,
     OptInAgreements,
     OptOutRequirements {
+  applyingAs: string
   isInstitutionalInvestor: boolean
+  isIntermediaryInvestor: boolean
 }
 
 export interface CorporateInvestorDocumentsFormValues {
-  evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
-  corporateDocuments: Array<FormArrayElement<DataroomFile>>
   //   financialDocuments: Array<FormArrayElement<DataroomFile>>
+  corporateDocuments: Array<FormArrayElement<DataroomFile>>
+  evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
   institutionalInvestorDocuments?: Array<FormArrayElement<DataroomFile>>
 }
 export interface DocumentFieldArrayItemValue {

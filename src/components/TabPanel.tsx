@@ -20,7 +20,6 @@ export const TabPanel = (props: TabPanelProps) => {
     type,
     ...rest
   } = props
-  console.log(props, 'props')
   return (
     <div role='tabpanel' hidden={value !== index}>
       {value === index &&

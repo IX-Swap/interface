@@ -1,7 +1,8 @@
+import React from 'react'
 import { Link } from '@mui/material'
 // import { useGetExchangeRules } from 'app/pages/admin/hooks/useGetExchangeRules'
 // import { DownloadDocument } from 'components/dataroom/DownloadDocument'
-import React from 'react'
+import { API_URL } from 'config'
 
 export const ExchangeRulesLink = () => {
   // const { data, isLoading } = useGetExchangeRules()
@@ -19,7 +20,7 @@ export const ExchangeRulesLink = () => {
     // >
     //   {({ download }) => (
     <Link
-      href='https://api.staging.mozork.com/IXExchangeRules.pdf'
+      href={`${API_URL}/IXExchangeRules.pdf`}
       style={{ cursor: 'pointer' }}
       // onClick={download}
       sx={{

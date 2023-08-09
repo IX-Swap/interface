@@ -41,12 +41,12 @@ export const AuthorizerRoute = {
   virtualAccounts: '/app/authorizer/virtual-accounts',
   dealClosure: '/app/authorizer/closure',
   tokenDeployment: '/app/authorizer/token-deployment',
-  otcTrades: '/app/authorizer/otc-trades',
+  otcTrades: '/app/authorizer/otc-trades'
 }
 
 export const authorizerLandingLinks: InternalRouteProps[] = [
   {
-    label: 'Bank Accounts',
+    label: 'Cash Accounts',
     path: AuthorizerRoute.banks,
     color: '#2B78FD',
     icon: AccountIcon

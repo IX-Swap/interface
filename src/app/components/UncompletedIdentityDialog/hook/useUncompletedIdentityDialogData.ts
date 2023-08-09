@@ -32,7 +32,8 @@ export const useUncompletedIdentityDialogData = () => {
       return `/app/profile/corporates/${corporateIdentities[0].user._id}/${corporateIdentities[0]._id}/edit-issuer`
     }
 
-    return '/'
+    // return '/'
+    return '/app/profile'
   }
 
   const createIdentityInfo = () => {
