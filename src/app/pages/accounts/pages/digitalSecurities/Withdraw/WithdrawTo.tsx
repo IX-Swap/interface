@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Grid, Typography } from '@mui/material'
-import { AddressType } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/AddressType'
+// import { AddressType } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/AddressType'
 import { Network } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/Network'
 import { AddressField } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/AddressField'
 
@@ -14,11 +14,11 @@ export const WithdrawTo = () => {
           </Box>
         </Typography>
       </Grid>
-      <Grid item xs={6} style={{ marginTop: `-10px` }}>
+      <Grid item xs={6}>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <AddressType />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <AddressField />
           </Grid>
