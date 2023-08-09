@@ -4,7 +4,11 @@ import { authURL } from 'config/apiURL'
 import { usersQueryKeys } from 'config/queryKeys'
 import { useParams } from 'react-router-dom'
 
-export const useResetPassword = (email: string, succesHandler: () => void) => {
+export const useResetPassword = (
+  email: string,
+  tenantId: string,
+  succesHandler: () => void
+) => {
   const { apiService, snackbarService } = useServices()
   const params = useParams<{ userId: string }>()
 
@@ -12,7 +16,7 @@ export const useResetPassword = (email: string, succesHandler: () => void) => {
 
   const url = authURL.resetPassword
   const mutateFn = async () => {
-    return await apiService.post(url, { email: email })
+    return await apiService.post(url, { email: email, tenantId: tenantId })
   }
 
   return useMutation(mutateFn, {
