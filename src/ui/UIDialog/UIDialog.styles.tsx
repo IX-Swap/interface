@@ -18,6 +18,18 @@ export const useStyles = makeStyles(theme => {
       top: 23.25,
       marginLeft: 20,
       cursor: 'pointer'
-    }
+    },
+    orderHeadig: {
+    color: "#3B4251",
+    fontSize: '14px'
+    },
+    verticalLine: {
+      display: 'block',
+      height: '1px',
+      border: '0px',
+      borderTop: '1px solid #DBE2EC',
+      margin: '1em 0px',
+      padding: '0px',
+    },
   }
 })
