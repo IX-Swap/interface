@@ -7,14 +7,16 @@ export interface DialogResetPasswordProps {
   open: boolean
   closeDialog: () => void
   email: string
+  tenantId: string
 }
 
 export const DialogResetPassword = ({
   open,
   closeDialog,
-  email
+  email,
+  tenantId
 }: DialogResetPasswordProps) => {
-  const [resetPassword] = useResetPassword(email, closeDialog)
+  const [resetPassword] = useResetPassword(email, tenantId, closeDialog)
 
   return (
     <UserActionsDialog
