@@ -9,7 +9,7 @@ export interface UserVerificationStatusProps {
 }
 
 export const UserAccountStatus = ({ data }: UserVerificationStatusProps) => {
-  const { isResetActive } = data
+  const { enabled } = data
   const classes = useStyles()
   const {
     enableChipText,
@@ -22,7 +22,7 @@ export const UserAccountStatus = ({ data }: UserVerificationStatusProps) => {
     <Grid sx={{ display: 'flex' }} gap={1}>
       <Grid item>
         <Typography>Account Status</Typography>
-        {!isResetActive ? (
+        {enabled ? (
           <Grid style={{ marginTop: '11px' }} item>
             <Chip
               label={<Box className={enableChipText}>Enabled</Box>}
