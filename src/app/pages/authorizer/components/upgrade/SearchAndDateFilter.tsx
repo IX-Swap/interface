@@ -22,7 +22,7 @@ export const SearchAndDateFilter = () => {
 
   return (
     <SearchQueryFilterGroup>
-      <Grid container spacing={3}>
+      <Grid container>
         {/* {isCommitments && (
           <Grid item xs={12}>
             <ClosedDSOsFilter />
@@ -35,6 +35,7 @@ export const SearchAndDateFilter = () => {
           display={'flex'}
           flexDirection={'row'}
           gap={3}
+          px={3}
         >
           <GroupedDateTimeFilter
             name='fromDate'
@@ -83,7 +84,7 @@ export const SearchAndDateFilter = () => {
           </Grid>
         </Grid>
         {onInvestorApplications && (
-          <Grid item xs={12} md={3.3}>
+          <Grid item xs={12} md={3.3} pl={3}>
             <Typography variant={'subtitle2'}>Filter by</Typography>
 
             <Box display={'flex'} flexDirection={'row'}>

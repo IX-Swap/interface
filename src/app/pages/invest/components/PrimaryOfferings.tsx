@@ -1,15 +1,15 @@
 import React from 'react'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { Button, Grid, Typography } from '@mui/material'
+import { Button, Grid, Typography, CircularProgress } from '@mui/material'
 import { useStyles } from 'app/pages/invest/components/styles/OTCMarket.style'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { issuanceURL } from 'config/apiURL'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
+import { STOCard } from 'app/pages/invest/components/STOCard/STOCard'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { Count } from 'app/pages/invest/components/Count'
+// import { Count } from 'app/pages/invest/components/Count'
 import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { Slide } from 'pure-react-carousel'
@@ -18,6 +18,7 @@ import { DSOCardsCarousel } from 'app/pages/invest/components/DSOCardsCarousel/D
 import { DSOTableFilters } from 'app/pages/invest/components/DSOTable/DSOTableFilters'
 import { TablePagination } from 'ui/Pagination/TablePagination'
 import { Pagination } from 'ui/Pagination/Pagination'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export interface PrimaryOfferingsProps {
   fullview?: boolean
@@ -91,7 +92,19 @@ export const PrimaryOfferings = ({
 
   const renderContent = () => {
     if (status === 'loading') {
-      return null
+      return (
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        </>
+      )
     }
 
     const renderItems = (items as DigitalSecurityOffering[]).slice(0, 3)
@@ -106,7 +119,7 @@ export const PrimaryOfferings = ({
           {renderItems.map((dso, i) => (
             <Slide index={i} key={dso._id} className='custom'>
               <Box paddingRight={1.5} height='100%'>
-                <DSOCard
+                <STOCard
                   type={'Primary'}
                   data={dso}
                   viewURL={InvestRoute.view}
@@ -123,7 +136,7 @@ export const PrimaryOfferings = ({
     return (
       <Grid container wrap='wrap' className={classes.container}>
         {(items as DigitalSecurityOffering[]).slice(0, 3).map(dso => (
-          <DSOCard
+          <STOCard
             type='Primary'
             data={dso}
             viewURL={InvestRoute.view}
@@ -149,7 +162,7 @@ export const PrimaryOfferings = ({
         <Grid item xs={12}>
           <Grid container wrap='wrap' className={classes.container}>
             {(items as DigitalSecurityOffering[]).map(dso => (
-              <DSOCard
+              <STOCard
                 type='Primary'
                 data={dso}
                 viewURL={InvestRoute.view}
@@ -189,13 +202,19 @@ export const PrimaryOfferings = ({
     )
   }
 
-  return (
+  return fullview ? (
     <Grid container spacing={3}>
-      {fullview ? (
-        <Grid item xs={12}>
-          <DSOTableFilters setPage={setPage} />
-        </Grid>
-      ) : (
+      <Grid item xs={12}>
+        <DSOTableFilters setPage={setPage} />
+      </Grid>
+
+      <Grid item xs={12}>
+        {renderFullviewContent()}
+      </Grid>
+    </Grid>
+  ) : (
+    <FieldContainer>
+      <Grid container spacing={3}>
         <Grid
           item
           xs={12}
@@ -204,28 +223,32 @@ export const PrimaryOfferings = ({
           justifyContent='space-between'
         >
           <Grid item>
-            <Typography variant='h4' display='inline-flex' alignItems='center'>
-              Primary Offerings <Count value={total} />
+            <Typography variant='h5' display='inline-flex' alignItems='center'>
+              Featured STOs
+              {/* <Count value={total} /> */}
+            </Typography>
+            <Typography color={'text.secondary'} mt={2}>
+              Invest in any of the following STOs.
             </Typography>
           </Grid>
           <Grid item>
             <Button
               component={AppRouterLinkComponent}
               color='primary'
-              variant='text'
+              variant='outlined'
               to={InvestRoute.primaryOfferings}
               data-testid='invest-link'
-              sx={{ px: 0 }}
+              // sx={{ px: 0 }}
             >
-              View all
+              View All Featured STOs
             </Button>
           </Grid>
         </Grid>
-      )}
 
-      <Grid item xs={12}>
-        {fullview ? renderFullviewContent() : renderContent()}
+        <Grid item xs={12}>
+          {renderContent()}
+        </Grid>
       </Grid>
-    </Grid>
+    </FieldContainer>
   )
 }

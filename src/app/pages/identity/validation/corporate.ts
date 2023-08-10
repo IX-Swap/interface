@@ -103,7 +103,7 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
           return await validateCorporateData('companyName', value, data?._id)
         }
       ),
-
+    countryOfFormation: yup.string().required(validationMessages.required),
     registrationNumber: yup
       .string()
       .when('countryOfFormation', {
@@ -140,7 +140,8 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
       then: yup.string().required(validationMessages.required),
       otherwise: yup.string()
     }),
-    countryOfFormation: yup.string().required(validationMessages.required),
+    sourceOfFund: yup.string().required(validationMessages.required),
+    corporateDocuments: corporateDocumentSchema,
     companyAddress: addressSchema.required(validationMessages.required),
     isMailingAddressSame: yup.bool().required(validationMessages.required),
     mailingAddress: yup.object<Address>().when('isMailingAddressSame', {
@@ -148,6 +149,11 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
       then: addressSchema.required(validationMessages.required),
       otherwise: yup.object().notRequired()
     }),
+    numberOfBusinessOwners: yup.string().required(validationMessages.required),
+    businessActivity: yup
+      .string()
+      .matches(lettersOrSpaces, 'Invalid business activity')
+      .required(validationMessages.required),
     representatives: yup
       .array<RepresentativeFormValues>()
       .of(
@@ -171,18 +177,13 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
           })
           .required(validationMessages.required)
       )
-      .required(validationMessages.required),
-    sourceOfFund: yup.string().required(validationMessages.required),
-    numberOfBusinessOwners: yup.string().required(validationMessages.required),
-    businessActivity: yup
-      .string()
-      .matches(lettersOrSpaces, 'Invalid business activity')
       .required(validationMessages.required)
   })
 
 export const directorsAndBeneficialOwnersSchema = yup
   .object()
   .shape<InvestorDirectorsAndBeneficialOwnersFormValues>({
+    // @ts-expect-error
     directors: yup
       .array<DirectorFormValues>()
       .of(
@@ -216,6 +217,7 @@ export const directorsAndBeneficialOwnersSchema = yup
           .required(validationMessages.required)
       )
       .required(validationMessages.required),
+    // @ts-expect-error
     beneficialOwners: yup
       .array<BeneficialOwnerFormValues>()
       .of(
@@ -331,6 +333,7 @@ export const corporateInvestorStatusDeclarationSchema = yup
     isIntermediaryInvestor: yup.bool(),
 
     // optInAgreements: yup.bool().when('applyingAs', {
+    // @ts-expect-error
     optInAgreementsSafeguards: yup.bool().when('applyingAs', {
       is: value => value === 'accredited' || value === 'expert',
       then: yup
@@ -346,11 +349,9 @@ export const corporateInvestorStatusDeclarationSchema = yup
     digitalSecuritiesIssuance: optInAgreementsDependentValueSchema,
     // @ts-expect-error
     allServices: optInAgreementsDependentValueSchema,
-    institutionalInvestorDocuments: institutionalInvestorDocumentsSchema,
     // @ts-expect-error
     evidenceOfAccreditation: corporateDocumentSchema,
-    // @ts-expect-error
-    corporateDocuments: corporateDocumentSchema
+    institutionalInvestorDocuments: institutionalInvestorDocumentsSchema
     // // @ts-expect-error
     // financialDocuments: corporateDocumentSchema
   })

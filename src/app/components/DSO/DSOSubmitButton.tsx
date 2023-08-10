@@ -161,7 +161,7 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
               return await handleSave()
             }
           }}
-          disabled={activeStep !== 2 || disabled && !isEdit } // draft mode dso button enable
+          disabled={activeStep !== 2 || (disabled && !isEdit)} // draft mode dso button enable
           disableElevation
           fullWidth={fullWidth}
           size={size}

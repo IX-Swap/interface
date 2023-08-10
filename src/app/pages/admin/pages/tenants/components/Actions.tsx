@@ -6,11 +6,17 @@ import useStyles from 'app/pages/issuance/components/SecondaryListingsTable/Acti
 import { IconButton, Box } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AdminRoute } from 'app/pages/admin/router/config'
-import { useDeleteTenant } from 'app/pages/admin/hooks/useDeleteTenant'
+import { DialogDeleteTenant } from './DialogDeleteTenant'
+import { useUserActionsDialog } from 'app/pages/admin/hooks/useUserActionsDialog'
 
 export const Actions = ({ item }: any) => {
+  const { deleteTenantOpen, closeDeleteTenant, openDeleteTenant } =
+    useUserActionsDialog()
   const classes = useStyles()
-  const [deleteTenant] = useDeleteTenant(item._id)
+
+  const handleOpenDeleteTenant = () => {
+    openDeleteTenant()
+  }
   return (
     <Box display={'flex'} justifyContent={'flex-start'}>
       <IconButton
@@ -31,13 +37,20 @@ export const Actions = ({ item }: any) => {
       >
         <ViewIcon color='disabled' />
       </IconButton>
-      <IconButton
-        size='medium'
-        className={classes.button}
-        onClick={async () => await deleteTenant()}
-      >
-        <DeleteIcon color='disabled' />
-      </IconButton>
+      <>
+        <IconButton
+          size='medium'
+          className={classes.button}
+          onClick={handleOpenDeleteTenant}
+        >
+          <DeleteIcon color='disabled' />
+        </IconButton>
+        <DialogDeleteTenant
+          id={item._id}
+          closeDialog={closeDeleteTenant}
+          open={deleteTenantOpen}
+        />
+      </>
     </Box>
   )
 }

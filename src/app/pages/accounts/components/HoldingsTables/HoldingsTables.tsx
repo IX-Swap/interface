@@ -1,5 +1,6 @@
 import { TableTabsView } from 'app/components/TableTabsView/TableTabsView'
-import { CurrentHoldingsTable } from 'app/pages/accounts/components/CurrentHoldingsTable/CurrentHoldingsTable'
+// import { CurrentHoldingsTable } from 'app/pages/accounts/components/CurrentHoldingsTable/CurrentHoldingsTable'
+import { CustodyList } from '../../pages/digitalSecurities/DSList/CustodyList'
 import { TradeHistoryTable } from 'app/pages/accounts/components/TradeHistoryTable/TradeHistoryTable'
 import { YourOrdersTable } from 'app/pages/accounts/components/YourOrdersTable/YourOrderstable'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
@@ -18,16 +19,17 @@ export interface HoldingsTablesProps {
 export const HoldingsTables = ({ setHeaderContent }: HoldingsTablesProps) => {
   const tabs = [
     {
-      panel: <CurrentHoldingsTable />,
+      //   panel: <CurrentHoldingsTable />,
+      panel: <CustodyList />,
       label: 'Current Holdings',
-      headerTitle: 'Holdings',
+      headerTitle: 'Current Holdings',
       description:
         'View, manage and track the value of your private company shares and stock options over time. Receive insights, and investment and liquidity opportunities specific to your holdings.'
     },
     {
       panel: <TradeHistoryTable />,
       label: 'Trade History',
-      headerTitle: 'Trades',
+      headerTitle: 'Trade History',
       description:
         'View, manage and filter all the transactions you have made on the secondary market.'
     },

@@ -13,12 +13,15 @@ import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
 import { DSOVideoLinksView } from 'app/components/DSO/components/DSOVideoLinksView'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
 // import { CapTable } from 'app/pages/issuance/pages/CapTable'
-import { Tabs, Tab, Grid } from '@mui/material'
+import { Tabs, Tab, Grid, Box } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
 import { DSOPreviewActions } from 'app/components/DSO/components/DSOPreviewActions'
 import { useStyles } from './DSOPreview.styles'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
+import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwitch'
+import { PromotionSwitch } from 'app/pages/authorizer/components/PromotionSwitch'
+import { NonInvestableSwitch } from 'app/pages/authorizer/components/NonInvestableSwitch'
 
 export interface DSOPreviewProps {
   data: DigitalSecurityOffering
@@ -72,7 +75,8 @@ export const DSOPreview = (props: DSOPreviewProps) => {
           className={tabs}
         >
           <Tab label='Overview' />
-          <Tab label='Commitments' />
+          <Tab label='Activities' />
+          <Tab label='Settings' />
           {/* <Tab label='CapTable' /> */}
         </Tabs>
       </FieldContainer>
@@ -131,6 +135,19 @@ export const DSOPreview = (props: DSOPreviewProps) => {
 
       <TabPanel value={selectedIdx} index={1}>
         <Commitments />
+      </TabPanel>
+      <TabPanel value={selectedIdx} index={2}>
+        <Box sx={{ background: 'white', marginTop: '-32px' }}>
+          <Grid marginLeft={'20px'}>
+            <VSpacer size='medium' />
+            <NonInvestableSwitch dso={data} />
+            <VSpacer size='small' />
+            <VisibilitySwitch dso={data} />
+            <VSpacer size='small' />
+            <PromotionSwitch dso={data} />
+            <VSpacer size='medium' />
+          </Grid>
+        </Box>
       </TabPanel>
 
       {/* <TabPanel value={selectedIdx} index={2}>

@@ -196,7 +196,10 @@ export const issuanceQueryKeys = {
   getActivitiesList: (dsoId?: string) =>
     generateQueryKey('activities-list', dsoId),
   getReport: (reportId?: string) => generateQueryKey('report', reportId),
-  reportTemplate: 'report-template'
+  reportTemplate: 'report-template',
+  totalStats: 'dashboard-total-stats',
+  mostPopular: 'most-popular-deals',
+  upcoming: 'upcoming-deals'
 }
 
 export const virtualAccountQueryKeys = {

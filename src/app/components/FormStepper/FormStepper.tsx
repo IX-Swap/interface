@@ -208,7 +208,7 @@ export const FormStepper = (props: FormStepperProps) => {
         ))}
       </Grid>
       <Grid item container className={classes.rightBlock}>
-        <Box position='sticky' top={90}>
+        <Box position='sticky' top={90} width={'100%'}>
           <Grid item className={classes.stepperBlock}>
             <Paper className={classes.stepperBlockWrapper}>
               <Stepper
@@ -236,20 +236,19 @@ export const FormStepper = (props: FormStepperProps) => {
                         }
                       />
                     </Grid>
-                    {matches ? null : (
-                      <Grid item xs={12}>
-                        <SubmitButton
-                          mutation={submitMutation}
-                          data={data}
-                          step={steps[steps.length - 1]}
-                          fullWidth
-                          size='medium'
-                          submitText={submitText}
-                          statusFieldName={statusFieldName}
-                          isLastStep={activeStep === steps.length - 1}
-                        />
-                      </Grid>
-                    )}
+                    <Grid item xs={12}>
+                      <SubmitButton
+                        mutation={submitMutation}
+                        data={data}
+                        //   step={steps[steps.length - 1]}
+                        step={steps[activeStep]}
+                        fullWidth
+                        size='medium'
+                        submitText={submitText}
+                        statusFieldName={statusFieldName}
+                        isLastStep={activeStep === steps.length - 1}
+                      />
+                    </Grid>
                   </Grid>
                 }
               >

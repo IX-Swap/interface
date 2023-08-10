@@ -1,7 +1,7 @@
 import React from 'react'
 import { ErrorBoundary } from '@sentry/react'
 import { Grid } from '@mui/material'
-import { AppError } from 'app/components/AppError'
+import { AppError } from 'components/AppError'
 import { useDataFromURL } from 'hooks/location/useDataFromURL'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 import { AppRouter } from 'app/router/AppRouter'

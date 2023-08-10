@@ -7,14 +7,14 @@ import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclar
 import { useFormContext } from 'react-hook-form'
 import { IdentityType, InvestorRole } from 'app/pages/identity/utils/shared'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
-import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
+import { CorporateAccreditationDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateAccreditationDocuments/CorporateAccreditationDocuments'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { UIRadio } from 'components/UIRadio/UIRadio'
 import { useStyles } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect.styles'
 import classnames from 'classnames'
-import { IndividualUploadDocumentsForm } from '../UploadDocumentsForm/IndividualUploadDocumentsForm'
+import { IndividualAccreditationDocumentsForm } from '../UploadDocumentsForm/IndividualAccreditationDocumentsForm'
 import { TypedField } from 'components/form/TypedField'
 import { capitalizeFirstLetter } from 'helpers/strings'
 
@@ -202,7 +202,6 @@ export const InvestorDeclarationForm = ({
 
         {!hasDeclaredInstitutionalInvestor ? (
           <>
-            {' '}
             <Grid item xs={12}>
               <FieldContainer>
                 <Grid container direction={'column'} spacing={5}>
@@ -220,18 +219,14 @@ export const InvestorDeclarationForm = ({
               </FieldContainer>
             </Grid>
             {isCorporate ? (
-              <CorporateDocuments
+              <CorporateAccreditationDocuments
                 corporateType={corporateType}
                 investorRole={investorRole as InvestorRole}
               />
             ) : (
-              <Grid item xs={12}>
-                <FieldContainer>
-                  <IndividualUploadDocumentsForm
-                    investorRole={investorRole as InvestorRole}
-                  />
-                </FieldContainer>
-              </Grid>
+              <IndividualAccreditationDocumentsForm
+                investorRole={investorRole as InvestorRole}
+              />
             )}
           </>
         ) : (
@@ -259,6 +254,13 @@ export const InvestorDeclarationForm = ({
                           Regulator
                         </Typography>
                       }
+                    />
+                  </Grid>
+                  {/* Hidden upload field for documents in Corporate KYC. This is to preserve their value in the `documents` field */}
+                  <Grid item hidden>
+                    <UploadDocumentField
+                      name='corporateDocuments'
+                      label='Corporate Documents'
                     />
                   </Grid>
                 </Grid>

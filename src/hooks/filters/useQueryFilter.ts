@@ -53,6 +53,7 @@ export interface QueryFilters {
   sortOrder: '1' | '-1' | undefined
   email: string | undefined
   mobile: string | undefined
+  uinfin: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

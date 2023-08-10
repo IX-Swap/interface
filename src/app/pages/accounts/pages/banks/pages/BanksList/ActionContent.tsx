@@ -1,8 +1,8 @@
-import { List, Box } from '@mui/material'
+import { List } from '@mui/material'
 import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
 import React from 'react'
-import { useStyles } from 'app/pages/accounts/pages/banks/pages/BanksList/ActionContent.styles'
-import { NewAction } from 'app/pages/authorizer/components/NewAction'
+import { Action } from 'app/pages/authorizer/components/Action'
+import { useTheme } from '@mui/styles'
 export interface ActionContentProps extends DropdownContentProps {
   edit: () => void
   remove: () => void
@@ -15,16 +15,25 @@ export const ActionContent = ({
   view,
   injectedProps
 }: ActionContentProps) => {
-  const classes = useStyles()
+  const theme = useTheme()
+
   return (
-    <Box className={classes.wrapper}>
-      <List data-testid='dropdown' onClick={injectedProps.close}>
-        <NewAction label='View details' onClick={view} />
-        <div className={classes.separator} />
-        <NewAction label='Edit' onClick={edit} />
-        <div className={classes.separator} />
-        <NewAction label='Delete' onClick={remove} />
-      </List>
-    </Box>
+    <List data-testid='dropdown' onClick={injectedProps.close}>
+      <Action
+        label='View details'
+        onClick={view}
+        style={{
+          borderBottom: `1px solid ${theme.palette.table.border}`
+        }}
+      />
+      <Action
+        label='Edit'
+        onClick={edit}
+        style={{
+          borderBottom: `1px solid ${theme.palette.table.border}`
+        }}
+      />
+      <Action label='Delete' onClick={remove} />
+    </List>
   )
 }

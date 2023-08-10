@@ -24,7 +24,7 @@ export const DSOInformationFields = () => {
   const corporateData = useAllCorporates({ all: true, status: 'Approved' })
   return (
     <Fragment>
-      {isSuperUser &&  (
+      {isSuperUser && (
         <>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -78,6 +78,7 @@ export const DSOInformationFields = () => {
           </FieldContainer>
         </Grid>
       </Grid>
+      <VSpacer size='small' />
     </Fragment>
   )
 }

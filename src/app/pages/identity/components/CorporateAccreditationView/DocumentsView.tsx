@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { DataroomFile } from 'types/dataroomFile'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
@@ -13,9 +13,6 @@ export interface DocumentsViewProps {
 export const DocumentsView = (props: DocumentsViewProps) => {
   const { data: documents, investorRole = 'accredited' } = props
 
-  const corporateDocuments = documents.filter(
-    doc => Object.values(doc).length > 0 && doc.type === 'Corporate Documents'
-  )
   //   const financialDocuments = documents.filter(
   //     doc => Object.values(doc).length > 0 && doc.type === 'Financial Documents'
   //   )
@@ -26,16 +23,6 @@ export const DocumentsView = (props: DocumentsViewProps) => {
   return (
     <FieldContainer>
       <Grid item container direction={'column'} spacing={5}>
-        <Grid item container direction={'column'} spacing={3}>
-          <Grid item>
-            <FormSectionHeader title='Corporate Documents' />
-          </Grid>
-
-          <Grid item container direction={'column'} spacing={2}>
-            <Documents documents={corporateDocuments} />
-          </Grid>
-        </Grid>
-
         {/* <Grid item container direction={'column'} spacing={3}>
           <Grid item>
             <FormSectionHeader title='Financial Documents' />
@@ -48,11 +35,13 @@ export const DocumentsView = (props: DocumentsViewProps) => {
 
         <Grid item container direction={'column'} spacing={3}>
           <Grid item>
-            <FormSectionHeader
-              title={`Evidence of ${
-                investorRole !== 'expert' ? 'Accreditation' : 'Expertise'
-              }`}
-            />
+            <FormSectionHeader title={'Accreditation Documents'} />
+          </Grid>
+
+          <Grid item>
+            <Typography>{`Evidence of ${
+              investorRole !== 'expert' ? 'Accreditation' : 'Expertise'
+            }`}</Typography>
           </Grid>
 
           <Grid item container direction={'column'} spacing={2}>

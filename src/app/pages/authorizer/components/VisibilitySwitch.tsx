@@ -4,6 +4,7 @@ import { red } from '@mui/material/colors'
 import { useDisableDSO } from 'app/pages/authorizer/hooks/useDisableDSO'
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 
 // TODO: move to ui folder
 const RedSwitch = withStyles({
@@ -49,14 +50,23 @@ export const VisibilitySwitch = (props: VisibilitySwitchProps) => {
               invest page
             </Typography>
           }
+          arrow
+          placement='right'
         >
-          <Typography
-            variant='subtitle2'
-            style={{ fontWeight: isDisabled ? 600 : 400 }}
-            color={isDisabled ? 'error' : 'textPrimary'}
-          >
-            Disabled
-          </Typography>
+          <div style={{ display: 'flex' }}>
+            <Typography
+              variant='subtitle2'
+              style={{ fontWeight: isDisabled ? 600 : 400 }}
+              color={isDisabled ? 'error' : 'textPrimary'}
+            >
+              Disabled
+            </Typography>
+
+            <InfoOutlinedIcon
+              style={{ marginLeft: '5px' }}
+              color='disabled'
+            ></InfoOutlinedIcon>
+          </div>
         </Tooltip>
       }
     />

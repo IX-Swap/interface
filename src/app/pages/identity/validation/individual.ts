@@ -49,6 +49,10 @@ export const personalInfoSchema = yup
         .required(validationMessages.required),
       otherwise: yup.string()
     })
+    // @ts-expect-error
+    // proofOfAddress: documentsSchema,
+    // @ts-expect-error
+    // proofOfIdentity: documentsSchema
   })
 
 export const financialInfoSchema = (data?: IndividualIdentity) =>
@@ -206,11 +210,11 @@ export const individualInvestorStatusDeclarationSchema = yup
       // @ts-expect-error
       allServices: optInAgreementsDependentValueSchema,
       // @ts-expect-error
-      evidenceOfAccreditation: documentsSchema,
-      // @ts-expect-error
-      proofOfAddress: documentsSchema,
-      // @ts-expect-error
-      proofOfIdentity: documentsSchema
+      evidenceOfAccreditation: documentsSchema
+      //   // @ts-expect-error
+      //   proofOfAddress: documentsSchema,
+      //   // @ts-expect-error
+      //   proofOfIdentity: documentsSchema
     }
   )
   .test(
@@ -223,11 +227,11 @@ export const individualInvestorDocumentsSchema = yup
   .object()
   .shape<IdentityDocumentsFormValues>({
     // @ts-expect-error
-    evidenceOfAccreditation: documentsSchema,
-    // @ts-expect-error
-    proofOfAddress: documentsSchema,
-    // @ts-expect-error
-    proofOfIdentity: documentsSchema
+    evidenceOfAccreditation: documentsSchema
+    // // @ts-expect-error
+    // proofOfAddress: documentsSchema,
+    // // @ts-expect-error
+    // proofOfIdentity: documentsSchema
   })
 
 export const individualInvestorAgreementsSchema = yup

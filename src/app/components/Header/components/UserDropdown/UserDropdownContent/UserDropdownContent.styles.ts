@@ -18,6 +18,8 @@ export const useStyles = makeStyles(theme => ({
     padding: theme.spacing(0, 3, 1.5),
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8
+    // height: '450px',
+    // overflowY: 'scroll'
   },
   border: {
     height: 1,

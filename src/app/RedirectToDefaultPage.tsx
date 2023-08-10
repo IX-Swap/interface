@@ -24,5 +24,6 @@ export const RedirectToDefaultPage = () => {
     showUncompletedIdentityDialog()
   }
 
-  return <Redirect to={isInvestor ? AppRoute.home : AppRoute.identity} />
+  //   return <Redirect to={isInvestor ? AppRoute.dashboard : AppRoute.identity} />
+  return <Redirect to={AppRoute.dashboard} />
 }

@@ -3,7 +3,7 @@ import { getCorporateInvestorDeclarationFormValues } from 'app/pages/identity/ut
 import { getCorporateInvestorDeclarationRequestPayload } from 'app/pages/identity/utils/corporate/requests'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import {
-  corporateAccreditationSchema,
+  //   corporateAccreditationSchema,
   corporateInvestorStatusDeclarationSchema
 } from 'app/pages/identity/validation/corporate'
 import { CorporateAccreditationContainer } from 'app/pages/identity/containers/CorporateAccreditationContainer'
@@ -23,11 +23,10 @@ export const getCorporateAccreditationFormSteps = () => [
   },
   {
     label: 'Review & Submit',
-    getFormValues: (data: any) =>
-      getCorporateInvestorDeclarationFormValues(data),
-    getRequestPayload: (data: any) =>
-      getCorporateInvestorDeclarationRequestPayload(data),
-    validationSchema: corporateAccreditationSchema,
+    getFormValues: getCorporateInvestorDeclarationFormValues,
+    getRequestPayload: getCorporateInvestorDeclarationRequestPayload,
+    validationSchema: corporateInvestorStatusDeclarationSchema,
+    // validationSchema: corporateAccreditationSchema,
     component: () => <CorporateAccreditationContainer />
   }
 ]

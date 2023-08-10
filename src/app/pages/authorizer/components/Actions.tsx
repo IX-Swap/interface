@@ -14,12 +14,12 @@ import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsD
 import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsDropdownContent'
 import { useLocation } from 'react-router-dom'
 import { get } from 'lodash'
-
 export interface ActionsProps {
   item: any
   cacheQueryKey: any
   featureCategory?: string
   statusFieldName?: string
+  // matchedStatusField?: string
 }
 
 export type ActionsType = (props: ActionsProps) => ReactElement
@@ -30,7 +30,8 @@ const getUserId = (item: any, category: string) => {
       'individuals',
       'individuals/accreditation',
       'corporates',
-      'corporates/accreditation'
+      'corporates/accreditation',
+      'otc'
     ].includes(category)
   ) {
     if (typeof item.user === 'string') {
@@ -47,29 +48,32 @@ const getUserId = (item: any, category: string) => {
 
 export const Actions = (props: ActionsProps): JSX.Element => {
   const {
+    // matchedStatusField,
     item,
     cacheQueryKey,
     featureCategory,
     statusFieldName = 'status'
   } = props
+
   const location = useLocation()
   const id: string = item._id
   const splitted = location.pathname.split('/')
   const status = location.search.split('=')[1]
 
+  // const isLoadingMatched = isConfirming || isRejectingMatched
   const category =
     typeof featureCategory !== 'undefined'
       ? featureCategory
       : splitted[splitted.length - 1]
   const userId: string = getUserId(item, category)
   const listingType: string = item.listingType
-  //   console.log(props.item, 'propsdpdppd')
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'approve',
     cacheQueryKey,
     listingType,
-    featureCategory
+    featureCategory,
+    item
   })
 
   const [reject, { isLoading: isRejecting }] = useApproveOrReject({
@@ -77,7 +81,8 @@ export const Actions = (props: ActionsProps): JSX.Element => {
     action: 'reject',
     cacheQueryKey,
     listingType,
-    featureCategory
+    featureCategory,
+    item
   })
 
   const view = () =>
@@ -107,14 +112,7 @@ export const Actions = (props: ActionsProps): JSX.Element => {
           `/app/authorizer/corporates/${userId}/${id}/view?tab=accreditation`
         )
       : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
-  //   console.log(
-  //     category,
-  //     listingType,
-  //     userId,
-  //     id,
-  //     status,
-  //     'category,listingType,userId, id,status'
-  //   )
+
   const isUnauthorized = item.status === 'Submitted' || 'Approved'
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
@@ -167,11 +165,12 @@ export const Actions = (props: ActionsProps): JSX.Element => {
                 <ActionsDropdownContent
                   {...props}
                   hideApproval={
-                    !['Submitted', 'PENDING', 'Rejected'].includes(statusField)
+                    !['Submitted', 'PENDING', 'NEW'].includes(statusField)
                   }
                   hideRejection={
-                    !['Submitted', 'PENDING', 'Approved'].includes(statusField)
+                    !['Submitted', 'PENDING', 'NEW'].includes(statusField)
                   }
+                  hideView={category === 'otc/matched'}
                   approve={approve}
                   reject={reject}
                   view={view}

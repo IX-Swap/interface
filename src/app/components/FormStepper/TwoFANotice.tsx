@@ -5,6 +5,7 @@ import {
 } from '@mui/material'
 // import { SecurityRoute } from 'app/pages/security/router/config'
 import { useAuth } from 'hooks/auth/useAuth'
+import { isUpdatedAtMoreThanAYear } from 'hooks/utils'
 import React from 'react'
 // import { Icon } from 'ui/Icons/Icon'
 // import { useTheme } from '@mui/material/styles'
@@ -14,13 +15,16 @@ import { Actions } from 'app/components/TwoFADialog/Actions/Actions'
 import { useStyles } from 'app/components/Header/components/TwoFADropdown/TwoFADropdownContent/TwoFADropdownContent.styles'
 
 export const TwoFANotice = () => {
-  const { user } = useAuth()
+  const { user = { enable2Fa: undefined } } = useAuth()
+  const { enable2Fa, updatedAt } = user
+  const hasEnabled = enable2Fa ?? false
+  const isMoreThanAYear = isUpdatedAtMoreThanAYear(updatedAt)
   //   const theme = useTheme()
   //   const matches = useMediaQuery(theme.breakpoints.down('md'))
   const classes = useStyles()
 
   //   if ((user !== undefined && user.enable2Fa === true) || matches) {
-  return (
+  return !hasEnabled || isMoreThanAYear ? (
     <Paper sx={{ p: 5, borderRadius: 2 }}>
       <Grid container direction='column' textAlign={'center'}>
         <Grid item className={classes.iconBlock}>
@@ -37,6 +41,8 @@ export const TwoFANotice = () => {
         </Grid>
       </Grid>
     </Paper>
+  ) : (
+    <></>
   )
   //   }
 

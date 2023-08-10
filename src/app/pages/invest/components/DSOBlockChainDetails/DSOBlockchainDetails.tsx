@@ -80,20 +80,25 @@ export const DSOBlockchainDetails = ({ dso }: DSOBlockchainDetailsProps) => {
           <FileCopyOutlined color='action' />
         </IconButton>
       </Box>
-      <Tooltip
-        title={metamaskMessageMap[accountState]}
-        aria-label={`add-to-metamask`}
-        arrow
-      >
-        <Box>
-          <IconButton
-            size='small'
-            onClick={async () => await metamaskCallbackMap[accountState]()}
-          >
-            <img src={MetamaskIcon} alt={'Icon'} />
-          </IconButton>
-        </Box>
-      </Tooltip>
+      {dso?.investable ? (
+        <Tooltip
+          title={metamaskMessageMap[accountState]}
+          aria-label={`add-to-metamask`}
+          arrow
+        >
+          <Box>
+            <IconButton
+              size='small'
+              onClick={async () => await metamaskCallbackMap[accountState]()}
+            >
+              <img src={MetamaskIcon} alt={'Icon'} />
+            </IconButton>
+          </Box>
+        </Tooltip>
+      ) : (
+        ''
+      )}
+
       <WalletModal isOpen={isOpen} toggleModal={toggleOpen} />
     </Box>
   )

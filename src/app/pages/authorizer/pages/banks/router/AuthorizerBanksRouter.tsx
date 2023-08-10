@@ -10,7 +10,7 @@ export const AuthorizerBanksRouter = () => {
     <Switch>
       <AppRoute
         exact
-        breadcrumb='Bank Account Details'
+        breadcrumb='Cash Account Details'
         path='/app/authorizer/bank-accounts/:userId/:bankId/view'
       >
         <BankAuthorization />

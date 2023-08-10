@@ -3,11 +3,12 @@ import { IdentityRoute } from 'app/pages/identity/router/config'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { useLogout } from 'auth/hooks/useLogout'
-import { useIsAdmin, useIsClient, useIsAuthorizer } from 'helpers/acl'
+import { useIsAdmin, useIsAuthorizer, useIsClient } from 'helpers/acl'
 import {
   AccountCircleOutlined,
   PowerSettingsNewOutlined,
-  SettingsOutlined
+  SettingsOutlined,
+  AdminPanelSettingsOutlined
 } from '@mui/icons-material'
 import { Box, List } from '@mui/material'
 import { UserDropdownItem } from 'app/components/Header/components/UserDropdown/UserDropdownItem/UserDropdownItem'
@@ -15,6 +16,8 @@ import { UserDropdownInfo } from 'app/components/Header/components/UserDropdown/
 import { DropdownContentProps } from 'app/components/Header/components/Dropdown/Dropdown'
 import { useStyles } from 'app/components/Header/components/UserDropdown/UserDropdownContent/UserDropdownContent.styles'
 import { AppRoute } from 'app/router/config'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
+import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 
 export const UserDropdownContent = (props: DropdownContentProps) => {
   const classes = useStyles()
@@ -22,6 +25,7 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
   const isAdmin = useIsAdmin()
   const isClient = useIsClient()
   const isAuthorizer = useIsAuthorizer()
+  const isSuperUser = isAuthorizer || isAdmin
   const handleClose = props.injectedProps.close
   return (
     <Fragment>
@@ -35,19 +39,30 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
             link={IdentityRoute.list}
             onClose={handleClose}
           />
-          <Box className={classes.border} />
           {isAdmin && (
             <>
+              <Box className={classes.border} />
               <UserDropdownItem
                 icon={AccountCircleOutlined}
                 label='Admin'
                 link={AdminRoute.landing}
                 onClose={handleClose}
               />
-              <Box className={classes.border} />
             </>
           )}
-          {isAdmin || isClient || isAuthorizer ? (
+
+          {isSuperUser && (
+            <>
+              <Box className={classes.border} />
+              <UserDropdownItem
+                icon={AdminPanelSettingsOutlined}
+                label='Authorizer'
+                link={AuthorizerRoute.landing}
+                onClose={handleClose}
+              />
+            </>
+          )}
+          {isClient ? (
             <>
               <Box className={classes.border} />
               <UserDropdownItem
@@ -60,6 +75,62 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
           ) : (
             ''
           )}
+          <Box className={classes.border} />
+          <UserDropdownItem
+            icon={AccountCircleOutlined}
+            label='Accounts'
+            link={AccountsRoute.landing}
+            onClose={handleClose}
+          />
+          {/* <UserDropdownItem
+            icon={Payment}
+            label='Cash'
+            link={AccountsRoute.cash}
+            onClose={handleClose}
+          />
+          <Box className={classes.border} />
+          <UserDropdownItem
+            icon={AccountCircleOutlined}
+            label='Commitments'
+            link={AccountsRoute.commitments}
+            onClose={handleClose}
+          />
+          <Box className={classes.border} />
+          <UserDropdownItem
+            icon={Token}
+            label='Security Tokens'
+            link={AccountsRoute.digitalSecurities}
+            onClose={handleClose}
+          />
+          <Box className={classes.border} />
+          <UserDropdownItem
+            icon={ReceiptLong}
+            label='Transactions'
+            link={AccountsRoute.transactions}
+            onClose={handleClose}
+          />
+          <Box className={classes.border} />
+          <UserDropdownItem
+            icon={AccountBalanceWallet}
+            label='Wallet Addresses'
+            link={AccountsRoute.withdrawalAddresses}
+            onClose={handleClose}
+          />
+          <Box className={classes.border} />
+          <UserDropdownItem
+            icon={SummarizeOutlined}
+            label='My Reports'
+            link={AccountsRoute.reports}
+            onClose={handleClose}
+          />
+          <Box className={classes.border} />
+          <UserDropdownItem
+            icon={CurrencyExchangeRounded}
+            label='My Exchanges Holdings'
+            link={AccountsRoute.myHoldings}
+            onClose={handleClose}
+          /> */}
+          <Box className={classes.border} />
           <UserDropdownItem
             icon={SettingsOutlined}
             label='Settings'

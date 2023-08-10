@@ -67,9 +67,15 @@ export const RegisterFields = ({ isMyInfo = false }: RegisterFieldsProps) => {
   const { bottomBlock, topBlock } = useStyles({})
   //   const nameErrors = errors.name
   const agreeErrors = errors.agree
-
+  const host = window.location.hostname
   const renderSingPassButton = () => {
-    if (isMyInfo) {
+    if (
+      isMyInfo ||
+      (host !== 'dev.mozork.com' &&
+        host !== 'staging.mozork.com' &&
+        host !== 'prime.investax.io' &&
+        host !== 'localhost')
+    ) {
       return null
     }
     return <SingPass />

@@ -1,49 +1,28 @@
 import React from 'react'
-import { Grid, Box, Typography, Button } from '@mui/material'
-import { ReactComponent as AddressEmptyState } from 'assets/address-empty-state.svg'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
+import { Grid, Typography } from '@mui/material'
+import { ReactComponent as AddWalletAddressImage } from 'assets/add-wallet-address.svg'
+import { AddWalletAddressButton } from '../WithdrawalAddressesList'
 
 export const NoWithdrawalAddressData = () => {
   return (
-    <Grid container>
-      <Grid
-        item
-        xs={12}
-        md={5}
-        container
-        justifyContent='center'
-        alignItems='center'
-      >
-        <Box py={8}>
-          <AddressEmptyState />
-        </Box>
+    <Grid container flexDirection={'column'} pt={8}>
+      <Grid item xs>
+        <AddWalletAddressImage />
       </Grid>
-      <Grid item xs={12} md={7}>
-        <Box p={8} height='100%' display='flex'>
-          <Grid container alignItems='center' spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant='h5' align='center'>
-                You have not added any withdrawal address yet.
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant='body1'>
-                All the blockchain addresses added by you or assigned to you
-                will be displayed here. Let’s add your first address.
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                component={AppRouterLinkComponent}
-                to={WithdrawalAddressesRoute.create}
-                color='primary'
-              >
-                Add Withdrawal Address
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
+      <Grid item xs container flexDirection={'column'} spacing={3} pt={5}>
+        <Grid item xs>
+          <Typography variant='h5' align='center'>
+            Add Wallet
+          </Typography>
+        </Grid>
+        <Grid item xs>
+          <Typography variant='body1'>
+            You have no existing wallet address yet.
+          </Typography>
+        </Grid>
+        <Grid item xs>
+          <AddWalletAddressButton />
+        </Grid>
       </Grid>
     </Grid>
   )

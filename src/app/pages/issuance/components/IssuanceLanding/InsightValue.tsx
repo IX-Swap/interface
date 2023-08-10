@@ -9,5 +9,9 @@ export interface InsightValueProps {
 export const InsightValue = ({ value }: InsightValueProps) => {
   const classes = useStyles()
 
-  return <Typography className={classes.root}>{value}</Typography>
+  return (
+    <Typography className={classes.root} pt={1.5} pb={4.4}>
+      {value}
+    </Typography>
+  )
 }
