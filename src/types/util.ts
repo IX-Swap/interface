@@ -44,6 +44,8 @@ export type FundStatus =
 
 export type TradingStatus = 'Pending' | 'Matched' | 'Filled' | ''
 
+export type TradingStatusPast = 'Approved' | 'Draft' | 'Rejected' | ''
+
 export type OtcTradesStatus =
   | 'Submitted'
   | 'Confirmed'

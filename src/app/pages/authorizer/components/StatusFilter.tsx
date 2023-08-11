@@ -13,7 +13,8 @@ import {
   AuthorizableStatus,
   DeploymentStatus,
   FundStatus,
-  TradingStatus
+  TradingStatus,
+  TradingStatusPast
 } from 'types/util'
 import { Box } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
@@ -145,6 +146,7 @@ export interface TradingStatusFilterProps {
 export const TradingStatusFilter = ({
   statusFilters
 }: TradingStatusFilterProps) => {
+  console.log(statusFilters, 'tetetetet')
   return (
     <SearchQueryFilter<'tradingStatus'> name='tradingStatus' defaultValue=''>
       {({ value, onChange }) => (
@@ -164,9 +166,9 @@ export const TradingStatusFilter = ({
   )
 }
 
-export const StatusFilter = () => {
+export const StatusFilter = (props: any) => {
   const category = useAuthorizerCategory()
-  console.log(category, 'catttt')
+  console.log(category, props.index, 'catttt')
   if (category === 'commitments') {
     return <BaseFundStatusFilter statusFilters={fundStatusFilters} />
   }
@@ -174,8 +176,11 @@ export const StatusFilter = () => {
   if (category === 'token-deployment') {
     return <DeploymentStatusFilter statusFilters={deploymentStatusFilter} />
   }
-  if (category === 'trading') {
+  if (category === 'trading' && props?.index === 0) {
     return <TradingStatusFilter statusFilters={tradingStatusFilter} />
+  }
+  if (category === 'trading' && props?.index === 1) {
+    return <TradingStatusFilter statusFilters={tradingStatusFilterPast} />
   }
   return <BaseStatusFilter statusFilters={[...statusFilters, ...allFilter]} />
 }
@@ -202,6 +207,12 @@ interface TradingStatusFilterItemType {
   icon: SvgIconComponent
   title: string
   value: TradingStatus
+}
+
+interface TradingStatusFilterItemPastType {
+  icon: SvgIconComponent
+  title: string
+  value: TradingStatusPast
 }
 
 export const allFilter: StatusFilterItemType[] = [
@@ -289,5 +300,24 @@ export const tradingStatusFilter: TradingStatusFilterItemType[] = [
     icon: UnauthorizedIcon,
     value: 'Filled',
     title: 'Filled'
+  }
+]
+
+export const tradingStatusFilterPast: TradingStatusFilterItemPastType[] = [
+  { icon: UnauthorizedIcon, value: '', title: 'All' },
+  {
+    icon: UnauthorizedIcon,
+    value: 'Approved',
+    title: 'Completed'
+  },
+  {
+    icon: UnauthorizedIcon,
+    value: 'Draft',
+    title: 'Draft'
+  },
+  {
+    icon: UnauthorizedIcon,
+    value: 'Rejected',
+    title: 'Rejected'
   }
 ]
