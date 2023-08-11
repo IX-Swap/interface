@@ -7,15 +7,40 @@ import BGError from 'assets/images/500 Error.svg'
 import { AppRouterLinkComponent } from './AppRouterLink'
 export const AppError = (_props: FallbackProps) => {
   return (
-    <Grid container>
-      <Grid item xs={7}>
-        <img style={{ position: 'absolute' }} src={BGImage}></img>
+    <Grid
+      container
+      sx={{
+        display: 'flex',
+        justifyContent: {
+          xs: 'center',
+          lg: 'start'
+        }
+      }}
+    >
+      <Grid
+        item
+        xs={6}
+        zIndex={-1}
+        sx={{
+          display: {
+            xs: 'none',
+            lg: 'block'
+          },
+          marginRight: '150px'
+        }}
+      >
+        <img
+          style={{ position: 'absolute' }}
+          src={BGImage}
+          alt={'Background'}
+        />
         <img
           style={{ position: 'relative', top: '194px', left: '80px' }}
           src={BGError}
-        ></img>
+          alt={'Error'}
+        />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={10} md={8} lg={4}>
         <Grid>
           <Typography
             sx={{
@@ -39,15 +64,16 @@ export const AppError = (_props: FallbackProps) => {
             Sorry, an error has occurred!
           </Typography>
           <Typography style={{ fontSize: '24px', textAlign: 'center' }}>
-            Our best engineers are fixing the problem. <br />
-            In the meantime, try reloading the page or <br /> click the button
-            below to return to home <br /> page.
+            Our best engineers are fixing the problem. In the meantime, try
+            reloading the page or click the button below to return to home page.
           </Typography>
           <Grid marginTop={5} textAlign={'center'}>
             <Button
               sx={{ padding: '20px 35px 20px 35px', fontSize: '20px' }}
               color='primary'
               variant='contained'
+              component={AppRouterLinkComponent}
+              to='/'
             >
               Return to Home Page
             </Button>
@@ -55,8 +81,6 @@ export const AppError = (_props: FallbackProps) => {
 
           <Grid textAlign={'center'} marginTop={5}>
             <Link
-              component={AppRouterLinkComponent}
-              to='/'
               sx={{
                 fontSize: 18,
                 textDecoration: 'none',
@@ -67,7 +91,7 @@ export const AppError = (_props: FallbackProps) => {
               }}
               href={'mailto:support@investax.io'}
             >
-              <MailOutlineIcon sx={{ marginRight: '10px' }} color='disabled' />
+              <MailOutlineIcon sx={{ marginRight: '5px' }} color='disabled' />
               <Typography color={'#778194'} variant={'body1'}>
                 support@investax.io
               </Typography>
@@ -75,7 +99,6 @@ export const AppError = (_props: FallbackProps) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={1}></Grid>
     </Grid>
   )
 }
