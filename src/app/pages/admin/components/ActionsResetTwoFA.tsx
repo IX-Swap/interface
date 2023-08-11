@@ -30,6 +30,7 @@ export const ActionResetTwoFA = ({ data }: ActionResetTwoFAProps) => {
         variant='contained'
         color='primary'
         disableElevation
+        disabled={!data?.twoFactorAuth}
       >
         Reset 2FA
       </Button>
