@@ -10,6 +10,7 @@ export interface FilterProps {
 
 export const Filters = (props: FilterProps) => {
   const { type } = props
+
   return (
     <>
       {type === 'matched' ? (
@@ -20,11 +21,11 @@ export const Filters = (props: FilterProps) => {
         </SidebarSection>
       ) : (
         <>
-          <SidebarSection padded>
+          <SidebarSection hasBorder padded>
             <StatusFilter />
           </SidebarSection>
 
-          <SidebarSection padded>
+          <SidebarSection style={{ paddingRight: '30px' }}>
             <Form>
               <SearchAndDateFilter />
             </Form>
