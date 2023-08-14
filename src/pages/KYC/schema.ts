@@ -44,9 +44,9 @@ export const individualErrorsSchema = yup.object().shape({
   employer: yup.string().required('Required'),
   income: yup.object().nullable().required('Required'),
 
-  investorDeclarationIsFilled: yup
-    .boolean()
-    .when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
+  // investorDeclarationIsFilled: yup
+  //   .boolean()
+  //   .when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
 
   isTotalAssets: yup.boolean(),
   isAnnualIncome: yup.boolean(),
@@ -93,7 +93,7 @@ export const individualErrorsSchema = yup.object().shape({
     otherwise: yup.string().nullable(),
   }),
 
-  accredited: yup.number().min(0).max(1),
+  // accredited: yup.number().min(0).max(1),
   acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
   acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
   evidenceOfAccreditation: yup.array().when('accredited', {
@@ -101,17 +101,17 @@ export const individualErrorsSchema = yup.object().shape({
     then: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
     otherwise: yup.array().nullable(),
   }),
-  confirmStatusDeclaration: yup.boolean().when('accredited', {
-    is: 1,
-    then: yup.boolean().isTrue('Required').required('Required'),
-    otherwise: yup.boolean().nullable(),
-  }),
+  // confirmStatusDeclaration: yup.boolean().when('accredited', {
+  //   is: 1,
+  //   then: yup.boolean().isTrue('Required').required('Required'),
+  //   otherwise: yup.boolean().nullable(),
+  // }),
 })
 
 export const corporateErrorsSchema = yup.object().shape({
   corporateName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   typeOfLegalEntity: yup.object().nullable().required('Required'),
-  countryOfIncorporation: yup.object().nullable().required('Required'),
+  // countryOfIncorporation: yup.object().nullable().required('Required'),
   businessActivity: yup.string().required('Required'),
 
   registrationNumber: yup.string().required('Required'),
@@ -141,7 +141,7 @@ export const corporateErrorsSchema = yup.object().shape({
     then: yup.string().required('Required'),
     otherwise: yup.string(),
   }),
-  accredited: yup.number().min(0).max(1),
+  // accredited: yup.number().min(0).max(1),
   isUSTaxPayer: yup.number().min(0).max(1),
   usTin: yup.string().when('isUSTaxPayer', {
     is: 1,

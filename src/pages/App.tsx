@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useEffect, useMemo } from 'react'
+import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { Redirect, RouteComponentProps, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { useDispatch } from 'react-redux'
@@ -36,6 +36,11 @@ import { ApplicationModal, clearStore } from 'state/application/actions'
 import { routeConfigs, RouteMapEntry } from './AppRoutes'
 import { routes } from 'utils/routes'
 import { ROLES } from 'constants/roles'
+import { RestrictedModal } from './RestrictedModal'
+import axios from 'axios'
+import { ip } from 'services/apiUrls'
+import { isMobile } from 'react-device-detect'
+import { ConnectWalletModal } from './Connect Wallet Modal'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -83,10 +88,16 @@ export default function App() {
   const getWitelabelConfig = useGetWihitelabelConfig()
   const { config } = useWhitelabelState()
   const hideHeader = useHideHeader()
-
   const { kyc } = useKYCState()
-
   const isWhitelisted = isUserWhitelisted({ account, chainId })
+  const [countryCode, setCountryCode] = useState()
+  useEffect(() => {
+    const getCountryCode = async () => {
+      const response = await axios.get(ip.getIPAddress)
+      setCountryCode(response?.data?.countryCode)
+    }
+    getCountryCode()
+  }, [])
 
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
@@ -213,42 +224,46 @@ export default function App() {
   }
 
   return (
-    <ErrorBoundary>
-      <Route component={GoogleAnalyticsReporter} />
-      <Route component={DarkModeQueryParamReader} />
-      <Route component={ApeModeQueryParamReader} />
-      <AppBackground />
-      <Popups />
-      <AppWrapper>
-        {!isAdminKyc && !hideHeader && <Header />}
-        <ToggleableBody
-          isVisible={visibleBody}
-          {...(isAdminKyc && { style: { marginTop: 26 } })}
-          hideHeader={hideHeader}
-        >
-          <IXSBalanceModal />
-          <Web3ReactManager>
-            <Suspense
-              fallback={
-                <>
-                  <LoadingIndicator isLoading />
-                </>
-              }
-            >
-              <Switch>
-                {routeConfigs.map(routeGenerator).filter((route) => !!route)}
+    <>
+      {isMobile && !window.ethereum && <ConnectWalletModal />}
+      {countryCode === 'SG' && <RestrictedModal />}
+      <ErrorBoundary>
+        <Route component={GoogleAnalyticsReporter} />
+        <Route component={DarkModeQueryParamReader} />
+        <Route component={ApeModeQueryParamReader} />
+        <AppBackground />
+        <Popups />
+        <AppWrapper>
+          {!isAdminKyc && !hideHeader && <Header />}
+          <ToggleableBody
+            isVisible={visibleBody}
+            {...(isAdminKyc && { style: { marginTop: 26 } })}
+            hideHeader={hideHeader}
+          >
+            <IXSBalanceModal />
+            <Web3ReactManager>
+              <Suspense
+                fallback={
+                  <>
+                    <LoadingIndicator isLoading />
+                  </>
+                }
+              >
+                <Switch>
+                  {routeConfigs.map(routeGenerator).filter((route) => !!route)}
 
-                {useRedirect && (
-                  <Route
-                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                  />
-                )}
-              </Switch>
-            </Suspense>
-          </Web3ReactManager>
-        </ToggleableBody>
-        {!hideHeader && <Footer />}
-      </AppWrapper>
-    </ErrorBoundary>
+                  {useRedirect && (
+                    <Route
+                      component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                    />
+                  )}
+                </Switch>
+              </Suspense>
+            </Web3ReactManager>
+          </ToggleableBody>
+          {!hideHeader && <Footer />}
+        </AppWrapper>
+      </ErrorBoundary>
+    </>
   )
 }

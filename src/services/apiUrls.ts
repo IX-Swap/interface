@@ -76,6 +76,10 @@ export const kyc = {
   corporateProgress: `newkyc/corporate/progress`,
 }
 
+export const ip = {
+  getIPAddress: 'https://api.bigdatacloud.net/data/reverse-geocode-client'
+}
+
 export const broker = {
   choose: (pairId: number) => `broker-dealer/choose/${pairId}`,
   pairs: (tokenId: number) => `broker-dealer/${tokenId}/pairs`,

@@ -18,9 +18,10 @@ import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
 import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentTypeInfo } from './InvestmentTypeInfo'
 import { text1, text2, text4, text5, text58 } from 'components/LaunchpadMisc/typography'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface Props {
-  offer: Offer
+  offer: any
 }
 
 const getStageLabel = (stage: OfferStatus) => {
@@ -31,6 +32,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const checkKYC = useCheckKYC()
   const history = useHistory()
   const theme = useTheme()
+  const { account } = useActiveWeb3React()
 
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
@@ -43,7 +45,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     [offer?.status]
   )
   const canOpen = React.useMemo(() => {
-    return checkKYC(offer.allowOnlyAccredited, isClosed)
+    return checkKYC(offer.allowOnlyAccredited, isClosed) || account?.toLowerCase() === offer?.vetting.issuance.user.ethAddress?.toLowerCase()
   }, [checkKYC, isClosed, offer?.allowOnlyAccredited])
 
   const stage = React.useMemo(() => {

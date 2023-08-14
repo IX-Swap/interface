@@ -2038,10 +2038,10 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
-"@ixswap1/default-token-list@^1.0.4":
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.3.7.tgz#74f25a21eceaf8f2f777ef595ec95bf383815787"
-  integrity sha512-czVDcwouTV68qIPoXxeN7iPcCyoUih2ThAxTeVX+Y5Ao7Cznf4K+W1qUJv59OpYoLRW6kDJALdOpyT3oTaTWoQ==
+"@ixswap1/default-token-list@^1.3.8":
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.3.8.tgz#ecf8e56ea4066062db2b0f0db58d7a4317e00127"
+  integrity sha512-bvYDPTsI7lNr+7uzugGmLur+te21BCricBKoiMHpdzHMtkAdN45359oU4JSVedmANIamEVit8GdDtNzydOv4Eg==
 
 "@ixswap1/lib@1.x.x":
   version "1.3.0"
@@ -2075,10 +2075,10 @@
     "@ixswap1/lib" "1.x.x"
     "@ixswap1/v2-core" "1.x.x"
 
-"@ixswap1/v2-sdk@^1.0.7":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.3.2.tgz#ece2d83f473aa24333ec1c144b9a8304f4cb660b"
-  integrity sha512-4W13GQNVuURX2EHoCuquQCGzlVrm2pO2SRANuykYJYbwRFwNulsMlnAdot1Fngqet0sdFqaZz+W2kP5rpefuLg==
+"@ixswap1/v2-sdk@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.3.3.tgz#f8a3d462b15e5a10193df18e750f09b40dacaf66"
+  integrity sha512-rbPK1yWgA9YgA2FXMLbHcC7QeRntPHZMEqfZDhOX+6Q2p9BovsT1xX64sBqJQIEB7+0wJFRE5qhc4cP8SIvE2w==
   dependencies:
     "@ethersproject/address" "^5.0.0"
     "@ethersproject/solidity" "^5.0.0"
