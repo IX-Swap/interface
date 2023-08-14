@@ -67,7 +67,7 @@ export const AdminRouter = () => {
       <AppRoute
         exact
         path={AdminRoute.virtualAccountAudit}
-        breadcrumb='VA Audit'
+        breadcrumb='Virtual Account Audit'
       >
         <VirtualAccountAudit />
       </AppRoute>

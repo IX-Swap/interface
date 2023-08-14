@@ -1,6 +1,7 @@
 import { Actions } from './Actions'
 import { columns } from './columns'
-import { TableView } from 'components/TableWithPagination/TableView'
+// import { TableView } from 'components/TableWithPagination/TableView'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { virtualAccountsAudit } from 'config/apiURL'
 import { virtualAccountsAuditQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
