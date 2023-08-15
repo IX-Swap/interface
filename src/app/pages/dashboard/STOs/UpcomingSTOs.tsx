@@ -54,7 +54,7 @@ export const UpcomingSTOs = () => {
   return (
     <FieldContainer>
       <Typography variant='h5' color={'otpInput.color'}>
-        Calendar
+        Launch Date
       </Typography>
       <TableContainer component={Paper} sx={{ marginTop: '15px' }}>
         <Table aria-label='Upcoming STOs'>
