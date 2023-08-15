@@ -18,7 +18,7 @@ import { AuthorizerIssuanceDetailsRouter } from 'app/pages/authorizer/pages/issu
 import { AuthorizerListingsRouter } from '../pages/listings/router/AuthorizerListingsRouter'
 import { AuthorizerVirtualAccountsRouter } from 'app/pages/authorizer/pages/VirtualAccounts/router/AuthorizerVirtualAccountsRouter'
 import { AuthorizerDealClosureRouter } from 'app/pages/authorizer/pages/DealClosures/AuthorizerDealClosuerRouter'
-import { AuthorizerLandingPage } from 'app/components/LandingPage/AuthorizerLandingPage'
+import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { TokenDeploymentRouter } from 'app/pages/authorizer/pages/TokenDeployment/TokenDeploymentRouter'
 import { OTCTrades } from '../pages/otcTrades/OTCTrades'
 // import { AuthorizerIndividualAccreditationsRouter } from 'app/pages/authorizer/pages/individualAccreditations/router/AuthorizerIndividualAccreditationsRouter'
@@ -118,10 +118,7 @@ export const AuthorizerRouter = () => {
       </AppRoute>
 
       <AppRoute path={AuthorizerRoute.landing}>
-        <AuthorizerLandingPage
-          links={authorizerLandingLinks}
-          title='Authorization'
-        />
+        <LandingPage links={authorizerLandingLinks} title='Authorizer' />
       </AppRoute>
     </Switch>
   )

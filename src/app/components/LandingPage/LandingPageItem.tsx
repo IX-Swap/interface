@@ -10,6 +10,8 @@ import { safeGeneratePath } from 'helpers/router'
 import { AppFeature } from 'types/app'
 import { useAuthorizerPendingItems } from 'app/pages/authorizer/hooks/useAuthorizerPendingItems'
 import { useHistory } from 'react-router-dom'
+import { useTheme } from '@mui/material/styles'
+
 export interface LandingPageItemProps {
   link: InternalRouteProps
   variant?: number
@@ -17,8 +19,9 @@ export interface LandingPageItemProps {
 
 export const LandingPageItem = (props: LandingPageItemProps) => {
   const {
-    link: { path, color = 'black', icon = Noop, label }
+    link: { path, icon = Noop, label }
   } = props
+  const theme = useTheme()
   const classes = useStyles()
   const { location } = useHistory()
   let { feature: category, params } = getCurrentLocationData(
@@ -45,7 +48,7 @@ export const LandingPageItem = (props: LandingPageItemProps) => {
           <Box
             className={classes.iconWrapper}
             style={{
-              backgroundColor: color,
+              backgroundColor: theme.palette.primary.main,
               position: 'relative'
             }}
           >
