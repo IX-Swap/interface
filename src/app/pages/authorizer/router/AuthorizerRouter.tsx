@@ -26,7 +26,7 @@ import { OTCTrades } from '../pages/otcTrades/OTCTrades'
 export const AuthorizerRouter = () => {
   return (
     <Switch>
-      <AppRoute breadcrumb='Cash Accounts' path={AuthorizerRoute.banks}>
+      <AppRoute breadcrumb='Bank Accounts' path={AuthorizerRoute.banks}>
         <AuthorizerBanksRouter />
       </AppRoute>
 

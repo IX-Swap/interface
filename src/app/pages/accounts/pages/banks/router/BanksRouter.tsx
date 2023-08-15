@@ -14,13 +14,13 @@ export const BanksRouter = () => {
         <BanksList />
       </AppRoute>
       <AppRoute
-        breadcrumb='Edit Cash Account Details'
+        breadcrumb='Edit Bank Account Details'
         exact
         path={BanksRoute.edit}
       >
         <EditBank />
       </AppRoute>
-      <AppRoute breadcrumb='Add Cash Account' exact path={BanksRoute.create}>
+      <AppRoute breadcrumb='Add Bank Account' exact path={BanksRoute.create}>
         <CreateBank />
       </AppRoute>
     </Switch>

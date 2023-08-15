@@ -16,7 +16,7 @@ export const BanksList: React.FC = () => {
         {!isTablet && (
           <PageHeader
             data-testid='desktop-header'
-            title='Cash Accounts'
+            title='Bank Accounts'
             endComponent={<Header />}
           />
         )}
@@ -30,7 +30,7 @@ export const BanksList: React.FC = () => {
           >
             <Grid item xs={12}>
               <PageHeader
-                title='Cash Accounts'
+                title='Bank Accounts'
                 showBreadcrumbs={false}
                 styled={false}
                 variant='h3'

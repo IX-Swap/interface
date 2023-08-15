@@ -24,6 +24,7 @@ import { OTPDialog } from 'app/pages/accounts/components/OTPDialog/OTPDialog'
 import { Typography, useTheme } from '@mui/material'
 import { useRemoveBank } from 'app/pages/accounts/pages/banks/hooks/useRemoveBank'
 import { NoData } from './NoData'
+import { AddBankAccountButton } from '../../../withdraw/components/AddBankAccountButton'
 
 export const Table = ({ limitRows = 0 }: { limitRows?: number }) => {
   const theme = useTheme()
@@ -94,7 +95,11 @@ export const Table = ({ limitRows = 0 }: { limitRows?: number }) => {
         //   }
         // }}
         limitRows={limitRows}
-        noDataComponent={<NoData />}
+        noDataComponent={
+          <NoData>
+            <AddBankAccountButton variant={'contained'} />
+          </NoData>
+        }
       >
         {isTablet
           ? (props: TableViewRendererProps<Bank>) => (

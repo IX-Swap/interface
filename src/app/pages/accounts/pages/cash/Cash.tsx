@@ -25,7 +25,7 @@ export const Cash = () => {
               component={AppRouterLinkComponent}
               to={AccountsRoute.banks}
             >
-              View Cash Accounts
+              View Bank Accounts
             </Button>
           }
         />
