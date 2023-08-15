@@ -3,7 +3,8 @@ import { Button, Grid, Typography } from '@mui/material'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
-import { Table } from 'app/pages/accounts/pages/banks/pages/BanksList/Table'
+import { CashTable } from 'app/pages/accounts/pages/cash/components/CashTable'
+import { NoCashButtons } from 'app/pages/accounts/pages/cash/components/NoCashButtons'
 
 export const CashAccounts = () => {
   return (
@@ -26,7 +27,7 @@ export const CashAccounts = () => {
               component={AppRouterLinkComponent}
               color='primary'
               variant='outlined'
-              to={AccountsRoute.banks}
+              to={AccountsRoute.cash}
             >
               View All Cash Accounts
             </Button>
@@ -34,7 +35,8 @@ export const CashAccounts = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Table limitRows={2} />
+          <CashTable />
+          <NoCashButtons />
         </Grid>
       </Grid>
     </FieldContainer>

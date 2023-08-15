@@ -1,12 +1,16 @@
-import { Button } from '@mui/material'
+import { Button, Box } from '@mui/material'
 import { useVirtualAccounts } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { useStyles } from 'app/pages/accounts/pages/cash/components/NoCashButtons.styles'
 import { useAuth } from 'hooks/auth/useAuth'
 import React, { useState } from 'react'
 import { useAssignVirtualAccount } from 'app/pages/accounts/pages/banks/hooks/useAssignVirtualAccount'
 import { AssignConfirmDialog } from './AutoAssignVirtualAccountForm/AssignConfirmDialog'
+import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { Add } from '@mui/icons-material'
 
 export const NoCashButtons = () => {
+  const { isTablet } = useAppBreakpoints()
   const classes = useStyles()
   const { data: items, isLoading } = useVirtualAccounts()
   const [selectedCurrency, setSelectedCurrency] = useState<'SGD' | 'USD'>('SGD')
@@ -37,18 +41,27 @@ export const NoCashButtons = () => {
 
   return (
     <>
-      {missingAccounts.map(account => {
-        return (
-          <Button
-            className={classes.button}
-            fullWidth
-            key={account}
-            onClick={() => onClick(account)}
-          >
-            Add {account} account
-          </Button>
-        )
-      })}
+      <Box display={'flex'} justifyContent={'center'}>
+        {missingAccounts.map(account => {
+          return (
+            <TwoFADialogWrapper>
+              <Button
+                className={classes.button}
+                color='primary'
+                disableElevation
+                fullWidth={isTablet}
+                key={account}
+                variant='contained'
+                onClick={() => onClick(account)}
+                size='medium'
+              >
+                <Add sx={{ marginRight: 1 }} />
+                <span>Add {account} account</span>
+              </Button>
+            </TwoFADialogWrapper>
+          )
+        })}
+      </Box>
       <AssignConfirmDialog
         handleSubmit={handleSubmit}
         assigning={loadingAssign}

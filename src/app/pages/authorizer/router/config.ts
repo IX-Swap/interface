@@ -48,7 +48,7 @@ export const AuthorizerRoute = {
 
 export const authorizerLandingLinks: InternalRouteProps[] = [
   {
-    label: 'Cash Accounts',
+    label: 'Bank Accounts',
     path: AuthorizerRoute.banks,
     icon: AccountIcon
   },
