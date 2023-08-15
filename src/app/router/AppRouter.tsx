@@ -81,7 +81,7 @@ export const AppRouter = () => {
       )}
 
       {isAuthorizer && (
-        <AppRoute breadcrumb='Authorization' path={AppPath.authorizer}>
+        <AppRoute breadcrumb='Authorizer' path={AppPath.authorizer}>
           <AuthorizerRoot />
         </AppRoute>
       )}
