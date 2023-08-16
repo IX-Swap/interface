@@ -1,4 +1,4 @@
-import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
+import { Web3ReactProvider } from '@web3-react/core'
 import { CookiesProvider } from 'react-cookie'
 import React, { StrictMode } from 'react'
 import { isMobile } from 'react-device-detect'
@@ -27,8 +27,6 @@ import SecTokenListUpdater from './state/secTokens/updater'
 import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
-
-const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
