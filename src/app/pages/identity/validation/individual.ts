@@ -8,6 +8,7 @@ import {
   taxIdentificationNumberSchema,
   validationMessages,
   documentsSchema,
+  proofOfIdentitySchema,
   //   individualInvestorStatusDeclarationItemSchema,
   optInAgreementsDependentValueSchema,
   expertInvestorAgreementSchema
@@ -48,11 +49,11 @@ export const personalInfoSchema = yup
         .max(12, 'Maximum of 12 characters')
         .required(validationMessages.required),
       otherwise: yup.string()
-    })
+    }),
     // @ts-expect-error
-    // proofOfAddress: documentsSchema,
+    proofOfAddress: documentsSchema,
     // @ts-expect-error
-    // proofOfIdentity: documentsSchema
+    proofOfIdentity: proofOfIdentitySchema
   })
 
 export const financialInfoSchema = (data?: IndividualIdentity) =>

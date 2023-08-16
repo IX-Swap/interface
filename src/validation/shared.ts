@@ -172,6 +172,16 @@ export const taxResidenciesArraySchema = yup
   .array<TaxResidency>()
   .of(taxResidenciesSchema.required(validationMessages.required))
 
+export const proofOfIdentitySchema = yup
+  .array<DocumentFieldArrayItemValue>()
+  .of(
+    yup.object<DocumentFieldArrayItemValue>({
+      // @ts-expect-error
+      id: yup.string()
+    })
+  )
+  .required(validationMessages.required)
+
 export const documentsSchema = yup
   .array<DocumentFieldArrayItemValue>()
   .of(
