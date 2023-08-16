@@ -43,7 +43,7 @@ export const STODetails = (props: STODetailsProps) => {
   return (
     <Grid container direction='column' gap={3}>
       <Grid item container justifyContent={'space-between'}>
-        <Grid item>
+        <Grid item xs={6}>
           <Typography color={'dialog.color'} fontWeight={'bold'}>
             {data.tokenName}
           </Typography>
