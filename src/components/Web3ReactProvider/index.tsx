@@ -2,9 +2,9 @@ import { useWeb3React, Web3ReactHooks, Web3ReactProvider } from '@web3-react/cor
 import type { MetaMask } from '@web3-react/metamask'
 import type { WalletConnect as WalletConnectV2 } from '@web3-react/walletconnect-v2'
 
-import { hooks as metaMaskHooks, metaMask } from '../connectors/metaMask'
-import { hooks as walletConnectV2Hooks, walletConnectV2 } from '../connectors/walletConnectV2'
-import { getName } from '../utils'
+import { hooks as metaMaskHooks, metaMask } from '../../connectors/metaMask'
+import { hooks as walletConnectV2Hooks, walletConnectV2 } from '../../connectors/walletConnectV2'
+import { getName } from '../../utils/web3ReactUtils'
 
 const connectors: [MetaMask | WalletConnectV2, Web3ReactHooks][] = [
   [metaMask, metaMaskHooks],
@@ -17,7 +17,7 @@ function Child() {
   return null
 }
 
-export default function ProviderExample() {
+export default function Web3Provider() {
   return (
     <Web3ReactProvider connectors={connectors}>
       <Child />

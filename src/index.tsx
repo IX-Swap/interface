@@ -1,6 +1,5 @@
-import { Web3ReactProvider } from '@web3-react/core'
 import { CookiesProvider } from 'react-cookie'
-import React, { StrictMode } from 'react'
+import { StrictMode } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
@@ -10,11 +9,9 @@ import { LocalizationProvider } from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import 'react-phone-input-2/lib/bootstrap.css'
 
-import getLibrary from './utils/getLibrary'
 import { MuiThemeProvider } from './theme/muiTheme'
 import { CustomHeaders } from './components/CustomHeaders'
 import Blocklist from './components/Blocklist'
-import { NetworkContextName } from './constants/misc'
 import { LanguageProvider } from './i18n'
 import './index.css'
 import App from './pages/App'
@@ -27,6 +24,7 @@ import SecTokenListUpdater from './state/secTokens/updater'
 import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
+import Web3Provider from 'components/Web3ReactProvider'
 
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
@@ -45,8 +43,8 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
     customBrowserType: !isMobile
       ? 'desktop'
       : 'web3' in window || 'ethereum' in window
-      ? 'mobileWeb3'
-      : 'mobileRegular',
+        ? 'mobileWeb3'
+        : 'mobileRegular',
   })
 } else {
   ReactGA.initialize('test', { testMode: true, debug: true })
@@ -70,25 +68,22 @@ ReactDOM.render(
     <Provider store={store}>
       <HashRouter>
         <LanguageProvider>
-          <Web3ReactProvider getLibrary={getLibrary}>
-            <Web3ProviderNetwork getLibrary={getLibrary}>
-              <Blocklist>
-                <Updaters />
-                <ThemeProvider>
-                  <ThemedGlobalStyle />
-                  <MuiThemeProvider>
-                    <LocalizationProvider dateAdapter={DayJsUtils}>
-                      <CookiesProvider>
-                        <CustomHeaders />
+          <Web3Provider />
+          <Blocklist>
+            <Updaters />
+            <ThemeProvider>
+              <ThemedGlobalStyle />
+              <MuiThemeProvider>
+                <LocalizationProvider dateAdapter={DayJsUtils}>
+                  <CookiesProvider>
+                    <CustomHeaders />
 
-                        <App />
-                      </CookiesProvider>
-                    </LocalizationProvider>
-                  </MuiThemeProvider>
-                </ThemeProvider>
-              </Blocklist>
-            </Web3ProviderNetwork>
-          </Web3ReactProvider>
+                    <App />
+                  </CookiesProvider>
+                </LocalizationProvider>
+              </MuiThemeProvider>
+            </ThemeProvider>
+          </Blocklist>
         </LanguageProvider>
       </HashRouter>
     </Provider>
