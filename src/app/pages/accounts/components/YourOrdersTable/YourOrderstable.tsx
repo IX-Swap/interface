@@ -52,6 +52,8 @@ export const YourOrdersTable = () => {
           hasActions
           actions={Actions}
           paperProps={{ variant: 'elevation', elevation: 0 }}
+          showExport
+          exportFileName='Orders'
         />
       </Grid>
     </Grid>
