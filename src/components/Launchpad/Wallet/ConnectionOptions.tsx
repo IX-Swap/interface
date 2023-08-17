@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 import { isMobile } from 'react-device-detect'
-import { injected } from 'connectors'
+import { metaMask } from 'connectors/metaMask'
 import { useWeb3React } from '@web3-react/core'
 import { SUPPORTED_WALLETS, WalletInfo } from 'constants/wallet'
 import { ExternalLink } from 'theme'
@@ -24,7 +24,7 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
       {Object.entries(SUPPORTED_WALLETS).map(([key, option]) => {
 
 
-        if (option.connector === injected) {
+        if (option.connector === metaMask) {
           if (!(window.web3 || window.ethereum)) {
             if (option.name === 'MetaMask') {
               return (
