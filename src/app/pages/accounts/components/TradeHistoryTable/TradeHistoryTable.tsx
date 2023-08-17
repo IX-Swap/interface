@@ -46,6 +46,8 @@ export const TradeHistoryTable = () => {
           columns={columns}
           filter={filter}
           paperProps={{ variant: 'elevation', elevation: 0 }}
+          showExport
+          exportFileName='Trade History'
         />
       </Grid>
     </Grid>
