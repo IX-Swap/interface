@@ -149,23 +149,26 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       }
 
       if (launchpadContract) {
-        let data
+        let transaction
         if (status === OfferStatus.preSale) {
           const { data: proof } = await getPresaleProof()
-          data = await launchpadContract.investPreSale(contractSaleId, parsedAmount, proof)
+          transaction = await launchpadContract.investPreSale(contractSaleId, parsedAmount, proof)
         } else if (status === OfferStatus.sale) {
           const { data: investStructData } = await getInvestPublicSaleStructData(amount, account)
-          data = await launchpadContract.investPublicSale(contractSaleId, parsedAmount, investStructData)
+          transaction = await launchpadContract.investPublicSale(contractSaleId, parsedAmount, investStructData)
         }
 
-        if (data.hash)
+        if (transaction) {
+          const receipt = await transaction.wait()
+
           await invest(status, {
             amount,
-            txHash: data.hash,
+            txHash: receipt.transactionHash,
           })
 
-        submitState.setSuccess()
-        openSuccess()
+          submitState.setSuccess()
+          openSuccess()
+        }
       }
     } catch (e) {
       console.error(e)
