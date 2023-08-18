@@ -16,6 +16,7 @@ export const RejectButton = (props: RejectButtonProps) => {
 
   return (
     <Button
+      style={{ width: '45%' }}
       size='large'
       variant='contained'
       onClick={handleClick}

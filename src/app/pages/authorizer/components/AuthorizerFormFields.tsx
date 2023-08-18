@@ -7,20 +7,23 @@ import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { VSpacer } from 'components/VSpacer'
 import { booleanValueExtractor } from 'helpers/forms'
+import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { AuthorizableStatus } from 'types/util'
 import { TextInput } from 'ui/TextInput/TextInput'
+import { AuthorizerActions } from './AuthorizerActions/AuthorizerActions'
 
 export interface AuthorizerFormFieldsProps {
   status: AuthorizableStatus
   itemId: string
   listingType: string
   feature?: string
+  documents?: any
 }
 
 export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
-  const { itemId, status, listingType, feature } = props
+  const { itemId, status, listingType, feature, documents } = props
   const { control } = useFormContext<AuthorizerFormValues>()
   const actionParams = {
     id: itemId,
@@ -48,6 +51,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
   //   const canReject = !isProcessing && ['Submitted', 'Approved'].includes(status)
   const canApprove = !isProcessing && ['Submitted'].includes(status)
   const canReject = !isProcessing && ['Submitted'].includes(status)
+  const category = useAuthorizerCategory()
 
   return (
     <>
@@ -61,6 +65,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
         label='Comment / Remarks'
         name='comment'
         multiline
+        rows={5}
       />
       <VSpacer size='small' />
 
@@ -74,7 +79,18 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
         name='sharedWithUser'
       />
       <VSpacer size='medium' />
-      <Grid container sx={{ display: 'flex', justifyContent: 'end' }}>
+
+      {category !== 'virtual-accounts' && (
+        <AuthorizerActions
+          id={itemId}
+          feature={feature}
+          documents={documents}
+        />
+      )}
+      <Grid
+        container
+        sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}
+      >
         <ApproveButton disabled={!canApprove} approve={approve} />
         <Box mx={1} />
         <RejectButton disabled={!canReject} reject={reject} />

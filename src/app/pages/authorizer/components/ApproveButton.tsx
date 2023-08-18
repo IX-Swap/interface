@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '@mui/material'
+import { ConfirmDisableDialogBox } from './ApproveDialogBox'
 
 export interface ApproveButtonProps {
   disabled: boolean
@@ -8,17 +9,35 @@ export interface ApproveButtonProps {
 
 export const ApproveButton = (props: ApproveButtonProps) => {
   const { disabled, approve } = props
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
 
-  const handleClick = async () => approve()
+  const closeDialog = () => {
+    setOpenConfirmDialog(false)
+  }
+
+  const openDialog = () => {
+    setOpenConfirmDialog(true)
+  }
+
+  // const handleClick = async () => approve()
 
   return (
-    <Button
-      size='large'
-      variant='contained'
-      onClick={handleClick}
-      disabled={disabled}
-    >
-      Approve
-    </Button>
+    <>
+      <Button
+        style={{ width: '45%' }}
+        size='large'
+        variant='contained'
+        // onClick={handleClick}
+        onClick={openDialog}
+        disabled={disabled}
+      >
+        Approve
+      </Button>
+      <ConfirmDisableDialogBox
+        approve={approve}
+        open={openConfirmDialog}
+        close={closeDialog}
+      />
+    </>
   )
 }
