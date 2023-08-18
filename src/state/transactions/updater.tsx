@@ -51,7 +51,7 @@ export default function Updater(): null {
       .forEach((hash) => {
         library
           .getTransactionReceipt(hash)
-          .then((receipt) => {
+          .then((receipt: any) => {
             if (receipt) {
               dispatch(
                 finalizeTransaction({
@@ -89,7 +89,7 @@ export default function Updater(): null {
               dispatch(checkedTransaction({ chainId, hash, blockNumber: lastBlockNumber }))
             }
           })
-          .catch((error) => {
+          .catch((error: any) => {
             console.error(`failed to check transaction hash: ${hash}`, error)
           })
       })
