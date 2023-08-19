@@ -8,6 +8,8 @@ import { HashRouter } from 'react-router-dom'
 import { LocalizationProvider } from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import 'react-phone-input-2/lib/bootstrap.css'
+import { Web3ReactProvider } from '@web3-react/core'
+import { connectors } from 'connectors'
 
 import { MuiThemeProvider } from './theme/muiTheme'
 import { CustomHeaders } from './components/CustomHeaders'
@@ -24,7 +26,6 @@ import SecTokenListUpdater from './state/secTokens/updater'
 import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
-import Web3Provider from 'components/Web3ReactProvider'
 
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
@@ -68,7 +69,7 @@ ReactDOM.render(
     <Provider store={store}>
       <HashRouter>
         <LanguageProvider>
-          <Web3Provider />
+        <Web3ReactProvider connectors={connectors}>
           <Blocklist>
             <Updaters />
             <ThemeProvider>
@@ -84,6 +85,7 @@ ReactDOM.render(
               </MuiThemeProvider>
             </ThemeProvider>
           </Blocklist>
+          </Web3ReactProvider>
         </LanguageProvider>
       </HashRouter>
     </Provider>

@@ -144,15 +144,10 @@
     "i18n:compile": "lingui compile",
     "integration-test": "cd e2e_tests && xvfb-run npx playwright test",
     "postinstall": "yarn compile-contract-types",
-    "start": "GENERATE_SOURCEMAP=true yarn compile-contract-types && react-app-rewired start",
+    "start": "GENERATE_SOURCEMAP=false yarn compile-contract-types && react-app-rewired start",
     "test": "react-app-rewired test --env=jsdom"
   },
-  "eslintConfig": {
-    "extends": "react-app",
-    "ignorePatterns": [
-      "node_modules"
-    ]
-  },
+  
   "browserslist": {
     "production": [
       ">0.2%",
@@ -170,8 +165,10 @@
     "@date-io/dayjs": "1.x",
     "@material-ui/core": "^4.12.3",
     "@material-ui/pickers": "4.0.0-alpha.12",
+    "@metamask/detect-provider": "^2.0.0",
     "@mui/material": "^5.13.6",
     "@mui/x-date-pickers": "^6.9.1",
+    "@walletconnect/environment": "^1.0.1",
     "@web3-react/core": "^8.2.0",
     "@web3-react/metamask": "8.2.0",
     "@web3-react/walletconnect-v2": "^8.3.7",
