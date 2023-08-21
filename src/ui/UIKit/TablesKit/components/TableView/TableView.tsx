@@ -262,7 +262,7 @@ export const TableView = <T,>({
       <Grid item zIndex={2}>
         {renderTableLoading()}
 
-        {columns.length > 0 && _items.length > 0 && (
+        {showExport && columns.length > 0 && _items.length > 0 && (
           <Box display={'flex'} justifyContent={'end'} mb={2}>
             <ExportButton
               fileName={exportFileName}
