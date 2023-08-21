@@ -14,21 +14,23 @@ export const TaxDeclarations: FC<Props> = ({ data }: Props) => {
     return null
   }
 
+  console.log(data, 'dtatatat')
+
   return (
     <Block title="Tax Declarations">
       <GridContainer spacing={30}>
-        {data.taxDeclarations.map((declaration, index) => (
+        {data?.taxDeclarations?.map((declaration, index) => (
           <>
             <GridItem key={`declaration-${index}-country`} md={4}>
-              <Field label={'Country of Tax Declaration'} value={declaration.country} />
+              <Field label={'Country of Tax Declaration'} value={declaration?.country} />
             </GridItem>
-            
+
             <GridItem key={`declaration-${index}-idNumber`} md={4}>
-              <Field label={'Tax Identification Number (TIN)'} value={declaration.idNumber ?? 'Not available'} />
+              <Field label={'Tax Identification Number (TIN)'} value={declaration?.idNumber ?? 'Not available'} />
             </GridItem>
-            
+
             <GridItem key={`declaration-${index}-reason`} md={4}>
-              {declaration.reason ? (<Field label={'Reason'} value={declaration.reason} />) : (<div></div>)}
+              <Field label={'Reason '} value={declaration?.reason ?? 'Not Avaliable'} />
             </GridItem>
           </>
         ))}

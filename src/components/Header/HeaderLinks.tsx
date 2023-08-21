@@ -219,6 +219,7 @@ export const HeaderLinks = () => {
         <Trans>Launchpad</Trans>
       </StyledNavLink>
       {showIssuance && <StyledNavLink to="/issuance">Issuance Dashboard</StyledNavLink>}
+      {isAdmin && <StyledNavLink to="/admin">Admin</StyledNavLink>}
     </HeaderLinksWrap>
   )
 }
