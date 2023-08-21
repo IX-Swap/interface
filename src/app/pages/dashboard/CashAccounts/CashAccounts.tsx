@@ -5,8 +5,24 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { CashTable } from 'app/pages/accounts/pages/cash/components/CashTable'
 import { NoCashButtons } from 'app/pages/accounts/pages/cash/components/NoCashButtons'
+import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { KnowYourCustomer } from 'app/pages/dashboard/AccountActions/KnowYourCustomer'
 
 export const CashAccounts = () => {
+  const {
+    isLoadingIdentities,
+    identity,
+    identityType,
+    hasStartedKYC,
+    hasSubmittedKYC,
+    hasApprovedKYC
+  } = useGetIdentities()
+
+  if (isLoadingIdentities) {
+    return <LoadingIndicator />
+  }
+
   return (
     <FieldContainer>
       <Grid container spacing={3}>
@@ -35,8 +51,22 @@ export const CashAccounts = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <CashTable />
-          <NoCashButtons />
+          {!hasApprovedKYC ? (
+            <Grid item xs>
+              <KnowYourCustomer
+                hasStarted={hasStartedKYC}
+                hasSubmitted={hasSubmittedKYC}
+                identityType={identityType}
+                identityId={identity?._id}
+                userId={identity?.user._id}
+              />
+            </Grid>
+          ) : (
+            <>
+              <CashTable />
+              <NoCashButtons />
+            </>
+          )}
         </Grid>
       </Grid>
     </FieldContainer>
