@@ -49,7 +49,6 @@ export const DSOPreview = (props: DSOPreviewProps) => {
     }
     return (
       <Element name={DSOFormSection.FAQs}>
-        <VSpacer size='large' />
         <DSOFAQsView dso={data} />
       </Element>
     )
@@ -61,7 +60,6 @@ export const DSOPreview = (props: DSOPreviewProps) => {
     }
     return (
       <Element name={DSOFormSection.Videos}>
-        <VSpacer size='large' />
         <DSOVideoLinksView dso={data} />
       </Element>
     )
@@ -121,8 +119,13 @@ export const DSOPreview = (props: DSOPreviewProps) => {
               </Element>
             </Grid>
 
-            {renderVideosFormSection()}
-            {renderFAQsFormSection()}
+            <Grid item xs={12}>
+              {renderVideosFormSection()}
+            </Grid>
+
+            <Grid item xs={12}>
+              {renderFAQsFormSection()}
+            </Grid>
           </Grid>
 
           {showStatusBar && (
