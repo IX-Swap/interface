@@ -4,6 +4,7 @@ import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-w
 import { ReactComponent as SecurityTokensIcon } from 'assets/icons/navigation/security-tokens.svg'
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/va-transactions.svg'
 import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
+import { ReactComponent as ListingsIcon } from 'assets/icons/navigation/listings.svg'
 // import { ReactComponent as ReportsIcon } from 'assets/icons/navigation/mas-disclosure.svg'
 import { makeURL } from 'config/appURL'
 import { InternalRouteProps } from 'types/util'
@@ -27,6 +28,7 @@ export const AccountsRoute = {
   dashboard: makeURL(['app', 'accounts', 'dashboard']),
   //   reports: '/app/accounts/reports',
   myHoldings: '/app/accounts/holdings',
+  myInvestments: '/app/accounts/investments',
   cash: '/app/accounts/cash'
 }
 
@@ -68,5 +70,10 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     label: 'My Exchange Holdings',
     path: AccountsRoute.myHoldings,
     icon: HoldingsIcon
+  },
+  {
+    label: 'My Investments',
+    path: AccountsRoute.myInvestments,
+    icon: ListingsIcon
   }
 ]

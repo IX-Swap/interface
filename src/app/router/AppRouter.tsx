@@ -44,7 +44,8 @@ export const AppRouter = () => {
         <IdentityRoot />
       </AppRoute>
 
-      <AppRoute breadcrumb='Invest' path={AppPath.invest}>
+      {/* <AppRoute breadcrumb='Invest' path={AppPath.invest}> */}
+      <AppRoute path={AppPath.invest}>
         <InvestRoot />
       </AppRoute>
 

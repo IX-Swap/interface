@@ -30,8 +30,10 @@ export const InvestRoute = {
 }
 
 export const CommitmentRoute = {
-  list: makeURL(['app', 'invest', 'commitments']),
-  view: makeURL(['app', 'invest', 'commitments', 'commitmentId', 'view'])
+  //   list: makeURL(['app', 'invest', 'commitments']),
+  //   view: makeURL(['app', 'invest', 'commitments', 'commitmentId', 'view'])
+  list: '/app/accounts/investments',
+  view: '/app/accounts/investments/:commitmentId/view'
 }
 
 export const investLandingLinks: InternalRouteProps[] = [
