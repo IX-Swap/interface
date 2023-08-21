@@ -45,9 +45,9 @@ const HeaderPopover = () => {
       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
       <Column style={{ gap: 3 }}>
-        <TYPE.body2 fontWeight={600} marginBottom="4px">
+        {/* <TYPE.body2 fontWeight={600} marginBottom="4px">
           <Trans>Staking</Trans>
-        </TYPE.body2>
+        </TYPE.body2> */}
 
         <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
           <Trans>Live Pools</Trans>
@@ -59,13 +59,13 @@ const HeaderPopover = () => {
       </Row>
 
       <Column style={{ gap: 3 }}>
-        <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
+        {/* <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
           <Trans>Liquidity Mining Program (Quickswap)</Trans>
         </SubMenuExternalLink>
 
         <Row style={{ padding: '0', margin: '5px 0' }}>
           <Line />
-        </Row>
+        </Row> */}
 
         {isAllowed(routes.vesting) && (
           <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
