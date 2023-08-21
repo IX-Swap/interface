@@ -5,7 +5,6 @@ import { KnowYourCustomer } from './KnowYourCustomer'
 import { Accreditation } from './Accreditation'
 import { TwoFactorAuthentication } from './TwoFactorAuthentication'
 import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
-import { useServices } from 'hooks/useServices'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useAuth } from 'hooks/auth/useAuth'
 import { isUpdatedAtMoreThanAYear } from 'hooks/utils'
@@ -16,28 +15,16 @@ export const AccountActions = () => {
   const hasEnabled = enable2Fa ?? false
   const isMoreThanAYear = isUpdatedAtMoreThanAYear(updatedAt)
 
-  const { isLoadingIdentities, individualIdentity, corporateIdentities } =
-    useGetIdentities()
-
-  const { storageService } = useServices()
-  const userAccount: any = storageService.get('user')
-  const isIndividual = userAccount.accountType === 'INDIVIDUAL'
-  const hasIdentity =
-    (isIndividual && individualIdentity !== undefined) ||
-    (!isIndividual && corporateIdentities.list.length > 0)
-
-  const hasStartedKYC = hasIdentity && !isLoadingIdentities
-  const identityType = isIndividual ? 'individual' : 'corporate'
-  const identity = isIndividual
-    ? individualIdentity
-    : corporateIdentities.list[0]
-  const hasApprovedKYC = identity?.status === 'Approved'
-  const hasSubmittedKYC = identity?.status === 'Submitted' || hasApprovedKYC
-  const hasStartedAccreditation =
-    typeof identity?.accreditationStatus !== 'undefined'
-  const hasSubmittedAccreditation =
-    identity?.accreditationStatus === 'Submitted' ||
-    identity?.accreditationStatus === 'Approved'
+  const {
+    isLoadingIdentities,
+    identity,
+    identityType,
+    hasStartedKYC,
+    hasSubmittedKYC,
+    hasApprovedKYC,
+    hasStartedAccreditation,
+    hasSubmittedAccreditation
+  } = useGetIdentities()
 
   if (isLoadingIdentities) {
     return <LoadingIndicator />
@@ -64,6 +51,7 @@ export const AccountActions = () => {
               <Grid item xs>
                 <KnowYourCustomer
                   hasStarted={hasStartedKYC}
+                  hasSubmitted={hasSubmittedKYC}
                   identityType={identityType}
                   identityId={identity?._id}
                   userId={identity?.user._id}

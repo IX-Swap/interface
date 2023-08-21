@@ -8,8 +8,24 @@ import { CashBalance } from 'app/pages/accounts/components/CashBalance'
 import { RecentTransactionsTable } from './components/RecentTransactionsTable'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
+import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { KnowYourCustomer } from 'app/pages/dashboard/AccountActions/KnowYourCustomer'
 
 export const Cash = () => {
+  const {
+    isLoadingIdentities,
+    identity,
+    identityType,
+    hasStartedKYC,
+    hasSubmittedKYC,
+    hasApprovedKYC
+  } = useGetIdentities()
+
+  if (isLoadingIdentities) {
+    return <LoadingIndicator />
+  }
+
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
@@ -44,8 +60,22 @@ export const Cash = () => {
             >
               Cash
             </Typography>
-            <CashTable />
-            <NoCashButtons />
+            {!hasApprovedKYC ? (
+              <Grid item xs>
+                <KnowYourCustomer
+                  hasStarted={hasStartedKYC}
+                  hasSubmitted={hasSubmittedKYC}
+                  identityType={identityType}
+                  identityId={identity?._id}
+                  userId={identity?.user._id}
+                />
+              </Grid>
+            ) : (
+              <>
+                <CashTable />
+                <NoCashButtons />
+              </>
+            )}
           </Grid>
           <Grid item xs={12}>
             <Typography
