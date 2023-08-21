@@ -1,5 +1,6 @@
 import React from 'react'
-import { TableView } from 'components/TableWithPagination/TableView'
+// import { TableView } from 'components/TableWithPagination/TableView'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { Commitment } from 'types/commitment'
 import columns from 'app/pages/invest/components/columns'
 import { Actions } from 'app/pages/invest/components/Actions'
