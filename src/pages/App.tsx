@@ -241,25 +241,25 @@ export default function App() {
             hideHeader={hideHeader}
           >
             <IXSBalanceModal />
-            <Web3ReactManager>
-              <Suspense
-                fallback={
-                  <>
-                    <LoadingIndicator isLoading />
-                  </>
-                }
-              >
-                <Switch>
-                  {routeConfigs.map(routeGenerator).filter((route) => !!route)}
+            {/* <Web3ReactManager> */}
+            <Suspense
+              fallback={
+                <>
+                  <LoadingIndicator isLoading />
+                </>
+              }
+            >
+              <Switch>
+                {routeConfigs.map(routeGenerator).filter((route) => !!route)}
 
-                  {useRedirect && (
-                    <Route
-                      component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                    />
-                  )}
-                </Switch>
-              </Suspense>
-            </Web3ReactManager>
+                {useRedirect && (
+                  <Route
+                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                  />
+                )}
+              </Switch>
+            </Suspense>
+            {/* </Web3ReactManager> */}
           </ToggleableBody>
           {!hideHeader && <Footer />}
         </AppWrapper>

@@ -6,6 +6,7 @@ import { Trans } from '@lingui/macro'
 import { useEagerConnect, useInactiveListener } from '../../hooks/web3'
 import { NetworkContextName } from '../../constants/misc'
 import Loader from '../Loader'
+import { metaMask } from 'connectors/metaMask'
 
 const MessageWrapper = styled.div`
   display: flex;
@@ -22,17 +23,11 @@ export default function Web3ReactManager({ children }: { children: JSX.Element }
   const { connector, isActive } = useWeb3React()
 
   // try to eagerly connect to an injected provider, if it exists and has granted access already
-  const triedEager = useEagerConnect()
-
-  // after eagerly trying injected, if the network connect ever isn't active or in an error state, activate itd
   useEffect(() => {
-    if (triedEager && !isActive) {
-      connector.activate()
-    }
-  }, [triedEager])
-
-  // when there's no account connected, react to logins (broadly speaking) on the injected provider, if it exists
-  useInactiveListener(!triedEager)
+    void metaMask.connectEagerly().catch(() => {
+      console.debug('Failed to connect eagerly to metamask')
+    })
+  }, [])
 
   // handle delayed loader state
   const [showLoader, setShowLoader] = useState(false)
@@ -46,10 +41,6 @@ export default function Web3ReactManager({ children }: { children: JSX.Element }
     }
   }, [])
 
-  // on page load, do nothing until we've tried to connect to the injected connector
-  if (!triedEager) {
-    return null
-  }
 
   // if the account context isn't active, and there's an error on the network context, it's an irrecoverable error
   // if (!active && networkError) {

@@ -28,6 +28,7 @@ interface Props {
 }
 
 export const ConnectionDialog: React.FC<Props> = (props) => {
+  debugger
   const [walletView, setWalletView] = React.useState(PromptView.options)
   const [pendingWallet, setPendingWallet] = React.useState<Connector | undefined>()
   const [pendingError, setPendingError] = React.useState<boolean>()

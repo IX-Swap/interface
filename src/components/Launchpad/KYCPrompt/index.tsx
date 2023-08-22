@@ -29,6 +29,7 @@ interface Props {
 }
 
 export const KYCPrompt: React.FC<Props> = (props) => {
+  debugger
   const { account } = useWeb3React()
   const { kyc } = useKYCState()
   const { isApproved, isRejected, isAccredited, isPending, isInProgress, isChangeRequested, isNotSubmitted } = useKyc()

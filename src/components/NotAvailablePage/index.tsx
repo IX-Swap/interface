@@ -30,6 +30,7 @@ export const NotAvailablePage = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
   const { config } = useWhitelabelState()
   const toggleWalletModal = useWalletModalToggle()
+  const [showConnectModal, setShowConnectModal] = React.useState(false)
 
   const farming = ['/vesting', '/staking'].includes(pathname)
 
@@ -66,6 +67,9 @@ export const NotAvailablePage = () => {
           </a>
           .
         </span>
+        <Modal isOpen={showConnectModal} onDismiss={toggleModal} maxWidth="430px" maxHeight="310px">
+          <ConnectionDialog onConnect={props.onConnect} onClose={toggleModal} />
+        </Modal>
       </ConnectWalletContainer>
     )
   }
