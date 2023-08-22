@@ -31,7 +31,7 @@ export const Tt = ({ accountId, currency }: DepositInfoProps) => {
     },
     {
       label: 'Beneficiary’s Bank Address:',
-      value: '48-01 10 MARINA BLVD, MARINA BAY FIN S(018983)'
+      value: 'MARINA BAY FINANCIAL CENTRE TOWER 2, 48-01, 10 MARINA BOULEVARD, SINGAPORE'
     },
     {
       label: 'Time Estimation for Deposit:',
