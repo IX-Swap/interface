@@ -36,7 +36,7 @@ export const Header = () => {
         <HeaderLink to={routes.launchpad}>IXS Launchpad</HeaderLink>
         <HeaderLink to={'#'}>Farming</HeaderLink>
         <HeaderExternalLink href="https://info.ixswap.io/home">Charts</HeaderExternalLink>
-        <HeaderLink to={routes.newAdmin}>Admin</HeaderLink>
+        {isAdmin && <HeaderLink to={routes.newAdmin}>Admin</HeaderLink>}
       </HeaderLinks>
 
       {showIssuance && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
