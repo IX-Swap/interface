@@ -58,7 +58,7 @@ export const individualErrorsSchema = yup.object().shape({
     .of(
       yup.object().shape({
         isAdditional: yup.bool(),
-        country: yup.object().shape({ label: yup.string() }).nullable().required('Required'),
+        // country: yup.object().shape({ label: yup.string() }).nullable().required('Required'),
         idNumber: yup.string().when('isAdditional', {
           is: true,
           then: yup.string().nullable(),

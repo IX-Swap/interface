@@ -1,12 +1,11 @@
-import React from "react"
-import styled from "styled-components"
-import { TYPE } from "theme"
-import { FormCard } from "./styleds"
+import React from 'react'
+import styled from 'styled-components'
+import { TYPE } from 'theme'
+import { FormCard } from './styleds'
 
 interface KYCValidationErrorsProps {
   fields: string[]
 }
-
 
 const errorLabelMap = [
   { field: 'firstName', label: 'First Name' },
@@ -23,7 +22,7 @@ const errorLabelMap = [
 
   { field: 'address', label: 'Address' },
   { field: 'postalCode', label: 'Postal Code' },
-  { field: 'country', label: 'Country' },
+  // { field: 'country', label: 'Country' },
   { field: 'city', label: 'City' },
 
   { field: 'idType', label: 'ID Type' },
@@ -40,7 +39,7 @@ const errorLabelMap = [
   { field: 'income', label: 'Income' },
 
   { field: 'taxDeclarations', label: 'Tax Declarations' },
-  { field: 'country', label: 'Country of Tax Declaration' },
+  // { field: 'country', label: 'Country of Tax Declaration' },
   { field: 'idNumber', label: 'Tax Identification Number (TIN)' },
   { field: 'reason', label: 'Reason' },
 
@@ -63,11 +62,11 @@ const findFieldLabel = (key: string): string | undefined => {
     return `Tax Declarations - ${findFieldLabel(key.split('.').pop() ?? '') ?? ''}`.trim()
   }
 
-  return errorLabelMap.find(entry => entry.field === key)?.label
+  return errorLabelMap.find((entry) => entry.field === key)?.label
 }
 
 export const KYCValidationErrors = ({ fields }: KYCValidationErrorsProps) => {
-  const labels = React.useMemo(() => fields.map(findFieldLabel).filter(label => !!label), [fields])
+  const labels = React.useMemo(() => fields.map(findFieldLabel).filter((label) => !!label), [fields])
 
   if (fields.length === 0) {
     return null
@@ -77,7 +76,7 @@ export const KYCValidationErrors = ({ fields }: KYCValidationErrorsProps) => {
     <FormCard style={{ marginBottom: '1rem' }}>
       <TYPE.title6 color="error">REASON FOR REJECTION</TYPE.title6>
       <ReasonList>
-        {labels.map(field => (
+        {labels.map((field) => (
           <ReasonEntry key={field}>
             <TYPE.body color="text2">{field}</TYPE.body>
           </ReasonEntry>
