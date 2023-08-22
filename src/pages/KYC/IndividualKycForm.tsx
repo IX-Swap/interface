@@ -1216,7 +1216,7 @@ export default function IndividualKycForm() {
                           )}
                         </Column>
                       </FormCard>
-{/* 
+                      {/* 
                       <FormCard id="status-declaration">
                         <RowBetween marginBottom="32px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>

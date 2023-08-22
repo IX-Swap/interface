@@ -17,7 +17,7 @@ import { routes } from 'utils/routes'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { MEDIA_WIDTHS } from 'theme'
 
-type SecurityTab = 'tokens' | 'payout-events'
+type SecurityTab = 'tokens' | 'payout-events' | ':tab'
 
 interface Tab {
   label: string
@@ -41,7 +41,7 @@ const renderTab = (selectedTab: SecurityTab | string) => {
     case 'payout-events':
       return <UserPayoutEvents />
     default:
-      return null
+      return <CustodianV2 />
   }
 }
 
@@ -68,8 +68,7 @@ const SecurityTokens = () => {
 
   useEffect(() => {
     const tab = params.tab
-
-    setSelectedTab(tab)
+    setSelectedTab(tab === ':tab' ? 'tokens' : tab)
   }, [params])
 
   if (!isLoggedIn) return <NotAvailablePage />
