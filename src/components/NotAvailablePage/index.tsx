@@ -23,6 +23,8 @@ import {
   PlaygroundBadge,
   ConnectWalletContainer,
 } from './styled'
+import Modal from 'components/Modal'
+import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 
 export const NotAvailablePage = () => {
   const { chainId, library, account } = useActiveWeb3React()
@@ -31,6 +33,7 @@ export const NotAvailablePage = () => {
   const { config } = useWhitelabelState()
   const toggleWalletModal = useWalletModalToggle()
   const [showConnectModal, setShowConnectModal] = React.useState(false)
+  const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
   const farming = ['/vesting', '/staking'].includes(pathname)
 
@@ -40,6 +43,10 @@ export const NotAvailablePage = () => {
     }
   }
 
+  const onConnect = React.useCallback(() => {
+    console.log('Connected')
+  }, [])
+
   if (!account) {
     return (
       <ConnectWalletContainer hasAnnouncement={!cookies.annoucementsSeen}>
@@ -47,7 +54,7 @@ export const NotAvailablePage = () => {
           <Trans>Welcome to {config?.name || 'IX Swap'}</Trans>
         </div>
         <div>Please connect your wallet to use the application.</div>
-        <ButtonIXSGradient onClick={toggleWalletModal}>Connect Wallet</ButtonIXSGradient>
+        <ButtonIXSGradient onClick={toggleModal}>Connect Wallet</ButtonIXSGradient>
         <span>
           While your wallet is not connected, you can see our{' '}
           <a href="https://ixswap.defiterm.io/" target="_blank" rel="noreferrer">
@@ -68,7 +75,7 @@ export const NotAvailablePage = () => {
           .
         </span>
         <Modal isOpen={showConnectModal} onDismiss={toggleModal} maxWidth="430px" maxHeight="310px">
-          <ConnectionDialog onConnect={props.onConnect} onClose={toggleModal} />
+          <ConnectionDialog onConnect={onConnect} onClose={toggleModal} />
         </Modal>
       </ConnectWalletContainer>
     )
