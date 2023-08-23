@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { Separator } from '../../LaunchpadMisc/styled'
@@ -7,6 +7,8 @@ import { Attachment } from './Attachment'
 import { Asset } from 'state/launchpad/types'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { Info } from 'react-feather'
+import axios from 'axios'
+import { ip } from 'services/apiUrls'
 
 export interface InfoEntry {
   label: React.ReactNode
@@ -38,23 +40,36 @@ export const InfoList: React.FC<Props> = ({
 }) => {
   const getIsLast = useCallback((idx: number) => entries.length === idx + 1, [entries])
   const theme = useTheme()
+  const [countryCode, setCountryCode] = useState('')
+
+  useEffect(() => {
+    const getCountryCode = async () => {
+      const response = await axios.get(ip.getIPAddress)
+      if (response) {
+        let utcCode = await axios.get(
+          `http://worldtimeapi.org/api/timezone/${response?.data?.localityInfo?.informative[1]?.name}`
+        )
+        console.log(utcCode?.data?.utc_offset, 'hahahahahha')
+        setCountryCode(utcCode?.data?.utc_offset)
+      }
+    }
+    getCountryCode()
+  }, [])
 
   return (
     <Container>
-      {title &&
+      {title && (
         <Title fontWeight={titleFontWeight}>
           <StageLabel>
             <div>{title}</div>
-            {title === 'Investment Stage' &&
-              <Tooltip
-                title={title}
-                body="The time provided is based on the UTC +0 time zone."
-              >
+            {title === 'Investment Stage' && (
+              <Tooltip title={title} body={`The time provided is based on your local time at ${countryCode}`}>
                 <Info size="14" color={theme.launchpad.colors.text.caption} />
-              </Tooltip>}
+              </Tooltip>
+            )}
           </StageLabel>
         </Title>
-      }
+      )}
 
       <Separator />
 
