@@ -76,8 +76,8 @@ export const getCorporateInfoFormValues = (
     : data?.legalEntityStatus
 
   const documents =
-    typeof data.documents !== 'undefined' &&
-    reduceCorporateDocuments(data.documents)
+    typeof data?.documents !== 'undefined' &&
+    reduceCorporateDocuments(data?.documents)
 
   const representatives = data?.representatives.map(item => {
     return {
