@@ -6,7 +6,7 @@ import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect
 import { PhoneInput } from 'components/form/PhoneInput'
 import { TypedField } from 'components/form/TypedField'
 import { pathToString, plainValueExtractor } from 'helpers/forms'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { TextInput } from 'ui/TextInput/TextInput'
 export interface DirectorsInformationFieldsProps {
@@ -20,7 +20,20 @@ export const DirectorsInformationFields = ({
   index,
   fieldId
 }: DirectorsInformationFieldsProps) => {
-  const { control } = useFormContext()
+  const { control, watch, clearErrors } = useFormContext()
+
+  const legalEntityStatus = pathToString([rootName, index, 'legalEntityStatus'])
+  const legalEntityStatusValue = watch(legalEntityStatus)
+
+  useEffect(() => {
+    if (legalEntityStatusValue !== 'others') {
+      control.setValue(
+        pathToString([rootName, index, 'otherLegalEntityStatus']),
+        ''
+      )
+      clearErrors('otherLegalEntityStatus')
+    }
+  }, [legalEntityStatusValue]) // eslint-disable-line
 
   return (
     <Grid container spacing={5}>
@@ -80,6 +93,19 @@ export const DirectorsInformationFields = ({
           variant='outlined'
           name={[rootName, index, 'legalEntityStatus']}
           label='Legal Entity'
+        />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <TypedField
+          fullWidth
+          component={TextInput}
+          control={control}
+          variant='outlined'
+          name={[rootName, index, 'otherLegalEntityStatus']}
+          label='Others (Legal Entity)'
+          disabled={legalEntityStatusValue !== 'others'}
+          placeholder='Please specify'
+          hideIcon
         />
       </Grid>
       <Grid item xs={12} md={6}>
