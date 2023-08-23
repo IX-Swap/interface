@@ -22,18 +22,16 @@ import { ScrollSpy } from 'ui/ScrollGuide/ScrollSpy'
 import { Divider } from 'ui/Divider'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { AuthorizerViewActions } from 'app/pages/authorizer/components/AuthorizerViewActions'
-import { DataroomFeature } from 'types/authorizer'
+import { AppFeature } from 'types/app'
 
 export interface IndividualPreviewProps {
   data?: IndividualIdentity
   isForAuthorizer?: boolean
-  feature?: typeof DataroomFeature[keyof typeof DataroomFeature]
 }
 
 export const IndividualPreview = ({
   data,
-  isForAuthorizer = false,
-  feature = ''
+  isForAuthorizer = false
 }: IndividualPreviewProps) => {
   const classes = useStyles()
   const { getFilterValue } = useQueryFilter()
@@ -63,6 +61,10 @@ export const IndividualPreview = ({
   const sections = Object.entries(
     onKycTab ? IndividualKYCSections : IndividualAccreditationSections
   )
+
+  const feature = onKycTab
+    ? AppFeature.Individuals
+    : AppFeature.IndividualsAccreditation
 
   const getDetails = () => {
     const details = {
