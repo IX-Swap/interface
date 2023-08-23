@@ -32,7 +32,7 @@ export const KnowYourCustomer = ({
   return (
     <ActionItem
       icon={<Icon />}
-      title={hasSubmitted ? 'You KYC is under review' : title}
+      title={hasSubmitted ? 'Your KYC is under review' : title}
       description={
         hasSubmitted
           ? "We'll notify you once the process is complete."

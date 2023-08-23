@@ -24,18 +24,16 @@ import { Divider } from 'ui/Divider'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { isEmptyString } from 'helpers/strings'
 import { AuthorizerViewActions } from 'app/pages/authorizer/components/AuthorizerViewActions'
-import { DataroomFeature } from 'types/authorizer'
+import { AppFeature } from 'types/app'
 
 export interface CorporatesPreviewProps {
   data?: CorporateIdentity
   isForAuthorizer?: boolean
-  feature?: typeof DataroomFeature[keyof typeof DataroomFeature]
 }
 
 export const CorporatesPreview = ({
   data,
-  isForAuthorizer = false,
-  feature = ''
+  isForAuthorizer = false
 }: CorporatesPreviewProps) => {
   const classes = useStyles()
   const { getFilterValue } = useQueryFilter()
@@ -65,6 +63,10 @@ export const CorporatesPreview = ({
   const sections = Object.entries(
     onKycTab ? CorporateKYCSections : CorporateAccreditationSections
   )
+
+  const feature = onKycTab
+    ? AppFeature.Corporates
+    : AppFeature.CorporatesAccreditation
 
   const getDetails = () => {
     let details = {
