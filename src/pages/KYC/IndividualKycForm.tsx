@@ -1045,7 +1045,11 @@ export default function IndividualKycForm() {
                                         <TextInput
                                           label="Tax Identification Number (TIN)"
                                           id="taxIdentificationNumberField"
-                                          value={values.taxDeclarations[index].idNumber}
+                                          value={
+                                            values.taxDeclarations[index].isAdditional
+                                              ? ''
+                                              : values.taxDeclarations[index].idNumber
+                                          }
                                           error={errors[`taxDeclarations[${index}].idNumber`]}
                                           disabled={values.taxDeclarations[index].isAdditional}
                                           onChange={(e) =>
