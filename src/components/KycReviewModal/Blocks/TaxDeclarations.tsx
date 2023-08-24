@@ -13,9 +13,6 @@ export const TaxDeclarations: FC<Props> = ({ data }: Props) => {
   if (data.taxDeclarations.length === 0) {
     return null
   }
-
-  console.log(data, 'dtatatat')
-
   return (
     <Block title="Tax Declarations">
       <GridContainer spacing={30}>
@@ -26,12 +23,17 @@ export const TaxDeclarations: FC<Props> = ({ data }: Props) => {
             </GridItem>
 
             <GridItem key={`declaration-${index}-idNumber`} md={4}>
-              <Field label={'Tax Identification Number (TIN)'} value={declaration?.idNumber ?? 'Not available'} />
+              <Field
+                label={'Tax Identification Number (TIN)'}
+                value={declaration?.isAdditional ? 'Not available' : declaration?.idNumber || ''}
+              />
             </GridItem>
 
-            <GridItem key={`declaration-${index}-reason`} md={4}>
-              <Field label={'Reason '} value={declaration?.reason ?? 'Not Avaliable'} />
-            </GridItem>
+            {declaration.isAdditional ? (
+              <GridItem key={`declaration-${index}-reason`} md={4}>
+                <Field label={'Reason '} value={declaration?.reason ?? 'Not Avaliable'} />
+              </GridItem>
+            ) : null}
           </>
         ))}
       </GridContainer>

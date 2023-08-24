@@ -227,7 +227,11 @@ export const individualTransformKycDto = (values: any) => {
         }
       : emptyInvestorDeclaration,
 
-    taxDeclarations: taxDeclarations?.map((t: any, idx: number) => ({ ...t, country: t?.country?.label })),
+    taxDeclarations: taxDeclarations?.map((t: any, idx: number) => ({
+      ...t,
+      country: t?.country?.label,
+      isAdditional: t?.isAdditional === true ? 'true' : 'false',
+    })),
 
     removedTaxDeclarations: values.removedTaxDeclarations,
   }
