@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import { isMobile } from 'react-device-detect'
+// import { isMobile } from 'react-device-detect'
 import { injected } from 'connectors'
 import { useWeb3React } from '@web3-react/core'
 import { SUPPORTED_WALLETS, WalletInfo } from 'constants/wallet'

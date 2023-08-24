@@ -46,7 +46,7 @@ export const InfoList: React.FC<Props> = ({
     const getCountryCode = async () => {
       const response = await axios.get(ip.getIPAddress)
       if (response) {
-        let utcCode = await axios.get(
+        const utcCode = await axios.get(
           `http://worldtimeapi.org/api/timezone/${response?.data?.localityInfo?.informative[1]?.name}`
         )
         console.log(utcCode?.data?.utc_offset, 'hahahahahha')
