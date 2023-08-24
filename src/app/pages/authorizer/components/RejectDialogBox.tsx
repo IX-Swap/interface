@@ -11,23 +11,23 @@ import React from 'react'
 // import { ConfirmDisableButton } from 'app/pages/admin/components/DisableAccountsButton/ConfirmDisableButton'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
 
-export interface ConfirmDisableDialogBoxProps {
+export interface RejectDialogBoxProps {
   open: boolean
   close: () => void
-  approve: Function
+  reject: Function
 }
 
-export const ConfirmDisableDialogBox = ({
+export const RejectDialogBox = ({
   open,
   close,
-  approve
-}: ConfirmDisableDialogBoxProps) => {
-  const handleClick = async () => approve()
+  reject
+}: RejectDialogBoxProps) => {
+  const handleClick = async () => reject()
   return (
     <UIDialog onClose={close} open={open}>
       <Box py={4} px={3}>
         <Typography variant='h3' align='center'>
-          Are You Sure You Want to Approve This Application?
+          Are You Sure You Want to Reject This Application?
         </Typography>
         <DialogContent>
           <Typography variant='body1' align='center'>

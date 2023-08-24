@@ -24,7 +24,7 @@ export const ApproveButton = (props: ApproveButtonProps) => {
   return (
     <>
       <Button
-        style={{ width: '45%' }}
+        style={{ width: '45%', backgroundColor: '#7DD320' }}
         size='large'
         variant='contained'
         // onClick={handleClick}

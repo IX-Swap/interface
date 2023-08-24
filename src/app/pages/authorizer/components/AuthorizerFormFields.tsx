@@ -23,7 +23,7 @@ export interface AuthorizerFormFieldsProps {
 }
 
 export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
-  const { itemId, status, listingType, feature, documents } = props
+  const { itemId, listingType, feature, documents } = props
   const { control } = useFormContext<AuthorizerFormValues>()
   const actionParams = {
     id: itemId,
@@ -49,8 +49,8 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
   const canShareComment = !isProcessing && hasComment
   //   const canApprove = !isProcessing && ['Submitted', 'Rejected'].includes(status)
   //   const canReject = !isProcessing && ['Submitted', 'Approved'].includes(status)
-  const canApprove = !isProcessing && ['Submitted'].includes(status)
-  const canReject = !isProcessing && ['Submitted'].includes(status)
+  // const canApprove = !isProcessing && ['Submitted'].includes(status)
+  // const canReject = !isProcessing && ['Submitted'].includes(status)
   const category = useAuthorizerCategory()
 
   return (
@@ -91,9 +91,13 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
         container
         sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}
       >
-        <ApproveButton disabled={!canApprove} approve={approve} />
+        {/* <ApproveButton disabled={!canApprove} approve={approve} />
         <Box mx={1} />
-        <RejectButton disabled={!canReject} reject={reject} />
+        <RejectButton disabled={!canReject} reject={reject} /> */}
+
+        <ApproveButton approve={approve} disabled={false} />
+        <Box mx={1} />
+        <RejectButton reject={reject} disabled={false} />
       </Grid>
     </>
   )

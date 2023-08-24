@@ -11,7 +11,8 @@ export interface ConfirmPlaceOrderDialogProps {
   open: boolean
   values: any
   close: () => void
-  submitForm: () => any
+  isExchangeEnabled: any
+  onSubmit: (bank: any) => Promise<any>
 }
 
 export const ConfirmPlaceOrderDialog = ({
@@ -20,13 +21,11 @@ export const ConfirmPlaceOrderDialog = ({
   pairId,
   activeTabNameIdx,
   values,
-  submitForm
+  onSubmit
 }: ConfirmPlaceOrderDialogProps) => {
   const classes = useStyles()
   const { data: marketData } = useMarket(pairId)
-  const onYes = () => {
-    submitForm()
-  }
+
   return (
     <UIDialog open={open} onClose={close}>
       <Typography
@@ -138,7 +137,7 @@ export const ConfirmPlaceOrderDialog = ({
               style={{ padding: '16px 110px' }}
               variant='contained'
               color='primary'
-              onClick={onYes}
+              onClick={onSubmit}
             >
               Yes
             </Button>

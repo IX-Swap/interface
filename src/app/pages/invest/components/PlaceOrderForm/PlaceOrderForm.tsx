@@ -8,7 +8,7 @@ import { LabelledValue } from 'components/LabelledValue'
 import { TabPanel } from 'components/TabPanel'
 import { formatMoney, formatTokenBalance } from 'helpers/numbers'
 import { isEmptyString } from 'helpers/strings'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { OrderSide } from 'types/order'
 import { PlaceOrderFormSubmitButton } from './PlaceOrderFormSubmitButton'
@@ -46,7 +46,6 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
 }) => {
   const { user } = useAuth()
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
-  const [isSubmit, setIsSubmit] = useState(false)
   const [values, setValues] = useState<PlaceOrderFormValues>()
   const roles = user?.roles?.split(',')
   const isRetailInvestor = roles?.includes('retail') ?? false
@@ -67,17 +66,6 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const balance = activeTabNameIdx === 0 ? currencyBalance : tokenBalance
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
-  
-
-  useEffect(() => {
-    async function fetchValues(values: PlaceOrderFormValues) {
-      handleSubmit(values)
-      setOpenConfirmDialog(false)
-    }
-    if (isSubmit) {
-      fetchValues()
-    }
-  }, [isSubmit])
 
   const closeDialog = () => {
     setOpenConfirmDialog(false)
@@ -87,28 +75,26 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
     setOpenConfirmDialog(true)
   }
 
-  const submitForm = () => {
-    setIsSubmit(true)
+  const handleSubmit = async (values: PlaceOrderFormValues) => {
+    setValues(values)
+
+    openDialog()
+  }
+  const handleClick = async () => {
+    if (isEmptyString(pairId) || !isExchangeEnabled) {
+      return Promise.resolve()
+    }
+
+    await Promise.resolve()
+    const args = transformPlaceOrderFormValuesToArgs(
+      values,
+      activeTabNameIdx === 0 ? OrderSide.BID : OrderSide.ASK,
+      pairId
+    )
+    onSubmit(args)
+    closeDialog()
   }
 
-  const handleSubmit = async (values: PlaceOrderFormValues) => {
-    if (isSubmit) {
-      if (isEmptyString(pairId) || !isExchangeEnabled) {
-        return
-      }
-      await onSubmit(
-        transformPlaceOrderFormValuesToArgs(
-          values,
-          activeTabNameIdx === 0 ? OrderSide.BID : OrderSide.ASK,
-          pairId
-        )
-      )
-      setIsSubmit(false)
-    } else {
-      setValues(values)
-      openDialog()
-    }
-  }
   return (
     <>
       <ConfirmPlaceOrderDialog
@@ -117,7 +103,8 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         open={openConfirmDialog}
         close={closeDialog}
         values={values}
-        submitForm={submitForm}
+        isExchangeEnabled={isExchangeEnabled}
+        onSubmit={handleClick}
       />
       <Form onSubmit={handleSubmit} resetAfterSubmit>
         <Grid container direction={'column'} className={classes.container}>
