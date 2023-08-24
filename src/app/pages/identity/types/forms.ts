@@ -97,6 +97,7 @@ export interface Personnel {
   address: Address
   percentageShareholding: number
   legalEntityStatus: string
+  otherLegalEntityStatus: string
   countryOfFormation: string
 }
 

@@ -6,6 +6,7 @@ import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { ProofDocuments } from 'app/pages/identity/components/CorporateIdentityView/ProofDocuments'
 import { AddressSection } from 'app/pages/identity/components/CorporateIdentityView/AddressSection'
+import { LEGAL_ENTITY_STATUS_LIST } from 'components/form/LegalEntityStatusSelect'
 
 export interface DirectorProps {
   directorData: Personnel
@@ -14,6 +15,13 @@ export interface DirectorProps {
 
 export const Director = ({ directorData, title }: DirectorProps) => {
   const { documents, address } = directorData
+
+  const getLegalEntityStatus = (value: string) => {
+    const status = LEGAL_ENTITY_STATUS_LIST.find(
+      item => item.value === value
+    )?.label
+    return status ?? value
+  }
 
   return (
     <FieldContainer>
@@ -51,7 +59,11 @@ export const Director = ({ directorData, title }: DirectorProps) => {
             <Grid item>
               <LabelledValue
                 isRedesigned
-                value={directorData.legalEntityStatus}
+                value={
+                  directorData.legalEntityStatus === 'others'
+                    ? directorData.otherLegalEntityStatus
+                    : getLegalEntityStatus(directorData.legalEntityStatus)
+                }
                 label='Legal Entity Status'
               />
             </Grid>
