@@ -9,7 +9,7 @@ import { ExternalLink } from 'theme'
 
 import { ProductsBlockContainer } from './styleds'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
-import { isDevelopment } from 'utils/isEnvMode'
+// import { isDevelopment } from 'utils/isEnvMode'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { useWhitelabelState } from 'state/whitelabel/hooks'

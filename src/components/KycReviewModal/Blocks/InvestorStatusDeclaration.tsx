@@ -13,7 +13,10 @@ interface Props {
   kycKey: string
 }
 
-export const InvestorStatusDeclaration = ({ data, kycKey }: Props) => {
+export const InvestorStatusDeclaration = ({
+  // data,
+  kycKey,
+}: Props) => {
   return (
     <Block title="Investor Status Declaration">
       <>
