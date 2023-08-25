@@ -1,4 +1,4 @@
-import { Box, Grid, OutlinedInput, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import useStyles from 'app/components/CommitmentIssuance/CommitmentIssuanceFields.styles'
 import { TypedField } from 'components/form/TypedField'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
@@ -8,6 +8,7 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { CommitmentIssuanceFormValues } from 'types/commitment'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { Tooltip } from 'ui/Tooltip/Tooltip'
 export interface CommitmentIssuanceFieldsProps {
   amount: string
 }
@@ -24,7 +25,7 @@ export const CommitmentIssuanceFields = (
         <FormSectionHeader title='Token Issuance' />
       </Grid>
 
-      <Grid item className={classes.spacedTop}>
+      {/* <Grid item className={classes.spacedTop}>
         <Typography variant='subtitle1'>
           Specify or Override the Withdrawal Address
         </Typography>
@@ -46,14 +47,23 @@ export const CommitmentIssuanceFields = (
           do, a new withdrawal address will be added on behalf of the investor
           and they'll get notified about this.
         </Typography>
-      </Grid>
+      </Grid> */}
 
       <Grid item className={classes.spaced}>
         <LabelledValue label='Amount to Issue' value={props.amount} />
       </Grid>
 
       <Grid item md={4}>
-        <Typography variant='subtitle1'>Free-to-Trade Date</Typography>
+        <Grid display={'flex'}>
+          <Typography variant='subtitle1'>Change Free-to-Trade Date</Typography>
+          <Tooltip
+            style={{ marginTop: '-2px' }}
+            data-testid='upload-document-field-tooltip'
+            title={
+              'Free-to-Trade (FTT) Date is the date where investors can start freely trading with other investors. This date can be changed because some STO deals will need different FTT Date due to staggered Closing Date for the STOs'
+            }
+          />
+        </Grid>
         <Box py={0.4} />
         <TypedField
           name='releaseDate'
@@ -70,12 +80,9 @@ export const CommitmentIssuanceFields = (
       <Grid item className={classes.spacedBottom}>
         <Box py={0.4} />
 
-        <Typography variant='body2'>
-          Please note that the investor will receive the tokens in their wallet
-          address (self wallet or custodied) but they will not be able to
-          transfer these tokens until the transfer lock (or locking period) is
-          over.
-        </Typography>
+        {/* <Typography variant='body2'>
+  
+        </Typography> */}
       </Grid>
     </>
   )
