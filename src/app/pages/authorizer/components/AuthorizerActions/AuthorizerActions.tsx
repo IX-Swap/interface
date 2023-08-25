@@ -1,7 +1,8 @@
 import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import { Form } from 'components/form/Form'
-import { AuthorizationDocuments } from 'app/pages/authorizer/components/AuthorizationDocuments'
+// import { AuthorizationDocuments } from 'app/pages/authorizer/components/AuthorizationDocuments'
+import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 
 interface AuthorizerActionsProps {
   id: string
@@ -26,7 +27,10 @@ export const AuthorizerActions = ({
               documents: documents.map(value => ({ value }))
             }}
           >
-            <AuthorizationDocuments resourceId={id} feature={feature} />
+            <Grid item xs={12}>
+              <UploadDocumentField name={feature} />
+            </Grid>
+            {/* <AuthorizationDocuments resourceId={id} feature={feature} /> */}
           </Form>
         </Grid>
       </Grid>

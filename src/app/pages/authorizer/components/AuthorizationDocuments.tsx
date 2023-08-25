@@ -9,7 +9,7 @@ import { DataroomUploaderWithFileTypeSelector } from 'components/dataroom/Dataro
 import { SelectionHelper } from 'components/SelectionHelper'
 import { SelectableDataroomUploader } from 'components/dataroom/SelectableDataroomUploader'
 import { DataroomDeleteSelected } from 'components/dataroom/DataroomDeleteSelected'
-import { SelectableDataroomHeader } from 'components/dataroom/SelectableDataroomHeader'
+// import { SelectableDataroomHeader } from 'components/dataroom/SelectableDataroomHeader'
 import { itemComparator, SelectedDocument } from 'helpers/dataroom'
 
 export interface AuthorizationDocumentsProps {
@@ -27,7 +27,7 @@ export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
         {({ fields, append, remove }) => (
           <Grid container direction='column' spacing={3}>
             <Grid item container wrap='wrap'>
-              <SelectableDataroomHeader />
+              {/* <SelectableDataroomHeader /> */}
               {fields.map((field, index) => (
                 <TypedField
                   customRenderer
