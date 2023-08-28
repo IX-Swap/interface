@@ -111,7 +111,7 @@ export const individualErrorsSchema = yup.object().shape({
 export const corporateErrorsSchema = yup.object().shape({
   corporateName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   typeOfLegalEntity: yup.object().nullable().required('Required'),
-  // countryOfIncorporation: yup.object().nullable().required('Required'),
+  countryOfIncorporation: yup.object().nullable().required('Required'),
   businessActivity: yup.string().required('Required'),
 
   registrationNumber: yup.string().required('Required'),
