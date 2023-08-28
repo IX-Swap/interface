@@ -9,7 +9,7 @@ import { OrderConfig, SearchConfig } from 'components/LaunchpadIssuance/Issuance
 
 import { AppState } from 'state'
 import { tryParseAmount } from 'state/swap/helpers'
-import { InvestedData, OrderTypes } from './types'
+import { InvestedData, OfferFile, OrderTypes } from './types'
 
 import {
   Asset,
@@ -931,6 +931,22 @@ const useUploadOfferFiles = () => {
 
     return files
   }, [])
+  
+  const getOtherExecutionDocumentFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
+    const uploadedFiles = new Set(initial.otherExecutionDocuments.filter((x) => x.file?.id).map((x) => x.file?.id))
+
+    const files: FileUpload[] = []
+
+    payload.otherExecutionDocuments.forEach((entry, idx) => {
+      if (!entry.file || uploadedFiles.has(entry.file?.id)) {
+        return
+      }
+
+      files.push({ name: `otherExecutionDocument.${idx}`, file: entry.file?.file })
+    })
+
+    return files
+  }, [])
 
   return React.useCallback(
     (payload: InformationFormValues, initial: InformationFormValues) => {
@@ -938,6 +954,7 @@ const useUploadOfferFiles = () => {
         ...getDocumentFiles(payload, initial),
         ...getImageFiles(payload, initial),
         ...getMemberFiles(payload, initial),
+        ...getOtherExecutionDocumentFiles(payload, initial),
       ]
 
       if (payload.cardPicture?.id !== initial.cardPicture?.id) {
@@ -948,9 +965,20 @@ const useUploadOfferFiles = () => {
         files.push({ name: 'profile', file: payload.profilePicture?.file })
       }
 
+      const firstUploadedPurchaseAgreement = !payload.purchaseAgreement?.file && !payload.purchaseAgreement?.file?.id;
+      const firstUploadedInvestmentMemorandum = !payload.investmentMemorandum?.file && !payload.investmentMemorandum?.file?.id;
+
+      if (firstUploadedPurchaseAgreement || payload.purchaseAgreement?.file?.id !== initial.purchaseAgreement?.file?.id) {
+        files.push({ name: 'purchaseAgreement', file: payload.purchaseAgreement?.file?.file })
+      }
+
+      if (firstUploadedInvestmentMemorandum || payload.investmentMemorandum?.file?.id !== initial.investmentMemorandum?.file?.id) {
+        files.push({ name: 'investmentMemorandum', file: payload.investmentMemorandum?.file?.file })
+      }
+
       return uploadFiles(files.filter((x) => x.file))
     },
-    [uploadFiles, getDocumentFiles, getImageFiles, getMemberFiles]
+    [uploadFiles, getDocumentFiles, getImageFiles, getMemberFiles, getOtherExecutionDocumentFiles]
   )
 }
 
@@ -993,6 +1021,9 @@ export const useOfferFormInitialValues = (
         images = [],
         videos = [],
         documents = [],
+        otherExecutionDocuments = [],
+        purchaseAgreement,
+        investmentMemorandum
       } = payload.files?.reduce(
         (accum: any, item) => {
           if (item.type === OfferFileType.image) {
@@ -1001,10 +1032,16 @@ export const useOfferFormInitialValues = (
             accum.videos.push(item)
           } else if (item.type === OfferFileType.document) {
             accum.documents.push(item)
+          } else if (item.type === OfferFileType.otherExecutionDocument) {
+            accum.otherExecutionDocuments.push(item)
+          } else if (item.type === OfferFileType.investmentMemorandum) {
+            accum.investmentMemorandum = item
+          } else if (item.type === OfferFileType.purchaseAgreement) {
+            accum.purchaseAgreement = item
           }
           return accum
         },
-        { images: [], videos: [], documents: [] }
+        { images: [], videos: [], documents: [], otherExecutionDocuments: [], purchaseAgreement: null, investmentMemorandum: null}
       )
 
       const res = {
@@ -1061,6 +1098,16 @@ export const useOfferFormInitialValues = (
               return { file: file, asset: document?.file } as AdditionalDocument
             })
           : initialValues.additionalDocuments,
+
+        purchaseAgreement,  
+        investmentMemorandum,  
+        otherExecutionDocuments: otherExecutionDocuments.length
+          ? otherExecutionDocuments.map((document: any) => {
+              const file = files.find((x) => x.id === document.file?.id)
+
+              return { file: file, asset: document?.file } as AdditionalDocument
+            })
+          : initialValues.otherExecutionDocuments,
 
         hasPresale: payload.hasPresale,
         presaleAlocated: payload.presaleAlocated,
@@ -1130,8 +1177,23 @@ export const useSubmitOffer = () => {
       offerId?: string
     ) => {
       const uploadedFiles = await uploadFiles(payload, initial)
-      const findDoc = (prefix: 'member.photo' | 'document' | 'image', idx: number) =>
+      const findDoc = (prefix: 'member.photo' | 'document' | 'image' | 'otherExecutionDocument', idx: number) =>
         uploadedFiles.find((x) => x.name === `${prefix}.${idx}`)?.id
+      const purchaseAgreementId = uploadedFiles.find((x) => x.name === 'purchaseAgreement')?.id || 
+        payload.purchaseAgreement?.file?.id || null;
+      const investmentMemorandumId = uploadedFiles.find((x) => x.name === 'investmentMemorandum')?.id || 
+        payload.investmentMemorandum?.file?.id || null;
+
+      const executionDocuments = []
+      if (purchaseAgreementId) executionDocuments.push({
+        type: OfferFileType.purchaseAgreement,
+        fileId: purchaseAgreementId
+      })
+
+      if (investmentMemorandumId) executionDocuments.push({
+        type: OfferFileType.investmentMemorandum,
+        fileId: investmentMemorandumId
+      })
 
       let data: Record<string, any> = {
         offerId,
@@ -1213,12 +1275,20 @@ export const useSubmitOffer = () => {
           .filter((x) => x.avatarId || x.name || x.title || x.description),
 
         files: [
+          ...executionDocuments,
           ...payload.additionalDocuments
             .map((x, idx) => ({
               type: OfferFileType.document,
               fileId: findDoc('document', idx) || x.file?.id || null,
             }))
             .filter((x) => x.fileId),
+          
+          ...payload.otherExecutionDocuments
+            .map((x, idx) => ({
+              type: OfferFileType.otherExecutionDocument,
+              fileId: findDoc('otherExecutionDocument', idx) || x.file?.id || null,
+            }))
+            .filter((x) => x.fileId),  
 
           ...payload.images
             .map((x, idx) => ({
@@ -1291,8 +1361,24 @@ export const useMinimalOfferEdit = () => {
   return React.useCallback(async (offerId: string, payload: InformationFormValues, initial: InformationFormValues) => {
     const files = await uploadFiles(payload, initial)
 
-    const find = (prefix: 'member.photo' | 'document' | 'image', idx: number) =>
+    const find = (prefix: 'member.photo' | 'document' | 'image' | 'otherExecutionDocument', idx: number) =>
       files.find((x) => x.name === `${prefix}.${idx}`)?.id
+
+    const purchaseAgreementId = files.find((x) => x.name === 'purchaseAgreement')?.id || 
+      payload.purchaseAgreement?.file?.id || null;
+    const investmentMemorandumId = files.find((x) => x.name === 'investmentMemorandum')?.id || 
+      payload.investmentMemorandum?.file?.id || null;
+
+    const executionDocuments = []
+    if (purchaseAgreementId) executionDocuments.push({
+      type: OfferFileType.purchaseAgreement,
+      fileId: purchaseAgreementId
+    })
+
+    if (investmentMemorandumId) executionDocuments.push({
+      type: OfferFileType.investmentMemorandum,
+      fileId: investmentMemorandumId
+    })
 
     const data = {
       shortDescription: payload.shortDescription,
@@ -1331,6 +1417,14 @@ export const useMinimalOfferEdit = () => {
         .filter((x) => x.avatarId || x.name || x.title || x.description),
 
       files: [
+        ...executionDocuments,
+        ...payload.otherExecutionDocuments
+            .map((x, idx) => ({
+              type: OfferFileType.otherExecutionDocument,
+              fileId: find('otherExecutionDocument', idx) || x.file?.id || null,
+            }))
+            .filter((x) => x.fileId),  
+
         ...payload.additionalDocuments
           .map((x, idx) => ({
             type: OfferFileType.document,

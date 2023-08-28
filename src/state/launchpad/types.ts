@@ -92,6 +92,9 @@ export enum WhitelistStatus {
 }
 
 export enum OfferFileType {
+  purchaseAgreement = 'purchaseAgreement',
+  investmentMemorandum = 'investmentMemorandum',
+  otherExecutionDocument = 'otherExecutionDocument',
   document = 'document',
   video = 'video',
   image = 'image',
@@ -310,6 +313,9 @@ export interface Offer {
   updatedAt: Date
   deletedAt?: Date
 
+  // purchaseAgreement: OfferFile
+  // investmentMemorandum: OfferFile
+  // otherExecutionDocuments: OfferFile[]
   files: OfferFile[]
   investments: OfferInvestment[]
   payments: OfferPayment[]
