@@ -6,12 +6,20 @@ import { DataroomFileType } from 'config/dataroom'
 import { Tooltip } from 'ui/Tooltip/Tooltip'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { FieldsArray } from 'components/form/FieldsArray'
-import { plainValueExtractor, pathToString } from 'helpers/forms'
+import {
+  plainValueExtractor,
+  pathToString,
+  dateTimeValueExtractor
+} from 'helpers/forms'
 import { Icon } from 'ui/Icons/Icon'
 import { AddDocumentButton } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/AddDocumentButton'
 import { DataroomFile } from 'types/dataroomFile'
 import { ProofOfIdentityTypeSelect } from 'components/form/ProofOfIdentityTypeSelect'
 import { UploadDocumentInfo } from 'hooks/useUploadFile'
+import { TextInput } from 'ui/TextInput/TextInput'
+import { DatePicker } from 'components/form/DatePicker'
+import { isEmpty } from 'lodash'
+import format from 'date-fns/format'
 
 export interface ProofOfIdentityFieldProps {
   name: any
@@ -87,21 +95,63 @@ export const ProofOfIdentityField = ({
               {fields.map((field, index) => {
                 const identityType = pathToString([name, index, 'identityType'])
                 const identityTypeValue = watch(identityType)
+                const documentNumberValue = watch(
+                  pathToString([name, index, 'documentNumber'])
+                )
+                const issuedDateValue = watch(
+                  pathToString([name, index, 'issuedDate'])
+                )
+                const expiryDateValue = watch(
+                  pathToString([name, index, 'expiryDate'])
+                )
                 const idsWithFrontAndBack = ['NATIONAL ID', 'DRIVING LICENSE']
                 const hasFrontAndBack =
                   idsWithFrontAndBack.includes(identityTypeValue)
 
+                const idsWithOptionalDates = ['NATIONAL ID', 'OTHERS']
+                const areDatesOptional =
+                  idsWithOptionalDates.includes(identityTypeValue)
+
+                const isUploadDisabled =
+                  isEmpty(identityTypeValue) ||
+                  isEmpty(documentNumberValue) ||
+                  (!areDatesOptional &&
+                    (expiryDateValue === null || issuedDateValue === null))
+
                 // console.log('identityType', identityTypeValue)
-                console.log('field', field)
+                // console.log('field', field)
 
                 const documentInfo: UploadDocumentInfo = {
                   type: label,
-                  title: identityTypeValue
+                  title: [
+                    identityTypeValue,
+                    !!issuedDateValue
+                      ? format(new Date(issuedDateValue), 'yyyy-MM-dd')
+                      : 'NA',
+                    !!expiryDateValue
+                      ? format(new Date(expiryDateValue), 'yyyy-MM-dd')
+                      : 'NA',
+                    documentNumberValue
+                  ].join(',')
                 }
+
+                const titleField =
+                  'front' in field ? field.front?.title : field.value?.title
+                const metadata: any = titleField
+                  .split(',')
+                  .map((data: any) => data.trim())
+                const title =
+                  (metadata?.[0] === 'NA' ? null : metadata[0]) ?? null
+                const documentNumber =
+                  (metadata?.[3] === 'NA' ? null : metadata[3]) ?? null
+                const issuance =
+                  (metadata?.[1] === 'NA' ? null : metadata[1]) ?? null
+                const expiry =
+                  (metadata?.[2] === 'NA' ? null : metadata[2]) ?? null
 
                 return (
                   <Grid item xs={12} key={field.id}>
-                    <Grid item xs={6} mb={2}>
+                    <Grid item xs={12} mt={-2}>
                       <TypedField
                         component={ProofOfIdentityTypeSelect}
                         control={control}
@@ -109,15 +159,51 @@ export const ProofOfIdentityField = ({
                         variant='outlined'
                         customRenderer
                         placeholder='Select Identity Type'
-                        defaultValue={
-                          'front' in field
-                            ? field.front?.title
-                            : field.value?.title
-                        }
+                        defaultValue={title}
                       />
                     </Grid>
+
+                    <Grid item container spacing={3} xs={12} mt={2}>
+                      <Grid item xs={12} md={6}>
+                        <TypedField
+                          fullWidth
+                          component={TextInput}
+                          control={control}
+                          name={[name, index, 'documentNumber']}
+                          label='Document Number'
+                          variant='outlined'
+                          customRenderer
+                          defaultValue={documentNumber}
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <TypedField
+                          component={DatePicker}
+                          control={control}
+                          name={[name, index, 'issuedDate']}
+                          label='Document Issued Date'
+                          defaultValue={issuance}
+                          valueExtractor={dateTimeValueExtractor}
+                          customRenderer
+                          isOptional={areDatesOptional}
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <TypedField
+                          component={DatePicker}
+                          control={control}
+                          name={[name, index, 'expiryDate']}
+                          label='Document Expiry Date'
+                          defaultValue={expiry}
+                          valueExtractor={dateTimeValueExtractor}
+                          customRenderer
+                          isOptional={areDatesOptional}
+                        />
+                      </Grid>
+                    </Grid>
+
                     {hasFrontAndBack ? (
-                      <Grid item container spacing={3}>
+                      <Grid item container spacing={3} mt={2}>
                         <Grid item xs={12} md={6}>
                           <TypedField
                             customRenderer
@@ -144,6 +230,7 @@ export const ProofOfIdentityField = ({
                             onRemoveCallback={handleRemoveFile}
                             isCover
                             defaultValue={field.front}
+                            disabled={isUploadDisabled}
                           />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -168,11 +255,12 @@ export const ProofOfIdentityField = ({
                             isCover
                             defaultValue={field.back}
                             isOptional
+                            disabled={isUploadDisabled}
                           />
                         </Grid>
                       </Grid>
                     ) : (
-                      <Grid item xs={12}>
+                      <Grid item xs={12} mt={2}>
                         <TypedField
                           customRenderer
                           name={[name, index, 'value']}
@@ -193,6 +281,7 @@ export const ProofOfIdentityField = ({
                           onSuccessUploadCallback={handleSuccessFileUpload}
                           onRemoveCallback={handleRemoveFile}
                           defaultValue={field.value}
+                          disabled={isUploadDisabled}
                         />
                       </Grid>
                     )}
@@ -203,9 +292,10 @@ export const ProofOfIdentityField = ({
               <AddDocumentButton
                 addEmptyValue={!isDefaultEmpty}
                 name={name}
-                isVisible={
-                  fields.length === uploadedFiles.length || fields.length === 0
-                }
+                // isVisible={
+                //   fields.length === uploadedFiles.length || fields.length === 0
+                // }
+                isVisible={false}
                 onClick={() => {
                   append({ value: {} })
                 }}
