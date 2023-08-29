@@ -7,8 +7,6 @@ import { Attachment } from './Attachment'
 import { Asset } from 'state/launchpad/types'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { Info } from 'react-feather'
-import axios from 'axios'
-import { ip } from 'services/apiUrls'
 
 export interface InfoEntry {
   label: React.ReactNode
@@ -40,22 +38,17 @@ export const InfoList: React.FC<Props> = ({
 }) => {
   const getIsLast = useCallback((idx: number) => entries.length === idx + 1, [entries])
   const theme = useTheme()
-  const [countryCode, setCountryCode] = useState('')
+  const [localTime, setLocalTime] = useState(new Date())
 
-  useEffect(() => {
-    const getCountryCode = async () => {
-      const response = await axios.get(ip.getIPAddress)
-      if (response) {
-        const utcCode = await axios.get(
-          `http://worldtimeapi.org/api/timezone/${response?.data?.localityInfo?.informative[1]?.name}`
-        )
-        console.log(utcCode?.data?.utc_offset, 'hahahahahha')
-        setCountryCode(utcCode?.data?.utc_offset)
-      }
-    }
-    getCountryCode()
-  }, [])
+  const convertToLocalUTC = () => {
+    const localTimestamp = localTime.getTime()
+    const utcTimestamp = localTimestamp - localTime.getTimezoneOffset() * 60 * 1000
+    const utcDate = new Date(utcTimestamp)
+    const newString = utcDate.toString().split(' ')[5]
+    return `${newString.slice(0, 6)}:${newString.slice(6, 8)}`
+  }
 
+  const utcTime = convertToLocalUTC()
   return (
     <Container>
       {title && (
@@ -63,7 +56,7 @@ export const InfoList: React.FC<Props> = ({
           <StageLabel>
             <div>{title}</div>
             {title === 'Investment Stage' && (
-              <Tooltip title={title} body={`The time provided is based on your local time at ${countryCode}`}>
+              <Tooltip title={title} body={`The time provided is based on your local time at ${utcTime}`}>
                 <Info size="14" color={theme.launchpad.colors.text.caption} />
               </Tooltip>
             )}
