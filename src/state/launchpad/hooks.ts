@@ -965,8 +965,8 @@ const useUploadOfferFiles = () => {
         files.push({ name: 'profile', file: payload.profilePicture?.file })
       }
 
-      const firstUploadedPurchaseAgreement = !payload.purchaseAgreement?.file && !payload.purchaseAgreement?.file?.id;
-      const firstUploadedInvestmentMemorandum = !payload.investmentMemorandum?.file && !payload.investmentMemorandum?.file?.id;
+      const firstUploadedPurchaseAgreement = payload.purchaseAgreement?.file && !payload.purchaseAgreement?.file?.id;
+      const firstUploadedInvestmentMemorandum = payload.investmentMemorandum?.file && !payload.investmentMemorandum?.file?.id;
 
       if (firstUploadedPurchaseAgreement || payload.purchaseAgreement?.file?.id !== initial.purchaseAgreement?.file?.id) {
         files.push({ name: 'purchaseAgreement', file: payload.purchaseAgreement?.file?.file })

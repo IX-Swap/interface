@@ -9,6 +9,7 @@ import {
   InvestedDataRes,
   InvestmentStatusesLabels,
   Offer,
+  OfferFileType,
   OfferStatus,
 } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
@@ -51,6 +52,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     contractSaleId,
     investingTokenDecimals,
     contractAddress,
+    files
   } = offer
   const { amount: amountInvested, availableToInvest, lastStatus } = investedData
   const theme = useTheme()
@@ -108,6 +110,10 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       },
     ]
   }, [availableToInvest, amountInvested, investingTokenSymbol, formatter, lastStatus])
+
+  const purchaseAgreement = files.find((x) => x.type === OfferFileType.purchaseAgreement);
+  const investmentMemorandum = files.find((x) => x.type === OfferFileType.investmentMemorandum);
+  const otherExecutionDocuments = files.filter((x) => x.type === OfferFileType.otherExecutionDocument);
 
   const tooltipContent = (
     <div>
@@ -192,13 +198,13 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           </InfoContainer>
         }
         fontSize="13px"
-        lineHeight="32px"
+        lineHeight="30px"
         entries={conditions}
       />
       <InfoList
         title={<InfoListTitle>My investment allowance</InfoListTitle>}
         fontSize="13px"
-        lineHeight="32px"
+        lineHeight="30px"
         entries={investmentAllowance}
       />
 
@@ -218,37 +224,66 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
               textDecoration: 'none',
               color: '#6667FF',
             }}
-            href="https://drive.google.com/file/d/1IyTwpKXXX2akqYimUstvwfcfFEPuOGBa/view?usp=sharing"
+            href={purchaseAgreement ? purchaseAgreement.file?.public : "https://drive.google.com/file/d/1IyTwpKXXX2akqYimUstvwfcfFEPuOGBa/view?usp=sharing"}
             target="_blank"
             rel="noreferrer"
           >
             Purchase Agreement
           </a>
-          ,&nbsp;
+          &nbsp;in respect of this token sale.
+        </AgreementText>
+      </Agreement>
+      <Agreement>
+        <AgreementCheckbox state={agreed} toggle={() => setAgreed((state) => !state)} />
+        <AgreementText>
+          I have read, fully understood and agree to be bound by the&nbsp;
           <a
             style={{
               textDecoration: 'none',
               color: '#6667FF',
             }}
-            href="https://drive.google.com/file/d/1cpYhcSYbxodNWB_OpvyjbFLwnHgGF6lj/view?usp=sharing"
+            href={investmentMemorandum ? investmentMemorandum.file?.public : "https://drive.google.com/file/d/1cpYhcSYbxodNWB_OpvyjbFLwnHgGF6lj/view?usp=sharing"}
             target="_blank"
             rel="noreferrer"
           >
             Investment Memorandum
           </a>
-          ,&nbsp;
-          <a
-            style={{
-              textDecoration: 'none',
-              color: '#6667FF',
-            }}
-            href="https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Amended Limited Liability Company Operating Agreement
-          </a>
-          &nbsp;and any other relevant agreements in respect of this token sale.
+          &nbsp;in respect of this token sale.
+        </AgreementText>
+      </Agreement>
+      <Agreement>
+        <AgreementCheckbox state={agreed} toggle={() => setAgreed((state) => !state)} />
+        <AgreementText>
+          I have read, fully understood and agree to be bound by the
+          other relevant agreements here in respect of this token sale:
+          {otherExecutionDocuments.length > 0 ? otherExecutionDocuments.map((document, idx) => 
+            <>
+              <br/>
+              <a
+                style={{
+                  textDecoration: 'none',
+                  color: '#6667FF',
+                }}
+                href={document ? document.file?.public : "https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing"}
+                target="_blank"
+                rel="noreferrer"
+              >
+                &#xB7; {`Support Document ${idx + 1}`}
+              </a>
+            </>
+          )
+          : 
+            <a
+              style={{
+                textDecoration: 'none',
+                color: '#6667FF',
+              }}
+              href="https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing"
+              target="_blank"
+              rel="noreferrer"
+            >
+              &#xB7; Support Document 1
+            </a>}
         </AgreementText>
       </Agreement>
 
