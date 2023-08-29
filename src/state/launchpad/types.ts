@@ -313,9 +313,6 @@ export interface Offer {
   updatedAt: Date
   deletedAt?: Date
 
-  // purchaseAgreement: OfferFile
-  // investmentMemorandum: OfferFile
-  // otherExecutionDocuments: OfferFile[]
   files: OfferFile[]
   investments: OfferInvestment[]
   payments: OfferPayment[]
