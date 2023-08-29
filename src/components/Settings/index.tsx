@@ -1,6 +1,6 @@
 import { Percent } from '@ixswap1/sdk-core'
 import Astronaut from 'assets/images/astronaut.svg'
-import { ReactComponent as SettingsEmpty } from 'assets/images/settings-empty.svg'
+import { ReactComponent as SettingsEmpty } from 'assets/images/settingnew.svg'
 import { ReactComponent as SettingsFull } from 'assets/images/settings-full.svg'
 import React from 'react'
 import styled from 'styled-components'

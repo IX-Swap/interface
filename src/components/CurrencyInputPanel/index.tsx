@@ -35,7 +35,7 @@ const FixedContainer = styled.div`
   height: 100%;
   position: absolute;
   border-radius: 20px;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg23};
   opacity: 0.95;
   display: flex;
   align-items: center;
@@ -44,8 +44,9 @@ const FixedContainer = styled.div`
 `
 
 const Container = styled.div<{ hideInput: boolean }>`
-  border-radius: 36px;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
+  border-radius: 8px;
+  border: solid 1px #e6e6ff;
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg23};
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       border-radius: 20px;
@@ -54,7 +55,7 @@ const Container = styled.div<{ hideInput: boolean }>`
 
 const CurrencySelect = styled(ButtonEmpty)<{ selected: boolean; hideInput?: boolean }>`
   align-items: center;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg23};
   color: ${({ selected, theme }) => (selected ? theme.text1 : theme.config.text?.additional1 || theme.white)};
   border-radius: 16px;
   outline: none;
@@ -128,7 +129,9 @@ export const StyledDropDown = styled(DropDown)<{ selected: boolean }>`
 
 const StyledTokenName = styled.span<{ active?: boolean }>`
   ${({ active }) => (active ? '  margin: 0 0.25rem 0 0.25rem;' : '  margin: 0 0.25rem 0 0.25rem;')}
-  font-size:  ${({ active }) => (active ? '18px' : '18px')};
+  font-size:  ${({ active }) => (active ? '14px' : '14px')};
+  color: ${({ theme }) => theme.text11};
+  // border: solid 1px red;
 `
 const BalanceRow = styled(RowEnd)``
 const BalanceWrap = styled(RowFixed)`
@@ -240,14 +243,19 @@ export default function CurrencyInputPanel({
         <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}} selected={!onCurrencySelect}>
           {!hideInput && (
             <>
-              <NumericalInput className="token-amount-input" data-testid="token-amount-input" value={value} onUserInput={onChangeInput} />
+              <NumericalInput
+                className="token-amount-input"
+                data-testid="token-amount-input"
+                value={value}
+                onUserInput={onChangeInput}
+              />
             </>
           )}
-          {showMaxButton && selectedCurrencyBalance ? (
+          {/* {showMaxButton && selectedCurrencyBalance ? (
             <StyledBalanceMax onClick={onMax}>
               <Trans>Max</Trans>
             </StyledBalanceMax>
-          ) : null}
+          ) : null} */}
           <CurrencySelect
             selected={!!currency}
             hideInput={hideInput}
@@ -284,7 +292,7 @@ export default function CurrencyInputPanel({
                 <BalanceWrap>
                   <TYPE.body
                     onClick={onMax}
-                    color={theme.text2}
+                    color={theme.text11}
                     fontWeight={400}
                     fontSize={14}
                     style={{ display: 'inline', cursor: 'pointer' }}
@@ -294,7 +302,10 @@ export default function CurrencyInputPanel({
                         renderBalance(selectedCurrencyBalance)
                       ) : (
                         <Trans>
-                          Balance: {formatCurrencyAmount(selectedCurrencyBalance, decimals)} {currency.symbol}
+                          Balance:
+                          <span style={{ color: '#292933' }}>
+                            {formatCurrencyAmount(selectedCurrencyBalance, decimals)} {currency.symbol}
+                          </span>
                         </Trans>
                       )
                     ) : null}

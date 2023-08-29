@@ -117,6 +117,6 @@ export const LiquidityInnerTitle = styled.span`
   font-size: 16px;
   line-height: 24px;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.text2};
+  color: #292933;
   margin-bottom: 1.5rem;
 `

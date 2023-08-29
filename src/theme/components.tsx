@@ -367,6 +367,29 @@ export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
   user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
 `
 
+export const ModalNewWrapper = styled.span<{ touchable?: boolean }>`
+  background: ${({ theme }) => theme.bg25};
+  border-radius: px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  display: flex;
+  min-width: 622px;
+  z-index: 5;
+  padding: 32px;
+  backdrop-filter: blur(20px);
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0;
+    min-width: 100%;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+  `};
+  user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
+`
+
 export const ModalLightBlurWrapper = styled.span<{ touchable?: boolean }>`
   border-radius: 45px;
   display: flex;
@@ -389,14 +412,14 @@ export const ModalLightBlurWrapper = styled.span<{ touchable?: boolean }>`
 `
 
 export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
-  color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
+  color: ${({ error, theme }) => (error ? theme.red1 : theme.text12)};
   width: 0;
   position: relative;
   outline: none;
   border: none;
   flex: 1 1 auto;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg23};
   text-align: ${({ align }) => align && align};
   white-space: nowrap;
   overflow: hidden;

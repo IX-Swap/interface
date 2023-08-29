@@ -62,13 +62,14 @@ export const BlueCard = styled(Card)`
 `
 
 export const TipCard = styled(Card)`
-  border-radius: 45px;
+  border-radius: 5px;
+  border: solid 1px #e6e6ff;
   font-size: 12px;
   line-height: 18px;
-  padding: 20px 35px;
+  padding: 20px 20px;
   text-align: left;
-  background: ${({ theme }) => theme.bgG12};
-  color: ${({ theme }) => theme.text2};
+  background: ${({ theme }) => theme.bg24};
+  color: ${({ theme }) => theme.text13};
 `
 
 export const EmptyStateInfoCard = styled(Card)`

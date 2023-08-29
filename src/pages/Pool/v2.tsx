@@ -82,17 +82,9 @@ export default function Pool() {
   const isBlurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
   return (
     <>
-      {!isBlurred && (
-        <DesktopOnly style={{ width: '100%', maxWidth: '592px' }}>
-          <TopContent />
-        </DesktopOnly>
-      )}
+      {!isBlurred && <DesktopOnly style={{ width: '100%', maxWidth: '592px' }}>{/* <TopContent /> */}</DesktopOnly>}
       <AppBody blurred={isBlurred}>
-        {!isBlurred && (
-          <MobileAndTablet style={{ marginBottom: '1rem' }}>
-            <TopContent />
-          </MobileAndTablet>
-        )}
+        {!isBlurred && <MobileAndTablet style={{ marginBottom: '1rem' }}>{/* <TopContent /> */}</MobileAndTablet>}
         <SwapPoolTabs active={'pool'} />
         <AutoColumn gap="1.5rem" justify="center">
           <AutoColumn gap="md" style={{ width: '100%' }}>

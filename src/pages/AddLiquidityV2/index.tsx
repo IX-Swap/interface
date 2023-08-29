@@ -15,12 +15,12 @@ import { setPoolTransactionHash, useAddLiquidity, useMitigationEnabled } from 's
 import { routes } from 'utils/routes'
 import { NETWORK_NAMES } from 'constants/chains'
 
-import { ButtonIXSGradient, ButtonIXSWide } from '../../components/Button'
+import { NewApproveButton, PinnedContentButton } from '../../components/Button'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { AddRemoveTabs } from '../../components/NavigationTabs'
-import { MinimalPositionCard } from '../../components/PositionCard/MinimalPositionCard'
-import { ButtonRow } from '../../components/Row'
+import { FixedHeightRow, MinimalPositionCard } from '../../components/PositionCard/MinimalPositionCard'
+import { ButtonRow, RowFixed } from '../../components/Row'
 import TransactionConfirmationModal from '../../components/TransactionConfirmationModal'
 import { ZERO_PERCENT } from '../../constants/misc'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
@@ -34,7 +34,7 @@ import { Field } from '../../state/mint/actions'
 import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useAccreditedToken, useIsExpertMode, useUserSlippageToleranceWithDefault } from '../../state/user/hooks'
-import { ModalBlurWrapper, TYPE } from '../../theme'
+import { ModalBlurWrapper, ModalNewWrapper, TYPE } from '../../theme'
 import { calculateGasMargin } from '../../utils/calculateGasMargin'
 import { calculateSlippageAmount } from '../../utils/calculateSlippageAmount'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
@@ -48,8 +48,18 @@ import { SecToSecWarning } from './SecToSecWarning'
 import { ToggleableBody } from './styleds'
 import { Tip } from './Tip'
 import { useHandleCurrencySelect } from './useHandleCurrencySelect'
+import { ReactComponent as ExternalIcon } from '../../assets/images/rightcheck.svg'
+import styled from 'styled-components/macro'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
+
+const Title = styled(Text)`
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.text12};
+`
 
 export default function AddLiquidity({
   match: {
@@ -323,21 +333,20 @@ export default function AddLiquidity({
           attemptingTxn={attemptingTxn}
           hash={txHash}
           content={() => (
-            <ModalBlurWrapper>
+            <ModalNewWrapper>
               <ConfirmationModalContent
                 title={noLiquidity ? <Trans>You are creating a pool</Trans> : <Trans>You will receive</Trans>}
                 onDismiss={handleDismissConfirmation}
                 topContent={modalHeader}
                 bottomContent={modalBottom}
               />
-            </ModalBlurWrapper>
+            </ModalNewWrapper>
           )}
           pendingText={pendingText}
           currencyToAdd={pair?.liquidityToken}
         />
       )}
       <ToggleableBody isVisible={!showConfirm}>
-        <Tip noLiquidity={noLiquidity} isCreate={isCreate} />
         <AppBody>
           <AddRemoveTabs creating={isCreate} adding={true} showBadge={mitigationEnabled} />
           <>
@@ -356,9 +365,9 @@ export default function AddLiquidity({
                 showCommonBases={false}
                 title={<Trans>Choose token to create a pool</Trans>}
               />
-              <ColumnCenter>
+              {/* <ColumnCenter>
                 <Plus size="24" color={theme.text2} />
-              </ColumnCenter>
+              </ColumnCenter> */}
               <CurrencyInputPanel
                 value={formattedAmounts[Field.CURRENCY_B]}
                 onUserInput={onFieldBInput}
@@ -382,35 +391,37 @@ export default function AddLiquidity({
                     price={price}
                   />
                 )}
-                {!Boolean(pair?.liquidityToken?.address) && (
+                {/* {!Boolean(pair?.liquidityToken?.address) && (
                   <MitigationToggle
                     active={enableMitigation}
                     toggle={toggleMitigation}
                     disabled={disableToggleMitigation}
                   />
-                )}
+                )} */}
                 {areBothSecTokens && <SecToSecWarning />}
                 <Box marginTop={'23px'}>
                   {addIsUnsupported ? (
-                    <ButtonIXSWide disabled={true} data-testid="unsupported-asset">
+                    <PinnedContentButton disabled={true} data-testid="unsupported-asset">
                       <TYPE.main mb="4px">
                         <Trans>Unsupported Asset</Trans>
                       </TYPE.main>
-                    </ButtonIXSWide>
+                    </PinnedContentButton>
                   ) : !account ? (
-                    <ButtonIXSWide onClick={toggleWalletModal} data-testid="connect-wallet-add-liquidity">
+                    <PinnedContentButton onClick={toggleWalletModal} data-testid="connect-wallet-add-liquidity">
                       <Trans>Connect Wallet</Trans>
-                    </ButtonIXSWide>
+                    </PinnedContentButton>
                   ) : (
                     <AutoColumn gap={'md'}>
                       {(approvalA === ApprovalState.NOT_APPROVED ||
                         approvalA === ApprovalState.PENDING ||
+                        approvalA === ApprovalState.APPROVED ||
                         approvalB === ApprovalState.NOT_APPROVED ||
-                        approvalB === ApprovalState.PENDING) &&
+                        approvalB === ApprovalState.PENDING ||
+                        approvalB === ApprovalState.APPROVED) &&
                         isValid && (
                           <ButtonRow marginBottom={'0.5rem'}>
                             {approvalA !== ApprovalState.APPROVED && (
-                              <ButtonIXSGradient
+                              <PinnedContentButton
                                 onClick={approveACallback}
                                 disabled={approvalA === ApprovalState.PENDING}
                                 data-testid="approve-currency-a"
@@ -423,10 +434,19 @@ export default function AddLiquidity({
                                 ) : (
                                   <Trans>Approve {currencies[Field.CURRENCY_A]?.symbol}</Trans>
                                 )}
-                              </ButtonIXSGradient>
+                              </PinnedContentButton>
+                            )}
+                            {approvalA === ApprovalState.APPROVED && (
+                              <NewApproveButton
+                                data-testid="approved-currency-a"
+                                style={{ flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2, gap: '10px' }}
+                              >
+                                <ExternalIcon />
+                                <Trans>Approved {currencies[Field.CURRENCY_A]?.symbol}</Trans>
+                              </NewApproveButton>
                             )}
                             {approvalB !== ApprovalState.APPROVED && (
-                              <ButtonIXSGradient
+                              <PinnedContentButton
                                 onClick={approveBCallback}
                                 disabled={approvalB === ApprovalState.PENDING}
                                 data-testid="approve-currency-b"
@@ -439,11 +459,20 @@ export default function AddLiquidity({
                                 ) : (
                                   <Trans>Approve {currencies[Field.CURRENCY_B]?.symbol}</Trans>
                                 )}
-                              </ButtonIXSGradient>
+                              </PinnedContentButton>
+                            )}
+                            {approvalB === ApprovalState.APPROVED && (
+                              <NewApproveButton
+                                data-testid="approved-currency-b"
+                                style={{ flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2, gap: '10px' }}
+                              >
+                                <ExternalIcon />
+                                <Trans>Approved {currencies[Field.CURRENCY_B]?.symbol}</Trans>
+                              </NewApproveButton>
                             )}
                           </ButtonRow>
                         )}
-                      <ButtonIXSWide
+                      <PinnedContentButton
                         data-testid="supply"
                         onClick={() => {
                           expertMode ? onAdd() : setShowConfirm(true)
@@ -453,24 +482,36 @@ export default function AddLiquidity({
                         }
                       >
                         <Text>{error ?? <Trans>Supply</Trans>}</Text>
-                      </ButtonIXSWide>
+                      </PinnedContentButton>
                     </AutoColumn>
+                  )}
+                  {!addIsUnsupported ? (
+                    pair && !noLiquidity && pairState !== PairState.INVALID ? (
+                      <>
+                        <FixedHeightRow style={{ marginBottom: '30px', marginTop: '20px' }}>
+                          <RowFixed>
+                            <Title>
+                              <Trans>Your position</Trans>
+                            </Title>
+                          </RowFixed>
+                        </FixedHeightRow>
+                        <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} />
+                      </>
+                    ) : null
+                  ) : (
+                    <UnsupportedCurrencyFooter
+                      show={addIsUnsupported}
+                      currencies={[currencies.CURRENCY_A, currencies.CURRENCY_B]}
+                    />
                   )}
                 </Box>
               </AutoColumn>
             </AutoColumn>
           </>
         </AppBody>
-        {!addIsUnsupported ? (
-          pair && !noLiquidity && pairState !== PairState.INVALID ? (
-            <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} />
-          ) : null
-        ) : (
-          <UnsupportedCurrencyFooter
-            show={addIsUnsupported}
-            currencies={[currencies.CURRENCY_A, currencies.CURRENCY_B]}
-          />
-        )}
+        <TYPE.main mt="20px">
+          <Tip noLiquidity={noLiquidity} isCreate={isCreate} />
+        </TYPE.main>
       </ToggleableBody>
     </>
   )

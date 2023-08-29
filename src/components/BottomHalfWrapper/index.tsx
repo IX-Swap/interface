@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 
 export const BackgroundWrapper = styled.div`
-  background: ${({ theme }) => theme.bgG7};
-  border-radius: 34px;
+  background: #F7F7FA;
+  border-radius: 10px;
   backdrop-filter: blur(4px);
   padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
+  border: 1px solid #E6E6FF;
+  margin-top: 20px;
 }
 `
 

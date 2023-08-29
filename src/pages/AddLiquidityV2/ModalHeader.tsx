@@ -25,29 +25,29 @@ export const ModalHeader = ({ noLiquidity, currencies, liquidityMinted, allowedS
     <ModalHeaderWrapper>
       <AutoColumn gap="12px">
         <RowBetween style={{ flexWrap: 'wrap' }}>
-          <Text fontSize="40px" fontWeight={600} lineHeight="60px" marginRight={10}>
+          <Text color={'#292933'} fontSize="40px" fontWeight={600} lineHeight="60px" marginRight={10}>
             {text}
           </Text>
           <DoubleCurrencyLogo
             currency0={currencies[Field.CURRENCY_A]}
             currency1={currencies[Field.CURRENCY_B]}
-            size={30}
+            size={50}
           />
         </RowBetween>
         {!noLiquidity && (
           <>
             <Row>
-              <Text fontSize="20px" lineHeight={'30px'}>
+              <Text fontWeight={'400'} color={'#292933'} fontSize="18px" lineHeight={'30px'}>
                 {currencies[Field.CURRENCY_A]?.symbol + '/' + currencies[Field.CURRENCY_B]?.symbol + ' Pool Tokens'}
               </Text>
             </Row>
             <SemiTransparent>
-              <TYPE.italic fontSize={12} textAlign="left" fontWeight={300} lineHeight={'18px'}>
+              <Text color={'#666680'} fontSize={16} width={'75%'} textAlign="left" fontWeight={300} lineHeight={'18px'}>
                 <Trans>
                   Output is estimated. If the price changes by more than{' '}
                   {formatAmount(+allowedSlippage.toSignificant(4))}% your transaction will revert.
                 </Trans>
-              </TYPE.italic>
+              </Text>
             </SemiTransparent>
           </>
         )}

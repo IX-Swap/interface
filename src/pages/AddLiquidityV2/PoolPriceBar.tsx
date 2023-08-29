@@ -12,7 +12,6 @@ import { TYPE } from '../../theme'
 const Row = styled(AutoRow)`
   justify: space-around;
 
-
   ${({ theme }) => theme.mediaWidth.upToSmall`
     justify-content: start;
   `};
@@ -34,26 +33,30 @@ export function PoolPriceBar({
   return (
     <AutoColumn gap="md">
       <Row justify="space-around" gap="4px">
-        <AutoColumn justify="center">
-          <TYPE.black>{formatAmount(+(price?.toSignificant(6) || 0)) ?? '-'}</TYPE.black>
-          <Text fontWeight={500} fontSize={14} color={theme.text2} pt={1}>
+        <AutoColumn style={{ padding: '25px', border: 'solid 1px #E6E6FF' }} justify="center">
+          <Text fontWeight={500} color={theme.text12}>
+            {formatAmount(+(price?.toSignificant(6) || 0)) ?? '-'}
+          </Text>
+          <Text fontWeight={500} fontSize={14} color={theme.text11} pt={1}>
             {currencies[Field.CURRENCY_B]?.symbol} per {currencies[Field.CURRENCY_A]?.symbol}
           </Text>
         </AutoColumn>
-        <AutoColumn justify="center">
-          <TYPE.black>{formatAmount(+(price?.invert()?.toSignificant(6) || 0)) ?? '-'}</TYPE.black>
-          <Text fontWeight={500} fontSize={14} color={theme.text2} pt={1}>
+        <AutoColumn style={{ padding: '25px', border: 'solid 1px #E6E6FF' }} justify="center">
+          <Text fontWeight={500} color={theme.text12}>
+            {formatAmount(+(price?.invert()?.toSignificant(6) || 0)) ?? '-'}
+          </Text>
+          <Text fontWeight={500} fontSize={14} color={theme.text11} pt={1}>
             {currencies[Field.CURRENCY_A]?.symbol} per {currencies[Field.CURRENCY_B]?.symbol}
           </Text>
         </AutoColumn>
-        <AutoColumn justify="center">
-          <TYPE.black>
+        <AutoColumn style={{ padding: '25px', border: 'solid 1px #E6E6FF' }} justify="center">
+          <Text fontWeight={500} color={theme.text12}>
             {noLiquidity && price
               ? '100'
               : (poolTokenPercentage?.lessThan(ONE_BIPS) ? '<0.01' : poolTokenPercentage?.toFixed(2)) ?? '0'}
             %
-          </TYPE.black>
-          <Text fontWeight={500} fontSize={14} color={theme.text2} pt={1}>
+          </Text>
+          <Text fontWeight={500} fontSize={14} color={theme.text11} pt={1}>
             Share of Pool
           </Text>
         </AutoColumn>

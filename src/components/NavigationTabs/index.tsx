@@ -8,9 +8,10 @@ import { AppDispatch } from 'state'
 import { resetMintState } from 'state/mint/actions'
 import styled from 'styled-components/macro'
 import { CloseIcon, StyledPageHeader } from 'theme'
-import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
+import { ReactComponent as ArrowLeft } from '../../assets/images/backNew.svg'
 import { RowBetween, RowStart, RowEnd } from '../Row'
 import MitigationBadge from 'components/MitigationBadge'
+import { Text } from 'rebass'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -175,14 +176,15 @@ export function AddRemoveTabs({
                 <ArrowLeft />
               </Box>
             </HistoryLink>
-
-            {creating ? (
-              <Trans>Create a pair</Trans>
-            ) : adding ? (
-              <Trans>Add Liquidity</Trans>
-            ) : (
-              <Trans>Remove Liquidity</Trans>
-            )}
+            <Text textAlign={'center'} fontSize={'20px'} color={'#292933'}>
+              {creating ? (
+                <Trans>Create a pair</Trans>
+              ) : adding ? (
+                <Trans>Add Liquidity</Trans>
+              ) : (
+                <Trans>Remove Liquidity</Trans>
+              )}
+            </Text>
           </RowStart>
           {showBadge && <MitigationBadge />}
         </RowBetween>
