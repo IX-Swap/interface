@@ -9,7 +9,7 @@ import { FormGrid } from '../../shared/FormGrid'
 import { AdditionalDocument } from '../types'
 import { getSetter } from '../util'
 import styled from 'styled-components'
-import { text50 } from 'components/LaunchpadMisc/typography'
+import { text48, text55 } from 'components/LaunchpadMisc/typography'
 import { Flex } from 'rebass'
 import { IssuanceTooltip } from '../../shared/fields/IssuanceTooltip'
 
@@ -20,8 +20,9 @@ interface Props {
 
 export const UploadDocuments: React.FC<Props> = ({ documents, otherExecutionDocuments }) => {
   return (
-    <FormGrid title="Upload Documents">
-      <>
+    <>
+      <MainTitle>{"Upload Documents"}</MainTitle>
+      <FormGrid>
         <Flex alignContent={"flex-end"}>
           <Title>{"Execution Documents"}</Title>
           <IssuanceTooltip tooltipContent={'Execution documents are legal documents that investors need to acknowledge and agree to in order to purchase tokens. Examples of these documents are Purchase Agreement and Investment Memorandum'} /> 
@@ -87,9 +88,9 @@ export const UploadDocuments: React.FC<Props> = ({ documents, otherExecutionDocu
               </>
             )}
           </FieldArray>
-      </>
+      </FormGrid>
         
-      <>
+      <FormGrid>
         <Flex alignContent={"flex-end"}>
           <Title>{"Dataroom"}</Title>
           <IssuanceTooltip tooltipContent={'An investor data room is a secure space for the sharing of sensitive information relating to the company in which the investor is considering investing. Data rooms for investors used to be physical rooms, however today they are almost always virtual'}/> 
@@ -127,13 +128,17 @@ export const UploadDocuments: React.FC<Props> = ({ documents, otherExecutionDocu
             </>
           )}
         </FieldArray>
-      </>  
-    </FormGrid>
+      </FormGrid>  
+    </>
   )
 }
 
 const Title = styled.div`
-  ${text50}
+  ${text55}
   color: ${(props) => props.theme.launchpad.colors.text.title};
   padding-right: 10px;
+`
+const MainTitle = styled.div`
+  ${text48}
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
