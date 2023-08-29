@@ -417,6 +417,14 @@ export const createValidationSchema = (account: string | null | undefined) => {
     }),
     gallery: yup.array(requiredFileSchema),
 
+    purchaseAgreement: requiredFileSchema,
+    investmentMemorandum: requiredFileSchema,
+    otherExecutionDocuments: yup.array(
+      yup.object().shape({
+        file: fileSchema,
+      })
+    ),
+
     additionalDocuments: yup.array(
       yup.object().shape({
         file: fileSchema,
@@ -482,6 +490,14 @@ export const editSchema = yup.object().shape({
 
   gallery: yup.array(requiredFileSchema),
 
+  purchaseAgreement: requiredFileSchema,
+  investmentMemorandum: requiredFileSchema,
+  otherExecutionDocuments: yup.array(
+    yup.object().shape({
+      file: fileSchema,
+    })
+  ),
+  
   additionalDocuments: yup.array(
     yup.object().shape({
       file: fileSchema,
