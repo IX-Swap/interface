@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 import { useHistory } from 'react-router-dom'
@@ -37,6 +37,12 @@ import { corporateErrorsSchema } from './schema'
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
 
+type FormSubmitHanderArgs = {
+  createFn: (body: any) => any
+  updateFn: (id: number, body: any) => any
+  validate: boolean
+}
+
 export default function CorporateKycForm() {
   const canLeavePage = useRef(false)
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -56,6 +62,8 @@ export default function CorporateKycForm() {
   const { token } = useAuthState()
   const [isTaxNumberDisabled, setIsTaxNumberDisabled] = useState<boolean>(false)
 
+  const form = useRef<any>(null)
+
   const isLoggedIn = !!token && !!account
 
   const prevAccount = usePrevious(account)
@@ -69,15 +77,28 @@ export default function CorporateKycForm() {
   useEffect(() => {
     setWaitingForInitialValues(true)
 
+    // const getProgress = async () => {
+    //   const data = await getCorporateProgress()
+    //   if (data) {
+    //     const transformedData = corporateTransformApiData(data)
+    //     setFormData(transformedData)
+    //     if (!data.taxIdAvailable) {
+    //       setIsTaxNumberDisabled(true)
+    //     }
+    //   }
+    // }
+
     const getProgress = async () => {
       const data = await getCorporateProgress()
       if (data) {
         const transformedData = corporateTransformApiData(data)
-        setFormData(transformedData)
+        const formData = { ...transformedData }
 
-        // Disable tax number text box if TIN is N/A
-        if (!data.taxIdAvailable) {
-          setIsTaxNumberDisabled(true)
+        setFormData(formData)
+        form.current.setValues(formData)
+
+        if (kyc?.status === KYCStatuses.DRAFT) {
+          setCanSubmit(true)
         }
       }
     }
@@ -228,7 +249,62 @@ export default function CorporateKycForm() {
       validationSeen(key)
     }
 
-    console.log(errors, 'rororororo')
+  const formSubmitHandler = useCallback(
+    async (values: any, { createFn, updateFn, validate = true }: FormSubmitHanderArgs) => {
+      try {
+        if (validate) {
+          await corporateErrorsSchema.validate(values, { abortEarly: false })
+        }
+
+        canLeavePage.current = true
+        setCanSubmit(false)
+        const body = corporateTransformKycDto(values)
+        let data: any = null
+
+        if (updateKycId) {
+          data = await updateFn(updateKycId, body)
+        } else {
+          data = await createFn(body)
+        }
+
+        if (data?.id) {
+          history.push('/kyc')
+          addPopup({ info: { success: true, summary: 'KYC was successfully saved' } })
+        } else {
+          setCanSubmit(true)
+          addPopup({ info: { success: false, summary: 'Something went wrong' } })
+        }
+      } catch (error: any) {
+        const newErrors: any = {}
+
+        // console.log(error, 'kjkjkjkjkj')
+
+        error?.inner.forEach((e: any) => {
+          newErrors[e.path] = e?.message
+        })
+
+        addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
+
+        setIsSubmittedOnce(true)
+        setErrors(newErrors)
+        setCanSubmit(false)
+
+        canLeavePage.current = false
+      }
+    },
+    []
+  )
+
+  const saveProgress = useCallback(
+    async (values: any) => {
+      await formSubmitHandler(values, {
+        createFn: (body) => createCorporateKYC(body, true),
+        updateFn: (id, body) => updateCorporateKYC(id, body, true),
+        validate: false,
+      })
+    },
+    [formSubmitHandler]
+  )
 
   return (
     <Loadable loading={!isLoggedIn}>
@@ -253,79 +329,105 @@ export default function CorporateKycForm() {
 
         {!waitingForInitialValues && formData && (
           <Formik
-            initialValues={formData}
+            innerRef={form}
+            initialValues={corporateFormInitialValues}
+            initialErrors={errors}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
             isInitialValid={false}
             enableReinitialize
             onSubmit={async (values) => {
-              corporateErrorsSchema
-                .validate(values, { abortEarly: false })
-                .then(async () => {
-                  canLeavePage.current = true
-                  setCanSubmit(false)
-                  if (values.taxIdAvailable === false) {
-                    values.taxNumber = ''
-                  } else {
-                    values.reason = ''
-                  }
-                  const body = corporateTransformKycDto(values)
-                  let data: any = null
+              try {
+                await corporateErrorsSchema.validate(values, { abortEarly: false })
+                // .then(async () => {
+                canLeavePage.current = true
+                setCanSubmit(false)
+                if (values?.taxIdAvailable === false) {
+                  values.taxNumber = ''
+                } else {
+                  values.reason = ''
+                }
+                const body = corporateTransformKycDto(values)
+                const data = updateKycId ? await updateCorporateKYC(updateKycId, body) : await createCorporateKYC(body)
 
-                  if (updateKycId) {
-                    data = await updateCorporateKYC(updateKycId, body)
-                  } else {
-                    data = await createCorporateKYC(body)
-                  }
+                // let data: any = null
 
-                  if (data?.id) {
-                    history.push('/kyc')
-                    addPopup({
-                      info: {
-                        success: true,
-                        summary: `KYC was successfully ${updateKycId ? 'updated' : 'submitted'}`,
-                      },
-                    })
-                  } else {
-                    setCanSubmit(true)
-                    addPopup({
-                      info: {
-                        success: false,
-                        summary: 'Something went wrong',
-                      },
-                    })
-                  }
-                })
-                .catch((error) => {
-                  const newErrors: any = {}
-                  error.inner.forEach((e: any) => {
-                    newErrors[e.path] = e.message
+                // if (updateKycId) {
+                //   data = await updateCorporateKYC(updateKycId, body)
+                // } else {
+                //   data = await createCorporateKYC(body)
+                // }
+
+                if (data?.id) {
+                  history.push('/kyc')
+                  addPopup({
+                    info: {
+                      success: true,
+                      summary: `KYC was successfully ${updateKycId ? 'updated' : 'submitted'}`,
+                    },
                   })
+                } else {
+                  setCanSubmit(true)
                   addPopup({
                     info: {
                       success: false,
-                      summary: 'Please, fill the valid data',
+                      summary: 'Something went wrong',
                     },
                   })
-                  setIsSubmittedOnce(true)
-                  setErrors(newErrors)
-                  setCanSubmit(false)
-                  canLeavePage.current = false
+                }
+              } catch (error: any) {
+                const newErrors: any = {}
+
+                error.inner.forEach((e: any) => {
+                  newErrors[e.path] = e.message
                 })
+
+                addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
+
+                setIsSubmittedOnce(true)
+                setErrors(newErrors)
+                setCanSubmit(true)
+                canLeavePage.current = false
+              }
+              // })
+              // .catch((error) => {
+              //   const newErrors: any = {}
+              //   error.inner.forEach((e: any) => {
+              //     newErrors[e.path] = e.message
+              //   })
+              // addPopup({
+              //   info: {
+              //     success: false,
+              //     summary: 'Please, fill the valid data',
+              //   },
+              // })
+              // setIsSubmittedOnce(true)
+              // setErrors(newErrors)
+              // setCanSubmit(false)
+              // canLeavePage.current = false
+              // })
             }}
           >
             {({ values, setFieldValue, dirty, handleSubmit }) => {
-              if (values.taxIdAvailable === undefined)
+              if (values?.taxIdAvailable === undefined) {
+                if (values === null) {
+                  values = {}
+                }
+
                 values.taxIdAvailable = true
-              if (!values.reason)
-                values.reason = 'A'
+              }
+              if (!values.reason) values.reason = 'A'
+              {
+                /* {({ values, setFieldValue, dirty, handleSubmit }) => {
+              if (values.taxIdAvailable === undefined) values.taxIdAvailable = true
+              if (!values.reason) values.reason = 'A' */
+              }
 
               const shouldValidate = dirty && isSubmittedOnce
               const infoFilled =
                 shouldValidate &&
                 !errors.corporateName &&
-                !errors.typeOfLegalEntity &&
                 !errors.countryOfIncorporation &&
                 !errors.businessActivity &&
                 !errors.registrationNumber &&
@@ -349,7 +451,9 @@ export default function CorporateKycForm() {
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
               // const investorFilled = shouldValidate && !errors.accredited
-              const taxDeclarationFilled = values.taxIdAvailable ? shouldValidate && !errors.taxCountry && !errors.taxNumber : shouldValidate
+              const taxDeclarationFilled = values.taxIdAvailable
+                ? shouldValidate && !errors.taxCountry && !errors.taxNumber
+                : shouldValidate
               const filesFilled = shouldValidate && !errors.financialDocuments && !errors.corporateDocuments
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
@@ -614,14 +718,14 @@ export default function CorporateKycForm() {
                         <FormGrid columns={3}>
                           {corporateSourceOfFunds.map(({ value, label }: any) => (
                             <Checkbox
-                              checked={values.sourceOfFunds.includes(label)}
+                              checked={values?.sourceOfFunds?.includes(label)}
                               onClick={() => onSourceOfFundsChange(label, values.sourceOfFunds, setFieldValue)}
                               key={`funds-${value}`}
                               label={label}
                             />
                           ))}
                         </FormGrid>
-                        {values.sourceOfFunds.includes('Others') && (
+                        {values?.sourceOfFunds?.includes('Others') && (
                           <TextInput
                             style={{ marginTop: 20 }}
                             placeholder="Other Source of Funds...."
@@ -767,14 +871,13 @@ export default function CorporateKycForm() {
                                   setIsTaxNumberDisabled(false)
                                 }
                                 onChangeInput('taxIdAvailable', !values.taxIdAvailable, values, setFieldValue)
-                              }
-                              }
+                              }}
                               label="TIN Is Not Available"
                             />
                           </FormGrid>
                         </Column>
 
-                        {!values.taxIdAvailable &&
+                        {!values.taxIdAvailable && (
                           <Column style={{ gap: '20px', marginTop: 20 }}>
                             <FormGrid columns={1}>
                               <Checkbox
@@ -797,7 +900,7 @@ export default function CorporateKycForm() {
                               />
                             </FormGrid>
                           </Column>
-                        }
+                        )}
                       </FormCard>
 
                       <FormCard id="beneficial-owners">
@@ -815,15 +918,15 @@ export default function CorporateKycForm() {
                         </ExtraInfoCard>
                         <BeneficialOwnersTable data={values.beneficialOwners} />
                         <Column style={{ gap: '20px' }}>
-                          {values.beneficialOwners.map((beneficiar: Record<string, string | any>, index: number) => (
+                          {values.beneficialOwners?.map((beneficiar: Record<string, string | any>, index: number) => (
                             <>
                               <FormGrid columns={4} key={index}>
                                 <DeleteRow
                                   onClick={() =>
                                     deleteBeneficiar(
                                       index,
-                                      values.beneficialOwners,
-                                      values.removedBeneficialOwners,
+                                      values?.beneficialOwners,
+                                      values?.removedBeneficialOwners,
                                       setFieldValue
                                     )
                                   }
@@ -988,7 +1091,9 @@ export default function CorporateKycForm() {
                   >
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
-                      disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
+                      handleSaveProgress={() => saveProgress(form?.current?.values)}
+                      // disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
+                      disabled={!canSubmit || Object.keys(errors).length !== 0}
                       topics={Object.values({
                         info: {
                           title: 'Corporate Information',

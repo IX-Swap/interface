@@ -41,6 +41,7 @@ export const OfferStages = ({ offer, refreshOffer }: Props) => {
   const theme = useTheme()
   const { isAdmin } = useRole()
   const [openEdit, setOpenEdit] = useState(false)
+  const [localTime, setLocalTime] = useState(new Date())
 
   const highlightedStatuses = useMemo(() => {
     const index = KEY_OFFER_STATUSES.findIndex((item) => item === status)
@@ -56,6 +57,16 @@ export const OfferStages = ({ offer, refreshOffer }: Props) => {
     }
   }
 
+  const convertToLocalUTC = () => {
+    const localTimestamp = localTime.getTime()
+    const utcTimestamp = localTimestamp - localTime.getTimezoneOffset() * 60 * 1000
+    const utcDate = new Date(utcTimestamp)
+    const newString = utcDate.toString().split(' ')[5]
+    return `${newString.slice(0, 6)}:${newString.slice(6, 8)}`
+  }
+
+  const utcTime = convertToLocalUTC()
+
   return (
     <Container>
       <EditTimeframeModal open={openEdit} setOpen={setOpenEdit} offer={offer} refreshOffer={refreshOffer} />
@@ -64,7 +75,7 @@ export const OfferStages = ({ offer, refreshOffer }: Props) => {
           <Title>Investment Stage</Title>
           <Tooltip
             title="Investments Stages"
-            body="Stages are in chronological order. One step has to be done before the deal will move on to the next step. For further clarification, please reach out to your account manager. The time provided is based on the UTC +0 time zone."
+            body={`Stages are in chronological order. One step has to be done before the deal will move on to the next step. For further clarification, please reach out to your account manager. The time provided is based on your local time at ${utcTime} time zone.`}
           >
             <Info size="14" color={theme.launchpad.colors.text.caption} />
           </Tooltip>

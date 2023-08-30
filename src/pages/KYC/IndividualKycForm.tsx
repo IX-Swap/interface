@@ -865,7 +865,7 @@ export default function IndividualKycForm() {
 
                           <Uploader
                             title="Proof of Address"
-                            subtitle="Bank Statement or Utility Bills within 3 months of issuance"
+                            subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
                             error={errors.proofOfAddress}
                             files={values.proofOfAddress}
                             onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
@@ -1045,7 +1045,11 @@ export default function IndividualKycForm() {
                                         <TextInput
                                           label="Tax Identification Number (TIN)"
                                           id="taxIdentificationNumberField"
-                                          value={values.taxDeclarations[index].idNumber}
+                                          value={
+                                            values.taxDeclarations[index].isAdditional
+                                              ? ''
+                                              : values.taxDeclarations[index].idNumber
+                                          }
                                           error={errors[`taxDeclarations[${index}].idNumber`]}
                                           disabled={values.taxDeclarations[index].isAdditional}
                                           onChange={(e) =>
@@ -1216,7 +1220,7 @@ export default function IndividualKycForm() {
                           )}
                         </Column>
                       </FormCard>
-{/* 
+                      {/* 
                       <FormCard id="status-declaration">
                         <RowBetween marginBottom="32px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>

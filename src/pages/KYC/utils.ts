@@ -77,12 +77,12 @@ export const corporateTransformKycDto = (values: any) => {
     ...values,
     ...(!isUSTaxPayer && { usTin: '' }),
     incorporationDate:
-      typeof incorporationDate === 'string' ? incorporationDate : incorporationDate.format('MM/DD/YYYY'),
-    typeOfLegalEntity: typeOfLegalEntity.label,
+      typeof incorporationDate === 'string' ? incorporationDate : incorporationDate?.format('MM/DD/YYYY'),
+    typeOfLegalEntity: typeOfLegalEntity?.label,
     sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
-    countryOfIncorporation: countryOfIncorporation.label,
-    country: country.label,
-    residentialAddressCountry: residentialAddressCountry.label,
+    countryOfIncorporation: countryOfIncorporation?.label,
+    country: country?.label,
+    residentialAddressCountry: residentialAddressCountry?.label,
     taxCountry: taxCountry?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
     beneficialOwners: JSON.stringify(
@@ -227,7 +227,11 @@ export const individualTransformKycDto = (values: any) => {
         }
       : emptyInvestorDeclaration,
 
-    taxDeclarations: taxDeclarations?.map((t: any, idx: number) => ({ ...t, country: t?.country?.label })),
+    taxDeclarations: taxDeclarations?.map((t: any, idx: number) => ({
+      ...t,
+      country: t?.country?.label,
+      isAdditional: t?.isAdditional === true ? 'true' : 'false',
+    })),
 
     removedTaxDeclarations: values.removedTaxDeclarations,
   }

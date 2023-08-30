@@ -66,9 +66,11 @@ export const kyc = {
   restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
   createIndividual: `/newkyc/individual`,
   createIndividualDraft: `/newkyc/individual/draft`,
+  createCorporateDraft: `/newkyc/corporate/draft`,
   createCorporate: `/newkyc/corporate`,
   updateIndividual: (kycId: number, draft = false) => `/newkyc/individual/${kycId}${draft ? '/draft' : ''}`,
-  updateCorporate: (kycId: number) => `/newkyc/corporate/${kycId}`,
+  updateCorporate: (kycId: number, draft = false) => `/newkyc/corporate/${kycId}${draft ? '/draft' : ''}`,
+  // updateCorporate: (kycId: number) => `/newkyc/corporate/${kycId}`,
   cynopsisRisks: (address: string) => `/newkyc/cynopsis/${address}`,
   getMyKyc: `newkyc/me`,
   getStatusStats: `newkyc/status/stats`,
@@ -77,7 +79,7 @@ export const kyc = {
 }
 
 export const ip = {
-  getIPAddress: 'https://api.bigdatacloud.net/data/reverse-geocode-client'
+  getIPAddress: 'https://api.bigdatacloud.net/data/reverse-geocode-client',
 }
 
 export const broker = {
