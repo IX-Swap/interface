@@ -63,7 +63,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
   const [amount, setAmount] = useState<string>()
 
   const [isDisabled, setDisabled] = useState(true)
-  const [agreed, setAgreed] = useState(false)
+  const [purchaseAgreed, setPurchaseAgreed] = useState(false)
+  const [investmentMemorandumAgreed, setInvestmentMemorandumAgreed] = useState(false)
+  const [otherDocumentsAgreed, setOtherDocumentsAgreed] = useState(false)
   const formatter = useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
   const isPresale = useMemo(() => status === OfferStatus.preSale, [status])
 
@@ -216,7 +218,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       />
 
       <Agreement>
-        <AgreementCheckbox state={agreed} toggle={() => setAgreed((state) => !state)} />
+        <AgreementCheckbox state={purchaseAgreed} toggle={() => setPurchaseAgreed((state) => !state)} />
         <AgreementText>
           I have read, fully understood and agree to be bound by the&nbsp;
           <a
@@ -234,7 +236,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
         </AgreementText>
       </Agreement>
       <Agreement>
-        <AgreementCheckbox state={agreed} toggle={() => setAgreed((state) => !state)} />
+        <AgreementCheckbox state={investmentMemorandumAgreed} toggle={() => setInvestmentMemorandumAgreed((state) => !state)} />
         <AgreementText>
           I have read, fully understood and agree to be bound by the&nbsp;
           <a
@@ -252,7 +254,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
         </AgreementText>
       </Agreement>
       <Agreement>
-        <AgreementCheckbox state={agreed} toggle={() => setAgreed((state) => !state)} />
+        <AgreementCheckbox state={otherDocumentsAgreed} toggle={() => setOtherDocumentsAgreed((state) => !state)} />
         <AgreementText>
           I have read, fully understood and agree to be bound by the
           other relevant agreements here in respect of this token sale:
@@ -289,7 +291,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
 
       <InvestFormSubmitButton
         state={submitState.current}
-        disabled={isDisabled || !agreed || submitState.current !== InvestSubmitState.default}
+        disabled={isDisabled || !purchaseAgreed || !investmentMemorandumAgreed || !otherDocumentsAgreed || submitState.current !== InvestSubmitState.default}
         onSubmit={submit}
       >
         {submitState.current === InvestSubmitState.success && (
