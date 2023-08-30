@@ -116,19 +116,21 @@ export const ProofOfIdentityField = ({
                   isEmpty(identityTypeValue) ||
                   isEmpty(documentNumberValue) ||
                   (!areDatesOptional &&
-                    (expiryDateValue === null || issuedDateValue === null))
+                    (isNaN(Date.parse(issuedDateValue)) ||
+                      isNaN(Date.parse(expiryDateValue))))
 
                 // console.log('identityType', identityTypeValue)
                 // console.log('field', field)
+                console.log('issuedDateValue', Date.parse(issuedDateValue))
 
                 const documentInfo: UploadDocumentInfo = {
                   type: label,
                   title: [
                     identityTypeValue,
-                    !!issuedDateValue
+                    !isNaN(Date.parse(issuedDateValue))
                       ? format(new Date(issuedDateValue), 'yyyy-MM-dd')
                       : 'NA',
-                    !!expiryDateValue
+                    !isNaN(Date.parse(expiryDateValue))
                       ? format(new Date(expiryDateValue), 'yyyy-MM-dd')
                       : 'NA',
                     documentNumberValue
