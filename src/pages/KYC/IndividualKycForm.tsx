@@ -865,7 +865,7 @@ export default function IndividualKycForm() {
 
                           <Uploader
                             title="Proof of Address"
-                            subtitle="Bank Statement or Utility Bills within 3 months of issuance"
+                            subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
                             error={errors.proofOfAddress}
                             files={values.proofOfAddress}
                             onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
