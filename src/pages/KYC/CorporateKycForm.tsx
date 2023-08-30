@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 import { useHistory } from 'react-router-dom'
@@ -37,6 +37,12 @@ import { corporateErrorsSchema } from './schema'
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
 
+type FormSubmitHanderArgs = {
+  createFn: (body: any) => any
+  updateFn: (id: number, body: any) => any
+  validate: boolean
+}
+
 export default function CorporateKycForm() {
   const canLeavePage = useRef(false)
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -60,6 +66,8 @@ export default function CorporateKycForm() {
 
   const prevAccount = usePrevious(account)
 
+  const form = useRef<any>(null)
+
   useEffect(() => {
     if (account && prevAccount && account !== prevAccount) {
       history.push('/kyc')
@@ -74,6 +82,7 @@ export default function CorporateKycForm() {
       if (data) {
         const transformedData = corporateTransformApiData(data)
         setFormData(transformedData)
+        form.current.setValues(transformedData)
 
         // Disable tax number text box if TIN is N/A
         if (!data.taxIdAvailable) {
@@ -82,7 +91,7 @@ export default function CorporateKycForm() {
       }
     }
 
-    if (kyc?.status === KYCStatuses.CHANGES_REQUESTED) {
+    if (kyc && [KYCStatuses.CHANGES_REQUESTED, KYCStatuses.DRAFT].includes(kyc.status)) {
       getProgress()
       setUpdateKycId(kyc.id)
     } else {
@@ -228,7 +237,61 @@ export default function CorporateKycForm() {
       validationSeen(key)
     }
 
-    console.log(errors, 'rororororo')
+  
+  const formSubmitHandler = useCallback(
+    async (values: any, { createFn, updateFn, validate = true }: FormSubmitHanderArgs) => {
+      try {
+        if (validate) {
+          await corporateErrorsSchema.validate(values, { abortEarly: false })
+        }
+
+        canLeavePage.current = true
+        setCanSubmit(false)
+        const body = corporateTransformKycDto(values)
+        let data: any = null
+
+        if (updateKycId) {
+          data = await updateFn(updateKycId, body)
+        } else {
+          data = await createFn(body)
+        }
+
+        if (data?.id) {
+          history.push('/kyc')
+          addPopup({ info: { success: true, summary: 'KYC was successfully saved' } })
+        } else {
+          setCanSubmit(true)
+          addPopup({ info: { success: false, summary: 'Something went wrong' } })
+        }
+      } catch (error: any) {
+        const newErrors: any = {}
+
+        error.inner.forEach((e: any) => {
+          newErrors[e.path] = e.message
+        })
+
+        addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
+
+        setIsSubmittedOnce(true)
+        setErrors(newErrors)
+        setCanSubmit(false)
+
+        canLeavePage.current = false
+      }
+    },
+    []
+  )  
+
+  const saveProgress = useCallback(
+    async (values: any) => {
+      await formSubmitHandler(values, {
+        createFn: (body) => createCorporateKYC(body, true),
+        updateFn: (id, body) => updateCorporateKYC(id, body, true),
+        validate: false,
+      })
+    },
+    [formSubmitHandler]
+  )
 
   return (
     <Loadable loading={!isLoggedIn}>
@@ -253,6 +316,7 @@ export default function CorporateKycForm() {
 
         {!waitingForInitialValues && formData && (
           <Formik
+            innerRef={form}
             initialValues={formData}
             validateOnBlur={false}
             validateOnChange={false}
@@ -988,6 +1052,7 @@ export default function CorporateKycForm() {
                   >
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
+                      handleSaveProgress={() => saveProgress(form?.current?.values)}
                       disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
                       topics={Object.values({
                         info: {

@@ -115,7 +115,7 @@ export const createIndividualKYC = async (newKYC: any, draft = false) => {
   }
 }
 
-export const createCorporateKYC = async (newKYC: any) => {
+export const createCorporateKYC = async (newKYC: any, draft = false) => {
   const formData = new FormData()
 
   for (const key in newKYC) {
@@ -133,7 +133,7 @@ export const createCorporateKYC = async (newKYC: any) => {
   }
 
   try {
-    const result = await apiService.post(kyc.createCorporate, formData)
+    const result = await apiService.post(draft ? kyc.createCorporateDraft : kyc.createCorporate, formData)
     return result.data
   } catch (e: any) {
     if (e.message === LONG_WAIT_RESPONSE) {
@@ -198,7 +198,7 @@ export const updateIndividualKYC = async (kycId: number, newKYC: any, draft = fa
   }
 }
 
-export const updateCorporateKYC = async (kycId: number, newKYC: any) => {
+export const updateCorporateKYC = async (kycId: number, newKYC: any, draft = false) => {
   const formData = new FormData()
 
   for (const key in newKYC) {
@@ -220,7 +220,9 @@ export const updateCorporateKYC = async (kycId: number, newKYC: any) => {
   }
 
   try {
-    const result = await apiService.put(kyc.updateCorporate(kycId), formData)
+    const result = draft 
+                    ? await apiService.post(kyc.updateCorporate(kycId, draft), formData)
+                    : await apiService.put(kyc.updateCorporate(kycId, draft), formData)
     return result.data
   } catch (e) {
     console.log(e)
@@ -258,10 +260,10 @@ export function useCreateCorporateKYC() {
   const dispatch = useDispatch<AppDispatch>()
   const getMyKyc = useGetMyKyc()
   const callback = useCallback(
-    async (newKYC: any) => {
+    async (newKYC: any, draft = false) => {
       try {
         dispatch(createKYC.pending())
-        const data = await createCorporateKYC(newKYC)
+        const data = await createCorporateKYC(newKYC, draft)
         dispatch(createKYC.fulfilled(data))
         await getMyKyc()
         return data
@@ -285,10 +287,10 @@ export function useUpdateCorporateKYC() {
   const dispatch = useDispatch<AppDispatch>()
   const getMyKyc = useGetMyKyc()
   const callback = useCallback(
-    async (kycId: number, newKYC: any) => {
+    async (kycId: number, newKYC: any, draft = false) => {
       try {
         dispatch(updateKYC.pending())
-        const data = await updateCorporateKYC(kycId, newKYC)
+        const data = await updateCorporateKYC(kycId, newKYC, draft)
         dispatch(updateKYC.fulfilled(data))
         await getMyKyc()
         return data
