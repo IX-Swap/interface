@@ -136,7 +136,9 @@ export const ProofOfIdentityField = ({
                 }
 
                 const titleField =
-                  'front' in field ? field.front?.title : field.value?.title
+                  ('front' in field
+                    ? field.front?.title
+                    : field.value?.title) ?? ''
                 const metadata: any = titleField
                   .split(',')
                   .map((data: any) => data.trim())
