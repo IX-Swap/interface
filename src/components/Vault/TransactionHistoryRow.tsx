@@ -62,7 +62,7 @@ export const TransactionHistoryRow = ({ row, currency, icon }: Props) => {
       </td>
       {amount && (
         <td>
-          <TYPE.subHeader1 color={'text2'}>{`${formatAmount(+amount)} ${currency?.symbol}`}</TYPE.subHeader1>
+          <TYPE.subHeader1 color={'text2'}>{`${formatAmount(+amount)} ${currency?.originalSymbol}`}</TYPE.subHeader1>
         </td>
       )}
       <td>
