@@ -23,7 +23,7 @@ export const TradingOrders = () => {
           <Tab label='Open Orders' />
           <Tab label='Past Orders' />
         </Tabs>
-        {selectedIdx === 0 ? <StatusFilter /> : ''}
+        <StatusFilter index={selectedIdx} />
       </Grid>
 
       <Grid>

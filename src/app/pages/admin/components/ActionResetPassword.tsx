@@ -4,12 +4,14 @@ import { useUserActionsDialog } from 'app/pages/admin/hooks/useUserActionsDialog
 import { ManagedUser } from 'types/user'
 import { isResetActive } from 'helpers/isResetActive'
 import { Button } from '@mui/material'
+import { useServices } from 'hooks/useServices'
 
 export interface ActionResetPasswordProps {
   data: ManagedUser
 }
 
 export const ActionResetPassword = ({ data }: ActionResetPasswordProps) => {
+  const { sessionService } = useServices()
   const { resetPasswordOpen, closeResetPassword, openResetPassword } =
     useUserActionsDialog()
 
@@ -34,6 +36,7 @@ export const ActionResetPassword = ({ data }: ActionResetPasswordProps) => {
       </Button>
       <DialogResetPassword
         email={data.email}
+        tenantId={sessionService?.get('tenantId')}
         closeDialog={closeResetPassword}
         open={resetPasswordOpen}
       />

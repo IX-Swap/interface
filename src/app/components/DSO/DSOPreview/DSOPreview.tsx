@@ -22,6 +22,7 @@ import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwitch'
 import { PromotionSwitch } from 'app/pages/authorizer/components/PromotionSwitch'
 import { NonInvestableSwitch } from 'app/pages/authorizer/components/NonInvestableSwitch'
+import { useIsAdmin, useIsAuthorizer } from 'helpers/acl'
 
 export interface DSOPreviewProps {
   data: DigitalSecurityOffering
@@ -33,6 +34,8 @@ export const DSOPreview = (props: DSOPreviewProps) => {
   const [selectedIdx, setSelectedIdx] = useState(0)
   const [showStatusBar, setShowStatusBar] = useState(showSidebar)
   const { tabs } = useStyles()
+  const isAdmin = useIsAdmin()
+  const isAuthorizer = useIsAuthorizer()
 
   useEffect(() => {
     setShowStatusBar(selectedIdx === 0)
@@ -46,7 +49,6 @@ export const DSOPreview = (props: DSOPreviewProps) => {
     }
     return (
       <Element name={DSOFormSection.FAQs}>
-        <VSpacer size='large' />
         <DSOFAQsView dso={data} />
       </Element>
     )
@@ -58,7 +60,6 @@ export const DSOPreview = (props: DSOPreviewProps) => {
     }
     return (
       <Element name={DSOFormSection.Videos}>
-        <VSpacer size='large' />
         <DSOVideoLinksView dso={data} />
       </Element>
     )
@@ -76,7 +77,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
         >
           <Tab label='Overview' />
           <Tab label='Activities' />
-          <Tab label='Settings' />
+          {(isAdmin || isAuthorizer) && <Tab label='Settings' />}
           {/* <Tab label='CapTable' /> */}
         </Tabs>
       </FieldContainer>
@@ -118,8 +119,13 @@ export const DSOPreview = (props: DSOPreviewProps) => {
               </Element>
             </Grid>
 
-            {renderVideosFormSection()}
-            {renderFAQsFormSection()}
+            <Grid item xs={12}>
+              {renderVideosFormSection()}
+            </Grid>
+
+            <Grid item xs={12}>
+              {renderFAQsFormSection()}
+            </Grid>
           </Grid>
 
           {showStatusBar && (
@@ -136,20 +142,22 @@ export const DSOPreview = (props: DSOPreviewProps) => {
       <TabPanel value={selectedIdx} index={1}>
         <Commitments />
       </TabPanel>
-      <TabPanel value={selectedIdx} index={2}>
-        <Box sx={{ background: 'white', marginTop: '-32px' }}>
-          <Grid marginLeft={'20px'}>
-            <VSpacer size='medium' />
-            <NonInvestableSwitch dso={data} />
-            <VSpacer size='small' />
-            <VisibilitySwitch dso={data} />
-            <VSpacer size='small' />
-            <PromotionSwitch dso={data} />
-            <VSpacer size='medium' />
-          </Grid>
-        </Box>
-      </TabPanel>
 
+      {(isAdmin || isAuthorizer) && (
+        <TabPanel value={selectedIdx} index={2}>
+          <Box sx={{ background: 'white', marginTop: '-32px' }}>
+            <Grid marginLeft={'20px'}>
+              <VSpacer size='medium' />
+              <NonInvestableSwitch dso={data} />
+              <VSpacer size='small' />
+              <VisibilitySwitch dso={data} />
+              <VSpacer size='small' />
+              <PromotionSwitch dso={data} />
+              <VSpacer size='medium' />
+            </Grid>
+          </Box>
+        </TabPanel>
+      )}
       {/* <TabPanel value={selectedIdx} index={2}>
         <CapTable />
       </TabPanel> */}

@@ -1,9 +1,10 @@
 import React from 'react'
-import { DialogResetPassword } from 'app/pages/admin/components/DialogResetPassword'
+// import { DialogResetPassword } from 'app/pages/admin/components/DialogResetPassword'
 import { useUserActionsDialog } from 'app/pages/admin/hooks/useUserActionsDialog'
 import { ManagedUser } from 'types/user'
 import { isResetActive } from 'helpers/isResetActive'
 import { Button } from '@mui/material'
+import { DialogConfirmReset2FA } from './DialogConfirmReset2FA'
 
 export interface ActionResetTwoFAProps {
   data: ManagedUser
@@ -29,14 +30,20 @@ export const ActionResetTwoFA = ({ data }: ActionResetTwoFAProps) => {
         variant='contained'
         color='primary'
         disableElevation
+        disabled={!data?.twoFactorAuth}
       >
         Reset 2FA
       </Button>
-      <DialogResetPassword
-        email={data.email}
+
+      <DialogConfirmReset2FA
         closeDialog={closeResetPassword}
         open={resetPasswordOpen}
       />
+      {/* <DialogResetPassword
+        email={data.email}
+        closeDialog={closeResetPassword}
+        open={resetPasswordOpen}
+      /> */}
     </>
   )
 }

@@ -1,7 +1,7 @@
-import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
+// import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
 import { Market } from 'app/pages/invest/pages/market/Market'
 import { ViewListing } from 'app/pages/invest/pages/ViewListing'
-import { CommitmentsRouter } from 'app/pages/invest/router/CommitmentsRouter'
+// import { CommitmentsRouter } from 'app/pages/invest/router/CommitmentsRouter'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { InvestDSORouter } from 'app/pages/invest/router/InvestDSORouter'
 import { AppRoute } from 'components/AppRoute'
@@ -11,21 +11,42 @@ import { RootContainer } from 'ui/RootContainer'
 import { Trading } from '../pages/Trading'
 // import { OverviewRouter } from './OverviewRouter'
 import { PrimaryOfferings } from 'app/pages/invest/pages/PrimaryOfferings'
+import CircleIcon from '@mui/icons-material/Circle'
 
 export const InvestRouter = () => {
+  const prependInvest = (breadcrumb: string) => (
+    <>
+      Invest
+      <CircleIcon
+        sx={{ fontSize: '5px', margin: '8px', verticalAlign: 'middle' }}
+      />
+      {breadcrumb}
+    </>
+  )
+
   return (
     <Switch>
-      <AppRoute breadcrumb='My Investments' path={InvestRoute.commitments}>
+      {/* <AppRoute
+        breadcrumb={prependInvest('My Investments')}
+        path={InvestRoute.commitments}
+      >
         <RootContainer>
           <CommitmentsRouter />
         </RootContainer>
-      </AppRoute>
+      </AppRoute> */}
 
-      <AppRoute breadcrumb='Security Token Offering' path={InvestRoute.view}>
+      <AppRoute
+        breadcrumb={prependInvest('Security Token Offering')}
+        path={InvestRoute.view}
+      >
         <InvestDSORouter />
       </AppRoute>
 
-      <AppRoute breadcrumb='Exchange' exact path={InvestRoute.exchange}>
+      <AppRoute
+        breadcrumb={prependInvest('Exchange')}
+        exact
+        path={InvestRoute.exchange}
+      >
         <Market />
       </AppRoute>
 
@@ -34,16 +55,16 @@ export const InvestRouter = () => {
           <ViewListing />
         </RootContainer>
       </AppRoute>
-      <AppRoute exact path={InvestRoute.landing}>
+      {/* <AppRoute exact path={InvestRoute.landing}>
         <RootContainer>
           <InvestLanding />
         </RootContainer>
-      </AppRoute>
+      </AppRoute> */}
       {/* <AppRoute path={InvestRoute.overview} breadcrumb='Overview'>
         <OverviewRouter />
       </AppRoute> */}
       <AppRoute
-        breadcrumb='Primary Offerings'
+        breadcrumb={prependInvest('Primary Offerings')}
         path={InvestRoute.primaryOfferings}
       >
         <PrimaryOfferings />
@@ -51,7 +72,7 @@ export const InvestRouter = () => {
       <AppRoute
         exact
         path={InvestRoute.trading}
-        breadcrumb='OTC Trading Market'
+        breadcrumb={prependInvest('OTC Trading Market')}
       >
         <Trading />
       </AppRoute>

@@ -13,10 +13,14 @@ export const VAAuditFilters = () => {
       item
       container
       wrap={'wrap'}
-      alignItems={'center'}
+      alignItems={'end'}
       justifyContent={'space-between'}
+      p={3}
     >
-      <Grid item md={7} xs={12}>
+      <Grid item xs={12} md={7}>
+        <Typography style={{ fontWeight: 500, marginBottom: '10px' }}>
+          Search
+        </Typography>
         <TextInputSearchFilter
           fullWidth
           placeholder='Search'
@@ -34,17 +38,12 @@ export const VAAuditFilters = () => {
         alignItems={'center'}
         wrap={'wrap'}
       >
-        <Grid item xs={12} sm={'auto'}>
-          <Typography style={{ fontWeight: 600 }}>Date:</Typography>
-          {isMobile && <VSpacer size={'small'} />}
-        </Grid>
-        <Box pr={1} />
-        <Grid item xs={12} sm={true} md={4}>
+        <Grid item xs={12} md={5} mb={'5px'}>
           <DateFilter name='fromDate' label='From' width={'100%'} />
           {isMobile && <VSpacer size={'small'} />}
         </Grid>
         <Box pr={3} />
-        <Grid item xs={12} sm={true} md={4}>
+        <Grid item xs={12} md={5} mb={'5px'}>
           <DateFilter name='toDate' label='To' width={'100%'} />
         </Grid>
       </Grid>

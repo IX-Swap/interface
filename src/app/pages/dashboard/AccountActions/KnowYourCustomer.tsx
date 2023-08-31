@@ -5,7 +5,8 @@ import { AppRoute } from 'app/router/config'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 
 interface KnowYourCustomerProps {
-  hasStarted: boolean
+  hasStarted?: boolean
+  hasSubmitted?: boolean
   identityType: 'individual' | 'corporate'
   identityId?: string
   userId?: string
@@ -13,6 +14,7 @@ interface KnowYourCustomerProps {
 
 export const KnowYourCustomer = ({
   hasStarted = false,
+  hasSubmitted = false,
   identityType,
   identityId,
   userId
@@ -30,11 +32,16 @@ export const KnowYourCustomer = ({
   return (
     <ActionItem
       icon={<Icon />}
-      title={title}
-      description={description}
+      title={hasSubmitted ? 'Your KYC is under review' : title}
+      description={
+        hasSubmitted
+          ? "We'll notify you once the process is complete."
+          : description
+      }
       buttonText={buttonText}
       buttonLink={buttonLink}
       params={params}
+      hideButton={hasSubmitted}
     />
   )
 }

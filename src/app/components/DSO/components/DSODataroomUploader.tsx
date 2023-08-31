@@ -22,7 +22,7 @@ export interface DSODataroomUploaderProps {
 export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
   const { append, fields, documentInfo = {}, control, remove } = props
   const [fileType, setFileType] = useState<DataroomDocumentType>(
-    DataroomDocumentType.Other
+    DataroomDocumentType.SupportingDocument
   )
 
   const { clearErrors, errors, trigger } = useFormContext()

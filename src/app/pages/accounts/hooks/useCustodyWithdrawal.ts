@@ -14,6 +14,7 @@ export const useCustodyWithdrawal = () => {
   return useMutation(withdraw, {
     onSuccess: () => {
       void snackbarService.showSnackbar('Success', 'success')
+      window.location.reload()
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(

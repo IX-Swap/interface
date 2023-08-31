@@ -12,7 +12,7 @@ interface AddBankAccountButtonProps extends ButtonProps {
 
 export const AddBankAccountButton = ({
   variant,
-  title = 'Add Cash Account',
+  title = 'Add Bank Account',
   ...rest
 }: AddBankAccountButtonProps) => {
   const { isTablet } = useAppBreakpoints()
@@ -29,7 +29,7 @@ export const AddBankAccountButton = ({
       {...rest}
     >
       <Add sx={{ marginRight: 1 }} />
-      <span>Add Cash Account</span>
+      <span>Add Bank Account</span>
     </Button>
   )
 }

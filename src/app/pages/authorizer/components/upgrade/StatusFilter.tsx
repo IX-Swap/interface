@@ -34,7 +34,7 @@ export const BaseStatusFilter = ({ statusFilters }: BaseStatusFilterProps) => {
         <Box
           style={{
             display: 'flex',
-            borderBottom: 'solid 1px #DBE2EC',
+            // borderBottom: 'solid 1px #DBE2EC',
             height: '60px'
           }}
         >
@@ -69,7 +69,7 @@ export const BaseFundStatusFilter = ({
         <Box
           style={{
             display: 'flex',
-            borderBottom: 'solid 1px #DBE2EC',
+            // borderBottom: 'solid 1px #DBE2EC',
             height: '60px'
           }}
         >
@@ -104,7 +104,7 @@ export const DeploymentStatusFilter = ({
         <Box
           style={{
             display: 'flex',
-            borderBottom: 'solid 1px #DBE2EC',
+            // borderBottom: 'solid 1px #DBE2EC',
             height: '60px'
           }}
         >

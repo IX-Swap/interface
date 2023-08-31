@@ -2,15 +2,17 @@ import { makeURL } from 'config/appURL'
 import { InternalRouteProps } from 'types/util'
 import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
-import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
+import { ReactComponent as STWithdrawalIcon } from 'assets/icons/navigation/st-withdrawal.svg'
 import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
 // import { ReactComponent as IssuanceDetailsIcon } from 'assets/icons/navigation/issuance-details.svg'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as OfferingIcon } from 'assets/icons/navigation/offering.svg'
+import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/va-transactions.svg'
 import { ReactComponent as CommitmentIcon } from 'assets/icons/navigation/commitment.svg'
 import { ReactComponent as ListingsIcon } from 'assets/icons/navigation/listings.svg'
 import { ReactComponent as VirtualAccountIcon } from 'assets/icons/navigation/virtual-account.svg'
+import { ReactComponent as TokenDeploymentIcon } from 'assets/icons/navigation/token-deployment.svg'
 
 export const AuthorizerRoute = {
   banks: makeURL(['app', 'authorizer', 'bankAccount']),
@@ -46,99 +48,83 @@ export const AuthorizerRoute = {
 
 export const authorizerLandingLinks: InternalRouteProps[] = [
   {
-    label: 'Cash Accounts',
+    label: 'Bank Accounts',
     path: AuthorizerRoute.banks,
-    color: '#2B78FD',
     icon: AccountIcon
   },
   {
     label: 'Cash Withdrawals',
     path: AuthorizerRoute.cashWithdrawals,
-    color: '#E6D200',
     icon: CashWithdrawalIcon
   },
   {
     label: 'Security Token Withdrawals',
     path: AuthorizerRoute.dsWithdrawals,
-    color: '#8B3DFF',
-    icon: DSWithdrawalIcon
+    icon: STWithdrawalIcon
   },
   {
     label: 'Individual Investor Applications',
     path: AuthorizerRoute.individualIdentities,
-    color: '#90A30F',
     icon: IndividualIcon
   },
   //   {
   //     label: 'Individual Accreditation Applications',
   //     path: AuthorizerRoute.individualAccreditations,
-  //     color: '#E65133',
   //     icon: IndividualIcon
   //   },
   {
     label: 'Corporate Investor Applications',
     path: AuthorizerRoute.corporateIdentities,
-    color: '#E65133',
     icon: CorporateIcon
   },
   //   {
   //     label: 'Corporate Accreditation Applications',
   //     path: AuthorizerRoute.corporateAccreditations,
-  //     color: '#E65133',
   //     icon: CorporateIcon
   //   },
   {
     label: 'Issuance Offerings',
     path: AuthorizerRoute.offerings,
-    color: '#11BB93',
     icon: OfferingIcon
   },
   // {
   //   label: 'Deal Closure',
   //   path: AuthorizerRoute.dealClosure,
-  //   color: '#11BB93',
   //   icon: CommitmentIcon
   // },
   {
     label: 'OTC Trades',
     path: AuthorizerRoute.otcTrades,
-    color: '#90A30F',
-    icon: CommitmentIcon
+    icon: TransactionIcon
   },
   {
     label: 'Commitments',
     path: AuthorizerRoute.commitments,
-    color: '#C17F53',
     icon: CommitmentIcon
   },
   {
     label: 'Wallet Addresses',
     path: AuthorizerRoute.withdrawalAddresses,
-    color: '#e6d200',
     icon: WithdrawalAddressIcon
   },
   // {
   //   label: 'Proposed Fundraising Details',
   //   path: AuthorizerRoute.issuanceDetails,
-  //   color: '#11BB93',
   //   icon: IssuanceDetailsIcon
   // },
   {
     label: 'Listings',
     path: AuthorizerRoute.listings,
-    color: '#90A30F',
     icon: ListingsIcon
   },
   {
     label: 'Virtual Accounts',
     path: AuthorizerRoute.virtualAccounts,
-    color: '#0FA3A3',
     icon: VirtualAccountIcon
   },
   {
     label: 'Token Deployment',
     path: AuthorizerRoute.tokenDeployment,
-    color: '#0FA3A3',
-    icon: VirtualAccountIcon
+    icon: TokenDeploymentIcon
   }
 ]

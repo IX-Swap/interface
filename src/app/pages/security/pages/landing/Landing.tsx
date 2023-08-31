@@ -1,6 +1,6 @@
 import { Box, Button, Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
+// import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { ThemeSelector } from 'app/pages/security/pages/landing/components/ThemeSelector'
 import useStyles from 'app/pages/security/pages/landing/Landing.styles'
 import { SecurityRoute } from 'app/pages/security/router/config'
@@ -84,9 +84,9 @@ export const Landing = () => {
                   }
                 />
               </Grid>
-              <Box className={classes.divider} />
+              {/* <Box className={classes.divider} /> */}
 
-              <Grid item>
+              {/* <Grid item>
                 <SettingsRow
                   name='Cash Accounts'
                   action={
@@ -100,7 +100,7 @@ export const Landing = () => {
                     </Button>
                   }
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
         </Grid>

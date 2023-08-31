@@ -12,7 +12,7 @@ export const CommitmentsRouter = () => {
         <InvestCommitmentView />
       </AppRoute>
 
-      <AppRoute breadcrumb='My Investments' path={CommitmentRoute.list}>
+      <AppRoute path={CommitmentRoute.list}>
         <MyCommitments />
       </AppRoute>
     </Switch>

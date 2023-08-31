@@ -19,7 +19,7 @@ export const DSOPreviewActions = (props: DSOPreviewActionsProps) => {
         variant='outlined'
         color='primary'
         disableElevation
-        disabled={dso?.status === 'Approved'}
+        disabled={dso?.status === 'Approved' || dso?.status === 'Submitted'}
         onClick={() =>
           push(
             generatePath(IssuanceRoute.edit, {

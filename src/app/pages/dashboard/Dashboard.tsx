@@ -28,7 +28,8 @@ export const Dashboard = () => {
   const isRetail = useIsRetail()
   const isExpert = useIsExpert()
   const isInstitutional = useIsInstitutional()
-  const hasAccreditation = isAccredited || isExpert || isInstitutional
+  const hasAccreditation =
+    isAccredited || isExpert || isInstitutional || isRetail
   const isInvestor = isRetail || hasAccreditation
   const isIssuer = useIsIssuer()
   const hasAcceptedMasDisclosure = sessionStorage.getItem('mobileMode')

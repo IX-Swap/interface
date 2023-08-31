@@ -22,7 +22,7 @@ export const UserTwoFAStatus = ({ data }: UserVerificationStatusProps) => {
     <Grid sx={{ display: 'flex' }} gap={1}>
       <Grid item>
         <Typography>2FA Status</Typography>
-        {!twoFactorAuth ? (
+        {twoFactorAuth ? (
           <Grid style={{ marginTop: '11px' }} item>
             <Chip
               label={<Box className={enableChipText}>Enabled</Box>}

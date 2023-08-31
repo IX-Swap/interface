@@ -27,6 +27,7 @@ import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 import { NoData } from 'app/components/NoData/NoData'
 import useStyles from 'ui/UIKit/TablesKit/components/TableView/TableView.styles'
 import { TablePagination } from 'ui/Pagination/TablePagination'
+import { ExportButton } from 'ui/ExportButton/ExportButton'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -66,6 +67,8 @@ export interface TableViewProps<T> {
   activeSortLabel?: string
   paperProps?: PaperProps
   limitRows?: number
+  showExport?: boolean
+  exportFileName?: string
 }
 
 export const TableView = <T,>({
@@ -93,7 +96,9 @@ export const TableView = <T,>({
   labelRowsPerPage,
   activeSortLabel,
   paperProps,
-  limitRows = 0
+  limitRows = 0,
+  showExport = false,
+  exportFileName = 'CSV Export'
 }: TableViewProps<T>): JSX.Element => {
   const hasActions = actions !== undefined
   const {
@@ -256,6 +261,17 @@ export const TableView = <T,>({
       {['top', 'both'].includes(paginationPlacement) && renderPagination()}
       <Grid item zIndex={2}>
         {renderTableLoading()}
+
+        {showExport && columns.length > 0 && _items.length > 0 && (
+          <Box display={'flex'} justifyContent={'end'} mb={2}>
+            <ExportButton
+              fileName={exportFileName}
+              columns={columns}
+              rows={_items}
+            />
+          </Box>
+        )}
+
         <Paper style={{ backgroundColor: 'inherit' }} {...paperProps}>
           <TableContainer style={{ overflow: 'visible' }}>
             <Table aria-label='table' data-testid='table' size={size}>

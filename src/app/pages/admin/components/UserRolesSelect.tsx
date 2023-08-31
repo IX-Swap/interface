@@ -8,7 +8,6 @@ export interface UserRolesProps {
 }
 
 export const UserRolesSelect = ({ user }: UserRolesProps) => {
-  console.log(user, 'userROooooo')
   return (
     <Grid sx={{ display: 'flex' }} gap={2}>
       <Grid item>

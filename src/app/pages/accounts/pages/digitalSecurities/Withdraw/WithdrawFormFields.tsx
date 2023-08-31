@@ -5,6 +5,8 @@ import { WithdrawTo } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/
 import React from 'react'
 import { ConfirmButton } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/ConfirmButton'
 import { useFormContext } from 'react-hook-form'
+import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export interface WithdrawFormFieldsProps {
   isLoading: boolean
@@ -17,7 +19,9 @@ export const WithdrawFormFields = ({
 }: WithdrawFormFieldsProps) => {
   const { watch } = useFormContext()
   const tokenSymbol = watch('token')
+  const otp = watch('otp')
   const hasTokenSymbol = tokenSymbol !== ''
+  const { isMobile } = useAppBreakpoints()
 
   return (
     <>
@@ -32,8 +36,14 @@ export const WithdrawFormFields = ({
           <Grid item xs={12}>
             <WithdrawalAmount />
           </Grid>
+          <Grid marginLeft={isMobile ? '50px' : '230px'} item xs={12}>
+            <OTPInputField disabled={false} />
+          </Grid>
           <Grid item xs={12}>
-            <ConfirmButton disabled={isLoading} isSuccess={isSuccess} />
+            <ConfirmButton
+              disabled={isLoading || otp === undefined}
+              isSuccess={isSuccess}
+            />
           </Grid>
         </>
       )}

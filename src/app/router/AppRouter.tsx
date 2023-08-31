@@ -44,7 +44,8 @@ export const AppRouter = () => {
         <IdentityRoot />
       </AppRoute>
 
-      <AppRoute breadcrumb='Invest' path={AppPath.invest}>
+      {/* <AppRoute breadcrumb='Invest' path={AppPath.invest}> */}
+      <AppRoute path={AppPath.invest}>
         <InvestRoot />
       </AppRoute>
 
@@ -81,7 +82,7 @@ export const AppRouter = () => {
       )}
 
       {isAuthorizer && (
-        <AppRoute breadcrumb='Authorization' path={AppPath.authorizer}>
+        <AppRoute breadcrumb='Authorizer' path={AppPath.authorizer}>
           <AuthorizerRoot />
         </AppRoute>
       )}

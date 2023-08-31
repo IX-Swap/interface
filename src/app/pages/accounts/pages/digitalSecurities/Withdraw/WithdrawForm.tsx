@@ -22,6 +22,7 @@ export const WithdrawForm = () => {
       assetTicker: values.token,
       quantity: values.amount.toString(),
       memo: values.memo !== '' ? values.memo : undefined,
+      otp: values.otp,
       toAddress:
         values.addressType === 'new'
           ? values.newAddress

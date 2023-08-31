@@ -1,8 +1,10 @@
 import { ReactComponent as HoldingsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
-import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
+import { ReactComponent as SecurityTokensIcon } from 'assets/icons/navigation/security-tokens.svg'
+import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/va-transactions.svg'
 import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
+import { ReactComponent as ListingsIcon } from 'assets/icons/navigation/listings.svg'
 // import { ReactComponent as ReportsIcon } from 'assets/icons/navigation/mas-disclosure.svg'
 import { makeURL } from 'config/appURL'
 import { InternalRouteProps } from 'types/util'
@@ -26,6 +28,7 @@ export const AccountsRoute = {
   dashboard: makeURL(['app', 'accounts', 'dashboard']),
   //   reports: '/app/accounts/reports',
   myHoldings: '/app/accounts/holdings',
+  myInvestments: '/app/accounts/investments',
   cash: '/app/accounts/cash'
 }
 
@@ -33,47 +36,44 @@ export const accountsLandingLinks: InternalRouteProps[] = [
   {
     label: 'Cash',
     path: AccountsRoute.cash,
-    color: '#90a30f',
     icon: AssetBalanceIcon
   },
   {
     label: 'Commitments',
     path: AccountsRoute.commitments,
-    color: '#e6d200',
     icon: DSWithdrawalIcon
   },
   {
     label: 'Security Tokens',
     path: AccountsRoute.digitalSecurities,
-    color: '#8b3dff',
-    icon: DSWithdrawalIcon
+    icon: SecurityTokensIcon
   },
   {
     label: 'Transactions',
     path: AccountsRoute.transactions,
-    color: '#90a30f',
     icon: TransactionIcon
   },
   {
     label: 'Wallet Addresses',
     path: AccountsRoute.withdrawalAddresses,
-    color: '#2B78FD',
     icon: WithdrawalAddressIcon
   },
   //   {
   //     label: 'Dashboard',
   //     path: AccountsRoute.dashboard,
-  //     color: '#e6d200',
   //     icon: WithdrawalAddressIcon
   //   },
   //     label: 'My Reports',
   //     path: AccountsRoute.reports,
-  //     color: '#e6d200'
   //   },
   {
     label: 'My Exchange Holdings',
     path: AccountsRoute.myHoldings,
-    color: '#2B78FD',
     icon: HoldingsIcon
+  },
+  {
+    label: 'My Investments',
+    path: AccountsRoute.myInvestments,
+    icon: ListingsIcon
   }
 ]

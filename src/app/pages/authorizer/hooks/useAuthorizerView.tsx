@@ -20,6 +20,10 @@ export const renderStatusColumn = (s: string): JSX.Element => (
   <AuthorizableStatus status={s} isNewTheme compact={false} />
 )
 
+export const renderStatus = (s: string): JSX.Element => (
+  <Status label={capitalizeFirstLetter(s)} type={s.toLowerCase()} />
+)
+
 export const renderStatusColumnWithApproval = (row: object, status: string) => {
   return (
     <Box display={'flex'} justifyContent={''}>
