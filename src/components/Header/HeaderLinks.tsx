@@ -14,7 +14,7 @@ import { SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
 import { useActiveWeb3React } from 'hooks/web3'
-import { ExternalLink, TYPE } from 'theme'
+import { ExternalLink } from 'theme'
 import { isDevelopment } from 'utils/isEnvMode'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { routes } from 'utils/routes'
@@ -45,9 +45,9 @@ const HeaderPopover = () => {
       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
       <Column style={{ gap: 3 }}>
-        <TYPE.body2 fontWeight={600} marginBottom="4px">
+        {/* <TYPE.body2 fontWeight={600} marginBottom="4px">
           <Trans>Staking</Trans>
-        </TYPE.body2>
+        </TYPE.body2> */}
 
         <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
           <Trans>Live Pools</Trans>
@@ -59,13 +59,13 @@ const HeaderPopover = () => {
       </Row>
 
       <Column style={{ gap: 3 }}>
-        <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
+        {/* <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
           <Trans>Liquidity Mining Program (Quickswap)</Trans>
         </SubMenuExternalLink>
 
         <Row style={{ padding: '0', margin: '5px 0' }}>
           <Line />
-        </Row>
+        </Row> */}
 
         {isAllowed(routes.vesting) && (
           <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
@@ -219,6 +219,7 @@ export const HeaderLinks = () => {
         <Trans>Launchpad</Trans>
       </StyledNavLink>
       {showIssuance && <StyledNavLink to="/issuance">Issuance Dashboard</StyledNavLink>}
+      {isAdmin && <StyledNavLink to="/admin">Admin</StyledNavLink>}
     </HeaderLinksWrap>
   )
 }
@@ -275,7 +276,7 @@ const navLinkStyles = css`
     }
   }
   @media (max-width: 1500px) {
-    font-size: 18px;
+    font-size: 15px;
   }
   @media (max-width: 1300px) {
     font-size: 16px;

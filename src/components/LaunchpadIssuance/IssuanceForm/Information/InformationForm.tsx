@@ -762,7 +762,7 @@ export const InformationForm = (props: Props) => {
 
         <Separator />
 
-        <UploadDocuments documents={values.additionalDocuments} />
+        <UploadDocuments documents={values.additionalDocuments} otherExecutionDocuments={values.otherExecutionDocuments} />
 
         <Separator />
 

@@ -36,7 +36,8 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
     const fetchCynopsisRisks = async () => {
       handleLoadingCynopsis(true)
       const result = await getCynopsisRisks(data?.user.ethAddress)
-      setRiskJSON(result?.riskReport?.riskScore ? result.riskReport : null)
+      setRiskJSON(result?.riskReport?.riskScore ? result.riskReport : 
+        result?.riskReport?.riskJson?.riskScore ? result.riskReport.riskJson : null)
       handleRiskReportId(result?.riskReport?.id || 0)
       handleLoadingCynopsis(false)
     }

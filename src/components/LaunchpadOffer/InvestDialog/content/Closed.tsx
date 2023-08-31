@@ -140,8 +140,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
           <Clock color={theme.launchpad.colors.primary} size="50" />
           <CantClaimNotice>
             Upon the commencement of the token claim deal stage, the issuer will initiate a batch claim process for the
-            tokens. The tokens will be automatically distributed to the investor&apos;s wallets as a consequence of this
-            process
+            tokens. The tokens will be automatically distributed to the investor&apos;s wallets.
           </CantClaimNotice>
         </Row>
       )}
@@ -149,7 +148,9 @@ export const ClosedStage: React.FC<Props> = (props) => {
       {canClaim && (
         <Column gap="0.5rem">
           <CanClaimNotice>
-            The funding round has reached its conclusion, and once the issuer initiates the batch distribution, the designated tokens will be sent to your wallet. To view and manage these tokens in your web3 wallet, please ensure that the correct token address has been added.
+            The funding round has reached its conclusion, and once the issuer initiates the batch distribution, the
+            designated tokens will be sent to your wallet. To view and manage these tokens in your web3 wallet, please
+            ensure that the correct token address has been added.
           </CanClaimNotice>
 
           <OfferLinks

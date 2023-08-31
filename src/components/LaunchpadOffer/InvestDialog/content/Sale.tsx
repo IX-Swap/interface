@@ -9,6 +9,7 @@ import {
   InvestedDataRes,
   InvestmentStatusesLabels,
   Offer,
+  OfferFileType,
   OfferStatus,
 } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
@@ -51,6 +52,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     contractSaleId,
     investingTokenDecimals,
     contractAddress,
+    files
   } = offer
   const { amount: amountInvested, availableToInvest, lastStatus } = investedData
   const theme = useTheme()
@@ -61,7 +63,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
   const [amount, setAmount] = useState<string>()
 
   const [isDisabled, setDisabled] = useState(true)
-  const [agreed, setAgreed] = useState(false)
+  const [purchaseAgreed, setPurchaseAgreed] = useState(false)
+  const [investmentMemorandumAgreed, setInvestmentMemorandumAgreed] = useState(false)
+  const [otherDocumentsAgreed, setOtherDocumentsAgreed] = useState(false)
   const formatter = useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
   const isPresale = useMemo(() => status === OfferStatus.preSale, [status])
 
@@ -109,6 +113,10 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     ]
   }, [availableToInvest, amountInvested, investingTokenSymbol, formatter, lastStatus])
 
+  const purchaseAgreement = files.find((x) => x.type === OfferFileType.purchaseAgreement);
+  const investmentMemorandum = files.find((x) => x.type === OfferFileType.investmentMemorandum);
+  const otherExecutionDocuments = files.filter((x) => x.type === OfferFileType.otherExecutionDocument);
+
   const tooltipContent = (
     <div>
       <PresaleTooltipTitle>Pre-Sale Conditions</PresaleTooltipTitle>
@@ -149,23 +157,26 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       }
 
       if (launchpadContract) {
-        let data
+        let transaction
         if (status === OfferStatus.preSale) {
           const { data: proof } = await getPresaleProof()
-          data = await launchpadContract.investPreSale(contractSaleId, parsedAmount, proof)
+          transaction = await launchpadContract.investPreSale(contractSaleId, parsedAmount, proof)
         } else if (status === OfferStatus.sale) {
           const { data: investStructData } = await getInvestPublicSaleStructData(amount, account)
-          data = await launchpadContract.investPublicSale(contractSaleId, parsedAmount, investStructData)
+          transaction = await launchpadContract.investPublicSale(contractSaleId, parsedAmount, investStructData)
         }
 
-        if (data.hash)
+        if (transaction) {
+          const receipt = await transaction.wait()
+
           await invest(status, {
             amount,
-            txHash: data.hash,
+            txHash: receipt.transactionHash,
           })
 
-        submitState.setSuccess()
-        openSuccess()
+          submitState.setSuccess()
+          openSuccess()
+        }
       }
     } catch (e) {
       console.error(e)
@@ -189,13 +200,13 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           </InfoContainer>
         }
         fontSize="13px"
-        lineHeight="32px"
+        lineHeight="30px"
         entries={conditions}
       />
       <InfoList
         title={<InfoListTitle>My investment allowance</InfoListTitle>}
         fontSize="13px"
-        lineHeight="32px"
+        lineHeight="30px"
         entries={investmentAllowance}
       />
 
@@ -207,7 +218,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       />
 
       <Agreement>
-        <AgreementCheckbox state={agreed} toggle={() => setAgreed((state) => !state)} />
+        <AgreementCheckbox state={purchaseAgreed} toggle={() => setPurchaseAgreed((state) => !state)} />
         <AgreementText>
           I have read, fully understood and agree to be bound by the&nbsp;
           <a
@@ -215,43 +226,72 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
               textDecoration: 'none',
               color: '#6667FF',
             }}
-            href="https://drive.google.com/file/d/1IyTwpKXXX2akqYimUstvwfcfFEPuOGBa/view?usp=sharing"
+            href={purchaseAgreement ? purchaseAgreement.file?.public : "https://drive.google.com/file/d/1IyTwpKXXX2akqYimUstvwfcfFEPuOGBa/view?usp=sharing"}
             target="_blank"
             rel="noreferrer"
           >
             Purchase Agreement
           </a>
-          ,&nbsp;
+          &nbsp;in respect of this token sale.
+        </AgreementText>
+      </Agreement>
+      <Agreement>
+        <AgreementCheckbox state={investmentMemorandumAgreed} toggle={() => setInvestmentMemorandumAgreed((state) => !state)} />
+        <AgreementText>
+          I have read, fully understood and agree to be bound by the&nbsp;
           <a
             style={{
               textDecoration: 'none',
               color: '#6667FF',
             }}
-            href="https://drive.google.com/file/d/1cpYhcSYbxodNWB_OpvyjbFLwnHgGF6lj/view?usp=sharing"
+            href={investmentMemorandum ? investmentMemorandum.file?.public : "https://drive.google.com/file/d/1cpYhcSYbxodNWB_OpvyjbFLwnHgGF6lj/view?usp=sharing"}
             target="_blank"
             rel="noreferrer"
           >
             Investment Memorandum
           </a>
-          ,&nbsp;
-          <a
-            style={{
-              textDecoration: 'none',
-              color: '#6667FF',
-            }}
-            href="https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Amended Limited Liability Company Operating Agreement
-          </a>
-          &nbsp;and any other relevant agreements in respect of this token sale.
+          &nbsp;in respect of this token sale.
+        </AgreementText>
+      </Agreement>
+      <Agreement>
+        <AgreementCheckbox state={otherDocumentsAgreed} toggle={() => setOtherDocumentsAgreed((state) => !state)} />
+        <AgreementText>
+          I have read, fully understood and agree to be bound by the
+          other relevant agreements here in respect of this token sale:
+          {otherExecutionDocuments.length > 0 ? otherExecutionDocuments.map((document, idx) => 
+            <>
+              <br/>
+              <a
+                style={{
+                  textDecoration: 'none',
+                  color: '#6667FF',
+                }}
+                href={document ? document.file?.public : "https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing"}
+                target="_blank"
+                rel="noreferrer"
+              >
+                &#xB7; {`Support Document ${idx + 1}`}
+              </a>
+            </>
+          )
+          : 
+            <a
+              style={{
+                textDecoration: 'none',
+                color: '#6667FF',
+              }}
+              href="https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing"
+              target="_blank"
+              rel="noreferrer"
+            >
+              &#xB7; Support Document 1
+            </a>}
         </AgreementText>
       </Agreement>
 
       <InvestFormSubmitButton
         state={submitState.current}
-        disabled={isDisabled || !agreed || submitState.current !== InvestSubmitState.default}
+        disabled={isDisabled || !purchaseAgreed || !investmentMemorandumAgreed || !otherDocumentsAgreed || submitState.current !== InvestSubmitState.default}
         onSubmit={submit}
       >
         {submitState.current === InvestSubmitState.success && (

@@ -417,6 +417,14 @@ export const createValidationSchema = (account: string | null | undefined) => {
     }),
     gallery: yup.array(requiredFileSchema),
 
+    purchaseAgreement: fileSchema,
+    investmentMemorandum: fileSchema,
+    otherExecutionDocuments: yup.array(
+      yup.object().shape({
+        file: fileSchema,
+      })
+    ),
+
     additionalDocuments: yup.array(
       yup.object().shape({
         file: fileSchema,
@@ -481,6 +489,14 @@ export const editSchema = yup.object().shape({
     .min(1, 'Add at least one social link'),
 
   gallery: yup.array(requiredFileSchema),
+
+  purchaseAgreement: fileSchema,
+  investmentMemorandum: fileSchema,
+  otherExecutionDocuments: yup.array(
+    yup.object().shape({
+      file: fileSchema,
+    })
+  ),
 
   additionalDocuments: yup.array(
     yup.object().shape({

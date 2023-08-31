@@ -46,4 +46,5 @@ export const routes = {
   reviewOffer: '/issuance/review/information',
   issuanceReport: `/issuance/extract/:issuanceId`,
   manageOffer: `/issuance/manage/:issuanceId`,
+  newAdmin: '/admin/accreditation',
 }

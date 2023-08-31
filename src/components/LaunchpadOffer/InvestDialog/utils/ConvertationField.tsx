@@ -152,7 +152,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
         onChange={changeValue}
         trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
         caption={warning === 'Loading' ? <Loader /> : warning}
-        height="90px"
+        height="85px"
         fontSize="24px"
         lineHeight="29px"
         decimalsLimit={investingTokenDecimals}
@@ -164,7 +164,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
         value={convertedValue}
         onChange={() => null}
         trailing={<CurrencyDropdown disabled value={offerToken} />}
-        height="90px"
+        height="85px"
         fontSize="24px"
         lineHeight="29px"
       />

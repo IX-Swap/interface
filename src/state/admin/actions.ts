@@ -449,6 +449,7 @@ export interface IndividualKyc {
 }
 
 export interface TaxDeclaration {
+  isAdditional?: any
   country: string
   idNumber?: string
   reason?: string
