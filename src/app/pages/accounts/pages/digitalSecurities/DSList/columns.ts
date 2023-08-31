@@ -37,11 +37,13 @@ export const columns: Array<TableColumn<AssetBalance>> = [
   }
 ]
 
+export const custodyColumn = {
+  label: 'Custody',
+  key: 'custody'
+}
+
 export const custodyColumns: Array<TableColumn<AssetBalance>> = [
   ...columns.slice(0, 2),
-  {
-    label: 'Custody',
-    key: 'custody'
-  },
+  custodyColumn,
   ...columns.slice(2)
 ]

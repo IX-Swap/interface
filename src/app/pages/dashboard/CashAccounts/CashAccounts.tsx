@@ -3,9 +3,26 @@ import { Button, Grid, Typography } from '@mui/material'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
-import { Table } from 'app/pages/accounts/pages/banks/pages/BanksList/Table'
+import { CashTable } from 'app/pages/accounts/pages/cash/components/CashTable'
+import { NoCashButtons } from 'app/pages/accounts/pages/cash/components/NoCashButtons'
+import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { KnowYourCustomer } from 'app/pages/dashboard/AccountActions/KnowYourCustomer'
 
 export const CashAccounts = () => {
+  const {
+    isLoadingIdentities,
+    identity,
+    identityType,
+    hasStartedKYC,
+    hasSubmittedKYC,
+    hasApprovedKYC
+  } = useGetIdentities()
+
+  if (isLoadingIdentities) {
+    return <LoadingIndicator />
+  }
+
   return (
     <FieldContainer>
       <Grid container spacing={3}>
@@ -26,8 +43,7 @@ export const CashAccounts = () => {
               component={AppRouterLinkComponent}
               color='primary'
               variant='outlined'
-              to={AccountsRoute.banks}
-              data-testid='invest-link'
+              to={AccountsRoute.cash}
             >
               View All Cash Accounts
             </Button>
@@ -35,7 +51,22 @@ export const CashAccounts = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Table limitRows={2} />
+          {!hasApprovedKYC ? (
+            <Grid item xs>
+              <KnowYourCustomer
+                hasStarted={hasStartedKYC}
+                hasSubmitted={hasSubmittedKYC}
+                identityType={identityType}
+                identityId={identity?._id}
+                userId={identity?.user._id}
+              />
+            </Grid>
+          ) : (
+            <>
+              <CashTable />
+              <NoCashButtons />
+            </>
+          )}
         </Grid>
       </Grid>
     </FieldContainer>

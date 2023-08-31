@@ -1,13 +1,17 @@
-import { Box, Button, Grid } from '@mui/material'
-import { AccountsRoute } from 'app/pages/accounts/router/config'
-import { AddressSelect } from 'app/pages/invest/components/MakeCommitment/AddressSelect'
+import {
+  Box,
+  // Button,˝
+  Grid
+} from '@mui/material'
+// import { AccountsRoute } from 'app/pages/accounts/router/config'
+// import { AddressSelect } from 'app/pages/invest/components/MakeCommitment/AddressSelect'
 import { DownloadDocumentButton } from 'app/pages/invest/components/MakeCommitment/DownloadDocumentButton'
 import { EstimatedValue } from 'app/pages/invest/components/MakeCommitment/EstimatedValue'
 import { NumberOfUnits } from 'app/pages/invest/components/MakeCommitment/NumberOfUnits'
 import { OTPFIeld } from 'app/pages/invest/components/MakeCommitment/OTPField'
 import { ToC } from 'app/pages/invest/components/MakeCommitment/ToC'
 import { UnitPrice } from 'app/pages/invest/components/MakeCommitment/UnitPrice'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+// import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { Divider } from 'ui/Divider'
@@ -19,11 +23,11 @@ export interface MakeCommitmentFormFieldsProps {
 export const MakeCommitmentFormFields = ({
   dso
 }: MakeCommitmentFormFieldsProps) => {
-  const { isTablet } = useAppBreakpoints()
+  //   const { isTablet } = useAppBreakpoints()
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={7}>
+      {/* <Grid item xs={12} md={7}>
         <AddressSelect />
       </Grid>
       <Grid item xs={12} md={5}>
@@ -39,7 +43,7 @@ export const MakeCommitmentFormFields = ({
         >
           Manage Wallets
         </Button>
-      </Grid>
+      </Grid> */}
       <Grid item xs={12} md={6}>
         <NumberOfUnits
           dsoDecimalScale={dso.decimals}

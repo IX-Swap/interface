@@ -13,7 +13,7 @@ export const LabelWithTooltip = ({
   tooltipTitle,
   ...rest
 }: Partial<LabelWithTooltipProps>) => (
-  <Box display={'flex'} alignItems={'center'} gap={1}>
+  <Box display={'flex'} alignItems={'center'} gap={0.5}>
     <span>{label}</span>
     <Tooltip title={tooltipTitle} {...rest} />
   </Box>

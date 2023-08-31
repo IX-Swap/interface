@@ -35,7 +35,7 @@ export const DisclosureDialog = ({
     await acceptMasDisclosure()
   }
   const handleClose = () => {
-    push(generatePath(InvestRoute.overview))
+    push(generatePath(InvestRoute.primaryOfferings))
   }
 
   return (

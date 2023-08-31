@@ -21,6 +21,7 @@ export const useStyles = makeStyles(theme => ({
     border: 'none',
     paddingTop: 30,
     paddingBottom: 30,
+    minHeight: '120px',
     width: '100%',
     [theme.breakpoints.up('md')]: {
       maxHeight: 120,

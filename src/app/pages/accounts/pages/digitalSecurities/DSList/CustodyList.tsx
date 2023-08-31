@@ -20,6 +20,8 @@ export const CustodyList = () => {
             borderTop: 'none'
           }
         }}
+        showExport
+        exportFileName='Current Holdings'
       />
     </Box>
   )

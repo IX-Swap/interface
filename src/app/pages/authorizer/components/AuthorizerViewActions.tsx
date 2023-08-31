@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Grid, Typography, useTheme } from '@mui/material'
 import React, { PropsWithChildren } from 'react'
 import { AuthorizableWithIdentity, DataroomFeature } from 'types/authorizer'
 import { AuthorizerForm } from 'app/pages/authorizer/components/AuthorizerForm'
@@ -29,6 +29,7 @@ export const AuthorizerViewActions = <T,>(
   props: PropsWithChildren<AuthorizerViewActionsProps<T>>
 ) => {
   const category = useAuthorizerCategory()
+  const theme = useTheme()
   const isTransaction = transactionalCategories.includes(category)
   const { data, feature, statusFieldName = 'status' } = props
   //   const hasIdentity = data.identity !== undefined
@@ -37,23 +38,25 @@ export const AuthorizerViewActions = <T,>(
     data[statusFieldName as keyof typeof data] as AuthorizableStatus
   )
   const showForm = !(isTransaction || approvedOrRejected)
-
+  const greyText = theme.palette.mode === 'dark' ? 500 : 600
   return (
     <Grid container direction='column' spacing={3} sx={{ paddingLeft: '25px' }}>
       <FieldContainer>
         <Grid item container direction={'column'} spacing={5}>
-          <Grid item>
-            <FormSectionHeader title='Authorizer Action (Optional)' />
+          <Grid item display={'flex'}>
+            <FormSectionHeader title='Authorizer Action' />
+            <Typography
+              style={{
+                color: theme.palette.grey[greyText],
+                marginLeft: '0.5rem',
+                marginTop: '0.25rem'
+              }}
+              variant='body1'
+            >
+              (Optional)
+            </Typography>
           </Grid>
           <Grid item>
-            {category !== 'virtual-accounts' && (
-              <AuthorizerActions
-                id={data._id}
-                feature={feature}
-                documents={documents}
-              />
-            )}
-
             {showForm && (
               <Grid item style={{ marginTop: 20 }}>
                 <AuthorizerForm
@@ -65,9 +68,17 @@ export const AuthorizerViewActions = <T,>(
                   itemId={data._id}
                   feature={feature}
                   listingType={data?.listingType}
+                  documents={documents}
                 />
               </Grid>
             )}
+            {/* {category !== 'virtual-accounts' && (
+              <AuthorizerActions
+                id={data._id}
+                feature={feature}
+                documents={documents}
+              />
+            )} */}
 
             {/* {category === AuthorizerCategory.Offerings && (
               <Grid

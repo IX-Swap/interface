@@ -41,55 +41,46 @@ export const adminLandingLinks: InternalRouteProps[] = [
   {
     label: 'Identities',
     path: AdminRoute.identities,
-    color: '#90A30F',
     icon: IndividualIcon
   },
   {
     label: 'Users',
     path: AdminRoute.users,
-    color: '#01A2FF',
     icon: UsersIcon
   },
   {
     label: 'Virtual Account',
     path: AdminRoute.virtualAccount,
-    color: '#0FA3A3',
     icon: VirtualAccountIcon
   },
   {
     label: 'Banner',
     path: AdminRoute.banner,
-    color: '#43B526',
     icon: BannerIcon
   },
   {
     label: 'Disclosure',
     path: AdminRoute.masDisclosure,
-    color: '#8B3DFF',
     icon: MasDisclosureIcon
   },
   {
     label: 'Virtual Account Transactions',
     path: AdminRoute.virtualAccountTransactions,
-    color: '#01A2FF',
     icon: VATransactionsIcon
   },
   {
     label: 'Virtual Account Audit',
     path: AdminRoute.virtualAccountAudit,
-    color: '#246D97',
     icon: VAAuditIcon
   },
   {
     label: 'Custody Management',
     path: AdminRoute.custodyManagement,
-    color: '#90A30F',
     icon: CustodyManagementIcon
   },
   {
     label: 'Client Spaces',
     path: AdminRoute.tenants,
-    color: '#0FA3A3',
-    icon: MasDisclosureIcon
+    icon: IndividualIcon
   }
 ]

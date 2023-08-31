@@ -15,7 +15,7 @@ export const Actions = ({ item }: ActionsProps) => {
       to={CommitmentRoute.view}
       params={{ commitmentId: item._id }}
       size='small'
-      variant='outlined'
+      //   variant='outlined'
     >
       View
     </Button>

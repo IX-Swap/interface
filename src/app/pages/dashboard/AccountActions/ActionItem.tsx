@@ -9,6 +9,7 @@ interface ActionItemProps {
   buttonText: string
   buttonLink: string
   params?: object
+  hideButton?: boolean
 }
 
 export const ActionItem = ({
@@ -17,7 +18,8 @@ export const ActionItem = ({
   description,
   buttonText,
   buttonLink,
-  params = {}
+  params = {},
+  hideButton = false
 }: ActionItemProps) => {
   return (
     <Box textAlign={'center'} mx={'auto'} my={5} maxWidth={290}>
@@ -28,17 +30,19 @@ export const ActionItem = ({
       <Typography color={'text.secondary'} mt={2} mx={2} mb={3}>
         {description}
       </Typography>
-      <Button
-        component={AppRouterLinkComponent}
-        color='primary'
-        variant={'contained'}
-        to={buttonLink}
-        params={params}
-        disableElevation
-        fullWidth
-      >
-        {buttonText}
-      </Button>
+      {!hideButton && (
+        <Button
+          component={AppRouterLinkComponent}
+          color='primary'
+          variant={'contained'}
+          to={buttonLink}
+          params={params}
+          disableElevation
+          fullWidth
+        >
+          {buttonText}
+        </Button>
+      )}
     </Box>
   )
 }

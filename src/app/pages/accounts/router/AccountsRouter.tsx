@@ -15,6 +15,7 @@ import React from 'react'
 import { Switch } from 'react-router-dom'
 // import { RootContainer } from 'ui/RootContainer'
 import { CashRouter } from '../pages/cash/router/CashRouter'
+import { CommitmentsRouter as InvestmentsRouter } from 'app/pages/invest/router/CommitmentsRouter'
 
 export const AccountsRouter = () => {
   return (
@@ -55,6 +56,9 @@ export const AccountsRouter = () => {
         path={AccountsRoute.myHoldings}
       >
         <MyHoldings />
+      </AppRoute>
+      <AppRoute breadcrumb='My Investments' path={AccountsRoute.myInvestments}>
+        <InvestmentsRouter />
       </AppRoute>
       <AppRoute breadcrumb='Cash' path={AccountsRoute.cash}>
         <CashRouter />

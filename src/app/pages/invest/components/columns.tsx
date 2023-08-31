@@ -1,7 +1,7 @@
 import { TableColumn } from 'types/util'
 import { formatAmount } from 'helpers/numbers'
 import { Commitment } from 'types/commitment'
-import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
+import { renderStatus } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import {
   renderCommitmentAvatar,
   renderCommitmentMoney
@@ -45,7 +45,7 @@ export const columns: Array<TableColumn<Commitment>> = [
   {
     key: 'status',
     label: 'Status',
-    render: renderStatusColumn
+    render: renderStatus
   }
 ]
 

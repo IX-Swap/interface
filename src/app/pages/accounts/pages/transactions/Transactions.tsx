@@ -8,12 +8,12 @@ import { RootContainer } from 'ui/RootContainer'
 
 export const Transactions = () => {
   return (
-    <TransactionFilterForm>
-      <Grid container direction='column' style={{ display: 'table' }}>
-        <Grid item>
-          <PageHeader title='Transactions' />
-        </Grid>
-        <RootContainer>
+    <Grid container direction='column' style={{ display: 'table' }}>
+      <Grid item>
+        <PageHeader title='Transactions' />
+      </Grid>
+      <RootContainer>
+        <TransactionFilterForm>
           <Grid item>
             <TransactionsFilter />
           </Grid>
@@ -22,8 +22,8 @@ export const Transactions = () => {
               <TransactionsTable />
             </Grid>
           </Grid>
-        </RootContainer>
-      </Grid>
-    </TransactionFilterForm>
+        </TransactionFilterForm>
+      </RootContainer>
+    </Grid>
   )
 }
