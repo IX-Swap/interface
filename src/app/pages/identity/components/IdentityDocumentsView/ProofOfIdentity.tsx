@@ -20,61 +20,58 @@ export const ProofOfIdentity = (props: DocumentsViewProps) => {
     doc => Object.values(doc).length > 0 && doc.type === 'Proof of Identity'
   )
 
+  let documentFields = <></>
+
+  if (proofOfIdentityDocs.length > 0) {
+    const metadata: any = proofOfIdentityDocs[0].title
+      .split(',')
+      .map((data: any) => data.trim())
+    const title = (metadata?.[0] === 'NA' ? null : metadata[0]) ?? null
+    const documentNumber = (metadata?.[3] === 'NA' ? null : metadata[3]) ?? null
+    const issuance = (metadata?.[1] === 'NA' ? null : metadata[1]) ?? null
+    const expiry = (metadata?.[2] === 'NA' ? null : metadata[2]) ?? null
+
+    documentFields = (
+      <>
+        <Grid item container direction={'column'} spacing={5}>
+          <Grid item xs>
+            <LabelledValue isRedesigned value={title} label='Document Type' />
+          </Grid>
+          <Grid item container>
+            <Grid item xs md={6}>
+              <LabelledValue
+                isRedesigned
+                value={documentNumber}
+                label='Document Number'
+              />
+            </Grid>
+            <Grid item xs md={6}>
+              <LabelledValue
+                isRedesigned
+                value={issuance}
+                label='Document Issuance Date'
+              />
+            </Grid>
+          </Grid>
+          <Grid item>
+            <LabelledValue
+              isRedesigned
+              value={expiry}
+              label='Document Expiry Date'
+            />
+          </Grid>
+        </Grid>
+      </>
+    )
+  }
+
   return (
     <FieldContainer>
       <Grid item container direction={'column'} spacing={3}>
         <Grid item>
           <FormSectionHeader title='Proof of Identity' />
         </Grid>
-        {proofOfIdentityDocs.map(doc => {
-          console.log(doc)
-          const metadata: any = doc.title
-            .split(',')
-            .map((data: any) => data.trim())
-          const title = (metadata?.[0] === 'NA' ? null : metadata[0]) ?? null
-          const documentNumber =
-            (metadata?.[3] === 'NA' ? null : metadata[3]) ?? null
-          const issuance = (metadata?.[1] === 'NA' ? null : metadata[1]) ?? null
-          const expiry = (metadata?.[2] === 'NA' ? null : metadata[2]) ?? null
-
-          return (
-            <>
-              <Grid item container direction={'column'} spacing={5}>
-                <Grid item xs>
-                  <LabelledValue
-                    isRedesigned
-                    value={title}
-                    label='Document Type'
-                  />
-                </Grid>
-                <Grid item container>
-                  <Grid item xs md={6}>
-                    <LabelledValue
-                      isRedesigned
-                      value={documentNumber}
-                      label='Document Number'
-                    />
-                  </Grid>
-                  <Grid item xs md={6}>
-                    <LabelledValue
-                      isRedesigned
-                      value={issuance}
-                      label='Document Issuance Date'
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item>
-                  <LabelledValue
-                    isRedesigned
-                    value={expiry}
-                    label='Document Expiry Date'
-                  />
-                </Grid>
-              </Grid>
-            </>
-          )
-        })}
-
+        {documentFields}
         <Grid item>
           <Documents documents={proofOfIdentityDocs} />
         </Grid>
