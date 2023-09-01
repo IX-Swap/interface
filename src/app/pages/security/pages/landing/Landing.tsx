@@ -85,7 +85,7 @@ export const Landing = () => {
                 />
               </Grid>
 
-              <Box className={classes.divider} />
+              {/* <Box className={classes.divider} />
 
               <Grid item>
                 <SettingsRow
@@ -100,7 +100,7 @@ export const Landing = () => {
                     </Button>
                   }
                 />
-              </Grid>
+              </Grid> */}
 
               {/* <Box className={classes.divider} /> */}
 
