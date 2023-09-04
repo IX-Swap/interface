@@ -14,12 +14,11 @@ export const PrerequisiteMessageWrapper = styled.div`
 
 export const FoundPoolWrapper = styled(ColumnCenter)`
   justify-items: center;
-  background: ${({ theme }) => theme.bg11};
+  background: ${({ theme }) => theme.bg25};
   padding: 24px 35px 46px 35px;
   border-radius: 20px;
+  border: 1px solid #E6E6FF
   gap: 34px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
   margin-top: 35px;
 `
 export const SelectCurrencyContainer = styled(AutoColumn)`

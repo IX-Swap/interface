@@ -118,5 +118,5 @@ export const LiquidityInnerTitle = styled.span`
   line-height: 24px;
   text-transform: uppercase;
   color: #292933;
-  margin-bottom: 1.5rem;
+  // margin-bottom: 1rem;
 `

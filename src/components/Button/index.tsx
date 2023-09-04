@@ -249,6 +249,18 @@ export const ButtonGradient = styled(Base)`
   cursor: pointer;
 `
 
+export const NewButtonGradient = styled(Base)`
+  background: ${({ theme }) => theme.config.primary?.main || theme.bg25};
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  padding: 14px 0;
+  border: 1px solid #e6e6ff;
+  cursor: pointer;
+`
+
 export const PinnedContentButton = styled(Base)`
   color: ${(props) => props.theme.launchpad.colors.text.light};
   background-color: ${(props) => props.theme.launchpad.colors.primary};

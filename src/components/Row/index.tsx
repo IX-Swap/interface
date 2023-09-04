@@ -38,8 +38,10 @@ export const RowFlat = styled.div`
 export const ButtonRow = styled(RowBetween)`
   grid-gap: 1.5rem;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      flex-direction: column;
+      // flex-direction: column;
       grid-gap: 1rem;
+      font-size: 14px;
+      padding: 10px;
   `};
 `
 

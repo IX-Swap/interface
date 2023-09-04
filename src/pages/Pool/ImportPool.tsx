@@ -10,12 +10,16 @@ import { routes } from 'utils/routes'
 
 const StyledButtonEmpty = styled(ButtonEmpty)`
   padding: 0;
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
 `
 
 export const ImportPool = () => {
   const theme = useTheme()
   return (
-    <SemiTransparent>
+    // <SemiTransparent>
+    <>
       <StyledButtonEmpty data-testid="find-pool-button" id="find-pool-button" as={Link} to={routes.find}>
         <Text color={'#666680'} fontWeight={300} fontSize={'12px'} lineHeight={'18px'}>
           <Trans>Don&apos;t see a pool you joined?</Trans>&nbsp;
@@ -24,6 +28,8 @@ export const ImportPool = () => {
           <Trans>Import it.</Trans>
         </Text>
       </StyledButtonEmpty>
-    </SemiTransparent>
+    </>
+
+    // </SemiTransparent>
   )
 }

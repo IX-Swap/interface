@@ -8,7 +8,43 @@ import { Field } from '../../state/mint/actions'
 import { SemiTransparent, TYPE } from '../../theme'
 import { Trans } from '@lingui/macro'
 import { ModalHeaderWrapper } from './styleds'
+import styled from 'styled-components/macro'
 import { formatAmount } from 'utils/formatCurrencyAmount'
+
+const TextContainer = styled.div`
+  color: #292933;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 60px;
+  margin-right: 10px;
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+`
+
+const DescriptionText = styled(Text)`
+  color: #292933;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 30px;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`
+
+const SemiTransparentText = styled(Text)`
+  color: #666680;
+  font-size: 16px;
+  width: 75%;
+  text-align: left;
+  font-weight: 300;
+  line-height: 18px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    font-size: 14px;
+  }
+`
 
 interface Props {
   noLiquidity?: boolean
@@ -21,13 +57,12 @@ export const ModalHeader = ({ noLiquidity, currencies, liquidityMinted, allowedS
   const text = noLiquidity
     ? currencies[Field.CURRENCY_A]?.symbol + '/' + currencies[Field.CURRENCY_B]?.symbol
     : formatAmount(+(liquidityMinted?.toSignificant(10) || 0))
+
   return (
     <ModalHeaderWrapper>
       <AutoColumn gap="12px">
         <RowBetween style={{ flexWrap: 'wrap' }}>
-          <Text color={'#292933'} fontSize="40px" fontWeight={600} lineHeight="60px" marginRight={10}>
-            {text}
-          </Text>
+          <TextContainer>{text}</TextContainer>
           <DoubleCurrencyLogo
             currency0={currencies[Field.CURRENCY_A]}
             currency1={currencies[Field.CURRENCY_B]}
@@ -37,17 +72,17 @@ export const ModalHeader = ({ noLiquidity, currencies, liquidityMinted, allowedS
         {!noLiquidity && (
           <>
             <Row>
-              <Text fontWeight={'400'} color={'#292933'} fontSize="18px" lineHeight={'30px'}>
+              <DescriptionText>
                 {currencies[Field.CURRENCY_A]?.symbol + '/' + currencies[Field.CURRENCY_B]?.symbol + ' Pool Tokens'}
-              </Text>
+              </DescriptionText>
             </Row>
             <SemiTransparent>
-              <Text color={'#666680'} fontSize={16} width={'75%'} textAlign="left" fontWeight={300} lineHeight={'18px'}>
+              <SemiTransparentText>
                 <Trans>
                   Output is estimated. If the price changes by more than{' '}
                   {formatAmount(+allowedSlippage.toSignificant(4))}% your transaction will revert.
                 </Trans>
-              </Text>
+              </SemiTransparentText>
             </SemiTransparent>
           </>
         )}

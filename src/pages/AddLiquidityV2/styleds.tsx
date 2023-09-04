@@ -8,7 +8,7 @@ export const ToggleableBody = styled.div<{ isVisible?: boolean }>`
 
 export const ModalHeaderWrapper = styled.div`
   padding-bottom: 1rem;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   display: flex;
   padding: 27px 40px 27px 40px;
   align-items: center;

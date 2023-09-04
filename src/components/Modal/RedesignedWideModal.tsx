@@ -11,7 +11,7 @@ import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 const StyledDialogContent = styled(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, scrollable, tip, isLarge, ...rest }) => (
-    <AnimatedDialogContent {...rest} data-testid="submittedDialog"/>
+    <AnimatedDialogContent {...rest} data-testid="submittedDialog" />
   )
 ).attrs({
   'aria-label': 'dialog',
@@ -100,7 +100,7 @@ const StyledDialogContent = styled(
         min-height: ${minHeight}vh;
       `}
     display: flex;
-    border-radius: 45px;
+    border-radius: 8px;
     ${({ theme, scrollable }) => theme.mediaWidth.upToMedium`
       width: 100vw;
       ${scrollable && 'min-height: auto !important;'}

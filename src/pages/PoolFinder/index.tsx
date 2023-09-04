@@ -6,8 +6,8 @@ import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import JSBI from 'jsbi'
 
-import { ButtonGradient } from 'components/Button'
-import { EmptyStateInfoCard } from 'components/Card'
+import { ButtonGradient, PinnedContentButton } from 'components/Button'
+import { EmptyStateInfoCard, NewEmptyStateInfoCard } from 'components/Card'
 import FullPositionCard from 'components/PositionCard'
 import { TipWithMessage } from 'components/TipWithMessage'
 import useTheme from 'hooks/useTheme'
@@ -27,6 +27,13 @@ import { Fields } from './enums'
 import { PrerequisiteMessage } from './PrerequisiteMessage'
 import { SelectCurrency } from './SelectCurrency'
 import { FoundPoolWrapper, PoolStateColumn, SelectCurrencyContainer } from './styleds'
+import { AddLiduidityContainer } from 'pages/AddLiquidityV2/redirects'
+import { Header } from 'pages/Launchpad/Header'
+import { useSetHideHeader } from 'state/application/hooks'
+import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import Portal from '@reach/portal'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
@@ -48,6 +55,7 @@ export default function PoolFinder() {
   const [currency1, setCurrency1] = useState<Currency | null>(null)
 
   const [pairState, pair] = useV2Pair(currency0 ?? undefined, currency1 ?? undefined)
+  const { chainId } = useActiveWeb3React()
   const addPair = usePairAdder()
   useEffect(() => {
     if (pair) {
@@ -93,85 +101,121 @@ export default function PoolFinder() {
   const invalidPair = currenciesExist && !(pairState === PairState.EXISTS) && pairState === PairState.INVALID
   const loadingPair = currenciesExist && !(pairState === PairState.EXISTS) && pairState === PairState.LOADING
   const prerequesiteState = !currenciesExist
+
+  const hideHeader = useSetHideHeader()
+
+  React.useEffect(() => {
+    hideHeader(true)
+
+    return () => {
+      hideHeader(false)
+    }
+  }, [])
+
+  const blurred = React.useMemo(
+    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0),
+    [account, chainId]
+  )
+
+  if (blurred) {
+    return (
+      <Portal>
+        <CenteredFixed width="100vw" height="100vh">
+          <NetworkNotAvailable />
+        </CenteredFixed>
+      </Portal>
+    )
+  }
   return (
     <>
-      <TipWithMessage
-        message={<Trans>Use this tool to find pairs that don&apos;t automatically appear in the interface.</Trans>}
-      />
-      <AppBody {...bodyProps}>
-        <FindPoolTabs origin={query.get('origin') ?? '/pool'} />
-        <AutoColumn>
-          <SelectCurrencyContainer gap="md">
-            <SelectCurrency {...{ currency0, currency1, chooseToken }} />
-          </SelectCurrencyContainer>
-          {poolFound && pair && (
-            <FoundPoolWrapper>
-              <Column>
-                <TYPE.title9>
-                  <Trans>Pool Found!</Trans>
-                </TYPE.title9>
-                <StyledInternalLink to={`/pool`}>
-                  <SemiTransparent>
-                    <Text fontSize={12} lineHeight={'18px'}>
-                      <Trans>Manage this Pool</Trans>
-                    </Text>
-                  </SemiTransparent>
-                </StyledInternalLink>
-              </Column>
-              <FullPositionCard pair={pair} />
-            </FoundPoolWrapper>
-          )}
-          {!poolFound && !prerequesiteState && currency0 && currency1 && (
-            <PoolStateColumn>
-              {noLiquidityInPool && (
-                <EmptyStateInfoCard>
-                  <TYPE.title9 fontWeight={500}>
-                    <Trans>You don’t have liquidity in this pool yet</Trans>
+      <Header />
+      <AddLiduidityContainer>
+        <AppBody page="liquidity" {...bodyProps}>
+          <FindPoolTabs origin={query.get('origin') ?? '/pool'} />
+          <AutoColumn>
+            <SelectCurrencyContainer gap="md">
+              <SelectCurrency {...{ currency0, currency1, chooseToken }} />
+            </SelectCurrencyContainer>
+            {poolFound && pair && (
+              <FoundPoolWrapper>
+                <Column>
+                  <TYPE.title9>
+                    <Trans>Pool Found!</Trans>
                   </TYPE.title9>
-                  <ButtonGradient style={{ width: '214px' }}>
-                    <Link to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`} style={{ color: theme.text1 }}>
-                      <Trans>Add liquidity</Trans>
-                    </Link>
-                  </ButtonGradient>
-                </EmptyStateInfoCard>
-              )}
-              {noPool && currency0 && currency1 && (
-                <EmptyStateInfoCard>
-                  <TYPE.title9 fontWeight={500}>
-                    <Trans>No pool found</Trans>
-                  </TYPE.title9>
-                  <ButtonGradient style={{ width: '214px' }}>
-                    <Link to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`} style={{ color: theme.text1 }}>
-                      <Trans>Create pool</Trans>
-                    </Link>
-                  </ButtonGradient>
-                </EmptyStateInfoCard>
-              )}
-              {invalidPair && (
-                <EmptyStateInfoCard>
-                  <Trans>Invalid pair</Trans>
-                </EmptyStateInfoCard>
-              )}
-              {loadingPair && (
-                <EmptyStateInfoCard>
-                  <Trans>
-                    <Dots>Loading</Dots>
-                  </Trans>
-                </EmptyStateInfoCard>
-              )}
-            </PoolStateColumn>
-          )}
-          {prerequesiteState && <PrerequisiteMessage account={account} />}
-        </AutoColumn>
+                  <StyledInternalLink to={`/pool`}>
+                    <SemiTransparent>
+                      <Text fontSize={12} lineHeight={'18px'}>
+                        <Trans>Manage this Pool</Trans>
+                      </Text>
+                    </SemiTransparent>
+                  </StyledInternalLink>
+                </Column>
+                <FullPositionCard pair={pair} />
+              </FoundPoolWrapper>
+            )}
+            {!poolFound && !prerequesiteState && currency0 && currency1 && (
+              <PoolStateColumn>
+                {noLiquidityInPool && (
+                  <EmptyStateInfoCard>
+                    <TYPE.title9 fontWeight={500}>
+                      <Trans>You don’t have liquidity in this pool yet</Trans>
+                    </TYPE.title9>
+                    <ButtonGradient style={{ width: '214px' }}>
+                      <Link
+                        to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}
+                        style={{ color: theme.text1 }}
+                      >
+                        <Trans>Add liquidity</Trans>
+                      </Link>
+                    </ButtonGradient>
+                  </EmptyStateInfoCard>
+                )}
+                {noPool && currency0 && currency1 && (
+                  <NewEmptyStateInfoCard>
+                    <TYPE.title9 fontWeight={500}>
+                      <Text color={'#B8B8CC'}>
+                        <Trans>No pool found</Trans>
+                      </Text>
+                    </TYPE.title9>
+                    <PinnedContentButton style={{ width: '214px' }}>
+                      <Link
+                        to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}
+                        style={{ color: theme.text1 }}
+                      >
+                        <Trans>Create pool</Trans>
+                      </Link>
+                    </PinnedContentButton>
+                  </NewEmptyStateInfoCard>
+                )}
+                {invalidPair && (
+                  <EmptyStateInfoCard>
+                    <Trans>Invalid pair</Trans>
+                  </EmptyStateInfoCard>
+                )}
+                {loadingPair && (
+                  <EmptyStateInfoCard>
+                    <Trans>
+                      <Dots>Loading</Dots>
+                    </Trans>
+                  </EmptyStateInfoCard>
+                )}
+              </PoolStateColumn>
+            )}
+            {prerequesiteState && <PrerequisiteMessage account={account} />}
+          </AutoColumn>
 
-        <CurrencySearchModal
-          isOpen={showSearch}
-          onCurrencySelect={handleCurrencySelect}
-          onDismiss={handleSearchDismiss}
-          showCommonBases={false}
-          selectedCurrency={(activeField === Fields.TOKEN0 ? currency1 : currency0) ?? undefined}
-        />
-      </AppBody>
+          <CurrencySearchModal
+            isOpen={showSearch}
+            onCurrencySelect={handleCurrencySelect}
+            onDismiss={handleSearchDismiss}
+            showCommonBases={false}
+            selectedCurrency={(activeField === Fields.TOKEN0 ? currency1 : currency0) ?? undefined}
+          />
+          {/* <TipWithMessage
+          message={<Trans>Use this tool to find pairs that don&apos;t automatically appear in the interface.</Trans>}
+        /> */}
+        </AppBody>
+      </AddLiduidityContainer>
     </>
   )
 }

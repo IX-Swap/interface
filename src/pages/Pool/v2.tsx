@@ -26,7 +26,13 @@ import { LiquidityTitle } from './LiquidityTitle'
 import { NoPairs } from './NoPairs'
 import { LiquidityInnerTitle, MarginerTitle } from './styleds'
 import { useTokens } from './useTokens'
-
+import { AddLiduidityContainer } from 'pages/AddLiquidityV2/redirects'
+import { Header } from 'pages/Launchpad/Header'
+import { useSetHideHeader } from 'state/application/hooks'
+import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import Portal from '@reach/portal'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 const LinkTitle = styled(TYPE.body1)`
   color: ${({ theme }) => theme.text1};
   font-weight: 600;
@@ -80,35 +86,63 @@ export default function Pool() {
   const currentHashTransaction = getPoolTransactionHash()
   const pending = useIsTransactionPending(currentHashTransaction)
   const isBlurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
+
+  const hideHeader = useSetHideHeader()
+
+  React.useEffect(() => {
+    hideHeader(true)
+
+    return () => {
+      hideHeader(false)
+    }
+  }, [])
+
+  const blurred = React.useMemo(
+    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0),
+    [account, chainId]
+  )
+
+  if (blurred) {
+    return (
+      <Portal>
+        <CenteredFixed width="100vw" height="100vh">
+          <NetworkNotAvailable />
+        </CenteredFixed>
+      </Portal>
+    )
+  }
   return (
     <>
-      {!isBlurred && <DesktopOnly style={{ width: '100%', maxWidth: '592px' }}>{/* <TopContent /> */}</DesktopOnly>}
-      <AppBody blurred={isBlurred}>
-        {!isBlurred && <MobileAndTablet style={{ marginBottom: '1rem' }}>{/* <TopContent /> */}</MobileAndTablet>}
-        <SwapPoolTabs active={'pool'} />
-        <AutoColumn gap="1.5rem" justify="center">
-          <AutoColumn gap="md" style={{ width: '100%' }}>
-            <MarginerTitle>
-              <AutoColumn gap="20px" style={{ width: '100%' }}>
-                <LiquidityTitle />
-                <AddLiquidityButton />
-              </AutoColumn>
-            </MarginerTitle>
-            {!account && <ConnectWallet message={<Trans>Connect a wallet to view your Liquidity.</Trans>} />}
-            {account && (dataIsLoading || showEmptyLiquidity) && (
-              <NoPairs account={account} v2IsLoading={v2IsLoading} showEmptyLiquidity={showEmptyLiquidity} />
-            )}
-            {dataIsLoaded && pairsPresent && (
-              <TopStraightBackgroundWrapper>
-                <LiquidityInnerTitle>
-                  <Trans>My Liquidity</Trans>
-                </LiquidityInnerTitle>
-                {!pending ? (
-                  <>
-                    {v2PairsWithoutStakedAmount.map((v2Pair) => (
-                      <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
-                    ))}
-                    {/* {stakingPairs.map(
+      <Header />
+      <AddLiduidityContainer>
+        {!isBlurred && <DesktopOnly>{/* <TopContent /> */}</DesktopOnly>}
+        <AppBody page="liquidity" blurred={isBlurred}>
+          {!isBlurred && <MobileAndTablet style={{ marginBottom: '1rem' }}>{/* <TopContent /> */}</MobileAndTablet>}
+          <SwapPoolTabs active={'pool'} />
+          <AutoColumn gap="1.5rem" justify="center">
+            <AutoColumn gap="md" style={{ width: '100%' }}>
+              <MarginerTitle>
+                <AutoColumn gap="20px" style={{ width: '100%' }}>
+                  <LiquidityTitle />
+                  <AddLiquidityButton />
+                </AutoColumn>
+              </MarginerTitle>
+              {!account && <ConnectWallet message={<Trans>Connect a wallet to view your Liquidity.</Trans>} />}
+              {account && (dataIsLoading || showEmptyLiquidity) && (
+                <NoPairs account={account} v2IsLoading={v2IsLoading} showEmptyLiquidity={showEmptyLiquidity} />
+              )}
+              {dataIsLoaded && pairsPresent && (
+                <>
+                  <LiquidityInnerTitle>
+                    <Trans>My Liquidity</Trans>
+                  </LiquidityInnerTitle>
+                  <TopStraightBackgroundWrapper>
+                    {!pending ? (
+                      <>
+                        {v2PairsWithoutStakedAmount.map((v2Pair) => (
+                          <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
+                        ))}
+                        {/* {stakingPairs.map(
                       (stakingPair, i) =>
                         stakingPair[1] && ( // skip pairs that arent loaded
                           <FullPositionCard
@@ -118,18 +152,20 @@ export default function Pool() {
                           />
                         )
                     )} */}
-                  </>
-                ) : (
-                  <RowCenter style={{ margin: '68px 0px' }}>
-                    <LoaderThin size={128} />
-                  </RowCenter>
-                )}
-                <ImportPool />
-              </TopStraightBackgroundWrapper>
-            )}
+                      </>
+                    ) : (
+                      <RowCenter style={{ margin: '68px 0px' }}>
+                        <LoaderThin size={128} />
+                      </RowCenter>
+                    )}
+                  </TopStraightBackgroundWrapper>
+                  <ImportPool />
+                </>
+              )}
+            </AutoColumn>
           </AutoColumn>
-        </AutoColumn>
-      </AppBody>
+        </AppBody>
+      </AddLiduidityContainer>
     </>
   )
 }

@@ -9,7 +9,7 @@ import { resetMintState } from 'state/mint/actions'
 import styled from 'styled-components/macro'
 import { CloseIcon, StyledPageHeader } from 'theme'
 import { ReactComponent as ArrowLeft } from '../../assets/images/backNew.svg'
-import { RowBetween, RowStart, RowEnd } from '../Row'
+import { RowBetween, RowStart, RowEnd, RowCenter } from '../Row'
 import MitigationBadge from 'components/MitigationBadge'
 import { Text } from 'rebass'
 
@@ -80,7 +80,9 @@ export function FindPoolTabs({ origin }: { origin: string }) {
               <ArrowLeft />
             </Box>
           </HistoryLink>
-          <Trans>Import Pool</Trans>
+          <Text style={{ color: '#292933' }}>
+            <Trans>Import Pool</Trans>
+          </Text>
         </RowStart>
       </StyledPageHeader>
     </PoolTabs>
@@ -162,32 +164,35 @@ export function AddRemoveTabs({
   return (
     <Tabs>
       <StyledPageHeader>
-        <RowBetween style={{ padding: '0' }}>
-          <RowStart>
-            <HistoryLink
-              to={'/pool' + (!!positionID ? `/${positionID.toString()}` : '')}
-              onClick={() => {
-                if (adding) {
-                  dispatch(resetMintState())
-                }
-              }}
-            >
-              <Box marginRight={'0.5rem'}>
-                <ArrowLeft />
-              </Box>
-            </HistoryLink>
-            <Text textAlign={'center'} fontSize={'20px'} color={'#292933'}>
-              {creating ? (
-                <Trans>Create a pair</Trans>
-              ) : adding ? (
-                <Trans>Add Liquidity</Trans>
-              ) : (
-                <Trans>Remove Liquidity</Trans>
-              )}
-            </Text>
-          </RowStart>
+        {/* <RowBetween style={{ padding: '0' }}> */}
+        <RowStart>
+          <HistoryLink
+            to={'/pool' + (!!positionID ? `/${positionID.toString()}` : '')}
+            onClick={() => {
+              if (adding) {
+                dispatch(resetMintState())
+              }
+            }}
+          >
+            <Box marginRight={'0.5rem'}>
+              <ArrowLeft />
+            </Box>
+          </HistoryLink>
+        </RowStart>
+        <RowCenter style={{ marginTop: '-25px' }}>
+          <Text textAlign={'center'} fontSize={'20px'} color={'#292933'}>
+            {creating ? (
+              <Trans>Create a pair</Trans>
+            ) : adding ? (
+              <Trans>Add Liquidity</Trans>
+            ) : (
+              <Trans>Remove Liquidity</Trans>
+            )}
+          </Text>
+
           {showBadge && <MitigationBadge />}
-        </RowBetween>
+        </RowCenter>
+        {/* </RowBetween> */}
       </StyledPageHeader>
     </Tabs>
   )

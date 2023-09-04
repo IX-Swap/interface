@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyledNumberInput } from 'theme'
 import { escapeRegExp } from '../../utils'
+import { useLocation } from 'react-router-dom'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." characters via in a non-capturing group
 
@@ -19,6 +20,7 @@ export const Input = React.memo(function InnerInput({
   placeholder,
   prependSymbol,
   maxLength = 79,
+
   ...rest
 }: {
   value: string | number
@@ -27,6 +29,7 @@ export const Input = React.memo(function InnerInput({
   fontSize?: string
   align?: 'right' | 'left'
   maxLength?: number
+
   prependSymbol?: string | undefined
 } & Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'onChange' | 'as'>) {
   const enforcer = (nextUserInput: string) => {
@@ -35,8 +38,15 @@ export const Input = React.memo(function InnerInput({
     }
   }
 
+  const [isActiveRoute, setIsActiveRoute] = useState(false)
+
+  useEffect(() => {
+    setIsActiveRoute(window.location.href.includes('add') || window.location.href.includes('find'))
+  }, [])
+
   return (
     <StyledNumberInput
+      route={isActiveRoute}
       {...rest}
       value={prependSymbol && value ? prependSymbol + value : formatNumberValue(value)}
       onChange={(event: { target: { value: string } }) => {

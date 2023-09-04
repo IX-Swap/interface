@@ -54,18 +54,30 @@ export interface ToggleProps {
   toggle: () => void
   showLabel?: boolean
   disabled?: boolean
+  page?: string
 }
 
-export default function Toggle({ id, isActive, toggle, showLabel = true, disabled = false }: ToggleProps) {
+export default function Toggle({ id, isActive, toggle, showLabel = true, disabled = false, page }: ToggleProps) {
+  const backgroundColor = page === 'liquidity' ? '#FFFFFF' : '#372E5E'
+  const border = page === 'liquidity' ? '1px solid rgba(230, 230, 255, 1)' : '#7A02E0'
   return (
     <ToggleContainer>
       {showLabel && (
-        <LabelContainer isActive={isActive}>
+        <LabelContainer style={{ color: page === 'liquidity' ? '#666680' : '#EDCEFF' }} isActive={isActive}>
           <Trans>{isActive ? 'On' : 'Off'}</Trans>
         </LabelContainer>
       )}
       <MirrorImage>
-        <StyledToggle id={id} isActive={isActive} onClick={toggle} disabled={disabled}>
+        <StyledToggle
+          style={{
+            backgroundColor,
+            border,
+          }}
+          id={id}
+          isActive={isActive}
+          onClick={toggle}
+          disabled={disabled}
+        >
           <ToggleElement isActive={isActive} isOnSwitch={true}></ToggleElement>
           <ToggleElement isActive={!isActive} isOnSwitch={false}></ToggleElement>
         </StyledToggle>

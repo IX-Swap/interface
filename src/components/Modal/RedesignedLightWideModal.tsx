@@ -11,7 +11,7 @@ import { AnimatedDialogContent, StyledLightDialogOverlay } from './styleds'
 const StyledDialogContent = styled(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, scrollable, tip, isLarge, ...rest }) => (
-    <AnimatedDialogContent {...rest} data-testid="submittedDialog"/>
+    <AnimatedDialogContent {...rest} data-testid="submittedDialog" />
   )
 ).attrs({
   'aria-label': 'dialog',
@@ -24,9 +24,7 @@ const StyledDialogContent = styled(
       ::before {
         content: '${tip}';
         position: fixed;
-        background: ${({ theme }) =>
-          theme.config.background?.secondary ||
-          theme.launchpad.colors.background};
+        background: ${({ theme }) => theme.config.background?.secondary || theme.launchpad.colors.background};
         border-radius: 45px;
         padding: 30px;
         z-index: 10;

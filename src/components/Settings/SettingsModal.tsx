@@ -7,7 +7,7 @@ import styled, { ThemeContext } from 'styled-components'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useToggleSettingsMenu } from '../../state/application/hooks'
 import { useExpertModeManager, useUserSingleHopOnly } from '../../state/user/hooks'
-import { TYPE } from '../../theme'
+import { ModalNewWrapper, TYPE } from '../../theme'
 import { AutoColumn } from '../Column'
 import QuestionHelper from '../QuestionHelper'
 import { RowBetween, RowFixed } from '../Row'
@@ -33,8 +33,21 @@ const StyledClose = styled(X)`
   }
 `
 const SettingsModalContentWrapper = styled(ModalContentWrapper)`
-  border-radius: 20px;
+  border-radius: 10px;
+  background: ${({ theme }) => theme.bg23};
   padding: 25px 20px;
+  border: 1px solid #e6e6ff;
+  margin-bottom: 14px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 22px 10px;
+  `};
+`
+
+const SettingsModalContentWrapper2 = styled(ModalContentWrapper)`
+  border-radius: 10px;
+  background: ${({ theme }) => theme.bg25};
+  padding: 25px 20px;
+  border: 1px solid #e6e6ff;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 22px 10px;
   `};
@@ -74,25 +87,28 @@ const SettingsModal = React.forwardRef(({ placeholderSlippage }: { placeholderSl
           mobileMaxHeight={90}
           scrollable
         >
-          <ModalBlurWrapper>
+          <ModalNewWrapper>
             <SettingsModalContentWrapper>
               <AutoColumn gap="md" style={{ padding: '1rem', gridRowGap: '18px' }}>
                 <SettingsHeader>
-                  <Text>
+                  <Text style={{ color: '#292933' }}>
                     <Trans>Transaction settings</Trans>
                   </Text>
-                  <StyledClose stroke="white" onClick={toggle} />
+                  <StyledClose stroke="black" onClick={toggle} />
                 </SettingsHeader>
                 <TransactionSettings placeholderSlippage={placeholderSlippage} />
+              </AutoColumn>
+            </SettingsModalContentWrapper>
+            <SettingsModalContentWrapper2>
+              <AutoColumn gap="md" style={{ padding: '1rem', gridRowGap: '18px' }}>
                 <SettingsHeader>
-                  <Text>
+                  <Text color={'#292933'}>
                     <Trans>Interface Settings</Trans>
                   </Text>
                 </SettingsHeader>
-
                 <RowBetween>
                   <RowFixed>
-                    <TYPE.black fontWeight={400} fontSize={14} color={theme.text2}>
+                    <TYPE.black fontWeight={400} fontSize={14} color={theme.text13}>
                       <Trans>Expert Mode</Trans>
                     </TYPE.black>
                     <QuestionHelper
@@ -102,6 +118,7 @@ const SettingsModal = React.forwardRef(({ placeholderSlippage }: { placeholderSl
                     />
                   </RowFixed>
                   <Toggle
+                    page="liquidity"
                     id="toggle-expert-mode-button"
                     isActive={expertMode}
                     toggle={
@@ -119,12 +136,13 @@ const SettingsModal = React.forwardRef(({ placeholderSlippage }: { placeholderSl
                 </RowBetween>
                 <RowBetween>
                   <RowFixed>
-                    <TYPE.black fontWeight={400} fontSize={14} color={theme.text2}>
+                    <TYPE.black fontWeight={400} fontSize={14} color={theme.text13}>
                       <Trans>Disable Multihops</Trans>
                     </TYPE.black>
                     <QuestionHelper text={<Trans>Restricts swaps to direct pairs only.</Trans>} />
                   </RowFixed>
                   <Toggle
+                    page="liquidity"
                     id="toggle-disable-multihop-button"
                     isActive={singleHopOnly}
                     toggle={() => {
@@ -137,8 +155,8 @@ const SettingsModal = React.forwardRef(({ placeholderSlippage }: { placeholderSl
                   />
                 </RowBetween>
               </AutoColumn>
-            </SettingsModalContentWrapper>
-          </ModalBlurWrapper>
+            </SettingsModalContentWrapper2>
+          </ModalNewWrapper>
         </RedesignedWideModal>
       )}
     </StyledSettings>
