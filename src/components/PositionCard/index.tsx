@@ -10,10 +10,11 @@ import styled from 'styled-components/macro'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { routes } from 'utils/routes'
 import { BIG_INT_ZERO } from '../../constants/misc'
-import { ButtonGradient } from '../Button'
+import { ButtonGradient, NewButtonGradient } from '../Button'
+import { Text } from 'rebass'
 import Card, { LightCard } from '../Card'
 import { AutoColumn } from '../Column'
-import { ButtonRow, RowBetween } from '../Row'
+import { ButtonRow, RowBetween, RowCenter } from '../Row'
 import { TextRow } from '../TextRow/TextRow'
 import { CurrencyHeader } from './CurrencyHeader'
 import { PositionCardProps } from './interfaces'
@@ -23,6 +24,16 @@ export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
 `
 
+export const HorizontalLine = () => {
+  const lineStyle = {
+    border: '1px solid #E6E6FF',
+    width: '100%',
+    marginTop: '10px',
+  }
+
+  return <hr style={lineStyle} />
+}
+
 export const HoverCard = styled(Card)`
   border: 1px solid transparent;
   :hover {
@@ -31,10 +42,10 @@ export const HoverCard = styled(Card)`
 `
 const StyledPositionCard = styled(LightCard)`
   border: none;
-  background: ${({ theme }) => theme.bgG4};
+  background: ${({ theme }) => theme.bg23};
   position: relative;
   overflow: hidden;
-  padding: 2rem 2rem 1.5rem 2rem;
+  // padding: 2rem 2rem 1.5rem 2rem;
   margin-bottom: 0.5rem;
   @media (max-width: 540px) {
     padding: 16px;
@@ -91,16 +102,37 @@ export default function FullPositionCard({ pair }: PositionCardProps) {
                 ) : null
               }
             />
+            <HorizontalLine />
+
+            <RowCenter>
+              <Trans>
+                <Text
+                  style={{
+                    color: '#6666FF',
+                    fontSize: '13px',
+                    fontWeight: '600',
+                    marginTop: '10px',
+                    marginBottom: '8px',
+                  }}
+                >
+                  View Pool Information
+                </Text>
+              </Trans>
+            </RowCenter>
             {/* TODO: unhide when we have the link */}
             {/* <PoolInformation /> */}
             {userDefaultPoolBalance && JSBI.greaterThan(userDefaultPoolBalance.quotient, BIG_INT_ZERO) && (
               <ButtonRow marginTop="10px">
-                <ButtonGradient as={Link} to={routes.add(currency0, currency1)} data-testid="add-to-liquidity">
-                  <Trans>Add</Trans>
-                </ButtonGradient>
-                <ButtonGradient as={Link} to={routes.remove(currency0, currency1)} data-testid="remove-liquidity">
-                  <Trans>Remove Liquidity</Trans>
-                </ButtonGradient>
+                <NewButtonGradient as={Link} to={routes.add(currency0, currency1)} data-testid="add-to-liquidity">
+                  <Text color={'#6666FF'}>
+                    <Trans>Add</Trans>
+                  </Text>
+                </NewButtonGradient>
+                <NewButtonGradient as={Link} to={routes.remove(currency0, currency1)} data-testid="remove-liquidity">
+                  <Text color={'#FF6161'}>
+                    <Trans>Remove</Trans>
+                  </Text>
+                </NewButtonGradient>
               </ButtonRow>
             )}
             {/* {stakedBalance && JSBI.greaterThan(stakedBalance.quotient, BIG_INT_ZERO) && (

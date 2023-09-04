@@ -19,11 +19,11 @@ const StyledRangeInput = styled.input<{ size: number }>`
     -webkit-appearance: none;
     height: ${({ size }) => size}px;
     width: ${({ size }) => size}px;
-    background: ${({ theme }) => theme.bgG3};
+    background: ${({ theme }) => theme.bg26};
     border-radius: 100%;
     border: none;
     transform: translateY(-50%);
-    color: ${({ theme }) => theme.bg1};
+    color: ${({ theme }) => theme.bg26};
 
     &:hover,
     &:focus {
@@ -35,10 +35,10 @@ const StyledRangeInput = styled.input<{ size: number }>`
   &::-moz-range-thumb {
     height: ${({ size }) => size}px;
     width: ${({ size }) => size}px;
-    background: ${({ theme }) => theme.bgG3};
+    background: ${({ theme }) => theme.bg26};
     border-radius: 100%;
     border: none;
-    color: ${({ theme }) => theme.bg1};
+    color: ${({ theme }) => theme.bg26};
 
     &:hover,
     &:focus {
@@ -50,7 +50,7 @@ const StyledRangeInput = styled.input<{ size: number }>`
   &::-ms-thumb {
     height: ${({ size }) => size}px;
     width: ${({ size }) => size}px;
-    background: ${({ theme }) => theme.bgG3};
+    background: ${({ theme }) => theme.bg26};
     border-radius: 100%;
     color: ${({ theme }) => theme.bg1};
 
@@ -62,12 +62,12 @@ const StyledRangeInput = styled.input<{ size: number }>`
   }
 
   &::-webkit-slider-runnable-track {
-    background: ${({ theme }) => theme.bgG3};
+    background: ${({ theme }) => theme.bg26};
     height: 2px;
   }
 
   &::-moz-range-track {
-    background: ${({ theme }) => theme.bgG3};
+    background: ${({ theme }) => theme.bg26};
     height: 2px;
   }
 

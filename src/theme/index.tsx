@@ -57,7 +57,12 @@ export function colors(configColors?: WlColors): Colors {
     text7: wlColors.text?.main || '#9184C4',
     text8: wlColors.text?.main || '#9184C3',
     text9: wlColors.text?.main || '#EDCEFF80',
-    text10: wlColors.text?.main || '#EDCEFF0D', // rgba(237, 206, 255, 0.05)
+    text10: wlColors.text?.main || '#EDCEFF0D',
+    text11: wlColors.text?.main || '#B8B8CC',
+    text12: wlColors.text?.main || '#292933',
+    text13: wlColors.text?.main || '#666680',
+
+    // rgba(237, 206, 255, 0.05)
     // backgrounds / greys
     bg0: wlColors.background?.main || '#0D0415',
     bg1: wlColors.background?.secondary || '#1A123A',
@@ -82,6 +87,10 @@ export function colors(configColors?: WlColors): Colors {
     bg20: wlColors.background?.secondary || '#7B42A9',
     bg21: wlColors.background?.secondary || '#EDCEFF80',
     bg22: wlColors.background?.secondary || '#2C254A80',
+    bg23: '#F7F7FA',
+    bg24: '#E6E6FF',
+    bg25: '#FFFFFF',
+    bg26: '#6666FF',
     bgG1:
       wlColors.background?.main ||
       'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
@@ -145,6 +154,7 @@ export function colors(configColors?: WlColors): Colors {
       wlColors.background?.main ||
       'linear-gradient(90deg, rgba(237, 206, 255, 0) 0%, #edceff 4.92%, #edceff 94.53%, rgba(237, 206, 255, 0) 98.88%);',
     modalBG: 'rgba(0,0,0,0.9)',
+    modalBG1: 'rgba(255,255,255,0.8)',
     advancedBG: wlColors.background?.main || 'rgba(0,0,0,0.1)',
     divider: wlColors.background?.main || 'rgba(43, 43, 43, 0.435)',
 
@@ -237,11 +247,12 @@ export function launchpadTheme() {
       error: '#FF8282',
       info: '#FFC93F',
       warn: '#FFC632',
-
       disabled: '#DCDCF0',
 
       background: '#FFFFFF',
       foreground: '#F7F7FF',
+      newBackground: '#F8F8F8',
+      green: 'rgba(9, 205, 135, 0.5)',
 
       border: {
         default: '#E6E6FF',
@@ -259,6 +270,7 @@ export function launchpadTheme() {
         light: '#FFFFFF',
         hint: '#8d8da3',
         error: '#ff6060',
+        green: '#09CD87',
       },
     },
   }

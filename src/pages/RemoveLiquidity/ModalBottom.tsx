@@ -4,7 +4,7 @@ import { TextRow } from 'components/TextRow/TextRow'
 import { TextRowDoubleCurrency } from 'components/TextRow/TextRowDoubleCurrency'
 import React, { useMemo } from 'react'
 import { formatAmount } from 'utils/formatCurrencyAmount'
-import { ButtonIXSWide } from '../../components/Button'
+import { ButtonIXSWide, PinnedContentButton } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
 import { ApprovalState } from '../../hooks/useApproveCallback'
 import { SignatureData } from '../../hooks/useERC20Permit'
@@ -58,14 +58,14 @@ export const ModalBottom = ({ currencyA, currencyB, approval, signatureData, onR
           </>
         )}
       </AutoColumn>
-      <ButtonIXSWide
+      <PinnedContentButton
         style={{ margin: '30px 0 0 0' }}
         disabled={!(approval === ApprovalState.APPROVED || signatureData !== null)}
         onClick={onRemove}
         data-testid="confirm-remove"
       >
         <Trans>Confirm</Trans>
-      </ButtonIXSWide>
+      </PinnedContentButton>
     </ModalBottomWrapper>
   )
 }

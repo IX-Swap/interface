@@ -8,16 +8,19 @@ export const ToggleableBody = styled.div<{ isVisible?: boolean }>`
 
 export const ModalHeaderWrapper = styled.div`
   padding-bottom: 1rem;
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-bottom: 20px;
   display: flex;
+  padding: 27px 40px 27px 40px;
   align-items: center;
   justify-content: center;
+  background: ${({ theme }) => theme.bg25};
+  border: solid 1px #e6e6ff;
+  border-radius: 10px;
 `
 
 export const ModalBottomWrapper = styled.div`
   padding: 27px 40px 27px 40px;
-  background: ${({ theme }) => theme.bgG7};
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  background: ${({ theme }) => theme.bg23};
+  border-radius: 10px;
+  border: solid 1px #e6e6ff;
 `

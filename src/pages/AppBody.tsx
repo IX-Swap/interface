@@ -33,6 +33,11 @@ export const BodyWrapper = styled.div<{
   ${({ theme, hasAnnouncement }) => theme.mediaWidth.upToMedium`
     margin-top: ${hasAnnouncement ? '9rem' : '1rem'};
   `};
+
+  /* Media Query for Mobile */
+  @media (max-width: 768px) {
+    padding-bottom: 20px;
+  }
 `
 export const BlurredOverlay = styled.div`
   width: 100%;
@@ -52,18 +57,28 @@ export const BlurredOverlay = styled.div`
 export default function AppBody({
   children,
   blurred,
+  page,
   ...rest
 }: {
   children: React.ReactNode
   blurred?: boolean
   transparent?: boolean
   maxWidth?: string
+  page?: string
 }) {
   const [cookies] = useCookies(['annoucementsSeen'])
-
   return (
     <React.Fragment>
-      <BodyWrapper {...rest} hasAnnouncement={!cookies.annoucementsSeen} blurred={blurred} paddingXS="12px">
+      <BodyWrapper
+        style={{
+          backgroundColor: page === 'liquidity' ? '#FFFFFF' : '#1A123A',
+          marginTop: page === 'liquidity' ? '-200px' : '0',
+        }}
+        {...rest}
+        hasAnnouncement={!cookies.annoucementsSeen}
+        blurred={blurred}
+        paddingXS="12px"
+      >
         {blurred && (
           <BlurredOverlay>
             <NotAvailablePage />

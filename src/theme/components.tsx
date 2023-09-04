@@ -334,7 +334,7 @@ export const SemiTransparent = styled.div`
   opacity: 0.5;
 `
 export const StyledPageHeader = styled.div`
-  padding: 0;
+  padding: 10px;
   width: 100%;
   margin-bottom: 22px;
   font-weight: 600;
@@ -367,6 +367,30 @@ export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
   user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
 `
 
+export const ModalNewWrapper = styled.span<{ touchable?: boolean }>`
+  background: ${({ theme }) => theme.bg25};
+  border-radius: 8px;
+  flex-direction: column;
+  font-size: 1rem;
+  display: flex;
+  min-width: 622px;
+  z-index: 5;
+  padding: 32px;
+  backdrop-filter: blur(20px);
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0;
+    min-width: 100%;
+    display: flex;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    display: flex;
+  `};
+  user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
+`
+
 export const ModalLightBlurWrapper = styled.span<{ touchable?: boolean }>`
   border-radius: 45px;
   display: flex;
@@ -388,15 +412,15 @@ export const ModalLightBlurWrapper = styled.span<{ touchable?: boolean }>`
   user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
 `
 
-export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
-  color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
+export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string; route?: boolean }>`
+  color: ${({ error, route, theme }) => (error ? theme.red1 : route ? theme.text12 : theme.text1)};
   width: 0;
   position: relative;
   outline: none;
   border: none;
   flex: 1 1 auto;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
+  background-color: ${({ theme, route }) => (route ? theme.bg23 : theme.bg7)};
   text-align: ${({ align }) => align && align};
   white-space: nowrap;
   overflow: hidden;
@@ -420,7 +444,7 @@ export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: stri
   }
 
   ::placeholder {
-    color: ${({ theme }) => theme.text2};
+    color: ${({ error, theme, route }) => (route ? theme.text1 : error ? theme.red1 : theme.text12)}
     opacity: 0.5;
     font-style: normal;
   }

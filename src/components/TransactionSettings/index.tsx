@@ -44,7 +44,7 @@ const MinuteLabel = styled.span`
   font-size: 16px;
   line-height: 33px;
   opacity: 0.5;
-  color: ${({ theme }) => theme.text2};
+  color: ${({ theme }) => theme.text12};
 `
 const StyledOptionRow = styled(OptionRow)`
   justify-content: flex-start;
@@ -61,6 +61,7 @@ const StyledOption = styled(Option)`
     width: fit-content;
     padding: 10px;
     margin: 0;
+
   `}
 `
 const StyledOptionCustom = styled(OptionCustom)`
@@ -89,7 +90,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
       <Marginer>
         <AutoColumn gap="16px">
           <RowFixed>
-            <TYPE.black fontWeight={400} fontSize={14} color={theme.text2}>
+            <TYPE.black fontWeight={400} fontSize={14} color={theme.text13}>
               <Trans>Slippage tolerance</Trans>
             </TYPE.black>
             <QuestionHelper
@@ -103,6 +104,8 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
           </RowFixed>
           <StyledOptionRow>
             <StyledOption
+              color={theme.text12}
+              style={{ background: '#FFFFFF', color: '#B8B8CC', borderRadius: '8px', width: '50%' }}
               key={'auto'}
               onClick={() => {
                 parseSlippageInput('')
@@ -112,9 +115,16 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               Auto
             </StyledOption>
 
-            <StyledOptionCustom active={userSlippageTolerance !== 'auto'} warning={!!slippageError} tabIndex={-1}>
+            <StyledOptionCustom
+              style={{ background: '#FFFFFF', color: '#B8B8CC', borderRadius: '8px', width: '50%' }}
+              active={userSlippageTolerance !== 'auto'}
+              warning={!!slippageError}
+              tabIndex={-1}
+              color={theme.text12}
+            >
               <RowBetween>
                 <Input
+                  style={{ background: '#FFFFFF', color: '#B8B8CC' }}
                   placeholder={placeholderSlippage.toFixed(2)}
                   value={displayUserSlippageTolerance({ slippageInput, userSlippageTolerance })}
                   onChange={(e: any) => {
@@ -123,7 +133,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                   onBlur={() => resetSlippage()}
                   color={slippageError ? 'red' : ''}
                 />
-                <Text color={theme.text8} fontWeight={500} fontSize={22} lineHeight={'33px'}>
+                <Text color={'#B8B8CC'} fontWeight={500} fontSize={22} lineHeight={'33px'}>
                   %
                 </Text>
               </RowBetween>
@@ -159,7 +169,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
       <Marginer>
         <AutoColumn gap="sm">
           <RowFixed>
-            <TYPE.black fontSize={14} fontWeight={400} color={theme.text2}>
+            <TYPE.black fontSize={14} fontWeight={400} color={theme.text13}>
               <Trans>Transaction deadline</Trans>
             </TYPE.black>
             <QuestionHelper
@@ -167,8 +177,13 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
             />
           </RowFixed>
           <RowFixed>
-            <StyledOptionCustom warning={!!deadlineError} tabIndex={-1}>
+            <StyledOptionCustom
+              style={{ background: '#FFFFFF', color: '#B8B8CC', borderRadius: '8px', width: '50%' }}
+              warning={!!deadlineError}
+              tabIndex={-1}
+            >
               <Input
+                style={{ background: '#FFFFFF' }}
                 placeholder={(DEFAULT_DEADLINE_FROM_NOW / 60).toString()}
                 value={displayDeadline({ deadlineInput, deadline })}
                 onChange={(e: any) => parseCustomDeadline(e.target.value)}

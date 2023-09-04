@@ -249,6 +249,47 @@ export const ButtonGradient = styled(Base)`
   cursor: pointer;
 `
 
+export const NewButtonGradient = styled(Base)`
+  background: ${({ theme }) => theme.config.primary?.main || theme.bg25};
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  padding: 14px 0;
+  border: 1px solid #e6e6ff;
+  cursor: pointer;
+`
+
+export const PinnedContentButton = styled(Base)`
+  color: ${(props) => props.theme.launchpad.colors.text.light};
+  background-color: ${(props) => props.theme.launchpad.colors.primary};
+  font-family: ${(props) => props.theme.launchpad.font};
+  border-radius: 6px;
+  text-align: center;
+  padding: 12px, 16px, 12px, 16px;
+  border: unset;
+  cursor: pointer;
+  width: 100%;
+  &:disabled {
+    background-color: #e2e2f1;
+    background: #e2e2f1;
+  }
+`
+
+export const NewApproveButton = styled(Base)`
+  color: ${(props) => props.theme.launchpad.colors.text.green};
+  background-color: ${(props) => props.theme.launchpad.colors.background};
+  font-family: ${(props) => props.theme.launchpad.font};
+  border-radius: 6px;
+  text-align: center;
+  padding: 12px, 16px, 12px, 16px;
+  border: unset;
+  cursor: pointer;
+  width: 100%;
+  border: solid 1px #09cd8780;
+`
+
 export const ButtonOutlined = styled(Base)`
   border: 1px solid ${({ theme }) => theme.bg2};
   background-color: transparent;

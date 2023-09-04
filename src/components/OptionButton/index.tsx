@@ -20,6 +20,33 @@ export const FancyButton = styled.button`
   }
 `
 
+export const NewOption = styled(FancyButton)<{ active: boolean }>`
+  border-radius: 8px;
+  margin-right: 8px;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 40px;
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid #e6e6ff;
+  padding: 10px 22px;
+  :hover,
+  :focus {
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+  :hover {
+    background: ${({ theme }) => theme.bg26};
+    color: ${({ active, theme }) => (active ? theme.text1 : theme.text1)};
+  }
+  background: ${({ active, theme }) => (active ? theme.bg26 : theme.bg25)};
+  color: ${({ active, theme }) => (active ? theme.text1 : theme.launchpad.colors.primary)};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100%  
+  `}
+`
+
 export const Option = styled(FancyButton)<{ active: boolean }>`
   margin-right: 8px;
   font-weight: 600;
@@ -41,7 +68,7 @@ export const Option = styled(FancyButton)<{ active: boolean }>`
   background: ${({ active, theme }) => (active ? theme.bgG6 : theme.bg12)};
   color: ${({ theme }) => theme.text1};
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    width: 100%  
+    width: 100%
   `}
 `
 export const OptionRow = styled(RowCenter)`

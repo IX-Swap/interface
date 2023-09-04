@@ -19,6 +19,9 @@ export interface Colors {
   text8: Color
   text9: Color
   text10: Color
+  text11: Color
+  text12: Color
+  text13: Color
 
   // backgrounds / greys
   bg0: Color
@@ -44,6 +47,10 @@ export interface Colors {
   bg20: Color
   bg21: Color
   bg22: Color
+  bg23: Color
+  bg24: Color
+  bg25: Color
+  bg26: Color
   bgG1: Gradient
   bgG2: Gradient
   bgG3: Gradient
@@ -68,6 +75,7 @@ export interface Colors {
   borderG2: Gradient
   borderG3: Gradient
   modalBG: Color
+  modalBG1: Color
   advancedBG: Color
   divider: Color
 
@@ -130,9 +138,9 @@ export interface LaunchpadTheme {
     error: string
     info: string
     warn: string
-
     disabled: string
-
+    green: string
+    newBackground: string
     background: string
     foreground: string
 
@@ -152,6 +160,7 @@ export interface LaunchpadTheme {
       light: string
       hint: string
       error: string
+      green: string
     }
   }
 }
