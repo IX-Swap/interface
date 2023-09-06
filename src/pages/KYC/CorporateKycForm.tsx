@@ -103,7 +103,7 @@ export default function CorporateKycForm() {
       }
     }
 
-    if (kyc?.status === KYCStatuses.CHANGES_REQUESTED) {
+    if (kyc?.status === KYCStatuses.CHANGES_REQUESTED || kyc?.status === KYCStatuses.DRAFT) {
       getProgress()
       setUpdateKycId(kyc.id)
     } else {
@@ -292,7 +292,7 @@ export default function CorporateKycForm() {
         canLeavePage.current = false
       }
     },
-    []
+    [updateKycId]
   )
 
   const saveProgress = useCallback(

@@ -119,34 +119,36 @@ export const createIndividualKYC = async (newKYC: any, draft = false) => {
 export const createCorporateKYC = async (newKYC: any, draft = false) => {
   const formData = new FormData()
   for (const key in newKYC) {
-    if (corporateKYCFiles.includes(key)) {
-      newKYC[key].forEach((item: any) => {
-        formData.append(`${key}`, item)
-      })
-    } else if (['removedDocuments', 'removedBeneficialOwners'].some((x) => x === key)) {
-      formData.append(key, JSON.stringify(newKYC[key]))
-    } else if (typeof newKYC[key] === 'object' && newKYC[key].length) {
-      const entries = (newKYC[key] as Array<any>)
-        .map((x: any, idx: number) =>
-          Object.entries(x).map(([objKey, value]) => ({ key: `${key}[${idx}][${objKey}]`, value: value as string }))
-        )
+    if (newKYC[key]) {
+      if (corporateKYCFiles.includes(key)) {
+        newKYC[key].forEach((item: any) => {
+          formData.append(`${key}`, item)
+        })
+      } else if (['removedDocuments', 'removedBeneficialOwners'].some((x) => x === key)) {
+        formData.append(key, JSON.stringify(newKYC[key]))
+      } else if (typeof newKYC[key] === 'object' && newKYC[key].length) {
+        const entries = (newKYC[key] as Array<any>)
+          .map((x: any, idx: number) =>
+            Object.entries(x).map(([objKey, value]) => ({ key: `${key}[${idx}][${objKey}]`, value: value as string }))
+          )
 
-        .reduce((acc, e) => [...acc, ...e], [])
+          .reduce((acc, e) => [...acc, ...e], [])
 
-      for (const entry of entries) {
-        formData.append(entry.key, entry.value as string)
+        for (const entry of entries) {
+          formData.append(entry.key, entry.value as string)
+        }
+      } else if (typeof newKYC[key] === 'object') {
+        const entries = Object.entries(newKYC[key]).map(([objKey, value]) => ({
+          key: `${key}[${objKey}]`,
+          value: value as string,
+        }))
+
+        for (const entry of entries) {
+          formData.append(entry.key, entry.value as string)
+        }
+      } else {
+        formData.append(key, newKYC[key])
       }
-    } else if (typeof newKYC[key] === 'object') {
-      const entries = Object.entries(newKYC[key]).map(([objKey, value]) => ({
-        key: `${key}[${objKey}]`,
-        value: value as string,
-      }))
-
-      for (const entry of entries) {
-        formData.append(entry.key, entry.value as string)
-      }
-    } else {
-      formData.append(key, newKYC[key])
     }
   }
 
@@ -277,50 +279,54 @@ export const updateIndividualKYC = async (kycId: number, newKYC: any, draft = fa
 export const updateCorporateKYC = async (kycId: number, newKYC: any, draft = false) => {
   const formData = new FormData()
   for (const key in newKYC) {
-    if (corporateKYCFiles.includes(key)) {
-      newKYC[key].forEach((item: any) => {
-        if (item.uuid || item.asset?.uuid) {
-          console.log('not binary')
-        } else {
-          formData.append(`${key}`, item)
-        }
-      })
-    } else {
-      if (['removedDocuments', 'removedBeneficialOwners'].some((x) => x === key)) {
-        formData.append(key, JSON.stringify(newKYC[key]))
-      } else if (typeof newKYC[key] === 'object' && newKYC[key].length) {
-        const entries = (newKYC[key] as Array<any>)
-          .map((x: any, idx: number) =>
-            Object.entries(x).map(([objKey, value]) => ({ key: `${key}[${idx}][${objKey}]`, value: value as string }))
-          )
-
-          .reduce((acc, e) => [...acc, ...e], [])
-
-        for (const entry of entries) {
-          if (entry.value) {
-            formData.append(entry.key, entry.value as string)
+    if (newKYC[key]) {
+      if (corporateKYCFiles.includes(key)) {
+        newKYC[key].forEach((item: any) => {
+          if (item) {
+            if (item.uuid || item.asset?.uuid) {
+              console.log('not binary')
+            } else {
+              formData.append(`${key}`, item)
+            }
           }
-        }
-      } else if (typeof newKYC[key] === 'object') {
-        const entries = Object.entries(newKYC[key]).map(([objKey, value]) => ({
-          key: `${key}[${objKey}]`,
-          value: value as string,
-        }))
-
-        for (const entry of entries) {
-          if (entry.value) {
-            formData.append(entry.key, entry.value as string)
-          }
-        }
+        })
       } else {
-        formData.append(key, newKYC[key])
+        if (['removedDocuments', 'removedBeneficialOwners'].some((x) => x === key)) {
+          formData.append(key, JSON.stringify(newKYC[key]))
+        } else if (typeof newKYC[key] === 'object' && newKYC[key].length) {
+          const entries = (newKYC[key] as Array<any>)
+            .map((x: any, idx: number) =>
+              Object.entries(x).map(([objKey, value]) => ({ key: `${key}[${idx}][${objKey}]`, value: value as string }))
+            )
+
+            .reduce((acc, e) => [...acc, ...e], [])
+
+          for (const entry of entries) {
+            if (entry.value) {
+              formData.append(entry.key, entry.value as string)
+            }
+          }
+        } else if (typeof newKYC[key] === 'object') {
+          const entries = Object.entries(newKYC[key]).map(([objKey, value]) => ({
+            key: `${key}[${objKey}]`,
+            value: value as string,
+          }))
+
+          for (const entry of entries) {
+            if (entry.value) {
+              formData.append(entry.key, entry.value as string)
+            }
+          }
+        } else {
+          formData.append(key, newKYC[key])
+        }
       }
     }
   }
 
   try {
     const result = draft
-      ? await apiService.post(kyc.updateCorporate(kycId, draft), formData)
+      ? await apiService.post(kyc.createCorporateDraft, formData)
       : await apiService.put(kyc.updateCorporate(kycId, draft), formData)
     return result.data
   } catch (e) {
