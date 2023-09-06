@@ -60,13 +60,16 @@ export const useStyles = makeStyles(theme => ({
     width: '100%',
     display: 'flex',
     gap: 80,
+    // border: '1px solid black',
     justifyContent: 'between',
     [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
+    //   flexDirection: 'column',
       gap: 20
     }
   },
   dataBox: {
+    // border: '1px solid black',
+    width: '50%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',

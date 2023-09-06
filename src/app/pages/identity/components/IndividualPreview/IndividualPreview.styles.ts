@@ -15,6 +15,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   tabs: {
+    // border: '1px solid black',
     display: 'flex',
     alignItems: 'end',
     zIndex: 5,
