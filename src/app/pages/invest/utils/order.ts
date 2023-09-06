@@ -11,8 +11,8 @@ export const transformPlaceOrderFormValuesToArgs = (
     pair: pairId,
     side: side,
     type: 'LIMIT',
-    price: values.price,
-    amount: values.amount
+    price: values.price.toString(),
+    amount: values.amount.toString()
   }
 }
 
