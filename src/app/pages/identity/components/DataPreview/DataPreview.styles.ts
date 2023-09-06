@@ -38,7 +38,8 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     zIndex: 1,
     [theme.breakpoints.down('md')]: {
-      display: 'none'
+      height: theme.spacing(68)
+      //   display: 'none'
     }
   },
   preview: {
@@ -60,23 +61,22 @@ export const useStyles = makeStyles(theme => ({
     width: '100%',
     display: 'flex',
     gap: 80,
-    // border: '1px solid black',
     justifyContent: 'between',
     [theme.breakpoints.down('md')]: {
-    //   flexDirection: 'column',
+      //   flexDirection: 'column',
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
       gap: 20
     }
   },
   dataBox: {
-    // border: '1px solid black',
-    width: '50%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
     textAlign: 'left',
     gap: 10,
     [theme.breakpoints.down('md')]: {
-      alignItems: 'center'
+      //   alignItems: 'center'
     },
     [theme.breakpoints.up('lg')]: {
       whiteSpace: 'nowrap'

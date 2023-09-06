@@ -17,11 +17,11 @@ export const useStyles = makeStyles(theme => ({
   //     }
   //   },
   nameIdentity: {
-    zIndex: 5,
+    zIndex: 5
     // paddingTop: theme.spacing(0.1),
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
-    }
+    // [theme.breakpoints.down('md')]: {
+    //   display: 'none'
+    // }
   },
   grid: {
     spacing: theme.spacing(4.2),
