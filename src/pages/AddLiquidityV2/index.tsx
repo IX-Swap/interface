@@ -86,7 +86,7 @@ export default function AddLiquidity({
   }, [currencyA, currencyB])
 
   const oneCurrencyIsWETH = Boolean(
-    chainId && ((currencyA && currencyA.equals(WETH9[chainId])) || (currencyB && currencyB.equals(WETH9[chainId])))
+    chainId && WETH9[chainId] && ((currencyA && currencyA.equals(WETH9[chainId])) || (currencyB && currencyB.equals(WETH9[chainId])))
   )
 
   const toggleWalletModal = useWalletModalToggle() // toggle wallet when disconnected

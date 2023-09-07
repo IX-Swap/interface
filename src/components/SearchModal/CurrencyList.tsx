@@ -37,7 +37,7 @@ import { formatAmount } from 'utils/formatCurrencyAmount'
 type CurrencySec = Currency & { isSecToken?: boolean }
 
 function currencyKey(currency: Currency): string {
-  return currency.isToken ? currency.address : 'ETHER'
+  return currency?.isToken ? currency.address : 'ETHER'
 }
 const StyledBalanceText = styled(Text)`
   ${({ theme: { config } }) =>
@@ -136,7 +136,7 @@ function CurrencyRow({
   const { account } = useActiveWeb3React()
   const key = currencyKey(currency)
   const selectedTokenList = useCombinedActiveList()
-  const isOnSelectedList = isTokenOnList(selectedTokenList, currency.isToken ? currency : undefined)
+  const isOnSelectedList = isTokenOnList(selectedTokenList, currency?.isToken ? currency : undefined)
   const customAdded = useIsUserAddedToken(currency)
   const balance = useCurrencyBalance(account ?? undefined, currency)
   // only show add or remove buttons if not on selected list
