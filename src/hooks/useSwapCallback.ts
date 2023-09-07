@@ -184,7 +184,7 @@ function useSwapCallArguments(
     }
 
     return swapMethods.map(({ methodName, args, value }) => {
-      if (argentWalletContract && trade.inputAmount.currency.isToken) {
+      if (argentWalletContract && trade.inputAmount.currency?.isToken) {
         return {
           address: argentWalletContract.address,
           calldata: argentWalletContract.interface.encodeFunctionData('wc_multiCall', [
