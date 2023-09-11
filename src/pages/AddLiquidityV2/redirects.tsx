@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import AddLiquidityV2 from './index'
 import styled from 'styled-components'
-import { Header } from 'pages/Launchpad/Header'
+// import { Header } from 'pages/Launchpad/Header'
 import { useSetHideHeader } from 'state/application/hooks'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import Portal from '@reach/portal'
@@ -10,6 +10,7 @@ import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useTokens } from 'pages/Pool/useTokens'
+import Header from 'components/Header'
 
 export const AddLiduidityContainer = styled.div<{ background?: string }>`
   display: flex;
@@ -89,9 +90,9 @@ export const RedirectDuplicateTokenIdsV2: React.FC<
   return (
     <>
       <Header />
-      <AddLiduidityContainer>
-        <AddLiquidityV2 {...props} />
-      </AddLiduidityContainer>
+      {/* <AddLiduidityContainer> */}
+      <AddLiquidityV2 {...props} />
+      {/* </AddLiduidityContainer> */}
     </>
   )
 }

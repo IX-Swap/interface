@@ -3,10 +3,11 @@ import styled from 'styled-components'
 import { gradientBorder, MEDIA_WIDTHS } from 'theme'
 
 export const Container = styled.div`
-  max-width: 592px;
+  max-width: 779px;
+  height: 606px;
   width: 100%;
-  border-radius: 30px;
-  background: ${({ theme }) => theme.bgG19};
+  border-radius: 6px;
+  background: ${({ theme }) => theme.bg25};
   padding: 52px 58px;
   text-align: center;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
@@ -115,34 +116,46 @@ export const KovanRow = styled.div`
 `
 
 export const ConnectWalletContainer = styled(Container)<{ hasAnnouncement?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: ${({ hasAnnouncement }) => (hasAnnouncement ? 3 : 1)}rem;
+
   a {
     color: ${({ theme }) => theme.text1};
   }
+
   > div:first-child {
-    font-weight: 600;
-    font-size: 24px;
+    font-weight: 400;
+    font-size: 16px;
     line-height: 160%;
     text-align: center;
-    color: ${({ theme }) => theme.text1};
-    margin-bottom: 4px;
+    color: ${({ theme }) => theme.text2};
+    margin-bottom: 14px;
   }
+
   > div:nth-child(2) {
     text-align: center;
     color: ${({ theme }) => theme.text1};
     margin-bottom: 32px;
+    font-size: 32px;
+    font-weight: 800;
   }
+
   > button {
     max-width: 312px;
     width: 100%;
     margin: 0 auto;
     margin-bottom: 32px;
   }
+
   > span:last-child {
-    font-weight: 500;
-    font-size: 12px;
+    font-weight: 400;
+    font-size: 13px;
     text-align: center;
-    color: ${({ theme }) => theme.text1};
+    color: ${({ theme }) => theme.text2};
+    line-height: 20.8px;
   }
 
   ${({ theme, hasAnnouncement }) => theme.mediaWidth.upToMedium`

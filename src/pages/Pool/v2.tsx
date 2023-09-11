@@ -27,12 +27,13 @@ import { NoPairs } from './NoPairs'
 import { LiquidityInnerTitle, MarginerTitle } from './styleds'
 import { useTokens } from './useTokens'
 import { AddLiduidityContainer } from 'pages/AddLiquidityV2/redirects'
-import { Header } from 'pages/Launchpad/Header'
+// import { Header } from 'pages/Launchpad/Header'
 import { useSetHideHeader } from 'state/application/hooks'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import Header from 'components/Header'
 const LinkTitle = styled(TYPE.body1)`
   color: ${({ theme }) => theme.text1};
   font-weight: 600;
@@ -114,35 +115,35 @@ export default function Pool() {
   return (
     <>
       <Header />
-      <AddLiduidityContainer>
-        {!isBlurred && <DesktopOnly>{/* <TopContent /> */}</DesktopOnly>}
-        <AppBody page="liquidity" blurred={isBlurred}>
-          {!isBlurred && <MobileAndTablet style={{ marginBottom: '1rem' }}>{/* <TopContent /> */}</MobileAndTablet>}
-          <SwapPoolTabs active={'pool'} />
-          <AutoColumn gap="1.5rem" justify="center">
-            <AutoColumn gap="md" style={{ width: '100%' }}>
-              <MarginerTitle>
-                <AutoColumn gap="20px" style={{ width: '100%' }}>
-                  <LiquidityTitle />
-                  <AddLiquidityButton />
-                </AutoColumn>
-              </MarginerTitle>
-              {!account && <ConnectWallet message={<Trans>Connect a wallet to view your Liquidity.</Trans>} />}
-              {account && (dataIsLoading || showEmptyLiquidity) && (
-                <NoPairs account={account} v2IsLoading={v2IsLoading} showEmptyLiquidity={showEmptyLiquidity} />
-              )}
-              {dataIsLoaded && pairsPresent && (
-                <>
-                  <LiquidityInnerTitle>
-                    <Trans>My Liquidity</Trans>
-                  </LiquidityInnerTitle>
-                  <TopStraightBackgroundWrapper>
-                    {!pending ? (
-                      <>
-                        {v2PairsWithoutStakedAmount.map((v2Pair) => (
-                          <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
-                        ))}
-                        {/* {stakingPairs.map(
+      {/* <AddLiduidityContainer> */}
+      {!isBlurred && <DesktopOnly>{/* <TopContent /> */}</DesktopOnly>}
+      <AppBody page="liquidity" blurred={isBlurred}>
+        {!isBlurred && <MobileAndTablet style={{ marginBottom: '1rem' }}>{/* <TopContent /> */}</MobileAndTablet>}
+        <SwapPoolTabs active={'pool'} />
+        <AutoColumn gap="1.5rem" justify="center">
+          <AutoColumn gap="md" style={{ width: '100%' }}>
+            <MarginerTitle>
+              <AutoColumn gap="20px" style={{ width: '100%' }}>
+                <LiquidityTitle />
+                <AddLiquidityButton />
+              </AutoColumn>
+            </MarginerTitle>
+            {!account && <ConnectWallet message={<Trans>Connect a wallet to view your Liquidity.</Trans>} />}
+            {account && (dataIsLoading || showEmptyLiquidity) && (
+              <NoPairs account={account} v2IsLoading={v2IsLoading} showEmptyLiquidity={showEmptyLiquidity} />
+            )}
+            {dataIsLoaded && pairsPresent && (
+              <>
+                <LiquidityInnerTitle>
+                  <Trans>My Liquidity</Trans>
+                </LiquidityInnerTitle>
+                <TopStraightBackgroundWrapper>
+                  {!pending ? (
+                    <>
+                      {v2PairsWithoutStakedAmount.map((v2Pair) => (
+                        <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
+                      ))}
+                      {/* {stakingPairs.map(
                       (stakingPair, i) =>
                         stakingPair[1] && ( // skip pairs that arent loaded
                           <FullPositionCard
@@ -152,20 +153,20 @@ export default function Pool() {
                           />
                         )
                     )} */}
-                      </>
-                    ) : (
-                      <RowCenter style={{ margin: '68px 0px' }}>
-                        <LoaderThin size={128} />
-                      </RowCenter>
-                    )}
-                  </TopStraightBackgroundWrapper>
-                  <ImportPool />
-                </>
-              )}
-            </AutoColumn>
+                    </>
+                  ) : (
+                    <RowCenter style={{ margin: '68px 0px' }}>
+                      <LoaderThin size={128} />
+                    </RowCenter>
+                  )}
+                </TopStraightBackgroundWrapper>
+                <ImportPool />
+              </>
+            )}
           </AutoColumn>
-        </AppBody>
-      </AddLiduidityContainer>
+        </AutoColumn>
+      </AppBody>
+      {/* </AddLiduidityContainer> */}
     </>
   )
 }

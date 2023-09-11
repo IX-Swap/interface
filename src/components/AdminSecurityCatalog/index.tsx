@@ -6,7 +6,7 @@ import { isMobile } from 'react-device-detect'
 
 import { ExternalLink, TYPE } from 'theme'
 import { Container } from 'components/AdminAccreditationTable'
-import { ButtonIXSGradient, ButtonText } from 'components/Button'
+import { ButtonIXSGradient, ButtonText, PinnedContentButton } from 'components/Button'
 import { Search } from 'components/Search'
 import { ContainerRow, Input, InputContainer, InputPanel } from 'components/Input'
 import { useAddPopup, useTokenPopupToggle, useDeleteTokenPopupToggle } from 'state/application/hooks'
@@ -317,9 +317,9 @@ export const AdminSecurityCatalog: FC = () => {
               </Box>
             </Box>
 
-            <ButtonIXSGradient onClick={handleSaveClick} style={{ width: 226 }}>
+            <PinnedContentButton onClick={handleSaveClick} style={{ width: 226 }}>
               <Trans>Save</Trans>
-            </ButtonIXSGradient>
+            </PinnedContentButton>
           </>
         )}
 

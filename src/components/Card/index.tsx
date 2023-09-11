@@ -73,7 +73,7 @@ export const TipCard = styled(Card)`
 `
 
 export const EmptyStateInfoCard = styled(Card)`
-  border-radius: 45px;
+  border-radius: 6px;
   padding: 0 17px;
   justify-content: center;
   align-items: center;
@@ -81,7 +81,7 @@ export const EmptyStateInfoCard = styled(Card)`
   gap: 10px;
   min-height: 177px;
   flex-direction: column;
-  background: ${({ theme }) => theme.bgG13};
+  background: #f7f7fa;
   color: ${({ theme }) => theme.text2};
   @media (max-width: 500px) {
     min-height: fit-content;

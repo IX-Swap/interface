@@ -239,14 +239,15 @@ export const ButtonIXSWide = styled(ButtonIXSGradient)`
   width: 100%;
 `
 export const ButtonGradient = styled(Base)`
-  background: ${({ theme }) => theme.config.primary?.main || theme.bgG1};
-  border-radius: 40px;
+  background: ${({ theme }) => theme.config.primary?.main || theme.bg26};
+  border-radius: 6px;
   font-weight: 600;
   font-size: 14px;
   line-height: 21px;
   text-align: center;
   padding: 7px 0;
   cursor: pointer;
+  color: white;
 `
 
 export const NewButtonGradient = styled(Base)`
@@ -291,21 +292,24 @@ export const NewApproveButton = styled(Base)`
 `
 
 export const ButtonOutlined = styled(Base)`
-  border: 1px solid ${({ theme }) => theme.bg2};
+  border: 1px solid #e6e6ff;
   background-color: transparent;
-  color: ${({ theme }) => theme.text1};
+  color: ${({ theme }) => theme.bg26};
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
 
   &:focus {
     box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
   }
-  &:hover {
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
-  }
+  // &:hover {
+  //   box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
+  // }
   &:active {
     box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
   }
   &:disabled {
-    opacity: 50%;
+    // opacity: 50%;
     cursor: auto;
   }
 `

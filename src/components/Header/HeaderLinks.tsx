@@ -230,7 +230,7 @@ const HeaderLinksWrap = styled(Row)<{ links: number }>`
   width: fit-content;
   flex-wrap: wrap;
   overflow: visible;
-  grid-gap: 32px;
+  grid-gap: 28px;
   display: flex;
   align-items: center;
   ${({ theme }) => theme.mediaWidth.upToMedium`
@@ -253,30 +253,31 @@ export const disabledStyle = css`
 const navLinkStyles = css`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: left;
+  font-size: 13px;
   border-radius: 3rem;
   outline: none;
   cursor: pointer;
   text-decoration: none !important;
-  color: ${({ theme }) => theme.text2};
+  color: ${({ theme }) => theme.text12};
   width: fit-content;
   word-break: break-word;
-  opacity: 0.4;
+  // opacity: 0.4;
   border-radius: 45px;
-  font-weight: 600;
+  font-weight: 500;
   &.${activeClassName} {
     opacity: 1;
-    color: ${({ theme }) => theme.config.text?.main || theme.text1};
+    color: ${({ theme }) => theme.config.text?.main || theme.text11};
   }
 
   :hover,
   :focus {
-    color: ${({ theme }) => darken(0.05, theme.text2)};
+    color: ${({ theme }) => darken(0.05, theme.text11)};
     &.${activeClassName} {
       color: ${({ theme }) => theme.config.text?.main || theme.white};
     }
   }
   @media (max-width: 1500px) {
-    font-size: 15px;
+    font-size: 10px;
   }
   @media (max-width: 1300px) {
     font-size: 16px;

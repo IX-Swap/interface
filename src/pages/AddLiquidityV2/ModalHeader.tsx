@@ -17,9 +17,13 @@ const TextContainer = styled.div`
   font-weight: 600;
   line-height: 60px;
   margin-right: 10px;
-  @media (max-width: 768px) {
+  // @media (max-width: 768px) {
+  //   font-size: 20px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     font-size: 20px;
-  }
+  `};
 `
 
 const DescriptionText = styled(Text)`
@@ -27,9 +31,13 @@ const DescriptionText = styled(Text)`
   font-size: 18px;
   font-weight: 400;
   line-height: 30px;
-  @media (max-width: 768px) {
+  // @media (max-width: 768px) {
+  //   font-size: 14px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     font-size: 14px;
-  }
+  `};
 `
 
 const SemiTransparentText = styled(Text)`
@@ -40,10 +48,15 @@ const SemiTransparentText = styled(Text)`
   font-weight: 300;
   line-height: 18px;
 
-  @media (max-width: 768px) {
+  // @media (max-width: 768px) {
+  //   width: 100%;
+  //   font-size: 14px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     width: 100%;
     font-size: 14px;
-  }
+  `};
 `
 
 interface Props {

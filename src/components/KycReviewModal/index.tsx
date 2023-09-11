@@ -36,8 +36,13 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
     const fetchCynopsisRisks = async () => {
       handleLoadingCynopsis(true)
       const result = await getCynopsisRisks(data?.user.ethAddress)
-      setRiskJSON(result?.riskReport?.riskScore ? result.riskReport : 
-        result?.riskReport?.riskJson?.riskScore ? result.riskReport.riskJson : null)
+      setRiskJSON(
+        result?.riskReport?.riskScore
+          ? result.riskReport
+          : result?.riskReport?.riskJson?.riskScore
+          ? result.riskReport.riskJson
+          : null
+      )
       handleRiskReportId(result?.riskReport?.id || 0)
       handleLoadingCynopsis(false)
     }
@@ -162,7 +167,7 @@ const ActionsContainer = styled.div<{ buttons: number }>`
   > button:nth-child(2) {
     color: ${({ theme: { error } }) => error};
     background-color: transparent;
-    border: 1px solid #ed0376;
+    border: 1px solid #ff6161;
   }
   > button:nth-child(3) {
     background-color: transparent;

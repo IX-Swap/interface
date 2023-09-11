@@ -251,6 +251,7 @@ export function ExternalLink({
 }
 
 export const DiscreteExternalLink = styled(ExternalLink)`
+  margin-bottom: 15px;
   :hover {
     text-decoration: none;
   }
@@ -336,6 +337,7 @@ export const SemiTransparent = styled.div`
 export const StyledPageHeader = styled.div`
   padding: 10px;
   width: 100%;
+  margin-top: 22px;
   margin-bottom: 22px;
   font-weight: 600;
   font-size: 22px;
@@ -345,8 +347,8 @@ export const StyledPageHeader = styled.div`
   }
 `
 export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
-  background: ${({ theme }) => theme.bgG5};
-  border-radius: 45px;
+  // background: ${({ theme }) => theme.bgG5};
+  // border-radius: 45px;
   display: flex;
   flex-direction: column;
   font-size: 1rem;
@@ -581,11 +583,11 @@ export const ModalContentWrapper = styled(Column)`
   width: 100%;
   flex: 1 1;
   position: relative;
-  background: ${({ theme }) => theme.config.background?.secondary || theme.bgG4};
-  border-radius: 20px;
+  background: ${({ theme }) => theme.bg0};
+  border-radius: 8px;
 `
 export const ModalPadding = styled.div`
-  padding: 37px 40px 19px 40px;
+  // padding: 37px 40px 19px 40px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
    padding: 22px 8px 18px 8px;
   `};

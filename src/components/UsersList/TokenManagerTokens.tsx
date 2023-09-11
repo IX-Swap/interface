@@ -24,7 +24,7 @@ const getStatusColor = (value: string) => {
     case 'scheduled':
       return '#F2F99D'
     case 'delayed':
-      return '#ED0376'
+      return '#FF6161'
 
     default:
       return '#FFFFFF'

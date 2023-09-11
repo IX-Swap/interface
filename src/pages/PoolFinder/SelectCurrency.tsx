@@ -17,9 +17,7 @@ export const SelectCurrency = ({ currency0, currency1, chooseToken }: Props) => 
   return (
     <>
       <CurrencyRow currency={currency0} chooseToken={() => chooseToken(Fields.TOKEN0)} />
-      <ColumnCenter>
-        <Plus size="16" color={theme.text2} />
-      </ColumnCenter>
+      <ColumnCenter>{/* <Plus size="16" color={theme.text2} /> */}</ColumnCenter>
       <CurrencyRow currency={currency1} chooseToken={() => chooseToken(Fields.TOKEN1)} />
     </>
   )

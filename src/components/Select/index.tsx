@@ -29,7 +29,7 @@ const colourStyles = {
   placeholder: (styles: Record<string, any>) => {
     return {
       ...styles,
-      color: '#EDCEFF80',
+      color: '#B8B8CC',
     }
   },
   option: (styles: Record<string, any>, { isSelected, isMulti }: { isSelected: boolean; isMulti: boolean }) => {
@@ -215,24 +215,26 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
     box-shadow: none;
     cursor: pointer;
     height: 60px;
-    border-radius: ${({ borderRadius }) => borderRadius};
+    border-radius: 8px;
+    border: 1px solid #e6e6ff !important;
+    // border-radius: ${({ borderRadius }) => borderRadius};
     padding: 0px 16px;
-    background: ${({ theme }) => theme.bg19};
+    background: ${({ theme }) => theme.bg0};
     border: none;
     ${({ error }) =>
       error &&
       css`
         border: 1px solid;
-        border-color: #ed0376 !important;
+        border-color: #ff6161 !important;
       `}
   }
   *[class*='indicatorSeparator'] {
     display: none;
   }
   *[class*='menu'] {
-    border-radius: 32px;
+    border-radius: 6px;
     padding: 24px 8px 24px 16px;
-    background-color: ${({ theme }) => theme.bg7};
+    background-color: ${({ theme }) => theme.bg0};
     margin-top: 4px;
     max-height: 236px;
     z-index: 2;
@@ -244,9 +246,9 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
       padding: 2px 8px;
       font-size: 16px;
       cursor: pointer;
-      border-radius: 12px;
+      border-radius: 6px;
       :hover {
-        background: ${({ theme }) => theme.bg19};
+        background: ${({ theme }) => theme.bg1};
       }
       :active {
         background-color: inherit;

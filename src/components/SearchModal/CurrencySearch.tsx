@@ -22,10 +22,10 @@ const Footer = styled.div`
   width: 100%;
   border-radius: 20px;
   padding: 20px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  background: ${({ theme }) => theme.bgG7};
-  border-top: 1px solid ${({ theme }) => theme.bg2};
+  // border-top-left-radius: 0;
+  // border-top-right-radius: 0;
+  // background: ${({ theme }) => theme.bgG7};
+  // border-top: 1px solid ${({ theme }) => theme.bg2};
 `
 const Title = styled.span`
   font-weight: 600;
@@ -108,10 +108,10 @@ export function CurrencySearch({
   )
 
   return (
-    <ModalContentWrapper style={{ borderRadius: '20px' }}>
+    <ModalContentWrapper style={{ borderRadius: '6px' }}>
       <PaddedColumn40 gap="16px">
         <RowBetween>
-          <Title>{title ?? <Trans>Select a token to swap</Trans>}</Title>
+          <Title>{title ?? <Trans>Choose Token to create a Pool</Trans>}</Title>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
         <Row>
@@ -169,9 +169,9 @@ export function CurrencySearch({
           >
             <RowFixed>
               <Box marginRight={'6px'} display="flex" justifyContent="center">
-                <Edit />
+                {/* <Edit /> */}
               </Box>
-              <Title>
+              <Title style={{ fontSize: '13px', color: '#6666FF' }}>
                 <Trans>Manage Token List</Trans>
               </Title>
             </RowFixed>

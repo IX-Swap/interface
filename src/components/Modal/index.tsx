@@ -37,7 +37,7 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, maxWidth, mobile, na
         min-height: ${minHeight}vh;
       `}
     display: flex;
-    border-radius: 20px;
+    border-radius: 8px;
     ${({ theme }) => theme.mediaWidth.upToMedium`
       width: 65vw;
       margin: 0;
@@ -48,9 +48,9 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, maxWidth, mobile, na
         mobile &&
         name !== 'connectWallet' &&
         css`
-          border-radius: 20px;
-          margin-left: 25px;
-          margin-top: 200px;
+          border-radius: 8px;
+          // margin-left: 25px;
+          // margin-top: 200px;
         `
       }
     `}
@@ -61,7 +61,7 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, maxWidth, mobile, na
       mobile &&
       name === 'connectWallet' &&
       css`
-        border-radius: 20px;
+        border-radius: 8px;
         margin-left: 25px;
         margin-top: 80px;
       `

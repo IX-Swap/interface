@@ -13,6 +13,7 @@ import { InformationFormValues, SocialMediaLink, SocialMediaType } from '../type
 import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { Flex } from 'rebass'
 import styled from 'styled-components'
+import { IssuanceTooltip } from '../../shared/fields/IssuanceTooltip'
 
 interface Props {
   values: InformationFormValues
@@ -115,15 +116,22 @@ export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, 
         error={(touched.website && errors.website) as string}
       />
 
-      <FormField
-        label="Whitepaper"
-        placeholder="URL"
-        field="whitepaper"
-        setter={setter}
-        touch={touch}
-        value={values.whitepaper}
-        error={(touched.whitepaper && errors.whitepaper) as string}
-      />
+      <Flex alignContent={'flex-end'}>
+        <FormField
+          label="Dataroom"
+          placeholder="URL"
+          field="whitepaper"
+          setter={setter}
+          touch={touch}
+          value={values.whitepaper}
+          error={(touched.whitepaper && errors.whitepaper) as string}
+        />
+        <IssuanceTooltip
+          tooltipContent={
+            'An investor data room is a secure space for the sharing of sensitive information relating to the company in which the investor is considering investing. Data rooms for investors used to be physical rooms, however today they are almost always virtual'
+          }
+        />
+      </Flex>
 
       {values.social.map((link, idx) => (
         <Flex flexDirection={'column'} key={idx}>

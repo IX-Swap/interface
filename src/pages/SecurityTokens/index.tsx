@@ -119,9 +119,10 @@ const TabLabel = styled.div`
 `
 
 export const StyledBodyWrapper = styled(BodyWrapper)`
-  background: ${({ theme }) => theme.config.background?.secondary || 'transparent'};
+  background: ${({ theme }) => theme.bg0};
   width: 100%;
   max-width: 1358px;
+  border-radius: 8px;
   padding-top: 0px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 0px;

@@ -5,7 +5,7 @@ import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 
 import { Input, Textarea } from 'components/Input'
-import { ButtonGradient } from 'components/Button'
+import { ButtonGradient, ButtonOutlined } from 'components/Button'
 import { TYPE, EllipsisText } from 'theme'
 import { Label } from 'components/Label'
 import Upload from 'components/Upload'
@@ -14,10 +14,11 @@ import { GradientText } from 'pages/CustodianV2/styleds'
 import { Select as ReactSelect } from 'components/Select'
 import { AcceptFiles } from 'components/Upload/types'
 
-import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
+import { ReactComponent as UploadLogo } from 'assets/images/NewDownloads.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
 import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
+import { Text } from 'rebass'
 
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
 import Row from 'components/Row'
@@ -347,11 +348,11 @@ export const Uploader: FC<UploaderProps> = ({
           <UploaderCard>
             <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
               <StyledUploadLogo />
-              <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
+              <TYPE.small textAlign="center" marginTop="8px" color={'#666680'}>
                 Drag and Drop
               </TYPE.small>
-              <TYPE.small display="flex" textAlign="center" color={'text9'}>
-                or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
+              <TYPE.small display="flex" textAlign="center" color={'#666680'}>
+                or <Text style={{ marginLeft: 2, color: '#6666FF' }}>Upload</Text>
               </TYPE.small>
             </Flex>
           </UploaderCard>
@@ -383,9 +384,9 @@ export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }
         <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
       ) : (
         <Upload file={file} onDrop={onDrop} data-testid={id}>
-          <ButtonGradient type="button" style={{ height: 52, padding: '7px 16px' }}>
+          <ButtonOutlined type="button" style={{ height: 52, padding: '7px 16px' }}>
             <EllipsisText>{(file as any)?.name || <Trans>Choose File</Trans>}</EllipsisText>
-          </ButtonGradient>
+          </ButtonOutlined>
         </Upload>
       )}
       {error && (
@@ -409,19 +410,20 @@ interface BeneficialOwnersTableTypes {
 export const BeneficialOwnersTable = ({}: BeneficialOwnersTableTypes) => {
   return (
     <BeneficialOwnersTableContainer>
-      <FormGrid columns={4}>
+      <FormGrid columns={5}>
         <Label label={t`Full Name`} />
         <Label label={t`% Shareholding`} />
         <Label label={t`Proof of Address`} />
         <Label label={t`Proof of Identity`} />
+        <Label label={t``} />
       </FormGrid>
     </BeneficialOwnersTableContainer>
   )
 }
 
 interface DeleteRowTypes {
-  children: JSX.Element
-  onClick: () => void
+  children?: JSX.Element
+  onClick?: () => void
 }
 
 export const DeleteRow = ({ children, onClick }: DeleteRowTypes) => {
@@ -463,13 +465,14 @@ const StyledDescription = styled(TYPE.description3)`
 
 const StyledInput = styled(Input)`
   padding: 10px 21px;
-  border-radius: 36px;
+  border-radius: 8px;
   font-weight: normal;
   font-size: 16px;
-  border: ${({ error, theme }) => (error ? 'solid 1px' + theme.error : 'none')};
-  background-color: ${({ theme: { bg19 } }) => bg19};
+  border: ${({ error, theme }) => (error ? 'solid 1px' + theme.error : 'solid 1px #E6E6FF')};
+  background-color: ${({ theme: { bg0 } }) => bg0};
   :focus {
-    background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};
+    // background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};
+    background-color: ${({ theme: { bg0 } }) => bg0};
   }
 `
 

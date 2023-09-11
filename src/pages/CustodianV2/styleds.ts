@@ -11,9 +11,9 @@ import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
 import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
 
 export const cardCommonStyles = css`
-  border-radius: 30px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  border-radius: 6px;
+  // backdrop-filter: blur(20px);
+  // -webkit-backdrop-filter: blur(20px);
 `
 
 export const StyledBodyWrapper = styled(BodyWrapper)`

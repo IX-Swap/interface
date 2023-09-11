@@ -18,7 +18,7 @@ import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg
 export const StatusCard = styled(Card)`
   display: flex;
   justify-content: center;
-  background: ${({ theme }) => theme.config.background?.secondary || theme.bgG13};
+  // background: ${({ theme }) => theme.config.background?.secondary || theme.bgG13};
   width: 100%;
   min-height: 630px;
   padding-bottom: 100px;
@@ -26,6 +26,7 @@ export const StatusCard = styled(Card)`
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     height: 100%;
+    margin-top: 30px;
   `};
 `
 
@@ -38,12 +39,16 @@ export const KYCStatusCard = styled(Card)`
   width: fit-content;
   display: flex;
   align-items: center;
-  padding: 8px 32px;
-  background: ${({ theme }) => theme.bgG13};
+  border-radius: 6px;
+  padding: 8px 20px;
+  // background: ${({ theme }) => theme.bgG13};
+  border: 1px solid #e6e6ff;
+
   ${cardCommonStyles};
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-direction: column;
+    flex-direction: row;
+     padding: 8px 6px;
   `};
 `
 
@@ -62,10 +67,10 @@ export const FormWrapper = styled.form`
 `
 
 export const FormCard = styled.div<{ filled?: boolean }>`
-  background: ${({ theme }) => theme.bg18};
+  background: ${({ theme }) => theme.bg0};
   border: ${({ filled, theme }) => `1px solid ${filled ? theme.success : 'transparent'}`};
   padding: 24px 24px 32px 24px;
-  border-radius: 16px;
+  border-radius: 8px;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 16px;
@@ -96,8 +101,8 @@ export const PageLink = styled.div<{ active?: boolean }>`
   align-items: center;
   margin: 4px 0px;
   padding: 8px 16px 8px 24px;
-  color: ${({ theme, active }) => (active ? theme.text1 : theme.text9)};
-  border-left: ${({ theme, active }) => (active ? `1px solid ${theme.bg14}` : 'none')};
+  color: ${({ theme, active }) => (active ? theme.text1 : theme.text11)};
+  border-left: ${({ theme, active }) => (active ? `2px solid ${theme.bg26}` : 'none')};
   text-decoration: none;
 `
 
@@ -113,8 +118,14 @@ export const FormGrid = styled.div<{ columns?: number }>`
 
 export const ExtraInfoCard = styled.div`
   padding: 12px 8px 12px 27px;
-  border-radius: 45px;
-  background: ${({ theme }) => theme.bgG12};
+  border-radius: 8px;
+  background: ${({ theme }) => theme.bg2};
+`
+export const ExtraInfoCardCountry = styled.div`
+  padding: 12px 8px 12px 27px;
+  border-radius: 8px;
+  background: ${({ theme }) => theme.bg0};
+  border: 1px solid #e6e6ff;
 `
 
 export const StyledInput = styled(Input)`
@@ -128,9 +139,9 @@ export const UploaderCard = styled.div`
   align-items: center;
   height: 120px;
   width: 100%;
-  background: ${({ theme }) => theme.bgG17};
-  border: 1px dashed ${({ theme }) => theme.bg7};
-  border-radius: 16px;
+  background: ${({ theme }) => theme.bg0};
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
   cursor: pointer;
 `
 
@@ -168,10 +179,10 @@ const AttentionIcon = styled(Attention)`
   ${({ theme }) =>
     theme.config.elements?.main &&
     css`
-      > circle[fill='#ED0376'] {
+      > circle[fill='#FF6161'] {
         fill: ${theme.error};
       }
-      > circle[stroke='#ED0376'] {
+      > circle[stroke='#FF6161'] {
         stroke: ${theme.error};
       }
       line {

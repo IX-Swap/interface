@@ -4,10 +4,10 @@ import styled, { css } from 'styled-components'
 
 import { ButtonText } from 'components/Button'
 import { TYPE } from 'theme'
-import { ReactComponent as Checked } from 'assets/images/checked_solid.svg'
-import { ReactComponent as NotChecked } from 'assets/images/not_checked_solid.svg'
-import { ReactComponent as RadioChecked } from 'assets/images/radio-checked.svg'
-import { ReactComponent as RadioNotChecked } from 'assets/images/radio-not-checked.svg'
+import { ReactComponent as Checked } from 'assets/images/checkedNew.svg'
+import { ReactComponent as NotChecked } from 'assets/images/uncheckedNew.svg'
+import { ReactComponent as RadioChecked } from 'assets/images/checkedRadioNew.svg'
+import { ReactComponent as RadioNotChecked } from 'assets/images/uncheckedRadioNew.svg'
 
 interface Props {
   label: string | JSX.Element

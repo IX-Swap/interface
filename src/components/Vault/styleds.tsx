@@ -143,10 +143,10 @@ const StyledAttention = styled(Attention)`
   ${({ theme }) =>
     theme.config.elements?.main &&
     css`
-      > circle[fill='#ED0376'] {
+      > circle[fill='#FF6161'] {
         fill: ${theme.error};
       }
-      > circle[stroke='#ED0376'] {
+      > circle[stroke='#FF6161'] {
         stroke: ${theme.error};
       }
       line {
