@@ -70,6 +70,7 @@ const FAQEntry = styled.div`
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
   padding: 1.25rem 2rem;
+  white-space: pre-line;
 `
 
 const Question = styled.div`
