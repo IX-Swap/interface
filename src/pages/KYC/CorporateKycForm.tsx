@@ -179,6 +179,7 @@ export default function CorporateKycForm() {
   }
 
   const onSourceOfFundsChange = (source: string, fields: any[], setFieldValue: any) => {
+    fields = fields ?? []
     const newSources = [...fields]
     const indexOfSource = fields.indexOf(source)
 
