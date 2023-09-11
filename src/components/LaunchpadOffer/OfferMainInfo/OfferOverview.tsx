@@ -22,6 +22,7 @@ const OverviewContainer = styled.div`
   flex-flow: column nowrap;
   gap: 2rem;
   margin: 2rem 0;
+  white-space: pre-line;
 `
 
 const OverviewTitle = styled.div`
