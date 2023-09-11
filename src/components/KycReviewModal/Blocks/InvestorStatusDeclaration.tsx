@@ -22,7 +22,7 @@ export const InvestorStatusDeclaration = ({
       <>
         <Column style={{ gap: '16px' }}>
           <LabeledCheckBox>
-            <Checkbox scaleSize={1.4} isRadio checked={data.accredited === 0} disabled label="" />
+            <Checkbox scaleSize={1.4} isRadio checked={data.accredited !== 1} disabled label="" />
             <TYPE.title6 style={{ textTransform: 'uppercase' }}>I declare I am a Retail Investor</TYPE.title6>
           </LabeledCheckBox>
 
