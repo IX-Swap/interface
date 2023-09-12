@@ -1295,7 +1295,7 @@ export default function IndividualKycForm() {
                         </Column>
                       </FormCard> */}
 
-                      {values.accredited === 1 && (
+                      {/* {values.accredited === 1 && (
                         <>
                           <FormCard id="investor-declaration">
                             <RowBetween marginBottom="32px">
@@ -1686,7 +1686,7 @@ export default function IndividualKycForm() {
                             )}
                           </FormCard>
                         </>
-                      )}
+                      )} */}
                     </Column>
                   </FormContainer>
 
