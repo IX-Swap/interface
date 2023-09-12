@@ -94,13 +94,13 @@ export const individualErrorsSchema = yup.object().shape({
   }),
 
   // accredited: yup.number().min(0).max(1),
-  acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
-  acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
-  evidenceOfAccreditation: yup.array().when('accredited', {
-    is: 1,
-    then: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
-    otherwise: yup.array().nullable(),
-  }),
+  // acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
+  // acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
+  // evidenceOfAccreditation: yup.array().when('accredited', {
+  //   is: 1,
+  //   then: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
+  //   otherwise: yup.array().nullable(),
+  // }),
   // confirmStatusDeclaration: yup.boolean().when('accredited', {
   //   is: 1,
   //   then: yup.boolean().isTrue('Required').required('Required'),
