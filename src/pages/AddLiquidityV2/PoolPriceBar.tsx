@@ -18,22 +18,36 @@ const Row = styled(AutoRow)`
 `
 
 const StyledAutoColumn = styled(AutoColumn)`
-  padding: 25px;
+  padding: 20px;
   border: solid 1px #e6e6ff;
   justify-content: center;
 
-  @media (max-width: 768px) {
-    padding: 10px 5px 10px 5px;
-  }
+  // @media (max-width: 768px) {
+  // padding: 10px 5px 10px 5px;
+
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    flex-direction: row;
+    padding: 15px 5px 15px 5px;
+    justify-content: space-between;
+    align-items: center;
+  `};
 `
 
 const StyledText = styled(Text)`
   font-weight: 500;
+  text-align: center;
   color: ${({ theme }) => theme.text12};
-  @media (max-width: 768px) {
+  // @media (max-width: 768px) {
+  //   font-weight: 400;
+  //   font-size: 12px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     font-weight: 400;
     font-size: 12px;
-  }
+  `};
 `
 
 const StyledLabel = styled(Text)`
@@ -41,10 +55,16 @@ const StyledLabel = styled(Text)`
   font-size: 14px;
   color: ${({ theme }) => theme.text11};
   padding-top: 1px;
-  @media (max-width: 768px) {
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     font-weight: 400;
     font-size: 10px;
-  }
+  `};
+
+  // @media (max-width: 768px) {
+  //   font-weight: 400;
+  //   font-size: 10px;
+  // }
 `
 
 export function PoolPriceBar({
@@ -63,7 +83,7 @@ export function PoolPriceBar({
 
   return (
     <AutoColumn gap="md">
-      <Row justify="space-around" gap="4px">
+      <Row justify="space-around" gap="3px">
         <StyledAutoColumn>
           <StyledText>{formatAmount(+(price?.toSignificant(6) || 0)) ?? '-'}</StyledText>
           <StyledLabel>

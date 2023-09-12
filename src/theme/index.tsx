@@ -48,11 +48,11 @@ export function colors(configColors?: WlColors): Colors {
     black,
 
     // text
-    text1: wlColors.text?.main || '#FFFFFF',
-    text2: wlColors.text?.additional1 || '#EDCEFF',
+    text1: wlColors.text?.main || '#292933',
+    text2: wlColors.text?.additional1 || '#666680',
     text3: wlColors.text?.main || '#6C7284',
-    text4: wlColors.text?.main || '#565A69',
-    text5: wlColors.text?.main || '#2C2F36',
+    text4: wlColors.text?.main || '#6666FF33',
+    text5: wlColors.text?.main || '#555566',
     text6: wlColors.text?.main || '#8275BC',
     text7: wlColors.text?.main || '#9184C4',
     text8: wlColors.text?.main || '#9184C3',
@@ -64,10 +64,10 @@ export function colors(configColors?: WlColors): Colors {
 
     // rgba(237, 206, 255, 0.05)
     // backgrounds / greys
-    bg0: wlColors.background?.main || '#0D0415',
-    bg1: wlColors.background?.secondary || '#1A123A',
-    bg2: '#2C2F36',
-    bg3: '#40444F',
+    bg0: wlColors.background?.main || '#FFFFFF',
+    bg1: wlColors.background?.secondary || '#F7f7FF',
+    bg2: '#F6F6FB',
+    bg3: '#6666ff33',
     bg4: '#565A69',
     bg5: '#6C7284',
     bg6: '#1A2028',
@@ -78,7 +78,7 @@ export function colors(configColors?: WlColors): Colors {
     bg11: wlColors.background?.secondary || '#272046',
     bg12: wlColors.background?.secondary || '#271F4A',
     bg13: wlColors.background?.secondary || '#2F254E',
-    bg14: '#ED0376',
+    bg14: '#FF6161',
     bg15: '#2C254A',
     bg16: wlColors.background?.secondary || '#170626',
     bg17: '#1C112D',
@@ -146,6 +146,7 @@ export function colors(configColors?: WlColors): Colors {
     bgG20:
       wlColors.background?.main ||
       'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A80;',
+    bgG21: wlColors.background?.main || 'radial-gradient(24.62% 985% at 50% 50%, #9191FE 0%, #6666FF 100%);',
     borderG1: wlColors.background?.main || 'linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);',
     borderG2:
       wlColors.text?.main ||
@@ -153,8 +154,9 @@ export function colors(configColors?: WlColors): Colors {
     borderG3:
       wlColors.background?.main ||
       'linear-gradient(90deg, rgba(237, 206, 255, 0) 0%, #edceff 4.92%, #edceff 94.53%, rgba(237, 206, 255, 0) 98.88%);',
+
     modalBG: 'rgba(0,0,0,0.9)',
-    modalBG1: 'rgba(255,255,255,0.8)',
+    modalBG1: 'rgba(233,233,245,0.8)',
     advancedBG: wlColors.background?.main || 'rgba(0,0,0,0.1)',
     divider: wlColors.background?.main || 'rgba(43, 43, 43, 0.435)',
 
@@ -190,7 +192,7 @@ export function colors(configColors?: WlColors): Colors {
     blue3: '#5B7BCF',
     orange1: '#FF6D41',
 
-    error: wlColors.status?.error || '#ED0376',
+    error: wlColors.status?.error || '#FF6161',
     success: wlColors.status?.success || '#27AE60',
     warning: wlColors.status?.warning || '#ff8f00',
     popUpInputBorder: '#7A02E0',
@@ -297,7 +299,10 @@ export const TYPE = {
     return <TextWrapper fontWeight={500} color={'text2'} {...props} />
   },
   main1(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize={20} lineHeight={'30px'} color={'text1'} {...props} />
+    return <TextWrapper fontWeight={500} fontSize={13} lineHeight={'30px'} color={'text1'} {...props} />
+  },
+  main2(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={13} lineHeight={'15px'} color={'text11'} {...props} />
   },
   link(props: TextProps) {
     return <TextWrapper fontWeight={500} color={'primary1'} {...props} />
@@ -351,7 +356,7 @@ export const TYPE = {
     return <TextWrapper fontWeight={500} fontSize={14} lineHeight={'21px'} {...props} />
   },
   buttonMuted(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize={14} lineHeight={'21px'} {...props} />
+    return <TextWrapper fontWeight={500} fontSize={13} color={'#555566'} lineHeight={'16px'} {...props} />
   },
   titleBig(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={36} lineHeight={'56px'} {...props} />
@@ -369,10 +374,10 @@ export const TYPE = {
     return <TextWrapper fontWeight={600} fontSize={22} lineHeight={'33px'} color={'text1'} {...props} />
   },
   title6(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize={16} lineHeight={'24px'} color={'text1'} {...props} />
+    return <TextWrapper fontWeight={800} fontSize={32} lineHeight={'38px'} color={'text1'} {...props} />
   },
   title7(props: TextProps) {
-    return <TextWrapper fontWeight={500} fontSize={18} lineHeight={'40px'} color={'text1'} {...props} />
+    return <TextWrapper fontWeight={700} fontSize={18} lineHeight={'40px'} color={'text1'} {...props} />
   },
   title8(props: TextProps) {
     return <TextWrapper fontWeight={600} fontSize={28} lineHeight={'42px'} color={'text2'} {...props} />
@@ -384,7 +389,7 @@ export const TYPE = {
     return <TextWrapper fontWeight={600} fontSize={12} lineHeight={'18px'} color={'text1'} {...props} />
   },
   title11(props: TextProps) {
-    return <TextWrapper fontWeight={300} fontSize={16} lineHeight={'24px'} color={'text1'} {...props} />
+    return <TextWrapper fontWeight={500} fontSize={13} lineHeight={'16px'} color={'text5'} {...props} />
   },
   descriptionThin(props: TextProps) {
     return <TextWrapper fontWeight={300} fontSize={16} lineHeight={'24px'} color={'text2'} {...props} />
@@ -393,7 +398,7 @@ export const TYPE = {
     return <TextWrapper fontWeight={300} fontSize={12} lineHeight={'18px'} color={'text2'} {...props} />
   },
   description3(props: TextProps) {
-    return <TextWrapper fontWeight={400} fontSize={12} lineHeight={'18px'} color={'text2'} {...props} />
+    return <TextWrapper fontWeight={400} fontSize={13} lineHeight={'21px'} color={'text2'} {...props} />
   },
   description4(props: TextProps) {
     return <TextWrapper fontWeight={300} fontSize={18} lineHeight={'29px'} color={'text2'} {...props} />

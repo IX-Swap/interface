@@ -17,11 +17,15 @@ import { useWalletModalToggle } from '../../state/application/hooks'
 import { isTransactionRecent, useAllTransactions } from '../../state/transactions/hooks'
 import { TransactionDetails } from '../../state/transactions/reducer'
 import { shortenAddress } from '../../utils'
-import { ButtonSecondary } from '../Button'
+import { ButtonSecondary, PinnedContentButton } from '../Button'
 import Identicon from '../Identicon'
 import Loader from '../Loader'
 import { RowBetween } from '../Row'
 import WalletModal from '../WalletModal'
+import { IXSBalance } from 'components/Header/IXSBalance'
+import { useETHBalances } from 'state/wallet/hooks'
+import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
@@ -40,7 +44,7 @@ const Web3StatusGeneric = styled(ButtonSecondary)`
   padding: 0;
   border: none;
   opacity: unset;
-  border-radius: 12px;
+  border-radius: 6px;
   cursor: pointer;
   user-select: none;
   outline: none;
@@ -59,6 +63,7 @@ const Web3StatusGeneric = styled(ButtonSecondary)`
 const Web3StatusError = styled(Web3StatusGeneric)`
   background-color: ${({ theme }) => theme.red1};
   border: 1px solid ${({ theme }) => theme.red1};
+  padding: 8px 18px;
   color: ${({ theme }) => theme.white};
   font-weight: 500;
   :hover,
@@ -86,12 +91,18 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
 `
 
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  background: ${({ theme }) => theme.config.text?.main || theme.bgG1};
+  background: ${({ theme }) => theme.config.text?.main || theme.bg25};
   opacity: ${({ pending }) => (pending ? '0.7' : '1')};
-  padding: 0 18px;
-  color: ${({ theme }) => theme.white};
-  font-weight: 600;
+  padding: 10px 5px 10px 10px;
+  color: ${({ theme }) => theme.black};
+  // font-weight: 600;
+  border-radius: 4px;
   font-size: 12px;
+  border: 1px solid #e6e6ff;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+     padding: 8px 3px 8px 20px;
+  `};
 `
 
 const Text = styled.p`
@@ -112,7 +123,47 @@ const NetworkIcon = styled(Activity)`
   height: 16px;
 `
 
-// we want the latest one to come first, so return negative if a is after b
+const AccountElement = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  white-space: nowrap;
+  width: fit-content;
+  cursor: pointer;
+  :focus {
+    border: 1px solid blue;
+  }
+`
+
+const BalanceText = styled(Text)`
+  background: ${({ theme }) => theme.bgG2};
+  color: ${({ theme }) => theme.text2};
+  font-weight: 600;
+  font-size: 12px;
+  opacity: ${({ theme }) => (theme.config.background ? '1' : '0.5')};
+  border-radius: 0 0 40px 40px;
+  padding: 0 18px;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    display: none;
+  `};
+`
+
+const StyledPinnedContentButton = styled(PinnedContentButton)`
+  width: 100%;
+  margin-left: 35px;
+  margin-right: 35px;
+  padding: 10px 40px;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 10px 40px;
+  `};
+`
+
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
   return b.addedTime - a.addedTime
 }
@@ -173,10 +224,13 @@ function Web3StatusInner() {
     ym(84960586, 'reachGoal', 'headerConnectWalletClicked')
     toggleWalletModal()
   }
+  const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
+  const nativeCurrency = useNativeCurrency()
 
   if (account) {
     return (
       <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal} pending={hasPendingTransactions}>
+        {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
         {hasPendingTransactions ? (
           <RowBetween>
             <Text style={{ margin: '4px 13px 4px 0' }}>
@@ -185,9 +239,15 @@ function Web3StatusInner() {
             <Loader stroke="white" />
           </RowBetween>
         ) : (
-          <Text style={{ margin: '4px 13px 4px 0' }}>{ENSName || shortenAddress(account)}</Text>
+          <Text style={{ margin: '4px 13px 4px 5px', width: '100%' }}>{ENSName || shortenAddress(account)}</Text>
         )}
-        {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
+        <AccountElement style={{ pointerEvents: 'auto' }}>
+          {account && userEthBalance ? (
+            <Trans>
+              {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
+            </Trans>
+          ) : null}
+        </AccountElement>
       </Web3StatusConnected>
     )
   } else if (error) {
@@ -201,11 +261,11 @@ function Web3StatusInner() {
     )
   } else {
     return (
-      <Web3StatusConnect id="connect-wallet" onClick={connectWallet} faded={!account}>
-        <Text style={{ fontWeight: 600, margin: '4px 0px' }}>
+      <StyledPinnedContentButton className="connect-button" id="connect-wallet" onClick={connectWallet}>
+        <Text>
           <Trans>Connect Wallet</Trans>
         </Text>
-      </Web3StatusConnect>
+      </StyledPinnedContentButton>
     )
   }
   // return null

@@ -114,13 +114,13 @@ const StyledCalendarIcon = styled(CalendarIcon)`
 `
 
 const TextField = styled(Input)<{ maxHeight?: number }>`
-  border-radius: 36px;
+  border-radius: 6px;
   height: 60px;
   max-height: ${({ maxHeight }) => (maxHeight ? `${maxHeight}px` : 'auto')};
   padding: 11px 66px 9px 21px;
   font-weight: normal;
   font-size: 16px;
-  background-color: ${({ theme: { bg19 } }) => bg19};
+  background-color: ${({ theme: { bg0 } }) => bg0};
 `
 
 const Container = styled.div`

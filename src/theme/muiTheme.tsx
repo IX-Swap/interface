@@ -4,13 +4,13 @@ import { DefaultTheme } from 'styled-components'
 
 import useTheme from 'hooks/useTheme'
 
-export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }: DefaultTheme) =>
+export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, config }: DefaultTheme) =>
   createTheme({
     overrides: {
       MuiPickersBasePicker: {
         pickerView: {
-          backgroundColor: bg7,
-          borderRadius: '32px',
+          backgroundColor: bg1,
+          borderRadius: '6px',
           '&:focus-visible': {
             outline: 'none',
           },
@@ -27,18 +27,18 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }
             border: 'none !important',
           },
           outline: 'none',
-          backgroundColor: bg7,
-          borderRadius: '32px',
-          color: 'white',
+          backgroundColor: bg1,
+          borderRadius: '6px',
+          color: '#555566',
           '&:focus-visible': {
             outline: 'none',
           },
         },
         dialog: {
           outline: 'none',
-          backgroundColor: bg7,
-          borderRadius: '32px',
-          color: 'white',
+          backgroundColor: bg1,
+          borderRadius: '6px',
+          color: '#555566',
           '&:focus-visible': {
             outline: 'none',
           },
@@ -55,16 +55,16 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }
       },
       MuiPickersToolbar: {
         toolbar: {
-          backgroundColor: bg11,
+          backgroundColor: bg1,
         },
         root: {
-          backgroundColor: bg11,
+          backgroundColor: bg1,
         },
       },
       MuiTouchRipple: {
         root: {
           '&:focus': {
-            background: 'rgba(55, 46, 94, 0.5)',
+            backgroundColor: bg1,
             borderRadius: '8px',
           },
         },
@@ -85,7 +85,7 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }
           color: text1,
         },
         subtitle1: {
-          color: `${text7} !important`,
+          // color: `${text7} !important`,
           fontSize: '18px',
           lineHeight: '150%',
         },
@@ -103,7 +103,8 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }
       },
       MuiPickersModal: {
         dialogRoot: {
-          borderRadius: '32px',
+          borderRadius: '6px',
+          color: 'red',
         },
       },
       MuiPickersToolbarText: {
@@ -118,7 +119,7 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }
         root: {
           flexBasis: '100%',
           '& button': {
-            color: text8,
+            color: text1,
             margin: '4px 0px',
             fontWeight: 400,
             fontSize: '18px',
@@ -161,7 +162,7 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }
           color: text9,
         },
         iconButton: {
-          backgroundColor: 'none',
+          backgroundColor: 'black',
           padding: 0,
           color: text1,
           width: 32,
@@ -179,7 +180,7 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }
             },
           },
           '&:hover': {
-            backgroundColor: bg18,
+            backgroundColor: bg1,
           },
         },
       },
@@ -188,14 +189,14 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }
           margin: '12px 0px',
         },
         weekDayLabel: {
-          color: text9,
+          color: text1,
           fontWeight: 400,
           fontSize: '14px',
         },
       },
       MuiPickersArrowSwitcher: {
         iconButton: {
-          backgroundColor: 'none',
+          backgroundColor: bg1,
           '& svg': {
             fill: text1,
           },
@@ -203,14 +204,14 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }
       },
       MuiPickersDay: {
         root: {
-          backgroundColor: 'none',
+          backgroundColor: bg1,
           color: text1,
           fontWeight: 400,
           fontSize: '16px',
           '&$selected': {
-            backgroundColor: bg11,
+            backgroundColor: bg1,
             '&:hover': {
-              backgroundColor: bg11,
+              backgroundColor: bg1,
             },
           },
           '&$disabled': {
@@ -219,17 +220,17 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }
           },
 
           '&:hover': {
-            background: bg18,
+            background: bg2,
           },
           '&:focus': {
             '&$selected': {
-              backgroundColor: bg11,
+              backgroundColor: bg2,
             },
           },
         },
         today: {
           border: 'none !important',
-          background: bg18,
+          background: bg2,
         },
       },
       MuiPickersDateRangePickerToolbarProps: {

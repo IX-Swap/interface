@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { Select } from 'components/Select'
 import { Search } from 'components/Search'
-import { ButtonEmpty, ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonEmpty, ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { TYPE } from 'theme'
 
 import { SelectFiltersContainer } from './styleds'
@@ -126,7 +126,7 @@ export const AdminKycFilters: FC<Props> = ({
                   {title}
                 </ButtonGradientBorder>
               ) : (
-                <ButtonIXSGradient
+                <PinnedContentButton
                   minHeight="32px !important"
                   height="32px"
                   padding="6px 24px"
@@ -136,7 +136,7 @@ export const AdminKycFilters: FC<Props> = ({
                 >
                   {statusInfo !== 'total' && statusInfo.icon()}
                   {title}
-                </ButtonIXSGradient>
+                </PinnedContentButton>
               )}
             </Fragment>
           )

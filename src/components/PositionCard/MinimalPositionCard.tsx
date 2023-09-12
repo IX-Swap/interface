@@ -32,7 +32,7 @@ export const HoverCard = styled(Card)`
 
 const MinimalPositionWrapper = styled.div`
   background: ${({ theme }) => theme.bg25};
-  padding: 42px 40px 42px 40px;
+  // padding: 42px 40px 42px 40px;
   border-radius: 8px;
   margin-top: 1.5rem;
   z-index: -5;
@@ -40,9 +40,13 @@ const MinimalPositionWrapper = styled.div`
   width: 100%;
   border: solid 1px #e6e6ff;
 
-  @media (max-width: 768px) {
-    padding: 22px 20px 22px 20px;
-  }
+  // @media (max-width: 768px) {
+  //   padding: 22px 20px 22px 20px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+//  padding: 22px 20px 22px 20px;
+  `};
 `
 
 const StyledText = styled(Text)`
@@ -50,18 +54,26 @@ const StyledText = styled(Text)`
   font-size: 16px;
   line-height: 24px;
 
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
+  // @media (max-width: 768px) {
+  //   font-size: 12px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+   font-size: 12px;
+  `};
 `
 
 const StyledText20 = styled(Text)`
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
+  // @media (max-width: 768px) {
+  //   font-size: 12px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+   font-size: 12px;
+  `};
 `
 
 export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCardProps) {

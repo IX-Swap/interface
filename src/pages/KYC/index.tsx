@@ -1,14 +1,10 @@
 import React, { useCallback, FC, useEffect, useState, useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
-import { Flex } from 'rebass'
+import { Flex, Text } from 'rebass'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
-
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
-import { LoaderThin } from 'components/Loader/LoaderThin'
-import { RowCenter } from 'components/Row'
 import { useActiveWeb3React } from 'hooks/web3'
 import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
@@ -16,14 +12,17 @@ import Column from 'components/Column'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { usePendingSignState } from 'state/application/hooks'
 import { useKYCState } from 'state/kyc/hooks'
-import { ReactComponent as IndividualKYC } from 'assets/images/individual-kyc.svg'
-import { ReactComponent as CorporateKYC } from 'assets/images/corporate-kyc.svg'
+import { ReactComponent as IndividualKYC } from 'assets/images/newIndividual.svg'
+import { ReactComponent as CorporateKYC } from 'assets/images/newCorporate.svg'
 import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
-import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
 import { Content, getStatusDescription, StatusCard, DateInfoContainer } from './styleds'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
+import { RowCenter } from 'components/Row'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 interface DescriptionProps {
   description: string | null
@@ -46,27 +45,27 @@ const DateInfo: FC<DateInfoProps> = ({
 }: DateInfoProps) => (
   <DateInfoContainer>
     {info && (
-      <TYPE.description3 marginTop="40px" marginBottom="16px" color="inherit">
+      <TYPE.description3 marginTop="40px" marginBottom="16px" color="#666680">
         {info}
       </TYPE.description3>
     )}
     {submittedDate && (
-      <TYPE.description3 color="inherit">{`Submitted on ${dayjs(submittedDate)
+      <TYPE.description3 color="#666680">{`Submitted on ${dayjs(submittedDate)
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
     {rejectedDate && (
-      <TYPE.description3 color="inherit">{`Rejected on ${dayjs(rejectedDate)
+      <TYPE.description3 color="#666680">{`Rejected on ${dayjs(rejectedDate)
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
     {changeRequestDate && (
-      <TYPE.description3 color="inherit">{`Change requested on ${dayjs(rejectedDate)
+      <TYPE.description3 color="#666680">{`Change requested on ${dayjs(rejectedDate)
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
     {approvedDate && (
-      <TYPE.description3 color="inherit">{`Approved on ${dayjs(approvedDate)
+      <TYPE.description3 color="#666680">{`Approved on ${dayjs(approvedDate)
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
@@ -74,12 +73,12 @@ const DateInfo: FC<DateInfoProps> = ({
 )
 
 const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) => (
-  <TYPE.title6 textAlign="center" margin="40px 0px" fontWeight={400}>
+  <TYPE.title6 textAlign="center" margin={isMobile ? '20px 26px' : '20px 0px'}>
     {description}
   </TYPE.title6>
 )
 
-export default function KYC() {
+const KYC = () => {
   const { account } = useActiveWeb3React()
   const [loading, setLoading] = useState(false)
   const pendingSign = usePendingSignState()
@@ -104,38 +103,63 @@ export default function KYC() {
       case KYCStatuses.NOT_SUBMITTED:
         return (
           <>
-            <Description description={description} />
-
             <Flex
               width="100%"
               flexDirection={isMobile ? 'column' : 'row'}
               justifyContent="space-between"
               alignItems={isMobile ? 'center' : 'flex-end'}
-              style={{ gap: '1rem' }}
+              sx={{ gap: '1rem', marginTop: '40px' }}
             >
-              <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
+              <Flex
+                sx={{
+                  border: '1px solid #E6E6FF',
+                  marginBottom: isMobile ? '32px' : '0px',
+                  padding: isMobile ? '40px 45px' : '55px 90px',
+                }}
+                flexDirection="column"
+                alignItems="center"
+              >
                 <IndividualKYC />
-                <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
-                  <ButtonIXSGradient
-                    style={{ padding: '16px 24px' }}
-                    marginTop="32px"
-                    data-testid="passKycAsIndividualButton"
+                <>
+                  <Text
+                    sx={{
+                      marginTop: '32px',
+                      width: 'max-content',
+                      fontSize: '18px',
+                      fontWeight: '700',
+                      color: '#292933',
+                    }}
                   >
                     <Trans>Pass KYC as Individual</Trans>
-                  </ButtonIXSGradient>
-                </Link>
+                  </Text>
+                  <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
+                    <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
+                      <Trans>Start Now</Trans>
+                    </Text>
+                  </Link>
+                </>
               </Flex>
 
-              <Flex flexDirection="column" alignItems="center">
+              <Flex
+                sx={{
+                  border: '1px solid #E6E6FF',
+                  padding: isMobile ? '40px 40px' : '50px 90px',
+                  marginBottom: isMobile ? '32px' : '0px',
+                  width: 'max-content',
+                }}
+                flexDirection="column"
+                alignItems="center"
+              >
                 <CorporateKYC />
-                <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
-                  <ButtonGradientBorder
-                    style={{ padding: '16px 24px' }}
-                    marginTop="32px"
-                    data-testid="passKycAsCorporateButton"
-                  >
+                <>
+                  <Text sx={{ marginTop: '32px', fontSize: '18px', fontWeight: '700', color: '#292933' }}>
                     <Trans>Pass KYC as Corporate</Trans>
-                  </ButtonGradientBorder>
+                  </Text>
+                </>
+                <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
+                  <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
+                    <Trans>Start Now</Trans>
+                  </Text>
                 </Link>
               </Flex>
             </Flex>
@@ -153,12 +177,12 @@ export default function KYC() {
               alignItems={isMobile ? 'center' : 'flex-start'}
             >
               {kyc?.individual && (
-                <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
+                <Flex sx={{ marginBottom: isMobile ? '32px' : '0px' }} flexDirection="column" alignItems="center">
                   <IndividualKYC />
                   <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
-                    <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
+                    <PinnedContentButton sx={{ padding: '16px 24px', marginTop: '32px' }}>
                       <Trans>Continue Pass KYC as Individual</Trans>
-                    </ButtonIXSGradient>
+                    </PinnedContentButton>
                   </Link>
                 </Flex>
               )}
@@ -167,7 +191,7 @@ export default function KYC() {
                 <Flex flexDirection="column" alignItems="center">
                   <CorporateKYC />
                   <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
-                    <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px">
+                    <ButtonGradientBorder sx={{ padding: '16px 24px', marginTop: '32px' }}>
                       <Trans>Continue Pass KYC as Corporate</Trans>
                     </ButtonGradientBorder>
                   </Link>
@@ -198,8 +222,7 @@ export default function KYC() {
             <DateInfo info={infoText} submittedDate={kyc?.createdAt} changeRequestDate={kyc?.updatedAt} />
             <Link style={{ textDecoration: 'none ' }} to={`/kyc/${kyc?.corporateKycId ? 'corporate' : 'individual'}`}>
               <ButtonIXSGradient
-                style={{ padding: '16px 24px' }}
-                marginTop="32px"
+                sx={{ padding: '16px 24px', marginTop: '32px' }}
                 data-testid="makeChangesAndResendKycButton"
               >
                 <Trans>Make changes and resend KYC</Trans>
@@ -254,17 +277,18 @@ export default function KYC() {
               marginTop={status === KYCStatuses.NOT_SUBMITTED || status === null ? '8px' : '40px'}
               alignItems="center"
             >
-              <TYPE.title4 marginBottom="40px">
+              <TYPE.description3 marginTop="40px">
                 <Trans>{config?.name || 'IX Swap'} KYC</Trans>
-              </TYPE.title4>
-
+              </TYPE.description3>
+              <Description description={description} />
               <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />
-
-              {getKYCDescription()}
             </Content>
+            {getKYCDescription()}
           </Column>
         )}
       </StatusCard>
     </StyledBodyWrapper>
   )
 }
+
+export default KYC

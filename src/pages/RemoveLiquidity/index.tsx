@@ -40,12 +40,13 @@ import { RemoveAmount } from './RemoveAmount'
 import { RemovedLiquidity } from './RemovedLiquidity'
 import useCurrencyInput from './useCurrencyInput'
 import { AddLiduidityContainer } from 'pages/AddLiquidityV2/redirects'
-import { Header } from 'pages/Launchpad/Header'
+// import { Header } from 'pages/Launchpad/Header'
 import { useSetHideHeader } from 'state/application/hooks'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import Header from 'components/Header'
 
 const DEFAULT_REMOVE_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(5, 100)
 
@@ -341,89 +342,90 @@ export default function RemoveLiquidity({
       />
       <>
         <Header />
-        <AddLiduidityContainer>
-          <Box style={{ marginTop: '240px' }}>
-            <AppBody page="liquidity">
-              <AddRemoveTabs creating={false} adding={false} showBadge={mitigationEnabled} />
-              <Box mb={'20px'}>
-                <AutoColumn gap="md">
-                  <RemoveAmount {...{ parsedAmounts, formattedAmounts, onUserInput }} />
-                  <RemovedLiquidity {...{ currencyIdA, currencyIdB, chainId, formattedAmounts }} />
-                  {pair && (
-                    <Box padding={'10px 20px'}>
-                      <TextRow
-                        textLeft={<Trans>Price</Trans>}
-                        textRight={
-                          <>
-                            1 {currencyA?.symbol} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'}{' '}
-                            {currencyB?.symbol}
-                          </>
-                        }
-                      />
-                      <TextRow
-                        textLeft={<></>}
-                        textRight={
-                          <>
-                            1 {currencyB?.symbol} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'}{' '}
-                            {currencyA?.symbol}
-                          </>
-                        }
-                      />
-                    </Box>
+        {/* <AddLiduidityContainer> */}
+        <Box>
+          <AppBody page="liquidity">
+            <AddRemoveTabs creating={false} adding={false} showBadge={mitigationEnabled} />
+            <Box mb={'20px'}>
+              <AutoColumn gap="md">
+                <RemoveAmount {...{ parsedAmounts, formattedAmounts, onUserInput }} />
+                <RemovedLiquidity {...{ currencyIdA, currencyIdB, chainId, formattedAmounts }} />
+                {pair && (
+                  <Box padding={'10px 20px'}>
+                    <TextRow
+                      textLeft={<Trans>Price</Trans>}
+                      textRight={
+                        <>
+                          1 {currencyA?.symbol} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'}{' '}
+                          {currencyB?.symbol}
+                        </>
+                      }
+                    />
+                    <TextRow
+                      textLeft={<></>}
+                      textRight={
+                        <>
+                          1 {currencyB?.symbol} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'}{' '}
+                          {currencyA?.symbol}
+                        </>
+                      }
+                    />
+                  </Box>
+                )}
+                <div style={{ position: 'relative' }}>
+                  {!account ? (
+                    <ButtonIXSWide onClick={toggleWalletModal} data-testid="connect-wallet-remove-liquidity">
+                      <Trans>Connect Wallet</Trans>
+                    </ButtonIXSWide>
+                  ) : (
+                    <>
+                      <RowBetween style={{ gap: '16px' }}>
+                        <PinnedContentButton
+                          data-testid="approve-currency-a-remove"
+                          onClick={onAttemptToApprove}
+                          disabled={approval !== ApprovalState.NOT_APPROVED || signatureData !== null}
+                        >
+                          {approval === ApprovalState.PENDING ? (
+                            <Dots>
+                              <Trans>Approving</Trans>
+                            </Dots>
+                          ) : approval === ApprovalState.APPROVED || signatureData !== null ? (
+                            <Trans>Approved</Trans>
+                          ) : (
+                            <>{error || <Trans>Approve</Trans>}</>
+                          )}
+                        </PinnedContentButton>
+                        <NewApproveButton
+                          style={{ border: '1px solid #E6E6FF' }}
+                          data-testid="approve-currency-b-remove"
+                          onClick={() => {
+                            setShowConfirm(true)
+                          }}
+                          disabled={!isValid || signatureData === null}
+                        >
+                          <Text color={'#FF6161'}>{<Trans>Remove</Trans>}</Text>
+                        </NewApproveButton>
+                      </RowBetween>
+                    </>
                   )}
-                  <div style={{ position: 'relative' }}>
-                    {!account ? (
-                      <ButtonIXSWide onClick={toggleWalletModal} data-testid="connect-wallet-remove-liquidity">
-                        <Trans>Connect Wallet</Trans>
-                      </ButtonIXSWide>
-                    ) : (
-                      <>
-                        <RowBetween style={{ gap: '16px' }}>
-                          <PinnedContentButton
-                            data-testid="approve-currency-a-remove"
-                            onClick={onAttemptToApprove}
-                            disabled={approval !== ApprovalState.NOT_APPROVED || signatureData !== null}
-                          >
-                            {approval === ApprovalState.PENDING ? (
-                              <Dots>
-                                <Trans>Approving</Trans>
-                              </Dots>
-                            ) : approval === ApprovalState.APPROVED || signatureData !== null ? (
-                              <Trans>Approved</Trans>
-                            ) : (
-                              <>{error || <Trans>Approve</Trans>}</>
-                            )}
-                          </PinnedContentButton>
-                          <NewApproveButton
-                            style={{ border: '1px solid #E6E6FF' }}
-                            data-testid="approve-currency-b-remove"
-                            onClick={() => {
-                              setShowConfirm(true)
-                            }}
-                            disabled={!isValid || signatureData === null}
-                          >
-                            <Text color={'#FF6161'}>{<Trans>Remove</Trans>}</Text>
-                          </NewApproveButton>
-                        </RowBetween>
-                      </>
-                    )}
-                  </div>
-                </AutoColumn>
-              </Box>
-            </AppBody>
-            {pair ? <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} /> : null}
-            <Box mb={'50px'} mt={'30px'}>
-              <TipWithMessage
-                message={
-                  <Trans>
-                    Removing pool tokens converts your position back into underlying tokens at the current rate,
-                    proportional to your share of the pool. Accrued fees are included in the amounts you receive.
-                  </Trans>
-                }
-              />
+                </div>
+              </AutoColumn>
             </Box>
+            {pair ? <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} /> : null}
+          </AppBody>
+
+          <Box mb={'50px'} mt={'30px'}>
+            <TipWithMessage
+              message={
+                <Trans>
+                  Removing pool tokens converts your position back into underlying tokens at the current rate,
+                  proportional to your share of the pool. Accrued fees are included in the amounts you receive.
+                </Trans>
+              }
+            />
           </Box>
-        </AddLiduidityContainer>
+        </Box>
+        {/* </AddLiduidityContainer> */}
       </>
     </>
   )

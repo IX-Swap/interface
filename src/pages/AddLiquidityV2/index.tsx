@@ -50,6 +50,7 @@ import { Tip } from './Tip'
 import { useHandleCurrencySelect } from './useHandleCurrencySelect'
 import { ReactComponent as ExternalIcon } from '../../assets/images/rightcheck.svg'
 import styled from 'styled-components/macro'
+import { isMobile } from 'react-device-detect'
 // import { AddLiduidityContainer } from './redirects'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
@@ -348,9 +349,9 @@ export default function AddLiquidity({
         />
       )}
 
-      <ToggleableBody style={{ marginTop: '80px' }} isVisible={!showConfirm}>
+      <ToggleableBody style={{ marginTop: isMobile ? '0px' : '0px' }} isVisible={!showConfirm}>
         {/* <AddLiduidityContainer></AddLiduidityContainer> */}
-        <Box style={{ marginTop: '200px' }}>
+        <Box style={{ marginTop: isMobile ? '0px' : '200px' }}>
           <AppBody page="liquidity">
             <AddRemoveTabs creating={isCreate} adding={true} showBadge={mitigationEnabled} />
             <>

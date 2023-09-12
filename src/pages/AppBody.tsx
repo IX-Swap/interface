@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie'
 import styled from 'styled-components/macro'
 
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { isMobile } from 'react-device-detect'
 
 export const BodyWrapper = styled.div<{
   margin?: string
@@ -35,9 +36,13 @@ export const BodyWrapper = styled.div<{
   `};
 
   /* Media Query for Mobile */
-  @media (max-width: 768px) {
+  // @media (max-width: 768px) {
+  //   padding-bottom: 20px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     padding-bottom: 20px;
-  }
+  `};
 `
 export const BlurredOverlay = styled.div`
   width: 100%;
@@ -72,7 +77,7 @@ export default function AppBody({
       <BodyWrapper
         style={{
           backgroundColor: page === 'liquidity' ? '#FFFFFF' : '#1A123A',
-          marginTop: page === 'liquidity' ? '-200px' : '0',
+          marginTop: isMobile ? '120px' : '120px',
         }}
         {...rest}
         hasAnnouncement={!cookies.annoucementsSeen}

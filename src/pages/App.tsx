@@ -18,7 +18,7 @@ import ErrorBoundary from 'components/ErrorBoundary'
 import Web3ReactManager from 'components/Web3ReactManager'
 import GoogleAnalyticsReporter from 'components/analytics/GoogleAnalyticsReporter'
 
-import { Footer } from 'components/Footer'
+// import { Footer } from 'components/Footer'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
@@ -41,6 +41,7 @@ import axios from 'axios'
 import { ip } from 'services/apiUrls'
 import { isMobile } from 'react-device-detect'
 import { ConnectWalletModal } from './Connect Wallet Modal'
+import { Footer } from './Launchpad/Footer'
 
 const AppWrapper = styled.div`
   display: flex;

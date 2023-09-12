@@ -13,6 +13,7 @@ import { switchToNetwork } from 'hooks/switchToNetwork'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 import { VioletCard } from '../Card'
+import { Box } from 'rebass'
 
 const SelectorControls = styled(VioletCard)`
   border-radius: 12px;
@@ -40,7 +41,7 @@ const NetworkCardWrapper = styled.div`
 `
 
 const FlyoutHeader = styled.div`
-  color: ${({ theme }) => theme.text2};
+  color: ${({ theme }) => theme.text1};
   font-weight: 400;
 `
 const FlyoutMenu = styled.div`
@@ -101,6 +102,15 @@ const NetworkLabel = styled.div`
 const Selector = styled.div`
   margin-right: 5px;
 `
+const StyledBox = styled.div`
+  font-size: 12px;
+  border: 1px solid #e6e6ff;
+  padding: 10px 12px 10px 10px;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+     padding: 10px 20px 10px 20px;
+  `};
+`
+
 export const NetworkCard = () => {
   const { chainId, library, account } = useActiveWeb3React()
   const node = useRef<HTMLDivElement>()
@@ -132,13 +142,14 @@ export const NetworkCard = () => {
   }
 
   return (
-    <>
+    <StyledBox>
       {account && (
         <Selector ref={node as any}>
           <SelectorControls onClick={() => toggle()}>
-            <NetworkCardWrapper>{activeChainName}</NetworkCardWrapper>
+            <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>{activeChainName}</NetworkCardWrapper>
             <ChevronElement showMore={open} setShowMore={toggle} />
           </SelectorControls>
+
           {open && (
             <FlyoutMenu>
               <FlyoutHeader>
@@ -151,6 +162,6 @@ export const NetworkCard = () => {
           )}
         </Selector>
       )}
-    </>
+    </StyledBox>
   )
 }

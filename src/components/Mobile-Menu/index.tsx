@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { ReactComponent as MenuIcon } from '../../assets/images/burger-menu.svg'
+import { ReactComponent as MenuIcon } from '../../assets/images/newMmobileIcon.svg'
 import { Menu } from './Menu'
 
 export const MobileMenu = () => {

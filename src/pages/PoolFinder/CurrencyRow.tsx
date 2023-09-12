@@ -5,7 +5,7 @@ import { StyledDropDown } from 'components/CurrencyInputPanel'
 import { Box, Text } from 'rebass'
 import styled from 'styled-components'
 import CurrencyLogo from '../../components/CurrencyLogo'
-import { RowEnd } from '../../components/Row'
+import { RowEnd, RowFixed } from '../../components/Row'
 
 interface Props {
   currency: Currency | null
@@ -21,10 +21,19 @@ const Container = styled.div`
       boder-radius: 1rem;
   `};
 `
+
+const Aligner = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`
+
 export const CurrencyRow = ({ currency, chooseToken }: Props) => {
   return (
     <Container onClick={chooseToken}>
-      <RowEnd>
+      {/* <Aligner> */}
+      <RowEnd style={{ border: '1px solid #E6E6FF', padding: '5px 12px 5px 12px', background: '#FFFFFF' }}>
         {currency && <CurrencyLogo currency={currency} />}
         <Text color={'#292933'} fontWeight={600} fontSize={'18px'} lineHeight={'34px'} marginLeft={'12px'}>
           {currency ? currency.symbol : <Trans>Choose token</Trans>}
@@ -33,6 +42,7 @@ export const CurrencyRow = ({ currency, chooseToken }: Props) => {
           <StyledDropDown selected={!!currency} />
         </Box>
       </RowEnd>
+      {/* </Aligner> */}
     </Container>
   )
 }

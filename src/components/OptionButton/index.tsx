@@ -38,10 +38,10 @@ export const NewOption = styled(FancyButton)<{ active: boolean }>`
   }
   :hover {
     background: ${({ theme }) => theme.bg26};
-    color: ${({ active, theme }) => (active ? theme.text1 : theme.text1)};
+    color: white;
   }
   background: ${({ active, theme }) => (active ? theme.bg26 : theme.bg25)};
-  color: ${({ active, theme }) => (active ? theme.text1 : theme.launchpad.colors.primary)};
+  color: ${({ active, theme }) => (active ? 'white' : theme.launchpad.colors.primary)};
   ${({ theme }) => theme.mediaWidth.upToSmall`
     width: 100%  
   `}

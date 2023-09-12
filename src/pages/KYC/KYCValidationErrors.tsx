@@ -74,11 +74,11 @@ export const KYCValidationErrors = ({ fields }: KYCValidationErrorsProps) => {
 
   return (
     <FormCard style={{ marginBottom: '1rem' }}>
-      <TYPE.title6 color="error">REASON FOR REJECTION</TYPE.title6>
+      <TYPE.title10 color="error">REASON FOR REJECTION</TYPE.title10>
       <ReasonList>
         {labels.map((field) => (
           <ReasonEntry key={field}>
-            <TYPE.body color="text2">{field}</TYPE.body>
+            <TYPE.title11 color="text2">{field}</TYPE.title11>
           </ReasonEntry>
         ))}
       </ReasonList>

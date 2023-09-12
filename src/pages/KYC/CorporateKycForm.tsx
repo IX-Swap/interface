@@ -6,21 +6,21 @@ import { Formik } from 'formik'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
 import { Prompt } from 'react-router-dom'
-
+import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg'
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
 import { ButtonText, ButtonIXSGradient } from 'components/Button'
 import { TYPE } from 'theme'
 import { GradientText } from 'pages/CustodianV2/styleds'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
-import { RowBetween } from 'components/Row'
+import { RowBetween, RowCenter } from 'components/Row'
 import { PhoneInput } from 'components/PhoneInput'
 import { Checkbox } from 'components/Checkbox'
 import { Loadable } from 'components/LoaderHover'
 import { useAuthState } from 'state/auth/hooks'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
-import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+import { ReactComponent as ArrowLeft } from 'assets/images/newBack.svg'
 import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { countriesList } from 'constants/countriesList'
@@ -30,12 +30,23 @@ import { DateInput } from 'components/DateInput'
 import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
-import { FormCard, FormGrid, ExtraInfoCard, Divider, StyledStickyBox, StyledBigPassed } from './styleds'
+import {
+  FormCard,
+  FormGrid,
+  ExtraInfoCard,
+  Divider,
+  StyledStickyBox,
+  StyledBigPassed,
+  ExtraInfoCardCountry,
+} from './styleds'
 import { ChooseFile, BeneficialOwnersTable, DeleteRow } from './common'
 import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
+import { Box } from 'rebass'
+import { Plus } from 'react-feather'
+import { IconButton } from '@material-ui/core'
 
 type FormSubmitHanderArgs = {
   createFn: (body: any) => any
@@ -312,8 +323,8 @@ export default function CorporateKycForm() {
       <Prompt when={!canLeavePage.current} message={promptValue} />
       <LoadingIndicator isLoading={loadingRequest} />
 
-      <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
-        <ButtonText
+      <StyledBodyWrapper style={{ background: 'none', boxShadow: 'none' }} hasAnnouncement={!cookies.annoucementsSeen}>
+        {/* <ButtonText
           style={{ textDecoration: 'none' }}
           display="flex"
           marginBottom={isMobile ? '32px' : '64px'}
@@ -326,7 +337,25 @@ export default function CorporateKycForm() {
           <TYPE.title4>
             <GradientText style={{ marginLeft: 8, fontSize: isMobile ? 26 : 36 }}>Corporate</GradientText>
           </TYPE.title4>
-        </ButtonText>
+        </ButtonText> */}
+
+        {/* <ButtonText
+          style={{ textDecoration: 'none' }}
+          display="flex"
+          marginBottom={isMobile ? '0px' : '30px'}
+          marginTop={isMobile ? '80px' : '10px'}
+          onClick={goBack}
+        >
+          <ArrowLeft style={{ width: isMobile ? 20 : 26 }} />
+          <TYPE.title4
+            fontWeight={'800'}
+            fontSize={isMobile ? 24 : 24}
+            style={{ whiteSpace: 'nowrap' }}
+            marginLeft="10px"
+          >
+            <Trans>KYC as Corporate</Trans>
+          </TYPE.title4>
+        </ButtonText> */}
 
         {!waitingForInitialValues && formData && (
           <Formik
@@ -463,11 +492,28 @@ export default function CorporateKycForm() {
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
                     <Column style={{ gap: '35px' }}>
-                      <FormCard id="info">
+                      <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="info">
+                        <ButtonText
+                          style={{ textDecoration: 'none' }}
+                          display="flex"
+                          marginBottom={isMobile ? '32px' : '30px'}
+                          marginTop={isMobile ? '20px' : '10px'}
+                          onClick={goBack}
+                        >
+                          <ArrowLeft style={{ width: isMobile ? 20 : 26 }} />
+                          <TYPE.title4
+                            fontWeight={'800'}
+                            fontSize={isMobile ? 24 : 24}
+                            style={{ whiteSpace: 'nowrap' }}
+                            marginLeft="10px"
+                          >
+                            <Trans>KYC as Corporate</Trans>
+                          </TYPE.title4>
+                        </ButtonText>
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Corporate Information</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {infoFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -479,6 +525,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.corporateName}
                               label="Corporate Name"
+                              placeholder="Corporate Name"
                               error={errors.corporateName && errors.corporateName}
                             />
                             <TextInput
@@ -487,10 +534,12 @@ export default function CorporateKycForm() {
                               }
                               value={values.registrationNumber}
                               label="Registration Number"
+                              placeholder="Registration Number"
                               error={errors.registrationNumber && errors.registrationNumber}
                             />
                             <Select
                               withScroll
+                              placeholder="Country of Incorporation"
                               label="Country of Incorporation"
                               selectedItem={values.countryOfIncorporation}
                               items={countries}
@@ -502,6 +551,7 @@ export default function CorporateKycForm() {
                           <FormGrid columns={2}>
                             <TextInput
                               label="Business Activity"
+                              placeholder="Business Activity"
                               value={values.businessActivity}
                               onChange={(e: any) =>
                                 onChangeInput('businessActivity', e.currentTarget.value, values, setFieldValue)
@@ -511,6 +561,7 @@ export default function CorporateKycForm() {
                             <Select
                               withScroll
                               label="Type of legal entity"
+                              placeholder="Type of legal entity"
                               selectedItem={values.typeOfLegalEntity}
                               items={legalEntityTypes}
                               onSelect={(entityType) => onSelectChange('typeOfLegalEntity', entityType, setFieldValue)}
@@ -520,6 +571,7 @@ export default function CorporateKycForm() {
                           <FormGrid>
                             <DateInput
                               label="Date of Incorporation"
+                              placeholder="Date of Incorporation"
                               maxHeight={60}
                               error={errors.incorporationDate}
                               value={values.incorporationDate}
@@ -544,9 +596,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="authorizedPersonnel">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Company Authorized Personnel</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {authorizedPersonnelFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -558,6 +610,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.personnelName}
                               label="Full Name"
+                              placeholder="Full Name"
                               error={errors.personnelName && errors.personnelName}
                             />
                             <TextInput
@@ -566,6 +619,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.designation}
                               label="Designation"
+                              placeholder="Designation"
                               error={errors.designation && errors.designation}
                             />
                           </FormGrid>
@@ -577,6 +631,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.email}
                               label="Email address"
+                              placeholder="Email address"
                               error={errors.email && errors.email}
                             />
                             <PhoneInput
@@ -608,9 +663,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="address">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Address</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {addressFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -622,6 +677,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.address}
                               label="Address"
+                              placeholder="Address"
                               error={errors.address && errors.address}
                             />
                             <TextInput
@@ -630,6 +686,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.postalCode}
                               label="Postal Code"
+                              placeholder="Postal Code"
                               error={errors.postalCode && errors.postalCode}
                             />
                           </FormGrid>
@@ -647,6 +704,7 @@ export default function CorporateKycForm() {
                               onChange={(e: any) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
                               value={values.city}
                               label="City"
+                              placeholder="City"
                               error={errors.city && errors.city}
                             />
                           </FormGrid>
@@ -655,15 +713,16 @@ export default function CorporateKycForm() {
 
                       <FormCard id="residentialAddress">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Residential Address</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {residentialAddressFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
                             <TextInput
+                              placeholder="Address"
                               onChange={(e: any) =>
                                 onChangeInput('residentialAddressAddress', e.currentTarget.value, values, setFieldValue)
                               }
@@ -680,6 +739,7 @@ export default function CorporateKycForm() {
                                   setFieldValue
                                 )
                               }
+                              placeholder="Postal Code"
                               value={values.residentialAddressPostalCode}
                               label="Postal Code"
                               error={errors.residentialAddressPostalCode && errors.residentialAddressPostalCode}
@@ -690,6 +750,7 @@ export default function CorporateKycForm() {
                             <Select
                               withScroll
                               label="Country"
+                              placeholder="Country"
                               selectedItem={values.residentialAddressCountry}
                               items={countries}
                               onSelect={(country) =>
@@ -703,6 +764,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.residentialAddressCity}
                               label="City"
+                              placeholder="City"
                               error={errors.residentialAddressCity && errors.residentialAddressCity}
                             />
                           </FormGrid>
@@ -711,9 +773,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="funds">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Source of Funds</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {fundsFilled && <StyledBigPassed />}
                         </RowBetween>
                         <FormGrid columns={3}>
@@ -779,9 +841,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="fatca">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>FATCA</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {fatcaFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -825,9 +887,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="tax-declaration">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Tax Declaration</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {taxDeclarationFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -843,6 +905,7 @@ export default function CorporateKycForm() {
                             <Select
                               withScroll
                               label="Country of tax residency"
+                              placeholder="Country of tax residency"
                               selectedItem={values.taxCountry}
                               items={countries}
                               onSelect={(country) => onSelectChange('taxCountry', country, setFieldValue)}
@@ -851,6 +914,7 @@ export default function CorporateKycForm() {
                             <TextInput
                               value={values.taxNumber}
                               label="Tax Indentification Number"
+                              placeholder="Tax Indentification Number"
                               disabled={isTaxNumberDisabled}
                               onChange={(e: any) =>
                                 onChangeInput('taxNumber', e.currentTarget.value, values, setFieldValue)
@@ -906,9 +970,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="beneficial-owners">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Beneficial Owners Information</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {beneficialOwnersFilled && <StyledBigPassed />}
                         </RowBetween>
                         <ExtraInfoCard style={{ marginBottom: 20 }}>
@@ -921,8 +985,8 @@ export default function CorporateKycForm() {
                         <Column style={{ gap: '20px' }}>
                           {values.beneficialOwners?.map((beneficiar: Record<string, string | any>, index: number) => (
                             <>
-                              <FormGrid columns={4} key={index}>
-                                <DeleteRow
+                              <FormGrid columns={5} key={index}>
+                                {/* <DeleteRow
                                   onClick={() =>
                                     deleteBeneficiar(
                                       index,
@@ -931,26 +995,26 @@ export default function CorporateKycForm() {
                                       setFieldValue
                                     )
                                   }
-                                >
-                                  <TextInput
-                                    value={beneficiar.fullName}
-                                    placeholder={isMobile ? 'Full Name' : ''}
-                                    onChange={(e: any) =>
-                                      changeBeneficiar(
-                                        'fullName',
-                                        e.currentTarget.value,
-                                        index,
-                                        values.beneficialOwners,
-                                        setFieldValue,
-                                        `beneficialOwners[${index}].fullName`
-                                      )
-                                    }
-                                    error={
-                                      errors[`beneficialOwners[${index}].fullName`] &&
-                                      errors[`beneficialOwners[${index}].fullName`]
-                                    }
-                                  />
-                                </DeleteRow>
+                                > */}
+                                <TextInput
+                                  value={beneficiar.fullName}
+                                  placeholder={isMobile ? 'Full Name' : ''}
+                                  onChange={(e: any) =>
+                                    changeBeneficiar(
+                                      'fullName',
+                                      e.currentTarget.value,
+                                      index,
+                                      values.beneficialOwners,
+                                      setFieldValue,
+                                      `beneficialOwners[${index}].fullName`
+                                    )
+                                  }
+                                  error={
+                                    errors[`beneficialOwners[${index}].fullName`] &&
+                                    errors[`beneficialOwners[${index}].fullName`]
+                                  }
+                                />
+                                {/* </DeleteRow> */}
                                 <TextInput
                                   type="number"
                                   style={{ textAlign: 'center', fontSize: '20px' }}
@@ -1024,6 +1088,22 @@ export default function CorporateKycForm() {
                                     )
                                   }
                                 />
+                                {/* <IconButton
+                                onClick={() => removeTaxDeclaration(values, index, setFieldValue, remove)}
+                                style={{ padding: '0 1rem', marginTop: '2rem' }}
+                                > */}
+                                <TrashIcon
+                                  style={{ cursor: 'pointer' }}
+                                  onClick={() =>
+                                    deleteBeneficiar(
+                                      index,
+                                      values?.beneficialOwners,
+                                      values?.removedBeneficialOwners,
+                                      setFieldValue
+                                    )
+                                  }
+                                />
+                                {/* </IconButton> */}
                               </FormGrid>
                               {values.beneficialOwners.length - 1 > index && <Divider />}
                             </>
@@ -1032,20 +1112,23 @@ export default function CorporateKycForm() {
                         {errors.beneficialOwners && (
                           <TYPE.small marginTop="4px" color={'red1'}>{t`${errors.beneficialOwners}`}</TYPE.small>
                         )}
-                        <ButtonIXSGradient
-                          type="button"
-                          style={{ marginTop: 32, height: 40, fontSize: 16 }}
+                        <ExtraInfoCardCountry
+                          // type="button"
+                          style={{ marginTop: 32, fontSize: 16, padding: 15 }}
                           onClick={() => addBeneficiary(values.beneficialOwners, setFieldValue)}
                         >
-                          <Trans> Add Beneficiary</Trans>
-                        </ButtonIXSGradient>
+                          <RowCenter style={{ color: '#6666FF' }}>
+                            <Plus style={{ width: '20px', marginRight: '5px', cursor: 'pointer' }} />
+                            <Box> Add Beneficiary </Box>
+                          </RowCenter>
+                        </ExtraInfoCardCountry>
                       </FormCard>
 
                       <FormCard id="upload">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Corporate Documents</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {filesFilled && <StyledBigPassed />}
                         </RowBetween>
 
