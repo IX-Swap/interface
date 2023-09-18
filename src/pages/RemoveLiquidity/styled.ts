@@ -47,7 +47,7 @@ export const ModalHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.bg23};
+  background: ${({ theme }) => theme.bg1};
   border: 1px solid #e6e6ff;
 `
 export const ModalBottomWrapper = styled.div`

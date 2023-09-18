@@ -38,6 +38,7 @@ import {
   YourAccount,
 } from './styleds'
 import Transaction from './Transaction'
+import { Line } from 'components/Line'
 
 function renderTransactions(transactions: string[]) {
   return (
@@ -77,8 +78,8 @@ export default function AccountDetails({
       )
       .map((k) => SUPPORTED_WALLETS[k].name)[0]
     return (
-      <Box style={{ opacity: 0.7, display: 'flex' }}>
-        <TYPE.description2>{t`Connected with ${name}`}</TYPE.description2>
+      <Box style={{ display: 'flex' }}>
+        <TYPE.description3>{t`Connected with ${name}`}</TYPE.description3>
       </Box>
     )
   }
@@ -136,7 +137,7 @@ export default function AccountDetails({
     <>
       <UpperSection>
         <HeaderRow>
-          <TYPE.title5>{t`Account`}</TYPE.title5>
+          <TYPE.title7>{t`Account`}</TYPE.title7>
           <CloseIcon onClick={toggleWalletModal}>
             <CloseColor />
           </CloseIcon>
@@ -149,7 +150,13 @@ export default function AccountDetails({
                 <div>
                   {connector !== injected && (
                     <WalletAction
-                      style={{ fontSize: '.825rem', fontWeight: 400, marginRight: '8px' }}
+                      style={{
+                        fontSize: '13px',
+                        color: '#666680',
+                        fontWeight: 400,
+                        marginRight: '8px',
+                        marginBottom: '12px',
+                      }}
                       onClick={() => {
                         ;(connector as any).close()
                       }}
@@ -171,9 +178,9 @@ export default function AccountDetails({
               </AccountGroupingRow>
               <AccountGroupingRow id="web3-account-identifier-row">
                 <>
-                  <Row style={{ gap: '4px' }}>
+                  <Row style={{ gap: '4px', border: '1px solid #e6e6ff', padding: '16px 10px' }}>
                     {getStatusIcon()}
-                    <TYPE.title5> {ENSName ?? (account && shortenAddress(account))}</TYPE.title5>
+                    <TYPE.title10 fontSize="13px"> {ENSName ?? (account && shortenAddress(account))}</TYPE.title10>
                   </Row>
                 </>
               </AccountGroupingRow>
@@ -186,24 +193,30 @@ export default function AccountDetails({
                         isENS={!!ENSName}
                         href={getExplorerLink(chainId, ENSName ?? account, ExplorerDataType.ADDRESS)}
                       >
-                        <IconWrapperWithBg size={8}>
-                          <ExternalBright />
-                        </IconWrapperWithBg>
-                        <TYPE.description2 style={{ marginLeft: '4px' }}>{t`View on Explorer`}</TYPE.description2>
+                        {/* <IconWrapperWithBg size={8}> */}
+                        <ExternalBright style={{ marginTop: '5px' }} />
+                        {/* </IconWrapperWithBg> */}
+                        <TYPE.description3
+                          style={{ marginLeft: '4px', fontSize: '11px' }}
+                        >{t`View on Explorer`}</TYPE.description3>
                       </AddressLink>
                     )}
                     {account && (
                       <Copy toCopy={account}>
-                        <TYPE.description2 style={{ marginLeft: '4px' }}>{t`Copy Address`}</TYPE.description2>
+                        <TYPE.description3
+                          style={{ marginLeft: '4px', fontSize: '11px' }}
+                        >{t`Copy Address`}</TYPE.description3>
                       </Copy>
                     )}
                   </>
                 </AccountControl>
               </AccountGroupingRow>
+              <Line style={{ marginTop: '10px' }} />
             </InfoCard>
           </YourAccount>
         </AccountSection>
       </UpperSection>
+
       {!!pendingTransactions.length || !!confirmedTransactions.length ? (
         <LowerSection>
           <AutoRow mb={'1rem'} style={{ justifyContent: 'space-between', textTransform: 'uppercase' }}>
@@ -217,9 +230,9 @@ export default function AccountDetails({
         </LowerSection>
       ) : (
         <LowerSection>
-          <TYPE.body color={theme.text2}>
+          <TYPE.description3 color={'#AFAFC1'}>
             <Trans>Your transactions will appear here...</Trans>
-          </TYPE.body>
+          </TYPE.description3>
         </LowerSection>
       )}
     </>

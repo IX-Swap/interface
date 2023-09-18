@@ -48,7 +48,7 @@ export const HeaderRow = styled.div`
 
 export const BodyRow = styled.div`
   ${rowStyle};
-  border: 1px solid ${({ theme: { bg11 } }) => bg11};
+  // border: 1px solid ${({ theme: { bg11 } }) => bg11};
   border-radius: 20px;
   margin-bottom: 8px;
   background-color: ${({ theme: { config } }) => config.background?.main || 'rgba(39, 31, 74, 0.3)'};

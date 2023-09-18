@@ -86,7 +86,7 @@ const Header = styled.div`
   line-height: 33px;
   padding: 20px 32px 12px;
   color: ${({ theme }) => theme.green1};
-  background: ${({ theme }) => theme.bgG4};
+  background: ${({ theme }) => theme.bg1};
   border-radius: 20px 20px 0px 0px;
   gap: 16px;
   > :first-child {
@@ -100,11 +100,11 @@ const Header = styled.div`
 
 const SummaryContainer = styled.div`
   padding: 24px;
-  background: ${({ theme }) => theme.bg11};
+  background: ${({ theme }) => theme.bg1};
   border-radius: 0px 0px 20px 20px;
   > div {
     padding: 16px;
-    background: ${({ theme }) => theme.bgG4};
+    background: ${({ theme }) => theme.bg1};
     border-radius: 20px;
     min-width: 500px;
     width: 100%;

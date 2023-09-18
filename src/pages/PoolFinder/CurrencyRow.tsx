@@ -6,43 +6,73 @@ import { Box, Text } from 'rebass'
 import styled from 'styled-components'
 import CurrencyLogo from '../../components/CurrencyLogo'
 import { RowEnd, RowFixed } from '../../components/Row'
+import { AssetLogo } from 'components/CurrencyInputPanel/AssetLogo'
+import { formatCurrencySymbol } from 'utils/formatCurrencySymbol'
+import { ReactComponent as NewDropDown } from '../../assets/images/dropdownIcon.svg'
+import { Pair } from '@ixswap1/v2-sdk'
 
 interface Props {
   currency: Currency | null
   chooseToken: () => void
+  pair?: Pair | null
 }
 
 const Container = styled.div`
   border-radius: 6px;
   background-color: ${({ theme }) => theme.bg23};
   width: 100%;
-  padding: 14px 2rem;
+  padding: 26px 2rem;
+  border: 1px solid #e6e6ff;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      boder-radius: 1rem;
+      border-radius: 1rem;
   `};
 `
 
 const Aligner = styled.span`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: right;
+  justify-content: right;
   width: 100%;
 `
 
-export const CurrencyRow = ({ currency, chooseToken }: Props) => {
+const StyledTokenName: any = styled.span<{ active?: boolean }>`
+  ${({ active }) => (active ? 'margin: 0 0.25rem 0 0.25rem;' : 'margin: 0 0.25rem 0 0.25rem;')}
+  font-size: ${({ active }) => (active ? '14px' : '14px')};
+  color: ${({ theme }) => theme.text11};
+  // border: solid 1px red;
+`
+
+export const CurrencyRow = ({ currency, chooseToken, pair }: Props) => {
+  console.log(currency, pair)
   return (
     <Container onClick={chooseToken}>
-      {/* <Aligner> */}
-      <RowEnd style={{ border: '1px solid #E6E6FF', padding: '5px 12px 5px 12px', background: '#FFFFFF' }}>
-        {currency && <CurrencyLogo currency={currency} />}
-        <Text color={'#292933'} fontWeight={600} fontSize={'18px'} lineHeight={'34px'} marginLeft={'12px'}>
-          {currency ? currency.symbol : <Trans>Choose token</Trans>}
-        </Text>
-        <Box marginLeft={'6px'}>
-          <StyledDropDown selected={!!currency} />
-        </Box>
-      </RowEnd>
-      {/* </Aligner> */}
+      <Aligner>
+        <RowFixed
+          style={{
+            border: '1px solid #E6E6FF',
+            padding: '5px 12px 5px 12px',
+            background: '#FFFFFF',
+            cursor: 'pointer',
+          }}
+        >
+          <AssetLogo pair={pair} currency={currency} />
+          <StyledTokenName className="pair-name-container">
+            {pair ? (
+              `${pair?.token0.symbol}:${pair?.token1.symbol}`
+            ) : (
+              <>
+                {formatCurrencySymbol({ currency }) || (
+                  <Box>
+                    <Trans>Choose token</Trans>
+                  </Box>
+                )}
+              </>
+            )}
+          </StyledTokenName>
+          <NewDropDown />
+        </RowFixed>
+        {/* <StyledDropDown selected={!!currency} /> */}
+      </Aligner>
     </Container>
   )
 }

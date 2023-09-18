@@ -10,6 +10,7 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { routes } from 'utils/routes'
 
 import { FeaturedTokenCard, StyledNonTradable, StyledTradable } from './styleds'
+import { NewApproveButton } from 'components/Button'
 
 interface Props {
   token: any
@@ -22,10 +23,21 @@ interface InfoProps {
 
 const Info: FC<InfoProps> = ({ label, title }: InfoProps) => {
   return (
-    <>
-      <TYPE.description3 marginBottom="5px">{label}</TYPE.description3>
-      <TYPE.buttonMuted marginBottom="6px">{title}</TYPE.buttonMuted>
-    </>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        borderBottom: '1px solid #E6E6FF',
+        paddingBottom: '3px',
+        marginBottom: '3px',
+        marginLeft: '15px',
+        marginRight: '10px',
+        marginTop: '14px',
+      }}
+    >
+      <TYPE.description3>{label}</TYPE.description3>
+      <TYPE.buttonMuted>{title}</TYPE.buttonMuted>
+    </div>
   )
 }
 
@@ -35,31 +47,50 @@ export const FeaturedToken: FC<Props> = ({ token }: Props) => {
   return (
     <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to={routes.securityToken(token.id)}>
       <FeaturedTokenCard>
-        <Flex flexDirection="row-reverse">
-          <MouseoverTooltip
-            style={{ padding: 8 }}
-            placement="top"
-            text={`${token.token ? 'Ready' : 'Not ready'} for trading on ${config?.name || 'IX Swap'}`}
-          >
-            {token.token ? <StyledTradable width={22} height={22} /> : <StyledNonTradable width={22} height={22} />}
-          </MouseoverTooltip>
-        </Flex>
-        <Flex alignItems="center" marginBottom="32px">
+        <Flex alignItems="center">
           {token.logo ? (
-            <img style={{ marginRight: 16, borderRadius: 24 }} width="46px" height="46px" src={token.logo.public} />
+            <img
+              style={{ margin: '10px', borderRadius: '50%' }}
+              width="64px"
+              height="64px"
+              src={token.logo.public}
+              alt="Token Logo"
+            />
           ) : (
-            <CurrencyLogo currency={undefined} size={'46px'} style={{ marginRight: 16 }} />
+            <CurrencyLogo currency={undefined} size={'64px'} style={{ margin: '10px' }} />
           )}
-          <Column>
-            <TYPE.title5>{token.ticker}</TYPE.title5>
-            <TYPE.small fontWeight={600} color="text2" lineHeight="16.5px">
-              {token.companyName}
-            </TYPE.small>
-          </Column>
         </Flex>
-        <Info label="Issuer:" title={token.issuer.name} />
-        <Info label="Country:" title={token.country} />
-        <Info label="Industry:" title={token.industry} />
+        <Column style={{ margin: '0px 15px', borderBottom: '1px solid #E6E6FF' }}>
+          <TYPE.title5>{token.ticker}</TYPE.title5>
+          <TYPE.small marginBottom={10} fontWeight={400} color="#666680" lineHeight="16.5px">
+            {token.companyName}
+          </TYPE.small>
+        </Column>
+
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <Info label="Issuer:" title={token.issuer.name} />
+          <Info label="Country:" title={token.country} />
+          <Info label="Industry:" title={token.industry} />
+        </div>
+        {/* <MouseoverTooltip
+          style={{ padding: '8px' }}
+          placement="top"
+          text={`${token.token ? 'Ready' : 'Not ready'} for trading on ${config?.name || 'IX Swap'}`}
+        >
+          {token.token ? <StyledTradable width={22} height={22} /> : <StyledNonTradable width={22} height={22} />}
+        </MouseoverTooltip> */}
+
+        <NewApproveButton
+          style={{
+            border: '1px solid #E6E6FF',
+            color: '#6666FF',
+            fontWeight: '600',
+            marginTop: '20px',
+            marginBottom: '20px',
+          }}
+        >
+          Trade Now
+        </NewApproveButton>
       </FeaturedTokenCard>
     </NavLink>
   )

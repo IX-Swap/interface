@@ -64,14 +64,14 @@ export const FilterDropdown = ({
       style={{ cursor: 'pointer', ...style }}
       isOpen={isOpen || (selectedItem ? true : false)}
     >
-      <TYPE.body2
-        color="inherit"
+      <TYPE.main1
+        color="inherredit"
         fontWeight={300}
-        overflow="hidden"
-        style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+        // overflow="hidden"
+        // style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
       >
         {selectedItem?.name || placeholder}
-      </TYPE.body2>
+      </TYPE.main1>
       <Popover
         style={withScroll ? { maxHeight: 300, overflowY: 'scroll', overflowX: 'hidden' } : {}}
         show={isOpen}

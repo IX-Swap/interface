@@ -35,7 +35,7 @@ const colourStyles = {
   option: (styles: Record<string, any>, { isSelected, isMulti }: { isSelected: boolean; isMulti: boolean }) => {
     return {
       ...styles,
-      backgroundColor: isSelected && !isMulti ? 'bg11' : 'transparend',
+      // backgroundColor: isSelected && !isMulti ? 'bg11' : 'transparend',
       color: isSelected && !isMulti ? 'text1' : 'text9',
       fontWeight: isSelected && !isMulti ? '700' : '400',
     }

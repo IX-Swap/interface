@@ -347,7 +347,7 @@ export const StyledPageHeader = styled.div`
   }
 `
 export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
-  // background: ${({ theme }) => theme.bgG5};
+  // background: ${({ theme }) => theme.bg0};
   // border-radius: 45px;
   display: flex;
   flex-direction: column;
@@ -422,13 +422,14 @@ export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: stri
   border: none;
   flex: 1 1 auto;
   font-weight: 600;
-  background-color: ${({ theme, route }) => (route ? theme.bg23 : theme.bg7)};
+  background-color: ${({ theme, route }) => (route ? theme.bg1 : theme.bg1)};
   text-align: ${({ align }) => align && align};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0px;
   -webkit-appearance: textfield;
+  border: 1px solid #E6E6FF
   text-align: left;
   font-size: 22px;
   line-height: 40px;

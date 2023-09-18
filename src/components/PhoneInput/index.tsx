@@ -74,7 +74,7 @@ const Container = styled.div`
     top: 100%;
     .highlight,
     .prefered {
-      background-color: ${({ theme }) => theme.bg11} !important;
+      // background-color: ${({ theme }) => theme.bg11} !important;
       color: ${({ theme }) => theme.text1} !important;
       font-weight: bold;
     }

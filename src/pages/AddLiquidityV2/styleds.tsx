@@ -20,7 +20,7 @@ export const ModalHeaderWrapper = styled.div`
 
 export const ModalBottomWrapper = styled.div`
   padding: 27px 40px 27px 40px;
-  background: ${({ theme }) => theme.bg23};
+  background: ${({ theme }) => theme.bg1};
   border-radius: 10px;
   border: solid 1px #e6e6ff;
 `

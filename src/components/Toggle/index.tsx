@@ -58,12 +58,12 @@ export interface ToggleProps {
 }
 
 export default function Toggle({ id, isActive, toggle, showLabel = true, disabled = false, page }: ToggleProps) {
-  const backgroundColor = page === 'liquidity' ? '#FFFFFF' : '#372E5E'
-  const border = page === 'liquidity' ? '1px solid rgba(230, 230, 255, 1)' : '#7A02E0'
+  const backgroundColor = '#FFFFFF'
+  const border = '1px solid rgba(230, 230, 255, 1)'
   return (
     <ToggleContainer>
       {showLabel && (
-        <LabelContainer style={{ color: page === 'liquidity' ? '#666680' : '#EDCEFF' }} isActive={isActive}>
+        <LabelContainer style={{ color: '#666680' }} isActive={isActive}>
           <Trans>{isActive ? 'On' : 'Off'}</Trans>
         </LabelContainer>
       )}

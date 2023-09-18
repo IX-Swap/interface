@@ -9,8 +9,10 @@ export const ReadMoreButton = styled(ButtonEmpty)`
   height: fit-content;
   padding: 0;
   margin: 0;
+  font-size: 13px;
+  font-weight: 600;
   margin-left: 5px;
-  color: ${({ theme }) => theme.text1} !important;
+  color: ${({ theme }) => theme.bg26} !important;
   :hover {
     text-decoration: underline;
   }

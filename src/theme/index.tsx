@@ -53,7 +53,7 @@ export function colors(configColors?: WlColors): Colors {
     text3: wlColors.text?.main || '#6C7284',
     text4: wlColors.text?.main || '#6666FF33',
     text5: wlColors.text?.main || '#555566',
-    text6: wlColors.text?.main || '#8275BC',
+    text6: wlColors.text?.main || '#8F8FB2',
     text7: wlColors.text?.main || '#9184C4',
     text8: wlColors.text?.main || '#9184C3',
     text9: wlColors.text?.main || '#EDCEFF80',
@@ -65,13 +65,13 @@ export function colors(configColors?: WlColors): Colors {
     // rgba(237, 206, 255, 0.05)
     // backgrounds / greys
     bg0: wlColors.background?.main || '#FFFFFF',
-    bg1: wlColors.background?.secondary || '#F7f7FF',
+    bg1: wlColors.background?.secondary || '#F7F7FF',
     bg2: '#F6F6FB',
     bg3: '#6666ff33',
     bg4: '#565A69',
     bg5: '#6C7284',
     bg6: '#1A2028',
-    bg7: wlColors.background?.main || '#372E5E',
+    bg7: wlColors.background?.main || '#F7F7FA',
     bg8: wlColors.background?.secondary || '#0F0518',
     bg9: wlColors.background?.main || '#372E5D',
     bg10: '#EDCEFF',
@@ -185,14 +185,14 @@ export function colors(configColors?: WlColors): Colors {
     yellow1: '#e3a507',
     yellow2: '#ff8f00',
     yellow3: '#F3B71E',
-    yellow4: wlColors.status?.warning || '#F2F99D',
+    yellow4: wlColors.status?.warning || '#FFD056',
     orange: '#FF6D41',
     blue1: '#2172E5',
     blue2: '#5199FF',
     blue3: '#5B7BCF',
     orange1: '#FF6D41',
 
-    error: wlColors.status?.error || '#FF6161',
+    error: wlColors.status?.error || '#FF9999',
     success: wlColors.status?.success || '#27AE60',
     warning: wlColors.status?.warning || '#ff8f00',
     popUpInputBorder: '#7A02E0',
@@ -368,10 +368,10 @@ export const TYPE = {
     return <TextWrapper fontWeight={600} fontSize={28} lineHeight={'56px'} color={'text1'} {...props} />
   },
   title4(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize={36} lineHeight={'56px'} color={'text1'} {...props} />
+    return <TextWrapper fontWeight={800} fontSize={40} lineHeight={'56px'} color={'text1'} {...props} />
   },
   title5(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize={22} lineHeight={'33px'} color={'text1'} {...props} />
+    return <TextWrapper fontWeight={700} fontSize={20} lineHeight={'33px'} color={'text1'} {...props} />
   },
   title6(props: TextProps) {
     return <TextWrapper fontWeight={800} fontSize={32} lineHeight={'38px'} color={'text1'} {...props} />
@@ -386,7 +386,7 @@ export const TYPE = {
     return <TextWrapper fontWeight={600} fontSize={18} lineHeight={'40px'} color={'text1'} {...props} />
   },
   title10(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize={12} lineHeight={'18px'} color={'text1'} {...props} />
+    return <TextWrapper fontWeight={500} fontSize={12} lineHeight={'18px'} color={'text1'} {...props} />
   },
   title11(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={13} lineHeight={'16px'} color={'text5'} {...props} />
@@ -395,7 +395,7 @@ export const TYPE = {
     return <TextWrapper fontWeight={300} fontSize={16} lineHeight={'24px'} color={'text2'} {...props} />
   },
   description2(props: TextProps) {
-    return <TextWrapper fontWeight={300} fontSize={12} lineHeight={'18px'} color={'text2'} {...props} />
+    return <TextWrapper fontWeight={500} fontSize={13} lineHeight={'18px'} color={'#86869D'} {...props} />
   },
   description3(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={13} lineHeight={'21px'} color={'text2'} {...props} />
@@ -410,10 +410,10 @@ export const TYPE = {
     return <TextWrapper fontWeight={300} fontSize={28} lineHeight={'56px'} color={'text1'} {...props} />
   },
   description7(props: TextProps) {
-    return <TextWrapper fontWeight={400} fontSize={30} lineHeight={'45px'} color={'text2'} {...props} />
+    return <TextWrapper fontWeight={700} fontSize={24} lineHeight={'45px'} color={'text2'} {...props} />
   },
   small(props: TextProps) {
-    return <TextWrapper fontWeight={500} fontSize={11} {...props} />
+    return <TextWrapper fontWeight={500} fontSize={13} color={'text11'} {...props} />
   },
   smallError(props: TextProps) {
     return <TextWrapper fontWeight={600} fontSize={10} lineHeight={'15px'} color={'error'} {...props} />

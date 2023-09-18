@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 
-import { ButtonIXSWide } from 'components/Button'
+import { ButtonIXSWide, PinnedContentButton } from 'components/Button'
 import Column from 'components/Column'
 import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import Row from 'components/Row'
@@ -32,6 +32,8 @@ import { WithdrawModalView } from './WithdrawPopup'
 import { FeeStatus } from './FeeStatus'
 import { isPending, WithdrawStatus } from './enum'
 import { WaitingWitdrawalFee, WarningPaidFee } from './styleds'
+import { ReactComponent as IButton } from 'assets/images/newIbutton.svg'
+import styled from 'styled-components'
 
 interface Props {
   currency?: SecCurrency
@@ -119,22 +121,21 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '18px' }}>
-        <Column>
-          <TYPE.description3>
-            <b>
-              <Trans>Info:</Trans>
-            </b>
-            &nbsp;
-            <Trans>{`Your wrapped ${
-              currency?.originalSymbol || tokenInfo?.symbol
-            } will be extracted from your Polygon wallet and burnt automatically.`}</Trans>
+        <InfoSection>
+          <TYPE.description3 style={{ display: 'flex' }}>
+            <Trans>
+              <IButton style={{ margin: '0px 10px 0px 0px' }} />
+              <strong>{`Info:`} &nbsp;</strong> Your wrapped ${currency?.originalSymbol || tokenInfo?.symbol} will be
+              extracted from <br></br> your Polygon wallet and burnt automatically.
+            </Trans>
           </TYPE.description3>
-        </Column>
+        </InfoSection>
+
         <Column style={{ gap: '11px' }}>
           <Row>
-            <TYPE.body1>
+            <TYPE.title11>
               <Trans>I want to withdraw:</Trans>
-            </TYPE.body1>
+            </TYPE.title11>
           </Row>
           <AmountInput
             widthdraw
@@ -183,7 +184,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
         </WarningPaidFee>
       )}
       <Row>
-        <ButtonIXSWide
+        <PinnedContentButton
           style={{ textTransform: 'unset' }}
           disabled={!!inputError || loadingFee || loadingWithdraw}
           onClick={onClick}
@@ -196,8 +197,14 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
           ) : (
             <>{inputError ?? t`${paid ? 'Withdraw' : 'Pay withdraw fee'}`}</>
           )}
-        </ButtonIXSWide>
+        </PinnedContentButton>
       </Row>
     </div>
   )
 }
+
+export const InfoSection = styled.div`
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
+  padding: 20px;
+`

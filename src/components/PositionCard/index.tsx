@@ -41,11 +41,12 @@ export const HoverCard = styled(Card)`
   }
 `
 const StyledPositionCard = styled(LightCard)`
-  border: none;
   background: ${({ theme }) => theme.bg23};
   position: relative;
   overflow: hidden;
-  // padding: 2rem 2rem 1.5rem 2rem;
+  padding: 2rem 2rem 1.5rem 2rem;
+  border: 1px solid #e6e6ff;
+  border-radius: 6px;
   margin-bottom: 0.5rem;
   @media (max-width: 540px) {
     padding: 16px;

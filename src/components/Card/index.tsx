@@ -98,7 +98,7 @@ export const NewEmptyStateInfoCard = styled(Card)`
   gap: 10px;
   min-height: 120px;
   flex-direction: column;
-  background: ${({ theme }) => theme.bg23};
+  background: ${({ theme }) => theme.bg1};
   color: ${({ theme }) => theme.text2};
   @media (max-width: 500px) {
     min-height: fit-content;
@@ -107,7 +107,7 @@ export const NewEmptyStateInfoCard = styled(Card)`
 `
 
 export const DarkCard = styled(Card)`
-  background: ${({ theme }) => theme.bgG4};
+  background: ${({ theme }) => theme.bg1};
   backdrop-filter: blur(4px);
   border-radius: 20px;
   padding: 26px 36px 40px 36px;
@@ -128,7 +128,7 @@ export const DarkCardNew = styled(Card)`
 `
 
 export const LightCardNew = styled(Card)`
-  background: ${({ theme }) => theme.bg23};
+  background: ${({ theme }) => theme.bg1};
   border: 1px solid #e6e6ff;
   backdrop-filter: blur(4px);
   border-radius: 10px;
@@ -142,7 +142,7 @@ export const SwapErrorCard = styled(DarkCard)`
   text-align: left;
 `
 export const BlueGreyCard = styled(Card)`
-  background: ${({ theme }) => `${theme.bg11}66`};
+  // background: ${({ theme }) => `${theme.bg1}66`};
   border-radius: 20px;
   padding: 18px 25px;
 

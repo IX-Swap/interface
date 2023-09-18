@@ -17,6 +17,8 @@ import { useEventState } from 'state/eventLog/hooks'
 import { ModalBlurWrapper, TYPE, CloseIcon, ExternalLink } from 'theme'
 import { shortenAddress } from 'utils'
 import { ReactComponent as SuccessIcon } from 'assets/images/check-2.svg'
+import { ReactComponent as ErrorIcon } from 'assets/images/newCloseIcon.svg'
+import { ReactComponent as PendingIcon } from 'assets/images/NewPendingIcon.svg'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { LogItem } from 'state/eventLog/actions'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -49,6 +51,7 @@ import {
 import { DepoistStatusInfo } from './DepoistStatusInfo'
 import { getNetworkFromToken, getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { WithdrawalWarning } from './WithdrawalWarning'
+import { PinnedContentButton } from 'components/Button'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -110,121 +113,137 @@ export const TransactionDetails = ({ currency }: Props) => {
               {currency?.originalSymbol}&nbsp;{ActionTypeText[data.type]}
             </Trans>
           </TYPE.title5>
-          <CloseIcon data-testid="cross" onClick={toggle} />
+          <CloseIcon style={{ color: '#B8B8CC' }} data-testid="cross" onClick={toggle} />
         </InfoModalHeader>
         <InfoModalBody style={{ position: 'relative' }} isSuccess={isSuccess}>
           {isDeposit(data.type) && status === DepositStatus.PENDING && (
             <DepositWarningInfo>
               <div>WARNING</div>
-              Please execute the transaction of {currency?.originalSymbol} Tokens to the Custodians wallet address on the <br />
+              Please execute the transaction of {currency?.originalSymbol} Tokens to the Custodians wallet address on
+              the <br />
               Ethereum Blockchain.
             </DepositWarningInfo>
           )}
+
           <div>
             <label>
               <Trans>Status:</Trans>
             </label>
-            <hr />
-            <TYPE.descriptionThin color={statusColor}>
-              {statusText} {isSuccess && <SuccessIcon />}
-            </TYPE.descriptionThin>
-            <LiniarProgressContainer statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
-              <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
-            </LiniarProgressContainer>
-            {isDeposit(data.type) && status === DepositStatus.PENDING && (
-              <PendingDepositInfo>
-                <Row style={{ flexWrap: 'wrap', gap: '12px', alignItems: 'flex-end', marginTop: '8px' }}>
-                  <div style={{ flex: '1', minWidth: '60%' }}>
-                    <DepoistStatusInfo
-                      originalSymbol={currency?.originalSymbol}
-                      fromAddress={data.fromAddress}
-                      toAddress={data.depositAddress}
-                      amount={data.amount}
-                      network={originalNetworkName}
-                    />
-                  </div>
+            {/* <hr /> */}
 
-                  <div style={{ margin: '0 auto' }}>
-                    <QRCodeWrap
-                      value={data.depositAddress ?? ''}
-                      size={80}
-                      info={<StyledQrInfo>{shortenAddress(data?.depositAddress || '', 4, originalNetworkName)}</StyledQrInfo>}
-                    ></QRCodeWrap>
-                  </div>
-                </Row>
-                {data.deadline && (
-                  <DeadlineInfo>
-                    <Trans>
-                      Deposit will be cancelled if no tokens are received until{' '}
-                      {dayjs(data.deadline).format('MMM D HH:mm')}
-                    </Trans>
-                  </DeadlineInfo>
-                )}
-              </PendingDepositInfo>
-            )}
+            <div
+              style={{
+                background: '#FFFFFF',
+                padding: '24px 16px',
+                border: '1px solid #E6E6FF',
+                borderRadius: '8px',
+                marginTop: '10px',
+              }}
+            >
+              <RowBetween>
+                <TYPE.description2 color={statusColor}>{statusText} </TYPE.description2>{' '}
+                {isSuccess ? <SuccessIcon /> : data?.status === 'pending' ? <PendingIcon /> : <ErrorIcon />}
+              </RowBetween>
+
+              <LiniarProgressContainer statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
+                <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
+              </LiniarProgressContainer>
+              {isDeposit(data.type) && status === DepositStatus.PENDING && (
+                <PendingDepositInfo>
+                  <Row style={{ flexWrap: 'wrap', gap: '12px', alignItems: 'flex-end', marginTop: '8px' }}>
+                    <div style={{ flex: '1', minWidth: '60%' }}>
+                      <DepoistStatusInfo
+                        originalSymbol={currency?.originalSymbol}
+                        fromAddress={data.fromAddress}
+                        toAddress={data.depositAddress}
+                        amount={data.amount}
+                        network={originalNetworkName}
+                      />
+                    </div>
+
+                    <div style={{ margin: '0 auto' }}>
+                      <QRCodeWrap
+                        value={data.depositAddress ?? ''}
+                        size={80}
+                        info={
+                          <StyledQrInfo>
+                            {shortenAddress(data?.depositAddress || '', 4, originalNetworkName)}
+                          </StyledQrInfo>
+                        }
+                      ></QRCodeWrap>
+                    </div>
+                  </Row>
+                  {data.deadline && (
+                    <DeadlineInfo>
+                      <Trans>
+                        Deposit will be cancelled if no tokens are received until{' '}
+                        {dayjs(data.deadline).format('MMM D HH:mm')}
+                      </Trans>
+                    </DeadlineInfo>
+                  )}
+                </PendingDepositInfo>
+              )}
+            </div>
           </div>
+
           <Column style={{ rowGap: '8px' }}>
             <RowBetween style={{ flexWrap: 'wrap' }}>
-              <label>
-                <Trans>Txn ID:</Trans>&nbsp;&nbsp;
-              </label>
-              <TYPE.descriptionThin>{data.id}</TYPE.descriptionThin>
+              <TYPE.small>Txn ID:</TYPE.small>&nbsp;&nbsp;
+              <TYPE.main1>{data.id}</TYPE.main1>
             </RowBetween>
             <RowBetween style={{ flexWrap: 'wrap' }}>
-              <label>
-                <Trans>Date:</Trans>&nbsp;&nbsp;
-              </label>
-              <TYPE.descriptionThin>{formattedDate}</TYPE.descriptionThin>
+              <TYPE.small>Date:</TYPE.small>&nbsp;&nbsp;
+              <TYPE.main1>{formattedDate}</TYPE.main1>
             </RowBetween>
 
             <RowBetween style={{ flexWrap: 'wrap' }}>
-              <label>
-                <Trans>Amount:</Trans>
-              </label>
-              <TYPE.descriptionThin>
+              <TYPE.small>Amount:</TYPE.small>
+
+              <TYPE.main1>
                 {amount}&nbsp;{currency?.originalSymbol}
-              </TYPE.descriptionThin>
+              </TYPE.main1>
             </RowBetween>
 
             {data?.fromAddress && (
               <RowBetween style={{ flexWrap: 'wrap' }}>
-                <label>
-                  {isDeposit(data.type) && <Trans>Sender&apos;s address:</Trans>}
-                  {isWithdraw(data.type) && <Trans>Receiver&apos;s address:</Trans>}
-                </label>
-                <TYPE.descriptionThin>
+                {isDeposit(data.type) && <TYPE.small>Sender&apos;s address:</TYPE.small>}
+                {isWithdraw(data.type) && <TYPE.small>Receiver&apos;s address:</TYPE.small>}
+
+                <TYPE.main1>
                   <Flex>
-                    <CopyAddress address={data?.fromAddress || ''} network={originalNetworkName}/>
+                    <CopyAddress address={data?.fromAddress || ''} network={originalNetworkName} />
                   </Flex>
-                </TYPE.descriptionThin>
+                </TYPE.main1>
               </RowBetween>
             )}
             {isDeposit(data.type) && (
               <RowBetween style={{ flexWrap: 'wrap' }}>
                 <label>
-                  <Trans>Receiver&apos;s address: </Trans>
+                  <TYPE.small>Receiver&apos;s address: </TYPE.small>
                 </label>
-                <TYPE.descriptionThin>
+                <TYPE.main1>
                   <Flex>
-                    <CopyAddress address={data?.depositAddress || ''} network={originalNetworkName}/>
+                    <CopyAddress address={data?.depositAddress || ''} network={originalNetworkName} />
                   </Flex>
-                </TYPE.descriptionThin>
+                </TYPE.main1>
               </RowBetween>
             )}
 
             {isWithdraw(data.type) && chainId && data.feeTxHash && (
               <RowBetween style={{ flexWrap: 'wrap' }}>
                 <label>
-                  <Trans>Fee paid ({data.feeAmount} MATIC):</Trans>
+                  <TYPE.small>Fee paid ({data.feeAmount} MATIC):</TYPE.small>
                 </label>
                 <ExternalLink href={getExplorerLink(chainId, data.feeTxHash, ExplorerDataType.TRANSACTION)}>
-                  <Trans>View on explorer</Trans>
+                  <TYPE.small style={{ color: '#6666FF', textDecoration: 'none !important' }}>
+                    View on explorer
+                  </TYPE.small>
                 </ExternalLink>
               </RowBetween>
             )}
             {depositError && (
               <RowCenter style={{ marginTop: '16px', opacity: '0.7' }}>
-                <TYPE.description2>{depositError}</TYPE.description2>
+                <TYPE.main1>{depositError}</TYPE.main1>
               </RowCenter>
             )}
           </Column>
@@ -235,6 +254,7 @@ export const TransactionDetails = ({ currency }: Props) => {
               symbol={currency?.originalSymbol}
             />
           )}
+          {!isSuccess && <PinnedContentButton>Contact Support</PinnedContentButton>}
         </InfoModalBody>
       </ModalBlurWrapper>
     </RedesignedWideModal>

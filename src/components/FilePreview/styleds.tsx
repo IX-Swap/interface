@@ -4,10 +4,12 @@ import styled, { css } from 'styled-components'
 import { ReactComponent as PdfImage } from 'assets/images/pdf.svg'
 
 export const Wrapper = styled(Flex)<{ withBackground: boolean }>`
-  padding: 8px 12px;
-  border-radius: 32px;
-  background-color: ${({ theme, withBackground }) => (withBackground ? theme.bg11 : 'none')};
-  max-width: ${({ withBackground }) => (withBackground ? 228 : 200)}px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  // min-width: 100%;
+  border: 1px solid #e6e6ff;
+  // background-color: ${({ theme, withBackground }) => (withBackground ? theme.bg1 : 'none')};
+  width: 100%;
 `
 
 export const StyledPdfImage = styled(PdfImage)`

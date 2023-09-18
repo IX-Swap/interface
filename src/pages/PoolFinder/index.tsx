@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
-import { Text } from 'rebass'
+import { Box, Text } from 'rebass'
 import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import JSBI from 'jsbi'
@@ -115,19 +115,29 @@ export default function PoolFinder() {
           </SelectCurrencyContainer>
           {poolFound && pair && (
             <FoundPoolWrapper>
-              <Column>
-                <TYPE.title9>
-                  <Trans>Pool Found!</Trans>
-                </TYPE.title9>
-                <StyledInternalLink to={`/pool`}>
-                  <SemiTransparent>
-                    <Text fontSize={12} lineHeight={'18px'}>
-                      <Trans>Manage this Pool</Trans>
-                    </Text>
-                  </SemiTransparent>
-                </StyledInternalLink>
-              </Column>
-              <FullPositionCard pair={pair} />
+              <div
+                style={{
+                  border: '1px solid #E6E6FF',
+                  width: '100%',
+                  padding: '20px',
+                  borderRadius: '6px',
+                  textAlign: 'center',
+                }}
+              >
+                <Column>
+                  <TYPE.title9>
+                    <Trans>Pool Found!</Trans>
+                  </TYPE.title9>
+                  <StyledInternalLink to={`/pool`}>
+                    <SemiTransparent>
+                      <Text marginBottom="10px" fontSize={12} lineHeight={'18px'}>
+                        <Trans>Manage this Pool</Trans>
+                      </Text>
+                    </SemiTransparent>
+                  </StyledInternalLink>
+                </Column>
+                <FullPositionCard pair={pair} />
+              </div>
             </FoundPoolWrapper>
           )}
           {!poolFound && !prerequesiteState && currency0 && currency1 && (
@@ -137,11 +147,11 @@ export default function PoolFinder() {
                   <TYPE.title7 fontWeight={500}>
                     <Trans>You don’t have liquidity in this pool yet</Trans>
                   </TYPE.title7>
-                  <ButtonGradient style={{ width: '214px' }}>
+                  <PinnedContentButton>
                     <Link to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`} style={{ color: theme.white }}>
                       <Trans>Add liquidity</Trans>
                     </Link>
-                  </ButtonGradient>
+                  </PinnedContentButton>
                 </EmptyStateInfoCard>
               )}
               {noPool && currency0 && currency1 && (
@@ -151,8 +161,11 @@ export default function PoolFinder() {
                       <Trans>No pool found</Trans>
                     </Text>
                   </TYPE.title9>
-                  <PinnedContentButton style={{ width: '214px' }}>
-                    <Link to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`} style={{ color: theme.text1 }}>
+                  <PinnedContentButton height="60px">
+                    <Link
+                      to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}
+                      style={{ color: '#FFFFFF', fontWeight: '600' }}
+                    >
                       <Trans>Create pool</Trans>
                     </Link>
                   </PinnedContentButton>
@@ -182,10 +195,10 @@ export default function PoolFinder() {
           showCommonBases={false}
           selectedCurrency={(activeField === Fields.TOKEN0 ? currency1 : currency0) ?? undefined}
         />
-        {/* <TipWithMessage
-          message={<Trans>Use this tool to find pairs that don&apos;t automatically appear in the interface.</Trans>}
-        /> */}
       </AppBody>
+      {/* <TipWithMessage
+        message={<Trans>Use this tool to find pairs that don&apos;t automatically appear in the interface.</Trans>}
+      /> */}
       {/* </AddLiduidityContainer> */}
     </>
   )
