@@ -34,7 +34,7 @@ const StyledClose = styled(X)`
 `
 const SettingsModalContentWrapper = styled(ModalContentWrapper)`
   border-radius: 10px;
-  background: ${({ theme }) => theme.bg23};
+  background: ${({ theme }) => theme.bg1};
   padding: 25px 20px;
   border: 1px solid #e6e6ff;
   margin-bottom: 14px;

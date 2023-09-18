@@ -37,7 +37,7 @@ const FixedContainer = styled.div`
   height: 100%;
   position: absolute;
   border-radius: 20px;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg23};
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg1};
   opacity: 0.95;
   display: flex;
   align-items: center;
@@ -48,7 +48,7 @@ const FixedContainer = styled.div`
 const NewContainer = styled.div<{ hideInput: boolean }>`
   border-radius: 8px;
   border: solid 1px #e6e6ff;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg23};
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg1};
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       border-radius: 20px;
@@ -66,7 +66,7 @@ const Container = styled.div<{ hideInput: boolean }>`
 
 const CurrencySelect = styled(ButtonEmpty)<{ selected: boolean; hideInput?: boolean }>`
   align-items: center;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg23};
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg1};
   color: ${({ selected, theme }) => (selected ? theme.text1 : theme.config.text?.additional1 || theme.white)};
   border-radius: 16px;
   outline: none;
@@ -141,7 +141,7 @@ export const StyledDropDown = styled(DropDown)<{ selected: boolean }>`
 const StyledTokenName: any = styled.span<{ active?: boolean }>`
   ${({ active }) => (active ? '  margin: 0 0.25rem 0 0.25rem;' : '  margin: 0 0.25rem 0 0.25rem;')}
   font-size:  ${({ active }) => (active ? '14px' : '14px')};
-  color: ${({ theme }) => theme.text11};
+  color: ${({ theme }) => theme.text1};
   // border: solid 1px red;
 `
 const BalanceRow = styled(RowEnd)``

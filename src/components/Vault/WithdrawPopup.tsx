@@ -52,11 +52,17 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
       mobileMaxHeight={90}
       topContent={
         <HideSmall>
-          <TYPE.body6 marginBottom="5px" marginTop="50px">
+          <TYPE.main1
+            style={{ padding: '10px 58px', borderRadius: '8px' }}
+            backgroundColor="#b4b4ce"
+            color="#FFFFFF"
+            marginBottom="15px"
+            marginTop="20px"
+          >
             <Trans>{`${amount || '0'} ${
               tokenInfo?.symbol
             } will be extracted from your Polygon wallet and burnt automatically.`}</Trans>
-          </TYPE.body6>
+          </TYPE.main1>
         </HideSmall>
       }
     >

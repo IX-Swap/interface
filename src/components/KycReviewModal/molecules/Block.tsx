@@ -21,7 +21,7 @@ export const Block = ({ title, children, additionalTitleInfo }: Props) => {
 }
 
 const Container = styled.div`
-  background-color: ${({ theme: { bg11 } }) => `${bg11}40`};
+  // background-color: ${({ theme: { bg11 } }) => `${bg11}40`};
   border-radius: 16px;
   padding: 32px 24px;
 `

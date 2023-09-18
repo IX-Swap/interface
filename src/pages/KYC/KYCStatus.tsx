@@ -27,9 +27,17 @@ const IconWrapper = styled.div<{ size?: number }>`
     width: ${({ size }) => (size ? size + 'px' : '32px')};
   }
 `
+
+const VerticalLine = styled.div`
+  border-left: 1px solid #e6e6ff;
+  height: 32px;
+  // margin-left: 10px;
+`
+
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
   return b.addedTime - a.addedTime
 }
+
 // eslint-disable-next-line react/prop-types
 function StatusIcon({ connector }: { connector: AbstractConnector }) {
   if (connector === injected) {
@@ -44,6 +52,7 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
 
   return null
 }
+
 export const KYCStatus: FC<Props> = ({ status }: Props) => {
   const { account, connector } = useActiveWeb3React()
   const { icon, text, color } = getStatusInfo(status)
@@ -62,10 +71,11 @@ export const KYCStatus: FC<Props> = ({ status }: Props) => {
       <TYPE.main1 marginLeft={'10px'} marginRight="16px">
         {shortAddress(account ?? '')}
       </TYPE.main1>
+      <VerticalLine />
       <Flex style={{ whiteSpace: 'nowrap' }} alignItems="center">
-        <TYPE.main2 marginLeft={'80px'} marginRight="10px" data-testid="kycStatus">
+        <TYPE.main1 marginLeft={'10px'} marginRight="10px" data-testid="kycStatus">
           {text}
-        </TYPE.main2>
+        </TYPE.main1>
         {icon()}
       </Flex>
     </KYCStatusCard>

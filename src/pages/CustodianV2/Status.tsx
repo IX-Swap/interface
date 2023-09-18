@@ -6,6 +6,8 @@ import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 
 import { StyledButtonMuted } from './styleds'
+import PendingIcon from 'assets/images/newPending.svg'
+import RejectIcon from 'assets/images/newReject.svg'
 
 interface Props {
   status: string
@@ -27,20 +29,23 @@ export const Status: FC<Props> = ({ status, amount: propAmount, decimals }: Prop
       case 'pending':
       case 'new':
         return (
-          <StyledButtonMuted color={'text1'}>
-            <Trans>Pending...</Trans>
+          <StyledButtonMuted display="flex" color={'text1'}>
+            <Trans>Pending</Trans>
+            <img style={{ marginLeft: '7px' }} width="20px" src={PendingIcon} alt="PendingIcon" />
           </StyledButtonMuted>
         )
       case 'failed':
         return (
-          <StyledButtonMuted color="rgba(237, 3, 118, 1)">
+          <StyledButtonMuted display="flex" color={'text1'}>
             <Trans>Failed</Trans>
+            <img style={{ marginLeft: '7px' }} width="20px" src={RejectIcon} alt="RejectIcon" />
           </StyledButtonMuted>
         )
       case 'declined':
         return (
-          <StyledButtonMuted color="rgba(237, 3, 118, 1)">
+          <StyledButtonMuted display="flex" color={'text1'}>
             <Trans>Rejected</Trans>
+            <img style={{ marginLeft: '7px' }} width="20px" src={RejectIcon} alt="RejectIcon" />
           </StyledButtonMuted>
         )
       default:

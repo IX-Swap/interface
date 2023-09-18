@@ -68,23 +68,23 @@ export default function CustodianV2() {
 
   return (
     <>
-      <TYPE.title4 marginBottom="16px" data-testid="securityTokensTitle">
+      <TYPE.title4 marginBottom="30px" data-testid="securityTokensTitle">
         <Trans>Security tokens</Trans>
       </TYPE.title4>
-      <Info />
+      {/* <Info /> */}
       {tokens && (
         <>
           {mySecTokens?.length > 0 && (
             <MySecTokensTab marginBottom="72px">
-              <GradientText>
-                <TYPE.title5 marginBottom="32px" color="inherit">
-                  <Trans>My security tokens</Trans>
-                </TYPE.title5>
-              </GradientText>
+              {/* <GradientText> */}
+              <TYPE.title5 marginBottom="32px">
+                <Trans>My security tokens</Trans>
+              </TYPE.title5>
+              {/* </GradientText> */}
               {approvedSecTokens.length > 0 && (
                 <>
-                  <TYPE.title6 marginBottom="32px" color="text9">
-                    <Trans>ACCREDITED</Trans>
+                  <TYPE.title6 fontSize={'13px'} marginBottom="32px">
+                    <Trans>Accredited</Trans>
                   </TYPE.title6>
                   <MySecTokensGrid>
                     {approvedSecTokens.map((token: any) => (
@@ -95,9 +95,9 @@ export default function CustodianV2() {
               )}
               {pendingSecTokens.length > 0 && (
                 <>
-                  <Divider />
-                  <TYPE.title6 marginBottom="32px" color="text9">
-                    <Trans>PENDING ACCREDITATION</Trans>
+                  <Divider style={{ marginTop: '50px', marginBottom: '40px' }} />
+                  <TYPE.title6 fontSize={'13px'} marginBottom="32px">
+                    <Trans>Pending Accreditations</Trans>
                   </TYPE.title6>
                   <MySecTokensGrid>
                     {pendingSecTokens.map((token: any) => (

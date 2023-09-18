@@ -15,6 +15,7 @@ import { DesktopAndTablet, LinkStyledButton, TYPE } from 'theme'
 import { ActionFilterTabs, ActionTypeTextHeader, filterTabs } from './enum'
 import { getStatusIcon, HistoryHeaderWrapper } from './styleds'
 import { TransactionHistoryRow } from './TransactionHistoryRow'
+import { Line } from 'components/Line'
 
 const PopOverContent = styled.div`
   display: flex;
@@ -85,7 +86,7 @@ export const HistoryTable = ({ currency }: { currency?: Currency & { originalSym
   const theme = useTheme()
   return (
     <>
-      <table style={{ marginTop: '26px', width: '100%', border: 'none' }} cellSpacing="0" cellPadding="0">
+      <table style={{ marginTop: '26px', width: '100%' }} cellSpacing="20px" cellPadding="0">
         <HistoryHeader />
         {eventLog.length > 0 &&
           currency &&

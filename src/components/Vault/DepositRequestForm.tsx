@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
-import { ArrowDown } from 'react-feather'
+import { ReactComponent as DownArrow } from 'assets/images/DownArrow.svg'
 
-import { ButtonIXSWide, ButtonGradient, ButtonText } from 'components/Button'
+import { ButtonIXSWide, ButtonGradient, ButtonText, PinnedContentButton } from 'components/Button'
 import Column from 'components/Column'
-import Row from 'components/Row'
+import Row, { RowBetween } from 'components/Row'
 import useENS from 'hooks/useENS'
 import { useActiveWeb3React } from 'hooks/web3'
 import {
@@ -31,9 +31,10 @@ import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
 import info from '../../assets/images/info-filled.svg'
 import { DepositWarningModal } from './DepositWarningModal'
+import { Line } from 'components/Line'
 
 export const ArrowWrapper = styled.div`
-  padding: 7px 5px;
+  // padding: 7px 5px;
   border-radius: 100%;
   margin: 14px auto;
   height: 31px;
@@ -41,10 +42,10 @@ export const ArrowWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.bg9};
+  // background-color: ${({ theme }) => theme.bg9};
 `
 interface Props {
-  currency?: SecCurrency & { tokenInfo?: { decimals?: number, originalDecimals?: number } }
+  currency?: SecCurrency & { tokenInfo?: { decimals?: number; originalDecimals?: number } }
   token: any
 }
 
@@ -110,9 +111,9 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
         <BlueGreyCard>
           <Column style={{ gap: '11px' }}>
             <Row>
-              <TYPE.body1>
+              <TYPE.title11>
                 <Trans>I want to deposit:</Trans>
-              </TYPE.body1>
+              </TYPE.title11>
             </Row>
             <AmountInput
               token={token}
@@ -127,7 +128,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
             <Row>
               <TYPE.body1 style={{ display: 'flex' }}>
                 <Trans>
-                  From my&nbsp;<TYPE.body1 color="error">{`${networkName || ''} wallet:`}</TYPE.body1>
+                  From my&nbsp;<TYPE.body1>{`${networkName || ''} wallet:`}</TYPE.body1>
                 </Trans>
               </TYPE.body1>
             </Row>
@@ -136,9 +137,9 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               placeholder={`Paste your ${networkName || ''} wallet`}
             />
           </Column>
-          <Column style={{ margin: '12px 0px', padding: '0 22px' }}>
+          <Column style={{ margin: '12px 0px', width: '60%' }}>
             <Row>
-              <TYPE.description2 color={`${theme.text2}80`}>
+              <TYPE.description2 color="#B8B8CC" fontSize="11px" fontWeight="400">
                 <Trans>
                   Please provide sender’s address in order to approve this transaction. Other addresses will be
                   rejected.
@@ -146,19 +147,25 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               </TYPE.description2>
             </Row>
           </Column>
+          <Line />
         </BlueGreyCard>
       </Column>
       <ArrowWrapper>
-        <ArrowDown width="22px" height="22px" color={theme.text9} />
+        <DownArrow />
       </ArrowWrapper>
       <Column style={{ gap: '25px', marginTop: '16px' }}>
         <BlueGreyCard>
           <Column style={{ gap: '11px' }}>
-            <Row>
+            <RowBetween>
               <TYPE.body1>
                 <Trans>{`You will get wrapped ${currency?.originalSymbol || currency?.symbol}:`}</Trans>
               </TYPE.body1>
-            </Row>
+              <HideSmall style={{ cursor: 'pointer' }}>
+                <TYPE.description2 color="#6666FF" onClick={showAboutWrapping}>
+                  About Wrapping
+                </TYPE.description2>
+              </HideSmall>
+            </RowBetween>
             <AmountInput
               token={token}
               currency={currency}
@@ -166,20 +173,15 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               value={amount ? `${amount} ${currency?.symbol || currency?.originalSymbol}` : ''}
               onUserInput={onTypeAmount}
               amount={parsedAmount}
-              rightItem={
-                <>
-                  <HideSmall>
-                    <ButtonGradient style={{ width: '146px' }} onClick={showAboutWrapping}>
-                      <Trans>About Wrapping</Trans>
-                    </ButtonGradient>
-                  </HideSmall>
-                  <SmallOnly>
-                    <ButtonText onClick={showAboutWrapping}>
-                      <img src={info} alt="info icon" width="20px" height="20px" />
-                    </ButtonText>
-                  </SmallOnly>
-                </>
-              }
+              // rightItem={
+              //   <>
+              //     <SmallOnly>
+              //       <ButtonText onClick={showAboutWrapping}>
+              //         <img src={info} alt="info icon" width="20px" height="20px" />
+              //       </ButtonText>
+              //     </SmallOnly>
+              //   </>
+              // }
             />
           </Column>
           <Column style={{ marginTop: '20px', marginBottom: '16px', gap: '11px' }}>
@@ -202,9 +204,9 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
         </BlueGreyCard>
       </Column>
       <Row style={{ marginTop: '43px', marginBottom: '8px' }}>
-        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={onClick}>
+        <PinnedContentButton style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={onClick}>
           {inputError ?? <Trans>Create deposit request</Trans>}
-        </ButtonIXSWide>
+        </PinnedContentButton>
       </Row>
     </div>
   )

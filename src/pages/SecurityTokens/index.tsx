@@ -84,9 +84,7 @@ const SecurityTokens = () => {
           {tabs.map(({ value, label }, index) => (
             <>
               <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-                <TabLabel>
-                  <Trans>{label}</Trans>
-                </TabLabel>
+                <TabLabel>{/* <Trans>{label}</Trans> */}</TabLabel>
                 <Border active={selectedTab === value} />
               </ToggleOption>
             </>
@@ -119,10 +117,11 @@ const TabLabel = styled.div`
 `
 
 export const StyledBodyWrapper = styled(BodyWrapper)`
-  background: ${({ theme }) => theme.bg0};
+  // background: ${({ theme }) => theme.bg0};
+  box-shadow: none;
   width: 100%;
   max-width: 1358px;
-  border-radius: 8px;
+  // border-radius: 8px;
   padding-top: 0px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 0px;

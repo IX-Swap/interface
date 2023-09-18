@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
 
-import { ButtonIXSGradient } from 'components/Button'
+import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useWalletModalToggle, useChooseBrokerDealerModalToggle } from 'state/application/hooks'
 import { useSecTokenId } from 'state/secTokens/hooks'
@@ -79,10 +79,10 @@ export const NoVault = ({
   return (
     <NoVaultWrapper>
       <NoVaultTitle style={{ order: 1, zIndex: 4 }}>
-        <TYPE.title3>
+        <TYPE.title6>
           {userHaveValidAccount ? <Trans>Create {symbolText} Vault</Trans> : <Trans>NOT AVAILABLE</Trans>}
-        </TYPE.title3>
-        {userHaveValidAccount && (
+        </TYPE.title6>
+        {/* {userHaveValidAccount && (
           <QuestionHelper
             width={512}
             text={
@@ -103,13 +103,13 @@ export const NoVault = ({
               </>
             }
           />
-        )}
+        )} */}
       </NoVaultTitle>
 
       {userHaveValidAccount && (
         <>
           <VaultStatusDescription style={{ order: statuses.includes(AccreditationStatusEnum.DECLINED) ? 3 : 2 }}>
-            <TYPE.descriptionThin>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.descriptionThin>
+            <TYPE.body1>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.body1>
           </VaultStatusDescription>
 
           {(custodianStatus || brokerDealerStatus) && (
@@ -124,35 +124,35 @@ export const NoVault = ({
       {userHaveValidAccount ? (
         <RowCenter style={{ order: 4 }}>
           {!account && (
-            <ButtonIXSGradient
+            <PinnedContentButton
               style={{ marginTop: '28px', padding: '16px 24px' }}
               onClick={toggleWalletModal}
               disabled={!!account}
               data-testid="connect-wallet-in-vault"
             >
               <Trans>Connect Wallet</Trans>
-            </ButtonIXSGradient>
+            </PinnedContentButton>
           )}
 
           {Boolean(account && !PENDING_ACCREDITATION_STATUSES.some((status) => statuses.includes(status))) && (
-            <ButtonIXSGradient
+            <PinnedContentButton
               style={{ marginTop: '28px', padding: '16px 24px' }}
               data-testid="pass-kyc-and-accreditation"
               onClick={toggleChooseBrokerDealerModal}
             >
-              {statuses.some((status) => !status) && <Trans>Pass Accreditation</Trans>}
+              {statuses.some((status) => !status) && <Trans>Pass KYC & accreditation</Trans>}
               {ERROR_ACCREDITATION_STATUSES.some((status) => statuses.includes(status)) && (
                 <Trans>Retry pass accreditation</Trans>
               )}
-            </ButtonIXSGradient>
+            </PinnedContentButton>
           )}
-          <ChooseBrokerDealerPopup tokenId={tokenId} currencyId={currencyId} />
+          <ChooseBrokerDealerPopup tokenId={tokenId} currencyId={currencyId} symbolText={symbolText} />
         </RowCenter>
       ) : (
         <VaultStatusDescription style={{ order: 2 }}>
-          <TYPE.descriptionThin>
+          <TYPE.title6>
             <Trans>This Security Token is not available for your KYC type</Trans>
-          </TYPE.descriptionThin>
+          </TYPE.title6>
         </VaultStatusDescription>
       )}
     </NoVaultWrapper>

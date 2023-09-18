@@ -273,7 +273,7 @@ const navLinkStyles = css`
   :focus {
     color: ${({ theme }) => darken(0.05, theme.text11)};
     &.${activeClassName} {
-      color: ${({ theme }) => theme.config.text?.main || theme.white};
+      color: ${({ theme }) => theme.config.text?.main || theme.text1};
     }
   }
   @media (max-width: 1500px) {

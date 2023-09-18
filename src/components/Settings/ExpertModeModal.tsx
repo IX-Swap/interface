@@ -22,7 +22,7 @@ const ExpertModalContentWrapper = styled.div`
   }
 
   border-radius: 20px;
-  background: ${({ theme }) => theme.bgG4};
+  background: ${({ theme }) => theme.bg1};
   text-align: center;
 `
 

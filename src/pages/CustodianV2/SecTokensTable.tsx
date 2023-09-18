@@ -1,12 +1,12 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react'
+import React, { ChangeEvent, FC, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import { Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
-
+import { getNames } from 'country-list'
 import { Table, HeaderRow, BodyRow } from 'components/Table'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { Pagination } from 'components/Pagination'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { useFetchIssuers, useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
@@ -14,9 +14,18 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import { RowCenter } from 'components/Row'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { FilterDropdown } from './FilterDropdown'
+import { industries } from 'components/AdminSecurityCatalog/mock'
+import { ButtonGradientBorder, PinnedContentButton } from 'components/Button'
 
 import { StyledSearchInput, StyledNonTradable, StyledTradable } from './styleds'
 import { routes } from 'utils/routes'
+import { BodyWrapper } from 'pages/AppBody'
+// import { Pagination } from 'components/Vault/Pagination'
+// import { Pagination } from 'components/AdminAccreditationTable/Pagination'
+// import Pagination from '@mui/material/Pagination/Pagination'
+// import Pagination from '@mui/material/Pagination'
+// import { Pagination } from '@mui/material'
 
 interface Props {
   tokens: any[]
@@ -43,6 +52,19 @@ const Header = () => {
     </StyledHeaderRow>
   )
 }
+
+export const StyledBodyWrapper = styled(BodyWrapper)`
+  background: ${({ theme }) => theme.bg0};
+  box-shadow: none;
+  width: 100%;
+  // padding: 0px;
+  max-width: 1358px;
+  border-radius: 8px;
+  padding-top: 60px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 0px;
+  }
+`
 
 const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
   const { config } = useWhitelabelState()
@@ -84,7 +106,11 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
                 placement="top"
                 text={`${token?.token ? 'Ready' : 'Not ready'} for trading on ${config?.name || 'IX Swap'}`}
               >
-                {token.token ? <StyledTradable width={22} height={22} /> : <StyledNonTradable width={22} height={22} />}
+                {token.token ? (
+                  <TYPE.small color="#6666FF">Trade Now</TYPE.small>
+                ) : (
+                  <TYPE.small>Not Tradable</TYPE.small>
+                )}
               </MouseoverTooltip>
             </div>
           </StyledBodyRow>
@@ -96,15 +122,21 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
 
 export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, totalItems }: Props) => {
   const [searchValue, setSearchValue] = useState('')
-  const [filters] = useState<any>({
+  // const [filters] = useState<any>({
+  //   industry: null,
+  //   country: null,
+  //   issuer: null,
+  // })
+  const getIssuers = useFetchIssuers()
+  // const { loadingRequest } = useSecCatalogState()
+  const [currentPage, setCurrentPage] = useState(1)
+  const fetchTokens = useFetchTokens()
+  const [filters, setFilters] = useState<any>({
     industry: null,
     country: null,
     issuer: null,
   })
-  const getIssuers = useFetchIssuers()
-  const { loadingRequest } = useSecCatalogState()
-  const [currentPage, setCurrentPage] = useState(1)
-  const fetchTokens = useFetchTokens()
+  const { issuers, loadingRequest } = useSecCatalogState()
 
   useEffect(() => {
     getIssuers({ page: 1, offset: 100000 })
@@ -142,48 +174,48 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
     setCurrentPage(page)
   }
 
-  // const handleResetFilters = () => {
-  //   setFilters({
-  //     industry: null,
-  //     country: null,
-  //     issuer: null,
-  //   })
-  //   setSearchValue('')
-  // }
+  const handleResetFilters = () => {
+    setFilters({
+      industry: null,
+      country: null,
+      issuer: null,
+    })
+    setSearchValue('')
+  }
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
     setCurrentPage(1)
   }
 
-  // const onFilterChange = (filterName: string, filter: any) => {
-  //   setFilters({ ...filters, [filterName]: filter })
-  //   setCurrentPage(1)
-  // }
+  const onFilterChange = (filterName: string, filter: any) => {
+    setFilters({ ...filters, [filterName]: filter })
+    setCurrentPage(1)
+  }
 
-  // const countries = useMemo(() => {
-  //   return getNames()
-  //     .map((name, index) => ({ id: ++index, name }))
-  //     .sort((a, b) => a.name.localeCompare(b.name))
-  // }, [])
+  const countries = useMemo(() => {
+    return getNames()
+      .map((name, index) => ({ id: ++index, name }))
+      .sort((a, b) => a.name.localeCompare(b.name))
+  }, [])
 
-  // const issuersWithTokens = useMemo(() => {
-  //   return issuers
-  //     ? issuers.items
-  //         .filter(({ tokens }: any) => tokens.length > 0)
-  //         .map(({ id, name }: any) => ({
-  //           id,
-  //           name,
-  //         }))
-  //     : []
-  // }, [issuers]) // get issuers with tokens.length > 0
+  const issuersWithTokens = useMemo(() => {
+    return issuers
+      ? issuers.items
+          .filter(({ tokens }: any) => tokens.length > 0)
+          .map(({ id, name }: any) => ({
+            id,
+            name,
+          }))
+      : []
+  }, [issuers]) // get issuers with tokens.length > 0
 
   return (
-    <>
+    <StyledBodyWrapper>
       <TYPE.title5 marginBottom="40px" display="flex" id="other-security-tokens-title">
         {`Other security tokens`}
         <TYPE.title5 marginLeft="4px" color="text2">
-          {`(${totalItems})`}
+          {/* {`(${totalItems})`} */}
         </TYPE.title5>
       </TYPE.title5>
 
@@ -195,20 +227,20 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
           onChange={onSearchChange}
         />
 
-        {/* <Flex>
+        <Flex>
           <FilterDropdown
             placeholder="Issuers"
             selectedItem={filters.issuer}
             onSelect={(item) => onFilterChange('issuer', item)}
             items={issuersWithTokens}
-            style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1, padding: 8, width: 132 }}
+            // style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1, padding: 8, width: 132 }}
           />
           <FilterDropdown
             selectedItem={filters.country}
             placeholder="Country"
             onSelect={(item) => onFilterChange('country', item)}
             items={countries}
-            style={{ borderRadius: '0px', marginRight: 1, padding: 8, width: 132 }}
+            // style={{ borderRadius: '0px', marginRight: 1, padding: 8, width: 132 }}
             withScroll
           />
           <FilterDropdown
@@ -216,16 +248,16 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
             placeholder="Industry"
             onSelect={(item) => onFilterChange('industry', item)}
             items={industries}
-            style={{ borderRadius: '0px 30px 30px 0px', padding: 8, width: 132 }}
+            // style={{ borderRadius: '1px', padding: 8, width: 132 }}
           />
         </Flex>
 
-        <ButtonGradientBorder
+        <PinnedContentButton
           onClick={handleResetFilters}
-          style={isMobile ? { width: '100%', marginTop: 16 } : { width: 200, marginLeft: 16 }}
+          style={isMobile ? { width: '100%', marginTop: 16 } : { width: 150, marginLeft: 16 }}
         >
-          <TYPE.body2>Reset filters</TYPE.body2>
-        </ButtonGradientBorder> */}
+          <TYPE.body2 style={{ color: '#FFFFFF' }}>Reset filters</TYPE.body2>
+        </PinnedContentButton>
       </Flex>
 
       {loadingRequest ? (
@@ -242,7 +274,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
           <Trans>No results</Trans>
         </TYPE.body2>
       )}
-    </>
+    </StyledBodyWrapper>
   )
 }
 
@@ -256,7 +288,8 @@ const StyledBodyRow = styled(BodyRow)`
   background: transparent;
   margin-bottom: 8px;
   border: none;
-  background: ${({ theme: { config } }) => config.background?.main || 'rgba(39, 31, 74, 0.3)'};
+  border-bottom: 1px solid #e6e6ff;
+  // background: ${({ theme: { config } }) => config.background?.main || 'rgba(39, 31, 74, 0.3)'};
   min-width: 1000px;
 
   > div {

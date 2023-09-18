@@ -89,10 +89,10 @@ const WithdrawStatusText = {
   [WithdrawStatus.FB_TX_CANCELLING]: 'Cancelling...',
   [WithdrawStatus.FB_TX_CANCELLED]: 'Withdrawal canceled (contact support if needed)',
   [WithdrawStatus.CANCELLED]: 'Withdrawal canceled (contact support if needed)',
-  [WithdrawStatus.FB_TX_BLOCKED]: 'Withdrawal blocked (contact support)',
-  [WithdrawStatus.FB_TX_TIMEOUT]: 'Withdrawal timeout (contact support)',
-  [WithdrawStatus.FB_TX_FAILED]: 'Withdrawal failed (contact support)',
-  [WithdrawStatus.FAILED]: 'Withdrawal failed (contact support)',
+  [WithdrawStatus.FB_TX_BLOCKED]: 'Withdrawal blocked',
+  [WithdrawStatus.FB_TX_TIMEOUT]: 'Withdrawal timeout',
+  [WithdrawStatus.FB_TX_FAILED]: 'Withdrawal failed',
+  [WithdrawStatus.FAILED]: 'Withdrawal failed',
   [WithdrawStatus.APPROVED]: 'Withdrawal Completed!',
 } as Record<string, string>
 

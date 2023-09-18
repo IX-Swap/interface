@@ -193,7 +193,7 @@ const TokenPayoutEventEntry = styled.div`
 
   border-radius: 12px;
 
-  background-color: ${({ theme }) => theme.bg11};
+  background-color: ${({ theme }) => theme.bg1};
 `
 
 const TokenPayoutEventType = styled.div``

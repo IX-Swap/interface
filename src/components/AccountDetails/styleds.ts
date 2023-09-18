@@ -18,11 +18,11 @@ export const HeaderRow = styled.div`
 
 export const UpperSection = styled.div`
   position: relative;
-  background: ${({ theme }) => theme.bgG4};
+  // background: ${({ theme }) => theme.bg1};
 `
 
 export const InfoCard = styled.div`
-  padding: 1rem;
+  padding: 0rem 1rem;
   position: relative;
   display: grid;
   grid-row-gap: 12px;
@@ -33,7 +33,6 @@ export const AccountGroupingRow = styled.div`
   ${({ theme }) => theme.flexRowNoWrap};
   justify-content: space-between;
   align-items: center;
-
   color: ${({ theme }) => theme.text1};
 
   div {
@@ -61,12 +60,10 @@ export const YourAccount = styled.div`
 
 export const LowerSection = styled.div`
   ${({ theme }) => theme.flexColumnNoWrap}
-  padding: 1.5rem 2.5rem;
+  padding: 10px 2.5rem;
   flex-grow: 1;
   overflow: auto;
-  background-color: ${({ theme }) => theme.bg11};
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  // background-color: ${({ theme }) => theme.bg1};
 
   h5 {
     margin: 0;

@@ -33,7 +33,7 @@ interface DateInfoProps {
   rejectedDate?: string | null
   approvedDate?: string | null
   changeRequestDate?: string | null
-  info?: string
+  info?: any
 }
 
 const DateInfo: FC<DateInfoProps> = ({
@@ -45,27 +45,27 @@ const DateInfo: FC<DateInfoProps> = ({
 }: DateInfoProps) => (
   <DateInfoContainer>
     {info && (
-      <TYPE.description3 marginTop="40px" marginBottom="16px" color="#666680">
+      <TYPE.description3 width="252px" marginTop="10px" marginBottom="16px" fontSize="11px">
         {info}
       </TYPE.description3>
     )}
     {submittedDate && (
-      <TYPE.description3 color="#666680">{`Submitted on ${dayjs(submittedDate)
+      <TYPE.description3 fontSize="11px" color="#B2B2BF">{`Submitted on ${dayjs(submittedDate)
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
     {rejectedDate && (
-      <TYPE.description3 color="#666680">{`Rejected on ${dayjs(rejectedDate)
+      <TYPE.description3 fontSize="11px" color="#B2B2BF">{`Rejected on ${dayjs(rejectedDate)
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
     {changeRequestDate && (
-      <TYPE.description3 color="#666680">{`Change requested on ${dayjs(rejectedDate)
+      <TYPE.description3 fontSize="11px" color="#B2B2BF">{`Change requested on ${dayjs(rejectedDate)
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
     {approvedDate && (
-      <TYPE.description3 color="#666680">{`Approved on ${dayjs(approvedDate)
+      <TYPE.description3 fontSize="11px" color="#B2B2BF">{`Approved on ${dayjs(approvedDate)
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
@@ -73,9 +73,9 @@ const DateInfo: FC<DateInfoProps> = ({
 )
 
 const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) => (
-  <TYPE.title6 textAlign="center" margin={isMobile ? '20px 26px' : '20px 0px'}>
+  <TYPE.description3 textAlign="center" marginTop="15px" marginBottom="8px">
     {description}
-  </TYPE.title6>
+  </TYPE.description3>
 )
 
 const KYC = () => {
@@ -88,7 +88,14 @@ const KYC = () => {
 
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
-  const infoText = 'In order to make changes to your KYC please get in touch with us via c@ixswap.io'
+  const infoText = (
+    <p>
+      In order to make changes to your KYC please get in touch with us via{' '}
+      <a href="mailto:info@ixswap.io" style={{ textDecoration: 'none', color: '#6666FF' }}>
+        info@ixswap.io
+      </a>
+    </p>
+  )
 
   useEffect(() => {
     if (pendingSign) {
@@ -232,8 +239,8 @@ const KYC = () => {
         )
       case KYCStatuses.APPROVED:
         return (
-          <Flex flexDirection="column" alignItems="center" marginTop="40px">
-            <ApprovedKYC />
+          <Flex flexDirection="column" alignItems="center" marginTop="0px">
+            {/* <ApprovedKYC /> */}
             <DateInfo info={infoText} submittedDate={kyc?.createdAt} approvedDate={kyc?.updatedAt} />
           </Flex>
         )
@@ -274,13 +281,13 @@ const KYC = () => {
           <Column style={{ alignItems: 'center' }}>
             <Content
               flexDirection="column"
-              marginTop={status === KYCStatuses.NOT_SUBMITTED || status === null ? '8px' : '40px'}
+              marginTop={status === KYCStatuses.NOT_SUBMITTED || status === null ? '8px' : '10px'}
               alignItems="center"
             >
-              <TYPE.description3 marginTop="40px">
+              <TYPE.title6 marginBottom="15px">
                 <Trans>{config?.name || 'IX Swap'} KYC</Trans>
-              </TYPE.description3>
-              <Description description={description} />
+              </TYPE.title6>
+              {/* {description && <Description description={description} />} */}
               <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />
             </Content>
             {getKYCDescription()}

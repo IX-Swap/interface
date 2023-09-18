@@ -94,7 +94,7 @@ const ModalContainer = styled.div`
 `
 
 const ModalContent = styled.div`
-  background: ${({ theme: { bgG4 } }) => bgG4};
+  background: ${({ theme: { bg1 } }) => bg1};
   width: 555px;
   padding: 32px 42px 42px;
   border-radius: 20px;

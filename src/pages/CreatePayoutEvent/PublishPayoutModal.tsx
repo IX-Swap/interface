@@ -101,7 +101,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     const data = await publishPayout({
       ...body,
       ...(paidTxHash && { paidTxHash }),
-      ...(contractPayoutId && { contractPayoutId })
+      ...(contractPayoutId && { contractPayoutId }),
     })
 
     return data
@@ -123,7 +123,6 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
       if (approvalState === 'NOT_APPROVED') {
         await approve()
         handleIsLoading(false)
-
       } else {
         const payoutNonce = await payoutContract?.numberPayouts()
 
@@ -149,7 +148,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
         if (data?.id) {
           closeForm(data.id, res.hash)
         }
-  
+
         handleIsLoading(false)
 
         //confirmPaidInfo(payoutId, )
@@ -357,13 +356,13 @@ const Subtitle = styled.div`
 `
 
 const ModalBody = styled.div`
-  background: ${({ theme }) => theme.bg11};
+  background: ${({ theme }) => theme.bg1};
   padding: 24px;
   border-radius: 0px 0px 20px 20px;
 `
 
 const Card = styled(Box)`
-  background: ${({ theme }) => theme.bgG4};
+  background: ${({ theme }) => theme.bg1};
   border-radius: 20px;
   padding: 16px;
 

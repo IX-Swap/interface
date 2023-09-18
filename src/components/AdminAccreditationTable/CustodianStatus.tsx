@@ -104,7 +104,7 @@ const ActionButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme: { bg11 } }) => bg11};
+  background-color: ${({ theme: { bg1 } }) => bg1};
   border-radius: 40px;
 `
 

@@ -12,19 +12,20 @@ import { Colors } from 'theme/styled'
 import { WithdrawStatus, DepositStatus, ActionTypes } from './enum'
 
 export const NoVaultWrapper = styled.div`
-  background: ${({ theme }) => theme.bgG10};
-  border-radius: 45px;
-  padding: 3rem 12px;
+  background: ${({ theme }) => theme.bg0};
+  border-radius: 8px;
+  // padding: 3rem 12px;
+  padding: 120px 360px;
   position: relative;
   display: flex;
   flex-direction: column;
-  ${gradientBorder}
 `
 
 export const ExistingWrapper = styled.div`
-  background: ${({ theme }) => theme.bgG11};
-  border-radius: 45px;
-  padding: 62px 56px 36px 56px;
+  background: ${({ theme }) => theme.bg0};
+  border-radius: 8px;
+  padding: 32px 56px 36px 56px;
+  width: 1200px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 1rem;
   `};
@@ -33,7 +34,7 @@ export const ExistingWrapper = styled.div`
 export const NoVaultTitle = styled.div`
   display: flex;
   justify-content: center;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   text-align: center;
   > div {
     line-height: 28px;
@@ -58,8 +59,8 @@ export const VaultStatusDescription = styled.div`
 `
 
 export const TitleStatusRow = styled(RowBetween)`
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  // margin-bottom: 2rem;
+  // flex-wrap: wrap;
 `
 
 export const StatusTitle = styled(TYPE.titleSmall)`
@@ -72,13 +73,16 @@ export const HistoryWrapper = styled.div``
 export const HistoryRowWraper = styled.tr`
   height: 30px;
   cursor: pointer;
+  border-bottom: 1px solid #e6e6ff;
+
   :hover,
   :active {
     padding: 1px;
-    background: ${({ theme }) => theme.bgG2};
+    // background: ${({ theme }) => theme.bgG2};
   }
   > td {
     padding: 0px 4px;
+    margin-bottom: 20px;
   }
 `
 
@@ -112,9 +116,9 @@ export const AccreditationButtonRow = styled.div`
   `};
 `
 
-export const StyledTitle = styled(TYPE.title4)`
+export const StyledTitle = styled(TYPE.title5)`
   @media (max-width: 768px) {
-    font-size: 28px !important;
+    font-size: 20px !important;
   }
 `
 
@@ -183,8 +187,8 @@ export const getStatusIcon = (action: ActionTypes, status: string) => {
 
 export const InfoModalHeader = styled.div`
   padding: 24px 32px;
-  border-radius: 20px 20px 0px 0px;
-  background: ${({ theme }) => theme.bgG4};
+  // border-radius: 20px 20px 0px 0px;
+  // background: ${({ theme }) => theme.bg0};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -194,19 +198,20 @@ export const InfoModalHeader = styled.div`
 `
 
 export const InfoModalBody = styled.div<{ isSuccess: boolean }>`
-  padding: 24px 32px;
+  padding: 1px 32px;
   display: flex;
   flex-direction: column;
   row-gap: 12px;
-  background: ${({ theme }) => theme.bg11};
+  background: ${({ theme }) => theme.bg0};
   border-radius: 0px 0px 20px 20px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 16px;
   }
   > div {
-    background: ${({ theme }) => theme.bgG4};
-    border-radius: 20px;
-    padding: 16px;
+    background: ${({ theme }) => theme.bg7};
+    border-radius: 8px;
+    border: 1px solid #e6e6ff;
+    padding: 20px;
     label {
       font-weight: 500;
       font-size: 16px;

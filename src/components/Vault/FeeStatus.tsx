@@ -17,15 +17,16 @@ export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
 
   const feeText = useMemo(() => {
     if (paid || feePrice) {
-      return `Withdrawal fee: ${(+feePrice).toFixed(4)} Matic`
+      return `${(+feePrice).toFixed(4)} Matic`
     }
-    return `Expected withdrawal fees: ${estimatedPrice ? `~${estimatedPrice.toFixed(4)} Matic` : ' - '}`
+    return `~${estimatedPrice ? `${estimatedPrice.toFixed(4)} Matic` : ' - '}`
   }, [estimatedPrice, feePrice, paid])
 
   return (
     <Container paid={paid}>
       <li>
-        {t`${feeText}`}
+        <span style={{ color: '#666680', marginRight: '4px' }}>{t`Withdrawal fee: `}</span>
+        <FeeAmount paid={paid}>{feeText}</FeeAmount>
         {paid && <SuccessIcon />}
       </li>
       <li>Burning fee: will be calculated on Txn Confirmation</li>
@@ -41,7 +42,7 @@ const Container = styled.div<{ paid: boolean }>`
   font-weight: 500;
   font-size: 14px;
   row-gap: 4px;
-  color: ${({ theme }) => theme.text9};
+  color: ${({ theme }) => theme.text2};
   svg {
     margin-left: 12px;
     path {
@@ -55,4 +56,8 @@ const Container = styled.div<{ paid: boolean }>`
         color: ${({ theme }) => theme.green1};
       `}
   }
+`
+
+const FeeAmount = styled.span<{ paid: boolean }>`
+  color: ${({ theme, paid }) => (paid ? theme.green1 : 'black')};
 `

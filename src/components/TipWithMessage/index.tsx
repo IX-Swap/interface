@@ -26,9 +26,9 @@ export const TipWithMessage = ({ message }: Props) => {
               </SvgIconWrapper>
               <Text fontWeight={400}>
                 <b>
-                  <Trans>Tip:</Trans>
+                  <Trans>Tip: </Trans>
                 </b>
-                {message}
+                &nbsp; {message}
               </Text>
             </div>
           </AutoColumn>

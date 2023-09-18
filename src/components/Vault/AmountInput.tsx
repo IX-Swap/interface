@@ -27,10 +27,11 @@ const InputRow = styled.div`
   `};
 `
 const Container = styled.div`
-  border-radius: 36px;
+  border-radius: 6px;
+  border: 1px solid #e6e6ff;
   background-color: ${({ theme }) => theme.bg7};
   width: 'initial';
-  padding: 10px 31px 10px 27px;
+  padding: 24px 31px 24px 27px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       boder-radius: 1rem;
   `};
@@ -57,7 +58,7 @@ interface Props {
   rightItem?: ReactNode
   onUserInput: (typedValue: string) => void
   token: any
-  widthdraw?: boolean,
+  widthdraw?: boolean
   originalDecimals?: number
 }
 export const AmountInput = ({
@@ -102,7 +103,9 @@ export const AmountInput = ({
                   className="token-symbol-container"
                   active={Boolean(currency && currency.originalSymbol)}
                 >
-                  <TYPE.main1>{widthdraw ? currency?.symbol : formatCurrencySymbol({ currency })}</TYPE.main1>
+                  <TYPE.title7 fontSize="14px">
+                    {widthdraw ? currency?.symbol : formatCurrencySymbol({ currency })}
+                  </TYPE.title7>
                 </StyledTokenName>
               </RowFixed>
             )}

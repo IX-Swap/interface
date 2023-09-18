@@ -11,14 +11,18 @@ import { Input } from 'components/Input'
 
 import { KYCStatuses } from './enum'
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
-import { ReactComponent as Passed } from 'assets/images/check-success.svg'
-import { ReactComponent as NonTradable } from 'assets/images/reject.svg'
+import { ReactComponent as Passed } from 'assets/images/newRightCheck.svg'
+import { ReactComponent as NonTradable } from 'assets/images/newReject.svg'
+import { ReactComponent as Pending } from 'assets/images/newPending.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
+import { ReactComponent as AttentionIcon } from 'assets/images/attentionIcon.svg'
 
 export const StatusCard = styled(Card)`
   display: flex;
+  flex-direction: column; /* Change the flex direction to column */
+  align-items: center; /* Center items vertically */
   justify-content: center;
-  // background: ${({ theme }) => theme.config.background?.secondary || theme.bgG13};
+  background: ${({ theme }) => theme.config.background?.secondary || theme.bg0};
   width: 100%;
   min-height: 630px;
   padding-bottom: 100px;
@@ -163,36 +167,36 @@ export const BeneficialOwnersTableContainer = styled.div`
   `};
 `
 
-const RejectedIcon = styled(NonTradable)`
-  ${({ theme }) =>
-    theme.config.elements?.main &&
-    css`
-      circle {
-        fill: ${theme.config.elements?.main};
-      }
-      path {
-        fill: white;
-      }
-    `}
-`
-const AttentionIcon = styled(Attention)`
-  ${({ theme }) =>
-    theme.config.elements?.main &&
-    css`
-      > circle[fill='#FF6161'] {
-        fill: ${theme.error};
-      }
-      > circle[stroke='#FF6161'] {
-        stroke: ${theme.error};
-      }
-      line {
-        stroke: ${theme.error};
-      }
-      > circle[fill='#372E5E'] {
-        fill: ${theme.config.elements?.main};
-      }
-    `}
-`
+// const RejectedIcon = styled(NonTradable)`
+//   ${({ theme }) =>
+//     theme.config.elements?.main &&
+//     css`
+//       circle {
+//         fill: ${theme.config.elements?.main};
+//       }
+//       path {
+//         fill: white;
+//       }
+//     `}
+// `
+// const AttentionIcon = styled(Attention)`
+//   ${({ theme }) =>
+//     theme.config.elements?.main &&
+//     css`
+//       > circle[fill='#FF6161'] {
+//         fill: ${theme.error};
+//       }
+//       > circle[stroke='#FF6161'] {
+//         stroke: ${theme.error};
+//       }
+//       line {
+//         stroke: ${theme.error};
+//       }
+//       > circle[fill='#372E5E'] {
+//         fill: ${theme.config.elements?.main};
+//       }
+//     `}
+// `
 
 export const PassedIcon = styled(Passed)`
   ${({ theme }) =>
@@ -222,14 +226,14 @@ export const StyledBigPassed = styled(BigPassed)`
 
 /* eslint-disable react/display-name */
 export const KYCStatusIcons = {
-  [KYCStatuses.PENDING]: () => <LoaderThin size={20} />,
+  [KYCStatuses.PENDING]: () => <Pending />,
   [KYCStatuses.APPROVED]: () => <PassedIcon />,
   [KYCStatuses.NOT_SUBMITTED]: () => null,
   [KYCStatuses.CHANGES_REQUESTED]: () => <AttentionIcon />,
-  [KYCStatuses.REJECTED]: () => <RejectedIcon />,
+  [KYCStatuses.REJECTED]: () => <NonTradable />,
   [KYCStatuses.DRAFT]: () => null,
-  [KYCStatuses.IN_PROGRESS]: () => <LoaderThin size={20} />,
-  [KYCStatuses.FAILED]: () => <RejectedIcon />,
+  [KYCStatuses.IN_PROGRESS]: () => <Pending />,
+  [KYCStatuses.FAILED]: () => <NonTradable />,
 }
 
 const KYCStatusText = {
