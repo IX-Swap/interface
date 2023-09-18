@@ -190,6 +190,7 @@ export const ProofOfIdentityField = ({
                           valueExtractor={dateTimeValueExtractor}
                           customRenderer
                           isOptional={areDatesOptional}
+                          maxDate={expiryDateValue}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -202,6 +203,8 @@ export const ProofOfIdentityField = ({
                           valueExtractor={dateTimeValueExtractor}
                           customRenderer
                           isOptional={areDatesOptional}
+                          minDate={issuedDateValue}
+                          disabled={isNaN(Date.parse(issuedDateValue))}
                         />
                       </Grid>
                     </Grid>
