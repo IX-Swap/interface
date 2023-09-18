@@ -14,7 +14,7 @@ import {
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { useMostPopularSTOs } from 'app/pages/issuance/hooks/useMostPopularSTOs'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
-import { formatDecimal } from 'helpers/numbers'
+// import { formatDecimal } from 'helpers/numbers'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { useTheme } from '@emotion/react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
@@ -66,11 +66,11 @@ export const MostPopularSTOs = () => {
               <TableCell sx={tableCellStyles}>
                 <Typography color={'text.secondary'}>STO</Typography>
               </TableCell>
-              <TableCell align='right' sx={tableCellStyles}>
+              {/* <TableCell align='right' sx={tableCellStyles}>
                 <Typography color={'text.secondary'}>
                   Total Raised Amount
                 </Typography>
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -103,13 +103,13 @@ export const MostPopularSTOs = () => {
                     </Typography>
                   </Box>
                 </TableCell>
-                <TableCell
+                {/* <TableCell
                   align='right'
                   sx={{ ...tableCellStyles, color: '#6ABC10' }}
                 >
                   {formatDecimal(sto.insight.raisedTotal ?? 0)}{' '}
                   {sto.currency.symbol}
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
