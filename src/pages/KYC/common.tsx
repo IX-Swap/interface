@@ -183,6 +183,7 @@ export const TextInput: FC<TextInputProps> = ({
   name,
   type,
   onBlur,
+  onWheel,
   required,
   error = false,
   tooltipText,
@@ -200,6 +201,7 @@ export const TextInput: FC<TextInputProps> = ({
         <StyledInput
           data-testid={id}
           onBlur={onBlur}
+          onWheel={onWheel}
           name={name}
           placeholder={placeholder}
           value={value}
