@@ -7,14 +7,20 @@ import get from 'lodash/get'
 
 interface ExportButtonProps {
   fileName?: string
-  columns: Array<TableColumn<any>>
-  rows: any
+  columns?: Array<TableColumn<any>>
+  rows?: any
+  fullWidth?: boolean
+  id?: string
+  onClick?: Function
 }
 
 export const ExportButton = ({
   fileName = 'CSV Export',
   columns = [],
-  rows
+  rows = [],
+  fullWidth = false,
+  onClick,
+  ...rest
 }: ExportButtonProps) => {
   const convertJSONtoCSV = (rows: object[]) => {
     const csvRows = []
@@ -64,11 +70,19 @@ export const ExportButton = ({
     <Button
       variant='contained'
       disableElevation
-      size='small'
-      onClick={() => download(convertJSONtoCSV(rows))}
+      fullWidth={fullWidth}
+      onClick={() => {
+        if (typeof onClick === 'function') {
+          onClick()
+        } else {
+          download(convertJSONtoCSV(rows))
+        }
+      }}
+      sx={{ paddingX: 3 }}
+      {...rest}
     >
       <FileDownload />
-      <Box ml={0.5}>Export</Box>
+      <Box ml={0.5}>Export as CSV</Box>
     </Button>
   )
 }

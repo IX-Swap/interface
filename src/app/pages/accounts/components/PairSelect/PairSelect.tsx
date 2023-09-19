@@ -1,7 +1,7 @@
 import { FormControl } from '@mui/material'
 import { Pair, useMarketList } from 'app/pages/invest/hooks/useMarketList'
 import React from 'react'
-import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+// import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { Select, SelectProps } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
@@ -14,17 +14,17 @@ export const PairSelect = (props: Partial<SelectProps>) => {
 
   return (
     <FormControl fullWidth variant='outlined'>
-      <InputLabel>Pair</InputLabel>
+      {/* <InputLabel>Pair</InputLabel> */}
 
       <Select
         {...props}
         label={undefined}
         renderValue={(value: any) => data.map[value].name}
         displayEmpty
-        placeholder='Pair'
+        placeholder='Select Pair'
       >
         <SelectItem disabled value={undefined}>
-          Pair
+          Select Pair
         </SelectItem>
         {data.list.map((item: Pair) => (
           <SelectItem key={item._id} value={item._id}>

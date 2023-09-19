@@ -46,7 +46,7 @@ export const AccountActions = () => {
               Complete the following actions to optimize platform experience.
             </Typography>
           </Grid>
-          <Grid item container>
+          <Grid item container justifyContent={'center'}>
             {showKYC && (
               <Grid item xs={12} md={6}>
                 <KnowYourCustomer

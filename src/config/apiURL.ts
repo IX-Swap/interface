@@ -116,6 +116,9 @@ export const accountsURL = {
     custody: (userId?: string) => `/custody/available-tokens/${userId}`,
     getTokenInfo: '/custody/token-info'
   },
+  ledger: {
+    getTokenHoldings: '/ledger/token-holdings'
+  },
   balance: {
     getAll: (userId?: string) => `/accounts/balance/${userId}`,
     getByUserId: (userId?: string) => `/accounts/currency-balance/${userId}`,
