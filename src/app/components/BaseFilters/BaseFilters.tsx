@@ -6,8 +6,9 @@ import { useTheme } from '@mui/styles'
 
 export const BaseFilters = ({
   children,
-  searchLabel = 'Search'
-}: PropsWithChildren<{ searchLabel?: string }>) => {
+  searchLabel = 'Search',
+  hideDateFilter = false
+}: PropsWithChildren<{ searchLabel?: string; hideDateFilter?: boolean }>) => {
   const theme = useTheme()
 
   return (
@@ -21,36 +22,46 @@ export const BaseFilters = ({
       }}
     >
       <Grid container>
-        <Grid item xs={12} lg={6} pr={2} mt={3.5}>
+        <Grid item xs={12} lg={hideDateFilter ? 10 : 4} pr={2}>
           <TextInputSearchFilter
             fullWidth
             placeholder={searchLabel}
             inputAdornmentPosition='start'
           />
         </Grid>
-        <Grid item xs={12} lg={6}>
-          <Grid container direction='row' alignItems='end' gap={2}>
-            <Grid item xs>
-              <DateFilter
-                name='fromDate'
-                dateTimePickerProps={{
-                  placeholder: 'From'
-                }}
-                width={'100%'}
-              />
+        {!hideDateFilter ? (
+          <Grid item xs={12} lg={8}>
+            <Grid container direction='row' gap={2}>
+              <Grid item xs>
+                <DateFilter
+                  name='fromDate'
+                  dateTimePickerProps={{
+                    inputProps: {
+                      placeholder: 'From'
+                    }
+                  }}
+                  width={'100%'}
+                />
+              </Grid>
+              <Grid item xs>
+                <DateFilter
+                  name='toDate'
+                  dateTimePickerProps={{
+                    inputProps: {
+                      placeholder: 'To'
+                    }
+                  }}
+                  width={'100%'}
+                />
+              </Grid>
+              {children}
             </Grid>
-            <Grid item xs>
-              <DateFilter
-                name='toDate'
-                dateTimePickerProps={{
-                  placeholder: 'To'
-                }}
-                width={'100%'}
-              />
-            </Grid>
+          </Grid>
+        ) : (
+          <Grid item xs={12} lg={2}>
             {children}
           </Grid>
-        </Grid>
+        )}
       </Grid>
     </Box>
   )

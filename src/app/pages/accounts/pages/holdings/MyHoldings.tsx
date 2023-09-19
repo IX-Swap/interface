@@ -13,8 +13,7 @@ export const MyHoldings = () => {
     subtitle: string
   }>({
     title: 'Current Holdings',
-    subtitle:
-      'View, manage and track the value of your private company shares and stock options over time. Receive insights, and investment and liquidity opportunities specific to your holdings.'
+    subtitle: 'View, manage, and track your STOs.'
   })
   return (
     <Grid container direction='column' spacing={3} style={{ display: 'table' }}>
