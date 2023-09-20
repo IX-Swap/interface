@@ -226,6 +226,7 @@ export const exchange = {
   orderBook: 'order-book',
   lastPrice: 'last-price',
   summary: 'summary',
+  estimateFee: 'esimate-fee',
   getMetrics: (tokenId?: string) => generateQueryKey('metrics', tokenId),
   userTrades: (userId?: string) => generateQueryKey('user-trades', userId),
   userOrders: (userId?: string) => generateQueryKey('user-orders', userId),
