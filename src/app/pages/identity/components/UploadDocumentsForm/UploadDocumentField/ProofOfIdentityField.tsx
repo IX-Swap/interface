@@ -1,4 +1,4 @@
-import { Grid, Typography, Box } from '@mui/material'
+import { Grid, Typography, Box, FormHelperText } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import React, { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -20,6 +20,7 @@ import { TextInput } from 'ui/TextInput/TextInput'
 import { DatePicker } from 'components/form/DatePicker'
 import { isEmpty } from 'lodash'
 import format from 'date-fns/format'
+import { compareDatesWithoutTime } from 'helpers/dates'
 
 export interface ProofOfIdentityFieldProps {
   name: any
@@ -112,25 +113,35 @@ export const ProofOfIdentityField = ({
                 const areDatesOptional =
                   idsWithOptionalDates.includes(identityTypeValue)
 
+                const isIssueDateEmpty = isNaN(Date.parse(issuedDateValue))
+                const isExpiryDateEmpty = isNaN(Date.parse(expiryDateValue))
+
+                const isExpiryDateEarlierThanIssuedDate =
+                  compareDatesWithoutTime(
+                    new Date(expiryDateValue),
+                    new Date(issuedDateValue)
+                  ) === -1
+
                 const isUploadDisabled =
                   isEmpty(identityTypeValue) ||
                   isEmpty(documentNumberValue) ||
                   (!areDatesOptional &&
-                    (isNaN(Date.parse(issuedDateValue)) ||
-                      isNaN(Date.parse(expiryDateValue))))
+                    (isIssueDateEmpty ||
+                      isExpiryDateEmpty ||
+                      isExpiryDateEarlierThanIssuedDate))
 
                 // console.log('identityType', identityTypeValue)
                 // console.log('field', field)
-                console.log('issuedDateValue', Date.parse(issuedDateValue))
+                // console.log('issuedDateValue', Date.parse(issuedDateValue))
 
                 const documentInfo: UploadDocumentInfo = {
                   type: label,
                   title: [
                     identityTypeValue,
-                    !isNaN(Date.parse(issuedDateValue))
+                    !isIssueDateEmpty
                       ? format(new Date(issuedDateValue), 'yyyy-MM-dd')
                       : 'NA',
-                    !isNaN(Date.parse(expiryDateValue))
+                    !isExpiryDateEmpty
                       ? format(new Date(expiryDateValue), 'yyyy-MM-dd')
                       : 'NA',
                     documentNumberValue
@@ -164,6 +175,7 @@ export const ProofOfIdentityField = ({
                         customRenderer
                         placeholder='Select Identity Type'
                         defaultValue={title}
+                        disabled={uploadedFiles.length > 0}
                       />
                     </Grid>
 
@@ -178,6 +190,7 @@ export const ProofOfIdentityField = ({
                           variant='outlined'
                           customRenderer
                           defaultValue={documentNumber}
+                          disabled={uploadedFiles.length > 0}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -191,6 +204,7 @@ export const ProofOfIdentityField = ({
                           customRenderer
                           isOptional={areDatesOptional}
                           maxDate={expiryDateValue}
+                          disabled={uploadedFiles.length > 0}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -204,8 +218,17 @@ export const ProofOfIdentityField = ({
                           customRenderer
                           isOptional={areDatesOptional}
                           minDate={issuedDateValue}
-                          disabled={isNaN(Date.parse(issuedDateValue))}
+                          disabled={
+                            isNaN(Date.parse(issuedDateValue)) ||
+                            uploadedFiles.length > 0
+                          }
                         />
+                        {isExpiryDateEarlierThanIssuedDate && (
+                          <FormHelperText error>
+                            The Document Expiry Date must not be earlier than
+                            the Document Issued Date
+                          </FormHelperText>
+                        )}
                       </Grid>
                     </Grid>
 

@@ -10,7 +10,11 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { accountsURL } from 'config/apiURL'
 import { ExportButton } from 'ui/ExportButton/ExportButton'
 
-export const CustodyList = () => {
+export const CustodyList = ({
+  hasTopBorder = true
+}: {
+  hasTopBorder: boolean
+}) => {
   //   const { data, isLoading } = useGetCustody()
   const { getFilterValue } = useQueryFilter()
   const filter = {
@@ -21,7 +25,7 @@ export const CustodyList = () => {
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
-        <BaseFilters hideDateFilter>
+        <BaseFilters hideDateFilter hasTopBorder={hasTopBorder}>
           <Grid item xs>
             <ExportButton
               fullWidth

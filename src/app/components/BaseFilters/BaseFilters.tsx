@@ -7,8 +7,13 @@ import { useTheme } from '@mui/styles'
 export const BaseFilters = ({
   children,
   searchLabel = 'Search',
-  hideDateFilter = false
-}: PropsWithChildren<{ searchLabel?: string; hideDateFilter?: boolean }>) => {
+  hideDateFilter = false,
+  hasTopBorder = true
+}: PropsWithChildren<{
+  searchLabel?: string
+  hideDateFilter?: boolean
+  hasTopBorder: boolean
+}>) => {
   const theme = useTheme()
 
   return (
@@ -16,9 +21,8 @@ export const BaseFilters = ({
       p={3}
       bgcolor={theme.palette.backgrounds.light}
       sx={{
-        borderTop: `1px solid ${theme.palette.divider}`,
-        borderBottomLeftRadius: '10px',
-        borderBottomRightRadius: '10px'
+        borderTop: hasTopBorder ? `1px solid ${theme.palette.divider}` : 0,
+        borderRadius: hasTopBorder ? '0 0 10px 10px' : '10px'
       }}
     >
       <Grid container>
