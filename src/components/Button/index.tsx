@@ -184,35 +184,43 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   border: none;
 
   :hover {
+    border-radius: 8px;
+    background-color: transparent;
+    background: transparent;
     @media (min-width: 1000px) {
       opacity: 0.8;
     }
   }
   :active {
     opacity: 0.9;
+    border-radius: 8px;
   }
-  border-radius: 40px;
+  border-radius: 8px;
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
-  background-color: ${({ theme }) => theme.config.primary?.main || theme.bg3};
-  background: ${({ theme }) => theme.config.primary?.main || theme.bgG3};
+  // background-color: ${({ theme }) => theme.config.primary?.main || theme.bg3};
+  // background: ${({ theme }) => theme.config.primary?.main || theme.bgG3};
+  background-color: transparent;
+  background: transparent;
+  border: 1px solid #6666ff;
+  padding: 28px 18px;
+  margin-right: 20px;
 `
 export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   background-color: transparent;
   background: transparent;
+  border-radius: 8px;
   color: ${({ theme }) => theme.text1};
+  border: 1px solid #e6e6ff;
+  padding: 28px 18px;
+  margin-right: 20px;
 
-  ${({ theme }) =>
-    isNotSupportGradient
-      ? css`
-          border: 2px solid ${theme.bg20} !important;
-        `
-      : gradientBorder}
   :focus,
   :hover {
     background-color: transparent;
     background: transparent;
+    border: 1px solid #6666ff;
   }
   &:disabled {
     background-color: transparent;

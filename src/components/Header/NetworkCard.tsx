@@ -74,7 +74,7 @@ const FlyoutMenu = styled.div`
 `
 const FlyoutRow = styled.div<{ active: boolean }>`
   align-items: center;
-  background-color: ${({ active, theme }) => (active ? theme.bg8 : 'transparent')};
+  background-color: ${({ active, theme }) => (active ? theme.bg1 : 'transparent')};
   border-radius: 8px;
   cursor: pointer;
   display: flex;

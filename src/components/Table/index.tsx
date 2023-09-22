@@ -39,19 +39,20 @@ const rowStyle = css`
 export const HeaderRow = styled.div`
   ${rowStyle};
   > div {
-    padding: 10px 12px;
-    font-weight: 300;
+    padding: 10px 10px;
+    font-weight: 500;
     font-size: 16px;
-    color: ${({ theme: { text2 } }) => text2};
+    color: ${({ theme: { text11 } }) => text11};
   }
 `
 
 export const BodyRow = styled.div`
   ${rowStyle};
   // border: 1px solid ${({ theme: { bg11 } }) => bg11};
-  border-radius: 20px;
+  border-bottom: 1px solid #e6e6ff;
+  // border-radius: 20px;
   margin-bottom: 8px;
-  background-color: ${({ theme: { config } }) => config.background?.main || 'rgba(39, 31, 74, 0.3)'};
+  // background-color: ${({ theme: { config } }) => config.background?.main || 'rgba(39, 31, 74, 0.3)'};
 `
 
 const Wrap = styled.div`

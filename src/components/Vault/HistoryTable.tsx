@@ -16,6 +16,7 @@ import { ActionFilterTabs, ActionTypeTextHeader, filterTabs } from './enum'
 import { getStatusIcon, HistoryHeaderWrapper } from './styleds'
 import { TransactionHistoryRow } from './TransactionHistoryRow'
 import { Line } from 'components/Line'
+import LineChart from 'components/LineChart'
 
 const PopOverContent = styled.div`
   display: flex;

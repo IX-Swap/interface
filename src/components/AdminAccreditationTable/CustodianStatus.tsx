@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import { AccreditationStatusEnum } from 'components/Vault/enum'
 import { useApproveAccreditation } from 'state/admin/hooks'
 import { EllipsisText } from 'theme'
-import { ReactComponent as CheckIcon } from 'assets/images/check-2.svg'
-import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
+import { ReactComponent as CrossIcon } from 'assets/images/RejectOutline.svg'
+import { ReactComponent as CheckIcon } from 'assets/images/CheckOutline.svg'
 
 import { RejectModal } from './RejectModal'
 import { getStatusIcon } from './utils'
@@ -35,25 +35,22 @@ export const CustodianStatus = ({ status, id, custodian, searchValue }: Props) =
   return (
     <Container>
       <div>
-        {status !== AccreditationStatusEnum.PENDING && (
-          <img src={getStatusIcon(status)} alt="icon" width="20px" height="20px" />
-        )}
-        <EllipsisText>{custodian}</EllipsisText>
-      </div>
-      <div>
         {status === AccreditationStatusEnum.PENDING && (
           <>
             <RejectModal searchValue={searchValue} isModalOpen={isModalOpen} closeModal={closeModal} id={id} />
             <ButtonsContainer>
-              <ActionButton onClick={approve}>
-                <StyledCheckIcon />
-              </ActionButton>
-              <ActionButton onClick={openModal}>
-                <StyledCrossIcon />
-              </ActionButton>
+              <CheckIcon onClick={approve} />
+
+              <CrossIcon onClick={openModal} />
             </ButtonsContainer>
           </>
         )}
+      </div>
+      <div>
+        {status !== AccreditationStatusEnum.PENDING && (
+          <img src={getStatusIcon(status)} alt="icon" width="20px" height="20px" />
+        )}
+        <EllipsisText>{custodian}</EllipsisText>
         <MoreActions id={id} searchValue={searchValue} />
       </div>
     </Container>
@@ -83,17 +80,18 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   column-gap: 8px;
-  width: 100%;
+  width: 100%; /* Add this to make sure it takes up the full width */
+
   > div:first-child {
     display: flex;
     align-items: center;
-    column-gap: 8px;
-    overflow: hidden;
+    column-gap: 10px; /* Adjust the gap as needed */
+    flex-grow: 1; /* Allow this div to grow and take up remaining space */
   }
   > div:last-child {
     display: flex;
     align-items: center;
-    column-gap: 20px;
+    column-gap: 10px;
   }
 `
 

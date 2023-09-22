@@ -13,12 +13,13 @@ const TipWrapper = styled.div`
 `
 interface Props {
   message: ReactNode
+  page?: string
 }
-export const TipWithMessage = ({ message }: Props) => {
+export const TipWithMessage = ({ message, page }: Props) => {
   return (
     <TipWrapper>
       <ColumnCenter>
-        <TipCard>
+        <TipCard style={{ padding: page === 'find' ? '10px 30px' : '20px' }}>
           <AutoColumn gap="10px">
             <div style={{ display: 'flex' }}>
               <SvgIconWrapper style={{ margin: '0px 9px 36px 0px' }} size={12}>

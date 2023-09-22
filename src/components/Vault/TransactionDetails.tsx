@@ -117,11 +117,12 @@ export const TransactionDetails = ({ currency }: Props) => {
         </InfoModalHeader>
         <InfoModalBody style={{ position: 'relative' }} isSuccess={isSuccess}>
           {isDeposit(data.type) && status === DepositStatus.PENDING && (
-            <DepositWarningInfo>
-              <div>WARNING</div>
-              Please execute the transaction of {currency?.originalSymbol} Tokens to the Custodians wallet address on
-              the <br />
-              Ethereum Blockchain.
+            <DepositWarningInfo style={{ background: '#fff0f1' }}>
+              <div style={{ color: '#FF6161', fontSize: '13px', fontWeight: 600 }}>WARNING</div>
+              <span style={{ color: '#666680', fontSize: '13px', fontWeight: 400 }}>
+                Please execute the transaction of {currency?.originalSymbol} Tokens to the Custodians wallet address on
+                the Ethereum Blockchain.
+              </span>
             </DepositWarningInfo>
           )}
 
@@ -148,6 +149,8 @@ export const TransactionDetails = ({ currency }: Props) => {
               <LiniarProgressContainer statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
                 <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
               </LiniarProgressContainer>
+            </div>
+            <div>
               {isDeposit(data.type) && status === DepositStatus.PENDING && (
                 <PendingDepositInfo>
                   <Row style={{ flexWrap: 'wrap', gap: '12px', alignItems: 'flex-end', marginTop: '8px' }}>

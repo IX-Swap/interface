@@ -49,26 +49,27 @@ const Container = styled.div`
 
 const SearchIcon = styled.img`
   position: absolute;
-  top: 14px;
+  top: 16px;
   left: 16px;
-  width: 32px;
-  height: 32px;
+  width: 20px;
+  height: 20px;
 `
 
 export const Input = styled.input`
-  background-color: ${({ theme, value }) => (value ? theme.bg7 : theme.bg19)};
+  // background-color: ${({ theme, value }) => (value ? theme.bg7 : theme.bg19)};
+  border: 1px solid #e6e6ff;
   font-size: 20px;
-  border-radius: 100px;
+  border-radius: 8px;
   width: 100%;
   height: 60px;
-  outline: none;
-  border: none;
+  // outline: none;
+  // border: none;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
   ::placeholder {
-    color: ${({ theme }) => theme.text9};
+    color: ${({ theme }) => theme.text11};
   }
   color: ${({ theme, color }) => (color === 'red' ? theme.red1 : theme.text1)};
   padding: 10px 22px;

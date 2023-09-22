@@ -370,7 +370,7 @@ export default function AddLiquidity({
                   id="add-liquidity-input-tokena"
                   data-testid="add-liquidity-input-tokena"
                   showCommonBases={false}
-                  title={<Trans>Choose token to create a pool</Trans>}
+                  title={<Trans>Coose token to create a pool</Trans>}
                 />
                 {/* <ColumnCenter>
                 <Plus size="24" color={theme.text2} />

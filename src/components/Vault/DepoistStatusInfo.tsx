@@ -20,7 +20,11 @@ export const DepoistStatusInfo = ({ fromAddress, toAddress, amount, originalSymb
       <Title>
         Send from your <span>{network} Wallet</span>
       </Title>
-      <CopyAddress address={fromAddress ?? ''} network={network} wrapperStyles={{ fontSize: '13px', fontWeight: 500 }} />
+      <CopyAddress
+        address={fromAddress ?? ''}
+        network={network}
+        wrapperStyles={{ fontSize: '13px', fontWeight: 500 }}
+      />
       <Title style={{ marginTop: 25 }}>To Custodian Wallet</Title>
       <CopyAddress address={toAddress ?? ''} network={network} wrapperStyles={{ fontSize: '13px', fontWeight: 500 }} />
     </Container>
@@ -40,7 +44,7 @@ const Info = styled.div`
 `
 
 const Title = styled.div`
-  color: ${({ theme }) => theme.text9};
+  color: ${({ theme }) => theme.text2};
   font-size: 15px;
   font-weight: 500;
   margin-bottom: 4px;

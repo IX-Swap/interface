@@ -17,6 +17,7 @@ import CurrencyList from './CurrencyList'
 import ImportRow from './ImportRow'
 import { PaddedColumn40, SearchInput } from './styleds'
 import { useCurrencySearch } from './useCurrencySearch'
+import searchIcon from '../../assets/images/searchNew.svg'
 
 const Footer = styled.div`
   width: 100%;
@@ -111,7 +112,7 @@ export function CurrencySearch({
     <ModalContentWrapper style={{ borderRadius: '6px' }}>
       <PaddedColumn40 gap="16px">
         <RowBetween>
-          <Title>{title ?? <Trans>Choose Token to create a Pool</Trans>}</Title>
+          <Title>{title ?? <Trans>hoose Token to create a Pool</Trans>}</Title>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
         <Row>
@@ -125,6 +126,7 @@ export function CurrencySearch({
             onChange={handleInput}
             onKeyDown={handleEnter}
           />
+          {/* <img src={searchIcon} style={{ marginLeft: '10px' }} width="15" /> */}
         </Row>
         {/* {showCommonBases && (
           <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />

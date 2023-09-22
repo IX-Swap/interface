@@ -31,11 +31,16 @@ import { TokenPopup } from './TokenPopup'
 import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
 import { Loader } from '../AdminTransactionsTable'
 import { BrokerDealerCard } from './BrokerDealerCard'
-import { EditButton, StyledButtonGradientBorder, FormGrid, Logo, TokenCard } from './styleds'
+import { EditButton, StyledButtonGradientBorder, FormGrid, Logo, TokenCard, NewEditButton } from './styleds'
 import { initialIssuerState } from './mock'
-import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
-import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
-import { ReactComponent as Delete } from '../../assets/images/delete-basket.svg'
+import { ReactComponent as ArrowLeft } from '../../assets/images/newBack.svg'
+import { ReactComponent as LogoImage } from '../../assets/images/UploadLogo.svg'
+import { ReactComponent as Delete } from '../../assets/images/NewTrashWB.svg'
+import { ReactComponent as EditIcon } from '../../assets/images/NewPen.svg'
+import { ReactComponent as NoToken } from '../../assets/images/NoToken.svg'
+import { AddWhiteBGContainer } from 'pages/AddLiquidityV2/redirects'
+import { Line } from 'components/Line'
+import { RowEnd } from 'components/Row'
 
 interface Tab {
   value: 'catalog' | 'add_issuer' | 'edit_issuer'
@@ -175,20 +180,59 @@ export const AdminSecurityCatalog: FC = () => {
       <Container>
         {['add_issuer', 'edit_issuer'].includes(showMode) && (
           <>
-            <Box>
-              <ButtonText
-                style={{ textDecoration: 'none' }}
-                display="flex"
-                marginBottom="26px"
-                onClick={handleResetState}
-              >
-                <ArrowLeft />
-                <TYPE.title5 marginLeft="10px">{showMode === 'add_issuer' ? 'Add issuer' : 'Edit issuer'}</TYPE.title5>
-              </ButtonText>
+            <Box style={{ background: '#FFFFFF', padding: '40px' }}>
+              <Flex>
+                <ButtonText
+                  style={{ textDecoration: 'none' }}
+                  display="flex"
+                  marginBottom="26px"
+                  onClick={handleResetState}
+                >
+                  <ArrowLeft />
+                  <TYPE.title4 marginLeft="10px">
+                    {showMode === 'add_issuer' ? 'Add issuer' : 'Edit issuer'}
+                  </TYPE.title4>
+                </ButtonText>
+              </Flex>
+              <Line style={{ marginBottom: '40px' }} />
 
               <FormGrid>
+                <Box style={{ marginTop: '8px' }}>
+                  <Label marginBottom="50px">
+                    <TYPE.title11 color="text2">
+                      <Trans>Logo</Trans>
+                    </TYPE.title11>
+                  </Label>
+                  <ButtonText style={{ marginLeft: '32px' }}>
+                    <Upload
+                      accept={AcceptFiles.IMAGE}
+                      file={currentIssuer?.file}
+                      onDrop={(file) => handleDropImage(file)}
+                    >
+                      <Logo>
+                        {currentIssuer?.filePath || currentIssuer?.logo?.public ? (
+                          <img
+                            style={{ borderRadius: '6px' }}
+                            width="146px"
+                            height="146px"
+                            src={currentIssuer?.filePath || currentIssuer?.logo?.public}
+                          />
+                        ) : (
+                          <div style={{ border: '1px solid #E6E6FF', borderRadius: '8px', padding: '35px' }}>
+                            <LogoImage />
+                          </div>
+                        )}
+                      </Logo>
+                    </Upload>
+                  </ButtonText>
+                  {issuerErrors?.logo && (
+                    <TYPE.small textAlign="center" marginTop="4px" color={'red1'}>
+                      {issuerErrors.logo}
+                    </TYPE.small>
+                  )}
+                </Box>
                 <Box>
-                  <Label marginBottom="11px" htmlFor="issuer-name">
+                  <Label marginBottom="11px" marginTop="10px" htmlFor="issuer-name">
                     <TYPE.title11 color="text2">
                       <Trans>Name</Trans>
                     </TYPE.title11>
@@ -209,9 +253,7 @@ export const AdminSecurityCatalog: FC = () => {
                       {issuerErrors.name}
                     </TYPE.small>
                   )}
-                </Box>
-                <Box>
-                  <Label marginBottom="11px" htmlFor="issuer-url">
+                  <Label marginBottom="8px" marginTop="15px" htmlFor="issuer-url">
                     <TYPE.title11 color="text2">
                       <Trans>URL</Trans>
                     </TYPE.title11>
@@ -233,51 +275,38 @@ export const AdminSecurityCatalog: FC = () => {
                     </TYPE.small>
                   )}
                 </Box>
-                <Box>
-                  <Label marginBottom="11px">
-                    <TYPE.title11 color="text2">
-                      <Trans>Logo:</Trans>
-                    </TYPE.title11>
-                  </Label>
-                  <ButtonText>
-                    <Upload
-                      accept={AcceptFiles.IMAGE}
-                      file={currentIssuer?.file}
-                      onDrop={(file) => handleDropImage(file)}
-                    >
-                      <Logo>
-                        {currentIssuer?.filePath || currentIssuer?.logo?.public ? (
-                          <img
-                            style={{ borderRadius: '36px' }}
-                            width="100%"
-                            height="100%"
-                            src={currentIssuer?.filePath || currentIssuer?.logo?.public}
-                          />
-                        ) : (
-                          <LogoImage />
-                        )}
-                      </Logo>
-                    </Upload>
-                  </ButtonText>
-                  {issuerErrors?.logo && (
-                    <TYPE.small textAlign="center" marginTop="4px" color={'red1'}>
-                      {issuerErrors.logo}
-                    </TYPE.small>
-                  )}
-                </Box>
               </FormGrid>
             </Box>
 
-            <Box>
-              {showMode === 'edit_issuer' && (
-                <EditButton marginBottom="20px" onClick={() => handleEditTokenClick(null)}>
-                  <TYPE.body3 color="white" fontWeight={600}>
-                    {t`+ Add token`}
-                  </TYPE.body3>
-                </EditButton>
-              )}
+            <Flex
+              justifyContent="space-between"
+              flexDirection={isMobile ? 'column' : 'row'}
+              marginTop="30px"
+              marginBottom="10px"
+            >
+              <Box>
+                <TYPE.description7 color="#292933">Tokens</TYPE.description7>
+                {/* {showMode === 'edit_issuer' && (
+                  <EditButton marginBottom="20px" onClick={() => handleEditTokenClick(null)}>
+                    <TYPE.body3 color="white" fontWeight={600}>
+                      {t`+ Add token`}
+                    </TYPE.body3>
+                  </EditButton>
+                )} */}
+              </Box>
+              <Box>
+                {/* {showMode === 'edit_issuer' && ( */}
+                <NewEditButton onClick={() => handleEditTokenClick(null)}>
+                  {/* <TYPE.body3 color="white" fontWeight={600}> */}
+                  {t`+ Add token`}
+                  {/* </TYPE.body3> */}
+                </NewEditButton>
+                {/* )} */}
+              </Box>
+            </Flex>
+            <Box style={{ background: currentIssuer?.tokens?.length > 0 ? '#FFFFFF' : 'none' }}>
               <Box overflow={isMobile ? 'scroll' : 'visible'}>
-                {currentIssuer?.tokens?.length > 0 &&
+                {currentIssuer?.tokens?.length > 0 ? (
                   currentIssuer.tokens.map((token: any) => {
                     const { id, address, ticker, logo, url, featured, active, token: wrappedToken } = token
 
@@ -302,9 +331,13 @@ export const AdminSecurityCatalog: FC = () => {
                         <TYPE.body3 color="text1">{active ? 'Active' : 'Not Active'}</TYPE.body3>
                         <TYPE.body3 color="text1">{wrappedToken ? 'Tradable' : 'Non Tradable'}</TYPE.body3>
                         <Box>
-                          <EditButton onClick={() => handleEditTokenClick(token)}>
+                          {/* <EditButton onClick={() => handleEditTokenClick(token)}>
                             <TYPE.body3 fontWeight={600}>{t`Edit`}</TYPE.body3>
-                          </EditButton>
+                          </EditButton> */}
+
+                          <ButtonText onClick={() => handleEditTokenClick(token)}>
+                            <EditIcon />
+                          </ButtonText>
                         </Box>
                         <Box>
                           <ButtonText onClick={() => handleDeleteToken(id)}>
@@ -313,28 +346,65 @@ export const AdminSecurityCatalog: FC = () => {
                         </Box>
                       </TokenCard>
                     )
-                  })}
+                  })
+                ) : (
+                  <div style={{ textAlign: 'center' }}>
+                    <NoToken />
+                  </div>
+                )}
               </Box>
             </Box>
 
-            <PinnedContentButton onClick={handleSaveClick} style={{ width: 226 }}>
-              <Trans>Save</Trans>
-            </PinnedContentButton>
+            <RowEnd>
+              <PinnedContentButton
+                onClick={handleSaveClick}
+                style={{ width: 226, color: '#B8B8CC', background: '#FFFFFF', border: '1px solid #E6E6FF' }}
+              >
+                <Trans>Cancel</Trans>
+              </PinnedContentButton>
+              <PinnedContentButton
+                disabled={!(currentIssuer?.tokens?.length > 0)}
+                onClick={handleSaveClick}
+                style={{ width: 226, marginLeft: '10px' }}
+              >
+                <Trans>Save</Trans>
+              </PinnedContentButton>
+            </RowEnd>
           </>
         )}
 
         {showMode === 'catalog' && (
           <>
-            <Flex flexDirection={isMobile ? 'column' : 'row'} marginBottom="33px">
-              <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={t`Search`} />
-              <StyledButtonGradientBorder
-                marginTop={isMobile ? '16px' : '0px'}
-                marginLeft={isMobile ? '0px' : '33px'}
-                onClick={handleCreateClick}
+            <div style={{ backgroundColor: '#FFFFFF', width: '100%', padding: '40px' }}>
+              <Flex
+                justifyContent="space-between"
+                flexDirection={isMobile ? 'column' : 'row'}
+                marginTop="30px"
+                marginBottom="10px"
               >
-                <Trans>+ Add issuer</Trans>
-              </StyledButtonGradientBorder>
-            </Flex>
+                {/* <AddWhiteBGContainer></AddWhiteBGContainer> */}
+                <TYPE.title4 data-testid="securityTokensTitle">
+                  <Trans>Security Catalog</Trans>
+                </TYPE.title4>
+                <StyledButtonGradientBorder
+                  style={{
+                    padding: '12px 16px',
+                    width: '134px',
+                    backgroundColor: '#6666FF',
+                    color: '#FFFFFF',
+                    borderRadius: '6px',
+                  }}
+                  marginTop={isMobile ? '16px' : '0px'}
+                  marginLeft={isMobile ? '0px' : '33px'}
+                  onClick={handleCreateClick}
+                >
+                  <Trans>+ Add issuer</Trans>
+                </StyledButtonGradientBorder>
+              </Flex>
+              <Flex>
+                <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={t`Search`} />
+              </Flex>
+            </div>
             <Flex flexDirection="column">
               {issuers?.items.length > 0 ? (
                 <>

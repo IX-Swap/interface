@@ -25,7 +25,7 @@ export const ExistingWrapper = styled.div`
   background: ${({ theme }) => theme.bg0};
   border-radius: 8px;
   padding: 32px 56px 36px 56px;
-  width: 1200px;
+  width: 1350px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 1rem;
   `};
@@ -73,12 +73,13 @@ export const HistoryWrapper = styled.div``
 export const HistoryRowWraper = styled.tr`
   height: 30px;
   cursor: pointer;
-  border-bottom: 1px solid #e6e6ff;
+  border-bottom: 1px solid red;
 
   :hover,
   :active {
     padding: 1px;
-    // background: ${({ theme }) => theme.bgG2};
+    // border-bottom: 1px solid red;
+    background: ${({ theme }) => theme.bg1};
   }
   > td {
     padding: 0px 4px;
@@ -308,6 +309,7 @@ export const WarningPaidFee = styled.div`
 `
 export const DepositWarningInfo = styled.div`
   color: ${({ theme }) => theme.error};
+  // background-color: #fff0f1;
   font-size: 16px;
   line-height: 24px;
   text-align: center;
@@ -323,8 +325,9 @@ export const DepositWarningInfo = styled.div`
 export const DeadlineInfo = styled.div`
   font-weight: 500;
   font-size: 10px;
-  /* color: ${({ theme }) => theme.text9}; */
-  color: ${({ theme }) => theme.text9};
+  text-align: center;
+
+  color: ${({ theme }) => theme.text2};
   line-height: 15px;
   margin-top: 8px;
 `
