@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { TipCard } from 'components/Card'
 import { AutoColumn, ColumnCenter } from 'components/Column'
@@ -46,6 +46,20 @@ const SwapBanner = () => {
   const handleCloseClick = () => {
     setIsVisible(false)
   }
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (isVisible && !event.target.closest('.SwapBanner')) {
+        setIsVisible(false)
+      }
+    }
+
+    document.body.addEventListener('click', handleClickOutside)
+
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside)
+    }
+  }, [isVisible])
 
   return isVisible ? (
     <TipWrapper>
