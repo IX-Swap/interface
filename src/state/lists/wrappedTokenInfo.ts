@@ -33,6 +33,7 @@ export class WrappedTokenInfo implements Token {
     const checksummedAddress =
       isAddress(this.tokenInfo.address) || isAddress((this.tokenInfo as any).contractAddress ?? '')
     if (!checksummedAddress) return ''
+    // if (!checksummedAddress) throw new Error(`Invalid token address: ${this.tokenInfo.address}`)
     return (this._checksummedAddress = checksummedAddress)
   }
 

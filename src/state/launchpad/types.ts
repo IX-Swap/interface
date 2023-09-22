@@ -92,6 +92,9 @@ export enum WhitelistStatus {
 }
 
 export enum OfferFileType {
+  purchaseAgreement = 'purchaseAgreement',
+  investmentMemorandum = 'investmentMemorandum',
+  otherExecutionDocument = 'otherExecutionDocument',
   document = 'document',
   video = 'video',
   image = 'image',

@@ -92,6 +92,9 @@ export interface InformationFormValues {
 
   images: IssuanceFile[]
   videos: VideoLink[]
+  purchaseAgreement: AdditionalDocument
+  investmentMemorandum: AdditionalDocument
+  otherExecutionDocuments: AdditionalDocument[]
   additionalDocuments: AdditionalDocument[]
 
   members: TeamMember[]

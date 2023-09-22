@@ -30,8 +30,8 @@ interface Props {
 export const ConnectionDialog: React.FC<Props> = (props) => {
   const { activate } = useWeb3React()
   const [walletView, setWalletView] = React.useState(PromptView.options)
-  const [pendingWallet, setPendingWallet] = React.useState<AbstractConnector | undefined>()
-  const [pendingError, setPendingError] = React.useState<boolean>()
+  const [, setPendingWallet] = React.useState<AbstractConnector | undefined>()
+  const [, setPendingError] = React.useState<boolean>()
 
   const tryActivation = React.useCallback(
     async (connector: AbstractConnector | undefined) => {

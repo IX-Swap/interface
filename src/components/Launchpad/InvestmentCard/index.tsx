@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 
 import { useCheckKYC } from 'state/launchpad/hooks'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
-import { Offer, OfferStatus } from 'state/launchpad/types'
+import { OfferStatus } from 'state/launchpad/types'
 
 import { Tooltip } from './Tooltip'
 import { InvestmentStatusBadge } from './InvestmentStatusBadge'
