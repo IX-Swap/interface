@@ -11,6 +11,7 @@ import { ReactComponent as ArrowDown } from '../../assets/images/arrow.svg'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { ArrowWrapper } from '../../components/swap/styleds'
 import { Field } from '../../state/swap/actions'
+import SwapBanner from 'pages/Swap/SwapBanner'
 
 interface ParsedAmounts {
   INPUT: CurrencyAmount<Currency> | undefined
@@ -83,52 +84,64 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
       : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
   }
   const showMaxButton = Boolean(maxInputAmount?.greaterThan(0) && !parsedAmounts[Field.INPUT]?.equalTo(maxInputAmount))
-
+  console.log(currencies[Field.INPUT]?.symbol, 'tetetet')
+  console.log(currencies[Field.OUTPUT]?.symbol, 'tetetet')
   return (
-    <div style={{ display: 'relative' }}>
-      <CurrencyInputPanel
-        label={independentField === Field.OUTPUT && !showWrap ? <Trans>From (at most)</Trans> : <Trans>From</Trans>}
-        value={formattedAmounts[Field.INPUT]}
-        showMaxButton={showMaxButton}
-        currency={currencies[Field.INPUT]}
-        onUserInput={handleTypeInput}
-        onMax={handleMaxInput}
-        fiatValue={fiatValueInput ?? undefined}
-        onCurrencySelect={handleInputSelect}
-        otherCurrency={currencies[Field.OUTPUT]}
-        showCommonBases={true}
-        title={<Trans>Select a token to swap</Trans>}
-        id="swap-currency-input"
-      />
-      <ArrowWrapper
-        data-testid="currencyReplace"
-        clickable
-        onClick={() => {
-          setApprovalSubmitted(false) // reset 2 step UI for approvals
-          onSwitchTokens()
-        }}
-      >
-        <ArrowDown
-          width="16px"
-          height="16px"
-          color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
-          fill={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
+    <>
+      {/* {(currencies[Field.INPUT]?.symbol === 'wSTOA' && currencies[Field.OUTPUT]?.symbol === 'TIXS') ||
+      (currencies[Field.INPUT]?.symbol === 'TIXS' && currencies[Field.OUTPUT]?.symbol === 'wSTOA') ? (
+        <SwapBanner />
+      ) : null} */}
+      {(currencies[Field.INPUT]?.symbol === 'IXS' && currencies[Field.OUTPUT]?.symbol === 'TAU') ||
+      (currencies[Field.INPUT]?.symbol === 'TAU' && currencies[Field.OUTPUT]?.symbol === 'IXS') ? (
+        <SwapBanner />
+      ) : null}
+      {/* <SwapBanner /> */}
+      <div style={{ display: 'relative' }}>
+        <CurrencyInputPanel
+          label={independentField === Field.OUTPUT && !showWrap ? <Trans>From (at most)</Trans> : <Trans>From</Trans>}
+          value={formattedAmounts[Field.INPUT]}
+          showMaxButton={showMaxButton}
+          currency={currencies[Field.INPUT]}
+          onUserInput={handleTypeInput}
+          onMax={handleMaxInput}
+          fiatValue={fiatValueInput ?? undefined}
+          onCurrencySelect={handleInputSelect}
+          otherCurrency={currencies[Field.OUTPUT]}
+          showCommonBases={true}
+          title={<Trans>Select a token to swap</Trans>}
+          id="swap-currency-input"
         />
-      </ArrowWrapper>
-      <CurrencyInputPanel
-        value={formattedAmounts[Field.OUTPUT]}
-        onUserInput={handleTypeOutput}
-        label={independentField === Field.INPUT && !showWrap ? <Trans>To (at least)</Trans> : <Trans>To</Trans>}
-        showMaxButton={false}
-        hideBalance={false}
-        fiatValue={fiatValueOutput ?? undefined}
-        priceImpact={priceImpact}
-        currency={currencies[Field.OUTPUT]}
-        onCurrencySelect={handleOutputSelect}
-        otherCurrency={currencies[Field.INPUT]}
-        showCommonBases={true}
-        id="swap-currency-output"
-      />
-    </div>
+        <ArrowWrapper
+          data-testid="currencyReplace"
+          clickable
+          onClick={() => {
+            setApprovalSubmitted(false) // reset 2 step UI for approvals
+            onSwitchTokens()
+          }}
+        >
+          <ArrowDown
+            width="16px"
+            height="16px"
+            color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
+            fill={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
+          />
+        </ArrowWrapper>
+        <CurrencyInputPanel
+          value={formattedAmounts[Field.OUTPUT]}
+          onUserInput={handleTypeOutput}
+          label={independentField === Field.INPUT && !showWrap ? <Trans>To (at least)</Trans> : <Trans>To</Trans>}
+          showMaxButton={false}
+          hideBalance={false}
+          fiatValue={fiatValueOutput ?? undefined}
+          priceImpact={priceImpact}
+          currency={currencies[Field.OUTPUT]}
+          onCurrencySelect={handleOutputSelect}
+          otherCurrency={currencies[Field.INPUT]}
+          showCommonBases={true}
+          id="swap-currency-output"
+        />
+      </div>
+    </>
   )
 }
