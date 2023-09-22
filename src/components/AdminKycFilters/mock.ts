@@ -12,9 +12,9 @@ export const identityOptions: IdentityOption[] = [
 ]
 
 export const ButtonStatusText: any = {
+  total: 'All',
   approved: 'Approved',
   rejected: 'Declined',
   pending: 'Pending',
-  total: 'Total',
   'changes-requested': 'Change requested',
 }

@@ -7,19 +7,30 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ModalBlurWrapper } from 'theme'
 
 export const StyledButtonGradientBorder = styled(ButtonGradientBorder)`
-  padding: 0px 30px;
   white-space: nowrap;
+  font-size: 13px;
+  padding: 12px 16px;
+  backgroundcolor: #6666ff;
+  color: #ffffff;
+  borderradius: 6px;
 `
 
 export const CardHeader = styled(BodyRow)`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 3fr;
+  display: flex; /* Use flexbox to align items horizontally */
   align-items: center;
   height: 80px;
   margin-bottom: 0px;
+  background: #ffffff;
+  padding: 60px 10px;
+
+  .left-side {
+    display: flex; /* Nested flex container for left-side elements */
+    align-items: center;
+    margin-right: auto; /* Push the left-side elements to the left */
+  }
 
   > div:first-child {
-    padding-left: 55px;
+    // padding-left: 55px;
   }
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
@@ -40,23 +51,35 @@ export const EditButton = styled(ButtonGray)`
   width: 109px;
   padding: 0px;
   color: ${({ theme }) => theme.text1};
+  
+}
 
-  &:focus {
-    background-color: ${({ theme, disabled }) => !disabled && darken(0.05, theme.bg7)};
-  }
-  &:hover {
-    background-color: ${({ theme, disabled }) => !disabled && darken(0.05, theme.bg7)};
-  }
-  &:active {
-    background-color: ${({ theme, disabled }) => !disabled && darken(0.1, theme.bg7)};
-  }
+`
+
+export const NewEditButton = styled.div`
+  padding: 12px 16px;
+  border: 1px solid #e6e6ff;
+  background-color: #ffffff;
+  width: 173px;
+  height: 47px;
+  border-radius: 8px;
+  color: #6666ff;
+  text-align: center;
+  cursor: pointer;
+`
+
+export const EditWrapper = styled.div`
+  width: 109px;
+  padding: 0px; 
+  margin-left: auto;
+  cursor: pointer;
+}
 `
 
 export const TokensList = styled.div`
-  margin: 0px 12px;
-  border-radius: 0px 0px 20px 20px;
-  background: ${({ theme }) => theme.bgG14};
-
+  // margin: 0px 12px;
+  // border-radius: 0px 0px 20px 20px;
+  background: #ffffff;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     overflow: scroll;
 
@@ -92,8 +115,8 @@ export const TokensListItem = styled.div`
 
 export const FormGrid = styled.div`
   display: grid;
-  grid-template-columns: 4fr 4fr 60px;
-  grid-gap: 25px;
+  grid-template-columns: 1.5fr 11fr;
+  // grid-gap: 25px;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     grid-template-columns: 1fr;
@@ -106,9 +129,9 @@ export const Logo = styled.div<{ error?: boolean }>`
   align-items: center;
   width: 60px;
   height: 60px;
-  border-radius: 36px;
-  background: ${({ theme }) => theme.bg7};
-  border: ${({ error, theme }) => (error ? `1px solid ${theme.error}` : 'none')};
+  border-radius: 6px;
+  // background: ${({ theme }) => theme.bg7};
+  // border: ${({ error, theme }) => (error ? `1px solid ${theme.error}` : 'none')};
 `
 
 export const TokenCard = styled(BodyRow)`
@@ -141,8 +164,8 @@ export const SmallModalWrapper = styled(ModalBlurWrapper)`
 `
 
 export const FormWrapper = styled.div`
-  padding: 24px 24px 20px 24px;
-  background: ${({ theme }) => theme.bg18};
+  // padding: 24px 24px 20px 24px;
+  // background: ${({ theme }) => theme.bg18};
   border-radius: 16px;
 
   > div {

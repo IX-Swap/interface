@@ -224,20 +224,34 @@ export const HeaderLinks = () => {
   )
 }
 
+export const AdminHeaderLinks = () => {
+  const { isAdmin } = useRole()
+
+  return (
+    <HeaderLinksWrap links={7}>
+      {isAdmin && <StyledNavLink to="/admin/accreditation">Accreditation</StyledNavLink>}
+      {isAdmin && <StyledNavLink to="/admin/kyc">KYC</StyledNavLink>}
+      {isAdmin && <StyledNavLink to="/admin/transactions">Broker Dealer Transactions</StyledNavLink>}
+      {isAdmin && <StyledNavLink to="/admin/security-catalog">Security Catalog</StyledNavLink>}
+      {isAdmin && <StyledNavLink to="/admin/users-list">User’s</StyledNavLink>}
+    </HeaderLinksWrap>
+  )
+}
+
 const HeaderLinksWrap = styled(Row)<{ links: number }>`
   justify-self: center;
   background-color: 'transparent';
   width: fit-content;
   flex-wrap: wrap;
   overflow: visible;
-  grid-gap: 28px;
+  grid-gap: 50px;
   display: flex;
   align-items: center;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
   @media (max-width: 1600px) {
-    grid-gap: 18px;
+    grid-gap: 50px;
   }
   @media (max-width: 1400px) {
     display: none;

@@ -76,7 +76,6 @@ export default function AppBody({
     <React.Fragment>
       <BodyWrapper
         style={{
-          backgroundColor: page === 'liquidity' ? '#FFFFFF' : '#1A123A',
           marginTop: isMobile ? '120px' : '120px',
         }}
         {...rest}

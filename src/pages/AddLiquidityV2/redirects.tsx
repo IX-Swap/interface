@@ -12,7 +12,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useTokens } from 'pages/Pool/useTokens'
 import Header from 'components/Header'
 
-export const AddLiduidityContainer = styled.div<{ background?: string }>`
+export const AddWhiteBGContainer = styled.div<{ background?: string }>`
   display: flex;
   align-items: center;
   justify-content: center;

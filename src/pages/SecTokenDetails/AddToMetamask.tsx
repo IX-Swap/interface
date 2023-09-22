@@ -63,20 +63,25 @@ export const AddWrappedToMetamask = ({ token }: Props) => {
         {token.token?.address && (
           <>
             <>
-              <div>
+              {/* <div>
                 <Info onClick={toggleAbout} />
                 <div>
                   <Trans>Wrapped {token?.ticker || 'Original token'}:</Trans>
                 </div>
-              </div>
+              </div> */}
               <div>
                 <CopyAddress address={token?.token?.address ?? ''} />
               </div>
             </>
             {library?.provider?.isMetaMask && (
-              <StyledButtonGradient onClick={() => !addCurrency.success && addCurrency.addToken()}>
+              // <StyledButtonGradient onClick={() => !addCurrency.success && addCurrency.addToken()}>
+              //   <Trans>{!addCurrency.success ? 'Add to Metamask' : 'Added'}</Trans>
+              // </StyledButtonGradient>
+
+              <StyledButtonGradientAddMetamask onClick={() => !addCurrency.success && addCurrency.addToken()}>
                 <Trans>{!addCurrency.success ? 'Add to Metamask' : 'Added'}</Trans>
-              </StyledButtonGradient>
+                <img src={MetamaskIcon} style={{ marginLeft: '10px' }} width="15" />
+              </StyledButtonGradientAddMetamask>
             )}
           </>
         )}

@@ -20,8 +20,8 @@ interface Props {
   address: string
   size?: number
   wrapperStyles?: CSSProperties
-  isShortenAddress?: boolean,
-  network?: string,
+  isShortenAddress?: boolean
+  network?: string
 }
 
 export const CopyAddress: FC<Props> = ({ address, wrapperStyles, size = 18, isShortenAddress = true, network }) => {
@@ -33,8 +33,12 @@ export const CopyAddress: FC<Props> = ({ address, wrapperStyles, size = 18, isSh
         <Trans>Copied!</Trans>
       ) : (
         <Flex style={wrapperStyles}>
-          {isShortenAddress ? (network ? shortenAddress(address || '', 4, network) : shortenAddress(address || '')) : address}
-          <IconWrapper
+          {isShortenAddress
+            ? network
+              ? shortenAddress(address || '', 4, network)
+              : shortenAddress(address || '')
+            : address}
+          {/* <IconWrapper
             style={wrapperStyles}
             size={size}
             onClick={(e) => {
@@ -44,7 +48,7 @@ export const CopyAddress: FC<Props> = ({ address, wrapperStyles, size = 18, isSh
             }}
           >
             <StyledCopy />
-          </IconWrapper>
+          </IconWrapper> */}
         </Flex>
       )}
     </>

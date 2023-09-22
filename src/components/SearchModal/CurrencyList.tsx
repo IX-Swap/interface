@@ -164,19 +164,19 @@ function CurrencyRow({
               </TYPE.darkGray>
             </RowFixed>
             <RowFixed>
-              <SvgIconWrapper size={20} style={{ marginLeft: '-6px' }}>
+              {/* <SvgIconWrapper size={20} style={{ marginLeft: '-6px' }}>
                 <img src={Attention} alt={'Attention'} />
-              </SvgIconWrapper>
-              <TYPE.popOver>
+              </SvgIconWrapper> */}
+              <TYPE.popOver color="#FF6060">
                 <Trans>Needs accreditation</Trans>
               </TYPE.popOver>
             </RowFixed>
           </Column>
           <Column>
             <Box width="100%">
-              <ButtonGradient>
+              <Text color="#6666FF" textAlign="right">
                 <Trans>Info</Trans>
-              </ButtonGradient>
+              </Text>
             </Box>
           </Column>
         </UnapprovedTokenWrapper>

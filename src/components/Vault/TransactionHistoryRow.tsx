@@ -21,6 +21,7 @@ import { DateBox, HistoryRowWraper, IconColumn } from './styleds'
 import { ReactComponent as SuccessIcon } from 'assets/images/check-2.svg'
 import { ReactComponent as ErrorIcon } from 'assets/images/newCloseIcon.svg'
 import { ReactComponent as PendingIcon } from 'assets/images/NewPendingIcon.svg'
+import { Line } from 'components/Line'
 
 interface Props {
   row: LogItem
@@ -59,9 +60,8 @@ export const TransactionHistoryRow = ({ row, currency, icon }: Props) => {
     }
   }, [toggle, dispatch, row, toggleWithdrawModal, onTypeReceiver, onTypeAmount])
 
-  console.log(status, statusText, 'kkkkkk')
-
   return (
+    // <div style={{ borderBottom: '1px solid red' }}>
     <HistoryRowWraper data-testid="row" key={`history-item-${row.createdAt}`} onClick={() => openModal()}>
       <td>
         <TYPE.small>{ActionTypeText[row.type]}</TYPE.small>
@@ -71,7 +71,7 @@ export const TransactionHistoryRow = ({ row, currency, icon }: Props) => {
           <TYPE.main1>{`${formatAmount(+amount)} ${currency?.originalSymbol}`}</TYPE.main1>
         </td>
       )}
-      <td>
+      <td width="35%">
         <Row>
           <IconColumn>
             <Box marginRight="8px" display="flex" justifyContent="center">
@@ -99,5 +99,6 @@ export const TransactionHistoryRow = ({ row, currency, icon }: Props) => {
         </RowBetween>
       </td>
     </HistoryRowWraper>
+    // </div>
   )
 }

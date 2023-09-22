@@ -66,7 +66,7 @@ export const TipCard = styled(Card)`
   border: 1px solid #e6e6ff;
   font-size: 12px;
   line-height: 18px;
-  padding: 20px 20px;
+  padding: 20px;
   text-align: left;
   // background: ${({ theme }) => theme.bg25};
   color: ${({ theme }) => theme.text13};

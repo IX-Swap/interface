@@ -213,7 +213,9 @@ export const Select = ({
 const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: string }>`
   *[class*='control'] {
     box-shadow: none;
+    color: #8f8fb2;
     cursor: pointer;
+    font-size: 13px;
     height: 60px;
     border-radius: 8px;
     border: 1px solid #e6e6ff !important;
@@ -251,7 +253,7 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
         background: ${({ theme }) => theme.bg1};
       }
       :active {
-        background-color: inherit;
+        background: ${({ theme }) => theme.bg1};
       }
     }
   }

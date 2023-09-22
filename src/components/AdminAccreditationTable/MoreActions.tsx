@@ -40,7 +40,7 @@ export const MoreActions = ({ id, searchValue }: Props) => {
   return (
     <Popover show={isOpen} content={popOverContent()} placement="bottom" close={close}>
       <ButtonEmpty onClick={toggle} padding="0" data-testid="more">
-        <StyledMenuIcon />
+        <MenuIcon />
       </ButtonEmpty>
     </Popover>
   )

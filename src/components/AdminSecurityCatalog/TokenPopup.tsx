@@ -222,7 +222,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     <>
       <AreYouSureModal isOpen={isConfirmOpen} onDecline={closeConfirm} onAccept={confirmClose} />
       <WideModal isLarge isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
-        <WideModalWrapper data-testid="tokenPopup" style={{ width: 1000, position: 'relative' }}>
+        <WideModalWrapper data-testid="tokenPopup" style={{ width: 1700, position: 'relative' }}>
           {isLoading && (
             <LoaderContainer>
               <LoaderThin size={48} />

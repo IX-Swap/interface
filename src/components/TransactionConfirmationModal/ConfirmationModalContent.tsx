@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   width: 100%;
   border-radius: 4px;
   background: ${({ theme }) => theme.bg25};
-  padding: 20px 40px 35px 40px;
+  padding: 20px 50px 35px 50px;
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       padding: 16px;

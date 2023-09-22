@@ -17,14 +17,15 @@ import { BodyRow, HeaderRow, Table } from '../Table'
 import { BrokerDealerStatus } from './BrokerDealerStatus'
 import { Pagination } from './Pagination'
 import { KycSource } from './KycSource'
+import { TYPE } from 'theme'
 
 const headerCells = [
-  t`Wallet address`,
   t`Token`,
-  t`Date of request`,
-  t`KYC source`,
+  t`Wallet address`,
   t`Country`,
+  t`Date of request`,
   t`Investor Status`,
+  t`KYC source`,
   t`Broker-Dealer status`,
   t`Custodian status`,
 ]
@@ -78,16 +79,17 @@ const Row: FC<RowProps> = ({ item, searchValue, openReviewModal }: RowProps) => 
 
   return (
     <StyledBodyRow key={id}>
+      <div style={{ fontWeight: 700 }}>{token?.symbol || '-'}</div>
       <Wallet>
         <CopyAddress address={ethAddress} />
       </Wallet>
-      <div>{token?.symbol || '-'}</div>
+      <div>{userKyc?.individual?.address?.country || userKyc?.corporate?.countryOfIncorporation || '-'}</div>
       <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+
+      <div>{statusLegend[investorType] || '-'}</div>
       <div>
         <KycSource onKycClick={onKycClick} kyc={kyc} userKyc={userKyc} status={status} />
       </div>
-      <div>{userKyc?.individual?.address?.country || userKyc?.corporate?.countryOfIncorporation || '-'}</div>
-      <div>{statusLegend[investorType] || '-'}</div>
       <div>
         <BrokerDealerStatus status={brokerDealerStatus} kyc={kyc} broker={broker} />
       </div>
@@ -143,8 +145,11 @@ export const AdminAccreditationTable = () => {
   const openModal = (kyc: KycItem) => handleKyc(kyc)
 
   return (
-    <div id="accreditation-container">
+    <div style={{ marginTop: '30px' }} id="accreditation-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
+      <TYPE.title4 marginBottom="30px" data-testid="securityTokensTitle">
+        <Trans>Accreditation</Trans>
+      </TYPE.title4>
       <Search setSearchValue={setSearchValue} />
       {adminLoading && (
         <Loader>
@@ -181,10 +186,11 @@ const Loader = styled.div`
 `
 
 const Wallet = styled.div`
-  background: ${({ theme: { bgG3 } }) => bgG3};
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #b8b8cc;
+  // background: ${({ theme: { bgG3 } }) => bgG3};
+  // -webkit-background-clip: text;
+  // background-clip: text;
+  // -webkit-text-fill-color: transparent;
 `
 
 export const Container = styled.div`
@@ -194,11 +200,11 @@ export const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 1fr 100px repeat(5, 1fr) minmax(250px, 1fr);
-  min-width: 1270px;
+  grid-template-columns: 0.6fr 200px 0.8fr repeat(4, 1fr) minmax(220px, 1fr);
+  min-width: 1500px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 1fr 100px repeat(5, 1fr) minmax(250px, 1fr);
-  min-width: 1270px;
+  grid-template-columns: 0.6fr 200px 0.8fr repeat(4, 1fr) minmax(250px, 1fr);
+  min-width: 1500px;
 `

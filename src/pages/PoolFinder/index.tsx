@@ -27,7 +27,6 @@ import { Fields } from './enums'
 import { PrerequisiteMessage } from './PrerequisiteMessage'
 import { SelectCurrency } from './SelectCurrency'
 import { FoundPoolWrapper, PoolStateColumn, SelectCurrencyContainer } from './styleds'
-import { AddLiduidityContainer } from 'pages/AddLiquidityV2/redirects'
 // import { Header } from 'pages/Launchpad/Header'
 import { useSetHideHeader } from 'state/application/hooks'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
@@ -196,10 +195,12 @@ export default function PoolFinder() {
           selectedCurrency={(activeField === Fields.TOKEN0 ? currency1 : currency0) ?? undefined}
         />
       </AppBody>
-      {/* <TipWithMessage
-        message={<Trans>Use this tool to find pairs that don&apos;t automatically appear in the interface.</Trans>}
-      /> */}
-      {/* </AddLiduidityContainer> */}
+      <div style={{ marginTop: '20px', textAlign: 'center' }}>
+        <TipWithMessage
+          page="find"
+          message={<Trans>Use this tool to find pairs that don’t automatically appear in the interface.</Trans>}
+        />
+      </div>
     </>
   )
 }

@@ -1,15 +1,18 @@
 import React from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
-import { StyledDropDown } from 'components/CurrencyInputPanel'
+
 import { Box, Text } from 'rebass'
 import styled from 'styled-components'
-import CurrencyLogo from '../../components/CurrencyLogo'
+
 import { RowEnd, RowFixed } from '../../components/Row'
 import { AssetLogo } from 'components/CurrencyInputPanel/AssetLogo'
 import { formatCurrencySymbol } from 'utils/formatCurrencySymbol'
 import { ReactComponent as NewDropDown } from '../../assets/images/dropdownIcon.svg'
 import { Pair } from '@ixswap1/v2-sdk'
+
+import { useCurrencyBalance } from 'state/wallet/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface Props {
   currency: Currency | null
@@ -39,18 +42,20 @@ const StyledTokenName: any = styled.span<{ active?: boolean }>`
   ${({ active }) => (active ? 'margin: 0 0.25rem 0 0.25rem;' : 'margin: 0 0.25rem 0 0.25rem;')}
   font-size: ${({ active }) => (active ? '14px' : '14px')};
   color: ${({ theme }) => theme.text11};
-  // border: solid 1px red;
 `
 
 export const CurrencyRow = ({ currency, chooseToken, pair }: Props) => {
-  console.log(currency, pair)
+  const { account } = useActiveWeb3React()
+  const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const formattedBalance = selectedCurrencyBalance ? selectedCurrencyBalance.toFixed(2) : '0.00'
+
   return (
     <Container onClick={chooseToken}>
       <Aligner>
         <RowFixed
           style={{
             border: '1px solid #E6E6FF',
-            padding: '5px 12px 5px 12px',
+            padding: '8px 12px 8px 18px',
             background: '#FFFFFF',
             cursor: 'pointer',
           }}
@@ -71,8 +76,13 @@ export const CurrencyRow = ({ currency, chooseToken, pair }: Props) => {
           </StyledTokenName>
           <NewDropDown />
         </RowFixed>
-        {/* <StyledDropDown selected={!!currency} /> */}
       </Aligner>
+      <div style={{ textAlign: 'end' }}>
+        <Trans>
+          <span style={{ color: '#B8B8CC' }}>Balance: </span>
+          {currency?.symbol} {formattedBalance}
+        </Trans>
+      </div>
     </Container>
   )
 }

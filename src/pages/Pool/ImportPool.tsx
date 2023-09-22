@@ -26,8 +26,8 @@ export const ImportPool = () => {
     // <SemiTransparent>
     <>
       {' '}
-      <StyledButtonEmpty data-testid="find-pool-button" id="find-pool-button" as={Link} to="/add">
-        {/* <StyledButtonEmpty data-testid="find-pool-button" id="find-pool-button" as={Link} to={routes.find}> */}
+      {/* <StyledButtonEmpty data-testid="find-pool-button" id="find-pool-button" as={Link} to="/add"> */}
+      <StyledButtonEmpty data-testid="find-pool-button" id="find-pool-button" as={Link} to={routes.find}>
         <Text color={'#666680'} fontWeight={300} fontSize={'12px'} lineHeight={'18px'}>
           <Trans>Don&apos;t see a pool you joined?</Trans>&nbsp;
         </Text>
