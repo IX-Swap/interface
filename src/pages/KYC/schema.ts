@@ -87,7 +87,7 @@ export const individualErrorsSchema = yup.object().shape({
   }),
 
   isUSTaxPayer: yup.number().min(0).max(1),
-  usTin: yup.string().when('isUSTaxPayer', {
+  usTin: yup.string().nullable().when('isUSTaxPayer', {
     is: 1,
     then: yup.string().required('Required'),
     otherwise: yup.string().nullable(),
@@ -143,10 +143,10 @@ export const corporateErrorsSchema = yup.object().shape({
   }),
   // accredited: yup.number().min(0).max(1),
   isUSTaxPayer: yup.number().min(0).max(1),
-  usTin: yup.string().when('isUSTaxPayer', {
+  usTin: yup.string().nullable().when('isUSTaxPayer', {
     is: 1,
     then: yup.string().required('Required'),
-    otherwise: yup.string(),
+    otherwise: yup.string().nullable(),
   }),
   taxCountry: yup
     .object()
