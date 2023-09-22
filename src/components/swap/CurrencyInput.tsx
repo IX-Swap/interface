@@ -92,8 +92,8 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
       (currencies[Field.INPUT]?.symbol === 'TIXS' && currencies[Field.OUTPUT]?.symbol === 'wSTOA') ? (
         <SwapBanner />
       ) : null} */}
-      {(currencies[Field.INPUT]?.symbol === 'IXS' && currencies[Field.OUTPUT]?.symbol === 'TAU') ||
-      (currencies[Field.INPUT]?.symbol === 'TAU' && currencies[Field.OUTPUT]?.symbol === 'IXS') ? (
+      {(currencies[Field.INPUT]?.symbol === 'WIXS' && currencies[Field.OUTPUT]?.symbol === 'wTAU') ||
+      (currencies[Field.INPUT]?.symbol === 'wTAU' && currencies[Field.OUTPUT]?.symbol === 'WIXS') ? (
         <SwapBanner />
       ) : null}
       {/* <SwapBanner /> */}
