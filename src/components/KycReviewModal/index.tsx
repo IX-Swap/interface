@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 
-import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { ButtonIXSWide, ButtonPinkBorder, ButtonGradientBorder } from 'components/Button'
+import { ButtonIXSWide, ButtonPinkBorder, ButtonGradientBorder, PinnedContentButton } from 'components/Button'
 import { ReasonModal } from 'components/ReasonModal'
 import { CorporateKyc, IndividualKyc, KycItem } from 'state/admin/actions'
 import { shortenAddress } from 'utils'
@@ -15,6 +15,8 @@ import { KYCStatuses } from 'pages/KYC/enum'
 
 import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
+
+import { ReactComponent as ArrowLeft } from '../../assets/images/newBack.svg'
 
 interface Props {
   isOpen: boolean
@@ -86,7 +88,6 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
 
   const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data.status as any)
-
   return (
     <>
       <ReasonModal
@@ -111,11 +112,17 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
             <TitleContainer>
               <Title>
                 <div>
-                  <Trans>KYC</Trans>&nbsp;-&nbsp;
+                  <Trans>
+                    <ArrowLeft style={{ cursor: 'pointer' }} data-testid="cross" onClick={onClose} />
+                  </Trans>
+                  &nbsp;&nbsp;
                 </div>
-                {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`})
+                <TYPE.title7 fontWeight="800" fontSize="24px">
+                  {data?.individual?.fullName || data?.corporate?.fullName || ''}
+                </TYPE.title7>
+                {/* {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
               </Title>
-              <CloseIcon data-testid="cross" onClick={onClose} />
+              {/* <CloseIcon data-testid="cross" onClick={onClose} /> */}
             </TitleContainer>
             <Body>
               {data.individualKycId ? (
@@ -125,9 +132,9 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
               )}
             </Body>
             <ActionsContainer buttons={needResubmit ? 4 : 3}>
-              <ButtonIXSWide onClick={approve} data-testid="approveButton" disabled={needResubmit}>
+              <PinnedContentButton onClick={approve} data-testid="approveButton" disabled={needResubmit}>
                 <Trans>Approve</Trans>
-              </ButtonIXSWide>
+              </PinnedContentButton>
               <ButtonPinkBorder onClick={reject} data-testid="rejectButton" disabled={needResubmit}>
                 <Trans>Reject</Trans>
               </ButtonPinkBorder>
@@ -184,8 +191,8 @@ const TitleContainer = styled.div`
 const ModalContent = styled(ModalContentWrapper)`
   padding: 29px 38px 42px 42px;
   border-radius: 20px;
-  min-width: 80vw;
-  max-width: 90vw;
+  min-width: 70vw;
+  max-width: 70vw;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 16px;
   }

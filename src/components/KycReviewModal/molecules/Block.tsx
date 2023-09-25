@@ -27,10 +27,10 @@ const Container = styled.div`
 `
 
 const Title = styled.div`
-  font-weight: 600;
-  font-size: 16px;
-  text-transform: uppercase;
-  color: ${({ theme: { white } }) => white};
+  font-weight: 700;
+  font-size: 18px;
+  // text-transform: uppercase;
+  color: ${({ theme: { text1 } }) => text1};
   margin-bottom: 36px;
   display: flex;
   align-items: center;

@@ -23,7 +23,7 @@ import { NoData } from 'components/UsersList/styleds'
 import { getStatusStats } from 'state/kyc/hooks'
 import { TYPE } from 'theme'
 import { Line } from 'components/Line'
-
+import { Link } from 'react-router-dom'
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
 interface RowProps {
   item: KycItem
@@ -69,6 +69,11 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <StatusCell status={status} />
       </div>
       {/* <div>risk level</div> */}
+      {/* <Link to={`/admin/kyc/${item.id}`}>
+        <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF">
+          Review
+        </TYPE.main2>
+      </Link> */}
       <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
         Review
       </TYPE.main2>
@@ -152,7 +157,7 @@ export const AdminKycTable = () => {
     handleKyc({} as KycItem)
   }
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
-
+  //  <Link to={`/admin/kyc/${kyc.id}`}></Link>
   const getKyc = useCallback(async () => {
     if (!id) return
     try {

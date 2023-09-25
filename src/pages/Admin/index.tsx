@@ -142,7 +142,7 @@ const Admin = () => {
 }
 
 // Step 2: Modify the styled component to accept background color
-export const Container = styled.div<{ background: string }>`
+export const Container = styled.div<{ background?: string }>`
   width: 100vw;
   display: flex;
   flex-direction: column;

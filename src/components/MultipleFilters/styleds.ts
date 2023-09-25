@@ -20,25 +20,25 @@ export const Container = styled.div`
 export const FiltersContainer = styled.div`
   display: flex;
   align-items: center;
-  column-gap: 1px;
+  column-gap: 10px;
   .dropdown {
     min-width: 160px;
     border-radius: 0;
   }
   > div:first-child {
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
+    // border-top-left-radius: 30px;
+    // border-bottom-left-radius: 30px;
   }
   > div:last-child {
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
+    // border-top-right-radius: 30px;
+    // border-bottom-right-radius: 30px;
   }
 `
 
 export const DarkBlueCard = styled.div<{ isOpen: boolean }>`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
   flex: 1;
   min-width: 150px;
   width: 100%;
@@ -46,16 +46,19 @@ export const DarkBlueCard = styled.div<{ isOpen: boolean }>`
   cursor: pointer;
   font-weight: 500;
   padding: 18px;
-  background-color: ${({ theme, isOpen }) => (isOpen ? theme.bg7 : theme.bg19)};
-  color: ${({ theme, isOpen }) => (isOpen ? theme.text2 : theme.text9)};
+  font-size: 13px;
+  border: 1px solid #e6e6ff;
+  // background-color: ${({ theme, isOpen }) => (isOpen ? theme.bg7 : theme.bg19)};
+  color: ${({ theme, isOpen }) => (isOpen ? theme.text6 : theme.text6)};
 `
 
 export const StyledPopover = styled(Popover)`
   .MuiPaper-root {
     margin-top: 2px;
-    background-color: ${({ theme }) => theme.bg7};
-    border-radius: 30px;
-    padding: 12px;
+    // background-color: ${({ theme }) => theme.bg7};
+    border: 1px solid #e6e6ff;
+    border-radius: 8px;
+    // padding: 10px;
     max-height: 216px;
     overflow: hidden;
   }
@@ -66,8 +69,8 @@ export const PopOverContent = styled.div`
   display: grid;
   gap: 8px;
   flex-direction: column;
-  padding-right: 16px;
-  color: white;
+  padding: 40px;
+  color: #8f8fb2;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -94,7 +97,7 @@ export const ResetFilters = styled(ButtonText)`
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
-  color: ${({ theme }) => theme.text2};
+  // color: ${({ theme }) => theme.text2};
   white-space: nowrap;
   text-decoration: underline;
 `

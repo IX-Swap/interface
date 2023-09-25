@@ -153,17 +153,17 @@ const Title = styled.div`
 
 const ColumnHeader = styled.div`
   margin-bottom: 13px;
-  font-size: 12px;
-  color: ${({ theme: { text2 } }) => `${text2}50`};
+  font-size: 13px;
+  color: ${({ theme: { text11 } }) => `${text11}`};
 `
 
 const BodyRow = styled.a`
   cursor: pointer;
   text-decoration: none;
-  color: ${({ theme: { white } }) => white};
+  color: ${({ theme: { text1 } }) => text1};
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 121px;
+  column-gap: 300px;
   overflow: auto;
   > div {
     display: grid;

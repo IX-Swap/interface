@@ -76,7 +76,7 @@ export const TokenManagerTokens = ({ items }: Props) => {
 
   return (
     <>
-      <Hr />
+      {/* <Hr /> */}
       <Container>
         {data.map(({ icon, value, label }, idx) => {
           return (
@@ -125,11 +125,10 @@ const Hr = styled.div`
 const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
-
   justify-content: flex-start;
   align-items: stretch;
 
-  gap: 20px;
+  gap: 10px;
 
   padding: 22px;
 `
@@ -143,12 +142,13 @@ const RowSeparator = styled.hr`
 const TokenRow = styled.div`
   display: flex;
   flex-flow: column wrap;
-
+  background: #f7f7ff;
+  padding: 24px;
   align-items: stretch;
 
   gap: 1rem;
 
-  border-radius: 32px;
+  border-radius: 8px;
 `
 
 const TokenHeader = styled.div`

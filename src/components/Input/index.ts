@@ -85,13 +85,13 @@ export const Input = styled.input<{ error?: boolean }>`
 `
 export const Textarea = styled.textarea`
   resize: none;
-  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg12};
+  // background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg12};
   font-weight: 300;
   font-size: 16px;
-  border-radius: 36px;
+  border-radius: 6px;
+  border: 1px solid #e6e6ff;
   width: 100%;
-  outline: none;
-  border: none;
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;

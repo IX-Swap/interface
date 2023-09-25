@@ -38,10 +38,11 @@ export const YellowCard = styled(Card)`
   font-weight: 500;
 `
 export const DarkBlueCard = styled(Card)`
-  background-color: ${({ theme }) => theme.bg7};
+  // background-color: ${({ theme }) => theme.bg7};
+  border: 1px solid #e6e6ff;
   color: ${({ theme }) => theme.text2};
   font-weight: 500;
-  border-radius: 36px;
+  border-radius: 6px;
   padding: 15px 31px 15px 27px;
 `
 export const VioletCard = styled(Card)`

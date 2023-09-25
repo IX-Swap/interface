@@ -54,7 +54,7 @@ export const RejectModal = ({ searchValue, isModalOpen, closeModal, id }: Props)
           </Title>
           <LabelContainer>
             <Label>Accompanying text</Label>
-            <img src={clipboardTextIcon} alt="clipboardTextIcon" />
+            {/* <img src={clipboardTextIcon} alt="clipboardTextIcon" /> */}
           </LabelContainer>
           <Textarea onChange={onValueChange} value={value} />
 

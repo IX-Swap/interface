@@ -53,14 +53,14 @@ export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder }: 
   return (
     <>
       <DarkBlueCard className="dropdown" onClick={handleOpen} isOpen={isOpen || (selectedItems?.length ? true : false)}>
-        <TYPE.body2
-          color="inherit"
+        <TYPE.main1
+          color="#8F8FB2"
           fontWeight={300}
           overflow="hidden"
           style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
         >
           {t`${placeholder}`}
-        </TYPE.body2>
+        </TYPE.main1>
       </DarkBlueCard>
       <StyledPopover
         elevation={0}
@@ -79,7 +79,7 @@ export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder }: 
                 key={item.value}
                 checked={isChecked(item.value)}
                 label={
-                  <RowCenter style={{ fontWeight: isChecked(item.value) ? 700 : 400, color: 'white', gap: 4 }}>
+                  <RowCenter style={{ fontWeight: isChecked(item.value) ? 700 : 400, color: '#8F8FB2', gap: 4 }}>
                     {item.icon && <Icon>{item.icon}</Icon>}
                     {item.label}
                   </RowCenter>

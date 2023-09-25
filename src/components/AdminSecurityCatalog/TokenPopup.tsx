@@ -5,13 +5,13 @@ import { Label } from '@rebass/forms'
 import { getNames } from 'country-list'
 import { isMobile } from 'react-device-detect'
 
-import { RowBetween } from 'components/Row'
+import { RowBetween, RowEnd } from 'components/Row'
 import { isValidAddress } from 'utils'
 import { ButtonText, CloseIcon, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
 import { useAddPopup, useModalOpen, useTokenPopupToggle } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
-import { ButtonIXSGradient } from 'components/Button'
+import { ButtonIXSGradient, ButtonOutlined, PinnedContentButton } from 'components/Button'
 import { addToken, checkWrappedAddress, updateToken, useFetchIssuers, validateToken } from 'state/secCatalog/hooks'
 import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
@@ -24,10 +24,21 @@ import { AcceptFiles } from 'components/Upload/types'
 
 import { Dropdown } from './Dropdown'
 import { Radio } from './Radio'
-import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
-import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow, LoaderContainer } from './styleds'
+import { ReactComponent as LogoImage } from '../../assets/images/UploadLogo.svg'
+import {
+  WideModal,
+  WideModalWrapper,
+  FormWrapper,
+  FormGrid,
+  Logo,
+  FormRow,
+  LoaderContainer,
+  NewFormRow,
+  NewFormRowDescriptions,
+} from './styleds'
 import { industries, initialTokenState } from './mock'
 import { TokenAvailableFor } from './TokenAvailableFor'
+import { Line } from 'components/Line'
 
 interface Props {
   token: any | null
@@ -231,17 +242,74 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
           <ModalContentWrapper>
             <ModalPadding>
               <RowBetween marginBottom="27px">
-                <TYPE.description5>
+                <TYPE.title4>
                   <Trans>{token?.id ? 'Edit token' : 'Add token'}</Trans>
-                </TYPE.description5>
+                </TYPE.title4>
 
                 <CloseIcon data-testid="cross" onClick={onClose} />
               </RowBetween>
-
+              <Line style={{ marginBottom: '70px' }} />
               {token && (
                 <>
                   <FormWrapper>
                     <FormGrid>
+                      <Box>
+                        <Label marginBottom="11px">
+                          <TYPE.title11 color="text2">
+                            <Trans>Logo:</Trans>
+                          </TYPE.title11>
+                        </Label>
+                        <ButtonText>
+                          {/* <Upload
+                            accept={AcceptFiles.IMAGE}
+                            file={currentIssuer?.file}
+                            onDrop={(file) => handleDropImage(file)}
+                          >
+                            <Logo>
+                              {currentIssuer?.filePath || currentIssuer?.logo?.public ? (
+                                <img
+                                  style={{ borderRadius: '6px' }}
+                                  width="146px"
+                                  height="146px"
+                                  src={currentIssuer?.filePath || currentIssuer?.logo?.public}
+                                />
+                              ) : (
+                                <div style={{ border: '1px solid #E6E6FF', borderRadius: '8px', padding: '35px' }}>
+                                  <LogoImage />
+                                </div>
+                              )}
+                            </Logo>
+                          </Upload> */}
+                          <Upload accept={AcceptFiles.IMAGE} file={token.file} onDrop={(file) => handleDropImage(file)}>
+                            <Logo error={errors?.logo}>
+                              {token.filePath || token.logo?.public ? (
+                                <img
+                                  style={{ borderRadius: '6px' }}
+                                  width="146px"
+                                  height="146px"
+                                  src={token.filePath || token.logo?.public}
+                                />
+                              ) : (
+                                <div
+                                  style={{
+                                    border: '1px solid #E6E6FF',
+                                    marginTop: '76px',
+                                    borderRadius: '8px',
+                                    padding: '35px',
+                                  }}
+                                >
+                                  <LogoImage />
+                                </div>
+                              )}
+                            </Logo>
+                          </Upload>
+                        </ButtonText>
+                        {errors?.logo && (
+                          <TYPE.small textAlign="center" marginTop="4px" color={'red1'}>
+                            {errors.logo}
+                          </TYPE.small>
+                        )}
+                      </Box>
                       <Box>
                         <Label marginBottom="11px" htmlFor="token-address">
                           <TYPE.title11 color="text2">
@@ -286,36 +354,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </TYPE.small>
                         )}
                       </Box>
-                      <Box>
-                        <Label marginBottom="11px">
-                          <TYPE.title11 color="text2">
-                            <Trans>Logo:</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <ButtonText>
-                          <Upload accept={AcceptFiles.IMAGE} file={token.file} onDrop={(file) => handleDropImage(file)}>
-                            <Logo error={errors?.logo}>
-                              {token.filePath || token.logo?.public ? (
-                                <img
-                                  style={{ borderRadius: '36px' }}
-                                  width="100%"
-                                  height="100%"
-                                  src={token.filePath || token.logo?.public}
-                                />
-                              ) : (
-                                <LogoImage />
-                              )}
-                            </Logo>
-                          </Upload>
-                        </ButtonText>
-                        {errors?.logo && (
-                          <TYPE.small textAlign="center" marginTop="4px" color={'red1'}>
-                            {errors.logo}
-                          </TYPE.small>
-                        )}
-                      </Box>
                     </FormGrid>
                     <FormRow>
+                      {/* <FormGrid> */}
+                      <Box></Box>
                       <Box>
                         <Label marginBottom="11px" htmlFor="token-chain">
                           <TYPE.title11 color="text2">
@@ -352,8 +394,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           }}
                         />
                       </Box>
+                      {/* </FormGrid> */}
                     </FormRow>
                     <FormRow>
+                      <Box></Box>
                       <Box>
                         <Label marginBottom="11px" htmlFor="token-company-name">
                           <TYPE.title11 color="text2">
@@ -402,9 +446,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                       </Box>
                     </FormRow>
 
-                    <FormRow>
+                    <NewFormRow>
+                      <Box></Box>
                       <Box>
-                        <Label marginBottom="11px">
+                        <Label marginTop="20px" marginBottom="11px">
                           <TYPE.title11 color="text2">
                             <Trans>Industry:</Trans>
                           </TYPE.title11>
@@ -419,6 +464,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                             {errors.industry}
                           </TYPE.small>
                         )}
+                      </Box>
+                      <Box>
                         <Label marginTop="20px" marginBottom="11px">
                           <TYPE.title11 color="text2">
                             <Trans>Country:</Trans>
@@ -435,7 +482,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                             {errors.country}
                           </TYPE.small>
                         )}
-
+                      </Box>
+                      <Box>
                         <Label marginTop="20px" marginBottom="11px" htmlFor="token-atlas-id">
                           <TYPE.title11 color="text2">
                             <Trans>AtlasOne ID:</Trans>
@@ -453,7 +501,9 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </ContainerRow>
                         </InputPanel>
                       </Box>
-
+                    </NewFormRow>
+                    <NewFormRowDescriptions>
+                      <Box></Box>
                       <Box>
                         <Label marginBottom="11px">
                           <TYPE.title11 color="text2">
@@ -462,7 +512,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                         </Label>
                         <Textarea
                           value={token.description}
-                          style={{ height: '290px', background: '#372E5E', marginBottom: 0 }}
+                          style={{ height: '290px', marginBottom: 0 }}
                           onChange={(e: any) => setToken({ ...token, description: e.currentTarget.value })}
                         />
                         {errors?.description && (
@@ -471,14 +521,19 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </TYPE.small>
                         )}
                       </Box>
-                    </FormRow>
+                    </NewFormRowDescriptions>
                     <FormRow>
+                      <Box></Box>
                       <Box>
                         <TokenAvailableFor setToken={setToken} token={token} error={errors.kycTypeJson} />
                       </Box>
-                      <Box display="flex" justifyContent="space-between">
-                        <Box marginRight={isMobile ? '0px' : '16px'}>
-                          <TYPE.title11 marginBottom="26px" color="text2">
+                      <Box
+                        style={{ border: '1px solid #E6E6FF', marginTop: '32px' }}
+                        display="flex"
+                        justifyContent="space-between"
+                      >
+                        <Box padding={'20px'} marginRight={isMobile ? '0px' : '16px'}>
+                          <TYPE.title11 marginBottom="16px" color="text2">
                             <Trans>Active</Trans>
                           </TYPE.title11>
                           <TYPE.title11 marginBottom="26px" color="text2">
@@ -491,7 +546,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                             <Trans>Allow Withdrawal</Trans>
                           </TYPE.title11>
                         </Box>
-                        <Box marginLeft={isMobile ? 'auto' : '0px'}>
+                        <Box paddingRight={'30px'} paddingTop={'20px'} marginLeft={isMobile ? 'auto' : '0px'}>
                           <Radio
                             isActive={token.active}
                             onToggle={() => setToken({ ...token, active: !token.active })}
@@ -512,19 +567,30 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                       </Box>
                     </FormRow>
                   </FormWrapper>
+                  {/* <div style={{ display: 'flex' }}> */}
 
-                  <ButtonIXSGradient
-                    onClick={handleCreateClick}
-                    margin="35px auto 30px auto"
-                    style={{ width: isMobile ? '100%' : 475 }}
-                    disabled={isLoading}
-                  >
-                    <Trans>Save</Trans>
-                  </ButtonIXSGradient>
+                  {/* </div> */}
                 </>
               )}
             </ModalPadding>
           </ModalContentWrapper>
+          <RowEnd>
+            <ButtonOutlined
+              onClick={onClose}
+              backgroundColor={'none'}
+              style={{ width: isMobile ? '100%' : 200, color: '#B8B8CC', marginRight: '10px' }}
+              disabled={isLoading}
+            >
+              <Trans>Cancel</Trans>
+            </ButtonOutlined>
+            <PinnedContentButton
+              onClick={handleCreateClick}
+              style={{ width: isMobile ? '100%' : 200 }}
+              disabled={isLoading}
+            >
+              <Trans>Save</Trans>
+            </PinnedContentButton>
+          </RowEnd>
         </WideModalWrapper>
       </WideModal>
     </>

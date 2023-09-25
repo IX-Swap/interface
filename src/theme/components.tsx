@@ -252,6 +252,7 @@ export function ExternalLink({
 
 export const DiscreteExternalLink = styled(ExternalLink)`
   margin-bottom: 15px;
+  color: #6666ff;
   :hover {
     text-decoration: none;
   }

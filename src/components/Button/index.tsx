@@ -211,8 +211,8 @@ export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   background-color: transparent;
   background: transparent;
   border-radius: 8px;
-  color: ${({ theme }) => theme.text1};
-  border: 1px solid #e6e6ff;
+  color: #f7c034;
+  border: 1px solid #ffd0564d;
   padding: 28px 18px;
   margin-right: 20px;
 

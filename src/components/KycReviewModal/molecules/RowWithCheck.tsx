@@ -2,7 +2,7 @@ import React from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
 
-import checkIcon from 'assets/images/check-2.svg'
+import checkIcon from 'assets/images/newCheckIcon.svg'
 import noneIcon from 'assets/images/none.svg'
 
 interface Props {
@@ -11,10 +11,11 @@ interface Props {
 }
 
 export const RowWithCheck = ({ text, isDone }: Props) => {
+  console.log(text, isDone, 'texttexttext')
   return (
     <Container>
-      <img src={isDone ? checkIcon : noneIcon} alt="status-icon" />
-      <Text>{t`${text}`}</Text>
+      {isDone ? <img src={checkIcon} alt="status-icon" /> : null}
+      <Text>{t`${isDone ? text : ''}`}</Text>
     </Container>
   )
 }
@@ -27,6 +28,7 @@ const Container = styled.div`
 `
 
 const Text = styled.div`
-  font-size: 14px;
-  color: ${({ theme: { text2 } }) => text2};
+  font-size: 13px;
+  color: ${({ theme: { text1 } }) => text1};
+  font-weight: 500;
 `

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { ModalBlurWrapper, ModalContentWrapper, TYPE, CloseIcon } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { ButtonIXSWide } from 'components/Button'
+import { ButtonIXSWide, PinnedContentButton } from 'components/Button'
 
 import clipboardTextIcon from '../../assets/images/clipboard-text .svg'
 
@@ -69,12 +69,12 @@ export const ReasonModal = ({
           )}
           <LabelContainer>
             <Label>{t`${inputLabel}`}</Label>
-            <img src={clipboardTextIcon} alt="clipboardTextIcon" />
+            {/* <img src={clipboardTextIcon} alt="clipboardTextIcon" /> */}
           </LabelContainer>
           <Textarea onChange={onValueChange} value={value} />
-          <ButtonIXSWide disabled={Boolean(error) || !value} onClick={onSubmit}>
+          <PinnedContentButton disabled={Boolean(error) || !value} onClick={onSubmit}>
             {t`${error || actionBtnText}`}
-          </ButtonIXSWide>
+          </PinnedContentButton>
         </ModalContent>
       </ModalBlurWrapper>
     </RedesignedWideModal>
@@ -107,13 +107,14 @@ const LabelContainer = styled.div`
 
 const Textarea = styled.textarea`
   resize: none;
-  background-color: ${({ theme }) => `${theme.bg12}40`};
+  // background-color: ${({ theme }) => `${theme.bg12}40`};
   font-weight: 300;
   font-size: 16px;
-  border-radius: 36px;
+  border-radius: 6px;
+  border: 1px solid #e6e6ff;
   width: 100%;
   outline: none;
-  border: none;
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
