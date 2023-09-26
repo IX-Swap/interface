@@ -63,6 +63,8 @@ export const ProofOfIdentityField = ({
       return it._id !== value._id
     })
 
+    console.log('test')
+
     setUploadedFiles(filteredValue)
   }
 
@@ -128,7 +130,12 @@ export const ProofOfIdentityField = ({
                   (!areDatesOptional &&
                     (isIssueDateEmpty ||
                       isExpiryDateEmpty ||
-                      isExpiryDateEarlierThanIssuedDate))
+                      isExpiryDateEarlierThanIssuedDate)) ||
+                  (areDatesOptional &&
+                    (!isIssueDateEmpty || !isExpiryDateEmpty) &&
+                    isExpiryDateEarlierThanIssuedDate)
+
+                const areDocumentFieldsDisabled = uploadedFiles.length > 0
 
                 // console.log('identityType', identityTypeValue)
                 // console.log('field', field)
@@ -175,7 +182,7 @@ export const ProofOfIdentityField = ({
                         customRenderer
                         placeholder='Select Identity Type'
                         defaultValue={title}
-                        disabled={uploadedFiles.length > 0}
+                        disabled={areDocumentFieldsDisabled}
                       />
                     </Grid>
 
@@ -190,7 +197,7 @@ export const ProofOfIdentityField = ({
                           variant='outlined'
                           customRenderer
                           defaultValue={documentNumber}
-                          disabled={uploadedFiles.length > 0}
+                          disabled={areDocumentFieldsDisabled}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -204,7 +211,7 @@ export const ProofOfIdentityField = ({
                           customRenderer
                           isOptional={areDatesOptional}
                           maxDate={expiryDateValue}
-                          disabled={uploadedFiles.length > 0}
+                          disabled={areDocumentFieldsDisabled}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -220,7 +227,7 @@ export const ProofOfIdentityField = ({
                           minDate={issuedDateValue}
                           disabled={
                             isNaN(Date.parse(issuedDateValue)) ||
-                            uploadedFiles.length > 0
+                            areDocumentFieldsDisabled
                           }
                         />
                         {isExpiryDateEarlierThanIssuedDate && (
