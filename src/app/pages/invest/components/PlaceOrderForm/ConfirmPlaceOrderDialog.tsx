@@ -48,7 +48,8 @@ export const ConfirmPlaceOrderDialog = ({
   }, [values, refetch])
 
   const fee = estimateFee?.data ?? 0
-  const totalPrice = parseFloat(values?.total ?? 0) + parseFloat(fee)
+  const totalPrice =
+    parseFloat(values?.total ?? 0) + parseFloat(isBuying ? fee : 0)
 
   return (
     <UIDialog open={open} onClose={close}>
@@ -119,7 +120,18 @@ export const ConfirmPlaceOrderDialog = ({
 
       <Grid className={classes.orderItem} mt={3} textAlign={'right'}>
         <Typography fontSize={'16px'} fontWeight={600}>
-          Total Price ({pairName[1]})
+          Total Price ({pairName[1]}){' '}
+          {!isBuying && (
+            <Tooltip
+              title={
+                <div>
+                  <p style={{ marginTop: 0 }}>
+                    Trading fees will be deducted when your order is settled
+                  </p>
+                </div>
+              }
+            />
+          )}
         </Typography>
         <Typography fontSize={'16px'} fontWeight={600} color={'#778194'}>
           {formatAmount(totalPrice)}
