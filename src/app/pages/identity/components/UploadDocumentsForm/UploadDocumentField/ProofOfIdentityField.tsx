@@ -63,8 +63,6 @@ export const ProofOfIdentityField = ({
       return it._id !== value._id
     })
 
-    console.log('test')
-
     setUploadedFiles(filteredValue)
   }
 
