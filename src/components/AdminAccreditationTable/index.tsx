@@ -196,7 +196,7 @@ const Wallet = styled.div`
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 100%;
-  grid-gap: 50px;
+  grid-gap: 10px;
 `
 
 const StyledHeaderRow = styled(HeaderRow)`

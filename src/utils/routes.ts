@@ -52,6 +52,7 @@ export const routes = {
 
   adminAccreditation: 'admin/accreditation',
   adminKYC: 'admin/kyc',
+  adminKYCID: '/admin/kyc/:kycId',
   adminTransactions: 'admin/transactions',
   adminCatalog: 'admin/security-catalog',
   adminUsers: 'admin/users-list',

@@ -71,7 +71,10 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
       <div>
         {transactionHash && currency?.chainId && (
           <ExternalLink href={getExplorerLink(currency.chainId, transactionHash, ExplorerDataType.TRANSACTION)}>
-            View on {getExplorerName(currency.chainId)}
+            <span style={{ color: '#6666ff', textDecoration: 'none' }}>
+              {' '}
+              View on {getExplorerName(currency.chainId)}
+            </span>
           </ExternalLink>
         )}
       </div>
@@ -154,10 +157,11 @@ export const Loader = styled.div`
 `
 
 const Wallet = styled.div`
-  background: ${({ theme: { bgG3 } }) => bgG3};
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #b8b8cc;
+  // background: ${({ theme: { bgG3 } }) => bgG3};
+  // -webkit-background-clip: text;
+  // background-clip: text;
+  // -webkit-text-fill-color: transparent;
 `
 
 const Container = styled.div`

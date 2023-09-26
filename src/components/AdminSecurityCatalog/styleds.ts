@@ -115,8 +115,9 @@ export const TokensListItem = styled.div`
 
 export const FormGrid = styled.div`
   display: grid;
-  grid-template-columns: 1.5fr 11fr;
-  // grid-gap: 25px;
+  grid-template-columns: 0.2fr 1fr 1fr;
+  grid-gap: 25px;
+  margin-left: 50px;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     grid-template-columns: 1fr;
@@ -175,8 +176,27 @@ export const FormWrapper = styled.div`
 
 export const FormRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.3fr 1fr 1fr;
   grid-gap: 20px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    grid-template-columns: 1fr;
+  `};
+`
+
+export const NewFormRow = styled.div`
+  display: grid;
+  grid-template-columns: 0.5fr 1.1fr 1.1fr 1fr;
+  grid-gap: 20px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    grid-template-columns: 1fr;
+  `};
+`
+export const NewFormRowDescriptions = styled.div`
+  display: grid;
+  grid-template-columns: 0.8fr 5fr;
+  grid-gap: 0px;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     grid-template-columns: 1fr;

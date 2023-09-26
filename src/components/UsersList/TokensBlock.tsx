@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import styled, { css } from 'styled-components'
 
-import { ReactComponent as DeleteIcon } from 'assets/images/cross.svg'
+import { ReactComponent as DeleteIcon } from 'assets/images/newCloseIcon.svg'
 
 export type Option = { label: string; value: string; icon: JSX.Element; isDisabled?: boolean }
 
@@ -48,6 +48,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
+  background: #f7f7fa;
   border: 1px solid ${({ theme }) => theme.text9};
   border-radius: 12px;
   padding: 12px;
@@ -66,11 +67,11 @@ const NoTokens = styled.div`
 `
 
 const Item = styled.div<{ disabled: boolean }>`
-  padding: 4px 16px 4px 12px;
+  padding: 10px 16px 10px 12px;
   display: flex;
   align-items: center;
-  background: ${({ theme }) => theme.bg11};
-  border-radius: 32px;
+  background: ${({ theme }) => theme.bg0};
+  border-radius: 8px;
   > svg {
     cursor: pointer;
   }

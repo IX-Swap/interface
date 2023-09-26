@@ -104,9 +104,7 @@ export function colors(configColors?: WlColors): Colors {
     bgG5:
       wlColors.background?.secondary ||
       'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);',
-    bgG6:
-      wlColors.background?.main ||
-      'linear-gradient(0deg, #ED0376, #ED0376), linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%);',
+    bgG6: '#6666FF',
     bgG7: wlColors.background?.main || 'linear-gradient(0deg, #272046, #272046), #170E20;',
     bgG8: wlColors.background?.main || 'linear-gradient(0deg, #1A123A, #1A123A), #170E20;',
     bgG9: wlColors.background?.main || 'linear-gradient(0deg, #14051B 0%, rgba(20, 5, 27, 0) 82.89%);',

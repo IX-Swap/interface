@@ -2,51 +2,47 @@ import styled, { css } from 'styled-components'
 
 import { MEDIA_WIDTHS } from 'theme'
 
-export const GridContainer = styled.div<{ spacing?: number }>`
+interface GridContainerProps {
+  spacing?: number
+}
+
+export const GridContainer = styled.div<GridContainerProps>`
   display: flex;
-  margin: ${({ spacing = 0 }) => `${-spacing}px 0 0 ${-spacing}px`};
-  width: ${({ spacing = 0 }) => `calc(100% + ${spacing}px)`};
-  flex-flow: row wrap;
+  flex-wrap: wrap;
+  margin: ${({ spacing = 0 }) => `${-spacing}px`};
   > div {
-    padding-left: ${({ spacing = 0 }) => `${spacing}px`};
-    padding-top: ${({ spacing = 0 }) => `${spacing}px`};
+    flex: 0 0 calc(16% - ${({ spacing = 0 }) => `${spacing}px`});
+    margin: ${({ spacing = 0 }) => `${spacing}px`};
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    > div {
+      flex: 0 0 calc(50% - ${({ spacing = 0 }) => `${spacing}px`});
+    }
   }
 `
-export const GridItem = styled.div<{ xs?: number; sm?: number; md?: number; lg?: number; xl?: number }>`
-  ${({ xs }) =>
-    xs &&
-    css`
-      @media (min-width: 1px) {
-        width: ${`${(xs * 100) / 12}%`};
-      }
-    `};
-  ${({ sm }) =>
-    sm &&
-    css`
-      @media (min-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
-        width: ${`${(sm * 100) / 12}%`};
-      }
-    `};
-  ${({ md }) =>
-    md &&
-    css`
-      @media (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
-        width: ${`${(md * 100) / 12}%`};
-      }
-    `};
-  ${({ lg }) =>
-    lg &&
-    css`
-      @media (min-width: ${MEDIA_WIDTHS.upToMedium}px) {
-        width: ${`${(lg * 100) / 12}%`};
-      }
-    `};
-  ${({ xl }) =>
-    xl &&
-    css`
-      @media (min-width: ${MEDIA_WIDTHS.upToLarge}px) {
-        width: ${`${(xl * 100) / 12}%`};
-      }
-    `};
+
+interface GridItemProps {
+  xs?: number
+  sm?: number
+  md?: number
+  lg?: number
+  xl?: number
+  spacing?: number // Add spacing prop here
+}
+
+export const GridItem = styled.div<GridItemProps>`
   width: 100%;
+
+  @media (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    flex: 0 0 calc(33.33% - ${({ spacing = 0 }) => `${spacing}px`});
+  }
+
+  @media (min-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    flex: 0 0 calc(25% - ${({ spacing = 0 }) => `${spacing}px`});
+  }
+
+  @media (min-width: ${MEDIA_WIDTHS.upToLarge}px) {
+    flex: 0 0 calc(20% - ${({ spacing = 0 }) => `${spacing}px`});
+  }
 `

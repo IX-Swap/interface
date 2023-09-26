@@ -7,10 +7,11 @@ import { Block } from '../molecules/Block'
 import { corporateInfoKeys, personalInfoKeys } from '../utils/constants'
 import { Field } from '../molecules/Field'
 import { RowWithCheck } from '../molecules/RowWithCheck'
+import { Line } from 'components/Line'
 
 interface Props {
   data: IndividualKyc
-  kycKey: string
+  kycKey: any
 }
 
 export const Information = ({ data, kycKey }: Props) => {
