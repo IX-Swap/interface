@@ -27,6 +27,8 @@ import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 
+/* eslint-disable react/display-name */
+
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
 }

@@ -6,7 +6,7 @@ import { Trans } from '@lingui/macro'
 import { useEagerConnect, useInactiveListener } from '../../hooks/web3'
 import { NetworkContextName } from '../../constants/misc'
 import Loader from '../Loader'
-import { metaMask } from 'connectors/metaMask'
+import { hooks, metaMask } from 'connectors/metaMask'
 
 const MessageWrapper = styled.div`
   display: flex;
@@ -21,6 +21,8 @@ const Message = styled.h2`
 
 export default function Web3ReactManager({ children }: { children: JSX.Element }) {
   const { connector, isActive } = useWeb3React()
+  // const { useIsActive } = hooks
+  // const isActive = useIsActive()
 
   // try to eagerly connect to an injected provider, if it exists and has granted access already
   useEffect(() => {
@@ -28,6 +30,12 @@ export default function Web3ReactManager({ children }: { children: JSX.Element }
       console.debug('Failed to connect eagerly to metamask')
     })
   }, [])
+
+  useEffect(() => {
+    if (!isActive) {
+      connector.activate()
+    }
+  }, [isActive])
 
   // handle delayed loader state
   const [showLoader, setShowLoader] = useState(false)
