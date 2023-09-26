@@ -85,23 +85,6 @@ export const Landing = () => {
                 />
               </Grid>
 
-              {/* <Box className={classes.divider} />
-
-              <Grid item>
-                <SettingsRow
-                  name={''}
-                  action={
-                    <Button
-                      onClick={() => window.showCollectorDialog()}
-                      variant='contained'
-                      disableElevation
-                    >
-                      Report feedback
-                    </Button>
-                  }
-                />
-              </Grid> */}
-
               {/* <Box className={classes.divider} /> */}
 
               {/* <Grid item>
