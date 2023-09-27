@@ -73,13 +73,15 @@ export const corporateTransformKycDto = (values: any) => {
     incorporationDate,
   } = values
 
+  const newSourceOfFunds = sourceOfFunds ?? '';
+
   return {
     ...values,
     ...(!isUSTaxPayer && { usTin: '' }),
     incorporationDate:
       typeof incorporationDate === 'string' ? incorporationDate : incorporationDate?.format('MM/DD/YYYY'),
     typeOfLegalEntity: typeOfLegalEntity?.label,
-    sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
+    sourceOfFunds: [...newSourceOfFunds, ...(newSourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
     countryOfIncorporation: countryOfIncorporation?.label,
     country: country?.label,
     residentialAddressCountry: residentialAddressCountry?.label,

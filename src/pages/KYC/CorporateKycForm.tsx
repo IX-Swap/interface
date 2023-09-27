@@ -179,6 +179,7 @@ export default function CorporateKycForm() {
   }
 
   const onSourceOfFundsChange = (source: string, fields: any[], setFieldValue: any) => {
+    fields = fields ?? []
     const newSources = [...fields]
     const indexOfSource = fields.indexOf(source)
 
@@ -864,13 +865,13 @@ export default function CorporateKycForm() {
                             <Checkbox
                               checked={!values.taxIdAvailable}
                               onClick={() => {
+                                onChangeInput('taxIdAvailable', !values.taxIdAvailable, values, setFieldValue)
                                 if (values.taxIdAvailable === true) {
                                   setFieldValue('taxNumber', '', false)
                                   setIsTaxNumberDisabled(true)
                                 } else {
                                   setIsTaxNumberDisabled(false)
                                 }
-                                onChangeInput('taxIdAvailable', !values.taxIdAvailable, values, setFieldValue)
                               }}
                               label="TIN Is Not Available"
                             />
@@ -952,6 +953,7 @@ export default function CorporateKycForm() {
                                 </DeleteRow>
                                 <TextInput
                                   type="number"
+                                  onWheel={() => (document.activeElement as HTMLElement).blur()}
                                   style={{ textAlign: 'center', fontSize: '20px' }}
                                   placeholder={isMobile ? '% Shareholding' : ''}
                                   value={beneficiar.shareholding}
