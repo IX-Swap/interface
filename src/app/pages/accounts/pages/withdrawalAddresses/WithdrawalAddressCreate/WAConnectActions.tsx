@@ -24,6 +24,7 @@ export const WAConnectActions = ({
       <Submit
         color='primary'
         variant='contained'
+        fullWidth
         disableElevation
         disabled={isVerifying || isLoading}
       >

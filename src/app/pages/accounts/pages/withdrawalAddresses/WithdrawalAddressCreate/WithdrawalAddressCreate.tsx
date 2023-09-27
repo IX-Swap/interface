@@ -9,6 +9,7 @@ import useStyles from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAd
 import { WAOfferToCreateWallet } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAOfferToCreateWallet/WAOfferToCreateWallet'
 import { useToggleValue } from 'hooks/useToggleValue'
 import { WithdrawalAddressForm } from './WAForm'
+import { ConnectWallet } from './ConnectWallet'
 
 export const WithdrawalAddressCreate = () => {
   const [isCreateWalletDialogVisible, toggleIsCreateWalletDialogVisible] =
@@ -27,8 +28,9 @@ export const WithdrawalAddressCreate = () => {
           root: classes.dialog
         }}
       >
-        <WADialogTitle label='Add Wallet Address' />
+        <WADialogTitle label='Connect Wallet' />
         <WADialogContent>
+          <ConnectWallet />
           <WithdrawalAddressForm hint={hint} />
         </WADialogContent>
       </WADialog>
