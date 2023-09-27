@@ -94,8 +94,6 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, onClose }: Isssuanc
       return ''
     } else if (issuanceFee === undefined) {
       return 'Fee is required!'
-    } else if (issuanceFee === 0) {
-      return 'Fee cannot be 0!'
     } else if (issuanceFee >= 100) {
       return 'Fee should be less than 100%!'
     }
@@ -109,7 +107,6 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, onClose }: Isssuanc
     return (
       Boolean(issuanceError) ||
       notAprrovedDisabled ||
-      !issuanceFee ||
       isLoading ||
       Number(offer?.feeRate) === issuanceFee
     )

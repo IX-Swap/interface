@@ -319,6 +319,12 @@ export const updateCorporateKYC = async (kycId: number, newKYC: any, draft = fal
   }
 
   try {
+    if (formData.get('taxIdAvailable') === null) {
+      formData.set('taxIdAvailable', newKYC.taxIdAvailable)
+    }
+    if (formData.get('taxNumber') === null) {
+      formData.set('taxNumber', newKYC.taxNumber)
+    }
     const result = draft
       ? await apiService.post(kyc.updateCorporate(kycId, draft), formData)
       : await apiService.put(kyc.updateCorporate(kycId, draft), formData)
