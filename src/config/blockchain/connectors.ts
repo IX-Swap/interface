@@ -1,6 +1,7 @@
 import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 
 import { NetworkConnector } from './NetworkConnector'
 import getLibrary from './getLibrary'
@@ -16,13 +17,17 @@ const NETWORK_URLS: {
   [chainId: number]: string
 } = {
   1: `https://mainnet.infura.io/v3/${INFURA_KEY}`,
-  4: `https://rinkeby.infura.io/v3/${INFURA_KEY}`,
   3: `https://ropsten.infura.io/v3/${INFURA_KEY}`,
+  4: `https://rinkeby.infura.io/v3/${INFURA_KEY}`,
   5: `https://goerli.infura.io/v3/${INFURA_KEY}`,
   42: `https://kovan.infura.io/v3/${INFURA_KEY}`,
+  137: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
   80001: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
-  137: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`
+  8453: `https://goerli.infura.io/v3/${INFURA_KEY}`,
+  84531: `https://base-goerli.infura.io/v3/${INFURA_KEY}`
 }
+
+export const supportedChainIds = Object.keys(NETWORK_URLS).map(Number)
 
 export const network = new NetworkConnector({
   urls: NETWORK_URLS,
@@ -34,7 +39,15 @@ export function getNetworkLibrary(): Web3Provider {
   return (networkLibrary = networkLibrary ?? getLibrary(network.provider))
 }
 
-export const injected = new InjectedConnector({})
+export const injected = new InjectedConnector({
+  supportedChainIds
+})
+
+export const coinbase = new WalletLinkConnector({
+  url: NETWORK_URLS[8453],
+  appName: 'IX Prime',
+  supportedChainIds
+})
 
 export const walletconnect = new WalletConnectConnector({
   rpc: NETWORK_URLS,

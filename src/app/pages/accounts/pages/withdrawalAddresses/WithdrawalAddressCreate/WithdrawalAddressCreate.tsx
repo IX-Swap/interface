@@ -1,15 +1,12 @@
 import React from 'react'
 import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog'
-import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogTitle'
-import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogContent'
-import { CreateWalletDialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialog'
-import { CreateWalletDialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogTitle'
-import { CreateWalletDialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogContent'
+// import { CreateWalletDialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialog'
+// import { CreateWalletDialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogTitle'
+// import { CreateWalletDialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogContent'
 import useStyles from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog.styles'
 import { WAOfferToCreateWallet } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAOfferToCreateWallet/WAOfferToCreateWallet'
 import { useToggleValue } from 'hooks/useToggleValue'
 import { WithdrawalAddressForm } from './WAForm'
-import { ConnectWallet } from './ConnectWallet'
 
 export const WithdrawalAddressCreate = () => {
   const [isCreateWalletDialogVisible, toggleIsCreateWalletDialogVisible] =
@@ -28,13 +25,9 @@ export const WithdrawalAddressCreate = () => {
           root: classes.dialog
         }}
       >
-        <WADialogTitle label='Connect Wallet' />
-        <WADialogContent>
-          <ConnectWallet />
-          <WithdrawalAddressForm hint={hint} />
-        </WADialogContent>
+        <WithdrawalAddressForm hint={hint} />
       </WADialog>
-      <CreateWalletDialog
+      {/* <CreateWalletDialog
         classes={{
           paper: classes.createDialog,
           root: classes.createDialog
@@ -47,7 +40,7 @@ export const WithdrawalAddressCreate = () => {
           onButtonCloseClick={toggleIsCreateWalletDialogVisible}
         />
         <CreateWalletDialogContent />
-      </CreateWalletDialog>
+      </CreateWalletDialog> */}
     </>
   )
 }

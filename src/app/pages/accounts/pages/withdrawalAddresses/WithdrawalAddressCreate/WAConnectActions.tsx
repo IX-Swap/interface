@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button } from '@mui/material'
+// import { Button } from '@mui/material'
 import { Submit } from 'components/form/Submit'
+import { ConnectWallet } from './ConnectWallet'
 
 interface WAConnectActionsProps {
   isLoading: boolean
@@ -28,21 +29,22 @@ export const WAConnectActions = ({
         disableElevation
         disabled={isVerifying || isLoading}
       >
-        Sign and Save
+        Save
       </Submit>
     )
   }
 
   return (
-    <Button
-      fullWidth
-      color='primary'
-      variant='contained'
-      disableElevation
-      onClick={() => getAccount()}
-      disabled={!allowConnect || isLoading}
-    >
-      Connect
-    </Button>
+    // <Button
+    //   fullWidth
+    //   color='primary'
+    //   variant='contained'
+    //   disableElevation
+    //   onClick={() => getAccount()}
+    //   disabled={!allowConnect || isLoading}
+    // >
+    //   Connect
+    // </Button>
+    <ConnectWallet onConnect={getAccount} />
   )
 }

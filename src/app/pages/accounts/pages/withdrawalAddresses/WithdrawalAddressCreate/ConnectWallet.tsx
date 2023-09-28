@@ -1,17 +1,19 @@
 import React, { ReactElement } from 'react'
 import { Box, Button, Typography, CircularProgress } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import MetamaskIcon from 'assets/images/wallets/metamask.png'
-import CoinbaseIcon from 'assets/images/wallets/coinbase.png'
+import { useWeb3React } from '@web3-react/core'
+import { injected, coinbase } from 'config/blockchain/connectors'
+import { SUPPORTED_WALLETS } from 'config/blockchain/supportedWallets'
 
 interface ConnectWalletButtonProps {
   children: ReactElement
-  isLoading?: Boolean
+  isLoading?: boolean | undefined
 }
 
 const ConnectWalletButton = ({
   children,
-  isLoading = false
+  isLoading = false,
+  ...rest
 }: ConnectWalletButtonProps) => {
   const theme = useTheme()
 
@@ -19,7 +21,6 @@ const ConnectWalletButton = ({
     <Button
       fullWidth
       variant='contained'
-      textColor={'primary'}
       disableElevation
       disabled={isLoading}
       sx={{
@@ -27,25 +28,18 @@ const ConnectWalletButton = ({
         color: theme.palette.primary.main,
         paddingY: '18px'
       }}
+      {...rest}
     >
       <Box display={'flex'} alignItems={'center'} gap={1.5}>
         {children}
-        {isLoading === true && (
-          <CircularProgress color='inherit' size={'1rem'} />
-        )}
+        {isLoading && <CircularProgress color='inherit' size={'1rem'} />}
       </Box>
     </Button>
   )
 }
 
-export const ConnectWallet = () => {
-  //   const { signWallet, status, getAccount } = useConnectMetamaskWallet()
-  //   const handleSubmit = async ({
-  //     agree,
-  //     ...values
-  //   }: WithdrawalAddressFormValues) => {
-  //     await signWallet(values)
-  //   }
+export const ConnectWallet = ({ onConnect }: { onConnect: Function }) => {
+  const { activate } = useWeb3React()
 
   return (
     <Box
@@ -53,23 +47,84 @@ export const ConnectWallet = () => {
       flexDirection={'column'}
       justifyContent={'center'}
       alignItems={'center'}
+      width={'100%'}
       gap={2}
     >
-      <ConnectWalletButton isLoading={true}>
+      <ConnectWalletButton
+        onClick={async () => {
+          await activate(injected)
+          onConnect()
+        }}
+      >
         <Box display={'flex'} alignItems={'center'} gap={1}>
           <span>Metamask Wallet</span>
-          <img src={MetamaskIcon} alt={'Metamask'} height={'20'} />
+          <img
+            src={SUPPORTED_WALLETS.METAMASK.iconURL}
+            alt={'Metamask'}
+            height={'20'}
+          />
         </Box>
       </ConnectWalletButton>
 
       <Typography variant='subtitle2'>or</Typography>
 
-      <ConnectWalletButton>
+      <ConnectWalletButton
+        onClick={async () => {
+          await activate(coinbase)
+          onConnect()
+        }}
+      >
         <Box display={'flex'} alignItems={'center'} gap={1}>
           <span>Coinbase Wallet</span>
-          <img src={CoinbaseIcon} alt={'Coinbase'} height={'20'} />
+          <img
+            src={SUPPORTED_WALLETS.COINBASE.iconURL}
+            alt={'Coinbase'}
+            height={'20'}
+          />
         </Box>
       </ConnectWalletButton>
     </Box>
   )
+}
+
+export const WalletInfo = ({ wallet }: { wallet: string }) => {
+  if (wallet in SUPPORTED_WALLETS) {
+    return (
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        padding={2}
+        sx={{
+          backgroundColor: '#F7F9FA',
+          border: '1px solid #DBE2EC',
+          borderRadius: '8px',
+          gap: 1,
+          marginBottom: '30px'
+        }}
+      >
+        <Typography color={'#778194'} fontSize={14}>
+          Connected to
+        </Typography>
+        <Box display={'flex'} gap={1} alignItems={'center'}>
+          <Typography
+            color={'##343A47'}
+            fontSize={20}
+            sx={{ textTransform: 'capitalize' }}
+            variant='subtitle2'
+          >
+            {wallet?.toLowerCase()}
+          </Typography>
+          <img
+            src={SUPPORTED_WALLETS[wallet].iconURL}
+            alt={'Metamask'}
+            height={'20'}
+          />
+        </Box>
+      </Box>
+    )
+  }
+
+  return <></>
 }
