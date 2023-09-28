@@ -17,7 +17,7 @@ export const IssuanceReport = () => {
     <Body>
       <TableTitle>
         <PageTitleRow>
-          <BackButton background={theme.launchpad.colors.background} onClick={goBack}>
+          <BackButton background="none" onClick={goBack}>
             <ArrowLeft color={theme.launchpad.colors.primary} />
           </BackButton>
           Data Extraction

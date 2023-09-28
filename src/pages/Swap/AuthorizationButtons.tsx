@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 
-import { ButtonIXSGradient } from 'components/Button'
+import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { RowBetween } from 'components/Row'
 import { useSwapAuthorizeFirstStep } from 'hooks/useSwapAuthorize'
 import { useMissingAuthorizations } from 'hooks/useSwapCallback'
@@ -61,13 +61,21 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
           {address && secTokens[address] && allowSwap && (
             <>
               {Boolean(authorizationInProgress) ? (
-                <ButtonIXSGradient disabled style={{ width: '100%' }} data-testid={'authorize' + secTokens[address]?.symbol + 'button'}>
+                <PinnedContentButton
+                  disabled
+                  style={{ width: '100%' }}
+                  data-testid={'authorize' + secTokens[address]?.symbol + 'button'}
+                >
                   Confirming transaction with broker...
-                </ButtonIXSGradient>
+                </PinnedContentButton>
               ) : (
-                <ButtonIXSGradient onClick={() => startFirstStep(address)} style={{ width: '100%' }} data-testid={'authorize' + secTokens[address]?.symbol + 'button'}>
+                <PinnedContentButton
+                  onClick={() => startFirstStep(address)}
+                  style={{ width: '100%' }}
+                  data-testid={'authorize' + secTokens[address]?.symbol + 'button'}
+                >
                   Authorize {secTokens[address]?.symbol}
-                </ButtonIXSGradient>
+                </PinnedContentButton>
               )}
             </>
           )}

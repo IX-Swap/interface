@@ -18,12 +18,12 @@ export const BodyWrapper = styled.div<{
   margin-top: ${({ margin }) => margin ?? '0px'};
   max-width: ${({ maxWidth }) => maxWidth ?? '592px'};
   width: 100%;
-  background: ${({ theme, transparent }) => (transparent ? 'transparent' : theme.bg1)};
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
-    0px 24px 32px rgba(0, 0, 0, 0.01);
-  border-radius: ${({ blurred }) => (blurred ? '30px' : '24px')};
+  background: ${({ theme }) => theme.bg0};
+  // box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
+  //   0px 24px 32px rgba(0, 0, 0, 0.01);
+  border-radius: 8px;
   margin-top: ${({ hasAnnouncement }) => (hasAnnouncement ? '3rem' : '1rem')};
-  padding: ${({ padding, blurred }) => (blurred ? '0px' : padding ?? '26px 36px 52px 36px;')};
+  padding: ${({ padding, blurred }) => (blurred ? '0px' : padding ?? '10px 36px 52px 36px;')};
   ${({ theme, paddingXS, blurred }) =>
     !blurred &&
     theme.mediaWidth.upToExtraSmall`

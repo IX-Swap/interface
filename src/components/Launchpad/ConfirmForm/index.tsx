@@ -34,7 +34,9 @@ export const ConfirmationForm: React.FC<Props> = (props) => {
           <MessageSubtitle>Would you like to submit this form?</MessageSubtitle>
         </Message>
 
-        <OutlineButton onClick={props.onClose}>Cancel</OutlineButton>
+        <OutlineButton style={{ border: '1px solid #6666FF33' }} onClick={props.onClose}>
+          Cancel
+        </OutlineButton>
 
         <FilledButton onClick={save}>Submit</FilledButton>
       </Container>

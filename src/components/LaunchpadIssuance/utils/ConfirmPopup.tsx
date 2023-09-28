@@ -46,7 +46,9 @@ export const ConfirmPopup: React.FC<Props> = ({
           {subtitle && <MessageSubtitle>{subtitle}</MessageSubtitle>}
         </Message>
 
-        <OutlineButton onClick={onDecline}>{t`${declineText || 'No'}`}</OutlineButton>
+        <OutlineButton style={{ border: '1px solid #6666FF33' }} onClick={onDecline}>{t`${
+          declineText || 'No'
+        }`}</OutlineButton>
 
         <FilledButton background={background} onClick={onAccept}>
           {t`${acceptText || 'Yes'}`}

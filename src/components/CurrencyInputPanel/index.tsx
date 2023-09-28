@@ -25,7 +25,7 @@ import { ReactComponent as NewDropDown } from '../../assets/images/dropdownIcon.
 const InputPanel = styled.div<{ hideInput?: boolean }>`
   ${({ theme }) => theme.flexColumnNoWrap}
   position: relative;
-  border-radius: ${({ hideInput }) => (hideInput ? '16px' : '36px')};
+  border-radius: 8px;
   background-color: ${({ theme, hideInput }) =>
     hideInput ? 'transparent' : theme.config.background?.main || theme.bg21};
   z-index: 1;
@@ -36,8 +36,8 @@ const FixedContainer = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  border-radius: 20px;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg1};
+  border-radius: 8px;
+  // background-color: ${({ theme }) => theme.config.background?.main || theme.bg1};
   opacity: 0.95;
   display: flex;
   align-items: center;
@@ -155,13 +155,15 @@ const BalanceWrap = styled(RowFixed)`
 `
 export const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
   background-color: transparent;
-  border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
   text-transform: uppercase;
-  padding: 0;
-  color: ${({ theme }) => theme.text2};
-  opacity: ${({ disabled }) => (!disabled ? 1 : 0.4)};
+  padding: 15px 20px;
+  border: 1px solid #e6e6ff;
+  background: white;
+
+  color: #b8b8cc;
+  // opacity: ${({ disabled }) => (!disabled ? 1 : 0.4)};
   pointer-events: ${({ disabled }) => (!disabled ? 'initial' : 'none')};
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -169,7 +171,7 @@ export const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
   font-weight: 600;
   font-size: 14px;
   line-height: 17px;
-  text-decoration: underline;
+  text-decoration: none;
   :focus {
     outline: none;
   }
@@ -252,93 +254,92 @@ export default function CurrencyInputPanel({
         </FixedContainer>
       )}
 
-      {inputId === 'liquidity' ? (
-        <NewContainer hideInput={hideInput}>
-          <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}} selected={!onCurrencySelect}>
-            {!hideInput && (
-              <>
-                <NumericalInput
-                  className="token-amount-input"
-                  data-testid="token-amount-input"
-                  value={value}
-                  onUserInput={onChangeInput}
-                />
-              </>
-            )}
-            {/* {showMaxButton && selectedCurrencyBalance ? (
+      <NewContainer hideInput={hideInput}>
+        <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}} selected={!onCurrencySelect}>
+          {!hideInput && (
+            <>
+              <NumericalInput
+                className="token-amount-input"
+                data-testid="token-amount-input"
+                value={value}
+                onUserInput={onChangeInput}
+              />
+            </>
+          )}
+          {showMaxButton && selectedCurrencyBalance ? (
             <StyledBalanceMax onClick={onMax}>
               <Trans>Max</Trans>
             </StyledBalanceMax>
-          ) : null} */}
-            <CurrencySelect
-              selected={!!currency}
-              hideInput={hideInput}
-              className="open-currency-select-button"
-              data-testid="chooseTokenDropdown"
-              onClick={() => {
-                if (onCurrencySelect) {
-                  setModalOpen(true)
-                }
-              }}
-            >
-              <Aligner>
-                <RowFixed style={{ border: '1px solid #E6E6FF', padding: '5px 12px 5px 12px', background: '#FFFFFF' }}>
-                  <AssetLogo pair={pair} currency={currency} />
-                  {pair ? (
-                    <StyledTokenName className="pair-name-container">
-                      {pair?.token0.symbol}:{pair?.token1.symbol}
-                    </StyledTokenName>
-                  ) : (
-                    <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
-                      {formatCurrencySymbol({ currency }) || (
-                        <Box>
-                          <Trans>Choose token</Trans>
-                        </Box>
-                      )}
-                    </StyledTokenName>
-                  )}
-                  <NewDropDown />
-                </RowFixed>
-                {onCurrencySelect && <StyledDropDown selected={!!currency} />}
-              </Aligner>
-            </CurrencySelect>
-          </InputRow>
-          {!hideInput && !hideBalance && (
-            <FiatRow>
-              <FiatValue fiatValue={fiatValue} priceImpact={priceImpact} />
-              <BalanceRow>
-                {account ? (
-                  <BalanceWrap style={{ marginTop: '10px' }}>
-                    <TYPE.body
-                      onClick={onMax}
-                      color={theme.text11}
-                      fontWeight={400}
-                      fontSize={14}
-                      style={{ display: 'inline', cursor: 'pointer' }}
-                    >
-                      {!hideBalance && currency && selectedCurrencyBalance ? (
-                        renderBalance ? (
-                          renderBalance(selectedCurrencyBalance)
-                        ) : (
-                          <Trans>
-                            Balance:
-                            <span style={{ color: '#292933' }}>
-                              {formatCurrencyAmount(selectedCurrencyBalance, decimals)} {currency.symbol}
-                            </span>
-                          </Trans>
-                        )
-                      ) : null}
-                    </TYPE.body>
-                  </BalanceWrap>
+          ) : null}
+          <CurrencySelect
+            selected={!!currency}
+            hideInput={hideInput}
+            className="open-currency-select-button"
+            data-testid="chooseTokenDropdown"
+            onClick={() => {
+              if (onCurrencySelect) {
+                setModalOpen(true)
+              }
+            }}
+          >
+            <Aligner>
+              <RowFixed style={{ border: '1px solid #E6E6FF', padding: '5px 12px 5px 12px', background: '#FFFFFF' }}>
+                <AssetLogo pair={pair} currency={currency} />
+                {pair ? (
+                  <StyledTokenName className="pair-name-container">
+                    {pair?.token0.symbol}:{pair?.token1.symbol}
+                  </StyledTokenName>
                 ) : (
-                  <span />
+                  <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
+                    {formatCurrencySymbol({ currency }) || (
+                      <Box>
+                        <Trans>Choose token</Trans>
+                      </Box>
+                    )}
+                  </StyledTokenName>
                 )}
-              </BalanceRow>
-            </FiatRow>
-          )}
-        </NewContainer>
-      ) : (
-        <Container hideInput={hideInput}>
+                <NewDropDown />
+              </RowFixed>
+              {onCurrencySelect && <StyledDropDown selected={!!currency} />}
+            </Aligner>
+          </CurrencySelect>
+        </InputRow>
+        {!hideInput && !hideBalance && (
+          <FiatRow>
+            <FiatValue fiatValue={fiatValue} priceImpact={priceImpact} />
+            <BalanceRow>
+              {account ? (
+                <BalanceWrap style={{ marginTop: '10px' }}>
+                  <TYPE.body
+                    onClick={onMax}
+                    color={theme.text11}
+                    fontWeight={400}
+                    fontSize={14}
+                    style={{ display: 'inline', cursor: 'pointer' }}
+                  >
+                    {!hideBalance && currency && selectedCurrencyBalance ? (
+                      renderBalance ? (
+                        renderBalance(selectedCurrencyBalance)
+                      ) : (
+                        <Trans>
+                          Balance:
+                          <span style={{ color: '#292933' }}>
+                            {formatCurrencyAmount(selectedCurrencyBalance, decimals)} {currency.symbol}
+                          </span>
+                        </Trans>
+                      )
+                    ) : null}
+                  </TYPE.body>
+                </BalanceWrap>
+              ) : (
+                <span />
+              )}
+            </BalanceRow>
+          </FiatRow>
+        )}
+      </NewContainer>
+
+      {/* <Container hideInput={hideInput}>
           <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}} selected={!onCurrencySelect}>
             {!hideInput && (
               <>
@@ -414,8 +415,7 @@ export default function CurrencyInputPanel({
               </BalanceRow>
             </FiatRow>
           )}
-        </Container>
-      )}
+        </Container> */}
 
       {onCurrencySelect && (
         <CurrencySearchModal

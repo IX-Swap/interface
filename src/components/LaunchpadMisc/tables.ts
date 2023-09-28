@@ -12,7 +12,7 @@ export const TableTitle = styled.div`
   margin: auto;
   padding: 0 0 1.25rem;
   width: 100%;
-  max-width: 1180px;
+  max-width: 1320px;
   font-family: ${(props) => props.theme.launchpad.font};
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
@@ -22,13 +22,16 @@ export const IssuanceTable = styled.div<{ maxWidth?: string; hideBorder?: boolea
   flex-flow: column nowrap;
   align-items: stretch;
   width: 100%;
-  max-width: ${(props) => props.maxWidth || '1180px'};
+  max-width: ${(props) => props.maxWidth || '1320px'};
 
   margin: auto;
-  border: ${(props) => (props.hideBorder ? 'none' : `1px solid ${props.theme.launchpad.colors.border.default}`)};
+  // border: ${(props) => (props.hideBorder ? 'none' : `1px solid ${props.theme.launchpad.colors.border.default}`)};
   border-radius: 8px;
   > :nth-child(even) {
-    background: ${(props) => props.theme.launchpad.colors.foreground};
+    // background: ${(props) => props.theme.launchpad.colors.foreground};
+    border-width: 1px 0px 1px 0px;
+    border-style: solid;
+    border-color: #e6e6ffcc;
   }
 `
 
