@@ -195,7 +195,8 @@ export const IssuancesFull = () => {
 
                 <ActionButtons>
                   <OutlineButton
-                    color={theme.launchpad.colors.primary + '80'}
+                    color={theme.launchpad.colors.primary}
+                    style={{ fontWeight: '600', border: 'none' }}
                     height="34px"
                     onClick={() => selectIssuance(issuance)}
                   >
@@ -204,8 +205,8 @@ export const IssuancesFull = () => {
 
                   {isAdmin && !!issuance.isMine && (
                     <OutlineButton
-                      color={theme.launchpad.colors.primary + '80'}
-                      borderType="tiny"
+                      color={theme.launchpad.colors.primary}
+                      style={{ fontWeight: '600' }}
                       height="34px"
                       as={DiscreteInternalLink}
                       to={getManageUrl(issuance)}

@@ -244,14 +244,14 @@ const HeaderLinksWrap = styled(Row)<{ links: number }>`
   width: fit-content;
   flex-wrap: wrap;
   overflow: visible;
-  grid-gap: 50px;
+  grid-gap: 30px;
   display: flex;
   align-items: center;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
   @media (max-width: 1600px) {
-    grid-gap: 50px;
+    grid-gap: 15px;
   }
   @media (max-width: 1400px) {
     display: none;

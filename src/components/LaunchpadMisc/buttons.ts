@@ -42,7 +42,7 @@ export const OutlineButton = styled(BaseButton)<{
   borderType?: string
 }>`
   color: ${(props) => props.color ?? props.theme.launchpad.colors.primary};
-  border: 1px solid ${(props) => props.borderColor ?? props.theme.launchpad.colors.border.default};
+  border: 1px solid #6666ff33;
   font-family: ${(props) => props.theme.launchpad.font};
   ${(props) => props.background && `background: ${props.background}`};
   ${(props) => props.borderType && `padding: 0 0.75rem;`}

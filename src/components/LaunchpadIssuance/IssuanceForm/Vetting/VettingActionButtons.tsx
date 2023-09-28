@@ -147,7 +147,7 @@ export const VettingActionButtons = ({
       {!isView && (!isApproved || isAdmin) && (
         <FormSubmitContainer>
           <>
-            <OutlineButton disabled={draftDisabled} onClick={onSaveDraft}>
+            <OutlineButton style={{ border: '1px solid #6666FF33' }} disabled={draftDisabled} onClick={onSaveDraft}>
               Save Draft
             </OutlineButton>
 

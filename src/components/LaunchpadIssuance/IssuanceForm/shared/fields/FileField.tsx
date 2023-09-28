@@ -12,6 +12,7 @@ import { text19, text30 } from 'components/LaunchpadMisc/typography'
 import { useShowError } from 'state/application/hooks'
 import { documentTypes, imageTypes, MBinBytes, photoTypes } from '../constants'
 import { downloadLocalFile } from 'components/LaunchpadOffer/util/files'
+import { ReactComponent as CrossIcon } from 'assets/images/BrowseNew.svg'
 
 interface Props {
   label?: React.ReactNode
@@ -150,9 +151,10 @@ export const FileField: React.FC<Props> = (props) => {
           <Spacer />
 
           {!props.disabled && (
-            <BrowseButton onClick={openFileBrowser} disabled={props.disabled}>
-              Browse
-            </BrowseButton>
+            // <BrowseButton onClick={openFileBrowser} disabled={props.disabled}>
+            //   Browse
+            // </BrowseButton>
+            <CrossIcon style={{ cursor: 'pointer' }} onClick={openFileBrowser} />
           )}
           {value && props.disabled && (
             <Download
