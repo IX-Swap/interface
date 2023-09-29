@@ -351,7 +351,7 @@ export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
   flex-direction: column;
   font-size: 1rem;
   display: flex;
-  min-width: 622px;
+  min-width: 700px;
   z-index: 5;
   padding: 32px;
   backdrop-filter: blur(20px);
@@ -557,8 +557,8 @@ export const ModalContentWrapper = styled(Column)`
   width: 100%;
   flex: 1 1;
   position: relative;
-  background: ${({ theme }) => theme.config.background?.secondary || theme.bgG4};
-  border-radius: 20px;
+  // background: ${({ theme }) => theme.config.background?.secondary || theme.bgG4};
+  border-radius: 8px;
 `
 export const ModalPadding = styled.div`
   padding: 37px 40px 19px 40px;
