@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { ReactComponent as AddWalletAddressImage } from 'assets/add-wallet-address.svg'
 import { AddWalletAddressButton } from '../WithdrawalAddressesList'
+import { WithdrawalAddressTooltip } from '../WithdrawalAddressTooltip'
 
 export const NoWithdrawalAddressData = () => {
   return (
@@ -20,8 +21,16 @@ export const NoWithdrawalAddressData = () => {
             You have no existing wallet address yet.
           </Typography>
         </Grid>
-        <Grid item xs>
-          <AddWalletAddressButton />
+        <Grid
+          item
+          xs
+          display={'flex'}
+          gap={1}
+          justifyContent={'center'}
+          alignItems={'center'}
+        >
+          <AddWalletAddressButton large />
+          <WithdrawalAddressTooltip />
         </Grid>
       </Grid>
     </Grid>

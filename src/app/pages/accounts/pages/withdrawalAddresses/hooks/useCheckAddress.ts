@@ -5,6 +5,11 @@ import { BlockchainWallet } from 'config/blockchain'
 import { QueryOrMutationCallbacks } from 'hooks/types'
 import { BlockchainNetworks } from 'types/blockchain'
 
+interface CheckAddressPayload {
+  walletAddress: string
+  chainId: number
+}
+
 interface CheckAddressResponse {
   allowConnect: boolean
   networkId: string
@@ -19,11 +24,17 @@ export const useCheckAddress = (
   const { apiService, snackbarService } = useServices()
   const uri = blockchainNetworksURL.checkAddress
 
-  const generateWalletHash = async (walletAddress: string) => {
-    return await apiService.post<CheckAddressResponse>(uri, { walletAddress })
+  const checkAddress = async ({
+    walletAddress,
+    chainId
+  }: CheckAddressPayload) => {
+    return await apiService.post<CheckAddressResponse>(uri, {
+      walletAddress,
+      chainId
+    })
   }
 
-  return useMutation(generateWalletHash, {
+  return useMutation(checkAddress, {
     onSuccess: callbacks?.onSuccess,
     onError: error => {
       snackbarService.showSnackbar((error as any).message, 'error')

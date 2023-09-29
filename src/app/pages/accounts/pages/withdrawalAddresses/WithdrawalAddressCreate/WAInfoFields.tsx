@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Grid, Divider } from '@mui/material'
 import { BigCheckboxWithLabel } from 'components/form/BigCheckboxWithLabel/BigCheckboxWithLabel'
 import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'
@@ -34,6 +34,8 @@ export const WAInfoFields = () => {
           variant='outlined'
         />
       </Grid>
+
+      <Divider />
 
       <Grid item>
         <TypedField
