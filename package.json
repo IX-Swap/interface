@@ -144,7 +144,7 @@
     "i18n:compile": "lingui compile",
     "integration-test": "cd e2e_tests && xvfb-run npx playwright test",
     "postinstall": "yarn compile-contract-types",
-    "start": "GENERATE_SOURCEMAP=false yarn compile-contract-types && react-app-rewired start",
+    "start": "yarn compile-contract-types && react-app-rewired start",
     "test": "react-app-rewired test --env=jsdom"
   },
   "browserslist": {

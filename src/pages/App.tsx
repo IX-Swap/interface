@@ -244,23 +244,23 @@ export default function App() {
           >
             <IXSBalanceModal />
             {/* <Web3ReactManager> */}
-              <Suspense
-                fallback={
-                  <>
-                    <LoadingIndicator isLoading />
-                  </>
-                }
-              >
-                <Switch>
-                  {routeConfigs.map(routeGenerator).filter((route) => !!route)}
+            <Suspense
+              fallback={
+                <>
+                  <LoadingIndicator isLoading />
+                </>
+              }
+            >
+              <Switch>
+                {routeConfigs.map(routeGenerator).filter((route) => !!route)}
 
-                  {useRedirect && (
-                    <Route
-                      component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                    />
-                  )}
-                </Switch>
-              </Suspense>
+                {useRedirect && (
+                  <Route
+                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                  />
+                )}
+              </Switch>
+            </Suspense>
             {/* </Web3ReactManager> */}
           </ToggleableBody>
           {!hideHeader && <Footer />}
