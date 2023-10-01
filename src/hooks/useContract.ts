@@ -50,11 +50,11 @@ export function useContract<T extends Contract = Contract>(
   ABI: any,
   withSignerIfPossible = true
 ): T | null {
-  const { library, account, chainId } = useActiveWeb3React()
+  const { provider, account, chainId } = useActiveWeb3React()
 
   return useMemo(
-    () => getContractInstance({ addressOrAddressMap, ABI, withSignerIfPossible, library, chainId, account }),
-    [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account]
+    () => getContractInstance({ addressOrAddressMap, ABI, withSignerIfPossible, provider, chainId, account }),
+    [addressOrAddressMap, ABI, provider, chainId, withSignerIfPossible, account]
   ) as T
 }
 
@@ -62,7 +62,7 @@ interface ContractInstanceProps {
   addressOrAddressMap: string | { [chainId: number]: string } | undefined
   ABI: any
   withSignerIfPossible?: boolean
-  library?: Web3Provider
+  provider?: Web3Provider
   chainId?: number
   account?: string | null
 }
@@ -71,11 +71,11 @@ export function getContractInstance({
   addressOrAddressMap,
   ABI,
   withSignerIfPossible = true,
-  library,
+  provider,
   chainId,
   account,
 }: ContractInstanceProps) {
-  if (!addressOrAddressMap || !ABI || !library || !chainId) return null
+  if (!addressOrAddressMap || !ABI || !provider || !chainId) return null
   let address: string | undefined
   if (typeof addressOrAddressMap === 'string') {
     address = addressOrAddressMap
@@ -84,7 +84,7 @@ export function getContractInstance({
   }
   if (!address) return null
   try {
-    return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
+    return getContract(address, ABI, provider, withSignerIfPossible && account ? account : undefined)
   } catch (error) {
     console.error('Failed to get contract', error)
     return null
@@ -103,11 +103,11 @@ export function useNftContract(contractAddress?: string) {
 // for using the contract immediately after creating it
 export function getNftContract({
   addressOrAddressMap,
-  library,
+  provider,
   chainId,
   account,
 }: Omit<ContractInstanceProps, 'ABI' | 'withSignerIfPossible'>) {
-  return getContractInstance({ addressOrAddressMap, library, chainId, account, ABI: NFT_ABI })
+  return getContractInstance({ addressOrAddressMap, provider, chainId, account, ABI: NFT_ABI })
 }
 export function useVestingContract() {
   return useContract(IXS_VESTING_ADDRESS, IIxsVestedDistribution, true)

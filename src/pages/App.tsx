@@ -243,7 +243,7 @@ export default function App() {
             hideHeader={hideHeader}
           >
             <IXSBalanceModal />
-            <Web3ReactManager>
+            {/* <Web3ReactManager> */}
               <Suspense
                 fallback={
                   <>
@@ -261,7 +261,7 @@ export default function App() {
                   )}
                 </Switch>
               </Suspense>
-            </Web3ReactManager>
+            {/* </Web3ReactManager> */}
           </ToggleableBody>
           {!hideHeader && <Footer />}
         </AppWrapper>

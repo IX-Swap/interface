@@ -23,7 +23,7 @@ const PaddedRow = styled(RowBetween)`
 `
 
 export const VestingTab = () => {
-  const { library, chainId, account } = useActiveWeb3React()
+  const { provider, chainId, account } = useActiveWeb3React()
   const switchChain = useSwitchChain()
   const IXSCurrency = useIXSCurrency()
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -42,7 +42,7 @@ export const VestingTab = () => {
           <TYPE.title4>
             <Trans>Vesting {IXSCurrency?.symbol}</Trans>
           </TYPE.title4>
-          {library?.provider?.isMetaMask && chainId && !isMobile && (
+          {provider?.isMetaMask && chainId && !isMobile && (
             <TextGradient style={{ cursor: 'pointer', marginLeft: '5px' }} onClick={() => switchChain.addChain()}>
               <Trans>Vesting on {CHAIN_SWITCH_STRINGS[chainId as SupportedChainId]}? Switch networks</Trans>
             </TextGradient>

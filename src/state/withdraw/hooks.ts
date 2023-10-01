@@ -179,7 +179,7 @@ export function useWithdrawCallback(
   currencyId?: string,
   currencySymbol?: string
 ): ({ id, amount, onSuccess, onError }: WithdrawProps) => Promise<void> {
-  const { library } = useActiveWeb3React()
+  const { provider } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const router = useBurnWSecContract(currencyId)
   const getEvents = useGetEventCallback()
@@ -190,7 +190,7 @@ export function useWithdrawCallback(
 
   return useCallback(
     async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
-      const web3 = new Web3(library?.provider)
+      const web3 = new Web3(provider)
       dispatch(withdrawCurrency.pending())
       dispatch(setLogItem({ logItem: null }))
       let withdrawId = null
@@ -332,8 +332,8 @@ export const useCreateDraftWitdraw = () => {
 
 export const usePayFee = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { library, account } = useActiveWeb3React()
-  const web3 = new Web3(library?.provider)
+  const { provider, account } = useActiveWeb3React()
+  const web3 = new Web3(provider)
   const paidFee = usePaidWithdrawFee()
   const paidFeeRejected = useFeeRejected()
   const getEvents = useGetEventCallback()

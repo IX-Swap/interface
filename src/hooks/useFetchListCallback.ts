@@ -10,12 +10,12 @@ import { useActiveWeb3React } from './web3'
 import getLibrary from 'utils/getLibrary'
 
 export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean) => Promise<TokenList> {
-  const { chainId, library, provider } = useActiveWeb3React()
+  const { chainId, provider } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
 
   const ensResolver = useCallback(
     async (ensName: string) => {
-      if (!library || chainId !== 1) {
+      if (!provider || chainId !== 1) {
         const networkLibrary = getLibrary(provider)
         const network = await networkLibrary.getNetwork()
         if (networkLibrary && network.chainId === 1) {
@@ -23,9 +23,9 @@ export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean
         }
         throw new Error('Could not construct mainnet ENS resolver')
       }
-      return resolveENSContentHash(ensName, library)
+      return resolveENSContentHash(ensName, provider)
     },
-    [chainId, library]
+    [chainId, provider]
   )
 
   // note: prevent dispatch if using for list search or unsupported list

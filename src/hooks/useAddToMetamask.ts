@@ -9,24 +9,22 @@ export interface UseAddTokenByDetailsToMetamaskArgs {
   onSuccess: (success: boolean) => void
 }
 export default function useAddToMetamask() {
-  const { library, chainId } = useActiveWeb3React()
+  const { provider, chainId } = useActiveWeb3React()
 
   return useCallback(
     (args: UseAddTokenByDetailsToMetamaskArgs) => {
       const { onSuccess, address, ...rest } = args
-      if (library && library.provider.isMetaMask && library.provider.request && address) {
-        library.provider
-          .request({
-            method: 'wallet_watchAsset',
-            params: {
-              //@ts-ignore // need this for incorrect ethers provider type
-              type: 'ERC20',
-              options: {
-                address,
-                ...rest,
-              },
-            },
-          })
+      const type = 'ERC20'
+      const options = {
+        address,
+        ...rest,
+      }
+      if (provider?.isMetaMask && provider?.send && address) {
+        provider
+          .send(
+            'wallet_watchAsset',
+            [type, options],
+          )
           .then((success: any) => {
             onSuccess(success)
           })
@@ -35,6 +33,6 @@ export default function useAddToMetamask() {
         onSuccess(false)
       }
     },
-    [library, chainId]
+    [provider, chainId]
   )
 }

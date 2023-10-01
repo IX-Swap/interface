@@ -102,7 +102,7 @@ const Selector = styled.div`
   margin-right: 5px;
 `
 export const NetworkCard = () => {
-  const { chainId, library, account } = useActiveWeb3React()
+  const { chainId, provider, account } = useActiveWeb3React()
   const node = useRef<HTMLDivElement>()
   const open = useModalOpen(ApplicationModal.NETWORK_SELECTOR)
   const toggle = useToggleModal(ApplicationModal.NETWORK_SELECTOR)
@@ -111,8 +111,8 @@ export const NetworkCard = () => {
 
   function Row({ targetChain }: { targetChain: number }) {
     const handleRowClick = () => {
-      if (chainId !== targetChain && library && library?.provider?.isMetaMask) {
-        switchToNetwork({ library, chainId: targetChain })
+      if (chainId !== targetChain && provider?.isMetaMask) {
+        switchToNetwork({ provider, chainId: targetChain })
         toggle()
       }
     }
@@ -127,7 +127,7 @@ export const NetworkCard = () => {
   }
 
   const activeChainName = useMemo(() => chainId && NETWORK_LABELS[chainId], [chainId])
-  if (!chainId || !NETWORK_LABELS[chainId] || !info || !library) {
+  if (!chainId || !NETWORK_LABELS[chainId] || !info || !provider) {
     return null
   }
 

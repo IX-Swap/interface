@@ -6,7 +6,7 @@ import { updateBlockNumber } from './actions'
 import { useDispatch } from 'react-redux'
 
 export default function Updater(): null {
-  const { library, chainId } = useActiveWeb3React()
+  const { provider, chainId } = useActiveWeb3React()
   const dispatch = useDispatch()
 
   const windowVisible = useIsWindowVisible()
@@ -31,20 +31,20 @@ export default function Updater(): null {
 
   // attach/detach listeners
   useEffect(() => {
-    if (!library || !chainId || !windowVisible) return undefined
+    if (!provider || !chainId || !windowVisible) return undefined
 
     setState({ chainId, blockNumber: null })
 
-    library
+    provider
       .getBlockNumber()
       .then(blockNumberCallback)
       .catch((error: any) => console.error(`Failed to get block number for chainId: ${chainId}`, error))
 
-    library.on('block', blockNumberCallback)
+      provider.on('block', blockNumberCallback)
     return () => {
-      library.removeListener('block', blockNumberCallback)
+      provider.removeListener('block', blockNumberCallback)
     }
-  }, [dispatch, chainId, library, blockNumberCallback, windowVisible])
+  }, [dispatch, chainId, provider, blockNumberCallback, windowVisible])
 
   const debouncedState = useDebounce(state, 100)
 

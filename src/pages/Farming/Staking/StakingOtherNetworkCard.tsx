@@ -14,7 +14,7 @@ import { OptionList, StakingTierCardWrapper, SwitchNetworkWrap } from './style'
 
 export const StakingOtherNetworkCard = () => {
   const switchChain = useSwitchChain()
-  const { library, chainId } = useActiveWeb3React()
+  const { provider, chainId } = useActiveWeb3React()
 
   const switchToParams = useMemo(
     () => ({
@@ -83,7 +83,7 @@ export const StakingOtherNetworkCard = () => {
           </OptionList>
         </TYPE.body1>
       </RowCenter>
-      {library?.provider?.isMetaMask && chainId && !isMobile && (
+      {provider?.isMetaMask && chainId && !isMobile && (
         <RowCenter style={{ marginBottom: '50px', marginTop: 'auto' }}>
           <ButtonGradientBorder style={{ width: '100%' }} onClick={() => switchChain.addChain()}>
             Switch network

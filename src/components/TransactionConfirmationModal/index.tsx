@@ -93,7 +93,7 @@ export function TransactionSubmittedContent({
   currencyToAdd?: Currency | undefined
   inline?: boolean // not in modal
 }) {
-  const { library } = useActiveWeb3React()
+  const { provider } = useActiveWeb3React()
 
   const { addToken, success } = useAddTokenToMetamask(currencyToAdd)
   const explorerName = useExplorerName()
@@ -111,7 +111,7 @@ export function TransactionSubmittedContent({
               <Trans>Transaction Submitted</Trans>
             </StyledTitle>
           </RowCenter>
-          {currencyToAdd && library?.provider?.isMetaMask && (
+          {currencyToAdd && provider?.isMetaMask && (
             <RowCenter>
               <ButtonGradient
                 mt="12px"

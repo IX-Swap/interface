@@ -60,7 +60,7 @@ const TopContent: FC = () => {
 }
 
 export default function Faucet() {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider } = useActiveWeb3React()
   const [selectedToken, setSelectedToken] = useState<IFaucetToken>(testStableCoinsTokens[0])
   const distributeToken = useDistributeToken(selectedToken)
   const selectedCurrency = useCurrency(selectedToken.address)
@@ -139,7 +139,7 @@ export default function Faucet() {
           />
         </Column>
         <Column style={{ marginTop: '20px' }}>
-          {selectedCurrency && library?.provider?.isMetaMask && (
+          {selectedCurrency && provider?.isMetaMask && (
             <ButtonGradient
               style={{ cursor: 'pointer' }}
               onClick={() => !addCurrency.success && addCurrency.addToken()}

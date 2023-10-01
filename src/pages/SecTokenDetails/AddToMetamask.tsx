@@ -22,7 +22,7 @@ export const AddToMetamask = ({ token }: Props) => {
   }, [token])
 
   const originalCurrency = useCurrency(originalAddress ?? null)
-  const { library } = useActiveWeb3React()
+  const { provider } = useActiveWeb3React()
 
   const addOriginalCurrency = useAddTokenToMetamask(originalCurrency ?? undefined)
 
@@ -36,7 +36,7 @@ export const AddToMetamask = ({ token }: Props) => {
           <div>
             <CopyAddress address={token?.token?.originalAddress ?? ''} />
           </div>
-          {originalCurrency && library?.provider?.isMetaMask && (
+          {originalCurrency && provider?.isMetaMask && (
             <StyledButtonGradient onClick={() => !addOriginalCurrency.success && addOriginalCurrency.addToken()}>
               <Trans>{!addOriginalCurrency.success ? 'Add to Metamask' : 'Added'}</Trans>
             </StyledButtonGradient>
@@ -48,7 +48,7 @@ export const AddToMetamask = ({ token }: Props) => {
 }
 export const AddWrappedToMetamask = ({ token }: Props) => {
   const addCurrency = useAddTokenToMetamask({ ...token?.token, wrapped: token?.token } ?? undefined)
-  const { library } = useActiveWeb3React()
+  const { provider } = useActiveWeb3React()
   const toggleAbout = useToggleModal(ApplicationModal.ABOUT_WRAPPING)
 
   return (
@@ -68,7 +68,7 @@ export const AddWrappedToMetamask = ({ token }: Props) => {
                 <CopyAddress address={token?.token?.address ?? ''} />
               </div>
             </>
-            {library?.provider?.isMetaMask && (
+            {provider?.isMetaMask && (
               <StyledButtonGradient onClick={() => !addCurrency.success && addCurrency.addToken()}>
                 <Trans>{!addCurrency.success ? 'Add to Metamask' : 'Added'}</Trans>
               </StyledButtonGradient>

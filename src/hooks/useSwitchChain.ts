@@ -21,21 +21,21 @@ export const CHAIN_SWITCH_STRINGS: { [key in SupportedChainId]: string } = {
 export default function useSwitchChain(): {
   addChain: () => void
 } {
-  const { library, chainId } = useActiveWeb3React()
+  const { provider, chainId } = useActiveWeb3React()
   const addChain = useCallback(async () => {
     if (
-      library &&
-      library.provider.isMetaMask &&
-      library.provider.request &&
+      
+      provider?.isMetaMask &&
+      provider?.request &&
       chainId &&
       ALL_SUPPORTED_CHAIN_IDS.includes(chainId)
     ) {
       try {
         const selectedChain = CHAIN_SWITCH_MAP[chainId as SupportedChainId]
-        await switchToNetwork({ chainId: selectedChain, library })
+        await switchToNetwork({ chainId: selectedChain, provider })
       } catch (e) {}
     }
-  }, [library, chainId])
+  }, [provider, chainId])
 
   return { addChain }
 }

@@ -57,7 +57,7 @@ export default function AddLiquidity({
   },
   history,
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
   const addLiquidity = useAddLiquidity()
 
@@ -150,7 +150,7 @@ export default function AddLiquidity({
 
   async function onAdd() {
     setCurrentPoolTransctionHash(null)
-    if (!chainId || !library || !account || !router) return
+    if (!chainId || !provider || !account || !router) return
 
     const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = parsedAmounts
     if (!parsedAmountA || !parsedAmountB || !currencyA || !currencyB || !deadline) {

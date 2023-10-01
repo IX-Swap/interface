@@ -28,7 +28,7 @@ export const TokenDetails = ({ token, atlasInfo }: Props) => {
     return token?.token?.originalSymbol
   }, [token])
   const originalCurrency = useCurrency(originalAddress ?? null)
-  const { library } = useActiveWeb3React()
+  const { provider } = useActiveWeb3React()
   const toggleAbout = useToggleModal(ApplicationModal.ABOUT_WRAPPING)
   const addCurrency = useAddTokenToMetamask({ ...token?.token, wrapped: token?.token } ?? undefined)
   const addOriginalCurrency = useAddTokenToMetamask(originalCurrency ?? undefined)
@@ -48,7 +48,7 @@ export const TokenDetails = ({ token, atlasInfo }: Props) => {
                   content={isCopied ? <Trans>Copied!</Trans> : shortenAddress(token.token?.address ?? '')}
                 />
               </div>
-              {library?.provider?.isMetaMask && (
+              {provider?.isMetaMask && (
                 <TextGradient
                   style={{ cursor: 'pointer', marginBottom: '0.75rem', fontSize: '18px', lineHeight: '27px' }}
                   onClick={() => !addCurrency.success && addCurrency.addToken()}
@@ -74,7 +74,7 @@ export const TokenDetails = ({ token, atlasInfo }: Props) => {
                   }
                 />
               </div>
-              {originalCurrency && library?.provider?.isMetaMask && (
+              {originalCurrency && provider?.isMetaMask && (
                 <TextGradient
                   style={{ cursor: 'pointer', marginBottom: '0.75rem', fontSize: '18px', lineHeight: '27px' }}
                   onClick={() => !addOriginalCurrency.success && addOriginalCurrency.addToken()}

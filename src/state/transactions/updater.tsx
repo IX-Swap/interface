@@ -31,7 +31,7 @@ export function shouldCheck(lastBlockNumber: number, tx: TxInterface): boolean {
 }
 
 export default function Updater(): null {
-  const { chainId, library } = useActiveWeb3React()
+  const { chainId, provider } = useActiveWeb3React()
 
   const lastBlockNumber = useBlockNumber()
 
@@ -44,12 +44,12 @@ export default function Updater(): null {
   const addPopup = useAddPopup()
 
   useEffect(() => {
-    if (!chainId || !library || !lastBlockNumber) return
+    if (!chainId || !provider || !lastBlockNumber) return
 
     Object.keys(transactions)
       .filter((hash) => shouldCheck(lastBlockNumber, transactions[hash]))
       .forEach((hash) => {
-        library
+        provider
           .getTransactionReceipt(hash)
           .then((receipt: any) => {
             if (receipt) {
@@ -93,7 +93,7 @@ export default function Updater(): null {
             console.error(`failed to check transaction hash: ${hash}`, error)
           })
       })
-  }, [chainId, library, transactions, lastBlockNumber, dispatch, addPopup])
+  }, [chainId, provider, transactions, lastBlockNumber, dispatch, addPopup])
 
   return null
 }
