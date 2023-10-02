@@ -24,6 +24,8 @@ export interface FileProps {
   readonly?: boolean
   isDisplay?: boolean
   isFileMissed?: boolean
+  isCover?: boolean
+  isSelfie?: boolean
   remove?: () => void
 }
 

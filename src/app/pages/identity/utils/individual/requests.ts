@@ -13,13 +13,16 @@ import format from 'date-fns/format'
 export const getPersonalInfoRequestPayload = (
   values: IndividualPersonalInfoFormValues
 ) => {
+
   let {
     proofOfIdentity,
+    selfie,
     proofOfAddress,
     evidenceOfAccreditation,
     dob,
     ...rest
   } = values
+
   if (values.dob === null || values.dob === undefined) {
     delete values.dob
   } else {
@@ -130,6 +133,7 @@ export const getInvestorDeclarationRequestPayload = (
     applyingAs,
     evidenceOfAccreditation,
     proofOfIdentity,
+    selfie,
     proofOfAddress,
     ...rest
   } = values

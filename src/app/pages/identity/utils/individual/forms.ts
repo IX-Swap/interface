@@ -117,14 +117,19 @@ export const getDocumentsFormValues = (
     return {
       evidenceOfAccreditation: [],
       proofOfAddress: [],
-      proofOfIdentity: []
+      proofOfIdentity: [],
+      selfie: []
     }
   }
 
   return data.documents.reduce(
     (result: any, document, index, documentsArray) => {
-      const { evidenceOfAccreditation, proofOfAddress, proofOfIdentity } =
-        result
+      const {
+        evidenceOfAccreditation,
+        proofOfAddress,
+        proofOfIdentity,
+        selfie
+      } = result
 
       if (document.type.startsWith('Evidence of ')) {
         return {
@@ -172,6 +177,14 @@ export const getDocumentsFormValues = (
         }
       }
 
+      if (document.type === 'Selfie') {
+        return {
+          ...result,
+          selfie: Array.isArray(selfie)
+            ? [...selfie, { value: document }]
+            : [{ value: document }]
+        }
+      }
       return result
     },
     {}

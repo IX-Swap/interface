@@ -34,7 +34,7 @@ export const IndividualInfoView = ({
             documentId={data.photo}
             ownerId={data.user._id}
             size={120}
-            borderRadius={16}
+            borderRadius={8}
             fallback={<AvatarPhoto />}
           />
         </Grid>

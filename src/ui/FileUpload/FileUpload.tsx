@@ -37,6 +37,7 @@ export interface FileUploadProps {
   readonly?: boolean
   neverComplete?: boolean
   isCover?: boolean
+  isSelfie?: boolean
 }
 
 export const FileUpload = (props: FileUploadProps) => {
@@ -57,7 +58,8 @@ export const FileUpload = (props: FileUploadProps) => {
     remove,
     readonly = false,
     neverComplete = false,
-    isCover = false
+    isCover = false,
+    isSelfie = false
   } = props
   const { watch } = useFormContext()
 
@@ -170,10 +172,13 @@ export const FileUpload = (props: FileUploadProps) => {
     completed: neverComplete ? 0 : completed,
     remove: handleRemove,
     readonly,
-    isCover
+    isCover,
+    isSelfie
   }
 
-  if (fullWidth) {
+  const isPdf = String(fileProps?.label).endsWith('.pdf')
+
+  if (fullWidth || isPdf) {
     return <File {...fileProps} hasError={!isValid} />
   }
 

@@ -1,11 +1,14 @@
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { DataroomFile } from 'types/dataroomFile'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { LabelledValue } from 'components/LabelledValue'
+import { ImagePreview } from 'components/ImagePreview'
+import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar_identity.svg'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export interface DocumentsViewProps {
   data: DataroomFile[]
@@ -14,10 +17,15 @@ export interface DocumentsViewProps {
 }
 
 export const ProofOfIdentity = (props: DocumentsViewProps) => {
+  const { isMobile } = useAppBreakpoints()
   const { data: documents } = props
 
   const proofOfIdentityDocs = documents.filter(
     doc => Object.values(doc).length > 0 && doc.type === 'Proof of Identity'
+  )
+
+  const selfie = documents.filter(
+    doc => Object.values(doc).length > 0 && doc.type === 'Selfie'
   )
 
   let documentFields = <></>
@@ -71,9 +79,56 @@ export const ProofOfIdentity = (props: DocumentsViewProps) => {
         <Grid item>
           <FormSectionHeader title='Proof of Identity' />
         </Grid>
+
         {documentFields}
+        
+        <Grid
+          item
+          display={'flex'}
+          gap={3}
+          sx={{ flexDirection: { xs: 'column', lg: 'row' } }}
+        >
+          {proofOfIdentityDocs.map(doc => {
+            const idsWithFrontAndBack = ['NATIONAL ID', 'DRIVING LICENSE']
+            const hasFrontAndBack = idsWithFrontAndBack.some(word =>
+              doc.title.startsWith(word)
+            )
+
+            return !hasFrontAndBack ? (
+              <Documents documents={proofOfIdentityDocs} />
+            ) : (
+              <ImagePreview
+                fileName={doc.originalFileName}
+                documentId={doc._id}
+                ownerId={doc.user}
+                size={[isMobile ? 'auto' : 390, 255]}
+                borderRadius={8}
+                fallback={<AvatarPhoto />}
+              />
+            )
+          })}
+        </Grid>
+
         <Grid item>
-          <Documents documents={proofOfIdentityDocs} />
+          <Typography my={2}>Selfie for Verification</Typography>
+          <Grid item>
+            {selfie.map(doc => {
+              const isPdf = String(doc?.originalFileName).endsWith('.pdf')
+
+              return isPdf ? (
+                <Documents documents={selfie} />
+              ) : (
+                <ImagePreview
+                  fileName={doc.originalFileName}
+                  documentId={doc._id}
+                  ownerId={doc.user}
+                  size={[180, 255]}
+                  borderRadius={8}
+                  fallback={<AvatarPhoto />}
+                />
+              )
+            })}
+          </Grid>
         </Grid>
       </Grid>
     </FieldContainer>
