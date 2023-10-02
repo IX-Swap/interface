@@ -1,5 +1,6 @@
 import { Flex } from 'rebass'
 import styled from 'styled-components'
+import { MEDIA_WIDTHS } from 'theme'
 
 export const SelectFiltersContainer = styled(Flex)`
   > div {
@@ -8,6 +9,12 @@ export const SelectFiltersContainer = styled(Flex)`
     width: 132px;
     height: 60px;
     margin-top: -22px;
+
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+      max-width: 100%;
+      width: 100%;
+      margin-top: 0px;
+    }
   }
 
   > :not(:last-child) {

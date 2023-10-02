@@ -66,7 +66,7 @@ export const Input = styled.input<{ error?: boolean }>`
   }
 
   ::-webkit-autofill::first-line {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
   ::-webkit-search-decoration {

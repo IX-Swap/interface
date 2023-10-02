@@ -5,8 +5,8 @@ import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 
 import { Input, Textarea } from 'components/Input'
-import { ButtonGradient, ButtonOutlined } from 'components/Button'
-import { TYPE, EllipsisText } from 'theme'
+import { ButtonGradient, ButtonOutlined, PinnedContentButton } from 'components/Button'
+import { TYPE, EllipsisText, MEDIA_WIDTHS } from 'theme'
 import { Label } from 'components/Label'
 import Upload from 'components/Upload'
 import { FilePreview } from 'components/FilePreview'
@@ -17,11 +17,18 @@ import { AcceptFiles } from 'components/Upload/types'
 import { ReactComponent as UploadLogo } from 'assets/images/NewDownloads.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
+
+import { ReactComponent as OneIcon } from 'assets/images/one.svg'
+import { ReactComponent as TwoIcon } from 'assets/images/two.svg'
+import { ReactComponent as ThreeIcon } from 'assets/images/three .svg'
 import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
 import { Text } from 'rebass'
 
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
 import Row from 'components/Row'
+import SelfieImage from 'assets/images/selfie.svg'
+import { alignItems } from 'styled-system'
+import { isMobile } from 'react-device-detect'
 
 export interface UploaderProps {
   files: FileWithPath[]
@@ -369,6 +376,120 @@ export const Uploader: FC<UploaderProps> = ({
   )
 }
 
+export const SelfieUploader: FC<UploaderProps> = ({
+  id,
+  title,
+  subtitle,
+  files,
+  required,
+  error,
+  handleDeleteClick,
+  onDrop,
+  optional = false,
+  tooltipText,
+  isDisabled = false,
+}: UploaderProps) => {
+  return (
+    <Box>
+      <Flex>
+        <Label label={title} required={required} tooltipText={tooltipText} />
+        {optional && (
+          <>
+            <TYPE.body1 marginLeft="4px" marginRight="8px" color={`text9`}>
+              (optional)
+            </TYPE.body1>
+            <InfoLogo />
+          </>
+        )}
+      </Flex>
+      {subtitle && <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>}
+      {files && files.length > 0 && (
+        <Flex flexWrap="wrap">
+          {files.map((file: any, index) => (
+            <FilePreview
+              key={`file-${index}-${file.name}`}
+              file={file?.asset ? file.asset : file}
+              index={1}
+              handleDeleteClick={() => {
+                handleDeleteClick(index)
+              }}
+              isDisabled={isDisabled}
+              style={{ marginRight: index !== files.length - 1 ? 16 : 0 }}
+            />
+          ))}
+        </Flex>
+      )}
+      {!isDisabled && (
+        <Upload
+          isDisabled={isDisabled}
+          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          data-testid={id}
+          file={null}
+          onDrop={onDrop}
+        >
+          {/* <UploaderCard>
+            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
+              <StyledUploadLogo />
+              <TYPE.small textAlign="center" marginTop="8px" color={'#666680'}>
+                Drag and Drop
+              </TYPE.small>
+              <TYPE.small display="flex" textAlign="center" color={'#666680'}>
+                or <Text style={{ marginLeft: 2, color: '#6666FF' }}>Upload</Text>
+              </TYPE.small>
+            </Flex>
+          </UploaderCard> */}
+          {!files?.length && (
+            <SelfieUploaderCard>
+              <Column style={{ alignItems: 'center', padding: '0px', margin: isMobile ? '20px 0px' : '0px' }}>
+                <Image src={SelfieImage} alt="Uploader" />
+              </Column>
+              <Column
+                style={{
+                  padding: isMobile ? '0px' : '0px 78px 16px 0px',
+                  margin: isMobile ? '0px 0px 0px 16px' : '0px',
+                }}
+              >
+                <Heading>How to Take Your Selfie</Heading>
+                <SubHeading>
+                  <OneIcon style={{ marginRight: '10px' }} /> Good lighting
+                </SubHeading>
+                <Paragraph>Make sure you are in a well-lit environment.</Paragraph>
+                <SubHeading>
+                  <TwoIcon style={{ marginRight: '10px' }} /> Look straight
+                </SubHeading>
+                <Paragraph>
+                  Make sure your face is angled such that your <br /> features are clearly visible.
+                </Paragraph>
+                <SubHeading>
+                  <ThreeIcon style={{ marginRight: '10px' }} /> Hold up handwritten verification text and ID
+                </SubHeading>
+                <Paragraph>
+                  Write down “For IXS Verification” and the current <br /> date on a piece of paper and hold it up
+                  together with <br /> your valid ID.
+                </Paragraph>
+                <PinnedContentButton
+                  style={{
+                    marginTop: '5px',
+                    width: isMobile ? '50%' : '340px',
+                    alignSelf: isMobile ? 'center' : 'normal',
+                  }}
+                >
+                  Upload
+                </PinnedContentButton>
+              </Column>
+            </SelfieUploaderCard>
+          )}
+        </Upload>
+      )}
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
+    </Box>
+  )
+}
+
 interface ChooseFileTypes {
   label?: string | JSX.Element | null
   file: FileWithPath | null
@@ -502,4 +623,82 @@ const DeleteIcon = styled.div`
   z-index: 2;
   border-radius: 36px 0 0 36px;
   cursor: pointer;
+`
+
+// const UploaderCard = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   max-width: 100px;
+// `
+
+const Column = styled.div`
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align content to the start */
+`
+
+const Image = styled.img`
+  max-width: 100%;
+  height: auto;
+`
+
+const Icon = styled.span`
+  margin-right: 8px;
+`
+
+const Heading = styled.h2`
+  font-size: 18px;
+  margin: 0px 0px 20px 0px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: #292933;
+`
+
+const SubHeading = styled.h3`
+  font-size: 13px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+`
+
+const Paragraph = styled.p`
+  font-size: 13px;
+  color: #b8b8cc;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight 500;
+  margin-bottom: 18px;
+`
+
+// const Button = styled.button`
+//   background-color: #6666ff;
+//   color: white;
+//   border: none;
+//   padding: 10px 20px;
+//   font-size: 16px;
+//   border-radius: 4px;
+//   margin-top: 16px;
+//   cursor: pointer;
+// `
+
+export const SelfieUploaderCard = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  width: 100%;
+  background: ${({ theme }) => theme.bg0};
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
+  cursor: pointer;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+    height: 720px;
+  }
 `

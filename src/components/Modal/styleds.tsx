@@ -76,7 +76,7 @@ export const StyledLightDialogOverlay = styled(AnimatedDialogOverlay)<{
     justify-content: ${({ isright }) => (isright ? 'flex-end' : 'center')};
     flex-direction: ${({ flexcolumn }) => (flexcolumn ? 'column' : 'row')};
 
-    background: rgba(6, 6, 40, 0.6);
+    // background: rgba(6, 6, 40, 0.6);
     backdrop-filter: blur(16px);
     padding: 0px;
     ${({ tip }) =>
