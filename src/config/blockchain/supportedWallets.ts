@@ -1,7 +1,8 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import METAMASK_ICON_URL from 'assets/images/metamask.svg'
+import COINBASE_ICON_URL from 'assets/images/coinbase.svg'
 import WALLETCONNECT_ICON_URL from 'assets/images/walletConnectIcon.svg'
-import { injected, walletconnect } from './connectors'
+import { injected, coinbase, walletconnect } from './connectors'
 
 export interface WalletInfo {
   connector?: AbstractConnector
@@ -27,9 +28,17 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   },
   METAMASK: {
     connector: injected,
-    name: 'MetaMask',
+    name: 'Metabask',
     iconURL: METAMASK_ICON_URL,
     description: 'Easy-to-use browser extension.',
+    href: null,
+    color: '#E8831D'
+  },
+  COINBASE: {
+    connector: coinbase,
+    name: 'Coinbase',
+    iconURL: COINBASE_ICON_URL,
+    description: 'Coinbase.',
     href: null,
     color: '#E8831D'
   },

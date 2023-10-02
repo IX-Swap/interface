@@ -4,11 +4,14 @@ import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { Grid } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { columns } from 'app/pages/accounts/components/TradeHistoryTable/columns'
-import { Filters } from 'app/pages/accounts/components/TradeHistoryTable/Filter'
+// import { Filters } from 'app/pages/accounts/components/TradeHistoryTable/Filter'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { exchange as exchangeUrl } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
+import { PairFilter } from 'app/pages/accounts/components/TradeHistoryTable/PairFilter'
+import { BaseFilters } from 'app/components/BaseFilters/BaseFilters'
+import { ExportButton } from 'ui/ExportButton/ExportButton'
 
 export interface TradeHistory {
   date: string
@@ -33,11 +36,24 @@ export const TradeHistoryTable = () => {
     pair: getFilterValue('pair'),
     orderType: 'PAST'
   }
+  const exportButtonId = 'exportTradeHistory'
 
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
-        <Filters />
+        <BaseFilters>
+          <Grid item xs>
+            <PairFilter />
+          </Grid>
+          <Grid item xs>
+            <ExportButton
+              fullWidth
+              onClick={() => {
+                document.getElementById(exportButtonId)?.click()
+              }}
+            />
+          </Grid>
+        </BaseFilters>
       </Grid>
       <Grid item>
         <TableView<TradeHistory>
@@ -46,8 +62,8 @@ export const TradeHistoryTable = () => {
           columns={columns}
           filter={filter}
           paperProps={{ variant: 'elevation', elevation: 0 }}
-          showExport
           exportFileName='Trade History'
+          exportButtonId={exportButtonId}
         />
       </Grid>
     </Grid>

@@ -48,7 +48,7 @@ export const urlFeature = {
   bankAccount: `${AppFeature.BankAccounts}`,
   balances: 'balances',
   transactions: 'transactions',
-  digitalSecurity: 'digital-security',
+  digitalSecurity: 'tokens',
   individualIdentity: `${AppFeature.Individuals}`,
   individualAccreditation: `${AppFeature.IndividualsAccreditation}`,
   corporateIdentity: `${AppFeature.Corporates}`,

@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react'
-import { Grid } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { waFormValidationSchema } from 'app/pages/accounts/pages/withdrawalAddresses/validation'
@@ -26,9 +25,7 @@ export const WithdrawalAddressForm = ({ hint }: WithdrawalAddressFormProps) => {
       defaultValues={{ agree: false }}
       data-testid='blockchain-address-form'
     >
-      <Grid container direction='column' spacing={3}>
-        <WAConnect hint={hint} status={status} getAccount={getAccount} />
-      </Grid>
+      <WAConnect hint={hint} status={status} getAccount={getAccount} />
     </Form>
   )
 }

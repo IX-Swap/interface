@@ -4,6 +4,7 @@ import { useVerifyWalletOwnership } from './useVerifyWalletOwnership'
 import { useServices } from 'hooks/useServices'
 import { useMakeWithdrawalAddress } from './useMakeWithdrawalAddress'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
+import { useWeb3React } from '@web3-react/core'
 
 export enum WalletConnectionStatus {
   IDLE,
@@ -20,6 +21,7 @@ export function useConnectMetamaskWallet() {
   const [generateWalletHash] = useGenerateWalletHash()
   const [verifyWalletOwnership] = useVerifyWalletOwnership()
   const [makeWithdrawalAddress] = useMakeWithdrawalAddress()
+  const { account } = useWeb3React()
 
   const signWallet = async (values: WithdrawalAddressFormValues) => {
     const { address } = values
@@ -40,7 +42,7 @@ export function useConnectMetamaskWallet() {
 
         if (verifyOwnershipResponse?.data?.isVerified ?? false) {
           const response = await makeWithdrawalAddress(values)
-          // @ts-expect-error
+
           if (response?.status < 400) {
             setStatus(WalletConnectionStatus.SUCCESS)
           } else {
@@ -61,7 +63,10 @@ export function useConnectMetamaskWallet() {
     setStatus(WalletConnectionStatus.INITIALISING)
 
     try {
-      await web3Service.getAccount(address)
+      if (account !== undefined) {
+        //   await web3Service.getAccount(address)
+        await web3Service.getAccount(account ?? '')
+      }
       setStatus(WalletConnectionStatus.INITIALISED)
     } catch (error) {
       setStatus(WalletConnectionStatus.IDLE)

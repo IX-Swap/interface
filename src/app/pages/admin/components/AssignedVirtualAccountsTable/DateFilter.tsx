@@ -15,7 +15,6 @@ export interface DateFilterProps {
 export const DateFilter = ({
   name,
   label,
-  width = 150,
   dateTimePickerProps = {}
 }: DateFilterProps) => {
   return (
@@ -28,12 +27,6 @@ export const DateFilter = ({
           value={value ?? null}
           className='denseAdornments'
           clearable
-          InputProps={{
-            fullWidth: false,
-            style: {
-              width
-            }
-          }}
           onChange={date => {
             if (date === null) {
               onClear()

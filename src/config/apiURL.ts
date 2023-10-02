@@ -116,6 +116,9 @@ export const accountsURL = {
     custody: (userId?: string) => `/custody/available-tokens/${userId}`,
     getTokenInfo: '/custody/token-info'
   },
+  ledger: {
+    getTokenHoldings: '/ledger/token-holdings'
+  },
   balance: {
     getAll: (userId?: string) => `/accounts/balance/${userId}`,
     getByUserId: (userId?: string) => `/accounts/currency-balance/${userId}`,
@@ -305,6 +308,7 @@ export const virtualAccounts = {
 export const exchange = {
   marketList: '/exchange/markets/list',
   otcList: 'otc/market/list',
+  estimateFee: 'exchange/orders/estimate-fee',
   userOrders: (userId?: string) => `/exchange/orders/list/${userId}`,
   userTrades: (userId?: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {
