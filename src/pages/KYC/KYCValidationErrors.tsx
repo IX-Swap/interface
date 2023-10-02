@@ -32,6 +32,7 @@ const errorLabelMap = [
 
   { field: 'proofOfIdentity', label: 'Proof of Identity' },
   { field: 'proofOfAddress', label: 'Proof of Address' },
+  { field: 'selfie', label: 'Selfie' },
 
   { field: 'occupation', label: 'Occupation' },
   { field: 'employmentStatus', label: 'Employment Status' },

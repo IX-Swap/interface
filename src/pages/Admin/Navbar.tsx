@@ -81,16 +81,17 @@ const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boo
   }
 
   @media (max-width: 1080px) {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr 1fr auto;
     grid-gap: 28px;
     padding: 14px 18px;
   }
 
   @media (max-width: 500px) {
-    grid-template-columns: 1fr 1fr auto;
+    grid-template-columns: 1.5fr 0.4fr 0.4fr 0.4fr;
     padding: 10px 10px;
     grid-template-rows: auto;
     margin: 0;
+    grid-gap: 2px;
   }
 `
 
@@ -254,16 +255,23 @@ export const Navbar = () => {
                 </IXSIcon>
               </Title>
             </HeaderRow>
-            <HeaderControls>
-              {isAllowed(routes.kyc) && isWhitelisted && (
-                <HeaderElement>
-                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to="/kyc">
-                    {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
-                  </NavLink>
-                </HeaderElement>
-              )}
-            </HeaderControls>
-            <MobileMenu />
+
+            <HeaderRowNew>
+              <HeaderElement>
+                <NavLink
+                  style={{ textDecoration: 'none', color: 'inherit', marginRight: 8, marginTop: '4px' }}
+                  to={routes.tokenManager('my-tokens', null)}
+                >
+                  <ProfileIcon width="50px" height="50px" />
+                </NavLink>
+              </HeaderElement>
+            </HeaderRowNew>
+            <HeaderElement>
+              <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to="/kyc">
+                <TimerIcon width="50px" height="50px" />
+              </NavLink>
+            </HeaderElement>
+            <MobileMenu isAdmin="true" />
           </HeaderFrame>
         </HeaderWrapper>
       )}
@@ -292,10 +300,7 @@ export const Navbar = () => {
 
               <IconWrapper>
                 <HeaderElement>
-                  <NavLink
-                    style={{ textDecoration: 'none', color: 'inherit', marginRight: 150, marginTop: 5 }}
-                    to="/kyc"
-                  >
+                  <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to="/kyc">
                     <TimerIcon width="50px" height="50px" />
                   </NavLink>
                 </HeaderElement>

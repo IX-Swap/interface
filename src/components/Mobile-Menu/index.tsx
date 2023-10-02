@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { ReactComponent as MenuIcon } from '../../assets/images/newMmobileIcon.svg'
 import { Menu } from './Menu'
 
-export const MobileMenu = () => {
+export const MobileMenu = (props: any) => {
   const [open, handleIsOpen] = useState(false)
 
   const toggle = () => handleIsOpen((state) => !state)
@@ -15,7 +15,7 @@ export const MobileMenu = () => {
       <IconContainer>
         <StyledMenuIcon onClick={toggle} />
       </IconContainer>
-      {open && <Menu close={close} />}
+      {open && <Menu isAdminMenu={props.isAdmin} close={close} />}
     </>
   )
 }

@@ -149,6 +149,18 @@ export const UploaderCard = styled.div`
   cursor: pointer;
 `
 
+export const SelfieUploaderCard = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  width: 100%;
+  background: ${({ theme }) => theme.bg0};
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
+  cursor: pointer;
+`
+
 export const StyledStickyBox = styled(StickyBox).attrs(() => ({ offsetTop: 100 }))`
   width: 296px;
   max-width: 296px;

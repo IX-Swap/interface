@@ -4,17 +4,18 @@ import styled from 'styled-components'
 
 import { Select } from 'components/Select'
 import { Search } from 'components/Search'
-import { ButtonEmpty, ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
-import { TYPE } from 'theme'
+import { ButtonEmpty, ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 
 import { SelectFiltersContainer } from './styleds'
-import { getStatusInfo } from 'pages/KYC/styleds'
-import { KYCStatuses } from 'pages/KYC/enum'
+// import { getStatusInfo } from 'pages/KYC/styleds'
+// import { KYCStatuses } from 'pages/KYC/enum'
 import { ButtonStatusText, identityOptions, KYCIdentity } from './mock'
 import { DateFilter } from 'components/DateFilter'
 import { ReactComponent as IdentityIcon } from 'assets/images/identityIcon.svg'
 import { ReactComponent as NewDateIcon } from 'assets/images/NewDateIcon.svg'
 import { Line } from 'components/Line'
+import { isMobile } from 'react-device-detect'
 
 const ResetFilterButton = styled(ButtonEmpty)`
   color: ${({ theme }) => theme.text2};
@@ -25,6 +26,28 @@ const ResetFilterButton = styled(ButtonEmpty)`
   border: 1px solid #e6e6ff;
   border-radius: 8px;
   font-size: 13px;
+`
+
+const StatusButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+  }
+`
+
+const StatusButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+  }
+`
+
+const Title = styled(TYPE.title11)`
+  color: #8f8fb2;
+  margin-left: 8px;
 `
 
 export type TStats = {
@@ -54,7 +77,6 @@ export const AdminKycFilters: FC<Props> = ({
   onIdentityChange,
 }) => {
   const handleStatusChange = (status: string) => {
-    console.log(status, 'hhhhh')
     const newStatuses = [...selectedStatuses]
     const indexOfSource = selectedStatuses.indexOf(status)
     const indexOfTotal = selectedStatuses.indexOf('total')
@@ -95,13 +117,10 @@ export const AdminKycFilters: FC<Props> = ({
         />
         <ResetFilterButton onClick={handleResetFilters}>Clear Filters</ResetFilterButton>
       </Flex>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '22px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <StatusButtonWrapper>
+        <StatusButton>
           {stats.map(({ status, count }) => {
-            // const statusInfo = status !== 'total' ? getStatusInfo(status as KYCStatuses) : 'total'
-            const title = (
-              <TYPE.title11 color="#8F8FB2" marginLeft="8px">{`${ButtonStatusText[status]} - ${count}`}</TYPE.title11>
-            )
+            const title = <Title marginLeft="8px">{`${ButtonStatusText[status]} - ${count}`}</Title>
 
             return (
               <Fragment key={`status-button-${status}`}>
@@ -130,23 +149,10 @@ export const AdminKycFilters: FC<Props> = ({
                   </ButtonIXSGradient>
                 )}
               </Fragment>
-              // <Fragment key={`status-button-${status}`}>
-              //   {!selectedStatuses.includes(status) ? (
-              //     <ResetFilterButton onClick={() => handleStatusChange(status)}>
-              //       {/* {statusInfo !== 'total' && statusInfo.icon()} */}
-              //       {title}
-              //     </ResetFilterButton>
-              //   ) : (
-              //     <ResetFilterButton onClick={() => handleStatusChange(status)}>
-              //       {/* {statusInfo !== 'total' && statusInfo.icon()} */}
-              //       {title}
-              //     </ResetFilterButton>
-              //   )}
-              // </Fragment>
             )
           })}
-        </div>
-        <div>
+        </StatusButton>
+        <div style={{ margin: isMobile ? '15px 0px' : '0px' }}>
           <SelectFiltersContainer>
             <div className="input-with-icon">
               <IdentityIcon style={{ position: 'relative', top: '46px', left: '90px', zIndex: '1' }} />
@@ -171,7 +177,7 @@ export const AdminKycFilters: FC<Props> = ({
             </div>
           </SelectFiltersContainer>
         </div>
-      </div>
+      </StatusButtonWrapper>
       <Line style={{ marginBottom: '20px' }} />
     </Flex>
   )

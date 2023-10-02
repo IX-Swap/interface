@@ -16,6 +16,11 @@ import { text35 } from 'components/LaunchpadMisc/typography'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { Currency } from '@ixswap1/sdk-core'
 import Loader from 'components/Loader'
+import { RowBetween } from 'components/Row'
+import { InvestFormSubmitButton } from './InvestSubmitButton'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { KycLightDocPreviewModal } from 'components/KycLightDocPreviewModal'
+import { BuyModal } from '../BuyModal'
 
 interface Props {
   offer: Offer
@@ -67,7 +72,7 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
     if (value === '') {
       warning = ''
     } else if (isInsufficientBalance) {
-      warning = `Insufficient balance`
+      warning = `Insufficient USDC balance`
     } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
       warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
     } else if (Number(min) > realValue) {
@@ -103,7 +108,10 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
-
+  const { account } = useActiveWeb3React()
+  const inputCurrency = useCurrency(investingTokenAddress)
+  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
+  const [openPreviewModal, setPreviewModal] = React.useState(false)
   const changeValue = (value: string) => {
     setInputValue(value)
 
@@ -145,36 +153,94 @@ export const ConvertationField: React.FC<Props> = (props) => {
     [investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens]
   )
 
+  const openModal = () => {
+    setPreviewModal(true)
+  }
+
+  const closeModal = () => {
+    setPreviewModal(false)
+  }
+
   return (
-    <ConvertationContainer>
-      <InvestTextField
-        type="number"
-        onChange={changeValue}
-        trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
-        caption={warning === 'Loading' ? <Loader /> : warning}
-        height="85px"
-        fontSize="24px"
-        lineHeight="29px"
-        decimalsLimit={investingTokenDecimals}
-      />
-
-      <InvestTextField
-        type="number"
-        disabled
-        value={convertedValue}
-        onChange={() => null}
-        trailing={<CurrencyDropdown disabled value={offerToken} />}
-        height="85px"
-        fontSize="24px"
-        lineHeight="29px"
-      />
-
-      <ConvertationArrow>
-        <ArrowDown color={theme.launchpad.colors.primary} size="18" />
-      </ConvertationArrow>
-    </ConvertationContainer>
+    <>
+      {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
+      <ConvertationContainer>
+        <InvestTextField
+          type="number"
+          onChange={changeValue}
+          trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
+          height="85px"
+          fontSize="24px"
+          lineHeight="29px"
+          decimalsLimit={investingTokenDecimals}
+        />
+        <InvestTextField
+          type="number"
+          disabled
+          value={convertedValue}
+          onChange={() => null}
+          trailing={<CurrencyDropdown disabled value={offerToken} />}
+          height="85px"
+          fontSize="24px"
+          lineHeight="29px"
+        />
+        <ConvertationArrow>
+          <ArrowDown color={theme.launchpad.colors.primary} size="18" />
+        </ConvertationArrow>
+      </ConvertationContainer>
+      {warning && (
+        <div style={{ padding: '25px 40px', border: '1px solid #E6E6FF' }}>
+          <RowBetween>
+            <div style={{ display: 'block' }}>
+              <WarningContainer>{warning === 'Loading' ? <Loader /> : warning}</WarningContainer>
+              <div>
+                {offerInvestmentToken && (
+                  <Trailing>
+                    {formatCurrencyAmount(balance, balance?.currency?.decimals ?? 18)}
+                    <span style={{ margin: '0px 5px' }}>{offerInvestmentToken.name} </span>
+                    <span style={{ marginTop: '3px' }}> {offerInvestmentToken.icon}</span>
+                  </Trailing>
+                )}
+              </div>
+            </div>
+            <InvestButton onClick={openModal}>Buy Now</InvestButton>
+          </RowBetween>
+        </div>
+      )}
+    </>
   )
 }
+
+const WarningContainer = styled.div`
+  color: red;
+  font-size: 13px;
+`
+
+const Trailing = styled.div`
+  grid-area: trailing;
+  place-self: center end;
+  height: fit-content;
+  color: black;
+  display: flex;
+  font-size: 20px;
+`
+
+const InvestButton = styled.button`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background: ${(props) => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.foreground};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
+  border-radius: 6px;
+  padding: 0.75rem;
+  cursor: pointer;
+  width: 40%;
+  text-align: center;
+  font-weight: 700;
+`
 
 const ConvertationContainer = styled.div`
   display: flex;
@@ -224,11 +290,11 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
     () =>
       tokensOptions.map(
         (token) =>
-        ({
-          name: token.label,
-          address: token.address,
-          icon: token.icon,
-        } as TokenOption)
+          ({
+            name: token.label,
+            address: token.address,
+            icon: token.icon,
+          } as TokenOption)
       ),
     [tokensOptions]
   )

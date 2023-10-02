@@ -30,7 +30,7 @@ import { countriesList } from 'constants/countriesList'
 import { ReactComponent as ArrowLeft } from 'assets/images/newBack.svg'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
-import { KycSelect as Select, KycTextInput as TextInput, Uploader } from './common'
+import { KycSelect as Select, KycTextInput as TextInput, Uploader, SelfieUploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import {
   empleymentStatuses,
@@ -580,7 +580,8 @@ export default function IndividualKycForm() {
                 isFilled('city')
 
               const fatcaFilled = shouldValidate && isFilled('usTin') && isFilled('isUSTaxPayer')
-              const filesFilled = shouldValidate && isFilled('proofOfIdentity') && isFilled('proofOfAddress')
+              const filesFilled =
+                shouldValidate && isFilled('proofOfIdentity') && isFilled('proofOfAddress') && isFilled('selfie')
 
               const investorStatusAcknowledgementFilled = shouldValidate && isFilled('confirmStatusDeclaration')
 
@@ -898,6 +899,20 @@ export default function IndividualKycForm() {
                             handleDeleteClick={handleImageDelete(
                               values,
                               'proofOfAddress',
+                              values.removedDocuments,
+                              setFieldValue
+                            )}
+                          />
+
+                          <SelfieUploader
+                            title=""
+                            subtitle="Selfie for Verification"
+                            error={errors.selfie}
+                            files={values.selfie}
+                            onDrop={(file) => handleDropImage(file, values, 'selfie', setFieldValue)}
+                            handleDeleteClick={handleImageDelete(
+                              values,
+                              'selfie',
                               values.removedDocuments,
                               setFieldValue
                             )}

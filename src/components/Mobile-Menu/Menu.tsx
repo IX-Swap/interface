@@ -16,9 +16,10 @@ import { useKyc, useRole } from 'state/user/hooks'
 
 interface Props {
   close: () => void
+  isAdminMenu?: string
 }
 
-export const Menu = ({ close }: Props) => {
+export const Menu = ({ close, isAdminMenu }: Props) => {
   const { chainId, account } = useActiveWeb3React()
   const { config } = useWhitelabelState()
 
@@ -56,7 +57,32 @@ export const Menu = ({ close }: Props) => {
     () => account && (isAdmin || (isCorporate && isApproved && isOfferManager)),
     [account, isAdmin, isCorporate, isApproved, isOfferManager]
   )
-  return (
+  return isAdminMenu ? (
+    <ModalContainer>
+      <CloseContainer>
+        <StyledCloseIcon onClick={close} />
+      </CloseContainer>
+      <Container>
+        <MenuList>
+          <MenuListItem id={`admin-accreditation-nav-link`} to="/admin/accreditation" onClick={close}>
+            <Trans>Accreditation</Trans>
+          </MenuListItem>
+          <MenuListItem id={`admin-kyc-nav-link`} to="/admin/kyc" onClick={close}>
+            <Trans>KYC</Trans>
+          </MenuListItem>
+          <MenuListItem id={`admin-transactions-nav-link`} to="/admin/transactions" onClick={close}>
+            <Trans>Broker Dealer Transactions</Trans>
+          </MenuListItem>
+          <MenuListItem id={`admin-security-nav-link`} to="/admin/security-catalog" onClick={close}>
+            <Trans>Security Catalog</Trans>
+          </MenuListItem>
+          <MenuListItem id={`admin-users-nav-link`} to="/admin/users-list" onClick={close}>
+            <Trans>User’s</Trans>
+          </MenuListItem>
+        </MenuList>
+      </Container>
+    </ModalContainer>
+  ) : (
     <ModalContainer>
       <Container>
         <CloseContainer>
@@ -188,14 +214,16 @@ const Container = styled.div`
 const CloseContainer = styled.div`
   text-align: right;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
 `
 
 const StyledCloseIcon = styled(CloseIcon)`
   width: 18px;
   height: 18px;
   cursor: pointer;
+  z-index: 9999;
 `
 
 const MenuList = styled.div`

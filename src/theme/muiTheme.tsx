@@ -76,7 +76,7 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
       },
       MuiTypography: {
         root: {
-          fontFamily: ['Poppins', 'sans-serif'].join(',') + ' !important',
+          fontFamily: ['Inter', 'sans-serif'].join(',') + ' !important',
         },
         body1: {
           color: text1,

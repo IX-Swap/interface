@@ -354,7 +354,7 @@ export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
   flex-direction: column;
   font-size: 1rem;
   display: flex;
-  min-width: 622px;
+  min-width: 800px;
   z-index: 5;
   padding: 32px;
   backdrop-filter: blur(20px);
