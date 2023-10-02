@@ -223,6 +223,7 @@ export const ProofOfIdentityField = ({
                             placeHolder='Upload Front Picture'
                             valueExtractor={plainValueExtractor}
                             accept={DataroomFileType.image}
+                            maxSize={10}
                             documentInfo={{
                               ...documentInfo,
                               feature: 'front'
@@ -247,6 +248,7 @@ export const ProofOfIdentityField = ({
                             placeHolder='Upload Back Picture'
                             valueExtractor={plainValueExtractor}
                             accept={DataroomFileType.image}
+                            maxSize={10}
                             documentInfo={{
                               ...documentInfo,
                               feature: 'back'

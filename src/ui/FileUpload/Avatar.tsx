@@ -9,6 +9,7 @@ import { getDataroomFileId } from 'helpers/dataroom'
 import { useFormContext } from 'react-hook-form'
 import classNames from 'classnames'
 import { isString } from 'lodash'
+import { SelfieGuide } from './SelfieGuide'
 
 export const Avatar = ({
   hasError,
@@ -22,15 +23,17 @@ export const Avatar = ({
   disabled = false,
   value,
   readonly = false,
-  isCover = false
+  isCover = false,
+  isSelfie = false
 }: FileProps) => {
   const { setValue } = useFormContext()
 
   const [currentValue, setCurrentValue] = useState(value)
+  const isNotEmpty = currentValue !== undefined
   const [imageValue, setImageValue] = useState(false)
 
   useEffect(() => {
-    if (inputProps?.ref?.current?.id === 'coverImg' || isCover === true) {
+    if (inputProps?.ref?.current?.id === 'coverImg' || isCover) {
       setImageValue(true)
     }
     setCurrentValue(value)
@@ -41,6 +44,7 @@ export const Avatar = ({
     setValue(name, undefined, { shouldDirty: true })
     setCurrentValue(undefined)
   }
+
   return (
     <Box>
       {label !== undefined && isString(label) && (
@@ -56,7 +60,7 @@ export const Avatar = ({
             isFileTooLarge,
             hasValue
           })}
-          height={isCover === true ? '400px' : '150px'}
+          height={isCover ? '400px' : '150px'}
         >
           <Box
             {...rootProps}
@@ -72,7 +76,7 @@ export const Avatar = ({
               cursor: 'pointer'
             }}
           >
-            {currentValue !== undefined ? (
+            {isNotEmpty ? (
               <AvatarComponent
                 imageValue={imageValue}
                 size={['100%', '100%']}
@@ -91,7 +95,7 @@ export const Avatar = ({
             )}
             <input id={name} name={name} {...inputProps} disabled={disabled} />
           </Box>
-          {currentValue !== undefined && !readonly ? (
+          {isNotEmpty && !readonly ? (
             <Box position='absolute' right={2} bottom={2}>
               <IconButton onClick={handleRemove}>
                 <Icon name='trash' />
@@ -106,6 +110,10 @@ export const Avatar = ({
             isFileTooLarge,
             hasValue
           })}
+          sx={{
+            width: isSelfie ? (isNotEmpty ? '180px' : '100%') : '120px',
+            height: isSelfie ? (isNotEmpty ? '255px' : 'auto') : '120px'
+          }}
         >
           <Box
             {...rootProps}
@@ -121,12 +129,14 @@ export const Avatar = ({
               cursor: 'pointer'
             }}
           >
-            {currentValue !== undefined ? (
+            {isNotEmpty ? (
               <AvatarComponent
-                size={120}
+                size={isSelfie ? [180, 255] : 120}
                 documentId={getDataroomFileId(currentValue)}
                 variant='square'
               />
+            ) : isSelfie ? (
+              <SelfieGuide />
             ) : (
               <>
                 <Icon name='file' />
@@ -140,7 +150,7 @@ export const Avatar = ({
             )}
             <input id={name} name={name} {...inputProps} disabled={disabled} />
           </Box>
-          {currentValue !== undefined && !readonly ? (
+          {isNotEmpty && !readonly ? (
             <Box position='absolute' right={2} bottom={2}>
               <IconButton onClick={handleRemove}>
                 <Icon name='trash' />

@@ -10,7 +10,7 @@ export interface AvatarProps extends MUIAvatarProps {
   documentId?: string
   ownerId?: string
   type?: 'banner' | 'document'
-  size?: number | [number, number] | [string, string]
+  size?: number | [string | number, string | number]
   border?: string | number
   borderRadius?: string | number
   maxWidth?: number | string

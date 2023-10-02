@@ -12,8 +12,14 @@ import { DataroomFile } from 'types/dataroomFile'
 export const getPersonalInfoRequestPayload = (
   values: IndividualPersonalInfoFormValues
 ) => {
-  const { proofOfIdentity, proofOfAddress, evidenceOfAccreditation, ...rest } =
-    values
+  const {
+    proofOfIdentity,
+    selfie,
+    proofOfAddress,
+    evidenceOfAccreditation,
+    ...rest
+  } = values
+
   if (values.dob === null || values.dob === undefined) {
     delete values.dob
   }
@@ -120,6 +126,7 @@ export const getInvestorDeclarationRequestPayload = (
     applyingAs,
     evidenceOfAccreditation,
     proofOfIdentity,
+    selfie,
     proofOfAddress,
     ...rest
   } = values
