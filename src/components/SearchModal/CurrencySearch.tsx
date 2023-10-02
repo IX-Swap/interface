@@ -112,7 +112,7 @@ export function CurrencySearch({
     <ModalContentWrapper style={{ borderRadius: '6px' }}>
       <PaddedColumn40 gap="16px">
         <RowBetween>
-          <Title>{title ?? <Trans>hoose Token to create a Pool</Trans>}</Title>
+          <Title>{title ?? <Trans>Choose Token to create a Pool</Trans>}</Title>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
         <Row>

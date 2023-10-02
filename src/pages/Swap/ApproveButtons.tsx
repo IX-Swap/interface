@@ -56,7 +56,7 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
           confirmed={approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED}
         >
           <AutoRow justify="space-between" style={{ flexWrap: 'nowrap' }}>
-            <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
+            <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px', color: '#292933' }}>
               <CurrencyLogo
                 currency={currencies[Field.INPUT]}
                 size={'20px'}

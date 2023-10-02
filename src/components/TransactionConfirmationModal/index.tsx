@@ -30,7 +30,7 @@ export const StyledSuccess = styled(Success)`
 `
 
 export const StyledModalContentWrapper = styled(ModalContentWrapper)`
-  padding: 37px 40px 19px 40px;
+  // padding: 37px 190px 19px 40px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
    padding: 1rem;
   `};
@@ -146,7 +146,7 @@ export function TransactionSubmittedContent({
             <ButtonGradientBorder
               onClick={onDismiss}
               data-testid="return-close"
-              style={{ width: '211px', marginBottom: '35px' }}
+              style={{ width: '311px', marginBottom: '35px' }}
             >
               <Trans>Close</Trans>
             </ButtonGradientBorder>

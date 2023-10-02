@@ -25,6 +25,7 @@ import { ReactComponent as TooltipIcon } from 'assets/images/newTooltip.svg'
 import { ReactComponent as Checked } from 'assets/images/newRightCheck.svg'
 import { ReactComponent as CheckmarkPlaceholder } from 'assets/images/newContainRadio.svg'
 import { ReactComponent as CheckmarkPlaceholderEmpty } from 'assets/images/newEmptyRadio.svg'
+import { StyledModalContentWrapper } from 'components/TransactionConfirmationModal'
 
 const KycSourceContainer = styled.div`
   width: 100%;
@@ -283,102 +284,102 @@ export const ChooseBrokerDealerPopup = ({
       mobileMaxHeight={90}
     >
       <ModalBlurWrapper data-testid="choose-broker-dealer-and-custodian-popup">
-        {/* <StyledModalContentWrapper> */}
-        <div>
-          <ModalPadding>
-            <ModalHeader>
-              <TYPE.title5>
-                <Trans>{symbolText} Accreditation</Trans>
-              </TYPE.title5>
-              <CloseIcon data-testid="cross" onClick={onClose} className="close-icon" />
-            </ModalHeader>
+        <StyledModalContentWrapper>
+          <div>
+            <ModalPadding>
+              <ModalHeader>
+                <TYPE.title5>
+                  <Trans>{symbolText} Accreditation</Trans>
+                </TYPE.title5>
+                <CloseIcon data-testid="cross" onClick={onClose} className="close-icon" />
+              </ModalHeader>
 
-            {/* Modal description segment */}
-            <div
-              style={{ border: '1px solid #E6E6FF', padding: '25px', marginTop: '20px', backgroundColor: '#F7F7FA' }}
-            >
-              <div style={{ marginTop: '18px' }}>
-                <TYPE.title10>1. Choose source of KYC for accreditation</TYPE.title10>
-                <TYPE.description2 fontWeight={400}>
-                  <Trans>{`We recommend choosing IX Swap KYC. Pass it once and use for all future accreditations quick and easy.`}</Trans>
-                </TYPE.description2>
-              </div>
-              <Line style={{ marginTop: '10px' }} />
-              <div style={{ marginTop: '18px' }}>
-                <TYPE.title10>
-                  2. Choose the pair of third-party services you want to use for {tokenId} token
-                </TYPE.title10>
-
-                <TYPE.description2 fontWeight={400}>
-                  <Trans>{`Broker-dealer will check and confirm every transaction with ${tokenName} token. Custodian will keep your ${tokenName} in a safe place.`}</Trans>
-                </TYPE.description2>
-              </div>
-            </div>
-          </ModalPadding>
-        </div>
-
-        {/* KYC source segement */}
-        <KycSourceSelector onChange={setSource} />
-
-        {/* <Separator /> */}
-        <Line style={{ margin: '6px 0px' }} />
-        <div id="broker-dealer-and-custodian-list" style={{ marginTop: '25px' }}>
-          {brokersLoading && (
-            <div style={{ margin: 'auto', display: 'table' }}>
-              <LoaderThin size={32} />
-            </div>
-          )}
-          {brokersError && <div style={{ margin: 'auto', display: 'table' }}>Something went wrong</div>}
-          <BrokerDealersGridHeader>
-            <TYPE.description2>Broker-dealer</TYPE.description2>
-            <div />
-            <TYPE.description2>Custodian</TYPE.description2>
-            <div />
-          </BrokerDealersGridHeader>
-          {brokerDealerPairs?.map((pair) => (
-            <BrokerDealersGrid
-              key={pair?.id}
-              onClick={() => setSelectedBrokerPair(pair?.id)}
-              className={`${selectedBrokerPair === pair?.id ? 'selected' : ''}`}
-            >
-              <TYPE.title10>{pair?.pair?.brokerDealer?.name}</TYPE.title10>
-              <Flex alignItems="center"></Flex>
-              <TYPE.title10 style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</TYPE.title10>
-              <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: -29 }}>
-                {selectedBrokerPair === pair?.id ? <CheckmarkPlaceholder /> : <CheckmarkPlaceholderEmpty />}
-              </IconWrapper>
-            </BrokerDealersGrid>
-          ))}
-          {brokerDealerPairs?.length === 0 && (
-            <RowCenter marginTop="8px" padding="0px 2rem">
-              No pairs available for this network, please change it.
-            </RowCenter>
-          )}
-        </div>
-        <Line style={{ margin: '20px 0px' }} />
-        <StartAccreditationButtonWrapper>
-          <Row style={{ marginBottom: '24px' }} className="start-accreditation-button-row">
-            {!loadingAccreditation && (
-              <PinnedContentButton
-                disabled={
-                  loadingAccreditation || kyc?.status !== KYCStatuses.APPROVED || brokerDealerPairs?.length === 0
-                }
-                style={{ textTransform: 'unset' }}
-                onClick={() => {
-                  passAccreditation(tokenId, selectedBrokerPair, source === KycSource.IXSwap)
-                }}
+              {/* Modal description segment */}
+              <div
+                style={{ border: '1px solid #E6E6FF', padding: '25px', marginTop: '20px', backgroundColor: '#F7F7FA' }}
               >
-                <Trans>Start accreditation</Trans>
-              </PinnedContentButton>
-            )}
-            {loadingAccreditation && (
-              <div style={{ margin: 'auto' }}>
+                <div style={{ marginTop: '18px' }}>
+                  <TYPE.title10>1. Choose source of KYC for accreditation</TYPE.title10>
+                  <TYPE.description2 fontWeight={400}>
+                    <Trans>{`We recommend choosing IX Swap KYC. Pass it once and use for all future accreditations quick and easy.`}</Trans>
+                  </TYPE.description2>
+                </div>
+                <Line style={{ marginTop: '10px' }} />
+                <div style={{ marginTop: '18px' }}>
+                  <TYPE.title10>
+                    2. Choose the pair of third-party services you want to use for {tokenId} token
+                  </TYPE.title10>
+
+                  <TYPE.description2 fontWeight={400}>
+                    <Trans>{`Broker-dealer will check and confirm every transaction with ${tokenName} token. Custodian will keep your ${tokenName} in a safe place.`}</Trans>
+                  </TYPE.description2>
+                </div>
+              </div>
+            </ModalPadding>
+          </div>
+
+          {/* KYC source segement */}
+          <KycSourceSelector onChange={setSource} />
+
+          {/* <Separator /> */}
+          <Line style={{ margin: '6px 0px' }} />
+          <div id="broker-dealer-and-custodian-list" style={{ marginTop: '25px' }}>
+            {brokersLoading && (
+              <div style={{ margin: 'auto', display: 'table' }}>
                 <LoaderThin size={32} />
               </div>
             )}
-          </Row>
-        </StartAccreditationButtonWrapper>
-        {/* </StyledModalContentWrapper> */}
+            {brokersError && <div style={{ margin: 'auto', display: 'table' }}>Something went wrong</div>}
+            <BrokerDealersGridHeader>
+              <TYPE.description2>Broker-dealer</TYPE.description2>
+              <div />
+              <TYPE.description2>Custodian</TYPE.description2>
+              <div />
+            </BrokerDealersGridHeader>
+            {brokerDealerPairs?.map((pair) => (
+              <BrokerDealersGrid
+                key={pair?.id}
+                onClick={() => setSelectedBrokerPair(pair?.id)}
+                className={`${selectedBrokerPair === pair?.id ? 'selected' : ''}`}
+              >
+                <TYPE.title10>{pair?.pair?.brokerDealer?.name}</TYPE.title10>
+                <Flex alignItems="center"></Flex>
+                <TYPE.title10 style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</TYPE.title10>
+                <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: -29 }}>
+                  {selectedBrokerPair === pair?.id ? <CheckmarkPlaceholder /> : <CheckmarkPlaceholderEmpty />}
+                </IconWrapper>
+              </BrokerDealersGrid>
+            ))}
+            {brokerDealerPairs?.length === 0 && (
+              <RowCenter marginTop="8px" padding="0px 2rem">
+                No pairs available for this network, please change it.
+              </RowCenter>
+            )}
+          </div>
+          <Line style={{ margin: '20px 0px' }} />
+          <StartAccreditationButtonWrapper>
+            <Row style={{ marginBottom: '24px' }} className="start-accreditation-button-row">
+              {!loadingAccreditation && (
+                <PinnedContentButton
+                  disabled={
+                    loadingAccreditation || kyc?.status !== KYCStatuses.APPROVED || brokerDealerPairs?.length === 0
+                  }
+                  style={{ textTransform: 'unset' }}
+                  onClick={() => {
+                    passAccreditation(tokenId, selectedBrokerPair, source === KycSource.IXSwap)
+                  }}
+                >
+                  <Trans>Start accreditation</Trans>
+                </PinnedContentButton>
+              )}
+              {loadingAccreditation && (
+                <div style={{ margin: 'auto' }}>
+                  <LoaderThin size={32} />
+                </div>
+              )}
+            </Row>
+          </StartAccreditationButtonWrapper>
+        </StyledModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
