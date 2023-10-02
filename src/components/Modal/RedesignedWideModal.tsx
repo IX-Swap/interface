@@ -71,7 +71,7 @@ const StyledDialogContent = styled(
     background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg0};
     box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.95, theme.shadow1)};
     padding: 0px;
-    width: ${({ isLarge }) => (isLarge ? '100%' : '622px')};
+    width: ${({ isLarge }) => (isLarge ? '100%' : '100%')};
     max-width: fit-content;
     overflow-y: ${({ mobile }) => (mobile ? 'auto' : 'hidden')};
     overflow-x: hidden;
