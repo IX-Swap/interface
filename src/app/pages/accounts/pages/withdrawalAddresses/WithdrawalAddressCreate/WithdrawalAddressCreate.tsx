@@ -1,8 +1,8 @@
 import React from 'react'
 import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog'
-// import { CreateWalletDialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialog'
-// import { CreateWalletDialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogTitle'
-// import { CreateWalletDialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogContent'
+import { CreateWalletDialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialog'
+import { CreateWalletDialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogTitle'
+import { CreateWalletDialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogContent'
 import useStyles from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog.styles'
 import { WAOfferToCreateWallet } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAOfferToCreateWallet/WAOfferToCreateWallet'
 import { useToggleValue } from 'hooks/useToggleValue'
@@ -27,7 +27,7 @@ export const WithdrawalAddressCreate = () => {
       >
         <WithdrawalAddressForm hint={hint} />
       </WADialog>
-      {/* <CreateWalletDialog
+      <CreateWalletDialog
         classes={{
           paper: classes.createDialog,
           root: classes.createDialog
@@ -40,7 +40,7 @@ export const WithdrawalAddressCreate = () => {
           onButtonCloseClick={toggleIsCreateWalletDialogVisible}
         />
         <CreateWalletDialogContent />
-      </CreateWalletDialog> */}
+      </CreateWalletDialog>
     </>
   )
 }

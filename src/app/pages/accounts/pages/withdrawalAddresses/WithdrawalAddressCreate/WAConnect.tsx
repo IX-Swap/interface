@@ -48,6 +48,9 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
       control.setValue('address', address)
       control.setValue('wallet', values.data?.walletApplication)
       control.setValue('network', values.data?.networkId)
+    },
+    onError: err => {
+      console.log('error', err)
     }
   })
 
@@ -55,6 +58,8 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
     checkAddress,
     300
   )
+
+  //   useEffect(deactivate, [deactivate])
 
   useEffect(() => {
     if (address?.trim().length > 0) {
@@ -73,6 +78,8 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
   const isVerifying = status === WalletConnectionStatus.VERIFYING
   const isVerified = status === WalletConnectionStatus.SUCCESS
   const allowConnect = data?.data.allowConnect ?? false
+
+  //   console.log('isActive', active)
 
   return (
     <>
@@ -138,9 +145,6 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
 
           {hasWallet && <WAInfoFields />}
 
-          {/* Create Wallet Hint */}
-          {/* {!hasWallet && hint} */}
-
           <DialogActions>
             <Grid item xs container justifyContent='center' mt={2}>
               <WAConnectActions
@@ -153,6 +157,9 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
               />
             </Grid>
           </DialogActions>
+
+          {/* Create Wallet Hint */}
+          {!hasWallet && hint}
 
           {isInitialising && (
             <LoadingIndicator

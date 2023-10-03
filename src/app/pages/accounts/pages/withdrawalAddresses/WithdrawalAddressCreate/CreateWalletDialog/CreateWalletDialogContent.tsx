@@ -5,6 +5,7 @@ import { Grid, Link, Typography } from '@mui/material'
 import { CreateWalletLink } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletLink'
 // import AlgorandIcon from 'assets/images/algorand.png'
 import MetamaskIcon from 'assets/images/metamask.png'
+import CoinbaseIcon from 'assets/images/coinbase.svg'
 // import HederaIcon from 'assets/images/hedera.png'
 // import TezosIcon from 'assets/images/tezos.png'
 
@@ -12,7 +13,13 @@ export const links = [
   {
     label: 'Install Metamask',
     icon: MetamaskIcon,
-    href: 'https://metamask.io',
+    href: 'https://metamask.io/download',
+    disabled: false
+  },
+  {
+    label: 'Install Coinbase',
+    icon: CoinbaseIcon,
+    href: 'https://www.coinbase.com/wallet/articles/getting-started-extension',
     disabled: false
   }
   //   {

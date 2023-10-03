@@ -5,6 +5,7 @@ import { useServices } from 'hooks/useServices'
 import { useMakeWithdrawalAddress } from './useMakeWithdrawalAddress'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { useWeb3React } from '@web3-react/core'
+import { stringToHex } from 'helpers/strings'
 
 export enum WalletConnectionStatus {
   IDLE,
@@ -21,7 +22,7 @@ export function useConnectMetamaskWallet() {
   const [generateWalletHash] = useGenerateWalletHash()
   const [verifyWalletOwnership] = useVerifyWalletOwnership()
   const [makeWithdrawalAddress] = useMakeWithdrawalAddress()
-  const { account } = useWeb3React()
+  const { account, library } = useWeb3React()
 
   const signWallet = async (values: WithdrawalAddressFormValues) => {
     const { address } = values
@@ -34,7 +35,12 @@ export function useConnectMetamaskWallet() {
       const walletHash = generateWalletHashResponse?.data
 
       if (walletHash !== undefined) {
-        const signedHash = await web3Service.signWallet(walletHash, address)
+        // const signedHash = await web3Service.signWallet(walletHash, address)
+        const message = stringToHex(walletHash)
+        const signedHash = await library.send('personal_sign', [
+          message,
+          address
+        ])
         const verifyOwnershipResponse = await verifyWalletOwnership({
           walletAddress: address,
           signedHash

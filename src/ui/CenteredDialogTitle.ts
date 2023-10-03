@@ -11,6 +11,8 @@ export const CenteredDialogTitle = styled(DialogTitle)(({ theme }) => ({
   '& button': {
     position: 'absolute',
     top: 12,
-    right: theme.spacing(3)
+    right: 15,
+    opacity: 0,
+    cursor: 'pointer'
   }
 }))
