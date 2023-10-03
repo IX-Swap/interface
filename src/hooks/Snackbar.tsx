@@ -18,10 +18,10 @@ export const Snackbar = (props: SnackbarProps) => {
   return (
     <Card
       square
-      elevation={0}
+      //   elevation={0}
       className={classNames(classes.container, classes.unread)}
     >
-      <Grid container alignItems='center' className={classes.inner}>
+      <Grid container alignItems='start' className={classes.inner}>
         <Grid item className={classes.icon}>
           <NotificationIcon type={variant} />
         </Grid>
