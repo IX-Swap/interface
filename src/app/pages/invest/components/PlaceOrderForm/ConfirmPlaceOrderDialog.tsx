@@ -1,11 +1,10 @@
-import { DialogActions, Typography, Grid, Button, Link } from '@mui/material'
+import { DialogActions, Typography, Grid, Button, Box } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import React, { useEffect } from 'react'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
 import { useStyles } from 'ui/UIDialog/UIDialog.styles'
 import { useMarket } from '../../hooks/useMarket'
 import { Tooltip } from 'ui/Tooltip/Tooltip'
-import { WEBSITE_URL } from 'config'
 import { formatAmount } from 'helpers/numbers'
 import { useGetEstimateFee } from 'app/pages/issuance/hooks/useGetEstimateFee'
 
@@ -47,9 +46,9 @@ export const ConfirmPlaceOrderDialog = ({
     void refetch()
   }, [values, refetch])
 
-  const fee = estimateFee?.data ?? 0
-  const totalPrice =
-    parseFloat(values?.total ?? 0) + parseFloat(isBuying ? fee : 0)
+  const totalValue = parseFloat(values?.total ?? 0)
+  const fee = parseFloat(estimateFee?.data ?? 0)
+  const totalPrice = isBuying ? totalValue + fee : totalValue - fee
 
   return (
     <UIDialog open={open} onClose={close}>
@@ -76,7 +75,7 @@ export const ConfirmPlaceOrderDialog = ({
         </Grid>
       </Grid>
 
-      <Grid display={'flex'} mt={3}>
+      <Grid display={'flex'} mt={3} mb={2}>
         <Grid xs={6} className={classes.orderItem}>
           <Typography>Price ({pairName[1]})</Typography>
           <Typography color={'#778194'}>
@@ -89,49 +88,38 @@ export const ConfirmPlaceOrderDialog = ({
         </Grid>
       </Grid>
 
-      <Grid className={classes.orderItem} mt={3}>
-        <Grid display={'flex'} alignItems={'center'} gap={0.5}>
-          <Typography>Est. Fee ({pairName[1]})</Typography>
-          <Tooltip
-            title={
-              <div>
-                <p style={{ marginTop: 0 }}>
-                  <strong>Estimated Fee</strong> is calculated based on the
-                  <Link
-                    href={`${WEBSITE_URL}/faq/`}
-                    sx={{ marginLeft: 0.5, textDecoration: 'none' }}
-                    target='_blank'
-                  >
-                    trading fee
-                  </Link>
-                  . It is for reference only and is subject to the final
-                  execution result. Fee levels may differ for Maker or Taker
-                  trades.
-                </p>
-              </div>
-            }
-          />
-        </Grid>
+      <Grid className={classes.verticalLine}></Grid>
 
+      <Grid display={'flex'} justifyContent={'space-between'} mt={2}>
+        <Typography>Total Value ({pairName[1]})</Typography>
+        <Typography color={'#778194'}>{formatAmount(totalValue)}</Typography>
+      </Grid>
+
+      <Grid display={'flex'} justifyContent={'space-between'} mt={2}>
+        <Typography>Est. Fee ({pairName[1]})</Typography>
         <Typography color={'#778194'}>{formatAmount(fee)}</Typography>
       </Grid>
 
-      <Grid className={classes.verticalLine} item my={3}></Grid>
-
-      <Grid className={classes.orderItem} mt={3} textAlign={'right'}>
+      <Grid display={'flex'} justifyContent={'space-between'} mt={2}>
         <Typography fontSize={'16px'} fontWeight={600}>
-          Total Price ({pairName[1]}){' '}
-          {!isBuying && (
-            <Tooltip
-              title={
-                <div>
-                  <p style={{ marginTop: 0 }}>
-                    Trading fees will be deducted when your order is settled
-                  </p>
-                </div>
-              }
-            />
-          )}
+          Total {!isBuying ? 'Receivable' : 'Payable'} ({pairName[1]}){' '}
+          <Tooltip
+            title={
+              <Box display={'flex'} gap={0.5}>
+                {!isBuying ? (
+                  <>
+                    <span style={{ color: '#343A47' }}>Total Receivable</span>
+                    <span> = (Price x Quantity) - Est. Fee</span>
+                  </>
+                ) : (
+                  <>
+                    <span style={{ color: '#343A47' }}>Total Payable</span>
+                    <span> = (Price x Quantity) + Est. Fee</span>
+                  </>
+                )}
+              </Box>
+            }
+          />
         </Typography>
         <Typography fontSize={'16px'} fontWeight={600} color={'#778194'}>
           {formatAmount(totalPrice)}
