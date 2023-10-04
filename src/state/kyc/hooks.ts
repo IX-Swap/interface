@@ -10,7 +10,7 @@ import { createKYC, fetchGetMyKyc, updateKYC } from './actions'
 import { LONG_WAIT_RESPONSE } from 'constants/misc'
 import { KYCStatuses } from 'pages/KYC/enum'
 
-const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity', 'evidenceOfAccreditation']
+const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity', 'selfie', 'evidenceOfAccreditation']
 const corporateKYCFiles = [
   'beneficialOwnersAddress',
   'beneficialOwnersIdentity',
