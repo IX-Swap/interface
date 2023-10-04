@@ -43,7 +43,7 @@ export const ConnectWallet = ({ onConnect }: { onConnect: Function }) => {
   const { activate } = useWeb3React()
   const { snackbarService } = useServices()
 
-  const hasMetamaskExtension = window.ethereum.isMetaMask === true
+  const hasMetamaskExtension = window.ethereum?.isMetaMask === true
   const hasCoinbaseExtension = true
   //   const hasCoinbaseExtension =
   //     typeof window.ethereum?.providers?.find(

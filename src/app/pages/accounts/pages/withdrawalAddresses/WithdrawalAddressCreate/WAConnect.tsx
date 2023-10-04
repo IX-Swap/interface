@@ -27,6 +27,7 @@ import { useWeb3React } from '@web3-react/core'
 import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogTitle'
 import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogContent'
 import { WalletInfo } from './ConnectWallet'
+import { SUPPORTED_WALLETS } from 'config/blockchain/supportedWallets'
 
 export interface WAConnectProps {
   hint: ReactElement
@@ -75,7 +76,9 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
     (status === WalletConnectionStatus.INITIALISED ||
       status === WalletConnectionStatus.VERIFYING ||
       status === WalletConnectionStatus.ERROR) &&
-    address !== ''
+    address !== '' &&
+    wallet !== undefined &&
+    wallet in SUPPORTED_WALLETS
   const isVerifying = status === WalletConnectionStatus.VERIFYING
   const isVerified = status === WalletConnectionStatus.SUCCESS
   const allowConnect = data?.data.allowConnect ?? false
