@@ -46,8 +46,8 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
     customBrowserType: !isMobile
       ? 'desktop'
       : 'web3' in window || 'ethereum' in window
-        ? 'mobileWeb3'
-        : 'mobileRegular',
+      ? 'mobileWeb3'
+      : 'mobileRegular',
   })
 } else {
   ReactGA.initialize('test', { testMode: true, debug: true })
@@ -71,22 +71,22 @@ ReactDOM.render(
     <Provider store={store}>
       <HashRouter>
         <LanguageProvider>
-        <Web3ReactProvider connectors={connectors}>
-          <Blocklist>
-            <Updaters />
-            <ThemeProvider>
-              <ThemedGlobalStyle />
-              <MuiThemeProvider>
-                <LocalizationProvider dateAdapter={DayJsUtils}>
-                  <CookiesProvider>
-                    <CustomHeaders />
+          <Web3ReactProvider connectors={connectors}>
+            <Blocklist>
+              <Updaters />
+              <ThemeProvider>
+                <ThemedGlobalStyle />
+                <MuiThemeProvider>
+                  <LocalizationProvider dateAdapter={DayJsUtils}>
+                    <CookiesProvider>
+                      <CustomHeaders />
 
-                    <App />
-                  </CookiesProvider>
-                </LocalizationProvider>
-              </MuiThemeProvider>
-            </ThemeProvider>
-          </Blocklist>
+                      <App />
+                    </CookiesProvider>
+                  </LocalizationProvider>
+                </MuiThemeProvider>
+              </ThemeProvider>
+            </Blocklist>
           </Web3ReactProvider>
         </LanguageProvider>
       </HashRouter>
