@@ -72,9 +72,10 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
 
   const isInitialising = status === WalletConnectionStatus.INITIALISING
   const hasWallet =
-    status === WalletConnectionStatus.INITIALISED ||
-    status === WalletConnectionStatus.VERIFYING ||
-    status === WalletConnectionStatus.ERROR
+    (status === WalletConnectionStatus.INITIALISED ||
+      status === WalletConnectionStatus.VERIFYING ||
+      status === WalletConnectionStatus.ERROR) &&
+    address !== ''
   const isVerifying = status === WalletConnectionStatus.VERIFYING
   const isVerified = status === WalletConnectionStatus.SUCCESS
   const allowConnect = data?.data.allowConnect ?? false

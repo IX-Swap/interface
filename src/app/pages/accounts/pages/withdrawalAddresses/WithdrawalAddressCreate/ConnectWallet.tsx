@@ -44,10 +44,11 @@ export const ConnectWallet = ({ onConnect }: { onConnect: Function }) => {
   const { snackbarService } = useServices()
 
   const hasMetamaskExtension = window.ethereum.isMetaMask === true
-  const hasCoinbaseExtension =
-    typeof window.ethereum?.providers?.find(
-      (provider: any) => provider.isCoinbaseWallet === true
-    ) !== 'undefined'
+  const hasCoinbaseExtension = true
+  //   const hasCoinbaseExtension =
+  //     typeof window.ethereum?.providers?.find(
+  //       (provider: any) => provider.isCoinbaseWallet === true
+  //     ) !== 'undefined'
 
   const failedToDetectExtension = () =>
     snackbarService.showSnackbar(
