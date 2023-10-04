@@ -133,6 +133,7 @@ export const individualTransformApiData = (data: any) => {
     city: address?.city,
     proofOfAddress: documents?.filter(({ type }: any) => type === 'address'),
     proofOfIdentity: documents?.filter(({ type }: any) => type === 'identity'),
+    selfie: documents?.filter(({ type }: any) => type === 'selfie'),
     evidenceOfAccreditation: documents?.filter(({ type }: any) => type === 'accreditation'),
     idType: { value: 0, label: IdentityDocumentType[idTypeKey] },
     citizenship: { value: 0, label: citizenship },
