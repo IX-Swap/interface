@@ -17,4 +17,5 @@ export const ButtonStatusText: any = {
   rejected: 'Declined',
   pending: 'Pending',
   'changes-requested': 'Change requested',
+  'in-progress': 'In progress',
 }
