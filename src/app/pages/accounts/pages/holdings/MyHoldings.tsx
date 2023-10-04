@@ -1,6 +1,9 @@
 import { Grid, Typography, Box } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { HoldingsTables } from 'app/pages/accounts/components/HoldingsTables/HoldingsTables'
+import {
+  HoldingsTables,
+  tabs
+} from 'app/pages/accounts/components/HoldingsTables/HoldingsTables'
 import { VSpacer } from 'components/VSpacer'
 import React, { useState } from 'react'
 import { RootContainer } from 'ui/RootContainer'
@@ -12,13 +15,14 @@ export const MyHoldings = () => {
     title: string
     subtitle: string
   }>({
-    title: 'Current Holdings',
-    subtitle: 'View, manage, and track your STOs.'
+    title: tabs[0].headerTitle,
+    subtitle: tabs[0].description
   })
+
   return (
     <Grid container direction='column' spacing={3} style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='My Exchange Holdings' showBreadcrumbs />
+        <PageHeader title='IX Exchange Orders' showBreadcrumbs />
       </Grid>
       <Grid item marginTop={-1}>
         <RootContainer padding={0}>

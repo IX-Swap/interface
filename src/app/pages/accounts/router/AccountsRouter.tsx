@@ -48,10 +48,7 @@ export const AccountsRouter = () => {
         <ReportsRouter />
       </AppRoute> */}
 
-      <AppRoute
-        breadcrumb='My Exchange Holdings'
-        path={AccountsRoute.myHoldings}
-      >
+      <AppRoute breadcrumb='IX Exchange Orders' path={AccountsRoute.myHoldings}>
         <MyHoldings />
       </AppRoute>
       <AppRoute breadcrumb='My Investments' path={AccountsRoute.myInvestments}>

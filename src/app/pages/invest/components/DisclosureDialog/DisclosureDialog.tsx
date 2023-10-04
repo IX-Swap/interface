@@ -11,7 +11,7 @@ import {
 import { useStyles } from 'app/pages/invest/components/DisclosureDialog/DisclosureDialog.style'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { VSpacer } from 'components/VSpacer'
-import { ExchangeRulesLink } from 'app/pages/invest/components/ExchangeRulesLink/ExchangeRulesLink'
+// import { ExchangeRulesLink } from 'app/pages/invest/components/ExchangeRulesLink/ExchangeRulesLink'
 import { Divider } from 'ui/Divider'
 import { useAcceptMASDisclosure } from 'app/pages/invest/hooks/useAcceptMASDisclosure'
 import { generatePath, useHistory } from 'react-router-dom'
@@ -67,7 +67,8 @@ export const DisclosureDialog = ({
                 label={
                   <>
                     I agree, accept, acknowledge and understand all the
-                    Disclosures. <ExchangeRulesLink />
+                    Disclosures.
+                    {/* <ExchangeRulesLink /> */}
                   </>
                 }
               />
