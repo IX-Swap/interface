@@ -39,7 +39,13 @@ const ConnectWalletButton = ({
   )
 }
 
-export const ConnectWallet = ({ onConnect }: { onConnect: Function }) => {
+export const ConnectWallet = ({
+  onConnect,
+  isLoading = false
+}: {
+  onConnect: Function
+  isLoading?: boolean
+}) => {
   const { activate } = useWeb3React()
   const { snackbarService } = useServices()
 
@@ -79,6 +85,7 @@ export const ConnectWallet = ({ onConnect }: { onConnect: Function }) => {
             failedToDetectExtension()
           }
         }}
+        isLoading={isLoading}
       >
         <Box display={'flex'} alignItems={'center'} gap={1}>
           <span>Metamask Wallet</span>
@@ -101,6 +108,7 @@ export const ConnectWallet = ({ onConnect }: { onConnect: Function }) => {
             failedToDetectExtension()
           }
         }}
+        isLoading={isLoading}
       >
         <Box display={'flex'} alignItems={'center'} gap={1}>
           <span>Coinbase Wallet</span>

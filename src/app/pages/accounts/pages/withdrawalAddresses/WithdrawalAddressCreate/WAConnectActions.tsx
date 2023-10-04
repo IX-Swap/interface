@@ -45,6 +45,9 @@ export const WAConnectActions = ({
     // >
     //   Connect
     // </Button>
-    <ConnectWallet onConnect={getAccount} />
+    <ConnectWallet
+      onConnect={getAccount}
+      isLoading={isVerifying || isLoading}
+    />
   )
 }
