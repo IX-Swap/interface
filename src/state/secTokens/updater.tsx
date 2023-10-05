@@ -5,7 +5,7 @@ import { useActiveWeb3React } from '../../hooks/web3'
 import { useFetchSecTokenListCallback } from './hooks'
 
 export default function Updater(): null {
-  const { provider } = useActiveWeb3React()
+  const { library } = useActiveWeb3React()
   // const isWindowVisible = useIsWindowVisible()
 
   const fetchList = useFetchSecTokenListCallback()
@@ -14,8 +14,8 @@ export default function Updater(): null {
     fetchList()
   }, [fetchList])
 
-  // fetch all lists every 15 minutes, but only after we initialize provider
-  useInterval(fetchListCallback, provider ? 1000 * 60 * 15 : null)
+  // fetch all lists every 15 minutes, but only after we initialize library
+  useInterval(fetchListCallback, library ? 1000 * 60 * 15 : null)
 
   return null
 }

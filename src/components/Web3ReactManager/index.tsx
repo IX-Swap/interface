@@ -7,7 +7,6 @@ import { useEagerConnect, useInactiveListener } from '../../hooks/web3'
 import { NetworkContextName } from '../../constants/misc'
 import Loader from '../Loader'
 import { hooks, metaMask } from 'connectors/metaMask'
-import detectEthereumProvider from '@metamask/detect-provider';
 
 const MessageWrapper = styled.div`
   display: flex;
@@ -26,11 +25,11 @@ export default function Web3ReactManager({ children }: { children: JSX.Element }
   // const isActive = useIsActive()
 
   // try to eagerly connect to an injected provider, if it exists and has granted access already
-  // useEffect(() => {
-  //   void metaMask.connectEagerly().catch(() => {
-  //     console.debug('Failed to connect eagerly to metamask')
-  //   })
-  // }, [])
+  useEffect(() => {
+    void metaMask.connectEagerly().catch(() => {
+      console.debug('Failed to connect eagerly to metamask')
+    })
+  }, [])
 
   useEffect(() => {
     if (!isActive) {

@@ -374,7 +374,7 @@ export function useTrackedTokenPairs(): [Token, Token][] {
 
 export const getUserSecTokensList = async () => {
   const result = await apiService.get(tokens.fromUser)
-  return result?.data
+  return result.data
 }
 
 const listCache: WeakMap<SecToken[], SecTokenAddressMap> | null =

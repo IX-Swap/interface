@@ -127,7 +127,7 @@ export function useERC20Permit(
   state: UseERC20PermitState
   gatherPermitSignature: null | (() => Promise<void>)
 } {
-  const { account, chainId, provider } = useActiveWeb3React()
+  const { account, chainId, library } = useActiveWeb3React()
   const transactionDeadline = useTransactionDeadline()
   const tokenAddress = currencyAmount?.currency?.isToken ? currencyAmount.currency.address : undefined
   const eip2612Contract = useEIP2612Contract(tokenAddress)
@@ -147,7 +147,7 @@ export function useERC20Permit(
       !account ||
       !chainId ||
       !transactionDeadline ||
-      !provider ||
+      !library ||
       !tokenNonceState.valid ||
       !tokenAddress ||
       !spender ||
@@ -223,7 +223,7 @@ export function useERC20Permit(
           message,
         })
 
-        return provider
+        return library
           .send('eth_signTypedData_v4', [account, data])
           .then(splitSignature)
           .then((signature: any) => {
@@ -250,7 +250,7 @@ export function useERC20Permit(
     chainId,
     isArgentWallet,
     transactionDeadline,
-    provider,
+    library,
     tokenNonceState.loading,
     tokenNonceState.valid,
     tokenNonceState.result,

@@ -139,7 +139,7 @@ export const getCollections = async (address: string, chainId?: number) => {
   const collections = await apiService.get(nft.getCollections(address, chainId))
   return collections
 }
-export const getCollection = async (id?: number, chainId?: number, provider?: Web3Provider) => {
+export const getCollection = async (id?: number, chainId?: number, library?: Web3Provider) => {
   if (id === undefined || isNaN(id)) {
     return null
   }
@@ -147,7 +147,7 @@ export const getCollection = async (id?: number, chainId?: number, provider?: We
   const collection = await apiService.get(nft.getCollection(id, chainId))
 
   if (collection.data) {
-    const web3 = new Web3(provider)
+    const web3 = new Web3(library?.provider)
     const contract = new web3.eth.Contract(NFT_ABI, collection.data.address)
 
     const supply = await contract.methods.maxSupply().call()
@@ -159,13 +159,13 @@ export const getCollection = async (id?: number, chainId?: number, provider?: We
 
 export function useCollection(id?: number) {
   const dispatch = useDispatch()
-  const { chainId, provider } = useActiveWeb3React()
+  const { chainId, library } = useActiveWeb3React()
   const [collection, setCollection] = useState<any | null>(null)
   useEffect(() => {
     async function fetchCollection() {
       try {
         dispatch(setCollectionsLoading({ loading: true }))
-        const result = await getCollection(id, chainId, provider)
+        const result = await getCollection(id, chainId, library)
         setCollection(result)
         dispatch(setCollectionsLoading({ loading: false }))
       } catch (e) {
@@ -221,17 +221,17 @@ export const useUpdateFullCollection = (history: H.History) => {
 }
 
 export const useDeployCollection = () => {
-  const { account, provider } = useActiveWeb3React()
+  const { account, library } = useActiveWeb3React()
   const addTransaction = useTransactionAdder()
   const showError = useShowError()
   return useCallback(
     async ({ name, maxSupply }: { name: string; maxSupply: number }) => {
       try {
-        if (!account || !provider) {
+        if (!account || !library) {
           return
         }
         //Deploy contract
-        const web3 = new Web3(provider)
+        const web3 = new Web3(library.provider)
         const contract = new web3.eth.Contract(NFT_ABI)
         const myContract = contract
           .deploy({
@@ -247,7 +247,7 @@ export const useDeployCollection = () => {
           data: myContract,
         }
 
-        const result = await provider.getSigner().sendTransaction(params)
+        const result = await library.getSigner().sendTransaction(params)
         addTransaction(result, { summary: t`Created your ${name} collection successfully` })
         const resp = await result.wait()
         return resp?.contractAddress
@@ -255,7 +255,7 @@ export const useDeployCollection = () => {
         showError(t`Could not create collection ${(e as Error)?.message}`)
       }
     },
-    [account, addTransaction, provider, showError]
+    [account, addTransaction, library, showError]
   )
 }
 
@@ -265,12 +265,12 @@ interface NftCollectionInfo extends NFTCollection {
 }
 
 export const useNftCollection = (address: string) => {
-  const { provider, chainId } = useActiveWeb3React()
+  const { library, chainId } = useActiveWeb3React()
 
   const contract = useMemo(() => {
-    const web3 = new Web3(provider)
+    const web3 = new Web3(library?.provider)
     return new web3.eth.Contract(NFT_ABI, address)
-  }, [provider, address])
+  }, [library, address])
 
   const [info, setInfo] = useState<NftCollectionInfo | undefined>(undefined)
   const [page, setPage] = useState(0)
@@ -327,18 +327,18 @@ export const useNftCollection = (address: string) => {
 }
 
 export const useNftCollectionImport = (history: H.History) => {
-  const { account, provider, chainId } = useActiveWeb3React()
+  const { account, library, chainId } = useActiveWeb3React()
   const showError = useShowError()
   const dispatch = useDispatch()
 
   return useCallback(
     async ({ address }: { address: string }) => {
-      if (!account || !provider) {
+      if (!account || !library) {
         return
       }
 
       try {
-        const web3 = new Web3(provider)
+        const web3 = new Web3(library?.provider)
         const contract = new web3.eth.Contract(NFT_CREATE_ABI, address)
 
         const [result, balance] = await Promise.all([
@@ -363,7 +363,7 @@ export const useNftCollectionImport = (history: H.History) => {
         showError(`Error when importing NFT collection: ${(e as Error).message}`)
       }
     },
-    [account, dispatch, history, provider, showError]
+    [account, dispatch, history, library, showError]
   )
 }
 
@@ -695,7 +695,7 @@ export const useCreateNftAssetForm = (history: H.History) => {
   const form = useAssetFormState()
   const showError = useShowError()
   const { collection, newCollectionName, maxSupply, collectionDescription, collectionLogo } = form
-  const { provider, account, chainId } = useActiveWeb3React()
+  const { library, account, chainId } = useActiveWeb3React()
   return useCallback(async () => {
     try {
       // first we create the asset on backend (uploading all files, etc, and get an assetUri)
@@ -712,12 +712,12 @@ export const useCreateNftAssetForm = (history: H.History) => {
       //this is contract instance with test contract created by me
       // const contractInstance = getNftContract({
       //   addressOrAddressMap: '0xadc2e42d74f57028d7be2da41ba9643bdb70d99b',
-      //   provider,
+      //   library,
       //   account,
       //   chainId,
       // })
       if (collection) {
-        contractInstance = getNftContract({ addressOrAddressMap: collection?.address, provider, account, chainId })
+        contractInstance = getNftContract({ addressOrAddressMap: collection?.address, library, account, chainId })
         contractAddress = collection.address
       } else {
         if (newCollectionName) {
@@ -727,7 +727,7 @@ export const useCreateNftAssetForm = (history: H.History) => {
           })
           contractAddress = newContractAddress
           if (contractAddress) {
-            contractInstance = getNftContract({ addressOrAddressMap: contractAddress, provider, account, chainId })
+            contractInstance = getNftContract({ addressOrAddressMap: contractAddress, library, account, chainId })
             await createFullNftCollection({
               name: newCollectionName,
               address: contractAddress,
@@ -765,7 +765,7 @@ export const useCreateNftAssetForm = (history: H.History) => {
     form,
     createNFTAsset,
     collection,
-    provider,
+    library,
     account,
     chainId,
     newCollectionName,

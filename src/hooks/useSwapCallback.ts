@@ -144,7 +144,7 @@ function useSwapCallArguments(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): () => Promise<SwapCall[]> {
-  const { account, chainId, provider } = useActiveWeb3React()
+  const { account, chainId, library } = useActiveWeb3React()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
@@ -155,7 +155,7 @@ function useSwapCallArguments(
   const authorizationDigest = useAuthorizationDigest(trade)
   const { shouldGetAuthorization } = useDerivedSwapInfo()
   return useCallback(async () => {
-    if (!trade || !recipient || !provider || !account || !chainId || !deadline) return []
+    if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
     if (!routerContract) return []
     if (shouldGetAuthorization) {
       return []
@@ -213,7 +213,7 @@ function useSwapCallArguments(
     argentWalletContract,
     chainId,
     deadline,
-    provider,
+    library,
     recipient,
     routerContract,
     trade,
@@ -266,12 +266,12 @@ export function useSwapCallbackError(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): { state: SwapCallbackState; error: string | null } {
-  const { account, chainId, provider } = useActiveWeb3React()
+  const { account, chainId, library } = useActiveWeb3React()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
   return useMemo(() => {
-    if (!trade || !provider || !account || !chainId) {
+    if (!trade || !library || !account || !chainId) {
       return { state: SwapCallbackState.INVALID, error: 'Missing dependencies' }
     }
     if (!recipient) {
@@ -286,7 +286,7 @@ export function useSwapCallbackError(
       state: SwapCallbackState.VALID,
       error: null,
     }
-  }, [trade, provider, account, chainId, recipient, recipientAddressOrName])
+  }, [trade, library, account, chainId, recipient, recipientAddressOrName])
 }
 
 // returns a function that will execute a swap, if the parameters are all valid
@@ -296,7 +296,7 @@ export function useSwapCallback(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): () => Promise<{ callback: null | (() => Promise<string>) }> {
-  const { account, chainId, provider } = useActiveWeb3React()
+  const { account, chainId, library } = useActiveWeb3React()
   const getSwapCalls = useSwapCallArguments(trade, allowedSlippage, recipientAddressOrName)
 
   const addTransaction = useTransactionAdder()
@@ -304,7 +304,7 @@ export function useSwapCallback(
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
   return useCallback(async () => {
-    if (!trade || !provider || !account || !chainId) {
+    if (!trade || !library || !account || !chainId) {
       return { callback: null }
     }
     if (!recipient) {
@@ -329,7 +329,7 @@ export function useSwapCallback(
                     data: calldata,
                     value,
                   }
-            return provider
+            return library
               .estimateGas(tx)
               .then((gasEstimate: any) => {
                 return {
@@ -344,7 +344,7 @@ export function useSwapCallback(
                     gasEstimate: '15000000',
                   } as any
                 }
-                return provider
+                return library
                   .call(tx)
                   .then(() => {
                     return { call, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
@@ -383,7 +383,7 @@ export function useSwapCallback(
           call: { address, calldata, value },
         } = bestCallOption
 
-        return provider
+        return library
           .getSigner()
           .sendTransaction({
             from: account,
@@ -436,5 +436,5 @@ export function useSwapCallback(
           })
       },
     }
-  }, [trade, provider, account, chainId, recipient, recipientAddressOrName, getSwapCalls, addTransaction])
+  }, [trade, library, account, chainId, recipient, recipientAddressOrName, getSwapCalls, addTransaction])
 }

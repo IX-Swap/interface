@@ -12,7 +12,7 @@ import { useActiveListUrls } from './hooks'
 import { UNSUPPORTED_LIST_URLS } from 'constants/lists'
 
 export default function Updater(): null {
-  const { provider } = useActiveWeb3React()
+  const { library } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const isWindowVisible = useIsWindowVisible()
 
@@ -26,8 +26,8 @@ export default function Updater(): null {
     Object.keys(lists).forEach((url) => fetchList(url))
   }, [fetchList, isWindowVisible, lists])
 
-  // fetch all lists every 10 minutes, but only after we initialize provider
-  useInterval(fetchAllListsCallback, provider ? 1000 * 60 * 10 : null)
+  // fetch all lists every 10 minutes, but only after we initialize library
+  useInterval(fetchAllListsCallback, library ? 1000 * 60 * 10 : null)
 
   // whenever a list is not loaded and not loading, try again to load it
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function Updater(): null {
         fetchList(listUrl)
       }
     })
-  }, [dispatch, fetchList, provider, lists])
+  }, [dispatch, fetchList, library, lists])
 
   // if any lists from unsupported lists are loaded, check them too (in case new updates since last visit)
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function Updater(): null {
         fetchList(listUrl)
       }
     })
-  }, [dispatch, fetchList, provider, lists])
+  }, [dispatch, fetchList, library, lists])
 
   // automatically update lists if versions are minor/patch
   useEffect(() => {

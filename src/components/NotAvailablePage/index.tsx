@@ -27,7 +27,7 @@ import Modal from 'components/Modal'
 import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 
 export const NotAvailablePage = () => {
-  const { chainId, provider, account } = useActiveWeb3React()
+  const { chainId, library, account } = useActiveWeb3React()
   const { pathname } = useLocation()
   const [cookies] = useCookies(['annoucementsSeen'])
   const { config } = useWhitelabelState()
@@ -38,8 +38,8 @@ export const NotAvailablePage = () => {
   const farming = ['/vesting', '/staking'].includes(pathname)
 
   const changeNetwork = (targetChain: number) => {
-    if (chainId !== targetChain && provider?.isMetaMask) {
-      switchToNetwork({ provider, chainId: targetChain })
+    if (chainId !== targetChain && library && library?.provider?.isMetaMask) {
+      switchToNetwork({ library, chainId: targetChain })
     }
   }
 

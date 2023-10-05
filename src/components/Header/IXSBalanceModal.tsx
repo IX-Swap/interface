@@ -41,7 +41,7 @@ export const IXSBalanceModal = () => {
   const isOpen = useModalOpen(ApplicationModal.IXS_BALANCE)
   const toggle = useToggleModal(ApplicationModal.IXS_BALANCE)
   const onClose = useCallback(() => toggle(), [toggle])
-  const { provider, chainId } = useActiveWeb3React()
+  const { library, chainId } = useActiveWeb3React()
   const IXSCurrency = useIXSCurrency()
   const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
   const addIXS = useAddTokenToMetamask(IXSCurrency ?? undefined)
@@ -80,7 +80,7 @@ export const IXSBalanceModal = () => {
                 textLeft={
                   <RowBetween style={{ gap: '5px' }}>
                     <Trans>Balance of {IXSCurrency?.symbol}</Trans>
-                    {IXSCurrency && provider?.isMetaMask && (
+                    {IXSCurrency && library?.provider?.isMetaMask && (
                       <TextGradient style={{ cursor: 'pointer' }} onClick={() => !addIXS.success && addIXS.addToken()}>
                         {!addIXS.success ? <Trans>Add to Metamask</Trans> : null}
                       </TextGradient>
@@ -99,7 +99,7 @@ export const IXSBalanceModal = () => {
                 textLeft={
                   <RowBetween style={{ gap: '5px' }}>
                     <Trans>Balance of IXGov</Trans>
-                    {IXSCurrency && provider?.isMetaMask && (
+                    {IXSCurrency && library?.provider?.isMetaMask && (
                       <TextGradient
                         style={{ cursor: 'pointer' }}
                         onClick={() => !addIXSGov.success && addIXSGov.addToken()}
