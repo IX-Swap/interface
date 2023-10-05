@@ -890,20 +890,6 @@ export default function IndividualKycForm() {
                             )}
                           />
 
-                          <Uploader
-                            title="Proof of Address"
-                            subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
-                            error={errors.proofOfAddress}
-                            files={values.proofOfAddress}
-                            onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
-                            handleDeleteClick={handleImageDelete(
-                              values,
-                              'proofOfAddress',
-                              values.removedDocuments,
-                              setFieldValue
-                            )}
-                          />
-
                           <SelfieUploader
                             title=""
                             subtitle="Selfie for Verification"
@@ -913,6 +899,20 @@ export default function IndividualKycForm() {
                             handleDeleteClick={handleImageDelete(
                               values,
                               'selfie',
+                              values.removedDocuments,
+                              setFieldValue
+                            )}
+                          />
+
+                          <Uploader
+                            title="Proof of Address"
+                            subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
+                            error={errors.proofOfAddress}
+                            files={values.proofOfAddress}
+                            onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                            handleDeleteClick={handleImageDelete(
+                              values,
+                              'proofOfAddress',
                               values.removedDocuments,
                               setFieldValue
                             )}

@@ -427,18 +427,7 @@ export const SelfieUploader: FC<UploaderProps> = ({
           file={null}
           onDrop={onDrop}
         >
-          {/* <UploaderCard>
-            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
-              <StyledUploadLogo />
-              <TYPE.small textAlign="center" marginTop="8px" color={'#666680'}>
-                Drag and Drop
-              </TYPE.small>
-              <TYPE.small display="flex" textAlign="center" color={'#666680'}>
-                or <Text style={{ marginLeft: 2, color: '#6666FF' }}>Upload</Text>
-              </TYPE.small>
-            </Flex>
-          </UploaderCard> */}
-          {!files?.length && (
+          {!files?.length ? (
             <SelfieUploaderCard>
               <Column style={{ alignItems: 'center', padding: '0px', margin: isMobile ? '20px 0px' : '0px' }}>
                 <Image src={SelfieImage} alt="Uploader" />
@@ -473,12 +462,13 @@ export const SelfieUploader: FC<UploaderProps> = ({
                     width: isMobile ? '50%' : '340px',
                     alignSelf: isMobile ? 'center' : 'normal',
                   }}
+                  onClick={(e) => e.preventDefault()}
                 >
                   Upload
                 </PinnedContentButton>
               </Column>
             </SelfieUploaderCard>
-          )}
+          ) : <></>}
         </Upload>
       )}
       {error && (
