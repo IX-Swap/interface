@@ -168,7 +168,16 @@ export const dsoInformationValidationSchemaStep1: any = {
   productType: string().required('Product Type is required'),
   completionDate: dateSchema
     .required('Completion Date is required')
-    .test('futureDate', 'Launch Date must be future date', pastDateValidator),
+    .test(
+      'before-completionDate',
+      'Completion Date cannot be earlier than Free-to-Trade Date',
+      function (completion) {
+        const { releaseDate } = this.parent
+        console.log(releaseDate)
+        return releaseDate === null || releaseDate <= completion
+      }
+    )
+    .test('pastDate', 'Completion Date must be future date', pastDateValidator),
   minimumInvestment: number()
     .typeError('Minimum Investment must be a number')
     .nullable()
