@@ -15,10 +15,12 @@ export interface STODatesProps {
 
 export const STODates = (props: STODatesProps) => {
   const { status } = props
-  const { control, trigger } = useFormContext<DSOFormValues>()
+  const { control, trigger, watch } = useFormContext<DSOFormValues>()
   const launchDate = control.getValues('launchDate')
   const isLaunchDateEmpty =
     typeof launchDate === 'undefined' || launchDate === ''
+  const freeToTradeDate = watch('releaseDate')
+  const completionDate = watch('completionDate')
 
   return (
     <Grid item>
@@ -82,6 +84,7 @@ export const STODates = (props: STODatesProps) => {
                 name='releaseDate'
                 control={control}
                 disabled={isLaunchDateEmpty}
+                maxDate={completionDate}
                 valueExtractor={dateTimeValueExtractor}
                 // @ts-expect-error
                 defaultValue={null}
@@ -117,6 +120,7 @@ export const STODates = (props: STODatesProps) => {
                   name='completionDate'
                   control={control}
                   disabled={isLaunchDateEmpty}
+                  minDate={freeToTradeDate}
                   valueExtractor={dateTimeValueExtractor}
                   // @ts-expect-error
                   defaultValue={null}
