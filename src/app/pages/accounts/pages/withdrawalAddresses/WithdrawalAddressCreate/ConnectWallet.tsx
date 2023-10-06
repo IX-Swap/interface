@@ -50,11 +50,19 @@ export const ConnectWallet = ({
   const { snackbarService } = useServices()
 
   const hasMetamaskExtension = window.ethereum?.isMetaMask === true
-  const hasCoinbaseExtension = true
+
+  // * Remove checking for Coinbase wallet extension (will default to pop-up with options to connect; including the QR option)
+  //   const hasCoinbaseExtension = true
+
+  // ! Doesn't work if user has no Metamask wallet extension enabled
   //   const hasCoinbaseExtension =
   //     typeof window.ethereum?.providers?.find(
   //       (provider: any) => provider.isCoinbaseWallet === true
   //     ) !== 'undefined'
+
+  // * Seem to work even without the Metamask wallet extension enabled
+  const hasCoinbaseExtension =
+    window.web3?.currentProvider?.isCoinbaseWallet === true
 
   const failedToDetectExtension = () =>
     snackbarService.showSnackbar(

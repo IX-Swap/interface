@@ -163,7 +163,7 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
           </DialogActions>
 
           {/* Create Wallet Hint */}
-          {!hasWallet && hint}
+          {/* {!hasWallet && hint} */}
 
           {/* {isInitialising && (
             <LoadingIndicator
