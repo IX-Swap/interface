@@ -11,6 +11,7 @@ import { Icon } from 'ui/Icons/Icon'
 import { AddDocumentButton } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/AddDocumentButton'
 import { DataroomFile } from 'types/dataroomFile'
 import { UploadDocumentInfo } from 'hooks/useUploadFile'
+import { isEmpty } from 'lodash'
 
 export interface SelfieFieldProps {
   name: any
@@ -112,7 +113,9 @@ export const SelfieField = ({
                         isSelfie
                         onSuccessUploadCallback={handleSuccessFileUpload}
                         onRemoveCallback={handleRemoveFile}
-                        defaultValue={field.value}
+                        defaultValue={
+                          !isEmpty(field.value) ? field.value : undefined
+                        }
                       />
                     </Grid>
                   </Grid>
