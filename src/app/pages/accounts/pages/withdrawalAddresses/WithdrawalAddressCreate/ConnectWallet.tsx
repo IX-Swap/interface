@@ -39,16 +39,30 @@ const ConnectWalletButton = ({
   )
 }
 
-export const ConnectWallet = ({ onConnect }: { onConnect: Function }) => {
+export const ConnectWallet = ({
+  onConnect,
+  isLoading = false
+}: {
+  onConnect: Function
+  isLoading?: boolean
+}) => {
   const { activate } = useWeb3React()
   const { snackbarService } = useServices()
 
   const hasMetamaskExtension = window.ethereum?.isMetaMask === true
-  const hasCoinbaseExtension = true
+
+  // * Remove checking for Coinbase wallet extension (will default to pop-up with options to connect; including the QR option)
+  //   const hasCoinbaseExtension = true
+
+  // ! Doesn't work if user has no Metamask wallet extension enabled
   //   const hasCoinbaseExtension =
   //     typeof window.ethereum?.providers?.find(
   //       (provider: any) => provider.isCoinbaseWallet === true
   //     ) !== 'undefined'
+
+  // * Seem to work even without the Metamask wallet extension enabled
+  const hasCoinbaseExtension =
+    window.web3?.currentProvider?.isCoinbaseWallet === true
 
   const failedToDetectExtension = () =>
     snackbarService.showSnackbar(
@@ -79,6 +93,7 @@ export const ConnectWallet = ({ onConnect }: { onConnect: Function }) => {
             failedToDetectExtension()
           }
         }}
+        isLoading={isLoading}
       >
         <Box display={'flex'} alignItems={'center'} gap={1}>
           <span>Metamask Wallet</span>
@@ -101,6 +116,7 @@ export const ConnectWallet = ({ onConnect }: { onConnect: Function }) => {
             failedToDetectExtension()
           }
         }}
+        isLoading={isLoading}
       >
         <Box display={'flex'} alignItems={'center'} gap={1}>
           <span>Coinbase Wallet</span>

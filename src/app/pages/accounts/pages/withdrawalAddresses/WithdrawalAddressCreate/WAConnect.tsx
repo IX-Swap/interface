@@ -9,7 +9,7 @@ import {
   Typography,
   useTheme
 } from '@mui/material'
-import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+// import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { WalletConnectionStatus } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useConnectMetamaskWallet'
 import { WAConnectActions } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAConnectActions'
 import { WAInfoFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAInfoFields'
@@ -163,15 +163,15 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
           </DialogActions>
 
           {/* Create Wallet Hint */}
-          {!hasWallet && hint}
+          {/* {!hasWallet && hint} */}
 
-          {isInitialising && (
+          {/* {isInitialising && (
             <LoadingIndicator
               opacity={1}
               title='Initializing. Please Wait...'
               message="By connecting a wallet, you agree to InvestaX' Terms and Conditions and acknowledge that you have read and understand the InvestaX Privacy Policy."
             />
-          )}
+          )} */}
 
           <input {...control.register('address')} hidden />
           <input {...control.register('wallet')} hidden />
