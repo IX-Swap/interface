@@ -121,7 +121,7 @@ export const ProofOfIdentityField = ({
 
                 // console.log('identityType', identityTypeValue)
                 // console.log('field', field)
-                console.log('issuedDateValue', Date.parse(issuedDateValue))
+                // console.log('issuedDateValue', Date.parse(issuedDateValue))
 
                 const documentInfo: UploadDocumentInfo = {
                   type: label,
