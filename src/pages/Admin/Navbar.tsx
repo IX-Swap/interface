@@ -87,7 +87,7 @@ const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boo
   }
 
   @media (max-width: 500px) {
-    grid-template-columns: 1.5fr 0.4fr 0.4fr 0.4fr;
+    grid-template-columns: 1.5fr 1fr;
     padding: 10px 10px;
     grid-template-rows: auto;
     margin: 0;
@@ -256,7 +256,7 @@ export const Navbar = () => {
               </Title>
             </HeaderRow>
 
-            <HeaderRowNew>
+            {/* <HeaderRowNew>
               <HeaderElement>
                 <NavLink
                   style={{ textDecoration: 'none', color: 'inherit', marginRight: 8, marginTop: '4px' }}
@@ -270,7 +270,7 @@ export const Navbar = () => {
               <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to="/kyc">
                 <TimerIcon width="50px" height="50px" />
               </NavLink>
-            </HeaderElement>
+            </HeaderElement> */}
             <MobileMenu isAdmin="true" />
           </HeaderFrame>
         </HeaderWrapper>
@@ -286,7 +286,7 @@ export const Navbar = () => {
               </Title>
             </HeaderRow>
             <AdminHeaderLinks />
-            <HeaderControls>
+            {/* <HeaderControls>
               <IconWrapper>
                 <HeaderElement>
                   <NavLink
@@ -305,7 +305,7 @@ export const Navbar = () => {
                   </NavLink>
                 </HeaderElement>
               </IconWrapper>
-            </HeaderControls>
+            </HeaderControls> */}
           </HeaderFrame>
         </HeaderWrapper>
       )}

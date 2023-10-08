@@ -2,11 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import { ModalBlurWrapper, ModalContentWrapper } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper, TYPE, CloseIcon } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { ROLES_LABEL } from 'constants/roles'
-import arrowImg from 'assets/images/arrow-right-white.png'
+import arrowImg from 'assets/images/newBack.svg'
+// import ProfileIcon from 'assets/images/profileIconButton.svg'
+import { Box } from 'rebass'
+import { ReactComponent as ProfileIcon } from 'assets/images/profileIconButton.svg'
 
 interface Props {
   close: () => void
@@ -23,26 +26,35 @@ export const RoleChangeWarning = ({ role = '', newRole, close, onConfirm }: Prop
         style={{ maxWidth: '612px', minWidth: '320px', width: '100%', position: 'relative' }}
       >
         <ModalContentWrapper>
+          <CloseIcon style={{ position: 'absolute', right: '10px' }} onClick={close} />
           <Container>
-            <Trans>
-              Changing the role of the user,
+            <TYPE.title7 style={{ lineHeight: '25px' }}>
+              Changing the role of the user, <br /> will lead to a change in his <br /> access to certain functionality.
               <br />
-              will lead to a change in his access to certain functionality.
-              <Warning>Proceed with changes?</Warning>
-            </Trans>
+              Proceed with changes?
+            </TYPE.title7>
             <RolesContainer>
-              {ROLES_LABEL[role] || '-'}
-              <img src={arrowImg} alt="arrowImg" width="12px" />
-              {ROLES_LABEL[newRole]}
+              <div style={{ border: '1px solid #E6E6FF', padding: '12px 20px', borderRadius: '8px' }}>
+                <ProfileIcon style={{ marginRight: '5px' }} />
+                {ROLES_LABEL[role] || '-'}
+              </div>
+              <img src={arrowImg} style={{ transform: 'rotate(180deg)' }} color="red" alt="arrowImg" width="16px" />
+              <div style={{ border: '1px solid #E6E6FF', padding: '12px 20px', borderRadius: '8px' }}>
+                <ProfileIcon style={{ marginRight: '5px' }} />
+                {ROLES_LABEL[newRole]}
+              </div>
             </RolesContainer>
           </Container>
           <ButtonsContainer>
-            <ButtonIXSGradient onClick={onConfirm}>
-              <Trans>Change</Trans>
-            </ButtonIXSGradient>
-            <ButtonGradientBorder onClick={close}>
+            <PinnedContentButton
+              style={{ border: '1px solid #E6E6FF', background: '#FFFFFF', color: '#B8B8CC', padding: '30px' }}
+              onClick={close}
+            >
               <Trans>Cancel</Trans>
-            </ButtonGradientBorder>
+            </PinnedContentButton>
+            <PinnedContentButton style={{ padding: '30px' }} onClick={onConfirm}>
+              <Trans>Change</Trans>
+            </PinnedContentButton>
           </ButtonsContainer>
         </ModalContentWrapper>
       </ModalBlurWrapper>
@@ -56,7 +68,7 @@ const Container = styled.div`
   font-weight: 300;
   font-size: 18px;
   line-height: 32px;
-  color: #ffffff;
+  // color: #ffffff;
   align-items: center;
   margin: 24px 16px;
   text-align: center;
@@ -68,8 +80,8 @@ const Warning = styled.div`
 `
 
 const RolesContainer = styled.div`
-  border: 1px solid ${({ theme }) => theme.text9};
-  border-radius: 24px;
+  // border: 1px solid ${({ theme }) => theme.text9};
+  // border-radius: 24px;
   padding: 8px 12px;
   column-gap: 18px;
   display: flex;
@@ -78,7 +90,7 @@ const RolesContainer = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #ffffff;
+  // color: #ffffff;
   margin: 24px 0px 0px;
 `
 

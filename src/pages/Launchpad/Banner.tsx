@@ -3,11 +3,14 @@ import styled from 'styled-components'
 
 import LearnMoreIcon from 'assets/launchpad/icons/learn-more.png'
 import { text31, text52, text6 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
 
 export const Banner = () => {
   return (
     <BannerContainer>
-      <BannerTitle>Invest in Startups and Other Unicorn-Like Opportunites</BannerTitle>
+      <BannerTitle>
+        Invest in Startups <br /> and Other Unicorn <br /> Like Opportunites
+      </BannerTitle>
 
       <BannerInfoRedirect>
         <BannerInfoRedirectImage src={LearnMoreIcon} />
@@ -22,17 +25,18 @@ export const Banner = () => {
 
 const BannerContainer = styled.div`
   max-width: ${(props) => props.theme.launchpad.content.maxWidth};
-  margin: 4rem auto;
+  margin: 8rem auto;
+  width: 100%;
 `
 
 const BannerTitle = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
-  max-width: 640px;
-
   font-family: ${(props) => props.theme.launchpad.font};
-
   ${text52}
   margin-bottom: 2rem;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 48px;
+  }
 `
 
 const BannerInfoRedirect = styled.a`

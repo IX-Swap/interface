@@ -45,7 +45,8 @@ export const Field = ({ label, value }: Props) => {
 const Container = styled.div`
   display: grid;
   row-gap: 6px;
-  font-size: 16px;
+  font-size: 13px;
+  text-transform: capitalize;
   > :first-child {
     color: ${({ theme: { text5 } }) => text5};
   }

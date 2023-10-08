@@ -15,6 +15,7 @@ import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
 import { text12, text54 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
 
 const getStageLabel = (stage: OfferStatus) => {
   return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
@@ -111,6 +112,10 @@ const PinnedWrapper = styled.div`
   background-color: ${(props) => props.theme.launchpad.colors.foreground};
   padding: 2rem;
   margin: 2rem 0;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 0rem;
+    // margin: 2rem 0;
+  }
 `
 
 const PinnedContainer = styled.div`
@@ -121,6 +126,10 @@ const PinnedContainer = styled.div`
   gap: 2rem;
   margin: 0 auto;
   max-width: ${(props) => props.theme.launchpad.content.maxWidth};
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    // width: 100%;
+    display: block;
+  }
 `
 
 const PinnedImageContainer = styled.div`
@@ -130,6 +139,9 @@ const PinnedImageContainer = styled.div`
 const PinnedImage = styled.img`
   border-radius: 8px;
   max-height: 385px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 350px;
+  }
 `
 
 const PinnedContent = styled.div`
@@ -145,6 +157,10 @@ const PinnedContentTitle = styled.div`
   ${text54}
   font-family: ${(props) => props.theme.launchpad.font};
   color: ${(props) => props.theme.launchpad.colors.text.title};
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 24px;
+  }
 `
 const PinnedContentBody = styled.div`
   ${text12}

@@ -1,11 +1,13 @@
 import React, { FC } from 'react'
 
 import { Block } from '../molecules/Block'
-import { GridContainer, GridItem } from 'components/Grid'
+// import { GridContainer, GridItem } from 'components/Grid'
 import { companyAuthorizedPersonnelKeys } from '../utils/constants'
 import { Field } from '../molecules/Field'
 import { Documents } from '../molecules/Documents'
 import { CorporateKyc } from 'state/admin/actions'
+import styled from 'styled-components'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   data: CorporateKyc
@@ -14,17 +16,33 @@ interface Props {
 export const CompanyAuthorizedPersonnel: FC<Props> = ({ data }: Props) => {
   return (
     <Block title="Company Authorized Personnel">
-      <GridContainer spacing={30}>
+      <GridContainer>
         {companyAuthorizedPersonnelKeys.map(({ key, label, width = {}, format }) => (
           <GridItem key={key} {...width}>
             <Field label={label} value={format ? format(data[key]) : data[key]} />
           </GridItem>
         ))}
-        <Documents
-          documents={data.documents.filter(({ type }) => type === 'authorization')}
-          title="Authorization Document"
-        />
+        <div style={{ marginTop: '40px' }}>
+          <Documents
+            documents={data.documents.filter(({ type }) => type === 'authorization')}
+            title="Authorization Document"
+          />
+        </div>
       </GridContainer>
     </Block>
   )
 }
+
+const GridContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`
+
+const GridItem = styled.div`
+  width: calc(25% - 10px); /* 4 columns with 15px spacing between them */
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: calc(50% - 15px); /* 2 columns with 15px spacing between them */
+  }
+`

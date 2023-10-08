@@ -13,7 +13,8 @@ import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/address
 import { useActiveWeb3React } from 'hooks/web3'
 import { Banner } from './Banner'
 import { Footer } from './Footer'
-import { Header } from './Header'
+import Header from 'components/Header'
+// import { Header } from './Header'
 
 export default function Launchpad() {
   const { chainId, account } = useActiveWeb3React()
@@ -44,12 +45,12 @@ export default function Launchpad() {
   }
 
   return (
-    <LaunchpadContainer>
+    <>
       <Header />
       <Banner />
       <Offers />
       <Footer />
-    </LaunchpadContainer>
+    </>
   )
 }
 

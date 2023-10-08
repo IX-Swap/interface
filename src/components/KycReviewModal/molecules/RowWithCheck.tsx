@@ -14,8 +14,8 @@ export const RowWithCheck = ({ text, isDone }: Props) => {
   console.log(text, isDone, 'texttexttext')
   return (
     <Container>
-      {isDone ? <img src={checkIcon} alt="status-icon" /> : null}
-      <Text>{t`${isDone ? text : ''}`}</Text>
+      {isDone ? <img src={checkIcon} alt="status-icon" /> : '-'}
+      <Text>{t`${isDone ? text : text}`}</Text>
     </Container>
   )
 }

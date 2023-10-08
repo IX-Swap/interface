@@ -235,7 +235,7 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
   }
   *[class*='menu'] {
     border-radius: 6px;
-    padding: 24px 8px 24px 16px;
+    // padding: 24px 8px 24px 16px;
     background-color: ${({ theme }) => theme.bg0};
     margin-top: 4px;
     max-height: 236px;
@@ -248,7 +248,7 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
       padding: 2px 8px;
       font-size: 16px;
       cursor: pointer;
-      border-radius: 6px;
+      // border-radius: 6px;
       :hover {
         background: ${({ theme }) => theme.bg1};
       }
