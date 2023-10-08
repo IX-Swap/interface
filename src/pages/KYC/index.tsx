@@ -24,6 +24,7 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
 import { Content, getStatusDescription, StatusCard, DateInfoContainer } from './styleds'
+import { hooks, metaMask } from '../../connectors/metaMask'
 
 interface DescriptionProps {
   description: string | null
@@ -80,7 +81,8 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 export default function KYC() {
-  const { account } = useActiveWeb3React()
+  const { useAccount } = hooks
+  const account = useAccount()
   const [loading, setLoading] = useState(false)
   const pendingSign = usePendingSignState()
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -92,12 +94,18 @@ export default function KYC() {
   const infoText = 'In order to make changes to your KYC please get in touch with us via c@ixswap.io'
 
   useEffect(() => {
+    void metaMask.connectEagerly().catch(() => {
+      console.debug('Failed to connect eagerly to metamask')
+    })
+  }, [])
+
+  useEffect(() => {
     if (pendingSign) {
       setLoading(true)
     } else {
       setLoading(false)
     }
-  }, [pendingSign])
+  }, [pendingSign, account])
 
   const getKYCDescription = useCallback(() => {
     switch (status) {
