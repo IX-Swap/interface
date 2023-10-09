@@ -14,6 +14,7 @@ import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
 import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
 import { CustodyManagementRouter } from 'app/pages/admin/router/CustodyManagementRouter'
 import { TenantRouter } from './TenantRouter'
+import { TokenTransactions } from '../pages/TokenTransactions'
 
 export const AdminRouter = () => {
   return (
@@ -81,6 +82,13 @@ export const AdminRouter = () => {
 
       <AppRoute breadcrumb='Client Spaces' path={AdminRoute.tenants}>
         <TenantRouter />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Token Transactions'
+        path={AdminRoute.tokenTransactions}
+      >
+        <TokenTransactions />
       </AppRoute>
 
       <AppRoute path={AdminRoute.landing}>

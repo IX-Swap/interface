@@ -62,7 +62,7 @@ export const TradeHistoryTable = () => {
           columns={columns}
           filter={filter}
           paperProps={{ variant: 'elevation', elevation: 0 }}
-          exportFileName='Trade History'
+          exportFileName='Past Orders'
           exportButtonId={exportButtonId}
         />
       </Grid>
