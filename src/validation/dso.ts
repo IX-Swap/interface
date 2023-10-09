@@ -168,16 +168,33 @@ export const dsoInformationValidationSchemaStep1: any = {
   productType: string().required('Product Type is required'),
   completionDate: dateSchema
     .required('Completion Date is required')
+    // .test(
+    //   'before-completionDate',
+    //   'Completion Date cannot be earlier than Free-to-Trade Date',
+    //   function (completion) {
+    //     const { releaseDate } = this.parent
+    //     console.log(releaseDate)
+    //     return releaseDate === null || releaseDate <= completion
+    //   }
+    // )
+    .test('pastDate', 'Completion Date must be future date', pastDateValidator),
+  releaseDate: dateSchema
     .test(
       'before-completionDate',
-      'Completion Date cannot be earlier than Free-to-Trade Date',
-      function (completion) {
-        const { releaseDate } = this.parent
-        console.log(releaseDate)
-        return releaseDate === null || releaseDate <= completion
+      'Free-to-Trade Date cannot be earlier than Completion Date',
+      function (releaseDate) {
+        const { completionDate } = this.parent
+        const isReleaseNull = releaseDate === null
+        const isReleaseDateBeforeCompletionDate = releaseDate < completionDate
+
+        return isReleaseNull || !isReleaseDateBeforeCompletionDate
       }
     )
-    .test('pastDate', 'Completion Date must be future date', pastDateValidator),
+    .test(
+      'pastDate',
+      'Free-to-Trade Date must be future date',
+      pastDateValidator
+    ),
   minimumInvestment: number()
     .typeError('Minimum Investment must be a number')
     .nullable()

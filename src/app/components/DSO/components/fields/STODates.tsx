@@ -84,7 +84,7 @@ export const STODates = (props: STODatesProps) => {
                 name='releaseDate'
                 control={control}
                 disabled={isLaunchDateEmpty}
-                maxDate={completionDate}
+                minDate={completionDate}
                 valueExtractor={dateTimeValueExtractor}
                 // @ts-expect-error
                 defaultValue={null}
@@ -120,7 +120,7 @@ export const STODates = (props: STODatesProps) => {
                   name='completionDate'
                   control={control}
                   disabled={isLaunchDateEmpty}
-                  minDate={freeToTradeDate}
+                  maxDate={freeToTradeDate}
                   valueExtractor={dateTimeValueExtractor}
                   // @ts-expect-error
                   defaultValue={null}
