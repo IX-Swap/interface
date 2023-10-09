@@ -109,7 +109,7 @@ export const UsersList: FC = () => {
           marginLeft={isMobile ? '0px' : '33px'}
           onClick={openUpdateModal}
         >
-          <Trans>+ Add issuer</Trans>
+          <Trans>+ Add User</Trans>
         </StyledButtonGradientBorder>
       </Flex>
       <Flex>

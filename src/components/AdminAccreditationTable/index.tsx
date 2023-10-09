@@ -201,10 +201,10 @@ export const Container = styled.div`
 
 const StyledHeaderRow = styled(HeaderRow)`
   grid-template-columns: 0.6fr 200px 0.8fr repeat(4, 1fr) minmax(220px, 1fr);
-  min-width: 1500px;
+  min-width: 1370px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
   grid-template-columns: 0.6fr 200px 0.8fr repeat(4, 1fr) minmax(250px, 1fr);
-  min-width: 1500px;
+  min-width: 1370px;
 `

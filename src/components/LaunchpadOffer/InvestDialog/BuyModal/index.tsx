@@ -96,10 +96,10 @@ interface Props {
 const data = [
   { imageSrc: Transak, text: 'Transak', url: 'https://global.transak.com' },
   { imageSrc: MoonPay, text: 'Moonpay', url: 'https://buy.moonpay.com' },
-  { imageSrc: Ramp, text: 'Ramp', url: '' },
-  { imageSrc: Sardine, text: 'Sardine', url: '' },
-  { imageSrc: Banxa, text: 'Banxa', url: '' },
-  { imageSrc: DTCPay, text: 'dtcpay', url: '' },
+  { imageSrc: Ramp, text: 'Ramp', url: 'https://ramp.network/buy' },
+  { imageSrc: Sardine, text: 'Sardine', url: 'https://crypto.sardine.ai/buy' },
+  { imageSrc: Banxa, text: 'Banxa', url: 'https://openocean.banxa.com/' },
+  { imageSrc: DTCPay, text: 'dtcpay', url: 'https://dtcpay.com/registration' },
 ]
 
 export const BuyModal = ({ isOpen, onClose }: Props) => {

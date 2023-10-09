@@ -164,7 +164,8 @@ const BodyRow = styled.a`
   color: ${({ theme: { text1 } }) => text1};
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 300px;
+  column-gap: 200px;
+  font-size: 13px;
   overflow: auto;
   > div {
     display: grid;

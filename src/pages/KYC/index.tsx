@@ -91,8 +91,8 @@ const KYC = () => {
   const infoText = (
     <p>
       In order to make changes to your KYC please get in touch with us via{' '}
-      <a href="mailto:info@ixswap.io" style={{ textDecoration: 'none', color: '#6666FF' }}>
-        info@ixswap.io
+      <a href="mailto:c@ixswap.io" style={{ textDecoration: 'none', color: '#6666FF' }}>
+        c@ixswap.io
       </a>
     </p>
   )
@@ -228,12 +228,12 @@ const KYC = () => {
             <Description description={description} />
             <DateInfo info={infoText} submittedDate={kyc?.createdAt} changeRequestDate={kyc?.updatedAt} />
             <Link style={{ textDecoration: 'none ' }} to={`/kyc/${kyc?.corporateKycId ? 'corporate' : 'individual'}`}>
-              <ButtonIXSGradient
-                sx={{ padding: '16px 24px', marginTop: '32px' }}
+              <PinnedContentButton
+                sx={{ padding: '16px 24px', marginTop: '32px', boxShadow: '0px 16px 16px 0px #6666FF21' }}
                 data-testid="makeChangesAndResendKycButton"
               >
                 <Trans>Make changes and resend KYC</Trans>
-              </ButtonIXSGradient>
+              </PinnedContentButton>
             </Link>
           </>
         )

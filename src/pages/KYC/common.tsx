@@ -468,7 +468,9 @@ export const SelfieUploader: FC<UploaderProps> = ({
                 </PinnedContentButton>
               </Column>
             </SelfieUploaderCard>
-          ) : <></>}
+          ) : (
+            <></>
+          )}
         </Upload>
       )}
       {error && (

@@ -111,18 +111,19 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
           <ModalContent>
             <TitleContainer>
               <Title>
-                <div>
+                {/* <div>
                   <Trans>
                     <ArrowLeft style={{ cursor: 'pointer' }} data-testid="cross" onClick={onClose} />
                   </Trans>
                   &nbsp;&nbsp;
-                </div>
+                </div> */}
                 <TYPE.title7 fontWeight="800" fontSize="24px">
-                  {data?.individual?.fullName || data?.corporate?.fullName || ''}
+                  {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`})
+                  {/* {data?.individual?.fullName || data?.corporate?.fullName || ''} */}
                 </TYPE.title7>
                 {/* {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
               </Title>
-              {/* <CloseIcon data-testid="cross" onClick={onClose} /> */}
+              <CloseIcon style={{ color: '#555566' }} data-testid="cross" onClick={onClose} />
             </TitleContainer>
             <Body>
               {data.individualKycId ? (
@@ -142,9 +143,9 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
                 <Trans>Request a change</Trans>
               </ButtonGradientBorder>
               {needResubmit && (
-                <ButtonIXSWide onClick={resubmit}>
+                <PinnedContentButton onClick={resubmit}>
                   <Trans>Resubmit</Trans>
-                </ButtonIXSWide>
+                </PinnedContentButton>
               )}
             </ActionsContainer>
           </ModalContent>
