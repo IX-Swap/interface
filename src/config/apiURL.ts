@@ -158,6 +158,11 @@ export const accountsURL = {
   }
 }
 
+export const ledgerURL = {
+  getTokenTransactions: '/ledger/token-transactions',
+  exportTokenTransactions: '/ledger/export/token-transactions'
+}
+
 export const tenantsURL = {
   getTenantInfoByCode: (tenantCode: string) =>
     `/tenant/tenant-info?tenantCode=${tenantCode}`,

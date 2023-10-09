@@ -1,17 +1,28 @@
-import React from 'react'
-import { Button, Box } from '@mui/material'
+import React, { MouseEventHandler } from 'react'
+import { Button, Box, ButtonProps } from '@mui/material'
 import { FileDownload } from '@mui/icons-material'
 import { isEmpty } from 'lodash'
 import { TableColumn } from 'types/util'
 import get from 'lodash/get'
 
-interface ExportButtonProps {
+interface ExportButtonProps extends ButtonProps {
   fileName?: string
   columns?: Array<TableColumn<any>>
   rows?: any
   fullWidth?: boolean
+  convertFromJSON?: boolean
   id?: string
-  onClick?: Function
+  onClick?: MouseEventHandler<HTMLButtonElement>
+}
+
+export const download = (data: BlobPart, fileName = 'CSV Export') => {
+  const blob = new Blob([data], { type: 'text/csv' })
+  const url = window.URL.createObjectURL(blob)
+  const a = document.createElement('a')
+
+  a.setAttribute('href', url)
+  a.setAttribute('download', `${fileName}.csv`)
+  a.click()
 }
 
 export const ExportButton = ({
@@ -19,6 +30,7 @@ export const ExportButton = ({
   columns = [],
   rows = [],
   fullWidth = false,
+  convertFromJSON = true,
   onClick,
   ...rest
 }: ExportButtonProps) => {
@@ -56,26 +68,18 @@ export const ExportButton = ({
     return csvRows.join('\n')
   }
 
-  const download = (data: BlobPart) => {
-    const blob = new Blob([data], { type: 'text/csv' })
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement('a')
-
-    a.setAttribute('href', url)
-    a.setAttribute('download', `${fileName}.csv`)
-    a.click()
-  }
-
   return (
     <Button
       variant='contained'
       disableElevation
       fullWidth={fullWidth}
-      onClick={() => {
+      onClick={e => {
         if (typeof onClick === 'function') {
-          onClick()
+          onClick(e)
         } else {
-          download(convertJSONtoCSV(rows))
+          const data = convertFromJSON ? convertJSONtoCSV(rows) : rows
+
+          download(data, fileName)
         }
       }}
       sx={{ paddingX: 3 }}

@@ -12,7 +12,7 @@ export const BaseFilters = ({
 }: PropsWithChildren<{
   searchLabel?: string
   hideDateFilter?: boolean
-  hasTopBorder: boolean
+  hasTopBorder?: boolean
 }>) => {
   const theme = useTheme()
 

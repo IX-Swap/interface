@@ -202,6 +202,11 @@ export const issuanceQueryKeys = {
   upcoming: 'upcoming-deals'
 }
 
+export const ledgerQueryKeys = {
+  getTokenTransactions: 'token-transactions',
+  exportTokenTransactions: 'export-token-transactions'
+}
+
 export const virtualAccountQueryKeys = {
   listAssigned: 'assigned-virtual-accounts',
   listUnassigned: 'unassigned-virtual-accounts',

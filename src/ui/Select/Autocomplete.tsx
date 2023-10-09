@@ -35,7 +35,10 @@ export const Autocomplete = ({ options, ...props }: AutocompleteProps) => {
       displayEmpty
       placeholder={props.placeholder}
       value={selectedOption}
-      onChange={(_, value) => setSelectedOption(value?.props?.children)}
+      onChange={(e, value) => {
+        setSelectedOption(value?.props?.children)
+        if (typeof props.onChange === 'function') props.onChange(e)
+      }}
       onClose={() => setSearchText('')}
       renderValue={() => selectedOption}
     >
