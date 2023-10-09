@@ -71,8 +71,6 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
     let warning = ''
     if (value === '') {
       warning = ''
-    } else if (isInsufficientBalance) {
-      warning = `Insufficient USDC balance`
     } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
       warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
     } else if (Number(min) > realValue) {
@@ -81,7 +79,9 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
       warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
     } else if (available < realValue) {
       warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
-    }
+    } else if (isInsufficientBalance) {
+      warning = `Insufficient ${offer.investingTokenSymbol} balance`
+    }  
     return warning
   }
 
@@ -105,6 +105,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
   const getWarning = useGetWarning(props.offer, true)
   const formatedValue = useFormatOfferValue()
+  const insufficientWarning = `Insufficient ${investingTokenSymbol} balance`
 
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
@@ -169,6 +170,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
           type="number"
           onChange={changeValue}
           trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
+          caption={insufficientWarning === warning ? '' : warning === 'Loading' ? <Loader /> : warning}
           height="85px"
           fontSize="24px"
           lineHeight="29px"
@@ -188,41 +190,55 @@ export const ConvertationField: React.FC<Props> = (props) => {
           <ArrowDown color={theme.launchpad.colors.primary} size="18" />
         </ConvertationArrow>
       </ConvertationContainer>
-      {warning && (
-        <div style={{ padding: '25px 40px', border: '1px solid #E6E6FF' }}>
+      {insufficientWarning === warning && (
+        <FlexContainer border={true} flexDirection="row" padding="0.75rem 1.5rem">
           <RowBetween>
-            <div style={{ display: 'block' }}>
-              <WarningContainer>{warning === 'Loading' ? <Loader /> : warning}</WarningContainer>
+            <FlexContainer flexDirection="column" gap={"0.35rem"} padding="0.4rem 0rem 0rem 0rem">
+              <WarningContainer>{warning}</WarningContainer>
               <div>
                 {offerInvestmentToken && (
-                  <Trailing>
+                  <Trailing fontSize="1rem" fontWeight="500">
                     {formatCurrencyAmount(balance, balance?.currency?.decimals ?? 18)}
                     <span style={{ margin: '0px 5px' }}>{offerInvestmentToken.name} </span>
-                    <span style={{ marginTop: '3px' }}> {offerInvestmentToken.icon}</span>
+                    <span style={{ marginTop: "-2px", transform: 'scale(0.8)' }}> {offerInvestmentToken.icon}</span>
                   </Trailing>
                 )}
               </div>
-            </div>
+            </FlexContainer>
             <InvestButton onClick={openModal}>Buy Now</InvestButton>
           </RowBetween>
-        </div>
+        </FlexContainer>
       )}
     </>
   )
 }
+
+const FlexContainer = styled.div<{ border?: boolean, padding?: string, flexDirection?: string, gap?: string}>`
+  display: flex;
+  flex-flow: ${(props) => props.flexDirection} nowrap;
+  justify-content: center;
+  align-items: start-end;
+  ${(props) => props.gap ? `gap: ${props.gap}` : ''};
+  ${(props) => `padding: ${props.padding ?? ''}`};
+  ${({ border }) => (border ? 
+    `border: 1px solid #E6E6FF;
+    border-radius: 10px;` : '')};
+  
+`
 
 const WarningContainer = styled.div`
   color: red;
   font-size: 13px;
 `
 
-const Trailing = styled.div`
+const Trailing = styled.div<{ fontSize?: string, fontWeight?: string }>`
   grid-area: trailing;
   place-self: center end;
   height: fit-content;
   color: black;
   display: flex;
-  font-size: 20px;
+  font-size: ${(props) => props.fontSize ?? '20px'};
+  ${(props) => props.fontWeight ? `font-weight: ${props.fontWeight}` : ''};
 `
 
 const InvestButton = styled.button`
@@ -237,7 +253,7 @@ const InvestButton = styled.button`
   border-radius: 6px;
   padding: 0.75rem;
   cursor: pointer;
-  width: 40%;
+  width: 30%;
   text-align: center;
   font-weight: 700;
 `
