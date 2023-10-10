@@ -66,7 +66,7 @@ export const IndividualIdentityView = ({
         </Element>
       </Grid>
 
-      <Grid item className={privateClassNames()}>
+      <Grid item className={privateClassNames()} mt={-2}>
         <Element name={IndividualKYCSections.Address}>
           <FieldContainer>
             <Grid item container direction={'column'} spacing={5}>

@@ -7,6 +7,7 @@ import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { useStyles } from 'app/pages/identity/components/UploadDocumentsForm/styles'
 import { InvestorRole } from '../../utils/shared'
+import { SelfieField } from './UploadDocumentField/SelfieField'
 
 export const IndividualAccreditationDocumentsForm = ({
   investorRole = 'accredited'
@@ -46,6 +47,7 @@ export const IndividualAccreditationDocumentsForm = ({
               name='proofOfIdentity'
               label='Proof of Identity'
             />
+            <SelfieField name='selfie' label='Selfie' />
             <UploadDocumentField
               name='proofOfAddress'
               label='Proof of Address'

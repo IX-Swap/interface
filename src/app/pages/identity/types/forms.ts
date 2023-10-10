@@ -32,6 +32,7 @@ export interface IndividualPersonalInfoFormValues {
   gender: string
   nric?: string
   proofOfIdentity?: Array<FormArrayElement<DataroomFile>>
+  selfie?: Array<FormArrayElement<DataroomFile>>
   proofOfAddress?: Array<FormArrayElement<DataroomFile>>
   evidenceOfAccreditation?: Array<FormArrayElement<DataroomFile>>
 }
@@ -131,6 +132,7 @@ export interface IdentityDocumentsFormValues {
   applyingAs: string
   evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
   proofOfIdentity: Array<FormArrayElement<DataroomFile>>
+  selfie: Array<FormArrayElement<DataroomFile>>
   proofOfAddress: Array<FormArrayElement<DataroomFile>>
 }
 

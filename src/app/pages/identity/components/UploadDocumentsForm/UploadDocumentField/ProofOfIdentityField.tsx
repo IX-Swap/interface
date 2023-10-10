@@ -121,7 +121,7 @@ export const ProofOfIdentityField = ({
 
                 // console.log('identityType', identityTypeValue)
                 // console.log('field', field)
-                console.log('issuedDateValue', Date.parse(issuedDateValue))
+                // console.log('issuedDateValue', Date.parse(issuedDateValue))
 
                 const documentInfo: UploadDocumentInfo = {
                   type: label,
@@ -223,6 +223,7 @@ export const ProofOfIdentityField = ({
                             placeHolder='Upload Front Picture'
                             valueExtractor={plainValueExtractor}
                             accept={DataroomFileType.image}
+                            maxSize={10}
                             documentInfo={{
                               ...documentInfo,
                               feature: 'front'
@@ -247,6 +248,7 @@ export const ProofOfIdentityField = ({
                             placeHolder='Upload Back Picture'
                             valueExtractor={plainValueExtractor}
                             accept={DataroomFileType.image}
+                            maxSize={10}
                             documentInfo={{
                               ...documentInfo,
                               feature: 'back'

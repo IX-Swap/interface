@@ -53,7 +53,9 @@ export const personalInfoSchema = yup
     // @ts-expect-error
     proofOfAddress: documentsSchema,
     // @ts-expect-error
-    proofOfIdentity: proofOfIdentitySchema
+    proofOfIdentity: proofOfIdentitySchema,
+    // @ts-expect-error
+    selfie: documentsSchema
   })
 
 export const financialInfoSchema = (data?: IndividualIdentity) =>

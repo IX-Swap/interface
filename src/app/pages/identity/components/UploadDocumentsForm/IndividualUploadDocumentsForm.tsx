@@ -1,8 +1,9 @@
 import React from 'react'
 import { Grid, Typography } from '@mui/material'
-import { ProofOfIdentityField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/ProofOfIdentityField'
-import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
+import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
+import { ProofOfIdentityField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/ProofOfIdentityField'
+import { SelfieField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/SelfieField'
 import { useStyles } from 'app/pages/identity/components/UploadDocumentsForm/styles'
 
 export const IndividualUploadDocumentsForm = () => {
@@ -33,6 +34,18 @@ export const IndividualUploadDocumentsForm = () => {
                 <Typography className={styles.text} variant='body1'>
                   passport, driving license, NRIC, government issued ID card and
                   others
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid item>
+            <SelfieField
+              name='selfie'
+              label='Selfie'
+              hideLabel
+              helperElement={
+                <Typography className={styles.text} variant='body1'>
+                  Selfie for Verification
                 </Typography>
               }
             />
