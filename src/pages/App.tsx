@@ -42,7 +42,8 @@ import { ip } from 'services/apiUrls'
 import { isMobile } from 'react-device-detect'
 import { ConnectWalletModal } from './Connect Wallet Modal'
 import { metaMask } from 'connectors/metaMask'
-
+import { walletConnectV2 } from 'connectors/walletConnectV2'
+import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
 
 const AppWrapper = styled.div`
@@ -179,8 +180,16 @@ export default function App() {
     if (window.location.host.split('.')[1] !== 'ixswap') {
       getWitelabelConfig()
     }
+
+    // connect eagerly for metamask
     void metaMask.connectEagerly().catch(() => {
       console.debug('Failed to connect eagerly to metamask')
+    })
+
+    // wallet connect
+    // log URI when available
+    walletConnectV2.events.on(URI_AVAILABLE, (uri: string) => {
+      console.log(`uri: ${uri}`)
     })
   }, [])
 
