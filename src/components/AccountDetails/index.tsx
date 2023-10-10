@@ -220,7 +220,7 @@ export default function AccountDetails({
       {!!pendingTransactions.length || !!confirmedTransactions.length ? (
         <LowerSection>
           <AutoRow mb={'1rem'} style={{ justifyContent: 'space-between', textTransform: 'uppercase' }}>
-            <TYPE.title6>{t`Recent Transactions`}</TYPE.title6>
+            <TYPE.title7>{t`Recent Transactions`}</TYPE.title7>
             <LinkStyledButton onClick={clearAllTransactionsCallback}>
               <TYPE.description2>{t`Clear all`}</TYPE.description2>
             </LinkStyledButton>

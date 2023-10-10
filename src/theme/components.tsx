@@ -354,7 +354,7 @@ export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
   flex-direction: column;
   font-size: 1rem;
   display: flex;
-  min-width: 800px;
+  min-width: 580px;
   z-index: 5;
   padding: 32px;
   backdrop-filter: blur(20px);
@@ -599,6 +599,7 @@ export const ellipsisText = css`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 14px;
 `
 
 export const EllipsisText = styled.div`

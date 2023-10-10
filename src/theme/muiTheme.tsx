@@ -59,6 +59,10 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
         },
         root: {
           backgroundColor: bg1,
+          color: '#8D8DA3',
+          // '&:hover .MuiSvgIcon-root': {
+          //   color: 'red',
+          // },
         },
       },
       MuiTouchRipple: {

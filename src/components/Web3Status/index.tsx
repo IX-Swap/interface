@@ -137,7 +137,7 @@ const AccountElement = styled.div`
 `
 
 const BalanceText = styled(Text)`
-  background: ${({ theme }) => theme.bgG2};
+  // background: ${({ theme }) => theme.bgG2};
   color: ${({ theme }) => theme.text2};
   font-weight: 600;
   font-size: 12px;
@@ -261,7 +261,12 @@ function Web3StatusInner() {
     )
   } else {
     return (
-      <StyledPinnedContentButton className="connect-button" id="connect-wallet" onClick={connectWallet}>
+      <StyledPinnedContentButton
+        style={{ padding: '5px 20px' }}
+        className="connect-button"
+        id="connect-wallet"
+        onClick={connectWallet}
+      >
         <Text>
           <Trans>Connect Wallet</Trans>
         </Text>

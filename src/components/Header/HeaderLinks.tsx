@@ -167,7 +167,7 @@ export const HeaderLinks = () => {
         </MenuExternalLink>
       )} */}
 
-      {account && chainId && isWhitelisted && isDevelopment && (
+      {/* {account && chainId && isWhitelisted && isDevelopment && (
         <StyledNavLink
           ref={nftNode as any}
           id={`nft-nav-link`}
@@ -181,7 +181,7 @@ export const HeaderLinks = () => {
             </RowFixed>
           </Popover>
         </StyledNavLink>
-      )}
+      )} */}
 
       {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && (
         <StyledNavLink

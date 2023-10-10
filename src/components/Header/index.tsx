@@ -111,7 +111,7 @@ const AccountElement = styled.div`
 `
 
 const BalanceText = styled(Text)`
-  background: ${({ theme }) => theme.bgG2};
+  // background: ${({ theme }) => theme.bgG2};
   color: ${({ theme }) => theme.text2};
   font-weight: 600;
   font-size: 12px;

@@ -39,9 +39,9 @@ const rowStyle = css`
 export const HeaderRow = styled.div`
   ${rowStyle};
   > div {
-    padding: 10px 10px;
+    // padding: 10px 10px;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     color: ${({ theme: { text11 } }) => text11};
   }
 `

@@ -108,10 +108,10 @@ const StyledDialogContent = styled(
       backdrop-filter: opacity(0);
     `}
     ${({ theme, mobileMaxHeight }) => theme.mediaWidth.upToSmall`
-          border-radius: 20px;
+          border-radius: 8px;
           top: 0;
           max-width: 90vw;
-          min-height: 95vh;
+          // min-height: 95vh;
           margin:0;
          ${
            mobileMaxHeight &&

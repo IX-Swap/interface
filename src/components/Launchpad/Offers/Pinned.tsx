@@ -134,6 +134,11 @@ const PinnedContainer = styled.div`
 
 const PinnedImageContainer = styled.div`
   position: relative;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 const PinnedImage = styled.img`

@@ -30,20 +30,24 @@ export const FilePreview: FC<Props> = ({
 
   return (
     <Wrapper withBackground={withBackground} marginBottom="10px" alignItems="center" style={style}>
-      <FileNew />
+      <FileNew style={{ minWidth: 14, minHeight: 14 }} />
       <TYPE.subHeader1
         style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
         lineHeight="40px"
         marginLeft="12px"
         marginRight="18px"
         color="#8D8DA3"
+        fontSize={'10px'}
+        // width={'80px'}
+        width={'100%'}
+        // minWidth={'100%'}
       >
         {file.name}
       </TYPE.subHeader1>
       {!isDisabled && (
-        // <ButtonText style={{ minWidth: 24, minHeight: 24 }}>
-        <TrashNoBorder style={{ marginLeft: 'auto' }} onClick={handleDeleteClick} type="button" />
-        // </ButtonText>
+        <ButtonText style={{ minWidth: 18, minHeight: 18 }}>
+          <TrashNoBorder style={{ marginLeft: 'auto' }} onClick={handleDeleteClick} type="button" />
+        </ButtonText>
       )}
     </Wrapper>
   )
