@@ -25,8 +25,8 @@ export const BaseFilters = ({
         borderRadius: hasTopBorder ? '0 0 10px 10px' : '10px'
       }}
     >
-      <Grid container>
-        <Grid item xs={12} lg={hideDateFilter ? 10 : 4} pr={2}>
+      <Grid container gap={2}>
+        <Grid item xs>
           <TextInputSearchFilter
             fullWidth
             placeholder={searchLabel}
@@ -62,9 +62,7 @@ export const BaseFilters = ({
             </Grid>
           </Grid>
         ) : (
-          <Grid item xs={12} lg={2}>
-            {children}
-          </Grid>
+          children !== undefined && <Grid item>{children}</Grid>
         )}
       </Grid>
     </Box>

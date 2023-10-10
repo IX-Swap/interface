@@ -237,6 +237,11 @@ export const issuanceURL = {
     getReport: (reportId?: string) =>
       `/issuance/financial-report-file/${reportId}`,
     reportTemplate: '/issuance/financial-report-file/template/recent'
+  },
+  whitelist: {
+    getWhitelistedAddresses: '/issuance/whitelist/list',
+    addToWhitelist: '/issuance/whitelist/add',
+    removeFromWhitelist: '/issuance/whitelist/remove'
   }
 }
 
