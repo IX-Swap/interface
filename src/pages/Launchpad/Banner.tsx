@@ -25,7 +25,7 @@ export const Banner = () => {
 
 const BannerContainer = styled.div`
   max-width: ${(props) => props.theme.launchpad.content.maxWidth};
-  margin: 8rem auto;
+  margin: 8rem 1rem 0rem 0rem;
   width: 100%;
 `
 

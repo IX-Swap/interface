@@ -106,7 +106,8 @@ export const CalendarPicker: React.FC<Props> = (props) => {
           isSelected={isSelected(day)}
           isWithinRange={isWithinRange(day)}
           isDisabled={
-            isBeforeWithSameTime(props.current.clone().date(day), minDate) || isAfterWithSameTime(props.current.clone().date(day), maxDate)
+            isBeforeWithSameTime(props.current.clone().date(day), minDate) ||
+            isAfterWithSameTime(props.current.clone().date(day), maxDate)
           }
         >
           {day}
@@ -160,10 +161,9 @@ const Day = styled.div<{ isSelected?: boolean; isDisabled?: boolean; isWithinRan
 
   :hover {
     ${(props) =>
-    !props.isSelected && `
-      background: ${props.theme.launchpad.colors.foreground};
+      !props.isSelected &&
       `
-  }
-    
+      background: ${props.theme.launchpad.colors.foreground};
+      `}
   }
 `

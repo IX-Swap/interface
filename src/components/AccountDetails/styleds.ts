@@ -7,7 +7,7 @@ import { ButtonSecondary } from '../Button'
 export const HeaderRow = styled.div`
   ${({ theme }) => theme.flexRowNoWrap};
   justify-content: space-between;
-  padding: 40px;
+  padding: 30px;
   padding-bottom: 0;
   font-weight: 500;
   color: ${(props) => (props.color === 'blue' ? ({ theme }) => theme.primary1 : 'inherit')};
@@ -18,7 +18,7 @@ export const HeaderRow = styled.div`
 
 export const UpperSection = styled.div`
   position: relative;
-  // background: ${({ theme }) => theme.bg1};
+  background: ${({ theme }) => theme.bg1};
 `
 
 export const InfoCard = styled.div`
@@ -63,7 +63,7 @@ export const LowerSection = styled.div`
   padding: 10px 2.5rem;
   flex-grow: 1;
   overflow: auto;
-  // background-color: ${({ theme }) => theme.bg1};
+  background-color: ${({ theme }) => theme.bg1};
 
   h5 {
     margin: 0;

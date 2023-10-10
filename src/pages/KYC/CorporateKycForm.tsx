@@ -1094,7 +1094,7 @@ export default function CorporateKycForm() {
                                 style={{ padding: '0 1rem', marginTop: '2rem' }}
                                 > */}
                                 <TrashIcon
-                                  style={{ cursor: 'pointer' }}
+                                  style={{ cursor: 'pointer', marginTop: '5px' }}
                                   onClick={() =>
                                     deleteBeneficiar(
                                       index,

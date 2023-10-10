@@ -40,7 +40,6 @@ export const CustodianStatus = ({ status, id, custodian, searchValue }: Props) =
             <RejectModal searchValue={searchValue} isModalOpen={isModalOpen} closeModal={closeModal} id={id} />
             <ButtonsContainer>
               <CheckIcon onClick={approve} />
-
               <CrossIcon onClick={openModal} />
             </ButtonsContainer>
           </>
@@ -80,7 +79,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   column-gap: 8px;
-  width: 100%; /* Add this to make sure it takes up the full width */
 
   > div:first-child {
     display: flex;

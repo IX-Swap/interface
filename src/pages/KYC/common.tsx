@@ -341,7 +341,7 @@ export const Uploader: FC<UploaderProps> = ({
                 handleDeleteClick(index)
               }}
               isDisabled={isDisabled}
-              style={{ marginRight: index !== files.length - 1 ? 16 : 0 }}
+              // style={{ marginRight: index !== files.length - 1 ? 0 : 0 }}
             />
           ))}
         </Flex>

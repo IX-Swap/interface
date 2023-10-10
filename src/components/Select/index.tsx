@@ -2,10 +2,11 @@ import React, { useMemo, useState } from 'react'
 import ReactSelect, { StylesConfig, components } from 'react-select'
 import styled, { css } from 'styled-components'
 
-import { Checkbox } from 'components/Checkbox'
+import { CheckMark, Checkbox } from 'components/Checkbox'
 import { isValidAddress, shortAddress } from 'utils'
 import { useAddUserToken } from 'state/user/hooks'
 import { useToken } from 'hooks/Tokens'
+import { Line } from 'components/Line'
 
 type Option = { label?: string; value?: any; disabled?: boolean }
 
@@ -35,9 +36,10 @@ const colourStyles = {
   option: (styles: Record<string, any>, { isSelected, isMulti }: { isSelected: boolean; isMulti: boolean }) => {
     return {
       ...styles,
-      // backgroundColor: isSelected && !isMulti ? 'bg11' : 'transparend',
-      color: isSelected && !isMulti ? 'text1' : 'text9',
-      fontWeight: isSelected && !isMulti ? '700' : '400',
+      backgroundColor: isSelected && !isMulti ? 'bg11' : 'transparend',
+      color: isSelected && !isMulti ? '#292933' : '#8F8FB2',
+      fontWeight: 500,
+      margin: '20px 0px',
     }
   },
   singleValue: (styles: Record<string, any>) => {
@@ -127,6 +129,7 @@ const Option = (props: any) => {
   return (
     <components.Option {...props}>
       <StyledValue
+        style={{ justifyContent: 'space-between' }}
         disabled={props.isDisabled}
         onClick={() => {
           if (props.data?.token) {
@@ -137,7 +140,15 @@ const Option = (props: any) => {
         {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
         {props?.data?.icon}
         {props?.data?.label}
+
+        {props.isMulti ? (
+          <Checkbox checked={props.isSelected} label="" />
+        ) : (
+          <CheckMark checked={props.isSelected} label="" />
+        )}
       </StyledValue>
+
+      <Line style={{ marginTop: '10px' }} />
     </components.Option>
   )
 }
@@ -235,10 +246,11 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
   }
   *[class*='menu'] {
     border-radius: 6px;
-    // padding: 24px 8px 24px 16px;
+    padding: 10px 8px 10px 16px;
     background-color: ${({ theme }) => theme.bg0};
     margin-top: 4px;
     max-height: 236px;
+    width: auto;
     z-index: 2;
   }
   *[class*='MenuList'] {
@@ -253,7 +265,7 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
         background: ${({ theme }) => theme.bg1};
       }
       :active {
-        background: ${({ theme }) => theme.bg1};
+        background-color: ${({ theme }) => theme.bg0};
       }
     }
   }
