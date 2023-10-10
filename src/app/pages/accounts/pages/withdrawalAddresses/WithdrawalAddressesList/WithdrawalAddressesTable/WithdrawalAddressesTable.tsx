@@ -8,6 +8,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { withdrawalAddressQueryKeys } from 'config/queryKeys'
 import { NoWithdrawalAddressData } from './NoWithdrawalAddressData'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export const WithdrawalAddressesTable = ({
   limitRows = 0
@@ -25,7 +26,11 @@ export const WithdrawalAddressesTable = ({
       limitRows={limitRows}
       //   hasActions
       actions={Actions}
-      noDataComponent={<NoWithdrawalAddressData />}
+      noDataComponent={
+        <FieldContainer>
+          <NoWithdrawalAddressData />
+        </FieldContainer>
+      }
     />
   )
 }
