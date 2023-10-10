@@ -41,6 +41,7 @@ import axios from 'axios'
 import { ip } from 'services/apiUrls'
 import { isMobile } from 'react-device-detect'
 import { ConnectWalletModal } from './Connect Wallet Modal'
+import { metaMask } from 'connectors/metaMask'
 
 /* eslint-disable react/display-name */
 
@@ -178,6 +179,9 @@ export default function App() {
     if (window.location.host.split('.')[1] !== 'ixswap') {
       getWitelabelConfig()
     }
+    void metaMask.connectEagerly().catch(() => {
+      console.debug('Failed to connect eagerly to metamask')
+    })
   }, [])
 
   useEffect(() => {
