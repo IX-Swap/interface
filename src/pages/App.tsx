@@ -191,6 +191,11 @@ export default function App() {
     walletConnectV2.events.on(URI_AVAILABLE, (uri: string) => {
       console.log(`uri: ${uri}`)
     })
+
+    // connect eagerly for walletConnectV2
+    walletConnectV2.connectEagerly().catch((error) => {
+      console.debug('Failed to connect eagerly to walletconnect', error)
+    })
   }, [])
 
   useEffect(() => {
