@@ -69,8 +69,8 @@ export const Autocomplete = ({ options, ...props }: AutocompleteProps) => {
         }}
       />
 
-      {displayedOptions?.map((option: Option) => (
-        <SelectItem key={option.value} value={option.value}>
+      {displayedOptions?.map((option: Option, i) => (
+        <SelectItem key={i} value={option.value}>
           {option?.render ?? option.label}
         </SelectItem>
       ))}
