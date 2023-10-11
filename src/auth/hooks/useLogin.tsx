@@ -4,8 +4,10 @@ import User from 'types/user'
 import { LOCK_LOGIN_ERROR_CODES, LoginArgs } from 'types/auth'
 import apiService from 'services/api'
 import { authURL } from 'config/apiURL'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { Box, Typography, Link } from '@mui/material'
+import { AuthRoute } from 'auth/router/config'
 
 export const useLogin = (referrer?: string) => {
   const [step, setStep] = useState<'login' | 'otp'>('login')
@@ -45,7 +47,26 @@ export const useLogin = (referrer?: string) => {
           setLocked(true)
         }
 
-        void snackbarService.showSnackbar(error.message, 'error')
+        if (error?.code === 'RWAU-9BE159') {
+          const message = (
+            <Box display={'flex'} gap={2} alignItems={'center'}>
+              <Typography>
+                Email has not been verified yet. Please check your email for the
+                verification link.
+              </Typography>
+              <Link
+                href={AuthRoute.resendVerification}
+                textTransform={'uppercase'}
+                underline='none'
+              >
+                Resend
+              </Link>
+            </Box>
+          )
+          void snackbarService.showSnackbar(message, 'error')
+        } else {
+          void snackbarService.showSnackbar(error.message, 'error')
+        }
       }
     }),
     step: step,
