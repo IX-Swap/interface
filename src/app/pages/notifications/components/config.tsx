@@ -36,36 +36,3 @@ export const notificationBackgroundMap: Record<NotificationType, string> = {
   info: '#fff',
   warning: '#FFC90033'
 }
-
-export const notificationBackgroundMap: Record<NotificationType, string> = {
-  //   success: themeColors.success,
-  success: '#7DD32033',
-  default: '#fff',
-  BUY: '#fff',
-  SELL: '#fff',
-  error: '#F5628333',
-  info: '#fff',
-  warning: '#fff'
-}
-
-export const notificationBackgroundMap: Record<NotificationType, string> = {
-  //   success: themeColors.success,
-  success: '#7DD32033',
-  default: '#fff',
-  BUY: '#fff',
-  SELL: '#fff',
-  error: '#F5628333',
-  info: '#fff',
-  warning: '#fff'
-}
-
-export const notificationBackgroundMap: Record<NotificationType, string> = {
-  //   success: themeColors.success,
-  success: '#7DD32033',
-  default: '#fff',
-  BUY: '#fff',
-  SELL: '#fff',
-  error: '#F5628333',
-  info: '#fff',
-  warning: '#fff'
-}
