@@ -4,14 +4,16 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 
-export const useWalletAddresses = () => {
+export const useWalletAddresses = (getByUser = true) => {
   const { apiService } = useServices()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
 
   const getWallets = async () => {
     return await apiService.post(
-      accountsURL.withdrawalAddresses.getAll(userId),
+      getByUser
+        ? accountsURL.withdrawalAddresses.getByUser(userId)
+        : accountsURL.withdrawalAddresses.getAll(),
       { skip: 0, limit: 100 }
     )
   }

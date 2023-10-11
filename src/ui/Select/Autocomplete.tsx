@@ -1,12 +1,13 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, ReactNode } from 'react'
 import { TextField, InputAdornment } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { Select, SelectProps } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface Option {
-  label: string
+  label: string | string[]
   value: string | number
+  render?: ReactNode
 }
 
 export interface AutocompleteProps extends SelectProps {
@@ -19,6 +20,11 @@ export const Autocomplete = ({ options, ...props }: AutocompleteProps) => {
 
   const [selectedOption, setSelectedOption] = useState('')
   const [searchText, setSearchText] = useState('')
+
+  options = options.map(option => ({
+    ...option,
+    label: Array.isArray(option.label) ? option.label.join(' ') : option.label
+  }))
 
   const displayedOptions = useMemo(
     () =>
@@ -65,7 +71,7 @@ export const Autocomplete = ({ options, ...props }: AutocompleteProps) => {
 
       {displayedOptions?.map((option: Option) => (
         <SelectItem key={option.value} value={option.value}>
-          {option.label}
+          {option?.render ?? option.label}
         </SelectItem>
       ))}
     </Select>
