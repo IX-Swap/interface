@@ -2,8 +2,11 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
-    border: `1px solid ${theme.palette.divider}`,
-    maxWidth: `calc(100vw - 16px)`
+    // border: `1px solid ${theme.palette.divider}`,
+    borderRadius: '8px',
+    maxWidth: `calc(100vw - 16px)`,
+    padding: '8px 12px',
+    boxShadow: '0px 24px 24px 0px #3B425114'
   },
   inner: {
     padding: '10px 14px',
@@ -23,7 +26,8 @@ export const useStyles = makeStyles(theme => ({
     '& svg': {
       width: 40,
       height: 40
-    }
+    },
+    marginRight: 8
   },
   markRead: {
     width: 10,

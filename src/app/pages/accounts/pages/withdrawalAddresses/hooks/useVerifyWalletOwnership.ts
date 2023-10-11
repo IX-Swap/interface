@@ -21,7 +21,7 @@ export const useVerifyWalletOwnership = () => {
 
   return useMutation(generateWalletHash, {
     onError: () => {
-      snackbarService.showSnackbar('Failed to verify sign the wallet', 'error')
+      snackbarService.showSnackbar('Failed to verify the wallet', 'error')
     }
   })
 }

@@ -10,5 +10,10 @@ export const CreateWalletDialogTitle = ({
   onButtonCloseClick,
   ...rest
 }: CreateWalletDialogTitleProps) => {
-  return <CenteredDialogTitle {...rest}>{label}</CenteredDialogTitle>
+  return (
+    <CenteredDialogTitle {...rest}>
+      {label}
+      <button onClick={onButtonCloseClick}>x</button>
+    </CenteredDialogTitle>
+  )
 }
