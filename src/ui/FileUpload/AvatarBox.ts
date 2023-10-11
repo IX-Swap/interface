@@ -9,8 +9,8 @@ export const AvatarBox = styled(Box)(
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 120px;
-  width: 120px;
+//   height: 120px;
+//   width: 120px;
   border: 1px solid ${theme.palette.toggledInputs?.border ?? ''};
   border-radius: 8px;
   &:hover {
