@@ -4,7 +4,7 @@ import { Grid, TextField } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { RequestPasswordResetArgs } from 'types/auth'
 
-export const RequestFields = () => {
+export const ResendFields = () => {
   const { control } = useFormContext<RequestPasswordResetArgs>()
 
   return (

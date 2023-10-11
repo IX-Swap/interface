@@ -237,6 +237,7 @@ export const authURL = {
   changePassword: (userId?: string) => `/auth/password/change/${userId}`,
   resetPassword: '/auth/password/reset/start',
   resetPasswordConfirm: '/auth/password/reset/confirm',
+  sendVerificationEmail: '/auth/sendVerificationEmail',
   enable2fa: (userId?: string, otp?: string) =>
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
   disable2fa: (userId: string) => `/auth/2fa/disable/${userId}`,

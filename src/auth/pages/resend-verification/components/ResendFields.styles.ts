@@ -1,0 +1,15 @@
+import makeStyles from '@mui/styles/makeStyles'
+
+export const useStyles = makeStyles(theme => ({
+  title: {
+    fontWeight: 700,
+    fontSize: 39,
+    lineHeight: 1.2,
+    color: theme.palette.text.primary,
+    textTransform: 'uppercase',
+    fontFamily: 'Monument Extended, sans-serif'
+  },
+  text: {
+    color: 'rgba(255, 255, 255, 0.5)'
+  }
+}))
