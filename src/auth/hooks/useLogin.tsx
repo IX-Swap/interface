@@ -54,16 +54,12 @@ export const useLogin = (referrer?: string) => {
                 Email has not been verified yet. Please check your email for the
                 verification link.
               </Typography>
-              <Link
-                href={AuthRoute.resendVerification}
-                textTransform={'uppercase'}
-                underline='none'
-              >
+              <Link href={AuthRoute.resendVerification} underline='none'>
                 Resend
               </Link>
             </Box>
           )
-          void snackbarService.showSnackbar(message, 'error')
+          void snackbarService.showSnackbar(message, 'warning')
         } else {
           void snackbarService.showSnackbar(error.message, 'error')
         }
