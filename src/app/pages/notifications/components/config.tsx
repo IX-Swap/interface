@@ -14,11 +14,25 @@ export const notificationIconMap: Record<NotificationType, ElementType> = {
 }
 
 export const notificationColorMap: Record<NotificationType, string> = {
-  success: themeColors.success,
+  //   success: themeColors.success,
+  success: '#7DD320',
   default: themeColors.success,
   BUY: themeColors.success,
   SELL: themeColors.success,
-  error: themeColors.error,
+  //   error: themeColors.error,
+  error: '#F56283',
   info: themeColors.info,
-  warning: themeColors.warning
+  //   warning: themeColors.warning
+  warning: '#FFC900'
+}
+
+export const notificationBackgroundMap: Record<NotificationType, string> = {
+  //   success: themeColors.success,
+  success: '#7DD32033',
+  default: '#fff',
+  BUY: '#fff',
+  SELL: '#fff',
+  error: '#F5628333',
+  info: '#fff',
+  warning: '#FFC90033'
 }
