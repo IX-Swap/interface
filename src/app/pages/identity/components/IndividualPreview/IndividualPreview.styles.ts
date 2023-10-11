@@ -2,7 +2,7 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
     // border: '1px solid black',
     display: 'flex',
     flexDirection: 'row',
@@ -15,9 +15,15 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   tabs: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: '10px',
+    padding: '0 15px',
     display: 'flex',
     alignItems: 'end',
     zIndex: 5,
+    [theme.breakpoints.down('md')]: {
+      width: '100%'
+    },
     '& button': {
       textTransform: 'capitalize',
       '&[aria-selected="true"]': {

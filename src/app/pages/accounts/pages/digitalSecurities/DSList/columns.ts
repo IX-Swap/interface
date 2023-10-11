@@ -5,11 +5,11 @@ import { formatAmount } from 'helpers/numbers'
 export const columns: Array<TableColumn<AssetBalance>> = [
   {
     label: 'Symbol',
-    key: 'symbol'
+    key: 'asset.symbol'
   },
   {
     label: 'Name',
-    key: 'name'
+    key: 'asset.name'
   },
   {
     label: 'Total Tokens',
@@ -45,5 +45,17 @@ export const custodyColumn = {
 export const custodyColumns: Array<TableColumn<AssetBalance>> = [
   ...columns.slice(0, 2),
   custodyColumn,
+  ...columns.slice(2)
+]
+
+export const selfCustodyColumns: Array<TableColumn<AssetBalance>> = [
+  {
+    label: 'Symbol',
+    key: 'symbol'
+  },
+  {
+    label: 'Name',
+    key: 'name'
+  },
   ...columns.slice(2)
 ]

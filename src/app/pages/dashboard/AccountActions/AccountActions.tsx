@@ -46,9 +46,9 @@ export const AccountActions = () => {
               Complete the following actions to optimize platform experience.
             </Typography>
           </Grid>
-          <Grid item container>
+          <Grid item container justifyContent={'center'}>
             {showKYC && (
-              <Grid item xs>
+              <Grid item xs={12} md={6}>
                 <KnowYourCustomer
                   hasStarted={hasStartedKYC}
                   hasSubmitted={hasSubmittedKYC}
@@ -60,7 +60,7 @@ export const AccountActions = () => {
             )}
 
             {showAccreditation && (
-              <Grid item xs>
+              <Grid item xs={12} md={6}>
                 <Accreditation
                   hasStarted={hasStartedAccreditation}
                   identityType={identityType}
@@ -73,10 +73,17 @@ export const AccountActions = () => {
             {show2FA && (
               <Grid
                 item
-                xs
+                xs={12}
+                md={6}
                 sx={{
-                  borderLeft: showKYC || showAccreditation ? 1 : 0,
-                  borderColor: '#DBE2EC'
+                  borderTop: {
+                    xs: showKYC || showAccreditation ? `1px solid #DBE2EC` : 0,
+                    md: 0
+                  },
+                  borderLeft: {
+                    xs: 0,
+                    md: showKYC || showAccreditation ? `1px solid #DBE2EC` : 0
+                  }
                 }}
               >
                 <TwoFactorAuthentication hasEnabled={hasEnabled} />

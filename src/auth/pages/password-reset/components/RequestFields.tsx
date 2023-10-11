@@ -14,7 +14,7 @@ export const RequestFields = () => {
         component={TextField}
         fullWidth
         name='email'
-        label='Email'
+        label='Email Address'
         placeholder={'Email Address'}
         InputLabelProps={{
           shrink: true

@@ -2,6 +2,7 @@ import { Bank } from 'types/bank'
 import { getAPIUrl, getEnvironment, getSocketTransports } from './utils'
 
 export const API_URL = getAPIUrl(process.env.REACT_APP_API_URL)
+export const WEBSITE_URL = process.env.WEBSITE_URL ?? 'https://investax.io'
 export const SOCKET_TRANSPORTS = getSocketTransports(
   process.env.REACT_APP_SOCKET_TRANSPORTS
 )

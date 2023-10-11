@@ -1,4 +1,4 @@
-import { DataroomFile } from 'types/dataroomFile'
+import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { Network } from 'types/networks'
 import { DistributionFrequency } from 'types/distributionFrequency'
 import { DigitalSecurityOffering, DsoTeamMember } from 'types/dso'
@@ -24,6 +24,7 @@ export interface SecondaryListingFormValues {
   maximumTradeUnits?: any
   minimumTradeUnits?: number
   raisedAmount?: number
+  documents?: Array<FormArrayElement<DataroomFile>>
 }
 
 export interface ListingFormValues {

@@ -31,19 +31,43 @@ export const CashAccounts = () => {
           xs={12}
           container
           alignItems='center'
-          justifyContent='space-between'
+          sx={{
+            flexDirection: {
+              xs: 'column',
+              md: 'row'
+            },
+            justifyContent: 'space-between',
+            rowGap: 3
+          }}
         >
-          <Grid item>
+          <Grid
+            item
+            sx={{
+              width: {
+                xs: '100%',
+                md: 'auto'
+              }
+            }}
+          >
             <Typography variant='h5' display='inline-flex' alignItems='center'>
               Cash Accounts
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid
+            item
+            sx={{
+              width: {
+                xs: '100%',
+                md: 'auto'
+              }
+            }}
+          >
             <Button
               component={AppRouterLinkComponent}
               color='primary'
               variant='outlined'
               to={AccountsRoute.cash}
+              fullWidth
             >
               View All Cash Accounts
             </Button>
