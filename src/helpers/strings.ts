@@ -94,3 +94,16 @@ export const getValueOrPlaceholder = (value: string) =>
 export const isSuccessRequest = (status?: number) => {
   return String(status).startsWith('2')
 }
+
+export const stringToHex = (string: string) => {
+  const encoder = new TextEncoder()
+  const data = encoder.encode(string)
+  let hexString = ''
+
+  for (const byte of data) {
+    const hex = byte.toString(16).padStart(2, '0')
+    hexString += String(hex)
+  }
+
+  return hexString
+}

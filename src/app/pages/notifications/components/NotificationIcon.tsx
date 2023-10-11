@@ -1,6 +1,10 @@
 import React, { createElement } from 'react'
 import { NotificationType } from 'types/notification'
-import { notificationColorMap, notificationIconMap } from './config'
+import {
+  notificationColorMap,
+  notificationBackgroundMap,
+  notificationIconMap
+} from './config'
 
 export interface NotificationIconProps {
   type: NotificationType
@@ -9,18 +13,21 @@ export interface NotificationIconProps {
 export const NotificationIcon = (props: NotificationIconProps) => {
   const { type } = props
   const style = {
-    width: 30,
-    height: 30,
-    color: 'white'
+    width: 20,
+    height: 20,
+    // color: 'white'
+    color: notificationColorMap[type]
   }
 
   return (
     <span
       style={{
-        width: 40,
-        height: 40,
+        width: 32,
+        height: 32,
+        border: `2px solid ${notificationColorMap[type]}`,
         borderRadius: 40,
-        backgroundColor: notificationColorMap[type],
+        // backgroundColor: notificationColorMap[type],
+        backgroundColor: notificationBackgroundMap[type],
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
