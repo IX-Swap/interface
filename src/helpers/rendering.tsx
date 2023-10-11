@@ -105,3 +105,7 @@ export const renderPartOfEmail = (email: string | undefined) => {
   const [firstPart, secondPart] = email.split('@')
   return firstPart.slice(0, 3) + '***@' + secondPart
 }
+
+export const renderWrappedContent = (content: string, width = '72px') => (
+  <div style={{ width, wordWrap: 'break-word' }}>{content}</div>
+)

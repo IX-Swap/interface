@@ -1,4 +1,4 @@
-import { Box, DialogTitle, Typography } from '@mui/material'
+import { Box, DialogTitle } from '@mui/material'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { injected } from 'config/blockchain/connectors'
 import { SUPPORTED_WALLETS } from 'config/blockchain/supportedWallets'
@@ -46,6 +46,7 @@ export default function PendingView({
                 alignItems: 'center',
                 justifyContent: 'flex-start',
                 display: 'flex',
+                flexDirection: 'column',
                 flexWrap: 'no-wrap'
               }}
             >
@@ -70,7 +71,7 @@ export default function PendingView({
               </Box>
             </Box>
           ) : (
-            <Typography>Initializing...</Typography>
+            <DialogTitle className={classes.title}>Initializing...</DialogTitle>
           )}
         </Box>
       </Box>

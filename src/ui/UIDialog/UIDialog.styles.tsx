@@ -20,8 +20,8 @@ export const useStyles = makeStyles(theme => {
       cursor: 'pointer'
     },
     orderHeadig: {
-    color: "#3B4251",
-    fontSize: '14px'
+      color: '#3B4251',
+      fontSize: '14px'
     },
     verticalLine: {
       display: 'block',
@@ -29,7 +29,12 @@ export const useStyles = makeStyles(theme => {
       border: '0px',
       borderTop: '1px solid #DBE2EC',
       margin: '1em 0px',
-      padding: '0px',
+      padding: '0px'
     },
+    orderItem: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '12px'
+    }
   }
 })

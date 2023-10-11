@@ -1,8 +1,9 @@
 import React from 'react'
-import { ListingMarketInfo } from 'app/pages/issuance/components/ListingForm/ListingMarketInfo'
-import { ListingBaseFields } from 'app/pages/issuance/components/ListingForm/ListingBaseFields'
-import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { Grid } from '@mui/material'
+import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
+import { ListingBaseFields } from 'app/pages/issuance/components/ListingForm/ListingBaseFields'
+import { ListingMarketInfo } from 'app/pages/issuance/components/ListingForm/ListingMarketInfo'
+import { ComplianceDocuments } from 'app/pages/issuance/components/ListingForm/ComplianceDocuments'
 
 export interface ListingFormFieldsProps {
   isNew: boolean
@@ -29,6 +30,11 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
       <Grid item>
         <FieldContainer>
           <ListingMarketInfo status={status} isNew={isNew} data={data} />
+        </FieldContainer>
+      </Grid>
+      <Grid item>
+        <FieldContainer>
+          <ComplianceDocuments />
         </FieldContainer>
       </Grid>
     </Grid>

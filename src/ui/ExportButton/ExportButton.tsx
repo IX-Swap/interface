@@ -1,20 +1,38 @@
-import React from 'react'
-import { Button, Box } from '@mui/material'
+import React, { MouseEventHandler } from 'react'
+import { Button, Box, ButtonProps } from '@mui/material'
 import { FileDownload } from '@mui/icons-material'
 import { isEmpty } from 'lodash'
 import { TableColumn } from 'types/util'
 import get from 'lodash/get'
 
-interface ExportButtonProps {
+interface ExportButtonProps extends ButtonProps {
   fileName?: string
-  columns: Array<TableColumn<any>>
-  rows: any
+  columns?: Array<TableColumn<any>>
+  rows?: any
+  fullWidth?: boolean
+  convertFromJSON?: boolean
+  id?: string
+  onClick?: MouseEventHandler<HTMLButtonElement>
+}
+
+export const download = (data: BlobPart, fileName = 'CSV Export') => {
+  const blob = new Blob([data], { type: 'text/csv' })
+  const url = window.URL.createObjectURL(blob)
+  const a = document.createElement('a')
+
+  a.setAttribute('href', url)
+  a.setAttribute('download', `${fileName}.csv`)
+  a.click()
 }
 
 export const ExportButton = ({
   fileName = 'CSV Export',
   columns = [],
-  rows
+  rows = [],
+  fullWidth = false,
+  convertFromJSON = true,
+  onClick,
+  ...rest
 }: ExportButtonProps) => {
   const convertJSONtoCSV = (rows: object[]) => {
     const csvRows = []
@@ -50,25 +68,25 @@ export const ExportButton = ({
     return csvRows.join('\n')
   }
 
-  const download = (data: BlobPart) => {
-    const blob = new Blob([data], { type: 'text/csv' })
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement('a')
-
-    a.setAttribute('href', url)
-    a.setAttribute('download', `${fileName}.csv`)
-    a.click()
-  }
-
   return (
     <Button
       variant='contained'
       disableElevation
-      size='small'
-      onClick={() => download(convertJSONtoCSV(rows))}
+      fullWidth={fullWidth}
+      onClick={e => {
+        if (typeof onClick === 'function') {
+          onClick(e)
+        } else {
+          const data = convertFromJSON ? convertJSONtoCSV(rows) : rows
+
+          download(data, fileName)
+        }
+      }}
+      sx={{ paddingX: 3 }}
+      {...rest}
     >
       <FileDownload />
-      <Box ml={0.5}>Export</Box>
+      <Box ml={0.5}>Export as CSV</Box>
     </Button>
   )
 }

@@ -2,13 +2,12 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import CloseIcon from '@mui/icons-material/Close'
 import {
+  Box,
   Button,
   Dialog,
   DialogContent,
   DialogTitle,
-  Grid,
-  IconButton,
-  Typography
+  Grid
 } from '@mui/material'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
@@ -204,9 +203,12 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
     }
     return (
       <Grid>
-        <IconButton aria-label='close' onClick={toggleModal} size='large'>
-          <CloseIcon />
-        </IconButton>
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
+          {/* <IconButton aria-label='close' size='large'> */}
+          <CloseIcon onClick={toggleModal} />
+          {/* </IconButton> */}
+        </Box>
+
         {walletView !== WALLET_VIEWS.ACCOUNT ? (
           <Button
             onClick={() => {
@@ -217,12 +219,10 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
             Back
           </Button>
         ) : (
-          <DialogTitle className={classes.title}>
-            <Typography variant='h6'>Connect to a wallet</Typography>
-          </DialogTitle>
+          <DialogTitle className={classes.title}>Connect Wallet</DialogTitle>
         )}
 
-        <Grid>
+        <Grid mt={4}>
           {walletView === WALLET_VIEWS.PENDING ? (
             <PendingView
               connector={pendingWallet}
@@ -243,7 +243,7 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
     return null
   }
   return (
-    <Dialog fullWidth open={isOpen} maxWidth={'xs'} onClose={toggleModal}>
+    <Dialog fullWidth open={isOpen} onClose={toggleModal}>
       <DialogContent className={classes.contentWrapper}>
         {getModalContent()}
       </DialogContent>

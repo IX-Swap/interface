@@ -24,7 +24,8 @@ export const transformDataFromDSOToListingFormValue = (
     capitalStructure: data.capitalStructure,
     currency: '',
     launchDate: data.launchDate,
-    dso: data._id
+    dso: data._id,
+    documents: data?.documents?.map(document => ({ value: document }))
   }
 }
 
@@ -44,7 +45,8 @@ export const transformListingToListingFormValue = (
     capitalStructure: data.capitalStructure,
     currency: data.markets[0]?.currency,
     launchDate: data.launchDate,
-    dso: data.dso?._id
+    dso: data.dso?._id,
+    documents: data?.documents?.map(document => ({ value: document }))
   }
 }
 

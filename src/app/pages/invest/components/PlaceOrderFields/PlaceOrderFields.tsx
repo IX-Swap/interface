@@ -11,8 +11,8 @@ import {
 } from 'config/numberFormat'
 import { NumericInput } from 'components/form/NumericInput'
 import { PlaceOrderSlider } from 'app/pages/invest/components/PlaceOrderSlider/PlaceOrderSlider'
-import { useOTCMarket } from 'app/pages/invest/hooks/useOTCMarket'
-import { useParams } from 'react-router-dom'
+// import { useOTCMarket } from 'app/pages/invest/hooks/useOTCMarket'
+// import { useParams } from 'react-router-dom'
 
 export interface PlaceOrderFieldsProps {
   balance: number
@@ -28,12 +28,12 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
   const classes = useStyles()
   const { control, setValue } = useFormContext()
 
-  const { pairId } = useParams<{
-    pairId: string
-  }>()
+  //   const { pairId } = useParams<{
+  //     pairId: string
+  //   }>()
 
-  const { data } = useOTCMarket(pairId)
-  const decimalPlaces = data?.otc?.dso?.decimalPlaces ?? 0
+  //   const { data } = useOTCMarket(pairId)
+  //   const decimalPlaces = data?.otc?.dso?.decimalPlaces ?? 0
 
   // TODO Uncomment after testing
   // const price = watch('price')
@@ -75,7 +75,8 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           variant='outlined'
           //   numberFormat={numberFormat}
           numberFormat={{
-            decimalScale: decimalPlaces < 4 ? decimalPlaces : 4,
+            // decimalScale: decimalPlaces < 4 ? decimalPlaces : 4,
+            decimalScale: 2,
             ...quantityNumberFormat
           }}
           defaultValue={''}
