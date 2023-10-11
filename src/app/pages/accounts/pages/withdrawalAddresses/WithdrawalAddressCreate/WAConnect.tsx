@@ -43,11 +43,12 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
   const { watch, control } = useFormContext<WithdrawalAddressFormValues>()
   //   const address = watch('address')
   const wallet = watch('wallet')
+  const network = watch('network')
 
   const [checkAddress, { isLoading, data, isSuccess }] = useCheckAddress({
     onSuccess: values => {
       control.setValue('address', address)
-      control.setValue('wallet', values.data?.walletApplication)
+      //   control.setValue('wallet', values.data?.walletApplication)
       control.setValue('network', values.data?.networkId)
     },
     onError: err => {
@@ -77,6 +78,7 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
       status === WalletConnectionStatus.VERIFYING ||
       status === WalletConnectionStatus.ERROR) &&
     address !== '' &&
+    network !== undefined &&
     wallet !== undefined &&
     wallet in SUPPORTED_WALLETS
   const isVerifying = status === WalletConnectionStatus.VERIFYING
