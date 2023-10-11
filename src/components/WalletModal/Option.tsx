@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Link } from '@mui/material'
+import { Box, Button, Link } from '@mui/material'
 import React from 'react'
 import { Icon } from 'ui/Icons/Icon'
 import useStyles from 'components/WalletModal/WalletModal.styles'
@@ -32,15 +32,16 @@ export default function Option({
       onClick={onClick}
       disabled={!(clickable && !active)}
       className={classes.link}
+      fullWidth
+      variant='contained'
+      disableElevation
     >
-      <Box sx={{ justifyContent: 'center', height: '100%' }}>
-        <Typography>
-          {active ? <Icon name='check' size={18} /> : ''}
-          {header}
-        </Typography>
+      <Box sx={{ justifyContent: 'center', height: '100%', marginRight: 1.5 }}>
+        {active ? <Icon name='check' size={18} /> : ''}
+        {header} Wallet
         {subheader !== null && <div>{subheader}</div>}
       </Box>
-      <img src={icon} alt={'Icon'} />
+      <img src={icon} alt={'Icon'} height={'20'} />
     </Button>
   )
   if (link !== null) {

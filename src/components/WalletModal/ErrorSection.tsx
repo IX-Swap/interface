@@ -1,7 +1,8 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { Box, IconButton } from '@mui/material'
+import { Box, DialogTitle, Typography } from '@mui/material'
 import { UnsupportedChainIdError } from '@web3-react/core'
 import React from 'react'
+import useStyles from 'components/WalletModal/WalletModal.styles'
 
 export const ErrorSection = ({
   error,
@@ -10,16 +11,27 @@ export const ErrorSection = ({
   error: any
   toggleWalletModal: () => void
 }) => {
+  const classes = useStyles()
+
   return (
     <Box>
-      <IconButton aria-label='close' onClick={toggleWalletModal} size='large'>
-        <CloseIcon />
-      </IconButton>
+      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
+        {/* <IconButton aria-label='close' size='large'> */}
+        <CloseIcon onClick={toggleWalletModal} />
+        {/* </IconButton> */}
+      </Box>
       <Box>
         {error instanceof UnsupportedChainIdError ? (
           <>Wrong Network</>
         ) : (
-          <>Error connecting</>
+          <>
+            <DialogTitle className={classes.title}>
+              Error connecting
+            </DialogTitle>
+            <Typography textAlign={'center'}>
+              Try refreshing the page.
+            </Typography>
+          </>
         )}
       </Box>
       <Box>

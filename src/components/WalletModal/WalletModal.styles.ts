@@ -6,7 +6,8 @@ export default makeStyles(theme => ({
     fontWeight: 600
   },
   contentWrapper: {
-    padding: theme.spacing(1, 3, 5)
+    maxWidth: '600px',
+    padding: theme.spacing(1, 3)
   },
   content: {
     background: theme.palette.backgrounds.light,
@@ -20,16 +21,13 @@ export default makeStyles(theme => ({
   },
   link: {
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    background:
-      theme.palette.mode === 'light'
-        ? '#F6F1FF'
-        : theme.palette.backgrounds.alternativeLight,
-    color: theme.palette.slider.activeBackground,
-    borderRadius: 15,
-    padding: theme.spacing(2, 3)
+    background: theme.palette.paginationItem.borderHover,
+    color: theme.palette.primary.main,
+    borderRadius: '8px',
+    padding: theme.spacing(2.5, 3),
+    marginBottom: theme.spacing(2)
   },
   linkText: {
     fontSize: 16
