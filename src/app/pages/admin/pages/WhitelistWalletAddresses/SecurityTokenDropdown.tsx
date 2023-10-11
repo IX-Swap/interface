@@ -41,9 +41,9 @@ export const SecurityTokenDropdown = (props: Partial<SelectProps>) => {
       <InputLabel>Security Token</InputLabel>
 
       <Autocomplete
-        options={options}
-        placeholder='Select Security Token'
         {...props}
+        placeholder='Select Security Token'
+        options={options}
       />
     </FormControl>
   )

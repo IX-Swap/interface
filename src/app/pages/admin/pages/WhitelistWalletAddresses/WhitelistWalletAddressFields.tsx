@@ -1,43 +1,90 @@
-import React from 'react'
-import { FormControl } from '@mui/material'
-import { Pair, useMarketList } from 'app/pages/invest/hooks/useMarketList'
-// import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
-import { SelectProps } from 'ui/Select/Select'
-import { Autocomplete } from 'ui/Select/Autocomplete'
+import React, { useState, MouseEventHandler } from 'react'
+import { useFormContext } from 'react-hook-form'
+import { Button, Box, TextField } from '@mui/material'
+import { Add } from '@mui/icons-material'
+import { TypedField } from 'components/form/TypedField'
+import { Submit } from 'components/form/Submit'
+import { SecurityTokenDropdown } from './SecurityTokenDropdown'
+import { WalletAddressDropdown } from './WalletAddressDropdown'
+import { WhitelistWalletAddressFormValues } from 'types/whitelistWalletAddress'
 
-export const WhitelistWalletAddressFields = (props: Partial<SelectProps>) => {
-  const { data } = useMarketList()
+interface WhitelistWalletAddressFieldsProps {
+  onCancel: MouseEventHandler
+}
 
-  if (data === undefined || data.list.length < 1) {
-    return null
-  }
-
-  const options = data?.list?.map((data: Pair) => {
-    return { label: data.name, value: data._id }
-  })
+export const WhitelistWalletAddressFields = ({
+  onCancel
+}: WhitelistWalletAddressFieldsProps) => {
+  const { control } = useFormContext<WhitelistWalletAddressFormValues>()
+  const [isAddingAddress, setIsAddingAddress] = useState(false)
 
   return (
-    <FormControl fullWidth variant='outlined'>
-      {/* <InputLabel>Pair</InputLabel> */}
+    <Box display={'flex'} flexDirection={'column'} gap={3}>
+      <TypedField
+        component={SecurityTokenDropdown}
+        control={control}
+        name='assetId'
+        variant='outlined'
+      />
 
-      <Autocomplete options={options} placeholder='Select Pair' {...props} />
-
-      {/* <Select
-        {...props}
-        label={undefined}
-        renderValue={(value: any) => data.map[value].name}
-        displayEmpty
-        placeholder='Select Pair'
-      >
-        <SelectItem disabled value={undefined}>
-          Select Pair
-        </SelectItem>
-        {data.list.map((item: Pair) => (
-          <SelectItem key={item._id} value={item._id}>
-            {item.name}
-          </SelectItem>
-        ))}
-      </Select> */}
-    </FormControl>
+      {!isAddingAddress ? (
+        <Box display={'flex'} alignItems={'end'} gap={2}>
+          <TypedField
+            component={WalletAddressDropdown}
+            control={control}
+            name='address'
+            variant='outlined'
+          />
+          <Button
+            variant='contained'
+            color='primary'
+            sx={{ width: '250px', paddingX: 1, paddingY: 1.5 }}
+            disableElevation
+            onClick={() => setIsAddingAddress(true)}
+          >
+            <Add sx={{ marginRight: 1 }} />
+            Wallet Address
+          </Button>
+        </Box>
+      ) : (
+        <>
+          <TypedField
+            component={TextField}
+            control={control}
+            name='label'
+            variant='outlined'
+            label='Address Label'
+          />
+          <TypedField
+            component={TextField}
+            control={control}
+            name='address'
+            variant='outlined'
+            label='Wallet Address'
+          />
+        </>
+      )}
+      <Box display={'flex'} gap={2}>
+        <Button
+          variant='outlined'
+          color='primary'
+          fullWidth
+          onClick={onCancel}
+          sx={{ paddingY: 2 }}
+          disableElevation
+        >
+          Cancel
+        </Button>
+        <Submit
+          variant='contained'
+          color='primary'
+          fullWidth
+          sx={{ paddingY: 2 }}
+          disableElevation
+        >
+          Add to Whitelist
+        </Submit>
+      </Box>
+    </Box>
   )
 }

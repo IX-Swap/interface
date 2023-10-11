@@ -35,7 +35,7 @@ export const WalletAddressDropdown = (props: Partial<SelectProps>) => {
           </Typography>
         </Box>
       ),
-      value: data.address
+      value: [data.address, data?.user?._id].join('_')
     }
   })
 
@@ -44,9 +44,9 @@ export const WalletAddressDropdown = (props: Partial<SelectProps>) => {
       <InputLabel>Wallet Address</InputLabel>
 
       <Autocomplete
-        options={options}
-        placeholder='Select Wallet Address'
         {...props}
+        placeholder='Select Wallet Address'
+        options={options}
       />
     </FormControl>
   )

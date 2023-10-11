@@ -1,6 +1,8 @@
+import React from 'react'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { renderAddressColumn } from 'helpers/rendering'
 import { TableColumn } from 'types/util'
+import { RemoveFromWhitelist } from './RemoveFromWhitelist'
 
 export const columns: Array<TableColumn<any>> = [
   {
@@ -26,8 +28,10 @@ export const columns: Array<TableColumn<any>> = [
     render: renderAddressColumn
   },
   {
-    key: '_id',
+    key: 'address',
     label: 'Action',
-    render: () => ''
+    render: (address, row) => (
+      <RemoveFromWhitelist address={address} assetId={row.asset._id} />
+    )
   }
 ]
