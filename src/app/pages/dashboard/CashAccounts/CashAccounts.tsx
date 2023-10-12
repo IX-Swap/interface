@@ -37,6 +37,10 @@ export const CashAccounts = () => {
             <Typography variant='h5' display='inline-flex' alignItems='center'>
               Cash Accounts
             </Typography>
+            <Typography color={'text.secondary'} mt={2}>
+              Set up USD and SGD cash accounts for cash deposits and
+              withdrawals.
+            </Typography>
           </Grid>
           <Grid item>
             <Button

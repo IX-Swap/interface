@@ -56,6 +56,9 @@ export const UpcomingSTOs = () => {
       <Typography variant='h5' color={'otpInput.color'}>
         Launch Date
       </Typography>
+      <Typography color={'text.secondary'} mt={2}>
+        Stay up to date with STOs that are launching soon.
+      </Typography>
       <TableContainer component={Paper} sx={{ marginTop: '15px' }}>
         <Table aria-label='Upcoming STOs'>
           <TableHead>
