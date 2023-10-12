@@ -9,6 +9,7 @@ import { useCreateListing } from 'app/pages/issuance/hooks/useCreateListing'
 import { useUpdateListing } from 'app/pages/issuance/hooks/useUpdateListing'
 import { Listing, ListingFormValues } from 'app/pages/issuance/types/listings'
 import { LISTING_TYPES } from '../../consts/listing'
+import { DataroomFile } from 'types/dataroomFile'
 
 // import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 
@@ -38,6 +39,17 @@ export const CreateOrSaveListingButton = (
     listing?.listingType
   )
   const { dso, ...defaultFormValues } = watch()
+
+  const documents = Object.values(defaultFormValues).reduce<
+    Array<{ value: DataroomFile }>
+  >((result, docs) => {
+    if (Array.isArray(docs)) {
+      return [...result, ...docs.map(document => document.value?._id)]
+    }
+
+    return result
+  }, [])
+
   const payload = {
     // ...listing,
     ...defaultFormValues,
@@ -59,6 +71,7 @@ export const CreateOrSaveListingButton = (
     introduction: listing?.introduction,
     team: listing?.team,
     productType: listing?.productType,
+    documents,
 
     // type: listingType when creating a new listing
     // type: listing?.listingType when eddting a listing

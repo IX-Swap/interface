@@ -7,6 +7,7 @@ import { ReactComponent as BannerIcon } from 'assets/icons/navigation/banner.svg
 import { ReactComponent as MasDisclosureIcon } from 'assets/icons/navigation/mas-disclosure.svg'
 import { ReactComponent as VAAuditIcon } from 'assets/icons/navigation/va-audit.svg'
 import { ReactComponent as VATransactionsIcon } from 'assets/icons/navigation/va-transactions.svg'
+import { ReactComponent as TokenTransactionsIcon } from 'assets/icons/navigation/token-transactions.svg'
 import { ReactComponent as CustodyManagementIcon } from 'assets/icons/navigation/custody-management.svg'
 
 export const AdminRoute = {
@@ -29,7 +30,8 @@ export const AdminRoute = {
   tenants: '/app/admin/tenants',
   createTenant: '/app/admin/tenants/create',
   viewTenant: '/app/admin/tenants/:tenantId/view',
-  editTenant: '/app/admin/tenants/:tenantId/edit'
+  editTenant: '/app/admin/tenants/:tenantId/edit',
+  tokenTransactions: '/app/admin/token-transactions'
 }
 
 export const CustodyManagementRoute = {
@@ -82,5 +84,10 @@ export const adminLandingLinks: InternalRouteProps[] = [
     label: 'Client Spaces',
     path: AdminRoute.tenants,
     icon: IndividualIcon
+  },
+  {
+    label: 'Token Transactions',
+    path: AdminRoute.tokenTransactions,
+    icon: TokenTransactionsIcon
   }
 ]

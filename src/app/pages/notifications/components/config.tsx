@@ -22,7 +22,8 @@ export const notificationColorMap: Record<NotificationType, string> = {
   //   error: themeColors.error,
   error: '#F56283',
   info: themeColors.info,
-  warning: themeColors.warning
+  //   warning: themeColors.warning
+  warning: '#FFC900'
 }
 
 export const notificationBackgroundMap: Record<NotificationType, string> = {
@@ -33,5 +34,5 @@ export const notificationBackgroundMap: Record<NotificationType, string> = {
   SELL: '#fff',
   error: '#F5628333',
   info: '#fff',
-  warning: '#fff'
+  warning: '#FFC90033'
 }

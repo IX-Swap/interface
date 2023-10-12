@@ -111,7 +111,8 @@ export const formatTokenBalance = (
 export const calculatePercent = (value: number, total: number): number =>
   Math.min(100, (100 * value) / total)
 
-export const formatPercent = (value: number): string => `${value.toFixed(2)}%`
+export const formatPercent = (value: number | string): string =>
+  `${Number(value).toFixed(2)}%`
 
 export const toPercentage = (value: number): string =>
   `${(value * 100).toFixed(2)}%`
