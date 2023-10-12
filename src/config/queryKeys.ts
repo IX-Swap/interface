@@ -199,7 +199,8 @@ export const issuanceQueryKeys = {
   reportTemplate: 'report-template',
   totalStats: 'dashboard-total-stats',
   mostPopular: 'most-popular-deals',
-  upcoming: 'upcoming-deals'
+  upcoming: 'upcoming-deals',
+  getWhitelistedAddresses: 'whitelisted-addresses'
 }
 
 export const ledgerQueryKeys = {

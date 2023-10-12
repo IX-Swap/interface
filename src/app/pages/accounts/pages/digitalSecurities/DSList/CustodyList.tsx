@@ -36,7 +36,7 @@ export const CustodyList = ({
           </Grid>
         </BaseFilters>
       </Grid>
-      <Grid item mt={-3}>
+      <Grid item>
         <TableView
           // fakeItems={data}
           // fakeLoading={isLoading}

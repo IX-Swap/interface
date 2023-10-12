@@ -10,16 +10,26 @@ import {
 } from '@mui/material'
 import { ButtonTransparent } from 'app/components/ButtonTransparent'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export interface UserActionsDialogProps extends DialogProps {
   action: () => void
   actionLabel: string
   title: string
   closeDialog: () => void
+  isLoading?: boolean
 }
 
 export const UserActionsDialog = (props: UserActionsDialogProps) => {
-  const { action, actionLabel, title, closeDialog, children, ...rest } = props
+  const {
+    action,
+    actionLabel,
+    title,
+    closeDialog,
+    children,
+    isLoading = false,
+    ...rest
+  } = props
 
   const handleClose = () => {
     closeDialog()
@@ -31,6 +41,7 @@ export const UserActionsDialog = (props: UserActionsDialogProps) => {
 
   return (
     <UIDialog maxWidth='md' onClose={handleClose} {...rest}>
+      {isLoading && <LoadingIndicator />}
       <DialogTitle>
         <Box mt={2} maxWidth={410} textAlign='center'>
           {title}

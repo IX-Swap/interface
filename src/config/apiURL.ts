@@ -106,8 +106,9 @@ export const accountsURL = {
     getById: (userId?: string, withdrawalAddressId?: string) =>
       `accounts/withdrawal-addresses/${userId}/${withdrawalAddressId}`,
     create: (userId?: string) => `/accounts/withdrawal-addresses/${userId}`,
-    getAll: (userId?: string) =>
+    getByUser: (userId?: string) =>
       `/accounts/withdrawal-addresses/list/${userId}`,
+    getAll: (userId?: string) => `/accounts/withdrawal-addresses/list`,
     getAllNetworks: '/blockchain/networks'
   },
   assets: {
@@ -237,6 +238,11 @@ export const issuanceURL = {
     getReport: (reportId?: string) =>
       `/issuance/financial-report-file/${reportId}`,
     reportTemplate: '/issuance/financial-report-file/template/recent'
+  },
+  whitelist: {
+    getWhitelistedAddresses: '/issuance/whitelist/list',
+    addToWhitelist: '/issuance/whitelist/add',
+    removeFromWhitelist: '/issuance/whitelist/remove'
   }
 }
 

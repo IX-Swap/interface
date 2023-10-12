@@ -60,9 +60,10 @@ export const renderDSOFavorite = (
   />
 )
 
-export const renderAddressColumn = (address: string): JSX.Element => (
-  <WalletAddress address={address} />
-)
+export const renderAddressColumn = (
+  address: string,
+  enableCopy: boolean = true
+): JSX.Element => <WalletAddress address={address} enableCopy={enableCopy} />
 
 export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(sanitize(draft)))
