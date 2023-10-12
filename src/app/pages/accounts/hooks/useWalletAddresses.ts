@@ -4,7 +4,11 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 
-export const useWalletAddresses = (status = '', getByUser = true) => {
+export const useWalletAddresses = (
+  status = '',
+  getByUser = true,
+  limit = 100
+) => {
   const { apiService } = useServices()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
@@ -14,7 +18,7 @@ export const useWalletAddresses = (status = '', getByUser = true) => {
       getByUser
         ? accountsURL.withdrawalAddresses.getByUser(userId)
         : accountsURL.withdrawalAddresses.getAll(),
-      { skip: 0, limit: 100, status }
+      { skip: 0, limit, status }
     )
   }
 

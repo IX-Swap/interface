@@ -8,7 +8,7 @@ import { renderAddressColumn } from 'helpers/rendering'
 import { renderIndividualOrCompanyName } from 'helpers/tables'
 
 export const WalletAddressDropdown = (props: Partial<SelectProps>) => {
-  const { data } = useWalletAddresses('Approved', false)
+  const { data } = useWalletAddresses('Approved', false, 500)
 
   if (data === undefined || data.length < 1) {
     return null

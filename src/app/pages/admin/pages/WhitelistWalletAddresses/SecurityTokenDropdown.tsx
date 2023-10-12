@@ -6,7 +6,7 @@ import { Autocomplete } from 'ui/Select/Autocomplete'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
 
 export const SecurityTokenDropdown = (props: Partial<SelectProps>) => {
-  const { data } = useAssetsData('Security')
+  const { data } = useAssetsData('Security', 500)
 
   if (data === undefined || data.list.length < 1) {
     return null
