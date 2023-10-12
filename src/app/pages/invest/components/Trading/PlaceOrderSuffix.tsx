@@ -81,7 +81,7 @@ export const PlaceOrderSuffix = ({
           >
             connect
           </Box>
-          your Metamask wallet to place any orders
+          your wallet to place any orders
         </Typography>
       )
     }

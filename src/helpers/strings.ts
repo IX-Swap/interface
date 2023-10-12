@@ -107,3 +107,11 @@ export const stringToHex = (string: string) => {
 
   return hexString
 }
+
+export const isValidJSON = (str: string) => {
+  // Define a regular expression to check if the string looks like valid JSON
+  const jsonPattern =
+    /^[\],:{}\s]*$|^".*?"(?:\:.{0,1}|\s*[\],:{}\s]|\s*$)|^'.'(?:\:.{0,1}|\s*[\],:{}\s]|\s*$)/
+
+  return jsonPattern.test(str)
+}

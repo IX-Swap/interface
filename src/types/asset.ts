@@ -24,4 +24,7 @@ export interface Asset {
     minimumWithdrawal?: number
     maximumWithdrawal?: number
   }
+  network: {
+    name: string
+  }
 }

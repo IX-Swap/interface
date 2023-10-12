@@ -215,7 +215,7 @@ export const FormStepper = (props: FormStepperProps) => {
                 nonLinear={nonLinear}
                 orientation={matches ? 'horizontal' : 'vertical'}
                 activeStep={activeStep}
-                title={matches ? formTitle : 'Progress'}
+                title={'Progress'}
                 stepInfo={{
                   label: steps[activeStep].label,
                   activeStep: activeStep + 1,

@@ -24,7 +24,8 @@ export const TotalStats = () => {
     <Grid container gap={2}>
       <Grid item xs={12} md>
         <Stats
-          title={'Total Investment'}
+          title={'Total Commitments'}
+          description='Keep track of the total amount you have invested or committed.'
           stats={`$${totalInvestment}`}
           increase={`$${totalInvestmentIncrease}`}
         />
@@ -32,6 +33,7 @@ export const TotalStats = () => {
       <Grid item xs={12} md>
         <Stats
           title={'Total STOs'}
+          description='Be informed of the running tally of available STOs for you to invest in.'
           stats={formatDecimal(data?.issuance?.total)}
           increase={formatDecimal(data?.issuance?.totalUp)}
         />

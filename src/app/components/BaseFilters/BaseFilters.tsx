@@ -6,8 +6,14 @@ import { useTheme } from '@mui/styles'
 
 export const BaseFilters = ({
   children,
-  searchLabel = 'Search'
-}: PropsWithChildren<{ searchLabel?: string }>) => {
+  searchLabel = 'Search',
+  hideDateFilter = false,
+  hasTopBorder = true
+}: PropsWithChildren<{
+  searchLabel?: string
+  hideDateFilter?: boolean
+  hasTopBorder?: boolean
+}>) => {
   const theme = useTheme()
 
   return (
@@ -15,42 +21,49 @@ export const BaseFilters = ({
       p={3}
       bgcolor={theme.palette.backgrounds.light}
       sx={{
-        borderTop: `1px solid ${theme.palette.divider}`,
-        borderBottomLeftRadius: '10px',
-        borderBottomRightRadius: '10px'
+        borderTop: hasTopBorder ? `1px solid ${theme.palette.divider}` : 0,
+        borderRadius: hasTopBorder ? '0 0 10px 10px' : '10px'
       }}
     >
-      <Grid container>
-        <Grid item xs={12} lg={6} pr={2} mt={3.5}>
+      <Grid container gap={2}>
+        <Grid item xs>
           <TextInputSearchFilter
             fullWidth
             placeholder={searchLabel}
             inputAdornmentPosition='start'
           />
         </Grid>
-        <Grid item xs={12} lg={6}>
-          <Grid container direction='row' alignItems='end' gap={2}>
-            <Grid item xs>
-              <DateFilter
-                name='fromDate'
-                dateTimePickerProps={{
-                  placeholder: 'From'
-                }}
-                width={'100%'}
-              />
+        {!hideDateFilter ? (
+          <Grid item xs={12} lg={8}>
+            <Grid container direction='row' gap={2}>
+              <Grid item xs>
+                <DateFilter
+                  name='fromDate'
+                  dateTimePickerProps={{
+                    inputProps: {
+                      placeholder: 'From'
+                    }
+                  }}
+                  width={'100%'}
+                />
+              </Grid>
+              <Grid item xs>
+                <DateFilter
+                  name='toDate'
+                  dateTimePickerProps={{
+                    inputProps: {
+                      placeholder: 'To'
+                    }
+                  }}
+                  width={'100%'}
+                />
+              </Grid>
+              {children}
             </Grid>
-            <Grid item xs>
-              <DateFilter
-                name='toDate'
-                dateTimePickerProps={{
-                  placeholder: 'To'
-                }}
-                width={'100%'}
-              />
-            </Grid>
-            {children}
           </Grid>
-        </Grid>
+        ) : (
+          children !== undefined && <Grid item>{children}</Grid>
+        )}
       </Grid>
     </Box>
   )

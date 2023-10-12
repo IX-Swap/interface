@@ -59,6 +59,9 @@ export const MostPopularSTOs = () => {
       <Typography variant='h5' color={'otpInput.color'}>
         Most Popular
       </Typography>
+      <Typography color={'text.secondary'} mt={2}>
+        Discover which STOs are trending among investors.
+      </Typography>
       <TableContainer component={Paper} sx={{ marginTop: '15px' }}>
         <Table aria-label='Most Popular STOs'>
           <TableHead>

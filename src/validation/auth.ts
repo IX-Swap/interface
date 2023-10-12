@@ -4,6 +4,7 @@ import {
   CompletePasswordResetArgs,
   LoginArgs,
   RequestPasswordResetArgs,
+  ResendVerificationEmailArgs,
   SignupArgs
 } from 'types/auth'
 import {
@@ -39,6 +40,11 @@ export const singpassFormValidationSchema = yup.object<SignupArgs>({
 
 export const requestPasswordResetValidationSchema =
   yup.object<RequestPasswordResetArgs>({
+    email: emailSchema.required(validationMessages.required)
+  })
+
+export const resendVerificationEmailValidationSchema =
+  yup.object<ResendVerificationEmailArgs>({
     email: emailSchema.required(validationMessages.required)
   })
 

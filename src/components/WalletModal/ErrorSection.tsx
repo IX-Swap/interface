@@ -46,11 +46,11 @@ export const ErrorSection = ({
             </>
           </h5>
         )}
-        {!(error instanceof UnsupportedChainIdError) &&
+        {/* {!(error instanceof UnsupportedChainIdError) &&
           error?.code &&
           error?.code !== -32002 && (
             <>Error connecting. Try refreshing the page.</>
-          )}
+          )} */}
       </Box>
     </Box>
   )
