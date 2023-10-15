@@ -80,10 +80,10 @@ export function FindPoolTabs({ origin }: { origin: string }) {
               <ArrowLeft />
             </Box>
           </HistoryLink>
+          <Text style={{ color: '#292933', textAlign: 'center', float: 'left' }}>
+            <Trans>Import Pool</Trans>
+          </Text>
         </RowStart>
-        <Text style={{ color: '#292933', textAlign: 'center', marginTop: '-30px' }}>
-          <Trans>Import Pool</Trans>
-        </Text>
       </StyledPageHeader>
     </PoolTabs>
   )

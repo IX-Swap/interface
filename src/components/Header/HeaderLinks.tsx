@@ -49,7 +49,7 @@ const HeaderPopover = () => {
           <Trans>Staking</Trans>
         </TYPE.body2> */}
 
-        <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
+        <SubMenuExternalLink style={{ fontSize: '13px' }} href={`https://ixswap.defiterm.io/`}>
           <Trans>Live Pools</Trans>
         </SubMenuExternalLink>
       </Column>
@@ -68,7 +68,7 @@ const HeaderPopover = () => {
         </Row> */}
 
         {isAllowed(routes.vesting) && (
-          <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
+          <SubMenuLink style={{ fontSize: '13px' }} id={`vesting-nav-link`} to={routes.vesting}>
             <Trans>Token Sale Distribution</Trans>
           </SubMenuLink>
         )}

@@ -57,14 +57,14 @@ export const Offers = () => {
   return (
     <div>
       <Pinned />
-      {/* <InvestmentList
+      <InvestmentList
         offers={offers}
         filter={filter}
         onFilter={setFilter}
         fetchMore={fetchMore}
         isLoading={loading}
         hasMore={hasMore}
-      /> */}
+      />
     </div>
   )
 }

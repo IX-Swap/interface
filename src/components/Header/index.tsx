@@ -30,6 +30,7 @@ import { useRole } from 'state/user/hooks'
 import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
 import { hexDiff } from 'node-vibrant/lib/util'
 import { isMobile } from 'react-device-detect'
+import { useWeb3React } from '@web3-react/core'
 
 const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
   display: grid;
@@ -207,6 +208,7 @@ export default function Header() {
   const { config } = useWhitelabelState()
   const { isTokenManager } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
+  const { connector, error } = useWeb3React()
 
   const isAllowed = useCallback(
     (path: string) => {
@@ -303,7 +305,7 @@ export default function Header() {
                 </HeaderElement>
               )}
               <HeaderElement>
-                {kyc?.status === 'approved' && <NetworkCard />}
+                {account ? <NetworkCard /> : ''}
                 <Web3Status />
               </HeaderElement>
             </HeaderControls>

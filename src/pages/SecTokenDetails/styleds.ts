@@ -19,6 +19,12 @@ export const InfoTitle = styled(RowStart)`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     gap: 12px;
   `}
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    gap: 12px;
+    margin-top: 130px;
+      margin-bottom: 0px;
+  `}
 `
 
 export const TitleText = styled.span`
@@ -41,6 +47,13 @@ export const Details = styled.div`
     fontsize: 16px;
     fontweight: 400;
     width: 680px;
+
+       ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      flex-direction: column;
+      align-items: start;
+      width: auto;
+      margin-top: 0px;
+    `}
   }
 
   // > :last-child {
@@ -54,11 +67,13 @@ export const Details = styled.div`
   //     color: ${({ theme }) => theme.text1};
   //   }
 
-  //   ${({ theme }) => theme.mediaWidth.upToMedium`
-  //     flex-direction: column;
-  //     align-items: start;
-  //   `}
-  // }
+    ${({ theme }) => theme.mediaWidth.upToMedium`
+      flex-direction: column;
+      align-items: start;
+    `}
+  }
+
+
 `
 
 export const Value = styled.span`
@@ -78,6 +93,10 @@ export const Label = styled.span`
   text-align: left;
   width: 200px;
   // margin-right: 30px;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  width: 160px;
+  `}
 `
 
 export const Info = styled.div`
@@ -91,9 +110,10 @@ export const Info = styled.div`
   }
 
   & > div:first-child > div {
-    &:before {
+    // Your styling for the first child's div here
+
+    & > div:last-child {
       border-bottom: 1px solid #e6e6ff;
-      width: 40px;
     }
   }
 
@@ -101,6 +121,14 @@ export const Info = styled.div`
     flex-direction: column;
     align-items: start;
     gap: 12px;
+    display: flex;
+  `}
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    flex-direction: column;
+    align-items: start;
+    gap: 12px;
+    display: flex;
   `}
 `
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Trans } from '@lingui/macro'
-import { CheckCircle, HelpCircle } from 'react-feather'
+import { HelpCircle } from 'react-feather'
+import { ReactComponent as CheckCircle } from 'assets/images/newRightCheck.svg'
 
 import { MouseoverTooltip } from 'components/Tooltip'
 import useIsArgentWallet from 'hooks/useIsArgentWallet'
@@ -56,38 +57,50 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
           confirmed={approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED}
         >
           <AutoRow justify="space-between" style={{ flexWrap: 'nowrap' }}>
-            <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px', color: '#292933' }}>
-              <CurrencyLogo
+            <span
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginRight: '12px',
+                // color: ApprovalState.PENDING ? '#ffffff' : '#0ec080',
+              }}
+            >
+              {/* <CurrencyLogo
                 currency={currencies[Field.INPUT]}
                 size={'20px'}
                 style={{ marginRight: '8px', flexShrink: 0 }}
-              />
+              /> */}
               {/* we need to shorten this string on mobile */}
               {approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED ? (
-                <Trans>You can now trade {currencies[Field.INPUT]?.symbol}</Trans>
+                <span color="#0ec080">
+                  <Trans>You can now trade {currencies[Field.INPUT]?.symbol}</Trans>
+                </span>
               ) : (
-                <Trans>
-                  Allow {config?.name || 'IX Swap'} to use your {currencies[Field.INPUT]?.symbol}
-                </Trans>
+                <span color="#ffffff">
+                  <Trans>
+                    Allow {config?.name || 'IX Swap'} to use your {currencies[Field.INPUT]?.symbol}
+                  </Trans>
+                </span>
               )}
             </span>
-            {approvalState === ApprovalState.PENDING ? (
-              <Loader stroke="white" />
-            ) : (approvalSubmitted && approvalState === ApprovalState.APPROVED) ||
-              signatureState === UseERC20PermitState.SIGNED ? (
-              <CheckCircle size="20" color={theme.green1} />
-            ) : (
-              <MouseoverTooltip
-                text={
-                  <Trans>
-                    You must give the IXS smart contracts permission to use your {currencies[Field.INPUT]?.symbol}. You
-                    only have to do this once per token.
-                  </Trans>
-                }
-              >
-                <HelpCircle size="20" color={'white'} style={{ marginLeft: '8px' }} />
-              </MouseoverTooltip>
-            )}
+            {
+              approvalState === ApprovalState.PENDING ? (
+                <Loader stroke="white" />
+              ) : (approvalSubmitted && approvalState === ApprovalState.APPROVED) ||
+                signatureState === UseERC20PermitState.SIGNED ? (
+                <CheckCircle />
+              ) : null
+              // <MouseoverTooltip
+              //   text={
+              //     <Trans>
+              //       You must give the IXS smart contracts permission to use your {currencies[Field.INPUT]?.symbol}. You
+              //       only have to do this once per token.
+              //     </Trans>
+              //   }
+              // >
+              //   <HelpCircle size="20" color={'white'} style={{ marginLeft: '8px' }} />
+              // </MouseoverTooltip>
+            }
           </AutoRow>
         </ButtonIXSWide>
       </AutoColumn>

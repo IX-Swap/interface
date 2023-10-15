@@ -16,6 +16,7 @@ import { ExistingTitle, TitleStatusRow } from './styleds'
 import { isPending } from './enum'
 import { useUserState } from 'state/user/hooks'
 import { ButtonGradientBorder, NewApproveButton } from 'components/Button'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   currency?: Currency
@@ -84,7 +85,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
       <DesktopOnly>
         <MouseoverTooltip text={tooltipText}>
           <NewApproveButton
-            style={{ width: '200px', border: '1px solid #6666FF33', color: '#6666FF' }}
+            style={{ width: isMobile ? '100%' : '200px', border: '1px solid #6666FF33', color: '#6666FF' }}
             data-testid="withdraw"
             onClick={async () => {
               toggle()
@@ -98,7 +99,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
       <MobileAndTablet style={{ width: '100%', marginTop: '0.6rem' }}>
         <MouseoverTooltip referenceStyle={{ width: '100%' }} text={tooltipText}>
           <NewApproveButton
-            style={{ width: '200px', marginBottom: '2rem', border: '1px solid #6666FF33', color: '#6666FF' }}
+            style={{ width: isMobile ? '100%' : '200px', border: '1px solid #6666FF33', color: '#6666FF' }}
             data-testid="withdraw"
             onClick={async () => {
               toggle()

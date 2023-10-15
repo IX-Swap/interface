@@ -1,6 +1,7 @@
 import React, { ReactNode, useCallback, useState } from 'react'
 import styled from 'styled-components/macro'
 import Tooltip from '../Tooltip'
+import { ReactComponent as TootipIcon } from 'assets/images/newTooltip.svg'
 
 const QuestionWrapper = styled.div`
   display: flex;
@@ -15,8 +16,9 @@ const QuestionWrapper = styled.div`
   cursor: default;
   border-radius: 36px;
   font-size: 12px;
-  background-color: ${({ theme }) => theme.bg24};
-  color: ${({ theme }) => theme.text12};
+  cursor: pointer;
+  // background-color: ${({ theme }) => theme.bg24};
+  // color: ${({ theme }) => theme.text12};
 
   :hover,
   :focus {
@@ -38,7 +40,7 @@ export default function QuestionHelper({ text, width }: { text: ReactNode; width
     <span style={{ marginLeft: 4, display: 'flex', alignItems: 'center' }}>
       <Tooltip text={text} show={show} width={width}>
         <QuestionWrapper onClick={open} onMouseEnter={open} onMouseLeave={close}>
-          <QuestionMark>?</QuestionMark>
+          <TootipIcon />
         </QuestionWrapper>
       </Tooltip>
     </span>

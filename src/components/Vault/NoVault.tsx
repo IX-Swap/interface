@@ -21,6 +21,7 @@ import {
   PENDING_ACCREDITATION_STATUSES,
 } from './enum'
 import { AccreditationStatus } from './AccreditationStatus'
+import { useKYCState } from 'state/kyc/hooks'
 
 interface Props {
   currency?: Currency
@@ -73,37 +74,41 @@ export const NoVault = ({
   const toggleChooseBrokerDealerModal = useChooseBrokerDealerModalToggle()
   const currencyId: string | undefined = (currency as any)?.address
   const tokenId = useSecTokenId({ currencyId })
+  const { kyc } = useKYCState()
 
   const statuses = [custodianStatus, brokerDealerStatus]
-
   return (
     <NoVaultWrapper>
       <NoVaultTitle style={{ order: 1, zIndex: 4 }}>
         <TYPE.title6>
           {userHaveValidAccount ? <Trans>Create {symbolText} Vault</Trans> : <Trans>NOT AVAILABLE</Trans>}
         </TYPE.title6>
-        {/* {userHaveValidAccount && (
+        {userHaveValidAccount && (
           <QuestionHelper
             width={512}
             text={
               <>
-                <div style={{ marginBottom: 4 }}>
+                <div
+                  style={{
+                    marginBottom: 4,
+                    fontSize: '13px',
+                    color: '#8F8FB2',
+                    padding: '15px',
+                    lineHeight: '20px',
+                    fontWeight: '500',
+                  }}
+                >
                   <Trans>
                     You need to pass accreditation to create a vault. Creating a vault is the equivalent of creating
                     your own safe custodian vault for {symbolText} tokens to deposit and get wrapped tokens to start
-                    trading.
-                  </Trans>
-                </div>
-                <div>
-                  <Trans>
-                    The accreditation is being verified by the custodian and can take up to 1-3 days. You need to
-                    complete this process for each security token you would like to trade.
+                    trading. The accreditation is being verified by the custodian and can take up to 1-3 days. You need
+                    to complete this process for each security token you would like to trade.
                   </Trans>
                 </div>
               </>
             }
           />
-        )} */}
+        )}
       </NoVaultTitle>
 
       {userHaveValidAccount && (
@@ -140,7 +145,9 @@ export const NoVault = ({
               data-testid="pass-kyc-and-accreditation"
               onClick={toggleChooseBrokerDealerModal}
             >
-              {statuses.some((status) => !status) && <Trans>Pass KYC & accreditation</Trans>}
+              {statuses.some((status) => !status) && (
+                <Trans>{kyc?.status === 'approved' ? 'Pass accreditation' : 'Pass KYC & accreditation'} </Trans>
+              )}
               {ERROR_ACCREDITATION_STATUSES.some((status) => statuses.includes(status)) && (
                 <Trans>Retry pass accreditation</Trans>
               )}

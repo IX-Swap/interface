@@ -34,6 +34,7 @@ import { isPending, WithdrawStatus } from './enum'
 import { WaitingWitdrawalFee, WarningPaidFee } from './styleds'
 import { ReactComponent as IButton } from 'assets/images/newIbutton.svg'
 import styled from 'styled-components'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   currency?: SecCurrency
@@ -117,17 +118,24 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
     const id = currencyId(currency)
     onCurrencySet(id)
   }, [currency, onCurrencySet])
-
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative', padding: isMobile ? '0px 10px 0px 10px' : '' }}>
       <Column style={{ gap: '25px', marginTop: '18px' }}>
         <InfoSection>
           <TYPE.description3 style={{ display: 'flex' }}>
-            <Trans>
-              <IButton style={{ margin: '0px 10px 0px 0px' }} />
-              <strong>{`Info:`} &nbsp;</strong> Your wrapped ${currency?.originalSymbol || tokenInfo?.symbol} will be
-              extracted from <br></br> your Polygon wallet and burnt automatically.
-            </Trans>
+            {isMobile ? (
+              <Trans>
+                <IButton style={{ margin: '0px 5px 0px 0px', width: '35px' }} />
+                &nbsp; <strong>{`Info:`} &nbsp;</strong> Your wrapped {currency?.originalSymbol || tokenInfo?.symbol}{' '}
+                will be extracted from your Polygon wallet and burnt automatically.
+              </Trans>
+            ) : (
+              <Trans>
+                <IButton style={{ margin: '0px 10px 0px 0px' }} />
+                <strong>{`Info:`}</strong> Your wrapped {currency?.originalSymbol || tokenInfo?.symbol} will be
+                extracted from your Polygon wallet and burnt automatically.
+              </Trans>
+            )}
           </TYPE.description3>
         </InfoSection>
 

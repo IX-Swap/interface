@@ -26,6 +26,7 @@ import { ReactComponent as Checked } from 'assets/images/newRightCheck.svg'
 import { ReactComponent as CheckmarkPlaceholder } from 'assets/images/newContainRadio.svg'
 import { ReactComponent as CheckmarkPlaceholderEmpty } from 'assets/images/newEmptyRadio.svg'
 import { StyledModalContentWrapper } from 'components/TransactionConfirmationModal'
+import { isMobile } from 'react-device-detect'
 
 const KycSourceContainer = styled.div`
   width: 100%;
@@ -76,6 +77,7 @@ const Button = styled.button`
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin: 0;
+      padding: 0.2rem 0.8rem;
   `};
 `
 
@@ -159,7 +161,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
       </KycRow>
       <RowBetween onClick={() => onChange(KycSource.IXSwap)}>
         <div style={{ display: 'flex' }}>
-          <TYPE.body1 style={{ marginRight: '5px' }} minWidth="auto">
+          <TYPE.body1 style={{ marginRight: '5px', fontSize: isMobile ? '14px' : '16px' }} minWidth="auto">
             My {config?.name || 'IX Swap'} KYC
           </TYPE.body1>
           <KycSourceTooltip text="Recommended" />
@@ -171,26 +173,24 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
             </TYPE.title10>
           </Button>
           {kyc?.status === KYCStatuses.APPROVED ? (
-            <Box style={{ marginTop: '6px' }}>
-              <Checked />
-            </Box>
+            <Box style={{ marginTop: '6px' }}>{!isMobile && <Checked />}</Box>
           ) : null}
         </div>
       </RowBetween>
-      <Line style={{ margin: '10px 0px' }} />
+      {/* <Line style={{ margin: '10px 0px' }} />
       <RowBetween>
         <div style={{ display: 'flex' }}>
           <TYPE.body1 style={{ marginRight: '5px' }}>Fetch from InvestaX</TYPE.body1>
           <KycSourceTooltip text="Make sure you have your KYC approved on InvestaX before using this option" />
         </div>
 
-        {/* {kyc?.status !== KYCStatuses.APPROVED && (
+        {kyc?.status !== KYCStatuses.APPROVED && (
           <KycSourceTooltip text={`Pass KYC on ${config?.name || 'IX Swap'} to enable this option`}>
             <IconWrapper size={16} style={{ marginLeft: 'auto', marginRight: 0 }}>
               <CheckmarkPlaceholder />
             </IconWrapper>
           </KycSourceTooltip>
-        )} */}
+        )}
 
         {kyc?.status === KYCStatuses.APPROVED ? (
           <IconWrapper size={16} style={{ marginLeft: 'auto', marginRight: 0 }}>
@@ -203,7 +203,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
             </IconWrapper>
           </KycSourceTooltip>
         )}
-      </RowBetween>
+      </RowBetween> */}
 
       {/* <RowBetween onClick={() => onChange(KycSource.InvestaX)}>
         <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
@@ -275,6 +275,7 @@ export const ChooseBrokerDealerPopup = ({
   }
 
   const passAccreditation = usePassAccreditation(currencyId, onSuccess)
+
   return (
     <RedesignedWideModal
       isOpen={isOpen}
@@ -286,16 +287,16 @@ export const ChooseBrokerDealerPopup = ({
       <ModalBlurWrapper data-testid="choose-broker-dealer-and-custodian-popup">
         <StyledModalContentWrapper>
           <div>
-            <ModalPadding>
-              <ModalHeader>
-                <TYPE.title5>
-                  <Trans>{symbolText} Accreditation</Trans>
-                </TYPE.title5>
-                <CloseIcon data-testid="cross" onClick={onClose} className="close-icon" />
-              </ModalHeader>
+            {/* <ModalPadding> */}
+            <ModalHeader>
+              <TYPE.title5>
+                <Trans>{symbolText} Accreditation</Trans>
+              </TYPE.title5>
+              <CloseIcon data-testid="cross" onClick={onClose} className="close-icon" />
+            </ModalHeader>
 
-              {/* Modal description segment */}
-              <div
+            {/* Modal description segment */}
+            {/* <div
                 style={{ border: '1px solid #E6E6FF', padding: '25px', marginTop: '20px', backgroundColor: '#F7F7FA' }}
               >
                 <div style={{ marginTop: '18px' }}>
@@ -314,8 +315,8 @@ export const ChooseBrokerDealerPopup = ({
                     <Trans>{`Broker-dealer will check and confirm every transaction with ${tokenName} token. Custodian will keep your ${tokenName} in a safe place.`}</Trans>
                   </TYPE.description2>
                 </div>
-              </div>
-            </ModalPadding>
+              </div> */}
+            {/* </ModalPadding> */}
           </div>
 
           {/* KYC source segement */}
@@ -323,39 +324,41 @@ export const ChooseBrokerDealerPopup = ({
 
           {/* <Separator /> */}
           <Line style={{ margin: '6px 0px' }} />
-          <div id="broker-dealer-and-custodian-list" style={{ marginTop: '25px' }}>
-            {brokersLoading && (
-              <div style={{ margin: 'auto', display: 'table' }}>
-                <LoaderThin size={32} />
-              </div>
-            )}
-            {brokersError && <div style={{ margin: 'auto', display: 'table' }}>Something went wrong</div>}
-            <BrokerDealersGridHeader>
-              <TYPE.description2>Broker-dealer</TYPE.description2>
-              <div />
-              <TYPE.description2>Custodian</TYPE.description2>
-              <div />
-            </BrokerDealersGridHeader>
-            {brokerDealerPairs?.map((pair) => (
-              <BrokerDealersGrid
-                key={pair?.id}
-                onClick={() => setSelectedBrokerPair(pair?.id)}
-                className={`${selectedBrokerPair === pair?.id ? 'selected' : ''}`}
-              >
-                <TYPE.title10>{pair?.pair?.brokerDealer?.name}</TYPE.title10>
-                <Flex alignItems="center"></Flex>
-                <TYPE.title10 style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</TYPE.title10>
-                <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: -29 }}>
-                  {selectedBrokerPair === pair?.id ? <CheckmarkPlaceholder /> : <CheckmarkPlaceholderEmpty />}
-                </IconWrapper>
-              </BrokerDealersGrid>
-            ))}
-            {brokerDealerPairs?.length === 0 && (
-              <RowCenter marginTop="8px" padding="0px 2rem">
-                No pairs available for this network, please change it.
-              </RowCenter>
-            )}
-          </div>
+
+          {brokerDealerPairs?.length === 0 ? (
+            <RowCenter marginTop="8px" fontSize={'14px'} padding="0px 2rem">
+              No pairs available for this network, please change it.
+            </RowCenter>
+          ) : (
+            <div id="broker-dealer-and-custodian-list" style={{ marginTop: '25px' }}>
+              {brokersLoading && (
+                <div style={{ margin: 'auto', display: 'table' }}>
+                  <LoaderThin size={32} />
+                </div>
+              )}
+              {brokersError && <div style={{ margin: 'auto', display: 'table' }}>Something went wrong</div>}
+              <BrokerDealersGridHeader>
+                <TYPE.description2>Broker-dealer</TYPE.description2>
+                <div />
+                <TYPE.description2>Custodian</TYPE.description2>
+                <div />
+              </BrokerDealersGridHeader>
+              {brokerDealerPairs?.map((pair) => (
+                <BrokerDealersGrid
+                  key={pair?.id}
+                  onClick={() => setSelectedBrokerPair(pair?.id)}
+                  className={`${selectedBrokerPair === pair?.id ? 'selected' : ''}`}
+                >
+                  <TYPE.title10>{pair?.pair?.brokerDealer?.name}</TYPE.title10>
+                  <Flex alignItems="center"></Flex>
+                  <TYPE.title10 style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</TYPE.title10>
+                  <IconWrapper size={28} style={{ marginLeft: 'auto' }}>
+                    {selectedBrokerPair === pair?.id ? <CheckmarkPlaceholder /> : <CheckmarkPlaceholderEmpty />}
+                  </IconWrapper>
+                </BrokerDealersGrid>
+              ))}
+            </div>
+          )}
           <Line style={{ margin: '20px 0px' }} />
           <StartAccreditationButtonWrapper>
             <Row style={{ marginBottom: '24px' }} className="start-accreditation-button-row">
@@ -385,7 +388,7 @@ export const ChooseBrokerDealerPopup = ({
   )
 }
 
-const ModalHeader = styled(RowBetween)`
+const ModalHeader: any = styled(RowBetween)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
       align-items: flex-start;
 
@@ -399,7 +402,7 @@ const ModalHeader = styled(RowBetween)`
 const BrokerDealersGridHeader = styled.div`
   display: grid;
   grid-template-columns: 200px 30px 1fr auto;
-  padding: 0.5rem 2rem;
+  padding: 10px 0px 0px 0px;
 `
 
 const BrokerDealersGrid = styled(BrokerDealersGridHeader)`

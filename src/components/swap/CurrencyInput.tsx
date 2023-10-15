@@ -104,7 +104,6 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
 
   return (
     <>
-      {' '}
       {isSwapBannerVisible && <SwapBanner />}
       <div style={{ display: 'relative' }}>
         <CurrencyInputPanel

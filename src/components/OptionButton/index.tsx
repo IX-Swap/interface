@@ -85,13 +85,14 @@ export const OptionRow = styled(RowCenter)`
 `
 
 export const OptionCustom = styled(FancyButton)<{ active?: boolean; warning?: boolean }>`
-  min-width: 110px;
-  max-width: 130px;
-  width: 100%;
-  height: 60px;
-  position: relative;
+  margin-right: 8px;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 40px;
+  width: fit-content;
+  height: fit-content;
+  border: none;
   padding: 10px 22px;
-  flex: 1;
   border: ${({ theme, active, warning }) =>
     warning ? `1px solid ${theme.red1}` : active ? `1px solid ${theme.popUpInputBorder}` : 'none'};
   :hover {

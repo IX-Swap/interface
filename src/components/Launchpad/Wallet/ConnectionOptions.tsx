@@ -22,8 +22,6 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
     <OptionList>
       <PromptTitle>Connect Wallet </PromptTitle>
       {Object.entries(SUPPORTED_WALLETS).map(([key, option]) => {
-
-
         if (option.connector === injected) {
           if (!(window.web3 || window.ethereum)) {
             if (option.name === 'MetaMask') {

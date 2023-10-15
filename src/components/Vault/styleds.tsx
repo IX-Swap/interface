@@ -1,10 +1,10 @@
 import React from 'react'
 import styled, { css, keyframes } from 'styled-components'
 
-import { ReactComponent as Attention } from 'assets/images/attention.svg'
-import { ReactComponent as Passed } from 'assets/images/check-success.svg'
+import { ReactComponent as Attention } from 'assets/images/newCloseIcon.svg'
+import { ReactComponent as Passed } from 'assets/images/check-2.svg'
 import Column from 'components/Column'
-import { LoaderThin } from 'components/Loader/LoaderThin'
+import { ReactComponent as PendingIcon } from 'assets/images/newPending.svg'
 import { RowBetween } from 'components/Row'
 import { gradientBorder, MEDIA_WIDTHS, TYPE } from 'theme'
 import { Colors } from 'theme/styled'
@@ -19,6 +19,9 @@ export const NoVaultWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  padding: 40px 12px;
+  `};
 `
 
 export const ExistingWrapper = styled.div`
@@ -28,6 +31,7 @@ export const ExistingWrapper = styled.div`
   width: 1350px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 1rem;
+    width: auto;
   `};
 `
 
@@ -42,6 +46,9 @@ export const NoVaultTitle = styled.div`
 `
 
 export const ExistingTitle = styled.span`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    text-align: center;
+  `};
   text-align: left;
   white-space: pre-wrap; /* CSS3 */
   white-space: -moz-pre-wrap; /* Firefox */
@@ -120,6 +127,7 @@ export const AccreditationButtonRow = styled.div`
 export const StyledTitle = styled(TYPE.title5)`
   @media (max-width: 768px) {
     font-size: 20px !important;
+    text-align: center;
   }
 `
 
@@ -183,11 +191,11 @@ export const DepositStatusIcons = {
 export const getStatusIcon = (action: ActionTypes, status: string) => {
   const StatusIcons = action === ActionTypes.DEPOSIT ? DepositStatusIcons : WithdrawStatusIcons
 
-  return StatusIcons[status] || <LoaderThin size={20} />
+  return StatusIcons[status] || <PendingIcon />
 }
 
 export const InfoModalHeader = styled.div`
-  padding: 24px 32px;
+  padding: 10px 0px;
   // border-radius: 20px 20px 0px 0px;
   // background: ${({ theme }) => theme.bg0};
   display: flex;
@@ -196,10 +204,15 @@ export const InfoModalHeader = styled.div`
   font-weight: 600;
   font-size: 22px;
   color: white;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 20px;
+    background: ${({ theme }) => theme.bg0};
+  }
 `
 
 export const InfoModalBody = styled.div<{ isSuccess: boolean }>`
-  padding: 1px 32px;
+  // padding: 1px 32px;
   display: flex;
   flex-direction: column;
   row-gap: 12px;
@@ -327,7 +340,7 @@ export const DeadlineInfo = styled.div`
   font-size: 10px;
   text-align: center;
 
-  color: ${({ theme }) => theme.text2};
+  color: #b8b8cc;
   line-height: 15px;
   margin-top: 8px;
 `

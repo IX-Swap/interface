@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { Plus } from 'react-feather'
+import { ReactComponent as Plus } from '../../assets/images/newAdd.svg'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box, Text } from 'rebass'
@@ -62,6 +62,14 @@ const Title = styled(Text)`
   text-transform: capitalize;
   color: ${({ theme }) => theme.text12};
 `
+
+const plusIconStyle = {
+  width: '50px',
+  height: '50px',
+  zIndex: '1',
+  marginTop: '-27px',
+  marginBottom: '-50px',
+}
 
 export default function AddLiquidity({
   match: {
@@ -357,7 +365,7 @@ export default function AddLiquidity({
           <AppBody page="liquidity">
             <AddRemoveTabs creating={isCreate} adding={true} showBadge={mitigationEnabled} />
             <>
-              <AutoColumn gap="17px">
+              <AutoColumn gap="14px">
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.CURRENCY_A]}
                   onUserInput={onFieldAInput}
@@ -372,9 +380,9 @@ export default function AddLiquidity({
                   showCommonBases={false}
                   title={<Trans>Choose token to create a pool</Trans>}
                 />
-                {/* <ColumnCenter>
-                <Plus size="24" color={theme.text2} />
-              </ColumnCenter> */}
+                <ColumnCenter>
+                  <Plus style={plusIconStyle} />
+                </ColumnCenter>
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.CURRENCY_B]}
                   onUserInput={onFieldBInput}

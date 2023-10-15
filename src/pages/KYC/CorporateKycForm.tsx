@@ -644,7 +644,7 @@ export default function CorporateKycForm() {
                           <FormGrid columns={1}>
                             <Uploader
                               title="Authorization Document"
-                              subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
+                              subtitle="Board Resolution, Power of Attorney, Partnership Deed, Trust Deed, and Others"
                               files={values.authorizationDocuments}
                               onDrop={(file) => {
                                 handleDropImage(file, values, 'authorizationDocuments', setFieldValue)

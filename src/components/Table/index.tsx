@@ -19,11 +19,12 @@ const rowStyle = css`
   display: grid;
 
   > div:first-child {
-    padding-left: 22px;
+    padding-left: 0px;
   }
 
   > div:last-child {
     padding-right: 22px;
+    padding-left: 0px;
   }
 
   > div {

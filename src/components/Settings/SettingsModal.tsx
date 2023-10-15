@@ -34,10 +34,10 @@ const StyledClose = styled(X)`
 `
 const SettingsModalContentWrapper = styled(ModalContentWrapper)`
   border-radius: 10px;
-  background: ${({ theme }) => theme.bg1};
+  // background: ${({ theme }) => theme.bg1};
   padding: 25px 20px;
-  border: 1px solid #e6e6ff;
-  margin-bottom: 14px;
+  // border: 1px solid #e6e6ff;
+  // margin-bottom: 14px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 22px 10px;
   `};
@@ -45,9 +45,9 @@ const SettingsModalContentWrapper = styled(ModalContentWrapper)`
 
 const SettingsModalContentWrapper2 = styled(ModalContentWrapper)`
   border-radius: 10px;
-  background: ${({ theme }) => theme.bg25};
-  padding: 25px 20px;
-  border: 1px solid #e6e6ff;
+  // background: ${({ theme }) => theme.bg25};
+  padding: 0px 20px 20px 20px;
+  // border: 1px solid #e6e6ff;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 22px 10px;
   `};
@@ -56,8 +56,8 @@ const SettingsModalContentWrapper2 = styled(ModalContentWrapper)`
 const SettingsHeader = styled.span`
   display: flex;
   justify-content: space-between;
-  font-weight: 600;
-  font-size: 22px;
+  font-weight: 700;
+  font-size: 20px;
   line-height: 33px;
   align-items: center;
 `
@@ -100,7 +100,7 @@ const SettingsModal = React.forwardRef(({ placeholderSlippage }: { placeholderSl
               </AutoColumn>
             </SettingsModalContentWrapper>
             <SettingsModalContentWrapper2>
-              <AutoColumn gap="md" style={{ padding: '1rem', gridRowGap: '18px' }}>
+              <AutoColumn gap="md" style={{ padding: '0rem 1rem', gridRowGap: '18px' }}>
                 <SettingsHeader>
                   <Text color={'#292933'}>
                     <Trans>Interface Settings</Trans>

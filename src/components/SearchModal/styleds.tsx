@@ -117,6 +117,9 @@ export const SearchInput = styled.input`
   ::placeholder {
     color: ${({ theme }) => theme.text2};
     font-size: 15px;
+    position: absolute;
+    left: 40px;
+    top: 18px;
   }
   transition: border 100ms;
   :focus {
@@ -124,7 +127,7 @@ export const SearchInput = styled.input`
   }
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 0px 22px;
+    padding: 16px 22px;
   `};
 `
 export const Separator = styled.div`

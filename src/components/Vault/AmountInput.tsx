@@ -31,7 +31,7 @@ const Container = styled.div`
   border: 1px solid #e6e6ff;
   background-color: ${({ theme }) => theme.bg7};
   width: 'initial';
-  padding: 24px 31px 24px 27px;
+  padding: 12px 31px 12px 27px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       boder-radius: 1rem;
   `};

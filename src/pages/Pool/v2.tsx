@@ -34,6 +34,8 @@ import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import Header from 'components/Header'
+import { isMobile } from 'react-device-detect'
+
 const LinkTitle = styled(TYPE.body1)`
   color: ${({ theme }) => theme.text1};
   font-weight: 600;
@@ -112,38 +114,45 @@ export default function Pool() {
       </Portal>
     )
   }
+
   return (
     <>
       <Header />
-      {/* <AddLiduidityContainer> */}
+
       {!isBlurred && <DesktopOnly>{/* <TopContent /> */}</DesktopOnly>}
-      <AppBody page="liquidity" blurred={isBlurred}>
-        {!isBlurred && <MobileAndTablet style={{ marginBottom: '1rem' }}>{/* <TopContent /> */}</MobileAndTablet>}
-        <SwapPoolTabs active={'pool'} />
-        <AutoColumn gap="1.5rem" justify="center">
-          <AutoColumn gap="md" style={{ width: '100%' }}>
-            <MarginerTitle>
-              <AutoColumn gap="20px" style={{ width: '100%' }}>
-                <LiquidityTitle />
-                <AddLiquidityButton />
-              </AutoColumn>
-            </MarginerTitle>
-            {!account && <ConnectWallet message={<Trans>Connect a wallet to view your Liquidity.</Trans>} />}
-            {account && (dataIsLoading || showEmptyLiquidity) && (
-              <NoPairs account={account} v2IsLoading={v2IsLoading} showEmptyLiquidity={showEmptyLiquidity} />
-            )}
-            {dataIsLoaded && pairsPresent && (
-              <>
-                <LiquidityInnerTitle>
-                  <Trans>My Liquidity</Trans>
-                </LiquidityInnerTitle>
-                <TopStraightBackgroundWrapper>
-                  {!pending ? (
-                    <>
-                      {v2PairsWithoutStakedAmount.map((v2Pair) => (
-                        <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
-                      ))}
-                      {/* {stakingPairs.map(
+      <div
+        style={{
+          marginTop: isMobile ? '10px' : '140px',
+          width: isMobile ? '380px' : '550px',
+        }}
+      >
+        <AppBody page="liquidity" blurred={isBlurred}>
+          {!isBlurred && <MobileAndTablet style={{ marginBottom: '1rem' }}>{/* <TopContent /> */}</MobileAndTablet>}
+          <SwapPoolTabs active={'pool'} />
+          <AutoColumn gap="1.5rem" justify="center">
+            <AutoColumn gap="md" style={{ width: '100%' }}>
+              <MarginerTitle>
+                <AutoColumn gap="20px" style={{ width: '100%' }}>
+                  <LiquidityTitle />
+                  <AddLiquidityButton />
+                </AutoColumn>
+              </MarginerTitle>
+              {!account && <ConnectWallet message={<Trans>Connect a wallet to view your Liquidity.</Trans>} />}
+              {account && (dataIsLoading || showEmptyLiquidity) && (
+                <NoPairs account={account} v2IsLoading={v2IsLoading} showEmptyLiquidity={showEmptyLiquidity} />
+              )}
+              {dataIsLoaded && pairsPresent && (
+                <>
+                  <LiquidityInnerTitle>
+                    <Trans>My Liquidity</Trans>
+                  </LiquidityInnerTitle>
+                  <TopStraightBackgroundWrapper>
+                    {!pending ? (
+                      <>
+                        {v2PairsWithoutStakedAmount.map((v2Pair) => (
+                          <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
+                        ))}
+                        {/* {stakingPairs.map(
                       (stakingPair, i) =>
                         stakingPair[1] && ( // skip pairs that arent loaded
                           <FullPositionCard
@@ -153,20 +162,20 @@ export default function Pool() {
                           />
                         )
                     )} */}
-                    </>
-                  ) : (
-                    <RowCenter style={{ margin: '68px 0px' }}>
-                      <LoaderThin size={128} />
-                    </RowCenter>
-                  )}
-                </TopStraightBackgroundWrapper>
-                <ImportPool />
-              </>
-            )}
+                      </>
+                    ) : (
+                      <RowCenter style={{ margin: '68px 0px' }}>
+                        <LoaderThin size={128} />
+                      </RowCenter>
+                    )}
+                  </TopStraightBackgroundWrapper>
+                  <ImportPool />
+                </>
+              )}
+            </AutoColumn>
           </AutoColumn>
-        </AutoColumn>
-      </AppBody>
-      {/* </AddLiduidityContainer> */}
+        </AppBody>
+      </div>
     </>
   )
 }
