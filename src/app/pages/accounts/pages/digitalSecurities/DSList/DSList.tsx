@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button, Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { DSTabs } from 'app/pages/accounts/pages/digitalSecurities/DSList/DSTabs'
+// import { DSTabs } from 'app/pages/accounts/pages/digitalSecurities/DSList/DSTabs'
+import { CustodyList } from 'app/pages/accounts/pages/digitalSecurities/DSList/CustodyList'
 import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { RootContainer } from 'ui/RootContainer'
@@ -11,7 +12,7 @@ export const DSList: React.FC = () => {
     <Grid container spacing={3} style={{ display: 'table' }}>
       <Grid item xs={12}>
         <PageHeader
-          title='Security Tokens'
+          title='My Tokens'
           endComponent={
             <Grid
               item
@@ -41,24 +42,14 @@ export const DSList: React.FC = () => {
                   Withdraw
                 </Button>
               </Grid>
-              {/* <Grid item>
-                <Button
-                  component={Link}
-                  href='https://swap.investax.io/'
-                  target='_blank'
-                  variant='contained'
-                  color='primary'
-                >
-                  Swap
-                </Button>
-              </Grid> */}
             </Grid>
           }
         />
       </Grid>
       <RootContainer padding={0}>
         <Grid item xs={12} mt={2} ml={1.5}>
-          <DSTabs />
+          {/* <DSTabs /> */}
+          <CustodyList hasTopBorder={false} />
         </Grid>
       </RootContainer>
     </Grid>

@@ -87,7 +87,7 @@ export const FinancialSummary = () => {
               variant='contained'
               to={AccountsRoute.myHoldings}
             >
-              My Exchange Holdings
+              IX Exchange Orders
             </Button>
           </Grid>
         </Box>

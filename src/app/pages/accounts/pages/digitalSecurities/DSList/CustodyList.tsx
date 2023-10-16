@@ -1,28 +1,59 @@
 import React from 'react'
-import { Box } from '@mui/material'
-import { useGetCustody } from 'app/pages/accounts/hooks/useGetCustody'
-import { custodyColumns } from 'app/pages/accounts/pages/digitalSecurities/DSList/columns'
+import { Grid } from '@mui/material'
+// import { useGetCustody } from 'app/pages/accounts/hooks/useGetCustody'
+// import { custodyColumns } from 'app/pages/accounts/pages/digitalSecurities/DSList/columns'
+import { columns } from 'app/pages/accounts/pages/digitalSecurities/DSList/columns'
 // import { TableView } from 'components/TableWithPagination/TableView'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
+import { BaseFilters } from 'app/components/BaseFilters/BaseFilters'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { accountsURL } from 'config/apiURL'
+import { ExportButton } from 'ui/ExportButton/ExportButton'
 
-export const CustodyList = () => {
-  const { data, isLoading } = useGetCustody()
+export const CustodyList = ({
+  hasTopBorder = true
+}: {
+  hasTopBorder: boolean
+}) => {
+  //   const { data, isLoading } = useGetCustody()
+  const { getFilterValue } = useQueryFilter()
+  const filter = {
+    search: getFilterValue('search')
+  }
+  const exportButtonId = 'exportCurrentHoldings'
 
   return (
-    <Box mt={2}>
-      <TableView
-        fakeItems={data}
-        fakeLoading={isLoading}
-        columns={custodyColumns}
-        queryEnabled={false}
-        paperProps={{
-          style: {
-            borderTop: 'none'
-          }
-        }}
-        showExport
-        exportFileName='Current Holdings'
-      />
-    </Box>
+    <Grid container direction='column' spacing={2}>
+      <Grid item>
+        <BaseFilters hideDateFilter hasTopBorder={hasTopBorder}>
+          <Grid item xs>
+            <ExportButton
+              fullWidth
+              onClick={() => {
+                document.getElementById(exportButtonId)?.click()
+              }}
+            />
+          </Grid>
+        </BaseFilters>
+      </Grid>
+      <Grid item>
+        <TableView
+          // fakeItems={data}
+          // fakeLoading={isLoading}
+          uri={accountsURL.ledger.getTokenHoldings}
+          name={'currentTokenHoldings'}
+          columns={columns}
+          // queryEnabled={false}
+          paperProps={{
+            style: {
+              borderTop: 'none'
+            }
+          }}
+          filter={filter}
+          exportFileName='Current Holdings'
+          exportButtonId={exportButtonId}
+        />
+      </Grid>
+    </Grid>
   )
 }

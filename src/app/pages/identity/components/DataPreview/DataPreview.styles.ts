@@ -38,7 +38,8 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     zIndex: 1,
     [theme.breakpoints.down('md')]: {
-      display: 'none'
+      height: theme.spacing(68)
+      //   display: 'none'
     }
   },
   preview: {
@@ -62,7 +63,9 @@ export const useStyles = makeStyles(theme => ({
     gap: 80,
     justifyContent: 'between',
     [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
+      //   flexDirection: 'column',
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
       gap: 20
     }
   },
@@ -73,7 +76,7 @@ export const useStyles = makeStyles(theme => ({
     textAlign: 'left',
     gap: 10,
     [theme.breakpoints.down('md')]: {
-      alignItems: 'center'
+      //   alignItems: 'center'
     },
     [theme.breakpoints.up('lg')]: {
       whiteSpace: 'nowrap'

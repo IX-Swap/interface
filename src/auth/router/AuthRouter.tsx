@@ -3,6 +3,7 @@ import { Redirect, Switch } from 'react-router-dom'
 import { Confirmation } from 'auth/pages/confirmation/Confirmation'
 import { LoginContainer } from 'auth/pages/login/LoginContainer'
 import { PasswordReset } from 'auth/pages/password-reset/PasswordReset'
+import { ResendVerification } from 'auth/pages/resend-verification/ResendVerification'
 import { Register } from 'auth/pages/register/Register'
 import { AuthRoute } from 'auth/router/config'
 import { AppRoute } from 'components/AppRoute'
@@ -28,6 +29,10 @@ export const AuthRouter = () => {
 
       <AppRoute exact path={AuthRoute.passwordReset}>
         <PasswordReset />
+      </AppRoute>
+
+      <AppRoute exact path={AuthRoute.resendVerification}>
+        <ResendVerification />
       </AppRoute>
 
       <AppRoute exact path={AuthRoute.successfulPasswordReset}>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { columns } from 'app/pages/accounts/pages/digitalSecurities/DSList/columns'
+import { selfCustodyColumns } from 'app/pages/accounts/pages/digitalSecurities/DSList/columns'
 // import { TableView } from 'components/TableWithPagination/TableView'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { accountsURL } from 'config/apiURL'
@@ -17,7 +17,7 @@ export const SelfCustodyList = () => {
       <TableView
         uri={accountsURL.balance.getAll(userId)}
         name={digitalSecuritiesQueryKeys.selfCustody(userId)}
-        columns={columns}
+        columns={selfCustodyColumns}
         filter={{ type: 'Security' }}
         paperProps={{
           style: {

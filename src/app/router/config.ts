@@ -12,6 +12,7 @@ export const AppRoute = {
   admin: '/app/admin',
   OTCMarket: '/app/OTCMarket',
   security: '/app/settings',
+  feedback: '/app/feedback',
   notifications: '/app/notifications',
   fundsManagement: '/app/funds-management',
   editClientSpace: `/app/admin/tenants/${tenantId}/edit`
