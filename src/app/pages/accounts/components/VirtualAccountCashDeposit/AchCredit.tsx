@@ -2,6 +2,7 @@ import { Box, Grid } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { DepositInfoProps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
 import React from 'react'
+import { AccountIdInstructions } from './AccountIdInstructions'
 
 export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
   const achDetails = [
@@ -44,6 +45,7 @@ export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
           </Grid>
         </Box>
       </Grid>
+      <AccountIdInstructions />
     </Grid>
   )
 }
