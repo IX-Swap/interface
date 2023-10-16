@@ -58,17 +58,17 @@ export const DepositPopup = ({ currency, token }: Props) => {
                     <Box display="flex" alignItems="center" marginRight={'0.5rem'}>
                       <ArrowLeft />
                     </Box>
-                    <TYPE.title5>
+                    <TYPE.titleSmall>
                       <Trans>About Wrapping</Trans>
-                    </TYPE.title5>
+                    </TYPE.titleSmall>
                   </ButtonText>
                 </Row>
               ) : (
-                <TYPE.title5>
+                <TYPE.titleSmall>
                   <Trans>{`Deposit ${currency?.originalSymbol || ''} ${
                     modalView === DepositModalView.SEND_INFO ? `to 1st Digital Custodian` : `from ${networkName || ''}`
                   }`}</Trans>
-                </TYPE.title5>
+                </TYPE.titleSmall>
               )}
               <CloseIcon
                 data-testid="cross"

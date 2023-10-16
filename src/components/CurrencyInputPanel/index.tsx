@@ -28,7 +28,7 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
   border-radius: 8px;
   background-color: ${({ theme, hideInput }) =>
     hideInput ? 'transparent' : theme.config.background?.main || theme.bg21};
-  z-index: 1;
+  // z-index: 1;
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
 `
 

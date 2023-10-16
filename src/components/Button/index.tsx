@@ -182,11 +182,12 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   position: relative;
   cursor: pointer;
   border: none;
+  background-color: #6666ff;
 
   :hover {
     border-radius: 8px;
-    background-color: transparent;
-    background: transparent;
+    background-color: #6666ff;
+    background: #6666ff;
     @media (min-width: 1000px) {
       opacity: 0.8;
     }
@@ -194,6 +195,8 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   :active {
     opacity: 0.9;
     border-radius: 8px;
+    background-color: #6666ff;
+    background: #6666ff;
   }
   border-radius: 8px;
   font-weight: 600;
@@ -201,11 +204,19 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   line-height: 20px;
   // background-color: ${({ theme }) => theme.config.primary?.main || theme.bg3};
   // background: ${({ theme }) => theme.config.primary?.main || theme.bgG3};
-  background-color: transparent;
+  background-color: #6666ff;
   background: transparent;
   border: 1px solid #6666ff;
   padding: 28px 18px;
   margin-right: 20px;
+
+  &:disabled {
+    background-color: transparent;
+    background: transparent;
+    color: #0ec080 !important;
+    border: 1px solid #0ec080;
+    opacity: 1;
+  }
 `
 export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   background-color: transparent;
@@ -245,6 +256,7 @@ export const ButtonPinkBorder = styled(ButtonIXSGradient)`
 `
 export const ButtonIXSWide = styled(ButtonIXSGradient)`
   width: 100%;
+  background-color: #6666ff;
 `
 export const ButtonGradient = styled(Base)`
   background: ${({ theme }) => theme.config.primary?.main || theme.bg26};

@@ -92,7 +92,7 @@ export const EmptyStateInfoCard = styled(Card)`
 
 export const NewEmptyStateInfoCard = styled(Card)`
   border-radius: 8px;
-  padding: 0 17px;
+  padding: 10 17px;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -145,7 +145,7 @@ export const SwapErrorCard = styled(DarkCard)`
 export const BlueGreyCard = styled(Card)`
   // background: ${({ theme }) => `${theme.bg1}66`};
   border-radius: 20px;
-  padding: 18px 25px;
+  // padding: 18px 25px;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 16px 8px;

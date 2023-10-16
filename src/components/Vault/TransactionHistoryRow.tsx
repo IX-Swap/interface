@@ -75,12 +75,12 @@ export const TransactionHistoryRow = ({ row, currency, icon }: Props) => {
         <Row>
           <IconColumn>
             <Box marginRight="8px" display="flex" justifyContent="center">
-              {/* <IconWrapper size={20}>{icon}</IconWrapper> */}
-              {status === 'approved' ? <SuccessIcon /> : status === 'pending' ? <PendingIcon /> : <ErrorIcon />}
+              <IconWrapper size={20}>{icon}</IconWrapper>
+              {/* {status === 'approved' ? <SuccessIcon /> : status === 'pending' ? <PendingIcon /> : <ErrorIcon />} */}
             </Box>
           </IconColumn>
           <DesktopOnly>
-            <TYPE.main1 color={textColor}>{statusText}</TYPE.main1>
+            <TYPE.main1 color={'#292933'}>{statusText}</TYPE.main1>
           </DesktopOnly>
         </Row>
       </td>

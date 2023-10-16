@@ -41,7 +41,7 @@ const Aligner = styled.span`
 const StyledTokenName: any = styled.span<{ active?: boolean }>`
   ${({ active }) => (active ? 'margin: 0 0.25rem 0 0.25rem;' : 'margin: 0 0.25rem 0 0.25rem;')}
   font-size: ${({ active }) => (active ? '14px' : '14px')};
-  color: ${({ theme }) => theme.text11};
+  color: ${({ theme }) => theme.text1};
 `
 
 export const CurrencyRow = ({ currency, chooseToken, pair }: Props) => {

@@ -13,6 +13,7 @@ import { SecTokensTable } from './SecTokensTable'
 import { MySecToken } from './MySecToken'
 import { Info } from './Info'
 import { FeaturedTokensGrid, MySecTokensTab, GradientText, MySecTokensGrid, Divider } from './styleds'
+import { isMobile } from 'react-device-detect'
 
 export default function CustodianV2() {
   const offset = 10
@@ -68,7 +69,13 @@ export default function CustodianV2() {
 
   return (
     <>
-      <TYPE.title4 marginBottom="30px" data-testid="securityTokensTitle">
+      <TYPE.title4
+        marginTop={isMobile ? '70px' : ''}
+        fontSize={isMobile ? '24px' : '40px'}
+        marginLeft={isMobile ? '30px' : ''}
+        marginBottom="30px"
+        data-testid="securityTokensTitle"
+      >
         <Trans>Security tokens</Trans>
       </TYPE.title4>
       {/* <Info /> */}

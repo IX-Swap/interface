@@ -51,7 +51,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
   )
 
   const { isCorporate, isApproved } = useKyc()
-  const { isOfferManager, isAdmin } = useRole()
+  const { isOfferManager, isAdmin, isTokenManager } = useRole()
 
   const showIssuance = useMemo(
     () => account && (isAdmin || (isCorporate && isApproved && isOfferManager)),
@@ -112,7 +112,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             </MenuListItem>
           )}
 
-          {chainId && chains.includes(chainId) && isWhitelisted && (
+          {/* {chainId && chains.includes(chainId) && isWhitelisted && (
             <ExternalListItem
               disabled={!isApproved}
               target="_self"
@@ -120,7 +120,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             >
               <Trans>FNFT</Trans>
             </ExternalListItem>
-          )}
+          )} */}
 
           {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
             <ExternalListItem href={`https://ixswap.defiterm.io/`}>
@@ -129,16 +129,22 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
           )}
 
           {isAllowed(routes.vesting) && (
-            <MenuListItem activeClassName="active-item" id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
-              <Trans>Token Sale Distribution</Trans>
+            <MenuListItem
+              // style={{ fontSize: '10px' }}
+              activeClassName="active-item"
+              id={`vesting-nav-link`}
+              to={routes.vesting}
+              onClick={close}
+            >
+              Token Sale Distribution
             </MenuListItem>
           )}
 
-          {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
+          {/* {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
             <ExternalListItem href={`https://ixswap.defiterm.io/`}>
               <Trans>Liquidity Mining Program (Quickswap)</Trans>
             </ExternalListItem>
-          )}
+          )} */}
 
           {isWhitelisted && (
             <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
@@ -157,7 +163,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
               <Trans>KYC</Trans>
             </MenuListItem>
           )}
-          {isAllowed(routes.tokenManager()) && (
+          {isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
             <MenuListItem
               activeClassName="active-item"
               id={`kyc-nav-link`}
@@ -179,6 +185,12 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
               onClick={close}
             >
               <Trans>Issuance Dashboard</Trans>
+            </MenuListItem>
+          )}
+
+          {isAdmin && (
+            <MenuListItem activeClassName="active-item" id={`admin-dashboard-nav-link`} to="/admin" onClick={close}>
+              <Trans>Admin</Trans>
             </MenuListItem>
           )}
         </MenuList>

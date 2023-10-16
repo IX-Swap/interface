@@ -105,6 +105,13 @@ export const StyledSearchInput = styled(SearchInput)`
   background: ${({ theme }) => theme.bg0};
   color: ${({ theme }) => theme.text2};
   width: 40%;
+  margin-right: 16px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  width: 100%; 
+  margin-bottom: 16px;
+  padding: 16px 22px;
+  `};
 `
 
 export const StyledDarkBlueCard = styled(DarkBlueCard)<{ isOpen: boolean }>`
@@ -114,6 +121,10 @@ export const StyledDarkBlueCard = styled(DarkBlueCard)<{ isOpen: boolean }>`
   border-radius: 8px;
   margin-right: 15px;
   padding: 15px 120px 15px 10px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  padding: 0px;
+  `};
 `
 
 export const StyledButtonMuted = styled(TYPE.buttonMuted)`

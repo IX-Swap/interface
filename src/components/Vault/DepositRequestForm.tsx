@@ -36,7 +36,7 @@ import { Line } from 'components/Line'
 export const ArrowWrapper = styled.div`
   // padding: 7px 5px;
   border-radius: 100%;
-  margin: 14px auto;
+  margin: 0px auto;
   height: 31px;
   width: 31px;
   display: flex;
@@ -124,7 +124,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               amount={parsedAmount}
             />
           </Column>
-          <Column style={{ marginTop: '20px', gap: '11px' }}>
+          <Column style={{ marginTop: '16px', gap: '11px' }}>
             <Row>
               <TYPE.body1 style={{ display: 'flex' }}>
                 <Trans>
@@ -153,7 +153,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
       <ArrowWrapper>
         <DownArrow />
       </ArrowWrapper>
-      <Column style={{ gap: '25px', marginTop: '16px' }}>
+      <Column style={{ gap: '25px', marginTop: '10px' }}>
         <BlueGreyCard>
           <Column style={{ gap: '11px' }}>
             <RowBetween>
@@ -184,7 +184,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               // }
             />
           </Column>
-          <Column style={{ marginTop: '20px', marginBottom: '16px', gap: '11px' }}>
+          <Column style={{ marginTop: '20px', marginBottom: '10px', gap: '11px' }}>
             <Row>
               <TYPE.body1>
                 <Trans>{`To your ${capitalizeFirstLetter(accountNetwork || '')} wallet`}</Trans>
@@ -203,7 +203,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
           </Column>
         </BlueGreyCard>
       </Column>
-      <Row style={{ marginTop: '43px', marginBottom: '8px' }}>
+      <Row style={{ marginTop: '4px', marginBottom: '8px' }}>
         <PinnedContentButton style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={onClick}>
           {inputError ?? <Trans>Create deposit request</Trans>}
         </PinnedContentButton>

@@ -143,7 +143,15 @@ function CurrencyRow({
   const unapprovedSecToken = useMemo(() => {
     if (!isUnapprovedSecToken) return null
     return (
-      <Row style={{ position: 'relative', height: '100%', alignItems: 'center' }}>
+      <Row
+        style={{
+          position: 'relative',
+          height: '100%',
+          alignItems: 'center',
+          border: isMobile ? '1px solid #E6E6FF' : 'none',
+          background: isMobile ? '#F7F7F7' : 'none',
+        }}
+      >
         <UnapprovedTokenWrapper
           as={Link}
           to={routes.securityToken((currency as any).tokenInfo.catalogId)}

@@ -81,7 +81,7 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
       warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
     } else if (isInsufficientBalance) {
       warning = `Insufficient ${offer.investingTokenSymbol} balance`
-    }  
+    }
     return warning
   }
 
@@ -171,9 +171,9 @@ export const ConvertationField: React.FC<Props> = (props) => {
           onChange={changeValue}
           trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
           caption={insufficientWarning === warning ? '' : warning === 'Loading' ? <Loader /> : warning}
-          height="85px"
-          fontSize="24px"
-          lineHeight="29px"
+          // height="85px"
+          fontSize="20px"
+          lineHeight="20px"
           decimalsLimit={investingTokenDecimals}
         />
         <InvestTextField
@@ -182,25 +182,25 @@ export const ConvertationField: React.FC<Props> = (props) => {
           value={convertedValue}
           onChange={() => null}
           trailing={<CurrencyDropdown disabled value={offerToken} />}
-          height="85px"
-          fontSize="24px"
-          lineHeight="29px"
+          // height="85px"
+          fontSize="20px"
+          lineHeight="20px"
         />
         <ConvertationArrow>
-          <ArrowDown color={theme.launchpad.colors.primary} size="18" />
+          <ArrowDown color={theme.launchpad.colors.primary} size="14" />
         </ConvertationArrow>
       </ConvertationContainer>
       {insufficientWarning === warning && (
-        <FlexContainer border={true} flexDirection="row" padding="0.75rem 1.5rem">
+        <FlexContainer border={true} flexDirection="row" padding="0.4rem 1.5rem">
           <RowBetween>
-            <FlexContainer flexDirection="column" gap={"0.35rem"} padding="0.4rem 0rem 0rem 0rem">
-              <WarningContainer>{warning}</WarningContainer>
+            <FlexContainer flexDirection="column" gap={'0.35rem'}>
+              <WarningContainer style={{ fontSize: '0.7rem' }}>{warning}</WarningContainer>
               <div>
                 {offerInvestmentToken && (
-                  <Trailing fontSize="1rem" fontWeight="500">
+                  <Trailing fontSize="0.7rem" fontWeight="500">
                     {formatCurrencyAmount(balance, balance?.currency?.decimals ?? 18)}
                     <span style={{ margin: '0px 5px' }}>{offerInvestmentToken.name} </span>
-                    <span style={{ marginTop: "-2px", transform: 'scale(0.8)' }}> {offerInvestmentToken.icon}</span>
+                    <span style={{ marginTop: '-2px', transform: 'scale(0.8)' }}>{offerInvestmentToken.icon}</span>
                   </Trailing>
                 )}
               </div>
@@ -213,17 +213,18 @@ export const ConvertationField: React.FC<Props> = (props) => {
   )
 }
 
-const FlexContainer = styled.div<{ border?: boolean, padding?: string, flexDirection?: string, gap?: string}>`
+const FlexContainer = styled.div<{ border?: boolean; padding?: string; flexDirection?: string; gap?: string }>`
   display: flex;
   flex-flow: ${(props) => props.flexDirection} nowrap;
   justify-content: center;
   align-items: start-end;
-  ${(props) => props.gap ? `gap: ${props.gap}` : ''};
+  ${(props) => (props.gap ? `gap: ${props.gap}` : '')};
   ${(props) => `padding: ${props.padding ?? ''}`};
-  ${({ border }) => (border ? 
-    `border: 1px solid #E6E6FF;
-    border-radius: 10px;` : '')};
-  
+  ${({ border }) =>
+    border
+      ? `border: 1px solid #E6E6FF;
+    border-radius: 10px;`
+      : ''};
 `
 
 const WarningContainer = styled.div`
@@ -231,14 +232,14 @@ const WarningContainer = styled.div`
   font-size: 13px;
 `
 
-const Trailing = styled.div<{ fontSize?: string, fontWeight?: string }>`
+const Trailing = styled.div<{ fontSize?: string; fontWeight?: string }>`
   grid-area: trailing;
   place-self: center end;
   height: fit-content;
   color: black;
   display: flex;
   font-size: ${(props) => props.fontSize ?? '20px'};
-  ${(props) => props.fontWeight ? `font-weight: ${props.fontWeight}` : ''};
+  ${(props) => (props.fontWeight ? `font-weight: ${props.fontWeight}` : '')};
 `
 
 const InvestButton = styled.button`
@@ -251,18 +252,19 @@ const InvestButton = styled.button`
   color: ${(props) => props.theme.launchpad.colors.foreground};
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
-  padding: 0.75rem;
+  padding: 0.65rem;
   cursor: pointer;
-  width: 30%;
+  width: 25%;
   text-align: center;
   font-weight: 700;
+  font-size: 12px;
 `
 
 const ConvertationContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
-  gap: 1rem;
+  gap: 0.4rem;
   position: relative;
 `
 

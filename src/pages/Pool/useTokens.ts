@@ -50,6 +50,19 @@ export const useTokens = () => {
   // remove any pairs that also are included in pairs with stake in mining pool
   const v2PairsWithoutStakedAmount = allV2PairsWithLiquidity
 
+  // console.log(
+  //   account,
+  //   dataIsLoading,
+  //   dataIsLoaded,
+  //   v2IsLoading,
+  //   showEmptyLiquidity,
+  //   pairsPresent,
+  //   v2PairsWithoutStakedAmount,
+  //   stakingPairs,
+  //   trackedTokenPairs,
+  //   'jjjjjjj'
+  // )
+
   return {
     account,
     dataIsLoading,

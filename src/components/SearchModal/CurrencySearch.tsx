@@ -18,6 +18,7 @@ import ImportRow from './ImportRow'
 import { PaddedColumn40, SearchInput } from './styleds'
 import { useCurrencySearch } from './useCurrencySearch'
 import searchIcon from '../../assets/images/searchNew.svg'
+import { isMobile } from 'react-device-detect'
 
 const Footer = styled.div`
   width: 100%;
@@ -126,7 +127,11 @@ export function CurrencySearch({
             onChange={handleInput}
             onKeyDown={handleEnter}
           />
-          {/* <img src={searchIcon} style={{ marginLeft: '10px' }} width="15" /> */}
+          <img
+            src={searchIcon}
+            style={{ position: 'absolute', left: isMobile ? '30px' : '50px', top: isMobile ? '80px' : '79px' }}
+            width="20"
+          />
         </Row>
         {/* {showCommonBases && (
           <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />

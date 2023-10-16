@@ -52,7 +52,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     contractSaleId,
     investingTokenDecimals,
     contractAddress,
-    files
+    files,
   } = offer
   const { amount: amountInvested, availableToInvest, lastStatus } = investedData
   const theme = useTheme()
@@ -113,9 +113,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     ]
   }, [availableToInvest, amountInvested, investingTokenSymbol, formatter, lastStatus])
 
-  const purchaseAgreement = files.find((x) => x.type === OfferFileType.purchaseAgreement);
-  const investmentMemorandum = files.find((x) => x.type === OfferFileType.investmentMemorandum);
-  const otherExecutionDocuments = files.filter((x) => x.type === OfferFileType.otherExecutionDocument);
+  const purchaseAgreement = files.find((x) => x.type === OfferFileType.purchaseAgreement)
+  const investmentMemorandum = files.find((x) => x.type === OfferFileType.investmentMemorandum)
+  const otherExecutionDocuments = files.filter((x) => x.type === OfferFileType.otherExecutionDocument)
 
   const tooltipContent = (
     <div>
@@ -226,7 +226,11 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
               textDecoration: 'none',
               color: '#6667FF',
             }}
-            href={purchaseAgreement ? purchaseAgreement.file?.public : "https://drive.google.com/file/d/1IyTwpKXXX2akqYimUstvwfcfFEPuOGBa/view?usp=sharing"}
+            href={
+              purchaseAgreement
+                ? purchaseAgreement.file?.public
+                : 'https://drive.google.com/file/d/1IyTwpKXXX2akqYimUstvwfcfFEPuOGBa/view?usp=sharing'
+            }
             target="_blank"
             rel="noreferrer"
           >
@@ -236,7 +240,10 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
         </AgreementText>
       </Agreement>
       <Agreement>
-        <AgreementCheckbox state={investmentMemorandumAgreed} toggle={() => setInvestmentMemorandumAgreed((state) => !state)} />
+        <AgreementCheckbox
+          state={investmentMemorandumAgreed}
+          toggle={() => setInvestmentMemorandumAgreed((state) => !state)}
+        />
         <AgreementText>
           I have read, fully understood and agree to be bound by the&nbsp;
           <a
@@ -244,7 +251,11 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
               textDecoration: 'none',
               color: '#6667FF',
             }}
-            href={investmentMemorandum ? investmentMemorandum.file?.public : "https://drive.google.com/file/d/1cpYhcSYbxodNWB_OpvyjbFLwnHgGF6lj/view?usp=sharing"}
+            href={
+              investmentMemorandum
+                ? investmentMemorandum.file?.public
+                : 'https://drive.google.com/file/d/1cpYhcSYbxodNWB_OpvyjbFLwnHgGF6lj/view?usp=sharing'
+            }
             target="_blank"
             rel="noreferrer"
           >
@@ -256,25 +267,30 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       <Agreement>
         <AgreementCheckbox state={otherDocumentsAgreed} toggle={() => setOtherDocumentsAgreed((state) => !state)} />
         <AgreementText>
-          I have read, fully understood and agree to be bound by the
-          other relevant agreements here in respect of this token sale:
-          {otherExecutionDocuments.length > 0 ? otherExecutionDocuments.map((document, idx) => 
-            <>
-              <br/>
-              <a
-                style={{
-                  textDecoration: 'none',
-                  color: '#6667FF',
-                }}
-                href={document ? document.file?.public : "https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing"}
-                target="_blank"
-                rel="noreferrer"
-              >
-                &#xB7; {`Support Document ${idx + 1}`}
-              </a>
-            </>
-          )
-          : 
+          I have read, fully understood and agree to be bound by the other relevant agreements here in respect of this
+          token sale:
+          {otherExecutionDocuments.length > 0 ? (
+            otherExecutionDocuments.map((document, idx) => (
+              <>
+                <br />
+                <a
+                  style={{
+                    textDecoration: 'none',
+                    color: '#6667FF',
+                  }}
+                  href={
+                    document
+                      ? document.file?.public
+                      : 'https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing'
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  &#xB7; {`Support Document ${idx + 1}`}
+                </a>
+              </>
+            ))
+          ) : (
             <a
               style={{
                 textDecoration: 'none',
@@ -285,13 +301,20 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
               rel="noreferrer"
             >
               &#xB7; Support Document 1
-            </a>}
+            </a>
+          )}
         </AgreementText>
       </Agreement>
 
       <InvestFormSubmitButton
         state={submitState.current}
-        disabled={isDisabled || !purchaseAgreed || !investmentMemorandumAgreed || !otherDocumentsAgreed || submitState.current !== InvestSubmitState.default}
+        disabled={
+          isDisabled ||
+          !purchaseAgreed ||
+          !investmentMemorandumAgreed ||
+          !otherDocumentsAgreed ||
+          submitState.current !== InvestSubmitState.default
+        }
         onSubmit={submit}
       >
         {submitState.current === InvestSubmitState.success && (

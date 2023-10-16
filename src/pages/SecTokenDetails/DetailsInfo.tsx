@@ -6,6 +6,7 @@ import { AddToMetamask } from './AddToMetamask'
 import dayjs from 'dayjs'
 import { ReadMore } from 'components/ReadMore'
 import { Line } from 'components/Line'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   token: any
@@ -13,7 +14,7 @@ interface Props {
 
 const KeyValueRow = ({ label, value }: { label: string; value: any }) => (
   <div>
-    <Line />
+    <Line style={{ margin: '10px 0px' }} />
     <Label>
       <Trans>{label}:</Trans>
     </Label>
@@ -40,7 +41,7 @@ const KeyValueRow = ({ label, value }: { label: string; value: any }) => (
     ) : (
       <Value>-</Value>
     )}
-    <Line />
+    {/* <Line /> */}
   </div>
 )
 
@@ -58,18 +59,23 @@ export const DetailsInfo = ({ token }: Props) => {
         <div>
           <KeyValueRow label="Country" value={country} />
           <KeyValueRow label="Industry" value={industry} />
+
+          <Line style={{ margin: '10px 0px', display: isMobile ? 'none' : 'block' }} />
+        </div>
+        <div>
           <KeyValueRow label="Issuer" value={issuer?.name} />
           <KeyValueRow label="Website" value={issuer?.url} />
+          <Line style={{ margin: '10px 0px', display: isMobile ? 'none' : 'block' }} />
+
+          {/* <KeyValueRow label="Market Capitalization" value="-" />
+          <KeyValueRow label="Protocol" value="-" /> */}
         </div>
         <div>
           <KeyValueRow label="Issuance Date" value={dayjs(issuerCreatedAt).format('MMM D, YYYY HH:mm')} />
-          <KeyValueRow label="Market Capitalization" value="-" />
-          <KeyValueRow label="Protocol" value="-" />
-        </div>
-        <div>
-          <KeyValueRow label="Exchange" value="-" />
+          <Line style={{ margin: '10px 0px' }} />
+          {/* <KeyValueRow label="Exchange" value="-" />
           <KeyValueRow label="Token Supply" value="-" />
-          <KeyValueRow label="Issuing Price" value="-" />
+          <KeyValueRow label="Issuing Price" value="-" /> */}
         </div>
       </Info>
     </Details>

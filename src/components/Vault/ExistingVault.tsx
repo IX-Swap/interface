@@ -16,6 +16,7 @@ import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { AddWrappedToMetamask } from 'pages/SecTokenDetails/AddToMetamask'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -44,7 +45,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
     word-break: break-all;
     line-height: 36px !important;
     ${({ theme }) => theme.mediaWidth.upToSmall`
-      display: flex;
+      display: block;
       gap: 0px;
       flex-direction: row;
       font-size: 23px !important;
@@ -54,7 +55,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
 
   return (
     <ExistingWrapper>
-      <TitleStatusRow style={{ marginBottom: '0rem' }}>
+      <TitleStatusRow style={{ marginBottom: '0rem', justifyContent: isMobile ? 'center' : 'space-between' }}>
         <ExistingTitle>
           <StyledTitle style={{ marginBottom: '4px' }}>
             <Trans>My {symbolText} Vault</Trans>
@@ -85,7 +86,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
           <BalanceRow currency={currency} account={account} token={token} />
         </DesktopOnly>
       </TitleStatusRow>
-      {/* <MobileAndTablet style={{ margin: '1rem 0 0.5rem 0', width: '100%' }}>
+      <MobileAndTablet style={{ margin: '1rem 0 0.5rem 0', width: '100%' }}>
         <MouseoverTooltip
           referenceStyle={{ width: '100%' }}
           text={isDisabled ? 'Deposit are not available yet for this token' : ''}
@@ -99,8 +100,10 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
             <Trans>Deposit</Trans>
           </PinnedContentButton>
         </MouseoverTooltip>
-      </MobileAndTablet> */}
-      <AddWrappedToMetamask token={token} />
+        <BalanceRow currency={currency} account={account} token={token} />
+      </MobileAndTablet>
+      {!isMobile && <AddWrappedToMetamask token={token} />}
+
       <HistoryBlock currency={currency} account={account} />
     </ExistingWrapper>
   )

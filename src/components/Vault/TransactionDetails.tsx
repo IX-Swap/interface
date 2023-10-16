@@ -106,7 +106,7 @@ export const TransactionDetails = ({ currency }: Props) => {
       maxHeight={'fit-content'}
       mobileMaxHeight={90}
     >
-      <ModalBlurWrapper data-testid="depositPopup" style={{ overflowY: 'scroll' }}>
+      <ModalBlurWrapper data-testid="depositPopup" style={{ overflowY: 'scroll', width: '500px' }}>
         <InfoModalHeader>
           <TYPE.title5>
             <Trans>
@@ -130,52 +130,90 @@ export const TransactionDetails = ({ currency }: Props) => {
             <label>
               <Trans>Status:</Trans>
             </label>
-            {/* <hr /> */}
-
-            <div
-              style={{
-                background: '#FFFFFF',
-                padding: '24px 16px',
-                border: '1px solid #E6E6FF',
-                borderRadius: '8px',
-                marginTop: '10px',
-              }}
-            >
-              <RowBetween>
-                <TYPE.description2 color={statusColor}>{statusText} </TYPE.description2>{' '}
-                {isSuccess ? <SuccessIcon /> : data?.status === 'pending' ? <PendingIcon /> : <ErrorIcon />}
-              </RowBetween>
-
-              <LiniarProgressContainer statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
+            {data?.status === 'approved' && (
+              <LiniarProgressContainer
+                style={{
+                  background: '#FFFFFF',
+                  padding: '24px 16px',
+                  border: '1px solid #E6E6FF',
+                  borderRadius: '8px',
+                  marginTop: '10px',
+                  display: 'block',
+                }}
+                statusColor={statusColor as Exclude<keyof Colors, 'config'>}
+              >
+                <TYPE.description2 marginBottom={'10px'} color={statusColor}>
+                  {statusText}
+                </TYPE.description2>
                 <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
               </LiniarProgressContainer>
-            </div>
+            )}
+
+            {/* <hr /> */}
+            {data?.status !== 'approved' && (
+              <div
+                style={{
+                  background: '#FFFFFF',
+                  padding: '24px 16px',
+                  border: '1px solid #E6E6FF',
+                  borderRadius: '8px',
+                  marginTop: '10px',
+                }}
+              >
+                <RowBetween>
+                  <TYPE.description2 color={statusColor}>{statusText} </TYPE.description2>
+                  {isSuccess ? (
+                    <SuccessIcon />
+                  ) : data?.status === 'pending' ? (
+                    ''
+                  ) : data?.status === 'approved' ? (
+                    <PendingIcon />
+                  ) : (
+                    <ErrorIcon />
+                  )}
+                </RowBetween>
+
+                <LiniarProgressContainer statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
+                  <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
+                </LiniarProgressContainer>
+              </div>
+            )}
+
             <div>
               {isDeposit(data.type) && status === DepositStatus.PENDING && (
                 <PendingDepositInfo>
-                  <Row style={{ flexWrap: 'wrap', gap: '12px', alignItems: 'flex-end', marginTop: '8px' }}>
-                    <div style={{ flex: '1', minWidth: '60%' }}>
-                      <DepoistStatusInfo
-                        originalSymbol={currency?.originalSymbol}
-                        fromAddress={data.fromAddress}
-                        toAddress={data.depositAddress}
-                        amount={data.amount}
-                        network={originalNetworkName}
-                      />
-                    </div>
+                  {/* <Row style={{ flexWrap: 'wrap', gap: '12px', alignItems: 'flex-end', marginTop: '8px' }}> */}
+                  <DepoistStatusInfo
+                    originalSymbol={currency?.originalSymbol}
+                    fromAddress={data.fromAddress}
+                    toAddress={data.depositAddress}
+                    amount={data.amount}
+                    network={originalNetworkName}
+                  />
+                  {/* </Row> */}
 
-                    <div style={{ margin: '0 auto' }}>
-                      <QRCodeWrap
-                        value={data.depositAddress ?? ''}
-                        size={80}
-                        info={
-                          <StyledQrInfo>
-                            {shortenAddress(data?.depositAddress || '', 4, originalNetworkName)}
-                          </StyledQrInfo>
-                        }
-                      ></QRCodeWrap>
-                    </div>
-                  </Row>
+                  <div
+                    style={{
+                      margin: '0 auto',
+                      padding: '10px 10px',
+                      border: '1px solid #E6E6FF',
+                      background: '#FFFFFF',
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <QRCodeWrap
+                      value={data.depositAddress ?? ''}
+                      size={80}
+                      // info={
+                      //   <StyledQrInfo>
+                      //     {shortenAddress(data?.depositAddress || '', 4, originalNetworkName)}
+                      //   </StyledQrInfo>
+                      // }
+                    ></QRCodeWrap>
+                  </div>
                   {data.deadline && (
                     <DeadlineInfo>
                       <Trans>
@@ -257,7 +295,7 @@ export const TransactionDetails = ({ currency }: Props) => {
               symbol={currency?.originalSymbol}
             />
           )}
-          {!isSuccess && <PinnedContentButton>Contact Support</PinnedContentButton>}
+          {/* {!isSuccess && <PinnedContentButton>Contact Support</PinnedContentButton>} */}
         </InfoModalBody>
       </ModalBlurWrapper>
     </RedesignedWideModal>

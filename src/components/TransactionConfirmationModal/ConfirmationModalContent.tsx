@@ -8,10 +8,10 @@ import { Box } from 'rebass'
 import { ReactComponent as ArrowLeft } from '../../assets/images/backNew.svg'
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 550px;
   border-radius: 4px;
   background: ${({ theme }) => theme.bg25};
-  padding: 20px 50px 35px 50px;
+  padding: 10px 30px 35px 30px;
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       padding: 16px;
@@ -23,8 +23,8 @@ const Section = styled(AutoColumn)<{ inline?: boolean }>`
 `
 
 const BottomSection = styled(Section)`
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  // border-bottom-left-radius: 20px;
+  // border-bottom-right-radius: 20px;
 `
 
 const TitleText = styled(Text)`
@@ -38,8 +38,8 @@ const TitleText = styled(Text)`
 const TitleRow = styled(RowBetween)`
   margin-top: 2.25rem;
   margin-bottom: 1.25rem;
-  padding-left: 40px;
-  padding-right: 40px;
+  // padding-left: 40px;
+  // padding-right: 40px;
   text-align: center;
 `
 

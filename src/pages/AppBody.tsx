@@ -23,7 +23,7 @@ export const BodyWrapper = styled.div<{
   //   0px 24px 32px rgba(0, 0, 0, 0.01);
   border-radius: 8px;
   margin-top: ${({ hasAnnouncement }) => (hasAnnouncement ? '3rem' : '1rem')};
-  padding: ${({ padding, blurred }) => (blurred ? '0px' : padding ?? '10px 36px 52px 36px;')};
+  padding: ${({ padding, blurred }) => (blurred ? '0px' : padding ?? '40px')};
   ${({ theme, paddingXS, blurred }) =>
     !blurred &&
     theme.mediaWidth.upToExtraSmall`
@@ -41,7 +41,7 @@ export const BodyWrapper = styled.div<{
   // }
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    padding-bottom: 20px;
+    padding: 40px;
   `};
 `
 export const BlurredOverlay = styled.div`
@@ -76,7 +76,7 @@ export default function AppBody({
     <React.Fragment>
       <BodyWrapper
         style={{
-          marginTop: isMobile ? '120px' : '120px',
+          marginTop: isMobile ? '120px' : '10px',
         }}
         {...rest}
         hasAnnouncement={!cookies.annoucementsSeen}
