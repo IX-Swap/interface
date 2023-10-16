@@ -21,7 +21,7 @@ export const TotalStats = () => {
   }
 
   return (
-    <Grid container gap={2}>
+    <Grid item container gap={2}>
       <Grid item xs={12} md>
         <Stats
           title={'Total Commitments'}

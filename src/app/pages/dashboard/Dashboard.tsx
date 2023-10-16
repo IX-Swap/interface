@@ -63,20 +63,18 @@ export const Dashboard = () => {
                   <>
                     {hasAccreditation && (
                       <>
-                        <Grid item>
-                          <TotalStats />
+                      <TotalStats />
+                      <Grid item container gap={2}>
+                        <Grid item xs={12} md>
+                          <MostPopularSTOs />
                         </Grid>
-                        <Grid item container spacing={2}>
-                          <Grid item xs={12} md={6}>
-                            <MostPopularSTOs />
-                          </Grid>
-                          <Grid item xs={12} md={6}>
-                            <UpcomingSTOs />
-                          </Grid>
+                        <Grid item xs={12} md>
+                          <UpcomingSTOs />
+                        </Grid>
                         </Grid>
                       </>
                     )}
-
+                    
                     <Grid item>
                       <PrimaryOfferings />
                     </Grid>
