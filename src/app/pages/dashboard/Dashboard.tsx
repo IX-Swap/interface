@@ -58,14 +58,12 @@ export const Dashboard = () => {
               <>
                 {hasAccreditation && (
                   <>
-                    <Grid item>
-                      <TotalStats />
-                    </Grid>
-                    <Grid item container spacing={2}>
-                      <Grid item xs={12} md={6}>
+                    <TotalStats />
+                    <Grid item container gap={2}>
+                      <Grid item xs={12} md>
                         <MostPopularSTOs />
                       </Grid>
-                      <Grid item xs={12} md={6}>
+                      <Grid item xs={12} md>
                         <UpcomingSTOs />
                       </Grid>
                     </Grid>
