@@ -434,6 +434,10 @@ export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: stri
   text-align: left;
   font-size: 22px;
   line-height: 40px;
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+
+    font-size: 14px; 
+  `}
   ::-webkit-search-decoration {
     -webkit-appearance: none;
   }

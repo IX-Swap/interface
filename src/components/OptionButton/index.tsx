@@ -43,7 +43,8 @@ export const NewOption = styled(FancyButton)<{ active: boolean }>`
   background: ${({ active, theme }) => (active ? theme.bg26 : theme.bg25)};
   color: ${({ active, theme }) => (active ? 'white' : theme.launchpad.colors.primary)};
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    width: 100%  
+    width: 100% 
+    font-size: 14px; 
   `}
 `
 
@@ -100,5 +101,6 @@ export const OptionCustom = styled(FancyButton)<{ active?: boolean; warning?: bo
   }
   ${({ theme }) => theme.mediaWidth.upToSmall`
       max-width: 100%;
+      font-size: 14px;
   `}
 `

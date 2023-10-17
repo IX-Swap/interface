@@ -45,7 +45,10 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     [offer?.status]
   )
   const canOpen = React.useMemo(() => {
-    return checkKYC(offer.allowOnlyAccredited, isClosed) || account?.toLowerCase() === offer?.vetting?.issuance?.user?.ethAddress?.toLowerCase()
+    return (
+      checkKYC(offer.allowOnlyAccredited, isClosed) ||
+      account?.toLowerCase() === offer?.vetting?.issuance?.user?.ethAddress?.toLowerCase()
+    )
   }, [checkKYC, isClosed, offer?.allowOnlyAccredited])
 
   const stage = React.useMemo(() => {

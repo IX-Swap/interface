@@ -12,6 +12,7 @@ import { AutoColumn } from '../Column'
 import QuestionHelper from '../QuestionHelper'
 import Row, { RowBetween, RowFixed, RowStart } from '../Row'
 import { displayDeadline, displayUserSlippageTolerance } from './helpers'
+import { isMobile } from 'react-device-detect'
 
 const Input = styled.input`
   background: ${({ theme }) => theme.config.background?.main || theme.bg1};
@@ -66,11 +67,12 @@ const StyledOption = styled(Option)`
 `
 const StyledOptionCustom = styled(OptionCustom)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    min-width: 85px;
-    max-width: 100px;
+    // min-width: 85px;
+    // max-width: 100px;
     padding: 10px;
     > div > input {
      text-align: left;
+
    }
   `}
 `
@@ -207,7 +209,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                 onBlur={() => resetDeadline()}
                 color={deadlineError ? 'red' : ''}
               />
-              <Text style={{ paddingLeft: '8px' }} color={'#B8B8CC'} fontSize={15}>
+              <Text style={{ paddingLeft: '8px', marginRight: isMobile ? '10px' : '' }} color={'#B8B8CC'} fontSize={15}>
                 Minutes
               </Text>
             </RowStart>
