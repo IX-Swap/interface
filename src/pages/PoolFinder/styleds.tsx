@@ -20,6 +20,10 @@ export const FoundPoolWrapper = styled(ColumnCenter)`
   border: 1px solid #e6e6ff;
   gap: 34px;
   // margin-top: 35px;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  padding: 24px 20px 46px 20px;
+  `};
 `
 export const SelectCurrencyContainer = styled(AutoColumn)`
   padding: 24px;

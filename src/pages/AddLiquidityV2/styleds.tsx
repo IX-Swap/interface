@@ -16,6 +16,10 @@ export const ModalHeaderWrapper = styled.div`
   background: ${({ theme }) => theme.bg25};
   border: solid 1px #e6e6ff;
   border-radius: 10px;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+   padding: 27px 22px 27px 10px;
+  `};
 `
 
 export const ModalBottomWrapper = styled.div`
@@ -23,4 +27,8 @@ export const ModalBottomWrapper = styled.div`
   background: ${({ theme }) => theme.bg1};
   border-radius: 10px;
   border: solid 1px #e6e6ff;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+   padding: 27px 22px 27px 10px;
+  `}
 `

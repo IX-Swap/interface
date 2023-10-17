@@ -41,6 +41,11 @@ const TitleRow = styled(RowBetween)`
   // padding-left: 40px;
   // padding-right: 40px;
   text-align: center;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  `};
 `
 
 export function ConfirmationModalContent({

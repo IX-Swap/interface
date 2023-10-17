@@ -85,6 +85,9 @@ const CurrencySelect = styled(ButtonEmpty)<{ selected: boolean; hideInput?: bool
   &:focus {
     text-decoration: none;
   }
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  font-size: 14px;
+  `};
 `
 
 const InputRow = styled.div<{ selected: boolean }>`
@@ -177,7 +180,8 @@ export const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
   }
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    margin-right: 0.5rem;
+    margin-right: 0rem;
+     padding: 10px 10px;
   `};
 `
 

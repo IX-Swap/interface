@@ -9,10 +9,17 @@ import { ExternalLink } from 'theme'
 import { routes } from 'utils/routes'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
-import { ReactComponent as CloseIcon } from '../../assets/images/cross.svg'
+import { ReactComponent as CloseIcon } from '../../assets/images/newCross.svg'
 import { disabledStyle } from 'components/Header/HeaderLinks'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { useKyc, useRole } from 'state/user/hooks'
+import { Line } from 'components/Line'
+import { Li } from 'pages/KYC/styleds'
+
+import MenuMobile from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Fade from '@mui/material/Fade'
+import { Button } from 'rebass'
 
 interface Props {
   close: () => void
@@ -22,6 +29,15 @@ interface Props {
 export const Menu = ({ close, isAdminMenu }: Props) => {
   const { chainId, account } = useActiveWeb3React()
   const { config } = useWhitelabelState()
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   useEffect(() => {
     const body = document.getElementsByTagName('body')[0]
@@ -60,25 +76,43 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
   return isAdminMenu ? (
     <ModalContainer>
       <CloseContainer>
-        <StyledCloseIcon onClick={close} />
+        <CloseIcon onClick={close} />
       </CloseContainer>
+
       <Container>
         <MenuList>
-          <MenuListItem id={`admin-accreditation-nav-link`} to="/admin/accreditation" onClick={close}>
-            <Trans>Accreditation</Trans>
-          </MenuListItem>
-          <MenuListItem id={`admin-kyc-nav-link`} to="/admin/kyc" onClick={close}>
-            <Trans>KYC</Trans>
-          </MenuListItem>
-          <MenuListItem id={`admin-transactions-nav-link`} to="/admin/transactions" onClick={close}>
-            <Trans>Broker Dealer Transactions</Trans>
-          </MenuListItem>
-          <MenuListItem id={`admin-security-nav-link`} to="/admin/security-catalog" onClick={close}>
-            <Trans>Security Catalog</Trans>
-          </MenuListItem>
-          <MenuListItem id={`admin-users-nav-link`} to="/admin/users-list" onClick={close}>
-            <Trans>User’s</Trans>
-          </MenuListItem>
+          <>
+            <MenuListItem id={`admin-accreditation-nav-link`} to="/admin/accreditation" onClick={close}>
+              <Trans>Accreditation</Trans>
+            </MenuListItem>
+            <Line />
+          </>
+          <>
+            <MenuListItem id={`admin-kyc-nav-link`} to="/admin/kyc" onClick={close}>
+              <Trans>KYC</Trans>
+            </MenuListItem>
+            <Line />
+          </>
+
+          <>
+            <MenuListItem id={`admin-transactions-nav-link`} to="/admin/transactions" onClick={close}>
+              <Trans>Broker Dealer Transactions</Trans>
+            </MenuListItem>
+            <Line />
+          </>
+          <>
+            <MenuListItem id={`admin-security-nav-link`} to="/admin/security-catalog" onClick={close}>
+              <Trans>Security Catalog</Trans>
+            </MenuListItem>
+            <Line />
+          </>
+
+          <>
+            <MenuListItem id={`admin-users-nav-link`} to="/admin/users-list" onClick={close}>
+              <Trans>User’s</Trans>
+            </MenuListItem>
+            <Line />
+          </>
         </MenuList>
       </Container>
     </ModalContainer>
@@ -86,30 +120,40 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
     <ModalContainer>
       <Container>
         <CloseContainer>
-          <StyledCloseIcon onClick={close} />
+          <CloseIcon onClick={close} />
         </CloseContainer>
+
         <MenuList>
           {isAllowed('/swap') && chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} data-testid={`swap-nav-link`}>
-              <Trans>Swap/Trade</Trans>
-            </MenuListItem>
+            <>
+              <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} data-testid={`swap-nav-link`}>
+                <Trans>Swap/Trade</Trans>
+              </MenuListItem>{' '}
+              <Line />
+            </>
           )}
 
           {isAllowed(routes.securityTokens()) && chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem
-              disabled={!isApproved}
-              id={`security-nav-link`}
-              to={routes.securityTokens('tokens')}
-              onClick={close}
-            >
-              <Trans>Security Tokens</Trans>
-            </MenuListItem>
+            <>
+              <MenuListItem
+                disabled={!isApproved}
+                id={`security-nav-link`}
+                to={routes.securityTokens('tokens')}
+                onClick={close}
+              >
+                <Trans>Security Tokens</Trans>
+              </MenuListItem>
+              <Line />
+            </>
           )}
 
           {isAllowed('/pool') && chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem id={`pool-nav-link`} to={`/pool`} onClick={close}>
-              <Trans>Liquidity Pools</Trans>
-            </MenuListItem>
+            <>
+              <MenuListItem id={`pool-nav-link`} to={`/pool`} onClick={close}>
+                <Trans>Liquidity Pools</Trans>
+              </MenuListItem>
+              <Line />
+            </>
           )}
 
           {/* {chainId && chains.includes(chainId) && isWhitelisted && (
@@ -122,34 +166,14 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             </ExternalListItem>
           )} */}
 
-          {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
-            <ExternalListItem href={`https://ixswap.defiterm.io/`}>
-              <Trans>Live Pools</Trans>
-            </ExternalListItem>
-          )}
-
-          {isAllowed(routes.vesting) && (
-            <MenuListItem
-              // style={{ fontSize: '10px' }}
-              activeClassName="active-item"
-              id={`vesting-nav-link`}
-              to={routes.vesting}
-              onClick={close}
-            >
-              Token Sale Distribution
-            </MenuListItem>
-          )}
-
-          {/* {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
-            <ExternalListItem href={`https://ixswap.defiterm.io/`}>
-              <Trans>Liquidity Mining Program (Quickswap)</Trans>
-            </ExternalListItem>
-          )} */}
-
           {isWhitelisted && (
-            <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
-              <Trans>Charts</Trans>
-            </ExternalListItem>
+            <>
+              <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
+                <Trans>Charts</Trans>
+              </ExternalListItem>
+
+              <Line />
+            </>
           )}
 
           {isAllowed('/faucet') && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
@@ -159,39 +183,128 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
           )}
 
           {isAllowed('/kyc') && (
-            <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
-              <Trans>KYC</Trans>
-            </MenuListItem>
+            <>
+              <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
+                <Trans>KYC</Trans>
+              </MenuListItem>
+              <Line />
+            </>
           )}
           {isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
-            <MenuListItem
-              activeClassName="active-item"
-              id={`kyc-nav-link`}
-              to={routes.tokenManager('my-tokens', null)}
-              onClick={close}
-            >
-              <Trans>Token Manager</Trans>
-            </MenuListItem>
+            <>
+              <MenuListItem
+                activeClassName="active-item"
+                id={`kyc-nav-link`}
+                to={routes.tokenManager('my-tokens', null)}
+                onClick={close}
+              >
+                <Trans>Token Manager</Trans>
+              </MenuListItem>
+              <Line />
+            </>
           )}
 
-          <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
-            <Trans>Launchpad</Trans>
-          </MenuListItem>
-          {showIssuance && (
-            <MenuListItem
-              activeClassName="active-item"
-              id={`issuance-dashboard-nav-link`}
-              to="/issuance"
-              onClick={close}
-            >
-              <Trans>Issuance Dashboard</Trans>
+          <>
+            <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
+              <Trans>Launchpad</Trans>
             </MenuListItem>
+
+            <Line />
+          </>
+
+          {/* <>
+            <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
+              <Trans>Launchpad</Trans>
+            </MenuListItem>
+            <Line />
+          </> */}
+
+          <div>
+            <div
+              style={{ fontSize: '20px', fontWeight: '700', marginTop: '20px', height: '40px' }}
+              id="fade-button"
+              aria-controls={open ? 'fade-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+            >
+              Farming
+            </div>
+            <MenuMobile
+              style={{ width: '90vw' }}
+              id="fade-menu"
+              MenuListProps={{
+                'aria-labelledby': 'fade-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+            >
+              {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
+                <>
+                  <MenuItem onClick={handleClose}>
+                    <ExternalListItem
+                      style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '400' }}
+                      href={`https://ixswap.defiterm.io/`}
+                    >
+                      <Trans>Live Pools</Trans>
+                    </ExternalListItem>
+                  </MenuItem>
+                </>
+              )}
+
+              {isAllowed(routes.vesting) && (
+                <>
+                  <MenuItem onClick={handleClose}>
+                    <MenuListItem
+                      style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '400' }}
+                      activeClassName="active-item"
+                      id={`vesting-nav-link`}
+                      to={routes.vesting}
+                      onClick={close}
+                    >
+                      Token Sale Distribution
+                    </MenuListItem>
+                  </MenuItem>
+                </>
+              )}
+
+              {/* {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
+                <MenuItem onClick={handleClose}>
+                  <ExternalListItem
+                    style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '500' }}
+                    href={`https://ixswap.defiterm.io/`}
+                  >
+                    <Trans>Liquidity Mining Program (Quickswap)</Trans>
+                  </ExternalListItem>
+                </MenuItem>
+              )} */}
+            </MenuMobile>
+            <Line />
+          </div>
+
+          {showIssuance && (
+            <>
+              <MenuListItem
+                activeClassName="active-item"
+                id={`issuance-dashboard-nav-link`}
+                to="/issuance"
+                onClick={close}
+              >
+                <Trans>Issuance Dashboard</Trans>
+              </MenuListItem>
+              <Line />
+            </>
           )}
 
           {isAdmin && (
-            <MenuListItem activeClassName="active-item" id={`admin-dashboard-nav-link`} to="/admin" onClick={close}>
-              <Trans>Admin</Trans>
-            </MenuListItem>
+            <>
+              <MenuListItem activeClassName="active-item" id={`admin-dashboard-nav-link`} to="/admin" onClick={close}>
+                <Trans>Admin</Trans>
+              </MenuListItem>
+              <Line />
+            </>
           )}
         </MenuList>
       </Container>
@@ -205,11 +318,11 @@ const ModalContainer = styled.div`
   left: 0;
   width: 100vw;
   height: 100%;
-  backdrop-filter: blur(36px);
+  // backdrop-filter: blur(36px);
   z-index: 9999;
   padding: 32px 18px;
   display: none;
-  background: ${({ theme }) => theme.bgG16};
+  background: ${({ theme }) => theme.bg0};
   @media (max-width: 1400px) {
     display: block;
     overflow-y: scroll;
@@ -218,9 +331,11 @@ const ModalContainer = styled.div`
 
 const Container = styled.div`
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // display: flex;
+  align-items: left;
+  justify-content: left;
+  display: contents;
+  color: black;
 `
 
 const CloseContainer = styled.div`
@@ -229,6 +344,7 @@ const CloseContainer = styled.div`
   top: 20px;
   right: 20px;
   z-index: 9999;
+  color: black;
 `
 
 const StyledCloseIcon = styled(CloseIcon)`
@@ -236,31 +352,33 @@ const StyledCloseIcon = styled(CloseIcon)`
   height: 18px;
   cursor: pointer;
   z-index: 9999;
+  color: black;
 `
 
 const MenuList = styled.div`
   display: grid;
   grid-template-columns: 100%;
   grid-gap: 6px;
-  justify-content: center;
+  justify-content: left;
 `
 const listItemStyle = css`
-  height: 60px;
+  margin-top: 20px;
+  height: 40px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 600;
-  font-size: 22px;
-  text-transform: uppercase;
+  justify-content: left;
+  align-items: left;
+  font-weight: 700;
+  font-size: 20px;
+  // text-transform: uppercase;
   outline: none;
   cursor: pointer;
   text-decoration: none;
   text-align: center;
-  color: ${({ theme }) => theme.config?.text?.main || theme.text2};
-  opacity: 0.6;
+
+  color: ${({ theme }) => theme.config?.text?.main || theme.text1};
   &.active-item {
-    opacity: 1;
-    color: white;
+    opacity: 0.5;
+    color: ${({ theme }) => theme.config?.text?.main || theme.text1};
   }
 `
 const MenuListItem = styled(NavLink)<{ disabled?: boolean }>`

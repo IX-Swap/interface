@@ -18,6 +18,7 @@ import { ButtonGradient, ButtonGradientBorder } from '../Button'
 import Column, { AutoColumn } from '../Column'
 import { RowBetween, RowCenter, RowFixed } from '../Row'
 import MetamaskIcon from 'assets/images/metamask.png'
+import { isMobile } from 'react-device-detect'
 
 export const StyledSuccess = styled(Success)`
   ${({ theme }) =>
@@ -157,7 +158,7 @@ export function TransactionSubmittedContent({
             <ButtonGradientBorder
               onClick={onDismiss}
               data-testid="return-close"
-              style={{ width: '450px', marginBottom: '35px', marginTop: '10px' }}
+              style={{ width: isMobile ? '200px' : '450px', marginBottom: '35px', marginTop: '10px' }}
             >
               <Trans>Close</Trans>
             </ButtonGradientBorder>

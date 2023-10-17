@@ -10,6 +10,7 @@ import { Trans } from '@lingui/macro'
 import { ModalHeaderWrapper } from './styleds'
 import styled from 'styled-components/macro'
 import { formatAmount } from 'utils/formatCurrencyAmount'
+import { isMobile } from 'react-device-detect'
 
 const TextContainer = styled.div`
   color: #292933;
@@ -22,7 +23,7 @@ const TextContainer = styled.div`
   // }
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    font-size: 20px;
+    font-size: 18px;
   `};
 `
 
@@ -79,7 +80,7 @@ export const ModalHeader = ({ noLiquidity, currencies, liquidityMinted, allowedS
           <DoubleCurrencyLogo
             currency0={currencies[Field.CURRENCY_A]}
             currency1={currencies[Field.CURRENCY_B]}
-            size={50}
+            size={isMobile ? 30 : 50}
           />
         </RowBetween>
         {!noLiquidity && (

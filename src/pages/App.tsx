@@ -72,6 +72,8 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: b
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     min-height: calc(100vh - 64px);
+    // width: 100%;
+    // padding: 0px 20px;
   `}
 `
 

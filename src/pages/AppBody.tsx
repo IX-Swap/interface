@@ -40,8 +40,12 @@ export const BodyWrapper = styled.div<{
   //   padding-bottom: 20px;
   // }
 
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    // padding: 40px;
+  `};
+
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    padding: 40px;
+    // padding: 40px;
   `};
 `
 export const BlurredOverlay = styled.div`

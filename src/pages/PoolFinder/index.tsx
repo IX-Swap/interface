@@ -34,6 +34,7 @@ import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import Header from 'components/Header'
+import { isMobile } from 'react-device-detect'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
@@ -116,9 +117,9 @@ export default function PoolFinder() {
             <FoundPoolWrapper>
               <div
                 style={{
-                  border: '1px solid #E6E6FF',
+                  border: isMobile ? 'none' : '1px solid #E6E6FF',
                   width: '100%',
-                  padding: '20px',
+                  padding: isMobile ? '0px' : '20px',
                   borderRadius: '6px',
                   textAlign: 'center',
                 }}

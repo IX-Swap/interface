@@ -40,14 +40,16 @@ const InvestmentListContainer = styled.div`
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-
   max-width: ${(props) => props.theme.launchpad.content.maxWidth};
-
   margin: auto;
-
   @media (max-width: 1180px) {
     margin: 0 1rem;
   }
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    min-height: calc(100vh - 64px);
+    width: 100%;
+  `}
 `
 
 const InvestmentTitle = styled.div`
