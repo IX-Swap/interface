@@ -3,21 +3,21 @@ import { useHistory } from 'react-router-dom'
 import { DialogTitle, DialogContent, Typography } from '@mui/material'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
 import { Form } from 'components/form/Form'
-import { WhitelistWalletAddressesRoute } from '../../router/config'
-import { WhitelistWalletAddressFields } from './WhitelistWalletAddressFields'
-import { WhitelistWalletAddressFormValues } from 'types/whitelistWalletAddress'
+import { VirtualAccountsRoute } from '../../router/config'
+import { CreateVirtualAccountTransactionFields } from './CreateVirtualAccountTransactionFields'
+import { VirtualAccountTransactionFormValues } from 'types/virtualAccountTransaction'
 import { WhitelistWalletAddressFormValidationSchema } from './validation'
 import { useAddToWhitelist } from '../../hooks/useAddToWhitelist'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
-export const AddToWhitelist = () => {
+export const CreateVirtualAccountTransaction = () => {
   const { replace } = useHistory()
   const [addToWhitelist, { isLoading }] = useAddToWhitelist()
-  const onClose = () => replace(WhitelistWalletAddressesRoute.list)
+  const onClose = () => replace(VirtualAccountsRoute.transactions.list)
 
   const handleSubmit = async ({
     ...values
-  }: WhitelistWalletAddressFormValues) => {
+  }: VirtualAccountTransactionFormValues) => {
     const wallet = values.address.split('_')
 
     await addToWhitelist({
@@ -32,7 +32,7 @@ export const AddToWhitelist = () => {
     <UIDialog open onClose={onClose}>
       {isLoading && <LoadingIndicator />}
       <DialogTitle>
-        <Typography variant='h3'>Add to Whitelist</Typography>
+        <Typography variant='h3'>Create VA Transaction</Typography>
       </DialogTitle>
       <DialogContent sx={{ width: '600px', maxWidth: '100%' }}>
         <Form
@@ -40,7 +40,7 @@ export const AddToWhitelist = () => {
           validationSchema={WhitelistWalletAddressFormValidationSchema}
           defaultValues={{ label: '' }}
         >
-          <WhitelistWalletAddressFields onCancel={onClose} />
+          <CreateVirtualAccountTransactionFields onCancel={onClose} />
         </Form>
       </DialogContent>
     </UIDialog>
