@@ -97,7 +97,7 @@ const PaginationRow = styled.div<{ smallMargin?: boolean }>`
   align-items: center;
   gap: 0.5rem;
   height: 40px;
-  max-width: 1180px;
+  max-width: 1320px;
   ${(props) => (props.smallMargin ? `margin: 1rem auto 0 auto;` : `margin: 1rem auto;`)}
 `
 

@@ -26,7 +26,7 @@ const StyledSVG = styled.svg<{ size: string; stroke?: string }>`
  */
 export default function Loader({
   size = '16px',
-  stroke = '#7A02E0',
+  stroke = '#6666FF',
 
   ...rest
 }: {

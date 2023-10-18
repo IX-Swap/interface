@@ -69,7 +69,7 @@ export const kyc = {
   createCorporateDraft: `/newkyc/corporate/draft`,
   createCorporate: `/newkyc/corporate`,
   updateIndividual: (kycId: number, draft = false) => `/newkyc/individual/${kycId}${draft ? '/draft' : ''}`,
-  updateCorporate: (kycId: number, draft = false) => `/newkyc/corporate/${kycId}${draft ? '/draft' : ''}`,
+  updateCorporate: (kycId: number, draft = false) => `/newkyc/corporate${draft ? '/draft' : ''}/${kycId}`,
   // updateCorporate: (kycId: number) => `/newkyc/corporate/${kycId}`,
   cynopsisRisks: (address: string) => `/newkyc/cynopsis/${address}`,
   getMyKyc: `newkyc/me`,

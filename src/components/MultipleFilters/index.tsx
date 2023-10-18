@@ -19,6 +19,8 @@ import { Container, DarkBlueCard, FiltersContainer, ResetFilters } from './style
 import { FilterDropdown } from './FilterDropdown'
 import { MobileFilters } from './MobileFilters'
 import { Option, useTokensList } from 'hooks/useTokensList'
+import { ReactComponent as IdentityIcon } from 'assets/images/identityIcon.svg'
+import { PinnedContentButton } from 'components/Button'
 
 interface Props {
   filters: FILTERS[]
@@ -163,12 +165,21 @@ export const MultipleFilters = ({
       />
     ),
     [FILTERS.ROLES]: (
-      <FilterDropdown
-        placeholder="Role"
-        selectedItems={values[FILTERS.ROLES]}
-        onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item)}
-        items={rolesOptions}
-      />
+      <>
+        <IdentityIcon style={{ position: 'relative', top: '0px', left: '130px', zIndex: '1' }} />
+        <FilterDropdown
+          placeholder="Role"
+          selectedItems={values[FILTERS.ROLES]}
+          onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item)}
+          items={rolesOptions}
+        />
+      </>
+      // <FilterDropdown
+      //   placeholder="Role"
+      //   selectedItems={values[FILTERS.ROLES]}
+      //   onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item)}
+      //   items={rolesOptions}
+      // />
     ),
     [FILTERS.SEC_TOKENS]: (
       <FilterDropdown
@@ -295,9 +306,9 @@ export const MultipleFilters = ({
             )
         )}
       </FiltersContainer>
-      <ResetFilters disabled={isEmpty} onClick={onResetFilters}>
+      <PinnedContentButton disabled={isEmpty} onClick={onResetFilters}>
         Clear Filters
-      </ResetFilters>
+      </PinnedContentButton>
     </Container>
   )
 }

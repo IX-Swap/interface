@@ -62,7 +62,7 @@ const FilterContainer = styled.div`
   width: 100%;
 
   margin: auto;
-  max-width: 1180px;
+  max-width: 1320px;
 `
 
 const FilterSearchField = styled.div`

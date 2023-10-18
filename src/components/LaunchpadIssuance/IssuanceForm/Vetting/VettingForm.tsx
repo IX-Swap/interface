@@ -110,7 +110,7 @@ export const VettingForm = (props: Props) => {
       )}
 
       <FormHeader>
-        <OutlineButton background={theme.launchpad.colors.background} onClick={goBack} padding="1rem 0.75rem">
+        <OutlineButton background="none" onClick={goBack} padding="1rem 0.75rem">
           <ArrowLeft color={theme.launchpad.colors.primary} />
         </OutlineButton>
 
@@ -412,7 +412,7 @@ export const VettingForm = (props: Props) => {
           field="directors"
         />
         <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
-          <OutlineButton width="280px" onClick={goBack}>
+          <OutlineButton style={{ border: '1px solid #6666FF33' }} width="280px" onClick={goBack}>
             Back
           </OutlineButton>
           {!view && IssuanceStatus.approved !== initialValues?.status && (

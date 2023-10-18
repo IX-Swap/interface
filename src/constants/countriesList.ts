@@ -263,6 +263,7 @@ export const countriesList = [
   'Ukraine',
   'United Arab Emirates',
   'United Kingdom',
+  'United States',
   'United States Virgin Islands',
   'Uruguay',
   'Uzbekistan',

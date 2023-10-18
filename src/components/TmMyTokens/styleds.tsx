@@ -14,7 +14,7 @@ export const TokensList = styled.div`
   padding: 32px;
   gap: 30px;
   border-radius: 30px;
-  background: ${({ theme }) => theme.bgG4};
+  background: ${({ theme }) => theme.bg1};
   :before {
     border-radius: 30px;
   }

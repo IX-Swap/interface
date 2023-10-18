@@ -61,6 +61,7 @@ const Container = styled.div`
 
 const Options = styled.div`
   * {
-    color: white;
+    color: #555566;
+    margin-bottom: 10px;
   }
 `

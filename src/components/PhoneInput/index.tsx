@@ -16,8 +16,8 @@ interface Props {
 export const PhoneInput = ({ value, onChange, label, onBlur, error }: Props) => {
   return (
     <Container>
-      <Label>{t`${label || 'Phone Number'}`}</Label>
-      <ReactPhoneInput onBlur={onBlur} country={'us'} value={value} onChange={onChange} />
+      <Label style={{ color: '#555566', fontSize: '13px', fontWeight: 500 }}>{t`${label || 'Phone Number'}`}</Label>
+      <ReactPhoneInput placeholder="Phone Number" onBlur={onBlur} country={'us'} value={value} onChange={onChange} />
       {error && (
         <TYPE.small marginTop="-8px" color={'red1'}>
           {error}
@@ -34,7 +34,7 @@ const Label = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 12px;
+  row-gap: 6px;
   .react-tel-input,
   .form-control {
     height: 60px;
@@ -42,21 +42,21 @@ const Container = styled.div`
   }
   .react-tel-input {
     background-color: transparent;
-    border-radius: 36px;
-    border: ${({ theme: { bg19 } }) => `1px solid ${bg19}`};
+    border-radius: 6px;
+    // border: ${({ theme: { bg0 } }) => `1px solid #E6E6FF`};
   }
 
   .form-control {
     position: relative;
     padding: 18px 20px 18px 52px;
-    border-radius: 36px;
-    background-color: ${({ theme: { bg19 } }) => bg19};
+    border-radius: 6px;
+    background-color: ${({ theme: { bg0 } }) => bg0};
     color: ${({ theme: { text1 } }) => text1};
-    border: none;
+    border: 1px solid #e6e6ff;
     width: 100%;
   }
   .form-control:focus {
-    background-color: ${({ theme }) => (theme.config.background ? theme.bg19 : theme.bg7)};
+    background-color: ${({ theme }) => (theme.config.background ? theme.bg0 : theme.bg0)};
     .react-tel-input {
       border-color: ${({ theme: { text9 } }) => text9};
     }
@@ -64,7 +64,7 @@ const Container = styled.div`
   }
 
   .country-list {
-    border-radius: 32px;
+    border-radius: 6px;
     margin: 4px 0px;
     padding: 24px 8px 24px 16px;
     > li {
@@ -74,7 +74,7 @@ const Container = styled.div`
     top: 100%;
     .highlight,
     .prefered {
-      background-color: ${({ theme }) => theme.bg11} !important;
+      // background-color: ${({ theme }) => theme.bg11} !important;
       color: ${({ theme }) => theme.text1} !important;
       font-weight: bold;
     }
@@ -84,7 +84,7 @@ const Container = styled.div`
       padding: 2px 12px;
       font-size: 16px;
       color: ${({ theme }) => theme.text9};
-      border-radius: 12px;
+      border-radius: 6px;
 
       .flag {
         position: initial;

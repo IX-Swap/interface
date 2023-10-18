@@ -1,10 +1,10 @@
 import React from 'react'
 import styled, { css, keyframes } from 'styled-components'
 
-import { ReactComponent as Attention } from 'assets/images/attention.svg'
-import { ReactComponent as Passed } from 'assets/images/check-success.svg'
+import { ReactComponent as Attention } from 'assets/images/newCloseIcon.svg'
+import { ReactComponent as Passed } from 'assets/images/check-2.svg'
 import Column from 'components/Column'
-import { LoaderThin } from 'components/Loader/LoaderThin'
+import { ReactComponent as PendingIcon } from 'assets/images/newPending.svg'
 import { RowBetween } from 'components/Row'
 import { gradientBorder, MEDIA_WIDTHS, TYPE } from 'theme'
 import { Colors } from 'theme/styled'
@@ -12,28 +12,33 @@ import { Colors } from 'theme/styled'
 import { WithdrawStatus, DepositStatus, ActionTypes } from './enum'
 
 export const NoVaultWrapper = styled.div`
-  background: ${({ theme }) => theme.bgG10};
-  border-radius: 45px;
-  padding: 3rem 12px;
+  background: ${({ theme }) => theme.bg0};
+  border-radius: 8px;
+  // padding: 3rem 12px;
+  padding: 120px 360px;
   position: relative;
   display: flex;
   flex-direction: column;
-  ${gradientBorder}
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  padding: 40px 12px;
+  `};
 `
 
 export const ExistingWrapper = styled.div`
-  background: ${({ theme }) => theme.bgG11};
-  border-radius: 45px;
-  padding: 62px 56px 36px 56px;
+  background: ${({ theme }) => theme.bg0};
+  border-radius: 8px;
+  padding: 32px 56px 36px 56px;
+  width: 1350px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 1rem;
+    width: auto;
   `};
 `
 
 export const NoVaultTitle = styled.div`
   display: flex;
   justify-content: center;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   text-align: center;
   > div {
     line-height: 28px;
@@ -41,6 +46,9 @@ export const NoVaultTitle = styled.div`
 `
 
 export const ExistingTitle = styled.span`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    text-align: center;
+  `};
   text-align: left;
   white-space: pre-wrap; /* CSS3 */
   white-space: -moz-pre-wrap; /* Firefox */
@@ -58,8 +66,8 @@ export const VaultStatusDescription = styled.div`
 `
 
 export const TitleStatusRow = styled(RowBetween)`
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  // margin-bottom: 2rem;
+  // flex-wrap: wrap;
 `
 
 export const StatusTitle = styled(TYPE.titleSmall)`
@@ -72,13 +80,17 @@ export const HistoryWrapper = styled.div``
 export const HistoryRowWraper = styled.tr`
   height: 30px;
   cursor: pointer;
+  border-bottom: 1px solid red;
+
   :hover,
   :active {
     padding: 1px;
-    background: ${({ theme }) => theme.bgG2};
+    // border-bottom: 1px solid red;
+    background: ${({ theme }) => theme.bg1};
   }
   > td {
     padding: 0px 4px;
+    margin-bottom: 20px;
   }
 `
 
@@ -112,9 +124,10 @@ export const AccreditationButtonRow = styled.div`
   `};
 `
 
-export const StyledTitle = styled(TYPE.title4)`
+export const StyledTitle = styled(TYPE.title5)`
   @media (max-width: 768px) {
-    font-size: 28px !important;
+    font-size: 20px !important;
+    text-align: center;
   }
 `
 
@@ -143,10 +156,10 @@ const StyledAttention = styled(Attention)`
   ${({ theme }) =>
     theme.config.elements?.main &&
     css`
-      > circle[fill='#ED0376'] {
+      > circle[fill='#FF6161'] {
         fill: ${theme.error};
       }
-      > circle[stroke='#ED0376'] {
+      > circle[stroke='#FF6161'] {
         stroke: ${theme.error};
       }
       line {
@@ -178,35 +191,41 @@ export const DepositStatusIcons = {
 export const getStatusIcon = (action: ActionTypes, status: string) => {
   const StatusIcons = action === ActionTypes.DEPOSIT ? DepositStatusIcons : WithdrawStatusIcons
 
-  return StatusIcons[status] || <LoaderThin size={20} />
+  return StatusIcons[status] || <PendingIcon />
 }
 
 export const InfoModalHeader = styled.div`
-  padding: 24px 32px;
-  border-radius: 20px 20px 0px 0px;
-  background: ${({ theme }) => theme.bgG4};
+  padding: 10px 0px;
+  // border-radius: 20px 20px 0px 0px;
+  // background: ${({ theme }) => theme.bg0};
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-weight: 600;
   font-size: 22px;
   color: white;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 20px;
+    background: ${({ theme }) => theme.bg0};
+  }
 `
 
 export const InfoModalBody = styled.div<{ isSuccess: boolean }>`
-  padding: 24px 32px;
+  // padding: 1px 32px;
   display: flex;
   flex-direction: column;
   row-gap: 12px;
-  background: ${({ theme }) => theme.bg11};
+  background: ${({ theme }) => theme.bg0};
   border-radius: 0px 0px 20px 20px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 16px;
   }
   > div {
-    background: ${({ theme }) => theme.bgG4};
-    border-radius: 20px;
-    padding: 16px;
+    background: ${({ theme }) => theme.bg7};
+    border-radius: 8px;
+    border: 1px solid #e6e6ff;
+    padding: 20px;
     label {
       font-weight: 500;
       font-size: 16px;
@@ -303,6 +322,7 @@ export const WarningPaidFee = styled.div`
 `
 export const DepositWarningInfo = styled.div`
   color: ${({ theme }) => theme.error};
+  // background-color: #fff0f1;
   font-size: 16px;
   line-height: 24px;
   text-align: center;
@@ -318,8 +338,9 @@ export const DepositWarningInfo = styled.div`
 export const DeadlineInfo = styled.div`
   font-weight: 500;
   font-size: 10px;
-  /* color: ${({ theme }) => theme.text9}; */
-  color: ${({ theme }) => theme.text9};
+  text-align: center;
+
+  color: #b8b8cc;
   line-height: 15px;
   margin-top: 8px;
 `

@@ -4,10 +4,13 @@ import styled, { css } from 'styled-components'
 
 import { ButtonText } from 'components/Button'
 import { TYPE } from 'theme'
-import { ReactComponent as Checked } from 'assets/images/checked_solid.svg'
-import { ReactComponent as NotChecked } from 'assets/images/not_checked_solid.svg'
-import { ReactComponent as RadioChecked } from 'assets/images/radio-checked.svg'
-import { ReactComponent as RadioNotChecked } from 'assets/images/radio-not-checked.svg'
+import { ReactComponent as Checked } from 'assets/images/checkedNew.svg'
+import { ReactComponent as NotChecked } from 'assets/images/uncheckedNew.svg'
+import { ReactComponent as RadioChecked } from 'assets/images/checkedRadioNew.svg'
+import { ReactComponent as RadioNotChecked } from 'assets/images/uncheckedRadioNew.svg'
+
+import { ReactComponent as ActiveCheck } from 'assets/images/ActiveCheck.svg'
+import { ReactComponent as InActiveCheck } from 'assets/images/InactiveCheck.svg'
 
 interface Props {
   label: string | JSX.Element
@@ -51,6 +54,43 @@ export const Checkbox: FC<Props> = ({
     >
       <Flex style={{ gap: 8 }}>
         {checked ? checkedImage : notCheckedImage}
+        {scaleSize !== 1 ? (
+          <TYPE.title6 fontWeight={checked ? 700 : 400}>{label}</TYPE.title6>
+        ) : (
+          <TYPE.body3>{label}</TYPE.body3>
+        )}
+      </Flex>
+    </ButtonText>
+  )
+}
+
+export const CheckMark: FC<Props> = ({
+  id,
+  label,
+  checked,
+  onClick,
+  isRadio,
+  onBlur,
+  name,
+  scaleSize = 1,
+  buttonStyles,
+  disabled = false,
+}: Props) => {
+  const style = { transform: `scale(${scaleSize})` }
+
+  return (
+    <ButtonText
+      name={name}
+      onBlur={onBlur}
+      id={id}
+      type="button"
+      style={{ ...buttonStyles, textDecoration: 'none', textAlign: 'inherit' }}
+      onClick={onClick}
+      disabled={disabled}
+      className="checkbox"
+    >
+      <Flex style={{ gap: 8 }}>
+        {checked ? <ActiveCheck /> : <InActiveCheck />}
         {scaleSize !== 1 ? (
           <TYPE.title6 fontWeight={checked ? 700 : 400}>{label}</TYPE.title6>
         ) : (

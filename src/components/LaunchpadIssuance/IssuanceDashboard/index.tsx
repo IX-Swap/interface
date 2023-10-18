@@ -41,7 +41,7 @@ const IssuanceTabs: React.FC<TabsProps> = (props) => {
 export const IssuanceDashboard = () => {
   const [activeTab, setActiveTab] = React.useState<IssuanceFilter>(() => {
     const issuanceTab = localStorage.getItem('issuanceTab')
-    return issuanceTab as IssuanceFilter ?? IssuanceFilter.pending
+    return (issuanceTab as IssuanceFilter) ?? IssuanceFilter.pending
   })
 
   const handleTabChange = (tab: IssuanceFilter) => {
@@ -88,7 +88,7 @@ const TabRow = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  max-width: 1180px;
+  max-width: 1320px;
   margin: auto;
 `
 

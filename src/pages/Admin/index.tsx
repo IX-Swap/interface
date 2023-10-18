@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams, useLocation } from 'react-router-dom' // Step 1: Import useLocation
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useWeb3React } from '@web3-react/core'
@@ -56,6 +56,7 @@ const renderTab = (selectedTab: AdminTab | string) => {
 
 const Admin = () => {
   const { account } = useWeb3React()
+  const location = useLocation() // Step 1: Get the current route location
 
   const [selectedTab, setSelectedTab] = useState<AdminTab>('kyc')
 
@@ -71,7 +72,7 @@ const Admin = () => {
     const result = await getMe()
 
     if (result && result?.role === 'admin') {
-      // history.push('/admin')
+      // history.push('/admin');
     } else if (result && result?.role === 'operator') {
       history.push('/admin/kyc')
     } else {
@@ -99,7 +100,7 @@ const Admin = () => {
     }
 
     if (me && SUPPORTED_ADMIN_ROLES.includes(me.role || 'user')) {
-      // history.push('/admin')
+      // history.push('/admin');
       return
     }
 
@@ -110,12 +111,14 @@ const Admin = () => {
     return <NotAvailablePage />
   }
 
+  const containerBackground = location.pathname.includes('security-catalog') ? 'none' : '#ffffff'
+
   return (
-    <Container>
+    <Container background={containerBackground}>
       <Navbar />
       {SUPPORTED_ADMIN_ROLES.includes(me?.role || 'user') && (
         <Body>
-          <TabsContainer>
+          {/* <TabsContainer>
             {tabs.map(({ value, label }, index) => (
               <>
                 <ToggleOption
@@ -129,7 +132,7 @@ const Admin = () => {
                 </ToggleOption>
               </>
             ))}
-          </TabsContainer>
+          </TabsContainer> */}
 
           {renderTab(selectedTab)}
         </Body>
@@ -138,17 +141,23 @@ const Admin = () => {
   )
 }
 
-export const Container = styled.div`
+// Step 2: Modify the styled component to accept background color
+export const Container = styled.div<{ background?: string }>`
   width: 100vw;
   display: flex;
   flex-direction: column;
+  background: ${(props) => props.background}; // Use the background prop
 `
 
 export const Body = styled.div`
   padding: 0 30px;
-  max-width: 1330px;
-  margin: 0 auto;
+  max-width: 1400px;
+  margin: 100px auto;
   width: 100%;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    margin: 20px auto;
+  }
 `
 
 const TabsContainer = styled.div`

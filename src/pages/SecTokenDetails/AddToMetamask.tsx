@@ -10,7 +10,9 @@ import { useToggleModal } from 'state/application/hooks'
 import { CopyAddress } from 'components/CopyAddress'
 import { ReactComponent as Info } from 'assets/images/info-filled.svg'
 
-import { AddressToMetamask, StyledButtonGradient } from './styleds'
+import MetamaskIcon from 'assets/images/metamask.png'
+
+import { AddressToMetamask, StyledButtonGradient, StyledButtonGradientAddMetamask } from './styleds'
 
 interface Props {
   token: any
@@ -30,16 +32,19 @@ export const AddToMetamask = ({ token }: Props) => {
     <AddressToMetamask>
       {token.token?.originalAddress && (
         <>
-          <div>
+          {/* <div>
             <Trans>{token?.ticker || 'Original token'}:</Trans>
-          </div>
+          </div> */}
           <div>
             <CopyAddress address={token?.token?.originalAddress ?? ''} />
           </div>
-          {originalCurrency && library?.provider?.isMetaMask && (
-            <StyledButtonGradient onClick={() => !addOriginalCurrency.success && addOriginalCurrency.addToken()}>
+          {!originalCurrency && library?.provider?.isMetaMask && (
+            <StyledButtonGradientAddMetamask
+              onClick={() => !addOriginalCurrency.success && addOriginalCurrency.addToken()}
+            >
               <Trans>{!addOriginalCurrency.success ? 'Add to Metamask' : 'Added'}</Trans>
-            </StyledButtonGradient>
+              <img src={MetamaskIcon} style={{ marginLeft: '10px' }} width="15" />
+            </StyledButtonGradientAddMetamask>
           )}
         </>
       )}
@@ -58,20 +63,25 @@ export const AddWrappedToMetamask = ({ token }: Props) => {
         {token.token?.address && (
           <>
             <>
-              <div>
+              {/* <div>
                 <Info onClick={toggleAbout} />
                 <div>
                   <Trans>Wrapped {token?.ticker || 'Original token'}:</Trans>
                 </div>
-              </div>
+              </div> */}
               <div>
                 <CopyAddress address={token?.token?.address ?? ''} />
               </div>
             </>
             {library?.provider?.isMetaMask && (
-              <StyledButtonGradient onClick={() => !addCurrency.success && addCurrency.addToken()}>
+              // <StyledButtonGradient onClick={() => !addCurrency.success && addCurrency.addToken()}>
+              //   <Trans>{!addCurrency.success ? 'Add to Metamask' : 'Added'}</Trans>
+              // </StyledButtonGradient>
+
+              <StyledButtonGradientAddMetamask onClick={() => !addCurrency.success && addCurrency.addToken()}>
                 <Trans>{!addCurrency.success ? 'Add to Metamask' : 'Added'}</Trans>
-              </StyledButtonGradient>
+                <img src={MetamaskIcon} style={{ marginLeft: '10px' }} width="15" />
+              </StyledButtonGradientAddMetamask>
             )}
           </>
         )}

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Text } from 'rebass'
+import { Box, Text } from 'rebass'
 import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
@@ -12,6 +12,7 @@ import { AppLogo } from 'components/AppLogo'
 import { routes } from 'utils/routes'
 import { ReactComponent as KYC } from 'assets/images/kyc.svg'
 import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
+import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
 import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
@@ -26,13 +27,16 @@ import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { useRole } from 'state/user/hooks'
+import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
+import { hexDiff } from 'node-vibrant/lib/util'
+import { isMobile } from 'react-device-detect'
+import { useWeb3React } from '@web3-react/core'
 
-const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
+const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
   display: grid;
-  grid-template-columns: 0.3fr auto 0.3fr;
+  grid-template-columns: 0.3fr auto 0.5fr;
   align-items: center;
   justify-content: space-between;
-  align-items: center;
   flex-direction: row;
   width: 100%;
   top: 0;
@@ -40,31 +44,28 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   padding: 1rem;
   z-index: 21;
   position: relative;
-
-  /* Background slide effect on scroll. */
-  background-image: ${({ theme, lightBackground }) =>
-    `linear-gradient(to bottom, transparent 50%, ${lightBackground ? theme.bg1 : theme.bg0} 50% )}}`};
+  background-color: white;
+  background-image: ${({ theme }) => `linear-gradient(to bottom, transparent 50%, ${theme.bg0} 50%)`};
   background-position: ${({ showBackground }) => (showBackground ? '0 -100%' : '0 0')};
   background-size: 100% 200%;
-  /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
   transition: background-position 0.1s, box-shadow 0.1s;
-  ${({ theme }) =>
-    theme.config.background &&
-    css`
-      background: ${({ theme }) => theme.config.background.secondary};
-    `}
+
   @media (max-width: 1400px) {
     grid-template-columns: 2fr auto auto;
     grid-gap: 28px;
   }
+
   @media (max-width: 1080px) {
     grid-template-columns: auto 1fr auto;
     grid-gap: 28px;
     padding: 14px 18px;
   }
+
   @media (max-width: 500px) {
-    grid-gap: 7px;
-    grid-template-columns: auto 2fr auto;
+    grid-template-columns: 1fr 1fr auto;
+    padding: 10px 10px;
+    grid-template-rows: auto;
+    margin: 0;
   }
 `
 
@@ -79,24 +80,25 @@ const HeaderElement = styled.div`
   display: flex;
   align-items: center;
 
-  /* addresses safari's lack of support for "gap" */
   & > *:not(:first-child) {
     margin-left: 8px;
   }
-
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    // flex-direction: row-reverse;
-    align-items: center;
-  `};
 `
 
 const HeaderRow = styled(RowFixed)`
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-   width: 100%;
-  `};
+  width: 100%;
 `
 
-const AccountElement = styled.div<{ active: boolean }>`
+const HeaderRowNew = styled(RowFixed)`
+  width: 100%;
+  display: flex;
+  grid-gap: 28px;
+  @media (max-width: 500px) {
+    grid-gap: 12px;
+  }
+`
+
+const AccountElement = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,13 +112,14 @@ const AccountElement = styled.div<{ active: boolean }>`
 `
 
 const BalanceText = styled(Text)`
-  background: ${({ theme }) => theme.bgG2};
+  // background: ${({ theme }) => theme.bgG2};
   color: ${({ theme }) => theme.text2};
   font-weight: 600;
   font-size: 12px;
   opacity: ${({ theme }) => (theme.config.background ? '1' : '0.5')};
   border-radius: 0 0 40px 40px;
   padding: 0 18px;
+
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     display: none;
   `};
@@ -128,9 +131,7 @@ const Title = styled.a`
   pointer-events: auto;
   justify-self: flex-start;
   margin-right: 12px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    justify-self: center;
-  `};
+
   :hover {
     cursor: pointer;
   }
@@ -166,18 +167,21 @@ export const StyledMenuButton = styled.button`
   svg {
     margin-top: 2px;
   }
+
   > * {
     stroke: ${({ theme }) => theme.text1};
   }
 `
 
 const HeaderWrapper = styled.div`
-  ${({ theme }) => theme.flexColumnNoWrap}
+  display: flex;
+  flex-direction: column;
   width: 100%;
   align-items: space-between;
   position: fixed;
   top: 0;
   z-index: 2;
+
   ${({ theme }) =>
     theme.config.background &&
     css`
@@ -197,16 +201,17 @@ export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
   const { account, chainId } = useActiveWeb3React()
   const { hasLightBackground } = useLightBackground()
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
+  const userEthBalance = useETHBalances(account ? [account] : [])
   const nativeCurrency = useNativeCurrency()
   const scrollY = useScrollPosition()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
   const { isTokenManager } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
+  const { connector, error } = useWeb3React()
 
   const isAllowed = useCallback(
-    (path: string): boolean => {
+    (path: string) => {
       if (!config || !config.pages || config.pages.length === 0) {
         return true
       }
@@ -218,61 +223,96 @@ export default function Header() {
 
   return (
     <>
-      <HeaderWrapper>
-        {!cookies.annoucementsSeen && <Announcement />}
-        <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
-          <HeaderRow>
-            <Title href={config?.defaultUrl || '.'}>
-              <IXSIcon>
-                <AppLogo width="auto" height="47px" {...config?.customStyles?.logo} />
-              </IXSIcon>
-            </Title>
-          </HeaderRow>
-          <HeaderLinks />
-          <HeaderControls>
-            {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
-              <IconWrapper>
+      {isMobile && (
+        <HeaderWrapper>
+          {!cookies.annoucementsSeen && <Announcement />}
+          <HeaderFrame>
+            <HeaderRow>
+              <Title href={config?.defaultUrl || '.'}>
+                <IXSIcon>
+                  <NewLogo width="auto" height="47px" {...config?.customStyles?.logo} />
+                </IXSIcon>
+              </Title>
+            </HeaderRow>
+            <HeaderControls>
+              {isAllowed(routes.kyc) && isWhitelisted && (
                 <HeaderElement>
-                  <NavLink
-                    style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }}
-                    to={routes.tokenManager('my-tokens', null)}
-                  >
-                    <TokenManager />
+                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to="/kyc">
+                    {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
                   </NavLink>
                 </HeaderElement>
-              </IconWrapper>
-            )}
-            {isAllowed(routes.kyc) && isWhitelisted && (
-              <IconWrapper>
+              )}
+            </HeaderControls>
+            <MobileMenu />
+            {kyc?.status === 'approved' && (
+              <HeaderRowNew>
                 <HeaderElement>
-                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
-                    {kyc?.status === 'approved' ? <KYCApproved /> : <KYC />}
-                  </NavLink>
+                  <NetworkCard />
                 </HeaderElement>
-              </IconWrapper>
+                <HeaderElement>
+                  <Web3Status />
+                </HeaderElement>
+              </HeaderRowNew>
             )}
-            {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
-              <HeaderElement>
-                <IXSBalance />
-              </HeaderElement>
-            )}
-            <HeaderElement>
-              <NetworkCard />
-              <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
-                <Web3Status />
-                {account && userEthBalance ? (
-                  <BalanceText style={{ flexShrink: 0 }} fontWeight={600}>
-                    <Trans>
-                      {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
-                    </Trans>
-                  </BalanceText>
-                ) : null}
-              </AccountElement>
+          </HeaderFrame>
+          {kyc?.status !== 'approved' && (
+            <HeaderElement style={{ background: 'white', padding: '18px 20px' }}>
+              <Web3Status />
             </HeaderElement>
-          </HeaderControls>
-          <MobileMenu />
-        </HeaderFrame>
-      </HeaderWrapper>
+          )}
+        </HeaderWrapper>
+      )}
+      {!isMobile && (
+        <HeaderWrapper>
+          {!cookies.annoucementsSeen && <Announcement />}
+          <HeaderFrame>
+            <HeaderRow marginLeft={100}>
+              <Title href={config?.defaultUrl || '.'}>
+                <IXSIcon>
+                  <NewLogo width="auto" height="47px" {...config?.customStyles?.logo} />
+                </IXSIcon>
+              </Title>
+            </HeaderRow>
+            <HeaderLinks />
+            <HeaderControls>
+              {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
+                <IconWrapper>
+                  <HeaderElement>
+                    <NavLink
+                      style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }}
+                      to={routes.tokenManager('my-tokens', null)}
+                    >
+                      <TokenManager />
+                    </NavLink>
+                  </HeaderElement>
+                </IconWrapper>
+              )}
+              {isAllowed(routes.kyc) && isWhitelisted && (
+                <IconWrapper>
+                  <HeaderElement>
+                    <NavLink
+                      style={{ textDecoration: 'none', color: 'inherit', marginRight: 16, marginTop: 5 }}
+                      to="/kyc"
+                    >
+                      {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
+                    </NavLink>
+                  </HeaderElement>
+                </IconWrapper>
+              )}
+              {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
+                <HeaderElement>
+                  <IXSBalance />
+                </HeaderElement>
+              )}
+              <HeaderElement>
+                {account ? <NetworkCard /> : ''}
+                <Web3Status />
+              </HeaderElement>
+            </HeaderControls>
+            <MobileMenu />
+          </HeaderFrame>
+        </HeaderWrapper>
+      )}
     </>
   )
 }

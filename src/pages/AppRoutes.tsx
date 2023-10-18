@@ -12,6 +12,13 @@ import { VestingTab } from 'pages/Farming/VestingTab'
 import { RedirectPathToSwapOnly, RedirectToSwap } from 'pages/Swap/redirects'
 import { RedirectDuplicateTokenIdsV2 } from 'pages/AddLiquidityV2/redirects'
 import { ROLES } from 'constants/roles'
+// import AdminKycTable from 'components/AdminKyc'
+import AdminAccreditationTable from 'components/AdminAccreditationTable'
+import { UsersList } from 'components/UsersList'
+import AdminSecurityCatalog from 'components/AdminSecurityCatalog'
+import AdminTransactionsTable from 'components/AdminTransactionsTable'
+import { AdminKycTable } from 'components/AdminKyc'
+import { KycReviewModal } from 'components/KycReviewModal'
 
 const Admin = lazy(() => import('pages/Admin'))
 const Swap = lazy(() => import('pages/Swap'))
@@ -149,6 +156,15 @@ export const routeConfigs: RouteMapEntry[] = [
 
   { path: routes.staking, component: StakingTab },
   { path: routes.vesting, component: VestingTab },
+
+  /* Admin Routes */
+
+  { path: routes.adminAccreditation, component: AdminAccreditationTable },
+  { path: routes.adminKYCID, component: KycReviewModal },
+  { path: routes.adminKYC, component: AdminKycTable },
+  { path: routes.adminTransactions, component: AdminTransactionsTable },
+  { path: routes.adminCatalog, component: AdminSecurityCatalog },
+  { path: routes.adminUsers, component: UsersList },
 
   /* Launchpad routes */
   { path: routes.launchpad, component: Launchpad },

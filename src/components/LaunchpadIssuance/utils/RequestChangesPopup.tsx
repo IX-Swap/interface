@@ -43,8 +43,8 @@ export const RequestChangesPopup = ({
 
   const onChangeMessage = (value: string) => {
     setMessage(value)
-    if(!value) setMessageError('Required')
-    else if(value.length > 1000) setMessageError('Message must be shorter than or equal to 1000 characters')
+    if (!value) setMessageError('Required')
+    else if (value.length > 1000) setMessageError('Message must be shorter than or equal to 1000 characters')
     else setMessageError('')
   }
 
@@ -70,13 +70,17 @@ export const RequestChangesPopup = ({
         <TextAreaInner
           label="Message"
           field="message"
-          setter={(field, value) => {onChangeMessage(value)}}
+          setter={(field, value) => {
+            onChangeMessage(value)
+          }}
           span={3}
           value={message}
           error={messageError}
         />
         <ButtonRow>
-          <OutlineButton width="200px" onClick={onDecline}>{t`${declineText || 'No'}`}</OutlineButton>
+          <OutlineButton style={{ border: '1px solid #6666FF33' }} width="200px" onClick={onDecline}>{t`${
+            declineText || 'No'
+          }`}</OutlineButton>
 
           <FilledButton
             width="200px"

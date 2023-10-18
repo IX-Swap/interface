@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { t } from '@lingui/macro'
 
 import { Input } from 'components/Input'
-import { ReactComponent as CalendarIcon } from 'assets/images/calendar.svg'
+import { ReactComponent as CalendarIcon } from 'assets/images/newCalendar.svg'
 import { Props as LabelProps } from 'components/Label'
 import dayjs from 'dayjs'
 import Row from 'components/Row'
@@ -91,14 +91,14 @@ const StyledCalendarIcon = styled(CalendarIcon)`
 `
 
 const TextField = styled(Input)<{ maxHeight?: number; error?: any }>`
-  border-radius: 36px;
+  border-radius: 6px;
   height: 60px;
   max-height: ${({ maxHeight }) => (maxHeight ? `${maxHeight}px` : 'auto')};
   padding: 11px 66px 9px 21px;
   font-weight: normal;
   font-size: 16px;
-  border: ${({ error, theme }) => (error ? 'solid 1px' + theme.error : 'none')};
-  background-color: ${({ theme: { bg19 } }) => bg19};
+  border: ${({ error, theme }) => (error ? 'solid 1px' + theme.error : '1px solid #E6E6FF')};
+  background-color: ${({ theme: { bg0 } }) => bg0};
 `
 
 const Container = styled.div`

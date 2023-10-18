@@ -1,16 +1,12 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
-
 import { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
-
 import { Plus } from 'react-feather'
-
 import { ErrorText, FlexVerticalCenter, Row } from 'components/LaunchpadMisc/styled'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-
 import { IssuanceDialog } from '../utils/Dialog'
-import { IssuanceTextField } from '../utils/TextField'
+import { IssuanceTextField, Label } from '../utils/TextField'
 import { object, string } from 'yup'
 import { Formik } from 'formik'
 import { useCreateIssuance, useGetIssuancePlain, useGetPinnedOffer, usePinOffer } from 'state/launchpad/hooks'
@@ -112,7 +108,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
   const { isAdmin } = useRole()
 
   const issuances = useGetIssuancePlain({ forPinning: 'true' })
-  const createIssunace = useCreateIssuance()
+  const createIssuance = useCreateIssuance()
 
   const [showIssuanceDialog, setShowIssuanceDialog] = useState(false)
   const [openPin, setOpenPin] = useState(false)
@@ -133,7 +129,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
       }
 
       setLoading(true)
-      const result = await createIssunace(values.name)
+      const result = await createIssuance(values.name)
       setLoading(false)
 
       setShowIssuanceDialog(false)
@@ -164,7 +160,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
           color={props.color}
           padding="0 1.5rem"
         >
-          <Plus size="15" color={props.color ?? theme.launchpad.colors.primary} />{' '}
+          <Plus size="15" color={props.color ?? theme.launchpad.colors.primary} />
           <NewIssuanceLabel>New Issuance</NewIssuanceLabel>
         </OutlineButton>
       </FlexVerticalCenter>
@@ -173,8 +169,9 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
         <Formik initialValues={initialValues} validationSchema={schema} onSubmit={openIssuanceForm}>
           {({ values, errors, submitForm, setFieldValue }) => (
             <>
+              <Label style={{ margin: '6px 0px 0px 0px' }}>Name</Label>
               <IssuanceTextField
-                label="Name"
+                // label="Name"
                 placeholder="Name of Asset"
                 value={values.name}
                 onChange={(v) => setFieldValue('name', v)}
@@ -185,10 +182,15 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
               {errors.name && <ErrorText>{errors.name}</ErrorText>}
 
               <Row gap="1rem" justifyContent="spaced-evenly" width="100%">
-                <OutlineButton grow={1} onClick={toggleNewIssuanceDialog}>
+                <OutlineButton
+                  style={{ border: '1px solid #6666FF33' }}
+                  color="#B8B8CC"
+                  grow={1}
+                  onClick={toggleNewIssuanceDialog}
+                >
                   Cancel
                 </OutlineButton>
-                <FilledButton grow={1} onClick={submitForm} disabled={loading}>
+                <FilledButton grow={1} onClick={submitForm} disabled={loading || !values.name}>
                   Submit
                 </FilledButton>
               </Row>

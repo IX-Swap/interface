@@ -101,7 +101,7 @@ const DialogContainer = styled.article`
   display: grid;
 
   grid-template-columns: 200px 500px;
-  grid-template-rows: 60px 1fr;
+  // grid-template-rows: 60px 1fr;
   grid-template-areas:
     'sidebar header'
     'sidebar content';

@@ -24,17 +24,16 @@ export const IssuanceDialog: React.FC<React.PropsWithChildren<Props>> = (props) 
   return (
     <Portal>
       <DialogWrapper onScroll={(e) => e.stopPropagation()}>
-        <OuterContainer >
+        <OuterContainer>
           <DialogCloseButton onClick={props.onClose}>
             <X size={14} />
           </DialogCloseButton>
 
           <DialogContainer width={props.width} height={props.height} padding={props.padding}>
+            {props.title && <DialogTitle>{props.title}</DialogTitle>}
 
-          {props.title && <DialogTitle>{props.title}</DialogTitle>}
-
-          <Content>{props.children}</Content>
-        </DialogContainer>
+            <Content>{props.children}</Content>
+          </DialogContainer>
         </OuterContainer>
       </DialogWrapper>
     </Portal>
@@ -60,17 +59,18 @@ const DialogWrapper = styled.div`
 
 const DialogCloseButton = styled.div`
   position: absolute;
-  top: -2.5rem;
-  right: -2.5rem;
+  top: 1.5rem;
+  right: 2rem;
   display: grid;
+  color: #b8b8cc;
   place-content: center;
   cursor: pointer;
-  padding: 0.75rem;
+  // padding: 0.75rem;
   z-index: 40;
-  background: rgba(41, 41, 51, 0.6);
-  box-shadow: 0px 2px 2px rgba(122, 122, 204, 0.08);
-  backdrop-filter: blur(8px);
-  border-radius: 16px;
+  // background: rgba(41, 41, 51, 0.6);
+  // box-shadow: 0px 2px 2px rgba(122, 122, 204, 0.08);
+  // backdrop-filter: blur(8px);
+  // border-radius: 16px;
   transition: transform 0.3s;
 
   :hover {

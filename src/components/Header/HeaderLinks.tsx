@@ -49,7 +49,7 @@ const HeaderPopover = () => {
           <Trans>Staking</Trans>
         </TYPE.body2> */}
 
-        <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
+        <SubMenuExternalLink style={{ fontSize: '13px' }} href={`https://ixswap.defiterm.io/`}>
           <Trans>Live Pools</Trans>
         </SubMenuExternalLink>
       </Column>
@@ -68,7 +68,7 @@ const HeaderPopover = () => {
         </Row> */}
 
         {isAllowed(routes.vesting) && (
-          <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
+          <SubMenuLink style={{ fontSize: '13px' }} id={`vesting-nav-link`} to={routes.vesting}>
             <Trans>Token Sale Distribution</Trans>
           </SubMenuLink>
         )}
@@ -167,7 +167,7 @@ export const HeaderLinks = () => {
         </MenuExternalLink>
       )} */}
 
-      {account && chainId && isWhitelisted && isDevelopment && (
+      {/* {account && chainId && isWhitelisted && isDevelopment && (
         <StyledNavLink
           ref={nftNode as any}
           id={`nft-nav-link`}
@@ -181,7 +181,7 @@ export const HeaderLinks = () => {
             </RowFixed>
           </Popover>
         </StyledNavLink>
-      )}
+      )} */}
 
       {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && (
         <StyledNavLink
@@ -224,20 +224,34 @@ export const HeaderLinks = () => {
   )
 }
 
+export const AdminHeaderLinks = () => {
+  const { isAdmin } = useRole()
+
+  return (
+    <HeaderLinksWrap links={7}>
+      {isAdmin && <StyledNavLink to="/admin/accreditation">Accreditation</StyledNavLink>}
+      {isAdmin && <StyledNavLink to="/admin/kyc">KYC</StyledNavLink>}
+      {isAdmin && <StyledNavLink to="/admin/transactions">Broker Dealer Transactions</StyledNavLink>}
+      {isAdmin && <StyledNavLink to="/admin/security-catalog">Security Catalog</StyledNavLink>}
+      {isAdmin && <StyledNavLink to="/admin/users-list">User’s</StyledNavLink>}
+    </HeaderLinksWrap>
+  )
+}
+
 const HeaderLinksWrap = styled(Row)<{ links: number }>`
   justify-self: center;
   background-color: 'transparent';
   width: fit-content;
   flex-wrap: wrap;
   overflow: visible;
-  grid-gap: 32px;
+  grid-gap: 30px;
   display: flex;
   align-items: center;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
   @media (max-width: 1600px) {
-    grid-gap: 18px;
+    grid-gap: 15px;
   }
   @media (max-width: 1400px) {
     display: none;
@@ -253,30 +267,31 @@ export const disabledStyle = css`
 const navLinkStyles = css`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: left;
+  font-size: 13px;
   border-radius: 3rem;
   outline: none;
   cursor: pointer;
   text-decoration: none !important;
-  color: ${({ theme }) => theme.text2};
+  color: ${({ theme }) => theme.text12};
   width: fit-content;
   word-break: break-word;
-  opacity: 0.4;
+  // opacity: 0.4;
   border-radius: 45px;
-  font-weight: 600;
+  font-weight: 500;
   &.${activeClassName} {
     opacity: 1;
-    color: ${({ theme }) => theme.config.text?.main || theme.text1};
+    color: ${({ theme }) => theme.config.text?.main || theme.text11};
   }
 
   :hover,
   :focus {
-    color: ${({ theme }) => darken(0.05, theme.text2)};
+    color: ${({ theme }) => darken(0.05, theme.text11)};
     &.${activeClassName} {
-      color: ${({ theme }) => theme.config.text?.main || theme.white};
+      color: ${({ theme }) => theme.config.text?.main || theme.text1};
     }
   }
   @media (max-width: 1500px) {
-    font-size: 15px;
+    font-size: 10px;
   }
   @media (max-width: 1300px) {
     font-size: 16px;

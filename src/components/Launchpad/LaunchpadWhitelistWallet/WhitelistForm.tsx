@@ -62,6 +62,7 @@ export const WhitelistForm = ({ offerId, onSuccess: callback }: WhitelistFormPro
               <Box width="0.5">
                 {!loadingSave && (
                   <OutlineButton
+                    style={{ border: '1px solid #6666FF33' }}
                     onClick={submitForm}
                     padding="0 1.5rem"
                     disabled={!values.fullName || !values.walletAddress}

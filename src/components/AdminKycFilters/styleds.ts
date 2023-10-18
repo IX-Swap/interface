@@ -1,5 +1,6 @@
 import { Flex } from 'rebass'
 import styled from 'styled-components'
+import { MEDIA_WIDTHS } from 'theme'
 
 export const SelectFiltersContainer = styled(Flex)`
   > div {
@@ -7,10 +8,17 @@ export const SelectFiltersContainer = styled(Flex)`
     max-width: 132px;
     width: 132px;
     height: 60px;
+    margin-top: -22px;
+
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+      max-width: 100%;
+      width: 100%;
+      margin-top: 0px;
+    }
   }
 
   > :not(:last-child) {
-    margin-right: 1px;
+    margin-right: 30px;
   }
 
   > div *[class*='IndicatorsContainer'] {
@@ -26,18 +34,18 @@ export const SelectFiltersContainer = styled(Flex)`
   }
 
   > div *[class*='placeholder'] {
-    font-size: 16px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 500;
     line-height: 20px;
-    color: ${({ theme }) => theme.text2};
+    color: #8f8fb2;
     text-align: center;
   }
 
   > div *[class*='singleValue'] {
-    font-size: 16px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 500;
     line-height: 20px;
-    color: ${({ theme }) => theme.text2};
+    color: #8f8fb2;
     text-align: center;
   }
 

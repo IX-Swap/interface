@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
-
-import { ReactComponent as ArrowBack } from 'assets/images/arrow-back.svg'
+import { ReactComponent as ArrowBack } from 'assets/images/newBack.svg'
+// import { ReactComponent as ArrowBack } from 'assets/images/arrow-back.svg'
 
 interface Props {
   onBack?: () => void

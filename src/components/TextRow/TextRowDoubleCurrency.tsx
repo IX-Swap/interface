@@ -17,11 +17,13 @@ export const TextRowDoubleCurrency = ({ textLeft, textRight, currencyA, currency
   return (
     <FixedHeightRow>
       <RowFixed>
-        <Text>{textLeft}</Text>
+        <Text color={'#292933'}>{textLeft}</Text>
       </RowFixed>
       <RowFixed>
+        <Text color={'#292933'} marginRight={'10px'}>
+          {textRight ?? '-'}
+        </Text>
         {showCurrency && <DoubleCurrencyLogo currency0={currencyA} currency1={currencyB} margin={false} />}
-        <Text marginLeft={'20px'}>{textRight ?? '-'}</Text>
       </RowFixed>
     </FixedHeightRow>
   )

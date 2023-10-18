@@ -2,6 +2,7 @@ import { Currency } from '@ixswap1/sdk-core'
 import React from 'react'
 import styled from 'styled-components/macro'
 import CurrencyLogo from '../CurrencyLogo'
+import { isMobile } from 'react-device-detect'
 
 const Wrapper = styled.div<{ margin: boolean; sizeraw: number }>`
   position: relative;
@@ -28,7 +29,7 @@ const CoveredLogo = styled(CurrencyLogo)<{ sizeraw: number }>`
 export default function DoubleCurrencyLogo({
   currency0,
   currency1,
-  size = 16,
+  size = isMobile ? 16 : 10,
   margin = false,
 }: DoubleCurrencyLogoProps) {
   return (

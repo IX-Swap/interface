@@ -55,7 +55,7 @@ export const Claimed: FC<Props> = ({ payoutToken, amountToClaim, claimStatus }) 
     case ClaimSatus.FAILED: {
       return (
         <>
-          <Box marginBottom="4px" fontSize="20px" lineHeight="30px" fontWeight={600} color="#ED0376">
+          <Box marginBottom="4px" fontSize="20px" lineHeight="30px" fontWeight={600} color="#FF6161">
             {t`Your claim request failed. Please contact support for further assistance.`}
           </Box>
           <Flex alignItems="center">

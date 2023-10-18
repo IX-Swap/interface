@@ -16,6 +16,7 @@ const Title = styled.span`
   font-weight: 600;
   font-size: 22px;
   line-height: 33px;
+  color: #292933;
 `
 export const LiquidityTitle = () => {
   const { allowedSlippage } = useDerivedSwapInfo()

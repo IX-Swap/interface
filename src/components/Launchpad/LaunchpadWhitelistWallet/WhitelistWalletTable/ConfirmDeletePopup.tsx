@@ -46,7 +46,9 @@ export const ConfirmDeletePopup: React.FC<Props> = ({ loading, onClose, onDiscar
             <Loader />
           </Centered>
         )}
-        <OutlineButton onClick={onClose}>Cancel</OutlineButton>
+        <OutlineButton style={{ border: '1px solid #6666FF33' }} onClick={onClose}>
+          Cancel
+        </OutlineButton>
       </Container>
     </IssuanceDialog>
   )

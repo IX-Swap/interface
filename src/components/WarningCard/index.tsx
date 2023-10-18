@@ -5,15 +5,25 @@ import { RowCenter } from 'components/Row'
 import React from 'react'
 import { SvgIconWrapper, TYPE } from 'theme'
 
-export const WarningCard = ({ message, style }: { message: React.ReactNode; style?: React.CSSProperties }) => {
+export const WarningCard = ({
+  message,
+  style,
+  name,
+}: {
+  message: React.ReactNode
+  style?: React.CSSProperties
+  name?: string
+}) => {
   return (
     <DarkCard style={style}>
       <AutoColumn gap="8px">
         <RowCenter style={{ gap: '12px' }}>
-          <SvgIconWrapper size={24}>
-            <img src={Attention} alt={'Error'} />
-          </SvgIconWrapper>
-          <TYPE.body1>{message}</TYPE.body1>
+          <SvgIconWrapper size={24}>{/* <img src={Attention} alt={'Error'} /> */}</SvgIconWrapper>
+          {name === 'liquidPage' ? (
+            <TYPE.body1 color={'#B8B8CC'}>{message}</TYPE.body1>
+          ) : (
+            <TYPE.body1>{message}</TYPE.body1>
+          )}
         </RowCenter>
       </AutoColumn>
     </DarkCard>

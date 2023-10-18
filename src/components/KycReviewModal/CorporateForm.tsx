@@ -17,6 +17,7 @@ import {
   BeneficialOwners,
   UploadedDocuments,
 } from './Blocks'
+import { Line } from 'components/Line'
 
 interface Props {
   data: CorporateKyc
@@ -27,16 +28,26 @@ export const CorporateForm = ({ data, riskJSON }: Props) => {
   return (
     <>
       <Cynopsis riskJSON={riskJSON} />
+      <Line />
       <Information data={data} kycKey="corporate" />
+      <Line />
       <CompanyAuthorizedPersonnel data={data} />
+      <Line />
       <Address data={data} />
+      <Line />
       <ResidentialAddress data={data.residentialAddress} />
+      <Line />
       <SourceOfFunds data={data} kycKey="corporate" />
+      <Line />
       <InvestorStatusDeclaration data={data} kycKey="corporate" />
+      <Line />
       <Fatca data={data} />
+      <Line />
       {/* <OptInRequirement /> */}
       <TaxDeclaration data={data} />
+      <Line />
       <BeneficialOwners owners={data.beneficialOwners} />
+      <Line />
       <UploadedDocuments data={data.documents.filter(({ type }) => type !== 'authorization')} />
     </>
   )

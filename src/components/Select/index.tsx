@@ -2,10 +2,11 @@ import React, { useMemo, useState } from 'react'
 import ReactSelect, { StylesConfig, components } from 'react-select'
 import styled, { css } from 'styled-components'
 
-import { Checkbox } from 'components/Checkbox'
+import { CheckMark, Checkbox } from 'components/Checkbox'
 import { isValidAddress, shortAddress } from 'utils'
 import { useAddUserToken } from 'state/user/hooks'
 import { useToken } from 'hooks/Tokens'
+import { Line } from 'components/Line'
 
 type Option = { label?: string; value?: any; disabled?: boolean }
 
@@ -29,15 +30,16 @@ const colourStyles = {
   placeholder: (styles: Record<string, any>) => {
     return {
       ...styles,
-      color: '#EDCEFF80',
+      color: '#B8B8CC',
     }
   },
   option: (styles: Record<string, any>, { isSelected, isMulti }: { isSelected: boolean; isMulti: boolean }) => {
     return {
       ...styles,
       backgroundColor: isSelected && !isMulti ? 'bg11' : 'transparend',
-      color: isSelected && !isMulti ? 'text1' : 'text9',
-      fontWeight: isSelected && !isMulti ? '700' : '400',
+      color: isSelected && !isMulti ? '#292933' : '#8F8FB2',
+      fontWeight: 500,
+      margin: '20px 0px',
     }
   },
   singleValue: (styles: Record<string, any>) => {
@@ -127,6 +129,7 @@ const Option = (props: any) => {
   return (
     <components.Option {...props}>
       <StyledValue
+        style={{ justifyContent: 'space-between' }}
         disabled={props.isDisabled}
         onClick={() => {
           if (props.data?.token) {
@@ -134,10 +137,14 @@ const Option = (props: any) => {
           }
         }}
       >
-        {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
         {props?.data?.icon}
         {props?.data?.label}
+        {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
+
+        {!props.isMulti && <CheckMark checked={props.isSelected} label="" />}
       </StyledValue>
+
+      <Line style={{ marginTop: '10px' }} />
     </components.Option>
   )
 }
@@ -213,28 +220,33 @@ export const Select = ({
 const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: string }>`
   *[class*='control'] {
     box-shadow: none;
+    color: #8f8fb2;
     cursor: pointer;
+    font-size: 13px;
     height: 60px;
-    border-radius: ${({ borderRadius }) => borderRadius};
+    border-radius: 8px;
+    border: 1px solid #e6e6ff !important;
+    // border-radius: ${({ borderRadius }) => borderRadius};
     padding: 0px 16px;
-    background: ${({ theme }) => theme.bg19};
+    background: ${({ theme }) => theme.bg0};
     border: none;
     ${({ error }) =>
       error &&
       css`
         border: 1px solid;
-        border-color: #ed0376 !important;
+        border-color: #ff6161 !important;
       `}
   }
   *[class*='indicatorSeparator'] {
     display: none;
   }
   *[class*='menu'] {
-    border-radius: 32px;
-    padding: 24px 8px 24px 16px;
-    background-color: ${({ theme }) => theme.bg7};
+    border-radius: 6px;
+    padding: 10px 8px 10px 16px;
+    background-color: ${({ theme }) => theme.bg0};
     margin-top: 4px;
     max-height: 236px;
+    width: auto;
     z-index: 2;
   }
   *[class*='MenuList'] {
@@ -244,12 +256,12 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
       padding: 2px 8px;
       font-size: 16px;
       cursor: pointer;
-      border-radius: 12px;
+      // border-radius: 6px;
       :hover {
-        background: ${({ theme }) => theme.bg19};
+        background: ${({ theme }) => theme.bg1};
       }
       :active {
-        background-color: inherit;
+        background-color: ${({ theme }) => theme.bg0};
       }
     }
   }

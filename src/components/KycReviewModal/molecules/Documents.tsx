@@ -14,6 +14,7 @@ const headerCells = [t`File`, t`Type`, t`Uploaded At`]
 const formattedTypes = {
   identity: t`Proof of Identity`,
   address: t`Proof of Address`,
+  selfie: t`Selfie`,
   accreditation: t`Evidence of Accreditation`,
   financial: t`Financial Documents`,
   authorization: t`Authorization document`,
@@ -139,11 +140,22 @@ const FileName = styled.div`
   overflow: hidden;
 `
 
-const Container = styled.div``
+const Container = styled.div`
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    // display: inline-block;
+    // width: 100%;
+  }
+`
 
 const Table = styled.div`
   display: grid;
   row-gap: 40px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: inline-block;
+    // width: 100%;
+    // row-gap: 40px;
+    column-gap: 10px;
+  }
 `
 
 const Title = styled.div`
@@ -153,17 +165,18 @@ const Title = styled.div`
 
 const ColumnHeader = styled.div`
   margin-bottom: 13px;
-  font-size: 12px;
-  color: ${({ theme: { text2 } }) => `${text2}50`};
+  font-size: 13px;
+  color: ${({ theme: { text11 } }) => `${text11}`};
 `
 
 const BodyRow = styled.a`
   cursor: pointer;
   text-decoration: none;
-  color: ${({ theme: { white } }) => white};
+  color: ${({ theme: { text1 } }) => text1};
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 121px;
+  column-gap: 200px;
+  font-size: 13px;
   overflow: auto;
   > div {
     display: grid;
@@ -171,6 +184,14 @@ const BodyRow = styled.a`
   }
 
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
-    column-gap: 32px;
+    column-gap: 11px;
+    font-size: 10px;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
+    column-gap: 11px;
+    font-size: 10px;
+    margin-bottom: 10px;
   }
 `

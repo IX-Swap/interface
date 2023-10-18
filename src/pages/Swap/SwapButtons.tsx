@@ -19,7 +19,7 @@ import { useExpertModeManager, useUserSingleHopOnly } from 'state/user/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
 import { verifySwap } from 'utils/verifySwap'
 
-import { ButtonIXSWide } from '../../components/Button'
+import { ButtonIXSWide, PinnedContentButton } from '../../components/Button'
 import { BottomGrouping, SwapCallbackError } from '../../components/swap/styleds'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
 import { Field } from '../../state/swap/actions'
@@ -147,13 +147,13 @@ export const SwapButtons = ({
         <>
           {trade && <OutputInfo {...{ trade, recipient, allowedSlippage }} />}
           <BottomGrouping>
-            <ButtonIXSWide
+            <PinnedContentButton
               onClick={handleSwap}
               disabled={showAcceptChanges || shouldGetAuthorization}
               data-testid="confirm-swap"
             >
               <Trans>Confirm swap</Trans>
-            </ButtonIXSWide>
+            </PinnedContentButton>
           </BottomGrouping>
         </>
       )}
@@ -161,20 +161,20 @@ export const SwapButtons = ({
         <BottomGrouping>
           <ApproveButtons parsedAmounts={parsedAmounts} />
           {swapIsUnsupported && (
-            <ButtonIXSWide disabled={true} data-testid="unsupported-asset">
+            <PinnedContentButton disabled={true} data-testid="unsupported-asset">
               <Trans>Unsupported asset</Trans>
-            </ButtonIXSWide>
+            </PinnedContentButton>
           )}
 
           {showConnectWallet && (
-            <ButtonIXSWide onClick={toggleWalletModal} data-testid="connect-wallet-from-swap">
+            <PinnedContentButton onClick={toggleWalletModal} data-testid="connect-wallet-from-swap">
               <Trans>Connect Wallet</Trans>
-            </ButtonIXSWide>
+            </PinnedContentButton>
           )}
           {showWrapButton && (
-            <ButtonIXSWide disabled={Boolean(wrapInputError)} onClick={onWrap} data-testid="wrap">
+            <PinnedContentButton disabled={Boolean(wrapInputError)} onClick={onWrap} data-testid="wrap">
               {wrapInputError ?? WrapText[wrapType] ?? null}
-            </ButtonIXSWide>
+            </PinnedContentButton>
           )}
           {showInsufficientLiquidity && (
             <SwapErrorCard style={{ textAlign: 'center' }}>
@@ -197,7 +197,8 @@ export const SwapButtons = ({
           )}
 
           {showSwapButton && allowSwap && (
-            <ButtonIXSWide
+            <PinnedContentButton
+              style={{ textAlign: 'center' }}
               onClick={onClick}
               data-testid="swap-button"
               id="swap-button"
@@ -220,7 +221,7 @@ export const SwapButtons = ({
                   <Trans>Swap</Trans>
                 )}
               </Text>
-            </ButtonIXSWide>
+            </PinnedContentButton>
           )}
 
           {expertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}

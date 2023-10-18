@@ -10,8 +10,9 @@ export const InputPanel = styled.div<{ hideInput?: boolean }>`
 `
 
 export const ContainerRow = styled.div`
-  border-radius: 36px;
-  background-color: ${({ theme }) => theme.bg7};
+  border-radius: 8px;
+  border: 1px solid #e6e6ff;
+  background-color: ${({ theme }) => theme.bg0};
   width: 'initial';
   padding: 10px 31px 10px 27px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -39,7 +40,7 @@ export const Input = styled.input<{ error?: boolean }>`
   color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 600;
+  font-weight: 500;
   text-align: left;
   font-size: 17px;
   line-height: 40px;
@@ -62,5 +63,6 @@ export const Input = styled.input<{ error?: boolean }>`
   ::placeholder {
     color: ${({ theme }) => theme.text2};
     opacity: 0.5;
+    font-weight: 500;
   }
 `
