@@ -58,6 +58,7 @@ export const LaunchpadContainer = styled.div<{ background?: string }>`
   min-height: 100vh;
   padding: 0 4rem;
   margin-top: 90px;
+  width: 100vw;
   font-family: ${(props) => props.theme.launchpad.font};
   background: ${(props) => props.background ?? props.theme.launchpad.colors.background};
 
