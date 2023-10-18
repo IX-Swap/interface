@@ -173,7 +173,7 @@ export const ButtonPink = styled(Base)`
 `
 
 export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; disabled?: boolean }>`
-  color: ${({ theme }) => theme.text2};
+  color: white;
   min-height: 54px;
   opacity: ${({ confirmed }) => (confirmed ? 0.5 : 1)};
   width: fit-content;
