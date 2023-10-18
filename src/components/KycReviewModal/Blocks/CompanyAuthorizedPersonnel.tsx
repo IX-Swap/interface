@@ -37,6 +37,9 @@ const GridContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+  }
 `
 
 const GridItem = styled.div`
@@ -44,5 +47,6 @@ const GridItem = styled.div`
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: calc(50% - 15px); /* 2 columns with 15px spacing between them */
+    padding: 0px 10px 0px 0px;
   }
 `

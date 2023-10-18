@@ -10,6 +10,7 @@ import { Field } from '../../state/burn/actions'
 import { SemiTransparent, TYPE } from '../../theme'
 import { ParsedAmounts } from './interfaces'
 import { ModalHeaderWrapper } from './styled'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   parsedAmounts: ParsedAmounts
@@ -22,7 +23,7 @@ export const ModalHeader = ({ parsedAmounts, currencyA, currencyB, allowedSlippa
     <ModalHeaderWrapper>
       <AutoColumn gap="12px">
         <RowBetween align="flex-end">
-          <Text color={'#292933'} fontSize="32px" fontWeight={700} lineHeight="60px">
+          <Text color={'#292933'} fontSize={isMobile ? '24px' : '32px'} fontWeight={700} lineHeight="60px">
             {formatAmount(+(parsedAmounts[Field.CURRENCY_A]?.toSignificant(6) || 0))}
           </Text>
           <RowFixed gap="4px">
@@ -33,7 +34,7 @@ export const ModalHeader = ({ parsedAmounts, currencyA, currencyB, allowedSlippa
           </RowFixed>
         </RowBetween>
         <RowBetween align="flex-end">
-          <Text color={'#292933'} fontSize="32px" fontWeight={700} lineHeight="60px">
+          <Text color={'#292933'} fontSize={isMobile ? '24px' : '32px'} fontWeight={700} lineHeight="60px">
             {formatAmount(+(parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) || 0))}
           </Text>
           <RowFixed gap="4px">
@@ -45,7 +46,7 @@ export const ModalHeader = ({ parsedAmounts, currencyA, currencyB, allowedSlippa
         </RowBetween>
 
         <RowFixed gap="4px">
-          <Text width={'70%'} color={'#666680'}>
+          <Text width={isMobile ? '100%' : '70%'} fontSize={isMobile ? '14px' : '16px'} color={'#666680'}>
             <Trans>
               Output is estimated. If the price changes by more than {formatAmount(+allowedSlippage.toSignificant(4))}%
               your transaction will revert.

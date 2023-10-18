@@ -435,7 +435,7 @@ export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: stri
   font-size: 22px;
   line-height: 40px;
     ${({ theme }) => theme.mediaWidth.upToSmall`
-
+    width: 100% 
     font-size: 14px; 
   `}
   ::-webkit-search-decoration {

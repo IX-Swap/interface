@@ -137,15 +137,11 @@ const Option = (props: any) => {
           }
         }}
       >
-        {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
         {props?.data?.icon}
         {props?.data?.label}
+        {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
 
-        {props.isMulti ? (
-          <Checkbox checked={props.isSelected} label="" />
-        ) : (
-          <CheckMark checked={props.isSelected} label="" />
-        )}
+        {!props.isMulti && <CheckMark checked={props.isSelected} label="" />}
       </StyledValue>
 
       <Line style={{ marginTop: '10px' }} />

@@ -94,7 +94,7 @@ export const UsersList: FC = () => {
         marginTop="30px"
         // marginBottom="10px"
       >
-        <TYPE.title4 data-testid="securityTokensTitle">
+        <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} data-testid="securityTokensTitle">
           <Trans>Users</Trans>
         </TYPE.title4>
         <StyledButtonGradientBorder

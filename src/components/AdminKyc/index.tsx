@@ -24,6 +24,7 @@ import { getStatusStats } from 'state/kyc/hooks'
 import { TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { Link } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
 interface RowProps {
   item: KycItem
@@ -177,7 +178,7 @@ export const AdminKycTable = () => {
   return (
     <div style={{ marginTop: '30px' }} id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
-      <TYPE.title4 marginBottom="30px" data-testid="securityTokensTitle">
+      <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} marginBottom="30px" data-testid="securityTokensTitle">
         <Trans>KYC</Trans>
       </TYPE.title4>
       <AdminKycFilters

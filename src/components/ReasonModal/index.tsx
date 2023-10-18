@@ -82,8 +82,12 @@ export const ReasonModal = ({
 }
 
 const ModalContent = styled(ModalContentWrapper)`
-  padding: 29px 38px 42px 42px;
+  // padding: 29px 38px 42px 42px;
   border-radius: 20px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+      padding: 30px;
+`}
 `
 
 const Title = styled.div`

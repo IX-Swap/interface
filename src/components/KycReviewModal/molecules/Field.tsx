@@ -1,6 +1,7 @@
 import React from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   label: string
@@ -47,10 +48,21 @@ const Container = styled.div`
   row-gap: 6px;
   font-size: 13px;
   text-transform: capitalize;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    row-gap: 6px;
+    margin-bottom: 12px;
+  }
   > :first-child {
     color: ${({ theme: { text5 } }) => text5};
+
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+      width: max-content;
+    }
   }
   > :last-child {
     color: ${({ theme: { text1 } }) => text1};
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+      width: max-content;
+    }
   }
 `

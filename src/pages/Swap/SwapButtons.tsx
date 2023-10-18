@@ -198,6 +198,7 @@ export const SwapButtons = ({
 
           {showSwapButton && allowSwap && (
             <PinnedContentButton
+              style={{ textAlign: 'center' }}
               onClick={onClick}
               data-testid="swap-button"
               id="swap-button"

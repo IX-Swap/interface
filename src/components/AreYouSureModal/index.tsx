@@ -2,7 +2,7 @@ import React from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
 
-import { ModalBlurWrapper, ModalContentWrapper, CloseIcon } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, MEDIA_WIDTHS } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ButtonPinkBorder, ButtonIXSGradient } from 'components/Button'
 
@@ -37,8 +37,12 @@ export const AreYouSureModal = ({ isOpen, title, acceptText, declineText, info, 
 }
 
 const ModalContent = styled(ModalContentWrapper)`
-  padding: 29px 38px 42px 42px;
+  // padding: 29px 38px 42px 42px;
   border-radius: 20px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
+    padding: 29px 38px 42px 42px;
+  }
 `
 
 const Title = styled.div`

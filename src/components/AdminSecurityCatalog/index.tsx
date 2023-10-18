@@ -375,7 +375,7 @@ export const AdminSecurityCatalog: FC = () => {
 
         {showMode === 'catalog' && (
           <>
-            <div style={{ backgroundColor: '#FFFFFF', width: '100%', padding: '40px' }}>
+            <div style={{ backgroundColor: '#FFFFFF', width: '100%', padding: isMobile ? '10px' : '40px' }}>
               <Flex
                 justifyContent="space-between"
                 flexDirection={isMobile ? 'column' : 'row'}
@@ -383,7 +383,7 @@ export const AdminSecurityCatalog: FC = () => {
                 marginBottom="10px"
               >
                 {/* <AddWhiteBGContainer></AddWhiteBGContainer> */}
-                <TYPE.title4 data-testid="securityTokensTitle">
+                <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} data-testid="securityTokensTitle">
                   <Trans>Security Catalog</Trans>
                 </TYPE.title4>
                 <StyledButtonGradientBorder

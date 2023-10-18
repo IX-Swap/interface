@@ -17,6 +17,7 @@ import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
 
 import { ReactComponent as ArrowLeft } from '../../assets/images/newBack.svg'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   isOpen: boolean
@@ -117,7 +118,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
                   </Trans>
                   &nbsp;&nbsp;
                 </div> */}
-                <TYPE.title7 fontWeight="800" fontSize="24px">
+                <TYPE.title7 fontWeight="800" fontSize={isMobile ? '18px' : '24px'}>
                   {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`})
                   {/* {data?.individual?.fullName || data?.corporate?.fullName || ''} */}
                 </TYPE.title7>
@@ -196,6 +197,10 @@ const ModalContent = styled(ModalContentWrapper)`
   max-width: 70vw;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 16px;
+    // padding: 29px 5px 42px 5px;
+    border-radius: 6px;
+    min-width: 90vw;
+    max-width: 90vw;
   }
 `
 
