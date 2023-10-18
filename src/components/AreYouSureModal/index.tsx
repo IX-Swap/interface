@@ -27,7 +27,7 @@ export const AreYouSureModal = ({ isOpen, title, acceptText, declineText, info, 
           </Title>
           {info && <Info>{t`${info}`}</Info>}
           <ButtonsContainer>
-            <ButtonIXSGradient onClick={onAccept}>{t`${acceptText || 'Yes'}`}</ButtonIXSGradient>
+            <ButtonIXSGradient color={'black'} onClick={onAccept}>{t`${acceptText || 'Yes'}`}</ButtonIXSGradient>
             <ButtonPinkBorder onClick={onDecline}>{t`${declineText || 'No'}`}</ButtonPinkBorder>
           </ButtonsContainer>
         </ModalContent>
