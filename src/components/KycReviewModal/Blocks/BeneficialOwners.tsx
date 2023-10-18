@@ -45,6 +45,9 @@ const GridContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   // justify-content: space-between;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+  }
 `
 
 const GridItem = styled.div`

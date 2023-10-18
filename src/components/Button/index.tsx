@@ -72,17 +72,15 @@ export const ButtonPrimary = styled(Base)`
     background-color: ${({ theme }) => darken(0.1, theme.primary1)};
   }
   &:disabled {
-    background-color: ${({ theme, altDisabledStyle, disabled }) =>
-      altDisabledStyle ? (disabled ? theme.primary1 : theme.primary1) : theme.primary1};
+    background-color: #e2e2f1;
     color: white;
     cursor: auto;
     box-shadow: none;
     border: 1px solid transparent;
     outline: none;
-    opacity: 0.4;
-    background: ${({ theme }) =>
-      theme.config.primary?.main || 'linear-gradient(116.36deg, #3a2161 33.43%, #590d4c 95.41%)'};
-    opacity: ${({ altDisabledStyle }) => (altDisabledStyle ? '0.5' : '0.4')};
+    // opacity: 0.4;
+    background: #e2e2f1;
+    // opacity: ${({ altDisabledStyle }) => (altDisabledStyle ? '0.5' : '0.4')};
   }
 `
 
@@ -175,14 +173,14 @@ export const ButtonPink = styled(Base)`
 `
 
 export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; disabled?: boolean }>`
-  color: white;
+  color: ${({ theme }) => theme.text2};
   min-height: 54px;
   opacity: ${({ confirmed }) => (confirmed ? 0.5 : 1)};
   width: fit-content;
   position: relative;
   cursor: pointer;
   border: none;
-  background-color: #6666ff;
+  background-color: ${({ confirmed }) => (confirmed ? 'transparent' : '#6666ff')};
 
   :hover {
     border-radius: 8px;
@@ -211,11 +209,10 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   margin-right: 20px;
 
   &:disabled {
-    background-color: transparent;
-    background: transparent;
-    color: #0ec080 !important;
-    border: 1px solid #0ec080;
-    opacity: 1;
+    background-color: ${({ confirmed }) => (confirmed ? 'transparent' : '#e2e2f1')};
+    color: ${({ confirmed }) => (confirmed ? '#0ec080 ' : 'white')};
+    border: ${({ confirmed }) => (confirmed ? '1px solid #0ec080' : '1px solid transparent')};
+    opacity: ${({ confirmed }) => (confirmed ? '1' : '0.5')};
   }
 `
 export const ButtonGradientBorder = styled(ButtonIXSGradient)`

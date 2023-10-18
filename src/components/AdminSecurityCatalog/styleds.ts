@@ -73,6 +73,11 @@ export const EditWrapper = styled.div`
   padding: 0px; 
   margin-left: auto;
   cursor: pointer;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  width: auto;
+  margin-left: 30px;
+  `};
+  
 }
 `
 

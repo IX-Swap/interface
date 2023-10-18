@@ -140,11 +140,22 @@ const FileName = styled.div`
   overflow: hidden;
 `
 
-const Container = styled.div``
+const Container = styled.div`
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    // display: inline-block;
+    // width: 100%;
+  }
+`
 
 const Table = styled.div`
   display: grid;
   row-gap: 40px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: inline-block;
+    // width: 100%;
+    // row-gap: 40px;
+    column-gap: 10px;
+  }
 `
 
 const Title = styled.div`
@@ -173,6 +184,14 @@ const BodyRow = styled.a`
   }
 
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
-    column-gap: 32px;
+    column-gap: 11px;
+    font-size: 10px;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
+    column-gap: 11px;
+    font-size: 10px;
+    margin-bottom: 10px;
   }
 `

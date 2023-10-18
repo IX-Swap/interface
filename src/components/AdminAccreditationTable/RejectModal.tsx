@@ -82,13 +82,13 @@ const Title = styled.div`
 `
 
 const ModalContainer = styled.div`
-  // background: ${({ theme: { bgG8 } }) => bgG8};
+  background: white;
   padding: 35px;
   border-radius: 6px;
   backdrop-filter: blur(20px);
   @media (max-width: 768px) {
     width: calc(100% - 24px);
-    padding: 12px;
+    padding: 20px;
     border-radius: 12px;
     margin: 0 auto;
   }
@@ -96,13 +96,14 @@ const ModalContainer = styled.div`
 
 const ModalContent = styled.div`
   // background: ${({ theme: { bg1 } }) => bg1};
-  width: 555px;
-  padding: 32px 42px 42px;
+  width: 450px;
+  // padding: 32px 42px 42px;
   border-radius: 20px;
   @media (max-width: 768px) {
     width: 100%;
     padding: 12px;
     border-radius: 12px;
+    background: white;
   }
 `
 
@@ -141,4 +142,8 @@ const Textarea = styled.textarea`
   padding: 16px 22px;
   margin-bottom: 31px;
   height: 308px;
+
+  @media (max-width: 768px) {
+    height: 200px;
+  }
 `

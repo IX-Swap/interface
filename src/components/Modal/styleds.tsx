@@ -32,6 +32,7 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
 
     ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       display: flex;
+       background-color: none;
   `};
 
     background-color: ${({ theme }) => theme.modalBG1};
@@ -45,11 +46,11 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
       `}
 
     ${({ theme }) => theme.mediaWidth.upToSmall`
-          background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, 
-                                      rgba(206, 20, 132, 0.33) 0%,
-                                      rgba(26, 18, 58, 0) 100%),
-                                      rgba(44, 37, 74, 0.3);
-          backdrop-filter: blur(20px);
+          // background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, 
+          //                             rgba(206, 20, 132, 0.33) 0%,
+          //                             rgba(26, 18, 58, 0) 100%),
+          //                             rgba(44, 37, 74, 0.3);
+          // backdrop-filter: blur(20px);
           width: 100vw;
       `}
   }

@@ -10,6 +10,10 @@ export const GridContainer = styled.div<GridContainerProps>`
   display: flex;
   flex-wrap: wrap;
   margin: ${({ spacing = 0 }) => `${-spacing}px`};
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+  }
   > div {
     flex: 0 0 calc(16% - ${({ spacing = 0 }) => `${spacing}px`});
     margin: ${({ spacing = 0 }) => `${spacing}px`};

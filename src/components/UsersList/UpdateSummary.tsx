@@ -11,6 +11,7 @@ import notCheckIcon from 'assets/images/reject.svg'
 import { CloseIcon } from '../../theme'
 
 import { Option } from './TokensBlock'
+import { isMobile } from 'react-device-detect'
 
 const Header = styled.div`
   display: flex;
@@ -27,7 +28,9 @@ const Header = styled.div`
   }
 
   @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
-    font-size: 16px;
+    font-size: 18px;
+    padding: 20px;
+    line-height: 24px;
   }
 `
 
@@ -42,6 +45,9 @@ const SummaryContainer = styled.div`
   padding: 24px;
   border: 1px solid #e6e6ff;
   border-radius: 6px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 10px;
+  }
 
   > div {
     padding: 16px;
@@ -102,7 +108,13 @@ export const UpdateSummary = ({ item, close }: Props) => {
     <RedesignedWideModal isOpen onDismiss={close}>
       <ModalBlurWrapper
         data-testid="remove-tokens-for-manager "
-        style={{ maxWidth: '600px', minWidth: '320px', width: '100%', position: 'relative' }}
+        style={{
+          maxWidth: '600px',
+          minWidth: '320px',
+          width: '100%',
+          position: 'relative',
+          backgroundColor: isMobile ? 'white' : '',
+        }}
       >
         <CloseIcon style={{ position: 'absolute', right: '30px', top: '30px' }} data-testid="cross" onClick={close} />
         <Header>

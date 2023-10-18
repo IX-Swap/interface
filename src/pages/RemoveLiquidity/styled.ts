@@ -41,18 +41,25 @@ export const RemovedLiquidityWrapper = styled(LightCardNew)`
 export const ModalHeaderWrapper = styled.div`
   padding-bottom: 1rem;
   padding: 27px 40px 27px 40px;
-  margin-left: 20px;
-  margin-right: 20px;
+
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: ${({ theme }) => theme.bg1};
   border: 1px solid #e6e6ff;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+   padding: 27px 22px 27px 10px;
+     margin-left: 10px;
+  margin-right: 10px;
+  `};
 `
 export const ModalBottomWrapper = styled.div`
   padding: 27px 40px 27px 40px;
   background: ${({ theme }) => theme.bg25};
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  // border-bottom-left-radius: 20px;
+  // border-bottom-right-radius: 20px;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+ padding: 27px 26px 27px 16px;
+  `};
 `

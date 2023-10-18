@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { OfferPresaleStatistics } from 'state/launchpad/types'
 import { text10, text51 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   data: OfferPresaleStatistics
@@ -72,6 +73,11 @@ const GridContainer = styled.div`
   grid-template-rows: auto;
   grid-template-areas: 'row1 separator1 row2 separator2 row3';
   gap: 32px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+    // justify-content: space-between;
+  }
 `
 const GridItem = styled.div<{ gridArea: string }>`
   grid-area: ${(props) => props.gridArea};

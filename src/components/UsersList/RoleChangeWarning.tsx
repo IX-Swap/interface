@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import { ModalBlurWrapper, ModalContentWrapper, TYPE, CloseIcon } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper, TYPE, CloseIcon, MEDIA_WIDTHS } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { ROLES_LABEL } from 'constants/roles'
@@ -10,6 +10,7 @@ import arrowImg from 'assets/images/newBack.svg'
 // import ProfileIcon from 'assets/images/profileIconButton.svg'
 import { Box } from 'rebass'
 import { ReactComponent as ProfileIcon } from 'assets/images/profileIconButton.svg'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   close: () => void
@@ -26,7 +27,10 @@ export const RoleChangeWarning = ({ role = '', newRole, close, onConfirm }: Prop
         style={{ maxWidth: '612px', minWidth: '320px', width: '100%', position: 'relative' }}
       >
         <ModalContentWrapper>
-          <CloseIcon style={{ position: 'absolute', right: '10px' }} onClick={close} />
+          <CloseIcon
+            style={{ position: 'absolute', right: isMobile ? '15px' : '10px', top: isMobile ? '10px' : '' }}
+            onClick={close}
+          />
           <Container>
             <TYPE.title7 style={{ lineHeight: '25px' }}>
               Changing the role of the user, <br /> will lead to a change in his <br /> access to certain functionality.
@@ -108,5 +112,9 @@ const ButtonsContainer = styled.div`
     font-weight: 600;
     font-size: 16px;
     padding: 16px 24px;
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 0px 12px 20px 12px;
   }
 `

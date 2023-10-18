@@ -308,9 +308,53 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
           )}
         </MenuList>
       </Container>
+      <StyledFooter>
+        <span>Copyright © IX Swap 2023</span>
+        <div>
+          <a
+            href={config?.footerConfig?.termsLink || 'https://ixswap.io/terms-and-conditions/'}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Terms & Conditions
+          </a>
+
+          <a
+            href={config?.footerConfig?.privacyLink || 'https://ixswap.io/privacy-policy/'}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Privacy Policy
+          </a>
+        </div>
+      </StyledFooter>
     </ModalContainer>
   )
 }
+
+const StyledFooter = styled.div`
+  text-align: center;
+  margin-top: 40px;
+
+  & > span {
+    color: #292933;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  & > div {
+    gap: 20px;
+
+    & > a {
+      color: #b8b8cc;
+      font-size: 12px;
+      font-weight: 500;
+      margin-right: 10px;
+      text-decoration: none;
+      // margin-top: 20px;
+    }
+  }
+`
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -345,6 +389,9 @@ const CloseContainer = styled.div`
   right: 20px;
   z-index: 9999;
   color: black;
+  border: 1px solid #e6e6ff;
+  border-radius: 6px;
+  padding: 10px 12px;
 `
 
 const StyledCloseIcon = styled(CloseIcon)`
@@ -359,6 +406,7 @@ const MenuList = styled.div`
   display: grid;
   grid-template-columns: 100%;
   grid-gap: 6px;
+  margin-top: 60px;
   justify-content: left;
 `
 const listItemStyle = css`

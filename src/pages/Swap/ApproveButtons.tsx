@@ -42,9 +42,10 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
   if (!showApproveFlow || shouldGetAuthorization) {
     return null
   }
+
   return (
     <AutoRow style={{ flexWrap: 'nowrap', width: '100%', marginBottom: '10px' }}>
-      <AutoColumn style={{ width: '100%' }} gap="12px">
+      <AutoColumn style={{ width: '100%', textAlign: 'center' }} gap="12px">
         <ButtonIXSWide
           onClick={handleApprove}
           disabled={
@@ -56,7 +57,7 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
           altDisabledStyle={approvalState === ApprovalState.PENDING} // show solid button while waiting
           confirmed={approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED}
         >
-          <AutoRow justify="space-between" style={{ flexWrap: 'nowrap' }}>
+          <AutoRow justify="center" style={{ flexWrap: 'nowrap' }}>
             <span
               style={{
                 display: 'flex',
@@ -72,11 +73,11 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
               /> */}
               {/* we need to shorten this string on mobile */}
               {approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED ? (
-                <span color="#0ec080">
+                <span style={{ textAlign: 'center' }} color="#0ec080">
                   <Trans>You can now trade {currencies[Field.INPUT]?.symbol}</Trans>
                 </span>
               ) : (
-                <span color="#ffffff">
+                <span style={{ textAlign: 'center' }} color="#ffffff">
                   <Trans>
                     Allow {config?.name || 'IX Swap'} to use your {currencies[Field.INPUT]?.symbol}
                   </Trans>

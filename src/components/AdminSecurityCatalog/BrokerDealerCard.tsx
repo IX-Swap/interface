@@ -21,7 +21,11 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
     <Box marginBottom="30px">
       <CardHeader>
         <div className="left-side">
-          <img style={{ width: '64px', height: '64px', marginRight: '20px' }} src={logo.public} />
+          {isMobile ? (
+            <img style={{ width: '30px', height: '30px', marginRight: '20px' }} src={logo.public} />
+          ) : (
+            <img style={{ width: '64px', height: '64px', marginRight: '20px' }} src={logo.public} />
+          )}
           <div>
             <TYPE.title7 style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</TYPE.title7>
             <TYPE.small overflow="hidden">

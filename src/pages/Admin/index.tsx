@@ -154,6 +154,10 @@ export const Body = styled.div`
   max-width: 1400px;
   margin: 100px auto;
   width: 100%;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    margin: 20px auto;
+  }
 `
 
 const TabsContainer = styled.div`
