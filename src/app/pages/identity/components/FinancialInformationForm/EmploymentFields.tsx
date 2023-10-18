@@ -8,7 +8,6 @@ import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
 import { hasValue } from 'helpers/forms'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { FundSourceSelect } from 'components/form/FundSourceSelect'
-import { OptionalLabel } from 'components/form/OptionalLabel'
 import { AnnualIncomeSelect } from 'components/form/AnnualIncomeSelect'
 
 export const EmploymentField = () => {
@@ -30,7 +29,7 @@ export const EmploymentField = () => {
               control={control}
               variant='outlined'
               name='occupation'
-              label={<OptionalLabel label='Occupation' />}
+              label={'Occupation'}
               placeholder='Occupation'
               data-testid='Occupation-select'
               fullWidth
