@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Trans } from '@lingui/macro'
 import styled, { css } from 'styled-components'
 import ReactPaginate from 'react-paginate'
-
 import { Input } from 'components/Input'
-import { inputGradientBorder, MEDIA_WIDTHS } from 'theme'
+import { inputGradientBorder, MEDIA_WIDTHS, TYPE } from 'theme'
 
-import { ReactComponent as ArrowIcon } from '../../assets/images/chevron.svg'
+import { ReactComponent as ArrowIcon } from '../../assets/images/newArrow.svg'
 
 interface Props {
   page: number
@@ -49,7 +48,7 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
 
   return (
     <Container>
-      <ReactPaginate
+      {/* <ReactPaginate
         forcePage={page - 1}
         breakLabel="..."
         onPageChange={onPageClick}
@@ -60,48 +59,32 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
         nextLabel={<Next />}
         containerClassName="pagination-container"
         pageClassName="page"
-      />
-      <GoToContaner>
-        <Trans>Go to Page</Trans>
-        <InputContainer>
-          <StyledInput value={inputPage} onChange={onPageInputChange} />
-        </InputContainer>
-        <Button onClick={onClickButton}>
+      /> */}
+      <InfoContainer>
+        <TYPE.small>
+          {page}-{Math.min(page + 4, totalPages)} of {totalPages}
+        </TYPE.small>
+        <Button onClick={() => onPageChange(page - 1)} disabled={page !== totalPages}>
+          <Prev />
+        </Button>
+        <Button onClick={() => onPageChange(page + 1)} disabled={page === totalPages}>
           <Next />
         </Button>
-      </GoToContaner>
+      </InfoContainer>
     </Container>
   )
 }
 
-const InputContainer = styled.div`
-  border-radius: 12px;
-  position: relative;
-  z-index: 1;
-  ${inputGradientBorder};
-  padding: 0 16px;
-  width: 60px;
-`
-
-const StyledInput = styled(Input)`
-  background-color: transparent;
-  width: auto;
-  border-radius: 12px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  height: 32px;
-  z-index: 20;
-  padding: 0;
-  width: 100%;
-  text-align: center;
-  position: relative;
+const InfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
 `
 
 const Container = styled.div`
   display: flex;
   align-items: center;
-  /* margin-top: 48px; */
   gap: 16px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-direction: column;
@@ -146,7 +129,7 @@ const Container = styled.div`
     opacity: 0.5;
   }
   .page {
-    border: ${({ theme }) => `1px solid ${theme.bg11};`};
+    // border: ${({ theme }) => `1px solid ${theme.bg11};`};
     border-radius: 50%;
   }
   .selected {
@@ -158,12 +141,6 @@ const Container = styled.div`
     background-color: ${({ theme }) => theme.text10};
     border-radius: 50%;
   }
-`
-
-const GoToContaner = styled.div`
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
 `
 
 const Button = styled.div<{ disabled?: boolean }>`

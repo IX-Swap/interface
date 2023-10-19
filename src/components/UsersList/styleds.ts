@@ -10,7 +10,7 @@ export const StyledBodyRow = styled(BodyRow)`
   min-width: 950px;
   width: 100%;
   margin-bottom: 0px;
-  background-color: transparent;
+  // background-color: transparent;
   border: none;
   > div {
     padding: 24px 10px;
@@ -54,19 +54,19 @@ export const TopContent = styled(Flex)`
 export const StyledAccordion = styled(Accordion)`
   min-width: 950px;
   width: 100%;
-  color: white !important;
-  margin: 0px !important;
-  border: 1px solid ${({ theme: { bg11 } }) => bg11}!important;
-  border-radius: 20px !important;
+  // color: white !important;
+  // margin: 0px !important;
+  // border-bottom: 1px solid #e6e6ff;
+  // border-radius: 20px !important;
   margin-bottom: 8px !important;
-  background-color: rgba(39, 31, 74, 0.3) !important;
+  // background-color: rgba(39, 31, 74, 0.3) !important;
   .MuiAccordionSummary-content {
     margin: 0px !important;
   }
   hr {
     height: 1px;
     border: none;
-    background-color: ${({ theme }) => theme.bg7};
+    // background-color: ${({ theme }) => theme.bg7};
   }
   .MuiAccordionDetails-root {
     display: grid;

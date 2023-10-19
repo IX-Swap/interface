@@ -128,20 +128,19 @@ export default function Swap({ history }: RouteComponentProps) {
   return (
     <>
       <TokenWarningModal history={history} />
+      <PendingSuccesModals
+        trade={trade}
+        swapErrorMessage={swapErrorMessage}
+        onDismiss={handleConfirmDismiss}
+        attemptingTxn={attemptingTxn}
+        txHash={txHash}
+        isOpen={openModal}
+      />
       <GeneralModal />
       <BrokerDealerForm ref={formRef} />
       <AppBody blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
         <SwapHeader />
         <Wrapper id="swap-page">
-          <PendingSuccesModals
-            trade={trade}
-            swapErrorMessage={swapErrorMessage}
-            onDismiss={handleConfirmDismiss}
-            attemptingTxn={attemptingTxn}
-            txHash={txHash}
-            isOpen={openModal}
-          />
-
           <AutoColumn gap={'1.25rem'}>
             <CurrencyInput {...{ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }} />
             {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}

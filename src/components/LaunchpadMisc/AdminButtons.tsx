@@ -14,6 +14,7 @@ export const AdminButtons = ({ disabled, onReject, onUpdate, onApprove }: AdminB
   return (
     <>
       <OutlineButton
+        style={{ border: '1px solid #6666FF33' }}
         disabled={disabled}
         onClick={onReject}
         borderColor={theme.launchpad.colors.error}
@@ -22,7 +23,7 @@ export const AdminButtons = ({ disabled, onReject, onUpdate, onApprove }: AdminB
         Reject
         <Delete color={theme.launchpad.colors.error} size="19" strokeWidth={2} />
       </OutlineButton>
-      <OutlineButton disabled={disabled} onClick={onUpdate}>
+      <OutlineButton style={{ border: '1px solid #6666FF33' }} disabled={disabled} onClick={onUpdate}>
         Request Update
       </OutlineButton>
       <FilledButton disabled={disabled} onClick={onApprove} background={theme.launchpad.colors.success}>

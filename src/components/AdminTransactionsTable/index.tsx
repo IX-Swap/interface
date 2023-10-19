@@ -12,13 +12,15 @@ import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 import { BrokerDealerSwapItem } from 'state/admin/actions'
 import { useCurrency } from 'hooks/Tokens'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import { ExternalLink } from 'theme'
+import { ExternalLink, TYPE } from 'theme'
 import { adminOffset as offset } from 'state/admin/constants'
 import { getExplorerName } from 'hooks/useExplorerName'
 import { CopyAddress } from 'components/CopyAddress'
 import { NoData } from 'components/UsersList/styleds'
 
 import { BodyRow, HeaderRow, Table } from '../Table'
+import { isMobile } from 'react-device-detect'
+import { lineHeight } from 'styled-system'
 
 interface RowProps {
   item: BrokerDealerSwapItem
@@ -71,7 +73,10 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
       <div>
         {transactionHash && currency?.chainId && (
           <ExternalLink href={getExplorerLink(currency.chainId, transactionHash, ExplorerDataType.TRANSACTION)}>
-            View on {getExplorerName(currency.chainId)}
+            <span style={{ color: '#6666ff', textDecoration: 'none' }}>
+              {' '}
+              View on {getExplorerName(currency.chainId)}
+            </span>
           </ExternalLink>
         )}
       </div>
@@ -123,6 +128,15 @@ export const AdminTransactionsTable = () => {
           <LoaderThin size={96} />
         </Loader>
       )}
+      <TYPE.title4
+        fontSize={isMobile ? '29px' : '40px'}
+        lineHeight={isMobile ? '40px' : '56px'}
+        marginTop={isMobile ? '35px' : ''}
+        marginBottom="30px"
+        data-testid="securityTokensTitle"
+      >
+        <Trans>Broker Dealer Transactions</Trans>
+      </TYPE.title4>
       <Search setSearchValue={setSearchValue} placeholder={t`Search for Wallet`} />
       {items?.length === 0 ? (
         <NoData>
@@ -154,10 +168,11 @@ export const Loader = styled.div`
 `
 
 const Wallet = styled.div`
-  background: ${({ theme: { bgG3 } }) => bgG3};
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #b8b8cc;
+  // background: ${({ theme: { bgG3 } }) => bgG3};
+  // -webkit-background-clip: text;
+  // background-clip: text;
+  // -webkit-text-fill-color: transparent;
 `
 
 const Container = styled.div`

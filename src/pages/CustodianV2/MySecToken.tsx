@@ -12,6 +12,7 @@ import CurrencyLogo from 'components/CurrencyLogo'
 
 import { MySecTokenCard } from './styleds'
 import { routes } from 'utils/routes'
+import { marginRight } from 'styled-system'
 
 interface Props {
   token: any
@@ -63,20 +64,22 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
               <CurrencyLogo currency={undefined} size={'46px'} style={{ marginRight: 16, minWidth: 46 }} />
             )}
             <Column>
-              <TYPE.title5>{token.ticker}</TYPE.title5>
-              <TYPE.small fontWeight={600} color="text2" lineHeight="16.5px">
-                {wrappedToken.name}
-              </TYPE.small>
+              <TYPE.title11>{token.ticker}</TYPE.title11>
+              {/* <TYPE.small fontWeight={600}>{wrappedToken.name}</TYPE.small> */}
+            </Column>
+            <Column style={{ minWidth: '100%', marginLeft: '10px' }}>
+              {/* <TYPE.title11>{token.ticker}</TYPE.title11> */}
+              <TYPE.small fontWeight={600}>{wrappedToken.name}</TYPE.small>
             </Column>
           </Flex>
-          <Flex
+          {/* <Flex
             alignItems="center"
             justifyContent={isMobileOnly ? 'flex-start' : 'flex-end'}
             width="-webkit-fill-available"
-          >
-            <Status status={status} amount={balance} decimals={token.token.decimals ?? 18} />
-          </Flex>
+          > */}
+          <Status status={status} amount={balance} decimals={token.token.decimals ?? 18} />
         </Flex>
+        {/* </Flex> */}
       </MySecTokenCard>
     </NavLink>
   )

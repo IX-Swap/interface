@@ -44,7 +44,7 @@ export default function TradePrice({ price, showInverted, setShowInverted }: Tra
   return (
     <StyledPriceContainer onClick={flipPrice} title={text}>
       <div style={{ alignItems: 'center', display: 'flex', width: 'fit-content' }}>
-        <Text fontWeight={500} fontSize={14} color={theme.text7}>
+        <Text fontWeight={500} fontSize={14} color={theme.text2}>
           {text}
         </Text>
         <IconWrapper clickable>

@@ -217,7 +217,7 @@ export const StyledBodyRow = styled(BodyRow)`
   font-weight: 400;
 
   .rewards {
-    color: #9df9b1;
+    color: #0ecc88;
   }
 `
 

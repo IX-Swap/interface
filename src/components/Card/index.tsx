@@ -38,10 +38,11 @@ export const YellowCard = styled(Card)`
   font-weight: 500;
 `
 export const DarkBlueCard = styled(Card)`
-  background-color: ${({ theme }) => theme.bg7};
+  // background-color: ${({ theme }) => theme.bg7};
+  border: 1px solid #e6e6ff;
   color: ${({ theme }) => theme.text2};
   font-weight: 500;
-  border-radius: 36px;
+  border-radius: 6px;
   padding: 15px 31px 15px 27px;
 `
 export const VioletCard = styled(Card)`
@@ -62,17 +63,18 @@ export const BlueCard = styled(Card)`
 `
 
 export const TipCard = styled(Card)`
-  border-radius: 45px;
+  border-radius: 8px;
+  border: 1px solid #e6e6ff;
   font-size: 12px;
   line-height: 18px;
-  padding: 20px 35px;
+  padding: 20px;
   text-align: left;
-  background: ${({ theme }) => theme.bgG12};
-  color: ${({ theme }) => theme.text2};
+  // background: ${({ theme }) => theme.bg25};
+  color: ${({ theme }) => theme.text13};
 `
 
 export const EmptyStateInfoCard = styled(Card)`
-  border-radius: 45px;
+  border-radius: 6px;
   padding: 0 17px;
   justify-content: center;
   align-items: center;
@@ -80,7 +82,24 @@ export const EmptyStateInfoCard = styled(Card)`
   gap: 10px;
   min-height: 177px;
   flex-direction: column;
-  background: ${({ theme }) => theme.bgG13};
+  background: #f7f7fa;
+  color: ${({ theme }) => theme.text2};
+  @media (max-width: 500px) {
+    min-height: fit-content;
+    padding: 1rem;
+  }
+`
+
+export const NewEmptyStateInfoCard = styled(Card)`
+  border-radius: 8px;
+  padding: 10 17px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  min-height: 120px;
+  flex-direction: column;
+  background: ${({ theme }) => theme.bg1};
   color: ${({ theme }) => theme.text2};
   @media (max-width: 500px) {
     min-height: fit-content;
@@ -89,9 +108,31 @@ export const EmptyStateInfoCard = styled(Card)`
 `
 
 export const DarkCard = styled(Card)`
-  background: ${({ theme }) => theme.bgG4};
+  background: ${({ theme }) => theme.bg1};
   backdrop-filter: blur(4px);
   border-radius: 20px;
+  padding: 26px 36px 40px 36px;
+  @media (max-width: 500px) {
+    padding: 16px;
+  }
+`
+
+export const DarkCardNew = styled(Card)`
+  background: ${({ theme }) => theme.bg25};
+  border: 1px solid #e6e6ff;
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+  padding: 26px 36px 40px 36px;
+  @media (max-width: 500px) {
+    padding: 16px;
+  }
+`
+
+export const LightCardNew = styled(Card)`
+  background: ${({ theme }) => theme.bg1};
+  border: 1px solid #e6e6ff;
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
   padding: 26px 36px 40px 36px;
   @media (max-width: 500px) {
     padding: 16px;
@@ -102,9 +143,9 @@ export const SwapErrorCard = styled(DarkCard)`
   text-align: left;
 `
 export const BlueGreyCard = styled(Card)`
-  background: ${({ theme }) => `${theme.bg11}66`};
+  // background: ${({ theme }) => `${theme.bg1}66`};
   border-radius: 20px;
-  padding: 18px 25px;
+  // padding: 18px 25px;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 16px 8px;

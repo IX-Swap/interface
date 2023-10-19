@@ -11,6 +11,8 @@ import { ReactComponent as ArrowDown } from '../../assets/images/arrow.svg'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { ArrowWrapper } from '../../components/swap/styleds'
 import { Field } from '../../state/swap/actions'
+import { ColumnCenter } from 'components/Column'
+import { ReactComponent as DownArrow } from '../../assets/images/downArrowNew.svg'
 import SwapBanner from 'pages/Swap/SwapBanner'
 
 interface ParsedAmounts {
@@ -27,6 +29,15 @@ interface Props {
   showWrap: boolean
   currencies: Currencies
   handleHideConfirm: () => void
+}
+
+const plusIconStyle = {
+  width: '50px',
+  height: '50px',
+  zIndex: '99999',
+  marginTop: '-27px',
+  marginBottom: '-12px',
+  cursor: 'pointer',
 }
 
 export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }: Props) => {
@@ -84,19 +95,16 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
       : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
   }
   const showMaxButton = Boolean(maxInputAmount?.greaterThan(0) && !parsedAmounts[Field.INPUT]?.equalTo(maxInputAmount))
-  console.log(currencies[Field.INPUT]?.symbol, 'tetetet')
-  console.log(currencies[Field.OUTPUT]?.symbol, 'tetetet')
+
+  const isSwapBannerVisible =
+    // (currencies[Field.INPUT]?.symbol === 'wSTOA' && currencies[Field.OUTPUT]?.symbol === 'TIXS') ||
+    // (currencies[Field.INPUT]?.symbol === 'TIXS' && currencies[Field.OUTPUT]?.symbol === 'wSTOA')
+    (currencies[Field.INPUT]?.symbol === 'WIXS' && currencies[Field.OUTPUT]?.symbol === 'wTAU') ||
+    (currencies[Field.INPUT]?.symbol === 'wTAU' && currencies[Field.OUTPUT]?.symbol === 'WIXS')
+
   return (
     <>
-      {/* {(currencies[Field.INPUT]?.symbol === 'wSTOA' && currencies[Field.OUTPUT]?.symbol === 'TIXS') ||
-      (currencies[Field.INPUT]?.symbol === 'TIXS' && currencies[Field.OUTPUT]?.symbol === 'wSTOA') ? (
-        <SwapBanner />
-      ) : null} */}
-      {(currencies[Field.INPUT]?.symbol === 'WIXS' && currencies[Field.OUTPUT]?.symbol === 'wTAU') ||
-      (currencies[Field.INPUT]?.symbol === 'wTAU' && currencies[Field.OUTPUT]?.symbol === 'WIXS') ? (
-        <SwapBanner />
-      ) : null}
-      {/* <SwapBanner /> */}
+      {isSwapBannerVisible && <SwapBanner />}
       <div style={{ display: 'relative' }}>
         <CurrencyInputPanel
           label={independentField === Field.OUTPUT && !showWrap ? <Trans>From (at most)</Trans> : <Trans>From</Trans>}
@@ -112,21 +120,31 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
           title={<Trans>Select a token to swap</Trans>}
           id="swap-currency-input"
         />
-        <ArrowWrapper
-          data-testid="currencyReplace"
-          clickable
-          onClick={() => {
-            setApprovalSubmitted(false) // reset 2 step UI for approvals
-            onSwitchTokens()
-          }}
-        >
-          <ArrowDown
-            width="16px"
-            height="16px"
-            color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
-            fill={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
+
+        <ColumnCenter>
+          <DownArrow
+            onClick={() => {
+              setApprovalSubmitted(false) // reset 2 step UI for approvals
+              onSwitchTokens()
+            }}
+            style={plusIconStyle}
           />
-        </ArrowWrapper>
+        </ColumnCenter>
+        {/* <ArrowWrapper
+        data-testid="currencyReplace"
+        clickable
+        onClick={() => {
+          setApprovalSubmitted(false) // reset 2 step UI for approvals
+          onSwitchTokens()
+        }}
+      >
+        <ArrowDown
+          width="16px"
+          height="16px"
+          color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
+          fill={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
+        />
+      </ArrowWrapper> */}
         <CurrencyInputPanel
           value={formattedAmounts[Field.OUTPUT]}
           onUserInput={handleTypeOutput}

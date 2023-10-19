@@ -31,7 +31,7 @@ export const Container = styled.div`
     /* Handle */
     ::-webkit-scrollbar-thumb {
       background: #ffffff;
-      border: 1px solid  #ededf7;
+      border: 1px solid #ededf7;
     }
 
     /* Handle on hover */

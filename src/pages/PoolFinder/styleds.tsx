@@ -14,17 +14,22 @@ export const PrerequisiteMessageWrapper = styled.div`
 
 export const FoundPoolWrapper = styled(ColumnCenter)`
   justify-items: center;
-  background: ${({ theme }) => theme.bg11};
+  // background: ${({ theme }) => theme.bg25};
   padding: 24px 35px 46px 35px;
-  border-radius: 20px;
+  border-radius: 8px;
+  border: 1px solid #e6e6ff;
   gap: 34px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  margin-top: 35px;
+  // margin-top: 35px;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  padding: 24px 20px 46px 20px;
+  `};
 `
 export const SelectCurrencyContainer = styled(AutoColumn)`
-  padding: 0 37px;
+  padding: 24px;
+  border: 1px solid #e6e6ff;
   margin-bottom: 10px;
+  border-radius: 8px;
   @media (max-width: 500px) {
     padding: 0 0.7rem;
   }

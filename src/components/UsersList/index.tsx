@@ -19,8 +19,8 @@ import { useAdminState, useGetUsersList, useOnlyAdminAccess } from 'state/admin/
 import { adminOffset as offset } from 'state/admin/constants'
 import { TokenManagerEntry, User } from 'state/admin/actions'
 
-import checkIcon from 'assets/images/check-success.svg'
-import notCheckIcon from 'assets/images/reject.svg'
+import checkIcon from 'assets/images/newRightCheck.svg'
+import notCheckIcon from 'assets/images/newReject.svg'
 import expandIcon from 'assets/images/dropdown.svg'
 
 import CurrencyLogo from 'components/CurrencyLogo'
@@ -32,6 +32,11 @@ import { Table } from '../Table'
 import { UserModal } from './UserModal'
 import { TopContent, StyledBodyRow, StyledHeaderRow, StyledAccordion, ExpandIcon, AddButton } from './styleds'
 import { TokenManagerTokens } from './TokenManagerTokens'
+import { ReactComponent as Checked } from 'assets/images/NewPen.svg'
+import { Flex } from 'rebass'
+import { isMobile } from 'react-device-detect'
+import { TYPE } from 'theme'
+import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
 
 const headerCells = [t`Wallet address`, t`Role`, t`Name`, t`Security Token`, t`Whitelisted`, '']
 
@@ -82,6 +87,35 @@ export const UsersList: FC = () => {
   return (
     <Container>
       <LoadingIndicator isLoading={adminLoading} />
+      {/* <div style={{ backgroundColor: '#FFFFFF', width: '100%', padding: '40px' }}> */}
+      <Flex
+        justifyContent="space-between"
+        flexDirection={isMobile ? 'column' : 'row'}
+        marginTop="30px"
+        // marginBottom="10px"
+      >
+        <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} data-testid="securityTokensTitle">
+          <Trans>Users</Trans>
+        </TYPE.title4>
+        <StyledButtonGradientBorder
+          style={{
+            padding: '12px 16px',
+            width: '134px',
+            backgroundColor: '#6666FF',
+            color: '#FFFFFF',
+            borderRadius: '6px',
+          }}
+          marginTop={isMobile ? '16px' : '0px'}
+          marginLeft={isMobile ? '0px' : '33px'}
+          onClick={openUpdateModal}
+        >
+          <Trans>+ Add User</Trans>
+        </StyledButtonGradientBorder>
+      </Flex>
+      <Flex>
+        {/* <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={t`Search`} /> */}
+      </Flex>
+      {/* </div> */}
       {modalOpen && <UserModal item={selectedItem} close={closeUpdateModal} filters={filters} />}
       <TopContent marginBottom="33px">
         <MultipleFilters
@@ -89,9 +123,6 @@ export const UsersList: FC = () => {
           onFiltersChange={handleFilters}
           searchPlaceholder="Search by Wallet or Name"
         />
-        <AddButton onClick={openUpdateModal}>
-          <Trans>Add User</Trans>
-        </AddButton>
       </TopContent>
 
       {usersList.items.length > 0 ? (
@@ -172,9 +203,11 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
 
             <div>
               <img src={isWhitelisted ? checkIcon : notCheckIcon} alt="is-whitelisted" />
+              <span style={{ marginLeft: '10px' }}>{isWhitelisted ? 'Yes' : 'No'}</span>
             </div>
             <div>
-              <ButtonGradientBorder
+              <Checked
+                style={{ cursor: 'pointer' }}
                 onClick={(e: any) => {
                   e.preventDefault()
                   e.stopPropagation()
@@ -183,9 +216,7 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
                     toggleAccordion()
                   }
                 }}
-              >
-                Edit
-              </ButtonGradientBorder>
+              />
               {needAccordion && <ExpandIcon src={expandIcon} alt="expandIcon" expanded={expanded} />}
             </div>
             {/* <div>

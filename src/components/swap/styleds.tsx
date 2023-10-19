@@ -25,7 +25,7 @@ export const ArrowWrapper = styled.div<{ clickable: boolean }>`
   align-items: center;
   justify-content: center;
   /* transform: rotate(90deg); */
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg9};
+  // background-color: ${({ theme }) => theme.config.background?.main || theme.bg9};
   z-index: 2;
   ${({ clickable }) =>
     clickable

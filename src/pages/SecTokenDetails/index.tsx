@@ -19,6 +19,7 @@ import { DetailsInfo } from './DetailsInfo'
 import { AddToMetamask } from './AddToMetamask'
 import { AtlasInfo } from './AtlasInfo'
 import { NotTradable } from './NotTradable'
+import styled from 'styled-components'
 
 export default function SecTokenDetails({
   match: {
@@ -57,29 +58,53 @@ export default function SecTokenDetails({
     <>
       <DepositPopup currency={token?.token} token={token} />
       <WithdrawPopup currency={token?.token} token={token} />
-      <LightBackground />
-      <Container>
-        <InfoTitle>
-          <BackArrowButton onBack={onBack} />
-          {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}
-          <Box display="flex" alignItems="center">
-            <StyledTitleBig fontWeight="600">{token?.ticker}</StyledTitleBig>
-            <CompanyName>
-              &nbsp;-&nbsp;
-              {token?.companyName}
-            </CompanyName>
-          </Box>
-        </InfoTitle>
-        {token && <DetailsInfo token={token} />}
-        {token && <AddToMetamask token={token} />}
-        {atlasInfo && <AtlasInfo atlasInfo={atlasInfo} />}
-        {token?.token?.id && (
-          <ValutContainer>
-            <Vault token={token} currency={token.token} />
-          </ValutContainer>
-        )}
-        {token && !token.token?.id && <NotTradable ticker={token.ticker} />}
-      </Container>
+      <TokenInfoContainer>
+        <Container>
+          {/* <LightBackground /> */}
+          <InfoTitle>
+            <BackArrowButton onBack={onBack} />
+            {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}
+            <Box display="flex" alignItems="center">
+              <StyledTitleBig fontWeight="600">{token?.ticker}</StyledTitleBig>
+              {/* <CompanyName>
+                &nbsp;-&nbsp;
+                {token?.companyName}
+              </CompanyName> */}
+            </Box>
+          </InfoTitle>
+          {token && <DetailsInfo token={token} />}
+        </Container>
+      </TokenInfoContainer>
+
+      {atlasInfo && <AtlasInfo atlasInfo={atlasInfo} />}
+      {token?.token?.id && (
+        <ValutContainer>
+          <Vault token={token} currency={token.token} />
+        </ValutContainer>
+      )}
+      {token && !token.token?.id && <NotTradable ticker={token.ticker} />}
     </>
   )
 }
+
+export const TokenInfoContainer = styled.div<{ background?: string }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 55vh;
+  width: 100%;
+  padding: 0 2rem;
+  // font-family: ${(props) => props.theme.launchpad.font};
+  background: #ffffff;
+  margin-top: -25px;
+
+  * {
+    // font-family: ${(props) => props.theme.launchpad.font};
+  }
+
+  /* Media Query for Mobile */
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+    background: #ffffff;
+  }
+`

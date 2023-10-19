@@ -2,11 +2,11 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import styled from 'styled-components'
 
-import { ButtonIXSWide } from 'components/Button'
+import { ButtonIXSWide, PinnedContentButton } from 'components/Button'
 
 import clipboardTextIcon from '../../assets/images/clipboard-text .svg'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import closeIcon from '../../assets/images/cross.svg'
+import closeIcon from '../../assets/images/newCross.svg'
 import { useDeclineAccreditation } from 'state/admin/hooks'
 
 interface Props {
@@ -50,17 +50,18 @@ export const RejectModal = ({ searchValue, isModalOpen, closeModal, id }: Props)
         <ModalContent>
           <Title>
             <Trans>Reject</Trans>
+
             <img src={closeIcon} alt={closeIcon} width="18px" height="18px" onClick={closeModal} />
           </Title>
           <LabelContainer>
             <Label>Accompanying text</Label>
-            <img src={clipboardTextIcon} alt="clipboardTextIcon" />
+            {/* <img src={clipboardTextIcon} alt="clipboardTextIcon" /> */}
           </LabelContainer>
           <Textarea onChange={onValueChange} value={value} />
 
-          <ButtonIXSWide disabled={Boolean(error)} onClick={onReject}>
+          <PinnedContentButton disabled={Boolean(error)} onClick={onReject}>
             <Trans>{error || 'Reject'}</Trans>
-          </ButtonIXSWide>
+          </PinnedContentButton>
         </ModalContent>
       </ModalContainer>
     </RedesignedWideModal>
@@ -81,50 +82,55 @@ const Title = styled.div`
 `
 
 const ModalContainer = styled.div`
-  background: ${({ theme: { bgG8 } }) => bgG8};
+  background: white;
   padding: 35px;
-  border-radius: 45px;
+  border-radius: 6px;
   backdrop-filter: blur(20px);
   @media (max-width: 768px) {
     width: calc(100% - 24px);
-    padding: 12px;
+    padding: 20px;
     border-radius: 12px;
     margin: 0 auto;
   }
 `
 
 const ModalContent = styled.div`
-  background: ${({ theme: { bgG4 } }) => bgG4};
-  width: 555px;
-  padding: 32px 42px 42px;
+  // background: ${({ theme: { bg1 } }) => bg1};
+  width: 450px;
+  // padding: 32px 42px 42px;
   border-radius: 20px;
   @media (max-width: 768px) {
     width: 100%;
     padding: 12px;
     border-radius: 12px;
+    background: white;
   }
 `
 
 const Label = styled.div`
-  color: ${({ theme: { text2 } }) => text2};
+  color: ${({ theme: { text1 } }) => text1};
   margin-right: 10px;
+  font-weight: 600;
+  margin-bottom: 12px;
 `
 
 const LabelContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 13px;
+  font-size: 13px;
 `
 
 const Textarea = styled.textarea`
   resize: none;
-  background-color: ${({ theme }) => theme.bg12};
+  // background-color: ${({ theme }) => theme.bg12};
+  border: 1px solid #e6e6ff;
   font-weight: 300;
-  font-size: 16px;
-  border-radius: 36px;
+  // font-size: 16px;
+  border-radius: 6px;
   width: 100%;
   outline: none;
-  border: none;
+  // border: none;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -136,4 +142,8 @@ const Textarea = styled.textarea`
   padding: 16px 22px;
   margin-bottom: 31px;
   height: 308px;
+
+  @media (max-width: 768px) {
+    height: 200px;
+  }
 `

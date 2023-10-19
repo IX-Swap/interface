@@ -21,7 +21,10 @@ import { ButtonGradientBorder } from 'components/Button'
 import { AdminParams } from 'pages/Admin'
 import { NoData } from 'components/UsersList/styleds'
 import { getStatusStats } from 'state/kyc/hooks'
-
+import { TYPE } from 'theme'
+import { Line } from 'components/Line'
+import { Link } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
 interface RowProps {
   item: KycItem
@@ -30,11 +33,14 @@ interface RowProps {
 
 const Header = () => {
   return (
-    <StyledHeaderRow>
-      {headerCells.map((cell) => (
-        <div key={cell}>{cell}</div>
-      ))}
-    </StyledHeaderRow>
+    <>
+      <StyledHeaderRow>
+        {headerCells.map((cell) => (
+          <div key={cell}>{cell}</div>
+        ))}
+      </StyledHeaderRow>
+      <Line style={{ marginBottom: '20px' }} />
+    </>
   )
 }
 
@@ -64,9 +70,14 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <StatusCell status={status} />
       </div>
       {/* <div>risk level</div> */}
-      <div>
-        <StyledReviewButton onClick={openModal} data-testid="reviewButton">Review</StyledReviewButton>
-      </div>
+      {/* <Link to={`/admin/kyc/${item.id}`}>
+        <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF">
+          Review
+        </TYPE.main2>
+      </Link> */}
+      <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
+        Review
+      </TYPE.main2>
     </StyledBodyRow>
   )
 }
@@ -147,7 +158,7 @@ export const AdminKycTable = () => {
     handleKyc({} as KycItem)
   }
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
-
+  //  <Link to={`/admin/kyc/${kyc.id}`}></Link>
   const getKyc = useCallback(async () => {
     if (!id) return
     try {
@@ -165,9 +176,11 @@ export const AdminKycTable = () => {
   }, [id, getKyc])
 
   return (
-    <div id="kyc-container">
+    <div style={{ marginTop: '30px' }} id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
-
+      <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} marginBottom="30px" data-testid="securityTokensTitle">
+        <Trans>KYC</Trans>
+      </TYPE.title4>
       <AdminKycFilters
         stats={stats}
         setSearchValue={setSearchValue}
@@ -215,10 +228,11 @@ const Loader = styled.div`
 `
 
 export const Wallet = styled.div`
-  background: ${({ theme: { bgG3 } }) => bgG3};
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #b8b8cc;
+  // background: ${({ theme: { bgG3 } }) => bgG3};
+  // -webkit-background-clip: text;
+  // background-clip: text;
+  // -webkit-text-fill-color: transparent;
 `
 
 export const Container = styled.div`
@@ -235,12 +249,12 @@ export const StyledDoc = styled(File)`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 175px 175px 175px 1fr 1fr 100px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 100px;
   min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 175px 175px 175px 1fr 1fr 100px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 100px;
   min-width: 1270px;
 `
 

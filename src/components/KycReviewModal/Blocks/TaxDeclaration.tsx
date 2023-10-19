@@ -13,7 +13,7 @@ interface Props {
 export const TaxDeclaration: FC<Props> = ({ data }: Props) => {
   let filteredTaxDeclarationKeys = taxDeclarationKeys
   if (data.taxIdAvailable) {
-    filteredTaxDeclarationKeys = filteredTaxDeclarationKeys.filter(item => item.key !== "reason")
+    filteredTaxDeclarationKeys = filteredTaxDeclarationKeys.filter((item) => item.key !== 'reason')
   }
   return (
     <Block title="Tax Declaration">

@@ -5,6 +5,7 @@ import styled, { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 import { ArrowLeft, Check, ChevronDown } from 'react-feather'
+import { ReactComponent as DropDown } from 'assets/images/dropdown.svg'
 
 import { ReactComponent as VettingIcon } from 'assets/launchpad/svg/issuance-vetting-check.svg'
 import { ReactComponent as IssuanceInformationIcon } from 'assets/launchpad/svg/issuance-information-icon.svg'
@@ -28,6 +29,7 @@ import { text30, text42, text53 } from 'components/LaunchpadMisc/typography'
 import { useRole } from 'state/user/hooks'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { OfferStatus } from 'state/launchpad/types'
+import { Line } from 'components/Line'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
@@ -70,7 +72,7 @@ export const NewIssuanceForm = () => {
   return (
     <Wrapper>
       <FormHeader>
-        <BackButton as={DiscreteInternalLink} to={routes.issuance} background={theme.launchpad.colors.background}>
+        <BackButton as={DiscreteInternalLink} to={routes.issuance} background="none">
           <ArrowLeft color={theme.launchpad.colors.primary} />
         </BackButton>
 
@@ -87,7 +89,7 @@ export const NewIssuanceForm = () => {
         >
           <IssuanceName>{issuance.data?.name}</IssuanceName>
 
-          {issuances.items!.length > 1 && <ChevronDown fill={theme.launchpad.colors.text.title} />}
+          {issuances.items!.length > 1 && <DropDown style={{ cursor: 'pointer' }} />}
 
           {showDropdown && (
             <IssuanceList>
@@ -161,6 +163,7 @@ export const NewIssuanceForm = () => {
                 </OutlineButton>
 
                 <OutlineButton
+                  style={{ border: '1px solid #6666FF33' }}
                   width="320px"
                   as={DiscreteInternalLink}
                   to={`/issuance/view/vetting?id=${issuance.data?.id}`}
@@ -188,7 +191,7 @@ export const NewIssuanceForm = () => {
                   Try again
                 </OutlineButton>
 
-                <OutlineButton width="320px" onClick={toggleContactForm}>
+                <OutlineButton style={{ border: '1px solid #6666FF33' }} width="320px" onClick={toggleContactForm}>
                   Contact support
                 </OutlineButton>
               </IssuanceFormStep>
@@ -280,6 +283,7 @@ export const NewIssuanceForm = () => {
                 </OutlineButton>
 
                 <OutlineButton
+                  style={{ border: '1px solid #6666FF33' }}
                   width="320px"
                   as={DiscreteInternalLink}
                   to={`/issuance/review/information?id=${issuance.data?.id}`}
@@ -307,7 +311,9 @@ export const NewIssuanceForm = () => {
                   Try again
                 </OutlineButton>
 
-                <OutlineButton width="320px">Contact support</OutlineButton>
+                <OutlineButton style={{ border: '1px solid #6666FF33' }} width="320px">
+                  Contact support
+                </OutlineButton>
               </IssuanceFormStep>
             )}
 
@@ -379,9 +385,10 @@ const Wrapper = styled.div`
   flex-flow: column nowrap;
   justify-content: flex-start;
   gap: 1rem;
-  max-width: 1180px;
+  max-width: 1300px;
   padding: 1rem;
   margin: auto;
+  margin-top: 20px;
 `
 
 const FormHeader = styled.div`
@@ -443,9 +450,9 @@ const BackButton = styled(FilledButton)`
   grid-area: back;
   padding: 0;
 
-  background: ${(props) => props.theme.launchpad.colors.background};
-  border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '14'};
-  border-radius: 6px;
+  // background: ${(props) => props.theme.launchpad.colors.background};
+  // border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '14'};
+  // border-radius: 6px;
 `
 
 const NewIssuanceButtonContainer = styled.div`

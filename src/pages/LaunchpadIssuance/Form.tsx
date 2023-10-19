@@ -8,7 +8,7 @@ export default function IssuanceFormPage() {
   const theme = useTheme()
 
   return (
-    <IssuancePageLayout background={theme.launchpad.colors.foreground}>
+    <IssuancePageLayout background={theme.launchpad.colors.background}>
       <NewIssuanceForm />
     </IssuancePageLayout>
   )

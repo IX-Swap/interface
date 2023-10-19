@@ -4,10 +4,10 @@ import styled, { ThemeContext } from 'styled-components'
 
 import { KYCStatuses } from 'pages/KYC/enum'
 
-import rejectedIcon from '../../assets/images/reject.svg'
-import changeRequestIcon from '../../assets/images/attention-white.svg'
-import approvedIcon from '../../assets/images/check-success.svg'
-import pendingIcon from '../../assets/images/loader_thin.svg'
+import rejectedIcon from '../../assets/images/newReject.svg'
+import changeRequestIcon from '../../assets/images/NewInfoIcon.svg'
+import approvedIcon from '../../assets/images/newRightCheck.svg'
+import pendingIcon from '../../assets/images/newPending.svg'
 import warningIcon from '../../assets/images/warning.svg'
 
 interface Props {
@@ -19,10 +19,10 @@ export const StatusCell = ({ status }: Props) => {
   const statusColors = {
     [KYCStatuses.PENDING]: theme.text2,
     [KYCStatuses.DRAFT]: theme.text2,
-    [KYCStatuses.REJECTED]: theme.error,
+    [KYCStatuses.REJECTED]: theme.text2,
     [KYCStatuses.CHANGES_REQUESTED]: theme.text2,
-    [KYCStatuses.APPROVED]: theme.green1,
-    [KYCStatuses.FAILED]: theme.error,
+    [KYCStatuses.APPROVED]: theme.text2,
+    [KYCStatuses.FAILED]: theme.text2,
     [KYCStatuses.IN_PROGRESS]: theme.text2,
   } as Record<string, string>
 
@@ -71,7 +71,9 @@ export const StatusCell = ({ status }: Props) => {
   return (
     <Container>
       <img src={getIcon()} alt="icon" width="20px" height="20px" />
-      <StatusText color={statusColors[status] || theme.text2} data-testid={getText()} >{getText()}</StatusText>
+      <StatusText color={statusColors[status] || theme.text2} data-testid={getText()}>
+        {getText()}
+      </StatusText>
     </Container>
   )
 }

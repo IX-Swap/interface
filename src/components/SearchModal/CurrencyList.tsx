@@ -37,7 +37,7 @@ import { formatAmount } from 'utils/formatCurrencyAmount'
 type CurrencySec = Currency & { isSecToken?: boolean }
 
 function currencyKey(currency: Currency): string {
-  return currency.isToken ? currency.address : 'ETHER'
+  return currency?.isToken ? currency.address : 'ETHER'
 }
 const StyledBalanceText = styled(Text)`
   ${({ theme: { config } }) =>
@@ -136,14 +136,22 @@ function CurrencyRow({
   const { account } = useActiveWeb3React()
   const key = currencyKey(currency)
   const selectedTokenList = useCombinedActiveList()
-  const isOnSelectedList = isTokenOnList(selectedTokenList, currency.isToken ? currency : undefined)
+  const isOnSelectedList = isTokenOnList(selectedTokenList, currency?.isToken ? currency : undefined)
   const customAdded = useIsUserAddedToken(currency)
   const balance = useCurrencyBalance(account ?? undefined, currency)
   // only show add or remove buttons if not on selected list
   const unapprovedSecToken = useMemo(() => {
     if (!isUnapprovedSecToken) return null
     return (
-      <Row style={{ position: 'relative', height: '100%', alignItems: 'center' }}>
+      <Row
+        style={{
+          position: 'relative',
+          height: '100%',
+          alignItems: 'center',
+          border: isMobile ? '1px solid #E6E6FF' : 'none',
+          background: isMobile ? '#F7F7F7' : 'none',
+        }}
+      >
         <UnapprovedTokenWrapper
           as={Link}
           to={routes.securityToken((currency as any).tokenInfo.catalogId)}
@@ -152,7 +160,7 @@ function CurrencyRow({
           <CurrencyLogo currency={currency} size={'24px'} />
           <Column style={{ marginLeft: '8px' }}>
             <RowFixed style={{ gap: '8px' }}>
-              <Text title={currency.name} fontWeight={500}>
+              <Text color={'#292933'} title={currency.name} fontWeight={500}>
                 {currency.symbol}
               </Text>
               <TYPE.darkGray ml="0px" fontSize={'12px'} fontWeight={300}>
@@ -164,19 +172,19 @@ function CurrencyRow({
               </TYPE.darkGray>
             </RowFixed>
             <RowFixed>
-              <SvgIconWrapper size={20} style={{ marginLeft: '-6px' }}>
+              {/* <SvgIconWrapper size={20} style={{ marginLeft: '-6px' }}>
                 <img src={Attention} alt={'Attention'} />
-              </SvgIconWrapper>
-              <TYPE.popOver>
+              </SvgIconWrapper> */}
+              <TYPE.popOver color="#FF6060">
                 <Trans>Needs accreditation</Trans>
               </TYPE.popOver>
             </RowFixed>
           </Column>
           <Column>
             <Box width="100%">
-              <ButtonGradient>
+              <Text color="#6666FF" textAlign="right">
                 <Trans>Info</Trans>
-              </ButtonGradient>
+              </Text>
             </Box>
           </Column>
         </UnapprovedTokenWrapper>
@@ -348,8 +356,13 @@ export default function CurrencyList({
     function TokenRow({ data, index, style }: any) {
       const row: Currency | BreakLine = data[index]
 
+      // Define a border style for the bottom of each row
+      const borderBottomStyle = {
+        borderBottom: '1px solid #E6E6FF',
+      }
+
       if (isBreakLine(row)) {
-        return <BreakLineComponent style={style} />
+        return <BreakLineComponent style={{ ...style, ...borderBottomStyle }} />
       }
 
       const currency = row
@@ -364,18 +377,24 @@ export default function CurrencyList({
       const isUnapprovedToken =
         token && secTokens[currencyId]
           ? (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.brokerDealerStatus !==
-            AccreditationStatusEnum.APPROVED ||
+              AccreditationStatusEnum.APPROVED ||
             (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.custodianStatus !==
-            AccreditationStatusEnum.APPROVED
+              AccreditationStatusEnum.APPROVED
           : false
       if (showImport && token) {
         return (
-          <ImportRow style={style} token={token} showImportView={showImportView} setImportToken={setImportToken} dim />
+          <ImportRow
+            style={{ ...style, ...borderBottomStyle }}
+            token={token}
+            showImportView={showImportView}
+            setImportToken={setImportToken}
+            dim
+          />
         )
       } else if (currency) {
         return (
           <CurrencyRow
-            style={style}
+            style={{ ...style, ...borderBottomStyle }}
             currency={currency}
             isSelected={isSelected}
             onSelect={handleSelect}

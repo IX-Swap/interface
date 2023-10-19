@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { CopyAddress } from 'components/CopyAddress'
+import { Box } from 'rebass'
 
 interface Props {
   originalSymbol?: string | null
@@ -14,22 +15,36 @@ interface Props {
 export const DepoistStatusInfo = ({ fromAddress, toAddress, amount, originalSymbol, network }: Props) => {
   return (
     <Container>
-      <Info>
-        Make Deposit by sending {amount} {originalSymbol}:
-      </Info>
-      <Title>
-        Send from your <span>{network} Wallet</span>
-      </Title>
-      <CopyAddress address={fromAddress ?? ''} network={network} wrapperStyles={{ fontSize: '13px', fontWeight: 500 }} />
-      <Title style={{ marginTop: 25 }}>To Custodian Wallet</Title>
-      <CopyAddress address={toAddress ?? ''} network={network} wrapperStyles={{ fontSize: '13px', fontWeight: 500 }} />
+      <Box>
+        <Title>
+          Make Deposit {amount} {originalSymbol}:
+        </Title>
+        <CopyAddress
+          address={fromAddress ?? ''}
+          network={network}
+          wrapperStyles={{ fontSize: '13px', fontWeight: 500 }}
+          deposit={true}
+        />
+      </Box>
+      <Box>
+        <Title>To Custodian Wallet</Title>
+        <CopyAddress
+          address={toAddress ?? ''}
+          network={network}
+          wrapperStyles={{ fontSize: '13px', fontWeight: 500 }}
+          deposit={true}
+        />
+      </Box>
     </Container>
   )
 }
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `
 const Info = styled.div`
   font-weight: 400;
@@ -40,11 +55,11 @@ const Info = styled.div`
 `
 
 const Title = styled.div`
-  color: ${({ theme }) => theme.text9};
-  font-size: 15px;
+  color: #b8b8cc;
+  font-size: 13px;
   font-weight: 500;
   margin-bottom: 4px;
-  > span {
-    color: ${({ theme }) => theme.error};
-  }
+  // > span {
+  //   color: ${({ theme }) => theme.error};
+  // }
 `

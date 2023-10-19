@@ -5,7 +5,7 @@ import { Trans, t } from '@lingui/macro'
 import { useFormik } from 'formik'
 
 import { User } from 'state/admin/actions'
-import { ButtonIXSGradient } from 'components/Button'
+import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { LoadingIndicator } from 'components/LoadingIndicator'
@@ -25,6 +25,7 @@ import { Option, TokensBlock } from './TokensBlock'
 import { RemoveTokensWarning } from './RemoveTokensWarning'
 import { RoleChangeWarning } from './RoleChangeWarning'
 import { UpdateSummary } from './UpdateSummary'
+import { Line } from 'components/Line'
 
 interface Props {
   item: User | null
@@ -228,15 +229,16 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                   </Label>
                   <div>
                     <CopyAddress
-                      wrapperStyles={{ wordBreak: 'break-word' }}
+                      wrapperStyles={{ wordBreak: 'break-word', color: '#B8B8CC', fontSize: '13px' }}
                       address={ethAddress}
                       isShortenAddress={false}
                     />
                   </div>
+                  <Line style={{ marginTop: '30px' }} />
                 </ExistingWallet>
               ) : (
                 <TextInput
-                  style={{ fontWeight: 600 }}
+                  style={{ fontWeight: 500, color: '#B8B8CC' }}
                   label="Wallet Address:"
                   onChange={({ currentTarget: { value } }) => setFieldValue('ethAddress', value)}
                   value={ethAddress}
@@ -245,6 +247,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                 />
               )}
               <TextInput
+                style={{ background: '#F7F7FA' }}
                 label="Full Name:"
                 onChange={({ currentTarget: { value } }) => setFieldValue('username', value)}
                 value={username || ''}
@@ -252,6 +255,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                 placeholder="Type Full Name"
               />
               <Select
+                style={{ background: '#F7F7FA' }}
                 withScroll
                 label={`User's Role:`}
                 selectedItem={role}
@@ -267,6 +271,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
               />
               {role === ROLES.TOKEN_MANAGER && (
                 <Select
+                  style={{ background: '#F7F7FA' }}
                   withScroll
                   isMulti
                   error={touched.managerOf && errors.managerOf}
@@ -290,11 +295,11 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                   onRemove={handleSelectedTokens}
                 />
               )}
-              <ButtonWrapper>
-                <StyledButton type="submit">
+              <>
+                <PinnedContentButton type="submit">
                   <Trans>{item ? 'Update' : 'Add User'}</Trans>
-                </StyledButton>
-              </ButtonWrapper>
+                </PinnedContentButton>
+              </>
             </form>
           </ModalContent>
         </ModalBlurWrapper>

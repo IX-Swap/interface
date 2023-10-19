@@ -143,8 +143,7 @@ export const investorStatusDeclarationKeys = [
 export const fatcaKeys = [
   {
     key: 'fatca1',
-    label:
-      'I confirm that I am a US citizen and/or resident in the US for tax purposes and my U.S. federal',
+    label: 'I confirm that I am a US citizen and/or resident in the US for tax purposes and my U.S. federal',
   },
   {
     key: 'fatca2',
@@ -194,7 +193,7 @@ export const taxDeclarationKeys = [
 export const IndividualTaxDeclarationKeys = [
   { key: 'country', label: 'Country of Tax Declaration' },
   { key: 'idNumber', label: 'Tax Identification Number (TIN)', format: (value: string) => value ?? 'Not available' },
-  { key: 'reason', label: 'Reason' }
+  { key: 'reason', label: 'Reason' },
 ]
 
 export const beneficialOwnersKeys = [

@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { TipCard } from 'components/Card'
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CloseColor, CloseIcon } from 'components/AccountDetails/styleds'
 import { Box } from 'rebass'
-import { InfoIcon } from 'pages/Farming/styleds'
+import { ReactComponent as InfoIcon } from '../../../assets/images/newTooltip.svg'
 
 const TipWrapper = styled.span`
   max-width: 592px;
@@ -24,8 +24,8 @@ const DisclaimerWrapper = styled.div`
 
 const Icon = styled.i`
   position: absolute;
-  top: 0px;
-  left: -30px;
+  top: 2px;
+  left: -20px;
   cursor: pointer;
 `
 
@@ -47,6 +47,20 @@ const SwapBanner = () => {
     setIsVisible(false)
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (isVisible && !event.target.closest('.SwapBanner')) {
+        setIsVisible(false)
+      }
+    }
+
+    document.body.addEventListener('click', handleClickOutside)
+
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside)
+    }
+  }, [isVisible])
+
   return isVisible ? (
     <TipWrapper>
       <ColumnCenter>
@@ -63,7 +77,6 @@ const SwapBanner = () => {
             </Box>
             <DisclaimerText>Dear users,</DisclaimerText>
             <p>
-              <br />
               Please be informed that the TAU Digital Token liquidity pool has been listed on the IXS DEX by Julian
               Thomas Tu Hai Kwan who is a Director of AMM (Bahamas) Ltd, which operates the IX Swap platform. Therefore,
               Julian Thomas Tu Hai Kwan may be deemed as having an interest in such listing of and/or any activity in

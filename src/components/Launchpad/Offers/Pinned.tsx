@@ -14,7 +14,9 @@ import { InvestmentStatusBadge } from 'components/Launchpad/InvestmentCard/Inves
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
-import { text12, text54 } from 'components/LaunchpadMisc/typography'
+import { text12, text54, text59 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
+import { isMobile } from 'react-device-detect'
 
 const getStageLabel = (stage: OfferStatus) => {
   return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
@@ -80,7 +82,6 @@ export const Pinned: React.FC = () => {
           <PinnedImage src={offer.cardPicture.public} />
           <PinnedTags>
             {stage && <InvestmentStatusBadge label={stage.label} color={stage.color} />}
-
             {offer.status !== OfferStatus.claim && (
               <InvestmentStatusBadge label={getStageLabel(offer.status)} color="rgba(41, 41, 51, 0.2)" />
             )}
@@ -88,7 +89,7 @@ export const Pinned: React.FC = () => {
         </PinnedImageContainer>
 
         <PinnedContent>
-          <InvestmentTypeInfo industry={offer.industry} type={offer.type} status={offer.status} />
+          {!isMobile && <InvestmentTypeInfo industry={offer.industry} type={offer.type} status={offer.status} />}
 
           <PinnedContentTitle>{offer.title}</PinnedContentTitle>
           <PinnedContentBody>{offer.longDescription}</PinnedContentBody>
@@ -111,6 +112,11 @@ const PinnedWrapper = styled.div`
   background-color: ${(props) => props.theme.launchpad.colors.foreground};
   padding: 2rem;
   margin: 2rem 0;
+  width: 1400px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 100%;
+  }
 `
 
 const PinnedContainer = styled.div`
@@ -121,15 +127,27 @@ const PinnedContainer = styled.div`
   gap: 2rem;
   margin: 0 auto;
   max-width: ${(props) => props.theme.launchpad.content.maxWidth};
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+  }
 `
 
 const PinnedImageContainer = styled.div`
   position: relative;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+  }
 `
 
 const PinnedImage = styled.img`
   border-radius: 8px;
   max-height: 385px;
+  width: 600px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 100%;
+  }
 `
 
 const PinnedContent = styled.div`
@@ -139,18 +157,33 @@ const PinnedContent = styled.div`
   align-items: flex-start;
   gap: 0.5rem;
   max-width: 600px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+  }
 `
 
 const PinnedContentTitle = styled.div`
   ${text54}
   font-family: ${(props) => props.theme.launchpad.font};
   color: ${(props) => props.theme.launchpad.colors.text.title};
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    ${text59}
+    margin-top: 20px;
+  }
 `
 const PinnedContentBody = styled.div`
   ${text12}
-
   font-family: ${(props) => props.theme.launchpad.font};
   color: ${(props) => props.theme.launchpad.colors.text.body};
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-top: 14px;
+    color: #666680;
+    font-weight: 400;
+    font-size: 13px;
+  }
 `
 
 const PinnedContentButton = styled.button`
@@ -163,6 +196,12 @@ const PinnedContentButton = styled.button`
   border: unset;
   max-width: fit-content;
   cursor: pointer;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    min-width: 100%;
+    margin-top: 16px;
+    padding: 1rem 4rem;
+  }
 `
 
 const PinnedTags = styled.header`

@@ -15,7 +15,7 @@ const StyledChevron = styled.div<{ open: boolean }>`
   height: 20px;
   min-width: 20px;
   > svg {
-    margin-left: 8px;
+    // margin-left: 8px;
     height: 20px;
     min-width: 20px;
     transform: ${({ open }) => (!open ? 'rotate(180deg)' : '')};

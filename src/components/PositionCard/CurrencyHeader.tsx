@@ -32,7 +32,7 @@ export const CurrencyHeader = ({ currency0, currency1 }: { currency0: Currency; 
       <MobileOnly>
         <DoubleCurrencyLogo currency0={currency0} currency1={currency1} size={24} />
       </MobileOnly>
-      <StyledText>
+      <StyledText color={'#292933'}>
         {!currency0 || !currency1 ? (
           <Dots>
             <Trans>Loading</Trans>

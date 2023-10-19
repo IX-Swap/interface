@@ -10,7 +10,7 @@ import { Box } from 'rebass'
 export const Container = styled(Box)`
   height: fit-content;
   width: 100%;
-  max-width: 920px;
+  max-width: 1300px;
 `
 export const InfoTitle = styled(RowStart)`
   gap: 21px;
@@ -18,6 +18,12 @@ export const InfoTitle = styled(RowStart)`
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
     gap: 12px;
+  `}
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    gap: 12px;
+    margin-top: 130px;
+      margin-bottom: 0px;
   `}
 `
 
@@ -37,15 +43,29 @@ export const Details = styled.div`
   display: grid;
   row-gap: 16px;
   > :first-child {
-    flex-wrap: wrap;
-    display: flex;
-    column-gap: 12px;
-    row-gap: 12px;
-    align-items: center;
-    font-size: 18px;
-    * {
-      color: ${({ theme }) => theme.text1};
-    }
+    color: #666680;
+    fontsize: 16px;
+    fontweight: 400;
+    width: 680px;
+
+       ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      flex-direction: column;
+      align-items: start;
+      width: auto;
+      margin-top: 0px;
+    `}
+  }
+
+  // > :last-child {
+  //   flex-wrap: wrap;
+  //   display: flex;
+  //   column-gap: 12px;
+  //   row-gap: 12px;
+  //   align-items: center;
+  //   font-size: 18px;
+  //   * {
+  //     color: ${({ theme }) => theme.text1};
+  //   }
 
     ${({ theme }) => theme.mediaWidth.upToMedium`
       flex-direction: column;
@@ -53,9 +73,63 @@ export const Details = styled.div`
     `}
   }
 
-  > :last-child {
-    color: ${({ theme }) => theme.text2};
+
+`
+
+export const Value = styled.span`
+  display: inline-block;
+  font-size: 12px;
+  color: #666680;
+  margin-bottom: 5px;
+  text-align: right;
+  margin-left: 30px;
+`
+
+export const Label = styled.span`
+  font-size: 12px;
+  color: #666680 !important;
+  display: inline-block;
+  margin-bottom: 5px;
+  text-align: left;
+  width: 200px;
+  // margin-right: 30px;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  width: 160px;
+  `}
+`
+
+export const Info = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 66px;
+  row-gap: 10px;
+  font-size: 18px;
+  * {
+    color: ${({ theme }) => theme.text1};
   }
+
+  & > div:first-child > div {
+    // Your styling for the first child's div here
+
+    & > div:last-child {
+      border-bottom: 1px solid #e6e6ff;
+    }
+  }
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    flex-direction: column;
+    align-items: start;
+    gap: 12px;
+    display: flex;
+  `}
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    flex-direction: column;
+    align-items: start;
+    gap: 12px;
+    display: flex;
+  `}
 `
 
 export const Dot = styled.div`
@@ -124,29 +198,21 @@ export const CompanyName = styled(StyledTitleBig)`
 export const AddressToMetamask = styled.div`
   display: flex;
   align-items: center;
-  font-size: 18px;
-  margin-top: 32px;
+  font-size: 13px;
+  margin-top: 25px;
   row-gap: 12px;
   > :first-child {
     display: flex;
     align-items: center;
     margin-right: 18px;
+    padding: 12px 16px;
     font-weight: 500;
+    border: 1px solid #e6e6ff;
     svg {
       margin-right: 12px;
       cursor: pointer;
+      color: #b8b8cc;
     }
-    ${({ theme }) =>
-      !isNotSupportGradient
-        ? `
-        background: ${theme.config.elements?.hover || theme.bgG3};
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      `
-        : `
-        color: ${theme.bg20};
-      `}
   }
   > div:nth-child(2) {
     margin-right: 12px;
@@ -161,6 +227,18 @@ export const StyledButtonGradient = styled(ButtonGradient)`
   font-weight: 600;
   font-size: 14px;
 `
+
+export const StyledButtonGradientAddMetamask = styled(ButtonGradient)`
+  width: auto;
+  padding: 12px 16px 12px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  background: none;
+  color: #292933;
+  border: 1px solid #e6e6ff;
+  font-size: 13px;
+`
+
 export const AtlasInfoContainer = styled.div`
   margin-top: 48px;
   display: grid;
@@ -189,17 +267,15 @@ export const ValutContainer = styled.div`
   margin-top: 48px;
 `
 export const NotTradableContainer = styled.div`
-  background: ${({ theme }) => theme.bgG10};
-  border-radius: 45px;
-  padding: 3rem 12px;
+  background: ${({ theme }) => theme.bg0};
+  border-radius: 8px;
+  padding: 120px 316px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  ${gradientBorder}
   > :first-child {
     line-height: 28px;
     margin-bottom: 20px;
-    text-transform: uppercase;
   }
 `

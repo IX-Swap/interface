@@ -4,11 +4,12 @@ import { TipCard } from '../Card'
 
 export const CloseIcon = styled.div`
   position: absolute;
-  right: 1rem;
-  top: 14px;
+  right: 3rem;
+  top: 20px;
+  opacity: 0.5;
   &:hover {
     cursor: pointer;
-    opacity: 0.6;
+    opacity: 0.3;
   }
 `
 
@@ -23,6 +24,7 @@ export const Wrapper = styled.div`
   margin: 0;
   padding: 0;
   width: 100%;
+  border-radius: 8px;
   min-width: 400px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
      min-width: unset;
@@ -42,14 +44,13 @@ export const HeaderRow = styled.div`
 export const ContentWrapper = styled.div`
   background-color: ${({ theme }) => theme.bg0};
   padding: 0 1rem 1rem 1rem;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`padding: 0 1rem 1rem 1rem`};
 `
 
 export const UpperSection = styled.div`
   position: relative;
+  padding: 25px;
 
   h5 {
     margin: 0;
@@ -80,6 +81,8 @@ export const OptionGrid = styled.div`
 export const HoverText = styled.div`
   text-decoration: none;
   color: ${({ theme }) => theme.text1};
+  font-weight: 700;
+  font-size: 18px;
   display: flex;
   align-items: center;
 

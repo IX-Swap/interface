@@ -19,10 +19,10 @@ export const NoPairs = ({ v2IsLoading, showEmptyLiquidity }: Props) => {
   return (
     <>
       <MarginerCard>
+        <LiquidityInnerTitle>
+          <Trans>My Liquidity</Trans>
+        </LiquidityInnerTitle>
         <BackgroundWrapper>
-          <LiquidityInnerTitle>
-            <Trans>My Liquidity</Trans>
-          </LiquidityInnerTitle>
           <SemiTransparent>
             {v2IsLoading && (
               <Card padding="40px">

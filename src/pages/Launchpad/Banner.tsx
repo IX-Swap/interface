@@ -3,11 +3,22 @@ import styled from 'styled-components'
 
 import LearnMoreIcon from 'assets/launchpad/icons/learn-more.png'
 import { text31, text52, text6 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
+import { isMobile } from 'react-device-detect'
 
 export const Banner = () => {
   return (
     <BannerContainer>
-      <BannerTitle>Invest in Startups and Other Unicorn-Like Opportunites</BannerTitle>
+      {isMobile ? (
+        <>
+          <BannerTitle>Invest in Startups and Other Unicorn Like Opportunites</BannerTitle>
+          <BannerTitleMobile>Next Generation Fundraising</BannerTitleMobile>
+        </>
+      ) : (
+        <BannerTitle>
+          Invest in Startups <br /> and Other Unicorn <br /> Like Opportunites
+        </BannerTitle>
+      )}
 
       <BannerInfoRedirect>
         <BannerInfoRedirectImage src={LearnMoreIcon} />
@@ -22,17 +33,33 @@ export const Banner = () => {
 
 const BannerContainer = styled.div`
   max-width: ${(props) => props.theme.launchpad.content.maxWidth};
-  margin: 4rem auto;
+  margin: 8rem 1rem 0rem 0rem;
+  width: 100%;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin: 7rem 10rem 0rem 10rem;
+  }
 `
 
 const BannerTitle = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
-  max-width: 640px;
-
   font-family: ${(props) => props.theme.launchpad.font};
-
   ${text52}
   margin-bottom: 2rem;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 13px;
+    color: #666680;
+    font-weight: 400;
+    text-align: center;
+  }
+`
+
+const BannerTitleMobile = styled.div`
+  font-family: ${(props) => props.theme.launchpad.font};
+  margin-bottom: 2rem;
+  font-size: 45px;
+  color: #292933;
+  font-weight: 800;
+  text-align: center;
 `
 
 const BannerInfoRedirect = styled.a`
@@ -44,6 +71,10 @@ const BannerInfoRedirect = styled.a`
   grid-template-rows: 80px;
   gap: 2rem;
   width: 375px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 100%;
+  }
 `
 
 const BannerInfoRedirectImage = styled.img`

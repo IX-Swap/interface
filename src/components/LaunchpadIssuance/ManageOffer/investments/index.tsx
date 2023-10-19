@@ -49,7 +49,7 @@ export const InvestmentsBlock = ({ offer, chosenStage }: Props) => {
     return <></>
   }
   return (
-    <GridContainer>
+    <GridContainer style={{ display: 'block' }}>
       <StyledGridItem xs={12}>
         <OfferInvestmentsList
           data={data}

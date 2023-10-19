@@ -24,12 +24,12 @@ export const TitleBox = ({ title, onlyMine, setFilter }: Props) => {
   return (
     <Container>
       <TableTitle>{title}</TableTitle>
-      {isAdmin && (
+      {/* {isAdmin && (
         <CheckBoxContainer onClick={toggle}>
           <BaseCheckbox state={showMine} toggle={() => null} />
           <CheckBoxLabel>Show only mine</CheckBoxLabel>
         </CheckBoxContainer>
-      )}
+      )} */}
     </Container>
   )
 }
@@ -40,7 +40,7 @@ const Container = styled.div`
   justify-content: space-between;
 
   margin: auto;
-  max-width: 1180px;
+  max-width: 1320px;
 `
 
 export const TableTitle = styled.div`

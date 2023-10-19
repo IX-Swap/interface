@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { FilterDropdown, FilterOption } from './FilterDropdown'
 
@@ -8,6 +8,7 @@ import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.s
 
 import { OFFER_INDUSTRY_LABELS, OFFER_STAGE_LABELS, OFFER_TYPE_LABELS } from 'state/launchpad/constants'
 import { text8 } from 'components/LaunchpadMisc/typography'
+import { isMobile } from 'react-device-detect'
 
 export interface FilterConfig {
   search: string
@@ -37,39 +38,50 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
   }
 
   return (
-    <FilterContainer>
-      <FilterDropdown
-        selected={filter.industry}
-        label="Industry"
-        options={OFFER_INDUSTRY_LABELS}
-        onSelect={handleDropdownSelect('industry')}
-      />
-      <FilterDropdown
-        selected={filter.stage}
-        label="Stage"
-        options={OFFER_STAGE_LABELS}
-        onSelect={handleDropdownSelect('stage')}
-      />
+    <>
+      <FilterContainer>
+        <FilterDropdown
+          selected={filter.industry}
+          label="Industry"
+          options={OFFER_INDUSTRY_LABELS}
+          onSelect={handleDropdownSelect('industry')}
+        />
+        <FilterDropdown
+          selected={filter.stage}
+          label="Stage"
+          options={OFFER_STAGE_LABELS}
+          onSelect={handleDropdownSelect('stage')}
+        />
 
-      <FilterSearchField>
-        <FilterSearchInput value={filter.search} onChange={onSearchChange} />
-        <SearchIcon />
-      </FilterSearchField>
+        {!isMobile && (
+          <FilterSearchField>
+            <FilterSearchInput value={filter.search} onChange={onSearchChange} />
+            <SearchIcon />
+          </FilterSearchField>
+        )}
 
-      <Spacer />
-      {/* Disabled for version 2 https://app.clickup.com/t/4733323/IXS-2662 */}
-      <FilterDropdown
-        selected={filter.type}
-        label="Type"
-        options={OFFER_TYPE_LABELS}
-        onSelect={handleDropdownSelect('type')}
-        disabled={true}
-      />
+        {!isMobile && <Spacer />}
+        {/* Disabled for version 2 https://app.clickup.com/t/4733323/IXS-2662 */}
+        <FilterDropdown
+          selected={filter.type}
+          label="Type"
+          options={OFFER_TYPE_LABELS}
+          onSelect={handleDropdownSelect('type')}
+          disabled={true}
+        />
 
-      <FilterButton type="button" disabled={true}>
-        <FilterIcon /> Filter
-      </FilterButton>
-    </FilterContainer>
+        <FilterButton type="button" disabled={true}>
+          <FilterIcon /> Filter
+        </FilterButton>
+      </FilterContainer>
+
+      {isMobile && (
+        <FilterSearchField>
+          <FilterSearchInput value={filter.search} onChange={onSearchChange} />
+          <SearchIcon />
+        </FilterSearchField>
+      )}
+    </>
   )
 }
 
@@ -85,6 +97,12 @@ const FilterContainer = styled.div`
   padding: 1rem 0;
   width: 100%;
   margin: auto;
+
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 12px;
+  }
 `
 
 const FilterSearchField = styled.div`
@@ -97,12 +115,18 @@ const FilterSearchField = styled.div`
   border-radius: 8px;
   height: 40px;
   flex-basis: 300px;
+
+  @media (max-width: 768px) {
+    flex-basis: 50px;
+    margin-bottom: 20px;
+  }
 `
 
 const FilterSearchInput = styled.input`
   flex-grow: 1;
   border: none;
   outline: 0;
+  background: none;
 `
 
 const FilterButton = styled.button`
@@ -120,6 +144,8 @@ const FilterButton = styled.button`
   border: 1px solid #e6e6ff;
   border-radius: 6px;
   font-family: ${(props) => props.theme.launchpad.font};
-  ${text8}
+  ${text8};
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
+
+export default InvestmentListFilter

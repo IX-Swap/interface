@@ -177,7 +177,7 @@ export const individualFormInitialValues: IFormInitial = {
   citizenship: null,
   email: '',
   phoneNumber: '',
-  
+
   address: '',
   postalCode: '',
   country: null,
@@ -187,15 +187,16 @@ export const individualFormInitialValues: IFormInitial = {
   idNumber: '',
   idIssueDate: null,
   idExpiryDate: null,
-  
+
   proofOfIdentity: [],
   proofOfAddress: [],
-  
+  selfie: [],
+
   occupation: '',
   employmentStatus: null,
   employer: '',
   income: null,
-  
+
   taxDeclarations: [{ country: null, idNumber: '' }],
   removedTaxDeclarations: [],
 

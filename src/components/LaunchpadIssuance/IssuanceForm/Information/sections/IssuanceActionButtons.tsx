@@ -95,7 +95,7 @@ export const IssuanceActionButtons = ({
         OfferStatus.closed,
         OfferStatus.claim,
       ].includes(status),
-      showReviewButton: status !== undefined && status !== OfferStatus.draft
+      showReviewButton: status !== undefined && status !== OfferStatus.draft,
     }),
     [status]
   )
@@ -159,7 +159,7 @@ export const IssuanceActionButtons = ({
       {(!isApproved || isAdmin) && (
         <FormSubmitContainer>
           {showDraft && (
-            <OutlineButton disabled={draftDisabled} onClick={onSaveDraft}>
+            <OutlineButton style={{ border: '1px solid #6666FF33' }} disabled={draftDisabled} onClick={onSaveDraft}>
               Save Draft
             </OutlineButton>
           )}
