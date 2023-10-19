@@ -42,7 +42,7 @@ export const ZeroBalanceVesting = () => {
             <Address>{shortAddress(account || '')}</Address>
           </YourAddressWrapper>
         )}
-        <Text fontSize={'18px'} lineHeight={'27px'} color={theme.text2}>
+        <Text fontSize={'13px'} lineHeight={'20px'} color={theme.text2}>
           <Trans>Balances will be updated on the vesting page until the contracts are programmed.</Trans>
         </Text>
       </VestingTextWrapper>
@@ -53,10 +53,11 @@ export const ZeroBalanceVesting = () => {
         as={ExternalLink}
         href="https://t.me/ixswapofficial"
       >
+        <ExternalBright style={{ marginRight: '10px' }} />
         <Trans>{IXSCurrency?.symbol} in Telegram</Trans>
-        <IconWrapperWithBg size={8} style={{ marginLeft: '6px' }}>
-          <ExternalBright />
-        </IconWrapperWithBg>
+        {/* <IconWrapperWithBg size={8} style={{ marginLeft: '6px' }}> */}
+
+        {/* </IconWrapperWithBg> */}
       </ButtonPinkBorder>
     </>
   )
