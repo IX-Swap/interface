@@ -34,11 +34,19 @@ export const YourAddressWrapper = styled.div`
 `
 
 export const YourAddress = styled.div`
-  font-weight: 400;
+  font-weight: 500;
+  color: #8f8fb2;
+  font-size: 13px;
 `
 
 export const Address = styled.div`
-  font-weight: 700;
+  font-weight: 500;
+  color: #292933;
+  font-size: 13px;
+  border: 1px solid #e6e6ff;
+  padding: 12px 16px;
+  margin-top: 20px;
+  border-radius: 6px;
 `
 
 export const Container = styled(Box)`
@@ -68,7 +76,7 @@ export const VestingWrapper = styled.div`
   display: grid;
   grid-gap: 33px;
   grid-template-columns: 360px 1fr;
-  padding: 0 15px;
+  // padding: 0 15px;
   @media (max-width: 1296px) {
     grid-template-columns: 100%;
   }
@@ -91,21 +99,21 @@ export const StakingWrapper = styled.div`
   `};
 `
 export const VestingBackground = styled.div`
-  border-radius: 30px;
+  border-radius: 6px;
   padding: 32px 32px 45px 32px;
   color: ${({ theme }) => theme.text2};
-  background: ${({ theme }) => theme.bgG14};
+  background: ${({ theme }) => theme.bg0};
   display: flex;
   flex-direction: column;
 `
 export const VestingTableWrapper = styled(VestingBackground)`
-  max-width: 873px;
+  // max-width: 873px;
   width: 100%;
   height: fit-content;
-  border-radius: 30px;
+  border-radius: 6px;
   padding: 32px 32px 45px 32px;
   color: ${({ theme }) => theme.text2};
-  background: ${({ theme }) => theme.bgG14};
+  background: ${({ theme }) => theme.bg0};
   gap: 50px;
   @media (max-width: 1296px) {
     max-width: 100%;
@@ -131,18 +139,19 @@ export const VestingInfoWrapper = styled(VestingBackground)`
   }
 `
 
-export const VestingTextWrapper = styled(Box)`
+export const VestingTextWrapper = styled.div`
   height: 100%;
   display: flex;
   text-align: center;
   align-items: center;
   justify-content: center;
-  width: 252px;
+  // width: 252px;
   align-self: center;
   flex-direction: column;
+  border-radius: 6px;
 `
 export const VestingTableTitle = styled.div`
-  opacity: 0.5;
+  // opacity: 0.5;
   text-align: left;
 `
 
@@ -204,4 +213,8 @@ export const StyledBodyWrapper = styled(BodyWrapper)`
   width: 100%;
   max-width: 1400px;
   padding-top: 0px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+   margin-top: 100px;
+  `};
 `

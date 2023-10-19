@@ -72,7 +72,13 @@ export const Pinned: React.FC = () => {
   }
 
   if (!offer) {
-    return null
+    return (
+      <>
+        <PinnedWrapper>
+          <PinnedContainer></PinnedContainer>
+        </PinnedWrapper>
+      </>
+    )
   }
 
   return (
