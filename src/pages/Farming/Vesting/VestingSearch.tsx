@@ -81,31 +81,35 @@ const ButtonWrapper = styled.div<{ addressChecked: boolean }>`
 const InputWrapper = styled.div`
   width: 100%;
   position: relative;
-  margin-top: 30px;
-  padding: 0 15px;
+  // margin-top: 30px;
+  padding: 30px 28px;
   margin-bottom: 33px;
+  background: white;
 `
 
 const Input = styled.input<{ addressChecked: boolean }>`
-  background-color: ${({ theme, value }) => (value ? theme.bg7 : theme.bg12)};
-  font-size: 20px;
-  border-radius: 100px;
+  background-color: ${({ theme, value }) => (value ? theme.bg0 : theme.bg0)};
+  font-size: 13px;
+  border-radius: 6px;
+  color: #292933;
   width: 100%;
+  font-weight: 500;
   height: 60px;
   outline: none;
-  border: none;
+  border: 1px solid #e6e6ff;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
   ::placeholder {
-    color: #${({ theme }) => theme.text9};
+    color: #292933;
+    font-weight: 500;
   }
   color: ${({ theme, color }) => (color === 'red' ? theme.red1 : theme.text1)};
   padding: 10px 22px;
   padding-right: ${({ addressChecked }) => (addressChecked ? '100px' : '175px')};
   @media (max-width: 768px) {
-    font-size: 16px;
+    font-size: 13px;
     padding-right: 22px;
   }
 `
