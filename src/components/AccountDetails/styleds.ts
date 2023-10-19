@@ -18,7 +18,7 @@ export const HeaderRow = styled.div`
 
 export const UpperSection = styled.div`
   position: relative;
-  background: ${({ theme }) => theme.bg1};
+  background: ${({ theme }) => theme.bg0};
 `
 
 export const InfoCard = styled.div`
@@ -63,7 +63,7 @@ export const LowerSection = styled.div`
   padding: 10px 2.5rem;
   flex-grow: 1;
   overflow: auto;
-  background-color: ${({ theme }) => theme.bg1};
+  background-color: ${({ theme }) => theme.bg0};
 
   h5 {
     margin: 0;

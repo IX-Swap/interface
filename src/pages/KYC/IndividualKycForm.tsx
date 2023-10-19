@@ -15,7 +15,7 @@ import { LinkStyledButton, TYPE } from 'theme'
 import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg'
 import { GradientText } from 'pages/CustodianV2/styleds'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
-import Row, { RowBetween, RowCenter } from 'components/Row'
+import Row, { RowBetween, RowCenter, RowStart } from 'components/Row'
 import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
@@ -613,13 +613,26 @@ export default function IndividualKycForm() {
                             <Trans>KYC as Individual</Trans>
                           </TYPE.title4>
                         </ButtonText>
-                        <RowBetween marginBottom="32px">
+                        <RowStart marginBottom="32px">
                           <TYPE.title7>
                             <Trans>Personal Information</Trans>
                           </TYPE.title7>
+                          <span
+                            style={{
+                              border: '1px solid #E6E6FF',
+                              background: '#F7F7F8',
+                              padding: '12px 16px',
+                              borderRadius: '6px',
+                              fontSize: '14px',
+                              marginLeft: '20px',
+                              fontWeight: '600',
+                            }}
+                          >
+                            Referred by <span style={{ color: '#6666FF' }}>12345</span>
+                          </span>
                           {/* {personalPassed && <StyledBigPassed />}
                           {personalFailed && <InvalidFormInputIcon />} */}
-                        </RowBetween>
+                        </RowStart>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
                             <TextInput
@@ -779,11 +792,11 @@ export default function IndividualKycForm() {
                           </FormGrid>
                         </Column>
 
-                        <RowBetween marginBottom="32px" marginTop="64px">
+                        {/* <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title7>
                             <Trans>Referral</Trans>
                           </TYPE.title7>
-                          {/* {identityDocumentFilled && <StyledBigPassed />} */}
+                          {identityDocumentFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <TextInput
@@ -791,7 +804,7 @@ export default function IndividualKycForm() {
                           label="Referral code"
                           value={values.referralCode}
                           onChange={(e) => onChangeInput('referralCode', e.currentTarget.value, values, setFieldValue)}
-                        />
+                        /> */}
 
                         <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title7>

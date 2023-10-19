@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { useDispatch } from 'react-redux'
 import { Box } from 'rebass'
-import { useTheme } from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 // import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 import { ReactComponent as ExternalBright } from '../../assets/images/external-bright.svg'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
@@ -39,6 +39,7 @@ import {
 } from './styleds'
 import Transaction from './Transaction'
 import { Line } from 'components/Line'
+import Column from 'components/Column'
 
 function renderTransactions(transactions: string[]) {
   return (
@@ -197,7 +198,7 @@ export default function AccountDetails({
                         <ExternalBright style={{ marginTop: '5px' }} />
                         {/* </IconWrapperWithBg> */}
                         <TYPE.description3
-                          style={{ marginLeft: '4px', fontSize: '11px' }}
+                          style={{ marginLeft: '4px', marginRight: '10px', fontSize: '11px' }}
                         >{t`View on Explorer`}</TYPE.description3>
                       </AddressLink>
                     )}
@@ -211,6 +212,24 @@ export default function AccountDetails({
                   </>
                 </AccountControl>
               </AccountGroupingRow>
+
+              <Column style={{ margin: '10px 0px' }}>
+                <TYPE.title11>Refer a Friend</TYPE.title11>
+              </Column>
+              <Column style={{ margin: '5px 0px' }}>
+                <StyledDiv>
+                  <CenteredDiv>
+                    <TitleSpan>12345</TitleSpan>
+                  </CenteredDiv>
+                  <FlexContainer>
+                    <Copy toCopy={'kapil'}>
+                      <span style={{ margin: '0px', padding: '0px' }}> {t``}</span>
+                    </Copy>
+                    {/* <CopyIcon /> */}
+                    <TextSpan>Copy Referral Link</TextSpan>
+                  </FlexContainer>
+                </StyledDiv>
+              </Column>
               <Line style={{ marginTop: '10px' }} />
             </InfoCard>
           </YourAccount>
@@ -238,3 +257,32 @@ export default function AccountDetails({
     </>
   )
 }
+
+const StyledDiv = styled.div`
+  border: 1px solid #e6e6ff;
+  padding: 10px 16px;
+  width: 280px;
+`
+
+const CenteredDiv = styled.div`
+  text-align: left;
+  margin-bottom: 12px;
+`
+
+const TitleSpan = styled.span`
+  font-size: 16px;
+  font-weight: 600;
+  color: #292933;
+`
+
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: left;
+`
+
+const TextSpan = styled.span`
+  color: #666680;
+  font-size: 11px;
+  font-weight: 400;
+  margin-left: 5px;
+`

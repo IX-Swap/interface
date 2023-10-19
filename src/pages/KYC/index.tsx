@@ -1,5 +1,5 @@
 import React, { useCallback, FC, useEffect, useState, useMemo } from 'react'
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex, Text } from 'rebass'
 import { Link } from 'react-router-dom'
@@ -23,6 +23,9 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { RowCenter } from 'components/Row'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { ReactComponent as CopyIcon } from '../../assets/images/newCopyIcon.svg'
+import styled from 'styled-components'
+import Copy from 'components/AccountDetails/Copy'
 
 interface DescriptionProps {
   description: string | null
@@ -73,9 +76,9 @@ const DateInfo: FC<DateInfoProps> = ({
 )
 
 const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) => (
-  <TYPE.description3 textAlign="center" marginTop="15px" marginBottom="8px">
+  <TYPE.title6 textAlign="center" marginTop="15px" marginBottom="8px">
     {description}
-  </TYPE.description3>
+  </TYPE.title6>
 )
 
 const KYC = () => {
@@ -284,11 +287,27 @@ const KYC = () => {
               marginTop={status === KYCStatuses.NOT_SUBMITTED || status === null ? '8px' : '10px'}
               alignItems="center"
             >
-              <TYPE.title6 marginBottom="15px">
+              <TYPE.description3 marginBottom="15px">
                 <Trans>{config?.name || 'IX Swap'} KYC</Trans>
-              </TYPE.title6>
-              {/* {description && <Description description={description} />} */}
+              </TYPE.description3>
+              {description && <Description description={description} />}
               <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />
+
+              <Column style={{ margin: '20px 0px' }}>
+                <TYPE.title11>Refer a Friend</TYPE.title11>
+              </Column>
+
+              <Column style={{ margin: '5px 0px' }}>
+                <StyledDiv>
+                  <CenteredDiv>
+                    <TitleSpan>12345</TitleSpan>
+                  </CenteredDiv>
+                  <FlexContainer>
+                    <Copy toCopy={'dave'}>{t``}</Copy>
+                    <TextSpan>Copy Referral Link</TextSpan>
+                  </FlexContainer>
+                </StyledDiv>
+              </Column>
             </Content>
             {getKYCDescription()}
           </Column>
@@ -299,3 +318,32 @@ const KYC = () => {
 }
 
 export default KYC
+
+const StyledDiv = styled.div`
+  border: 1px solid #e6e6ff;
+  padding: 10px 16px;
+  width: 280px;
+`
+
+const CenteredDiv = styled.div`
+  text-align: center;
+  margin-bottom: 12px;
+`
+
+const TitleSpan = styled.span`
+  font-size: 16px;
+  font-weight: 600;
+  color: #292933;
+`
+
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const TextSpan = styled.span`
+  color: #666680;
+  font-size: 11px;
+  font-weight: 400;
+  margin-left: 3px;
+`

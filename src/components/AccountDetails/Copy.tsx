@@ -2,7 +2,7 @@ import React from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components/macro'
 
-import { ReactComponent as CopySvg } from '../../assets/images/copy.svg'
+import { ReactComponent as CopySvg } from '../../assets/images/newCopyIcon.svg'
 import useCopyClipboard from '../../hooks/useCopyClipboard'
 import { LinkStyledButton } from '../../theme'
 import { IconWrapperWithBg } from './styleds'
@@ -22,8 +22,8 @@ const CopyIcon = styled(LinkStyledButton)`
   }
 `
 const TransactionStatusText = styled.span`
-  margin-left: 0.25rem;
-  font-size: 0.825rem;
+  margin-left: -0.2rem;
+  font-size: 0.9rem;
   ${({ theme }) => theme.flexRowNoWrap};
   align-items: center;
 `
