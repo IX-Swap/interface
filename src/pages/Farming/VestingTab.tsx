@@ -16,10 +16,22 @@ import { LightBackground } from 'theme/Background'
 
 import { Vesting } from './Vesting/Vesting'
 import { StyledBodyWrapper } from './styleds'
+import { Pinned } from 'components/Launchpad/Offers/Pinned'
+import { PinnedContentButton } from 'components/Button'
 
 const PaddedRow = styled(RowBetween)`
-  padding: 0 15px;
+  padding: 40px 30px 0px 30px;
   flex-wrap: wrap;
+  background: ${({ theme }) => theme.config.background?.secondary || 'white'};
+  width: 100%;
+  // max-width: 1300px;
+`
+
+const VestingText = styled.div`
+  color: #8f8fb2;
+  font-size: 13px;
+  font-weight: 500;
+  min-inline-size: fit-content;
 `
 
 export const VestingTab = () => {
@@ -36,19 +48,25 @@ export const VestingTab = () => {
 
   return (
     <>
-      <LightBackground />
+      {/* <LightBackground /> */}
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         <PaddedRow>
           <TYPE.title4>
             <Trans>Vesting {IXSCurrency?.symbol}</Trans>
           </TYPE.title4>
           {library?.provider?.isMetaMask && chainId && !isMobile && (
-            <TextGradient style={{ cursor: 'pointer', marginLeft: '5px' }} onClick={() => switchChain.addChain()}>
-              <Trans>Vesting on {CHAIN_SWITCH_STRINGS[chainId as SupportedChainId]}? Switch networks</Trans>
-            </TextGradient>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <VestingText>Vesting on {CHAIN_SWITCH_STRINGS[chainId as SupportedChainId]}?</VestingText>
+
+              <PinnedContentButton
+                style={{ background: 'none', color: '#6666FF', border: '1px solid #E6E6FF', marginLeft: '15px' }}
+                onClick={() => switchChain.addChain()}
+              >
+                Switch networks
+              </PinnedContentButton>
+            </div>
           )}
         </PaddedRow>
-
         <Vesting />
       </StyledBodyWrapper>
     </>

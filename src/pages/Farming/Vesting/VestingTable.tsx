@@ -69,12 +69,12 @@ export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingStatus }
           tension: 0.4,
           borderColor: hexToRGBA(theme.text2, 0.3),
           borderRadius: 10,
-          borderWidth: 4,
+          borderWidth: 2,
           borderCapStyle: 'round',
           segment: {
             borderColor: (ctx: any) =>
               vestingStatus !== VestingStatus.VALID
-                ? hexToRGBA(theme.text2, 0.3)
+                ? hexToRGBA(theme.primary1, 1)
                 : getColor(ctx, theme.text2, theme.error),
           },
         },
@@ -86,9 +86,9 @@ export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingStatus }
   return (
     <VestingTableWrapper>
       <VestingTableTitle>
-        <TYPE.title6 color={theme.text2} style={{ textTransform: 'uppercase' }} onClick={() => distribute()}>
+        <TYPE.title7 color={theme.text1} onClick={() => distribute()}>
           <Trans>Progress</Trans>
-        </TYPE.title6>
+        </TYPE.title7>
       </VestingTableTitle>
       <ChartParent>{chart}</ChartParent>
     </VestingTableWrapper>
