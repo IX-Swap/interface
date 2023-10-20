@@ -29,22 +29,20 @@ export const AddToWhitelist = () => {
   }
 
   return (
-    <>
-      <UIDialog open onClose={onClose}>
-        {isLoading && <LoadingIndicator />}
-        <DialogTitle>
-          <Typography variant='h3'>Add to Whitelist</Typography>
-        </DialogTitle>
-        <DialogContent sx={{ width: '600px', maxWidth: '100%' }}>
-          <Form
-            onSubmit={handleSubmit}
-            validationSchema={WhitelistWalletAddressFormValidationSchema}
-            defaultValues={{ label: '' }}
-          >
-            <WhitelistWalletAddressFields onCancel={onClose} />
-          </Form>
-        </DialogContent>
-      </UIDialog>
-    </>
+    <UIDialog open onClose={onClose}>
+      {isLoading && <LoadingIndicator />}
+      <DialogTitle>
+        <Typography variant='h3'>Add to Whitelist</Typography>
+      </DialogTitle>
+      <DialogContent sx={{ width: '600px', maxWidth: '100%' }}>
+        <Form
+          onSubmit={handleSubmit}
+          validationSchema={WhitelistWalletAddressFormValidationSchema}
+          defaultValues={{ label: '' }}
+        >
+          <WhitelistWalletAddressFields onCancel={onClose} />
+        </Form>
+      </DialogContent>
+    </UIDialog>
   )
 }

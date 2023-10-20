@@ -7,22 +7,31 @@ import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router-dom'
 
-export const TenantRouter = () => {
+export const ClientRouter = () => {
   return (
     <Switch>
-      <AppRoute exact path={AdminRoute.tenants}>
+      <AppRoute exact path={AdminRoute.clientSpaces}>
         <Tenants />
       </AppRoute>
 
-      <AppRoute breadcrumb='View Client Space' path={AdminRoute.viewTenant}>
+      <AppRoute
+        breadcrumb='View Client Space'
+        path={AdminRoute.viewClientSpace}
+      >
         <ViewTenant />
       </AppRoute>
 
-      <AppRoute breadcrumb='Edit Client Space' path={AdminRoute.editTenant}>
+      <AppRoute
+        breadcrumb='Edit Client Space'
+        path={AdminRoute.editClientSpace}
+      >
         <EditTenant />
       </AppRoute>
 
-      <AppRoute breadcrumb='Create Client Space' path={AdminRoute.createTenant}>
+      <AppRoute
+        breadcrumb='Create Client Space'
+        path={AdminRoute.createClientSpace}
+      >
         <CreateNewTenant />
       </AppRoute>
     </Switch>

@@ -136,6 +136,7 @@ export const withdrawalAddressQueryKeys = {
 export const usersQueryKeys = {
   getList: 'user-list',
   getUserById: (id?: string) => generateQueryKey('user', id),
+  getUserByAccountId: (id?: string) => generateQueryKey('account', id),
   getCustomFields: (service?: string, feature?: string) =>
     generateQueryKey('customf-fields', service, feature)
 }

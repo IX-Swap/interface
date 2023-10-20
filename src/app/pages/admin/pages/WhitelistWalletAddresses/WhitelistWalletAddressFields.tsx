@@ -1,8 +1,9 @@
 import React, { useState, MouseEventHandler } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Button, Box, TextField } from '@mui/material'
+import { Button, Box } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import { TypedField } from 'components/form/TypedField'
+import { TextInput } from 'ui/TextInput/TextInput'
 import { Submit } from 'components/form/Submit'
 import { SecurityTokenDropdown } from './SecurityTokenDropdown'
 import { WalletAddressDropdown } from './WalletAddressDropdown'
@@ -49,14 +50,14 @@ export const WhitelistWalletAddressFields = ({
       ) : (
         <>
           <TypedField
-            component={TextField}
+            component={TextInput}
             control={control}
             name='label'
             variant='outlined'
             label='Address Label'
           />
           <TypedField
-            component={TextField}
+            component={TextInput}
             control={control}
             name='address'
             variant='outlined'

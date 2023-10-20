@@ -1,5 +1,6 @@
 import { columns } from './columns'
-import { TableView } from 'components/TableWithPagination/TableView'
+// import { TableView } from 'components/TableWithPagination/TableView'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { virtualTransactions } from 'config/apiURL'
 import { virtualTransactionsQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'

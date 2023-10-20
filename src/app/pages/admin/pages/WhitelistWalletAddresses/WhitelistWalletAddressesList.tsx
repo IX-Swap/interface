@@ -1,12 +1,12 @@
 import React from 'react'
 import { Grid, Box, Button, Typography } from '@mui/material'
+import { useTheme } from '@mui/styles'
+import { Add } from '@mui/icons-material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { WhitelistedWalletAddressesTable } from '../../components/WhitelistWalletAddresses/WhitelistedWalletAddressesTable'
 import { WhitelistWalletAddressesRoute } from '../../router/config'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { RootContainer } from 'ui/RootContainer'
-import { useTheme } from '@mui/styles'
-import { Add } from '@mui/icons-material'
 
 export const AddToWhitelistButton = ({ large = false }) => (
   <Button
