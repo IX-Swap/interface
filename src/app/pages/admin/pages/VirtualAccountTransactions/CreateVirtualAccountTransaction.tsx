@@ -5,26 +5,29 @@ import { UIDialog } from 'ui/UIDialog/UIDialog'
 import { Form } from 'components/form/Form'
 import { VirtualAccountsRoute } from '../../router/config'
 import { CreateVirtualAccountTransactionFields } from './CreateVirtualAccountTransactionFields'
-import { VirtualAccountTransactionFormValues } from 'types/virtualAccountTransaction'
-import { WhitelistWalletAddressFormValidationSchema } from './validation'
-import { useAddToWhitelist } from '../../hooks/useAddToWhitelist'
+import { VirtualAccountTransactionFormValidationSchema } from './validation'
+import {
+  CreateVirtualAccountTransactionProps,
+  useCreateVirtualAccountTransaction
+} from '../../hooks/useCreateVirtualAccountTransaction'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const CreateVirtualAccountTransaction = () => {
   const { replace } = useHistory()
-  const [addToWhitelist, { isLoading }] = useAddToWhitelist()
+  const [createTransaction, { isLoading }] =
+    useCreateVirtualAccountTransaction()
   const onClose = () => replace(VirtualAccountsRoute.transactions.list)
 
   const handleSubmit = async ({
     ...values
-  }: VirtualAccountTransactionFormValues) => {
-    const wallet = values.address.split('_')
+  }: CreateVirtualAccountTransactionProps) => {
+    const { user, amount, type, reference } = values
 
-    await addToWhitelist({
-      address: wallet[0],
-      userId: wallet[1] ?? '',
-      assetId: values.assetId,
-      label: values.label ?? ''
+    await createTransaction({
+      user,
+      amount,
+      type,
+      reference
     })
   }
 
@@ -37,8 +40,7 @@ export const CreateVirtualAccountTransaction = () => {
       <DialogContent sx={{ width: '600px', maxWidth: '100%' }}>
         <Form
           onSubmit={handleSubmit}
-          validationSchema={WhitelistWalletAddressFormValidationSchema}
-          defaultValues={{ label: '' }}
+          validationSchema={VirtualAccountTransactionFormValidationSchema}
         >
           <CreateVirtualAccountTransactionFields onCancel={onClose} />
         </Form>

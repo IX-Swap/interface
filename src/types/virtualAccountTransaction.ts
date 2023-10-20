@@ -1,8 +1,8 @@
 export interface VirtualAccountTransactionFormValues {
+  user: string
   accountId: string
   email: string
-  amount: string
-  type: 'CREDIT' | 'DEBIT'
+  amount: number
+  type: 'Credit' | 'Debit'
   reference: string
-  notes?: string
 }

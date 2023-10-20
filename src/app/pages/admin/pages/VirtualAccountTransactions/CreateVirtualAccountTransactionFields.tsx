@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react'
+import React, { MouseEventHandler, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Button, Box } from '@mui/material'
 import { LabelWithTooltip } from 'ui/LabelWithTooltip/LabelWithTooltip'
@@ -10,6 +10,7 @@ import { numericValueExtractor } from 'helpers/forms'
 import { Submit } from 'components/form/Submit'
 import { TransactionTypeSelect } from './TransactionTypeSelect'
 import { VirtualAccountTransactionFormValues } from 'types/virtualAccountTransaction'
+import { useUserByAccountId } from '../../hooks/useUserByAccountId'
 
 interface CreateVirtualAccountTransactionFieldsProps {
   onCancel: MouseEventHandler
@@ -18,13 +19,21 @@ interface CreateVirtualAccountTransactionFieldsProps {
 export const CreateVirtualAccountTransactionFields = ({
   onCancel
 }: CreateVirtualAccountTransactionFieldsProps) => {
-  const { control } = useFormContext<VirtualAccountTransactionFormValues>()
+  const { control, watch } =
+    useFormContext<VirtualAccountTransactionFormValues>()
+  const accountId = watch('accountId')
+  const { data } = useUserByAccountId(accountId)
+
+  useEffect(() => {
+    control.setValue('user', data?._id ?? '')
+    control.setValue('email', data?.email ?? '')
+  }, [control, data])
 
   return (
     <Box display={'flex'} flexDirection={'column'} gap={3}>
+      <input {...control.register('user')} hidden />
       <TypedField
         component={TextInput}
-        // onChange={() => alert('test')}
         control={control}
         name='accountId'
         variant='outlined'
@@ -61,22 +70,15 @@ export const CreateVirtualAccountTransactionFields = ({
         variant='outlined'
         label={
           <LabelWithTooltip
-            label={'Reference Number'}
+            label={'Reference'}
             tooltipTitle={
               <span>
-                <strong>Reference Number</strong> represents the bank
-                transaction number.
+                <strong>Reference</strong> represents the bank transaction
+                number.
               </span>
             }
           />
         }
-      />
-      <TypedField
-        component={TextInput}
-        control={control}
-        name='notes'
-        variant='outlined'
-        label='Notes'
       />
       <Box display={'flex'} gap={2}>
         <Button

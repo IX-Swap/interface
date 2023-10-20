@@ -8,11 +8,11 @@ import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 export const TRANSACTION_TYPES = [
   {
     label: 'Credit',
-    value: 'CREDIT'
+    value: 'Credit'
   },
   {
     label: 'Debit',
-    value: 'DEBIT'
+    value: 'Debit'
   }
 ]
 
@@ -24,17 +24,7 @@ export const TransactionTypeSelect = (props: TransactionTypeSelectProps) => {
   return (
     <>
       <InputLabel htmlFor={name}>{label}</InputLabel>
-      <Select
-        {...(rest as SelectProps)}
-        displayEmpty
-        renderValue={selected => {
-          const filtered = TRANSACTION_TYPES.find(
-            type => type.value === selected
-          )
-
-          return typeof filtered !== 'undefined' ? filtered.label : selected
-        }}
-      >
+      <Select {...(rest as SelectProps)} displayEmpty>
         {renderSelectItems(TRANSACTION_TYPES)}
       </Select>
     </>

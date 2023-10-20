@@ -268,6 +268,8 @@ export const authURL = {
 
 export const userURL = {
   getUserById: (userId?: string) => `/auth/user/${userId}`,
+  getUserByAccountId: (accountId?: string) =>
+    `/auth/account/user?accountId=${accountId}`,
   getAll: '/auth/users/list',
   getUserProfile: (userId?: string) => `/auth/profiles/${userId}`,
   updateRoles: (userId?: string) => `/auth/users/${userId}/roles`,
@@ -308,6 +310,7 @@ export const bannerURL = {
 export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
+  createManualTransaction: '/virtual-accounts/transactions/manual',
   getByUserId: (userId?: string) => `/virtual-accounts/${userId}`,
   assign: '/virtual-accounts/assign',
   unassign: (accountId?: string) => `/virtual-accounts/unassign/${accountId}`,
