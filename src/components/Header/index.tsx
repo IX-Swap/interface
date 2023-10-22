@@ -208,7 +208,7 @@ export default function Header() {
   const { config } = useWhitelabelState()
   const { isTokenManager } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-  const { connector, error } = useWeb3React()
+  const { connector } = useWeb3React()
 
   const isAllowed = useCallback(
     (path: string) => {
