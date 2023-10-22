@@ -18,7 +18,7 @@ import ErrorBoundary from 'components/ErrorBoundary'
 import Web3ReactManager from 'components/Web3ReactManager'
 import GoogleAnalyticsReporter from 'components/analytics/GoogleAnalyticsReporter'
 
-import { Footer } from 'components/Footer'
+// import { Footer } from 'components/Footer'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
@@ -45,6 +45,7 @@ import { metaMask } from 'connectors/metaMask'
 import { walletConnectV2 } from 'connectors/walletConnectV2'
 import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
+import { Footer } from './Launchpad/Footer'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -75,6 +76,8 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: b
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     min-height: calc(100vh - 64px);
+    // width: 100%;
+    // padding: 0px 20px;
   `}
 `
 
@@ -246,7 +249,7 @@ export default function App() {
   return (
     <>
       {isMobile && !window.ethereum && <ConnectWalletModal />}
-      {countryCode === 'SG' && <RestrictedModal />}
+      {/* {countryCode === 'SG' && <RestrictedModal />} */}
       <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
         <Route component={DarkModeQueryParamReader} />

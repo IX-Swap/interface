@@ -33,9 +33,9 @@ export default function CopyHelper(props: { toCopy: string; children?: React.Rea
   return (
     <CopyIcon onClick={() => setCopied(props.toCopy)}>
       <TransactionStatusText>
-        <IconWrapperWithBg size={8}>
-          <CopySvg />
-        </IconWrapperWithBg>
+        {/* <IconWrapperWithBg size={8}> */}
+        <CopySvg />
+        {/* </IconWrapperWithBg> */}
       </TransactionStatusText>
       {isCopied ? t`Copied` : props.children}
     </CopyIcon>

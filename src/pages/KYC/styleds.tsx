@@ -11,14 +11,18 @@ import { Input } from 'components/Input'
 
 import { KYCStatuses } from './enum'
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
-import { ReactComponent as Passed } from 'assets/images/check-success.svg'
-import { ReactComponent as NonTradable } from 'assets/images/reject.svg'
+import { ReactComponent as Passed } from 'assets/images/newRightCheck.svg'
+import { ReactComponent as NonTradable } from 'assets/images/newReject.svg'
+import { ReactComponent as Pending } from 'assets/images/newPending.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
+import { ReactComponent as AttentionIcon } from 'assets/images/attentionIcon.svg'
 
 export const StatusCard = styled(Card)`
   display: flex;
+  flex-direction: column; /* Change the flex direction to column */
+  align-items: center; /* Center items vertically */
   justify-content: center;
-  background: ${({ theme }) => theme.config.background?.secondary || theme.bgG13};
+  background: ${({ theme }) => theme.config.background?.secondary || theme.bg0};
   width: 100%;
   min-height: 630px;
   padding-bottom: 100px;
@@ -26,6 +30,7 @@ export const StatusCard = styled(Card)`
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     height: 100%;
+    margin-top: 30px;
   `};
 `
 
@@ -38,12 +43,16 @@ export const KYCStatusCard = styled(Card)`
   width: fit-content;
   display: flex;
   align-items: center;
-  padding: 8px 32px;
-  background: ${({ theme }) => theme.bgG13};
+  border-radius: 6px;
+  padding: 8px 20px;
+  // background: ${({ theme }) => theme.bgG13};
+  border: 1px solid #e6e6ff;
+
   ${cardCommonStyles};
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-direction: column;
+    flex-direction: row;
+     padding: 8px 6px;
   `};
 `
 
@@ -62,10 +71,10 @@ export const FormWrapper = styled.form`
 `
 
 export const FormCard = styled.div<{ filled?: boolean }>`
-  background: ${({ theme }) => theme.bg18};
+  background: ${({ theme }) => theme.bg0};
   border: ${({ filled, theme }) => `1px solid ${filled ? theme.success : 'transparent'}`};
   padding: 24px 24px 32px 24px;
-  border-radius: 16px;
+  border-radius: 8px;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 16px;
@@ -96,8 +105,8 @@ export const PageLink = styled.div<{ active?: boolean }>`
   align-items: center;
   margin: 4px 0px;
   padding: 8px 16px 8px 24px;
-  color: ${({ theme, active }) => (active ? theme.text1 : theme.text9)};
-  border-left: ${({ theme, active }) => (active ? `1px solid ${theme.bg14}` : 'none')};
+  color: ${({ theme, active }) => (active ? theme.text1 : theme.text11)};
+  border-left: ${({ theme, active }) => (active ? `2px solid ${theme.bg26}` : 'none')};
   text-decoration: none;
 `
 
@@ -113,8 +122,14 @@ export const FormGrid = styled.div<{ columns?: number }>`
 
 export const ExtraInfoCard = styled.div`
   padding: 12px 8px 12px 27px;
-  border-radius: 45px;
-  background: ${({ theme }) => theme.bgG12};
+  border-radius: 8px;
+  background: ${({ theme }) => theme.bg2};
+`
+export const ExtraInfoCardCountry = styled.div`
+  padding: 12px 8px 12px 27px;
+  border-radius: 8px;
+  background: ${({ theme }) => theme.bg0};
+  border: 1px solid #e6e6ff;
 `
 
 export const StyledInput = styled(Input)`
@@ -128,9 +143,21 @@ export const UploaderCard = styled.div`
   align-items: center;
   height: 120px;
   width: 100%;
-  background: ${({ theme }) => theme.bgG17};
-  border: 1px dashed ${({ theme }) => theme.bg7};
-  border-radius: 16px;
+  background: ${({ theme }) => theme.bg0};
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
+  cursor: pointer;
+`
+
+export const SelfieUploaderCard = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  width: 100%;
+  background: ${({ theme }) => theme.bg0};
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
   cursor: pointer;
 `
 
@@ -152,36 +179,36 @@ export const BeneficialOwnersTableContainer = styled.div`
   `};
 `
 
-const RejectedIcon = styled(NonTradable)`
-  ${({ theme }) =>
-    theme.config.elements?.main &&
-    css`
-      circle {
-        fill: ${theme.config.elements?.main};
-      }
-      path {
-        fill: white;
-      }
-    `}
-`
-const AttentionIcon = styled(Attention)`
-  ${({ theme }) =>
-    theme.config.elements?.main &&
-    css`
-      > circle[fill='#ED0376'] {
-        fill: ${theme.error};
-      }
-      > circle[stroke='#ED0376'] {
-        stroke: ${theme.error};
-      }
-      line {
-        stroke: ${theme.error};
-      }
-      > circle[fill='#372E5E'] {
-        fill: ${theme.config.elements?.main};
-      }
-    `}
-`
+// const RejectedIcon = styled(NonTradable)`
+//   ${({ theme }) =>
+//     theme.config.elements?.main &&
+//     css`
+//       circle {
+//         fill: ${theme.config.elements?.main};
+//       }
+//       path {
+//         fill: white;
+//       }
+//     `}
+// `
+// const AttentionIcon = styled(Attention)`
+//   ${({ theme }) =>
+//     theme.config.elements?.main &&
+//     css`
+//       > circle[fill='#FF6161'] {
+//         fill: ${theme.error};
+//       }
+//       > circle[stroke='#FF6161'] {
+//         stroke: ${theme.error};
+//       }
+//       line {
+//         stroke: ${theme.error};
+//       }
+//       > circle[fill='#372E5E'] {
+//         fill: ${theme.config.elements?.main};
+//       }
+//     `}
+// `
 
 export const PassedIcon = styled(Passed)`
   ${({ theme }) =>
@@ -211,14 +238,14 @@ export const StyledBigPassed = styled(BigPassed)`
 
 /* eslint-disable react/display-name */
 export const KYCStatusIcons = {
-  [KYCStatuses.PENDING]: () => <LoaderThin size={20} />,
+  [KYCStatuses.PENDING]: () => <Pending />,
   [KYCStatuses.APPROVED]: () => <PassedIcon />,
   [KYCStatuses.NOT_SUBMITTED]: () => null,
   [KYCStatuses.CHANGES_REQUESTED]: () => <AttentionIcon />,
-  [KYCStatuses.REJECTED]: () => <RejectedIcon />,
+  [KYCStatuses.REJECTED]: () => <NonTradable />,
   [KYCStatuses.DRAFT]: () => null,
-  [KYCStatuses.IN_PROGRESS]: () => <LoaderThin size={20} />,
-  [KYCStatuses.FAILED]: () => <RejectedIcon />,
+  [KYCStatuses.IN_PROGRESS]: () => <Pending />,
+  [KYCStatuses.FAILED]: () => <NonTradable />,
 }
 
 const KYCStatusText = {

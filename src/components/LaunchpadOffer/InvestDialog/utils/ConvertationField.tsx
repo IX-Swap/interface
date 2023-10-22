@@ -16,6 +16,11 @@ import { text35 } from 'components/LaunchpadMisc/typography'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { Currency } from '@ixswap1/sdk-core'
 import Loader from 'components/Loader'
+import { RowBetween } from 'components/Row'
+import { InvestFormSubmitButton } from './InvestSubmitButton'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { KycLightDocPreviewModal } from 'components/KycLightDocPreviewModal'
+import { BuyModal } from '../BuyModal'
 
 interface Props {
   offer: Offer
@@ -66,8 +71,6 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
     let warning = ''
     if (value === '') {
       warning = ''
-    } else if (isInsufficientBalance) {
-      warning = `Insufficient balance`
     } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
       warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
     } else if (Number(min) > realValue) {
@@ -76,6 +79,8 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
       warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
     } else if (available < realValue) {
       warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
+    } else if (isInsufficientBalance) {
+      warning = `Insufficient ${offer.investingTokenSymbol} balance`
     }
     return warning
   }
@@ -100,10 +105,14 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
   const getWarning = useGetWarning(props.offer, true)
   const formatedValue = useFormatOfferValue()
+  const insufficientWarning = `Insufficient ${investingTokenSymbol} balance`
 
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
-
+  const { account } = useActiveWeb3React()
+  const inputCurrency = useCurrency(investingTokenAddress)
+  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
+  const [openPreviewModal, setPreviewModal] = React.useState(false)
   const changeValue = (value: string) => {
     setInputValue(value)
 
@@ -145,42 +154,117 @@ export const ConvertationField: React.FC<Props> = (props) => {
     [investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens]
   )
 
+  const openModal = () => {
+    setPreviewModal(true)
+  }
+
+  const closeModal = () => {
+    setPreviewModal(false)
+  }
+
   return (
-    <ConvertationContainer>
-      <InvestTextField
-        type="number"
-        onChange={changeValue}
-        trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
-        caption={warning === 'Loading' ? <Loader /> : warning}
-        height="90px"
-        fontSize="24px"
-        lineHeight="29px"
-        decimalsLimit={investingTokenDecimals}
-      />
-
-      <InvestTextField
-        type="number"
-        disabled
-        value={convertedValue}
-        onChange={() => null}
-        trailing={<CurrencyDropdown disabled value={offerToken} />}
-        height="90px"
-        fontSize="24px"
-        lineHeight="29px"
-      />
-
-      <ConvertationArrow>
-        <ArrowDown color={theme.launchpad.colors.primary} size="18" />
-      </ConvertationArrow>
-    </ConvertationContainer>
+    <>
+      {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
+      <ConvertationContainer>
+        <InvestTextField
+          type="number"
+          onChange={changeValue}
+          trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
+          caption={insufficientWarning === warning ? '' : warning === 'Loading' ? <Loader /> : warning}
+          // height="85px"
+          fontSize="20px"
+          lineHeight="20px"
+          decimalsLimit={investingTokenDecimals}
+        />
+        <InvestTextField
+          type="number"
+          disabled
+          value={convertedValue}
+          onChange={() => null}
+          trailing={<CurrencyDropdown disabled value={offerToken} />}
+          // height="85px"
+          fontSize="20px"
+          lineHeight="20px"
+        />
+        <ConvertationArrow>
+          <ArrowDown color={theme.launchpad.colors.primary} size="14" />
+        </ConvertationArrow>
+      </ConvertationContainer>
+      {insufficientWarning === warning && (
+        <FlexContainer border={true} flexDirection="row" padding="0.4rem 1.5rem">
+          <RowBetween>
+            <FlexContainer flexDirection="column" gap={'0.35rem'}>
+              <WarningContainer style={{ fontSize: '0.7rem' }}>{warning}</WarningContainer>
+              <div>
+                {offerInvestmentToken && (
+                  <Trailing fontSize="0.7rem" fontWeight="500">
+                    {formatCurrencyAmount(balance, balance?.currency?.decimals ?? 18)}
+                    <span style={{ margin: '0px 5px' }}>{offerInvestmentToken.name} </span>
+                    <span style={{ marginTop: '-2px', transform: 'scale(0.8)' }}>{offerInvestmentToken.icon}</span>
+                  </Trailing>
+                )}
+              </div>
+            </FlexContainer>
+            <InvestButton onClick={openModal}>Buy Now</InvestButton>
+          </RowBetween>
+        </FlexContainer>
+      )}
+    </>
   )
 }
+
+const FlexContainer = styled.div<{ border?: boolean; padding?: string; flexDirection?: string; gap?: string }>`
+  display: flex;
+  flex-flow: ${(props) => props.flexDirection} nowrap;
+  justify-content: center;
+  align-items: start-end;
+  ${(props) => (props.gap ? `gap: ${props.gap}` : '')};
+  ${(props) => `padding: ${props.padding ?? ''}`};
+  ${({ border }) =>
+    border
+      ? `border: 1px solid #E6E6FF;
+    border-radius: 10px;`
+      : ''};
+`
+
+const WarningContainer = styled.div`
+  color: red;
+  font-size: 13px;
+`
+
+const Trailing = styled.div<{ fontSize?: string; fontWeight?: string }>`
+  grid-area: trailing;
+  place-self: center end;
+  height: fit-content;
+  color: black;
+  display: flex;
+  font-size: ${(props) => props.fontSize ?? '20px'};
+  ${(props) => (props.fontWeight ? `font-weight: ${props.fontWeight}` : '')};
+`
+
+const InvestButton = styled.button`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background: ${(props) => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.foreground};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
+  border-radius: 6px;
+  padding: 0.65rem;
+  cursor: pointer;
+  width: 25%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 12px;
+`
 
 const ConvertationContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
-  gap: 1rem;
+  gap: 0.4rem;
   position: relative;
 `
 
@@ -224,11 +308,11 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
     () =>
       tokensOptions.map(
         (token) =>
-        ({
-          name: token.label,
-          address: token.address,
-          icon: token.icon,
-        } as TokenOption)
+          ({
+            name: token.label,
+            address: token.address,
+            icon: token.icon,
+          } as TokenOption)
       ),
     [tokensOptions]
   )

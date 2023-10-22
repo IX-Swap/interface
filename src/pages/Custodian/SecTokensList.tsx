@@ -6,7 +6,7 @@ import { FixedSizeList as List } from 'react-window'
 import { MEDIA_WIDTHS } from 'theme'
 
 function currencyKey(currency: Currency): string {
-  return currency.isToken ? currency.address : 'ETHER'
+  return currency?.isToken ? currency.address : 'ETHER'
 }
 
 function CurrencyRow({ currency, style, isAll }: { currency: Currency; style: CSSProperties; isAll: boolean }) {

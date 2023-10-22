@@ -10,8 +10,9 @@ import styled, { ThemeContext } from 'styled-components'
 import { TYPE } from 'theme'
 import { AutoColumn } from '../Column'
 import QuestionHelper from '../QuestionHelper'
-import { RowBetween, RowFixed, RowStart } from '../Row'
+import Row, { RowBetween, RowFixed, RowStart } from '../Row'
 import { displayDeadline, displayUserSlippageTolerance } from './helpers'
+import { isMobile } from 'react-device-detect'
 
 const Input = styled.input`
   background: ${({ theme }) => theme.config.background?.main || theme.bg1};
@@ -44,7 +45,7 @@ const MinuteLabel = styled.span`
   font-size: 16px;
   line-height: 33px;
   opacity: 0.5;
-  color: ${({ theme }) => theme.text2};
+  color: ${({ theme }) => theme.text12};
 `
 const StyledOptionRow = styled(OptionRow)`
   justify-content: flex-start;
@@ -61,15 +62,17 @@ const StyledOption = styled(Option)`
     width: fit-content;
     padding: 10px;
     margin: 0;
+
   `}
 `
 const StyledOptionCustom = styled(OptionCustom)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    min-width: 85px;
-    max-width: 100px;
+    // min-width: 85px;
+    // max-width: 100px;
     padding: 10px;
     > div > input {
      text-align: left;
+
    }
   `}
 `
@@ -89,7 +92,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
       <Marginer>
         <AutoColumn gap="16px">
           <RowFixed>
-            <TYPE.black fontWeight={400} fontSize={14} color={theme.text2}>
+            <TYPE.black fontWeight={500} fontSize={13} color={'#292933'}>
               <Trans>Slippage tolerance</Trans>
             </TYPE.black>
             <QuestionHelper
@@ -103,6 +106,8 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
           </RowFixed>
           <StyledOptionRow>
             <StyledOption
+              color={theme.text12}
+              style={{ background: '#6666FF', color: '#FFFFFF', borderRadius: '8px', width: '50%', fontSize: '16px' }}
               key={'auto'}
               onClick={() => {
                 parseSlippageInput('')
@@ -112,21 +117,36 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               Auto
             </StyledOption>
 
-            <StyledOptionCustom active={userSlippageTolerance !== 'auto'} warning={!!slippageError} tabIndex={-1}>
-              <RowBetween>
+            <StyledOptionCustom
+              style={{
+                background: '#F7F7F8',
+                color: '#B8B8CC',
+                borderRadius: '8px',
+                width: '50%',
+                fontSize: '16px',
+                border: '1px solid #E6E6FF',
+                padding: '20px 5px',
+              }}
+              active={userSlippageTolerance !== 'auto'}
+              warning={!!slippageError}
+              tabIndex={-1}
+            >
+              <RowStart>
                 <Input
-                  placeholder={placeholderSlippage.toFixed(2)}
+                  style={{ fontSize: '14px', textAlign: 'left' }}
+                  placeholder={`${placeholderSlippage.toFixed(2)}%`}
                   value={displayUserSlippageTolerance({ slippageInput, userSlippageTolerance })}
                   onChange={(e: any) => {
                     parseSlippageInput(e.target.value)
                   }}
                   onBlur={() => resetSlippage()}
-                  color={slippageError ? 'red' : ''}
+                  color={slippageError ? 'red' : '#B8B8CC'}
                 />
-                <Text color={theme.text8} fontWeight={500} fontSize={22} lineHeight={'33px'}>
+
+                {/* <Text color={'#B8B8CC'} fontWeight={500} fontSize={14} lineHeight={'33px'}>
                   %
-                </Text>
-              </RowBetween>
+                </Text> */}
+              </RowStart>
             </StyledOptionCustom>
           </StyledOptionRow>
           {slippageError || tooLow || tooHigh ? (
@@ -159,29 +179,42 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
       <Marginer>
         <AutoColumn gap="sm">
           <RowFixed>
-            <TYPE.black fontSize={14} fontWeight={400} color={theme.text2}>
+            <TYPE.black fontWeight={500} fontSize={13} color={'#292933'}>
               <Trans>Transaction deadline</Trans>
             </TYPE.black>
             <QuestionHelper
               text={t`Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min.`}
             />
           </RowFixed>
-          <RowFixed>
-            <StyledOptionCustom warning={!!deadlineError} tabIndex={-1}>
+
+          <StyledOptionCustom
+            style={{
+              background: '#F7F7F8',
+              color: '#B8B8CC',
+              borderRadius: '8px',
+              width: '100%',
+              fontSize: '16px',
+              border: '1px solid #E6E6FF',
+              marginTop: '10px',
+            }}
+            warning={!!deadlineError}
+            tabIndex={-1}
+          >
+            <RowStart>
               <Input
+                style={{ textAlign: 'left', fontSize: '15px' }}
                 placeholder={(DEFAULT_DEADLINE_FROM_NOW / 60).toString()}
                 value={displayDeadline({ deadlineInput, deadline })}
                 onChange={(e: any) => parseCustomDeadline(e.target.value)}
                 onBlur={() => resetDeadline()}
                 color={deadlineError ? 'red' : ''}
               />
-            </StyledOptionCustom>
-            <TYPE.body style={{ paddingLeft: '8px' }} fontSize={14}>
-              <MinuteLabel>
-                <Trans>minutes</Trans>
-              </MinuteLabel>
-            </TYPE.body>
-          </RowFixed>
+              <Text style={{ paddingLeft: '8px', marginRight: isMobile ? '10px' : '' }} color={'#B8B8CC'} fontSize={15}>
+                Minutes
+              </Text>
+            </RowStart>
+          </StyledOptionCustom>
+
           {deadlineError ? (
             <RowStart
               style={{

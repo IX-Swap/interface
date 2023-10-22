@@ -31,6 +31,7 @@ const TeamMemberList = styled.div`
   justify-content: flex-start;
   align-items: stretch;
   gap: 1rem;
+  white-space: pre-line;
 `
 
 const TeamMemberListTitle = styled.div`

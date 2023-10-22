@@ -18,6 +18,11 @@ import { formatAmount } from 'utils/formatCurrencyAmount'
 import { ActionTypeText, getActionStatusText, getStatusColor, ActionTypes, WithdrawStatus } from './enum'
 import { DateBox, HistoryRowWraper, IconColumn } from './styleds'
 
+import { ReactComponent as SuccessIcon } from 'assets/images/check-2.svg'
+import { ReactComponent as ErrorIcon } from 'assets/images/newCloseIcon.svg'
+import { ReactComponent as PendingIcon } from 'assets/images/NewPendingIcon.svg'
+import { Line } from 'components/Line'
+
 interface Props {
   row: LogItem
   currency: Currency & { originalSymbol: string }
@@ -56,24 +61,26 @@ export const TransactionHistoryRow = ({ row, currency, icon }: Props) => {
   }, [toggle, dispatch, row, toggleWithdrawModal, onTypeReceiver, onTypeAmount])
 
   return (
+    // <div style={{ borderBottom: '1px solid red' }}>
     <HistoryRowWraper data-testid="row" key={`history-item-${row.createdAt}`} onClick={() => openModal()}>
       <td>
-        <TYPE.subHeader1 color={'text1'}>{ActionTypeText[row.type]}</TYPE.subHeader1>
+        <TYPE.small>{ActionTypeText[row.type]}</TYPE.small>
       </td>
       {amount && (
         <td>
-          <TYPE.subHeader1 color={'text2'}>{`${formatAmount(+amount)} ${currency?.originalSymbol}`}</TYPE.subHeader1>
+          <TYPE.main1>{`${formatAmount(+amount)} ${currency?.originalSymbol}`}</TYPE.main1>
         </td>
       )}
-      <td>
+      <td width="35%">
         <Row>
           <IconColumn>
             <Box marginRight="8px" display="flex" justifyContent="center">
               <IconWrapper size={20}>{icon}</IconWrapper>
+              {/* {status === 'approved' ? <SuccessIcon /> : status === 'pending' ? <PendingIcon /> : <ErrorIcon />} */}
             </Box>
           </IconColumn>
           <DesktopOnly>
-            <TYPE.subHeader1 color={textColor}>{statusText}</TYPE.subHeader1>
+            <TYPE.main1 color={'#292933'}>{statusText}</TYPE.main1>
           </DesktopOnly>
         </Row>
       </td>
@@ -81,7 +88,7 @@ export const TransactionHistoryRow = ({ row, currency, icon }: Props) => {
         <RowBetween>
           <DesktopAndTablet>
             <DateBox>
-              <TYPE.subHeader1 color={'text1'}>{formattedDate}</TYPE.subHeader1>
+              <TYPE.main1>{formattedDate}</TYPE.main1>
             </DateBox>
           </DesktopAndTablet>
           <Box marginLeft="1rem" display="flex" justifyContent="center">
@@ -92,5 +99,6 @@ export const TransactionHistoryRow = ({ row, currency, icon }: Props) => {
         </RowBetween>
       </td>
     </HistoryRowWraper>
+    // </div>
   )
 }

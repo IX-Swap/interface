@@ -25,8 +25,8 @@ const MessageContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  gap: 1.5rem;
-  padding: 1rem;
+  // gap: 1.5rem;
+  padding: 0.6rem;
 
   background: ${(props) => props.theme.launchpad.colors.info + '0d'};
   border: 1px solid ${(props) => props.theme.launchpad.colors.info + '80'};

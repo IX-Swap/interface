@@ -17,8 +17,8 @@ export interface Props {
 }
 
 export const Label: FC<Props> = ({ label, marginBottom, htmlFor, tooltipText, required = false, color }) => (
-  <RebassLabel marginBottom={marginBottom ?? '8px'} htmlFor={htmlFor} >
-    <TYPE.title11 color={color ?? "text2"}>{label}</TYPE.title11>
+  <RebassLabel marginBottom={marginBottom ?? '8px'} htmlFor={htmlFor}>
+    <TYPE.title11 color={'text5'}>{label}</TYPE.title11>
     {required && (
       <TYPE.title11 fontWeight={400} color="error">
         *

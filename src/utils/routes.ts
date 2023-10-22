@@ -46,4 +46,14 @@ export const routes = {
   reviewOffer: '/issuance/review/information',
   issuanceReport: `/issuance/extract/:issuanceId`,
   manageOffer: `/issuance/manage/:issuanceId`,
+  newAdmin: '/admin/accreditation',
+
+  //admin urls
+
+  adminAccreditation: 'admin/accreditation',
+  adminKYC: 'admin/kyc',
+  adminKYCID: '/admin/kyc/:kycId',
+  adminTransactions: 'admin/transactions',
+  adminCatalog: 'admin/security-catalog',
+  adminUsers: 'admin/users-list',
 }

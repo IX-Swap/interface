@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 
 import { useCheckKYC } from 'state/launchpad/hooks'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
-import { Offer, OfferStatus } from 'state/launchpad/types'
+import { OfferStatus } from 'state/launchpad/types'
 
 import { Tooltip } from './Tooltip'
 import { InvestmentStatusBadge } from './InvestmentStatusBadge'
@@ -45,7 +45,10 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     [offer?.status]
   )
   const canOpen = React.useMemo(() => {
-    return checkKYC(offer.allowOnlyAccredited, isClosed) || account?.toLowerCase() === offer?.vetting.issuance.user.ethAddress?.toLowerCase()
+    return (
+      checkKYC(offer.allowOnlyAccredited, isClosed) ||
+      account?.toLowerCase() === offer?.vetting?.issuance?.user?.ethAddress?.toLowerCase()
+    )
   }, [checkKYC, isClosed, offer?.allowOnlyAccredited])
 
   const stage = React.useMemo(() => {

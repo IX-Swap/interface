@@ -10,11 +10,11 @@ export const InputPanel = styled.div<{ hideInput?: boolean }>`
 `
 
 export const ContainerRow = styled.div<{ error?: boolean }>`
-  outline: ${({ theme, error }) => (error ? `1px solid ${theme.error}` : 'none')};
-  border-radius: 36px;
-  background-color: ${({ theme }) => theme.bg7};
+  // outline: ${({ theme, error }) => (error ? `1px solid ${theme.error}` : 'none')};
+  // border-radius: 36px;
+  // background-color: ${({ theme }) => theme.bg7};
   width: 'initial';
-  padding: 10px 31px 10px 27px;
+  // padding: 10px 31px 10px 27px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       boder-radius: 1rem;
   `};
@@ -32,18 +32,20 @@ export const InputContainer = styled.div`
 export const Input = styled.input<{ error?: boolean }>`
   font-size: 1.25rem;
   outline: none;
-  border: none;
   flex: 1 1 auto;
   width: 0;
-  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg7};
-  transition: color 300ms ${({ error }) => (error ? 'step-end' : 'step-start')};
+  border: 1px solid #e6e6ff;
+  // background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg7};
+  // transition: color 300ms ${({ error }) => (error ? 'step-end' : 'step-start')};
   color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 600;
+  font-weight: 500;
   text-align: left;
-  font-size: 17px;
+  font-size: 13px;
   line-height: 40px;
+  border-radius: 6px;
+  padding: 12px;
   width: 100%;
   ::placeholder {
     font-size: 16px;
@@ -51,13 +53,12 @@ export const Input = styled.input<{ error?: boolean }>`
     font-weight: 400;
     color: ${({ theme }) => theme.text9};
   }
-  padding: 0px;
   -webkit-appearance: textfield;
 
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus {
-    border: none;
+    // border: none;
     -webkit-text-fill-color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
     color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
     -webkit-box-shadow: ${({ theme: { bg19 } }) => `0 0 0px 1000px ${`${bg19}`} inset`};
@@ -65,7 +66,7 @@ export const Input = styled.input<{ error?: boolean }>`
   }
 
   ::-webkit-autofill::first-line {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
   ::-webkit-search-decoration {
@@ -84,13 +85,13 @@ export const Input = styled.input<{ error?: boolean }>`
 `
 export const Textarea = styled.textarea`
   resize: none;
-  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg12};
+  // background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg12};
   font-weight: 300;
   font-size: 16px;
-  border-radius: 36px;
+  border-radius: 6px;
+  border: 1px solid #e6e6ff;
   width: 100%;
-  outline: none;
-  border: none;
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;

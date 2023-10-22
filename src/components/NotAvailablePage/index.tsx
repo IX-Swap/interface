@@ -1,3 +1,4 @@
+// Import necessary libraries and components
 import React from 'react'
 import { Trans, t } from '@lingui/macro'
 import { useLocation } from 'react-router-dom'
@@ -8,11 +9,13 @@ import polygonIcon from 'assets/images/polygon.svg'
 import { useActiveWeb3React } from 'hooks/web3'
 import { switchToNetwork } from 'hooks/switchToNetwork'
 import { SupportedChainId } from 'constants/chains'
-import { ButtonIXSGradient } from 'components/Button'
+import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { useWalletModalToggle } from 'state/application/hooks'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { Text } from 'rebass'
 
+// Import styled components
 import {
   Container,
   Title,
@@ -26,10 +29,11 @@ import {
 import Modal from 'components/Modal'
 import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 
+// Define the NotAvailablePage component
 export const NotAvailablePage = () => {
   const { chainId, library, account } = useActiveWeb3React()
   const { pathname } = useLocation()
-  const [cookies] = useCookies(['annoucementsSeen'])
+  const [cookies] = useCookies(['announcementsSeen'])
   const { config } = useWhitelabelState()
   const toggleWalletModal = useWalletModalToggle()
   const [showConnectModal, setShowConnectModal] = React.useState(false)
@@ -49,23 +53,42 @@ export const NotAvailablePage = () => {
 
   if (!account) {
     return (
-      <ConnectWalletContainer hasAnnouncement={!cookies.annoucementsSeen}>
-        <div>
+      <ConnectWalletContainer hasAnnouncement={!cookies.announcementsSeen}>
+        <Text>
           <Trans>Welcome to {config?.name || 'IX Swap'}</Trans>
+        </Text>
+        <div>
+          Please Connect <br /> your Wallet to use <br /> the Application.
         </div>
         <div>Please connect your wallet to use the application.</div>
         <ButtonIXSGradient onClick={toggleModal}>Connect Wallet</ButtonIXSGradient>
+        <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleWalletModal}>
+          <Text className="connect-wallet-button">
+            <Trans>Connect Wallet</Trans>
+          </Text>
+        </PinnedContentButton>
         <span>
-          While your wallet is not connected, you can see our{' '}
-          <a href="https://ixswap.defiterm.io/" target="_blank" rel="noreferrer">
-            New Staking Program
+          While your wallet is not connected, you can see our New <br />
+          <a
+            style={{ color: '#6666FF', textDecoration: 'none' }}
+            href="https://ixswap.defiterm.io/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Staking Program
           </a>
           ,&nbsp;
-          <a href="https://ixswap.defiterm.io/" target="_blank" rel="noreferrer">
+          <a
+            style={{ color: '#6666FF', textDecoration: 'none' }}
+            href="https://ixswap.defiterm.io/"
+            target="_blank"
+            rel="noreferrer"
+          >
             Liquidity Mining on Polygon
           </a>
-          &nbsp;and&nbsp;
+          &nbsp;and&nbsp; <br />
           <a
+            style={{ color: '#6666FF', textDecoration: 'none' }}
             href="https://app.uniswap.org/#/add/v2/ETH/0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4?chain=polygon"
             target="_blank"
             rel="noreferrer"

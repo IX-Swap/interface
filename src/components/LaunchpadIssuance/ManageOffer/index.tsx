@@ -161,14 +161,14 @@ export const ManageOffer = () => {
       )}
       <Header>
         <HeaderItem>
-          <BackButton background={theme.launchpad.colors.background} onClick={goBack}>
+          <BackButton background="none" onClick={goBack}>
             <ArrowLeft color={theme.launchpad.colors.primary} />
           </BackButton>
           <FormTitle>{offer.title}</FormTitle>
         </HeaderItem>
         <HeaderItem>
           {showWhitelistBtn && (
-            <OutlineButton onClick={() => setOpenWhitelisting(true)}>
+            <OutlineButton style={{ border: '1px solid #6666FF33' }} onClick={() => setOpenWhitelisting(true)}>
               <ButtonLabel>Whitelist Wallet</ButtonLabel>
             </OutlineButton>
           )}

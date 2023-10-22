@@ -60,6 +60,9 @@ export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGI
     images: [],
     videos: [{ url: '' }],
 
+    purchaseAgreement: null,
+    investmentMemorandum: null,
+    otherExecutionDocuments: [{ file: null }],
     additionalDocuments: [{ file: null }],
 
     members: [

@@ -20,7 +20,7 @@ import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 const Wrapper = styled.div`
   width: 100%;
   border-radius: 20px;
-  background: ${({ theme }) => theme.bgG4};
+  background: ${({ theme }) => theme.bg1};
 `
 const Section = styled(AutoColumn)`
   border-top-left-radius: 20px;
@@ -29,7 +29,7 @@ const Section = styled(AutoColumn)`
 `
 
 const BottomSection = styled(AutoColumn)`
-  background: ${({ theme }) => theme.bg11};
+  // background: ${({ theme }) => theme.bg11};
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   padding: 36px 40px 51px 40px;

@@ -61,7 +61,7 @@ export function useSwapActionHandlers(): {
       dispatch(
         selectCurrency({
           field,
-          currencyId: currency.isToken ? currency.address : currency.isNative ? native.symbol || 'ETH' : '',
+          currencyId: currency?.isToken ? currency.address : currency.isNative ? native.symbol || 'ETH' : '',
         })
       )
     },

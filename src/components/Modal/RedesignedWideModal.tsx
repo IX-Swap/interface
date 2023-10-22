@@ -11,7 +11,7 @@ import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 const StyledDialogContent = styled(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, scrollable, tip, isLarge, ...rest }) => (
-    <AnimatedDialogContent {...rest} data-testid="submittedDialog"/>
+    <AnimatedDialogContent {...rest} data-testid="submittedDialog" />
   )
 ).attrs({
   'aria-label': 'dialog',
@@ -71,7 +71,7 @@ const StyledDialogContent = styled(
     background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg0};
     box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.95, theme.shadow1)};
     padding: 0px;
-    width: ${({ isLarge }) => (isLarge ? '100%' : '622px')};
+    width: ${({ isLarge }) => (isLarge ? '100%' : '100%')};
     max-width: fit-content;
     overflow-y: ${({ mobile }) => (mobile ? 'auto' : 'hidden')};
     overflow-x: hidden;
@@ -100,7 +100,7 @@ const StyledDialogContent = styled(
         min-height: ${minHeight}vh;
       `}
     display: flex;
-    border-radius: 45px;
+    border-radius: 8px;
     ${({ theme, scrollable }) => theme.mediaWidth.upToMedium`
       width: 100vw;
       ${scrollable && 'min-height: auto !important;'}
@@ -108,10 +108,10 @@ const StyledDialogContent = styled(
       backdrop-filter: opacity(0);
     `}
     ${({ theme, mobileMaxHeight }) => theme.mediaWidth.upToSmall`
-          border-radius: 20px;
+          border-radius: 8px;
           top: 0;
           max-width: 90vw;
-          min-height: 95vh;
+          // min-height: 95vh;
           margin:0;
          ${
            mobileMaxHeight &&

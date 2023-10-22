@@ -12,6 +12,7 @@ import { OfferTokenType } from './types'
 import { isEthChainAddress } from 'utils'
 import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { STRING_MIN, STRING_MAX, TEXT_MAX, TEXT_MIN } from 'components/LaunchpadIssuance/utils/TextField'
+import { truncate } from 'fs/promises'
 
 const fileSchema = yup.mixed()
 const REQUIRED = 'Required'
@@ -49,15 +50,15 @@ const checkMaxGreaterThanMinimum = function (minimum: string, maximum: string) {
   return true
 }
 
-const checkMinSmallerThanMaximum = function (minimum: string, maximum: string) {
+const checkMinSmallerThanMaximum = function (minimum: string, maximum: string, permitEqual = false) {
   if (!maximum || !minimum) {
     return true
   }
+  const condition = permitEqual ? Number(minimum) > Number(maximum) : Number(minimum) >= Number(maximum);
 
-  if (Number(minimum) >= Number(maximum)) {
+  if (condition) {
     return false
   }
-
   return true
 }
 
@@ -241,7 +242,7 @@ export const createValidationSchema = (account: string | null | undefined) => {
         'maxInvestmentHardCapConstraint',
         'Maximal investment should be smaller than total amount to raise',
         function (): boolean | yup.ValidationError {
-          return checkMinSmallerThanMaximum(this.parent.maxInvestment, this.parent.hardCap)
+          return checkMinSmallerThanMaximum(this.parent.maxInvestment, this.parent.hardCap, true)
         }
       ),
     hasPresale: yup.boolean().required(REQUIRED),
@@ -266,7 +267,7 @@ export const createValidationSchema = (account: string | null | undefined) => {
             'presaleMaxInvestmentAllocation',
             'Maximal investment should be smaller or equal to pre-sale allocation',
             function () {
-              return checkMinSmallerThanMaximum(this.parent.presaleMaxInvestment, this.parent.presaleAlocated)
+              return checkMinSmallerThanMaximum(this.parent.presaleMaxInvestment, this.parent.presaleAlocated, true)
             }
           ),
         otherwise: yup.string().nullable(),
@@ -417,6 +418,14 @@ export const createValidationSchema = (account: string | null | undefined) => {
     }),
     gallery: yup.array(requiredFileSchema),
 
+    purchaseAgreement: fileSchema,
+    investmentMemorandum: fileSchema,
+    otherExecutionDocuments: yup.array(
+      yup.object().shape({
+        file: fileSchema,
+      })
+    ),
+
     additionalDocuments: yup.array(
       yup.object().shape({
         file: fileSchema,
@@ -481,6 +490,14 @@ export const editSchema = yup.object().shape({
     .min(1, 'Add at least one social link'),
 
   gallery: yup.array(requiredFileSchema),
+
+  purchaseAgreement: fileSchema,
+  investmentMemorandum: fileSchema,
+  otherExecutionDocuments: yup.array(
+    yup.object().shape({
+      file: fileSchema,
+    })
+  ),
 
   additionalDocuments: yup.array(
     yup.object().shape({

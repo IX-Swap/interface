@@ -23,8 +23,9 @@ export const KycSource = ({ userKyc, onKycClick, status }: Props) => {
 
     return (
       <InternalKycContainer onClick={onKycClick}>
-        <AppLogo />
-        <div>{name}</div>
+        {/* <AppLogo /> */}
+        <img src={getStatusIcon(status)} alt="icon" width="14px" height="14px" />
+        <div style={{ fontSize: '14px' }}>{name}</div>
       </InternalKycContainer>
     )
   }
@@ -35,7 +36,7 @@ export const KycSource = ({ userKyc, onKycClick, status }: Props) => {
 
   return (
     <ExternalKycContainer>
-      <img src={getStatusIcon(status)} alt="icon" width="20px" height="20px" />
+      <img src={getStatusIcon(status)} alt="icon" width="14px" height="14px" />
       InvestaX
       {status === AccreditationStatusEnum.APPROVED && (
         <DownloadContainer onClick={downloadClick}>

@@ -8,7 +8,7 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { useExplorerName } from 'hooks/useExplorerName'
 
-import Attention from '../../assets/images/attention.svg'
+import Attention from '../../assets/images/NewWarning.svg'
 import { ReactComponent as Success } from '../../assets/images/success.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { ExternalLink, TYPE, ModalContentWrapper } from '../../theme'
@@ -17,6 +17,8 @@ import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { ButtonGradient, ButtonGradientBorder } from '../Button'
 import Column, { AutoColumn } from '../Column'
 import { RowBetween, RowCenter, RowFixed } from '../Row'
+import MetamaskIcon from 'assets/images/metamask.png'
+import { isMobile } from 'react-device-detect'
 
 export const StyledSuccess = styled(Success)`
   ${({ theme }) =>
@@ -30,13 +32,13 @@ export const StyledSuccess = styled(Success)`
 `
 
 export const StyledModalContentWrapper = styled(ModalContentWrapper)`
-  padding: 37px 40px 19px 40px;
+  // padding: 37px 190px 19px 40px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
    padding: 1rem;
   `};
 `
 
-export const StyledTitle = styled(TYPE.title4)`
+export const StyledTitle = styled(TYPE.title7)`
   @media (max-width: 768px) {
     text-align: center;
   }
@@ -55,7 +57,6 @@ export function ConfirmationPendingContent({
       <StyledModalContentWrapper>
         <Column>
           <RowBetween>
-            <div />
             <CloseIcon onClick={onDismiss} />
           </RowBetween>
           <RowCenter>
@@ -115,13 +116,21 @@ export function TransactionSubmittedContent({
             <RowCenter>
               <ButtonGradient
                 mt="12px"
-                style={{ width: 'fit-content', padding: '7px 45px' }}
+                style={{
+                  width: 'fit-content',
+                  padding: '18px 45px',
+                  background: 'none',
+                  border: ' 1px solid #E6E6FF',
+                  color: '#292933',
+                  borderRadius: '6px',
+                }}
                 onClick={addToken}
                 data-testid="add-currency-to-metamask"
                 disabled={Boolean(success)}
               >
                 {!success ? (
                   <RowFixed>
+                    <img style={{ height: '18px', marginRight: '10px' }} src={MetamaskIcon} />
                     <Trans>Add {currencyToAdd.symbol} to Metamask</Trans>
                   </RowFixed>
                 ) : (
@@ -139,14 +148,17 @@ export function TransactionSubmittedContent({
           </RowCenter>
           <AutoColumn gap="12px" justify={'center'}>
             {chainId && hash && (
-              <ExternalLink href={getExplorerLink(chainId, hash, ExplorerDataType.TRANSACTION)}>
+              <ExternalLink
+                style={{ color: '#6666FF', textDecoration: 'none' }}
+                href={getExplorerLink(chainId, hash, ExplorerDataType.TRANSACTION)}
+              >
                 <Trans>View on {explorerName}</Trans>
               </ExternalLink>
             )}
             <ButtonGradientBorder
               onClick={onDismiss}
               data-testid="return-close"
-              style={{ width: '211px', marginBottom: '35px' }}
+              style={{ width: isMobile ? '200px' : '450px', marginBottom: '35px', marginTop: '10px' }}
             >
               <Trans>Close</Trans>
             </ButtonGradientBorder>
@@ -161,26 +173,28 @@ export function TransactionErrorContent({ message, onDismiss }: { message: React
   return (
     <ModalBlurWrapper data-testid="TransactionPopup">
       <StyledModalContentWrapper>
+        <CloseIcon style={{ position: 'absolute', right: '10px' }} onClick={onDismiss} />
         <Column>
-          <RowBetween>
-            <div></div>
-            <CloseIcon onClick={onDismiss} />
-          </RowBetween>
-          <RowCenter>
-            <TYPE.title4>
-              <Trans>Error Occurred</Trans>
-            </TYPE.title4>
-          </RowCenter>
-          <RowCenter style={{ marginTop: 61 }}>
+          <RowCenter style={{ marginTop: 30 }}>
             <SvgIconWrapper size={128}>
               <img src={Attention} alt={'Error'} />
             </SvgIconWrapper>
           </RowCenter>
+          <RowCenter style={{ marginTop: '20px' }}>
+            <TYPE.title5>
+              <Trans>Error Occurred</Trans>
+            </TYPE.title5>
+          </RowCenter>
+
           <RowCenter style={{ marginTop: 14, marginBottom: 53, textAlign: 'center' }}>
             <TYPE.error error={!!message}>{message}</TYPE.error>
           </RowCenter>
           <RowCenter style={{ marginBottom: 35 }}>
-            <ButtonGradientBorder onClick={onDismiss} data-testid="close" style={{ width: '112px' }}>
+            <ButtonGradientBorder
+              onClick={onDismiss}
+              data-testid="close"
+              style={{ width: '112px', border: '1px solid #E6E6FF ' }}
+            >
               <Trans>Close</Trans>
             </ButtonGradientBorder>
           </RowCenter>
@@ -215,19 +229,23 @@ export default function ConfirmationModalContent({
 
   // confirmation screen
   return (
-    <RedesignedWideModal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90}>
-      {attemptingTxn ? (
-        <ConfirmationPendingContent onDismiss={onDismiss} pendingText={pendingText} />
-      ) : hash ? (
-        <TransactionSubmittedContent
-          chainId={chainId}
-          hash={hash}
-          onDismiss={onDismiss}
-          currencyToAdd={currencyToAdd}
-        />
-      ) : (
-        content()
-      )}
-    </RedesignedWideModal>
+    <ModalBlurWrapper data-testid="TransactionPopup">
+      <StyledModalContentWrapper>
+        <RedesignedWideModal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90}>
+          {attemptingTxn ? (
+            <ConfirmationPendingContent onDismiss={onDismiss} pendingText={pendingText} />
+          ) : hash ? (
+            <TransactionSubmittedContent
+              chainId={chainId}
+              hash={hash}
+              onDismiss={onDismiss}
+              currencyToAdd={currencyToAdd}
+            />
+          ) : (
+            content()
+          )}
+        </RedesignedWideModal>
+      </StyledModalContentWrapper>
+    </ModalBlurWrapper>
   )
 }

@@ -251,6 +251,8 @@ export function ExternalLink({
 }
 
 export const DiscreteExternalLink = styled(ExternalLink)`
+  margin-bottom: 15px;
+  color: #6666ff;
   :hover {
     text-decoration: none;
   }
@@ -334,8 +336,9 @@ export const SemiTransparent = styled.div`
   opacity: 0.5;
 `
 export const StyledPageHeader = styled.div`
-  padding: 0;
+  padding: 10px;
   width: 100%;
+  margin-top: 22px;
   margin-bottom: 22px;
   font-weight: 600;
   font-size: 22px;
@@ -345,13 +348,13 @@ export const StyledPageHeader = styled.div`
   }
 `
 export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
-  background: ${({ theme }) => theme.bgG5};
-  border-radius: 45px;
+  // background: ${({ theme }) => theme.bg0};
+  // border-radius: 45px;
   display: flex;
   flex-direction: column;
   font-size: 1rem;
   display: flex;
-  min-width: 622px;
+  min-width: 580px;
   z-index: 5;
   padding: 32px;
   backdrop-filter: blur(20px);
@@ -363,6 +366,30 @@ export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
     min-width: 100%;
     max-width: 100%;
     border-radius: 0;
+  `};
+  user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
+`
+
+export const ModalNewWrapper = styled.span<{ touchable?: boolean }>`
+  background: ${({ theme }) => theme.bg25};
+  border-radius: 8px;
+  flex-direction: column;
+  font-size: 1rem;
+  display: flex;
+  min-width: 622px;
+  z-index: 5;
+  padding: 32px;
+  backdrop-filter: blur(20px);
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0;
+    min-width: 100%;
+    display: flex;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    display: flex;
   `};
   user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
 `
@@ -388,24 +415,29 @@ export const ModalLightBlurWrapper = styled.span<{ touchable?: boolean }>`
   user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
 `
 
-export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
-  color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
+export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string; route?: boolean }>`
+  color: ${({ error, route, theme }) => (error ? theme.red1 : route ? theme.text12 : theme.text1)};
   width: 0;
   position: relative;
   outline: none;
   border: none;
   flex: 1 1 auto;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
+  background-color: ${({ theme, route }) => (route ? theme.bg1 : theme.bg1)};
   text-align: ${({ align }) => align && align};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0px;
   -webkit-appearance: textfield;
+  border: 1px solid #E6E6FF
   text-align: left;
   font-size: 22px;
   line-height: 40px;
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100% 
+    font-size: 14px; 
+  `}
   ::-webkit-search-decoration {
     -webkit-appearance: none;
   }
@@ -420,7 +452,7 @@ export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: stri
   }
 
   ::placeholder {
-    color: ${({ theme }) => theme.text2};
+    color: ${({ error, theme, route }) => (route ? theme.text1 : error ? theme.red1 : theme.text12)}
     opacity: 0.5;
     font-style: normal;
   }
@@ -557,11 +589,11 @@ export const ModalContentWrapper = styled(Column)`
   width: 100%;
   flex: 1 1;
   position: relative;
-  background: ${({ theme }) => theme.config.background?.secondary || theme.bgG4};
-  border-radius: 20px;
+  background: ${({ theme }) => theme.bg0};
+  border-radius: 8px;
 `
 export const ModalPadding = styled.div`
-  padding: 37px 40px 19px 40px;
+  // padding: 37px 40px 19px 40px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
    padding: 22px 8px 18px 8px;
   `};
@@ -571,6 +603,7 @@ export const ellipsisText = css`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 14px;
 `
 
 export const EllipsisText = styled.div`

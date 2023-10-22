@@ -26,12 +26,16 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
     justify-content: ${({ isright }) => (isright ? 'flex-end' : 'center')};
     flex-direction: ${({ flexcolumn }) => (flexcolumn ? 'column' : 'row')};
 
+    // @media (max-width: 768px) {
+    //   display: flex;
+    // }
 
-  @media (max-width: 768px) {
-    display: block;
-  }
+    ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      display: flex;
+       background-color: none;
+  `};
 
-    background-color: ${({ theme }) => theme.modalBG};
+    background-color: ${({ theme }) => theme.modalBG1};
     ${({ tip }) =>
       tip &&
       css`
@@ -42,11 +46,11 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
       `}
 
     ${({ theme }) => theme.mediaWidth.upToSmall`
-          background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, 
-                                      rgba(206, 20, 132, 0.33) 0%,
-                                      rgba(26, 18, 58, 0) 100%),
-                                      rgba(44, 37, 74, 0.3);
-          backdrop-filter: blur(20px);
+          // background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, 
+          //                             rgba(206, 20, 132, 0.33) 0%,
+          //                             rgba(26, 18, 58, 0) 100%),
+          //                             rgba(44, 37, 74, 0.3);
+          // backdrop-filter: blur(20px);
           width: 100vw;
       `}
   }
@@ -73,7 +77,7 @@ export const StyledLightDialogOverlay = styled(AnimatedDialogOverlay)<{
     justify-content: ${({ isright }) => (isright ? 'flex-end' : 'center')};
     flex-direction: ${({ flexcolumn }) => (flexcolumn ? 'column' : 'row')};
 
-    background: rgba(6, 6, 40, 0.6);
+    // background: rgba(6, 6, 40, 0.6);
     backdrop-filter: blur(16px);
     padding: 0px;
     ${({ tip }) =>

@@ -26,8 +26,8 @@ const LoadingMessage = styled.div<{ error?: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap};
   align-items: center;
   justify-content: flex-start;
-  border-radius: 12px;
-  margin-bottom: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
   color: ${({ theme, error }) => (error ? theme.red1 : 'inherit')};
   border: 1px solid ${({ theme, error }) => (error ? theme.red1 : theme.text4)};
 
@@ -43,13 +43,13 @@ const ErrorGroup = styled.div`
 `
 
 const ErrorButton = styled.div`
-  border-radius: 8px;
+  border-radius: 2px;
   font-size: 12px;
-  color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.bg4};
+  color: ${({ theme }) => theme.text2};
+  background-color: ${({ theme }) => theme.bg1};
   margin-left: 1rem;
-  padding: 0.5rem;
-  font-weight: 600;
+  padding: 0.8rem;
+  font-weight: 500;
   user-select: none;
 
   &:hover {

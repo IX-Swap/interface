@@ -4,10 +4,11 @@ import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 
 import { ExternalLink, TYPE } from 'theme'
-import { ReactComponent as Passed } from 'assets/images/check-success.svg'
-import { ReactComponent as NonTradable } from 'assets/images/reject.svg'
+import { ReactComponent as Passed } from 'assets/images/newRightCheck.svg'
+import { ReactComponent as NonTradable } from 'assets/images/newReject.svg'
+import { ReactComponent as EditIcon } from 'assets/images/NewEditButton.svg'
 
-import { CardHeader, EditButton, TokensList, TokensListItem } from './styleds'
+import { CardHeader, EditButton, EditWrapper, TokensList, TokensListItem } from './styleds'
 export interface BrokerDealerFakeProps {
   issuer: any
   handleEditClick: (editIssuer: any) => void
@@ -19,26 +20,29 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
   return (
     <Box marginBottom="30px">
       <CardHeader>
-        <Box height="100%">
-          <img style={{ width: 'auto', height: '100%' }} src={logo.public} />
-        </Box>
-        <TYPE.title6 style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</TYPE.title6>
-        <TYPE.descriptionThin overflow="hidden">
-          <ExternalLink
-            style={{ color: 'rgba(237, 206, 255, 0.5)', overflow: 'hidden', textOverflow: 'ellipsis' }}
-            href={url}
-          >
-            {url}
-          </ExternalLink>
-        </TYPE.descriptionThin>
-        <EditButton
-          onClick={() => handleEditClick(issuer)}
-          marginLeft={isMobile ? '8px' : 'auto'}
-          marginRight="19px"
-          color="white"
-        >
-          <Trans>Edit</Trans>
-        </EditButton>
+        <div className="left-side">
+          {isMobile ? (
+            <img style={{ width: '30px', height: '30px', marginRight: '20px' }} src={logo.public} />
+          ) : (
+            <img style={{ width: '64px', height: '64px', marginRight: '20px' }} src={logo.public} />
+          )}
+          <div>
+            <TYPE.title7 style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</TYPE.title7>
+            <TYPE.small overflow="hidden">
+              <ExternalLink style={{ color: '#B8B8CC', overflow: 'hidden', textOverflow: 'ellipsis' }} href={url}>
+                {url}
+              </ExternalLink>
+            </TYPE.small>
+          </div>
+        </div>
+
+        {/* <div className="left-side">
+          <img style={{ width: '64px', height: '64px', marginRight: '20px' }} src={logo.public} />
+        </div> */}
+        <EditWrapper onClick={() => handleEditClick(issuer)}>
+          <EditIcon />
+          {/* <img style={{ width: '64px', height: '64px', marginRight: '20px' }} src={logo.public} /> */}
+        </EditWrapper>
       </CardHeader>
 
       {tokens?.length > 0 && (
@@ -47,34 +51,34 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
             <TokensListItem key={`token-list-${index}`}>
               <Box>
                 <img style={{ borderRadius: '24px' }} width="30px" height="31px" src={logo?.public} />
-                <TYPE.body3 style={{ whiteSpace: 'nowrap' }} marginLeft="12px" color="white">
+                <TYPE.title7 style={{ whiteSpace: 'nowrap' }} marginLeft="12px">
                   {ticker}
-                </TYPE.body3>
+                </TYPE.title7>
               </Box>
 
-              <TYPE.body3 overflow="hidden" color="white">
-                <ExternalLink style={{ color: 'white' }} href={url}>
+              <TYPE.small overflow="hidden" color="#B8B8CC">
+                <ExternalLink style={{ color: '#B8B8CC' }} href={url}>
                   {url}
                 </ExternalLink>
-              </TYPE.body3>
+              </TYPE.small>
               <div>
                 {wrappedToken ? (
                   <>
                     <Passed />
-                    <TYPE.title6 marginLeft="10px" fontWeight={400} color="#9DF9B1">
+                    <TYPE.title10 fontSize="13px" marginLeft="10px">
                       <Trans>Tradable</Trans>
-                    </TYPE.title6>
+                    </TYPE.title10>
                   </>
                 ) : (
                   <>
                     <NonTradable />
-                    <TYPE.title6 marginLeft="10px" fontWeight={400} color="#EDCEFF">
+                    <TYPE.title10 fontSize="13px" marginLeft="10px">
                       <Trans>Non Tradable</Trans>
-                    </TYPE.title6>
+                    </TYPE.title10>
                   </>
                 )}
               </div>
-              <TYPE.title6 fontWeight={400}>{featured ? 'Featured' : '-'}</TYPE.title6>
+              <TYPE.title10 fontSize="13px">{featured ? 'Featured' : '-'}</TYPE.title10>
             </TokensListItem>
           ))}
         </TokensList>

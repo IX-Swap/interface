@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 
-import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { ButtonIXSWide, ButtonPinkBorder, ButtonGradientBorder } from 'components/Button'
+import { ButtonIXSWide, ButtonPinkBorder, ButtonGradientBorder, PinnedContentButton } from 'components/Button'
 import { ReasonModal } from 'components/ReasonModal'
 import { CorporateKyc, IndividualKyc, KycItem } from 'state/admin/actions'
 import { shortenAddress } from 'utils'
@@ -15,6 +15,9 @@ import { KYCStatuses } from 'pages/KYC/enum'
 
 import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
+
+import { ReactComponent as ArrowLeft } from '../../assets/images/newBack.svg'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   isOpen: boolean
@@ -36,8 +39,13 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
     const fetchCynopsisRisks = async () => {
       handleLoadingCynopsis(true)
       const result = await getCynopsisRisks(data?.user.ethAddress)
-      setRiskJSON(result?.riskReport?.riskScore ? result.riskReport : 
-        result?.riskReport?.riskJson?.riskScore ? result.riskReport.riskJson : null)
+      setRiskJSON(
+        result?.riskReport?.riskScore
+          ? result.riskReport
+          : result?.riskReport?.riskJson?.riskScore
+          ? result.riskReport.riskJson
+          : null
+      )
       handleRiskReportId(result?.riskReport?.id || 0)
       handleLoadingCynopsis(false)
     }
@@ -81,7 +89,6 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
 
   const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data.status as any)
-
   return (
     <>
       <ReasonModal
@@ -105,12 +112,19 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
           <ModalContent>
             <TitleContainer>
               <Title>
-                <div>
-                  <Trans>KYC</Trans>&nbsp;-&nbsp;
-                </div>
-                {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`})
+                {/* <div>
+                  <Trans>
+                    <ArrowLeft style={{ cursor: 'pointer' }} data-testid="cross" onClick={onClose} />
+                  </Trans>
+                  &nbsp;&nbsp;
+                </div> */}
+                <TYPE.title7 fontWeight="800" fontSize={isMobile ? '18px' : '24px'}>
+                  {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`})
+                  {/* {data?.individual?.fullName || data?.corporate?.fullName || ''} */}
+                </TYPE.title7>
+                {/* {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
               </Title>
-              <CloseIcon data-testid="cross" onClick={onClose} />
+              <CloseIcon style={{ color: '#555566' }} data-testid="cross" onClick={onClose} />
             </TitleContainer>
             <Body>
               {data.individualKycId ? (
@@ -120,9 +134,9 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
               )}
             </Body>
             <ActionsContainer buttons={needResubmit ? 4 : 3}>
-              <ButtonIXSWide onClick={approve} data-testid="approveButton" disabled={needResubmit}>
+              <PinnedContentButton onClick={approve} data-testid="approveButton" disabled={needResubmit}>
                 <Trans>Approve</Trans>
-              </ButtonIXSWide>
+              </PinnedContentButton>
               <ButtonPinkBorder onClick={reject} data-testid="rejectButton" disabled={needResubmit}>
                 <Trans>Reject</Trans>
               </ButtonPinkBorder>
@@ -130,9 +144,9 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
                 <Trans>Request a change</Trans>
               </ButtonGradientBorder>
               {needResubmit && (
-                <ButtonIXSWide onClick={resubmit}>
+                <PinnedContentButton onClick={resubmit}>
                   <Trans>Resubmit</Trans>
-                </ButtonIXSWide>
+                </PinnedContentButton>
               )}
             </ActionsContainer>
           </ModalContent>
@@ -162,7 +176,7 @@ const ActionsContainer = styled.div<{ buttons: number }>`
   > button:nth-child(2) {
     color: ${({ theme: { error } }) => error};
     background-color: transparent;
-    border: 1px solid #ed0376;
+    border: 1px solid #ff6161;
   }
   > button:nth-child(3) {
     background-color: transparent;
@@ -179,10 +193,14 @@ const TitleContainer = styled.div`
 const ModalContent = styled(ModalContentWrapper)`
   padding: 29px 38px 42px 42px;
   border-radius: 20px;
-  min-width: 80vw;
-  max-width: 90vw;
+  min-width: 70vw;
+  max-width: 70vw;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 16px;
+    // padding: 29px 5px 42px 5px;
+    border-radius: 6px;
+    min-width: 90vw;
+    max-width: 90vw;
   }
 `
 

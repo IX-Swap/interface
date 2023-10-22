@@ -20,16 +20,16 @@ export const corporateTransformApiData = (data: any) => {
     beneficialOwners,
     usTin,
   } = data
-  const [funds, otherFunds = ''] = sourceOfFunds.split(', Others, ')
+  const [funds, otherFunds = ''] = sourceOfFunds ? sourceOfFunds.split(', Others, ') : [null, null]
 
   return {
     ...data,
     typeOfLegalEntity: {
-      value: legalEntityTypes.find(({ label }) => label === typeOfLegalEntity)?.value || 0,
+      value: legalEntityTypes?.find(({ label }) => label === typeOfLegalEntity)?.value || 0,
       label: typeOfLegalEntity,
     },
     countryOfIncorporation: { value: 0, label: countryOfIncorporation },
-    authorizationDocuments: documents.filter(({ type }: any) => type === 'authorization'),
+    authorizationDocuments: documents?.filter(({ type }: any) => type === 'authorization'),
     address: address.address,
     postalCode: address.postalCode,
     country: { value: 0, label: address.country },
@@ -38,22 +38,22 @@ export const corporateTransformApiData = (data: any) => {
     residentialAddressPostalCode: residentialAddress.postalCode,
     residentialAddressCountry: { value: 0, label: residentialAddress.country },
     residentialAddressCity: residentialAddress.city,
-    sourceOfFunds: otherFunds.length ? [...funds.split(', '), 'Others'] : funds.split(', '),
+    sourceOfFunds: funds && otherFunds && otherFunds.length ? [...funds?.split(', '), 'Others'] : funds?.split(', '),
     isUSTaxPayer: usTin ? 1 : 0,
     otherFunds,
     taxCountry: { value: 0, label: taxCountry },
     beneficialOwners:
       beneficialOwners.length > 0
-        ? beneficialOwners.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
-            id,
-            fullName,
-            shareholding,
-            proofOfAddress,
-            proofOfIdentity,
-          }))
+        ? beneficialOwners?.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+          id,
+          fullName,
+          shareholding,
+          proofOfAddress,
+          proofOfIdentity,
+        }))
         : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
-    corporateDocuments: documents.filter(({ type }: any) => type === 'corporate'),
-    financialDocuments: documents.filter(({ type }: any) => type === 'financial'),
+    corporateDocuments: documents?.filter(({ type }: any) => type === 'corporate'),
+    financialDocuments: documents?.filter(({ type }: any) => type === 'financial'),
     removedDocuments: [],
     removedBeneficialOwners: [],
   }
@@ -73,16 +73,18 @@ export const corporateTransformKycDto = (values: any) => {
     incorporationDate,
   } = values
 
+  const newSourceOfFunds = sourceOfFunds ?? '';
+
   return {
     ...values,
     ...(!isUSTaxPayer && { usTin: '' }),
     incorporationDate:
-      typeof incorporationDate === 'string' ? incorporationDate : incorporationDate.format('MM/DD/YYYY'),
-    typeOfLegalEntity: typeOfLegalEntity.label,
-    sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
-    countryOfIncorporation: countryOfIncorporation.label,
-    country: country.label,
-    residentialAddressCountry: residentialAddressCountry.label,
+      typeof incorporationDate === 'string' ? incorporationDate : incorporationDate?.format('MM/DD/YYYY'),
+    typeOfLegalEntity: typeOfLegalEntity?.label,
+    sourceOfFunds: [...newSourceOfFunds, ...(newSourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
+    countryOfIncorporation: countryOfIncorporation?.label,
+    country: country?.label,
+    residentialAddressCountry: residentialAddressCountry?.label,
     taxCountry: taxCountry?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
     beneficialOwners: JSON.stringify(
@@ -131,6 +133,7 @@ export const individualTransformApiData = (data: any) => {
     city: address?.city,
     proofOfAddress: documents?.filter(({ type }: any) => type === 'address'),
     proofOfIdentity: documents?.filter(({ type }: any) => type === 'identity'),
+    selfie: documents?.filter(({ type }: any) => type === 'selfie'),
     evidenceOfAccreditation: documents?.filter(({ type }: any) => type === 'accreditation'),
     idType: { value: 0, label: IdentityDocumentType[idTypeKey] },
     citizenship: { value: 0, label: citizenship },
@@ -215,19 +218,23 @@ export const individualTransformKycDto = (values: any) => {
 
     investorDeclaration: values?.accredited
       ? {
-          ...values.investorDeclaration,
+        ...values.investorDeclaration,
 
-          isTotalAssets: values.isTotalAssets,
-          isAnnualIncome: values.isAnnualIncome,
-          isFinancialAssets: values.isFinancialAssets,
-          isJointIncome: values.isJointIncome,
+        isTotalAssets: values.isTotalAssets,
+        isAnnualIncome: values.isAnnualIncome,
+        isFinancialAssets: values.isFinancialAssets,
+        isJointIncome: values.isJointIncome,
 
-          acceptOfQualification: values?.acceptOfQualification,
-          acceptRefusalRight: values?.acceptRefusalRight,
-        }
+        acceptOfQualification: values?.acceptOfQualification,
+        acceptRefusalRight: values?.acceptRefusalRight,
+      }
       : emptyInvestorDeclaration,
 
-    taxDeclarations: taxDeclarations?.map((t: any, idx: number) => ({ ...t, country: t?.country?.label })),
+    taxDeclarations: taxDeclarations?.map((t: any, idx: number) => ({
+      ...t,
+      country: t?.country?.label,
+      isAdditional: t?.isAdditional === true ? 'true' : 'false',
+    })),
 
     removedTaxDeclarations: values.removedTaxDeclarations,
   }

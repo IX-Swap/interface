@@ -83,7 +83,7 @@ const SubmitButton = styled.button<{ state: InvestSubmitState; disabled?: boolea
 
 
   border-radius: 6px;
-  height: 60px;
+  height: 50px;
 
   ${text9}
 `

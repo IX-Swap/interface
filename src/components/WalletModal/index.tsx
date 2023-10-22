@@ -3,7 +3,8 @@ import { Trans } from '@lingui/macro'
 import { Connector } from '@web3-react/types'
 import { useWeb3React } from '@web3-react/core'
 import ReactGA from 'react-ga'
-
+import { isMobile } from 'react-device-detect'
+import { Text } from 'rebass'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { AutoRow } from 'components/Row'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
@@ -234,7 +235,7 @@ export default function WalletModal({
                 setWalletView(WALLET_VIEWS.ACCOUNT)
               }}
             >
-              <Trans>Back</Trans>
+              <Trans>Connect to a wallet</Trans>
             </HoverText>
           </HeaderRow>
         ) : (
@@ -246,21 +247,21 @@ export default function WalletModal({
         )}
 
         <ContentWrapper>
-          <TermsCard style={{ marginBottom: '16px' }}>
-            <AutoRow style={{ flexWrap: 'nowrap' }}>
-              <TYPE.main fontSize={14}>
-                <Trans>
-                  By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
-                  <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
-                  acknowledge that you have read and understood the{' '}
-                  <ExternalLink href="https://ixswap.io/privacy-policy/">
-                    {config?.name || 'IX Swap'} Privacy Policy
-                  </ExternalLink>
-                  .
-                </Trans>
-              </TYPE.main>
-            </AutoRow>
-          </TermsCard>
+          {/* <TermsCard style={{ marginBottom: '16px' }}>  */}
+          <AutoRow style={{ flexWrap: 'nowrap' }}>
+            <Text style={{ fontSize: '13px', color: '#666680', fontWeight: '400', lineHeight: '19.5px' }}>
+              <Trans>
+                By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
+                <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
+                acknowledge that you have read and understood the{' '}
+                <ExternalLink href="https://ixswap.io/privacy-policy/">
+                  {config?.name || 'IX Swap'} Privacy Policy
+                </ExternalLink>
+                .
+              </Trans>
+            </Text>
+          </AutoRow>
+          {/* </TermsCard> */}
           {walletView === WALLET_VIEWS.PENDING ? (
             <PendingView
               connector={pendingWallet}
@@ -280,7 +281,7 @@ export default function WalletModal({
       <RedesignedWideModal
         isOpen={walletModalOpen}
         onDismiss={toggleWalletModal}
-        minHeight={50}
+        minHeight={60}
         maxHeight={50}
         mobileMaxHeight={80}
         isright

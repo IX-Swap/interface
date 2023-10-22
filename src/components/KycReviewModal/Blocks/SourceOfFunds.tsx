@@ -10,7 +10,7 @@ import { RowWithCheck } from '../molecules/RowWithCheck'
 
 interface Props {
   data: IndividualKyc | CorporateKyc
-  kycKey: string
+  kycKey: any
 }
 
 export const SourceOfFunds = ({ data, kycKey }: Props) => {

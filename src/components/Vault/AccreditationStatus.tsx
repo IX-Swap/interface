@@ -3,7 +3,7 @@ import { Box } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { RowCenter } from 'components/Row'
+import { RowBetween, RowCenter, RowStart } from 'components/Row'
 import { IconWrapper } from 'pages/SecTokenDetails/styleds'
 import { TYPE } from 'theme'
 
@@ -53,43 +53,39 @@ export const AccreditationStatus = ({ brokerDealerStatus, custodianStatus, messa
 
   return (
     <Column style={{ marginTop: '28px', order: statuses.includes(AccreditationStatusEnum.DECLINED) ? 2 : 3 }}>
-      <RowCenter flexWrap="wrap">
-        <StatusTitle>
-          <Trans>Broker - dealer:</Trans>
-        </StatusTitle>
+      <RowStart style={{ border: '1px solid #E6E6FF', padding: '8px' }}>
+        <TYPE.title10>
+          <Trans>Broker - Dealer:</Trans>
+        </TYPE.title10>
         <Box marginLeft="13px" display="flex" alignItems="center">
-          <TYPE.titleSmall color={getStatusInfo(brokerDealerStatus).color}>
-            {getStatusInfo(brokerDealerStatus).text}
-          </TYPE.titleSmall>
+          <TYPE.body3>{getStatusInfo(brokerDealerStatus).text}</TYPE.body3>
           {getStatusInfo(brokerDealerStatus).icon && (
             <Box marginLeft="9px" display="flex" justifyContent="center">
               <IconWrapper size={20}>{getStatusInfo(brokerDealerStatus).icon}</IconWrapper>
             </Box>
           )}
         </Box>
-      </RowCenter>
-      <RowCenter flexWrap="wrap">
-        <StatusTitle>
+      </RowStart>
+      <RowStart style={{ border: '1px solid #E6E6FF', padding: '8px', marginTop: '16px' }}>
+        <TYPE.title10>
           <Trans>Custodian:</Trans>
-        </StatusTitle>
+        </TYPE.title10>
         <Box marginLeft="13px" display="flex" alignItems="center">
-          <TYPE.titleSmall color={getStatusInfo(custodianStatus).color}>
-            {getStatusInfo(custodianStatus).text}
-          </TYPE.titleSmall>
+          <TYPE.body3>{getStatusInfo(custodianStatus).text}</TYPE.body3>
           {getStatusInfo(custodianStatus).icon && (
             <Box marginLeft="9px" display="flex" justifyContent="center">
               <IconWrapper size={20}>{getStatusInfo(custodianStatus).icon}</IconWrapper>
             </Box>
           )}
         </Box>
-      </RowCenter>
+      </RowStart>
       {message && needReason && (
-        <RowCenter flexWrap="wrap" marginTop="8px">
-          <StatusTitle color="error">
+        <RowCenter style={{ border: '1px solid #E6E6FF', padding: '8px', marginTop: '16px' }} flexWrap="wrap">
+          <TYPE.title10 color="error">
             <Trans>Reason:</Trans>
-          </StatusTitle>
+          </TYPE.title10>
           <Box marginLeft="13px" display="flex" alignItems="center">
-            <TYPE.titleSmall>{message}</TYPE.titleSmall>
+            <TYPE.body3>{message}</TYPE.body3>
           </Box>
         </RowCenter>
       )}

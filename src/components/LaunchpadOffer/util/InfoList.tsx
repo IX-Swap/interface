@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { Separator } from '../../LaunchpadMisc/styled'
@@ -38,23 +38,31 @@ export const InfoList: React.FC<Props> = ({
 }) => {
   const getIsLast = useCallback((idx: number) => entries.length === idx + 1, [entries])
   const theme = useTheme()
+  const [localTime, setLocalTime] = useState(new Date())
 
+  const convertToLocalUTC = () => {
+    const localTimestamp = localTime.getTime()
+    const utcTimestamp = localTimestamp - localTime.getTimezoneOffset() * 60 * 1000
+    const utcDate = new Date(utcTimestamp)
+    const newString = utcDate.toString().split(' ')[5]
+    return `${newString.slice(0, 6)}:${newString.slice(6, 8)}`
+  }
+
+  const utcTime = convertToLocalUTC()
   return (
     <Container>
-      {title &&
+      {title && (
         <Title fontWeight={titleFontWeight}>
           <StageLabel>
             <div>{title}</div>
-            {title === 'Investment Stage' &&
-              <Tooltip
-                title={title}
-                body="The time provided is based on the UTC +0 time zone."
-              >
+            {title === 'Investment Stage' && (
+              <Tooltip title={title} body={`The time provided is based on your local time at ${utcTime}`}>
                 <Info size="14" color={theme.launchpad.colors.text.caption} />
-              </Tooltip>}
+              </Tooltip>
+            )}
           </StageLabel>
         </Title>
-      }
+      )}
 
       <Separator />
 

@@ -6,7 +6,7 @@ import useTheme from 'hooks/useTheme'
 export const EmptyLiquidity = () => {
   const theme = useTheme()
   return (
-    <TYPE.body color={theme.text2} textAlign="center">
+    <TYPE.body fontWeight={500} color={'#B8B8CC'} textAlign="center">
       <Trans>No liquidity found.</Trans>
     </TYPE.body>
   )

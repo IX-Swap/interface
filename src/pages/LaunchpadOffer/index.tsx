@@ -6,7 +6,7 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import { useActiveWeb3React } from 'hooks/web3'
 
-import { Header } from 'pages/Launchpad/Header'
+// import { Header } from 'pages/Launchpad/Header'
 import { Footer } from 'pages/Launchpad/Footer'
 
 import { OfferStatus } from 'state/launchpad/types'
@@ -28,6 +28,7 @@ import { FilledButton } from 'components/LaunchpadMisc/buttons'
 import { DiscreteInternalLink } from 'theme'
 import { ArrowLeft } from 'react-feather'
 import { routes } from 'utils/routes'
+import Header from 'components/Header'
 
 interface OfferPageParams {
   offerId: string
@@ -48,10 +49,18 @@ export default function LaunchpadOffer() {
 
   React.useEffect(() => {
     if (offer.data) {
-      setIsAllowed(
-        checkKYC(offer.data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(offer.data.status)) ||
-          account?.toLowerCase() === offer.data.ethAddress.toLowerCase()
-      )
+      if (offer && offer.data && offer.data.ethAddress) {
+        setIsAllowed(
+          checkKYC(
+            offer.data.allowOnlyAccredited,
+            [OfferStatus.closed, OfferStatus.claim].includes(offer.data.status)
+          ) || account?.toLowerCase() === offer?.data?.ethAddress?.toLowerCase()
+        )
+      } else {
+        setIsAllowed(
+          checkKYC(offer.data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(offer.data.status))
+        )
+      }
     }
   }, [offer])
 
@@ -174,7 +183,7 @@ const OfferContainer = styled.article`
     '. main sidebar .'
     'footer footer footer footer';
 
-  gap: 2rem 4rem;
+  gap: 4rem 6rem;
 
   @media (max-width: 1440px) {
     grid-template-columns: 100px minmax(auto, 800px) 380px 8px;

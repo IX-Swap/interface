@@ -19,7 +19,7 @@ const OptionCard = styled(InfoCard as any)`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
   margin-top: 2rem;
   padding: 1rem;
 `
@@ -31,11 +31,10 @@ const OptionCardLeft = styled.div`
 `
 
 const OptionCardClickable = styled(OptionCard as any)<{ clickable?: boolean }>`
-  margin-top: 0;
-  background: ${({ theme, active }) => (active ? theme.bg7 : theme.bg7)};
+  background: ${({ theme, active }) => (active ? theme.bg0 : theme.bg0)};
   &:hover {
     cursor: ${({ clickable }) => (clickable ? 'pointer' : '')};
-    border: ${({ clickable, theme }) => (clickable ? `1px solid ${theme.bg1}` : ``)};
+    // border: ${({ clickable, theme }) => (clickable ? `1px solid ${theme.bg1}` : ``)};
   }
   opacity: ${({ disabled }) => (disabled ? '0.5' : '1')};
 `
@@ -64,14 +63,15 @@ const CircleWrapper = styled.div`
 const HeaderText = styled.div`
   ${({ theme }) => theme.flexRowNoWrap};
   color: ${(props) => (props.color === 'blue' ? ({ theme }) => theme.primary1 : ({ theme }) => theme.text1)};
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
 `
 
 const SubHeader = styled.div`
   color: ${({ theme }) => theme.text1};
-  margin-top: 10px;
-  font-size: 12px;
+  // margin-top: 10px;
+  font-size: 11px;
+  margin-left: 16px;
 `
 
 const IconWrapper = styled.div<{ size?: number | null }>`
@@ -113,8 +113,11 @@ export default function Option({
 }) {
   const content = (
     <OptionCardClickable id={id} onClick={onClick} clickable={clickable && !active} active={active}>
+      <IconWrapper size={size}>
+        <img src={icon} alt={'Icon'} />
+      </IconWrapper>
       <OptionCardLeft>
-        <HeaderText color={color}>
+        <HeaderText style={{ marginLeft: '16px' }} color={color}>
           {active ? (
             <CircleWrapper>
               <GreenCircle>
@@ -128,9 +131,6 @@ export default function Option({
         </HeaderText>
         {subheader && <SubHeader>{subheader}</SubHeader>}
       </OptionCardLeft>
-      <IconWrapper size={size}>
-        <img src={icon} alt={'Icon'} />
-      </IconWrapper>
     </OptionCardClickable>
   )
   if (link) {

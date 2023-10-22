@@ -10,12 +10,12 @@ import { useCookies } from 'react-cookie'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
-import { ButtonGradientBorder, ButtonIXSGradient, ButtonText } from 'components/Button'
+import { ButtonGradientBorder, ButtonIXSGradient, ButtonText, PinnedContentButton } from 'components/Button'
 import { LinkStyledButton, TYPE } from 'theme'
-import { ReactComponent as TrashIcon } from 'assets/svg/trash-icon.svg'
+import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg'
 import { GradientText } from 'pages/CustodianV2/styleds'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
-import Row, { RowBetween } from 'components/Row'
+import Row, { RowBetween, RowCenter } from 'components/Row'
 import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
@@ -27,10 +27,10 @@ import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { countriesList } from 'constants/countriesList'
-import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+import { ReactComponent as ArrowLeft } from 'assets/images/newBack.svg'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
-import { KycSelect as Select, KycTextInput as TextInput, Uploader } from './common'
+import { KycSelect as Select, KycTextInput as TextInput, Uploader, SelfieUploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import {
   empleymentStatuses,
@@ -41,7 +41,15 @@ import {
   promptValue,
   occupationList,
 } from './mock'
-import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox, StyledBigPassed } from './styleds'
+import {
+  FormCard,
+  FormGrid,
+  ExtraInfoCard,
+  FormWrapper,
+  StyledStickyBox,
+  StyledBigPassed,
+  ExtraInfoCardCountry,
+} from './styleds'
 import { individualErrorsSchema } from './schema'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
 import { KYCStatuses, IdentityDocumentType } from './enum'
@@ -477,22 +485,7 @@ export default function IndividualKycForm() {
     <Loadable loading={!isLoggedIn}>
       <Prompt when={!canLeavePage.current} message={promptValue} />
       <LoadingIndicator isLoading={loadingRequest} />
-      <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
-        <ButtonText
-          style={{ textDecoration: 'none' }}
-          display="flex"
-          marginBottom={isMobile ? '32px' : '64px'}
-          onClick={goBack}
-        >
-          <ArrowLeft style={{ width: isMobile ? 20 : 26 }} />
-          <TYPE.title4 fontSize={isMobile ? 24 : 36} style={{ whiteSpace: 'nowrap' }} marginLeft="10px">
-            <Trans>KYC as</Trans>
-          </TYPE.title4>
-          <TYPE.title4>
-            <GradientText style={{ marginLeft: 8, fontSize: isMobile ? 26 : 36 }}>Individual</GradientText>
-          </TYPE.title4>
-        </ButtonText>
-
+      <StyledBodyWrapper style={{ background: 'none', boxShadow: 'none' }} hasAnnouncement={!cookies.annoucementsSeen}>
         {!waitingForInitialValues && formData && (
           <Formik
             innerRef={form}
@@ -587,7 +580,8 @@ export default function IndividualKycForm() {
                 isFilled('city')
 
               const fatcaFilled = shouldValidate && isFilled('usTin') && isFilled('isUSTaxPayer')
-              const filesFilled = shouldValidate && isFilled('proofOfIdentity') && isFilled('proofOfAddress')
+              const filesFilled =
+                shouldValidate && isFilled('proofOfIdentity') && isFilled('proofOfAddress') && isFilled('selfie')
 
               const investorStatusAcknowledgementFilled = shouldValidate && isFilled('confirmStatusDeclaration')
 
@@ -601,19 +595,37 @@ export default function IndividualKycForm() {
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
                     <Column style={{ gap: '35px' }}>
-                      <FormCard id="personal">
+                      <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="personal">
+                        <ButtonText
+                          style={{ textDecoration: 'none' }}
+                          display="flex"
+                          marginBottom={isMobile ? '32px' : '30px'}
+                          marginTop={isMobile ? '10px' : '10px'}
+                          onClick={goBack}
+                        >
+                          <ArrowLeft style={{ width: isMobile ? 20 : 26 }} />
+                          <TYPE.title4
+                            fontWeight={'800'}
+                            fontSize={isMobile ? 24 : 24}
+                            style={{ whiteSpace: 'nowrap' }}
+                            marginLeft="10px"
+                          >
+                            <Trans>KYC as Individual</Trans>
+                          </TYPE.title4>
+                        </ButtonText>
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Personal Information</Trans>
-                          </TYPE.title6>
-                          {personalPassed && <StyledBigPassed />}
-                          {personalFailed && <InvalidFormInputIcon />}
+                          </TYPE.title7>
+                          {/* {personalPassed && <StyledBigPassed />}
+                          {personalFailed && <InvalidFormInputIcon />} */}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
                             <TextInput
                               id="firstNameInput"
-                              label="First Name:"
+                              label="First Name"
+                              placeholder="First Name"
                               value={values.firstName}
                               error={errors.firstName}
                               onChange={(e: any) =>
@@ -622,7 +634,8 @@ export default function IndividualKycForm() {
                             />
                             <TextInput
                               id="middleNameInput"
-                              label="Middle Name:"
+                              label="Middle Name"
+                              placeholder="Middle Name"
                               value={values.middleName}
                               error={errors.middleName}
                               onChange={(e: any) =>
@@ -631,7 +644,8 @@ export default function IndividualKycForm() {
                             />
                             <TextInput
                               id="lastNameInput"
-                              label="Last Name:"
+                              label="Last Name"
+                              placeholder="Last Name"
                               value={values.lastName}
                               error={errors.lastName}
                               onChange={(e: any) =>
@@ -646,6 +660,7 @@ export default function IndividualKycForm() {
                               error={errors.dateOfBirth}
                               value={values.dateOfBirth}
                               id="dateOfBirthButton"
+                              placeholder="Date of Birth"
                               onChange={(value) => {
                                 setFieldValue('dateOfBirth', dayjs(value).local().format('YYYY-MM-DD'), false)
                                 validationSeen('dateOfBirth')
@@ -656,6 +671,7 @@ export default function IndividualKycForm() {
                               error={errors.gender}
                               id="genderDropdown"
                               label="Gender"
+                              placeholder="Gender"
                               selectedItem={values.gender}
                               items={genders}
                               onSelect={(gender) => onSelectChange('gender', gender, setFieldValue)}
@@ -668,6 +684,7 @@ export default function IndividualKycForm() {
                               withScroll
                               id="nationalityDropdown"
                               label="Nationality"
+                              placeholder="Nationality"
                               selectedItem={values.nationality}
                               items={countries}
                               onSelect={(nationality) => onSelectChange('nationality', nationality, setFieldValue)}
@@ -677,6 +694,7 @@ export default function IndividualKycForm() {
                               withScroll
                               id="citizenshipDropdown"
                               label="Citizenship"
+                              placeholder="Citizenship"
                               selectedItem={values.citizenship}
                               items={countries}
                               onSelect={(citizenship) => onSelectChange('citizenship', citizenship, setFieldValue)}
@@ -693,8 +711,9 @@ export default function IndividualKycForm() {
                               }}
                             />
                             <TextInput
+                              placeholder="Email address"
                               id="emailAddressField"
-                              label="Email address:"
+                              label="Email address"
                               value={values.email}
                               error={errors.email}
                               onChange={(e: any) =>
@@ -705,15 +724,16 @@ export default function IndividualKycForm() {
                         </Column>
 
                         <RowBetween marginBottom="32px" marginTop="64px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Address</Trans>
-                          </TYPE.title6>
-                          {addressFilled && <StyledBigPassed />}
+                          </TYPE.title7>
+                          {/* {addressFilled && <StyledBigPassed />} */}
                         </RowBetween>
 
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
                             <TextInput
+                              placeholder="Address"
                               label="Address"
                               id="addressField"
                               value={values.address}
@@ -723,6 +743,7 @@ export default function IndividualKycForm() {
                               }
                             />
                             <TextInput
+                              placeholder="Postal Code"
                               label="Postal Code"
                               id="postalCodeField"
                               value={values.postalCode}
@@ -737,6 +758,7 @@ export default function IndividualKycForm() {
                             <Select
                               withScroll
                               label="Country"
+                              placeholder="Country"
                               id="countryDropdown"
                               selectedItem={values.country}
                               items={countries.filter(
@@ -749,6 +771,7 @@ export default function IndividualKycForm() {
                             <TextInput
                               label="City"
                               id="cityField"
+                              placeholder="City"
                               value={values.city}
                               error={errors.city}
                               onChange={(e: any) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
@@ -757,27 +780,29 @@ export default function IndividualKycForm() {
                         </Column>
 
                         <RowBetween marginBottom="32px" marginTop="64px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Referral</Trans>
-                          </TYPE.title6>
-                          {identityDocumentFilled && <StyledBigPassed />}
+                          </TYPE.title7>
+                          {/* {identityDocumentFilled && <StyledBigPassed />} */}
                         </RowBetween>
 
                         <TextInput
+                          placeholder="Referral code"
                           label="Referral code"
                           value={values.referralCode}
                           onChange={(e) => onChangeInput('referralCode', e.currentTarget.value, values, setFieldValue)}
                         />
 
                         <RowBetween marginBottom="32px" marginTop="64px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Identification</Trans>
-                          </TYPE.title6>
-                          {identityDocumentFilled && <StyledBigPassed />}
+                          </TYPE.title7>
+                          {/* {identityDocumentFilled && <StyledBigPassed />} */}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
                             <Select
+                              placeholder="ID Type"
                               error={errors.idType}
                               withScroll
                               id="documentTypeDropdown"
@@ -803,6 +828,7 @@ export default function IndividualKycForm() {
                               value={values.idNumber}
                               id="documentNumberField"
                               label="ID Number"
+                              placeholder="ID Number"
                               error={errors.idNumber}
                             />
                           </FormGrid>
@@ -810,6 +836,7 @@ export default function IndividualKycForm() {
                           <FormGrid>
                             <DateInput
                               label="ID Issuance Date"
+                              placeholder="ID Issuance Date"
                               id="documentIssueDateButton"
                               maxHeight={60}
                               error={errors.idIssueDate}
@@ -835,10 +862,10 @@ export default function IndividualKycForm() {
                         </Column>
 
                         <RowBetween marginBottom="10px" marginTop="64px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Upload Documents</Trans>
-                          </TYPE.title6>
-                          {filesFilled && <StyledBigPassed />}
+                          </TYPE.title7>
+                          {/* {filesFilled && <StyledBigPassed />} */}
                         </RowBetween>
 
                         <TYPE.description3>
@@ -863,9 +890,23 @@ export default function IndividualKycForm() {
                             )}
                           />
 
+                          <SelfieUploader
+                            title=""
+                            subtitle="Selfie for Verification"
+                            error={errors.selfie}
+                            files={values.selfie}
+                            onDrop={(file) => handleDropImage(file, values, 'selfie', setFieldValue)}
+                            handleDeleteClick={handleImageDelete(
+                              values,
+                              'selfie',
+                              values.removedDocuments,
+                              setFieldValue
+                            )}
+                          />
+
                           <Uploader
                             title="Proof of Address"
-                            subtitle="Bank Statement or Utility Bills within 3 months of issuance"
+                            subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
                             error={errors.proofOfAddress}
                             files={values.proofOfAddress}
                             onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
@@ -881,15 +922,16 @@ export default function IndividualKycForm() {
 
                       <FormCard id="financial">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Financial Information</Trans>
-                          </TYPE.title6>
-                          {financialFilled && <StyledBigPassed />}
-                          {financialFailed && <InvalidFormInputIcon />}
+                          </TYPE.title7>
+                          {/* {financialFilled && <StyledBigPassed />}
+                          {financialFailed && <InvalidFormInputIcon />} */}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={2}>
                             <Select
+                              placeholder="Occupation"
                               label="Occupation"
                               id="occupationDropdown"
                               selectedItem={values.occupation}
@@ -898,6 +940,7 @@ export default function IndividualKycForm() {
                               error={errors.occupation}
                             />
                             <Select
+                              placeholder="Employment Status"
                               label="Employment Status"
                               id="employmentStatusDropdown"
                               selectedItem={values.employmentStatus}
@@ -909,6 +952,7 @@ export default function IndividualKycForm() {
 
                           <FormGrid columns={2}>
                             <TextInput
+                              placeholder="Employer"
                               label="Employer"
                               id="employerField"
                               value={values.employer}
@@ -918,6 +962,7 @@ export default function IndividualKycForm() {
                               }
                             />
                             <Select
+                              placeholder="Total Income (in SGD) in the Last 12 Months"
                               label="Total Income (in SGD) in the Last 12 Months"
                               id="incomeUsdDropdown"
                               items={incomes}
@@ -931,6 +976,7 @@ export default function IndividualKycForm() {
                             isMulti
                             withScroll
                             label="Source of Funds"
+                            placeholder="Source of Funds"
                             id="sourceOfFundsDropdown"
                             selectedItem={values.sourceOfFunds}
                             items={sourceOfFunds}
@@ -958,10 +1004,10 @@ export default function IndividualKycForm() {
                         </Column>
 
                         <RowBetween marginBottom="32px" marginTop="64px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Tax Declaration</Trans>
-                          </TYPE.title6>
-                          {fatcaFilled && <StyledBigPassed />}
+                          </TYPE.title7>
+                          {/* {fatcaFilled && <StyledBigPassed />} */}
                         </RowBetween>
 
                         <ExtraInfoCard>
@@ -990,13 +1036,13 @@ export default function IndividualKycForm() {
                                     2016.
                                   </TYPE.description2>
 
-                                  <ButtonIXSGradient
+                                  <PinnedContentButton
                                     type="button"
                                     onClick={() => setShowTaxModal(false)}
                                     style={{ width: '100%', marginTop: '32px' }}
                                   >
                                     OK
-                                  </ButtonIXSGradient>
+                                  </PinnedContentButton>
                                 </Column>
                               </FormCard>
                             </Modal>
@@ -1019,6 +1065,7 @@ export default function IndividualKycForm() {
                                         <Select
                                           withScroll
                                           label="Country of Tax Declaration"
+                                          placeholder="Country of Tax Declaration"
                                           id="countryOfTaxDeclaration"
                                           selectedItem={values.taxDeclarations[index].country}
                                           items={countries.filter(
@@ -1045,7 +1092,12 @@ export default function IndividualKycForm() {
                                         <TextInput
                                           label="Tax Identification Number (TIN)"
                                           id="taxIdentificationNumberField"
-                                          value={values.taxDeclarations[index].idNumber}
+                                          placeholder="Tax Identification Number (TIN)"
+                                          value={
+                                            values.taxDeclarations[index].isAdditional
+                                              ? ''
+                                              : values.taxDeclarations[index].idNumber
+                                          }
                                           error={errors[`taxDeclarations[${index}].idNumber`]}
                                           disabled={values.taxDeclarations[index].isAdditional}
                                           onChange={(e) =>
@@ -1092,6 +1144,7 @@ export default function IndividualKycForm() {
                                     <>
                                       <TextInput
                                         label="Reason"
+                                        placeholder="Reason"
                                         value={values.taxDeclarations[index].reason}
                                         onChange={(e) =>
                                           onChangeInput(
@@ -1113,19 +1166,19 @@ export default function IndividualKycForm() {
                                 </>
                               ))}
 
-                              <HrLine />
+                              {/* <HrLine /> */}
 
                               <LinkButton
                                 type="button"
                                 onClick={() => push({ country: null, idNumber: '', isAdditional: false })}
-                                style={{ marginTop: '32px', width: '100%' }}
+                                style={{ marginTop: '32px', width: '100%', textDecoration: 'none' }}
                               >
-                                <ExtraInfoCard>
-                                  <RowBetween>
+                                <ExtraInfoCardCountry>
+                                  <RowCenter>
+                                    <Plus style={{ width: '20px', marginRight: '5px' }} />
                                     <Box> Add Country </Box>
-                                    <Plus />
-                                  </RowBetween>
-                                </ExtraInfoCard>
+                                  </RowCenter>
+                                </ExtraInfoCardCountry>
                               </LinkButton>
 
                               {errors.taxDeclarations && (
@@ -1138,10 +1191,10 @@ export default function IndividualKycForm() {
                         </FieldArray>
 
                         <RowBetween marginBottom="32px" marginTop="64px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>FATCA</Trans>
-                          </TYPE.title6>
-                          {fatcaFilled && <StyledBigPassed />}
+                          </TYPE.title7>
+                          {/* {fatcaFilled && <StyledBigPassed />} */}
                         </RowBetween>
 
                         <ExtraInfoCard>
@@ -1168,13 +1221,13 @@ export default function IndividualKycForm() {
                                     </ol>
                                   </TYPE.description2>
 
-                                  <ButtonIXSGradient
+                                  <PinnedContentButton
                                     type="button"
                                     onClick={() => setShowFATCAModal(false)}
                                     style={{ width: '100%', marginTop: '32px' }}
                                   >
                                     OK
-                                  </ButtonIXSGradient>
+                                  </PinnedContentButton>
                                 </Column>
                               </FormCard>
                             </Modal>
@@ -1257,13 +1310,13 @@ export default function IndividualKycForm() {
                         </Column>
                       </FormCard> */}
 
-                      {values.accredited === 1 && (
+                      {/* {values.accredited === 1 && (
                         <>
                           <FormCard id="investor-declaration">
                             <RowBetween marginBottom="32px">
-                              <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                              <TYPE.title7>
                                 <Trans>Investor Declaration</Trans>
-                              </TYPE.title6>
+                              </TYPE.title7>
                             </RowBetween>
 
                             <Column style={{ margin: '1rem', marginLeft: 0, gap: '1rem' }}>
@@ -1451,13 +1504,13 @@ export default function IndividualKycForm() {
                                         (7) SF(LCB)R; reg. 4A(6) FAR.
                                       </TYPE.description2>
 
-                                      <ButtonIXSGradient
+                                      <PinnedContentButton
                                         type="button"
                                         onClick={() => setShowSafeguardModal(false)}
                                         style={{ width: '100%', marginTop: '32px' }}
                                       >
                                         OK
-                                      </ButtonIXSGradient>
+                                      </PinnedContentButton>
                                     </Column>
                                   </FormCard>
                                 </Modal>
@@ -1527,13 +1580,13 @@ export default function IndividualKycForm() {
                                           Cancel
                                         </ButtonGradientBorder>
 
-                                        <ButtonIXSGradient
+                                        <PinnedContentButton
                                           type="button"
                                           onClick={openConfirmationModal}
                                           style={{ width: '100%', marginTop: '32px' }}
                                         >
                                           Opt Out
-                                        </ButtonIXSGradient>
+                                        </PinnedContentButton>
                                       </FormGrid>
                                     </Column>
                                   </FormCard>
@@ -1561,13 +1614,13 @@ export default function IndividualKycForm() {
                                           Cancel
                                         </ButtonGradientBorder>
 
-                                        <ButtonIXSGradient
+                                        <PinnedContentButton
                                           type="button"
                                           onClick={() => confirmOptOut(setFieldValue)}
                                           style={{ width: '100%', marginTop: '32px' }}
                                         >
                                           Ok
-                                        </ButtonIXSGradient>
+                                        </PinnedContentButton>
                                       </FormGrid>
                                     </Column>
                                   </FormCard>
@@ -1648,7 +1701,7 @@ export default function IndividualKycForm() {
                             )}
                           </FormCard>
                         </>
-                      )}
+                      )} */}
                     </Column>
                   </FormContainer>
 
@@ -1702,7 +1755,7 @@ const BorderBox = styled.div<{ active: boolean }>`
 
   padding: 0.5rem 2rem;
 
-  background: ${({ theme }) => theme.bg18};
+  background: ${({ theme }) => theme.bg0};
   position: relative;
 
   width: 50%;
@@ -1730,7 +1783,7 @@ const LabeledCheckBox = styled.div`
 `
 
 const LinkButton = styled(LinkStyledButton)`
-  color: #4c88ff;
+  color: #6666ff;
 `
 
 const InlineLinkButton = styled(LinkStyledButton)`

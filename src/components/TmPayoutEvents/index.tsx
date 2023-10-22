@@ -142,9 +142,7 @@ const Row = ({ item }: IRow) => {
 
   const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
 
-  const amountClaimed = claimed
-    ? splitClaimedAmount(claimed.toString())
-    : null
+  const amountClaimed = claimed ? splitClaimedAmount(claimed.toString()) : null
 
   const onEdit = () => {
     history.push(`/payout/edit/${id}`)
@@ -181,10 +179,7 @@ const Row = ({ item }: IRow) => {
         <div style={{ fontWeight: 500 }}>
           {amountClaimed ? (
             <>
-              <MouseoverTooltip
-                style={{ height: '24px' }}
-                text={tooltipText}
-                textStyle={{ whiteSpace: 'pre-line' }}>
+              <MouseoverTooltip style={{ height: '24px' }} text={tooltipText} textStyle={{ whiteSpace: 'pre-line' }}>
                 <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
               </MouseoverTooltip>
               {currency?.symbol || '-'}&nbsp;{amountClaimed}/{tokenAmount}

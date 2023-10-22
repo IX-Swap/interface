@@ -38,7 +38,7 @@ export const individualErrorsSchema = yup.object().shape({
 
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
   proofOfAddress: yup.array().min(1, 'Required').nullable(),
-
+  selfie: yup.array().min(1, 'Required').nullable(),
   occupation: yup.object().nullable().required('Required'),
   employmentStatus: yup.object().nullable().required('Required'),
   employer: yup.string().required('Required'),
@@ -87,20 +87,23 @@ export const individualErrorsSchema = yup.object().shape({
   }),
 
   isUSTaxPayer: yup.number().min(0).max(1),
-  usTin: yup.string().when('isUSTaxPayer', {
-    is: 1,
-    then: yup.string().required('Required'),
-    otherwise: yup.string().nullable(),
-  }),
+  usTin: yup
+    .string()
+    .nullable()
+    .when('isUSTaxPayer', {
+      is: 1,
+      then: yup.string().required('Required'),
+      otherwise: yup.string().nullable(),
+    }),
 
   // accredited: yup.number().min(0).max(1),
-  acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
-  acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
-  evidenceOfAccreditation: yup.array().when('accredited', {
-    is: 1,
-    then: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
-    otherwise: yup.array().nullable(),
-  }),
+  // acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
+  // acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
+  // evidenceOfAccreditation: yup.array().when('accredited', {
+  //   is: 1,
+  //   then: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
+  //   otherwise: yup.array().nullable(),
+  // }),
   // confirmStatusDeclaration: yup.boolean().when('accredited', {
   //   is: 1,
   //   then: yup.boolean().isTrue('Required').required('Required'),
@@ -111,7 +114,7 @@ export const individualErrorsSchema = yup.object().shape({
 export const corporateErrorsSchema = yup.object().shape({
   corporateName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   typeOfLegalEntity: yup.object().nullable().required('Required'),
-  // countryOfIncorporation: yup.object().nullable().required('Required'),
+  countryOfIncorporation: yup.object().nullable().required('Required'),
   businessActivity: yup.string().required('Required'),
 
   registrationNumber: yup.string().required('Required'),
@@ -143,11 +146,14 @@ export const corporateErrorsSchema = yup.object().shape({
   }),
   // accredited: yup.number().min(0).max(1),
   isUSTaxPayer: yup.number().min(0).max(1),
-  usTin: yup.string().when('isUSTaxPayer', {
-    is: 1,
-    then: yup.string().required('Required'),
-    otherwise: yup.string(),
-  }),
+  usTin: yup
+    .string()
+    .nullable()
+    .when('isUSTaxPayer', {
+      is: 1,
+      then: yup.string().required('Required'),
+      otherwise: yup.string().nullable(),
+    }),
   taxCountry: yup
     .object()
     .nullable()

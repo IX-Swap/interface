@@ -8,8 +8,8 @@ import { Field } from '../../state/burn/actions'
 import { Trans } from '@lingui/macro'
 import { FormattedAmounts, ParsedAmounts } from './interfaces'
 import { RemoveAmountTitle } from './styled'
-import { Option, OptionRow } from 'components/OptionButton'
-import { DarkCard } from 'components/Card'
+import { NewOption, Option, OptionRow } from 'components/OptionButton'
+import { DarkCard, DarkCardNew } from 'components/Card'
 
 interface Props {
   formattedAmounts: FormattedAmounts
@@ -30,36 +30,36 @@ export const RemoveAmount = ({ parsedAmounts, formattedAmounts, onUserInput }: P
   )
 
   return (
-    <DarkCard>
+    <DarkCardNew>
       <AutoColumn gap="30px">
-        <RowBetween>
-          <RemoveAmountTitle>
-            <Trans>Remove Amount</Trans>
-          </RemoveAmountTitle>
-        </RowBetween>
-        <Row style={{ alignItems: 'flex-end' }}>
-          <Text fontSize={55} fontWeight={600} lineHeight={'40px'}>
-            {formattedAmounts[Field.LIQUIDITY_PERCENT]}%
-          </Text>
-        </Row>
+        {/* <RowBetween> */}
+        <RemoveAmountTitle>
+          <Trans>Remove Amount</Trans>
+        </RemoveAmountTitle>
+        {/* </RowBetween> */}
+        {/* <Row style={{ alignItems: 'center', textAlign: 'center' }}> */}
+        <Text color={'#6666FF'} fontSize={55} textAlign={'center'} fontWeight={700} lineHeight={'40px'}>
+          {formattedAmounts[Field.LIQUIDITY_PERCENT]}%
+        </Text>
+        {/* </Row> */}
       </AutoColumn>
       <Box marginTop={'50px'}>
         <AutoColumn gap="50px">
           <Slider value={innerLiquidityPercentage} onChange={setInnerLiquidityPercentage} />
           <OptionRow>
             {PERCENTAGES.map((percentage) => (
-              <Option
+              <NewOption
                 key={percentage}
                 onClick={() => onUserInput(Field.LIQUIDITY_PERCENT, percentage)}
                 active={formattedAmounts[Field.LIQUIDITY_PERCENT] === percentage}
                 data-testid={'percentage_' + percentage}
               >
                 {percentage !== '100' ? `${percentage}%` : <Trans>MAX</Trans>}
-              </Option>
+              </NewOption>
             ))}
           </OptionRow>
         </AutoColumn>
       </Box>
-    </DarkCard>
+    </DarkCardNew>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 import { useHistory } from 'react-router-dom'
@@ -6,21 +6,21 @@ import { Formik } from 'formik'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
 import { Prompt } from 'react-router-dom'
-
+import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg'
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
 import { ButtonText, ButtonIXSGradient } from 'components/Button'
 import { TYPE } from 'theme'
 import { GradientText } from 'pages/CustodianV2/styleds'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
-import { RowBetween } from 'components/Row'
+import { RowBetween, RowCenter } from 'components/Row'
 import { PhoneInput } from 'components/PhoneInput'
 import { Checkbox } from 'components/Checkbox'
 import { Loadable } from 'components/LoaderHover'
 import { useAuthState } from 'state/auth/hooks'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
-import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+import { ReactComponent as ArrowLeft } from 'assets/images/newBack.svg'
 import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { countriesList } from 'constants/countriesList'
@@ -30,12 +30,29 @@ import { DateInput } from 'components/DateInput'
 import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
-import { FormCard, FormGrid, ExtraInfoCard, Divider, StyledStickyBox, StyledBigPassed } from './styleds'
+import {
+  FormCard,
+  FormGrid,
+  ExtraInfoCard,
+  Divider,
+  StyledStickyBox,
+  StyledBigPassed,
+  ExtraInfoCardCountry,
+} from './styleds'
 import { ChooseFile, BeneficialOwnersTable, DeleteRow } from './common'
 import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
+import { Box } from 'rebass'
+import { Plus } from 'react-feather'
+import { IconButton } from '@material-ui/core'
+
+type FormSubmitHanderArgs = {
+  createFn: (body: any) => any
+  updateFn: (id: number, body: any) => any
+  validate: boolean
+}
 
 export default function CorporateKycForm() {
   const canLeavePage = useRef(false)
@@ -56,6 +73,8 @@ export default function CorporateKycForm() {
   const { token } = useAuthState()
   const [isTaxNumberDisabled, setIsTaxNumberDisabled] = useState<boolean>(false)
 
+  const form = useRef<any>(null)
+
   const isLoggedIn = !!token && !!account
 
   const prevAccount = usePrevious(account)
@@ -69,20 +88,33 @@ export default function CorporateKycForm() {
   useEffect(() => {
     setWaitingForInitialValues(true)
 
+    // const getProgress = async () => {
+    //   const data = await getCorporateProgress()
+    //   if (data) {
+    //     const transformedData = corporateTransformApiData(data)
+    //     setFormData(transformedData)
+    //     if (!data.taxIdAvailable) {
+    //       setIsTaxNumberDisabled(true)
+    //     }
+    //   }
+    // }
+
     const getProgress = async () => {
       const data = await getCorporateProgress()
       if (data) {
         const transformedData = corporateTransformApiData(data)
-        setFormData(transformedData)
+        const formData = { ...transformedData }
 
-        // Disable tax number text box if TIN is N/A
-        if (!data.taxIdAvailable) {
-          setIsTaxNumberDisabled(true)
+        setFormData(formData)
+        form.current.setValues(formData)
+
+        if (kyc?.status === KYCStatuses.DRAFT) {
+          setCanSubmit(true)
         }
       }
     }
 
-    if (kyc?.status === KYCStatuses.CHANGES_REQUESTED) {
+    if (kyc?.status === KYCStatuses.CHANGES_REQUESTED || kyc?.status === KYCStatuses.DRAFT) {
       getProgress()
       setUpdateKycId(kyc.id)
     } else {
@@ -158,6 +190,7 @@ export default function CorporateKycForm() {
   }
 
   const onSourceOfFundsChange = (source: string, fields: any[], setFieldValue: any) => {
+    fields = fields ?? []
     const newSources = [...fields]
     const indexOfSource = fields.indexOf(source)
 
@@ -228,15 +261,70 @@ export default function CorporateKycForm() {
       validationSeen(key)
     }
 
-    console.log(errors, 'rororororo')
+  const formSubmitHandler = useCallback(
+    async (values: any, { createFn, updateFn, validate = true }: FormSubmitHanderArgs) => {
+      try {
+        if (validate) {
+          await corporateErrorsSchema.validate(values, { abortEarly: false })
+        }
+
+        canLeavePage.current = true
+        setCanSubmit(false)
+        const body = corporateTransformKycDto(values)
+        let data: any = null
+
+        if (updateKycId) {
+          data = await updateFn(updateKycId, body)
+        } else {
+          data = await createFn(body)
+        }
+
+        if (data?.id) {
+          history.push('/kyc')
+          addPopup({ info: { success: true, summary: 'KYC was successfully saved' } })
+        } else {
+          setCanSubmit(true)
+          addPopup({ info: { success: false, summary: 'Something went wrong' } })
+        }
+      } catch (error: any) {
+        const newErrors: any = {}
+
+        // console.log(error, 'kjkjkjkjkj')
+
+        error?.inner.forEach((e: any) => {
+          newErrors[e.path] = e?.message
+        })
+
+        addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
+
+        setIsSubmittedOnce(true)
+        setErrors(newErrors)
+        setCanSubmit(false)
+
+        canLeavePage.current = false
+      }
+    },
+    [updateKycId]
+  )
+
+  const saveProgress = useCallback(
+    async (values: any) => {
+      await formSubmitHandler(values, {
+        createFn: (body) => createCorporateKYC(body, true),
+        updateFn: (id, body) => updateCorporateKYC(id, body, true),
+        validate: false,
+      })
+    },
+    [formSubmitHandler]
+  )
 
   return (
     <Loadable loading={!isLoggedIn}>
       <Prompt when={!canLeavePage.current} message={promptValue} />
       <LoadingIndicator isLoading={loadingRequest} />
 
-      <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
-        <ButtonText
+      <StyledBodyWrapper style={{ background: 'none', boxShadow: 'none' }} hasAnnouncement={!cookies.annoucementsSeen}>
+        {/* <ButtonText
           style={{ textDecoration: 'none' }}
           display="flex"
           marginBottom={isMobile ? '32px' : '64px'}
@@ -249,83 +337,127 @@ export default function CorporateKycForm() {
           <TYPE.title4>
             <GradientText style={{ marginLeft: 8, fontSize: isMobile ? 26 : 36 }}>Corporate</GradientText>
           </TYPE.title4>
-        </ButtonText>
+        </ButtonText> */}
+
+        {/* <ButtonText
+          style={{ textDecoration: 'none' }}
+          display="flex"
+          marginBottom={isMobile ? '0px' : '30px'}
+          marginTop={isMobile ? '80px' : '10px'}
+          onClick={goBack}
+        >
+          <ArrowLeft style={{ width: isMobile ? 20 : 26 }} />
+          <TYPE.title4
+            fontWeight={'800'}
+            fontSize={isMobile ? 24 : 24}
+            style={{ whiteSpace: 'nowrap' }}
+            marginLeft="10px"
+          >
+            <Trans>KYC as Corporate</Trans>
+          </TYPE.title4>
+        </ButtonText> */}
 
         {!waitingForInitialValues && formData && (
           <Formik
-            initialValues={formData}
+            innerRef={form}
+            initialValues={corporateFormInitialValues}
+            initialErrors={errors}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
             isInitialValid={false}
             enableReinitialize
             onSubmit={async (values) => {
-              corporateErrorsSchema
-                .validate(values, { abortEarly: false })
-                .then(async () => {
-                  canLeavePage.current = true
-                  setCanSubmit(false)
-                  if (values.taxIdAvailable === false) {
-                    values.taxNumber = ''
-                  } else {
-                    values.reason = ''
-                  }
-                  const body = corporateTransformKycDto(values)
-                  let data: any = null
+              try {
+                await corporateErrorsSchema.validate(values, { abortEarly: false })
+                // .then(async () => {
+                canLeavePage.current = true
+                setCanSubmit(false)
+                if (values?.taxIdAvailable === false) {
+                  values.taxNumber = ''
+                } else {
+                  values.reason = ''
+                }
+                const body = corporateTransformKycDto(values)
+                const data = updateKycId ? await updateCorporateKYC(updateKycId, body) : await createCorporateKYC(body)
 
-                  if (updateKycId) {
-                    data = await updateCorporateKYC(updateKycId, body)
-                  } else {
-                    data = await createCorporateKYC(body)
-                  }
+                // let data: any = null
 
-                  if (data?.id) {
-                    history.push('/kyc')
-                    addPopup({
-                      info: {
-                        success: true,
-                        summary: `KYC was successfully ${updateKycId ? 'updated' : 'submitted'}`,
-                      },
-                    })
-                  } else {
-                    setCanSubmit(true)
-                    addPopup({
-                      info: {
-                        success: false,
-                        summary: 'Something went wrong',
-                      },
-                    })
-                  }
-                })
-                .catch((error) => {
-                  const newErrors: any = {}
-                  error.inner.forEach((e: any) => {
-                    newErrors[e.path] = e.message
+                // if (updateKycId) {
+                //   data = await updateCorporateKYC(updateKycId, body)
+                // } else {
+                //   data = await createCorporateKYC(body)
+                // }
+
+                if (data?.id) {
+                  history.push('/kyc')
+                  addPopup({
+                    info: {
+                      success: true,
+                      summary: `KYC was successfully ${updateKycId ? 'updated' : 'submitted'}`,
+                    },
                   })
+                } else {
+                  setCanSubmit(true)
                   addPopup({
                     info: {
                       success: false,
-                      summary: 'Please, fill the valid data',
+                      summary: 'Something went wrong',
                     },
                   })
-                  setIsSubmittedOnce(true)
-                  setErrors(newErrors)
-                  setCanSubmit(false)
-                  canLeavePage.current = false
+                }
+              } catch (error: any) {
+                const newErrors: any = {}
+
+                error.inner.forEach((e: any) => {
+                  newErrors[e.path] = e.message
                 })
+
+                addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
+
+                setIsSubmittedOnce(true)
+                setErrors(newErrors)
+                setCanSubmit(true)
+                canLeavePage.current = false
+              }
+              // })
+              // .catch((error) => {
+              //   const newErrors: any = {}
+              //   error.inner.forEach((e: any) => {
+              //     newErrors[e.path] = e.message
+              //   })
+              // addPopup({
+              //   info: {
+              //     success: false,
+              //     summary: 'Please, fill the valid data',
+              //   },
+              // })
+              // setIsSubmittedOnce(true)
+              // setErrors(newErrors)
+              // setCanSubmit(false)
+              // canLeavePage.current = false
+              // })
             }}
           >
             {({ values, setFieldValue, dirty, handleSubmit }) => {
-              if (values.taxIdAvailable === undefined)
+              if (values?.taxIdAvailable === undefined) {
+                if (values === null) {
+                  values = {}
+                }
+
                 values.taxIdAvailable = true
-              if (!values.reason)
-                values.reason = 'A'
+              }
+              if (!values.reason) values.reason = 'A'
+              {
+                /* {({ values, setFieldValue, dirty, handleSubmit }) => {
+              if (values.taxIdAvailable === undefined) values.taxIdAvailable = true
+              if (!values.reason) values.reason = 'A' */
+              }
 
               const shouldValidate = dirty && isSubmittedOnce
               const infoFilled =
                 shouldValidate &&
                 !errors.corporateName &&
-                !errors.typeOfLegalEntity &&
                 !errors.countryOfIncorporation &&
                 !errors.businessActivity &&
                 !errors.registrationNumber &&
@@ -349,7 +481,9 @@ export default function CorporateKycForm() {
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
               // const investorFilled = shouldValidate && !errors.accredited
-              const taxDeclarationFilled = values.taxIdAvailable ? shouldValidate && !errors.taxCountry && !errors.taxNumber : shouldValidate
+              const taxDeclarationFilled = values.taxIdAvailable
+                ? shouldValidate && !errors.taxCountry && !errors.taxNumber
+                : shouldValidate
               const filesFilled = shouldValidate && !errors.financialDocuments && !errors.corporateDocuments
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
@@ -358,11 +492,28 @@ export default function CorporateKycForm() {
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
                     <Column style={{ gap: '35px' }}>
-                      <FormCard id="info">
+                      <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="info">
+                        <ButtonText
+                          style={{ textDecoration: 'none' }}
+                          display="flex"
+                          marginBottom={isMobile ? '32px' : '30px'}
+                          marginTop={isMobile ? '20px' : '10px'}
+                          onClick={goBack}
+                        >
+                          <ArrowLeft style={{ width: isMobile ? 20 : 26 }} />
+                          <TYPE.title4
+                            fontWeight={'800'}
+                            fontSize={isMobile ? 24 : 24}
+                            style={{ whiteSpace: 'nowrap' }}
+                            marginLeft="10px"
+                          >
+                            <Trans>KYC as Corporate</Trans>
+                          </TYPE.title4>
+                        </ButtonText>
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Corporate Information</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {infoFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -374,6 +525,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.corporateName}
                               label="Corporate Name"
+                              placeholder="Corporate Name"
                               error={errors.corporateName && errors.corporateName}
                             />
                             <TextInput
@@ -382,10 +534,12 @@ export default function CorporateKycForm() {
                               }
                               value={values.registrationNumber}
                               label="Registration Number"
+                              placeholder="Registration Number"
                               error={errors.registrationNumber && errors.registrationNumber}
                             />
                             <Select
                               withScroll
+                              placeholder="Country of Incorporation"
                               label="Country of Incorporation"
                               selectedItem={values.countryOfIncorporation}
                               items={countries}
@@ -397,6 +551,7 @@ export default function CorporateKycForm() {
                           <FormGrid columns={2}>
                             <TextInput
                               label="Business Activity"
+                              placeholder="Business Activity"
                               value={values.businessActivity}
                               onChange={(e: any) =>
                                 onChangeInput('businessActivity', e.currentTarget.value, values, setFieldValue)
@@ -406,6 +561,7 @@ export default function CorporateKycForm() {
                             <Select
                               withScroll
                               label="Type of legal entity"
+                              placeholder="Type of legal entity"
                               selectedItem={values.typeOfLegalEntity}
                               items={legalEntityTypes}
                               onSelect={(entityType) => onSelectChange('typeOfLegalEntity', entityType, setFieldValue)}
@@ -415,6 +571,7 @@ export default function CorporateKycForm() {
                           <FormGrid>
                             <DateInput
                               label="Date of Incorporation"
+                              placeholder="Date of Incorporation"
                               maxHeight={60}
                               error={errors.incorporationDate}
                               value={values.incorporationDate}
@@ -439,9 +596,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="authorizedPersonnel">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Company Authorized Personnel</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {authorizedPersonnelFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -453,6 +610,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.personnelName}
                               label="Full Name"
+                              placeholder="Full Name"
                               error={errors.personnelName && errors.personnelName}
                             />
                             <TextInput
@@ -461,6 +619,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.designation}
                               label="Designation"
+                              placeholder="Designation"
                               error={errors.designation && errors.designation}
                             />
                           </FormGrid>
@@ -472,6 +631,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.email}
                               label="Email address"
+                              placeholder="Email address"
                               error={errors.email && errors.email}
                             />
                             <PhoneInput
@@ -484,7 +644,7 @@ export default function CorporateKycForm() {
                           <FormGrid columns={1}>
                             <Uploader
                               title="Authorization Document"
-                              subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
+                              subtitle="Board Resolution, Power of Attorney, Partnership Deed, Trust Deed, and Others"
                               files={values.authorizationDocuments}
                               onDrop={(file) => {
                                 handleDropImage(file, values, 'authorizationDocuments', setFieldValue)
@@ -503,9 +663,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="address">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Address</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {addressFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -517,6 +677,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.address}
                               label="Address"
+                              placeholder="Address"
                               error={errors.address && errors.address}
                             />
                             <TextInput
@@ -525,6 +686,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.postalCode}
                               label="Postal Code"
+                              placeholder="Postal Code"
                               error={errors.postalCode && errors.postalCode}
                             />
                           </FormGrid>
@@ -542,6 +704,7 @@ export default function CorporateKycForm() {
                               onChange={(e: any) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
                               value={values.city}
                               label="City"
+                              placeholder="City"
                               error={errors.city && errors.city}
                             />
                           </FormGrid>
@@ -550,15 +713,16 @@ export default function CorporateKycForm() {
 
                       <FormCard id="residentialAddress">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Residential Address</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {residentialAddressFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
                             <TextInput
+                              placeholder="Address"
                               onChange={(e: any) =>
                                 onChangeInput('residentialAddressAddress', e.currentTarget.value, values, setFieldValue)
                               }
@@ -575,6 +739,7 @@ export default function CorporateKycForm() {
                                   setFieldValue
                                 )
                               }
+                              placeholder="Postal Code"
                               value={values.residentialAddressPostalCode}
                               label="Postal Code"
                               error={errors.residentialAddressPostalCode && errors.residentialAddressPostalCode}
@@ -585,6 +750,7 @@ export default function CorporateKycForm() {
                             <Select
                               withScroll
                               label="Country"
+                              placeholder="Country"
                               selectedItem={values.residentialAddressCountry}
                               items={countries}
                               onSelect={(country) =>
@@ -598,6 +764,7 @@ export default function CorporateKycForm() {
                               }
                               value={values.residentialAddressCity}
                               label="City"
+                              placeholder="City"
                               error={errors.residentialAddressCity && errors.residentialAddressCity}
                             />
                           </FormGrid>
@@ -606,22 +773,22 @@ export default function CorporateKycForm() {
 
                       <FormCard id="funds">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Source of Funds</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {fundsFilled && <StyledBigPassed />}
                         </RowBetween>
                         <FormGrid columns={3}>
                           {corporateSourceOfFunds.map(({ value, label }: any) => (
                             <Checkbox
-                              checked={values.sourceOfFunds.includes(label)}
+                              checked={values?.sourceOfFunds?.includes(label)}
                               onClick={() => onSourceOfFundsChange(label, values.sourceOfFunds, setFieldValue)}
                               key={`funds-${value}`}
                               label={label}
                             />
                           ))}
                         </FormGrid>
-                        {values.sourceOfFunds.includes('Others') && (
+                        {values?.sourceOfFunds?.includes('Others') && (
                           <TextInput
                             style={{ marginTop: 20 }}
                             placeholder="Other Source of Funds...."
@@ -674,9 +841,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="fatca">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>FATCA</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {fatcaFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -720,9 +887,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="tax-declaration">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Tax Declaration</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {taxDeclarationFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -738,6 +905,7 @@ export default function CorporateKycForm() {
                             <Select
                               withScroll
                               label="Country of tax residency"
+                              placeholder="Country of tax residency"
                               selectedItem={values.taxCountry}
                               items={countries}
                               onSelect={(country) => onSelectChange('taxCountry', country, setFieldValue)}
@@ -746,6 +914,7 @@ export default function CorporateKycForm() {
                             <TextInput
                               value={values.taxNumber}
                               label="Tax Indentification Number"
+                              placeholder="Tax Indentification Number"
                               disabled={isTaxNumberDisabled}
                               onChange={(e: any) =>
                                 onChangeInput('taxNumber', e.currentTarget.value, values, setFieldValue)
@@ -760,21 +929,20 @@ export default function CorporateKycForm() {
                             <Checkbox
                               checked={!values.taxIdAvailable}
                               onClick={() => {
+                                onChangeInput('taxIdAvailable', !values.taxIdAvailable, values, setFieldValue)
                                 if (values.taxIdAvailable === true) {
                                   setFieldValue('taxNumber', '', false)
                                   setIsTaxNumberDisabled(true)
                                 } else {
                                   setIsTaxNumberDisabled(false)
                                 }
-                                onChangeInput('taxIdAvailable', !values.taxIdAvailable, values, setFieldValue)
-                              }
-                              }
+                              }}
                               label="TIN Is Not Available"
                             />
                           </FormGrid>
                         </Column>
 
-                        {!values.taxIdAvailable &&
+                        {!values.taxIdAvailable && (
                           <Column style={{ gap: '20px', marginTop: 20 }}>
                             <FormGrid columns={1}>
                               <Checkbox
@@ -797,14 +965,14 @@ export default function CorporateKycForm() {
                               />
                             </FormGrid>
                           </Column>
-                        }
+                        )}
                       </FormCard>
 
                       <FormCard id="beneficial-owners">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Beneficial Owners Information</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {beneficialOwnersFilled && <StyledBigPassed />}
                         </RowBetween>
                         <ExtraInfoCard style={{ marginBottom: 20 }}>
@@ -815,40 +983,41 @@ export default function CorporateKycForm() {
                         </ExtraInfoCard>
                         <BeneficialOwnersTable data={values.beneficialOwners} />
                         <Column style={{ gap: '20px' }}>
-                          {values.beneficialOwners.map((beneficiar: Record<string, string | any>, index: number) => (
+                          {values.beneficialOwners?.map((beneficiar: Record<string, string | any>, index: number) => (
                             <>
-                              <FormGrid columns={4} key={index}>
-                                <DeleteRow
+                              <FormGrid columns={5} key={index}>
+                                {/* <DeleteRow
                                   onClick={() =>
                                     deleteBeneficiar(
                                       index,
-                                      values.beneficialOwners,
-                                      values.removedBeneficialOwners,
+                                      values?.beneficialOwners,
+                                      values?.removedBeneficialOwners,
                                       setFieldValue
                                     )
                                   }
-                                >
-                                  <TextInput
-                                    value={beneficiar.fullName}
-                                    placeholder={isMobile ? 'Full Name' : ''}
-                                    onChange={(e: any) =>
-                                      changeBeneficiar(
-                                        'fullName',
-                                        e.currentTarget.value,
-                                        index,
-                                        values.beneficialOwners,
-                                        setFieldValue,
-                                        `beneficialOwners[${index}].fullName`
-                                      )
-                                    }
-                                    error={
-                                      errors[`beneficialOwners[${index}].fullName`] &&
-                                      errors[`beneficialOwners[${index}].fullName`]
-                                    }
-                                  />
-                                </DeleteRow>
+                                > */}
+                                <TextInput
+                                  value={beneficiar.fullName}
+                                  placeholder={isMobile ? 'Full Name' : ''}
+                                  onChange={(e: any) =>
+                                    changeBeneficiar(
+                                      'fullName',
+                                      e.currentTarget.value,
+                                      index,
+                                      values.beneficialOwners,
+                                      setFieldValue,
+                                      `beneficialOwners[${index}].fullName`
+                                    )
+                                  }
+                                  error={
+                                    errors[`beneficialOwners[${index}].fullName`] &&
+                                    errors[`beneficialOwners[${index}].fullName`]
+                                  }
+                                />
+                                {/* </DeleteRow> */}
                                 <TextInput
                                   type="number"
+                                  onWheel={() => (document.activeElement as HTMLElement).blur()}
                                   style={{ textAlign: 'center', fontSize: '20px' }}
                                   placeholder={isMobile ? '% Shareholding' : ''}
                                   value={beneficiar.shareholding}
@@ -920,6 +1089,22 @@ export default function CorporateKycForm() {
                                     )
                                   }
                                 />
+                                {/* <IconButton
+                                onClick={() => removeTaxDeclaration(values, index, setFieldValue, remove)}
+                                style={{ padding: '0 1rem', marginTop: '2rem' }}
+                                > */}
+                                <TrashIcon
+                                  style={{ cursor: 'pointer', marginTop: '5px' }}
+                                  onClick={() =>
+                                    deleteBeneficiar(
+                                      index,
+                                      values?.beneficialOwners,
+                                      values?.removedBeneficialOwners,
+                                      setFieldValue
+                                    )
+                                  }
+                                />
+                                {/* </IconButton> */}
                               </FormGrid>
                               {values.beneficialOwners.length - 1 > index && <Divider />}
                             </>
@@ -928,20 +1113,23 @@ export default function CorporateKycForm() {
                         {errors.beneficialOwners && (
                           <TYPE.small marginTop="4px" color={'red1'}>{t`${errors.beneficialOwners}`}</TYPE.small>
                         )}
-                        <ButtonIXSGradient
-                          type="button"
-                          style={{ marginTop: 32, height: 40, fontSize: 16 }}
+                        <ExtraInfoCardCountry
+                          // type="button"
+                          style={{ marginTop: 32, fontSize: 16, padding: 15 }}
                           onClick={() => addBeneficiary(values.beneficialOwners, setFieldValue)}
                         >
-                          <Trans> Add Beneficiary</Trans>
-                        </ButtonIXSGradient>
+                          <RowCenter style={{ color: '#6666FF' }}>
+                            <Plus style={{ width: '20px', marginRight: '5px', cursor: 'pointer' }} />
+                            <Box> Add Beneficiary </Box>
+                          </RowCenter>
+                        </ExtraInfoCardCountry>
                       </FormCard>
 
                       <FormCard id="upload">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <TYPE.title7>
                             <Trans>Corporate Documents</Trans>
-                          </TYPE.title6>
+                          </TYPE.title7>
                           {filesFilled && <StyledBigPassed />}
                         </RowBetween>
 
@@ -988,7 +1176,9 @@ export default function CorporateKycForm() {
                   >
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
-                      disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
+                      handleSaveProgress={() => saveProgress(form?.current?.values)}
+                      // disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
+                      disabled={!canSubmit || Object.keys(errors).length !== 0}
                       topics={Object.values({
                         info: {
                           title: 'Corporate Information',

@@ -19,7 +19,7 @@ export const TextRow = ({ textLeft, textRight, currency, tooltipText }: Props) =
   return (
     <FixedHeightRow data-testid="tableRow">
       <RowFixed className="text-row">
-        <Text>{textLeft}</Text>
+        <Text color={'#B8B8CC'}>{textLeft}</Text>
         {tooltipText && (
           <MouseoverTooltip style={{ whiteSpace: 'pre-line' }} text={tooltipText}>
             <IconWrapper size={20} style={{ marginLeft: '12px' }}>
@@ -30,7 +30,7 @@ export const TextRow = ({ textLeft, textRight, currency, tooltipText }: Props) =
       </RowFixed>
       <RowFixed>
         {currency && textRight && <CurrencyLogo size="20px" style={{ marginRight: '8px' }} currency={currency} />}
-        <Text>{textRight ?? '-'}</Text>
+        <Text color={'#292933'}>{textRight ?? '-'}</Text>
       </RowFixed>
     </FixedHeightRow>
   )

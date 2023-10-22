@@ -230,7 +230,7 @@ const ArrowRight = ({ disabled }: { disabled?: boolean }) => {
 const MoreEventsContainer = styled.div``
 
 const MoreEventsTitle = styled.div`
-  font-family: 'Poppins';
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
   font-size: 22px;

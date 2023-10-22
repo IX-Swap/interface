@@ -1,7 +1,7 @@
 import { AccreditationStatusEnum } from 'components/Vault/enum'
-import rejectedIcon from 'assets/images/reject.svg'
-import approvedIcon from 'assets/images/check-success.svg'
-import pendingIcon from 'assets/images/loader_thin.svg'
+import rejectedIcon from 'assets/images/newReject.svg'
+import approvedIcon from 'assets/images/newRightCheck.svg'
+import pendingIcon from 'assets/images/newPending.svg'
 
 export function capitalizeFirstLetter(word: string) {
   return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()

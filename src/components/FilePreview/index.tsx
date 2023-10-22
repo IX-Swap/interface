@@ -5,6 +5,8 @@ import { TYPE } from 'theme'
 import { KYCStatusIcons } from 'pages/KYC/styleds'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { ButtonText } from 'components/Button'
+import { ReactComponent as TrashNoBorder } from 'assets/images/TrashNoBorder.svg'
+import { ReactComponent as FileNew } from 'assets/images/fileNew.svg'
 
 import { Wrapper, StyledPdfImage } from './styleds'
 
@@ -24,22 +26,27 @@ export const FilePreview: FC<Props> = ({
   withBackground = true,
   isDisabled = false,
 }: Props) => {
-  const deleteIcon = KYCStatusIcons[KYCStatuses.REJECTED]
+  // const deleteIcon = KYCStatusIcons[KYCStatuses.REJECTED]
 
   return (
-    <Wrapper withBackground={withBackground} marginBottom="10px" width="fit-content" alignItems="center" style={style}>
-      <StyledPdfImage style={{ minWidth: 32, minHeight: 32 }} />
-      <TYPE.subHeader
+    <Wrapper withBackground={withBackground} marginBottom="10px" alignItems="center" style={style}>
+      <FileNew style={{ minWidth: 14, minHeight: 14 }} />
+      <TYPE.subHeader1
         style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
         lineHeight="40px"
         marginLeft="12px"
         marginRight="18px"
+        color="#8D8DA3"
+        fontSize={'10px'}
+        // width={'80px'}
+        width={'100%'}
+        // minWidth={'100%'}
       >
         {file.name}
-      </TYPE.subHeader>
+      </TYPE.subHeader1>
       {!isDisabled && (
-        <ButtonText style={{ minWidth: 24, minHeight: 24 }} onClick={handleDeleteClick} type="button">
-          {deleteIcon()}
+        <ButtonText style={{ minWidth: 18, minHeight: 18 }}>
+          <TrashNoBorder style={{ marginLeft: 'auto' }} onClick={handleDeleteClick} type="button" />
         </ButtonText>
       )}
     </Wrapper>

@@ -104,19 +104,22 @@ export const SearchInput = styled.input`
   padding: 15px 22px;
   align-items: center;
   white-space: nowrap;
-  border: none;
+  border: 1px solid #e6e6ff;
   outline: none;
-  border-radius: 36px;
+  border-radius: 6px;
   color: ${({ theme }) => theme.text8};
-  border: none;
   -webkit-appearance: none;
-  background: ${({ theme }) => theme.bg11};
+  background: ${({ theme }) => theme.bg2};
   font-size: 20px;
   line-height: 40px;
   width: 100%;
   height: 100%;
   ::placeholder {
-    color: ${({ theme }) => theme.text8};
+    color: ${({ theme }) => theme.text2};
+    font-size: 15px;
+    position: absolute;
+    left: 40px;
+    top: 18px;
   }
   transition: border 100ms;
   :focus {
@@ -124,7 +127,7 @@ export const SearchInput = styled.input`
   }
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 0px 22px;
+    padding: 16px 22px;
   `};
 `
 export const Separator = styled.div`
@@ -141,7 +144,8 @@ export const SeparatorDark = styled.div`
 `
 
 export const UnapprovedTokenWrapper = styled.div`
-  ${gradientBorder}
+  // ${gradientBorder}
+  // border: 1px solid #e6e6ff;
   padding-left: 24px;
   padding-right: 21px;
   align-items: center;

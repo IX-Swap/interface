@@ -15,40 +15,46 @@ import {
   TaxDeclarations,
   InvestorDeclaration,
 } from './Blocks'
+
 import { Referral } from './Blocks/Referral'
+import { Line } from 'components/Line'
 
 interface Props {
-  data: IndividualKyc
+  data: IndividualKyc | undefined // Make sure data is optional
   riskJSON: any
 }
 
-export const IndividualForm = ({ data, riskJSON }: Props) => {
-  const documents = data?.documents?.filter(document => {
-    if (+data?.accredited === 0) {
-      return document.type !== 'accreditation'
-    }
+const sections = [
+  { component: Cynopsis },
+  { component: Information, kycKey: 'individual' },
+  { component: Address },
+  { component: Referral },
+  { component: IndividualDocument },
+  { component: UploadedDocuments, dataKey: 'documents' },
+  { component: Occupation },
+  { component: SourceOfFunds, kycKey: 'individual' },
+  { component: TaxDeclarations },
+  { component: Fatca },
+  { component: InvestorStatusDeclaration, kycKey: 'individual' },
+  { component: InvestorDeclaration },
+]
 
+export const IndividualForm = ({ data, riskJSON }: Props) => {
+  const filteredDocuments = data?.documents?.filter((document) => {
+    if (data && +data.accredited === 0) {
+      return document?.type !== 'accreditation' // Use optional chaining for document
+    }
     return document
   })
 
   return (
     <>
-      <Cynopsis riskJSON={riskJSON} />
-
-      <Information data={data} kycKey="individual" />
-      <Address data={data} />
-      <IndividualDocument data={data} />
-
-      <Referral data={data} />
-
-      <Occupation data={data} />
-      <SourceOfFunds data={data} kycKey="individual" />
-      <TaxDeclarations data={data} />
-      <Fatca data={data} />
-
-      <InvestorStatusDeclaration data={data} kycKey="individual" />
-      <InvestorDeclaration data={data} />
-      <UploadedDocuments data={documents} />
+      {sections.map((section, index) => (
+        <React.Fragment key={index}>
+          <section.component data={section.dataKey ? data?.[section.dataKey] : data} kycKey={section.kycKey} />
+          {index < sections.length - 1 && <Line />}
+        </React.Fragment>
+      ))}
     </>
   )
 }

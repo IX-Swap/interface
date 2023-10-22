@@ -15,7 +15,8 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import { ExistingTitle, TitleStatusRow } from './styleds'
 import { isPending } from './enum'
 import { useUserState } from 'state/user/hooks'
-import { ButtonGradientBorder } from 'components/Button'
+import { ButtonGradientBorder, NewApproveButton } from 'components/Button'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   currency?: Currency
@@ -74,17 +75,17 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
 
   return (
     <StyledTitleStatusRow style={{ marginTop: '0.6rem' }}>
-      <ExistingTitle>
-        <TextWrap>
+      {/* <ExistingTitle>
+        <TextWrap style={{ color: '#6666FF', fontSize: '40px', fontWeight: 800 }}>
           <span style={{ marginRight: '10px' }}>{formatCurrencyAmount(currencyBalance, currency?.decimals ?? 18)}</span>
           <span>{currency?.symbol}</span>
         </TextWrap>
-        <AddWrappedToMetamask token={token} />
-      </ExistingTitle>
+      </ExistingTitle> */}
+
       <DesktopOnly>
         <MouseoverTooltip text={tooltipText}>
-          <ButtonGradientBorder
-            style={{ width: '230px' }}
+          <NewApproveButton
+            style={{ width: isMobile ? '100%' : '200px', border: '1px solid #6666FF33', color: '#6666FF' }}
             data-testid="withdraw"
             onClick={async () => {
               toggle()
@@ -92,13 +93,13 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
             disabled={isDisabled}
           >
             <Trans>Withdraw</Trans>
-          </ButtonGradientBorder>
+          </NewApproveButton>
         </MouseoverTooltip>
       </DesktopOnly>
       <MobileAndTablet style={{ width: '100%', marginTop: '0.6rem' }}>
         <MouseoverTooltip referenceStyle={{ width: '100%' }} text={tooltipText}>
-          <ButtonGradientBorder
-            style={{ width: '100%', marginBottom: '2rem' }}
+          <NewApproveButton
+            style={{ width: isMobile ? '100%' : '200px', border: '1px solid #6666FF33', color: '#6666FF' }}
             data-testid="withdraw"
             onClick={async () => {
               toggle()
@@ -106,7 +107,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
             disabled={isDisabled}
           >
             <Trans>Withdraw</Trans>
-          </ButtonGradientBorder>
+          </NewApproveButton>
         </MouseoverTooltip>
       </MobileAndTablet>
     </StyledTitleStatusRow>

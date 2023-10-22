@@ -72,17 +72,15 @@ export const ButtonPrimary = styled(Base)`
     background-color: ${({ theme }) => darken(0.1, theme.primary1)};
   }
   &:disabled {
-    background-color: ${({ theme, altDisabledStyle, disabled }) =>
-      altDisabledStyle ? (disabled ? theme.primary1 : theme.primary1) : theme.primary1};
+    background-color: #e2e2f1;
     color: white;
     cursor: auto;
     box-shadow: none;
     border: 1px solid transparent;
     outline: none;
-    opacity: 0.4;
-    background: ${({ theme }) =>
-      theme.config.primary?.main || 'linear-gradient(116.36deg, #3a2161 33.43%, #590d4c 95.41%)'};
-    opacity: ${({ altDisabledStyle }) => (altDisabledStyle ? '0.5' : '0.4')};
+    // opacity: 0.4;
+    background: #e2e2f1;
+    // opacity: ${({ altDisabledStyle }) => (altDisabledStyle ? '0.5' : '0.4')};
   }
 `
 
@@ -182,37 +180,55 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   position: relative;
   cursor: pointer;
   border: none;
+  background-color: ${({ confirmed }) => (confirmed ? 'transparent' : '#6666ff')};
 
   :hover {
+    border-radius: 8px;
+    background-color: #6666ff;
+    background: #6666ff;
     @media (min-width: 1000px) {
       opacity: 0.8;
     }
   }
   :active {
     opacity: 0.9;
+    border-radius: 8px;
+    background-color: #6666ff;
+    background: #6666ff;
   }
-  border-radius: 40px;
+  border-radius: 8px;
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
-  background-color: ${({ theme }) => theme.config.primary?.main || theme.bg3};
-  background: ${({ theme }) => theme.config.primary?.main || theme.bgG3};
+  // background-color: ${({ theme }) => theme.config.primary?.main || theme.bg3};
+  // background: ${({ theme }) => theme.config.primary?.main || theme.bgG3};
+  background-color: #6666ff;
+  background: transparent;
+  border: 1px solid #6666ff;
+  padding: 28px 18px;
+  margin-right: 20px;
+
+  &:disabled {
+    background-color: ${({ confirmed }) => (confirmed ? 'transparent' : '#e2e2f1')};
+    color: ${({ confirmed }) => (confirmed ? '#0ec080 ' : 'white')};
+    border: ${({ confirmed }) => (confirmed ? '1px solid #0ec080' : '1px solid transparent')};
+    opacity: ${({ confirmed }) => (confirmed ? '1' : '0.5')};
+  }
 `
 export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   background-color: transparent;
   background: transparent;
-  color: ${({ theme }) => theme.text1};
+  border-radius: 8px;
+  color: #b8b8cc;
+  border: 1px solid #e6e6ff;
+  padding: 28px 18px;
+  margin-right: 20px;
 
-  ${({ theme }) =>
-    isNotSupportGradient
-      ? css`
-          border: 2px solid ${theme.bg20} !important;
-        `
-      : gradientBorder}
   :focus,
   :hover {
     background-color: transparent;
     background: transparent;
+    border: 1px solid #6666ff;
   }
   &:disabled {
     background-color: transparent;
@@ -223,8 +239,10 @@ export const ButtonGradientBorder = styled(ButtonIXSGradient)`
 export const ButtonPinkBorder = styled(ButtonIXSGradient)`
   background-color: transparent;
   background: transparent;
-  color: ${({ theme }) => theme.text2};
-  border: 1px solid ${({ theme }) => theme.error};
+  color: #6666ff;
+  border: 1px solid #e6e6ff;
+  font-size: 13px;
+  font-weight: 600;
   :focus,
   :hover {
     background-color: transparent;
@@ -237,34 +255,80 @@ export const ButtonPinkBorder = styled(ButtonIXSGradient)`
 `
 export const ButtonIXSWide = styled(ButtonIXSGradient)`
   width: 100%;
+  background-color: #6666ff;
 `
 export const ButtonGradient = styled(Base)`
-  background: ${({ theme }) => theme.config.primary?.main || theme.bgG1};
-  border-radius: 40px;
+  background: ${({ theme }) => theme.config.primary?.main || theme.bg26};
+  border-radius: 6px;
   font-weight: 600;
   font-size: 14px;
   line-height: 21px;
   text-align: center;
   padding: 7px 0;
   cursor: pointer;
+  color: white;
+`
+
+export const NewButtonGradient = styled(Base)`
+  background: ${({ theme }) => theme.config.primary?.main || theme.bg25};
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  padding: 14px 0;
+  border: 1px solid #e6e6ff;
+  cursor: pointer;
+`
+
+export const PinnedContentButton = styled(Base)`
+  color: ${(props) => props.theme.launchpad.colors.text.light};
+  background-color: ${(props) => props.theme.launchpad.colors.primary};
+  font-family: ${(props) => props.theme.launchpad.font};
+  border-radius: 6px;
+  text-align: center;
+  padding: 12px, 16px, 12px, 16px;
+  border: unset;
+  cursor: pointer;
+  width: 100%;
+  &:disabled {
+    background-color: #e2e2f1;
+    background: #e2e2f1;
+  }
+`
+
+export const NewApproveButton = styled(Base)`
+  color: ${(props) => props.theme.launchpad.colors.text.green};
+  background-color: ${(props) => props.theme.launchpad.colors.background};
+  font-family: ${(props) => props.theme.launchpad.font};
+  border-radius: 6px;
+  text-align: center;
+  padding: 12px, 16px, 12px, 16px;
+  border: unset;
+  cursor: pointer;
+  width: 100%;
+  border: solid 1px #09cd8780;
 `
 
 export const ButtonOutlined = styled(Base)`
-  border: 1px solid ${({ theme }) => theme.bg2};
+  border: 1px solid #e6e6ff;
   background-color: transparent;
-  color: ${({ theme }) => theme.text1};
+  color: ${({ theme }) => theme.bg26};
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
 
   &:focus {
     box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
   }
-  &:hover {
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
-  }
+  // &:hover {
+  //   box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
+  // }
   &:active {
     box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
   }
   &:disabled {
-    opacity: 50%;
+    // opacity: 50%;
     cursor: auto;
   }
 `

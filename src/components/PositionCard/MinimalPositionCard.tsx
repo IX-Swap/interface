@@ -16,6 +16,8 @@ import { PositionCardProps } from './interfaces'
 import useTheme from 'hooks/useTheme'
 import { TextRow } from 'components/TextRow/TextRow'
 import Card from '../Card'
+import CurrencyLogo from 'components/CurrencyLogo'
+import { isMobile } from 'react-device-detect'
 
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -27,22 +29,51 @@ export const HoverCard = styled(Card)`
     border: 1px solid ${({ theme }) => darken(0.06, theme.bg2)};
   }
 `
-const Title = styled(Text)`
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.text2};
-`
 
 const MinimalPositionWrapper = styled.div`
-  background: ${({ theme }) => theme.bgG12};
-  padding: 42px 40px 20px 40px;
-  border-radius: 45px;
-  margin-top: -1.5rem;
+  background: ${({ theme }) => theme.bg25};
+  // padding: 42px 40px 42px 40px;
+  border-radius: 8px;
+  margin-top: 1.5rem;
   z-index: -5;
   max-width: 592px;
   width: 100%;
+  border: solid 1px #e6e6ff;
+
+  // @media (max-width: 768px) {
+  //   padding: 22px 20px 22px 20px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+//  padding: 22px 20px 22px 20px;
+  `};
+`
+
+const StyledText = styled(Text)`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+
+  // @media (max-width: 768px) {
+  //   font-size: 12px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+   font-size: 12px;
+  `};
+`
+
+const StyledText20 = styled(Text)`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  // @media (max-width: 768px) {
+  //   font-size: 12px;
+  // }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+   font-size: 12px;
+  `};
 `
 
 export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCardProps) {
@@ -74,38 +105,46 @@ export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCar
         ]
       : [undefined, undefined]
   const showMinimalPositionCard = userPoolBalance && JSBI.greaterThan(userPoolBalance.quotient, JSBI.BigInt(0))
+  const size = isMobile === true ? 25 : 40
   return (
     <>
       {showMinimalPositionCard ? (
         <MinimalPositionWrapper>
-          <AutoColumn gap="12px">
-            <FixedHeightRow>
-              <RowFixed>
-                <Title>
-                  <Trans>Your position</Trans>
-                </Title>
-              </RowFixed>
-            </FixedHeightRow>
+          <AutoColumn style={{ background: '#F7F7FA', border: '1px solid #E6E6FF ', padding: '40px' }} gap="12px">
             <FixedHeightRow onClick={() => setShowMore(!showMore)}>
               <RowFixed>
-                <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={false} size={20} />
-                <Text fontWeight={600} fontSize={16} lineHeight={'24px'} color={theme.text2} marginLeft={'20px'}>
+                <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={false} size={size} />
+                <StyledText color={theme.text12} marginLeft={'25px'}>
                   {currency0.symbol}/{currency1.symbol}
-                </Text>
+                </StyledText>
               </RowFixed>
               <RowFixed>
-                <Text fontWeight={600} fontSize={16} lineHeight={'20px'} color={theme.text2}>
+                <StyledText20 color={theme.text12}>
                   {userPoolBalance ? userPoolBalance.toSignificant(9) : '-'}
-                </Text>
+                </StyledText20>
               </RowFixed>
             </FixedHeightRow>
-            <AutoColumn gap="4px">
+            <AutoColumn gap="10px">
               <TextRow
                 textLeft={<Trans>My pool share</Trans>}
                 textRight={<>{poolTokenPercentage ? poolTokenPercentage.toFixed(6) + '%' : '-'}</>}
               />
-              <TextRow textLeft={<>{currency0.symbol}</>} textRight={token0Deposited?.toSignificant(6) ?? ''} />
-              <TextRow textLeft={<>{currency1.symbol}</>} textRight={token1Deposited?.toSignificant(6) ?? ''} />
+              <TextRow
+                textLeft={<>{currency0.symbol}</>}
+                textRight={
+                  <>
+                    {token0Deposited?.toSignificant(6)} <CurrencyLogo currency={currency0} size={'20px'} />
+                  </>
+                }
+              />
+              <TextRow
+                textLeft={<>{currency1.symbol}</>}
+                textRight={
+                  <>
+                    {token1Deposited?.toSignificant(6)} <CurrencyLogo currency={currency1} size={'20px'} />
+                  </>
+                }
+              />
             </AutoColumn>
           </AutoColumn>
         </MinimalPositionWrapper>

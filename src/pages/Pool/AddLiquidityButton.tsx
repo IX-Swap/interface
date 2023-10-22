@@ -4,16 +4,16 @@ import { Text } from 'rebass'
 import { Trans } from '@lingui/macro'
 
 import { RowCenter } from '../../components/Row'
-import { ButtonIXSWide } from '../../components/Button'
+import { ButtonIXSWide, PinnedContentButton } from '../../components/Button'
 
 export const AddLiquidityButton = () => {
   return (
     <RowCenter>
-      <ButtonIXSWide id="add-liquidity" data-testid="add-liquidity" as={Link} to="/add">
+      <PinnedContentButton id="add-liquidity" data-testid="add-liquidity" as={Link} to="/add">
         <Text>
           <Trans>Add Liquidity</Trans>
         </Text>
-      </ButtonIXSWide>
+      </PinnedContentButton>
     </RowCenter>
   )
 }
