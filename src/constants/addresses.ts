@@ -115,6 +115,7 @@ export const IXSALE_ADDRESS: { [key: number]: string } = {
 export const PAYOUT_ADDRESS = {
   [42]: '0xBf432B246e20afa1E26170932b8aD067F2dD52B2',
   [137]: '0xd1B888b6fe05d9737ad0a0800253CD706254DB64',
+  [80001]: '0x12805f042f191d8C8e7C769a70dE169bCeBBe761',
 } as Record<number, string>
 
 export const STAKING_ALTERNATE_MAP = {
