@@ -73,8 +73,14 @@ export const CreateVirtualAccountTransactionFields = ({
             label={'Reference'}
             tooltipTitle={
               <span>
-                <strong>Reference</strong> represents the bank transaction
-                number.
+                <strong>Reference</strong> is a unique identifier or a set of
+                alphanumeric characters provided to specify the purpose or
+                details of a particular transaction. It helps both the sender
+                and recipient recognize and trace a specific payment or
+                transfer. This can include invoice numbers, order IDs, or any
+                other relevant information to make tracking and reconciliation
+                easier. It's essential to provide accurate references to ensure
+                clarity in financial records and avoid any misunderstandings.
               </span>
             }
           />
