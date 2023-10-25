@@ -15,7 +15,7 @@ import { LinkStyledButton, TYPE } from 'theme'
 import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg'
 import { GradientText } from 'pages/CustodianV2/styleds'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
-import Row, { RowBetween, RowCenter } from 'components/Row'
+import Row, { RowBetween, RowCenter, RowStart } from 'components/Row'
 import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
@@ -104,6 +104,7 @@ export default function IndividualKycForm() {
   const [showOptoutModal, setShowOptoutModal] = useState(false)
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
   const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
+  const [referralCode, setReferralCode] = useState<string | null>(null)
   const openConfirmationModal = useCallback(() => {
     setShowOptoutModal(false)
     setShowOptoutConfirmationModal(true)
@@ -121,6 +122,9 @@ export default function IndividualKycForm() {
   const prevAccount = usePrevious(account)
 
   useEffect(() => {
+    const code = new URL(window.location.href).href?.split('=')[1]
+    setReferralCode(code)
+
     if (account && prevAccount && account !== prevAccount) {
       history.push('/kyc')
     }
@@ -132,7 +136,7 @@ export default function IndividualKycForm() {
     const getProgress = async () => {
       const data = await getIndividualProgress()
       if (data) {
-        const transformedData = individualTransformApiData(data)
+        const transformedData = individualTransformApiData(data, new URL(window.location.href).href?.split('=')[1])
         const taxDeclarations =
           transformedData.taxDeclarations?.length === 0
             ? [{ country: null, idNumber: '' }]
@@ -435,7 +439,7 @@ export default function IndividualKycForm() {
 
         canLeavePage.current = true
         setCanSubmit(false)
-        const body = individualTransformKycDto(values)
+        const body = individualTransformKycDto(values, new URL(window.location.href).href?.split('=')[1])
         let data: any = null
 
         if (updateKycId) {
@@ -503,7 +507,7 @@ export default function IndividualKycForm() {
 
                 setCanSubmit(false)
 
-                const body = individualTransformKycDto(values)
+                const body = individualTransformKycDto(values, new URL(window.location.href).href?.split('=')[1])
                 const data = updateKycId
                   ? await updateIndividualKYC(updateKycId, body)
                   : await createIndividualKYC(body)
@@ -613,13 +617,29 @@ export default function IndividualKycForm() {
                             <Trans>KYC as Individual</Trans>
                           </TYPE.title4>
                         </ButtonText>
-                        <RowBetween marginBottom="32px">
+                        <RowStart marginBottom="32px">
                           <TYPE.title7>
                             <Trans>Personal Information</Trans>
                           </TYPE.title7>
+                          {referralCode && (
+                            <span
+                              style={{
+                                border: '1px solid #E6E6FF',
+                                background: '#F7F7F8',
+                                padding: '12px 16px',
+                                borderRadius: '6px',
+                                fontSize: '14px',
+                                marginLeft: '20px',
+                                fontWeight: '600',
+                              }}
+                            >
+                              Referred by <span style={{ color: '#6666FF' }}>{referralCode}</span>
+                            </span>
+                          )}
+
                           {/* {personalPassed && <StyledBigPassed />}
                           {personalFailed && <InvalidFormInputIcon />} */}
-                        </RowBetween>
+                        </RowStart>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
                             <TextInput
@@ -779,11 +799,27 @@ export default function IndividualKycForm() {
                           </FormGrid>
                         </Column>
 
-                        <RowBetween marginBottom="32px" marginTop="64px">
+                        {/* <input
+                          value={referralCode || ''}
+                          onChange={(e) => onChangeInput('referralCode', referralCode, values, setFieldValue)}
+                          type="text"
+                          id="hiddenField"
+                          name="referralCode"
+                        /> */}
+
+                        {/* <input
+                          value={values.referralCode}
+                          onChange={(e) => onChangeInput('referralCode', e.currentTarget.value, values, setFieldValue)}
+                          type="text"
+                          id="hiddenField"
+                          name="hiddenField"
+                        ></input> */}
+
+                        {/* <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title7>
                             <Trans>Referral</Trans>
                           </TYPE.title7>
-                          {/* {identityDocumentFilled && <StyledBigPassed />} */}
+                          {identityDocumentFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <TextInput
@@ -791,7 +827,7 @@ export default function IndividualKycForm() {
                           label="Referral code"
                           value={values.referralCode}
                           onChange={(e) => onChangeInput('referralCode', e.currentTarget.value, values, setFieldValue)}
-                        />
+                        /> */}
 
                         <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title7>
