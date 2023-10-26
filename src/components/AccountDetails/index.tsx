@@ -5,6 +5,7 @@ import { Box } from 'rebass'
 import styled, { useTheme } from 'styled-components'
 // import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 import { ReactComponent as ExternalBright } from '../../assets/images/external-bright.svg'
+import { ReactComponent as NewExplore } from '../../assets/images/newExplore.svg'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 // import PortisIcon from '../../assets/images/portisIcon.png'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
@@ -211,7 +212,7 @@ export default function AccountDetails({
                         href={getExplorerLink(chainId, ENSName ?? account, ExplorerDataType.ADDRESS)}
                       >
                         {/* <IconWrapperWithBg size={8}> */}
-                        <ExternalBright style={{ marginTop: '5px' }} />
+                        <NewExplore style={{ marginTop: '5px' }} />
                         {/* </IconWrapperWithBg> */}
                         <TYPE.description3
                           style={{ marginLeft: '4px', marginRight: '10px', fontSize: '11px' }}
@@ -240,7 +241,9 @@ export default function AccountDetails({
                         <TitleSpan>{referralCode}</TitleSpan>
                       </CenteredDiv>
                       <FlexContainer>
-                        <Copy toCopy={`${new URL(window.location.href).href}?referralCode=${referralCode}`}>
+                        <Copy
+                          toCopy={`${new URL(window.location.href).href?.split('?')[0]}?referralCode=${referralCode}`}
+                        >
                           <span style={{ margin: '0px', padding: '0px' }}> {t``}</span>
                         </Copy>
                         {/* <CopyIcon /> */}
