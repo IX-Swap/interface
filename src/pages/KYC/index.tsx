@@ -110,7 +110,6 @@ const KYC = () => {
 
   useEffect(() => {
     fetchMe()
-    const code = new URL(window.location.href).href?.split('=')[1]
     // setReferralCode(code)
     if (pendingSign) {
       setLoading(true)
