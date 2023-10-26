@@ -1,5 +1,5 @@
 import React, { useCallback, FC, useEffect, useState, useMemo } from 'react'
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex, Text } from 'rebass'
 import { Link } from 'react-router-dom'
@@ -23,6 +23,10 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { RowCenter } from 'components/Row'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { ReactComponent as CopyIcon } from '../../assets/images/newCopyIcon.svg'
+import styled from 'styled-components'
+import Copy from 'components/AccountDetails/Copy'
+import { useGetMe } from 'state/user/hooks'
 
 interface DescriptionProps {
   description: string | null
@@ -73,9 +77,9 @@ const DateInfo: FC<DateInfoProps> = ({
 )
 
 const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) => (
-  <TYPE.description3 textAlign="center" marginTop="15px" marginBottom="8px">
+  <TYPE.title6 textAlign="center" marginTop="15px" marginBottom="8px">
     {description}
-  </TYPE.description3>
+  </TYPE.title6>
 )
 
 const KYC = () => {
@@ -88,6 +92,13 @@ const KYC = () => {
 
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
+  const [referralCode, setReferralCode] = useState<string | null>('')
+  const getMe = useGetMe()
+  const fetchMe = useCallback(async () => {
+    const result = await getMe()
+    setReferralCode(result?.referralCode)
+  }, [getMe, history])
+
   const infoText = (
     <p>
       In order to make changes to your KYC please get in touch with us via{' '}
@@ -98,6 +109,9 @@ const KYC = () => {
   )
 
   useEffect(() => {
+    fetchMe()
+    const code = new URL(window.location.href).href?.split('=')[1]
+    // setReferralCode(code)
     if (pendingSign) {
       setLoading(true)
     } else {
@@ -139,7 +153,14 @@ const KYC = () => {
                   >
                     <Trans>Pass KYC as Individual</Trans>
                   </Text>
-                  <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
+                  <Link
+                    style={{ textDecoration: 'none' }}
+                    to={
+                      new URL(window.location.href).href?.split('=')[1]
+                        ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
+                        : '/kyc/individual'
+                    }
+                  >
                     <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
                       <Trans>Start Now</Trans>
                     </Text>
@@ -186,7 +207,14 @@ const KYC = () => {
               {kyc?.individual && (
                 <Flex sx={{ marginBottom: isMobile ? '32px' : '0px' }} flexDirection="column" alignItems="center">
                   <IndividualKYC />
-                  <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
+                  <Link
+                    style={{ textDecoration: 'none' }}
+                    to={
+                      new URL(window.location.href).href?.split('=')[1]
+                        ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
+                        : '/kyc/individual'
+                    }
+                  >
                     <PinnedContentButton sx={{ padding: '16px 24px', marginTop: '32px' }}>
                       <Trans>Continue Pass KYC as Individual</Trans>
                     </PinnedContentButton>
@@ -227,7 +255,17 @@ const KYC = () => {
           <>
             <Description description={description} />
             <DateInfo info={infoText} submittedDate={kyc?.createdAt} changeRequestDate={kyc?.updatedAt} />
-            <Link style={{ textDecoration: 'none ' }} to={`/kyc/${kyc?.corporateKycId ? 'corporate' : 'individual'}`}>
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={
+                kyc?.corporateKycId
+                  ? `/kyc/corporate`
+                  : new URL(window.location.href).href?.split('=')[1]
+                  ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
+                  : `/kyc/individual`
+              }
+            >
+              {/* <Link style={{ textDecoration: 'none ' }} to={`/kyc/${kyc?.corporateKycId ? 'corporate' : 'individual'}`}> */}
               <PinnedContentButton
                 sx={{ padding: '16px 24px', marginTop: '32px', boxShadow: '0px 16px 16px 0px #6666FF21' }}
                 data-testid="makeChangesAndResendKycButton"
@@ -284,11 +322,29 @@ const KYC = () => {
               marginTop={status === KYCStatuses.NOT_SUBMITTED || status === null ? '8px' : '10px'}
               alignItems="center"
             >
-              <TYPE.title6 marginBottom="15px">
+              <TYPE.description3 marginBottom="15px">
                 <Trans>{config?.name || 'IX Swap'} KYC</Trans>
-              </TYPE.title6>
-              {/* {description && <Description description={description} />} */}
+              </TYPE.description3>
+              {description && <Description description={description} />}
               <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />
+              {referralCode && (
+                <>
+                  <Column style={{ margin: '20px 0px' }}>
+                    <TYPE.title11>Refer a Friend</TYPE.title11>
+                  </Column>
+                  <Column style={{ margin: '5px 0px' }}>
+                    <StyledDiv>
+                      <CenteredDiv>
+                        <TitleSpan>{referralCode}</TitleSpan>
+                      </CenteredDiv>
+                      <FlexContainer>
+                        <Copy toCopy={`${new URL(window.location.href).href}?referralCode=${referralCode}`}>{t``}</Copy>
+                        <TextSpan>Copy Referral Link</TextSpan>
+                      </FlexContainer>
+                    </StyledDiv>
+                  </Column>
+                </>
+              )}
             </Content>
             {getKYCDescription()}
           </Column>
@@ -299,3 +355,32 @@ const KYC = () => {
 }
 
 export default KYC
+
+const StyledDiv = styled.div`
+  border: 1px solid #e6e6ff;
+  padding: 10px 16px;
+  width: 280px;
+`
+
+const CenteredDiv = styled.div`
+  text-align: center;
+  margin-bottom: 12px;
+`
+
+const TitleSpan = styled.span`
+  font-size: 16px;
+  font-weight: 600;
+  color: #292933;
+`
+
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const TextSpan = styled.span`
+  color: #666680;
+  font-size: 11px;
+  font-weight: 400;
+  margin-left: 3px;
+`

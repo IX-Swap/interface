@@ -3,6 +3,8 @@ import { Slash } from 'react-feather'
 import { ImageProps } from 'rebass'
 import useTheme from '../../hooks/useTheme'
 
+import { ReactComponent as CopyIcon } from '../../assets/images/newCurrencyLogo.svg'
+
 const BAD_SRCS: { [tokenAddress: string]: true } = {}
 
 export interface LogoProps extends Pick<ImageProps, 'style' | 'alt' | 'className'> {
@@ -34,5 +36,5 @@ export default function Logo({ srcs, alt, style, ...rest }: LogoProps) {
     )
   }
 
-  return <Slash {...rest} style={{ ...style, color: theme.bg4 }} />
+  return <CopyIcon />
 }

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import styled, { useTheme } from 'styled-components'
 import Row from 'components/Row'
 import { CheckCircle, Info } from 'react-feather'
@@ -22,13 +22,16 @@ import { useInvest, useInvestPublicSaleStructData, usePresaleProof } from 'state
 import { text10, text11 } from 'components/LaunchpadMisc/typography'
 import { useLaunchpadInvestmentContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
-import { useApproveCallback } from 'hooks/useApproveCallback'
+import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { IXSALE_ADDRESS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/shared/fields/IssuanceTooltip'
 import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
+import { PinnedContentButton } from 'components/Button'
+import { ReactComponent as ExternalIcon } from 'assets/images/rightcheck.svg'
+import LoaderThin from 'components/Loader'
 
 interface Props {
   offer: Offer
@@ -68,6 +71,44 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
   const [otherDocumentsAgreed, setOtherDocumentsAgreed] = useState(false)
   const formatter = useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
   const isPresale = useMemo(() => status === OfferStatus.preSale, [status])
+  const launchpadContract = useLaunchpadInvestmentContract(contractAddress)
+  const tokenCurrency = useCurrency(offer.investingTokenAddress)
+  const { chainId = 137, account } = useActiveWeb3React()
+
+  const submitState = useInvestSubmitState()
+
+  const [approvalStatus, setApprovalStatus] = useState('PENDING')
+
+  const [approval, approveCallback] = useApproveCallback(
+    tokenCurrency
+      ? CurrencyAmount.fromRawAmount(
+          tokenCurrency,
+          ethers.utils.parseUnits(amount || '0', investingTokenDecimals) as any
+        )
+      : undefined,
+    contractAddress || IXSALE_ADDRESS[chainId]
+  )
+
+  const handleTokenApproval = async () => {
+    try {
+      await approveCallback()
+      setApprovalStatus('APPROVED')
+    } catch (error) {
+      console.error('Error while approving token:', error)
+    }
+  }
+
+  useEffect(() => {
+    async function checkApprovalStatus() {
+      console.log(approval, 'approbalkakak')
+      // Check the approval status of the token here
+      // You can use a function to check if the token is approved, and set the approvalStatus accordingly
+      const isTokenApproved = approval // Implement this function
+      setApprovalStatus(isTokenApproved ? 'APPROVED' : 'NOT_APPROVED')
+    }
+
+    checkApprovalStatus()
+  }, [])
 
   const conditions = useMemo(
     () => [
@@ -128,21 +169,6 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     </div>
   ) as React.ReactNode
 
-  const launchpadContract = useLaunchpadInvestmentContract(contractAddress)
-  const tokenCurrency = useCurrency(offer.investingTokenAddress)
-  const { chainId = 137, account } = useActiveWeb3React()
-
-  const [approval, approveCallback] = useApproveCallback(
-    tokenCurrency
-      ? CurrencyAmount.fromRawAmount(
-          tokenCurrency,
-          ethers.utils.parseUnits(amount || '0', investingTokenDecimals) as any
-        )
-      : undefined,
-    contractAddress || IXSALE_ADDRESS[chainId]
-  )
-  const submitState = useInvestSubmitState()
-
   const submit = useCallback(async () => {
     if (!amount) {
       return
@@ -152,9 +178,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       submitState.setLoading()
       const parsedAmount = ethers.utils.parseUnits(amount, investingTokenDecimals)
 
-      if (approval !== 'APPROVED') {
-        await approveCallback()
-      }
+      // if (approval !== 'APPROVED') {
+      //   await approveCallback()
+      // }
 
       if (launchpadContract) {
         let transaction
@@ -305,11 +331,38 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           )}
         </AgreementText>
       </Agreement>
-
+      <PinnedContentButton
+        style={{
+          background: approvalStatus === ApprovalState.APPROVED ? 'none' : '',
+          border: approvalStatus === ApprovalState.APPROVED ? '1px solid #09CD8780' : '',
+          color: approvalStatus === ApprovalState.APPROVED ? '#09CD87' : '',
+        }}
+        onClick={handleTokenApproval}
+        disabled={
+          approvalStatus === ApprovalState.APPROVED ||
+          !purchaseAgreed ||
+          !investmentMemorandumAgreed ||
+          !otherDocumentsAgreed
+        }
+      >
+        {approvalStatus === ApprovalState.APPROVED
+          ? `Approved ${tokenSymbol}`
+          : ApprovalState.PENDING
+          ? `Approving Spending ${tokenSymbol}`
+          : `Approve Spending ${tokenSymbol}`}
+        {approvalStatus === ApprovalState.APPROVED ? (
+          <ExternalIcon style={{ marginLeft: '10px' }} />
+        ) : approvalStatus === ApprovalState.PENDING ? (
+          <LoaderThin stroke="white" />
+        ) : (
+          ''
+        )}
+      </PinnedContentButton>
       <InvestFormSubmitButton
         state={submitState.current}
         disabled={
           isDisabled ||
+          approvalStatus !== ApprovalState.APPROVED ||
           !purchaseAgreed ||
           !investmentMemorandumAgreed ||
           !otherDocumentsAgreed ||
