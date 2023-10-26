@@ -77,9 +77,9 @@ const DateInfo: FC<DateInfoProps> = ({
 )
 
 const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) => (
-  <TYPE.title6 textAlign="center" marginTop="15px" marginBottom="8px">
+  <TYPE.description3 textAlign="center" marginTop="15px" marginBottom="8px">
     {description}
-  </TYPE.title6>
+  </TYPE.description3>
 )
 
 const KYC = () => {
@@ -321,10 +321,10 @@ const KYC = () => {
               marginTop={status === KYCStatuses.NOT_SUBMITTED || status === null ? '8px' : '10px'}
               alignItems="center"
             >
-              <TYPE.description3 marginBottom="15px">
+              <TYPE.description6 fontWeight={'800'} marginBottom="15px">
                 <Trans>{config?.name || 'IX Swap'} KYC</Trans>
-              </TYPE.description3>
-              {description && <Description description={description} />}
+              </TYPE.description6>
+              {/* {description && <Description description={description} />} */}
               <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />
               {referralCode && (
                 <>
@@ -337,7 +337,9 @@ const KYC = () => {
                         <TitleSpan>{referralCode}</TitleSpan>
                       </CenteredDiv>
                       <FlexContainer>
-                        <Copy toCopy={`${new URL(window.location.href).href}?referralCode=${referralCode}`}>{t``}</Copy>
+                        <Copy
+                          toCopy={`${new URL(window.location.href).href?.split('?')[0]}?referralCode=${referralCode}`}
+                        >{t``}</Copy>
                         <TextSpan>Copy Referral Link</TextSpan>
                       </FlexContainer>
                     </StyledDiv>
