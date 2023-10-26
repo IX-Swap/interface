@@ -40,6 +40,7 @@ import {
 import Transaction from './Transaction'
 import { Line } from 'components/Line'
 import Column from 'components/Column'
+import { useGetMe } from 'state/user/hooks'
 
 function renderTransactions(transactions: string[]) {
   return (
@@ -66,8 +67,19 @@ export default function AccountDetails({
   ENSName,
 }: AccountDetailsProps) {
   const { chainId, account, connector } = useActiveWeb3React()
+  const [referralCode, setReferralCode] = useState<string | null>(null)
+  const getMe = useGetMe()
+  const fetchMe = useCallback(async () => {
+    const result = await getMe()
+    setReferralCode(result?.referralCode)
+  }, [getMe, history])
   const dispatch = useDispatch<AppDispatch>()
   const theme = useTheme()
+
+  useEffect(() => {
+    fetchMe()
+    const code = new URL(window.location.href).href?.split('=')[1]
+  }, [])
 
   function formatConnectorName() {
     const { ethereum } = window
@@ -133,11 +145,11 @@ export default function AccountDetails({
   const clearAllTransactionsCallback = useCallback(() => {
     if (chainId) dispatch(clearAllTransactions({ chainId }))
   }, [dispatch, chainId])
-  const [referralCode, setReferralCode] = useState<string | null>(null)
-  useEffect(() => {
-    const code = new URL(window.location.href)?.href?.split('=')[1]
-    setReferralCode(code)
-  }, [])
+
+  // useEffect(() => {
+  //   const code = new URL(window.location.href)?.href?.split('=')[1]
+  //   setReferralCode(code)
+  // }, [])
   return (
     <>
       <UpperSection>
@@ -228,7 +240,7 @@ export default function AccountDetails({
                         <TitleSpan>{referralCode}</TitleSpan>
                       </CenteredDiv>
                       <FlexContainer>
-                        <Copy toCopy={`${referralCode}`}>
+                        <Copy toCopy={`${new URL(window.location.href).href}?referralCode=${referralCode}`}>
                           <span style={{ margin: '0px', padding: '0px' }}> {t``}</span>
                         </Copy>
                         {/* <CopyIcon /> */}
