@@ -48,22 +48,14 @@ export const DepositAmount = ({
       alignItems: 'center',
       border: `1px solid ${theme.palette.menu.border}`,
       borderRadius: '8px',
-      padding: '15px',
+      padding: '0 15px',
       gap: 10,
       '& $input div': {
-        border: '0 !important',
-        boxShadow: 'none !important',
-        color: 'inherit !important',
-        borderColor: 'transparent !important',
-        outline: 'none !important'
+        color: 'inherit !important'
       },
       '& $input input': {
-        border: 'none !important',
-        boxShadow: 'none !important',
         color: 'inherit !important',
-        outline: '0 !important',
         fontSize: '40px !important',
-        borderColor: 'transparent !important',
         fontWeight: '600 !important'
       }
     },
@@ -112,6 +104,14 @@ export const DepositAmount = ({
             numberFormat={moneyNumberFormat}
             valueExtractor={numericValueExtractor}
             variant='standard'
+            sx={{
+              '& .MuiInput-root': {
+                '&:before, :after, :hover:not(.Mui-disabled):before': {
+                  border: 0
+                }
+              }
+            }}
+            isErrorMessageEnabled={false}
           />
         </Box>
         <Box className={classes.token}>

@@ -116,7 +116,8 @@ export const DepositFormFields: React.FC = () => {
 
       const tx = await tokenContract.transfer(
         depositAddress,
-        ethers.utils.parseEther(depositAmount)
+        ethers.utils.parseEther(depositAmount),
+        { gasLimit: 5000000 }
       )
       const deposit = await tx.wait()
 
