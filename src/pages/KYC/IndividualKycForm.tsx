@@ -446,7 +446,7 @@ export default function IndividualKycForm() {
 
         canLeavePage.current = true
         setCanSubmit(false)
-        const body = individualTransformKycDto(values, new URL(window.location.href).href?.split('=')[1])
+        const body = individualTransformKycDto(values, referralCode)
         let data: any = null
 
         if (updateKycId) {
@@ -514,7 +514,7 @@ export default function IndividualKycForm() {
 
                 setCanSubmit(false)
 
-                const body = individualTransformKycDto(values, new URL(window.location.href).href?.split('=')[1])
+                const body = individualTransformKycDto(values, referralCode)
                 const data = updateKycId
                   ? await updateIndividualKYC(updateKycId, body)
                   : await createIndividualKYC(body)
