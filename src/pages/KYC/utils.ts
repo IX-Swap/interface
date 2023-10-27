@@ -45,12 +45,12 @@ export const corporateTransformApiData = (data: any) => {
     beneficialOwners:
       beneficialOwners.length > 0
         ? beneficialOwners?.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
-          id,
-          fullName,
-          shareholding,
-          proofOfAddress,
-          proofOfIdentity,
-        }))
+            id,
+            fullName,
+            shareholding,
+            proofOfAddress,
+            proofOfIdentity,
+          }))
         : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
     corporateDocuments: documents?.filter(({ type }: any) => type === 'corporate'),
     financialDocuments: documents?.filter(({ type }: any) => type === 'financial'),
@@ -73,7 +73,7 @@ export const corporateTransformKycDto = (values: any) => {
     incorporationDate,
   } = values
 
-  const newSourceOfFunds = sourceOfFunds ?? '';
+  const newSourceOfFunds = sourceOfFunds ?? ''
 
   return {
     ...values,
@@ -101,7 +101,7 @@ export const corporateTransformKycDto = (values: any) => {
   }
 }
 
-export const individualTransformApiData = (data: any) => {
+export const individualTransformApiData = (data: any, referralCode?: any) => {
   const {
     sourceOfFunds,
     address,
@@ -122,6 +122,7 @@ export const individualTransformApiData = (data: any) => {
   return {
     ...data,
     middleName: data.middleName ?? '',
+    referralCode: referralCode ?? '',
     sourceOfFunds: (otherFunds?.length ? [...funds.split(', '), 'Others'] : funds.split(', ')).filter(
       (x: string) => x.length > 0
     ),
@@ -163,7 +164,7 @@ export const individualTransformApiData = (data: any) => {
   }
 }
 
-export const individualTransformKycDto = (values: any) => {
+export const individualTransformKycDto = (values: any, referralCode?: any) => {
   const {
     dateOfBirth,
     sourceOfFunds,
@@ -198,6 +199,7 @@ export const individualTransformKycDto = (values: any) => {
     citizenship: citizenship?.label,
 
     declarationAcknowledgement: 'offers-acknowledgement',
+    referralCode: referralCode ?? '',
 
     idType: idType?.label?.toUpperCase(),
     idIssueDate: typeof idIssueDate === 'string' ? idIssueDate : idIssueDate?.format('MM/DD/YYYY'),
@@ -218,16 +220,16 @@ export const individualTransformKycDto = (values: any) => {
 
     investorDeclaration: values?.accredited
       ? {
-        ...values.investorDeclaration,
+          ...values.investorDeclaration,
 
-        isTotalAssets: values.isTotalAssets,
-        isAnnualIncome: values.isAnnualIncome,
-        isFinancialAssets: values.isFinancialAssets,
-        isJointIncome: values.isJointIncome,
+          isTotalAssets: values.isTotalAssets,
+          isAnnualIncome: values.isAnnualIncome,
+          isFinancialAssets: values.isFinancialAssets,
+          isJointIncome: values.isJointIncome,
 
-        acceptOfQualification: values?.acceptOfQualification,
-        acceptRefusalRight: values?.acceptRefusalRight,
-      }
+          acceptOfQualification: values?.acceptOfQualification,
+          acceptRefusalRight: values?.acceptRefusalRight,
+        }
       : emptyInvestorDeclaration,
 
     taxDeclarations: taxDeclarations?.map((t: any, idx: number) => ({
