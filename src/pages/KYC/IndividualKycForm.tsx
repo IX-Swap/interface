@@ -123,8 +123,15 @@ export default function IndividualKycForm() {
 
   useEffect(() => {
     const code = new URL(window.location.href).href?.split('=')[1]
-    setReferralCode(code)
-
+    const storedReferralCode = localStorage.getItem('referralCode')
+    if (code) {
+      setReferralCode(code)
+      localStorage.setItem('referralCode', code)
+    } else if (storedReferralCode) {
+      setReferralCode(storedReferralCode)
+    }
+    // setReferralCode(code)
+    // localStorage.setItem('referralCode', code)
     if (account && prevAccount && account !== prevAccount) {
       history.push('/kyc')
     }
@@ -514,8 +521,8 @@ export default function IndividualKycForm() {
 
                 if (data?.id) {
                   history.push('/kyc')
-
                   addPopup({ info: { success: true, summary: 'KYC was successfully submitted' } })
+                  localStorage.removeItem('referralCode')
                 } else {
                   addPopup({ info: { success: false, summary: 'Something went wrong' } })
                   setCanSubmit(true)
