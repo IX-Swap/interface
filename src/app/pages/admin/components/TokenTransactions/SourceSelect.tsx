@@ -2,7 +2,7 @@ import React from 'react'
 import { FormControl } from '@mui/material'
 // import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { SelectProps } from 'ui/Select/Select'
-import { Autocomplete } from 'ui/Select/Autocomplete'
+import { Autocomplete } from 'ui/Select/Autocomplete/Autocomplete'
 
 export const SourceSelect = (props: Partial<SelectProps>) => {
   const options = [

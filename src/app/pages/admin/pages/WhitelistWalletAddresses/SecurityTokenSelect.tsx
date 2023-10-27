@@ -1,11 +1,12 @@
 import React from 'react'
-import { FormControl, Box, Typography } from '@mui/material'
+import { FormControl } from '@mui/material'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { SelectProps } from 'ui/Select/Select'
-import { Autocomplete } from 'ui/Select/Autocomplete'
+import { Autocomplete } from 'ui/Select/Autocomplete/Autocomplete'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
+import { SecurityTokenSelectItem } from 'ui/Select/SelectItem/SecurityToken/SecurityToken'
 
-export const SecurityTokenDropdown = (props: Partial<SelectProps>) => {
+export const SecurityTokenSelect = (props: Partial<SelectProps>) => {
   const { data } = useAssetsData('Security', 500)
 
   if (data === undefined || data.list.length < 1) {
@@ -15,23 +16,7 @@ export const SecurityTokenDropdown = (props: Partial<SelectProps>) => {
   const options = data?.list?.map(data => {
     return {
       label: [data.symbol, data.name, data?.network?.name],
-      render: (
-        <Box display={'flex'} alignItems='center' gap={1}>
-          <Typography color='tooltip.color'>{data.symbol}</Typography>
-          <Typography>{data.name}</Typography>
-          <Box
-            color='tooltip.color'
-            sx={{
-              backgroundColor: '#F0F2F7B2',
-              paddingX: 1,
-              paddingY: 0.5,
-              borderRadius: '4px'
-            }}
-          >
-            {data?.network?.name}
-          </Box>
-        </Box>
-      ),
+      render: <SecurityTokenSelectItem sto={data} />,
       value: data._id
     }
   })

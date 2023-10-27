@@ -1,4 +1,4 @@
-import React, { useState, useMemo, ReactNode } from 'react'
+import React, { ReactNode, useState, useMemo } from 'react'
 import { TextField, InputAdornment } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { Select, SelectProps } from 'ui/Select/Select'
@@ -18,7 +18,7 @@ export const Autocomplete = ({ options, ...props }: AutocompleteProps) => {
   const containsText = (text: any, searchText: string) =>
     text.toLowerCase().indexOf(searchText.toLowerCase()) > -1
 
-  const [selectedOption, setSelectedOption] = useState('')
+  const [selectedOption, setSelectedOption] = useState(props.value)
   const [searchText, setSearchText] = useState('')
 
   options = options.map(option => ({
@@ -34,13 +34,15 @@ export const Autocomplete = ({ options, ...props }: AutocompleteProps) => {
     [searchText, options]
   )
 
+  //   useEffect(() => setSelectedOption(props.value), [props.value])
+
   return (
     <Select
       {...props}
       label={undefined}
       displayEmpty
       placeholder={props.placeholder}
-      value={selectedOption}
+      //   value={selectedOption}
       onChange={(e, value) => {
         setSelectedOption(value?.props?.children)
         if (typeof props.onChange === 'function') props.onChange(e)
@@ -53,7 +55,6 @@ export const Autocomplete = ({ options, ...props }: AutocompleteProps) => {
         autoFocus
         placeholder='Search'
         fullWidth
-        sx={{ marginTop: 1 }}
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>
@@ -61,6 +62,7 @@ export const Autocomplete = ({ options, ...props }: AutocompleteProps) => {
             </InputAdornment>
           )
         }}
+        sx={{ marginTop: 1 }}
         onChange={e => setSearchText(e.target.value)}
         onKeyDown={e => {
           if (e.key !== 'Escape') {
@@ -69,11 +71,17 @@ export const Autocomplete = ({ options, ...props }: AutocompleteProps) => {
         }}
       />
 
-      {displayedOptions?.map((option: Option, i) => (
-        <SelectItem key={i} value={option.value}>
-          {option?.render ?? option.label}
+      {displayedOptions.length > 0 ? (
+        displayedOptions?.map((option: Option, i) => (
+          <SelectItem key={i} value={option.value}>
+            {option?.render ?? option.label}
+          </SelectItem>
+        ))
+      ) : (
+        <SelectItem key={0} value={undefined} disabled>
+          No results found.
         </SelectItem>
-      ))}
+      )}
     </Select>
   )
 }

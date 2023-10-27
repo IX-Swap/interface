@@ -45,7 +45,8 @@ export const useStyles = makeStyles(theme => {
     paper: {
       '&.MuiPaper-root': {
         paddingTop: 0,
-        paddingBottom: 0
+        paddingBottom: 0,
+        maxHeight: 500
       }
     },
     list: {

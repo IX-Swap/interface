@@ -2,11 +2,11 @@ import React, { ReactElement } from 'react'
 import { Box, Button, Typography, CircularProgress } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useWeb3React } from '@web3-react/core'
-import { injected, coinbase } from 'config/blockchain/connectors'
 import { SUPPORTED_WALLETS } from 'config/blockchain/supportedWallets'
 import { useServices } from 'hooks/useServices'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
+import _ from 'lodash'
 
 interface ConnectWalletButtonProps {
   children: ReactElement
@@ -41,6 +41,53 @@ const ConnectWalletButton = ({
   )
 }
 
+export const useConnectWallet = () => {
+  const { activate } = useWeb3React()
+  const { snackbarService } = useServices()
+
+  const connectWallet = async (walletKey: string) => {
+    if (_.has(SUPPORTED_WALLETS, walletKey)) {
+      const hasMetamaskExtension = window.ethereum?.isMetaMask === true
+
+      // * Remove checking for Coinbase wallet extension (will default to pop-up with options to connect; including the QR option)
+      //   const hasCoinbaseExtension = true
+
+      // ! Doesn't work if user has no Metamask wallet extension enabled
+      //   const hasCoinbaseExtension =
+      //     typeof window.ethereum?.providers?.find(
+      //       (provider: any) => provider.isCoinbaseWallet === true
+      //     ) !== 'undefined'
+
+      // * Seem to work even without the Metamask wallet extension enabled
+      const hasCoinbaseExtension =
+        window.web3?.currentProvider?.isCoinbaseWallet === true
+
+      const hasExtension = {
+        METAMASK: hasMetamaskExtension,
+        COINBASE: hasCoinbaseExtension
+      }
+
+      if (hasExtension[walletKey] === true) {
+        return await activate(SUPPORTED_WALLETS[walletKey].connector)
+      } else {
+        snackbarService.showSnackbar(
+          <>
+            Failed to detect wallet extension.
+            <br />
+            <br />
+            Please install the correct wallet extension in your browser.
+          </>,
+          'error'
+        )
+      }
+    }
+
+    return false
+  }
+
+  return { connectWallet }
+}
+
 export const ConnectWallet = ({
   onConnect,
   isLoading = false
@@ -48,36 +95,8 @@ export const ConnectWallet = ({
   onConnect: Function
   isLoading?: boolean
 }) => {
-  const { activate } = useWeb3React()
-  const { snackbarService } = useServices()
-
   const { control } = useFormContext<WithdrawalAddressFormValues>()
-
-  const hasMetamaskExtension = window.ethereum?.isMetaMask === true
-
-  // * Remove checking for Coinbase wallet extension (will default to pop-up with options to connect; including the QR option)
-  //   const hasCoinbaseExtension = true
-
-  // ! Doesn't work if user has no Metamask wallet extension enabled
-  //   const hasCoinbaseExtension =
-  //     typeof window.ethereum?.providers?.find(
-  //       (provider: any) => provider.isCoinbaseWallet === true
-  //     ) !== 'undefined'
-
-  // * Seem to work even without the Metamask wallet extension enabled
-  const hasCoinbaseExtension =
-    window.web3?.currentProvider?.isCoinbaseWallet === true
-
-  const failedToDetectExtension = () =>
-    snackbarService.showSnackbar(
-      <>
-        Failed to detect wallet extension.
-        <br />
-        <br />
-        Please install the correct wallet extension in your browser.
-      </>,
-      'error'
-    )
+  const { connectWallet } = useConnectWallet()
 
   return (
     <Box
@@ -88,51 +107,21 @@ export const ConnectWallet = ({
       width={'100%'}
       gap={2}
     >
-      <ConnectWalletButton
-        onClick={async () => {
-          if (hasMetamaskExtension) {
-            await activate(injected)
-            control.setValue('wallet', 'METAMASK')
+      {Object.values(SUPPORTED_WALLETS).map(wallet => (
+        <ConnectWalletButton
+          onClick={async () => {
+            await connectWallet(wallet.key)
+            control.setValue('wallet', wallet.key)
             onConnect()
-          } else {
-            failedToDetectExtension()
-          }
-        }}
-        isLoading={isLoading}
-      >
-        <Box display={'flex'} alignItems={'center'} gap={1}>
-          <span>MetaMask Wallet</span>
-          <img
-            src={SUPPORTED_WALLETS.METAMASK.iconURL}
-            alt={'Metamask'}
-            height={'20'}
-          />
-        </Box>
-      </ConnectWalletButton>
-
-      <Typography variant='subtitle2'>or</Typography>
-
-      <ConnectWalletButton
-        onClick={async () => {
-          if (hasCoinbaseExtension) {
-            await activate(coinbase)
-            control.setValue('wallet', 'COINBASE')
-            onConnect()
-          } else {
-            failedToDetectExtension()
-          }
-        }}
-        isLoading={isLoading}
-      >
-        <Box display={'flex'} alignItems={'center'} gap={1}>
-          <span>Coinbase Wallet</span>
-          <img
-            src={SUPPORTED_WALLETS.COINBASE.iconURL}
-            alt={'Coinbase'}
-            height={'20'}
-          />
-        </Box>
-      </ConnectWalletButton>
+          }}
+          isLoading={isLoading}
+        >
+          <Box display={'flex'} alignItems={'center'} gap={1}>
+            <span>{wallet.name} Wallet</span>
+            <img src={wallet.iconURL} alt={wallet.name} height={'20'} />
+          </Box>
+        </ConnectWalletButton>
+      ))}
     </Box>
   )
 }
@@ -168,7 +157,7 @@ export const WalletInfo = ({ wallet }: { wallet: string }) => {
           </Typography>
           <img
             src={SUPPORTED_WALLETS[wallet].iconURL}
-            alt={'Metamask'}
+            alt={SUPPORTED_WALLETS[wallet].name}
             height={'20'}
           />
         </Box>

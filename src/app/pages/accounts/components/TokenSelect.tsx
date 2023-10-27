@@ -1,36 +1,38 @@
-import { SelectProps } from '@mui/material'
-import { useGetCustody } from 'app/pages/accounts/hooks/useGetCustody'
+import { SelectProps, FormControl } from '@mui/material'
+// import { useGetCustody } from 'app/pages/accounts/hooks/useGetCustody'
+// import { useGetTokenHoldings } from 'app/pages/accounts/hooks/useGetTokenHoldings'
+import { useAssetsData } from 'hooks/asset/useAssetsData'
 import React from 'react'
-import { AssetBalance } from 'types/balance'
-import { isEmptyString } from 'helpers/strings'
-import { Select } from 'ui/Select/Select'
-import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Autocomplete } from 'ui/Select/Autocomplete/Autocomplete'
+import { SecurityTokenSelectItem } from 'ui/Select/SelectItem/SecurityToken/SecurityToken'
 
-export const TokenSelect = React.forwardRef((props: SelectProps, ref) => {
-  const { data, isLoading } = useGetCustody()
-  const label = isLoading || data === undefined ? 'No tokens' : props.label
+export const TokenSelect = React.forwardRef((props: SelectProps) => {
+  //   const { data, isLoading } = useGetTokenHoldings()
+  const { data, isLoading } = useAssetsData('Security', 500, true)
+
+  if (isLoading || data === undefined || data.list.length < 1) {
+    return null
+  }
+
+  const options = data?.list?.map(token => {
+    return {
+      label: [token?.symbol, token?.name, token?.network?.name],
+      render: <SecurityTokenSelectItem sto={token} />,
+      value: token
+    }
+  })
 
   return (
-    <>
-      <InputLabel>{props.label}</InputLabel>
-      <Select
+    <FormControl fullWidth variant='outlined'>
+      <InputLabel>Security Token</InputLabel>
+
+      <Autocomplete
         {...props}
-        ref={ref}
-        placeholder={String(props.label)}
-        label={undefined}
-        displayEmpty
-      >
-        <SelectItem disabled value={undefined}>
-          {label}
-        </SelectItem>
-        {data?.map((token: AssetBalance) => (
-          <SelectItem key={token.symbol} value={token.symbol}>
-            {token.symbol} {!isEmptyString(token.name) && `(${token.name})`}
-          </SelectItem>
-        ))}
-      </Select>
-    </>
+        placeholder='Select Security Token'
+        options={options}
+      />
+    </FormControl>
   )
 })
 

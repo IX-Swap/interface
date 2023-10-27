@@ -2,12 +2,12 @@ import React from 'react'
 import { FormControl, Box, Typography } from '@mui/material'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { SelectProps } from 'ui/Select/Select'
-import { Autocomplete } from 'ui/Select/Autocomplete'
+import { Autocomplete } from 'ui/Select/Autocomplete/Autocomplete'
 import { useWalletAddresses } from 'app/pages/accounts/hooks/useWalletAddresses'
 import { renderAddressColumn } from 'helpers/rendering'
 import { renderIndividualOrCompanyName } from 'helpers/tables'
 
-export const WalletAddressDropdown = (props: Partial<SelectProps>) => {
+export const WalletAddressSelect = (props: Partial<SelectProps>) => {
   const { data } = useWalletAddresses('Approved', false, 500)
 
   if (data === undefined || data.length < 1) {
