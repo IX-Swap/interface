@@ -3,7 +3,7 @@ import { Box, Button, Typography, CircularProgress } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useWeb3React } from '@web3-react/core'
 import { SUPPORTED_WALLETS } from 'config/blockchain/supportedWallets'
-import { useServices } from 'hooks/useServices'
+import { useSnackbar } from 'hooks/useSnackbar'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import _ from 'lodash'
@@ -43,7 +43,7 @@ const ConnectWalletButton = ({
 
 export const useConnectWallet = () => {
   const { activate } = useWeb3React()
-  const { snackbarService } = useServices()
+  const { showSnackbar } = useSnackbar()
 
   const connectWallet = async (walletKey: string) => {
     if (_.has(SUPPORTED_WALLETS, walletKey)) {
@@ -68,9 +68,13 @@ export const useConnectWallet = () => {
       }
 
       if (hasExtension[walletKey] === true) {
-        return await activate(SUPPORTED_WALLETS[walletKey].connector)
+        return await activate(
+          SUPPORTED_WALLETS[walletKey].connector,
+          undefined,
+          true
+        )
       } else {
-        snackbarService.showSnackbar(
+        showSnackbar(
           <>
             Failed to detect wallet extension.
             <br />

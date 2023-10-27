@@ -6,7 +6,7 @@ import { ethers } from 'ethers'
 import ERC20_ABI from 'abis/erc20.json'
 // import { LabelledValue } from 'components/LabelledValue'
 import { TokensField as SecurityToken } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/TokensField'
-import { DepositMethod } from './DepositMethod'
+import { DepositMethod } from './DepositMethod/DepositMethod'
 import { WalletAddress } from './WalletAddress'
 import { DepositAmount } from './DepositAmount'
 // import { Network } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/Network'
@@ -97,7 +97,7 @@ export const DepositFormFields: React.FC = () => {
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    fetchTokenBalance()
+    if (isNetworkSupported && networksMatched) fetchTokenBalance()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, account, network])
 

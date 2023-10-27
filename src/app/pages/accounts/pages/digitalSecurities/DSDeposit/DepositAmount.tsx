@@ -111,6 +111,11 @@ export const DepositAmount = ({
                 }
               }
             }}
+            InputProps={{
+              startAdornment: <></>,
+              endAdornment: <></>,
+              inputProps: {}
+            }}
             isErrorMessageEnabled={false}
           />
         </Box>
