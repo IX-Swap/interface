@@ -5,8 +5,8 @@ import { Add } from '@mui/icons-material'
 import { TypedField } from 'components/form/TypedField'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { Submit } from 'components/form/Submit'
-import { SecurityTokenDropdown } from './SecurityTokenDropdown'
-import { WalletAddressDropdown } from './WalletAddressDropdown'
+import { SecurityTokenSelect } from './SecurityTokenSelect'
+import { WalletAddressSelect } from './WalletAddressSelect'
 import { WhitelistWalletAddressFormValues } from 'types/whitelistWalletAddress'
 
 interface WhitelistWalletAddressFieldsProps {
@@ -22,7 +22,7 @@ export const WhitelistWalletAddressFields = ({
   return (
     <Box display={'flex'} flexDirection={'column'} gap={3}>
       <TypedField
-        component={SecurityTokenDropdown}
+        component={SecurityTokenSelect}
         control={control}
         name='assetId'
         variant='outlined'
@@ -31,7 +31,7 @@ export const WhitelistWalletAddressFields = ({
       {!isAddingAddress ? (
         <Box display={'flex'} alignItems={'end'} gap={2}>
           <TypedField
-            component={WalletAddressDropdown}
+            component={WalletAddressSelect}
             control={control}
             name='address'
             variant='outlined'

@@ -18,7 +18,7 @@ import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicat
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { useTheme } from '@emotion/react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 interface PopularSTO {
   _id: string
@@ -83,7 +83,7 @@ export const MostPopularSTOs = () => {
                   <Box display={'flex'} gap={1} alignItems={'center'}>
                     <Link
                       component={AppRouterLinkComponent}
-                      to={IssuanceRoute.view}
+                      to={InvestRoute.view}
                       params={{ dsoId: sto._id, issuerId: sto.user }}
                     >
                       <DSOLogo

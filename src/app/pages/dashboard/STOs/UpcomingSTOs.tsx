@@ -19,7 +19,7 @@ import { renderListingStatus } from 'helpers/tables'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { useTheme } from '@emotion/react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 interface UpcomingSTO {
   _id: string
@@ -81,7 +81,7 @@ export const UpcomingSTOs = () => {
                   <Box display={'flex'} gap={1} alignItems={'center'}>
                     <Link
                       component={AppRouterLinkComponent}
-                      to={IssuanceRoute.view}
+                      to={InvestRoute.view}
                       params={{ dsoId: sto._id, issuerId: sto.user }}
                     >
                       <DSOLogo

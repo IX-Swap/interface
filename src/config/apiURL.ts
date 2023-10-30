@@ -95,8 +95,11 @@ export const accountsURL = {
   cashWithdrawals: {
     create: (userId?: string) => `/accounts/cash/withdrawals/${userId}`
   },
-  digitalSecurities: {
-    getDepositAddress: '/custody/deposits/getDepositAddress'
+  securityToken: {
+    // getDepositAddress: '/custody/deposits/getDepositAddress'
+    getDepositAddress: (assetId: string) =>
+      `/deposits/deposit-address/${assetId}`,
+    deposit: `/deposits/sto`
   },
   dsWithdrawals: {
     create: (userId?: string) => `/accounts/security/withdrawals/${userId}`,
