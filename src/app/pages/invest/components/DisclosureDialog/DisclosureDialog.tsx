@@ -65,11 +65,16 @@ export const DisclosureDialog = ({
                   />
                 }
                 label={
-                  <>
-                    I agree, accept, acknowledge and understand all the
-                    Disclosures.
-                    {/* <ExchangeRulesLink /> */}
-                  </>
+                  <Box
+                    pt={1.5}
+                    pl={1}
+                    lineHeight={1.5}
+                    color={!isChecked ? 'tooltip.color' : ''}
+                  >
+                    I agree, accept, acknowledge, and understand all the
+                    disclosures and <ExchangeRulesLink />. I also agree to abide
+                    by the <ExchangeRulesLink />.
+                  </Box>
                 }
               />
             </Box>
@@ -86,6 +91,7 @@ export const DisclosureDialog = ({
               variant={'outlined'}
               color={'primary'}
               onClick={handleClose}
+              disableElevation
             >
               Decline
             </Button>
@@ -98,6 +104,7 @@ export const DisclosureDialog = ({
               color={'primary'}
               disabled={!isChecked}
               onClick={acceptDisclosure}
+              disableElevation
             >
               I Agree
             </Button>

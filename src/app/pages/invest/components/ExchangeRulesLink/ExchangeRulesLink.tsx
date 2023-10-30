@@ -31,7 +31,7 @@ export const ExchangeRulesLink = () => {
       target='_blank'
       // rel='noopener noreferrer'
     >
-      Exchange Rules
+      IX Exchange Rules
     </Link>
     //   )}
     // </DownloadDocument>
