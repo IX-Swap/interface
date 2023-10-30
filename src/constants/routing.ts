@@ -26,6 +26,7 @@ const WETH_ONLY: ChainTokenList = {
   [5]: [WETH9[5]],
   [42]: [WETH9[42]],
   [137]: [WETH9[137]],
+  [80001]: [WETH9[80001]],
 }
 
 // used only for testing multihop on kovan
@@ -45,6 +46,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [1]: [...WETH_ONLY[1], ...TRANSFORMED_DEFAULT_TOKEN_LIST[1], USDC[1], IXS[1]],
   [42]: [...WETH_ONLY[42], ...TEST_TOKENS, ...TRANSFORMED_DEFAULT_TOKEN_LIST[42], USDC[42], IXS[42]],
   [137]: [...WETH_ONLY[137], ...TRANSFORMED_DEFAULT_TOKEN_LIST[137], USDC[137], IXS[137]],
+  [80001]: [...WETH_ONLY[80001], ...TRANSFORMED_DEFAULT_TOKEN_LIST[80001], USDC[80001], IXS[80001]],
 }
 export const ADDITIONAL_BASES: { [chainId: number]: { [tokenAddress: string]: Token[] } } = {
   [1]: {},
@@ -61,6 +63,7 @@ export const ADDITIONAL_BASES: { [chainId: number]: { [tokenAddress: string]: To
     // [WBTC.address]: [renBTC],
     // [renBTC.address]: [WBTC],
   },
+  [80001]: {},
 }
 /**
  * Some tokens can only be swapped via certain pairs, so we override the list of bases that are considered for these
@@ -72,6 +75,7 @@ export const CUSTOM_BASES: { [chainId: number]: { [tokenAddress: string]: Token[
   },
   [42]: {},
   [137]: {},
+  [80001]: {},
 }
 
 /**
@@ -84,6 +88,7 @@ export const COMMON_BASES: ChainCurrencyList = {
   [5]: [Ether.onChain(5), WETH9[5]],
   [42]: [Ether.onChain(42), WETH9[42], USDC[42]],
   [137]: [Ether.onChain(137), WETH9[137], USDC[137]],
+  [80001]: [Ether.onChain(80001), WETH9[80001], USDC[80001]],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
@@ -92,9 +97,11 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [1]: [...WETH_ONLY[1], ...TRANSFORMED_DEFAULT_TOKEN_LIST[1], USDC[1], IXS[1]],
   [42]: [...WETH_ONLY[42], ...TEST_TOKENS, ...TRANSFORMED_DEFAULT_TOKEN_LIST[42], USDC[42], IXS[42]],
   [137]: [...WETH_ONLY[137], ...TRANSFORMED_DEFAULT_TOKEN_LIST[137], USDC[137], IXS[137]],
+  [80001]: [...WETH_ONLY[80001], ...TRANSFORMED_DEFAULT_TOKEN_LIST[80001], USDC[80001], IXS[80001]],
 }
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {
   [1]: [[USDC[1], IXS[1]]],
   [42]: [[USDC[42], IXS[42]]],
   [137]: [[USDC[137], IXS[137]]],
+  [80001]: [[USDC[80001], IXS[80001]]],
 }
