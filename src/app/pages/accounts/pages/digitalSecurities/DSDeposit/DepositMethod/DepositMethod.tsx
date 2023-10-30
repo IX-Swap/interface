@@ -89,7 +89,10 @@ export const DepositMethod = () => {
                     }}
                   >
                     <FormControlLabel
-                      sx={{ width: '100%' }}
+                      sx={{
+                        width: '100%',
+                        '& .MuiFormControlLabel-label': { width: '100%' }
+                      }}
                       label={
                         <Box className={classes.labelWrapper}>
                           <Box className={classes.label}>
@@ -103,22 +106,20 @@ export const DepositMethod = () => {
                               height={'20'}
                             />
                           </Box>
-                          <Box className={classes.iconWrapper}>
-                            {isConnecting && (
-                              <CircularProgress
-                                size={'1rem'}
-                                className={classes.loaderIcon}
-                              />
-                            )}
+                          {isConnecting && (
+                            <CircularProgress
+                              size={'1rem'}
+                              className={classes.loaderIcon}
+                            />
+                          )}
 
-                            {isSelected && (
-                              <CheckIcon
-                                className={classes.checkIcon}
-                                width={'20'}
-                                height={'16'}
-                              />
-                            )}
-                          </Box>
+                          {isSelected && (
+                            <CheckIcon
+                              className={classes.checkIcon}
+                              width={'20'}
+                              height={'16'}
+                            />
+                          )}
                         </Box>
                       }
                       value={wallet.key}

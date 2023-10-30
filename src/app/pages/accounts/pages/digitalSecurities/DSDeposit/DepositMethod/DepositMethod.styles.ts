@@ -27,18 +27,11 @@ export const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     gap: '8px'
   },
-  iconWrapper: {
-    position: 'relative'
-  },
   loaderIcon: {
-    position: 'absolute',
-    right: '-50px',
     color: theme.palette.tooltip.color,
     opacity: 0.5
   },
   checkIcon: {
-    position: 'absolute',
-    right: '-50px',
     color: '#3DD08A'
   }
 }))
