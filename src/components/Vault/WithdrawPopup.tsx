@@ -96,7 +96,7 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
               </TYPE.title10>
             </RowCenter>
             <Line style={{ marginBottom: '30px' }} />
-            <RowCenter>
+            <RowCenter onClick={onClose}>
               <LinkWrap>
                 <Trans>Back to Security Token Vault</Trans>
               </LinkWrap>
