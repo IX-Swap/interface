@@ -21,10 +21,16 @@ export const ProofOfAddressForm = () => {
               label='Proof of Address'
               hideLabel
               helperElement={
-                <Typography className={styles.text} variant='body1'>
-                  utility bills, bank statement/credit card statement, tenancy
-                  agreement, telecom bill
-                </Typography>
+                <>
+                  <Typography mb={2} className={styles.text}>
+                    Please upload the following documents. All account
+                    statements and documents should be dated within 3 months.{' '}
+                  </Typography>
+                  <Typography className={styles.text}>
+                    Utility Bills, Bank Statement/Credit Card Statement, Tenancy
+                    Agreement, Telecom Bill
+                  </Typography>
+                </>
               }
             />
           </Grid>

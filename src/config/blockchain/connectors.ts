@@ -23,7 +23,7 @@ const NETWORK_URLS: {
   42: `https://kovan.infura.io/v3/${INFURA_KEY}`,
   137: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
   80001: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
-  8453: `https://goerli.infura.io/v3/${INFURA_KEY}`,
+  //   8453: `https://goerli.infura.io/v3/${INFURA_KEY}`,
   84531: `https://base-goerli.infura.io/v3/${INFURA_KEY}`
 }
 
@@ -44,7 +44,7 @@ export const injected = new InjectedConnector({
 })
 
 export const coinbase = new WalletLinkConnector({
-  url: NETWORK_URLS[8453],
+  url: NETWORK_URLS[84531],
   appName: 'IX Prime',
   supportedChainIds
 })

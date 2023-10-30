@@ -29,7 +29,7 @@ export const Tenants = () => {
                   size='large'
                   color='primary'
                   variant='contained'
-                  to={AdminRoute.createTenant}
+                  to={AdminRoute.createClientSpace}
                 >
                   Create new Client Space
                 </Button>

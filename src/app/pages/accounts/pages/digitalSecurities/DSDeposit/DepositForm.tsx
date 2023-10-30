@@ -2,7 +2,7 @@ import React from 'react'
 import { DepositFormFields } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositFormFields'
 import { withdrawValidationSchema } from 'app/pages/accounts/validation'
 import { Form } from 'components/form/Form'
-import { Box, Grid } from '@mui/material'
+import { Typography } from '@mui/material'
 
 export const DepositForm: React.FC = () => {
   return (
@@ -12,11 +12,10 @@ export const DepositForm: React.FC = () => {
         token: ''
       }}
     >
-      <Box maxWidth={900} m='0 auto'>
-        <Grid container spacing={3}>
-          <DepositFormFields />
-        </Grid>
-      </Box>
+      <Typography variant='h3' textAlign={'center'} mb={5}>
+        Deposit My Tokens
+      </Typography>
+      <DepositFormFields />
     </Form>
   )
 }

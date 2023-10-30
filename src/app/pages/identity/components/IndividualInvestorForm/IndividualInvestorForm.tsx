@@ -63,7 +63,7 @@ export const IndividualInvestorForm = memo(() => {
         defaultActiveStep={defaultActiveStep}
         steps={individualInvestorFormSteps}
         nonLinear
-        formTitle='Individual Investor Identity'
+        formTitle='Individual KYC'
         createModeRedirect={IdentityRoute.editIndividual}
       />
     </>

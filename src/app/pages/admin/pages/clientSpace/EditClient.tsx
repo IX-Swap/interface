@@ -27,7 +27,7 @@ export const EditClient = () => {
   )
 
   if (!isLoading && result === undefined) {
-    replace(AdminRoute.tenants)
+    replace(AdminRoute.clientSpaces)
   }
 
   return (

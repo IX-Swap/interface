@@ -95,8 +95,11 @@ export const accountsURL = {
   cashWithdrawals: {
     create: (userId?: string) => `/accounts/cash/withdrawals/${userId}`
   },
-  digitalSecurities: {
-    getDepositAddress: '/custody/deposits/getDepositAddress'
+  securityToken: {
+    // getDepositAddress: '/custody/deposits/getDepositAddress'
+    getDepositAddress: (assetId: string) =>
+      `/deposits/deposit-address/${assetId}`,
+    deposit: `/deposits/sto`
   },
   dsWithdrawals: {
     create: (userId?: string) => `/accounts/security/withdrawals/${userId}`,
@@ -106,8 +109,9 @@ export const accountsURL = {
     getById: (userId?: string, withdrawalAddressId?: string) =>
       `accounts/withdrawal-addresses/${userId}/${withdrawalAddressId}`,
     create: (userId?: string) => `/accounts/withdrawal-addresses/${userId}`,
-    getAll: (userId?: string) =>
+    getByUser: (userId?: string) =>
       `/accounts/withdrawal-addresses/list/${userId}`,
+    getAll: (userId?: string) => `/accounts/withdrawal-addresses/list`,
     getAllNetworks: '/blockchain/networks'
   },
   assets: {
@@ -115,6 +119,9 @@ export const accountsURL = {
     getAll: '/accounts/assets/list',
     custody: (userId?: string) => `/custody/available-tokens/${userId}`,
     getTokenInfo: '/custody/token-info'
+  },
+  ledger: {
+    getTokenHoldings: '/ledger/token-holdings'
   },
   balance: {
     getAll: (userId?: string) => `/accounts/balance/${userId}`,
@@ -153,6 +160,11 @@ export const accountsURL = {
     getDividends: (userId?: string) =>
       `/resources/financialReports/dividends/${userId}`
   }
+}
+
+export const ledgerURL = {
+  getTokenTransactions: '/ledger/token-transactions',
+  exportTokenTransactions: '/ledger/export/token-transactions'
 }
 
 export const tenantsURL = {
@@ -229,6 +241,11 @@ export const issuanceURL = {
     getReport: (reportId?: string) =>
       `/issuance/financial-report-file/${reportId}`,
     reportTemplate: '/issuance/financial-report-file/template/recent'
+  },
+  whitelist: {
+    getWhitelistedAddresses: '/issuance/whitelist/list',
+    addToWhitelist: '/issuance/whitelist/add',
+    removeFromWhitelist: '/issuance/whitelist/remove'
   }
 }
 
@@ -237,6 +254,7 @@ export const authURL = {
   changePassword: (userId?: string) => `/auth/password/change/${userId}`,
   resetPassword: '/auth/password/reset/start',
   resetPasswordConfirm: '/auth/password/reset/confirm',
+  sendVerificationEmail: '/auth/sendVerificationEmail',
   enable2fa: (userId?: string, otp?: string) =>
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
   disable2fa: (userId: string) => `/auth/2fa/disable/${userId}`,
@@ -253,6 +271,8 @@ export const authURL = {
 
 export const userURL = {
   getUserById: (userId?: string) => `/auth/user/${userId}`,
+  getUserByAccountId: (accountId?: string) =>
+    `/auth/account/user?accountId=${accountId}`,
   getAll: '/auth/users/list',
   getUserProfile: (userId?: string) => `/auth/profiles/${userId}`,
   updateRoles: (userId?: string) => `/auth/users/${userId}/roles`,
@@ -293,6 +313,7 @@ export const bannerURL = {
 export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
+  createManualTransaction: '/virtual-accounts/transactions/manual',
   getByUserId: (userId?: string) => `/virtual-accounts/${userId}`,
   assign: '/virtual-accounts/assign',
   unassign: (accountId?: string) => `/virtual-accounts/unassign/${accountId}`,
@@ -305,6 +326,7 @@ export const virtualAccounts = {
 export const exchange = {
   marketList: '/exchange/markets/list',
   otcList: 'otc/market/list',
+  estimateFee: 'exchange/orders/estimate-fee',
   userOrders: (userId?: string) => `/exchange/orders/list/${userId}`,
   userTrades: (userId?: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {

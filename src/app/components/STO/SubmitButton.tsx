@@ -38,7 +38,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   const isDraft = rawData?.status === 'Draft'
   const isSubmitted = rawData?.status === 'Submitted'
   const isApproved = rawData?.status === 'Approved'
-  console.log('rawData', rawData)
+  //   console.log('rawData', rawData)
   const getButtonText = () => {
     if (isApproved) return 'Approved'
     if (isSubmitted) return 'Submitted'

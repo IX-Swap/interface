@@ -69,6 +69,7 @@ export interface TableViewProps<T> {
   limitRows?: number
   showExport?: boolean
   exportFileName?: string
+  exportButtonId?: string
 }
 
 export const TableView = <T,>({
@@ -98,7 +99,8 @@ export const TableView = <T,>({
   paperProps,
   limitRows = 0,
   showExport = false,
-  exportFileName = 'CSV Export'
+  exportFileName = 'CSV Export',
+  exportButtonId = 'exportToCSV'
 }: TableViewProps<T>): JSX.Element => {
   const hasActions = actions !== undefined
   const {
@@ -262,15 +264,20 @@ export const TableView = <T,>({
       <Grid item zIndex={2}>
         {renderTableLoading()}
 
-        {showExport && columns.length > 0 && _items.length > 0 && (
-          <Box display={'flex'} justifyContent={'end'} mb={2}>
-            <ExportButton
-              fileName={exportFileName}
-              columns={columns}
-              rows={_items}
-            />
-          </Box>
-        )}
+        {/* {columns.length > 0 && _items.length > 0 && ( */}
+        <Box
+          display={showExport ? 'flex' : 'none'}
+          justifyContent={'end'}
+          mb={2}
+        >
+          <ExportButton
+            fileName={exportFileName}
+            columns={columns}
+            rows={_items}
+            id={exportButtonId}
+          />
+        </Box>
+        {/* )} */}
 
         <Paper style={{ backgroundColor: 'inherit' }} {...paperProps}>
           <TableContainer style={{ overflow: 'visible' }}>

@@ -17,6 +17,10 @@ export const useStyles = makeStyles(theme => ({
   },
   active: {
     border: `1px solid ${theme.palette.primary.main}`,
-    backgroundColor: 'rgba(76, 136, 255, 0.16)'
+    // backgroundColor: 'rgba(76, 136, 255, 0.16)'
+    backgroundColor: theme.palette.paginationItem.borderHover
+  },
+  disabled: {
+    backgroundColor: theme.palette.select.itemBorder
   }
 }))

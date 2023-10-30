@@ -19,6 +19,7 @@ import { dsoQueryKeys } from 'config/queryKeys'
 import { sanitize } from 'dompurify'
 import { formatDateToMMDDYY, formatTime } from 'helpers/dates'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { JsxElement } from 'typescript'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -31,7 +32,7 @@ export const renderMenuItems = (
 }
 
 export const renderSelectItems = (
-  items: Array<{ label: string; value: string | number }>
+  items: Array<{ label: string | JsxElement; value: string | number }>
 ): JSX.Element[] => {
   return items.map(({ value, label }) => (
     <SelectItem key={value} value={value}>
@@ -60,9 +61,10 @@ export const renderDSOFavorite = (
   />
 )
 
-export const renderAddressColumn = (address: string): JSX.Element => (
-  <WalletAddress address={address} />
-)
+export const renderAddressColumn = (
+  address: string,
+  enableCopy: boolean = true
+): JSX.Element => <WalletAddress address={address} enableCopy={enableCopy} />
 
 export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(sanitize(draft)))
@@ -105,3 +107,7 @@ export const renderPartOfEmail = (email: string | undefined) => {
   const [firstPart, secondPart] = email.split('@')
   return firstPart.slice(0, 3) + '***@' + secondPart
 }
+
+export const renderWrappedContent = (content: string, width = '72px') => (
+  <div style={{ width, wordWrap: 'break-word' }}>{content}</div>
+)

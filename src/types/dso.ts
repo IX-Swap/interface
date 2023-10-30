@@ -316,7 +316,7 @@ export interface DepositAddress {
   account_id: number
   wallet_name: string
   asset_ticker: string
-  deposit_address: string
+  address: string
   hd_path: string
   depositQRCodeUrl: string
 }

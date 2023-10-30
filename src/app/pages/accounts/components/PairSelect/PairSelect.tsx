@@ -1,9 +1,9 @@
+import React from 'react'
 import { FormControl } from '@mui/material'
 import { Pair, useMarketList } from 'app/pages/invest/hooks/useMarketList'
-import React from 'react'
-import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
-import { Select, SelectProps } from 'ui/Select/Select'
-import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+// import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { SelectProps } from 'ui/Select/Select'
+import { Autocomplete } from 'ui/Select/Autocomplete/Autocomplete'
 
 export const PairSelect = (props: Partial<SelectProps>) => {
   const { data } = useMarketList()
@@ -12,26 +12,32 @@ export const PairSelect = (props: Partial<SelectProps>) => {
     return null
   }
 
+  const options = data?.list?.map((data: Pair) => {
+    return { label: data.name, value: data._id }
+  })
+
   return (
     <FormControl fullWidth variant='outlined'>
-      <InputLabel>Pair</InputLabel>
+      {/* <InputLabel>Pair</InputLabel> */}
 
-      <Select
+      <Autocomplete options={options} placeholder='Select Pair' {...props} />
+
+      {/* <Select
         {...props}
         label={undefined}
         renderValue={(value: any) => data.map[value].name}
         displayEmpty
-        placeholder='Pair'
+        placeholder='Select Pair'
       >
         <SelectItem disabled value={undefined}>
-          Pair
+          Select Pair
         </SelectItem>
         {data.list.map((item: Pair) => (
           <SelectItem key={item._id} value={item._id}>
             {item.name}
           </SelectItem>
         ))}
-      </Select>
+      </Select> */}
     </FormControl>
   )
 }

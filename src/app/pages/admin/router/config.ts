@@ -7,6 +7,8 @@ import { ReactComponent as BannerIcon } from 'assets/icons/navigation/banner.svg
 import { ReactComponent as MasDisclosureIcon } from 'assets/icons/navigation/mas-disclosure.svg'
 import { ReactComponent as VAAuditIcon } from 'assets/icons/navigation/va-audit.svg'
 import { ReactComponent as VATransactionsIcon } from 'assets/icons/navigation/va-transactions.svg'
+import { ReactComponent as WhitelistIcon } from 'assets/icons/navigation/whitelist-wallet-addresses.svg'
+import { ReactComponent as TokenTransactionsIcon } from 'assets/icons/navigation/token-transactions.svg'
 import { ReactComponent as CustodyManagementIcon } from 'assets/icons/navigation/custody-management.svg'
 
 export const AdminRoute = {
@@ -20,21 +22,35 @@ export const AdminRoute = {
   viewIndividualIdentity: '/app/admin/identies/individual/:userId/view',
   viewCorporateIdentity:
     '/app/admin/identies/corporate/:userId/:identityId/view',
-  virtualAccount: '/app/admin/virtualAccount',
+  virtualAccount: '/app/admin/virtual-account',
   banner: '/app/admin/banner',
   masDisclosure: '/app/admin/masDisclosure',
-  virtualAccountAudit: '/app/admin/virtualAccountAudit',
-  virtualAccountTransactions: '/app/admin/virtualAccountTransactions',
+  virtualAccountAudit: '/app/admin/virtual-account-audit',
+  virtualAccountTransactions: '/app/admin/virtual-account-transactions',
   custodyManagement: '/app/admin/custody-management',
-  tenants: '/app/admin/tenants',
-  createTenant: '/app/admin/tenants/create',
-  viewTenant: '/app/admin/tenants/:tenantId/view',
-  editTenant: '/app/admin/tenants/:tenantId/edit'
+  clientSpaces: '/app/admin/client-spaces',
+  createClientSpace: '/app/admin/client-spaces/create',
+  viewClientSpace: '/app/admin/client-spaces/:tenantId/view',
+  editClientSpace: '/app/admin/client-spaces/:tenantId/edit',
+  whitelistWalletAddresses: '/app/admin/whitelist-wallet-addresses',
+  tokenTransactions: '/app/admin/token-transactions'
 }
 
 export const CustodyManagementRoute = {
   main: '/app/admin/custody-management',
   custodyDetails: '/app/admin/custody-management/:accountId/details'
+}
+
+export const WhitelistWalletAddressesRoute = {
+  list: AdminRoute.whitelistWalletAddresses,
+  create: AdminRoute.whitelistWalletAddresses + '/create'
+}
+
+export const VirtualAccountsRoute = {
+  transactions: {
+    list: AdminRoute.virtualAccountTransactions,
+    create: AdminRoute.virtualAccountTransactions + '/create'
+  }
 }
 
 export const adminLandingLinks: InternalRouteProps[] = [
@@ -80,7 +96,17 @@ export const adminLandingLinks: InternalRouteProps[] = [
   },
   {
     label: 'Client Spaces',
-    path: AdminRoute.tenants,
+    path: AdminRoute.clientSpaces,
     icon: IndividualIcon
+  },
+  {
+    label: 'Whitelist Wallet Addresses',
+    path: AdminRoute.whitelistWalletAddresses,
+    icon: WhitelistIcon
+  },
+  {
+    label: 'Token Transactions',
+    path: AdminRoute.tokenTransactions,
+    icon: TokenTransactionsIcon
   }
 ]

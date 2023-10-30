@@ -7,7 +7,7 @@ import { IBasicDataFeed } from 'charting_library'
 import { generatePath, Redirect, useParams } from 'react-router-dom'
 import { useMarketList } from 'app/pages/invest/hooks/useMarketList'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { GetWalletDialog } from 'app/pages/invest/components/GetWalletDialog/GetWalletDialog'
+// import { GetWalletDialog } from 'app/pages/invest/components/GetWalletDialog/GetWalletDialog'
 import { isMarketDataFalsy, isPairIdFalsy } from 'app/pages/invest/utils/order'
 import { history } from 'config/history'
 
@@ -44,8 +44,8 @@ export const Market = () => {
 
   const classes = useStyles()
   const {
-    openDialog,
-    setOpenDialog,
+    // openDialog,
+    // setOpenDialog,
     submitForm,
     isFetching,
     createOrderStatus
@@ -91,7 +91,7 @@ export const Market = () => {
         content={masDisclosure}
         isOpen={isDisclosureVisible && !isProdEnv}
       />
-      <GetWalletDialog open={openDialog} toggleOpen={setOpenDialog} />
+      {/* <GetWalletDialog open={openDialog} toggleOpen={setOpenDialog} /> */}
       <ExchangeDeactivatedDialog
         open={isOpenDeactivatedDialog}
         toggleOpen={toggleDeactivatedDialog}
