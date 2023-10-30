@@ -8,6 +8,7 @@ import { NumericInput } from 'components/form/NumericInput'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
 import { Submit } from 'components/form/Submit'
+import { CurrencySelect } from 'components/form/CurrencySelect'
 import { TransactionTypeSelect } from './TransactionTypeSelect'
 import { VirtualAccountTransactionFormValues } from 'types/virtualAccountTransaction'
 import { useUserByAccountId } from '../../hooks/useUserByAccountId'
@@ -46,6 +47,14 @@ export const CreateVirtualAccountTransactionFields = ({
         variant='outlined'
         label='Email'
         disabled
+      />
+      <TypedField
+        component={CurrencySelect}
+        control={control}
+        name='currency'
+        variant='outlined'
+        label='Currency'
+        helperText='Select Currency'
       />
       <TypedField
         control={control}

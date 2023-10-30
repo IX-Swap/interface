@@ -21,10 +21,11 @@ export const CreateVirtualAccountTransaction = () => {
   const handleSubmit = async ({
     ...values
   }: CreateVirtualAccountTransactionProps) => {
-    const { user, amount, type, reference } = values
+    const { user, currency, amount, type, reference } = values
 
     await createTransaction({
       user,
+      currency,
       amount,
       type,
       reference
