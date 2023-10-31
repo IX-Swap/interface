@@ -116,7 +116,7 @@ const KYC = () => {
     } else {
       setLoading(false)
     }
-  }, [pendingSign])
+  }, [pendingSign, status])
 
   const getKYCDescription = useCallback(() => {
     switch (status) {
