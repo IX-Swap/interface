@@ -122,6 +122,7 @@ const PinnedWrapper = styled.div`
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: 100%;
+    padding: 2rem 0rem 2rem 2rem;
   }
 `
 

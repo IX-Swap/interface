@@ -28,7 +28,7 @@ const sections = [
   { component: Cynopsis },
   { component: Information, kycKey: 'individual' },
   { component: Address },
-  { component: Referral },
+  // { component: Referral },
   { component: IndividualDocument },
   { component: UploadedDocuments, dataKey: 'documents' },
   { component: Occupation },

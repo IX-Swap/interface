@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { RowBetween } from 'components/Row'
+import { RowBetween, RowCenter } from 'components/Row'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useWithdrawModalToggle } from 'state/application/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
@@ -16,6 +16,11 @@ import { WithdrawError } from './WithDrawError'
 import { WithdrawPending } from './WithdrawPending'
 import { WithdrawRequestForm } from './WithdrawRequestForm'
 import { WithdrawSuccess } from './WithDrawSuccess'
+
+import { ReactComponent as Newunavaliable } from '../../assets/images/unavaliableNew.svg'
+import { Line } from 'components/Line'
+import { isMobile } from 'react-device-detect'
+import styled from 'styled-components'
 
 export enum WithdrawModalView {
   WITHDRAW_REQUEST,
@@ -52,7 +57,8 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
       mobileMaxHeight={90}
       topContent={
         <HideSmall>
-          <TYPE.main1
+          {/* hide this for temporary  */}
+          {/* <TYPE.main1
             style={{ padding: '10px 58px', borderRadius: '8px' }}
             backgroundColor="#b4b4ce"
             color="#FFFFFF"
@@ -62,15 +68,42 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
             <Trans>{`${amount || '0'} ${
               tokenInfo?.symbol
             } will be extracted from your Polygon wallet and burnt automatically.`}</Trans>
-          </TYPE.main1>
+          </TYPE.main1> */}
         </HideSmall>
       }
     >
-      <ModalBlurWrapper style={{ position: 'relative' }}>
+      <ModalBlurWrapper style={{ position: 'relative', minWidth: isMobile ? '100%' : '500px' }}>
         <LoadingIndicator isLoading={loading} isRelative />
         <ModalContentWrapper>
           <ModalPadding>
-            <RowBetween>
+            {/* temporary display */}
+            <CloseIcon style={{ right: '20px', position: 'absolute', color: '#B8B8CC' }} onClick={onClose} />
+            <RowCenter marginBottom={'30px'}>
+              <Newunavaliable />
+            </RowCenter>
+            <RowCenter marginBottom={'30px'}>
+              <TYPE.title5 textAlign={'center'} fontSize={'24px'}>
+                <Trans>
+                  Withdraw from Custodian <br /> Temporarily Unavailable
+                </Trans>
+              </TYPE.title5>
+            </RowCenter>
+            <RowCenter marginBottom={'30px'}>
+              <TYPE.title10 textAlign={'center'} fontSize={'13px'}>
+                <Trans>
+                  This feature is currently under <br /> maintenance. Please come back later.
+                </Trans>
+              </TYPE.title10>
+            </RowCenter>
+            <Line style={{ marginBottom: '30px' }} />
+            <RowCenter onClick={onClose}>
+              <LinkWrap>
+                <Trans>Back to Security Token Vault</Trans>
+              </LinkWrap>
+            </RowCenter>
+            {/* temporary display */}
+            {/* hide this for temporary  */}
+            {/* <RowBetween>
               <TYPE.title5>
                 <Trans>Withdraw from Custodian</Trans>
               </TYPE.title5>
@@ -81,10 +114,19 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
             )}
             {modalView === WithdrawModalView.PENDING && <WithdrawPending />}
             {modalView === WithdrawModalView.SUCCESS && <WithdrawSuccess onClose={onClose} />}
-            {modalView === WithdrawModalView.ERROR && <WithdrawError onClose={onClose} />}
+            {modalView === WithdrawModalView.ERROR && <WithdrawError onClose={onClose} />} */}
           </ModalPadding>
         </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const LinkWrap = styled.div`
+  text-align: center;
+  color: #9494ff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-weight: 600;
+`
