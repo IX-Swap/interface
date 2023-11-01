@@ -243,11 +243,9 @@ export default function AccountDetails({
                       <FlexContainer>
                         <Copy
                           toCopy={`${new URL(window.location.href).href?.split('?')[0]}?referralCode=${referralCode}`}
-                        >
-                          <span style={{ margin: '0px', padding: '0px' }}> {t``}</span>
-                        </Copy>
+                        >{t`Copy Referral Link`}</Copy>
                         {/* <CopyIcon /> */}
-                        <TextSpan>Copy Referral Link</TextSpan>
+                        {/* <TextSpan>Copy Referral Link</TextSpan> */}
                       </FlexContainer>
                     </StyledDiv>
                   </Column>
