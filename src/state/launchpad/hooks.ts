@@ -1587,7 +1587,7 @@ export const useGetManagedOfferInvestments = (id: string | undefined) => {
 export const useOnChangeOrder = (
   order: AbstractOrder,
   setOrder: (foo: AbstractOrder) => void,
-  setPage: (foo: number) => void
+  setPage?: (foo: number) => void
 ) => {
   const onChangeOrder = React.useCallback(
     (key: string) => {
@@ -1601,7 +1601,7 @@ export const useOnChangeOrder = (
 
         setOrder({ [current]: manner })
       }
-      setPage(1)
+      if(setPage) setPage(1)
     },
     [order, setOrder, setPage]
   )

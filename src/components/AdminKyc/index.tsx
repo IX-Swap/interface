@@ -25,24 +25,23 @@ import { TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { Link } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
-const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
+import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
+import { useOnChangeOrder } from 'state/launchpad/hooks'
+import { AbstractOrder, KycOrderConfig, OrderTypes } from 'state/launchpad/types'
+import { OrderType } from 'state/launchpad/types'
+const headerCells = [
+  { key: 'ethAddress', label: t`Wallet address`, show: false },
+  { key: 'fullName', label: t`Name`, show: false },
+  { key: 'identity', label: t`Identity`, show: false },
+  { key: 'createdAt', label: t`Date of request`, show: true },
+  { key: 'status', label: t`KYC Status`, show: false },
+  { key: 'updatedAt', label: t`Updated At`, show: true },
+]
 interface RowProps {
   item: KycItem
   openModal: () => void
 }
 
-const Header = () => {
-  return (
-    <>
-      <StyledHeaderRow>
-        {headerCells.map((cell) => (
-          <div key={cell}>{cell}</div>
-        ))}
-      </StyledHeaderRow>
-      <Line style={{ marginBottom: '20px' }} />
-    </>
-  )
-}
 
 const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   const {
@@ -50,6 +49,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
     user: { ethAddress },
     status,
     createdAt,
+    updatedAt,
     individualKycId,
   } = item
 
@@ -69,6 +69,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       <div>
         <StatusCell status={status} />
       </div>
+      <div>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
       {/* <div>risk level</div> */}
       {/* <Link to={`/admin/kyc/${item.id}`}>
         <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF">
@@ -103,6 +104,10 @@ export const AdminKycTable = () => {
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>(['total'])
   const [endDate, setEndDate] = useState(null)
   const [searchValue, setSearchValue] = useState('')
+  const [sortBy, setSortBy] = useState('')
+  const [sortDirection, setSortDirection] = useState<OrderType>('DESC')
+  const [order, setOrder] = React.useState<KycOrderConfig>({})
+
   const {
     kycList: { totalPages, page, items },
     adminLoading,
@@ -119,6 +124,8 @@ export const AdminKycTable = () => {
       offset,
       search: searchValue,
       identity: identity?.label ? identity.label.toLowerCase() : 'all',
+      sortBy,
+      sortDirection,
     }
     if (!selectedStatuses.includes('total') && withStatus && selectedStatuses.length > 0) {
       kycFilter.status = selectedStatuses.join(',')
@@ -141,12 +148,20 @@ export const AdminKycTable = () => {
 
   useEffect(() => {
     getKycList(getKycFilters(1))
-  }, [getKycList, searchValue, identity, selectedStatuses, endDate])
+  }, [getKycList, searchValue, identity, selectedStatuses, endDate, sortBy, sortDirection])
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
     getKycList(getKycFilters(page))
+  }
+
+  const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder)
+
+  const onChangeSort = (field: string) => {
+    onChangeOrder(field)
+    setSortBy(field)
+    setSortDirection(order[field as keyof KycOrderConfig] as OrderType)
   }
 
   const onIdentityChange = (identity: any) => {
@@ -204,7 +219,20 @@ export const AdminKycTable = () => {
         </NoData>
       ) : (
         <Container>
-          <Table body={<Body openModal={openModal} />} header={<Header />} />
+          <Table body={<Body openModal={openModal} />} header={
+            <>
+              <StyledHeaderRow>
+                {headerCells.map((cell) => (
+                  <HeaderCell key={cell.key} onClick={() => onChangeSort(cell.key)}>
+                    {cell.label}
+                    
+                    {cell.show && <SortIcon type={order[cell.key as keyof KycOrderConfig]} />}
+                  </HeaderCell>
+                ))}
+              </StyledHeaderRow>
+              {/* <Line style={{ marginBottom: '20px' }} /> */}
+            </>
+          } />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
       )}
@@ -235,6 +263,11 @@ export const Wallet = styled.div`
   // -webkit-text-fill-color: transparent;
 `
 
+const HeaderCell = styled.div`
+  display: flex;
+  gap: 5px
+`
+
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 100%;
@@ -249,13 +282,17 @@ export const StyledDoc = styled(File)`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 100px;
-  min-width: 1270px;
+  grid-template-columns: repeat(6, 1fr) 100px;
+  min-width: 1370px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid;
+  border-color: rgba(102,102,128, 0.2)
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 100px;
-  min-width: 1270px;
+  grid-template-columns: repeat(6, 1fr) 100px;
+  min-width: 1370px;
 `
 
 const StyledReviewButton = styled(ButtonGradientBorder)`
