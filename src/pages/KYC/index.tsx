@@ -116,7 +116,7 @@ const KYC = () => {
     } else {
       setLoading(false)
     }
-  }, [pendingSign])
+  }, [pendingSign, status, description, kyc])
 
   const getKYCDescription = useCallback(() => {
     switch (status) {
@@ -339,8 +339,8 @@ const KYC = () => {
                       <FlexContainer>
                         <Copy
                           toCopy={`${new URL(window.location.href).href?.split('?')[0]}?referralCode=${referralCode}`}
-                        >{t``}</Copy>
-                        <TextSpan>Copy Referral Link</TextSpan>
+                        >{t`Copy Referral Link`}</Copy>
+                        {/* <TextSpan></TextSpan> */}
                       </FlexContainer>
                     </StyledDiv>
                   </Column>
