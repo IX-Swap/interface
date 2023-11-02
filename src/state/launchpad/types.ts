@@ -460,6 +460,12 @@ export interface ManagedOfferInvestment {
   tokenAmount: number
   createdAt: Date
 }
+
+export interface KycOrderConfig {
+  dateOfRequest?: OrderType
+  updatedAt?: OrderType
+}
+
 export interface MOInvestmentOrderConfig {
   username?: OrderType
   amount?: OrderType
