@@ -7,8 +7,8 @@ import { TYPE } from 'theme'
 
 import { KYCStatuses } from './enum'
 import { KYCStatusCard, getStatusInfo } from './styleds'
-import { AbstractConnector } from '@web3-react/abstract-connector'
-import { injected, walletconnect } from '../../connectors'
+import { metaMask } from '../../connectors/metaMask'
+import { walletConnectV2 } from '../../connectors/walletConnectV2'
 import Identicon from 'components/Identicon'
 import styled, { css } from 'styled-components'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
@@ -39,10 +39,10 @@ function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
 }
 
 // eslint-disable-next-line react/prop-types
-function StatusIcon({ connector }: { connector: AbstractConnector }) {
-  if (connector === injected) {
+function StatusIcon({ connector }: { connector: any }) {
+  if (connector === metaMask) {
     return <Identicon />
-  } else if (connector === walletconnect) {
+  } else if (connector === walletConnectV2) {
     return (
       <IconWrapper size={16}>
         <img src={WalletConnectIcon} alt={'WalletConnect'} />

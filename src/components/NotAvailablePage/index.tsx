@@ -26,6 +26,8 @@ import {
   PlaygroundBadge,
   ConnectWalletContainer,
 } from './styled'
+import Modal from 'components/Modal'
+import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 
 // Define the NotAvailablePage component
 export const NotAvailablePage = () => {
@@ -34,6 +36,8 @@ export const NotAvailablePage = () => {
   const [cookies] = useCookies(['announcementsSeen'])
   const { config } = useWhitelabelState()
   const toggleWalletModal = useWalletModalToggle()
+  const [showConnectModal, setShowConnectModal] = React.useState(false)
+  const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
   const farming = ['/vesting', '/staking'].includes(pathname)
 
@@ -42,6 +46,10 @@ export const NotAvailablePage = () => {
       switchToNetwork({ library, chainId: targetChain })
     }
   }
+
+  const onConnect = React.useCallback(() => {
+    console.log('Connected')
+  }, [])
 
   if (!account) {
     return (
@@ -52,6 +60,8 @@ export const NotAvailablePage = () => {
         <div>
           Please Connect <br /> your Wallet to use <br /> the Application.
         </div>
+        <div>Please connect your wallet to use the application.</div>
+        <ButtonIXSGradient onClick={toggleModal}>Connect Wallet</ButtonIXSGradient>
         <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleWalletModal}>
           <Text className="connect-wallet-button">
             <Trans>Connect Wallet</Trans>
@@ -87,6 +97,9 @@ export const NotAvailablePage = () => {
           </a>
           .
         </span>
+        <Modal isOpen={showConnectModal} onDismiss={toggleModal} maxWidth="430px" maxHeight="310px">
+          <ConnectionDialog onConnect={onConnect} onClose={toggleModal} />
+        </Modal>
       </ConnectWalletContainer>
     )
   }

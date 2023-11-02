@@ -331,7 +331,7 @@ export function useSwapCallback(
                   }
             return library
               .estimateGas(tx)
-              .then((gasEstimate) => {
+              .then((gasEstimate: any) => {
                 return {
                   call,
                   gasEstimate,
@@ -349,7 +349,7 @@ export function useSwapCallback(
                   .then(() => {
                     return { call, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
                   })
-                  .catch((callError) => {
+                  .catch((callError: any) => {
                     const errorMessage = formatRpcError(gasError)
 
                     return {
@@ -396,7 +396,7 @@ export function useSwapCallback(
             }),
             ...(value && !isZero(value) ? { value } : {}),
           })
-          .then((response) => {
+          .then((response: any) => {
             const inputSymbol = trade.inputAmount.currency.symbol
             const outputSymbol = trade.outputAmount.currency.symbol
             const inputAmount = trade.inputAmount.toSignificant(4)
@@ -420,7 +420,7 @@ export function useSwapCallback(
 
             return response.hash
           })
-          .catch((error) => {
+          .catch((error: any) => {
             // if the user rejected the tx, pass this along
             if (error?.code === 4001) {
               throw new Error('Transaction rejected.')

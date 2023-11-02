@@ -7,13 +7,35 @@ import { login } from './login'
 import { sign } from './personalSign'
 import { useActiveWeb3React } from './web3'
 
+/* eslint-disable react/display-name */
+
 interface Hash {
   hash: string
 }
 export const useFetchToken = () => {
-  const { account, library, deactivate } = useActiveWeb3React()
+  const { account, provider, deactivate } = useActiveWeb3React()
 
-  const fetchToken = useCallback(async () => {
+  // const fetchToken = useCallback(async () => {
+  //   if (!account) {
+  //     throw new Error("User didn't connect a wallet")
+  //   }
+  //   const { data } = await apiService.post<Hash>(metamask.challenge, { address: account })
+  //   if (!data.hash) {
+  //     throw new Error('No hash received')
+  //   }
+  //   const result = await sign({ hash: data.hash, account, library })
+  //   if (!result) {
+  //     await deactivate()
+  //     throw new Error('Login sign failed')
+  //   }
+  //   const loginData = await login({ hash: result, account })
+  //   if (!loginData) {
+  //     throw new Error('No login data received')
+  //   }
+  //   return loginData.data
+  // }, [account, library, deactivate])
+
+  const fetchToken = async () => {
     if (!account) {
       throw new Error("User didn't connect a wallet")
     }
@@ -21,7 +43,7 @@ export const useFetchToken = () => {
     if (!data.hash) {
       throw new Error('No hash received')
     }
-    const result = await sign({ hash: data.hash, account, library })
+    const result = await sign({ hash: data.hash, account, provider })
     if (!result) {
       await deactivate()
       throw new Error('Login sign failed')
@@ -31,7 +53,7 @@ export const useFetchToken = () => {
       throw new Error('No login data received')
     }
     return loginData.data
-  }, [account, library, deactivate])
+  }
 
   return { fetchToken }
 }
