@@ -342,6 +342,14 @@ export const corporateInvestorStatusDeclarationSchema = yup
         .required(validationMessages.required)
     }),
     // @ts-expect-error
+    optInAgreementsExchange: yup.bool().when('applyingAs', {
+      is: value => value === 'accredited' || value === 'expert',
+      then: yup
+        .bool()
+        .oneOf([true], 'Opt-In Requirement is required')
+        .required(validationMessages.required)
+    }),
+    // @ts-expect-error
     primaryOfferingServices: optInAgreementsDependentValueSchema,
     // @ts-expect-error
     digitalSecurities: optInAgreementsDependentValueSchema,
