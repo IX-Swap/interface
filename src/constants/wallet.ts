@@ -1,15 +1,20 @@
-import { Connector } from '@web3-react/types'
+import { AbstractConnector } from '@web3-react/abstract-connector'
 // import INJECTED_ICON_URL from '../assets /images/arrow-right.svg'
 // import COINBASE_ICON_URL from '../assets/images/coinbaseWalletIcon.svg'
 // import FORTMATIC_ICON_URL from '../assets/images/fortmaticIcon.png'
 import METAMASK_ICON_URL from '../assets/images/metamask.png'
 // import PORTIS_ICON_URL from '../assets/images/portisIcon.png'
 import WALLETCONNECT_ICON_URL from '../assets/images/walletConnectIcon.svg'
-import { metaMask } from '../connectors/metaMask'
-import { walletConnectV2 } from '../connectors/walletConnectV2'
+import {
+  // fortmatic,
+  injected,
+  // portis,
+  walletconnect,
+  // walletlink
+} from '../connectors'
 
 export interface WalletInfo {
-  connector?: Connector
+  connector?: AbstractConnector
   name: string
   iconURL: string
   description: string
@@ -22,7 +27,7 @@ export interface WalletInfo {
 
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   INJECTED: {
-    connector: metaMask,
+    connector: injected,
     name: 'Injected',
     iconURL: WALLETCONNECT_ICON_URL,
     description: 'Injected web3 provider.',
@@ -31,22 +36,22 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     primary: true,
   },
   METAMASK: {
-    connector: metaMask,
+    connector: injected,
     name: 'MetaMask',
     iconURL: METAMASK_ICON_URL,
     description: 'Easy-to-use browser extension.',
     href: null,
     color: '#E8831D',
   },
-  WALLET_CONNECT: {
-    connector: walletConnectV2,
-    name: 'WalletConnect',
-    iconURL: WALLETCONNECT_ICON_URL,
-    description: 'Connect to Trust Wallet, MetaMask, Rainbow Wallet and more...',
-    href: null,
-    color: '#4196FC',
-    mobile: true,
-  },
+  // WALLET_CONNECT: {
+  //   connector: walletconnect,
+  //   name: 'WalletConnect',
+  //   iconURL: WALLETCONNECT_ICON_URL,
+  //   description: 'Connect to Trust Wallet, MetaMask, Rainbow Wallet and more...',
+  //   href: null,
+  //   color: '#4196FC',
+  //   mobile: true,
+  // },
   // WALLET_LINK: {
   //   connector: walletlink,
   //   name: 'Coinbase Wallet',

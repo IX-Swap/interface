@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Trans } from '@lingui/macro'
-import { Connector } from '@web3-react/types'
-import { useWeb3React } from '@web3-react/core'
+import { AbstractConnector } from '@web3-react/abstract-connector'
+import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { darken } from 'polished'
 import { Activity } from 'react-feather'
 import styled, { css } from 'styled-components'
@@ -10,8 +10,7 @@ import styled, { css } from 'styled-components'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 // import PortisIcon from '../../assets/images/portisIcon.png'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
-import { metaMask } from '../../connectors/metaMask'
-import { walletConnectV2 } from '../../connectors/walletConnectV2'
+import { injected, walletconnect } from '../../connectors'
 import { NetworkContextName } from '../../constants/misc'
 import useENSName from '../../hooks/useENSName'
 import { useWalletModalToggle } from '../../state/application/hooks'
@@ -170,10 +169,10 @@ function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
 }
 
 // eslint-disable-next-line react/prop-types
-function StatusIcon({ connector }: { connector: Connector }) {
-  if (connector === metaMask) {
+function StatusIcon({ connector }: { connector: AbstractConnector }) {
+  if (connector === injected) {
     return <Identicon />
-  } else if (connector === walletConnectV2) {
+  } else if (connector === walletconnect) {
     return (
       <IconWrapper size={16}>
         <img src={WalletConnectIcon} alt={'WalletConnect'} />
@@ -204,7 +203,7 @@ function StatusIcon({ connector }: { connector: Connector }) {
 }
 
 function Web3StatusInner() {
-  const { account, connector } = useWeb3React()
+  const { account, connector, error } = useWeb3React()
 
   const { ENSName } = useENSName(account ?? undefined)
 
@@ -251,6 +250,15 @@ function Web3StatusInner() {
         </AccountElement>
       </Web3StatusConnected>
     )
+  } else if (error) {
+    return (
+      <Web3StatusError onClick={toggleWalletModal}>
+        <NetworkIcon />
+        <Text style={{ margin: '4px 0px 4px 13px' }}>
+          {error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}
+        </Text>
+      </Web3StatusError>
+    )
   } else {
     return (
       <StyledPinnedContentButton
@@ -269,8 +277,8 @@ function Web3StatusInner() {
 }
 
 export default function Web3Status() {
-  const { isActive, account } = useWeb3React()
-  const contextNetwork = useWeb3React()
+  const { active, account } = useWeb3React()
+  const contextNetwork = useWeb3React(NetworkContextName)
 
   const { ENSName } = useENSName(account ?? undefined)
 
@@ -284,7 +292,7 @@ export default function Web3Status() {
   const pending = sortedRecentTransactions.filter((tx) => !tx.receipt).map((tx) => tx.hash)
   const confirmed = sortedRecentTransactions.filter((tx) => tx.receipt).map((tx) => tx.hash)
 
-  if (!contextNetwork.isActive && !isActive) {
+  if (!contextNetwork.active && !active) {
     return null
   }
 

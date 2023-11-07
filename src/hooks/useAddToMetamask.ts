@@ -27,7 +27,7 @@ export default function useAddToMetamask() {
               },
             },
           })
-          .then((success: any) => {
+          .then((success) => {
             onSuccess(success)
           })
           .catch(() => onSuccess(false))

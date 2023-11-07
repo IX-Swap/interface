@@ -226,7 +226,7 @@ export function useERC20Permit(
         return library
           .send('eth_signTypedData_v4', [account, data])
           .then(splitSignature)
-          .then((signature: any) => {
+          .then((signature) => {
             setSignatureData({
               v: signature.v,
               r: signature.r,

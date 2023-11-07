@@ -2,7 +2,7 @@ import { Interface } from '@ethersproject/abi'
 import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
-import STAKING_REWARDS_ABI from '@uniswap/liquidity-staker/build/StakingRewards.json'
+import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
 import { IXS_STAKING_V1_ADDRESS, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { BIG_INT_ZERO } from 'constants/misc'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
@@ -45,7 +45,7 @@ import {
 } from './actions'
 import { claimsAdapter, payoutsAdapter, rewardsAdapter, stakingsAdapter } from './utils'
 
-export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI.abi)
+export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
 export const REWARDS_DURATION_DAYS = 60
 

@@ -5,14 +5,17 @@ import { setPendingSign } from 'state/application/actions'
 interface Props {
   hash?: string
   account?: string | null
-  provider?: Web3Provider
+  library?: Web3Provider
 }
-export const sign = async ({ hash, account, provider }: Props) => {
-  if (provider && hash && account) {
+export const sign = async ({ hash, account, library }: Props) => {
+  if (library && library.provider && library.provider.request && hash && account) {
     try {
       store.dispatch(setPendingSign(true))
 
-      const result = await provider.send('personal_sign', [hash, account])
+      const result = await library.provider.request({
+        method: 'personal_sign',
+        params: [hash, account],
+      })
 
       store.dispatch(setPendingSign(false))
 

@@ -1,12 +1,12 @@
 import { Pair } from '@ixswap1/v2-sdk'
 import { useMemo } from 'react'
-import IIxsV2PairABI from '@ixswap1/v2-core/build/IIxsV2Pair.json'
+import { abi as IIxsV2PairABI } from '@ixswap1/v2-core/build/IIxsV2Pair.json'
 import { Interface } from '@ethersproject/abi'
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { isSecurityPair, useSecTokens } from 'state/secTokens/hooks'
 
-const PAIR_INTERFACE = new Interface(IIxsV2PairABI.abi)
+const PAIR_INTERFACE = new Interface(IIxsV2PairABI)
 
 export enum PairState {
   LOADING,

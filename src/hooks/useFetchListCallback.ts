@@ -2,21 +2,21 @@ import { nanoid } from '@reduxjs/toolkit'
 import { TokenList } from '@uniswap/token-lists'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
+import { getNetworkLibrary } from '../connectors'
 import { AppDispatch } from '../state'
 import { fetchTokenList } from '../state/lists/actions'
 import getTokenList from '../utils/getTokenList'
 import resolveENSContentHash from '../utils/resolveENSContentHash'
 import { useActiveWeb3React } from './web3'
-import getLibrary from 'utils/getLibrary'
 
 export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean) => Promise<TokenList> {
-  const { chainId, library, provider } = useActiveWeb3React()
+  const { chainId, library } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
 
   const ensResolver = useCallback(
     async (ensName: string) => {
       if (!library || chainId !== 1) {
-        const networkLibrary = getLibrary(provider)
+        const networkLibrary = getNetworkLibrary()
         const network = await networkLibrary.getNetwork()
         if (networkLibrary && network.chainId === 1) {
           return resolveENSContentHash(ensName, networkLibrary)
