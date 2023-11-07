@@ -78,10 +78,12 @@ export const TokenManagerTokens = ({ items }: Props) => {
     <>
       {/* <Hr /> */}
       <Container>
-        {data.map(({ icon, value, label }, idx) => {
+      {data
+        ?.filter((item) => item) 
+        .map(({ icon, value, label }, idx) => {
           return (
-            <>
-              <TokenRow key={value}>
+            <React.Fragment key={value}>
+              <TokenRow>
                 <TokenHeader onClick={() => redirectToToken(+value)}>
                   {icon}
                   <div>{label}</div>
@@ -107,10 +109,10 @@ export const TokenManagerTokens = ({ items }: Props) => {
               </TokenRow>
 
               {idx < data.length - 1 && <RowSeparator />}
-            </>
-          )
+            </React.Fragment>
+          );
         })}
-      </Container>
+    </Container>
     </>
   )
 }

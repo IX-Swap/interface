@@ -9,6 +9,7 @@ import changeRequestIcon from '../../assets/images/NewInfoIcon.svg'
 import approvedIcon from '../../assets/images/newRightCheck.svg'
 import pendingIcon from '../../assets/images/newPending.svg'
 import warningIcon from '../../assets/images/warning.svg'
+import newDraftsIcon from "../../assets/images/newDrafts.svg"
 
 interface Props {
   status: string
@@ -58,7 +59,7 @@ export const StatusCell = ({ status }: Props) => {
       case KYCStatuses.CHANGES_REQUESTED:
         return changeRequestIcon
       case KYCStatuses.DRAFT:
-        return warningIcon
+        return newDraftsIcon
       case KYCStatuses.FAILED:
         return rejectedIcon
       case KYCStatuses.IN_PROGRESS:
