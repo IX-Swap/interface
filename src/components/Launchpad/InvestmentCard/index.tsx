@@ -193,7 +193,7 @@ const InvestmentCardHeader = styled.header`
 `
 
 const InvestmentCardFooter = styled.footer`
-  z-index: 20;
+  // z-index: 20;
 `
 
 const InvestmentCardImage = styled.img`
