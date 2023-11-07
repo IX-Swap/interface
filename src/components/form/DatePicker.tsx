@@ -31,8 +31,11 @@ export const DatePickerComponent = (props: DatePickerProps) => {
 export const DatePicker = (props: DatePickerProps) => {
   const { name } = props
   const { hasError, error } = useFormError(name ?? '')
-  const value =
+  console.log('props.value', props.value)
+  const value = new Date(
     props.value === null || props.value === undefined ? null : props.value
+  )
+  console.log('value', value)
 
   return (
     <>
