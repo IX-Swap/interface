@@ -60,9 +60,9 @@ export const NotAvailablePage = () => {
         <div>
           Please Connect <br /> your Wallet to use <br /> the Application.
         </div>
-        <div>Please connect your wallet to use the application.</div>
-        <ButtonIXSGradient onClick={toggleModal}>Connect Wallet</ButtonIXSGradient>
-        <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleWalletModal}>
+        {/* <div>Please connect your wallet to use the application.</div> */}
+        {/* <ButtonIXSGradient onClick={toggleModal}>Connect Wallet</ButtonIXSGradient> */}
+        <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleModal}>
           <Text className="connect-wallet-button">
             <Trans>Connect Wallet</Trans>
           </Text>
