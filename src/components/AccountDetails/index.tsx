@@ -9,8 +9,7 @@ import { ReactComponent as NewExplore } from '../../assets/images/newExplore.svg
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 // import PortisIcon from '../../assets/images/portisIcon.png'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
-import { metaMask } from '../../connectors/metaMask'
-import { walletConnectV2 } from '../../connectors/walletConnectV2'
+import { injected, walletconnect } from '../../connectors'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { AppDispatch } from '../../state'
@@ -89,7 +88,7 @@ export default function AccountDetails({
     const name = Object.keys(SUPPORTED_WALLETS)
       .filter(
         (k) =>
-          SUPPORTED_WALLETS[k].connector === connector && (connector !== metaMask || isMetaMask === (k === 'METAMASK'))
+          SUPPORTED_WALLETS[k].connector === connector && (connector !== injected || isMetaMask === (k === 'METAMASK'))
       )
       .map((k) => SUPPORTED_WALLETS[k].name)[0]
     return (
@@ -100,13 +99,13 @@ export default function AccountDetails({
   }
 
   function getStatusIcon() {
-    if (connector === metaMask) {
+    if (connector === injected) {
       return (
         <IconWrapper size={33}>
           <Identicon size={33} />
         </IconWrapper>
       )
-    } else if (connector === walletConnectV2) {
+    } else if (connector === walletconnect) {
       return (
         <IconWrapper size={33}>
           <img src={WalletConnectIcon} alt={'WalletConnect logo'} />
@@ -167,7 +166,7 @@ export default function AccountDetails({
               <AccountGroupingRow>
                 {formatConnectorName()}
                 <div>
-                  {connector !== metaMask && (
+                  {connector !== injected && (
                     <WalletAction
                       style={{
                         fontSize: '13px',

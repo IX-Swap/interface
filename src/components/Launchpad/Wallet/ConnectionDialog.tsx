@@ -8,9 +8,9 @@ import { SUPPORTED_WALLETS, WalletInfo } from 'constants/wallet'
 import { ConnectionOptions } from './ConnectionOptions'
 import { ConnectionLoader } from './ConnectionLoader'
 
-import { Connector } from '@web3-react/types'
-import { useWeb3React } from '@web3-react/core'
-import { WalletConnect } from '@web3-react/walletconnect-v2'
+import { AbstractConnector } from '@web3-react/abstract-connector'
+import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
 import { text13 } from 'components/LaunchpadMisc/typography'
@@ -28,33 +28,46 @@ interface Props {
 }
 
 export const ConnectionDialog: React.FC<Props> = (props) => {
+  const { activate } = useWeb3React()
   const [walletView, setWalletView] = React.useState(PromptView.options)
-  const [pendingWallet, setPendingWallet] = React.useState<Connector | undefined>()
-  const [pendingError, setPendingError] = React.useState<boolean>()
+  const [, setPendingWallet] = React.useState<AbstractConnector | undefined>()
+  const [, setPendingError] = React.useState<boolean>()
 
-  const tryActivation = async (connector: Connector | undefined) => {
-    const wallet = Object.values(SUPPORTED_WALLETS).find((wallet) => wallet.connector === connector)
+  const tryActivation = React.useCallback(
+    async (connector: AbstractConnector | undefined) => {
+      const wallet = Object.values(SUPPORTED_WALLETS).find((wallet) => wallet.connector === connector)
 
-    window.ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
-    ReactGA.event({ category: 'Wallet', action: 'Change Wallet', label: wallet?.name ?? '' })
+      window.ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
+      ReactGA.event({ category: 'Wallet', action: 'Change Wallet', label: wallet?.name ?? '' })
 
-    setPendingWallet(connector) // set wallet for pending view
-    setWalletView(PromptView.pending)
+      setPendingWallet(connector) // set wallet for pending view
+      setWalletView(PromptView.pending)
 
-    if (!connector) {
-      return
-    }
+      // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
+      if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
+        connector.walletConnectProvider = undefined
+      }
 
-    try {
-      await connector.activate()
-      setWalletView(PromptView.account)
+      if (!connector) {
+        return
+      }
 
-      props.onConnect()
-    } catch (error) {
-      connector.activate()
-      setPendingError(true)
-    }
-  }
+      try {
+        await activate(connector, undefined, true)
+        setWalletView(PromptView.account)
+
+        props.onConnect()
+      } catch (error) {
+        if (error instanceof UnsupportedChainIdError) {
+          activate(connector) // a little janky...can't use setError because the connector isn't set
+        } else {
+          activate(connector) // a little janky...can't use setError because the connector isn't set
+          setPendingError(true)
+        }
+      }
+    },
+    [activate]
+  )
 
   const onSelect = React.useCallback((option: WalletInfo) => tryActivation(option.connector), [tryActivation])
 

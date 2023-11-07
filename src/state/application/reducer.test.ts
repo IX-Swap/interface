@@ -6,13 +6,13 @@ describe('application reducer', () => {
   let store: Store<ApplicationState>
 
   beforeEach(() => {
-    // store = createStore(reducer, {
-    //   popupList: [],
-    //   blockNumber: {
-    //     [1]: 3,
-    //   },
-    //   openModal: null,
-    // })
+    store = createStore(reducer, {
+      popupList: [],
+      blockNumber: {
+        [1]: 3,
+      },
+      openModal: null,
+    })
   })
 
   describe('addPopup', () => {

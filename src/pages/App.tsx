@@ -41,10 +41,6 @@ import axios from 'axios'
 import { ip } from 'services/apiUrls'
 import { isMobile } from 'react-device-detect'
 import { ConnectWalletModal } from './Connect Wallet Modal'
-import { metaMask } from 'connectors/metaMask'
-import { walletConnectV2 } from 'connectors/walletConnectV2'
-import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
-/* eslint-disable react/display-name */
 import { Footer } from './Launchpad/Footer'
 
 const AppWrapper = styled.div`
@@ -183,22 +179,6 @@ export default function App() {
     if (window.location.host.split('.')[1] !== 'ixswap') {
       getWitelabelConfig()
     }
-
-    // connect eagerly for metamask
-    void metaMask.connectEagerly().catch(() => {
-      console.debug('Failed to connect eagerly to metamask')
-    })
-
-    // wallet connect
-    // log URI when available
-    walletConnectV2.events.on(URI_AVAILABLE, (uri: string) => {
-      console.log(`uri: ${uri}`)
-    })
-
-    // connect eagerly for walletConnectV2
-    walletConnectV2.connectEagerly().catch((error) => {
-      console.debug('Failed to connect eagerly to walletconnect', error)
-    })
   }, [])
 
   useEffect(() => {
@@ -264,25 +244,25 @@ export default function App() {
             hideHeader={hideHeader}
           >
             <IXSBalanceModal />
-            {/* <Web3ReactManager> */}
-            <Suspense
-              fallback={
-                <>
-                  <LoadingIndicator isLoading />
-                </>
-              }
-            >
-              <Switch>
-                {routeConfigs.map(routeGenerator).filter((route) => !!route)}
+            <Web3ReactManager>
+              <Suspense
+                fallback={
+                  <>
+                    <LoadingIndicator isLoading />
+                  </>
+                }
+              >
+                <Switch>
+                  {routeConfigs.map(routeGenerator).filter((route) => !!route)}
 
-                {useRedirect && (
-                  <Route
-                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                  />
-                )}
-              </Switch>
-            </Suspense>
-            {/* </Web3ReactManager> */}
+                  {useRedirect && (
+                    <Route
+                      component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                    />
+                  )}
+                </Switch>
+              </Suspense>
+            </Web3ReactManager>
           </ToggleableBody>
           {!hideHeader && <Footer />}
         </AppWrapper>

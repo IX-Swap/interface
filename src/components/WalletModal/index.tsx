@@ -1,7 +1,8 @@
-import { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Trans } from '@lingui/macro'
-import { Connector } from '@web3-react/types'
-import { useWeb3React } from '@web3-react/core'
+import { AbstractConnector } from '@web3-react/abstract-connector'
+import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import ReactGA from 'react-ga'
 import { isMobile } from 'react-device-detect'
 import { Text } from 'rebass'
@@ -10,7 +11,7 @@ import { AutoRow } from 'components/Row'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import MetamaskIcon from '../../assets/images/metamask.png'
-import { metaMask } from '../../connectors/metaMask'
+import { injected } from '../../connectors'
 // import { OVERLAY_READY } from '../../connectors/Fortmatic'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import usePrevious from '../../hooks/usePrevious'
@@ -19,6 +20,7 @@ import { useModalOpen, useWalletModalToggle } from '../../state/application/hook
 import { ExternalLink, TYPE } from '../../theme'
 import AccountDetails from '../AccountDetails'
 import Modal from '../Modal'
+import { ErrorSection } from './ErrorSection'
 import Option from './Option'
 import PendingView from './PendingView'
 import {
@@ -50,11 +52,11 @@ export default function WalletModal({
   ENSName?: string
 }) {
   // important that these are destructed from the account-specific web3-react context
-  const { account, connector, isActive } = useWeb3React()
+  const { active, account, connector, activate, error } = useWeb3React()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
-  const [pendingWallet, setPendingWallet] = useState<Connector | undefined>()
+  const [pendingWallet, setPendingWallet] = useState<AbstractConnector | undefined>()
 
   const [pendingError, setPendingError] = useState<boolean>()
 
@@ -79,16 +81,16 @@ export default function WalletModal({
   }, [walletModalOpen])
 
   // close modal when a connection is successful
-  const activePrevious = usePrevious(isActive)
+  const activePrevious = usePrevious(active)
   const connectorPrevious = usePrevious(connector)
   useEffect(() => {
-    if (walletModalOpen && ((isActive && !activePrevious) || (connector && connector !== connectorPrevious))) {
+    if (walletModalOpen && ((active && !activePrevious) || (connector && connector !== connectorPrevious && !error))) {
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
-  }, [setWalletView, isActive, connector, walletModalOpen, activePrevious, connectorPrevious])
+  }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
 
   const tryActivation = useCallback(
-    async (connector: Connector | undefined) => {
+    async (connector: AbstractConnector | undefined) => {
       let name = ''
       Object.keys(SUPPORTED_WALLETS).map((key) => {
         if (connector === SUPPORTED_WALLETS[key].connector) {
@@ -109,16 +111,24 @@ export default function WalletModal({
       setPendingWallet(connector) // set wallet for pending view
       setWalletView(WALLET_VIEWS.PENDING)
 
+      // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
+      if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
+        connector.walletConnectProvider = undefined
+      }
       if (connector) {
         try {
-          await connector.activate()
+          await activate(connector, undefined, true)
         } catch (error) {
-          connector.activate() // a little janky...can't use setError because the connector isn't set
-          setPendingError(true)
+          if (error instanceof UnsupportedChainIdError) {
+            activate(connector) // a little janky...can't use setError because the connector isn't set
+          } else {
+            activate(connector) // a little janky...can't use setError because the connector isn't set
+            setPendingError(true)
+          }
         }
       }
     },
-    [isActive]
+    [activate]
   )
 
   // useEffect(() => {
@@ -168,7 +178,7 @@ export default function WalletModal({
       // }
 
       // overwrite injected when needed
-      if (option.connector === metaMask) {
+      if (option.connector === injected) {
         // don't show injected if there's no injected provider
         if (!(window.web3 || window.ethereum)) {
           if (option.name === 'MetaMask') {
@@ -222,6 +232,9 @@ export default function WalletModal({
   }
 
   function getModalContent() {
+    if (error) {
+      return <ErrorSection error={error} toggleWalletModal={toggleWalletModal} />
+    }
     return (
       <UpperSection>
         <CloseIcon onClick={toggleWalletModal}>
