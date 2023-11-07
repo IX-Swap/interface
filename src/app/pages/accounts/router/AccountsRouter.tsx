@@ -1,7 +1,7 @@
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/CommitmentsRouter'
 // import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
-import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurities/router/DigitalSecuritiesRouter'
+import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/security-tokens/router/DigitalSecuritiesRouter'
 import { MyHoldings } from 'app/pages/accounts/pages/holdings/MyHoldings'
 // import { ReportsRouter } from 'app/pages/accounts/pages/reports/router/ReportsRouter'
 import { Transactions } from 'app/pages/accounts/pages/transactions/Transactions'
