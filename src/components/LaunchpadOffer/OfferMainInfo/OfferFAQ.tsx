@@ -5,6 +5,7 @@ import { ChevronDown } from 'react-feather'
 
 import { OfferFAQ } from 'state/launchpad/types'
 import { text34, text56, text7 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   faq: OfferFAQ[]
@@ -52,6 +53,9 @@ const FAQList = styled.div`
   justify-content: flex-start;
   align-items: stretch;
   gap: 1rem;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 0px 20px;
+   }
 `
 
 const FAQListTitle = styled.div`

@@ -8,7 +8,7 @@ import { OfferNetwork } from 'state/launchpad/types'
 import { useAddPopup } from 'state/application/hooks'
 import { NETWORK_NAMES, CHAIN_INFO, SupportedChainId, nameChainMap } from 'constants/chains'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
-import { DiscreteExternalLink } from 'theme'
+import { DiscreteExternalLink, MEDIA_WIDTHS } from 'theme'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { text10 } from 'components/LaunchpadMisc/typography'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -90,4 +90,10 @@ const OfferLink = styled.div<{ grow?: boolean }>`
 
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    height: 36px;
+    gap: 10px;
+    width: 40px;
+    font-size: 10px;
+   }
 `
