@@ -3,6 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - nvm install 18.18.2
         - nvm use 18.18.2
         - node -v
         - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
@@ -10,6 +11,7 @@ frontend:
         - yarn install
     build:
       commands:
+        - nvm install 18.18.2
         - nvm use 18.18.2
         - node -v
         - if [ "${AWS_BRANCH}" = "development" ]; then cp -fv .env.development .env.production; fi
