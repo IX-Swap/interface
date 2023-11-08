@@ -14,8 +14,8 @@ frontend:
         - if [ "${AWS_BRANCH}" = "staging" ]; then cp -fv .env.staging .env.test; fi
         - if [ "${AWS_BRANCH}" = "clientspace" ]; then cp -fv .env.staging .env.production; fi
         - if [ "${AWS_BRANCH}" = "clientspace" ]; then cp -fv .env.staging .env.test; fi
-        - if [ "${AWS_BRANCH}" = "staging-client-demo" ]; then cp -fv .env.staging-client-demo .env.production; fi
-        - if [ "${AWS_BRANCH}" = "staging-client-demo" ]; then cp -fv .env.staging-client-demo .env.test; fi
+        - if [ "${AWS_BRANCH}" = "upgrade-wallet-connect" ]; then cp -fv .env.staging-client-demo .env.production; fi
+        - if [ "${AWS_BRANCH}" = "upgrade-wallet-connect" ]; then cp -fv .env.staging-client-demo .env.test; fi
         - yarn run build
   artifacts:
     baseDirectory: build
