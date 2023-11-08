@@ -2,7 +2,6 @@ import { WalletAddressSelect } from 'app/pages/accounts/components/WalletAddress
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-// import { TextInput } from 'ui/TextInput/TextInput'
 
 export const AddressField = () => {
   const { control } = useFormContext()
@@ -11,10 +10,11 @@ export const AddressField = () => {
   return (
     <TypedField
       control={control}
-      name='existingAddress'
+      name='wallet'
       variant='outlined'
       fullWidth
-      label='Select Address'
+      label='Withdraw To'
+      helperText='Select Wallet Address'
       component={WalletAddressSelect}
     />
   )

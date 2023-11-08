@@ -9,7 +9,7 @@ export const DeployedSecurityTokenSelect = React.forwardRef(
   (props: SelectProps) => {
     const { data, isLoading } = useAssetsData('Security', 500, true)
 
-    const hasTokens = !isLoading && data !== undefined && data.list.length < 1
+    const hasTokens = !isLoading && data !== undefined && data.list.length > 0
     const options = !hasTokens
       ? []
       : data?.list?.map(token => {

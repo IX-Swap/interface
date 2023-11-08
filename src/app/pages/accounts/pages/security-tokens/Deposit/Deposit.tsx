@@ -5,7 +5,7 @@ import { RootContainer } from 'ui/RootContainer'
 import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { DepositForm } from 'app/pages/accounts/pages/security-tokens/Deposit/DepositForm'
 
-export const DSDeposit: React.FC = () => {
+export const Deposit: React.FC = () => {
   return (
     <Grid container direction='column' spacing={3} style={{ display: 'table' }}>
       <Grid item>
@@ -14,7 +14,7 @@ export const DSDeposit: React.FC = () => {
 
       <RootContainer>
         <Grid container justifyContent={'center'}>
-          <Grid item xs md={7}>
+          <Grid item xs md={10} lg={7}>
             <FieldContainer>
               <DepositForm />
             </FieldContainer>

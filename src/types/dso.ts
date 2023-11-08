@@ -321,6 +321,16 @@ export interface DepositAddress {
   depositQRCodeUrl: string
 }
 
+export interface WithdrawalFeeData {
+  currency: string
+  balance: number
+  withdrawalFee: number
+}
+export interface WithdrawalFee {
+  valid: boolean
+  data: WithdrawalFeeData
+}
+
 export interface DSOFormActionsProps {
   dso: DigitalSecurityOffering | undefined
   schema: ObjectSchema<Shape<object | undefined, DSOFormValues>, object>

@@ -14,7 +14,7 @@ export const Withdraw = () => {
 
       <RootContainer>
         <Grid container justifyContent={'center'}>
-          <Grid item xs md={7}>
+          <Grid item xs md={10} lg={7}>
             <FieldContainer>
               <WithdrawForm />
             </FieldContainer>

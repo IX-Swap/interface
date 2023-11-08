@@ -18,7 +18,7 @@ import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicat
 import { useSnackbar } from 'hooks/useSnackbar'
 import { useDepositSTO } from 'app/pages/accounts/hooks/useDepositSTO'
 import { ClearFormDialog } from '../ClearFormDialog'
-import { ConfirmDepositDiaglog } from './ConfirmDepositDialog'
+import { ConfirmDepositDialog } from './ConfirmDepositDialog'
 
 export const DepositFormFields: React.FC = () => {
   const [clearFormConfirmationVisible, setClearFormConfirmationVisible] =
@@ -157,10 +157,7 @@ export const DepositFormFields: React.FC = () => {
                 />
 
                 {isNetworkSupported && networksMatched && (
-                  <DepositAmount
-                    tokenBalance={tokenBalance}
-                    isBalanceSufficient={!inSufficientBalance}
-                  />
+                  <DepositAmount tokenBalance={tokenBalance} />
                 )}
 
                 {/* <Network /> */}
@@ -215,7 +212,7 @@ export const DepositFormFields: React.FC = () => {
         clearForm={clearForm}
       />
 
-      <ConfirmDepositDiaglog
+      <ConfirmDepositDialog
         open={depositConfirmationVisible}
         close={() => setDepositConfirmationVisible(false)}
         confirm={sendToken}

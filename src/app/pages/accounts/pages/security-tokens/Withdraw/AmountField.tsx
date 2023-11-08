@@ -45,7 +45,7 @@ export const AmountField = () => {
           control={control}
           component={NumericInput}
           valueExtractor={numericValueExtractor}
-          label='Amount'
+          label='Withdrawal Amount'
           name='amount'
           numberFormat={{ ...moneyNumberFormat, isAllowed }}
           variant='outlined'

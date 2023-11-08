@@ -1,5 +1,5 @@
 import React from 'react'
-import { DSDeposit } from 'app/pages/accounts/pages/security-tokens/Deposit/DSDeposit'
+import { Deposit } from 'app/pages/accounts/pages/security-tokens/Deposit/Deposit'
 import { DSList } from 'app/pages/accounts/pages/security-tokens/DSList/DSList'
 import { DSRoute } from 'app/pages/accounts/pages/security-tokens/router/config'
 import { Switch } from 'react-router-dom'
@@ -10,7 +10,7 @@ export const DigitalSecuritiesRouter = () => {
   return (
     <Switch>
       <AppRoute breadcrumb='Deposit' path={DSRoute.deposit}>
-        <DSDeposit />
+        <Deposit />
       </AppRoute>
 
       <AppRoute breadcrumb='Withdraw' path={DSRoute.withdraw}>

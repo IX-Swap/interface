@@ -1,64 +1,112 @@
-import React, { useState } from 'react'
-import { Grid, Box, Divider, Button } from '@mui/material'
-import { WithdrawSecurityTokenField as SecurityToken } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawSecurityTokenField'
-import { WithdrawalAmount } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawalAmount'
-import { WithdrawTo } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawTo'
-import { ConfirmButton } from 'app/pages/accounts/pages/security-tokens/Withdraw/ConfirmButton'
+import React, { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
-import { ClearFormDialog } from '../ClearFormDialog'
 import { isEmpty } from 'lodash'
+import { Box, Divider, Button } from '@mui/material'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { WithdrawSecurityTokenField as SecurityToken } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawSecurityTokenField'
+import { WithdrawTo } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawTo'
+import { WithdrawalAmount } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawalAmount'
+import { MemoField } from 'app/pages/accounts/pages/security-tokens/Withdraw/MemoField'
+import { Warning } from 'app/pages/accounts/pages/security-tokens/Withdraw/Warning'
+// import { ConfirmButton } from 'app/pages/accounts/pages/security-tokens/Withdraw/ConfirmButton'
+import { WithdrawalFee } from './WithdrawalFee'
+import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
+import { ClearFormDialog } from '../ClearFormDialog'
+import { useWithdrawalFee } from 'app/pages/accounts/hooks/useWithdrawalFee'
+import { ConfirmWithdrawalDialog } from './ConfirmWithdrawalDialog'
+import { useWithdrawDS } from '../../banks/hooks/useWithdrawDS'
 
-export interface WithdrawFormFieldsProps {
-  //   isLoading: boolean
-  isSuccess: boolean
-}
-
-export const WithdrawFormFields = ({
-  //   isLoading,
-  isSuccess
-}: WithdrawFormFieldsProps) => {
+export const WithdrawFormFields = () => {
   const [clearFormConfirmationVisible, setClearFormConfirmationVisible] =
     useState(false)
-  const [withdrawConfirmationVisible, setWithdrawConfirmationVisible] =
+  const [withdrawalConfirmationVisible, setWithdrawalConfirmationVisible] =
     useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const { watch, reset } = useFormContext()
   const token = watch('token')
+  const tokenBalance = token?.available
   const hasSelectedToken = !isEmpty(token)
+  const wallet = watch('wallet')
+  const hasSelectedWalletAddress = !isEmpty(wallet)
+  const amount = watch('amount')
+  const fee = watch('withdrawalFee')
+  const currency = watch('currency')
+  const memo = watch('memo')
   const otp = watch('otp')
-  const { isMobile } = useAppBreakpoints()
 
-  const hasError = true
+  const {
+    data: withdrawal,
+    refetch: refetchWithdrawalFee,
+    isLoading: isFetchingWithdrawalFee
+  } = useWithdrawalFee(token?.asset?.network?._id)
+
+  useEffect(() => {
+    void refetchWithdrawalFee()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token])
+
+  const inSufficientTokenBalance = tokenBalance < amount
+  const inSufficientCurencyBalance = withdrawal?.valid !== true
+  const hasError =
+    !hasSelectedToken ||
+    !hasSelectedWalletAddress ||
+    inSufficientTokenBalance ||
+    amount === undefined ||
+    amount <= 0 ||
+    inSufficientCurencyBalance ||
+    otp === undefined
 
   const clearForm = () => {
     reset()
   }
 
+  const [mutate, { isLoading }] = useWithdrawDS()
+  const withdrawSTO = async () => {
+    const args = {
+      asset: token?.asset?._id,
+      withdrawalAddress: wallet?._id,
+      amount: String(amount),
+      memo,
+      otp
+    }
+
+    await mutate(args, {
+      onSuccess: clearForm
+    })
+  }
+
   return (
     <>
-      {isLoading && <LoadingIndicator />}
+      {(isLoading || isFetchingWithdrawalFee) && <LoadingIndicator />}
       <Box display={'flex'} flexDirection={'column'} gap={3}>
         <SecurityToken />
+
         {hasSelectedToken && (
           <>
-            <Grid item xs={12}>
-              <WithdrawTo />
-            </Grid>
-            <Grid item xs={12}>
-              <WithdrawalAmount />
-            </Grid>
-            <Grid marginLeft={isMobile ? '50px' : '230px'} item xs={12}>
-              <OTPInputField disabled={false} />
-            </Grid>
-            <Grid item xs={12}>
-              <ConfirmButton
-                disabled={isLoading || otp === undefined}
-                isSuccess={isSuccess}
-              />
-            </Grid>
+            <WithdrawTo />
+
+            {hasSelectedWalletAddress && (
+              <>
+                <WithdrawalAmount />
+
+                <WithdrawalFee
+                  currency={withdrawal?.data?.currency}
+                  balance={withdrawal?.data?.balance}
+                  fee={withdrawal?.data?.withdrawalFee}
+                  inSufficientBalance={inSufficientCurencyBalance}
+                />
+
+                <MemoField />
+                <Warning />
+
+                <OTPInputField disabled={false} />
+                {/* <Grid item xs={12}>
+                  <ConfirmButton
+                    disabled={isLoading || otp === undefined}
+                    isSuccess={isSuccess}
+                  />
+                </Grid> */}
+              </>
+            )}
           </>
         )}
       </Box>
@@ -77,7 +125,7 @@ export const WithdrawFormFields = ({
           Clear Form
         </Button>
         <Button
-          onClick={() => setWithdrawConfirmationVisible(true)}
+          onClick={() => setWithdrawalConfirmationVisible(true)}
           variant='contained'
           color='primary'
           disableElevation
@@ -94,16 +142,18 @@ export const WithdrawFormFields = ({
         clearForm={clearForm}
       />
 
-      {/* <ConfirmWithdrawDiaglog
-        open={depositConfirmationVisible}
-        close={() => setWithdrawConfirmationVisible(false)}
-        confirm={sendToken}
-        depositMethod={depositMethod}
-        walletAddress={walletAddress}
-        network={network?.name}
-        token={token}
-        depositAmount={amount}
-      /> */}
+      <ConfirmWithdrawalDialog
+        open={withdrawalConfirmationVisible}
+        close={() => setWithdrawalConfirmationVisible(false)}
+        confirm={withdrawSTO}
+        walletName={wallet?.label}
+        walletAddress={wallet?.address}
+        token={token?.asset}
+        withdrawalAmount={amount}
+        currency={currency}
+        withdrawalFee={fee}
+        memo={memo}
+      />
     </>
   )
 }

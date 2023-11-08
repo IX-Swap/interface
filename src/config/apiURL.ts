@@ -103,7 +103,9 @@ export const accountsURL = {
   },
   dsWithdrawals: {
     create: (userId?: string) => `/accounts/security/withdrawals/${userId}`,
-    createCustodyWithdrawal: '/custody/withdrawals'
+    createCustodyWithdrawal: '/custody/withdrawals',
+    getWithdrawalFee: (networkId?: string) =>
+      `/accounts/security/withdrawals/fee-currency?network=${networkId}`
   },
   withdrawalAddresses: {
     getById: (userId?: string, withdrawalAddressId?: string) =>

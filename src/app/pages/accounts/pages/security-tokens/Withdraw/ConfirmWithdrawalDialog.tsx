@@ -12,30 +12,34 @@ import { UIDialog } from 'ui/UIDialog/UIDialog'
 import { Asset } from 'types/asset'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { formatAmountValue } from 'helpers/numbers'
-import { SUPPORTED_WALLETS } from 'config/blockchain/supportedWallets'
-import { isEmpty } from 'lodash'
+import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
+import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 
-export interface ConfirmDepositDialogProps {
+export interface ConfirmWithdrawalDialogProps {
   open: boolean
   close: () => void
   confirm: Function
-  depositMethod: string
+  walletName: string
   walletAddress: string
-  network: string
   token: Asset
-  depositAmount: string
+  withdrawalAmount: string
+  currency: string
+  withdrawalFee: number
+  memo: string
 }
 
-export const ConfirmDepositDialog = ({
+export const ConfirmWithdrawalDialog = ({
   open,
   close,
   confirm,
-  depositMethod,
+  walletName,
   walletAddress,
-  network,
   token,
-  depositAmount
-}: ConfirmDepositDialogProps) => {
+  withdrawalAmount,
+  currency,
+  withdrawalFee,
+  memo
+}: ConfirmWithdrawalDialogProps) => {
   const theme = useTheme()
 
   const useStyles = makeStyles(() => ({
@@ -60,14 +64,9 @@ export const ConfirmDepositDialog = ({
     walletAddress: {
       color: theme.palette.tooltip.color,
       flex: 1,
+      minWidth: 0,
       overflowWrap: 'break-word',
-      minWidth: 0
-    },
-    network: {
-      backgroundColor: theme.palette.paginationItem.borderHover,
-      borderRadius: '4px',
-      color: theme.palette.primary.main,
-      padding: '4px 8px'
+      textAlign: 'right'
     },
     amountContainer: {
       display: 'flex',
@@ -77,6 +76,10 @@ export const ConfirmDepositDialog = ({
     },
     amount: {
       fontSize: '40px !important',
+      fontWeight: 600
+    },
+    fee: {
+      fontSize: '24px !important',
       fontWeight: 600
     },
     token: {
@@ -93,43 +96,30 @@ export const ConfirmDepositDialog = ({
       <Box py={4} px={3}>
         <Typography variant='h3' align='center'>
           Please Confirm <br />
-          STO Deposit
+          STO Withdrawal
         </Typography>
+
+        <Typography color='tooltip.color' textAlign={'center'} mt={5}>
+          Please ensure that the wallet address and the blockchain network
+          supports the tokens. You will lose your tokens if the chosen wallet
+          address does not support it.
+        </Typography>
+
         <Box display={'flex'} flexDirection={'column'} p={1} mb={3}>
-          {!isEmpty(depositMethod) && (
-            <Box className={classes.field}>
-              <Typography>Deposit Method</Typography>
-              <Box className={classes.container}>
-                <Box display={'flex'} alignItems={'center'} gap={1}>
-                  <Typography fontSize={'20px'} fontWeight={600}>
-                    {SUPPORTED_WALLETS[depositMethod].name}
-                  </Typography>
-                  <img
-                    src={SUPPORTED_WALLETS[depositMethod].iconURL}
-                    alt={SUPPORTED_WALLETS[depositMethod].name}
-                    width={'20'}
-                    height={'20'}
-                  />
-                </Box>
-              </Box>
-            </Box>
-          )}
           <Box className={classes.field}>
-            <Typography>Wallet Address</Typography>
+            <Typography>Withdraw to</Typography>
             <Box className={classes.container}>
+              <Typography>{walletName}</Typography>
               <Typography className={classes.walletAddress}>
                 {walletAddress}
               </Typography>
-              <Typography className={classes.network}>
-                {network ?? 'Unsupported Network'}
-              </Typography>
             </Box>
           </Box>
-          <Box pt={3}>
-            <Typography>Deposit Amount</Typography>
+          <Box pt={3} className={classes.field}>
+            <Typography>Withdrawal Amount</Typography>
             <Box className={classes.amountContainer}>
               <Typography className={classes.amount}>
-                {formatAmountValue(depositAmount)}
+                {formatAmountValue(Number(withdrawalAmount))}
               </Typography>
               <Box className={classes.token}>
                 <DSOLogo
@@ -141,6 +131,28 @@ export const ConfirmDepositDialog = ({
                 <Typography>{token?.symbol}</Typography>
               </Box>
             </Box>
+          </Box>
+          <Box pt={3} className={classes.field}>
+            <Typography>Withdrawal Fee</Typography>
+            <Box className={classes.amountContainer}>
+              <Typography className={classes.fee}>
+                {formatAmountValue(withdrawalFee)}
+              </Typography>
+              <Box className={classes.token}>
+                {currency === 'USD' ? (
+                  <USDIcon width={24} height={24} />
+                ) : (
+                  <SGDIcon width={24} height={24} />
+                )}
+                <Typography>{currency}</Typography>
+              </Box>
+            </Box>
+          </Box>
+          <Box pt={3}>
+            <Typography>Memo</Typography>
+            <Typography color='tooltip.color' mt={1.5}>
+              {memo}
+            </Typography>
           </Box>
         </Box>
         <DialogActions>
