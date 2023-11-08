@@ -5,6 +5,7 @@ import { Offer } from 'state/launchpad/types'
 
 import { InvestmentTypeInfo } from 'components/Launchpad/InvestmentCard/InvestmentTypeInfo'
 import { text12, text52 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   offer: Offer
@@ -29,11 +30,18 @@ const SummaryContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin: 60px 20px 0px 20px;
+  }
 `
 
 const SummaryTitle = styled.div`
   ${text52}
   color: ${(props) => props.theme.launchpad.colors.text.title};
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 32px;
+  }
 `
 
 const SummaryDescription = styled.div`

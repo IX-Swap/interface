@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { BaseButton } from './buttons'
 import { text34 } from './typography'
 import { ChevronUp } from 'react-feather'
+import { MEDIA_WIDTHS } from 'theme'
 
 export const BackToTopButton = () => {
   const goToTop = () => {
@@ -39,6 +40,10 @@ const BackToTop = styled(BaseButton)`
     opacity: 1;
   }
   ${text34}
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    left: 50%;
+    z-index: 0;
+  }
 `
 const Container = styled.div`
   position: relative;

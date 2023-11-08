@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { Offer } from 'state/launchpad/types'
 import { text33, text53 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   offer: Offer
@@ -23,6 +24,9 @@ const OverviewContainer = styled.div`
   gap: 2rem;
   margin: 2rem 0;
   white-space: pre-line;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+   padding: 0px 20px;
+  }
 `
 
 const OverviewTitle = styled.div`

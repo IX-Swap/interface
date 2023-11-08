@@ -43,7 +43,7 @@ const InvestmentListContainer = styled.div`
   max-width: ${(props) => props.theme.launchpad.content.maxWidth};
   margin: auto;
   @media (max-width: 1180px) {
-    margin: 0 1rem;
+    // margin: 0 1rem;
   }
 
   ${({ theme }) => theme.mediaWidth.upToSmall`

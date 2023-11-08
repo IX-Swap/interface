@@ -13,6 +13,8 @@ import useInterval from 'hooks/useInterval'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { useTokenLoading } from 'hooks/Tokens'
 import { Loader } from '../util/Loader'
+import { isMobile } from 'react-device-detect'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   offer: Offer
@@ -26,6 +28,14 @@ enum StageForm {
   sale,
   closed,
 }
+
+const allLabels = [
+  { label: 'Register To Invest', value: OfferStatus.whitelist },
+  { label: 'Pre-Sale', value: OfferStatus.preSale },
+  { label: 'Public Sale', value: OfferStatus.sale },
+  { label: 'Closed', value: OfferStatus.closed },
+  { label: 'Token Claim', value: OfferStatus.claim },
+]
 
 export const InvestDialog: React.FC<Props> = (props) => {
   const theme = useTheme()
@@ -52,19 +62,27 @@ export const InvestDialog: React.FC<Props> = (props) => {
     props.investedData.load()
   }, [props.investedData.load])
   useInterval(updateCallback, 30 * 1000)
-
+  const labelToShow = allLabels.find((label) => label.value === props.offer.status)?.label
   return (
     <>
       <Portal>
         <ModalWrapper>
           <DialogContainer>
-            <aside>
-              <InvestDialogSidebar stage={props.offer.status} hasPresale={props.offer.hasPresale} />
-            </aside>
+            {!isMobile && (
+              <aside>
+                <InvestDialogSidebar stage={props.offer.status} hasPresale={props.offer.hasPresale} />
+              </aside>
+            )}
 
             <header>
               <DialogHeader>
-                <DialogHeaderTitle>Dashboard</DialogHeaderTitle>
+                {isMobile ? (
+                  <DialogHeaderTitle style={{ marginBottom: '20px'}}>
+                    <span style={{border: '1px solid #E6E6FF', padding: '10px 30px', borderRadius: '8px'}}>{labelToShow || props.offer.status}</span></DialogHeaderTitle>
+                ) : (
+                  <DialogHeaderTitle> {props.offer.status}Dashboard</DialogHeaderTitle>
+                )}
+
                 <DialogHeaderExit onClick={props.onClose}>
                   <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
                 </DialogHeaderExit>
@@ -111,6 +129,10 @@ const DialogContainer = styled.article`
 
   max-width: 700px;
   min-height: 500px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    grid-template-columns: 0px 400px;
+  }
 
   > header {
     grid-area: header;
