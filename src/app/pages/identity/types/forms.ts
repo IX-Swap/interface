@@ -303,6 +303,7 @@ export interface OptOutRequirements {
 export interface OptInAgreements {
   optInAgreements?: boolean
   optInAgreementsSafeguards: boolean
+  optInAgreementsExchange: boolean
   optInAgreementsOptOut?: boolean
 }
 
