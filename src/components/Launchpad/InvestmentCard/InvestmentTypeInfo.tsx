@@ -47,6 +47,7 @@ const InvestmentCardMetaContainer = styled.div`
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 1rem;
+  margin-top: 5px;
 `
 
 const InvestmentCardMetaEntry = styled.div`
