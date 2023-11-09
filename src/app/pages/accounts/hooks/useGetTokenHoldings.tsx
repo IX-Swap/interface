@@ -20,6 +20,7 @@ export const useGetTokenHoldings = () => {
     digitalSecuritiesQueryKeys.custody(userId),
     getCustody
   )
+
   return {
     data: data?.data[0].documents,
     ...rest
