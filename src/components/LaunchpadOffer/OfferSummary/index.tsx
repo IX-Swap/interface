@@ -31,7 +31,7 @@ const SummaryContainer = styled.div`
   flex-flow: column nowrap;
   gap: 1rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    margin: 60px 20px 0px 20px;
+    margin: 20px 20px 0px 20px;
   }
 `
 
