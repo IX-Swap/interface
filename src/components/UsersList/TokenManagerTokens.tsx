@@ -77,7 +77,7 @@ export const TokenManagerTokens = ({ items }: Props) => {
   return (
     <>
       {/* <Hr /> */}
-      <Container>
+      {/* <Container>
         {data.map(({ icon, value, label }, idx) => {
           return (
             <>
@@ -110,7 +110,7 @@ export const TokenManagerTokens = ({ items }: Props) => {
             </>
           )
         })}
-      </Container>
+      </Container> */}
     </>
   )
 }
