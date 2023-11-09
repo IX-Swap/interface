@@ -140,7 +140,7 @@ export const PageHeader = (props: PageHeaderProps) => {
                       </Box>
                     )}
                   </Grid>
-                  {showBreadcrumbs && !isTablet && (
+                  {showBreadcrumbs && (
                     <Grid item>
                       <Box
                         display='flex'

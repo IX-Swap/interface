@@ -79,7 +79,7 @@ export const IndividualPreview = ({
   return (
     <>
       <Grid container className={classes.container}>
-        <Grid item className={classes.tabs}>
+        <Grid item className={classes.tabs} sx={{ order: { xs: 3, md: 1 } }}>
           <Tabs
             value={selectedIdx}
             onChange={(_, index) => setSelectedIdx(index)}
@@ -90,7 +90,7 @@ export const IndividualPreview = ({
             <Tab label='Accreditation' />
           </Tabs>
         </Grid>
-        <Grid item className={classes.profile}>
+        <Grid item className={classes.profile} sx={{ order: { xs: 1, md: 2 } }}>
           <Box>
             <DataPreview
               avatar={data.photo}
@@ -103,7 +103,11 @@ export const IndividualPreview = ({
             />
           </Box>
         </Grid>
-        <Grid item className={classes.buttonBox}></Grid>
+        <Grid
+          item
+          className={classes.buttonBox}
+          sx={{ order: { xs: 2, md: 3 } }}
+        ></Grid>
       </Grid>
 
       <Grid container className={classes.wrapper}>

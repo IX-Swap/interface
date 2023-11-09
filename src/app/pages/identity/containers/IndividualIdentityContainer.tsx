@@ -37,5 +37,5 @@ export const IndividualIdentityContainer: FC<
     return createElement(component, { data })
   }
 
-  return <IndividualIdentityView data={data} />
+  return <IndividualIdentityView data={data} showReview />
 }

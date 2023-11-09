@@ -54,6 +54,7 @@ export interface QueryFilters {
   email: string | undefined
   mobile: string | undefined
   uinfin: string | undefined
+  tokenTransactionSource: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

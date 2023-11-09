@@ -23,10 +23,7 @@ export const AccountsRouter = () => {
       <AppRoute breadcrumb='Commitments' path={AccountsRoute.commitments}>
         <CommitmentsRouter />
       </AppRoute>
-      <AppRoute
-        breadcrumb='Security Tokens'
-        path={AccountsRoute.digitalSecurities}
-      >
+      <AppRoute breadcrumb='My Tokens' path={AccountsRoute.digitalSecurities}>
         <DigitalSecuritiesRouter />
       </AppRoute>
 
@@ -51,10 +48,7 @@ export const AccountsRouter = () => {
         <ReportsRouter />
       </AppRoute> */}
 
-      <AppRoute
-        breadcrumb='My Exchange Holdings'
-        path={AccountsRoute.myHoldings}
-      >
+      <AppRoute breadcrumb='IX Exchange Orders' path={AccountsRoute.myHoldings}>
         <MyHoldings />
       </AppRoute>
       <AppRoute breadcrumb='My Investments' path={AccountsRoute.myInvestments}>

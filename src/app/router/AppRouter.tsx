@@ -20,6 +20,7 @@ import {
   useIsClient
 } from 'helpers/acl'
 import { Dashboard } from 'app/pages/dashboard/Dashboard'
+import { Feedback } from 'app/pages/feedback/Feedback'
 import { ClientRouter } from 'app/pages/admin/router/ClietRouter'
 
 export const AppRouter = () => {
@@ -86,6 +87,10 @@ export const AppRouter = () => {
           <AuthorizerRoot />
         </AppRoute>
       )}
+
+      <AppRoute path={AppPath.feedback}>
+        <Feedback />
+      </AppRoute>
 
       <RedirectToDefaultPage />
     </Switch>
