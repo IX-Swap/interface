@@ -8,6 +8,7 @@ import {
   IndividualTaxDeclarationFormValues
 } from 'app/pages/identity/types/forms'
 import { DataroomFile } from 'types/dataroomFile'
+// import format from 'date-fns/format'
 
 export const getPersonalInfoRequestPayload = (
   values: IndividualPersonalInfoFormValues
@@ -17,11 +18,16 @@ export const getPersonalInfoRequestPayload = (
     selfie,
     proofOfAddress,
     evidenceOfAccreditation,
+    dob,
     ...rest
   } = values
 
   if (values.dob === null || values.dob === undefined) {
     delete values.dob
+  } else {
+    // const inputtedDate = new Date(values.dob)
+    // const isValidDate = !isNaN(inputtedDate.getTime())
+    // if (isValidDate) dob = format(inputtedDate, 'MM/dd/yyyy')
   }
 
   const documents = Object.values(values).reduce<
@@ -57,6 +63,7 @@ export const getPersonalInfoRequestPayload = (
 
   return {
     ...rest,
+    dob,
     nric: values.nationality === 'Singapore' ? values.nric : undefined,
     documents: documents.filter(doc => doc !== undefined)
   }

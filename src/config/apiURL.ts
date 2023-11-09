@@ -116,6 +116,9 @@ export const accountsURL = {
     custody: (userId?: string) => `/custody/available-tokens/${userId}`,
     getTokenInfo: '/custody/token-info'
   },
+  ledger: {
+    getTokenHoldings: '/ledger/token-holdings'
+  },
   balance: {
     getAll: (userId?: string) => `/accounts/balance/${userId}`,
     getByUserId: (userId?: string) => `/accounts/currency-balance/${userId}`,
@@ -153,6 +156,11 @@ export const accountsURL = {
     getDividends: (userId?: string) =>
       `/resources/financialReports/dividends/${userId}`
   }
+}
+
+export const ledgerURL = {
+  getTokenTransactions: '/ledger/token-transactions',
+  exportTokenTransactions: '/ledger/export/token-transactions'
 }
 
 export const tenantsURL = {
@@ -237,6 +245,7 @@ export const authURL = {
   changePassword: (userId?: string) => `/auth/password/change/${userId}`,
   resetPassword: '/auth/password/reset/start',
   resetPasswordConfirm: '/auth/password/reset/confirm',
+  sendVerificationEmail: '/auth/sendVerificationEmail',
   enable2fa: (userId?: string, otp?: string) =>
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
   disable2fa: (userId: string) => `/auth/2fa/disable/${userId}`,
@@ -305,6 +314,7 @@ export const virtualAccounts = {
 export const exchange = {
   marketList: '/exchange/markets/list',
   otcList: 'otc/market/list',
+  estimateFee: 'exchange/orders/estimate-fee',
   userOrders: (userId?: string) => `/exchange/orders/list/${userId}`,
   userTrades: (userId?: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {
