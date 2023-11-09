@@ -80,6 +80,7 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
               background: '#F7F7F8',
               border: '1px solid #E6E6FF',
               marginTop: '20px',
+              borderRadius: '8px'
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -198,9 +199,9 @@ const ModalContainer = styled.div`
 `
 
 const ModalContent = styled.div`
-  // background: ${({ theme: { bg1 } }) => bg1};
   width: 450px;
-  // padding: 32px 42px 42px;
+  overflow-y: auto;
+  max-height: 90vh;
   border-radius: 20px;
   @media (max-width: 768px) {
     width: 100%;
