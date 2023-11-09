@@ -329,7 +329,14 @@ export const corporateInvestorStatusDeclarationSchema = yup
     // partnership: investorStatusDeclarationItemSchema,
     investorAgreement: expertInvestorAgreementSchema,
 
-    isInstitutionalInvestor: yup.bool(),
+    // @ts-expect-error
+    isInstitutionalInvestor: yup.bool().when('applyingAs', {
+      is: value => value === 'institutional',
+      then: yup
+        .bool()
+        .oneOf([true], 'Opt-In Requirement is required')
+        .required(validationMessages.required)
+    }),
     isIntermediaryInvestor: yup.bool(),
 
     // optInAgreements: yup.bool().when('applyingAs', {
@@ -341,6 +348,18 @@ export const corporateInvestorStatusDeclarationSchema = yup
         .oneOf([true], 'Opt-In Requirement is required')
         .required(validationMessages.required)
     }),
+    // // @ts-expect-error
+    // optInAgreementsExchange: yup.bool().when('applyingAs', {
+    //   is: value => value === 'accredited' || value === 'expert',
+    //   then: yup
+    //     .bool()
+    //     .oneOf([true], 'Opt-In Requirement is required')
+    //     .required(validationMessages.required)
+    // }),
+    optInAgreementsExchange: yup
+      .bool()
+      .oneOf([true], 'Opt-In Requirement is required')
+      .required(validationMessages.required),
     // @ts-expect-error
     optInAgreementsExchange: yup.bool().when('applyingAs', {
       is: value => value === 'accredited' || value === 'expert',
