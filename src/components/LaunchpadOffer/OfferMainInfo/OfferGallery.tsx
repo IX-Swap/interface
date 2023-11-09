@@ -57,9 +57,9 @@ export const OfferGallery: React.FC<Props> = (props) => {
           <GalleryCarouselImage src={props.offer?.cardPicture.public} />
         </GalleryCarouselMainImage>
 
-        <GalleryCarouselExtraMediaList>
+        <GalleryCarouselExtraMediaList style={{height: gallery?.length > 0 ? '120px' : ''}}>
           {gallery.slice(0, 3).map((media, idx) => (
-            <GalerryCarouselEntry key={`carousel-${idx}`} onClick={() => openViewer(media)}>
+            <GalerryCarouselEntry    key={`carousel-${idx}`} onClick={() => openViewer(media)}>
               <MediaEntry media={media} />
             </GalerryCarouselEntry>
           ))}
@@ -146,7 +146,7 @@ const GalleryCarouselExtraMediaList = styled.div`
   flex-flow: row nowrap;
   justify-content: flex-start;
   gap: 1rem;
-  height: 120px;
+  // height: 120px;
 `
 
 const GalleryCarouselImage = styled.img`

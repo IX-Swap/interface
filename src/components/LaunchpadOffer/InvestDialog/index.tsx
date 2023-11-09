@@ -14,7 +14,7 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { useTokenLoading } from 'hooks/Tokens'
 import { Loader } from '../util/Loader'
 import { isMobile } from 'react-device-detect'
-import { MEDIA_WIDTHS } from 'theme'
+import { MEDIA_WIDTHS, ModalPadding } from 'theme'
 
 interface Props {
   offer: Offer
@@ -65,7 +65,8 @@ export const InvestDialog: React.FC<Props> = (props) => {
   const labelToShow = allLabels.find((label) => label.value === props.offer.status)?.label
   return (
     <>
-      <Portal>
+        <ModalContainer>
+        {/* <ModalPadding> */}
         <ModalWrapper>
           <DialogContainer>
             {!isMobile && (
@@ -77,8 +78,11 @@ export const InvestDialog: React.FC<Props> = (props) => {
             <header>
               <DialogHeader>
                 {isMobile ? (
-                  <DialogHeaderTitle style={{ marginBottom: '20px'}}>
-                    <span style={{border: '1px solid #E6E6FF', padding: '10px 30px', borderRadius: '8px'}}>{labelToShow || props.offer.status}</span></DialogHeaderTitle>
+                  <DialogHeaderTitle style={{ marginBottom: '20px' }}>
+                    <span style={{ border: '1px solid #E6E6FF', padding: '10px 30px', borderRadius: '8px' }}>
+                      {labelToShow || props.offer.status}
+                    </span>
+                  </DialogHeaderTitle>
                 ) : (
                   <DialogHeaderTitle> {props.offer.status}Dashboard</DialogHeaderTitle>
                 )}
@@ -96,11 +100,28 @@ export const InvestDialog: React.FC<Props> = (props) => {
             </main>
           </DialogContainer>
         </ModalWrapper>
-      </Portal>
+        {/* </ModalPadding> */}
+      {/* </Portal> */}
+      </ModalContainer>
     </>
   )
 }
-
+const ModalContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  // backdrop-filter: blur(36px);
+  z-index: 9999;
+  padding: 0px 18px;
+  display: none;
+  background: ${({ theme }) => theme.bg0};
+  @media (max-width: 1400px) {
+    display: block;
+    overflow-y: scroll;
+  }
+`
 const ModalWrapper = styled.div`
   display: grid;
   place-content: center;
@@ -110,16 +131,21 @@ const ModalWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   z-index: 30;
-
   background: rgba(6, 6, 40, 0.6);
   backdrop-filter: blur(16px);
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    overflow-y: auto;
+    height: 82vh;
+    background: white;
+    
+  }
 `
 
 const DialogContainer = styled.article`
   display: grid;
 
   grid-template-columns: 200px 500px;
-  // grid-template-rows: 60px 1fr;
   grid-template-areas:
     'sidebar header'
     'sidebar content';

@@ -128,9 +128,10 @@ const SaleAllocationTitle = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-
-  ${text5}
-  color: ${(props) => props.theme.launchpad.colors.text.body};
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 40px;
+  color: #292933;
 `
 
 const SaleAllocationEntry = styled.div`

@@ -20,6 +20,8 @@ import { InvestmentTypeInfo } from './InvestmentTypeInfo'
 import { text1, text2, text4, text5, text58 } from 'components/LaunchpadMisc/typography'
 import { useActiveWeb3React } from 'hooks/web3'
 import { PreviewModal } from './PreviewModal'
+import { useKYCState } from 'state/kyc/hooks'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 interface Props {
   offer: any
@@ -41,6 +43,9 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
+
+const { kyc } = useKYCState()
+const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const isClosed = React.useMemo(
     () => !!offer.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status),
@@ -171,9 +176,11 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
               </InvestButton>
             )}
 
-            <InvestButton style={{marginTop: '10px'}} type="button" onClick={openModal}>
+            {!isKycApproved &&          <InvestButton style={{marginTop: '10px'}} type="button" onClick={openModal}>
               Preview
-            </InvestButton>
+            </InvestButton>}
+
+   
           </InvestmentCardFooter>
         </InvestmentCardInfoContainer>
       </InvestmentCardContainer>

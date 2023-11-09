@@ -238,4 +238,10 @@ const BackButton = styled(FilledButton)`
   background: ${(props) => props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '14'};
   border-radius: 6px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-top: 80px;
+    position: relative;
+    right: 85%;
+  }
 `

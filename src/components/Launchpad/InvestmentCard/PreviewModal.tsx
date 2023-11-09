@@ -12,6 +12,7 @@ import { isMobile } from 'react-device-detect'
 import { OfferTerms } from 'components/LaunchpadOffer/OfferSidebar/OfferTerms'
 import { PinnedContentButton } from 'components/Button'
 
+
 interface Props {
   isModalOpen: boolean
   closeModal: () => void
@@ -49,7 +50,7 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
             <OverviewContent>{offer?.longDescription}</OverviewContent>
           </OverviewContainer>
           <div style={{ display: isMobile ? 'block' : 'flex' }}>
-            <div style={{ marginRight: '30px' }}>
+            <div style={{ marginRight: isMobile? '0px' : '30px' }}>
               <div style={{ marginTop: '0px', border: '1px solid #E6E6FF', padding: isMobile ? '20px 0px' : '20px' }}>
                 <SaleAllocationTitle style={{marginLeft: '20px', marginBottom: '20px'}}>Main Information</SaleAllocationTitle>
                 <OfferGeneralInfo {...offer} />
@@ -62,15 +63,16 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
               <div style={{ marginBottom: '10px', marginTop: isMobile ? '15px' : '' }}>
                 <OfferSaleAllocation {...offer} />
               </div>
-              <div style={{ marginTop: '15px', border: '1px solid #E6E6FF', padding: isMobile ? '20px 0px ' : '20px' }}>
-                <OfferTerms terms={offer?.terms} />
-              </div>
+     
 
               {offer.hasPresale && (
                 <div style={{ marginTop: '10px' }}>
                   <OfferPreSaleInfo {...offer} />
                 </div>
               )}
+                       <div style={{ marginTop: '15px', border: '1px solid #E6E6FF', padding: isMobile ? '20px 0px ' : '20px' }}>
+                <OfferTerms terms={offer?.terms} />
+              </div>
             </div>
           </div>
           <div
@@ -80,7 +82,8 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
               background: '#F7F7F8',
               border: '1px solid #E6E6FF',
               marginTop: '20px',
-              borderRadius: '8px'
+              borderRadius: '8px',
+              marginBottom: isMobile ? '150px' : '30px'
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -208,5 +211,6 @@ const ModalContent = styled.div`
     padding: 12px;
     border-radius: 12px;
     background: white;
+    max-height: 90vh;
   }
 `
