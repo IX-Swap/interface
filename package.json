@@ -136,6 +136,9 @@
     "workbox-strategies": "^6.1.0",
     "yup": "^0.32.11"
   },
+  "resolutions": {
+    "babel-plugin-styled-components": "1.13.3"
+  },
   "scripts": {
     "compile-contract-types": "yarn compile-external-abi-types",
     "compile-external-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types \"./src/abis/**/*.json\"",
