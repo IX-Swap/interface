@@ -7,6 +7,7 @@ import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
 import { ReactComponent as LeftConfettiSvg } from 'assets/svg/left-confetti.svg'
 import { ReactComponent as RightConfettiSvg } from 'assets/svg/right-confetti.svg'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   show: boolean
@@ -89,4 +90,7 @@ const Wrapper = styled.div`
   > svg.right {
     right: -9px;
   }
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 20px;
+   }
 `

@@ -25,7 +25,7 @@ import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/address
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 import { BackToTopButton } from 'components/LaunchpadMisc/BackToTopButton'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
-import { DiscreteInternalLink } from 'theme'
+import { DiscreteInternalLink, MEDIA_WIDTHS } from 'theme'
 import { ArrowLeft } from 'react-feather'
 import { routes } from 'utils/routes'
 import Header from 'components/Header'
@@ -177,6 +177,10 @@ const OfferContainer = styled.article`
   grid-template-columns: 1fr minmax(auto, 800px) 380px 1fr;
   grid-template-rows: 80px auto auto auto;
 
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+  }
+
   grid-template-areas:
     'header header header header'
     'back summary . .'
@@ -234,4 +238,10 @@ const BackButton = styled(FilledButton)`
   background: ${(props) => props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '14'};
   border-radius: 6px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-top: 80px;
+    position: relative;
+    right: 85%;
+  }
 `

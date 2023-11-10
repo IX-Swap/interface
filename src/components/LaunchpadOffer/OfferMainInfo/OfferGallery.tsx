@@ -14,6 +14,8 @@ import { ReactComponent as CoingeckoLogo } from 'assets/launchpad/svg/social/coi
 
 import { MediaEntry, OfferGalleryViewer } from './OfferGalleryViewer'
 import { text8 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   offer: Offer
@@ -55,9 +57,9 @@ export const OfferGallery: React.FC<Props> = (props) => {
           <GalleryCarouselImage src={props.offer?.cardPicture.public} />
         </GalleryCarouselMainImage>
 
-        <GalleryCarouselExtraMediaList>
+        <GalleryCarouselExtraMediaList style={{height: gallery?.length > 0 ? '120px' : ''}}>
           {gallery.slice(0, 3).map((media, idx) => (
-            <GalerryCarouselEntry key={`carousel-${idx}`} onClick={() => openViewer(media)}>
+            <GalerryCarouselEntry    key={`carousel-${idx}`} onClick={() => openViewer(media)}>
               <MediaEntry media={media} />
             </GalerryCarouselEntry>
           ))}
@@ -75,19 +77,35 @@ export const OfferGallery: React.FC<Props> = (props) => {
           onClose={() => setShowViewer(false)}
         />
       )}
-
-      <SocialMediaLinks>
-        <SocialMediaLink href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
-        {props.offer?.whitepaperUrl && <SocialMediaLink href={props.offer.whitepaperUrl}>Dataroom</SocialMediaLink>}
-
-        {socialMedialLinks
-          .filter((link) => link.url)
-          .map((link, idx) => (
-            <SocialMediaLink key={`link-${idx}`} href={link.url}>
-              {link.logo}
-            </SocialMediaLink>
-          ))}
-      </SocialMediaLinks>
+      {isMobile ? (
+        <>
+          <SocialMediaLinks>
+            <SocialMediaLink href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
+            {props.offer?.whitepaperUrl && <SocialMediaLink href={props.offer.whitepaperUrl}>Dataroom</SocialMediaLink>}
+          </SocialMediaLinks>
+          <SocialMediaLinks style={{ marginTop: '20px', justifyContent: 'left', width: '30%', marginLeft: '20px' }}>
+            {socialMedialLinks
+              .filter((link) => link.url)
+              .map((link, idx) => (
+                <SocialMediaLink key={`link-${idx}`} href={link.url}>
+                  {link.logo}
+                </SocialMediaLink>
+              ))}
+          </SocialMediaLinks>
+        </>
+      ) : (
+        <SocialMediaLinks>
+          <SocialMediaLink href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
+          {props.offer?.whitepaperUrl && <SocialMediaLink href={props.offer.whitepaperUrl}>Dataroom</SocialMediaLink>}
+          {socialMedialLinks
+            .filter((link) => link.url)
+            .map((link, idx) => (
+              <SocialMediaLink key={`link-${idx}`} href={link.url}>
+                {link.logo}
+              </SocialMediaLink>
+            ))}
+        </SocialMediaLinks>
+      )}
     </div>
   )
 }
@@ -100,6 +118,10 @@ const GalleryCarousel = styled.div`
   gap: 1rem;
   width: 100%;
   margin-bottom: 2rem;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 20px;
+  }
 `
 
 const GalleryCarouselMainImage = styled.div`
@@ -112,6 +134,11 @@ const GalleryCarouselMainImage = styled.div`
   object-fit: contain;
   place-self: stretch;
   cursor: pointer;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    height: 250px;
+    display: contents;
+    padding: 20px;
+  }
 `
 
 const GalleryCarouselExtraMediaList = styled.div`
@@ -119,7 +146,7 @@ const GalleryCarouselExtraMediaList = styled.div`
   flex-flow: row nowrap;
   justify-content: flex-start;
   gap: 1rem;
-  height: 120px;
+  // height: 120px;
 `
 
 const GalleryCarouselImage = styled.img`
@@ -165,6 +192,10 @@ const SocialMediaLinks = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 1rem;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    // padding: 20px;
+    justify-content: center;
+  }
 `
 
 const SocialMediaLink = styled.a`
@@ -190,5 +221,8 @@ const SocialMediaLink = styled.a`
 
   :hover svg {
     transform: scale(1.2);
+  }
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 42%;
   }
 `

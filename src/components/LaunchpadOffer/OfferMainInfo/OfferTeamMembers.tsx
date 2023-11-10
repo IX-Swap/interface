@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { OfferTeamMember } from 'state/launchpad/types'
 import { text34, text56, text7 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   team: OfferTeamMember[]
@@ -32,6 +33,9 @@ const TeamMemberList = styled.div`
   align-items: stretch;
   gap: 1rem;
   white-space: pre-line;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 0px 20px;
+   }
 `
 
 const TeamMemberListTitle = styled.div`
@@ -56,6 +60,9 @@ const TeamMemberCard = styled.div`
 
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 1rem 0rem;
+   }
 `
 
 const TeamMemberPhoto = styled.img`

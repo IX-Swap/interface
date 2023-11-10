@@ -47,17 +47,17 @@ export const DepositPopup = ({ currency, token }: Props) => {
   }, [toggle, dispatch, hideAboutWrapping])
 
   return (
-    <RedesignedWideModal isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
-      <ModalBlurWrapper data-testid="depositPopup">
+    <RedesignedWideModal  isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
+      <ModalBlurWrapper style={{width: '500px'}} data-testid="depositPopup">
         <ModalContentWrapper>
           <ModalPadding>
             <RowBetween>
               {modalView === DepositModalView.ABOUT_WRAPPING ? (
                 <Row align="center">
                   <ButtonText onClick={hideAboutWrapping}>
-                    <Box display="flex" alignItems="center" marginRight={'0.5rem'}>
+                    {/* <Box display="flex" alignItems="center" marginRight={'0.5rem'}>
                       <ArrowLeft />
-                    </Box>
+                    </Box> */}
                     <TYPE.titleSmall>
                       <Trans>About Wrapping</Trans>
                     </TYPE.titleSmall>

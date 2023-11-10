@@ -8,10 +8,11 @@ import { OfferNetwork } from 'state/launchpad/types'
 import { useAddPopup } from 'state/application/hooks'
 import { NETWORK_NAMES, CHAIN_INFO, SupportedChainId, nameChainMap } from 'constants/chains'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
-import { DiscreteExternalLink } from 'theme'
+import { DiscreteExternalLink, MEDIA_WIDTHS } from 'theme'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { text10 } from 'components/LaunchpadMisc/typography'
 import { useActiveWeb3React } from 'hooks/web3'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   network: OfferNetwork
@@ -29,13 +30,9 @@ export const OfferLinks: React.FC<Props> = ({ network, address, symbol, decimals
 
   const networkLogoUrl = CHAIN_INFO[nameChainMapNetwork].logoUrl
 
-  const explorerLink = useMemo(
-    () => {
-      return getExplorerLink(nameChainMapNetwork, address, ExplorerDataType.TOKEN)
-    },
-    
-    [network, address, nameChainMapNetwork]
-  )
+  const explorerLink = useMemo(() => {
+    return getExplorerLink(nameChainMapNetwork, address, ExplorerDataType.TOKEN)
+  }, [network, address, nameChainMapNetwork])
 
   const copyAddress = useCallback(async () => {
     await navigator.clipboard.writeText(address)
@@ -51,28 +48,30 @@ export const OfferLinks: React.FC<Props> = ({ network, address, symbol, decimals
     })
   }
   return (
-    <Row alignItems="stretch" gap="1rem" height="36px">
-      <OfferLink>{networkLogoUrl && <img src={networkLogoUrl} width="20" />}</OfferLink>
+    <>
+      <Row alignItems="stretch" gap="1rem" height="36px">
+        <OfferLink>{networkLogoUrl && <img src={networkLogoUrl} width="20" />}</OfferLink>
 
-      <OfferLink
-        as={DiscreteExternalLink}
-        href={explorerLink}
-      >
-        <Search size="18" color={theme.launchpad.colors.text.bodyAlt} />
-      </OfferLink>
+        <OfferLink as={DiscreteExternalLink} href={explorerLink}>
+          <Search size="18" color={theme.launchpad.colors.text.bodyAlt} />
+        </OfferLink>
 
-      <OfferLink onClick={() => addToMetamask()}>
-        <Plus size="12" color={theme.launchpad.colors.text.bodyAlt} />
-        <img src={MetamaskIcon} width="20" />
-      </OfferLink>
-
-      <OfferLink grow onClick={copyAddress}>
-        {shortenAddress(address, 8)}
-        <IconButton>
-          <Copy stroke={theme.launchpad.colors.text.body} size="18" />
-        </IconButton>
-      </OfferLink>
-    </Row>
+        <OfferLink onClick={() => addToMetamask()}>
+          <Plus size="12" color={theme.launchpad.colors.text.bodyAlt} />
+          <img src={MetamaskIcon} width="20" />
+        </OfferLink>
+      </Row>
+      <Row>
+        {isMobile && (
+          <OfferLink grow onClick={copyAddress}>
+            {shortenAddress(address, 8)}
+            <IconButton>
+              <Copy stroke={theme.launchpad.colors.text.body} size="18" />
+            </IconButton>
+          </OfferLink>
+        )}
+      </Row>
+    </>
   )
 }
 
@@ -90,4 +89,10 @@ const OfferLink = styled.div<{ grow?: boolean }>`
 
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    height: 36px;
+    gap: 10px;
+    width: 200px;
+    font-size: 10px;
+  }
 `
