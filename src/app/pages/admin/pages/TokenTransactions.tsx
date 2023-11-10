@@ -14,7 +14,16 @@ export const TokenTransactions = () => {
   const { getFilterValue } = useQueryFilter()
   const startDate = getFilterValue('fromDate') ?? undefined
   const endDate = getFilterValue('toDate') ?? undefined
-  const { refetch } = useExportTokenTransactions(0, 500, startDate, endDate)
+  const search = getFilterValue('search') ?? undefined
+  const source = getFilterValue('tokenTransactionSource') ?? undefined
+  const { refetch } = useExportTokenTransactions(
+    0,
+    500,
+    startDate,
+    endDate,
+    search,
+    source
+  )
 
   return (
     <Grid container direction='column' gap={2} style={{ display: 'table' }}>

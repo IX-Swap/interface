@@ -9,14 +9,18 @@ type ExportTokenTransactionProps = (
   pageNo?: number,
   pageSize?: number,
   startDate?: string | boolean,
-  endDate?: string | boolean
+  endDate?: string | boolean,
+  search?: string | boolean,
+  source?: string | boolean
 ) => any
 
 export const useExportTokenTransactions: ExportTokenTransactionProps = (
   pageNo = 0,
   pageSize = 500,
   startDate = undefined,
-  endDate = undefined
+  endDate = undefined,
+  search = undefined,
+  source = undefined
 ) => {
   const { apiService, snackbarService } = useServices()
   const uri = ledgerURL.exportTokenTransactions
@@ -24,7 +28,9 @@ export const useExportTokenTransactions: ExportTokenTransactionProps = (
     skip: pageNo,
     limit: pageSize,
     from: startDate,
-    to: endDate
+    to: endDate,
+    search,
+    source
   }
 
   const exportTransactions = async () =>
