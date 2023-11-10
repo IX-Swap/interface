@@ -135,10 +135,9 @@ const ModalWrapper = styled.div`
   backdrop-filter: blur(16px);
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    overflow-y: auto;
-    height: 82vh;
+    overflow-y: scroll;
+    max-height: 100vh;
     background: white;
-    
   }
 `
 
