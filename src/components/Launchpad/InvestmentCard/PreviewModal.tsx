@@ -52,7 +52,7 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
           <div style={{ display: isMobile ? 'block' : 'flex' }}>
             <div style={{ marginRight: isMobile? '0px' : '30px' }}>
               <div style={{ marginTop: '0px', border: '1px solid #E6E6FF', padding: isMobile ? '20px 0px' : '20px' }}>
-                <SaleAllocationTitle style={{marginLeft: '20px', marginBottom: '20px'}}>Main Information</SaleAllocationTitle>
+                <SaleAllocationTitle style={{marginLeft: isMobile ? '20px' : '0px', marginBottom: '20px'}}>Main Information</SaleAllocationTitle>
                 <OfferGeneralInfo {...offer} />
               </div>
               <div style={{ marginTop: '15px', border: '1px solid #E6E6FF', padding: isMobile ? '20px 0px ' : '20px' }}>
@@ -109,7 +109,7 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
 const SaleAllocationTitle = styled.div`
   display: flex;
   align-items: center;
-  font-weight: 600;
+  font-weight: 800;
   font-size: 14px;
   color: #292933;
 `
