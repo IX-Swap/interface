@@ -60,6 +60,14 @@ export const OfferLinks: React.FC<Props> = ({ network, address, symbol, decimals
           <Plus size="12" color={theme.launchpad.colors.text.bodyAlt} />
           <img src={MetamaskIcon} width="20" />
         </OfferLink>
+        {!isMobile && (
+          <OfferLink grow onClick={copyAddress}>
+            {shortenAddress(address, 8)}
+            <IconButton>
+              <Copy stroke={theme.launchpad.colors.text.body} size="18" />
+            </IconButton>
+          </OfferLink>
+        )}
       </Row>
       <Row>
         {isMobile && (
@@ -82,10 +90,13 @@ const OfferLink = styled.div<{ grow?: boolean }>`
   justify-content: center;
   align-items: center;
   ${(props) => (props.grow ? 'flex-grow: 1;' : 'width: 60px;')}
-  gap: 0.5rem;
   background: ${(props) => props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
+  height: 36px;
+  gap: 10px;
+  width: 200px;
+  font-size: 10px;
 
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};

@@ -65,43 +65,44 @@ export const InvestDialog: React.FC<Props> = (props) => {
   const labelToShow = allLabels.find((label) => label.value === props.offer.status)?.label
   return (
     <>
-        <ModalContainer>
-        {/* <ModalPadding> */}
-        <ModalWrapper>
-          <DialogContainer>
-            {!isMobile && (
-              <aside>
-                <InvestDialogSidebar stage={props.offer.status} hasPresale={props.offer.hasPresale} />
-              </aside>
-            )}
+      <ModalContainer>
+        <Portal>
+          {/* <ModalPadding> */}
+          <ModalWrapper>
+            <DialogContainer>
+              {!isMobile && (
+                <aside>
+                  <InvestDialogSidebar stage={props.offer.status} hasPresale={props.offer.hasPresale} />
+                </aside>
+              )}
 
-            <header>
-              <DialogHeader>
-                {isMobile ? (
-                  <DialogHeaderTitle style={{ marginBottom: '20px' }}>
-                    <span style={{ border: '1px solid #E6E6FF', padding: '10px 30px', borderRadius: '8px' }}>
-                      {labelToShow || props.offer.status}
-                    </span>
-                  </DialogHeaderTitle>
-                ) : (
-                  <DialogHeaderTitle> {props.offer.status}Dashboard</DialogHeaderTitle>
-                )}
+              <header>
+                <DialogHeader>
+                  {isMobile ? (
+                    <DialogHeaderTitle style={{ marginBottom: '20px' }}>
+                      <span style={{ border: '1px solid #E6E6FF', padding: '10px 30px', borderRadius: '8px' }}>
+                        {labelToShow || props.offer.status}
+                      </span>
+                    </DialogHeaderTitle>
+                  ) : (
+                    <DialogHeaderTitle> Dashboard</DialogHeaderTitle>
+                  )}
 
-                <DialogHeaderExit onClick={props.onClose}>
-                  <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
-                </DialogHeaderExit>
-              </DialogHeader>
-            </header>
+                  <DialogHeaderExit onClick={props.onClose}>
+                    <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
+                  </DialogHeaderExit>
+                </DialogHeader>
+              </header>
 
-            <main>
-              {stage === StageForm.register && <RegisterToInvestStage {...props} />}
-              {stage === StageForm.sale && <SaleStage {...props} />}
-              {stage === StageForm.closed && <ClosedStage {...props} />}
-            </main>
-          </DialogContainer>
-        </ModalWrapper>
-        {/* </ModalPadding> */}
-      {/* </Portal> */}
+              <main>
+                {stage === StageForm.register && <RegisterToInvestStage {...props} />}
+                {stage === StageForm.sale && <SaleStage {...props} />}
+                {stage === StageForm.closed && <ClosedStage {...props} />}
+              </main>
+            </DialogContainer>
+          </ModalWrapper>
+          {/* </ModalPadding> */}
+        </Portal>
       </ModalContainer>
     </>
   )

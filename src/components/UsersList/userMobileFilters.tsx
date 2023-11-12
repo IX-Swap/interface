@@ -35,7 +35,7 @@ interface Props {
   filters: Record<string, any>
 }
 
-export const UserModal: FC<Props> = ({ item, close, filters }) => {
+export const UserMobileFilters: FC<Props> = ({ item, close, filters }) => {
   const [tokensToRemove, handleTokensToRemove] = useState<Option[]>([])
   const [showDeleteTokensWarning, handleShowDeleteTokensWarning] = useState(false)
   const [changeRole, handleChangeRole] = useState(false)

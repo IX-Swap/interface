@@ -403,7 +403,7 @@ export default function RemoveLiquidity({
                           }}
                           disabled={!isValid || signatureData === null}
                         >
-                          <Text color={'#FF6161'}>{<Trans>Remove</Trans>}</Text>
+                          <Text color={ !isValid || signatureData === null ? '#f8c0c0' : '#FF6161'}>{<Trans>Remove</Trans>}</Text>
                         </NewApproveButton>
                       </RowBetween>
                     </>

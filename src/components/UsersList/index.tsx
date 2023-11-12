@@ -38,7 +38,7 @@ import { isMobile } from 'react-device-detect'
 import { TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
 
-const headerCells = [t`Wallet address`, t`Role`, t`Name`, t`Security Token`, t`Whitelisted`, '']
+const headerCells = [t`Wallet address`, t`Role`, t`Name`, t`Security Token`, t`Waive Withdrawal Fees`, '']
 
 interface BodyProps {
   changeUser: (item: User) => void
@@ -100,10 +100,10 @@ export const UsersList: FC = () => {
         <StyledButtonGradientBorder
           style={{
             padding: '12px 16px',
-            width: '134px',
             backgroundColor: '#6666FF',
             color: '#FFFFFF',
             borderRadius: '6px',
+            width: isMobile ? '100%' : '134px'
           }}
           marginTop={isMobile ? '16px' : '0px'}
           marginLeft={isMobile ? '0px' : '33px'}
