@@ -85,7 +85,7 @@ export function colors(configColors?: WlColors): Colors {
     bg18: wlColors.background?.main || '#27204666',
     bg19: wlColors.background?.secondary || '#271F4A66',
     bg20: wlColors.background?.secondary || '#7B42A9',
-    bg21: wlColors.background?.secondary || '#6b6b6b',
+    bg21: wlColors.background?.secondary || '#FFFFFF',
     bg22: wlColors.background?.secondary || '#2C254A80',
     bg23: '#F7F7FA',
     bg24: '#E6E6FF',
