@@ -34,7 +34,7 @@ export const Search = ({ setSearchValue, placeholder, style, value }: Props) => 
       <SearchIcon src={searchImg} alt="searchImg" />
       <Input
         style={style}
-        placeholder={t`${placeholder || 'Search for Wallet or Token'}`}
+        placeholder={`${placeholder || 'Search for Wallet or Token'}`}
         onChange={onSearchChange}
         value={search}
       />

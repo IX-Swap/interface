@@ -58,7 +58,9 @@ export const MyPayouts = () => {
           {items.map(({ label, data, type }, index) => (
             <>
               <MyPayoutListContainer>
-                <MyListTitle>{t`${label}`}</MyListTitle>
+                <MyListTitle>
+                  <Trans>{`${label}`}</Trans>
+                </MyListTitle>
                 {data.totalItems ? (
                   <MyListContainer>
                     {data.items.map((item) => (

@@ -65,7 +65,9 @@ export function ConfirmationPendingContent({
             </StyledTitle>
           </RowCenter>
           <RowCenter style={{ marginTop: '20px' }}>
-            <TYPE.title9>{pendingText}</TYPE.title9>
+            <TYPE.title9>
+              <Trans>{pendingText}</Trans>
+            </TYPE.title9>
           </RowCenter>
           <RowCenter style={{ marginTop: '53px', marginBottom: '84px' }}>
             <LoaderThin size={128} />

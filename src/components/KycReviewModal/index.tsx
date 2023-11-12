@@ -119,10 +119,11 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
                   &nbsp;&nbsp;
                 </div> */}
                 <TYPE.title7 fontWeight="800" fontSize={isMobile ? '18px' : '24px'}>
-                  {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`})
+                  {shortenAddress(data.user.ethAddress)} (
+                  <Trans>{`${data.individualKycId ? 'Individual' : 'Corporate'}`}</Trans>)
                   {/* {data?.individual?.fullName || data?.corporate?.fullName || ''} */}
                 </TYPE.title7>
-                {/* {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
+                {/* {shortenAddress(data.user.ethAddress)} ({`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
               </Title>
               <CloseIcon style={{ color: '#555566' }} data-testid="cross" onClick={onClose} />
             </TitleContainer>

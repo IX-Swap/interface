@@ -38,7 +38,7 @@ import { isMobile } from 'react-device-detect'
 import { TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
 
-const headerCells = [t`Wallet address`, t`Role`, t`Name`, t`Security Token`, t`Whitelisted`, '']
+const headerCells = [`Wallet address`, `Role`, `Name`, `Security Token`, `Whitelisted`, '']
 
 interface BodyProps {
   changeUser: (item: User) => void
@@ -113,7 +113,7 @@ export const UsersList: FC = () => {
         </StyledButtonGradientBorder>
       </Flex>
       <Flex>
-        {/* <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={t`Search`} /> */}
+        {/* <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={`Search`} /> */}
       </Flex>
       {/* </div> */}
       {modalOpen && <UserModal item={selectedItem} close={closeUpdateModal} filters={filters} />}
@@ -253,7 +253,9 @@ const Header = () => {
   return (
     <StyledHeaderRow>
       {headerCells.map((cell) => (
-        <div key={cell}>{cell}</div>
+        <div key={cell}>
+          <Trans>{cell}</Trans>
+        </div>
       ))}
     </StyledHeaderRow>
   )

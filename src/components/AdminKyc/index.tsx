@@ -30,18 +30,17 @@ import { useOnChangeOrder } from 'state/launchpad/hooks'
 import { AbstractOrder, KycOrderConfig, OrderTypes } from 'state/launchpad/types'
 import { OrderType } from 'state/launchpad/types'
 const headerCells = [
-  { key: 'ethAddress', label: t`Wallet address`, show: false },
-  { key: 'fullName', label: t`Name`, show: false },
-  { key: 'identity', label: t`Identity`, show: false },
-  { key: 'createdAt', label: t`Date of request`, show: true },
-  { key: 'status', label: t`KYC Status`, show: false },
-  { key: 'updatedAt', label: t`Updated At`, show: true },
+  { key: 'ethAddress', label: 'Wallet address', show: false },
+  { key: 'fullName', label: 'Name', show: false },
+  { key: 'identity', label: 'Identity', show: false },
+  { key: 'createdAt', label: 'Date of request', show: true },
+  { key: 'status', label: 'KYC Status', show: false },
+  { key: 'updatedAt', label: 'Updated At', show: true },
 ]
 interface RowProps {
   item: KycItem
   openModal: () => void
 }
-
 
 const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   const {
@@ -64,7 +63,9 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <CopyAddress address={ethAddress} />
       </Wallet>
       <div>{fullName || '-'}</div>
-      <div>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>
+      <div>
+        <Trans>{`${individualKycId ? 'Individual' : 'Corporate'}`}</Trans>
+      </div>
       <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
       <div>
         <StatusCell status={status} />
@@ -219,20 +220,23 @@ export const AdminKycTable = () => {
         </NoData>
       ) : (
         <Container>
-          <Table body={<Body openModal={openModal} />} header={
-            <>
-              <StyledHeaderRow>
-                {headerCells.map((cell) => (
-                  <HeaderCell key={cell.key} onClick={() => onChangeSort(cell.key)}>
-                    {cell.label}
-                    
-                    {cell.show && <SortIcon type={order[cell.key as keyof KycOrderConfig]} />}
-                  </HeaderCell>
-                ))}
-              </StyledHeaderRow>
-              {/* <Line style={{ marginBottom: '20px' }} /> */}
-            </>
-          } />
+          <Table
+            body={<Body openModal={openModal} />}
+            header={
+              <>
+                <StyledHeaderRow>
+                  {headerCells.map((cell) => (
+                    <HeaderCell key={cell.key} onClick={() => onChangeSort(cell.key)}>
+                      <Trans>{cell.label}</Trans>
+
+                      {cell.show && <SortIcon type={order[cell.key as keyof KycOrderConfig]} />}
+                    </HeaderCell>
+                  ))}
+                </StyledHeaderRow>
+                {/* <Line style={{ marginBottom: '20px' }} /> */}
+              </>
+            }
+          />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
       )}
@@ -265,7 +269,7 @@ export const Wallet = styled.div`
 
 const HeaderCell = styled.div`
   display: flex;
-  gap: 5px
+  gap: 5px;
 `
 
 export const Container = styled.div`
@@ -287,7 +291,7 @@ const StyledHeaderRow = styled(HeaderRow)`
   padding-bottom: 15px;
   margin-bottom: 20px;
   border-bottom: 1px solid;
-  border-color: rgba(102,102,128, 0.2)
+  border-color: rgba(102, 102, 128, 0.2);
 `
 
 const StyledBodyRow = styled(BodyRow)`

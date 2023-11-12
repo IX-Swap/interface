@@ -223,7 +223,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
         <StyledSearchInput
           // style={isMobile ? { marginBottom: 16, padding: '16px 22px' } : { marginRight: 16 }}
           value={searchValue}
-          placeholder={t`Search`}
+          placeholder={`Search`}
           onChange={onSearchChange}
         />
 

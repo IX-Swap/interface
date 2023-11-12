@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 import axios from 'axios'
@@ -9,16 +9,16 @@ import { EllipsisText, MEDIA_WIDTHS } from 'theme'
 import { Document } from 'state/admin/actions'
 import { KycDocPreviewModal } from 'components/KycDocPreviewModal'
 
-const headerCells = [t`File`, t`Type`, t`Uploaded At`]
+const headerCells = [`File`, `Type`, `Uploaded At`]
 
 const formattedTypes = {
-  identity: t`Proof of Identity`,
-  address: t`Proof of Address`,
-  selfie: t`Selfie`,
-  accreditation: t`Evidence of Accreditation`,
-  financial: t`Financial Documents`,
-  authorization: t`Authorization document`,
-  corporate: t`Corporate documents`,
+  identity: `Proof of Identity`,
+  address: `Proof of Address`,
+  selfie: `Selfie`,
+  accreditation: `Evidence of Accreditation`,
+  financial: `Financial Documents`,
+  authorization: `Authorization document`,
+  corporate: `Corporate documents`,
 } as Record<string, string>
 
 interface Props {
@@ -48,7 +48,11 @@ export const Documents = ({ documents, title }: Props) => {
   {
     return (
       <Container>
-        {title && <Title>{t`${title}`}</Title>}
+        {title && (
+          <Title>
+            <Trans>{`${title}`}</Trans>
+          </Title>
+        )}
         <Table>
           <Body documents={documents} />
         </Table>
@@ -87,19 +91,31 @@ const Row = ({
   return (
     <BodyRow key={id} onClick={() => handleRowClick(publicUrl, name, mimeType)}>
       <div>
-        {isFirstRow && <ColumnHeader>{headerCells[0]}</ColumnHeader>}
+        {isFirstRow && (
+          <ColumnHeader>
+            <Trans>{headerCells[0]}</Trans>
+          </ColumnHeader>
+        )}
         <FileName>
           <img src={pdfIcon} alt="pdfIcon" />
           <EllipsisText>{name}</EllipsisText>
         </FileName>
       </div>
       <div>
-        {isFirstRow && <ColumnHeader>{headerCells[1]}</ColumnHeader>}
+        {isFirstRow && (
+          <ColumnHeader>
+            <Trans>{headerCells[1]}</Trans>
+          </ColumnHeader>
+        )}
 
-        {formattedTypes[type] || type}
+        <Trans>{formattedTypes[type] || type}</Trans>
       </div>
       <div>
-        {isFirstRow && <ColumnHeader>{headerCells[2]}</ColumnHeader>}
+        {isFirstRow && (
+          <ColumnHeader>
+            <Trans>{headerCells[2]}</Trans>
+          </ColumnHeader>
+        )}
         {dayjs(createdAt).format('MMM D, YYYY hh:mm:ss A')}
       </div>
     </BodyRow>

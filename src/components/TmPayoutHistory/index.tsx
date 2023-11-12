@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { Flex } from 'rebass'
 
@@ -24,12 +24,12 @@ import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
 
 const headerCells = [
-  t`Recipient's wallet`,
-  t`Payout type`,
-  t`SEC token`,
-  t`Date/Time of claim`,
-  t`Claimed tokens`,
-  t`Transactions`,
+  `Recipient's wallet`,
+  `Payout type`,
+  `SEC token`,
+  `Date/Time of claim`,
+  `Claimed tokens`,
+  `Transactions`,
 ]
 
 export const TmPayoutHistory = () => {
@@ -155,7 +155,9 @@ const Header = () => {
   return (
     <StyledHeaderRow>
       {headerCells.map((cell) => (
-        <div key={cell}>{cell}</div>
+        <div key={cell}>
+          <Trans>{cell}</Trans>
+        </div>
       ))}
     </StyledHeaderRow>
   )

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled, { ThemeContext } from 'styled-components'
 
 import { KYCStatuses } from 'pages/KYC/enum'
@@ -29,21 +29,21 @@ export const StatusCell = ({ status }: Props) => {
   const getText = () => {
     switch (status) {
       case KYCStatuses.PENDING:
-        return t`Pending`
+        return `Pending`
       case KYCStatuses.REJECTED:
-        return t`Declined`
+        return `Declined`
       case KYCStatuses.CHANGES_REQUESTED:
-        return t`Change requested`
+        return `Change requested`
       case KYCStatuses.APPROVED:
-        return t`Approved`
+        return `Approved`
       case KYCStatuses.DRAFT:
-        return t`Draft`
+        return `Draft`
       case KYCStatuses.FAILED:
-        return t`Failed`
+        return `Failed`
       case KYCStatuses.IN_PROGRESS:
-        return t`In progress`
+        return `In progress`
       default:
-        return t`Status`
+        return `Status`
     }
   }
 
@@ -72,7 +72,7 @@ export const StatusCell = ({ status }: Props) => {
     <Container>
       <img src={getIcon()} alt="icon" width="20px" height="20px" />
       <StatusText color={statusColors[status] || theme.text2} data-testid={getText()}>
-        {getText()}
+        <Trans>{getText()}</Trans>
       </StatusText>
     </Container>
   )

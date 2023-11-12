@@ -150,7 +150,7 @@ export function useClaimAll(): () => Promise<any> {
 
       if (currency) {
         addTransaction(claimed, {
-          summary: t`Claimed ${formatCurrencyAmount(
+          summary: `Claimed ${formatCurrencyAmount(
             CurrencyAmount.fromRawAmount(currency, claimable),
             currency?.decimals ?? 18
           )} ${currency?.symbol}`,

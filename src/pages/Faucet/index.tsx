@@ -99,7 +99,7 @@ export default function Faucet() {
         </StyledPageHeader>
         <WarningCard
           style={{ padding: '15px 10px', marginBottom: '10px' }}
-          message={t`These tokens are fake, they were made only for testing ${
+          message={`These tokens are fake, they were made only for testing ${
             config?.name || 'IX Swap'
           } Playground on Kovan`}
         />

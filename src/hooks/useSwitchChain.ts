@@ -12,10 +12,10 @@ export const CHAIN_SWITCH_MAP: { [key in SupportedChainId]: SupportedChainId } =
 }
 
 export const CHAIN_SWITCH_STRINGS: { [key in SupportedChainId]: string } = {
-  [SupportedChainId.MAINNET]: t`Polygon`,
-  [SupportedChainId.KOVAN]: t`Polygon`,
-  [SupportedChainId.MATIC]: t`Ethereum`,
-  [SupportedChainId.MUMBAI]: t`Ethereum`,
+  [SupportedChainId.MAINNET]: `Polygon`,
+  [SupportedChainId.KOVAN]: `Polygon`,
+  [SupportedChainId.MATIC]: `Ethereum`,
+  [SupportedChainId.MUMBAI]: `Ethereum`,
 }
 
 export default function useSwitchChain(): {

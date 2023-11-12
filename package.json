@@ -148,7 +148,7 @@
     "postinstall": "yarn compile-contract-types",
     "start": "yarn compile-contract-types && react-app-rewired start",
     "test": "react-app-rewired test --env=jsdom",
-    "serve": "serve -s build -l 4000"
+    "serve": "serve -s build -l 3000"
   },
   "browserslist": {
     "production": [

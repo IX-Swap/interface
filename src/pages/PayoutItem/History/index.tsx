@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Box, Flex } from 'rebass'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled, { css } from 'styled-components'
 import dayjs from 'dayjs'
 import { capitalize } from '@material-ui/core'
@@ -18,7 +18,7 @@ import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 
 import { formatDate } from '../utils'
 
-const headerCells = [t`Recipient's wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Status`, t`Transaction`]
+const headerCells = [`Recipient's wallet`, `Amount claimed`, `Date/Time of claim`, `Status`, `Transaction`]
 
 interface Props {
   claimHistory: any
@@ -57,7 +57,7 @@ const Header = () => {
     <StyledHeaderRow>
       {headerCells.map((cell) => (
         <TYPE.buttonMuted fontWeight="600 !important" opacity="0.5" key={cell}>
-          {cell}
+          <Trans>{cell}</Trans>
         </TYPE.buttonMuted>
       ))}
     </StyledHeaderRow>

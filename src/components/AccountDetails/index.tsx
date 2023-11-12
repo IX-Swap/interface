@@ -94,7 +94,9 @@ export default function AccountDetails({
       .map((k) => SUPPORTED_WALLETS[k].name)[0]
     return (
       <Box style={{ display: 'flex' }}>
-        <TYPE.description3>{t`Connected with ${name}`}</TYPE.description3>
+        <TYPE.description3>
+          <Trans>{`Connected with ${name}`}</Trans>
+        </TYPE.description3>
       </Box>
     )
   }
@@ -156,7 +158,9 @@ export default function AccountDetails({
     <>
       <UpperSection>
         <HeaderRow>
-          <TYPE.title7>{t`Account`}</TYPE.title7>
+          <TYPE.title7>
+            <Trans>{`Account`}</Trans>
+          </TYPE.title7>
           <CloseIcon onClick={toggleWalletModal}>
             <CloseColor />
           </CloseIcon>
@@ -180,7 +184,7 @@ export default function AccountDetails({
                         ;(connector as any).close()
                       }}
                     >
-                      {t`Disconnect`}
+                      <Trans>{`Disconnect`}</Trans>
                     </WalletAction>
                   )}
                   {/* TODO: uncomment when we have more options */}
@@ -215,16 +219,16 @@ export default function AccountDetails({
                         {/* <IconWrapperWithBg size={8}> */}
                         <NewExplore style={{ marginTop: '5px' }} />
                         {/* </IconWrapperWithBg> */}
-                        <TYPE.description3
-                          style={{ marginLeft: '4px', marginRight: '10px', fontSize: '11px' }}
-                        >{t`View on Explorer`}</TYPE.description3>
+                        <TYPE.description3 style={{ marginLeft: '4px', marginRight: '10px', fontSize: '11px' }}>
+                          <Trans>{`View on Explorer`}</Trans>
+                        </TYPE.description3>
                       </AddressLink>
                     )}
                     {account && (
                       <Copy toCopy={account}>
-                        <TYPE.description3
-                          style={{ marginLeft: '4px', fontSize: '11px' }}
-                        >{t`Copy Address`}</TYPE.description3>
+                        <TYPE.description3 style={{ marginLeft: '4px', fontSize: '11px' }}>
+                          <Trans>{`Copy Address`}</Trans>
+                        </TYPE.description3>
                       </Copy>
                     )}
                   </>
@@ -244,7 +248,9 @@ export default function AccountDetails({
                       <FlexContainer>
                         <Copy
                           toCopy={`${new URL(window.location.href).href?.split('?')[0]}?referralCode=${referralCode}`}
-                        >{t`Copy Referral Link`}</Copy>
+                        >
+                          <Trans>{`Copy Referral Link`}</Trans>
+                        </Copy>
                         {/* <CopyIcon /> */}
                         {/* <TextSpan>Copy Referral Link</TextSpan> */}
                       </FlexContainer>
@@ -262,9 +268,13 @@ export default function AccountDetails({
       {!!pendingTransactions.length || !!confirmedTransactions.length ? (
         <LowerSection>
           <AutoRow mb={'1rem'} style={{ justifyContent: 'space-between', textTransform: 'uppercase' }}>
-            <TYPE.title7>{t`Recent Transactions`}</TYPE.title7>
+            <TYPE.title7>
+              <Trans>{`Recent Transactions`}</Trans>
+            </TYPE.title7>
             <LinkStyledButton onClick={clearAllTransactionsCallback}>
-              <TYPE.description2>{t`Clear all`}</TYPE.description2>
+              <TYPE.description2>
+                <Trans>{`Clear all`}</Trans>
+              </TYPE.description2>
             </LinkStyledButton>
           </AutoRow>
           {renderTransactions(pendingTransactions)}

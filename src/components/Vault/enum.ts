@@ -53,9 +53,9 @@ export type ActionFilterTabs = ActionTypes | 'all'
 export const filterTabs: ActionFilterTabs[] = [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW, 'all']
 
 export const ActionTypeTextHeader: { [key in ActionFilterTabs]: string } = {
-  [ActionTypes.DEPOSIT]: t`Deposit`,
-  [ActionTypes.WITHDRAW]: t`Withdraw`,
-  ['all']: t`All`,
+  [ActionTypes.DEPOSIT]: `Deposit`,
+  [ActionTypes.WITHDRAW]: `Withdraw`,
+  ['all']: `All`,
 }
 
 export const isSuccessTransaction = (action: ActionTypes, status: string) => {
@@ -146,8 +146,8 @@ export const endedStatuses = [
 ] as string[]
 
 export const ActionTypeText = {
-  [ActionTypes.DEPOSIT]: t`Deposit`,
-  [ActionTypes.WITHDRAW]: t`Withdrawal`,
+  [ActionTypes.DEPOSIT]: `Deposit`,
+  [ActionTypes.WITHDRAW]: `Withdrawal`,
 }
 
 const WithdrawStatusPercents = {

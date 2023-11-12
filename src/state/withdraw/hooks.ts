@@ -104,16 +104,16 @@ export function useDerivedWithdrawInfo(): {
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
   let inputError: string | undefined
   if (!account) {
-    inputError = t`Connect Wallet`
+    inputError = `Connect Wallet`
   }
 
   if (!parsedAmount) {
-    inputError = inputError ?? t`Enter an amount`
+    inputError = inputError ?? `Enter an amount`
   }
 
   let formattedTo = isAddress(receiver)
   if (!receiver) {
-    inputError = inputError ?? t`Enter a receiver`
+    inputError = inputError ?? `Enter a receiver`
   } else{//if (!formattedTo) {
     const network = networkName || 'Ethereum'
     const currency = walletValidator.findCurrency(network)
@@ -126,7 +126,7 @@ export function useDerivedWithdrawInfo(): {
     }
 
     if (!isValidForNetwork) {
-      inputError = inputError ?? t`Receiver is invalid`
+      inputError = inputError ?? `Receiver is invalid`
     }
     if (isValidForNetwork) {
       formattedTo = receiver
@@ -135,7 +135,7 @@ export function useDerivedWithdrawInfo(): {
 
   const sufficientBalance = parsedAmount && balance && !balance.lessThan(parsedAmount)
   if (!sufficientBalance) {
-    inputError = inputError ?? t`Insufficient balance`
+    inputError = inputError ?? `Insufficient balance`
   }
   return {
     parsedAmount,
@@ -198,7 +198,7 @@ export function useWithdrawCallback(
         const response = await withdrawToken({ id, amount, receiver })
         const data = response?.data
         if (!data) {
-          throw new Error(response?.message || t`An error occured. Could not submit withdraw request`)
+          throw new Error(response?.message || `An error occured. Could not submit withdraw request`)
         }
         const { withdrawRequest, signature } = data
         withdrawId = withdrawRequest.id
@@ -217,10 +217,10 @@ export function useWithdrawCallback(
           }
         )
         if (!burned.hash) {
-          throw new Error(t`An error occured. Could not submit withdraw request`)
+          throw new Error(`An error occured. Could not submit withdraw request`)
         }
         getEvents({ tokenId, filter: 'all' })
-        addTransaction(burned, { summary: t`Withdraw ${amount} ${currencySymbol}` })
+        addTransaction(burned, { summary: `Withdraw ${amount} ${currencySymbol}` })
         dispatch(setTransaction({ tx: burned.hash }))
         dispatch(withdrawCurrency.fulfilled())
         dispatch(setLogItem({ logItem: withdrawRequest }))

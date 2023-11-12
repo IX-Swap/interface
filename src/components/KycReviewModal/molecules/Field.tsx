@@ -1,5 +1,5 @@
 import React from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 
@@ -29,14 +29,18 @@ export const Field = ({ label, value }: Props) => {
     }
     return (
       <Container>
-        <span>{t`${label}`}</span>
+        <span>
+          <Trans>{`${label}`}</Trans>
+        </span>
         <span>{value}</span>
       </Container>
     )
   } else {
     return (
       <Container>
-        <span>{t`${label}`}</span>
+        <span>
+          <Trans>{`${label}`}</Trans>
+        </span>
         <span>{value || 'Not completed'}</span>
       </Container>
     )

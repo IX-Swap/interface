@@ -477,7 +477,7 @@ export function usePassAccreditation(
           }
           await postPassAccreditation({ tokenId, isKyc })
         } else {
-          showError(t`Could not get accredited because of login. Please try again`)
+          showError(`Could not get accredited because of login. Please try again`)
           dispatch(passAccreditation.rejected({ errorMessage: 'Could not get accredited because of login.' }))
           return
         }
@@ -486,7 +486,7 @@ export function usePassAccreditation(
         toggle()
         onSuccess && onSuccess()
       } catch (error) {
-        showError(t`Failed to pass accreditation ${String((error as any)?.message)}`)
+        showError(`Failed to pass accreditation ${String((error as any)?.message)}`)
         dispatch(passAccreditation.rejected({ errorMessage: String((error as any)?.message) }))
       }
     },

@@ -50,7 +50,7 @@ export const DetailsInfo = ({ token }: Props) => {
 
   return (
     <Details>
-      <ReadMore more={t`Read More`} less={t`Show Less`} lines={2}>
+      <ReadMore more={`Read More`} less={`Show Less`} lines={2}>
         <Trans>{description}</Trans>
       </ReadMore>
 

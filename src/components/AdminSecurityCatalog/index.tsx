@@ -289,7 +289,7 @@ export const AdminSecurityCatalog: FC = () => {
                 {/* {showMode === 'edit_issuer' && (
                   <EditButton marginBottom="20px" onClick={() => handleEditTokenClick(null)}>
                     <TYPE.body3 color="white" fontWeight={600}>
-                      {t`+ Add token`}
+                      {`+ Add token`}
                     </TYPE.body3>
                   </EditButton>
                 )} */}
@@ -298,7 +298,7 @@ export const AdminSecurityCatalog: FC = () => {
                 {/* {showMode === 'edit_issuer' && ( */}
                 <NewEditButton onClick={() => handleEditTokenClick(null)}>
                   {/* <TYPE.body3 color="white" fontWeight={600}> */}
-                  {t`+ Add token`}
+                  <Trans>{`+ Add token`}</Trans>
                   {/* </TYPE.body3> */}
                 </NewEditButton>
                 {/* )} */}
@@ -332,7 +332,7 @@ export const AdminSecurityCatalog: FC = () => {
                         <TYPE.body3 color="text1">{wrappedToken ? 'Tradable' : 'Non Tradable'}</TYPE.body3>
                         <Box>
                           {/* <EditButton onClick={() => handleEditTokenClick(token)}>
-                            <TYPE.body3 fontWeight={600}>{t`Edit`}</TYPE.body3>
+                            <TYPE.body3 fontWeight={600}>{`Edit`}</TYPE.body3>
                           </EditButton> */}
 
                           <ButtonText onClick={() => handleEditTokenClick(token)}>
@@ -402,7 +402,7 @@ export const AdminSecurityCatalog: FC = () => {
                 </StyledButtonGradientBorder>
               </Flex>
               <Flex>
-                <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={t`Search`} />
+                <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={`Search`} />
               </Flex>
             </div>
             <Flex flexDirection="column">

@@ -200,10 +200,10 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
           {loadingFee ? (
             <WaitingWitdrawalFee>
               <LoaderThin size={20} />
-              {t`Sending Withdrawal Fee`}
+              <Trans>{`Sending Withdrawal Fee`}</Trans>
             </WaitingWitdrawalFee>
           ) : (
-            <>{inputError ?? t`${paid ? 'Withdraw' : 'Pay withdraw fee'}`}</>
+            <>{inputError ?? <Trans>`${paid ? 'Withdraw' : 'Pay withdraw fee'}`</Trans>}</>
           )}
         </PinnedContentButton>
       </Row>

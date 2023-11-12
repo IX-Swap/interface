@@ -59,7 +59,7 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
     const unstakeTx = await unstake(stake, parseFloat(amount))
     if (unstakeTx) {
       addTransaction(unstakeTx, {
-        summary: t`Unstake ${amount} ${currency?.symbol}`,
+        summary: `Unstake ${amount} ${currency?.symbol}`,
       })
     }
   }
@@ -74,7 +74,7 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
 
     if (unstakeTx) {
       addTransaction(unstakeTx, {
-        summary: t`Unstake ${stake?.stakeAmount} ${currency?.symbol}`,
+        summary: `Unstake ${stake?.stakeAmount} ${currency?.symbol}`,
       })
     }
   }
@@ -92,7 +92,7 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
       isOpen={isOpen}
       onDismiss={wrappedOnDismiss}
       scrollable
-      tip={t`Tip: To unstake ${currency?.symbol} tokens you need to have enough IXSgov tokens. 
+      tip={`Tip: To unstake ${currency?.symbol} tokens you need to have enough IXSgov tokens. 
 You can unstake ${currency?.symbol} tokens equal to the number of IXSgov tokens in your account.`}
     >
       <ModalBlurWrapper>

@@ -14,6 +14,7 @@ import styled, { css } from 'styled-components'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
 import { isTransactionRecent, useAllTransactions } from 'state/transactions/hooks'
 import { TransactionDetails } from 'state/transactions/reducer'
+import { Trans } from '@lingui/macro'
 
 interface Props {
   status: KYCStatuses
@@ -74,7 +75,7 @@ export const KYCStatus: FC<Props> = ({ status }: Props) => {
       <VerticalLine />
       <Flex style={{ whiteSpace: 'nowrap' }} alignItems="center">
         <TYPE.main1 marginLeft={'10px'} marginRight="10px" data-testid="kycStatus">
-          {text}
+          <Trans>{text}</Trans>
         </TYPE.main1>
         {icon()}
       </Flex>

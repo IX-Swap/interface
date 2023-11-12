@@ -99,7 +99,11 @@ export const Images = ({ collection, setPending }: Props) => {
               Drag and Drop
               <br /> or <span>Upload</span>
             </Trans>
-            {errors.cover && <TYPE.error error>{t`${errors.cover}`}</TYPE.error>}
+            {errors.cover && (
+              <TYPE.error error>
+                <Trans>{`${errors.cover}`}</Trans>
+              </TYPE.error>
+            )}
           </UploadText>
           {cover && (
             <DeleteImage onClick={clearCover}>
@@ -121,7 +125,11 @@ export const Images = ({ collection, setPending }: Props) => {
               Drag and Drop
               <br /> or <span>Upload</span>
             </Trans>
-            {errors.logo && <TYPE.error error>{t`${errors.logo}`}</TYPE.error>}
+            {errors.logo && (
+              <TYPE.error error>
+                <Trans>{`${errors.logo}`}</Trans>
+              </TYPE.error>
+            )}
           </UploadText>
           {logo && (
             <DeleteImage isLogo onClick={clearLogo}>

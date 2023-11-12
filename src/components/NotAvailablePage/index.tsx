@@ -109,10 +109,12 @@ export const NotAvailablePage = () => {
   return (
     <Container>
       <Title>
-        {t`${config?.name || 'IX Swap'} is not available`}
-        <br /> {t`on this Blockchain network`}
+        <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
+        <br /> <Trans>{`on this Blockchain network`}</Trans>
       </Title>
-      <Info>{t`${config?.name || 'IX Swap'} is available only on:`}</Info>
+      <Info>
+        <Trans>{`${config?.name || 'IX Swap'} is available only on:`}</Trans>
+      </Info>
 
       <NetworksRow elements={farming ? chains.length + 1 : chains.length}>
         {(chains.includes(SupportedChainId.MAINNET) || farming) && (

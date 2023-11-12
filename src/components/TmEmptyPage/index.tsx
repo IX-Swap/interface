@@ -16,13 +16,13 @@ export const TmEmptyPage = ({ tab, children, filtred }: Props) => {
   const text = useMemo(() => {
     switch (tab) {
       case 'my-tokens':
-        return t`No Tokens Added`
+        return `No Tokens Added`
       case 'payout-events':
-        return t`No Payout Event Created`
+        return `No Payout Event Created`
       case 'payout-history':
-        return t`No Payout History`
+        return `No Payout History`
       default:
-        return t`No Data`
+        return `No Data`
     }
   }, [tab])
 

@@ -57,7 +57,9 @@ export const StakingInputPercentage = ({
   return (
     <>
       <Row style={{ marginTop: '19px' }}>
-        <TYPE.body1>{fieldTitle}</TYPE.body1>
+        <TYPE.body1>
+          <Trans>{fieldTitle}</Trans>
+        </TYPE.body1>
       </Row>
       <HighlightedInput style={{ marginTop: '11px' }}>
         <RowBetween style={{ flexWrap: 'wrap' }}>
