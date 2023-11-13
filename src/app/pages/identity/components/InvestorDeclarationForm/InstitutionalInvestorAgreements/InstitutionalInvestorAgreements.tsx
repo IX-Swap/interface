@@ -3,6 +3,7 @@ import React, { Fragment } from 'react'
 import useStyles from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorAgreements/InstitutionalInvestorAgreements.styles'
 import { InstitutionalInvestorInfoDialog } from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorInfoDialog/InstitutionalInvestorInfoDialog'
 import { IntermediaryInvestorInfoDialog } from 'app/pages/identity/components/InvestorDeclarationForm/IntermediaryInvestorInfoDialog/IntermediaryInvestorInfoDialog'
+import { ExchangeAgreements } from '../ExchangeAgreements/ExchangeAgreements'
 
 const InstitutionalInvestorAgreements = ({ type }: { type: string }) => {
   const classes = useStyles()
@@ -29,6 +30,10 @@ export const institutionalInvestorAgreements = [
   {
     name: 'isIntermediaryInvestor',
     label: <InstitutionalInvestorAgreements type='Intermediary' />
+  },
+  {
+    name: 'optInAgreementsExchange',
+    label: <ExchangeAgreements investorRole='Institutional' />
   }
 ]
 
@@ -38,5 +43,6 @@ export const institutionalInvestorAgreementsMap = {
   ),
   isIntermediaryInvestor: (
     <InstitutionalInvestorAgreements type='Intermediary' />
-  )
+  ),
+  optInAgreementsExchange: <ExchangeAgreements investorRole='Institutional' />
 }

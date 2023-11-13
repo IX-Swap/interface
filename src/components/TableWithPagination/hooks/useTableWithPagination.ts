@@ -5,6 +5,7 @@ import { useAPIService } from 'hooks/useAPIService'
 import { KeyValueMap, PaginatedData } from 'services/api/types'
 import { BaseFilter } from 'types/util'
 // import { useLocation } from 'react-router-dom'
+import { useAppActions } from 'app/hooks/useAppState'
 
 export interface UseTableWithPaginationReturnType<TData> {
   items: TData[]
@@ -52,6 +53,7 @@ export const useTableWithPagination = <TData>({
   const filter = defaultFilter
   const [sortOrder, setSortOrder] = useState('desc')
   const [sortField, setSortField] = useState('createdAt')
+  const { setTableHasData } = useAppActions()
 
   useEffect(() => {
     if (disabledUseEffect !== undefined && !disabledUseEffect) {
@@ -94,6 +96,11 @@ export const useTableWithPagination = <TData>({
       method === 'POST'
         ? await apiService.post<PaginatedData<TData>>(uri!, payload)
         : await apiService.get<PaginatedData<TData>>(uri!, payload)
+
+    const hasNoInitialResult =
+      payload?.search === undefined && result?.data[0]?.count < 1
+
+    setTableHasData(!hasNoInitialResult)
 
     setTotalPage(result?.data[0]?.count)
     return result

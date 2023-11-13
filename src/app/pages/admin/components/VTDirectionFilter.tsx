@@ -1,6 +1,6 @@
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { ChangeEvent } from 'react'
-import { FormControl, Grid, InputLabel } from '@mui/material'
+import { FormControl, Grid, Typography } from '@mui/material'
 import { VTDirectionSelect } from 'app/pages/admin/components/VTDirectionSelect'
 
 export const VTDirectionFilter = () => {
@@ -12,9 +12,9 @@ export const VTDirectionFilter = () => {
   }
 
   return (
-    <Grid item xs={12} md={4} lg={true}>
+    <Grid item display={'flex'} flexDirection={'column'} gap={1}>
+      <Typography>Direction</Typography>
       <FormControl variant='outlined' fullWidth>
-        <InputLabel htmlFor='sortBy'>Direction</InputLabel>
         <VTDirectionSelect
           includeAll
           valueBetweenAll={''}

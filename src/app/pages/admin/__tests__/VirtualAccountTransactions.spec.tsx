@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
+import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions/VirtualAccountTransactions'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'

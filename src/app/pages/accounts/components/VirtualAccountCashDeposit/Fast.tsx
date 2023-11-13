@@ -3,6 +3,7 @@ import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccount
 import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/shared.styles'
 import { ValidCurrency } from 'helpers/types'
 import React from 'react'
+import { AccountIdInstructions } from './AccountIdInstructions'
 
 export interface DepositInfoProps {
   accountId: string
@@ -52,6 +53,7 @@ export const Fast = ({ accountId, currency }: DepositInfoProps) => {
           </Grid>
         </Box>
       </Grid>
+      <AccountIdInstructions />
       <Paper className={paper}>
         <Box className={footerInfo}>
           <Typography

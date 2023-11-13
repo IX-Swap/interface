@@ -47,7 +47,6 @@ export interface TableViewProps<T> {
   filter?: BaseFilter
   hasActions?: boolean
   hasStatus?: boolean
-  hasStatusWithActions?: boolean
   actions?: ActionsType<T>
   children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
@@ -71,7 +70,6 @@ export const TableView = <T,>({
   columns: columnsProp = [],
   hasActions = false,
   hasStatus = false,
-  hasStatusWithActions = true,
   bordered = true,
   actions,
   children,

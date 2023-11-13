@@ -248,7 +248,7 @@ const defaultPalette = {
   error: {
     main: '#F56283',
     dark: '#FF8080',
-    light: tinycolor('#FF8080').setAlpha(0.2).toRgbString()
+    light: tinycolor('#F56283').setAlpha(0.16).toRgbString()
   },
   info: {
     main: '#4C88FF',

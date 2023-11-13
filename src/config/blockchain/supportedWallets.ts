@@ -1,12 +1,17 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import METAMASK_ICON_URL from 'assets/images/metamask.svg'
 import COINBASE_ICON_URL from 'assets/images/coinbase.svg'
-import WALLETCONNECT_ICON_URL from 'assets/images/walletConnectIcon.svg'
-import { injected, coinbase, walletconnect } from './connectors'
+// import WALLETCONNECT_ICON_URL from 'assets/images/walletConnectIcon.svg'
+import {
+  injected,
+  coinbase
+  // walletconnect
+} from './connectors'
 
 export interface WalletInfo {
   connector?: AbstractConnector
   name: string
+  key: string
   iconURL: string
   description: string
   href: string | null
@@ -17,18 +22,20 @@ export interface WalletInfo {
 }
 
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
-  INJECTED: {
-    connector: injected,
-    name: 'Injected',
-    iconURL: METAMASK_ICON_URL,
-    description: 'Injected web3 provider.',
-    href: null,
-    color: '#010101',
-    primary: true
-  },
+  //   INJECTED: {
+  //     connector: injected,
+  //     name: 'Injected',
+  //     key: 'INJECTED',
+  //     iconURL: METAMASK_ICON_URL,
+  //     description: 'Injected web3 provider.',
+  //     href: null,
+  //     color: '#010101',
+  //     primary: true
+  //   },
   METAMASK: {
     connector: injected,
-    name: 'Metabask',
+    name: 'MetaMask',
+    key: 'METAMASK',
     iconURL: METAMASK_ICON_URL,
     description: 'Easy-to-use browser extension.',
     href: null,
@@ -37,20 +44,22 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   COINBASE: {
     connector: coinbase,
     name: 'Coinbase',
+    key: 'COINBASE',
     iconURL: COINBASE_ICON_URL,
     description: 'Coinbase.',
     href: null,
     color: '#E8831D'
-  },
-  WALLET_CONNECT: {
-    connector: walletconnect,
-    name: 'WalletConnect',
-    iconURL: WALLETCONNECT_ICON_URL,
-    description:
-      'Connect to MetaMask, Trust Wallet, Rainbow Wallet and more...',
-    href: null,
-    color: '#4196FC',
-    mobile: true,
-    mobileOnly: true
   }
+  //   WALLET_CONNECT: {
+  //     connector: walletconnect,
+  //     name: 'WalletConnect',
+  //     key: 'WALLET_CONNECT',
+  //     iconURL: WALLETCONNECT_ICON_URL,
+  //     description:
+  //       'Connect to MetaMask, Trust Wallet, Rainbow Wallet and more...',
+  //     href: null,
+  //     color: '#4196FC',
+  //     mobile: true,
+  //     mobileOnly: true
+  //   }
 }

@@ -1,10 +1,10 @@
+import React, { useState } from 'react'
 import { FileCopyOutlined } from '@mui/icons-material'
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import {
   AccountState,
   useMetamaskWalletState
 } from 'app/pages/invest/hooks/useMetamaskWalletState'
-import MetamaskIcon from 'assets/images/metamask.svg'
 import WalletModal from 'components/WalletModal/WalletModal'
 import {
   ALL_SUPPORTED_CHAIN_IDS,
@@ -15,9 +15,10 @@ import { copyToClipboard } from 'helpers/clipboard'
 import { isTruthy } from 'helpers/strings'
 import { useAddTokenToMetamask } from 'hooks/blockchain/useAddTokenToMetamask'
 import { useSwitchChain } from 'hooks/blockchain/useSwitchChain'
-import React, { useState } from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useStyles } from './DSOBlockainDetails.styles'
+import { ReactComponent as AddToWalletIcon } from 'assets/icons/add-tokens-to-wallet.svg'
+import { ReactComponent as AddToWalletHoverIcon } from 'assets/icons/add-tokens-to-wallet-hover.svg'
 
 export interface DSOBlockchainDetailsProps {
   dso: DigitalSecurityOffering
@@ -39,20 +40,30 @@ export const DSOBlockchainDetails = ({ dso }: DSOBlockchainDetailsProps) => {
 
   const info = CHAIN_INFO[dsoChainId as number]
 
-  const metamaskCallbackMap = {
+  const callbackMap = {
     [AccountState.NOT_CONNECTED]: () => setOpen(true),
     [AccountState.DIFFERENT_CHAIN]: () => switchChain(dsoChainId),
     [AccountState.SAME_CHAIN]: async () => await addToken()
   }
-  const metamaskMessageMap = {
-    [AccountState.NOT_CONNECTED]: `To add token first connect to Metamask`,
-    [AccountState.DIFFERENT_CHAIN]: `Please connect to ${info?.chainName} to add token in Your Metamask wallet`,
-    [AccountState.SAME_CHAIN]: 'Add to Metamask'
+  const messageMap = {
+    [AccountState.NOT_CONNECTED]: `To add token first connect to wallet`,
+    [AccountState.DIFFERENT_CHAIN]: `Please connect to ${info?.chainName} to add token in your wallet`,
+    [AccountState.SAME_CHAIN]: 'Add to wallet'
   }
   const hideComponent =
     !isTruthy(address) ||
     !isTruthy(info) ||
     !ALL_SUPPORTED_CHAIN_IDS.includes(dsoChainId as number)
+
+  const [isHovered, setHovered] = useState(false)
+
+  const handleMouseEnter = () => {
+    setHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setHovered(false)
+  }
 
   if (hideComponent) {
     return null
@@ -62,6 +73,7 @@ export const DSOBlockchainDetails = ({ dso }: DSOBlockchainDetailsProps) => {
       <img src={info.logoUrl} alt={'Icon'} className={classes.chainLogo} />
     </IconButton>
   )
+
   return (
     <Box className={classes.root}>
       <Box className={classes.addressBox}>
@@ -82,18 +94,22 @@ export const DSOBlockchainDetails = ({ dso }: DSOBlockchainDetailsProps) => {
       </Box>
       {dso?.investable ? (
         <Tooltip
-          title={metamaskMessageMap[accountState]}
+          title={messageMap[accountState]}
           aria-label={`add-to-metamask`}
           arrow
         >
-          <Box>
-            <IconButton
-              size='small'
-              onClick={async () => await metamaskCallbackMap[accountState]()}
-            >
-              <img src={MetamaskIcon} alt={'Icon'} />
-            </IconButton>
-          </Box>
+          <IconButton
+            className={classes.addToWalletButton}
+            onClick={async () => await callbackMap[accountState]()}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {!isHovered ? (
+              <AddToWalletIcon width={28} height={28} />
+            ) : (
+              <AddToWalletHoverIcon width={28} height={28} />
+            )}
+          </IconButton>
         </Tooltip>
       ) : (
         ''
