@@ -37,33 +37,33 @@ export const UploadDocumentField = ({
       ? watch(name).map((file: { value: DataroomFile }) => file.value)
       : []
   const filteredDefaultUploadedFiles = defaultUploadedFiles.filter(
-    (file: DataroomFile) => Object.keys(file).length > 0
+    (file: DataroomFile) => file !== undefined && Object.keys(file).length > 0
   )
-//   console.log(
-//     defaultUploadedFiles,
-//     filteredDefaultUploadedFiles,
-//     'defaultUploadedFiles 1'
-//   )
+  //   console.log(
+  //     defaultUploadedFiles,
+  //     filteredDefaultUploadedFiles,
+  //     'defaultUploadedFiles 1'
+  //   )
   const [uploadedFiles, setUploadedFiles] = useState<DataroomFile[]>(
     filteredDefaultUploadedFiles
   )
 
-//   console.log(
-//     defaultUploadedFiles,
-//     filteredDefaultUploadedFiles,
-//     uploadedFiles,
-//     'defaultUploadedFiles 2'
-//   )
+  //   console.log(
+  //     defaultUploadedFiles,
+  //     filteredDefaultUploadedFiles,
+  //     uploadedFiles,
+  //     'defaultUploadedFiles 2'
+  //   )
 
   const handleSuccessFileUpload = (value: DataroomFile) => {
     setUploadedFiles([...uploadedFiles, value])
   }
-//   console.log(
-//     defaultUploadedFiles,
-//     filteredDefaultUploadedFiles,
-//     uploadedFiles,
-//     'defaultUploadedFiles 3'
-//   )
+  //   console.log(
+  //     defaultUploadedFiles,
+  //     filteredDefaultUploadedFiles,
+  //     uploadedFiles,
+  //     'defaultUploadedFiles 3'
+  //   )
   const handleRemoveFile = (value: DataroomFile) => {
     const filteredValue = uploadedFiles.filter((it: DataroomFile) => {
       return it._id !== value._id
@@ -72,12 +72,12 @@ export const UploadDocumentField = ({
     setUploadedFiles(filteredValue)
   }
 
-//   console.log(
-//     defaultUploadedFiles,
-//     filteredDefaultUploadedFiles,
-//     uploadedFiles,
-//     'defaultUploadedFiles 4'
-//   )
+  //   console.log(
+  //     defaultUploadedFiles,
+  //     filteredDefaultUploadedFiles,
+  //     uploadedFiles,
+  //     'defaultUploadedFiles 4'
+  //   )
 
   return (
     <Grid container spacing={3}>
