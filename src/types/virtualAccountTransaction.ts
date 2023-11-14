@@ -5,5 +5,6 @@ export interface VirtualAccountTransactionFormValues {
   currency: 'SGD' | 'USD'
   amount: number
   type: 'Credit' | 'Debit'
+  sendEmail: boolean
   reference: string
 }
