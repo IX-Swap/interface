@@ -6,12 +6,14 @@ import { TypedField } from 'components/form/TypedField'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { NumericInput } from 'components/form/NumericInput'
 import { moneyNumberFormat } from 'config/numberFormat'
-import { numericValueExtractor } from 'helpers/forms'
+import { booleanValueExtractor, numericValueExtractor } from 'helpers/forms'
 import { Submit } from 'components/form/Submit'
 import { CurrencySelect } from 'components/form/CurrencySelect'
 import { TransactionTypeSelect } from './TransactionTypeSelect'
 import { VirtualAccountTransactionFormValues } from 'types/virtualAccountTransaction'
 import { useUserByAccountId } from '../../hooks/useUserByAccountId'
+import { Divider } from 'ui/Divider'
+import { Checkbox } from 'components/form/Checkbox'
 
 interface CreateVirtualAccountTransactionFieldsProps {
   onCancel: MouseEventHandler
@@ -94,6 +96,14 @@ export const CreateVirtualAccountTransactionFields = ({
             }
           />
         }
+      />
+      <Divider />
+      <TypedField
+        component={Checkbox}
+        control={control}
+        name='sendEmail'
+        label='Send email to notify user of this transaction'
+        valueExtractor={booleanValueExtractor}
       />
       <Box display={'flex'} gap={2}>
         <Button
