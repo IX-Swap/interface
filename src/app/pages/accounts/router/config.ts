@@ -1,6 +1,6 @@
 import { ReactComponent as HoldingsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
-import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
+// import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
 import { ReactComponent as SecurityTokensIcon } from 'assets/icons/navigation/security-tokens.svg'
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/va-transactions.svg'
 import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
@@ -38,11 +38,11 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     path: AccountsRoute.cash,
     icon: AssetBalanceIcon
   },
-  {
-    label: 'Commitments',
-    path: AccountsRoute.commitments,
-    icon: DSWithdrawalIcon
-  },
+  //   {
+  //     label: 'Commitments',
+  //     path: AccountsRoute.commitments,
+  //     icon: DSWithdrawalIcon
+  //   },
   {
     label: 'My Tokens',
     path: AccountsRoute.digitalSecurities,
