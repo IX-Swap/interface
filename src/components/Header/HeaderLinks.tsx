@@ -139,7 +139,7 @@ export const HeaderLinks = () => {
 
       {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
-          disabled={!isApproved}
+          // disabled={!isApproved}
           data-testid="securityTokensButton"
           id={`stake-nav-link`}
           to={routes.securityTokens('tokens')}
@@ -219,7 +219,7 @@ export const HeaderLinks = () => {
         <Trans>Launchpad</Trans>
       </StyledNavLink>
       {showIssuance && <StyledNavLink to="/issuance">Issuance Dashboard</StyledNavLink>}
-      {isAdmin && <StyledNavLink to="/admin">Admin</StyledNavLink>}
+      {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && <StyledNavLink to="/admin">Admin</StyledNavLink>}
     </HeaderLinksWrap>
   )
 }

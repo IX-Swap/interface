@@ -13,6 +13,8 @@ import useInterval from 'hooks/useInterval'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { useTokenLoading } from 'hooks/Tokens'
 import { Loader } from '../util/Loader'
+import { isMobile } from 'react-device-detect'
+import { MEDIA_WIDTHS, ModalPadding } from 'theme'
 
 interface Props {
   offer: Offer
@@ -26,6 +28,14 @@ enum StageForm {
   sale,
   closed,
 }
+
+const allLabels = [
+  { label: 'Register To Invest', value: OfferStatus.whitelist },
+  { label: 'Pre-Sale', value: OfferStatus.preSale },
+  { label: 'Public Sale', value: OfferStatus.sale },
+  { label: 'Closed', value: OfferStatus.closed },
+  { label: 'Token Claim', value: OfferStatus.claim },
+]
 
 export const InvestDialog: React.FC<Props> = (props) => {
   const theme = useTheme()
@@ -52,37 +62,67 @@ export const InvestDialog: React.FC<Props> = (props) => {
     props.investedData.load()
   }, [props.investedData.load])
   useInterval(updateCallback, 30 * 1000)
-
+  const labelToShow = allLabels.find((label) => label.value === props.offer.status)?.label
   return (
     <>
-      <Portal>
-        <ModalWrapper>
-          <DialogContainer>
-            <aside>
-              <InvestDialogSidebar stage={props.offer.status} hasPresale={props.offer.hasPresale} />
-            </aside>
+      <ModalContainer>
+        <Portal>
+          {/* <ModalPadding> */}
+          <ModalWrapper>
+            <DialogContainer>
+              {!isMobile && (
+                <aside>
+                  <InvestDialogSidebar stage={props.offer.status} hasPresale={props.offer.hasPresale} />
+                </aside>
+              )}
 
-            <header>
-              <DialogHeader>
-                <DialogHeaderTitle>Dashboard</DialogHeaderTitle>
-                <DialogHeaderExit onClick={props.onClose}>
-                  <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
-                </DialogHeaderExit>
-              </DialogHeader>
-            </header>
+              <header>
+                <DialogHeader>
+                  {isMobile ? (
+                    <DialogHeaderTitle style={{ marginBottom: '20px' }}>
+                      <span style={{ border: '1px solid #E6E6FF', padding: '10px 30px', borderRadius: '8px' }}>
+                        {labelToShow || props.offer.status}
+                      </span>
+                    </DialogHeaderTitle>
+                  ) : (
+                    <DialogHeaderTitle> Dashboard</DialogHeaderTitle>
+                  )}
 
-            <main>
-              {stage === StageForm.register && <RegisterToInvestStage {...props} />}
-              {stage === StageForm.sale && <SaleStage {...props} />}
-              {stage === StageForm.closed && <ClosedStage {...props} />}
-            </main>
-          </DialogContainer>
-        </ModalWrapper>
-      </Portal>
+                  <DialogHeaderExit onClick={props.onClose}>
+                    <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
+                  </DialogHeaderExit>
+                </DialogHeader>
+              </header>
+
+              <main>
+                {stage === StageForm.register && <RegisterToInvestStage {...props} />}
+                {stage === StageForm.sale && <SaleStage {...props} />}
+                {stage === StageForm.closed && <ClosedStage {...props} />}
+              </main>
+            </DialogContainer>
+          </ModalWrapper>
+          {/* </ModalPadding> */}
+        </Portal>
+      </ModalContainer>
     </>
   )
 }
-
+const ModalContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  // backdrop-filter: blur(36px);
+  z-index: 9999;
+  padding: 0px 18px;
+  display: none;
+  background: ${({ theme }) => theme.bg0};
+  @media (max-width: 1400px) {
+    display: block;
+    overflow-y: scroll;
+  }
+`
 const ModalWrapper = styled.div`
   display: grid;
   place-content: center;
@@ -92,16 +132,20 @@ const ModalWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   z-index: 30;
-
   background: rgba(6, 6, 40, 0.6);
   backdrop-filter: blur(16px);
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    overflow-y: scroll;
+    max-height: 100vh;
+    background: white;
+  }
 `
 
 const DialogContainer = styled.article`
   display: grid;
 
   grid-template-columns: 200px 500px;
-  // grid-template-rows: 60px 1fr;
   grid-template-areas:
     'sidebar header'
     'sidebar content';
@@ -111,6 +155,10 @@ const DialogContainer = styled.article`
 
   max-width: 700px;
   min-height: 500px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    grid-template-columns: 0px 400px;
+  }
 
   > header {
     grid-area: header;

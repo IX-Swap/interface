@@ -7,6 +7,7 @@ import { Attachment } from './Attachment'
 import { Asset } from 'state/launchpad/types'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { Info } from 'react-feather'
+import { MEDIA_WIDTHS } from 'theme'
 
 export interface InfoEntry {
   label: React.ReactNode
@@ -92,6 +93,9 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: stretch;
   color: ${(props) => props.theme.launchpad.colors.text.body};
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding:  0px 20px;
+   }
 `
 
 const Title = styled.div<{ fontWeight?: string }>`

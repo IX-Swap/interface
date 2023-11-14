@@ -19,7 +19,7 @@ import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask
 import { shortenAddress } from 'utils'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { nameChainMap, SupportedChainId } from 'constants/chains'
-import { ExternalLink } from 'theme'
+import { ExternalLink, MEDIA_WIDTHS } from 'theme'
 import { text10, text33, text6, text9 } from 'components/LaunchpadMisc/typography'
 import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -257,6 +257,9 @@ const Container = styled.div`
   align-items: stretch;
 
   gap: 2rem;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+   padding: 20px;
+  }
 `
 
 const OfferSidebarSummary = styled.div`
@@ -300,7 +303,7 @@ const Participants = styled.div`
   header {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
 
     ${text6}
     color: ${(props) => props.theme.launchpad.colors.text.caption};

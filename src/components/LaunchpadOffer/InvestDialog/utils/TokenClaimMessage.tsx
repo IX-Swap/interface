@@ -3,6 +3,7 @@ import styled, { useTheme } from 'styled-components'
 
 import { Calendar } from 'react-feather'
 import { text10 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
 
 export const TokenClaimMessage = () => {
   const theme = useTheme()
@@ -31,6 +32,9 @@ const MessageContainer = styled.div`
   background: ${(props) => props.theme.launchpad.colors.info + '0d'};
   border: 1px solid ${(props) => props.theme.launchpad.colors.info + '80'};
   border-radius: 6px;
+  // @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+  //  margin-bottom: 160px;
+  // }
 `
 
 const MessageText = styled.div`
