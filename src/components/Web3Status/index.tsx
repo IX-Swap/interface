@@ -26,6 +26,7 @@ import { IXSBalance } from 'components/Header/IXSBalance'
 import { useETHBalances } from 'state/wallet/hooks'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { formatAmount } from 'utils/formatCurrencyAmount'
+import { isMobile } from 'react-device-detect'
 
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
@@ -93,7 +94,7 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
   background: ${({ theme }) => theme.config.text?.main || theme.bg25};
   opacity: ${({ pending }) => (pending ? '0.7' : '1')};
-  padding: 10px 5px 10px 10px;
+  padding: 2px 0px 2px 5px;
   color: ${({ theme }) => theme.black};
   // font-weight: 600;
   border-radius: 4px;
@@ -230,24 +231,43 @@ function Web3StatusInner() {
   if (account) {
     return (
       <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal} pending={hasPendingTransactions}>
-        {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
-        {hasPendingTransactions ? (
-          <RowBetween>
-            <Text style={{ margin: '4px 13px 4px 0' }}>
-              <Trans>{pending?.length} Pending</Trans>
-            </Text>{' '}
-            <Loader stroke="white" />
-          </RowBetween>
-        ) : (
-          <Text style={{ margin: '4px 13px 4px 5px', width: '100%' }}>{ENSName || shortenAddress(account)}</Text>
-        )}
-        <AccountElement style={{ pointerEvents: 'auto' }}>
+        <AccountElement style={{ pointerEvents: 'auto', color: '#6666FF', fontWeight: '600', marginRight: isMobile? '10px' : '' }}>
           {account && userEthBalance ? (
             <Trans>
               {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
             </Trans>
           ) : null}
         </AccountElement>
+        {/* {!hasPendingTransactions && connector && <StatusIcon connector={connector} />} */}
+        {hasPendingTransactions ? (
+          <RowBetween>
+            <Text
+              style={{ margin: '4px 13px 4px 0', border: '1px solid #E6E6FF', padding: '10px', borderRadius: '4px' }}
+            >
+              <Trans>{pending?.length} Pending</Trans>
+            </Text>{' '}
+            <Loader stroke="white" />
+          </RowBetween>
+        ) : (
+          <>
+            {isMobile ? (
+              <Text>{ENSName || shortenAddress(account)}</Text>
+            ) : (
+              <Text
+                style={{
+                  margin: '4px 3px 4px 5px',
+                  width: '100%',
+                  border: '1px solid #E6E6FF',
+                  padding: '10px',
+                  borderRadius: '4px',
+                  color: '#B8B8CC',
+                }}
+              >
+                {ENSName || shortenAddress(account)}
+              </Text>
+            )}{' '}
+          </>
+        )}
       </Web3StatusConnected>
     )
   } else if (error) {

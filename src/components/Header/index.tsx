@@ -31,6 +31,8 @@ import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
 import { hexDiff } from 'node-vibrant/lib/util'
 import { isMobile } from 'react-device-detect'
 import { useWeb3React } from '@web3-react/core'
+import { ReactComponent as NewAddIcon } from 'assets/images/newAddIcon.svg'
+import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
 
 const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
   display: grid;
@@ -209,6 +211,7 @@ export default function Header() {
   const { isTokenManager } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const { connector, error } = useWeb3React()
+  const [openPreviewModal, setPreviewModal] = React.useState(false)
 
   const isAllowed = useCallback(
     (path: string) => {
@@ -220,6 +223,14 @@ export default function Header() {
     },
     [config]
   )
+
+  const openModal = () => {
+    setPreviewModal(true)
+  }
+
+  const closeModal = () => {
+    setPreviewModal(false)
+  }
 
   return (
     <>
@@ -307,6 +318,20 @@ export default function Header() {
               <HeaderElement>
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
+                <div
+                onClick={openModal}
+                  style={{
+                    border: '1.3px solid #E6E6FF',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    display: 'flex',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <NewAddIcon />
+                  <span style={{ color: '#6666FF', fontSize: '13px', fontWeight: '600', marginLeft: '8px' }}>Buy</span>
+                </div>
+                {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
               </HeaderElement>
             </HeaderControls>
             <MobileMenu />
