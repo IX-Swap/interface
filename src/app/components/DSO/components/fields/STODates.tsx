@@ -19,8 +19,8 @@ export const STODates = (props: STODatesProps) => {
   const launchDate = control.getValues('launchDate')
   const isLaunchDateEmpty =
     typeof launchDate === 'undefined' || launchDate === ''
-  const freeToTradeDate = watch('releaseDate')
   const completionDate = watch('completionDate')
+  const freeToTradeDate = watch('releaseDate')
 
   return (
     <Grid item>
@@ -91,7 +91,10 @@ export const STODates = (props: STODatesProps) => {
                 inputVariant='outlined'
                 withIcon
                 disablePast
-                onAccept={async () => await trigger('launchDate')}
+                onAccept={async () => {
+                  await trigger('launchDate')
+                  await trigger('releaseDate')
+                }}
               />
             </Grid>
             <VSpacer size='small' />
@@ -131,7 +134,7 @@ export const STODates = (props: STODatesProps) => {
                   disablePast
                   // isOptional
                   // optionalText='(Securities will be locked for n days)'
-                  // onAccept={async () => await trigger('launchDate')}
+                  onAccept={async () => await trigger('completionDate')}
                 />
               </Grid>
             </Grid>
