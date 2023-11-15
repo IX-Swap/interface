@@ -14,6 +14,7 @@ import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { text28, text59, text9 } from 'components/LaunchpadMisc/typography'
 import { useGetWarning } from '../utils/ConvertationField'
+import { useShowError, useShowSuccess } from 'state/application/hooks'
 
 interface Props {
   offer: Offer
@@ -63,15 +64,19 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
   const requestWhitelist = useRequestWhitelist(props.offer.id)
   const disableForm = React.useMemo(() => whitelist.status === WhitelistStatus.accepted, [whitelist])
   const [amount, setAmount] = React.useState("")
+  const showError = useShowError()
+  const showSuccess = useShowSuccess()
   const submit = React.useCallback(
     async (values: FormValues) => {
       try {
         submitState.setLoading()
         await requestWhitelist({ amount: values.amount ?? 0, isInterested: Boolean(values.isInterested) })
         submitState.setSuccess()
+        showSuccess('Register to invest successfully')
         props.onClose()
-      } catch {
+      } catch (err: any) {
         submitState.setError()
+        showError(err?.message ?? '')
       }
     },
     [submitState]
