@@ -225,9 +225,9 @@ const KYC = () => {
                 <Flex flexDirection="column" alignItems="center">
                   <CorporateKYC />
                   <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
-                    <ButtonGradientBorder sx={{ padding: '16px 24px', marginTop: '32px' }}>
+                    <PinnedContentButton sx={{ padding: '16px 24px', marginTop: '32px' }}>
                       <Trans>Continue Pass KYC as Corporate</Trans>
-                    </ButtonGradientBorder>
+                    </PinnedContentButton>
                   </Link>
                 </Flex>
               )}
@@ -321,7 +321,7 @@ const KYC = () => {
               marginTop={status === KYCStatuses.NOT_SUBMITTED || status === null ? '8px' : '10px'}
               alignItems="center"
             >
-              <TYPE.description6 fontWeight={'800'} marginBottom="15px">
+              <TYPE.description6 fontWeight={'800'} marginTop={'30px'} marginBottom="15px">
                 <Trans>{config?.name || 'IX Swap'} KYC</Trans>
               </TYPE.description6>
               {/* {description && <Description description={description} />} */}

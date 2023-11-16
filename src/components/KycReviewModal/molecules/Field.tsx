@@ -47,7 +47,7 @@ const Container = styled.div`
   display: grid;
   row-gap: 6px;
   font-size: 13px;
-  text-transform: capitalize;
+  // text-transform: capitalize;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     row-gap: 6px;
     margin-bottom: 12px;
