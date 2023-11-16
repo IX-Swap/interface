@@ -26,7 +26,7 @@ import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance
 // import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 
 import { InternalRouteProps } from 'types/util'
-import { WEBSITE_URL } from 'config'
+import { PRIME_URL, WEBSITE_URL } from 'config'
 
 export const useAppNavigation = () => {
   const isAuthorizer = useIsAuthorizer()
@@ -101,18 +101,19 @@ export const useAppNavigation = () => {
   //   })
   // }
 
-  links.push(
-    {
+  if (window.location.protocol + '//' + window.location.host !== PRIME_URL) {
+    links.push({
       label: 'Explore STOs',
       link: 'https://prime.investax.io',
       isExternalUrl: true
-    },
-    {
-      label: 'Knowledge Center',
-      link: `${WEBSITE_URL}/knowledge-center`,
-      isExternalUrl: true
-    }
-  )
+    })
+  }
+
+  links.push({
+    label: 'Knowledge Center',
+    link: `${WEBSITE_URL}/knowledge-center`,
+    isExternalUrl: true
+  })
 
   const dropdownLinksItems = (name: string) => {
     switch (name) {
