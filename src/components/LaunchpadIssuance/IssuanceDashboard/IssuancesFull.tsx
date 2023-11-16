@@ -196,7 +196,7 @@ export const IssuancesFull = () => {
                 <ActionButtons>
                   <OutlineButton
                     color={theme.launchpad.colors.primary}
-                    style={{ fontWeight: '600', border: 'none' }}
+                    style={{ fontWeight: '600', border: 'none', padding: '0px 10px 0px 0px' }}
                     height="34px"
                     onClick={() => selectIssuance(issuance)}
                   >
@@ -238,5 +238,5 @@ const Container = styled.article`
 const ActionButtons = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  // gap: 0.5rem;
 `

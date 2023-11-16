@@ -6,8 +6,6 @@ import { useFormik } from 'formik'
 
 import { User } from 'state/admin/actions'
 import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
-import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, TYPE } from 'theme'
-import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useAdminState, useCreateUser, useUpdateUser } from 'state/admin/hooks'
 import { useAddPopup } from 'state/application/hooks'
@@ -28,14 +26,15 @@ import { UpdateSummary } from './UpdateSummary'
 import { Line } from 'components/Line'
 import { HelpCircle, Info } from 'react-feather'
 import { MouseoverTooltip } from 'components/Tooltip'
+import { TYPE } from 'theme'
 
 interface Props {
-  item: User | null
-  close: () => void
+  item?: User | null
+  // close: () => void
   filters: Record<string, any>
 }
 
-export const UserMobileFilters: FC<Props> = ({ item, close, filters }) => {
+export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
   const [tokensToRemove, handleTokensToRemove] = useState<Option[]>([])
   const [showDeleteTokensWarning, handleShowDeleteTokensWarning] = useState(false)
   const [changeRole, handleChangeRole] = useState(false)
@@ -85,10 +84,10 @@ export const UserMobileFilters: FC<Props> = ({ item, close, filters }) => {
   }, [item, tokensOptions])
 
   const submit = async () => {
-    const isManager = role === ROLES.TOKEN_MANAGER
+    const isManager = role === ROLES.TOKEN_MANAGER;
     try {
-      handleShowDeleteTokensWarning(false)
-      handleChangeRole(false)
+      handleShowDeleteTokensWarning(false);
+      handleChangeRole(false);
       if (item) {
         await updateUser(
           item.id,
@@ -100,8 +99,8 @@ export const UserMobileFilters: FC<Props> = ({ item, close, filters }) => {
             removedTokens: tokensToRemove.map(({ value }) => value),
           },
           filters
-        )
-        handleShowSummary(true)
+        );
+        handleShowSummary(true);
       } else {
         await createUser(
           {
@@ -112,54 +111,54 @@ export const UserMobileFilters: FC<Props> = ({ item, close, filters }) => {
             managerOf: isManager ? managerOf.map((el) => el.value || el) : [],
           },
           filters
-        )
-        close()
+        );
+        close();
       }
-      handleTokensToRemove([])
+      handleTokensToRemove([]);
 
       addPopup({
         info: {
           success: true,
           summary: `User was ${item ? 'updated' : 'added'} successfully`,
         },
-      })
+      });
     } catch (err: any) {
-      handleTokensToRemove([])
+      handleTokensToRemove([]);
       addPopup({
         info: {
           success: false,
           summary: `Failed to ${item ? 'update' : 'add'} user. ${err.message}`,
         },
-      })
+      });
     }
-  }
+  };
 
   const tryToSubmit = () => {
     if (!item) {
-      submit()
-      return
+      submit();
+      return;
     }
 
     if (item.role !== role) {
-      handleChangeRole(true)
-      return
+      handleChangeRole(true);
+      return;
     }
 
     const tokensToDelete = Object.values(initialValues.managerOf).reduce((acc: Option[], el) => {
-      const isRemoved = managerOf.findIndex(({ value }) => value === el.value) === -1
+      const isRemoved = managerOf.findIndex(({ value }) => value === el.value) === -1;
 
-      if (isRemoved) acc.push(el)
+      if (isRemoved) acc.push(el);
 
-      return acc
-    }, [])
+      return acc;
+    }, []);
 
     if (tokensToDelete.length > 0) {
-      handleTokensToRemove(tokensToDelete)
-      handleShowDeleteTokensWarning(true)
-      return
+      handleTokensToRemove(tokensToDelete);
+      handleShowDeleteTokensWarning(true);
+      return;
     }
-    submit()
-  }
+    submit();
+  };
 
   const {
     values: { ethAddress, role, isWhitelisted, username, managerOf },
@@ -172,37 +171,37 @@ export const UserMobileFilters: FC<Props> = ({ item, close, filters }) => {
     enableReinitialize: true,
     initialValues,
     onSubmit: tryToSubmit,
-  })
+  });
 
   const handleSelectedTokens = (selectedTokens: Option[]) => {
-    setFieldValue('managerOf', selectedTokens)
-  }
+    setFieldValue('managerOf', selectedTokens);
+  };
 
   const closeTokensWarning = () => {
-    handleShowDeleteTokensWarning(false)
-    setFieldValue('managerOf', initialValues.managerOf)
-  }
+    handleShowDeleteTokensWarning(false);
+    setFieldValue('managerOf', initialValues.managerOf);
+  };
 
   const closeRoleWarning = () => {
-    handleChangeRole(false)
-  }
+    handleChangeRole(false);
+  };
 
   const closeSummary = () => {
-    handleShowSummary(false)
-    close()
-  }
+    handleShowSummary(false);
+    close();
+  };
 
   const canNotEditRole = useMemo(() => {
     if (item && role === ROLES.TOKEN_MANAGER) {
-      return item.managerOf.some(({ token: { payoutEvents } }) => Boolean(payoutEvents.length))
+      return item.managerOf.some(({ token: { payoutEvents } }) => Boolean(payoutEvents.length));
     }
 
-    return false
-  }, [item])
+    return false;
+  }, [item]);
 
   return (
     <>
-      <RedesignedWideModal isOpen onDismiss={close}>
+      <div>
         {showDeleteTokensWarning && (
           <RemoveTokensWarning tokens={tokensToRemove} close={closeTokensWarning} onConfirm={submit} />
         )}
@@ -214,12 +213,12 @@ export const UserMobileFilters: FC<Props> = ({ item, close, filters }) => {
           <UpdateSummary item={{ ethAddress, role, isWhitelisted, username, managerOf }} close={closeSummary} />
         )}
 
-        <ModalBlurWrapper data-testid="user-modal" style={{ maxWidth: '547px', width: '100%', position: 'relative' }}>
+        <div style={{ maxWidth: '547px', width: '100%', position: 'relative' }}>
           <LoadingIndicator isLoading={adminLoading} isRelative />
-          <ModalContent>
+          <div>
             <Title>
               <Trans>{item ? 'Update User' : 'Add User'}</Trans>
-              <CloseIcon data-testid="cross" onClick={close} />
+              {/* <CloseIcon data-testid="cross" onClick={close} /> */}
             </Title>
             <form onSubmit={handleSubmit}>
               {item ? (
@@ -318,21 +317,12 @@ export const UserMobileFilters: FC<Props> = ({ item, close, filters }) => {
                 </PinnedContentButton>
               </>
             </form>
-          </ModalContent>
-        </ModalBlurWrapper>
-      </RedesignedWideModal>
+          </div>
+        </div>
+      </div>
     </>
-  )
-}
-
-const Tooltip = styled.div`
-  font-weight: 500;
-  font-size: 9px;
-  line-height: 160%;
-  text-align: center;
-  color: ${({ theme }) => theme.text9};
-  max-width: 319px;
-`
+  );
+};
 
 const ExistingWallet = styled.div`
   display: flex;
@@ -342,40 +332,7 @@ const ExistingWallet = styled.div`
     font-size: 16px;
     line-height: 24px;
   }
-`
-
-const ButtonWrapper = styled.div`
-  padding-top: 24px;
-  margin-top: 8px;
-  width: 100%;
-  border-top: 1px solid rgba(39, 32, 70, 0.72); ;
-`
-
-const StyledButton = styled(ButtonIXSGradient)`
-  width: 100%;
-`
-
-const ModalContent = styled(ModalContentWrapper)`
-  overflow: auto;
-  > div {
-    padding: 20px 23px;
-    border-radius: 20px 20px 0px 0px;
-  }
-  > form {
-    padding: 20px 23px;
-    border-radius: 20px;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    row-gap: 24px;
-    label {
-      margin-bottom: 8px;
-      > div {
-        font-weight: 400;
-      }
-    }
-  }
-`
+`;
 
 const Title = styled.div`
   font-weight: 600;
@@ -385,5 +342,7 @@ const Title = styled.div`
   align-items: center;
   justify-content: space-between;
   padding-bottom: 24px;
-  border-bottom: 1px solid rgba(39, 32, 70, 0.72); ;
-`
+  border-bottom: 1px solid rgba(39, 32, 70, 0.72);
+`;
+
+// Remove Modal-related styled components and imports

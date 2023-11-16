@@ -215,7 +215,7 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      <StyledNavLink id={`issuance-nav-link`} to={'/launchpad'}>
+      <StyledNavLink  id={`issuance-nav-link`} to={'/launchpad'}>
         <Trans>Launchpad</Trans>
       </StyledNavLink>
       {showIssuance && <StyledNavLink to="/issuance">Issuance Dashboard</StyledNavLink>}
