@@ -86,7 +86,7 @@ export const DataExtractTable = () => {
             <TablesParent>
               <UnpaddedOverflowIssuanceTable>
                 <Header header={header} />
-                <Statistics statistics={statistics} count={columnCount} />
+                <Statistics statistics={statistics} count={columnCount} tab={tab}/>
                 <FormikProvider value={formik}>
                   <OverflowRow count={columnCount}>
                     <SpreadColumn key="extract">
