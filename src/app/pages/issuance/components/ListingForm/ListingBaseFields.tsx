@@ -13,7 +13,7 @@ import { useFormContext } from 'react-hook-form'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { ListingHiddenFields } from 'app/pages/issuance/components/ListingForm/ListingHiddenFields'
-import { CurrencySelect } from 'components/form/CurrencySelect'
+import { CURRENCIES, CurrencySelect } from 'components/form/CurrencySelect'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
 
 export interface ListingBaseFieldsProps {
@@ -64,7 +64,9 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               control={control}
               component={CurrencySelect}
               options={currencyList.map(cur => ({
-                label: cur.symbol,
+                label:
+                  CURRENCIES.find(option => option.value === cur.symbol)
+                    ?.label ?? cur.symbol,
                 value: cur._id
               }))}
               label='Currency'
