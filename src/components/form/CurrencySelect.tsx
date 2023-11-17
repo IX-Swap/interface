@@ -7,7 +7,7 @@ import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 
-const CURRENCIES = [
+export const CURRENCIES = [
   {
     label: (
       <Box display={'flex'} alignItems={'center'}>
@@ -29,6 +29,7 @@ const CURRENCIES = [
 ]
 
 export const CurrencySelect = (props: any): JSX.Element => {
+  const options = props.options ?? CURRENCIES
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
@@ -38,13 +39,13 @@ export const CurrencySelect = (props: any): JSX.Element => {
         placeholder={String(props.label)}
         displayEmpty
         renderValue={value =>
-          CURRENCIES.find(currency => currency.value === value)?.label
+          options.find(currency => currency.value === value)?.label
         }
       >
         <SelectItem disabled value={undefined}>
           Select Currency
         </SelectItem>
-        {renderSelectItems(CURRENCIES)}
+        {renderSelectItems(options)}
       </Select>
     </>
   )
