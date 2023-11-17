@@ -3,7 +3,7 @@ import { FormControl } from '@mui/material'
 import { Pair, useMarketList } from 'app/pages/invest/hooks/useMarketList'
 // import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { SelectProps } from 'ui/Select/Select'
-import { Autocomplete } from 'ui/Select/Autocomplete'
+import { Autocomplete } from 'ui/Select/Autocomplete/Autocomplete'
 
 export const PairSelect = (props: Partial<SelectProps>) => {
   const { data } = useMarketList()

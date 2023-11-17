@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
-import { WithdrawDSArgs } from 'app/pages/accounts/types'
+// import { WithdrawDSArgs } from 'app/pages/accounts/types'
 import { useDepositStore } from 'app/pages/accounts/pages/banks/context'
 import { DepositStoreStep } from 'app/pages/accounts/pages/banks/context/store'
 import { getIdFromObj } from 'helpers/strings'
@@ -13,7 +13,14 @@ export const useWithdrawDS = () => {
   const { setCurrentStep } = useDepositStore()
   const uri = accountsURL.dsWithdrawals.create(getIdFromObj(user))
 
-  const withdrawDS = async (args: WithdrawDSArgs) => {
+  //   const withdrawDS = async (args: WithdrawDSArgs) => {
+  const withdrawDS = async (args: {
+    asset: string
+    withdrawalAddress: string
+    amount: string
+    memo: string
+    otp: string
+  }) => {
     return await apiService.post(uri, args)
   }
 

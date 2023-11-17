@@ -63,9 +63,13 @@ export const InvestorDeclarationView = ({
     investorAgreement
   }
 
+  const optInAgreementsExchange =
+    data?.declarations?.investorsStatus?.optInAgreementsExchange
+
   const institutionalInvestor = {
     isInstitutionalInvestor,
-    isIntermediaryInvestor
+    isIntermediaryInvestor,
+    optInAgreementsExchange
   }
 
   const investorRole: string =

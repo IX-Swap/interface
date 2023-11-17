@@ -6,8 +6,7 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 400,
     lineHeight: '160%',
     fontSize: '14px',
-    letterSpacing: '-0.01em',
-    textTransform: 'capitalize'
+    letterSpacing: '-0.01em'
   },
   blackText: { color: theme.palette.text.primary }
 }))

@@ -8,7 +8,7 @@ import { WithdrawalAddressTooltip } from 'app/pages/accounts/pages/withdrawalAdd
 import { RootContainer } from 'ui/RootContainer'
 import { Add } from '@mui/icons-material'
 
-export const AddWalletAddressButton = ({ large = false }) => (
+export const AddWalletAddressButton = ({ large = false, ...rest }) => (
   <Button
     component={AppRouterLinkComponent}
     to={WithdrawalAddressesRoute.create}
@@ -17,6 +17,7 @@ export const AddWalletAddressButton = ({ large = false }) => (
     variant='contained'
     disableElevation
     sx={{ paddingX: large ? 8 : 4 }}
+    {...rest}
   >
     <Add sx={{ marginRight: 1 }} />
     <span>Add Wallet Address</span>

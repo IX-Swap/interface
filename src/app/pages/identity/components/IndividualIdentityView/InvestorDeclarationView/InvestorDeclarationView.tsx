@@ -13,6 +13,7 @@ import {
 } from 'app/pages/identity/types/forms'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
+import { ExchangeAgreements } from '../../InvestorDeclarationForm/ExchangeAgreements/ExchangeAgreements'
 
 export interface StatusDeclaration {
   accreditedInvestorDeclaration: Record<string, boolean>
@@ -47,7 +48,8 @@ export const InvestorDeclarationView: React.FC<
 
     optInAgreements,
     optInAgreementsSafeguards,
-    optInAgreementsOptOut
+    optInAgreementsOptOut,
+    optInAgreementsExchange
   } = data.declarations?.investorsStatus ?? {}
 
   const accreditedInvestorDeclaration = {
@@ -138,6 +140,15 @@ export const InvestorDeclarationView: React.FC<
               data={{ optInAgreementsSafeguards }}
               labelMap={{
                 optInAgreementsSafeguards: <SafeguardAgreements />
+              }}
+            />
+          )}
+          {optInAgreementsExchange !== undefined && (
+            <DeclarationsList
+              title=''
+              data={{ optInAgreementsExchange }}
+              labelMap={{
+                optInAgreementsExchange: <ExchangeAgreements />
               }}
             />
           )}

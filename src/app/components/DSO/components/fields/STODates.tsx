@@ -19,8 +19,8 @@ export const STODates = (props: STODatesProps) => {
   const launchDate = control.getValues('launchDate')
   const isLaunchDateEmpty =
     typeof launchDate === 'undefined' || launchDate === ''
-  const freeToTradeDate = watch('releaseDate')
   const completionDate = watch('completionDate')
+  const freeToTradeDate = watch('releaseDate')
 
   return (
     <Grid item>
@@ -44,7 +44,7 @@ export const STODates = (props: STODatesProps) => {
                     tooltipTitle={
                       <span>
                         <strong>Launch Date</strong> is the date when investors
-                        can invest in STOs.
+                        can invest and commit to invest in STOs.
                       </span>
                     }
                   />
@@ -69,22 +69,21 @@ export const STODates = (props: STODatesProps) => {
                 customRenderer
                 label={
                   <LabelWithTooltip
-                    label={'Free-to-Trade Date (Optional)'}
+                    label={'Completion Date'}
                     tooltipTitle={
                       <span>
-                        <strong>Free-to-Trade Date</strong> is the date when
-                        STOs can be traded freely between investors. This date
-                        should not be earlier than launch date. In between the
-                        Launch Date and Free-to-Trade Date, the STOs won’t be
-                        available for secondary trades on OTC and IX Exchange.
+                        <strong>Completion Date</strong> is the date when the
+                        STO deal closes. After this date, investors cannot
+                        invest or commit to invest in a deal. This date should
+                        not be earlier than Launch Date.
                       </span>
                     }
                   />
                 }
-                name='releaseDate'
+                name='completionDate'
                 control={control}
                 disabled={isLaunchDateEmpty}
-                minDate={completionDate}
+                maxDate={freeToTradeDate}
                 valueExtractor={dateTimeValueExtractor}
                 // @ts-expect-error
                 defaultValue={null}
@@ -92,9 +91,10 @@ export const STODates = (props: STODatesProps) => {
                 inputVariant='outlined'
                 withIcon
                 disablePast
-                // isOptional
-                // optionalText='(Securities will be locked for n days)'
-                // onAccept={async () => await trigger('launchDate')}
+                onAccept={async () => {
+                  await trigger('launchDate')
+                  await trigger('releaseDate')
+                }}
               />
             </Grid>
             <VSpacer size='small' />
@@ -107,20 +107,24 @@ export const STODates = (props: STODatesProps) => {
                   customRenderer
                   label={
                     <LabelWithTooltip
-                      label={'Completion Date'}
+                      label={'Free-to-Trade Date (Optional)'}
                       tooltipTitle={
                         <span>
-                          <strong>Completion Date</strong> is the date when the
-                          STO cannot be invested in anymore. This date should
-                          not be earlier than launch date.
+                          <strong>Free-to-Trade Date</strong> is the date when
+                          STOs can be traded freely between investors. This date
+                          should not be earlier than Completion Date. In between
+                          the Completion Date and FTT Date, the STOs won&apos;t
+                          be available for secondary trading on OTC and IX
+                          Exchange. If FTT Date is left empty, then Completion
+                          Date will be the FTT Date by default.
                         </span>
                       }
                     />
                   }
-                  name='completionDate'
+                  name='releaseDate'
                   control={control}
                   disabled={isLaunchDateEmpty}
-                  maxDate={freeToTradeDate}
+                  minDate={completionDate}
                   valueExtractor={dateTimeValueExtractor}
                   // @ts-expect-error
                   defaultValue={null}
@@ -128,7 +132,9 @@ export const STODates = (props: STODatesProps) => {
                   inputVariant='outlined'
                   withIcon
                   disablePast
-                  onAccept={async () => await trigger('launchDate')}
+                  // isOptional
+                  // optionalText='(Securities will be locked for n days)'
+                  onAccept={async () => await trigger('completionDate')}
                 />
               </Grid>
             </Grid>

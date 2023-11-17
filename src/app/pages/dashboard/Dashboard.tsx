@@ -19,8 +19,10 @@ import { CashAccounts } from './CashAccounts/CashAccounts'
 import { WalletAddresses } from './WalletAddresses/WalletAddresses'
 import { isMobile } from 'react-device-detect'
 import { MobileDialog } from './MobileDialog'
+import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 
 export const Dashboard = () => {
+  const { hasSubmittedKYC } = useGetIdentities()
   const [isOpen, setOpen] = useState(false)
   const toggleOpen = () => setOpen(!isOpen)
   const [isDisclosureVisible, setIsDisclosureVisible] = useState<boolean>(false)
@@ -54,36 +56,43 @@ export const Dashboard = () => {
         <RootContainer>
           <Grid container direction='column' spacing={2}>
             <AccountActions />
-            {isInvestor && (
+
+            {hasSubmittedKYC && (
               <>
-                {hasAccreditation && (
+                {isInvestor && (
                   <>
+                    {hasAccreditation && (
+                      <>
+                        <TotalStats />
+                        <Grid item container gap={2}>
+                          <Grid item xs={12} md>
+                            <MostPopularSTOs />
+                          </Grid>
+                          <Grid item xs={12} md>
+                            <UpcomingSTOs />
+                          </Grid>
+                        </Grid>
+                      </>
+                    )}
+
                     <Grid item>
-                      <TotalStats />
-                    </Grid>
-                    <Grid item container spacing={2}>
-                      <Grid item xs={12} md={6}>
-                        <MostPopularSTOs />
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <UpcomingSTOs />
-                      </Grid>
+                      <PrimaryOfferings />
                     </Grid>
                   </>
                 )}
-                <Grid item>
-                  <PrimaryOfferings />
-                </Grid>
+
+                {isIssuer && (
+                  <Grid item>
+                    <IssuerSTOs />
+                  </Grid>
+                )}
               </>
             )}
-            {isIssuer && (
-              <Grid item>
-                <IssuerSTOs />
-              </Grid>
-            )}
+
             <Grid item>
               <CashAccounts />
             </Grid>
+
             <Grid item>
               <WalletAddresses />
             </Grid>

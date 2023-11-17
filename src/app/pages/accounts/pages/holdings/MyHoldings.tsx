@@ -20,12 +20,12 @@ export const MyHoldings = () => {
   })
 
   return (
-    <Grid container direction='column' spacing={3} style={{ display: 'table' }}>
+    <Grid container direction='column' gap={2} style={{ display: 'table' }}>
       <Grid item>
         <PageHeader title='IX Exchange Orders' showBreadcrumbs />
       </Grid>
-      <Grid item marginTop={-1}>
-        <RootContainer padding={0}>
+      <Grid item>
+        <RootContainer>
           <Box
             p={3}
             bgcolor={theme.palette.backgrounds.light}

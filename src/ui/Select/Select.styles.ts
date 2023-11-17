@@ -44,11 +44,13 @@ export const useStyles = makeStyles(theme => {
     },
     paper: {
       '&.MuiPaper-root': {
-        padding: 0
+        paddingTop: 0,
+        paddingBottom: 0,
+        maxHeight: 500
       }
     },
     list: {
-      padding: theme.spacing(1.25, 2.5)
+      //   padding: theme.spacing(1.25, 2.5, 1.25, 2.5)
     },
     placeholder: {
       color: selectPalette.placeholder
