@@ -28,7 +28,7 @@ export const CurrencySelect = (props: any): JSX.Element => {
         <SelectItem disabled value={undefined}>
           Currency
         </SelectItem>
-        {renderSelectItems(CURRENCIES)}
+        {renderSelectItems(props.options ?? CURRENCIES)}
       </Select>
     </>
   )
