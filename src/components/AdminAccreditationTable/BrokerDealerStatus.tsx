@@ -15,7 +15,7 @@ export const BrokerDealerStatus = ({ status, broker = '' }: Props) => {
   return (
     <Container>
       <img src={getStatusIcon(status)} alt="icon" width="20px" height="20px" />
-      <EllipsisText>{broker}</EllipsisText>
+      <EllipsisText style={{fontSize: '12px'}}>{broker}</EllipsisText>
     </Container>
   )
 }

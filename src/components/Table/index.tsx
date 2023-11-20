@@ -43,7 +43,7 @@ export const HeaderRow = styled.div`
   > div {
     // padding: 10px 9px;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12px;
     color: ${({ theme: { text11 } }) => text11};
   }
   div:nth-last-child(2) {
