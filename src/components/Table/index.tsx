@@ -27,6 +27,7 @@ const rowStyle = css`
     padding-left: 0px;
   }
 
+
   > div {
     display: flex;
     align-items: center;
@@ -40,10 +41,13 @@ const rowStyle = css`
 export const HeaderRow = styled.div`
   ${rowStyle};
   > div {
-    // padding: 10px 10px;
+    // padding: 10px 9px;
     font-weight: 500;
     font-size: 14px;
     color: ${({ theme: { text11 } }) => text11};
+  }
+  div:nth-last-child(2) {
+    padding: 10px 7px;
   }
 `
 

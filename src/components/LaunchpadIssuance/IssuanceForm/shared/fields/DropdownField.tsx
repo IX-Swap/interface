@@ -5,6 +5,8 @@ import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { ChevronDown } from 'react-feather'
 import { FormFieldWrapper, OptionalLabel } from '../styled'
 import { text19, text30 } from 'components/LaunchpadMisc/typography'
+import { ReactComponent as Check } from '../../../../../assets/images/dropdownIcon.svg'
+
 
 interface Option<T> {
   value: T
@@ -190,7 +192,7 @@ export function DropdownField<T>(props: Props<T>) {
         )}
 
         <FieldIcon isOpen={showDropdown}>
-          <ChevronDown fill={theme.launchpad.colors.text.bodyAlt} size="18" />
+          <Check  />
         </FieldIcon>
       </FieldContainer>
 

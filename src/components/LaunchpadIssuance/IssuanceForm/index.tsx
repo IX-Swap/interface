@@ -42,6 +42,7 @@ export const NewIssuanceForm = () => {
   const [contactFormOpen, setContactForm] = React.useState<boolean>(false)
   const [showDropdown, setShowDropdown] = React.useState(false)
   const ref = useRef<HTMLDivElement>()
+  const [selectedIssuanceId, setSelectedIssuanceId] = React.useState<number | null>(null)
   useOnClickOutside(ref, showDropdown ? () => setShowDropdown(false) : undefined)
 
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
@@ -94,9 +95,23 @@ export const NewIssuanceForm = () => {
           {showDropdown && (
             <IssuanceList>
               {issuances.items.map((item) => (
-                <IssuanceEntry key={item.id} onClick={() => selectIssuance(item.id)}>
-                  {item.name}
-                </IssuanceEntry>
+                <>
+                  <Line style={{marginBottom: '3px'}} />
+                  <IssuanceEntry
+                    key={item.id}
+                    onClick={() => {
+                      selectIssuance(item.id)
+                      setSelectedIssuanceId(item.id)
+                      setShowDropdown(true)
+                    }}
+                    style={{
+                      background: theme.launchpad.colors.background,
+                      color: selectedIssuanceId === item.id ? 'blue' : theme.launchpad.colors.text.title,
+                    }}
+                  >
+                    {item.name}
+                  </IssuanceEntry>
+                </>
               ))}
             </IssuanceList>
           )}
@@ -499,7 +514,6 @@ const IssuanceEntry = styled.div`
   padding: 0.5rem 1rem;
   ${text30}
   cursor: pointer;
-
   background: ${(props) => props.theme.launchpad.colors.background};
   color: ${(props) => props.theme.launchpad.colors.text.title};
 

@@ -78,7 +78,7 @@ const Container = styled.article`
 
 const Header = styled.header`
   height: 80px;
-  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
+
   border-radius: 6px;
   margin-top: 40px;
 `
@@ -91,13 +91,14 @@ const TabRow = styled.div`
   height: 100%;
   max-width: 1320px;
   margin: auto;
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
 `
 
 const Body = styled.main`
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
-  margin: 2rem;
+  margin: 2rem 0rem;
 `
 
 const Tabs = styled.div`
