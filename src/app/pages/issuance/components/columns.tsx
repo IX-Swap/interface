@@ -1,23 +1,25 @@
 import React from 'react'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
-import { Grid, Box } from '@mui/material'
-import { renderPriceWithCurrency } from 'app/pages/invest/components/DSOTable/columns'
+import { Grid } from '@mui/material'
+import {
+  renderPriceWithCurrency,
+  renderSettings
+} from 'app/pages/invest/components/DSOTable/columns'
 import { HeadCellWithSort } from 'ui/UIKit/TablesKit/components/HeadCellWithSort/HeadCellWithSort'
 import { renderListingStatus } from 'helpers/tables'
 
 export const renderDSOLogo = (dsoId: string) => (
-  <Grid container justifyContent='center' alignItems='center'>
-    <DSOLogo dsoId={dsoId} size={70} />
+  <Grid container alignItems='center'>
+    <DSOLogo dsoId={dsoId} size={32} />
   </Grid>
 )
 
 export const columns = [
   {
-    label: <Box ml={2}>Logo</Box>,
+    label: 'Logo',
     key: '_id',
     render: renderDSOLogo
   },
-
   {
     label: <HeadCellWithSort label={'Name'} field={'tokenName'} />,
     key: 'tokenName'
@@ -51,6 +53,11 @@ export const columns = [
     )
   },
   {
+    key: '_id',
+    label: 'Settings',
+    render: renderSettings
+  },
+  {
     key: 'status',
     label: <HeadCellWithSort label={'Status'} field={'status'} />,
     render: renderListingStatus
@@ -58,9 +65,14 @@ export const columns = [
 ]
 
 export const compactColumns = [
+  //   {
+  //     label: 'Pair',
+  //     key: '_id'
+  //   },
   {
-    label: 'Pair',
-    key: '_id'
+    label: 'Logo',
+    key: '_id',
+    render: renderDSOLogo
   },
   {
     label: 'Name',
@@ -85,7 +97,13 @@ export const compactColumns = [
     label: 'Distribution'
   },
   {
+    key: '_id',
+    label: 'Settings',
+    render: renderSettings
+  },
+  {
     key: 'status',
-    label: 'Status'
+    label: 'Status',
+    render: renderListingStatus
   }
 ]

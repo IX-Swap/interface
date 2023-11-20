@@ -109,7 +109,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
 
             <Grid item xs={12}>
               <Element name={DSOFormSection['Team Members']}>
-                <DSOTeamView dso={data} isNewThemeOn />
+                <DSOTeamView dso={data} hasContainer />
               </Element>
             </Grid>
 

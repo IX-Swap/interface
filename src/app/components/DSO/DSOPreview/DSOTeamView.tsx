@@ -7,28 +7,36 @@ import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export interface DSOTeamViewProps {
   dso: DigitalSecurityOffering
-  isNewThemeOn?: boolean
+  hasContainer?: boolean
 }
 
-export const DSOTeamView = ({ dso }: DSOTeamViewProps) => {
+export const DSOTeamView = ({
+  dso,
+  hasContainer = false
+}: DSOTeamViewProps) => {
   const team = dso.team
 
-  return (
+  const TeamMembers = () => (
+    <Grid item container direction={'column'} spacing={5}>
+      <Grid item>
+        <FormSectionHeader title='Team Members' />
+      </Grid>
+      {team.length > 0 &&
+        team.map(member => (
+          <Grid item xs={12} key={member._id}>
+            <DSOTeamMemberView dsoId={dso._id} member={member} />
+          </Grid>
+        ))}
+    </Grid>
+  )
+
+  return hasContainer ? (
     <Grid container direction='column' spacing={3}>
       <FieldContainer>
-        <Grid item container direction={'column'} spacing={5}>
-          <Grid item>
-            <FormSectionHeader title='Team Members' />
-          </Grid>
-          {team.length > 0
-            ? team.map(member => (
-                <Grid item xs={12} key={member._id}>
-                  <DSOTeamMemberView dsoId={dso._id} member={member} />
-                </Grid>
-              ))
-            : null}
-        </Grid>
+        <TeamMembers />
       </FieldContainer>
     </Grid>
+  ) : (
+    <TeamMembers />
   )
 }
