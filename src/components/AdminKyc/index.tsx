@@ -60,16 +60,16 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
 
   return (
     <StyledBodyRow key={id}>
-      <Wallet>
+      <Wallet style={{fontSize: '12px'}}>
         <CopyAddress address={ethAddress} />
       </Wallet>
-      <div>{fullName || '-'}</div>
-      <div>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>
-      <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-      <div>
+      <div style={{fontSize: '12px'}}>{fullName || '-'}</div>
+      <div style={{fontSize: '12px'}}>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>
+      <div style={{fontSize: '12px'}}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+      <div style={{fontSize: '12px'}}>
         <StatusCell status={status} />
       </div>
-      <div>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
+      <div style={{fontSize: '12px'}}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
       {/* <div>risk level</div> */}
       {/* <Link to={`/admin/kyc/${item.id}`}>
         <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF">
@@ -283,7 +283,7 @@ export const StyledDoc = styled(File)`
 
 const StyledHeaderRow = styled(HeaderRow)`
   grid-template-columns: repeat(6, 1fr) 100px;
-  min-width: 1370px;
+  // min-width: 1370px;
   padding-bottom: 15px;
   margin-bottom: 20px;
   border-bottom: 1px solid;
@@ -292,7 +292,7 @@ const StyledHeaderRow = styled(HeaderRow)`
 
 const StyledBodyRow = styled(BodyRow)`
   grid-template-columns: repeat(6, 1fr) 100px;
-  min-width: 1370px;
+  // min-width: 1370px;
 `
 
 const StyledReviewButton = styled(ButtonGradientBorder)`

@@ -31,10 +31,12 @@ import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { OfferStatus } from 'state/launchpad/types'
 import { Line } from 'components/Line'
 
+
 export const NewIssuanceForm = () => {
   const theme = useTheme()
   const history = useHistory()
   const { isAdmin } = useRole()
+
 
   const issuance = useGetIssuance()
   const issuances = useGetIssuancePlain()
@@ -94,7 +96,7 @@ export const NewIssuanceForm = () => {
 
           {showDropdown && (
             <IssuanceList>
-              {issuances.items.map((item) => (
+              {issuances.items.map((item) =>  (
                 <>
                   <Line style={{marginBottom: '3px'}} />
                   <IssuanceEntry
@@ -105,9 +107,11 @@ export const NewIssuanceForm = () => {
                       setShowDropdown(true)
                     }}
                     style={{
-                      background: theme.launchpad.colors.background,
-                      color: selectedIssuanceId === item.id ? 'blue' : theme.launchpad.colors.text.title,
+                      color: selectedIssuanceId === null
+                        ? (Number(issuanceId) === item.id ? 'blue' : theme.launchpad.colors.text.title)
+                        : (selectedIssuanceId === item?.id ? 'blue' : theme.launchpad.colors.text.title),
                     }}
+                    
                   >
                     {item.name}
                   </IssuanceEntry>

@@ -60,17 +60,17 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
   const currency = useCurrency(tokenAddress)
   return (
     <StyledBodyRow key={`transaction-${id}`}>
-      <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-      <div>{broker}</div>
-      <Wallet>
-        <CopyAddress address={ethAddress} />
+      <div style={{fontSize: '14px'}}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+      <div style={{fontSize: '14px'}}>{broker}</div>
+      <Wallet style={{fontSize: '14px'}}>
+        <CopyAddress  address={ethAddress} />
       </Wallet>
-      <div>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
-      <div>
+      <div style={{fontSize: '14px'}}>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
+      <div style={{fontSize: '14px'}}>
         {currency ? `${CurrencyAmount.fromRawAmount(currency as Currency, amount).toFixed()} ${token?.symbol}` : ''}
       </div>
-      <div style={{ textTransform: 'capitalize' }}>{status}</div>
-      <div>
+      <div  style={{ textTransform: 'capitalize', fontSize: '14px' }}>{status}</div>
+      <div style={{fontSize: '14px'}}>
         {transactionHash && currency?.chainId && (
           <ExternalLink href={getExplorerLink(currency.chainId, transactionHash, ExplorerDataType.TRANSACTION)}>
             <span style={{ color: '#6666ff', textDecoration: 'none' }}>
