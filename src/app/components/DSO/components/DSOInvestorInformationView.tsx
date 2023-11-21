@@ -4,6 +4,7 @@ import { DSOTeamView } from 'app/components/DSO/DSOPreview/DSOTeamView'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { DigitalSecurityOffering } from 'types/dso'
 import { TextContent } from 'app/components/DSO/components/TextContent/TextContent'
+import { STOSettings } from '../DSOPreview/STOSettings'
 
 export interface DSOInvestorInformationViewProps {
   dso: DigitalSecurityOffering
@@ -22,18 +23,21 @@ export const DSOInvestorInformationView = (
           title='Company Profile'
         />
       </Grid>
+
       <Grid item xs={12}>
         <TextContent
           content={renderStringToHTML(dso.businessModel)}
           title='Business Model'
         />
       </Grid>
+
       <Grid item xs={12}>
         <TextContent
           content={renderStringToHTML(dso.useOfProceeds)}
           title='Use of Proceeds'
         />
       </Grid>
+
       <Grid item xs={12}>
         <TextContent
           content={renderStringToHTML(dso.fundraisingMilestone)}
@@ -42,7 +46,11 @@ export const DSOInvestorInformationView = (
       </Grid>
 
       <Grid item xs={12}>
-        <DSOTeamView dso={dso} isNewThemeOn />
+        <DSOTeamView dso={dso} />
+      </Grid>
+
+      <Grid item xs={12}>
+        <STOSettings sto={dso} />
       </Grid>
     </Grid>
   )
