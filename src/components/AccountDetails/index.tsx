@@ -181,7 +181,7 @@ export default function AccountDetails({
                         marginBottom: '12px',
                       }}
                       onClick={() => {
-                        ;(connector as any).close()
+                        ;(connector as any).deactivate()
                       }}
                     >
                       <Trans>{`Disconnect`}</Trans>
