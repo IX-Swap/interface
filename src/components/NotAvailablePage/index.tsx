@@ -31,7 +31,7 @@ import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 
 // Define the NotAvailablePage component
 export const NotAvailablePage = () => {
-  const { chainId, library, account } = useActiveWeb3React()
+  const { chainId, provider, account } = useActiveWeb3React()
   const { pathname } = useLocation()
   const [cookies] = useCookies(['announcementsSeen'])
   const { config } = useWhitelabelState()
@@ -42,8 +42,8 @@ export const NotAvailablePage = () => {
   const farming = ['/vesting', '/staking'].includes(pathname)
 
   const changeNetwork = (targetChain: number) => {
-    if (chainId !== targetChain && library && library?.provider?.isMetaMask) {
-      switchToNetwork({ library, chainId: targetChain })
+    if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
+      switchToNetwork({ provider, chainId: targetChain })
     }
   }
 

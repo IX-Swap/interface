@@ -21,7 +21,7 @@ import { ChevronDown } from 'react-feather'
 import { text10, text16, text8 } from 'components/LaunchpadMisc/typography'
 
 export const WalletInformation = () => {
-  const { chainId, library, account } = useActiveWeb3React()
+  const { chainId, provider, account } = useActiveWeb3React()
 
   const theme = useTheme()
 
@@ -34,12 +34,12 @@ export const WalletInformation = () => {
 
   const onNetworkSelect = React.useCallback(
     (targetChain: number) => {
-      if (chainId !== targetChain && library && library?.provider?.isMetaMask) {
-        switchToNetwork({ library, chainId: targetChain })
+      if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
+        switchToNetwork({ provider, chainId: targetChain })
         toggleNetworkMenu()
       }
     },
-    [chainId, library, toggleNetworkMenu]
+    [chainId, provider, toggleNetworkMenu]
   )
 
   return (

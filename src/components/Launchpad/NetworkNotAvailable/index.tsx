@@ -11,7 +11,7 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, PlaygroundBadge } from './styled'
 
 export const NetworkNotAvailable = () => {
-  const { chainId, library } = useActiveWeb3React()
+  const { chainId, provider } = useActiveWeb3React()
   const { pathname } = useLocation()
 
   const { config } = useWhitelabelState()
@@ -19,8 +19,8 @@ export const NetworkNotAvailable = () => {
   const farming = ['/vesting', '/staking'].includes(pathname)
 
   const changeNetwork = (targetChain: number) => {
-    if (chainId !== targetChain && library && library?.provider?.isMetaMask) {
-      switchToNetwork({ library, chainId: targetChain })
+    if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
+      switchToNetwork({ provider, chainId: targetChain })
     }
   }
 
