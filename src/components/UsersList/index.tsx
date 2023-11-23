@@ -86,7 +86,7 @@ export const UsersList: FC = () => {
   }
 
   return (
-    <Container>
+    <Container style={{ margin: '30px 80px 0px 40px' }} >
       <LoadingIndicator isLoading={adminLoading} />
       {/* <div style={{ backgroundColor: '#FFFFFF', width: '100%', padding: '40px' }}> */}
       <Flex
