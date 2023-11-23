@@ -11,6 +11,8 @@ export type StatusType =
   | 'passed'
   | 'new'
   | 'completed'
+  | 'error'
+  | 'success'
   | string
 
 export interface StatusProps {

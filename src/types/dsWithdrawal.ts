@@ -7,13 +7,19 @@ import {
 
 export interface DSWithdrawal extends AuthorizableWithIdentity {
   _id: string
-  user: string
+  user: {
+    name: string
+  }
   amount: number
   asset: Asset
   hold: string
   memo?: string
   recipientWallet: string
-  identity: {
+  withdrawalAddress: {
+    name: string
+    address: string
+  }
+  identity?: {
     corporates: CorporateIdentity[]
     individual: IndividualIdentity
   }

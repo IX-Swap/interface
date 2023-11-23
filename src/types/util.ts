@@ -46,14 +46,18 @@ export type TradingStatus = 'Pending' | 'Matched' | 'Filled' | ''
 
 export type TradingStatusPast = 'Approved' | 'Draft' | 'Rejected' | ''
 
-export type OtcTradesStatus =
-  | 'Submitted'
-  | 'Confirmed'
-  | 'Settled'
-  | 'Rejected'
-  | ''
+export type OtcTradesStatus = 'NEW' | 'COMPLETED' | 'REJECTED' | ''
 
 export type DeploymentStatus = 'DEPLOYED' | 'PENDING' | ''
+
+export type STOWithdrawalStatus =
+  | 'Submitted'
+  | 'Approved'
+  | 'Rejected'
+  | 'Error'
+  | 'Success'
+  | ''
+
 export interface NumberFormat {
   currency: string
 }

@@ -42,6 +42,8 @@ export const renderIncome = (i: string): string => `SGD ${i}`
 
 export const renderAssetName = (a: Asset): string => a.name
 
+export const renderAssetSymbol = (a: Asset): string => a.symbol
+
 export const renderAssetBalance = (val: string, row: AssetBalance): string =>
   `${row.name} (${val})`
 

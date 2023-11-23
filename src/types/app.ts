@@ -97,6 +97,7 @@ export enum AuthorizerCategory {
   VirtualAccounts = 'virtual-accounts',
   DealClosure = 'closure',
   TokenDeployment = 'token-deployment',
+  OTCTrades = 'otc-trades',
   Trading = 'trading'
 }
 
