@@ -191,7 +191,7 @@ export const AdminKycTable = () => {
   }, [id, getKyc])
 
   return (
-    <div style={{ marginTop: '30px' }} id="kyc-container">
+    <div style={{ margin: '30px 90px 0px 90px' }} id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} marginBottom="30px" data-testid="securityTokensTitle">
         <Trans>KYC</Trans>

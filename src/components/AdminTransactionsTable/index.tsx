@@ -122,7 +122,7 @@ export const AdminTransactionsTable = () => {
   }
 
   return (
-    <>
+    <div style={{ margin: '30px 80px 0px 40px' }}>
       {adminLoading && (
         <Loader>
           <LoaderThin size={96} />
@@ -143,12 +143,12 @@ export const AdminTransactionsTable = () => {
           <Trans>No results</Trans>
         </NoData>
       ) : (
-        <Container>
+        <Container >
           <Table body={<Body />} header={<Header />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
       )}
-    </>
+    </div>
   )
 }
 

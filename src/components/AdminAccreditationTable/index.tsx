@@ -145,7 +145,7 @@ export const AdminAccreditationTable = () => {
   const openModal = (kyc: KycItem) => handleKyc(kyc)
 
   return (
-    <div style={{ marginTop: '30px' }} id="accreditation-container">
+    <div  style={{ margin: '30px 80px 0px 40px' }} id="accreditation-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <TYPE.title4 fontSize={'29px'} marginBottom="30px" data-testid="securityTokensTitle">
         <Trans>Accreditation</Trans>
@@ -197,6 +197,7 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 100%;
   grid-gap: 10px;
+  // padding: 0px 40px;
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
