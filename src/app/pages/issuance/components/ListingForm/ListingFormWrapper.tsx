@@ -12,7 +12,6 @@ import {
   getIssuerIdFromDSOSelectValue
 } from 'app/pages/issuance/utils/utils'
 import { Listing } from 'app/pages/issuance/types/listings'
-import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 
 export interface ListingFormWrapperProps {
   data?: Listing
@@ -52,16 +51,14 @@ export const ListingFormWrapper = (props: ListingFormWrapperProps) => {
     <Grid item container direction={'column'} spacing={2}>
       {!isNew ? null : (
         <Grid item>
-          <FieldContainer>
-            <ListingDetails
-              listingType={listingType}
-              setListingType={setListingType}
-              onImportClick={value => {
-                setDsoId(getIdFromDSOSelectValue(value))
-                setIssuerId(getIssuerIdFromDSOSelectValue(value))
-              }}
-            />
-          </FieldContainer>
+          <ListingDetails
+            listingType={listingType}
+            setListingType={setListingType}
+            onImportClick={value => {
+              setDsoId(getIdFromDSOSelectValue(value))
+              setIssuerId(getIssuerIdFromDSOSelectValue(value))
+            }}
+          />
         </Grid>
       )}
 

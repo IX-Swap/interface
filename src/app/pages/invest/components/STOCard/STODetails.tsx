@@ -1,11 +1,11 @@
 import React from 'react'
-import { DigitalSecurityOffering } from 'types/dso'
-import Grid from '@mui/material/Grid'
+import { Box, Divider, Grid, Typography } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatAmount } from 'helpers/numbers'
-import { formatDateToDDMonYYYY } from 'helpers/dates'
-import { Divider, Typography } from '@mui/material'
 import { isEmptyString } from 'helpers/strings'
+import { formatDateToDDMonYYYY } from 'helpers/dates'
+import { DigitalSecurityOffering } from 'types/dso'
+import { Status } from 'ui/Status/Status'
 
 export interface STODetailsProps {
   data: DigitalSecurityOffering | any
@@ -71,6 +71,19 @@ export const STODetails = (props: STODetailsProps) => {
           />
         </Grid>
       </Grid>
+      <Box display={'flex'} gap={1} minHeight={'40px'}>
+        {data?.investable === false && (
+          <Status type={'submitted'} label={'Non-Investable'} autoWidth />
+        )}
+
+        {data?.disabled === true && (
+          <Status type={'draft'} label={'Disabled'} autoWidth />
+        )}
+
+        {data?.promoted === true && (
+          <Status type={'approved'} label={'Promoted'} autoWidth />
+        )}
+      </Box>
       <Divider />
       <Grid item container>
         <Grid item xs>

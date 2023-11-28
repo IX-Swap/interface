@@ -26,5 +26,16 @@ export const useStyles = makeStyles(theme => ({
   chainLogo: {
     width: 18,
     height: 18
+  },
+  addToWalletButton: {
+    backgroundColor: theme.palette.paginationItem.borderHover,
+    border: '0 !important',
+    borderRadius: '8px',
+    padding: '8px 12px !important',
+    color: 'white',
+
+    '&:hover': {
+      backgroundColor: theme.palette.primary.light
+    }
   }
 }))

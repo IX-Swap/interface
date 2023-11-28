@@ -158,7 +158,7 @@ export const PageHeader = (props: PageHeaderProps) => {
           </Grid>
 
           {hasEndComponent && (
-            <Grid item>
+            <Grid item xs={12} md={'auto'}>
               <Box ref={endComponentRef} width='100%' height='100%'>
                 {endComponent}
               </Box>

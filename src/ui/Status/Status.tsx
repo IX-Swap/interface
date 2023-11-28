@@ -18,6 +18,7 @@ export interface StatusProps {
   type: StatusType
   matchedStatus?: string
   size?: 'normal' | 'small'
+  autoWidth?: boolean
 }
 
 export const getChipVariant = (type: StatusType) => {
@@ -31,7 +32,8 @@ export const Status = ({
   label,
   type,
   matchedStatus,
-  size = 'normal'
+  size = 'normal',
+  autoWidth = false
 }: StatusProps) => {
   const classes = useStyles({ type })
 
@@ -59,7 +61,7 @@ export const Status = ({
       )}
       //   color={'success'}
       variant={getChipVariant(type)}
-      sx={{ minWidth: '140px', width: 'auto' }}
+      sx={{ minWidth: !autoWidth ? '140px' : 0, width: 'auto' }}
     />
   )
 }

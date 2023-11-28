@@ -49,7 +49,8 @@ export const MakeCommitmentForm = (
       currency: dso.currency._id
     })
   }
-  const showCommit = capitalStructureWithFunds.includes(dso.capitalStructure)
+  //   const showCommit = capitalStructureWithFunds.includes(dso.capitalStructure)
+  const showCommit = false
   return (
     <Form {...rest} validationSchema={commitmentCampaignValidationSchema}>
       <Grid container spacing={3}>

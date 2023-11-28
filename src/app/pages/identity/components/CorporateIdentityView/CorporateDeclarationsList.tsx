@@ -41,16 +41,16 @@ export const CorporateDeclarationsList = ({
                 {Object.entries(data).map((item, index) => {
                   const key = labelMap[item[0]]
                   const value = item[1]
-                  if (value === true) {
-                    return (
-                      <DeclarationsListItem
-                        key={index}
-                        label={key}
-                        value={value}
-                      />
-                    )
-                  }
-                  return null
+                  //   if (value === true) {
+                  return (
+                    <DeclarationsListItem
+                      key={index}
+                      label={key}
+                      value={value}
+                    />
+                  )
+                  //   }
+                  //   return null
                 })}
 
                 {Object.values(data).every(item => item !== true) &&

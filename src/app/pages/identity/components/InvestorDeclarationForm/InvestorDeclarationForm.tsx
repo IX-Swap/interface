@@ -17,6 +17,7 @@ import classnames from 'classnames'
 import { IndividualAccreditationDocumentsForm } from '../UploadDocumentsForm/IndividualAccreditationDocumentsForm'
 import { TypedField } from 'components/form/TypedField'
 import { capitalizeFirstLetter } from 'helpers/strings'
+import { ExchangeAgreements } from './ExchangeAgreements/ExchangeAgreements'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
@@ -68,6 +69,15 @@ export const InvestorDeclarationForm = ({
       })
     }
 
+    agreements.push({
+      name: 'optInAgreementsExchange',
+      label: (
+        <ExchangeAgreements
+          investorRole={capitalizeFirstLetter(investorRole)}
+        />
+      )
+    })
+
     return agreements
   }
 
@@ -91,7 +101,8 @@ export const InvestorDeclarationForm = ({
     jointlyHeldAccount,
     investorAgreement,
     optInAgreementsOptOut,
-    optInAgreementsSafeguards
+    optInAgreementsSafeguards,
+    optInAgreementsExchange
   } = formState.dirtyFields
 
   useEffect(() => {
@@ -124,6 +135,7 @@ export const InvestorDeclarationForm = ({
     investorAgreement,
     optInAgreementsOptOut,
     optInAgreementsSafeguards,
+    optInAgreementsExchange,
     trigger
   ])
 

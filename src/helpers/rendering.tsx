@@ -21,6 +21,7 @@ import { formatDateToMMDDYY, formatTime } from 'helpers/dates'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
+import { JsxElement } from 'typescript'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -33,7 +34,7 @@ export const renderMenuItems = (
 }
 
 export const renderSelectItems = (
-  items: Array<{ label: string; value: string | number }>
+  items: Array<{ label: string | JsxElement; value: string | number }>
 ): JSX.Element[] => {
   return items.map(({ value, label }) => (
     <SelectItem key={value} value={value}>
@@ -62,9 +63,10 @@ export const renderDSOFavorite = (
   />
 )
 
-export const renderAddressColumn = (address: string): JSX.Element => (
-  <WalletAddress address={address} />
-)
+export const renderAddressColumn = (
+  address: string,
+  enableCopy: boolean = true
+): JSX.Element => <WalletAddress address={address} enableCopy={enableCopy} />
 
 export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(sanitize(draft)))

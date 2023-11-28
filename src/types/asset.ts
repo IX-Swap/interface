@@ -5,10 +5,12 @@ export type AssetType = 'Currency' | 'Security'
 
 export interface GetAssetsArgs extends PaginationArgs {
   type?: AssetType
+  isDeployed?: boolean
 }
 
 export interface Asset {
   _id: string
+  logo?: string
   deleted: boolean
   createdBy: string
   symbol: string
@@ -23,5 +25,8 @@ export interface Asset {
     maximumDeposit?: number
     minimumWithdrawal?: number
     maximumWithdrawal?: number
+  }
+  network: {
+    name: string
   }
 }
