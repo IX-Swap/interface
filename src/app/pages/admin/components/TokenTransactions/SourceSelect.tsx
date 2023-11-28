@@ -11,12 +11,16 @@ export const SourceSelect = (props: Partial<SelectProps>) => {
       value: 'STO_ISSUANCE'
     },
     {
+      label: 'EXCHANGE_TRADE',
+      value: 'EXCHANGE_TRADE'
+    },
+    {
       label: 'STO_WITHDRAWAL',
       value: 'STO_WITHDRAWAL'
     },
     {
-      label: 'EXCHANGE_TRADE',
-      value: 'EXCHANGE_TRADE'
+      label: 'STO_DEPOSIT',
+      value: 'STO_DEPOSIT'
     }
   ]
 
