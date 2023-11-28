@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react'
-import { Grid, MenuItem } from '@mui/material'
+import { Grid, Link, MenuItem } from '@mui/material'
 import draftToHtml from 'draftjs-to-html'
 import pdfIcon from 'assets/icons/documents/pdf2.svg'
 import docxIcon from 'assets/icons/documents/docx.svg'
@@ -19,6 +19,8 @@ import { dsoQueryKeys } from 'config/queryKeys'
 import { sanitize } from 'dompurify'
 import { formatDateToMMDDYY, formatTime } from 'helpers/dates'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -72,8 +74,24 @@ export const renderOrderStatus = (status: Order['status']) => {
   return <OrderStatus status={status} />
 }
 
-export const renderMarketType = (marketType: string) => {
-  return marketType === '' ? 'Both' : marketType
+export const renderMarketType = (marketType: string, row: any) => {
+  console.log('row', row)
+
+  const markets = marketType.split('/')
+
+  return markets.map((market, index) => (
+    <>
+      {index % 2 !== 0 && ' / '}
+      <Link
+        component={AppRouterLinkComponent}
+        to={market === 'Exchange' ? InvestRoute.exchange : InvestRoute.trading}
+        target='_blank'
+        params={{ pairId: row.markets[0]._id }}
+      >
+        {market}
+      </Link>
+    </>
+  ))
 }
 
 export const documentIcons = {
