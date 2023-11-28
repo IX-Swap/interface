@@ -25,7 +25,7 @@ export const KycSource = ({ userKyc, onKycClick, status }: Props) => {
       <InternalKycContainer onClick={onKycClick}>
         {/* <AppLogo /> */}
         <img src={getStatusIcon(status)} alt="icon" width="14px" height="14px" />
-        <div style={{ fontSize: '14px' }}>{name}</div>
+        <div style={{ fontSize: '12px' }}>{name}</div>
       </InternalKycContainer>
     )
   }

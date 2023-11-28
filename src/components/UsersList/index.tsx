@@ -37,6 +37,7 @@ import { Flex } from 'rebass'
 import { isMobile } from 'react-device-detect'
 import { TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
+import { UserMobileFilters } from './userMobileFilters'
 
 const headerCells = [t`Wallet address`, t`Role`, t`Name`, t`Security Token`, t`Waive Withdrawal Fees`, '']
 
@@ -85,7 +86,7 @@ export const UsersList: FC = () => {
   }
 
   return (
-    <Container>
+    <Container style={{ margin: '30px 80px 0px 40px' }} >
       <LoadingIndicator isLoading={adminLoading} />
       {/* <div style={{ backgroundColor: '#FFFFFF', width: '100%', padding: '40px' }}> */}
       <Flex
@@ -103,7 +104,7 @@ export const UsersList: FC = () => {
             backgroundColor: '#6666FF',
             color: '#FFFFFF',
             borderRadius: '6px',
-            width: isMobile ? '100%' : '134px'
+            width: isMobile ? '100%' : '134px',
           }}
           marginTop={isMobile ? '16px' : '0px'}
           marginLeft={isMobile ? '0px' : '33px'}

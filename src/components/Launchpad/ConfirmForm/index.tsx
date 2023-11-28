@@ -1,8 +1,8 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { Check } from 'react-feather'
-
+// import { Check } from 'react-feather'
+import { ReactComponent as Check } from '../../../assets/images/newCheckLogo.svg'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { text3, text50 } from 'components/LaunchpadMisc/typography'
@@ -25,7 +25,7 @@ export const ConfirmationForm: React.FC<Props> = (props) => {
     <IssuanceDialog show={props.isOpen} onClose={props.onClose}>
       <Container>
         <Icon>
-          <Check color={theme.launchpad.colors.success} size="42" strokeWidth={1} />
+          <Check />
         </Icon>
 
         <Message>
@@ -34,8 +34,8 @@ export const ConfirmationForm: React.FC<Props> = (props) => {
           <MessageSubtitle>Would you like to submit this form?</MessageSubtitle>
         </Message>
 
-        <OutlineButton style={{ border: '1px solid #6666FF33' }} onClick={props.onClose}>
-          Cancel
+        <OutlineButton style={{ border: 'border: 1px solid #6666FF33' }} onClick={props.onClose}>
+    No
         </OutlineButton>
 
         <FilledButton onClick={save}>Submit</FilledButton>
@@ -57,7 +57,7 @@ const Container = styled.div`
   place-content: center;
 
   gap: 2rem 1rem;
-  padding: 2rem;
+  // padding: 2rem;
 `
 
 const Icon = styled.div`
@@ -73,7 +73,7 @@ const Icon = styled.div`
   width: 100px;
   height: 100px;
 
-  border: 1px solid ${(props) => props.theme.launchpad.colors.success + '33'};
+  // border: 1px solid ${(props) => props.theme.launchpad.colors.success + '33'};
   border-radius: 50%;
 `
 

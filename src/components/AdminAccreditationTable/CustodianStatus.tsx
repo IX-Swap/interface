@@ -49,7 +49,7 @@ export const CustodianStatus = ({ status, id, custodian, searchValue }: Props) =
         {status !== AccreditationStatusEnum.PENDING && (
           <img src={getStatusIcon(status)} alt="icon" width="20px" height="20px" />
         )}
-        <EllipsisText>{custodian}</EllipsisText>
+        <EllipsisText style={{fontSize: '12px'}}>{custodian}</EllipsisText>
         <MoreActions id={id} searchValue={searchValue} />
       </div>
     </Container>
