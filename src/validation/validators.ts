@@ -91,7 +91,8 @@ export const corporateAccreditedInvestorValidator = (
 
 export const pastDateValidator = (value: string | null | undefined) => {
   if (value === undefined || value === null) {
-    return false
+    // return false
+    return true
   }
 
   return !isPast(new Date(value))
