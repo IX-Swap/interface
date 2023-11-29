@@ -75,7 +75,7 @@ export const Register: React.FC = observer(() => {
     : registerFormInitialValues
 
   const useSubmit = () => {
-    console.log(data, defaultFormValues, isMyInfo)
+    // console.log(data, defaultFormValues, isMyInfo)
     useTenant()
     return async (values: SignupArgs) =>
       await signup(
