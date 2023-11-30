@@ -27,6 +27,7 @@ import { ReactComponent as CopyIcon } from '../../assets/images/newCopyIcon.svg'
 import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
+import { EmailVerification } from './EmailVerifyModal'
 
 interface DescriptionProps {
   description: string | null
@@ -89,6 +90,7 @@ const KYC = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
   const { config } = useWhitelabelState()
   const { kyc, loadingRequest } = useKYCState()
+  const [isModalOpen, handleIsModalOpen] = useState(true)
 
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
@@ -108,6 +110,9 @@ const KYC = () => {
     </p>
   )
 
+  const openModal = () => handleIsModalOpen(true)
+  const closeModal = () => handleIsModalOpen(false)
+
   useEffect(() => {
     fetchMe()
     // setReferralCode(code)
@@ -123,6 +128,7 @@ const KYC = () => {
       case KYCStatuses.NOT_SUBMITTED:
         return (
           <>
+            <EmailVerification  isModalOpen={isModalOpen} closeModal={closeModal} />  
             <Flex
               width="100%"
               flexDirection={isMobile ? 'column' : 'row'}
@@ -131,10 +137,12 @@ const KYC = () => {
               sx={{ gap: '1rem', marginTop: '40px' }}
             >
               <Flex
+             onClick={openModal}
                 sx={{
                   border: '1px solid #E6E6FF',
                   marginBottom: isMobile ? '32px' : '0px',
                   padding: isMobile ? '40px 45px' : '55px 90px',
+                  cursor: 'pointer'
                 }}
                 flexDirection="column"
                 alignItems="center"
@@ -150,24 +158,28 @@ const KYC = () => {
                       color: '#292933',
                     }}
                   >
+                    
+            
                     <Trans>Pass KYC as Individual</Trans>
+    
                   </Text>
-                  <Link
+                  {/* <Link
                     style={{ textDecoration: 'none' }}
                     to={
                       new URL(window.location.href).href?.split('=')[1]
                         ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
                         : '/kyc/individual'
                     }
-                  >
+                  > */}
                     <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
                       <Trans>Start Now</Trans>
                     </Text>
-                  </Link>
+                  {/* </Link> */}
                 </>
               </Flex>
-
+       
               <Flex
+     
                 sx={{
                   border: '1px solid #E6E6FF',
                   padding: isMobile ? '40px 40px' : '50px 90px',
@@ -177,6 +189,7 @@ const KYC = () => {
                 flexDirection="column"
                 alignItems="center"
               >
+              
                 <CorporateKYC />
                 <>
                   <Text sx={{ marginTop: '32px', fontSize: '18px', fontWeight: '700', color: '#292933' }}>
