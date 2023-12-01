@@ -23,6 +23,12 @@ import Modal from '../Modal'
 import { ErrorSection } from './ErrorSection'
 import Option from './Option'
 import PendingView from './PendingView'
+import Column from 'components/Column'
+
+import metamaskmobile from 'assets/images/metamaskmobile.png'
+import trust from 'assets/images/trust.png'
+import coinbase from 'assets/images/coinbase.png'
+// import { FormCard } from './styleds'
 import {
   CloseColor,
   CloseIcon,
@@ -34,6 +40,7 @@ import {
   UpperSection,
   Wrapper,
 } from './styleds'
+import { ButtonIXSGradient, ButtonOutlined } from 'components/Button'
 
 const WALLET_VIEWS = {
   OPTIONS: 'options',
@@ -259,8 +266,67 @@ export default function WalletModal({
           </HeaderRow>
         )}
 
-        <ContentWrapper>
-          {/* <TermsCard style={{ marginBottom: '16px' }}>  */}
+
+{isMobile ?         <ContentWrapper>
+          <Column style={{ alignItems: 'stretch' }}>
+            <br />
+            <TYPE.description2>
+              You are accessing IX Swap through a mobile phone. To connect a wallet, we recommend using browsers from
+              Metamask, Trust Wallet, Coinbase Wallet. See links below for more information:
+              <br />
+            </TYPE.description2>
+
+            <ButtonOutlined
+              type="button"
+              onClick={() =>
+                location.replace(
+                  'https://support.metamask.io/hc/en-us/articles/6356387482523-How-to-use-the-MetaMask-Mobile-Browser'
+                )
+              }
+              style={{
+                width: '100%',
+                marginTop: '32px',
+                color: 'black',
+                justifyContent: 'left',
+                fontSize: '13px',
+              }}
+            >
+              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={metamaskmobile} alt="homeImg" />
+              Metamask Browser
+            </ButtonOutlined>
+            <ButtonOutlined
+              type="button"
+              onClick={() => location.replace('https://trustwallet.com/dapp/')}
+              style={{
+                width: '100%',
+                marginTop: '32px',
+                color: 'black',
+     
+                justifyContent: 'left',
+                fontSize: '13px',
+              }}
+            >
+              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={trust} alt="groupImg" />
+              Trust Wallet Browser
+            </ButtonOutlined>
+
+            <ButtonOutlined
+              type="button"
+              onClick={() => location.replace('https://help.coinbase.com/en/wallet/other-topics/what-is-a-dapp')}
+              style={{
+                width: '100%',
+                marginTop: '32px',
+                color: 'black',
+                justifyContent: 'left',
+                fontSize: '12px',
+              }}
+            >
+              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={coinbase} alt="groupImg" />
+              Coinbased Wallet Browser
+            </ButtonOutlined>
+          </Column>
+          {/* </FormCard> */}
+        </ContentWrapper> :         <ContentWrapper>
           <AutoRow style={{ flexWrap: 'nowrap' }}>
             <Text style={{ fontSize: '13px', color: '#666680', fontWeight: '400', lineHeight: '19.5px' }}>
               <Trans>
@@ -274,7 +340,6 @@ export default function WalletModal({
               </Trans>
             </Text>
           </AutoRow>
-          {/* </TermsCard> */}
           {walletView === WALLET_VIEWS.PENDING ? (
             <PendingView
               connector={pendingWallet}
@@ -285,7 +350,8 @@ export default function WalletModal({
           ) : (
             <OptionGrid>{getOptions()}</OptionGrid>
           )}
-        </ContentWrapper>
+        </ContentWrapper> }
+
       </UpperSection>
     )
   }
