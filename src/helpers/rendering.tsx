@@ -86,7 +86,8 @@ export const renderMarketType = (marketType: string, row: any) => {
         component={AppRouterLinkComponent}
         to={market === 'Exchange' ? InvestRoute.exchange : InvestRoute.trading}
         target='_blank'
-        params={{ pairId: row.markets[0]._id }}
+        // params={{ pairId: row.markets[0]._id }}
+        params={{ pairId: row.exchange.markets[0] }}
       >
         {market}
       </Link>
