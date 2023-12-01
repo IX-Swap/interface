@@ -21,7 +21,7 @@ import {
 } from 'helpers/acl'
 import { Dashboard } from 'app/pages/dashboard/Dashboard'
 import { Feedback } from 'app/pages/feedback/Feedback'
-import { ClientRouter } from 'app/pages/admin/router/ClietRouter'
+import { ClientRouter } from 'app/pages/admin/router/ClientRouter'
 
 export const AppRouter = () => {
   const isAuthorizer = useIsAuthorizer()

@@ -7,6 +7,7 @@ import { Grid, Typography } from '@mui/material'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { DeclarationsListItem } from 'app/pages/identity/components/DeclarationsListItem/DeclarationsListItem'
 import { capitalizeFirstLetter } from 'helpers/strings'
+import { ExchangeAgreements } from '../../InvestorDeclarationForm/ExchangeAgreements/ExchangeAgreements'
 
 export interface OptInRequirementViewProps {
   data: IndividualIdentity
@@ -47,6 +48,12 @@ export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
                 }
               />
             )}
+            <DeclarationsListItem
+              label={<ExchangeAgreements investorRole={investorRole} />}
+              value={
+                data?.declarations?.investorsStatus?.optInAgreementsExchange
+              }
+            />
           </Grid>
         </Grid>
       </Grid>

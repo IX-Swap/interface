@@ -9,14 +9,21 @@ import { accountsURL } from 'config/apiURL'
 
 export const useAssetsData = (
   type?: AssetType,
-  customLimit?: number
+  customLimit?: number,
+  isDeployed?: boolean
 ): UsePaginatedQueryData<Asset> => {
   let payloadPaginationArgs = paginationArgs
+
   if (customLimit !== undefined) {
     payloadPaginationArgs = { ...paginationArgs, limit: customLimit }
   }
 
-  const payload = { ...payloadPaginationArgs, type }
+  let payload: GetAssetsArgs = { ...payloadPaginationArgs, type }
+
+  if (isDeployed !== undefined) {
+    payload = { ...payload, isDeployed }
+  }
+
   const getAssets = async (queryKey: string, args: GetAssetsArgs) => {
     const uri = accountsURL.assets.getAll
 

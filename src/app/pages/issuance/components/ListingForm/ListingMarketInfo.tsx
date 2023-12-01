@@ -41,6 +41,8 @@ export const ListingMarketInfo = (props: any) => {
     return <LoadingIndicator />
   }
 
+  return null
+
   return (
     <Grid item container direction='column' spacing={5}>
       <Grid item>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { IconButton, Box } from '@mui/material'
-import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined'
+import { ContentCopy } from '@mui/icons-material'
 import { copyToClipboard } from 'helpers/clipboard'
 import { useSnackbar } from 'hooks/useSnackbar'
 import { AppRouterLink } from 'components/AppRouterLink'
@@ -12,13 +12,15 @@ export interface WalletAddressProps {
   link?: boolean
   network?: Network
   long?: boolean
+  enableCopy?: boolean
 }
 
 export const WalletAddress = ({
   address,
   network,
   link = false,
-  long = false
+  long = false,
+  enableCopy = true
 }: WalletAddressProps) => {
   const { showSnackbar } = useSnackbar()
   const handleCopy = () => {
@@ -50,14 +52,19 @@ export const WalletAddress = ({
       ) : (
         textContent
       )}
-      <Box px={0.5} />
-      <IconButton
-        size='small'
-        onClick={handleCopy}
-        style={{ fontSize: '18px' }}
-      >
-        <FileCopyOutlinedIcon fontSize='inherit' color='disabled' />
-      </IconButton>
+      {enableCopy && (
+        <>
+          {' '}
+          <Box px={0.5} />
+          <IconButton
+            size='small'
+            onClick={handleCopy}
+            style={{ fontSize: '18px' }}
+          >
+            <ContentCopy fontSize='inherit' color='disabled' />
+          </IconButton>
+        </>
+      )}
     </span>
   )
 }

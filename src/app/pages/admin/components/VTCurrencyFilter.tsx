@@ -1,31 +1,28 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@mui/material'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { Grid, Typography } from '@mui/material'
 import { CurrencyFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/CurrencyFilter'
 
 export const VTCurrencyFilter = () => {
-  const { isMobile } = useAppBreakpoints()
-
   return (
-    <Grid
-      item
-      container
-      xs={12}
-      md={4}
-      lg={2}
-      alignItems={'center'}
-      justifyContent={'flex-start'}
-    >
-      <Grid item xs={4} sm={'auto'}>
-        <Typography style={{ fontWeight: 600 }}>Currency:</Typography>
+    <Grid item container direction={'column'} gap={1}>
+      <Grid item xs={12} sm={'auto'}>
+        <Typography>Currency</Typography>
       </Grid>
-      {!isMobile && <Box pr={1} />}
-      <Grid item xs={4} sm={'auto'} lg={3}>
-        <CurrencyFilter currency='SGD' defaultValue={null} />
-      </Grid>
-      {!isMobile && <Box pr={2} />}
-      <Grid item xs={4} sm={'auto'} lg={3}>
-        <CurrencyFilter currency='USD' defaultValue={null} />
+      <Grid
+        item
+        container
+        xs={12}
+        justifyContent={'start'}
+        display={'flex'}
+        gap={1}
+        pt={1}
+      >
+        <Grid item px={1}>
+          <CurrencyFilter currency='SGD' defaultValue={null} />
+        </Grid>
+        <Grid item px={1}>
+          <CurrencyFilter currency='USD' defaultValue={null} />
+        </Grid>
       </Grid>
     </Grid>
   )

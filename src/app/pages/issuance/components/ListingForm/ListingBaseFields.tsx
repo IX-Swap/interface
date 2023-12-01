@@ -8,11 +8,13 @@ import { TypedField } from 'components/form/TypedField'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { numberFormat } from 'config/numberFormat'
 import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { FormSectionHeader } from 'ui/FormSectionHeader/FormSectionHeader'
 import { ListingHiddenFields } from 'app/pages/issuance/components/ListingForm/ListingHiddenFields'
+import { CURRENCIES, CurrencySelect } from 'components/form/CurrencySelect'
+import { useAssetsData } from 'hooks/asset/useAssetsData'
 
 export interface ListingBaseFieldsProps {
   isNew: boolean
@@ -23,15 +25,17 @@ export interface ListingBaseFieldsProps {
 export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
   const { isNew, isDataFromDSO } = props
   const { control, watch } = useFormContext()
+  const { data } = useAssetsData('Currency')
+  const currencyList = useMemo(() => data.list.reverse(), [data])
 
   return (
     <Grid item>
       <Grid container direction='column' spacing={5}>
         <Grid item>
-          <FormSectionHeader title='General Information' />
+          <FormSectionHeader title='Overview of Selected Token' />
         </Grid>
-        <Grid item container>
-          <Grid item xs={12} md={12}>
+        <Grid item container spacing={{ xs: 5, md: 3 }}>
+          <Grid item xs={12} md={6}>
             <TypedField
               control={control}
               component={
@@ -52,6 +56,27 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 (isDataFromDSO &&
                   watch('capitalStructure') !==
                     initialListingFormValues.capitalStructure)
+              }
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TypedField
+              control={control}
+              component={CurrencySelect}
+              options={currencyList.map(cur => ({
+                label:
+                  CURRENCIES.find(option => option.value === cur.symbol)
+                    ?.label ?? cur.symbol,
+                value: cur._id
+              }))}
+              label='Currency'
+              name='currency'
+              displayEmpty
+              variant='outlined'
+              disabled={
+                !isNew ||
+                (isDataFromDSO &&
+                  watch('currency') !== initialListingFormValues.currency)
               }
             />
           </Grid>

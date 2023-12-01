@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query'
+import { _axios } from 'services/api'
 import { useServices } from 'hooks/useServices'
 import { tenantsURL } from 'config/apiURL'
 
@@ -40,6 +41,9 @@ export const useTenant = () => {
   sessionService.set('logoDark', logoDark)
   sessionService.set('backgroundImage', backgroundImage)
   sessionService.set('mobileMode', true)
+
+  _axios.defaults.headers.common['X-Subdomain'] = subdomain
+  _axios.defaults.headers.common['X-Tenant-ID'] = tenantId
 
   return null
 }

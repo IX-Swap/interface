@@ -40,6 +40,7 @@ export const Cash = () => {
               sx={{ paddingX: 5, paddingY: 2 }}
               component={AppRouterLinkComponent}
               to={AccountsRoute.banks}
+              fullWidth
             >
               View Bank Accounts
             </Button>

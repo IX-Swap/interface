@@ -10,7 +10,7 @@ import { useStyles } from 'app/components/OTP.styles'
 export const OTPInputField = ({ disabled }: { disabled: boolean }) => {
   const { control } = useFormContext()
   const { theme } = useAppTheme()
-  const { otp } = useStyles()
+  const { otpContainer, otpField } = useStyles()
   return (
     <Grid item>
       <TypedField
@@ -19,8 +19,8 @@ export const OTPInputField = ({ disabled }: { disabled: boolean }) => {
         component={OTPField}
         name='otp'
         isInputNum={true}
-        containerStyle={{ alignItems: 'flex-start' }}
-        inputStyle={otp}
+        containerStyle={otpContainer}
+        inputStyle={otpField}
         label={
           <Box
             sx={{

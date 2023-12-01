@@ -22,7 +22,7 @@ export const Actions = ({ item }: any) => {
       <IconButton
         component={AppRouterLinkComponent}
         size='medium'
-        to={AdminRoute.editTenant}
+        to={AdminRoute.editClientSpace}
         params={{ tenantId: item._id }}
         className={classes.button}
       >
@@ -31,7 +31,7 @@ export const Actions = ({ item }: any) => {
       <IconButton
         component={AppRouterLinkComponent}
         size='medium'
-        to={AdminRoute.viewTenant}
+        to={AdminRoute.viewClientSpace}
         params={{ tenantId: item._id }}
         className={classes.button}
       >

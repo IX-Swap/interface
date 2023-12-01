@@ -11,9 +11,10 @@ import { UserRouter } from 'app/pages/admin/router/UserRouter'
 import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
 import { Banner } from 'app/pages/admin/pages/Banner'
 import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
-import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
+import { VirtualAccountTransactionsRouter } from './VirtualAccountTransactionsRouter'
 import { CustodyManagementRouter } from 'app/pages/admin/router/CustodyManagementRouter'
-import { TenantRouter } from './TenantRouter'
+import { ClientRouter } from './ClientRouter'
+import { WhitelistWithdrawalAddressesRouter } from './WhitelistWalletAddressesRouter'
 import { TokenTransactions } from '../pages/TokenTransactions'
 
 export const AdminRouter = () => {
@@ -58,11 +59,10 @@ export const AdminRouter = () => {
       </AppRoute>
 
       <AppRoute
-        exact
         path={AdminRoute.virtualAccountTransactions}
-        breadcrumb='VA Transactions'
+        breadcrumb='Virtual Account Transactions'
       >
-        <VirtualAccountTransactions />
+        <VirtualAccountTransactionsRouter />
       </AppRoute>
 
       <AppRoute
@@ -80,8 +80,15 @@ export const AdminRouter = () => {
         <CustodyManagementRouter />
       </AppRoute>
 
-      <AppRoute breadcrumb='Client Spaces' path={AdminRoute.tenants}>
-        <TenantRouter />
+      <AppRoute breadcrumb='Client Spaces' path={AdminRoute.clientSpaces}>
+        <ClientRouter />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Whitelist Wallet Addresses'
+        path={AdminRoute.whitelistWalletAddresses}
+      >
+        <WhitelistWithdrawalAddressesRouter />
       </AppRoute>
 
       <AppRoute

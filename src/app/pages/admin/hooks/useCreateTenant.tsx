@@ -19,7 +19,7 @@ export const useCreateTenant = () => {
     onSuccess: data => {
       void snackbarService.showSnackbar('Success', 'success')
       replace(
-        generatePath(AdminRoute.viewTenant, {
+        generatePath(AdminRoute.viewClientSpace, {
           tenantId: data.data._id
         })
       )

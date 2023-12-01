@@ -185,9 +185,8 @@ export const dsoInformationValidationSchemaStep1: any = {
       function (releaseDate) {
         const { completionDate } = this.parent
         const isReleaseNull = releaseDate === null
-        const isReleaseDateBeforeCompletionDate = releaseDate < completionDate
 
-        return isReleaseNull || !isReleaseDateBeforeCompletionDate
+        return isReleaseNull || isBeforeDate(completionDate, releaseDate)
       }
     )
     .test(

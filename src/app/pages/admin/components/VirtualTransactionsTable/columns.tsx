@@ -11,17 +11,17 @@ import {
 export const columns: Array<TableColumn<VirtualTransaction>> = [
   {
     key: 'createdAt',
-    label: 'Date',
+    label: 'Date & Time',
     render: renderDateAndTimeField
   },
   {
     key: 'detail.debtorAccountNumber',
-    label: 'From',
+    label: 'Origin',
     render: renderFromField
   },
   {
     key: 'detail.creditorAccountNumber',
-    label: 'To',
+    label: 'Destination',
     render: renderToField
   },
   {
@@ -31,7 +31,7 @@ export const columns: Array<TableColumn<VirtualTransaction>> = [
   },
   {
     key: 'detail.paymentMethod',
-    label: 'Type Of Transfer'
+    label: 'Type of Transfer'
   },
   {
     key: 'amount',

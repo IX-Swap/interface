@@ -76,11 +76,7 @@ export const IssuanceRouter = () => {
         </RootContainer>
       </AppRoute>
 
-      <AppRoute
-        breadcrumb='My Security Token Offerings'
-        exact
-        path={IssuanceRoute.list}
-      >
+      <AppRoute breadcrumb='My STOs' exact path={IssuanceRoute.list}>
         <DSOList />
       </AppRoute>
 

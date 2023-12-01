@@ -11,6 +11,7 @@ interface AppState {
   isNavDrawerOpened: boolean
   isSidebarOpened: boolean
   isOnboardingPanelOpen: boolean
+  tableHasData: boolean
 }
 
 type AppActionTypes =
@@ -26,6 +27,10 @@ type AppActionTypes =
       type: 'setOnboardingPanelOpened'
       payload: AppState['isOnboardingPanelOpen']
     }
+  | {
+      type: 'setTableHasData'
+      payload: AppState['tableHasData']
+    }
 
 const AppStateContext = createContext<AppState | null>(null)
 
@@ -33,6 +38,7 @@ interface AppActions {
   setPageTitle: (title: AppState['pageTitle']) => void
   setSidebarOpened: (status: boolean) => void
   setOnboardingPanelOpened: (status: boolean) => void
+  setTableHasData: (status: boolean) => void
 }
 
 const AppActionsContext = createContext<AppActions | null>(null)
@@ -41,7 +47,8 @@ const initialAppState: AppState = {
   pageTitle: undefined,
   isNavDrawerOpened: false,
   isSidebarOpened: false,
-  isOnboardingPanelOpen: true
+  isOnboardingPanelOpen: true,
+  tableHasData: true
 }
 
 const appReducer = (state: AppState, action: AppActionTypes) => {
@@ -64,6 +71,12 @@ const appReducer = (state: AppState, action: AppActionTypes) => {
         isOnboardingPanelOpen: action.payload
       }
 
+    case 'setTableHasData':
+      return {
+        ...state,
+        tableHasData: action.payload
+      }
+
     default:
       throw new Error('Unsupported action')
   }
@@ -80,7 +93,9 @@ export const AppStateProvider = (props: PropsWithChildren<any>) => {
     setSidebarOpened: (opened: boolean) =>
       dispatch({ type: 'setSidebarOpened', payload: opened }),
     setOnboardingPanelOpened: (opened: boolean) =>
-      dispatch({ type: 'setOnboardingPanelOpened', payload: opened })
+      dispatch({ type: 'setOnboardingPanelOpened', payload: opened }),
+    setTableHasData: (opened: boolean) =>
+      dispatch({ type: 'setTableHasData', payload: opened })
   }
 
   return (
