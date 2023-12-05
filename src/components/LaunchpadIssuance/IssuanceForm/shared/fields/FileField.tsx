@@ -3,7 +3,7 @@ import styled, { useTheme } from 'styled-components'
 
 import { Download, Paperclip } from 'react-feather'
 
-import { ReactComponent as CancelIcon } from 'assets/launchpad/svg/cancel-vector.svg'
+import { ReactComponent as CancelIcon } from 'assets/images/TrashNoBorder.svg'
 import { Column, ErrorText, Row, Spacer } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper, OptionalLabel } from '../styled'
 import { FileRejection, useDropzone } from 'react-dropzone'
@@ -139,7 +139,7 @@ export const FileField: React.FC<Props> = (props) => {
 
           <input {...getInputProps()} ref={input} multiple={false} disabled={props.disabled} />
 
-          {value && !props.disabled && <CancelIcon onClick={onFileRemove} title="remove" cursor="pointer" />}
+
           {value && !props.disabled && (
             <Download
               size="18"
@@ -148,6 +148,7 @@ export const FileField: React.FC<Props> = (props) => {
               onClick={onDownloadFile}
             />
           )}
+                    {value && !props.disabled && <CancelIcon style={{marginLeft: '4px'}} onClick={onFileRemove} title="remove" cursor="pointer" />}
           <Spacer />
 
           {!props.disabled && (

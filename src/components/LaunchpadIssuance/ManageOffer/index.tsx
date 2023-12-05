@@ -146,7 +146,7 @@ export const ManageOffer = () => {
     timeframe: offer.timeframe,
   }
   return (
-    <Wrapper>
+    <Wrapper style={{padding: '0px 8%'}}>
       <ConfirmClaimModal
         isOpen={confirmClaim}
         onClose={() => setConfirmClaim(false)}

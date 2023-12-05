@@ -79,22 +79,22 @@ const Row: FC<RowProps> = ({ item, searchValue, openReviewModal }: RowProps) => 
 
   return (
     <StyledBodyRow key={id}>
-      <div style={{ fontWeight: 700 }}>{token?.symbol || '-'}</div>
-      <Wallet>
-        <CopyAddress address={ethAddress} />
+      <div style={{ fontWeight: 700, fontSize: '12px' }}>{token?.symbol || '-'}</div>
+      <Wallet style={{fontSize: '12px'}}>
+        <CopyAddress  address={ethAddress} />
       </Wallet>
-      <div>{userKyc?.individual?.address?.country || userKyc?.corporate?.countryOfIncorporation || '-'}</div>
-      <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+      <div style={{fontSize: '12px'}}>{userKyc?.individual?.address?.country || userKyc?.corporate?.countryOfIncorporation || '-'}</div>
+      <div style={{fontSize: '12px'}}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
 
-      <div>{statusLegend[investorType] || '-'}</div>
+      <div style={{fontSize: '12px'}}>{statusLegend[investorType] || '-'}</div>
       <div>
         <KycSource onKycClick={onKycClick} kyc={kyc} userKyc={userKyc} status={status} />
       </div>
       <div>
-        <BrokerDealerStatus status={brokerDealerStatus} kyc={kyc} broker={broker} />
+        <BrokerDealerStatus  status={brokerDealerStatus} kyc={kyc} broker={broker} />
       </div>
       <div>
-        <CustodianStatus status={custodianStatus} searchValue={searchValue} id={id} custodian={custodian} />
+        <CustodianStatus  status={custodianStatus} searchValue={searchValue} id={id} custodian={custodian} />
       </div>
     </StyledBodyRow>
   )
@@ -145,7 +145,7 @@ export const AdminAccreditationTable = () => {
   const openModal = (kyc: KycItem) => handleKyc(kyc)
 
   return (
-    <div style={{ marginTop: '30px' }} id="accreditation-container">
+    <div  style={{ margin: '30px 80px 0px 40px' }} id="accreditation-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <TYPE.title4 fontSize={'29px'} marginBottom="30px" data-testid="securityTokensTitle">
         <Trans>Accreditation</Trans>
@@ -197,14 +197,15 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 100%;
   grid-gap: 10px;
+  // padding: 0px 40px;
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
   grid-template-columns: 0.6fr 200px 0.8fr 170px repeat(3, 1fr) minmax(218px, 1fr);
-  min-width: 1370px;
+  min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
   grid-template-columns: 0.6fr 200px 0.8fr 170px repeat(3, 1fr) minmax(217px, 0.8fr);
-  min-width: 1366px;
+  min-width: 1266px;
 `

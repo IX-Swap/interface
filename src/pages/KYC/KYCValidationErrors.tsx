@@ -40,7 +40,7 @@ const errorLabelMap = [
   { field: 'income', label: 'Income' },
 
   { field: 'taxDeclarations', label: 'Tax Declarations' },
-  // { field: 'country', label: 'Country of Tax Declaration' },
+  { field: 'country', label: 'Country of Tax Declaration' },
   { field: 'idNumber', label: 'Tax Identification Number (TIN)' },
   { field: 'reason', label: 'Reason' },
 
