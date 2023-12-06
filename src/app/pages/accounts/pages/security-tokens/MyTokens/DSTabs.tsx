@@ -2,15 +2,15 @@ import {
   TableTabsView,
   TabsContent
 } from 'app/components/TableTabsView/TableTabsView'
-import { CustodyList } from 'app/pages/accounts/pages/security-tokens/DSList/CustodyList'
-import { DSTooltip } from 'app/pages/accounts/pages/security-tokens/DSList/DSTooltip'
-import { SelfCustodyList } from 'app/pages/accounts/pages/security-tokens/DSList/SelfCustodyList'
+import { SecurityTokensTable } from 'app/pages/accounts/pages/security-tokens/MyTokens/SecurityTokensTable'
+import { DSTooltip } from 'app/pages/accounts/pages/security-tokens/MyTokens/DSTooltip'
+import { SelfCustodyList } from 'app/pages/accounts/pages/security-tokens/MyTokens/SelfCustodyList'
 import React from 'react'
 
 export const DSTabs = () => {
   const tabs: TabsContent[] = [
     {
-      panel: <CustodyList />,
+      panel: <SecurityTokensTable />,
       label: 'Custody'
     },
     {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { selfCustodyColumns } from 'app/pages/accounts/pages/security-tokens/DSList/columns'
+import { selfCustodyColumns } from 'app/pages/accounts/pages/security-tokens/MyTokens/columns'
 // import { TableView } from 'components/TableWithPagination/TableView'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { accountsURL } from 'config/apiURL'

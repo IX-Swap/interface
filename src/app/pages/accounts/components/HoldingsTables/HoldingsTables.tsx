@@ -1,6 +1,4 @@
 import { TableTabsView } from 'app/components/TableTabsView/TableTabsView'
-// import { CurrentHoldingsTable } from 'app/pages/accounts/components/CurrentHoldingsTable/CurrentHoldingsTable'
-// import { CustodyList } from '../../pages/digitalSecurities/DSList/CustodyList'
 import { TradeHistoryTable } from 'app/pages/accounts/components/TradeHistoryTable/TradeHistoryTable'
 import { YourOrdersTable } from 'app/pages/accounts/components/YourOrdersTable/YourOrderstable'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
@@ -17,13 +15,6 @@ export interface HoldingsTablesProps {
 }
 
 export const tabs = [
-  // {
-  //   //   panel: <CurrentHoldingsTable />,
-  //   panel: <CustodyList />,
-  //   label: 'Current Holdings',
-  //   headerTitle: 'Current Holdings',
-  //   description: 'View, manage, and track your STOs.'
-  // },
   {
     panel: <TradeHistoryTable />,
     label: 'Past Orders',
