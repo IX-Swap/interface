@@ -30,7 +30,7 @@ export const WalletAddress = ({
 
   const textContent = long
     ? address
-    : `${address.slice(0, 4)}...${address.slice(address.length - 4)}`
+    : `${address?.slice(0, 4)}...${address?.slice(address.length - 4)}`
 
   if (address === '') {
     return null
