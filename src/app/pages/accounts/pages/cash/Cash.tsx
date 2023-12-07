@@ -11,6 +11,7 @@ import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { KnowYourCustomer } from 'app/pages/dashboard/AccountActions/KnowYourCustomer'
+import { StableCoinsTable } from './components/StableCoinsTable/StableCoinsTable'
 
 export const Cash = () => {
   const {
@@ -52,6 +53,7 @@ export const Cash = () => {
           <Grid item xs={12}>
             <CashBalance />
           </Grid>
+
           <Grid item xs={12}>
             <Typography
               variant='h4'
@@ -78,6 +80,33 @@ export const Cash = () => {
               </>
             )}
           </Grid>
+
+          <Grid item xs={12}>
+            <Typography
+              variant='h4'
+              display={'inline-flex'}
+              alignItems={'center'}
+              mb={3}
+            >
+              Stablecoin
+            </Typography>
+            {!hasApprovedKYC ? (
+              <Grid item xs>
+                <KnowYourCustomer
+                  hasStarted={hasStartedKYC}
+                  hasSubmitted={hasSubmittedKYC}
+                  identityType={identityType}
+                  identityId={identity?._id}
+                  userId={identity?.user._id}
+                />
+              </Grid>
+            ) : (
+              <>
+                <StableCoinsTable />
+              </>
+            )}
+          </Grid>
+
           <Grid item xs={12}>
             <Typography
               variant='h4'

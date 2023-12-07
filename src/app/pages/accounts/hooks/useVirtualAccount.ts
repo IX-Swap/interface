@@ -25,7 +25,7 @@ export const useVirtualAccounts = () => {
   const { apiService } = useServices()
 
   const getVirtualAccount = async () => {
-    const uri = virtualAccounts.getByUserId(userId)
+    const uri = virtualAccounts.getByUserId(userId, 'Currency')
     return await apiService.get(uri)
   }
 
