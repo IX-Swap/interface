@@ -5,6 +5,7 @@ import { useMutation } from 'react-query'
 interface DepositSTOProps {
   from: string
   to: string
+  type: 'Security' | 'Stablecoin'
   amount: string
   assetId: string
   txHash: string

@@ -32,6 +32,7 @@ export const DepositFormFields: React.FC = () => {
     useWalletAddresses()
   const [depositSTO] = useDepositSTO()
   const { watch, reset } = useFormContext()
+  const tokenType = watch('tokenType')
   const token = watch('token')
   const tokenAddress = token?.tokenAddress
   const [tokenBalance, setTokenBalance] = useState('0')
@@ -125,6 +126,7 @@ export const DepositFormFields: React.FC = () => {
       await depositSTO({
         from: walletAddress,
         to: depositAddress,
+        type: tokenType,
         amount: depositAmount,
         assetId: token?._id,
         txHash: deposit.transactionHash
