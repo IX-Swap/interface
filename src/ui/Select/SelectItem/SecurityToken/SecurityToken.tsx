@@ -4,6 +4,8 @@ import { Box, Typography, useTheme } from '@mui/material'
 import { makeStyles } from '@material-ui/core/styles'
 import { Asset } from 'types/tokenBalance'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
+import { ReactComponent as USDTIcon } from 'assets/icons/stablecoins/usdt.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
 
 interface SecurityTokenSelectItemProps {
   sto: Asset
@@ -42,16 +44,22 @@ export const SecurityTokenSelectItem = ({
   }))
 
   const classes = useStyles()
+  const Icon = sto?.symbol === 'USDC' ? USDCIcon : USDTIcon
 
   return (
     <Box className={classes.container}>
-      <DSOLogo
-        size={22}
-        uri={'/dataroom/raw/'}
-        dsoId={sto?.logo}
-        variant='circular'
-        className={classes.logo}
-      />
+      {sto?.symbol === 'USDC' || sto?.symbol === 'USDT' ? (
+        <Icon style={{ height: 22 }} />
+      ) : (
+        <DSOLogo
+          size={22}
+          uri={'/dataroom/raw/'}
+          dsoId={sto?.logo}
+          variant='circular'
+          className={classes.logo}
+        />
+      )}
+
       <Typography className={cn([classes.symbol, classes.child])}>
         {sto?.symbol}
       </Typography>
