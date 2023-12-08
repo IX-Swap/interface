@@ -15,6 +15,7 @@ import { ClearFormDialog } from '../ClearFormDialog'
 import { useWithdrawalFee } from 'app/pages/accounts/hooks/useWithdrawalFee'
 import { ConfirmWithdrawalDialog } from './ConfirmWithdrawalDialog'
 import { useWithdrawDS } from '../../banks/hooks/useWithdrawDS'
+import { TokenType } from '../TokenType/TokenType'
 
 export const WithdrawFormFields = () => {
   const [clearFormConfirmationVisible, setClearFormConfirmationVisible] =
@@ -78,6 +79,8 @@ export const WithdrawFormFields = () => {
     <>
       {(isLoading || isFetchingWithdrawalFee) && <LoadingIndicator />}
       <Box display={'flex'} flexDirection={'column'} gap={3}>
+        <TokenType />
+
         <SecurityToken />
 
         {hasSelectedToken && (

@@ -8,6 +8,7 @@ import { useDepositAddress } from 'app/pages/accounts/hooks/useDepositAddress'
 export const DepositSecurityTokenField = () => {
   const { control, watch, setValue } = useFormContext()
   const token = watch('token')
+  const tokenType = watch('tokenType')
 
   const { data } = useDepositAddress(token?._id)
   const address = data?.address
@@ -21,8 +22,9 @@ export const DepositSecurityTokenField = () => {
         <TypedField
           control={control}
           component={DeployedSecurityTokenSelect}
+          type={tokenType}
           name='token'
-          label='Security Token'
+          label={tokenType === 'Security' ? 'Security Token' : 'Stablecoin'}
           variant='outlined'
           fullWidth
         />

@@ -19,6 +19,7 @@ import { useSnackbar } from 'hooks/useSnackbar'
 import { useDepositSTO } from 'app/pages/accounts/hooks/useDepositSTO'
 import { ClearFormDialog } from '../ClearFormDialog'
 import { ConfirmDepositDialog } from './ConfirmDepositDialog'
+import { TokenType } from '../TokenType/TokenType'
 
 export const DepositFormFields: React.FC = () => {
   const [clearFormConfirmationVisible, setClearFormConfirmationVisible] =
@@ -143,6 +144,8 @@ export const DepositFormFields: React.FC = () => {
     <>
       {(isFetchingAddresses || isLoading) && <LoadingIndicator />}
       <Box display={'flex'} flexDirection={'column'} gap={3}>
+        <TokenType />
+
         <SecurityToken />
 
         {hasSelectedToken && (
