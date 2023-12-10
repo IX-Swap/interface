@@ -23,6 +23,7 @@ export const useStyles = makeStyles(theme => {
       case 'Pendig':
       case 'new-match':
         return theme.palette.warning.dark
+      case 'error':
       case 'rejected':
       case 'funds on hold':
       case 'failed':
@@ -37,6 +38,7 @@ export const useStyles = makeStyles(theme => {
       case 'new-settled':
       case 'completed-confirmed':
         return theme.palette.info.light
+      case 'success':
       case 'passed':
         return '#4C88FF'
       case 'completed-settled':
@@ -63,6 +65,7 @@ export const useStyles = makeStyles(theme => {
       case 'Pendig':
       case 'new-match':
         return theme.palette.warning.light
+      case 'error':
       case 'rejected':
       case 'funds on hold':
       case 'failed':
@@ -77,6 +80,7 @@ export const useStyles = makeStyles(theme => {
       case 'new-settled':
       case 'completed-confirmed':
         return theme.palette.info.dark
+      case 'success':
       case 'passed':
         return '#4C88FF20'
 

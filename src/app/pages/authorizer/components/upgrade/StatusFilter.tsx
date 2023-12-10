@@ -14,7 +14,8 @@ import {
   AuthorizableStatus,
   DeploymentStatus,
   FundStatus,
-  OtcTradesStatus
+  OtcTradesStatus,
+  STOWithdrawalStatus
 } from 'types/util'
 import { Box } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
@@ -125,7 +126,7 @@ export const DeploymentStatusFilter = ({
 
 export const StatusFilter = () => {
   const category = useAuthorizerCategory()
-  console.log(category, 'catatatat')
+
   if (category === 'commitments') {
     return (
       <BaseFundStatusFilter statusFilters={[...fundStatusFilters].reverse()} />
@@ -140,7 +141,13 @@ export const StatusFilter = () => {
     )
   }
 
+  if (category === 'security-token-withdrawals') {
+    // @ts-expect-error
+    return <BaseStatusFilter statusFilters={stoWithdrawalStatusFilter} />
+  }
+
   if (category === 'otc-trades') {
+    // @ts-expect-error
     return <BaseStatusFilter statusFilters={otcTradesStatusFilter} />
   }
 
@@ -171,6 +178,12 @@ interface DeploymentStatusFilterItemType {
   icon: SvgIconComponent
   title: string
   value: DeploymentStatus
+}
+
+interface STOWithdrawalStatusFilterItemType {
+  icon: SvgIconComponent
+  title: string
+  value: STOWithdrawalStatus
 }
 
 interface OtcTradesStatusFilterItemType {
@@ -275,5 +288,24 @@ export const otcTradesStatusFilter: OtcTradesStatusFilterItemType[] = [
     icon: UnauthorizedIcon,
     value: 'REJECTED',
     title: 'Rejected'
+  }
+]
+
+export const stoWithdrawalStatusFilter: STOWithdrawalStatusFilterItemType[] = [
+  // @ts-expect-error
+  ...allFilter,
+  // @ts-expect-error
+  ...statusFilters,
+  {
+    icon: RejectedIcon,
+    // @ts-expect-error
+    value: 'Error',
+    title: 'Error'
+  },
+  {
+    icon: RejectedIcon,
+    // @ts-expect-error
+    value: 'Success',
+    title: 'Success'
   }
 ]
