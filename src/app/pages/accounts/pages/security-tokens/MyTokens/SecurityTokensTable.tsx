@@ -2,18 +2,19 @@ import React from 'react'
 import { Grid } from '@mui/material'
 // import { useGetCustody } from 'app/pages/accounts/hooks/useGetCustody'
 // import { custodyColumns } from 'app/pages/accounts/pages/digitalSecurities/DSList/columns'
-import { columns } from 'app/pages/accounts/pages/security-tokens/DSList/columns'
+import { columns } from 'app/pages/accounts/pages/security-tokens/MyTokens/columns'
 // import { TableView } from 'components/TableWithPagination/TableView'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { BaseFilters } from 'app/components/BaseFilters/BaseFilters'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { accountsURL } from 'config/apiURL'
+import { ledgerQueryKeys } from 'config/queryKeys'
 import { ExportButton } from 'ui/ExportButton/ExportButton'
 
-export const CustodyList = ({
+export const SecurityTokensTable = ({
   hasTopBorder = true
 }: {
-  hasTopBorder: boolean
+  hasTopBorder?: boolean
 }) => {
   //   const { data, isLoading } = useGetCustody()
   const { getFilterValue } = useQueryFilter()
@@ -41,7 +42,8 @@ export const CustodyList = ({
           // fakeItems={data}
           // fakeLoading={isLoading}
           uri={accountsURL.ledger.getTokenHoldings}
-          name={'currentTokenHoldings'}
+          //   name={'currentTokenHoldings'}
+          name={ledgerQueryKeys.getTokenHoldings}
           columns={columns}
           // queryEnabled={false}
           paperProps={{
@@ -52,6 +54,7 @@ export const CustodyList = ({
           filter={filter}
           exportFileName='Current Holdings'
           exportButtonId={exportButtonId}
+          //   noDataComponent={<></>}
         />
       </Grid>
     </Grid>
