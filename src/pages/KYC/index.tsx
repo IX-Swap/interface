@@ -27,6 +27,7 @@ import { ReactComponent as CopyIcon } from '../../assets/images/newCopyIcon.svg'
 import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
+import { EmailVerification } from './EmailVerifyModal'
 
 interface DescriptionProps {
   description: string | null
@@ -89,6 +90,7 @@ const KYC = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
   const { config } = useWhitelabelState()
   const { kyc, loadingRequest } = useKYCState()
+  const [isModalOpen, handleIsModalOpen] = useState(false)
 
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
@@ -118,6 +120,16 @@ const KYC = () => {
     }
   }, [pendingSign, status, description, kyc])
 
+  const openModal = () => {
+    console.log('Opening modal')
+    handleIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    console.log('Closing modal')
+    handleIsModalOpen(false)
+  }
+
   const getKYCDescription = useCallback(() => {
     switch (status) {
       case KYCStatuses.NOT_SUBMITTED:
@@ -131,10 +143,12 @@ const KYC = () => {
               sx={{ gap: '1rem', marginTop: '40px' }}
             >
               <Flex
+                onClick={openModal}
                 sx={{
                   border: '1px solid #E6E6FF',
                   marginBottom: isMobile ? '32px' : '0px',
                   padding: isMobile ? '40px 45px' : '55px 90px',
+                  cursor: 'pointer',
                 }}
                 flexDirection="column"
                 alignItems="center"
@@ -152,18 +166,18 @@ const KYC = () => {
                   >
                     <Trans>Pass KYC as Individual</Trans>
                   </Text>
-                  <Link
+                  {/* <Link
                     style={{ textDecoration: 'none' }}
                     to={
                       new URL(window.location.href).href?.split('=')[1]
                         ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
                         : '/kyc/individual'
                     }
-                  >
-                    <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
-                      <Trans>Start Now</Trans>
-                    </Text>
-                  </Link>
+                  > */}
+                  <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
+                    <Trans>Start Now</Trans>
+                  </Text>
+                  {/* </Link> */}
                 </>
               </Flex>
 
@@ -309,6 +323,7 @@ const KYC = () => {
 
   return (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
+      <EmailVerification isModalOpen={isModalOpen} closeModal={closeModal} />
       <StatusCard>
         {loadingRequest || loading ? (
           <RowCenter>
