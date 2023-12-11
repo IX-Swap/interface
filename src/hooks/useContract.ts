@@ -50,7 +50,7 @@ export function useContract<T extends Contract = Contract>(
   ABI: any,
   withSignerIfPossible = true
 ): T | null {
-  const { library, account, chainId } = useActiveWeb3React()
+  const { provider: library, account, chainId } = useActiveWeb3React()
 
   return useMemo(
     () => getContractInstance({ addressOrAddressMap, ABI, withSignerIfPossible, library, chainId, account }),
@@ -84,7 +84,8 @@ export function getContractInstance({
   }
   if (!address) return null
   try {
-    return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
+    const contract = getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
+    return contract
   } catch (error) {
     console.error('Failed to get contract', error)
     return null

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ArrowDown, ChevronDown } from 'react-feather'
@@ -8,19 +8,20 @@ import { InvestTextField } from './InvestTextField'
 
 import { useActiveWeb3React } from 'hooks/web3'
 import { Option, useTokensList } from 'hooks/useTokensList'
-import { useCurrency } from 'hooks/Tokens'
+import { useAllTokens, useCurrency } from 'hooks/Tokens'
 
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useFormatOfferValue, useDerivedBalanceInfo } from 'state/launchpad/hooks'
 import { text35 } from 'components/LaunchpadMisc/typography'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { Currency } from '@ixswap1/sdk-core'
+import { Currency, Token } from '@ixswap1/sdk-core'
 import Loader from 'components/Loader'
 import { RowBetween } from 'components/Row'
 import { InvestFormSubmitButton } from './InvestSubmitButton'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { KycLightDocPreviewModal } from 'components/KycLightDocPreviewModal'
 import { BuyModal } from '../BuyModal'
+import { Web3Helpers } from '../../../../helpers/web3/web3'
 
 interface Props {
   offer: Offer
@@ -53,38 +54,55 @@ const getTokenInfo = (address: string, symbol: string, currency: Currency | null
   } as TokenOption
 }
 
-export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
-  const { account } = useActiveWeb3React()
-  const inputCurrency = useCurrency(offer.investingTokenAddress)
-  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
-  const isSufficientBalance = useDerivedBalanceInfo(offer.id)
-
-  const getWarning = (value: string, availableToInvest?: number) => {
-    const isPresale = offer.status !== OfferStatus.sale
-    const realValue = value ? Number(value.replace(/,/g, '')) : 0
-    const min = isPresale ? offer.presaleMinInvestment : offer.minInvestment
-    const max = isPresale ? offer.presaleMaxInvestment : offer.maxInvestment
-    const total = isPresale ? offer.presaleAlocated : offer.hardCap
-    const available = +total - offer.totalInvestment
-
-    const isInsufficientBalance = isCheckBalance ? !isSufficientBalance(value, inputCurrency, balance) : false
-    let warning = ''
-    if (value === '') {
-      warning = ''
-    } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
-      warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
-    } else if (Number(min) > realValue) {
-      warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
-    } else if (Number(max) < realValue) {
-      warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
-    } else if (available < realValue) {
-      warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
-    } else if (isInsufficientBalance) {
-      warning = `Insufficient ${offer.investingTokenSymbol} balance`
-    }
-    return warning
+export const useGetWarning = (
+  offer: Offer,
+  isCheckBalance = false,
+  tokenOption: TokenOption = {
+    name: '',
+    address: '',
+    icon: <a></a>,
   }
+) => {
+  const { account, accounts, provider } = useActiveWeb3React()
+  const tokens = useAllTokens()
+  // const inputCurrency = useCurrency(offer.investingTokenAddress)
+  // const inputCurrency = new Token(1, tokenOption.address, 0)
+  // const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
+  // const isSufficientBalance = useDerivedBalanceInfo(offer.id)
+  const [balance, setBalance] = useState<number>(0)
+  // provider.getBalance(account).then((bal: number) => setBalance(bal))
+  const web3Helper = new Web3Helpers()
+  web3Helper.getTokenBalance(tokenOption.address, account).then((bal: number) => setBalance(bal))
 
+  const getWarning = useCallback(
+    (value: string, availableToInvest?: number) => {
+      const isPresale = offer.status !== OfferStatus.sale
+      const realValue = value ? Number(value.replace(/,/g, '')) : 0
+      const min = isPresale ? offer.presaleMinInvestment : offer.minInvestment
+      const max = isPresale ? offer.presaleMaxInvestment : offer.maxInvestment
+      const total = isPresale ? offer.presaleAlocated : offer.hardCap
+      const available = +total - offer.totalInvestment
+
+      // const isInsufficientBalance = isCheckBalance ? !isSufficientBalance(value, inputCurrency, balance) : false
+      const isInsufficientBalance = isCheckBalance ? balance < +value : false
+      let warning = ''
+      if (value === '') {
+        warning = ''
+      } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
+        warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
+      } else if (Number(min) > realValue) {
+        warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
+      } else if (Number(max) < realValue) {
+        warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
+      } else if (available < realValue) {
+        warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
+      } else if (isInsufficientBalance) {
+        warning = `Insufficient ${offer.investingTokenSymbol} balance`
+      }
+      return warning
+    },
+    [balance]
+  )
   return getWarning
 }
 
@@ -103,7 +121,6 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
-  const getWarning = useGetWarning(props.offer, true)
   const formatedValue = useFormatOfferValue()
   const insufficientWarning = `Insufficient ${investingTokenSymbol} balance`
 
@@ -153,6 +170,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
     () => getTokenInfo(investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens),
     [investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens]
   )
+  const getWarning = useGetWarning(props.offer, true, offerInvestmentToken)
 
   const openModal = () => {
     setPreviewModal(true)
