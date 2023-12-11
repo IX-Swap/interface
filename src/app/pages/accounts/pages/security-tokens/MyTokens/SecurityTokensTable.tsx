@@ -8,6 +8,7 @@ import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { BaseFilters } from 'app/components/BaseFilters/BaseFilters'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { accountsURL } from 'config/apiURL'
+import { ledgerQueryKeys } from 'config/queryKeys'
 import { ExportButton } from 'ui/ExportButton/ExportButton'
 
 export const SecurityTokensTable = ({
@@ -41,7 +42,8 @@ export const SecurityTokensTable = ({
           // fakeItems={data}
           // fakeLoading={isLoading}
           uri={accountsURL.ledger.getTokenHoldings}
-          name={'currentTokenHoldings'}
+          //   name={'currentTokenHoldings'}
+          name={ledgerQueryKeys.getTokenHoldings}
           columns={columns}
           // queryEnabled={false}
           paperProps={{
@@ -52,6 +54,7 @@ export const SecurityTokensTable = ({
           filter={filter}
           exportFileName='Current Holdings'
           exportButtonId={exportButtonId}
+          //   noDataComponent={<></>}
         />
       </Grid>
     </Grid>

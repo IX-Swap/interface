@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react'
-import { Grid, Link, MenuItem } from '@mui/material'
+import { Box, Grid, Link, MenuItem } from '@mui/material'
 import draftToHtml from 'draftjs-to-html'
 import pdfIcon from 'assets/icons/documents/pdf2.svg'
 import docxIcon from 'assets/icons/documents/docx.svg'
 import txtIcon from 'assets/icons/documents/txt.svg'
 import unknownIcon from 'assets/icons/documents/unknown.svg'
 import { WalletAddress } from 'app/components/WalletAddress'
+import { TransactionHash } from 'app/components/TransactionHash'
 import { DSOFavorite } from 'app/components/DSOFavorite'
 import { DigitalSecurityOffering } from 'types/dso'
 import { formatMoney } from './numbers'
@@ -22,6 +23,8 @@ import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { JsxElement } from 'typescript'
+import { Status } from 'ui/Status/Status'
+import { Tooltip } from 'ui/Tooltip/Tooltip'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -66,7 +69,41 @@ export const renderDSOFavorite = (
 export const renderAddressColumn = (
   address: string,
   enableCopy: boolean = true
-): JSX.Element => <WalletAddress address={address} enableCopy={enableCopy} />
+): JSX.Element => (
+  <>
+    {address !== undefined && (
+      <WalletAddress address={address} enableCopy={enableCopy} />
+    )}
+  </>
+)
+
+export const renderTransactionHash = (
+  txHash: string,
+  txHashLink: string,
+  enableCopy: boolean = true
+): JSX.Element => (
+  <TransactionHash
+    txHash={txHash}
+    txHashLink={txHashLink}
+    enableCopy={enableCopy}
+  />
+)
+
+export const renderStatus = (status: string, row: any) => {
+  const type = status.toLowerCase()
+
+  return (
+    <Box display={'flex'} gap={1} alignItems={'center'}>
+      <Status label={status} type={type} />
+      {type === 'error' && (
+        <Tooltip
+          title={row?.failedReason ?? 'Unknown reason'}
+          placement='bottom'
+        />
+      )}
+    </Box>
+  )
+}
 
 export const wysiwygToHtml = (draft: string): string => {
   return draftToHtml(JSON.parse(sanitize(draft)))

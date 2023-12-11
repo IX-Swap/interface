@@ -1,17 +1,16 @@
 import React from 'react'
-// import { TableView } from 'components/TableWithPagination/TableView'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { Grid } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { columns } from 'app/pages/accounts/components/TradeHistoryTable/columns'
-// import { Filters } from 'app/pages/accounts/components/TradeHistoryTable/Filter'
-import { useAuth } from 'hooks/auth/useAuth'
-import { getIdFromObj } from 'helpers/strings'
-import { exchange as exchangeUrl } from 'config/apiURL'
-import { exchange as exchangeQueryKeys } from 'config/queryKeys'
-import { PairFilter } from 'app/pages/accounts/components/TradeHistoryTable/PairFilter'
+import { columns } from './columns'
+import { accountsURL } from 'config/apiURL'
+import { securityToken as stoQueryKeys } from 'config/queryKeys'
+import { DepositStatusFilter } from './DepositStatusFilter'
 import { BaseFilters } from 'app/components/BaseFilters/BaseFilters'
 import { ExportButton } from 'ui/ExportButton/ExportButton'
+import { useExportDeposits } from 'hooks/securityToken/useExportDeposits'
+import { useAppState } from 'app/hooks/useAppState'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 export interface Deposit {
   date: string
@@ -25,45 +24,67 @@ export interface Deposit {
 }
 
 export const DepositsTable = () => {
-  const { user } = useAuth()
-  const userId = getIdFromObj(user)
+  const { tableHasData } = useAppState()
+  const queryKey = stoQueryKeys.getDeposits
+  const depositsTable = tableHasData.find(table => table.tableName === queryKey)
+  const hasData = depositsTable !== undefined ? depositsTable.status : false
+
+  console.log(tableHasData)
+
   const { getFilterValue } = useQueryFilter()
 
+  const search = getFilterValue('searchTransactions')
+  const startDate = getFilterValue('fromDate')
+  const endDate = getFilterValue('toDate')
+  const status = getFilterValue('status')
+
   const filter = {
-    search: getFilterValue('search'),
-    to: getFilterValue('toDate'),
-    from: getFilterValue('fromDate'),
-    pair: getFilterValue('pair'),
-    orderType: 'PAST'
+    search,
+    from: startDate,
+    to: endDate,
+    status
   }
-  const exportButtonId = 'exportTradeHistory'
+
+  const { refetch } = useExportDeposits(
+    0,
+    500,
+    startDate,
+    endDate,
+    search,
+    status
+  )
 
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
-        <BaseFilters>
+        <BaseFilters
+          searchFilterValue='searchTransactions'
+          fullWidthSearch
+          showDateLabels
+        >
           <Grid item xs>
-            <PairFilter />
+            <InputLabel>Status</InputLabel>
+            <DepositStatusFilter />
           </Grid>
-          <Grid item xs>
-            <ExportButton
-              fullWidth
-              onClick={() => {
-                document.getElementById(exportButtonId)?.click()
-              }}
-            />
-          </Grid>
+          {hasData && (
+            <Grid item xs={2} display={'flex'} alignItems={'end'}>
+              <ExportButton
+                fullWidth
+                onClick={async () => {
+                  await refetch()
+                }}
+              />
+            </Grid>
+          )}
         </BaseFilters>
       </Grid>
       <Grid item>
-        <TableView<TradeHistory>
-          uri={exchangeUrl.userOrders(userId)}
-          name={exchangeQueryKeys.userOrders(userId)}
+        <TableView<Deposit>
+          uri={accountsURL.securityToken.getDeposits}
+          name={queryKey}
           columns={columns}
           filter={filter}
           paperProps={{ variant: 'elevation', elevation: 0 }}
-          exportFileName='Past Orders'
-          exportButtonId={exportButtonId}
         />
       </Grid>
     </Grid>

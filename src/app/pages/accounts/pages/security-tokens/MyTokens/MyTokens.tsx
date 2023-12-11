@@ -11,16 +11,25 @@ import { FieldContainer } from 'ui/FieldContainer/FieldContainer'
 import { NoInvestments } from './NoInvestments'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { TableTabsView } from 'app/components/TableTabsView/TableTabsView'
+import { WithdrawalsTable } from './WithdrawalsTable/WithdrawalsTable'
 import { DepositsTable } from './DepositsTable/DepositsTable'
 import { VSpacer } from 'components/VSpacer'
+import { ledgerQueryKeys } from 'config/queryKeys'
 
 export const MyTokens: React.FC = () => {
   const { tableHasData } = useAppState()
+  const queryKey = ledgerQueryKeys.getTokenHoldings
+  const myTokensTable = tableHasData.find(table => table.tableName === queryKey)
+  const hasData = myTokensTable !== undefined ? myTokensTable.status : false
   const { removeFilters } = useQueryFilter()
+
+  const handleChange = (event: object, value: any) => {
+    removeFilters(['search', 'toDate', 'fromDate', 'status'])
+  }
 
   const tabs = [
     {
-      panel: <DepositsTable />,
+      panel: <WithdrawalsTable />,
       label: 'Withdraw'
     },
     {
@@ -28,10 +37,6 @@ export const MyTokens: React.FC = () => {
       label: 'Deposit'
     }
   ]
-
-  const handleChange = (event: object, value: any) => {
-    removeFilters(['search', 'toDate', 'fromDate', 'status'])
-  }
 
   return (
     <Grid container spacing={3} style={{ display: 'table' }}>
@@ -58,7 +63,7 @@ export const MyTokens: React.FC = () => {
                 </Button>
               </Grid>
 
-              {tableHasData && (
+              {hasData && (
                 <Grid item>
                   <Button
                     component={AppRouterLinkComponent}
@@ -77,15 +82,16 @@ export const MyTokens: React.FC = () => {
       <RootContainer padding={0}>
         <Grid item xs={12} mt={2} ml={1.5}>
           {/* <DSTabs /> */}
-          {tableHasData ? (
+          <SecurityTokensTable hasTopBorder={false} />
+          {hasData ? (
             <>
-              <SecurityTokensTable hasTopBorder={false} />
               <VSpacer size='medium'></VSpacer>
               <TableTabsView
                 tabs={tabs}
                 onChange={handleChange}
                 variant='tabsOnly'
               />
+              <VSpacer size='medium'></VSpacer>
             </>
           ) : (
             <FieldContainer>
