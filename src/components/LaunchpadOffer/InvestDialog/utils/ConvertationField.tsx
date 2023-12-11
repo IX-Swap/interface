@@ -63,14 +63,8 @@ export const useGetWarning = (
     icon: <a></a>,
   }
 ) => {
-  const { account, accounts, provider } = useActiveWeb3React()
-  const tokens = useAllTokens()
-  // const inputCurrency = useCurrency(offer.investingTokenAddress)
-  // const inputCurrency = new Token(1, tokenOption.address, 0)
-  // const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
-  // const isSufficientBalance = useDerivedBalanceInfo(offer.id)
+  const { account } = useActiveWeb3React()
   const [balance, setBalance] = useState<number>(0)
-  // provider.getBalance(account).then((bal: number) => setBalance(bal))
   const web3Helper = new Web3Helpers()
   web3Helper.getTokenBalance(tokenOption.address, account).then((bal: number) => setBalance(bal))
 
@@ -83,7 +77,6 @@ export const useGetWarning = (
       const total = isPresale ? offer.presaleAlocated : offer.hardCap
       const available = +total - offer.totalInvestment
 
-      // const isInsufficientBalance = isCheckBalance ? !isSufficientBalance(value, inputCurrency, balance) : false
       const isInsufficientBalance = isCheckBalance ? balance < +value : false
       let warning = ''
       if (value === '') {
