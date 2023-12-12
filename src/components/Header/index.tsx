@@ -277,10 +277,10 @@ export default function Header() {
         <HeaderWrapper>
           {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
-            <HeaderRow marginLeft={100}>
+            <HeaderRow marginLeft={50}>
               <Title href={config?.defaultUrl || '.'}>
                 <IXSIcon>
-                  <NewLogo width="auto" height="47px" {...config?.customStyles?.logo} />
+                  <NewLogo width="130px" height="47px" {...config?.customStyles?.logo} />
                 </IXSIcon>
               </Title>
             </HeaderRow>
