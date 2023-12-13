@@ -27,6 +27,7 @@ import { ReactComponent as CopyIcon } from '../../assets/images/newCopyIcon.svg'
 import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
+import { EmailVerification } from './EmailVerifyModal'
 
 interface DescriptionProps {
   description: string | null
@@ -89,11 +90,17 @@ const KYC = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
   const { config } = useWhitelabelState()
   const { kyc, loadingRequest } = useKYCState()
-
+  const [isModalOpen, handleIsModalOpen] = useState(false)
+  const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false })
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
   const [referralCode, setReferralCode] = useState<string | null>('')
   const getMe = useGetMe()
+
+  interface ModalProps {
+    isModalOpen: boolean
+    kycType?: string
+  }
   const fetchMe = useCallback(async () => {
     const result = await getMe()
     setReferralCode(result?.referralCode)
@@ -118,6 +125,20 @@ const KYC = () => {
     }
   }, [pendingSign, status, description, kyc])
 
+  const openModal = (kycType: string) => {
+    console.log('Opening modal for', kycType)
+    // Pass additional props based on the selected KYC type
+    setModalProps({
+      isModalOpen: true,
+      kycType,
+      // Add more props as needed
+    })
+  }
+
+  const closeModal = () => {
+    console.log('Closing modal')
+    setModalProps({ isModalOpen: false })
+  }
   const getKYCDescription = useCallback(() => {
     switch (status) {
       case KYCStatuses.NOT_SUBMITTED:
@@ -131,10 +152,12 @@ const KYC = () => {
               sx={{ gap: '1rem', marginTop: '40px' }}
             >
               <Flex
+                onClick={() => openModal('individual')}
                 sx={{
                   border: '1px solid #E6E6FF',
                   marginBottom: isMobile ? '32px' : '0px',
                   padding: isMobile ? '40px 45px' : '55px 90px',
+                  cursor: 'pointer',
                 }}
                 flexDirection="column"
                 alignItems="center"
@@ -152,22 +175,23 @@ const KYC = () => {
                   >
                     <Trans>Pass KYC as Individual</Trans>
                   </Text>
-                  <Link
+                  {/* <Link
                     style={{ textDecoration: 'none' }}
                     to={
                       new URL(window.location.href).href?.split('=')[1]
                         ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
                         : '/kyc/individual'
                     }
-                  >
-                    <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
-                      <Trans>Start Now</Trans>
-                    </Text>
-                  </Link>
+                  > */}
+                  <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
+                    <Trans>Start Now</Trans>
+                  </Text>
+                  {/* </Link> */}
                 </>
               </Flex>
 
               <Flex
+                onClick={() => openModal('corporate')}
                 sx={{
                   border: '1px solid #E6E6FF',
                   padding: isMobile ? '40px 40px' : '50px 90px',
@@ -309,6 +333,7 @@ const KYC = () => {
 
   return (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
+      <EmailVerification {...modalProps} closeModal={closeModal} />
       <StatusCard>
         {loadingRequest || loading ? (
           <RowCenter>
