@@ -16,7 +16,7 @@ const formattedTypes = {
   address: t`Proof of Address`,
   selfie: t`Selfie`,
   accreditation: t`Evidence of Accreditation`,
-  financial: t`Financial Documents`,
+  financial: t`Additional Documents`,
   authorization: t`Authorization document`,
   corporate: t`Corporate documents`,
 } as Record<string, string>
