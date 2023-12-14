@@ -1151,7 +1151,7 @@ export default function CorporateKycForm() {
                           />
 
                           <Uploader
-                            title="Financial Documents"
+                            title="Additional Documents"
                             subtitle="Please upload your balance sheet , P&L statement or Annual Returns"
                             files={values.financialDocuments}
                             onDrop={(file) => {
