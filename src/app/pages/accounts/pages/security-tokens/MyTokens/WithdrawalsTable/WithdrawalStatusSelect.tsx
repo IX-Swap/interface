@@ -5,10 +5,11 @@ import { Autocomplete } from 'ui/Select/Autocomplete/Autocomplete'
 
 export const WithdrawalStatusSelect = (props: Partial<SelectProps>) => {
   const options = [
-    {
-      label: 'Draft',
-      value: 'Draft'
-    },
+    // * Removing Draft as per https://investax.atlassian.net/browse/IPD1-1798
+    // {
+    //   label: 'Draft',
+    //   value: 'Draft'
+    // },
     {
       label: 'Submitted',
       value: 'Submitted'
