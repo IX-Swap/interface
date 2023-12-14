@@ -70,14 +70,14 @@ export const getCorporateProgress = async () => {
   }
 }
 
-export const  useEmailVerify = () => {
+export const useEmailVerify = () => {
   return React.useCallback(
     async (email: string, identity: string) => {
       try {
         const response = await apiService.post(`/kyc/registerEmail`, { email, identity });
         console.log(response);
         return { success: true, response }; // Return success and response
-      } catch (error) {
+      } catch (error: any) {
         // Handle errors here
         console.error(error);
         return { success: false, error };
@@ -95,7 +95,7 @@ export const useEmailVerifyCode = () => {
         const response = await apiService.put(`/kyc/verifyEmail`, { code });
         console.log(response);
         return { success: true, response }; // Return success and response
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
         return { success: false, error }; // Return failure and error
       }

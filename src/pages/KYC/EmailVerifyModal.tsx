@@ -109,7 +109,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
               setStep(2);
             } else {
               // Handle the case when verification is not successful
-              addPopup({ info: { success: false, summary: 'Email verification failed' } });
+              addPopup({ info: { success: false, summary: result?.error?.message || 'Email verification failed' } });
             }
           }
         } else if (step === 2) {
