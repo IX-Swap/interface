@@ -1,6 +1,6 @@
 import React from 'react'
 import { Deposit } from 'app/pages/accounts/pages/security-tokens/Deposit/Deposit'
-import { DSList } from 'app/pages/accounts/pages/security-tokens/DSList/DSList'
+import { MyTokens } from 'app/pages/accounts/pages/security-tokens/MyTokens/MyTokens'
 import { DSRoute } from 'app/pages/accounts/pages/security-tokens/router/config'
 import { Switch } from 'react-router-dom'
 import { AppRoute } from 'components/AppRoute'
@@ -18,7 +18,7 @@ export const DigitalSecuritiesRouter = () => {
       </AppRoute>
 
       <AppRoute path={DSRoute.list}>
-        <DSList />
+        <MyTokens />
       </AppRoute>
     </Switch>
   )

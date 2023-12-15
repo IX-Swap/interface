@@ -39,6 +39,7 @@ export const useStyles = makeStyles(theme => {
       case 'completed-confirmed':
         return theme.palette.info.light
       case 'success':
+      case 'completed':
       case 'passed':
         return '#4C88FF'
       case 'completed-settled':
@@ -81,6 +82,7 @@ export const useStyles = makeStyles(theme => {
       case 'completed-confirmed':
         return theme.palette.info.dark
       case 'success':
+      case 'completed':
       case 'passed':
         return '#4C88FF20'
 

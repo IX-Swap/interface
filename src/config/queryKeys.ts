@@ -206,7 +206,8 @@ export const issuanceQueryKeys = {
 
 export const ledgerQueryKeys = {
   getTokenTransactions: 'token-transactions',
-  exportTokenTransactions: 'export-token-transactions'
+  exportTokenTransactions: 'export-token-transactions',
+  getTokenHoldings: 'token-holdings'
 }
 
 export const virtualAccountQueryKeys = {
@@ -266,6 +267,13 @@ export const tradingQueryKeys = {
 export const listingsQueryKeys = {
   getListingsList: 'listings-list',
   getCombinedList: 'listings-combined-list'
+}
+
+export const securityToken = {
+  getDeposits: 'security-token-deposits',
+  exportDeposits: 'export-security-token-deposits',
+  getWithdrawals: 'security-token-withdrawals',
+  exportWithdrawals: 'export-security-token-withdrawals'
 }
 
 export const exchangeListingsQueryKeys = {

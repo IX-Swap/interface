@@ -99,7 +99,11 @@ export const accountsURL = {
     // getDepositAddress: '/custody/deposits/getDepositAddress'
     getDepositAddress: (assetId: string) =>
       `/deposits/deposit-address/${assetId}`,
-    deposit: `/deposits/token`
+    deposit: `/deposits/token`,
+    getDeposits: `/accounts/security/deposit`,
+    exportDeposits: `/accounts/security/exportDeposit`,
+    getWithdrawals: `/accounts/security/withdrawal`,
+    exportWithdrawals: `/accounts/security/exportWithdrawal`
   },
   dsWithdrawals: {
     create: (userId?: string) => `/accounts/security/withdrawals/${userId}`,

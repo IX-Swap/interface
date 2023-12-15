@@ -3,14 +3,14 @@ import { DSWithdrawal } from 'types/dsWithdrawal'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { formatAmount } from 'helpers/numbers'
 import { renderAssetName, renderAssetSymbol } from 'helpers/tables'
-import { renderAddressColumn } from 'helpers/rendering'
-import { isEmpty } from 'lodash'
+import { renderAddressColumn, renderTransactionHash } from 'helpers/rendering'
 
 export const columns: Array<TableColumn<DSWithdrawal>> = [
   {
     key: 'txHash',
     label: 'Transaction Hash',
-    render: txHash => (!isEmpty(txHash) ? renderAddressColumn(txHash) : '-')
+    render: (txHash, row) =>
+      renderTransactionHash(txHash, row.txExplorerLink, true)
   },
   {
     key: 'createdAt',

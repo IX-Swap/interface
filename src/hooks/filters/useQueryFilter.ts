@@ -6,6 +6,7 @@ export interface QueryFilters {
   search: string | undefined
   searchToken: string | undefined
   searchTokenName: string | undefined
+  searchTransactions: string | undefined
   primaryOfferingSearch: string | undefined
   otcMarketSearch: string | undefined
   secondaryMarketSearch: string | undefined

@@ -33,7 +33,7 @@ export const StableCoinsTable: React.FC = () => {
         uri={virtualAccounts.getByUserId(getIdFromObj(user), 'Stablecoin')}
         name={balanceQueryKeys.getByUserId(getIdFromObj(user))}
         filter={{ type: 'Stablecoin' }}
-        columns={columns}
+        columns={columns.slice(0, -1)}
         actions={Actions}
         method='GET'
         actionHeader='Actions'
@@ -45,7 +45,7 @@ export const StableCoinsTable: React.FC = () => {
           ? (props: TableViewRendererProps<ConvertedAssetBalance>) => (
               <CompactTable
                 {...props}
-                columns={compactColumns}
+                columns={compactColumns.slice(0, -1)}
                 renderActionButton={renderActionButton}
                 menu={
                   <MobileMenu

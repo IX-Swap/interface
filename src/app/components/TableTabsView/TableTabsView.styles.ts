@@ -9,7 +9,8 @@ export default makeStyles(theme => {
     },
     tabsOnly: {
       backgroundColor: theme.palette.backgrounds.light,
-      borderRadius: '10px',
+      borderTopLeftRadius: '10px',
+      borderTopRightRadius: '10px',
       marginLeft: 0
     },
     secondary: {
