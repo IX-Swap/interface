@@ -76,6 +76,8 @@ export const DepositFormFields: React.FC = () => {
       try {
         setIsLoading(true)
 
+        console.log('network', network)
+
         const provider = new ethers.providers.JsonRpcProvider(
           network?.rpcEndpoint
         )
@@ -86,7 +88,18 @@ export const DepositFormFields: React.FC = () => {
         )
 
         const balance = await tokenContract.balanceOf(account)
-        setTokenBalance(ethers.utils.formatUnits(balance, 'ether'))
+        const tokenBalance = ethers.utils.formatUnits(
+          balance,
+          tokenType === 'Security' ? 'ether' : 'mwei'
+          //   tokenType === 'Security' ? 'ether' : 18
+          //   'ether'
+        )
+
+        // const tokenBalance =
+        //   tokenType === 'Security'
+        //     ? ethers.utils.formatUnits(balance, 'ether')
+        //     : balance
+        setTokenBalance(tokenBalance)
 
         setIsLoading(false)
 
@@ -118,7 +131,9 @@ export const DepositFormFields: React.FC = () => {
 
       const tx = await tokenContract.transfer(
         depositAddress,
-        ethers.utils.parseEther(depositAmount),
+        tokenType === 'Security'
+          ? ethers.utils.parseEther(depositAmount)
+          : ethers.utils.parseUnits(depositAmount, 'mwei'),
         { gasLimit: 5000000 }
       )
       const deposit = await tx.wait()
