@@ -1,7 +1,7 @@
 import { Box, Grid, Paper, Typography } from '@mui/material'
 import { BackLink } from 'app/components/BackLink/BackLink'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { CurrencySelect } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect'
+// import { CurrencySelect } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect'
 import { VirtualAccountCashDeposit } from 'app/pages/accounts/components/VirtualAccountCashDeposit/VirtualAccountCashDeposit'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
@@ -14,11 +14,16 @@ export const Deposit = () => {
   const { isMiniLaptop, isTablet } = useAppBreakpoints()
   const subtitle = 'Bank charges may apply and will be borne by the clients'
   const accountFromFilter = getFilterValue('account')
-  const [virtualAccountId, setVirtualAccountId] = useState<string | undefined>(
-    accountFromFilter
-  )
+  const [
+    virtualAccountId
+    // setVirtualAccountId
+  ] = useState<string | undefined>(accountFromFilter)
 
-  const { data, list, isLoading } = useVirtualAccount(virtualAccountId)
+  const {
+    data,
+    // list,
+    isLoading
+  } = useVirtualAccount(virtualAccountId)
 
   return (
     <Grid container direction='column' spacing={1} paddingBottom={3}>
@@ -56,7 +61,8 @@ export const Deposit = () => {
               <Box
                 sx={{
                   px: { xs: 3, sm: 5 },
-                  paddingTop: { xs: 3, sm: 5 }
+                  //   paddingTop: { xs: 3, sm: 5 }
+                  paddingTop: { xs: 3, sm: 0 }
                 }}
               >
                 {isMiniLaptop && (
@@ -68,11 +74,11 @@ export const Deposit = () => {
                     {subtitle}
                   </Typography>
                 )}
-                <CurrencySelect
+                {/* <CurrencySelect
                   accounts={list}
                   defaultValue={accountFromFilter}
                   onButtonClick={setVirtualAccountId}
-                />
+                /> */}
               </Box>
               <VirtualAccountCashDeposit virtualAccountDetails={data} />
             </Paper>

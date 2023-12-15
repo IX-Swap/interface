@@ -20,7 +20,8 @@ export const NoCashButtons = () => {
   const [assignVirtualAccount, { isLoading: loadingAssign }] =
     useAssignVirtualAccount(handleClose)
 
-  if (items?.length > 1 || isLoading) {
+  //   if (items?.length > 1 || isLoading) {
+  if (items?.length > 0 || isLoading) {
     return null
   }
   const necessaryAccounts: Array<'SGD' | 'USD'> = ['SGD', 'USD']
