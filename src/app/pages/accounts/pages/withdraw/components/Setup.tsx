@@ -1,5 +1,5 @@
 import { Box, Grid, Paper, Typography } from '@mui/material'
-import { CurrencySelect } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect'
+// import { CurrencySelect } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect'
 import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
@@ -30,7 +30,7 @@ export const Setup: React.FC = () => {
   const virtualAccountId = getFilterValue('account')
   const {
     data: virtualAccountData,
-    list,
+    // list,
     isLoading: virtualAccountLoading
   } = useVirtualAccount(virtualAccountId)
 
@@ -82,9 +82,9 @@ export const Setup: React.FC = () => {
   return (
     <Box className={container}>
       <Paper sx={{ width: '100%' }}>
-        <Box sx={{ px: { xs: 3, md: 5 }, paddingTop: 5 }}>
+        {/* <Box sx={{ px: { xs: 3, md: 5 }, paddingTop: 5 }}>
           <CurrencySelect accounts={list} />
-        </Box>
+        </Box> */}
         <div className={separator} />
         <Grid container direction='column'>
           <Grid item>
