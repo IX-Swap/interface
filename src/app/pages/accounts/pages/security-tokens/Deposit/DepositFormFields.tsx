@@ -19,6 +19,7 @@ import { useSnackbar } from 'hooks/useSnackbar'
 import { useDepositSTO } from 'app/pages/accounts/hooks/useDepositSTO'
 import { ClearFormDialog } from '../ClearFormDialog'
 import { ConfirmDepositDialog } from './ConfirmDepositDialog'
+import { TokenType } from '../TokenType/TokenType'
 
 export const DepositFormFields: React.FC = () => {
   const [clearFormConfirmationVisible, setClearFormConfirmationVisible] =
@@ -31,6 +32,7 @@ export const DepositFormFields: React.FC = () => {
     useWalletAddresses()
   const [depositSTO] = useDepositSTO()
   const { watch, reset } = useFormContext()
+  const tokenType = watch('tokenType')
   const token = watch('token')
   const tokenAddress = token?.tokenAddress
   const [tokenBalance, setTokenBalance] = useState('0')
@@ -74,6 +76,8 @@ export const DepositFormFields: React.FC = () => {
       try {
         setIsLoading(true)
 
+        console.log('network', network)
+
         const provider = new ethers.providers.JsonRpcProvider(
           network?.rpcEndpoint
         )
@@ -84,7 +88,18 @@ export const DepositFormFields: React.FC = () => {
         )
 
         const balance = await tokenContract.balanceOf(account)
-        setTokenBalance(ethers.utils.formatUnits(balance, 'ether'))
+        const tokenBalance = ethers.utils.formatUnits(
+          balance,
+          tokenType === 'Security' ? 'ether' : 'mwei'
+          //   tokenType === 'Security' ? 'ether' : 18
+          //   'ether'
+        )
+
+        // const tokenBalance =
+        //   tokenType === 'Security'
+        //     ? ethers.utils.formatUnits(balance, 'ether')
+        //     : balance
+        setTokenBalance(tokenBalance)
 
         setIsLoading(false)
 
@@ -116,7 +131,9 @@ export const DepositFormFields: React.FC = () => {
 
       const tx = await tokenContract.transfer(
         depositAddress,
-        ethers.utils.parseEther(depositAmount),
+        tokenType === 'Security'
+          ? ethers.utils.parseEther(depositAmount)
+          : ethers.utils.parseUnits(depositAmount, 'mwei'),
         { gasLimit: 5000000 }
       )
       const deposit = await tx.wait()
@@ -124,6 +141,7 @@ export const DepositFormFields: React.FC = () => {
       await depositSTO({
         from: walletAddress,
         to: depositAddress,
+        type: tokenType,
         amount: depositAmount,
         assetId: token?._id,
         txHash: deposit.transactionHash
@@ -143,6 +161,8 @@ export const DepositFormFields: React.FC = () => {
     <>
       {(isFetchingAddresses || isLoading) && <LoadingIndicator />}
       <Box display={'flex'} flexDirection={'column'} gap={3}>
+        <TokenType />
+
         <SecurityToken />
 
         {hasSelectedToken && (

@@ -9,7 +9,7 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
 export const TokenHoldingsSelect = React.forwardRef((props: SelectProps) => {
-  const { data, isLoading } = useGetTokenHoldings()
+  const { data, isLoading } = useGetTokenHoldings(props.type ?? 'Security')
 
   const hasTokens = !isLoading && data !== undefined && data.length > 1
   const options = !hasTokens
@@ -28,15 +28,18 @@ export const TokenHoldingsSelect = React.forwardRef((props: SelectProps) => {
 
   return (
     <FormControl fullWidth variant='outlined'>
-      <InputLabel>Security Token</InputLabel>
+      <InputLabel>{props.label ?? 'Select Security Token'}</InputLabel>
 
       <Box display={'flex'} gap={2}>
         <Autocomplete
           {...props}
           placeholder={
             hasTokens
-              ? 'Select Security Token'
-              : 'You do not have a security token'
+              ? // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-base-to-string
+                `Select ${props.label ?? 'Select Security Token'}`
+              : `You do not have a ${
+                  props.type === 'Security' ? 'security token' : 'stablecoin'
+                }`
           }
           disabled={isLoading || !hasTokens}
           options={options}

@@ -7,7 +7,11 @@ import { SecurityTokenSelectItem } from 'ui/Select/SelectItem/SecurityToken/Secu
 
 export const DeployedSecurityTokenSelect = React.forwardRef(
   (props: SelectProps) => {
-    const { data, isLoading } = useAssetsData('Security', 500, true)
+    const { data, isLoading } = useAssetsData(
+      props.type ?? 'Security',
+      500,
+      true
+    )
 
     const hasTokens = !isLoading && data !== undefined && data.list.length > 0
     const options = !hasTokens
@@ -22,12 +26,15 @@ export const DeployedSecurityTokenSelect = React.forwardRef(
 
     return (
       <FormControl fullWidth variant='outlined'>
-        <InputLabel>Security Token</InputLabel>
+        <InputLabel>{props.label ?? 'Select Security Token'}</InputLabel>
 
         <Autocomplete
           {...props}
           placeholder={
-            hasTokens ? 'Select Security Token' : 'No tokens available'
+            hasTokens
+              ? // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-base-to-string
+                `Select ${props.label ?? 'Select Security Token'}`
+              : 'No tokens available'
           }
           disabled={isLoading || !hasTokens}
           options={options}

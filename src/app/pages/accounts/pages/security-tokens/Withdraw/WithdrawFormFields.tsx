@@ -7,7 +7,7 @@ import { WithdrawSecurityTokenField as SecurityToken } from 'app/pages/accounts/
 import { WithdrawTo } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawTo'
 import { WithdrawalAmount } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawalAmount'
 import { MemoField } from 'app/pages/accounts/pages/security-tokens/Withdraw/MemoField'
-import { Warning } from 'app/pages/accounts/pages/security-tokens/Withdraw/Warning'
+// import { Warning } from 'app/pages/accounts/pages/security-tokens/Withdraw/Warning'
 // import { ConfirmButton } from 'app/pages/accounts/pages/security-tokens/Withdraw/ConfirmButton'
 import { WithdrawalFee } from './WithdrawalFee'
 import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
@@ -15,19 +15,21 @@ import { ClearFormDialog } from '../ClearFormDialog'
 import { useWithdrawalFee } from 'app/pages/accounts/hooks/useWithdrawalFee'
 import { ConfirmWithdrawalDialog } from './ConfirmWithdrawalDialog'
 import { useWithdrawDS } from '../../banks/hooks/useWithdrawDS'
+import { TokenType } from '../TokenType/TokenType'
 
 export const WithdrawFormFields = () => {
   const [clearFormConfirmationVisible, setClearFormConfirmationVisible] =
     useState(false)
   const [withdrawalConfirmationVisible, setWithdrawalConfirmationVisible] =
     useState(false)
-  const { watch, reset } = useFormContext()
+  const { watch, reset, control, setValue } = useFormContext()
   const token = watch('token')
   const tokenBalance = token?.available
   const hasSelectedToken = !isEmpty(token)
   const wallet = watch('wallet')
   const hasSelectedWalletAddress = !isEmpty(wallet)
   const amount = watch('amount')
+  const fiatBalance = watch('fiatBalance')
   const fee = watch('withdrawalFee')
   const currency = watch('currency')
   const memo = watch('memo')
@@ -37,15 +39,24 @@ export const WithdrawFormFields = () => {
     data: withdrawal,
     refetch: refetchWithdrawalFee,
     isLoading: isFetchingWithdrawalFee
-  } = useWithdrawalFee(token?.asset?.network?._id)
+    //   } = useWithdrawalFee(token?.asset?.network?._id)
+  } = useWithdrawalFee(token?.asset?._id)
 
   useEffect(() => {
-    void refetchWithdrawalFee()
+    setValue('currency', withdrawal?.currency)
+    setValue('withdrawalFee', withdrawal?.withdrawalFee)
+    setValue('fiatBalance', withdrawal?.balance)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [withdrawal])
+
+  useEffect(() => {
+    if (!isEmpty(token)) void refetchWithdrawalFee()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
   const inSufficientTokenBalance = tokenBalance < amount
-  const inSufficientCurencyBalance = withdrawal?.valid !== true
+  //   const inSufficientCurencyBalance = withdrawal?.valid !== true
+  const inSufficientCurencyBalance = fiatBalance < fee
   const hasError =
     !hasSelectedToken ||
     !hasSelectedWalletAddress ||
@@ -78,25 +89,31 @@ export const WithdrawFormFields = () => {
     <>
       {(isLoading || isFetchingWithdrawalFee) && <LoadingIndicator />}
       <Box display={'flex'} flexDirection={'column'} gap={3}>
+        <TokenType />
+
         <SecurityToken />
 
         {hasSelectedToken && (
           <>
             <WithdrawTo />
 
+            <input {...control.register('fiatBalance')} hidden />
+            <input {...control.register('withdrawalFee')} hidden />
+            <input {...control.register('currency')} hidden />
+
             {hasSelectedWalletAddress && (
               <>
                 <WithdrawalAmount />
 
                 <WithdrawalFee
-                  currency={withdrawal?.data?.currency}
-                  balance={withdrawal?.data?.balance}
-                  fee={withdrawal?.data?.withdrawalFee}
+                  currency={currency}
+                  balance={fiatBalance}
+                  fee={fee}
                   inSufficientBalance={inSufficientCurencyBalance}
                 />
 
                 <MemoField />
-                <Warning />
+                {/* <Warning /> */}
 
                 <OTPInputField disabled={false} />
                 {/* <Grid item xs={12}>

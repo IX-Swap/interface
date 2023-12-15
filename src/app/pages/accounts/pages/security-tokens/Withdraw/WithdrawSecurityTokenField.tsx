@@ -5,7 +5,8 @@ import { useFormContext } from 'react-hook-form'
 import { TokenHoldingsSelect } from 'app/pages/accounts/components/TokenHoldingsSelect'
 
 export const WithdrawSecurityTokenField = () => {
-  const { control } = useFormContext()
+  const { control, watch } = useFormContext()
+  const tokenType = watch('tokenType')
 
   return (
     <Grid container alignItems='center' spacing={2}>
@@ -13,8 +14,9 @@ export const WithdrawSecurityTokenField = () => {
         <TypedField
           control={control}
           component={TokenHoldingsSelect}
+          type={tokenType}
           name='token'
-          label='Security Token'
+          label={tokenType === 'Security' ? 'Security Token' : 'Stablecoin'}
           variant='outlined'
           fullWidth
         />
