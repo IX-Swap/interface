@@ -53,6 +53,10 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
     email: '',
   }
 
+  interface MyError {
+    message: string;
+  }
+
   const handleNextClick = async (verificationCode: string) => {
     try {
       // Call the codeVerify function with the verification code
@@ -69,12 +73,15 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
           window.location.reload()
         }
         setTimer(60)
+        setResetCodeInput(false);
       } else {
         // Handle error
         console.error(result.error)
         setHasCodeError(true)
         // setResetCodeInput(true);
-        setErrorMessage('Invalid code. Please try again or get a new code.')
+        // setErrorMessage( 'Invalid code. Please try again or get a new code.')
+        setErrorMessage(String((result.error as MyError).message));
+
       }
     } catch (error) {
       console.error(error)
@@ -87,6 +94,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
     setHasCodeError(false) // Reset code error status
     setErrorMessage('') // Reset error message
     setStep((prevStep) => Math.max(1, prevStep - 1))
+    setTimer(60);
   }
 
   const schema = object().shape({
@@ -127,7 +135,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
   const handleGetNewCodeClick = async () => {
     try {
       setHasCodeError(false)
-      setResetCodeInput(true)
+      setResetCodeInput((prevValue) => !prevValue);
       // Call the resendEmail function obtained from the hook
       const result = await resendEmail()
       // Now you can use the result if needed
@@ -137,6 +145,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
       console.log(boxBorderColor, 'boxBorderColor')
       // Reset the border color to the initial color (black)
       setBoxBorderColor('#E6E6FF')
+      // resetCode(); 
 
       // Reset the timer to 60 seconds
       setTimer(60)
@@ -144,6 +153,8 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
       console.error(error)
       setHasCodeError(true)
       // Handle error if necessary
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      setErrorMessage(errorMessage);
     }
   }
 
@@ -214,13 +225,14 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
           {step === 2 && (
             <>
               <CodeInput
-                key={boxBorderColor}
+          key={resetCodeInput}
                 numberOfBoxes={6}
                 boxBackgroundColor="#F7F7FA"
                 boxBorderColor={hasCodeError ? 'red' : boxBorderColor}
                 gapBetweenBoxes={5}
                 handleNextClick={handleNextClick}
                 reset={resetCodeInput}
+                // resetCode={() => setCode(Array(6).fill(''))} 
               />
 
               <TimerContainer>
@@ -412,7 +424,7 @@ interface CodeBoxProps {
 const CodeBox = styled.input.attrs((props: { gap: any; backgroundColor: any; borderColor: any; value: string }) => ({
   style: {
     width: isMobile ? '40px' : '60px',
-    height: isMobile ?  '80px': '80px',
+    height: isMobile ? '80px' : '80px',
     textAlign: 'center',
     marginRight: `10px`,
     background: props.backgroundColor,
@@ -420,7 +432,6 @@ const CodeBox = styled.input.attrs((props: { gap: any; backgroundColor: any; bor
     borderRadius: '5px',
     gap: '3px',
     color: props.value ? 'black' : 'gray',
-    
   },
   maxLength: 1,
   type: 'tel',
@@ -445,15 +456,18 @@ const CodeRow = styled.div`
 
 const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, handleNextClick }: any) => {
   const inputRefs = Array.from({ length: numberOfBoxes }, () => React.createRef<HTMLInputElement>())
-
   const [code, setCode] = React.useState(Array(numberOfBoxes).fill(''))
 
   React.useEffect(() => {
     if (reset) {
+      console.log(reset, 'kkkkkkkk')
       // Reset the code values when the reset prop changes
       setCode(Array(numberOfBoxes).fill(''))
     }
   }, [reset, numberOfBoxes])
+
+  
+  
 
   const handleCodeChange = (index: number, value: string) => {
     const newCode = [...code]
@@ -480,24 +494,24 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, h
   }
 
   return (
-    <CodeInputContainer>
-      <CodeRow>
-        {Array.from({ length: numberOfBoxes }).map((_, index) => (
-          <CodeBox
-            placeholder="0"
-            key={index}
-            value={code[index]}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleCodeChange(index, e.target.value)}
-            borderColor={boxBorderColor}
-            backgroundColor={boxBackgroundColor}
-            ref={inputRefs[index]}
-          />
-        ))}
-      </CodeRow>
+    <CodeInputContainer key={reset}>
+    <CodeRow>
+      {Array.from({ length: numberOfBoxes }).map((_, index) => (
+        <CodeBox
+          placeholder="0"
+          key={index}
+          value={code[index]}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleCodeChange(index, e.target.value)}
+          borderColor={boxBorderColor}
+          backgroundColor={boxBackgroundColor}
+          ref={inputRefs[index]}
+        />
+      ))}
+    </CodeRow>
 
-      <SubscriptionFormSubmitButton disabled={!isCodeComplete} onClick={handleCodeSubmit}>
-        Next
-      </SubscriptionFormSubmitButton>
-    </CodeInputContainer>
+    <SubscriptionFormSubmitButton disabled={!isCodeComplete} onClick={handleCodeSubmit}>
+      Next
+    </SubscriptionFormSubmitButton>
+  </CodeInputContainer>
   )
 }
