@@ -153,7 +153,7 @@ export const ConfirmWithdrawalDialog = ({
               </Box>
             </Box>
           </Box>
-          <Box pt={3} className={classes.field}>
+          <Box pt={3} className={!isEmpty(memo) ? classes.field : ''}>
             <Typography>Withdrawal Fee</Typography>
             <Box className={classes.amountContainer}>
               <Typography className={classes.fee}>

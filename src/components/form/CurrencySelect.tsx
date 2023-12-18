@@ -4,19 +4,19 @@ import { renderSelectItems } from 'helpers/rendering'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
-import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
+// import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 
 export const CURRENCIES = [
-  {
-    label: (
-      <Box display={'flex'} alignItems={'center'}>
-        <SGDIcon style={{ marginRight: 16 }} />
-        SGD
-      </Box>
-    ),
-    value: 'SGD'
-  },
+  //   {
+  //     label: (
+  //       <Box display={'flex'} alignItems={'center'}>
+  //         <SGDIcon style={{ marginRight: 16 }} />
+  //         SGD
+  //       </Box>
+  //     ),
+  //     value: 'SGD'
+  //   },
   {
     label: (
       <Box display={'flex'} alignItems={'center'}>
