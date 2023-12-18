@@ -22,6 +22,8 @@ export const useGetTokenHoldings = (type = 'Security') => {
     getCustody
   )
 
+  console.log('response', response)
+
   return {
     data: type === 'Security' ? response?.data[0].documents : response?.data,
     ...rest

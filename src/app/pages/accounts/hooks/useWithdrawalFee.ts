@@ -13,11 +13,12 @@ export const useWithdrawalFee = (assetId: string) => {
   }
 
   const { data, ...rest } = useQuery(['withdrawal-fee'], getWithdrawalFee, {
-    enabled: !isEmpty(assetId)
+    enabled: !isEmpty(assetId),
+    cacheTime: 0
   })
 
-  console.log('data', assetId)
-  console.log('data', data)
+  //   console.log('data', assetId)
+  //   console.log('data', data)
 
   return {
     data,

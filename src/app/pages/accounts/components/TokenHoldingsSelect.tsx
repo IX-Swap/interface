@@ -11,7 +11,7 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 export const TokenHoldingsSelect = React.forwardRef((props: SelectProps) => {
   const { data, isLoading } = useGetTokenHoldings(props.type ?? 'Security')
 
-  const hasTokens = !isLoading && data !== undefined && data.length > 1
+  const hasTokens = !isLoading && data !== undefined && data.length > 0
   const options = !hasTokens
     ? []
     : data?.map(token => {
