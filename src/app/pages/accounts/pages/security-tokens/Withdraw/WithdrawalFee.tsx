@@ -5,6 +5,8 @@ import { formatAmountValue } from 'helpers/numbers'
 import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 import { ReactComponent as CurrencyIcon } from 'assets/icons/currency.svg'
+import { ReactComponent as USDTIcon } from 'assets/icons/stablecoins/usdt.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 
@@ -77,6 +79,22 @@ export const WithdrawalFee = ({
   }))
 
   const classes = useStyles()
+  let Icon = SGDIcon
+
+  console.log('balance', balance)
+  console.log('inSufficientBalance', inSufficientBalance)
+
+  switch (currency) {
+    case 'USD':
+      Icon = USDIcon
+      break
+    case 'USDC':
+      Icon = USDCIcon
+      break
+    case 'USDT':
+      Icon = USDTIcon
+      break
+  }
 
   return (
     <FormControl>
@@ -125,11 +143,7 @@ export const WithdrawalFee = ({
         <Box className={classes.container}>
           <Box className={classes.amount}>{formatAmountValue(fee ?? 0)}</Box>
           <Box className={classes.currency}>
-            {currency === 'USD' ? (
-              <USDIcon width={24} height={24} />
-            ) : (
-              <SGDIcon width={24} height={24} />
-            )}
+            <Icon width={24} height={24} />
             <Typography>{currency}</Typography>
           </Box>
         </Box>

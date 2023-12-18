@@ -14,6 +14,8 @@ import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { formatAmountValue } from 'helpers/numbers'
 import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
+import { ReactComponent as USDTIcon } from 'assets/icons/stablecoins/usdt.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
 
 export interface ConfirmWithdrawalDialogProps {
   open: boolean
@@ -90,6 +92,20 @@ export const ConfirmWithdrawalDialog = ({
   }))
 
   const classes = useStyles()
+  const TokenIcon = token?.symbol === 'USDC' ? USDCIcon : USDTIcon
+  let CurrencyIcon = SGDIcon
+
+  switch (currency) {
+    case 'USD':
+      CurrencyIcon = USDIcon
+      break
+    case 'USDC':
+      CurrencyIcon = USDCIcon
+      break
+    case 'USDT':
+      CurrencyIcon = USDTIcon
+      break
+  }
 
   return (
     <UIDialog onClose={close} open={open}>
@@ -122,12 +138,16 @@ export const ConfirmWithdrawalDialog = ({
                 {formatAmountValue(Number(withdrawalAmount))}
               </Typography>
               <Box className={classes.token}>
-                <DSOLogo
-                  size={24}
-                  uri={'/dataroom/raw/'}
-                  dsoId={token?.logo}
-                  variant='circular'
-                />
+                {token?.symbol === 'USDC' || token?.symbol === 'USDT' ? (
+                  <TokenIcon style={{ height: 24 }} />
+                ) : (
+                  <DSOLogo
+                    size={24}
+                    uri={'/dataroom/raw/'}
+                    dsoId={token?.logo}
+                    variant='circular'
+                  />
+                )}
                 <Typography>{token?.symbol}</Typography>
               </Box>
             </Box>
@@ -139,11 +159,7 @@ export const ConfirmWithdrawalDialog = ({
                 {formatAmountValue(withdrawalFee)}
               </Typography>
               <Box className={classes.token}>
-                {currency === 'USD' ? (
-                  <USDIcon width={24} height={24} />
-                ) : (
-                  <SGDIcon width={24} height={24} />
-                )}
+                <CurrencyIcon width={24} height={24} />
                 <Typography>{currency}</Typography>
               </Box>
             </Box>
