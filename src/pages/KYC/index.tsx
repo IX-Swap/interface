@@ -197,6 +197,7 @@ const KYC = () => {
                   padding: isMobile ? '40px 40px' : '50px 90px',
                   marginBottom: isMobile ? '32px' : '0px',
                   width: 'max-content',
+                  cursor: 'pointer',
                 }}
                 flexDirection="column"
                 alignItems="center"
@@ -207,11 +208,11 @@ const KYC = () => {
                     <Trans>Pass KYC as Corporate</Trans>
                   </Text>
                 </>
-                <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
+                {/* <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate"> */}
                   <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
                     <Trans>Start Now</Trans>
                   </Text>
-                </Link>
+                {/* </Link> */}
               </Flex>
             </Flex>
           </>

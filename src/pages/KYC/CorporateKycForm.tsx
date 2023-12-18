@@ -875,7 +875,7 @@ export default function CorporateKycForm() {
                             isRadio
                             checked={values.isUSTaxPayer === 0}
                             onClick={() => onSelectChange('isUSTaxPayer', 0, setFieldValue)}
-                            label="I confirm that I am not a US citizen or resident in the US for tax purposes. "
+                            label="I confirm that I am not a US citizen or resident in the US for tax purposes "
                           />
                           {errors.isUSTaxPayer && (
                             <TYPE.small marginTop="-4px" color={'red1'}>
