@@ -44,7 +44,7 @@ export const WithdrawFormFields = () => {
   } = useWithdrawalFee(token?.asset?._id)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setValue('token', null), [tokenType])
+  useEffect(() => setValue('token', ''), [tokenType])
 
   useEffect(() => {
     setValue('currency', withdrawal?.data?.currency)
