@@ -217,7 +217,7 @@ export const TextInput: FC<TextInputProps> = ({
           style={style}
           type={type}
           autoComplete="off"
-          disabled={disabled}
+          disabled={true}
         />
       )}
 
@@ -262,7 +262,7 @@ export const KycTextInput: FC<TextInputProps> = ({
           style={style}
           type={type}
           autoComplete="off"
-          disabled={disabled}
+          disabled={true}
           error={error}
         />
       )}
@@ -588,6 +588,9 @@ const StyledInput = styled(Input)`
   :focus {
     // background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};
     background-color: ${({ theme: { bg0 } }) => bg0};
+  }
+  :disabled {
+    color: #B8B8CC;
   }
 `
 

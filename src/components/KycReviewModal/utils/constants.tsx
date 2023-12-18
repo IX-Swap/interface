@@ -147,7 +147,7 @@ export const fatcaKeys = [
   },
   {
     key: 'fatca2',
-    label: 'I confirm that I am not a US citizen or resident in the US for tax purposes.  ',
+    label: 'I confirm that I am not a US citizen or resident in the US for tax purposes  ',
   },
 ]
 

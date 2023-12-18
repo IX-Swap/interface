@@ -568,7 +568,7 @@ export default function IndividualKycForm() {
                 hasNoErrors('middleName') &&
                 isFilled('lastName') &&
                 isFilled('dateOfBirth') &&
-                isFilled('gender') &&
+                // isFilled('gender') &&
                 isFilled('nationality') &&
                 isFilled('citizenship') &&
                 isFilled('phoneNumber') &&
@@ -698,7 +698,7 @@ export default function IndividualKycForm() {
                               }}
                               maxDate={moment().subtract(18, 'years')}
                             />
-                            <Select
+                            {/* <Select
                               error={errors.gender}
                               id="genderDropdown"
                               label="Gender"
@@ -706,7 +706,7 @@ export default function IndividualKycForm() {
                               selectedItem={values.gender}
                               items={genders}
                               onSelect={(gender) => onSelectChange('gender', gender, setFieldValue)}
-                            />
+                            /> */}
                           </FormGrid>
 
                           <FormGrid>
@@ -922,7 +922,7 @@ export default function IndividualKycForm() {
 
                         <Column style={{ gap: '40px', marginTop: '32px' }}>
                           <Uploader
-                            subtitle="Proof of ID - Passport, Singapore NRIC, International Passport, National ID, Driving License or Others."
+                            subtitle="Passport, National ID, or Driving License"
                             error={errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
@@ -938,8 +938,8 @@ export default function IndividualKycForm() {
                           />
 
                           <SelfieUploader
-                            title=""
-                            subtitle="Selfie for Verification"
+                            title="Selfie with Proof of Identity"
+                            subtitle="Selfie displaying your face, your Proof of Identity, and the present date written down on a piece of paper"
                             error={errors.selfie}
                             files={values.selfie}
                             onDrop={(file) => handleDropImage(file, values, 'selfie', setFieldValue)}
@@ -1009,8 +1009,8 @@ export default function IndividualKycForm() {
                               }
                             />
                             <Select
-                              placeholder="Total Income (in SGD) in the Last 12 Months"
-                              label="Total Income (in SGD) in the Last 12 Months"
+                              placeholder="Total Income (in USD) in the Last 12 Months"
+                              label="Total Income (in USD) in the Last 12 Months"
                               id="incomeUsdDropdown"
                               items={incomes}
                               selectedItem={values.income}
@@ -1292,7 +1292,7 @@ export default function IndividualKycForm() {
                             />
                             {values.isUSTaxPayer === 1 && (
                               <TextInput
-                                style={{ width: 284 }}
+                                style={{ width: 640 }}
                                 placeholder="ID Number.."
                                 value={values.usTin}
                                 onChange={(e: any) =>
@@ -1307,7 +1307,7 @@ export default function IndividualKycForm() {
                             id="notCitizenOfUS"
                             checked={values.isUSTaxPayer === 0}
                             onClick={() => onRadioChange('isUSTaxPayer', 0, setFieldValue)}
-                            label="I confirm that I am not a US citizen or resident in the US for tax purposes. "
+                            label="I confirm that I am not a US citizen or resident in the US for tax purposes "
                           />
                           {errors.isUSTaxPayer && (
                             <TYPE.small marginTop="-4px" color={'red1'}>

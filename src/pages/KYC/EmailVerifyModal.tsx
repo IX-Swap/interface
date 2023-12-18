@@ -4,14 +4,13 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { text12, text1, text8 } from 'components/LaunchpadMisc/typography'
 import { CloseIcon, MEDIA_WIDTHS } from 'theme'
 import { isMobile } from 'react-device-detect'
-import { PinnedContentButton } from 'components/Button'
 import { Formik } from 'formik'
 import { object, string } from 'yup'
-import { useSubscribeToOffer } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { useEmailVerify, useEmailVerifyCode } from 'state/kyc/hooks'
 import { ReactComponent as ArrowBack } from 'assets/images/newBack.svg'
 import { useHistory } from 'react-router-dom'
+import { resendEmail } from 'state/admin/hooks'
 
 interface Props {
   isModalOpen: boolean
@@ -22,15 +21,15 @@ interface Props {
 export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) => {
   const [active, setActive] = React.useState(false)
   const [step, setStep] = React.useState(1)
-  const [stepHistory, setStepHistory] = React.useState([1])
   const emailVerify = useEmailVerify()
   const codeVerify = useEmailVerifyCode()
   const addPopup = useAddPopup()
   const [timer, setTimer] = React.useState(60)
   const [hasCodeError, setHasCodeError] = React.useState(false)
   const [errorMessage, setErrorMessage] = React.useState('')
-  const [email, setEmail] = React.useState('')
   const history = useHistory()
+  const [boxBorderColor, setBoxBorderColor] = React.useState('#E6E6FF')
+  const [resetCodeInput, setResetCodeInput] = React.useState(false)
   React.useEffect(() => {
     let interval: NodeJS.Timeout
 
@@ -63,17 +62,18 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
         if (kycType === 'individual') {
           // Redirect to the individual KYC page
           history.push('/kyc/individual')
-          window.location.reload();
+          window.location.reload()
         } else if (kycType === 'corporate') {
           // Redirect to the corporate KYC page
           history.push('/kyc/corporate')
-          window.location.reload();
+          window.location.reload()
         }
         setTimer(60)
       } else {
         // Handle error
         console.error(result.error)
         setHasCodeError(true)
+        // setResetCodeInput(true);
         setErrorMessage('Invalid code. Please try again or get a new code.')
       }
     } catch (error) {
@@ -101,43 +101,48 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
         if (step === 1) {
           if (kycType) {
             // Assuming emailVerify is an asynchronous function
-            const result = await emailVerify(values.email, kycType);
-  
+            const result = await emailVerify(values.email, kycType)
+
             if (result.success) {
-              setEmail(values.email);
-              console.log(values.email, kycType,result, 'kycType');
-              setStep(2);
+              console.log(values.email, kycType, result, 'kycType')
+              setStep(2)
             } else {
               // Handle the case when verification is not successful
-              addPopup({ info: { success: false, summary: 'Email verification failed' } });
+              addPopup({ info: { success: false, summary: 'Email verification failed' } })
             }
           }
         } else if (step === 2) {
           // Handle step 2 logic or actions if needed
         }
-  
+
         // addPopup({ info: { success: true, summary: `You have subscribed successfully` } })
       } catch (err) {
-        console.error('Error during email verification:', err);
-        addPopup({ info: { success: false, summary: 'An error occurred during email verification' } });
+        console.error('Error during email verification:', err)
+        addPopup({ info: { success: false, summary: 'An error occurred during email verification' } })
       }
     },
     [step, addPopup, emailVerify, kycType]
-  );
-  
+  )
 
   const handleGetNewCodeClick = async () => {
     try {
-      // Log values.email and kycType
-      if (email && kycType) {
-        await emailVerify(email, kycType)
-        console.log(kycType, email, 'kycType')
-      }
+      setHasCodeError(false)
+      setResetCodeInput(true)
+      // Call the resendEmail function obtained from the hook
+      const result = await resendEmail()
+      // Now you can use the result if needed
+      console.log(result)
+
+      // Reset the code values
+      console.log(boxBorderColor, 'boxBorderColor')
+      // Reset the border color to the initial color (black)
+      setBoxBorderColor('#E6E6FF')
 
       // Reset the timer to 60 seconds
       setTimer(60)
     } catch (error) {
       console.error(error)
+      setHasCodeError(true)
       // Handle error if necessary
     }
   }
@@ -156,7 +161,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
           {step === 2 && (
             <FlexContainer>
               <ArrowBack
-                style={{ position: 'absolute', left: '55px', top: '100px', cursor: 'pointer' }}
+                style={{ position: 'absolute', left: '55px', top: isMobile ? '94px' : '100px', cursor: 'pointer' }}
                 onClick={handleBackClick}
               />
               <IXSTitle>Welcome to IX Swap</IXSTitle>
@@ -167,12 +172,25 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
           {step === 2 && <IXSSubTitle> Enter the code</IXSSubTitle>}
           {step === 1 && (
             <IXSSubTitleSub>
-              Get a verification code sent to your email address so we <br /> can confirm that you are not a robot.
+              {isMobile ? (
+                'Get a verification code sent to your email address so we can confirm that you are not a robot.'
+              ) : (
+                <>
+                  Get a verification code sent to your email address so we <br /> can confirm that you are not a robot.
+                </>
+              )}
             </IXSSubTitleSub>
           )}
           {step === 2 && (
             <IXSSubTitleSub>
-              A 6-digit verification code has been sent to your email. <br /> Enter the code below to verify your email.
+              {isMobile ? (
+                'A 6-digit verification code has been sent to your email.Enter the code below to verify your email.'
+              ) : (
+                <>
+                  A 6-digit verification code has been sent to your email. <br /> Enter the code below to verify your
+                  email.
+                </>
+              )}
             </IXSSubTitleSub>
           )}
           {step === 1 && (
@@ -196,12 +214,15 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
           {step === 2 && (
             <>
               <CodeInput
+                key={boxBorderColor}
                 numberOfBoxes={6}
                 boxBackgroundColor="#F7F7FA"
-                boxBorderColor={hasCodeError ? 'red' : '#E6E6FF'}
+                boxBorderColor={hasCodeError ? 'red' : boxBorderColor}
                 gapBetweenBoxes={5}
                 handleNextClick={handleNextClick}
+                reset={resetCodeInput}
               />
+
               <TimerContainer>
                 {timer > 0 ? (
                   <>
@@ -243,17 +264,6 @@ const TimerText = styled.p`
   font-weight: 400;
 `
 
-const GetNewCodeButton = styled.button<GetNewCodeButtonProps>`
-  background-color: #6666ff;
-  color: #fff;
-  ${text12}
-  padding: 8px 16px;
-  cursor: pointer;
-  border: none;
-  border-radius: 6px;
-  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
-`
-
 const FlexContainer = styled.div`
   display: flex;
   align-items: center;
@@ -268,6 +278,11 @@ const IXSTitle = styled.div`
   text-align: center;
   color: #666680;
   margin-bottom: 20px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+font-size: 13px;
+margin-top:20px;
+`};
 `
 
 const IXSSubTitle = styled.div`
@@ -277,6 +292,9 @@ const IXSSubTitle = styled.div`
   text-align: center;
   color: #292933;
   margin-bottom: 20px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  font-size: 20px;
+  `};
 `
 const IXSSubTitleSub = styled.div`
   font-weight: 400;
@@ -285,6 +303,10 @@ const IXSSubTitleSub = styled.div`
   text-align: center;
   color: #666680;
   margin-bottom: 20px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  font-size: 12px;
+  `};
 `
 
 const ModalContainer = styled.div`
@@ -336,7 +358,7 @@ const SubscriptionFormEmailField = styled.div`
   }
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-     width: 370px;
+     width: 300px;
   `};
 `
 
@@ -389,8 +411,8 @@ interface CodeBoxProps {
 }
 const CodeBox = styled.input.attrs((props: { gap: any; backgroundColor: any; borderColor: any; value: string }) => ({
   style: {
-    width: '50px',
-    height: '80px',
+    width: isMobile ? '40px' : '60px',
+    height: isMobile ?  '80px': '80px',
     textAlign: 'center',
     marginRight: `10px`,
     background: props.backgroundColor,
@@ -398,11 +420,13 @@ const CodeBox = styled.input.attrs((props: { gap: any; backgroundColor: any; bor
     borderRadius: '5px',
     gap: '3px',
     color: props.value ? 'black' : 'gray',
+    
   },
   maxLength: 1,
   type: 'tel',
   pattern: '[0-9]*',
   color: 'red',
+  key: props.borderColor,
 }))<{ onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; borderColor: string; backgroundColor: string }>``
 
 const CodeInputContainer = styled.div`
@@ -419,10 +443,17 @@ const CodeRow = styled.div`
   flex-direction: row;
 `
 
-const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, gapBetweenBoxes, handleNextClick }: any) => {
+const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, handleNextClick }: any) => {
   const inputRefs = Array.from({ length: numberOfBoxes }, () => React.createRef<HTMLInputElement>())
 
   const [code, setCode] = React.useState(Array(numberOfBoxes).fill(''))
+
+  React.useEffect(() => {
+    if (reset) {
+      // Reset the code values when the reset prop changes
+      setCode(Array(numberOfBoxes).fill(''))
+    }
+  }, [reset, numberOfBoxes])
 
   const handleCodeChange = (index: number, value: string) => {
     const newCode = [...code]
@@ -442,7 +473,7 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, gapBetwe
   const handleCodeSubmit = () => {
     const verificationCode = code.join('')
     if (verificationCode.length === numberOfBoxes) {
-      handleNextClick(verificationCode)
+      handleNextClick(verificationCode) // Pass verificationCode as a single argument
     } else {
       // Set the error message
     }
