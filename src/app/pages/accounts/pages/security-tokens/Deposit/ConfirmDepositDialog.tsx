@@ -14,6 +14,8 @@ import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { formatAmountValue } from 'helpers/numbers'
 import { SUPPORTED_WALLETS } from 'config/blockchain/supportedWallets'
 import { isEmpty } from 'lodash'
+import { ReactComponent as USDTIcon } from 'assets/icons/stablecoins/usdt.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
 
 export interface ConfirmDepositDialogProps {
   open: boolean
@@ -87,6 +89,7 @@ export const ConfirmDepositDialog = ({
   }))
 
   const classes = useStyles()
+  const Icon = token?.symbol === 'USDC' ? USDCIcon : USDTIcon
 
   return (
     <UIDialog onClose={close} open={open}>
@@ -132,12 +135,16 @@ export const ConfirmDepositDialog = ({
                 {formatAmountValue(depositAmount)}
               </Typography>
               <Box className={classes.token}>
-                <DSOLogo
-                  size={24}
-                  uri={'/dataroom/raw/'}
-                  dsoId={token?.logo}
-                  variant='circular'
-                />
+                {token?.symbol === 'USDC' || token?.symbol === 'USDT' ? (
+                  <Icon style={{ height: 24 }} />
+                ) : (
+                  <DSOLogo
+                    size={24}
+                    uri={'/dataroom/raw/'}
+                    dsoId={token?.logo}
+                    variant='circular'
+                  />
+                )}
                 <Typography>{token?.symbol}</Typography>
               </Box>
             </Box>

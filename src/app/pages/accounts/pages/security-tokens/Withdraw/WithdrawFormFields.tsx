@@ -43,11 +43,11 @@ export const WithdrawFormFields = () => {
   } = useWithdrawalFee(token?.asset?._id)
 
   useEffect(() => {
-    setValue('currency', withdrawal?.currency)
-    setValue('withdrawalFee', withdrawal?.withdrawalFee)
-    setValue('fiatBalance', withdrawal?.balance)
+    setValue('currency', withdrawal?.data?.currency)
+    setValue('withdrawalFee', withdrawal?.data?.withdrawalFee)
+    setValue('fiatBalance', withdrawal?.data?.balance)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [withdrawal])
+  }, [withdrawal, token])
 
   useEffect(() => {
     if (!isEmpty(token)) void refetchWithdrawalFee()
@@ -56,14 +56,13 @@ export const WithdrawFormFields = () => {
 
   const inSufficientTokenBalance = tokenBalance < amount
   //   const inSufficientCurencyBalance = withdrawal?.valid !== true
-  const inSufficientCurencyBalance = fiatBalance < fee
   const hasError =
     !hasSelectedToken ||
     !hasSelectedWalletAddress ||
     inSufficientTokenBalance ||
     amount === undefined ||
     amount <= 0 ||
-    inSufficientCurencyBalance ||
+    fiatBalance < fee ||
     otp === undefined
 
   const clearForm = () => {
@@ -109,7 +108,7 @@ export const WithdrawFormFields = () => {
                   currency={currency}
                   balance={fiatBalance}
                   fee={fee}
-                  inSufficientBalance={inSufficientCurencyBalance}
+                  inSufficientBalance={fiatBalance < fee}
                 />
 
                 <MemoField />

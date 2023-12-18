@@ -16,8 +16,11 @@ export const useWithdrawalFee = (assetId: string) => {
     enabled: !isEmpty(assetId)
   })
 
+  console.log('data', assetId)
+  console.log('data', data)
+
   return {
-    data: data?.data,
+    data,
     ...rest
   }
 }

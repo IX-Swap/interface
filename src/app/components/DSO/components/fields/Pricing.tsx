@@ -30,7 +30,7 @@ export const Pricing = () => {
           <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
-                assetType='Currency'
+                assetType='Currency,Stablecoin'
                 component={AssetSelect}
                 label='Currency'
                 name='currency'

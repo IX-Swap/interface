@@ -9,6 +9,8 @@ import { TypedField } from 'components/form/TypedField'
 import { NumericInput } from 'components/form/NumericInput'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
+import { ReactComponent as USDTIcon } from 'assets/icons/stablecoins/usdt.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
 
 interface AmountFieldProps {
   label?: string
@@ -78,6 +80,7 @@ export const AmountField = ({
   }))
 
   const classes = useStyles()
+  const Icon = tokenSymbol === 'USDC' ? USDCIcon : USDTIcon
 
   return (
     <FormControl>
@@ -127,12 +130,17 @@ export const AmountField = ({
           >
             MAX
           </Button>
-          <DSOLogo
-            size={24}
-            uri={'/dataroom/raw/'}
-            dsoId={tokenLogo}
-            variant='circular'
-          />
+
+          {tokenSymbol === 'USDC' || tokenSymbol === 'USDT' ? (
+            <Icon style={{ height: 24 }} />
+          ) : (
+            <DSOLogo
+              size={24}
+              uri={'/dataroom/raw/'}
+              dsoId={tokenLogo}
+              variant='circular'
+            />
+          )}
           <Typography>{tokenSymbol}</Typography>
         </Box>
       </Box>
