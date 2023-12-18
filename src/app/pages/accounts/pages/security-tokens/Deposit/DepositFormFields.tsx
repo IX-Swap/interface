@@ -31,7 +31,7 @@ export const DepositFormFields: React.FC = () => {
   const { data: registeredWallets, isLoading: isFetchingAddresses } =
     useWalletAddresses()
   const [depositSTO] = useDepositSTO()
-  const { watch, reset } = useFormContext()
+  const { watch, reset, setValue } = useFormContext()
   const tokenType = watch('tokenType')
   const token = watch('token')
   const tokenAddress = token?.tokenAddress
@@ -109,6 +109,9 @@ export const DepositFormFields: React.FC = () => {
       }
     }
   }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setValue('token', null), [tokenType])
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises

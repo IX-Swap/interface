@@ -23,6 +23,7 @@ export const WithdrawFormFields = () => {
   const [withdrawalConfirmationVisible, setWithdrawalConfirmationVisible] =
     useState(false)
   const { watch, reset, control, setValue } = useFormContext()
+  const tokenType = watch('tokenType')
   const token = watch('token')
   const tokenBalance = token?.available
   const hasSelectedToken = !isEmpty(token)
@@ -41,6 +42,9 @@ export const WithdrawFormFields = () => {
     isLoading: isFetchingWithdrawalFee
     //   } = useWithdrawalFee(token?.asset?.network?._id)
   } = useWithdrawalFee(token?.asset?._id)
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setValue('token', null), [tokenType])
 
   useEffect(() => {
     setValue('currency', withdrawal?.data?.currency)
