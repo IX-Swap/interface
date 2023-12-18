@@ -16,6 +16,7 @@ import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 import { ReactComponent as USDTIcon } from 'assets/icons/stablecoins/usdt.svg'
 import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
+import { isEmpty } from 'lodash'
 
 export interface ConfirmWithdrawalDialogProps {
   open: boolean
@@ -27,7 +28,7 @@ export interface ConfirmWithdrawalDialogProps {
   withdrawalAmount: string
   currency: string
   withdrawalFee: number
-  memo: string
+  memo?: string
 }
 
 export const ConfirmWithdrawalDialog = ({
@@ -164,12 +165,14 @@ export const ConfirmWithdrawalDialog = ({
               </Box>
             </Box>
           </Box>
-          <Box pt={3}>
-            <Typography>Memo</Typography>
-            <Typography color='tooltip.color' mt={1.5}>
-              {memo}
-            </Typography>
-          </Box>
+          {!isEmpty(memo) && (
+            <Box pt={3}>
+              <Typography>Memo</Typography>
+              <Typography color='tooltip.color' mt={1.5}>
+                {memo}
+              </Typography>
+            </Box>
+          )}
         </Box>
         <DialogActions>
           <Grid display={'flex'} gap={3} container alignItems={'center'}>

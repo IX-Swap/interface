@@ -6,7 +6,7 @@ import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicat
 import { WithdrawSecurityTokenField as SecurityToken } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawSecurityTokenField'
 import { WithdrawTo } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawTo'
 import { WithdrawalAmount } from 'app/pages/accounts/pages/security-tokens/Withdraw/WithdrawalAmount'
-import { MemoField } from 'app/pages/accounts/pages/security-tokens/Withdraw/MemoField'
+// import { MemoField } from 'app/pages/accounts/pages/security-tokens/Withdraw/MemoField'
 // import { Warning } from 'app/pages/accounts/pages/security-tokens/Withdraw/Warning'
 // import { ConfirmButton } from 'app/pages/accounts/pages/security-tokens/Withdraw/ConfirmButton'
 import { WithdrawalFee } from './WithdrawalFee'
@@ -115,7 +115,7 @@ export const WithdrawFormFields = () => {
                   inSufficientBalance={fiatBalance < fee}
                 />
 
-                <MemoField />
+                {/* <MemoField /> */}
                 {/* <Warning /> */}
 
                 <OTPInputField disabled={false} />
