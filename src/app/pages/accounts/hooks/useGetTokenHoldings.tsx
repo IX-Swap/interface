@@ -17,13 +17,13 @@ export const useGetTokenHoldings = (type = 'Security') => {
     })
   }
 
-  const { data, ...rest } = useQuery(
+  const { data: response, ...rest } = useQuery(
     [digitalSecuritiesQueryKeys.custody(userId), type],
     getCustody
   )
 
   return {
-    data: data?.data[0].documents,
+    data: type === 'Security' ? response?.data[0].documents : response?.data,
     ...rest
   }
 }

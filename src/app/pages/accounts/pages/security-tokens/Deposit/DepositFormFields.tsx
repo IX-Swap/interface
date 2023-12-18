@@ -31,7 +31,7 @@ export const DepositFormFields: React.FC = () => {
   const { data: registeredWallets, isLoading: isFetchingAddresses } =
     useWalletAddresses()
   const [depositSTO] = useDepositSTO()
-  const { watch, reset } = useFormContext()
+  const { watch, reset, setValue } = useFormContext()
   const tokenType = watch('tokenType')
   const token = watch('token')
   const tokenAddress = token?.tokenAddress
@@ -76,8 +76,6 @@ export const DepositFormFields: React.FC = () => {
       try {
         setIsLoading(true)
 
-        console.log('network', network)
-
         const provider = new ethers.providers.JsonRpcProvider(
           network?.rpcEndpoint
         )
@@ -91,24 +89,19 @@ export const DepositFormFields: React.FC = () => {
         const tokenBalance = ethers.utils.formatUnits(
           balance,
           tokenType === 'Security' ? 'ether' : 'mwei'
-          //   tokenType === 'Security' ? 'ether' : 18
-          //   'ether'
         )
 
-        // const tokenBalance =
-        //   tokenType === 'Security'
-        //     ? ethers.utils.formatUnits(balance, 'ether')
-        //     : balance
         setTokenBalance(tokenBalance)
 
         setIsLoading(false)
-
-        console.log('tokenBalance', balance)
       } catch (error) {
         console.error('Error fetching token balance:', error)
       }
     }
   }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setValue('token', ''), [tokenType])
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
