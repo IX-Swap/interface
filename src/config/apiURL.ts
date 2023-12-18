@@ -320,7 +320,7 @@ export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
   createManualTransaction: '/virtual-accounts/transactions/manual',
-  getByUserId: (userId: string, type?: 'Currency' | 'Stablecoin') =>
+  getByUserId: (userId: string, type?: 'Currency' | 'Stablecoin' | 'All') =>
     `/virtual-accounts/${userId}${type != null ? `?type=${type}` : ''}`,
   assign: '/virtual-accounts/assign',
   unassign: (accountId?: string) => `/virtual-accounts/unassign/${accountId}`,
