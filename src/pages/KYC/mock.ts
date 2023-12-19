@@ -138,7 +138,6 @@ export const legalEntityTypes = [
 ].map((name, index) => ({ value: ++index, label: name }))
 
 export const corporateSourceOfFunds = [
-  'Salary',
   'Loan',
   'Property',
   'Investments',
@@ -230,7 +229,6 @@ export const corporateFormInitialValues: IFormInitial = {
   registrationNumber: '',
   countryOfIncorporation: null,
   businessActivity: '',
-  incorporationDate: null,
   inFatfJurisdiction: false,
   personnelName: '',
   designation: '',
@@ -252,11 +250,13 @@ export const corporateFormInitialValues: IFormInitial = {
   usTin: '',
   taxCountry: null,
   taxNumber: '',
-  beneficialOwners: [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+  beneficialOwners: [{ fullName: '', nationality: '', address: '', shareholding: '', proofOfIdentity: null }],
+  corporateMembers: [{ fullName: '', nationality: '', designation: '', proofOfIdentity: null }],
   corporateDocuments: [],
   financialDocuments: [],
   removedDocuments: [],
   removedBeneficialOwners: [],
+  removedCorporateMembers: [],
 }
 
 export const promptValue = 'Data will be lost if you leave the page, are you sure?'

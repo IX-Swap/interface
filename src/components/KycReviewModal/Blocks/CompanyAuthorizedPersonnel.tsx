@@ -15,7 +15,7 @@ interface Props {
 
 export const CompanyAuthorizedPersonnel: FC<Props> = ({ data }: Props) => {
   return (
-    <Block title="Company Authorized Personnel">
+    <Block title="Authorized Personnel">
       <GridContainer>
         {companyAuthorizedPersonnelKeys.map(({ key, label, width = {}, format }) => (
           <GridItem key={key} {...width}>

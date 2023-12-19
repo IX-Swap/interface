@@ -18,6 +18,7 @@ export const corporateTransformApiData = (data: any) => {
     taxCountry,
     sourceOfFunds,
     beneficialOwners,
+    corporateMembers,
     usTin,
   } = data
   const [funds, otherFunds = ''] = sourceOfFunds ? sourceOfFunds.split(', Others, ') : [null, null]
@@ -52,10 +53,20 @@ export const corporateTransformApiData = (data: any) => {
             proofOfIdentity,
           }))
         : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+    corporateMembers: JSON.stringify(
+      corporateMembers?.map(({ id, fullName, nationality, designation, proofOfIdentity }: any) => ({
+        id: id || null,
+        fullName,
+        nationality,
+        designation,
+        proofOfIdentity: proofOfIdentity?.id || null,
+      }))
+    ),
     corporateDocuments: documents?.filter(({ type }: any) => type === 'corporate'),
     financialDocuments: documents?.filter(({ type }: any) => type === 'financial'),
     removedDocuments: [],
     removedBeneficialOwners: [],
+    removedCorporateMembers: [],
   }
 }
 
@@ -70,7 +81,7 @@ export const corporateTransformKycDto = (values: any) => {
     isUSTaxPayer,
     taxCountry,
     beneficialOwners,
-    incorporationDate,
+    corporateMembers,
   } = values
 
   const newSourceOfFunds = sourceOfFunds ?? ''
@@ -78,8 +89,6 @@ export const corporateTransformKycDto = (values: any) => {
   return {
     ...values,
     ...(!isUSTaxPayer && { usTin: '' }),
-    incorporationDate:
-      typeof incorporationDate === 'string' ? incorporationDate : incorporationDate?.format('MM/DD/YYYY'),
     typeOfLegalEntity: typeOfLegalEntity?.label,
     sourceOfFunds: [...newSourceOfFunds, ...(newSourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
     countryOfIncorporation: countryOfIncorporation?.label,
@@ -88,15 +97,26 @@ export const corporateTransformKycDto = (values: any) => {
     taxCountry: taxCountry?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
     beneficialOwners: JSON.stringify(
-      beneficialOwners.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+      beneficialOwners.map(({ id, fullName, nationality, address, shareholding, proofOfIdentity }: any) => ({
         id: id || null,
         fullName,
+        nationality,
+        address,
         shareholding: +shareholding,
-        proofOfAddress: proofOfAddress?.id || null,
+        proofOfIdentity: proofOfIdentity?.id || null,
+      }))
+    ),
+    corporateMembers: JSON.stringify(
+      corporateMembers?.map(({ id, fullName, nationality, designation, proofOfIdentity }: any) => ({
+        id: id || null,
+        fullName,
+        nationality,
+        designation,
         proofOfIdentity: proofOfIdentity?.id || null,
       }))
     ),
     beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),
+    corporateMembersIdentity: corporateMembers?.map(({ proofOfIdentity }: any) => proofOfIdentity),
     beneficialOwnersAddress: beneficialOwners.map(({ proofOfAddress }: any) => proofOfAddress),
   }
 }

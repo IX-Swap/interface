@@ -69,6 +69,7 @@ type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
   error?: any | JSX.Element
   required?: boolean
   tooltipText?: string | JSX.Element
+  isText?: boolean
 }
 
 interface KycInputLabelProps {
@@ -196,6 +197,7 @@ export const TextInput: FC<TextInputProps> = ({
   error = false,
   tooltipText,
   disabled = false,
+  isText = false,
 }: TextInputProps) => {
   return (
     <Box>
@@ -203,7 +205,7 @@ export const TextInput: FC<TextInputProps> = ({
         <Label label={label} htmlFor={name || ''} required={disabled ? false : required} tooltipText={tooltipText} />
       )}
 
-      {disabled && value ? (
+      {isText && value ? (
         <div>{value}</div>
       ) : (
         <StyledInput
@@ -217,7 +219,7 @@ export const TextInput: FC<TextInputProps> = ({
           style={style}
           type={type}
           autoComplete="off"
-          disabled={true}
+          disabled={disabled}
         />
       )}
 
@@ -516,8 +518,9 @@ export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }
 interface BeneficialOwnersTableTypes {
   data: Array<{
     fullName: string
+    nationality: string
+    address: string
     shareholding: string
-    proofOfAddress: FileWithPath | null
     proofOfIdentity: FileWithPath | null
   }>
 }
@@ -525,10 +528,34 @@ interface BeneficialOwnersTableTypes {
 export const BeneficialOwnersTable = ({}: BeneficialOwnersTableTypes) => {
   return (
     <BeneficialOwnersTableContainer>
-      <FormGrid columns={5}>
+      <FormGrid columns={6}>
         <Label label={t`Full Name`} />
-        <Label label={t`% Shareholding`} />
-        <Label label={t`Proof of Address`} />
+        <Label label={t`Nationality`} />
+        <Label label={t`Address`} />
+        <Label label={t`% Beneficial Ownership`} />
+        <Label label={t`Proof of Identity`} />
+        <Label label={t``} />
+      </FormGrid>
+    </BeneficialOwnersTableContainer>
+  )
+}
+
+interface CorporateMembersTableTypes {
+  data: Array<{
+    fullName: string
+    nationality: string
+    designation: string
+    proofOfIdentity: FileWithPath | null
+  }>
+}
+
+export const CorporateMembersTable = ({}: CorporateMembersTableTypes) => {
+  return (
+    <BeneficialOwnersTableContainer>
+      <FormGrid columns={6}>
+        <Label label={t`Full Name`} />
+        <Label label={t`Nationality`} />
+        <Label label={t`Designation`} />
         <Label label={t`Proof of Identity`} />
         <Label label={t``} />
       </FormGrid>
@@ -590,7 +617,7 @@ const StyledInput = styled(Input)`
     background-color: ${({ theme: { bg0 } }) => bg0};
   }
   :disabled {
-    color: #B8B8CC;
+    color: #b8b8cc;
   }
 `
 
