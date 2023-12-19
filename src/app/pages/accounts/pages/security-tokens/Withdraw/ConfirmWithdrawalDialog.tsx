@@ -132,10 +132,10 @@ export const ConfirmWithdrawalDialog = ({
               </Typography>
             </Box>
           </Box>
-          <Box pt={3} className={classes.field}>
+          <Box pt={3}>
             <Typography>Withdrawal Amount</Typography>
             <Box className={classes.amountContainer}>
-              <Typography className={classes.amount}>
+              <Typography className={classes.fee}>
                 {formatAmountValue(Number(withdrawalAmount))}
               </Typography>
               <Box className={classes.token}>
@@ -153,7 +153,7 @@ export const ConfirmWithdrawalDialog = ({
               </Box>
             </Box>
           </Box>
-          <Box pt={3} className={!isEmpty(memo) ? classes.field : ''}>
+          <Box pt={3} className={classes.field}>
             <Typography>Withdrawal Fee</Typography>
             <Box className={classes.amountContainer}>
               <Typography className={classes.fee}>
@@ -166,13 +166,36 @@ export const ConfirmWithdrawalDialog = ({
             </Box>
           </Box>
           {!isEmpty(memo) && (
-            <Box pt={3}>
+            <Box pt={3} className={classes.field}>
               <Typography>Memo</Typography>
               <Typography color='tooltip.color' mt={1.5}>
                 {memo}
               </Typography>
             </Box>
           )}
+          <Box pt={3}>
+            <Typography>Receivable Amount</Typography>
+            <Box className={classes.amountContainer}>
+              <Typography className={classes.amount}>
+                {formatAmountValue(
+                  Number(withdrawalAmount) - Number(withdrawalFee)
+                )}
+              </Typography>
+              <Box className={classes.token}>
+                {token?.symbol === 'USDC' || token?.symbol === 'USDT' ? (
+                  <TokenIcon style={{ height: 24 }} />
+                ) : (
+                  <DSOLogo
+                    size={24}
+                    uri={'/dataroom/raw/'}
+                    dsoId={token?.logo}
+                    variant='circular'
+                  />
+                )}
+                <Typography>{token?.symbol}</Typography>
+              </Box>
+            </Box>
+          </Box>
         </Box>
         <DialogActions>
           <Grid display={'flex'} gap={3} container alignItems={'center'}>

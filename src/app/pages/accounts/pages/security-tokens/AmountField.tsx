@@ -27,8 +27,10 @@ export const AmountField = ({
 }: AmountFieldProps) => {
   const { control, setValue, watch } = useFormContext()
   const amount = watch('amount')
+  const fee = watch('withdrawalFee')
 
   const inSufficientBalance = tokenBalance < amount
+  const amountTooSmall = amount <= fee
 
   const theme = useTheme()
 
@@ -97,7 +99,7 @@ export const AmountField = ({
       <Box
         className={cn([
           classes.container,
-          inSufficientBalance ? classes.hasError : ''
+          inSufficientBalance || amountTooSmall ? classes.hasError : ''
         ])}
       >
         <Box className={classes.input}>
@@ -148,6 +150,12 @@ export const AmountField = ({
       {inSufficientBalance && (
         <Typography className={classes.errorMessage}>
           Insufficient available token balance
+        </Typography>
+      )}
+
+      {amountTooSmall && (
+        <Typography className={classes.errorMessage}>
+          Withdrawal amount too small and doesnt cover withdrawal fee
         </Typography>
       )}
     </FormControl>
