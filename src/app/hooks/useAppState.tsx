@@ -11,7 +11,12 @@ interface AppState {
   isNavDrawerOpened: boolean
   isSidebarOpened: boolean
   isOnboardingPanelOpen: boolean
-  tableHasData: boolean
+  tableHasData: TableStatus[]
+}
+
+export interface TableStatus {
+  tableName: string
+  status: boolean
 }
 
 type AppActionTypes =
@@ -38,7 +43,7 @@ interface AppActions {
   setPageTitle: (title: AppState['pageTitle']) => void
   setSidebarOpened: (status: boolean) => void
   setOnboardingPanelOpened: (status: boolean) => void
-  setTableHasData: (status: boolean) => void
+  setTableHasData: (status: TableStatus[]) => void
 }
 
 const AppActionsContext = createContext<AppActions | null>(null)
@@ -48,7 +53,7 @@ const initialAppState: AppState = {
   isNavDrawerOpened: false,
   isSidebarOpened: false,
   isOnboardingPanelOpen: true,
-  tableHasData: true
+  tableHasData: []
 }
 
 const appReducer = (state: AppState, action: AppActionTypes) => {
@@ -94,8 +99,8 @@ export const AppStateProvider = (props: PropsWithChildren<any>) => {
       dispatch({ type: 'setSidebarOpened', payload: opened }),
     setOnboardingPanelOpened: (opened: boolean) =>
       dispatch({ type: 'setOnboardingPanelOpened', payload: opened }),
-    setTableHasData: (opened: boolean) =>
-      dispatch({ type: 'setTableHasData', payload: opened })
+    setTableHasData: (tableStatusList: TableStatus[]) =>
+      dispatch({ type: 'setTableHasData', payload: tableStatusList })
   }
 
   return (

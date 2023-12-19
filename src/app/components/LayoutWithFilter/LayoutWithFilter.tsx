@@ -10,6 +10,7 @@ export interface LayoutWithFilterProps {
   filter: ComponentType<any>
   content: ComponentType<any>
   secret?: boolean
+  exportButtonId?: string
 }
 
 export const LayoutWithFilter = (props: LayoutWithFilterProps) => {
@@ -28,7 +29,9 @@ export const LayoutWithFilter = (props: LayoutWithFilterProps) => {
       <RootContainer className={containerClass}>
         <Grid container direction='column'>
           <Grid className={classes.content}>
-            <SidebarWrapperKyc>{createElement(filter)}</SidebarWrapperKyc>
+            <SidebarWrapperKyc>
+              {createElement(filter, props)}
+            </SidebarWrapperKyc>
           </Grid>
           <Grid className={classes.content}>{createElement(content)}</Grid>
         </Grid>

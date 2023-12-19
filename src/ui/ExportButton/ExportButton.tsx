@@ -55,9 +55,11 @@ export const ExportButton = ({
               }`
             : get(row, col.key))
 
-        if (typeof cellValue === 'object') {
+        if (typeof cellValue === 'object' && 'side' in cellValue.props) {
           cellValue = cellValue.props.side === 'ASK' ? 'Sell' : 'Buy'
         }
+
+        console.log(cellValue)
 
         values.push(`"${cellValue as string}"`)
       })

@@ -327,8 +327,11 @@ export interface WithdrawalFeeData {
   withdrawalFee: number
 }
 export interface WithdrawalFee {
-  valid: boolean
-  data: WithdrawalFeeData
+  //   valid: boolean
+  //   data: WithdrawalFeeData
+  currency: string
+  balance: number
+  withdrawalFee: number
 }
 
 export interface DSOFormActionsProps {

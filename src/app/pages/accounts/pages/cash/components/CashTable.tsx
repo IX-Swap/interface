@@ -30,7 +30,7 @@ export const CashTable: React.FC = () => {
   return (
     <ActiveElementContextWrapper>
       <TableView<ConvertedAssetBalance>
-        uri={virtualAccounts.getByUserId(getIdFromObj(user))}
+        uri={virtualAccounts.getByUserId(getIdFromObj(user), 'Currency')}
         name={balanceQueryKeys.getByUserId(getIdFromObj(user))}
         filter={{ type: 'Currency' }}
         columns={columns}

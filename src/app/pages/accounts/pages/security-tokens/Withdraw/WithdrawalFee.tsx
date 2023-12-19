@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
-import { useFormContext } from 'react-hook-form'
+import React from 'react'
 import { Box, Button, FormControl, Typography, useTheme } from '@mui/material'
 import { makeStyles } from '@material-ui/core/styles'
 import { formatAmountValue } from 'helpers/numbers'
 import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 import { ReactComponent as CurrencyIcon } from 'assets/icons/currency.svg'
+import { ReactComponent as USDTIcon } from 'assets/icons/stablecoins/usdt.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 
@@ -22,8 +23,6 @@ export const WithdrawalFee = ({
   fee,
   inSufficientBalance
 }: WithdrawalFeeProps) => {
-  const { control, setValue } = useFormContext()
-
   const theme = useTheme()
 
   const useStyles = makeStyles(() => ({
@@ -80,17 +79,25 @@ export const WithdrawalFee = ({
   }))
 
   const classes = useStyles()
+  let Icon = SGDIcon
 
-  useEffect(() => {
-    setValue('currency', currency)
-    setValue('withdrawalFee', fee)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currency, fee])
+  console.log('balance', balance)
+  console.log('inSufficientBalance', inSufficientBalance)
+
+  switch (currency) {
+    case 'USD':
+      Icon = USDIcon
+      break
+    case 'USDC':
+      Icon = USDCIcon
+      break
+    case 'USDT':
+      Icon = USDTIcon
+      break
+  }
 
   return (
     <FormControl>
-      <input {...control.register('withdrawalFee')} hidden />
-      <input {...control.register('currency')} hidden />
       <Box className={classes.header}>
         <Typography>Withdrawal Fee</Typography>
         {inSufficientBalance ? (
@@ -136,11 +143,7 @@ export const WithdrawalFee = ({
         <Box className={classes.container}>
           <Box className={classes.amount}>{formatAmountValue(fee ?? 0)}</Box>
           <Box className={classes.currency}>
-            {currency === 'USD' ? (
-              <USDIcon width={24} height={24} />
-            ) : (
-              <SGDIcon width={24} height={24} />
-            )}
+            <Icon width={24} height={24} />
             <Typography>{currency}</Typography>
           </Box>
         </Box>

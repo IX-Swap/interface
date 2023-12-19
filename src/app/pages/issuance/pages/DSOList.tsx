@@ -11,7 +11,7 @@ export const DSOList = () => {
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
         <PageHeader
-          title='My STOs'
+          title='My Security Token Offerings'
           endComponent={
             <Button
               component={AppRouterLinkComponent}
@@ -20,6 +20,7 @@ export const DSOList = () => {
               color='primary'
               variant='contained'
               disableElevation
+              fullWidth
             >
               Create STO
             </Button>

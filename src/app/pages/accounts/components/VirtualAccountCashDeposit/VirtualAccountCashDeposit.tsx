@@ -53,27 +53,28 @@ export const VirtualAccountCashDeposit = ({
         {currencyIsSGD && (
           <TabPanel value={activeTab} index={0} pt={0}>
             <Fast
-              accountId={virtualAccountDetails.accountNumber}
+              //   accountId={virtualAccountDetails.accountNumber}
+              accountId={'821001807001'}
               currency={virtualAccountDetails.currency}
             />
           </TabPanel>
         )}
         <TabPanel value={activeTab} index={!currencyIsSGD ? 0 : 1} pt={0}>
           <AchCredits
-            accountId={virtualAccountDetails.accountNumber}
+            accountId={!currencyIsSGD ? '887000909001' : '821001815001'}
             currency={virtualAccountDetails.currency}
           />
         </TabPanel>
         <TabPanel value={activeTab} index={!currencyIsSGD ? 1 : 2} pt={0}>
           <Tt
-            accountId={virtualAccountDetails.accountNumber}
+            accountId={!currencyIsSGD ? '887000867001' : '821001823001'}
             currency={virtualAccountDetails.currency}
           />
         </TabPanel>
         {currencyIsSGD && (
           <TabPanel value={activeTab} index={3} pt={0}>
             <Meps
-              accountId={virtualAccountDetails.accountNumber}
+              accountId={'821001831001'}
               currency={virtualAccountDetails.currency}
             />
           </TabPanel>

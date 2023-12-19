@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { DSTableActions } from 'app/pages/accounts/pages/security-tokens/DSList/DSTableActions'
+import { DSTableActions } from 'app/pages/accounts/pages/security-tokens/MyTokens/DSTableActions'
 import { balance } from '__fixtures__/balance'
 import { DSRoute } from '../../router/config'
 

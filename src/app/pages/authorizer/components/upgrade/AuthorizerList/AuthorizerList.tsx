@@ -15,6 +15,7 @@ export interface AuthorizerListProps<T>
   selectable?: boolean
   itemComparator?: (a: any, b: any) => boolean
   selectionActions?: AuthorizerSelectionActions
+  exportButtonId?: string
 }
 
 export const defaultItemComparator = (a: any, b: any) => {
@@ -29,6 +30,7 @@ export const AuthorizerList = <T,>(props: AuthorizerListProps<T>) => {
       <LayoutWithFilter
         title={props.title}
         secret
+        exportButtonId={props.exportButtonId}
         filter={Filters}
         content={() => <AuthorizerTable {...props} />}
       />

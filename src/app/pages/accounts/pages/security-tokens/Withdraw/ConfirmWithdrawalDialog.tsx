@@ -14,6 +14,9 @@ import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { formatAmountValue } from 'helpers/numbers'
 import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
+import { ReactComponent as USDTIcon } from 'assets/icons/stablecoins/usdt.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
+import { isEmpty } from 'lodash'
 
 export interface ConfirmWithdrawalDialogProps {
   open: boolean
@@ -25,7 +28,7 @@ export interface ConfirmWithdrawalDialogProps {
   withdrawalAmount: string
   currency: string
   withdrawalFee: number
-  memo: string
+  memo?: string
 }
 
 export const ConfirmWithdrawalDialog = ({
@@ -90,6 +93,20 @@ export const ConfirmWithdrawalDialog = ({
   }))
 
   const classes = useStyles()
+  const TokenIcon = token?.symbol === 'USDC' ? USDCIcon : USDTIcon
+  let CurrencyIcon = SGDIcon
+
+  switch (currency) {
+    case 'USD':
+      CurrencyIcon = USDIcon
+      break
+    case 'USDC':
+      CurrencyIcon = USDCIcon
+      break
+    case 'USDT':
+      CurrencyIcon = USDTIcon
+      break
+  }
 
   return (
     <UIDialog onClose={close} open={open}>
@@ -115,19 +132,23 @@ export const ConfirmWithdrawalDialog = ({
               </Typography>
             </Box>
           </Box>
-          <Box pt={3} className={classes.field}>
+          <Box pt={3}>
             <Typography>Withdrawal Amount</Typography>
             <Box className={classes.amountContainer}>
-              <Typography className={classes.amount}>
+              <Typography className={classes.fee}>
                 {formatAmountValue(Number(withdrawalAmount))}
               </Typography>
               <Box className={classes.token}>
-                <DSOLogo
-                  size={24}
-                  uri={'/dataroom/raw/'}
-                  dsoId={token?.logo}
-                  variant='circular'
-                />
+                {token?.symbol === 'USDC' || token?.symbol === 'USDT' ? (
+                  <TokenIcon style={{ height: 24 }} />
+                ) : (
+                  <DSOLogo
+                    size={24}
+                    uri={'/dataroom/raw/'}
+                    dsoId={token?.logo}
+                    variant='circular'
+                  />
+                )}
                 <Typography>{token?.symbol}</Typography>
               </Box>
             </Box>
@@ -139,20 +160,41 @@ export const ConfirmWithdrawalDialog = ({
                 {formatAmountValue(withdrawalFee)}
               </Typography>
               <Box className={classes.token}>
-                {currency === 'USD' ? (
-                  <USDIcon width={24} height={24} />
-                ) : (
-                  <SGDIcon width={24} height={24} />
-                )}
+                <CurrencyIcon width={24} height={24} />
                 <Typography>{currency}</Typography>
               </Box>
             </Box>
           </Box>
+          {!isEmpty(memo) && (
+            <Box pt={3} className={classes.field}>
+              <Typography>Memo</Typography>
+              <Typography color='tooltip.color' mt={1.5}>
+                {memo}
+              </Typography>
+            </Box>
+          )}
           <Box pt={3}>
-            <Typography>Memo</Typography>
-            <Typography color='tooltip.color' mt={1.5}>
-              {memo}
-            </Typography>
+            <Typography>Receivable Amount</Typography>
+            <Box className={classes.amountContainer}>
+              <Typography className={classes.amount}>
+                {formatAmountValue(
+                  Number(withdrawalAmount) - Number(withdrawalFee)
+                )}
+              </Typography>
+              <Box className={classes.token}>
+                {token?.symbol === 'USDC' || token?.symbol === 'USDT' ? (
+                  <TokenIcon style={{ height: 24 }} />
+                ) : (
+                  <DSOLogo
+                    size={24}
+                    uri={'/dataroom/raw/'}
+                    dsoId={token?.logo}
+                    variant='circular'
+                  />
+                )}
+                <Typography>{token?.symbol}</Typography>
+              </Box>
+            </Box>
           </Box>
         </Box>
         <DialogActions>

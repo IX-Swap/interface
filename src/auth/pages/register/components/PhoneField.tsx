@@ -6,7 +6,6 @@ import { FocusButton } from 'auth/pages/register/components/FocusButton'
 import { useInputFocus } from 'auth/pages/register/hooks/useInputFocus'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { plainValueExtractor } from 'helpers/forms'
-// import { FocusButton } from './FocusButton'
 
 export interface MobileFieldProps {
   isMyInfo?: boolean
@@ -15,7 +14,12 @@ export interface MobileFieldProps {
 export const PhoneField = ({ isMyInfo = false }: MobileFieldProps) => {
   const { control } = useFormContext<SignupArgs>()
 
-  const { inputRef, inputDisabled, handelInputFocus } = useInputFocus()
+  const {
+    // ! Temporarily commented out. Causes white screen issue in SingPass sign-ups. See https://investax.atlassian.net/browse/IPD1-1741
+    // inputRef,
+    inputDisabled,
+    handelInputFocus
+  } = useInputFocus()
 
   return (
     <TypedField
@@ -33,7 +37,7 @@ export const PhoneField = ({ isMyInfo = false }: MobileFieldProps) => {
             marginRight: '-45px'
           }
         },
-        inputRef: inputRef,
+        // inputRef: inputRef,
         endAdornment: <FocusButton onClick={handelInputFocus} />
       }}
       disabled={isMyInfo ? inputDisabled : false}

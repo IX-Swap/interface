@@ -9,6 +9,8 @@ import { TypedField } from 'components/form/TypedField'
 import { NumericInput } from 'components/form/NumericInput'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
+import { ReactComponent as USDTIcon } from 'assets/icons/stablecoins/usdt.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
 
 interface AmountFieldProps {
   label?: string
@@ -25,8 +27,10 @@ export const AmountField = ({
 }: AmountFieldProps) => {
   const { control, setValue, watch } = useFormContext()
   const amount = watch('amount')
+  const fee = watch('withdrawalFee')
 
   const inSufficientBalance = tokenBalance < amount
+  const amountTooSmall = amount <= fee
 
   const theme = useTheme()
 
@@ -78,6 +82,7 @@ export const AmountField = ({
   }))
 
   const classes = useStyles()
+  const Icon = tokenSymbol === 'USDC' ? USDCIcon : USDTIcon
 
   return (
     <FormControl>
@@ -94,7 +99,7 @@ export const AmountField = ({
       <Box
         className={cn([
           classes.container,
-          inSufficientBalance ? classes.hasError : ''
+          inSufficientBalance || amountTooSmall ? classes.hasError : ''
         ])}
       >
         <Box className={classes.input}>
@@ -127,12 +132,17 @@ export const AmountField = ({
           >
             MAX
           </Button>
-          <DSOLogo
-            size={24}
-            uri={'/dataroom/raw/'}
-            dsoId={tokenLogo}
-            variant='circular'
-          />
+
+          {tokenSymbol === 'USDC' || tokenSymbol === 'USDT' ? (
+            <Icon style={{ height: 24 }} />
+          ) : (
+            <DSOLogo
+              size={24}
+              uri={'/dataroom/raw/'}
+              dsoId={tokenLogo}
+              variant='circular'
+            />
+          )}
           <Typography>{tokenSymbol}</Typography>
         </Box>
       </Box>
@@ -140,6 +150,12 @@ export const AmountField = ({
       {inSufficientBalance && (
         <Typography className={classes.errorMessage}>
           Insufficient available token balance
+        </Typography>
+      )}
+
+      {amountTooSmall && (
+        <Typography className={classes.errorMessage}>
+          Withdrawal amount too small and doesnt cover withdrawal fee
         </Typography>
       )}
     </FormControl>

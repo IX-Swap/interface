@@ -6,6 +6,8 @@ import { CashWithdrawal } from 'types/cashWithdrawal'
 import { TableColumn } from 'types/util'
 import { HeadCellWithSort } from 'ui/UIKit/TablesKit/components/HeadCellWithSort/HeadCellWithSort'
 import { TransactionStatus } from './TransactionStatus'
+import { isEmpty } from 'lodash'
+import { renderAddressColumn } from 'helpers/rendering'
 
 export const renderDate = (date: string) => formatDateToMMDDYY(date)
 export const renderStatus = (
@@ -16,7 +18,8 @@ export const renderStatus = (
 export const columns: Array<TableColumn<CashWithdrawal | CashDeposit>> = [
   {
     key: '_id',
-    label: 'Transaction ID'
+    label: 'Transaction ID',
+    render: txHash => (!isEmpty(txHash) ? renderAddressColumn(txHash) : '-')
   },
   {
     key: 'createdAt',
@@ -34,6 +37,8 @@ export const columns: Array<TableColumn<CashWithdrawal | CashDeposit>> = [
     key: 'amount',
     label: <HeadCellWithSort label={'Amount'} field={'amount'} />,
     secret: true,
+    headAlign: 'right',
+    align: 'right',
     render: (val: number, row: CashWithdrawal | CashDeposit) =>
       formatMoney(val, row?.currency ?? row?.asset?.symbol)
   },

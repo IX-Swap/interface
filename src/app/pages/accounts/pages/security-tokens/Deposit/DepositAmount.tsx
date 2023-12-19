@@ -15,6 +15,9 @@ export const DepositAmount = ({ tokenBalance }: DepositAmountProps) => {
   const tokenLogo = token?.logo
   const tokenSymbol = token?.symbol
 
+  console.log('tokenBalance', tokenBalance)
+  console.log('Number', Number(tokenBalance))
+
   return (
     <AmountField
       label='Deposit Amount'

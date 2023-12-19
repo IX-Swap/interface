@@ -55,6 +55,16 @@ export const renderExpectedReturn = (
   return result.toFixed(2).toString().concat('%')
 }
 
+export const renderSettings = (_: string, sto: DigitalSecurityOffering) => {
+  const settings = []
+
+  if (!sto.investable) settings.push('Non-Investable')
+  if (sto.disabled) settings.push('Disabled')
+  if (sto.promoted) settings.push('Promoted')
+
+  return settings.join(', ')
+}
+
 export const columns: Array<
   TableColumn<DigitalSecurityOffering, DSOTableColumn>
 > = [

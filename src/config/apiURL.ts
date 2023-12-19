@@ -99,13 +99,17 @@ export const accountsURL = {
     // getDepositAddress: '/custody/deposits/getDepositAddress'
     getDepositAddress: (assetId: string) =>
       `/deposits/deposit-address/${assetId}`,
-    deposit: `/deposits/sto`
+    deposit: `/deposits/token`,
+    getDeposits: `/accounts/security/deposit`,
+    exportDeposits: `/accounts/security/exportDeposit`,
+    getWithdrawals: `/accounts/security/withdrawal`,
+    exportWithdrawals: `/accounts/security/exportWithdrawal`
   },
   dsWithdrawals: {
     create: (userId?: string) => `/accounts/security/withdrawals/${userId}`,
     createCustodyWithdrawal: '/custody/withdrawals',
-    getWithdrawalFee: (networkId?: string) =>
-      `/accounts/security/withdrawals/fee-currency?network=${networkId}`
+    getWithdrawalFee: (assetId?: string) =>
+      `/accounts/security/withdrawals/fee-currency?asset=${assetId}`
   },
   withdrawalAddresses: {
     getById: (userId?: string, withdrawalAddressId?: string) =>
@@ -316,7 +320,8 @@ export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
   createManualTransaction: '/virtual-accounts/transactions/manual',
-  getByUserId: (userId?: string) => `/virtual-accounts/${userId}`,
+  getByUserId: (userId: string, type?: 'Currency' | 'Stablecoin' | 'All') =>
+    `/virtual-accounts/${userId}${type != null ? `?type=${type}` : ''}`,
   assign: '/virtual-accounts/assign',
   unassign: (accountId?: string) => `/virtual-accounts/unassign/${accountId}`,
   uploadCSV: '/virtual-accounts/upload',
