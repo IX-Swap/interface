@@ -59,11 +59,13 @@ export const WithdrawFormFields = () => {
   }, [token])
 
   const inSufficientTokenBalance = tokenBalance < amount
+  const amountTooSmall = amount <= fee
   //   const inSufficientCurencyBalance = withdrawal?.valid !== true
   const hasError =
     !hasSelectedToken ||
     !hasSelectedWalletAddress ||
     inSufficientTokenBalance ||
+    amountTooSmall ||
     amount === undefined ||
     amount <= 0 ||
     fiatBalance < fee ||
