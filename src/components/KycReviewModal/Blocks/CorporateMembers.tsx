@@ -22,11 +22,11 @@ export const CorporateMembers: FC<Props> = ({ owners }: Props) => {
             </GridItem>
 
             <GridItem>
-              <Field label="Shareholding" value={nationality} />
+              <Field label="Nationality" value={nationality} />
             </GridItem>
 
             <GridItem>
-              <Field label="Shareholding" value={designation} />
+              <Field label="Designation" value={designation} />
             </GridItem>
 
             <GridItemNew style={{ marginBottom: index !== owners.length - 1 ? 32 : 0, display: 'flex' }}>

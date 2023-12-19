@@ -109,7 +109,7 @@ const Row = ({
 const Body = ({ documents }: Pick<Props, 'documents'>) => {
   const [openPreviewModal, setPreviewModal] = useState(false)
 
-  const filteredDocs = documents.filter((doc: any) => {
+  const filteredDocs = documents?.filter((doc: any) => {
     const docName = doc?.asset?.name
     const docType = extractDocType(docName)
 
@@ -126,7 +126,7 @@ const Body = ({ documents }: Pick<Props, 'documents'>) => {
         <KycDocPreviewModal isOpen onClose={closeModal} data={filteredDocs} downloadFile={downloadFile} />
       )}
 
-      {documents.map((item, index) => {
+      {documents?.map((item, index) => {
         return <Row key={`kyc-table-${item.id}`} file={item} isFirstRow={!index} setPreviewModal={setPreviewModal} />
       })}
     </>

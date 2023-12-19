@@ -53,15 +53,16 @@ export const corporateTransformApiData = (data: any) => {
             proofOfIdentity,
           }))
         : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
-    corporateMembers: JSON.stringify(
-      corporateMembers?.map(({ id, fullName, nationality, designation, proofOfIdentity }: any) => ({
-        id: id || null,
-        fullName,
-        nationality,
-        designation,
-        proofOfIdentity: proofOfIdentity?.id || null,
-      }))
-    ),
+    corporateMembers:
+      corporateMembers.length > 0
+        ? corporateMembers?.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+            id,
+            fullName,
+            shareholding,
+            proofOfAddress,
+            proofOfIdentity,
+          }))
+        : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
     corporateDocuments: documents?.filter(({ type }: any) => type === 'corporate'),
     financialDocuments: documents?.filter(({ type }: any) => type === 'financial'),
     removedDocuments: [],

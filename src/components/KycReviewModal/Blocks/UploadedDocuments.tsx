@@ -13,7 +13,7 @@ interface Props {
   title: string
 }
 
-export const UploadedDocuments = ({ data }: Props) => {
+export const UploadedDocuments = ({ data, title }: Props) => {
   return (
     <Block title={title}>
       <Content>
