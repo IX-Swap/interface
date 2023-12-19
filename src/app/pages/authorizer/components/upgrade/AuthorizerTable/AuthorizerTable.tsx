@@ -70,6 +70,7 @@ export const AuthorizerTable = <T,>(
       )}
       <Grid item xs={12}>
         <TableView<T>
+          {...props}
           name={name}
           uri={uri}
           columns={columns}

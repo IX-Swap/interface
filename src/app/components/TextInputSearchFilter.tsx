@@ -61,7 +61,7 @@ export const TextInputSearchFilter = (props: TextInputSearchFilterProps) => {
 
               if (value !== '') {
                 onChange(value)
-                onInputCb?.(value)
+                // onInputCb?.(value)
               } else {
                 onClear()
               }
