@@ -500,15 +500,34 @@ interface ChooseFileTypes {
 
 export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }: ChooseFileTypes) => {
   return (
-    <Box style={{ maxWidth: 200 }}>
+    <Box style={{ maxWidth: '100%' }}>
       {label && <Label label={label} />}
       {file ? (
         <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
       ) : (
-        <Upload file={file} onDrop={onDrop} data-testid={id}>
-          <ButtonOutlined type="button" style={{ height: 52, padding: '7px 16px' }}>
-            <EllipsisText>{(file as any)?.name || <Trans>Choose File</Trans>}</EllipsisText>
-          </ButtonOutlined>
+        // <Upload file={file} onDrop={onDrop} data-testid={id}>
+        //   <ButtonOutlined type="button" style={{ height: 52, padding: '7px 16px' }}>
+        //     <EllipsisText>{(file as any)?.name || <Trans>Choose File</Trans>}</EllipsisText>
+        //   </ButtonOutlined>
+        // </Upload>
+
+        <Upload
+          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          data-testid={id}
+          file={null}
+          onDrop={onDrop}
+        >
+          <UploaderCard>
+            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
+              <StyledUploadLogo />
+              <TYPE.small textAlign="center" marginTop="8px" color={'#666680'}>
+                Drag and Drop
+              </TYPE.small>
+              <TYPE.small display="flex" textAlign="center" color={'#666680'}>
+                or <Text style={{ marginLeft: 2, color: '#6666FF' }}>Upload</Text>
+              </TYPE.small>
+            </Flex>
+          </UploaderCard>
         </Upload>
       )}
       {error && (
