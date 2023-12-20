@@ -25,7 +25,7 @@ export const useWalletAddresses = (
   const { data, ...rest } = useQuery(['wallet-addresses'], getWallets)
 
   return {
-    data: data?.data[0].documents,
+    data: data?.data[0]?.documents ?? [],
     ...rest
   }
 }
