@@ -9,7 +9,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import React from 'react'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
-import { Asset } from 'types/asset'
+import { Asset, TokenType } from 'types/asset'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { formatAmountValue } from 'helpers/numbers'
 import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
@@ -25,7 +25,7 @@ export interface ConfirmWithdrawalDialogProps {
   walletName: string
   walletAddress: string
   token: Asset
-  tokenType: 'Security' | 'Stablecoin'
+  tokenType: TokenType
   withdrawalAmount: string
   currency: string
   withdrawalFee: number

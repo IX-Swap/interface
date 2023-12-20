@@ -2,6 +2,7 @@ import { NumberFormat } from './util'
 import { PaginationArgs } from 'services/api/types'
 
 export type AssetType = 'Currency' | 'Security' | 'Currency,Stablecoin'
+export type TokenType = 'Security' | 'Stablecoin'
 
 export interface GetAssetsArgs extends PaginationArgs {
   type?: AssetType
