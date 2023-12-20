@@ -118,7 +118,6 @@ export const corporateErrorsSchema = yup.object().shape({
   businessActivity: yup.string().required('Required'),
 
   registrationNumber: yup.string().required('Required'),
-  incorporationDate: yup.mixed().nullable().required('Required'),
   inFatfJurisdiction: yup.string().required('Required'),
 
   personnelName: yup.string().required('Required'),
@@ -130,6 +129,7 @@ export const corporateErrorsSchema = yup.object().shape({
     .max(15, 'Must be valid phone number')
     .required('Required'),
   authorizationDocuments: yup.array().min(1, 'Required').nullable(),
+  authorizationIdentity: yup.array().min(1, 'Required').nullable(),
   address: yup.string().required('Required'),
   postalCode: yup.string().required('Required'),
   country: yup.object().nullable().required('Required'),
@@ -172,9 +172,10 @@ export const corporateErrorsSchema = yup.object().shape({
     .of(
       yup.object().shape({
         fullName: yup.string().required('Required'),
+        nationality: yup.string().required('Required'),
+        address: yup.string().required('Required'),
         shareholding: yup.number().min(1, 'Min 1').max(100, 'Max 10').required('Required'),
         proofOfIdentity: yup.mixed().nullable().required('Required'),
-        proofOfAddress: yup.mixed().nullable().required('Required'),
       })
     )
     .min(1, 'At least one beneficial owner')
@@ -186,6 +187,18 @@ export const corporateErrorsSchema = yup.object().shape({
       }
       return true
     }),
+  corporateMembers: yup
+    .array()
+    .of(
+      yup.object().shape({
+        fullName: yup.string().required('Required'),
+        nationality: yup.string().required('Required'),
+        designation: yup.string().required('Required'),
+        proofOfIdentity: yup.mixed().nullable().required('Required'),
+      })
+    )
+    .min(1, 'At least one corporate member')
+    .required('Required'),  
   corporateDocuments: yup.array().min(1, 'Required').nullable(),
   financialDocuments: yup.array().min(1, 'Required').nullable(),
 })

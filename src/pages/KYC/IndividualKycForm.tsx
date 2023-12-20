@@ -746,7 +746,7 @@ export default function IndividualKycForm() {
                           </FormGrid>
                           {/* <FormGrid> */}
                           <TextInput
-                            disabled
+                            disabled={true}
                             style={{ background: '#F7F7FA' }}
                             placeholder="Email address"
                             id="emailAddressField"

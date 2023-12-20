@@ -27,7 +27,7 @@ import { countriesList } from 'constants/countriesList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { DateInput } from 'components/DateInput'
 
-import { Select, TextInput, Uploader } from './common'
+import { CorporateMembersTable, Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
 import {
@@ -171,7 +171,7 @@ export default function CorporateKycForm() {
   const addBeneficiary = (owners: any, setFieldValue: any) => {
     setFieldValue(
       'beneficialOwners',
-      [...owners, { fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+      [...owners, { fullName: '', nationality: '', address: '', shareholding: '', proofOfIdentity: null }],
       false
     )
   }
@@ -184,9 +184,56 @@ export default function CorporateKycForm() {
     newData.splice(index, 1)
 
     if (!newData.length) {
-      newData.push({ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null })
+      newData.push({ fullName: '', nationality: '', address: '', shareholding: '', proofOfIdentity: null })
     }
     setFieldValue('beneficialOwners', newData, false)
+  }
+
+  const changeCorporateMembers = (
+    fieldName: string,
+    value: string | FileWithPath | null,
+    index: number,
+    owners: any,
+    setFieldValue: any,
+    specificErrorField: string
+  ) => {
+    const beneficiar = owners[index]
+    const newData = [...owners]
+
+    if (value && typeof value === 'object' && value?.size > MAX_FILE_UPLOAD_SIZE) {
+      showError(MAX_FILE_UPLOAD_SIZE_ERROR)
+      return
+    }
+
+    if (beneficiar[fieldName]?.id) {
+      setFieldValue('removedDocuments', [beneficiar[fieldName].id])
+    }
+    newData.splice(index, 1, { ...beneficiar, [fieldName]: value })
+
+    setFieldValue('corporateMembers', newData, false)
+    validationSeen(specificErrorField)
+    validationSeen('corporateMembers')
+  }
+
+  const addCorporateMember = (owners: any, setFieldValue: any) => {
+    setFieldValue(
+      'corporateMembers',
+      [...owners, { fullName: '', nationality: '', designation: '', proofOfIdentity: null }],
+      false
+    )
+  }
+
+  const deleteCorporateMembers = (index: number, owners: any, removedBeneficialOwners: any[], setFieldValue: any) => {
+    const newData = [...owners]
+    if (newData[index]?.id) {
+      setFieldValue('removedCorporateMembers', [...removedBeneficialOwners, newData[index].id])
+    }
+    newData.splice(index, 1)
+
+    if (!newData.length) {
+      newData.push({ fullName: '', nationality: '', designation: '', proofOfIdentity: null })
+    }
+    setFieldValue('corporateMembers', newData, false)
   }
 
   const onSourceOfFundsChange = (source: string, fields: any[], setFieldValue: any) => {
@@ -447,12 +494,12 @@ export default function CorporateKycForm() {
 
                 values.taxIdAvailable = true
               }
-              if (!values.reason) values.reason = 'A'
-              {
-                /* {({ values, setFieldValue, dirty, handleSubmit }) => {
-              if (values.taxIdAvailable === undefined) values.taxIdAvailable = true
-              if (!values.reason) values.reason = 'A' */
-              }
+              // if (!values.reason) values.reason = 'A'
+              // {
+              //   /* {({ values, setFieldValue, dirty, handleSubmit }) => {
+              // if (values.taxIdAvailable === undefined) values.taxIdAvailable = true
+              // if (!values.reason) values.reason = 'A' */
+              // }
 
               const shouldValidate = dirty && isSubmittedOnce
               const infoFilled =
@@ -461,7 +508,6 @@ export default function CorporateKycForm() {
                 !errors.countryOfIncorporation &&
                 !errors.businessActivity &&
                 !errors.registrationNumber &&
-                !errors.incorporationDate &&
                 !errors.inFatfJurisdiction
               const authorizedPersonnelFilled =
                 shouldValidate &&
@@ -469,6 +515,7 @@ export default function CorporateKycForm() {
                 !errors.designation &&
                 !errors.email &&
                 !errors.phoneNumber &&
+                !errors.authorizationIdentity &&
                 !errors.authorizationDocuments
               const addressFilled =
                 shouldValidate && !errors.address && !errors.postalCode && !errors.city && !errors.country
@@ -487,6 +534,8 @@ export default function CorporateKycForm() {
               const filesFilled = shouldValidate && !errors.financialDocuments && !errors.corporateDocuments
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
+              const corporateMembersFilled =
+                shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('corporateMembers'))
 
               return (
                 <FormRow>
@@ -560,26 +609,12 @@ export default function CorporateKycForm() {
                             />
                             <Select
                               withScroll
-                              label="Type of legal entity"
-                              placeholder="Type of legal entity"
+                              label="Type of Legal Entity"
+                              placeholder="Type of Legal Entity"
                               selectedItem={values.typeOfLegalEntity}
                               items={legalEntityTypes}
                               onSelect={(entityType) => onSelectChange('typeOfLegalEntity', entityType, setFieldValue)}
                               error={errors.typeOfLegalEntity && errors.typeOfLegalEntity}
-                            />
-                          </FormGrid>
-                          <FormGrid>
-                            <DateInput
-                              label="Date of Incorporation"
-                              placeholder="Date of Incorporation"
-                              maxHeight={60}
-                              error={errors.incorporationDate}
-                              value={values.incorporationDate}
-                              onChange={(value) => {
-                                setFieldValue('incorporationDate', value, false)
-                                validationSeen('incorporationDate')
-                              }}
-                              maxDate={new Date()}
                             />
                           </FormGrid>
                           <FormGrid columns={1}>
@@ -597,7 +632,7 @@ export default function CorporateKycForm() {
                       <FormCard id="authorizedPersonnel">
                         <RowBetween marginBottom="32px">
                           <TYPE.title7>
-                            <Trans>Company Authorized Personnel</Trans>
+                            <Trans>Authorized Personnel</Trans>
                           </TYPE.title7>
                           {authorizedPersonnelFilled && <StyledBigPassed />}
                         </RowBetween>
@@ -633,6 +668,7 @@ export default function CorporateKycForm() {
                               label="Email address"
                               placeholder="Email address"
                               error={errors.email && errors.email}
+                              disabled={true}
                             />
                             <PhoneInput
                               onChange={(value) => onChangeInput('phoneNumber', value, values, setFieldValue)}
@@ -657,6 +693,21 @@ export default function CorporateKycForm() {
                                 setFieldValue
                               )}
                             />
+                            <Uploader
+                              subtitle="Passport, National ID, or Driving License"
+                              error={errors.authorizationIdentity}
+                              title="Proof of Identity"
+                              files={values.authorizationIdentity}
+                              onDrop={(file) => {
+                                handleDropImage(file, values, 'authorizationIdentity', setFieldValue)
+                              }}
+                              handleDeleteClick={handleImageDelete(
+                                values,
+                                'authorizationIdentity',
+                                values.removedDocuments,
+                                setFieldValue
+                              )}
+                            />
                           </FormGrid>
                         </Column>
                       </FormCard>
@@ -664,7 +715,7 @@ export default function CorporateKycForm() {
                       <FormCard id="address">
                         <RowBetween marginBottom="32px">
                           <TYPE.title7>
-                            <Trans>Address</Trans>
+                            <Trans>Business Address</Trans>
                           </TYPE.title7>
                           {addressFilled && <StyledBigPassed />}
                         </RowBetween>
@@ -714,7 +765,7 @@ export default function CorporateKycForm() {
                       <FormCard id="residentialAddress">
                         <RowBetween marginBottom="32px">
                           <TYPE.title7>
-                            <Trans>Residential Address</Trans>
+                            <Trans>Registered Address</Trans>
                           </TYPE.title7>
                           {residentialAddressFilled && <StyledBigPassed />}
                         </RowBetween>
@@ -857,11 +908,10 @@ export default function CorporateKycForm() {
                               isRadio
                               checked={values.isUSTaxPayer === 1}
                               onClick={() => onSelectChange('isUSTaxPayer', 1, setFieldValue)}
-                              label={`I confirm that I am a US citizen and/or resident in the US for tax purposes and my US federal taxpayer ID number (US TIN) is as follows: `}
+                              label={`I confirm that the entity is in the US for tax purposes and its US federal taxpayer ID number (US TIN) is as follows: `}
                             />
                             {values.isUSTaxPayer === 1 && (
                               <TextInput
-                                style={{ width: 284 }}
                                 placeholder="ID Number.."
                                 value={values.usTin || ''}
                                 onChange={(e: any) =>
@@ -875,7 +925,7 @@ export default function CorporateKycForm() {
                             isRadio
                             checked={values.isUSTaxPayer === 0}
                             onClick={() => onSelectChange('isUSTaxPayer', 0, setFieldValue)}
-                            label="I confirm that I am not a US citizen or resident in the US for tax purposes "
+                            label="I confirm that the entity is not resident in the US for tax purposes "
                           />
                           {errors.isUSTaxPayer && (
                             <TYPE.small marginTop="-4px" color={'red1'}>
@@ -895,8 +945,8 @@ export default function CorporateKycForm() {
 
                         <ExtraInfoCard>
                           <TYPE.buttonMuted>
-                            Please list all jurisdictions where the Entity is a resident for tax purposes and the
-                            respective TIN for each jurisdiction.
+                            Please list all countries where the entity is a resident for tax purposes and the respective
+                            TIN for each country.
                           </TYPE.buttonMuted>
                         </ExtraInfoCard>
 
@@ -944,26 +994,14 @@ export default function CorporateKycForm() {
 
                         {!values.taxIdAvailable && (
                           <Column style={{ gap: '20px', marginTop: 20 }}>
-                            <FormGrid columns={1}>
-                              <Checkbox
-                                isRadio
-                                checked={values.reason === 'A'}
-                                onClick={() => onSelectChange('reason', 'A', setFieldValue)}
-                                label={`Reason A - The country/jurisdiction where the Account Holder is resident does not issue TINs to its residents`}
-                              />
-                              <Checkbox
-                                isRadio
-                                checked={values.reason === 'B'}
-                                onClick={() => onSelectChange('reason', 'B', setFieldValue)}
-                                label="Reason B - The Account Holder is otherwise unable to obtain a TIN or equivalent number (Please explain why your are unable to obtain a TIN in the below table if you have selected this reason)"
-                              />
-                              <Checkbox
-                                isRadio
-                                checked={values.reason === 'C'}
-                                onClick={() => onSelectChange('reason', 'C', setFieldValue)}
-                                label="Reason C - No TIN is required. (Note. Only select this reason if the domestic law of the relevant jurisdiction does not require the collection of the TIN issued by such jurisdiction)"
-                              />
-                            </FormGrid>
+                            <TextInput
+                              value={values.reason}
+                              placeholder="Reason"
+                              onChange={(e: any) =>
+                                onChangeInput('reason', e.currentTarget.value, values, setFieldValue)
+                              }
+                              error={errors.reason && errors.reason}
+                            />
                           </Column>
                         )}
                       </FormCard>
@@ -977,25 +1015,15 @@ export default function CorporateKycForm() {
                         </RowBetween>
                         <ExtraInfoCard style={{ marginBottom: 20 }}>
                           <TYPE.buttonMuted>
-                            Please upload the Proof of Identity and Proof of Address for Beneficial Owner. All account
-                            statements and documents should be dated within 3 months.
+                            Please upload Proof of Identity (Passport, National ID or Driving License) dated within the
+                            last 3 months.
                           </TYPE.buttonMuted>
                         </ExtraInfoCard>
                         <BeneficialOwnersTable data={values.beneficialOwners} />
                         <Column style={{ gap: '20px' }}>
                           {values.beneficialOwners?.map((beneficiar: Record<string, string | any>, index: number) => (
                             <>
-                              <FormGrid columns={5} key={index}>
-                                {/* <DeleteRow
-                                  onClick={() =>
-                                    deleteBeneficiar(
-                                      index,
-                                      values?.beneficialOwners,
-                                      values?.removedBeneficialOwners,
-                                      setFieldValue
-                                    )
-                                  }
-                                > */}
+                              <FormGrid columns={6} key={index}>
                                 <TextInput
                                   value={beneficiar.fullName}
                                   placeholder={isMobile ? 'Full Name' : ''}
@@ -1014,12 +1042,48 @@ export default function CorporateKycForm() {
                                     errors[`beneficialOwners[${index}].fullName`]
                                   }
                                 />
+                                <TextInput
+                                  value={beneficiar.nationality}
+                                  placeholder={isMobile ? 'Nationality' : ''}
+                                  onChange={(e: any) =>
+                                    changeBeneficiar(
+                                      'nationality',
+                                      e.currentTarget.value,
+                                      index,
+                                      values.beneficialOwners,
+                                      setFieldValue,
+                                      `beneficialOwners[${index}].nationality`
+                                    )
+                                  }
+                                  error={
+                                    errors[`beneficialOwners[${index}].nationality`] &&
+                                    errors[`beneficialOwners[${index}].nationality`]
+                                  }
+                                />
+                                <TextInput
+                                  value={beneficiar.address}
+                                  placeholder={isMobile ? 'Address' : ''}
+                                  onChange={(e: any) =>
+                                    changeBeneficiar(
+                                      'address',
+                                      e.currentTarget.value,
+                                      index,
+                                      values.beneficialOwners,
+                                      setFieldValue,
+                                      `beneficialOwners[${index}].address`
+                                    )
+                                  }
+                                  error={
+                                    errors[`beneficialOwners[${index}].address`] &&
+                                    errors[`beneficialOwners[${index}].address`]
+                                  }
+                                />
                                 {/* </DeleteRow> */}
                                 <TextInput
                                   type="number"
                                   onWheel={() => (document.activeElement as HTMLElement).blur()}
                                   style={{ textAlign: 'center', fontSize: '20px' }}
-                                  placeholder={isMobile ? '% Shareholding' : ''}
+                                  placeholder={isMobile ? '% Beneficial Ownership' : ''}
                                   value={beneficiar.shareholding}
                                   onChange={(e: any) =>
                                     changeBeneficiar(
@@ -1032,34 +1096,6 @@ export default function CorporateKycForm() {
                                     )
                                   }
                                   error={errors[`beneficialOwners[${index}].shareholding`] && 'Required'}
-                                />
-                                <ChooseFile
-                                  file={beneficiar.proofOfAddress}
-                                  label={isMobile ? 'Proof of Address' : null}
-                                  onDrop={(file) =>
-                                    changeBeneficiar(
-                                      'proofOfAddress',
-                                      file,
-                                      index,
-                                      values.beneficialOwners,
-                                      setFieldValue,
-                                      `beneficialOwners[${index}].proofOfAddress`
-                                    )
-                                  }
-                                  error={
-                                    errors[`beneficialOwners[${index}].proofOfAddress`] &&
-                                    errors[`beneficialOwners[${index}].proofOfAddress`]
-                                  }
-                                  handleDeleteClick={() =>
-                                    changeBeneficiar(
-                                      'proofOfAddress',
-                                      null,
-                                      index,
-                                      values.beneficialOwners,
-                                      setFieldValue,
-                                      `beneficialOwners[${index}].proofOfAddress`
-                                    )
-                                  }
                                 />
                                 <ChooseFile
                                   file={beneficiar.proofOfIdentity}
@@ -1089,10 +1125,6 @@ export default function CorporateKycForm() {
                                     )
                                   }
                                 />
-                                {/* <IconButton
-                                onClick={() => removeTaxDeclaration(values, index, setFieldValue, remove)}
-                                style={{ padding: '0 1rem', marginTop: '2rem' }}
-                                > */}
                                 <TrashIcon
                                   style={{ cursor: 'pointer', marginTop: '5px' }}
                                   onClick={() =>
@@ -1125,6 +1157,140 @@ export default function CorporateKycForm() {
                         </ExtraInfoCardCountry>
                       </FormCard>
 
+                      <FormCard id="corporate-members">
+                        <RowBetween marginBottom="32px">
+                          <TYPE.title7>
+                            <Trans>Directors / Officers / Managers Information</Trans>
+                          </TYPE.title7>
+                          {corporateMembersFilled && <StyledBigPassed />}
+                        </RowBetween>
+                        <ExtraInfoCard style={{ marginBottom: 20 }}>
+                          <TYPE.buttonMuted>
+                            Please upload Proof of Identity (Passport, National ID or Driving License) dated within the
+                            last 3 months.
+                          </TYPE.buttonMuted>
+                        </ExtraInfoCard>
+                        <CorporateMembersTable data={values.corporateMembers} />
+                        <Column style={{ gap: '20px' }}>
+                          {values.corporateMembers?.map(
+                            (corporateMember: Record<string, string | any>, index: number) => (
+                              <>
+                                <FormGrid columns={6} key={index}>
+                                  <TextInput
+                                    value={corporateMember.fullName}
+                                    placeholder={isMobile ? 'Full Name' : ''}
+                                    onChange={(e: any) =>
+                                      changeCorporateMembers(
+                                        'fullName',
+                                        e.currentTarget.value,
+                                        index,
+                                        values.corporateMembers,
+                                        setFieldValue,
+                                        `corporateMembers[${index}].fullName`
+                                      )
+                                    }
+                                    error={
+                                      errors[`corporateMembers[${index}].fullName`] &&
+                                      errors[`corporateMembers[${index}].fullName`]
+                                    }
+                                  />
+                                  <TextInput
+                                    value={corporateMember.nationality}
+                                    placeholder={isMobile ? 'Nationality' : ''}
+                                    onChange={(e: any) =>
+                                      changeCorporateMembers(
+                                        'nationality',
+                                        e.currentTarget.value,
+                                        index,
+                                        values.corporateMembers,
+                                        setFieldValue,
+                                        `corporateMembers[${index}].nationality`
+                                      )
+                                    }
+                                    error={
+                                      errors[`corporateMembers[${index}].nationality`] &&
+                                      errors[`corporateMembers[${index}].nationality`]
+                                    }
+                                  />
+                                  <TextInput
+                                    value={corporateMember.designation}
+                                    placeholder={isMobile ? 'Designation' : ''}
+                                    onChange={(e: any) =>
+                                      changeCorporateMembers(
+                                        'designation',
+                                        e.currentTarget.value,
+                                        index,
+                                        values.corporateMembers,
+                                        setFieldValue,
+                                        `corporateMembers[${index}].designation`
+                                      )
+                                    }
+                                    error={
+                                      errors[`corporateMembers[${index}].designation`] &&
+                                      errors[`corporateMembers[${index}].designation`]
+                                    }
+                                  />
+                                  <ChooseFile
+                                    file={corporateMember.proofOfIdentity}
+                                    label={isMobile ? 'Proof of Identity' : null}
+                                    onDrop={(file) =>
+                                      changeCorporateMembers(
+                                        'proofOfIdentity',
+                                        file,
+                                        index,
+                                        values.corporateMembers,
+                                        setFieldValue,
+                                        `corporateMembers[${index}].proofOfIdentity`
+                                      )
+                                    }
+                                    error={
+                                      errors[`corporateMembers[${index}].proofOfIdentity`] &&
+                                      errors[`corporateMembers[${index}].proofOfIdentity`]
+                                    }
+                                    handleDeleteClick={() =>
+                                      changeCorporateMembers(
+                                        'proofOfIdentity',
+                                        null,
+                                        index,
+                                        values.corporateMembers,
+                                        setFieldValue,
+                                        `corporateMembers[${index}].proofOfIdentity`
+                                      )
+                                    }
+                                  />
+                                  <TrashIcon
+                                    style={{ cursor: 'pointer', marginTop: '5px' }}
+                                    onClick={() =>
+                                      deleteCorporateMembers(
+                                        index,
+                                        values?.corporateMembers,
+                                        values?.removedCorporateMembers,
+                                        setFieldValue
+                                      )
+                                    }
+                                  />
+                                  {/* </IconButton> */}
+                                </FormGrid>
+                                {values.corporateMembers.length - 1 > index && <Divider />}
+                              </>
+                            )
+                          )}
+                        </Column>
+                        {errors.corporateMembers && (
+                          <TYPE.small marginTop="4px" color={'red1'}>{t`${errors.corporateMembers}`}</TYPE.small>
+                        )}
+                        <ExtraInfoCardCountry
+                          // type="button"
+                          style={{ marginTop: 32, fontSize: 16, padding: 15 }}
+                          onClick={() => addCorporateMember(values.corporateMembers, setFieldValue)}
+                        >
+                          <RowCenter style={{ color: '#6666FF' }}>
+                            <Plus style={{ width: '20px', marginRight: '5px', cursor: 'pointer' }} />
+                            <Box> Add Corporate Member </Box>
+                          </RowCenter>
+                        </ExtraInfoCardCountry>
+                      </FormCard>
+
                       <FormCard id="upload">
                         <RowBetween marginBottom="32px">
                           <TYPE.title7>
@@ -1132,11 +1298,17 @@ export default function CorporateKycForm() {
                           </TYPE.title7>
                           {filesFilled && <StyledBigPassed />}
                         </RowBetween>
+                        <ExtraInfoCard style={{ marginBottom: 20 }}>
+                          <TYPE.buttonMuted>
+                            Please upload the following documents. All documents should be dated within the last 3
+                            months. Type of document format supported is PDF, JPG and PNG.
+                          </TYPE.buttonMuted>
+                        </ExtraInfoCard>
 
                         <Column style={{ gap: '40px' }}>
                           <Uploader
                             title="Corporate documents"
-                            subtitle="Company Registry Profile, Certificate of Incorporation, Memorandum and article association, Corporate registry profile, Company Organization Chart, Register of shareholders and directors and Partnership Deed, Trust Deed."
+                            subtitle="Certificate of Incorporation, Registration or Formation, Certificate of Good Standing, Memorandum and Articles of Association, Register of Shareholders, Directors, Managers and/or Officers, Board Resolution or Mandate authorizing the establishment of business relationship with AMM (Bahamas) Ltd, Partnership or Trust Agreement or Deed, or their respective equivalents."
                             files={values.corporateDocuments}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'corporateDocuments', setFieldValue)
@@ -1149,10 +1321,27 @@ export default function CorporateKycForm() {
                               setFieldValue
                             )}
                           />
+                        </Column>
+                      </FormCard>
 
+                      <FormCard id="upload">
+                        <RowBetween marginBottom="32px">
+                          <TYPE.title7>
+                            <Trans>Additional Documents</Trans>
+                          </TYPE.title7>
+                          {filesFilled && <StyledBigPassed />}
+                        </RowBetween>
+                        <ExtraInfoCard style={{ marginBottom: 20 }}>
+                          <TYPE.buttonMuted>
+                            Please upload the following documents. All documents should be dated within the last 3
+                            months. Type of document format supported is PDF, JPG and PNG.
+                          </TYPE.buttonMuted>
+                        </ExtraInfoCard>
+
+                        <Column style={{ gap: '40px' }}>
                           <Uploader
                             title="Additional Documents"
-                            subtitle="Please upload your balance sheet , P&L statement or Annual Returns"
+                            subtitle="For IXS Launchpad Issuers and IXS DEX Applicants, please also enclose the most recent financial documents (balance sheet, P&L statement or Annual Returns), Certificate of Incumbency and Company Organization Chart showing Ownership Structure (signed copy). All documents must be dated within the last 3 months."
                             files={values.financialDocuments}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'financialDocuments', setFieldValue)
@@ -1186,7 +1375,7 @@ export default function CorporateKycForm() {
                           passed: infoFilled,
                         },
                         authorizedPersonnel: {
-                          title: 'Company Authorized Personnel',
+                          title: 'Authorized Personnel',
                           href: 'authorizedPersonnel',
                           passed: authorizedPersonnelFilled,
                         },
@@ -1196,7 +1385,7 @@ export default function CorporateKycForm() {
                           passed: addressFilled,
                         },
                         residentialAddress: {
-                          title: 'Residential Address',
+                          title: 'Registered Address',
                           href: 'residentialAddress',
                           passed: residentialAddressFilled,
                         },
@@ -1219,6 +1408,11 @@ export default function CorporateKycForm() {
                           title: 'Beneficial Owners Information',
                           href: 'beneficial-owners',
                           passed: beneficialOwnersFilled,
+                        },
+                        corporateMembers: {
+                          title: 'Directors / Officers / Managers Information',
+                          href: 'corporate-members',
+                          passed: corporateMembersFilled,
                         },
                         upload: {
                           title: 'Corporate Documents',
