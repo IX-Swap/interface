@@ -7,6 +7,7 @@ import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
 import { Prompt } from 'react-router-dom'
 import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg'
+import { ReactComponent as TrashNoBorder } from 'assets/images/TrashNoBorder.svg'
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
 import { ButtonText, ButtonIXSGradient } from 'components/Button'
@@ -1019,14 +1020,15 @@ export default function CorporateKycForm() {
                             last 3 months.
                           </TYPE.buttonMuted>
                         </ExtraInfoCard>
-                        <BeneficialOwnersTable data={values.beneficialOwners} />
+                        {/* <BeneficialOwnersTable data={values.beneficialOwners} /> */}
                         <Column style={{ gap: '20px' }}>
                           {values.beneficialOwners?.map((beneficiar: Record<string, string | any>, index: number) => (
                             <>
-                              <FormGrid columns={6} key={index}>
+                              <FormGrid columns={2} key={index}>
                                 <TextInput
                                   value={beneficiar.fullName}
-                                  placeholder={isMobile ? 'Full Name' : ''}
+                                  placeholder='Full Name'
+                                  label='Full Name'
                                   onChange={(e: any) =>
                                     changeBeneficiar(
                                       'fullName',
@@ -1044,7 +1046,8 @@ export default function CorporateKycForm() {
                                 />
                                 <TextInput
                                   value={beneficiar.nationality}
-                                  placeholder={isMobile ? 'Nationality' : ''}
+                                  placeholder='Nationality'
+                                  label='Nationality'
                                   onChange={(e: any) =>
                                     changeBeneficiar(
                                       'nationality',
@@ -1062,7 +1065,8 @@ export default function CorporateKycForm() {
                                 />
                                 <TextInput
                                   value={beneficiar.address}
-                                  placeholder={isMobile ? 'Address' : ''}
+                                  placeholder='Address'
+                                  label='Address'
                                   onChange={(e: any) =>
                                     changeBeneficiar(
                                       'address',
@@ -1082,8 +1086,8 @@ export default function CorporateKycForm() {
                                 <TextInput
                                   type="number"
                                   onWheel={() => (document.activeElement as HTMLElement).blur()}
-                                  style={{ textAlign: 'center', fontSize: '20px' }}
-                                  placeholder={isMobile ? '% Beneficial Ownership' : ''}
+                                  placeholder='%'
+                                  label='% Beneficial Ownership'
                                   value={beneficiar.shareholding}
                                   onChange={(e: any) =>
                                     changeBeneficiar(
@@ -1097,46 +1101,59 @@ export default function CorporateKycForm() {
                                   }
                                   error={errors[`beneficialOwners[${index}].shareholding`] && 'Required'}
                                 />
+                                {/* </IconButton> */}
+                              </FormGrid>
+                              <FormGrid columns={1} key={index}>
                                 <ChooseFile
-                                  file={beneficiar.proofOfIdentity}
-                                  label={isMobile ? 'Proof of Identity' : null}
-                                  onDrop={(file) =>
-                                    changeBeneficiar(
-                                      'proofOfIdentity',
-                                      file,
-                                      index,
-                                      values.beneficialOwners,
-                                      setFieldValue,
-                                      `beneficialOwners[${index}].proofOfIdentity`
-                                    )
-                                  }
-                                  error={
-                                    errors[`beneficialOwners[${index}].proofOfIdentity`] &&
-                                    errors[`beneficialOwners[${index}].proofOfIdentity`]
-                                  }
-                                  handleDeleteClick={() =>
-                                    changeBeneficiar(
-                                      'proofOfIdentity',
-                                      null,
-                                      index,
-                                      values.beneficialOwners,
-                                      setFieldValue,
-                                      `beneficialOwners[${index}].proofOfIdentity`
-                                    )
-                                  }
-                                />
-                                <TrashIcon
-                                  style={{ cursor: 'pointer', marginTop: '5px' }}
-                                  onClick={() =>
+                                    file={beneficiar.proofOfIdentity}
+                                    label='Proof of Identity'
+                                    onDrop={(file) =>
+                                      changeBeneficiar(
+                                        'proofOfIdentity',
+                                        file,
+                                        index,
+                                        values.beneficialOwners,
+                                        setFieldValue,
+                                        `beneficialOwners[${index}].proofOfIdentity`
+                                      )
+                                    }
+                                    error={
+                                      errors[`beneficialOwners[${index}].proofOfIdentity`] &&
+                                      errors[`beneficialOwners[${index}].proofOfIdentity`]
+                                    }
+                                    handleDeleteClick={() =>
+                                      changeBeneficiar(
+                                        'proofOfIdentity',
+                                        null,
+                                        index,
+                                        values.beneficialOwners,
+                                        setFieldValue,
+                                        `beneficialOwners[${index}].proofOfIdentity`
+                                      )
+                                    }
+                                  />
+                                  {/* <TrashIcon
+                                    style={{ cursor: 'pointer', marginTop: '5px', width: '100%' }}
+                                    onClick={() =>
+                                      deleteBeneficiar(
+                                        index,
+                                        values?.beneficialOwners,
+                                        values?.removedBeneficialOwners,
+                                        setFieldValue
+                                      )
+                                    }
+                                  /> */}
+                                  <ButtonText style={{ width: '100%', minHeight: 18, borderRadius: '8px', border: 'solid 1px #E6E6FF',padding: '18px 21px'}} onClick={(e) => {
+                                    e.preventDefault();
                                     deleteBeneficiar(
                                       index,
                                       values?.beneficialOwners,
                                       values?.removedBeneficialOwners,
                                       setFieldValue
                                     )
-                                  }
-                                />
-                                {/* </IconButton> */}
+                                  }}>
+                                    <TrashNoBorder style={{ margin: 'auto' }} type="button" />
+                                  </ButtonText>
                               </FormGrid>
                               {values.beneficialOwners.length - 1 > index && <Divider />}
                             </>
@@ -1258,7 +1275,7 @@ export default function CorporateKycForm() {
                                       )
                                     }
                                   />
-                                  <TrashIcon
+                                  {/* <TrashIcon
                                     style={{ cursor: 'pointer', marginTop: '5px' }}
                                     onClick={() =>
                                       deleteCorporateMembers(
@@ -1268,7 +1285,7 @@ export default function CorporateKycForm() {
                                         setFieldValue
                                       )
                                     }
-                                  />
+                                  /> */}
                                   {/* </IconButton> */}
                                 </FormGrid>
                                 {values.corporateMembers.length - 1 > index && <Divider />}
