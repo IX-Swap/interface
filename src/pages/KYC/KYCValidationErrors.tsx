@@ -13,7 +13,7 @@ const errorLabelMap = [
   { field: 'lastName', label: 'Last Name' },
 
   { field: 'dateOfBirth', label: 'Date of Birth' },
-  { field: 'gender', label: 'Gender' },
+  // { field: 'gender', label: 'Gender' },
 
   { field: 'nationality', label: 'Nationality' },
   { field: 'citizenship', label: 'citizenship' },
@@ -31,7 +31,7 @@ const errorLabelMap = [
   { field: 'idExpiryDate', label: 'ID ExpirationDate' },
 
   { field: 'proofOfIdentity', label: 'Proof of Identity' },
-  { field: 'proofOfAddress', label: 'Proof of Address' },
+  // { field: 'proofOfAddress', label: 'Proof of Address' },
   { field: 'selfie', label: 'Selfie' },
 
   { field: 'occupation', label: 'Occupation' },
