@@ -14,17 +14,17 @@ export const NonInvestableSwitch = (props: NonInvestableSwitchProps) => {
     dso._id
   )
 
-  const isPromoted = isSuccess
-    ? updatedData?.data.promoted ?? false
-    : dso.promoted
+  const isNonInvestable = isSuccess
+    ? !(updatedData?.data.investable ?? false)
+    : !dso.investable
 
   return (
     <FormControlLabel
       control={
         <Switch
-          name='promoted'
-          defaultChecked={isPromoted}
-          onChange={async (_, checked) => await nonInvestableDSO(checked)}
+          name='investable'
+          defaultChecked={isNonInvestable}
+          onChange={async (_, checked) => await nonInvestableDSO(!checked)}
         />
       }
       label={
@@ -41,8 +41,11 @@ export const NonInvestableSwitch = (props: NonInvestableSwitchProps) => {
           <div style={{ display: 'flex' }}>
             <Typography
               variant='subtitle2'
-              style={{ fontWeight: isPromoted ? 600 : 400, marginTop: '3px' }}
-              color={isPromoted ? 'primary' : 'textPrimary'}
+              style={{
+                fontWeight: isNonInvestable ? 600 : 400,
+                marginTop: '3px'
+              }}
+              color={isNonInvestable ? 'primary' : 'textPrimary'}
             >
               Non-Investable
             </Typography>
