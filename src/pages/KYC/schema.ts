@@ -83,7 +83,7 @@ export const individualErrorsSchema = yup.object().shape({
   otherFunds: yup.string().when('sourceOfFunds', {
     is: (sourceOfFunds: string[]) => sourceOfFunds.includes('Others'),
     then: yup.string().required('Required'),
-    otherwise: yup.string(),
+    otherwise: yup.string().nullable(),
   }),
 
   isUSTaxPayer: yup.number().min(0).max(1),
@@ -142,7 +142,7 @@ export const corporateErrorsSchema = yup.object().shape({
   otherFunds: yup.string().when('sourceOfFunds', {
     is: (sourceOfFunds: string[]) => sourceOfFunds.includes('Others'),
     then: yup.string().required('Required'),
-    otherwise: yup.string(),
+    otherwise: yup.string().nullable(),
   }),
   // accredited: yup.number().min(0).max(1),
   isUSTaxPayer: yup.number().min(0).max(1),
