@@ -69,6 +69,7 @@ type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
   error?: any | JSX.Element
   required?: boolean
   tooltipText?: string | JSX.Element
+  subText?: string
 }
 
 interface KycInputLabelProps {
@@ -244,13 +245,17 @@ export const KycTextInput: FC<TextInputProps> = ({
   error = false,
   tooltipText,
   disabled = false,
+  subText,
 }: TextInputProps) => {
   return (
     <Box>
       <KycInputLabel name={name} label={label} error={error} tooltipText={tooltipText} />
-
+      <p style={{ color: '#B8B8CC', fontSize: '13px', padding: '0px 80px 0px 0px' }}>{subText}</p>
       {disabled && value ? (
-        <div>{value}</div>
+        <div>
+          {' '}
+          <StyledInput style={{ background: '#F7F7FA' }} value={value} />
+        </div>
       ) : (
         <StyledInput
           onBlur={onBlur}
@@ -262,7 +267,7 @@ export const KycTextInput: FC<TextInputProps> = ({
           style={style}
           type={type}
           autoComplete="off"
-          disabled={true}
+          disabled={disabled}
           error={error}
         />
       )}
@@ -590,7 +595,7 @@ const StyledInput = styled(Input)`
     background-color: ${({ theme: { bg0 } }) => bg0};
   }
   :disabled {
-    color: #B8B8CC;
+    color: #b8b8cc;
   }
 `
 

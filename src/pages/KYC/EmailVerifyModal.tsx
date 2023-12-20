@@ -460,7 +460,6 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, h
 
   React.useEffect(() => {
     if (reset) {
-      console.log(reset, 'kkkkkkkk')
       // Reset the code values when the reset prop changes
       setCode(Array(numberOfBoxes).fill(''))
     }
@@ -471,6 +470,11 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, h
 
   const handleCodeChange = (index: number, value: string) => {
     const newCode = [...code]
+
+  if (newCode[index] !== value) {
+    newCode[index] = '';
+  }
+
     if (/^[a-zA-Z0-9]*$/.test(value)) {
       newCode[index] = value
       setCode(newCode)
