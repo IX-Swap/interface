@@ -31,7 +31,7 @@ export const corporateTransformApiData = (data: any) => {
     },
     countryOfIncorporation: { value: 0, label: countryOfIncorporation },
     authorizationDocuments: documents?.filter(({ type }: any) => type === 'authorization'),
-    authorizedProofOfIdentity: documents?.filter(({ type }: any) => type === 'authorizationIdentity'),
+    authorizationIdentity: documents?.filter(({ type }: any) => type === 'authorizationIdentity'),
     address: address.address,
     postalCode: address.postalCode,
     country: { value: 0, label: address.country },
@@ -56,11 +56,11 @@ export const corporateTransformApiData = (data: any) => {
         : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
     corporateMembers:
       corporateMembers.length > 0
-        ? corporateMembers?.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+        ? corporateMembers?.map(({ id, fullName, nationality, designation, proofOfIdentity }: any) => ({
             id,
             fullName,
-            shareholding,
-            proofOfAddress,
+            nationality,
+            designation,
             proofOfIdentity,
           }))
         : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],

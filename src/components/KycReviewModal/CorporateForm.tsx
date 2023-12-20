@@ -16,9 +16,9 @@ import {
   TaxDeclaration,
   BeneficialOwners,
   UploadedDocuments,
+  CorporateMembers,
 } from './Blocks'
 import { Line } from 'components/Line'
-import { CorporateMembers } from './Blocks/CorporateMembers'
 
 interface Props {
   data: CorporateKyc

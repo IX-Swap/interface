@@ -515,7 +515,7 @@ export default function CorporateKycForm() {
                 !errors.designation &&
                 !errors.email &&
                 !errors.phoneNumber &&
-                !errors.authorizedProofOfIdentity &&
+                !errors.authorizationIdentity &&
                 !errors.authorizationDocuments
               const addressFilled =
                 shouldValidate && !errors.address && !errors.postalCode && !errors.city && !errors.country
@@ -695,15 +695,15 @@ export default function CorporateKycForm() {
                             />
                             <Uploader
                               subtitle="Passport, National ID, or Driving License"
-                              error={errors.authorizedProofOfIdentity}
+                              error={errors.authorizationIdentity}
                               title="Proof of Identity"
-                              files={values.authorizedProofOfIdentity}
+                              files={values.authorizationIdentity}
                               onDrop={(file) => {
-                                handleDropImage(file, values, 'authorizedProofOfIdentity', setFieldValue)
+                                handleDropImage(file, values, 'authorizationIdentity', setFieldValue)
                               }}
                               handleDeleteClick={handleImageDelete(
                                 values,
-                                'authorizedProofOfIdentity',
+                                'authorizationIdentity',
                                 values.removedDocuments,
                                 setFieldValue
                               )}

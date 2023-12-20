@@ -552,7 +552,7 @@ interface CorporateMembersTableTypes {
 export const CorporateMembersTable = ({}: CorporateMembersTableTypes) => {
   return (
     <BeneficialOwnersTableContainer>
-      <FormGrid columns={6}>
+      <FormGrid columns={5}>
         <Label label={t`Full Name`} />
         <Label label={t`Nationality`} />
         <Label label={t`Designation`} />

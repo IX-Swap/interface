@@ -15,10 +15,18 @@ export const BeneficialOwners: FC<Props> = ({ owners }: Props) => {
   return (
     <Block title="Beneficial Owners Information">
       <GridContainer>
-        {owners.map(({ fullName, shareholding, proofOfIdentity, proofOfAddress }, index) => (
+        {owners.map(({ fullName, nationality, address, shareholding, proofOfIdentity }, index) => (
           <React.Fragment key={`owner-${index}`}>
             <GridItem>
               <Field label="Full Name" value={fullName} />
+            </GridItem>
+
+            <GridItem>
+              <Field label="Nationality" value={nationality} />
+            </GridItem>
+
+            <GridItem>
+              <Field label="Address" value={address} />
             </GridItem>
 
             <GridItem>
@@ -29,7 +37,6 @@ export const BeneficialOwners: FC<Props> = ({ owners }: Props) => {
               <Documents
                 documents={[
                   { id: 0, type: 'Proof of Identity', asset: proofOfIdentity } as any,
-                  { id: 1, type: 'Proof of Address', asset: proofOfAddress } as any,
                 ]}
                 title="Documents"
               />

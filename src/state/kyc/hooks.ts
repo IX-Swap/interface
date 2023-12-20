@@ -15,11 +15,12 @@ const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity', 'selfie', 'evid
 const corporateKYCFiles = [
   'beneficialOwnersAddress',
   'beneficialOwnersIdentity',
+  'corporateMembersIdentity',
   'authorizationDocuments',
   'corporateDocuments',
   'financialDocuments',
   'authorizationDocuments',
-  'authorizedProofOfIdentity',
+  'authorizationIdentity',
 ]
 
 export function useKYCState() {
