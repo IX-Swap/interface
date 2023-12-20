@@ -46,14 +46,15 @@ export const corporateTransformApiData = (data: any) => {
     taxCountry: { value: 0, label: taxCountry },
     beneficialOwners:
       beneficialOwners.length > 0
-        ? beneficialOwners?.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+        ? beneficialOwners?.map(({ id, fullName, nationality, address, shareholding, proofOfIdentity }: any) => ({
             id,
             fullName,
+            nationality, 
+            address,
             shareholding,
-            proofOfAddress,
             proofOfIdentity,
           }))
-        : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+        : [{ fullName: '', nationality: '', address: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
     corporateMembers:
       corporateMembers.length > 0
         ? corporateMembers?.map(({ id, fullName, nationality, designation, proofOfIdentity }: any) => ({
@@ -63,7 +64,7 @@ export const corporateTransformApiData = (data: any) => {
             designation,
             proofOfIdentity,
           }))
-        : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+        : [{ fullName: '', nationality: '', designation: '',  proofOfIdentity: null }],
     corporateDocuments: documents?.filter(({ type }: any) => type === 'corporate'),
     financialDocuments: documents?.filter(({ type }: any) => type === 'financial'),
     removedDocuments: [],

@@ -494,12 +494,12 @@ export default function CorporateKycForm() {
 
                 values.taxIdAvailable = true
               }
-              if (!values.reason) values.reason = 'A'
-              {
-                /* {({ values, setFieldValue, dirty, handleSubmit }) => {
-              if (values.taxIdAvailable === undefined) values.taxIdAvailable = true
-              if (!values.reason) values.reason = 'A' */
-              }
+              // if (!values.reason) values.reason = 'A'
+              // {
+              //   /* {({ values, setFieldValue, dirty, handleSubmit }) => {
+              // if (values.taxIdAvailable === undefined) values.taxIdAvailable = true
+              // if (!values.reason) values.reason = 'A' */
+              // }
 
               const shouldValidate = dirty && isSubmittedOnce
               const infoFilled =
@@ -1213,7 +1213,7 @@ export default function CorporateKycForm() {
                                     }
                                   />
                                   <TextInput
-                                    value={corporateMember.address}
+                                    value={corporateMember.designation}
                                     placeholder={isMobile ? 'Designation' : ''}
                                     onChange={(e: any) =>
                                       changeCorporateMembers(
