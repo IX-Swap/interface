@@ -6,6 +6,7 @@ import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 // import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
 
 export const CURRENCIES = [
   //   {
@@ -25,6 +26,15 @@ export const CURRENCIES = [
       </Box>
     ),
     value: 'USD'
+  },
+  {
+    label: (
+      <Box display={'flex'} alignItems={'center'}>
+        <USDCIcon style={{ marginRight: 16 }} />
+        USDC
+      </Box>
+    ),
+    value: 'USDC'
   }
 ]
 

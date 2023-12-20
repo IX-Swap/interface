@@ -25,7 +25,7 @@ export interface ListingBaseFieldsProps {
 export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
   const { isNew, isDataFromDSO } = props
   const { control, watch } = useFormContext()
-  const { data } = useAssetsData('Currency')
+  const { data } = useAssetsData('Currency,Stablecoin')
   const currencyList = useMemo(() => data.list.reverse(), [data])
 
   return (
