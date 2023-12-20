@@ -596,7 +596,10 @@ export default function IndividualKycForm() {
 
               const fatcaFilled = shouldValidate && isFilled('usTin') && isFilled('isUSTaxPayer')
               const filesFilled =
-                shouldValidate && isFilled('proofOfIdentity') && isFilled('proofOfAddress') && isFilled('selfie')
+                shouldValidate &&
+                isFilled('proofOfIdentity') &&
+                //  && isFilled('proofOfAddress')
+                isFilled('selfie')
 
               const investorStatusAcknowledgementFilled = shouldValidate && isFilled('confirmStatusDeclaration')
 
@@ -698,6 +701,16 @@ export default function IndividualKycForm() {
                               }}
                               maxDate={moment().subtract(18, 'years')}
                             />
+                            <Select
+                              error={errors.nationality}
+                              withScroll
+                              id="nationalityDropdown"
+                              label="Nationality"
+                              placeholder="Nationality"
+                              selectedItem={values.nationality}
+                              items={countries}
+                              onSelect={(nationality) => onSelectChange('nationality', nationality, setFieldValue)}
+                            />
                             {/* <Select
                               error={errors.gender}
                               id="genderDropdown"
@@ -711,16 +724,6 @@ export default function IndividualKycForm() {
 
                           <FormGrid>
                             <Select
-                              error={errors.nationality}
-                              withScroll
-                              id="nationalityDropdown"
-                              label="Nationality"
-                              placeholder="Nationality"
-                              selectedItem={values.nationality}
-                              items={countries}
-                              onSelect={(nationality) => onSelectChange('nationality', nationality, setFieldValue)}
-                            />
-                            <Select
                               error={errors.citizenship}
                               withScroll
                               id="citizenshipDropdown"
@@ -730,8 +733,7 @@ export default function IndividualKycForm() {
                               items={countries}
                               onSelect={(citizenship) => onSelectChange('citizenship', citizenship, setFieldValue)}
                             />
-                          </FormGrid>
-                          <FormGrid>
+
                             <PhoneInput
                               error={errors.phoneNumber}
                               value={values.phoneNumber}
@@ -741,18 +743,19 @@ export default function IndividualKycForm() {
                                 validationSeen('phoneNumber')
                               }}
                             />
-                            <TextInput
-                              placeholder="Email address"
-                              id="emailAddressField"
-                              label="Email address"
-                              value={values.email}
-                              error={errors.email}
-                              onChange={(e: any) =>
-                                onChangeInput('email', e.currentTarget.value, values, setFieldValue)
-                              }
-                              disabled={true}
-                            />
                           </FormGrid>
+                          {/* <FormGrid> */}
+                          <TextInput
+                            disabled={true}
+                            style={{ background: '#F7F7FA' }}
+                            placeholder="Email address"
+                            id="emailAddressField"
+                            label="Email address"
+                            value={values.email}
+                            error={errors.email}
+                            onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
+                          />
+                          {/* </FormGrid> */}
                         </Column>
 
                         <RowBetween marginBottom="32px" marginTop="64px">
@@ -918,7 +921,7 @@ export default function IndividualKycForm() {
 
                         <TYPE.description3>
                           Please upload the following documents. All account statements and documents should be dated
-                          within the last 3 months. Type of document format supported is PDF, JPEG, JPG, DOCX and PNG.
+                          within the last 3 months. Type of document format supported is PDF, JPG, and PNG.
                         </TYPE.description3>
 
                         <Column style={{ gap: '40px', marginTop: '32px' }}>
@@ -951,20 +954,21 @@ export default function IndividualKycForm() {
                               setFieldValue
                             )}
                           />
-
-                          <Uploader
-                            title="Proof of Address"
-                            subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
-                            error={errors.proofOfAddress}
-                            files={values.proofOfAddress}
-                            onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
-                            handleDeleteClick={handleImageDelete(
-                              values,
-                              'proofOfAddress',
-                              values.removedDocuments,
-                              setFieldValue
-                            )}
-                          />
+                          <TextInput
+                            placeholder="Secondary Contact Details"
+                            subText='Please select one from the following options in the dropdown (Proof of Address Document, Business Email Address, or Social Media Handle)'
+                            label="Secondary Contact Details"
+                            id="employerField"
+                            value={values.employer}
+                            // error={errors.employer}
+                            onChange={(e: any) =>
+                              onChangeInput('proofOfAddress', e.currentTarget.value, values, setFieldValue)
+                            }
+                            // title="Secondary Contact Details"
+                            // subtitle="Please select one from the following options in the dropdown (Proof of Address Document, Business Email Address, or Social Media Handle)"
+                          >
+                        
+                          </TextInput>
                         </Column>
                       </FormCard>
 
@@ -1293,7 +1297,7 @@ export default function IndividualKycForm() {
                             />
                             {values.isUSTaxPayer === 1 && (
                               <TextInput
-                                style={{ width: 640 }}
+                                style={{ width: '100%' }}
                                 placeholder="ID Number.."
                                 value={values.usTin}
                                 onChange={(e: any) =>

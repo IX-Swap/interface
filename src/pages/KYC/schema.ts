@@ -7,7 +7,7 @@ export const individualErrorsSchema = yup.object().shape({
   lastName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
 
   dateOfBirth: yup.mixed().nullable().required('Required'),
-  gender: yup.object().nullable().required('Required'),
+  // gender: yup.object().nullable().required('Required'),
 
   nationality: yup.object().nullable().required('Required'),
   citizenship: yup.object().nullable().required('Required'),
@@ -37,7 +37,7 @@ export const individualErrorsSchema = yup.object().shape({
     }),
 
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
-  proofOfAddress: yup.array().min(1, 'Required').nullable(),
+  // proofOfAddress: yup.array().min(1, 'Required').nullable(),
   selfie: yup.array().min(1, 'Required').nullable(),
   occupation: yup.object().nullable().required('Required'),
   employmentStatus: yup.object().nullable().required('Required'),

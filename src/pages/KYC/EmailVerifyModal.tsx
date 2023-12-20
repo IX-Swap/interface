@@ -116,7 +116,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
               setStep(2)
             } else {
               // Handle the case when verification is not successful
-              addPopup({ info: { success: false, summary: 'Email verification failed' } })
+              addPopup({ info: { success: false, summary: result?.error?.message ||'Email verification failed' } })
             }
           }
         } else if (step === 2) {
@@ -460,7 +460,6 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, h
 
   React.useEffect(() => {
     if (reset) {
-      console.log(reset, 'kkkkkkkk')
       // Reset the code values when the reset prop changes
       setCode(Array(numberOfBoxes).fill(''))
     }
@@ -471,6 +470,11 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, h
 
   const handleCodeChange = (index: number, value: string) => {
     const newCode = [...code]
+
+  if (newCode[index] !== value) {
+    newCode[index] = '';
+  }
+
     if (/^[a-zA-Z0-9]*$/.test(value)) {
       newCode[index] = value
       setCode(newCode)
