@@ -31,6 +31,7 @@ export const corporateTransformApiData = (data: any) => {
     },
     countryOfIncorporation: { value: 0, label: countryOfIncorporation },
     authorizationDocuments: documents?.filter(({ type }: any) => type === 'authorization'),
+    authorizedProofOfIdentity: documents?.filter(({ type }: any) => type === 'authorizationIdentity'),
     address: address.address,
     postalCode: address.postalCode,
     country: { value: 0, label: address.country },

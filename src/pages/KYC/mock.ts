@@ -235,6 +235,7 @@ export const corporateFormInitialValues: IFormInitial = {
   email: '',
   phoneNumber: '',
   authorizationDocuments: [],
+  authorizedProofOfIdentity: [],
   address: '',
   postalCode: '',
   country: null,

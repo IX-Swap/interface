@@ -129,6 +129,7 @@ export const corporateErrorsSchema = yup.object().shape({
     .max(15, 'Must be valid phone number')
     .required('Required'),
   authorizationDocuments: yup.array().min(1, 'Required').nullable(),
+  authorizedProofOfIdentity: yup.array().min(1, 'Required').nullable(),
   address: yup.string().required('Required'),
   postalCode: yup.string().required('Required'),
   country: yup.object().nullable().required('Required'),

@@ -19,6 +19,7 @@ const corporateKYCFiles = [
   'corporateDocuments',
   'financialDocuments',
   'authorizationDocuments',
+  'authorizedProofOfIdentity',
 ]
 
 export function useKYCState() {
