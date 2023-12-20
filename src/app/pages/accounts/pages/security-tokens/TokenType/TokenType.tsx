@@ -56,6 +56,7 @@ export const TokenType = () => {
                     className={cn(classes.button, {
                       [classes.active]: isSelected
                     })}
+                    key={type.value}
                     // onClick={() => setValue('tokenType', type.value)}
                   >
                     <FormControlLabel
