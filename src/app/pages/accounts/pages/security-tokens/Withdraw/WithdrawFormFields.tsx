@@ -24,6 +24,7 @@ export const WithdrawFormFields = () => {
     useState(false)
   const { watch, reset, control, setValue } = useFormContext()
   const tokenType = watch('tokenType')
+  const isStablecoin = tokenType === 'Stablecoin'
   const token = watch('token')
   const tokenBalance = token?.available
   const hasSelectedToken = !isEmpty(token)
@@ -59,7 +60,7 @@ export const WithdrawFormFields = () => {
   }, [token])
 
   const inSufficientTokenBalance = tokenBalance < amount
-  const amountTooSmall = amount <= fee
+  const amountTooSmall = isStablecoin ? amount <= fee : false
   //   const inSufficientCurencyBalance = withdrawal?.valid !== true
   const hasError =
     !hasSelectedToken ||
@@ -170,6 +171,7 @@ export const WithdrawFormFields = () => {
         confirm={withdrawSTO}
         walletName={wallet?.label}
         walletAddress={wallet?.address}
+        tokenType={tokenType}
         token={token?.asset}
         withdrawalAmount={amount}
         currency={currency}

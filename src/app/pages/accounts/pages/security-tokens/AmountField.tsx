@@ -26,11 +26,13 @@ export const AmountField = ({
   tokenSymbol
 }: AmountFieldProps) => {
   const { control, setValue, watch } = useFormContext()
+  const tokenType = watch('tokenType')
   const amount = watch('amount')
   const fee = watch('withdrawalFee')
+  const isStablecoin = tokenType === 'Stablecoin'
 
   const inSufficientBalance = tokenBalance < amount
-  const amountTooSmall = amount <= fee
+  const amountTooSmall = isStablecoin ? amount <= fee : false
 
   const theme = useTheme()
 

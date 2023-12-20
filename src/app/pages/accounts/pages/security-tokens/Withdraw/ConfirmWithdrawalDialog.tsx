@@ -25,6 +25,7 @@ export interface ConfirmWithdrawalDialogProps {
   walletName: string
   walletAddress: string
   token: Asset
+  tokenType: 'Security' | 'Stablecoin'
   withdrawalAmount: string
   currency: string
   withdrawalFee: number
@@ -38,6 +39,7 @@ export const ConfirmWithdrawalDialog = ({
   walletName,
   walletAddress,
   token,
+  tokenType,
   withdrawalAmount,
   currency,
   withdrawalFee,
@@ -93,6 +95,7 @@ export const ConfirmWithdrawalDialog = ({
   }))
 
   const classes = useStyles()
+  const isStablecoin = tokenType === 'Stablecoin'
   const TokenIcon = token?.symbol === 'USDC' ? USDCIcon : USDTIcon
   let CurrencyIcon = SGDIcon
 
@@ -178,7 +181,9 @@ export const ConfirmWithdrawalDialog = ({
             <Box className={classes.amountContainer}>
               <Typography className={classes.amount}>
                 {formatAmountValue(
-                  Number(withdrawalAmount) - Number(withdrawalFee)
+                  isStablecoin
+                    ? Number(withdrawalAmount) - Number(withdrawalFee)
+                    : Number(withdrawalAmount)
                 )}
               </Typography>
               <Box className={classes.token}>
