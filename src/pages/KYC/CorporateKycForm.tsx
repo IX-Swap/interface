@@ -1187,15 +1187,16 @@ export default function CorporateKycForm() {
                             last 3 months.
                           </TYPE.buttonMuted>
                         </ExtraInfoCard>
-                        <CorporateMembersTable data={values.corporateMembers} />
+                        {/* <CorporateMembersTable data={values.corporateMembers} /> */}
                         <Column style={{ gap: '20px' }}>
                           {values.corporateMembers?.map(
                             (corporateMember: Record<string, string | any>, index: number) => (
                               <>
-                                <FormGrid columns={6} key={index}>
+                                <FormGrid columns={3} key={index}>
                                   <TextInput
+                                    label='Full Name'
                                     value={corporateMember.fullName}
-                                    placeholder={isMobile ? 'Full Name' : ''}
+                                    placeholder='Full Name'
                                     onChange={(e: any) =>
                                       changeCorporateMembers(
                                         'fullName',
@@ -1212,8 +1213,9 @@ export default function CorporateKycForm() {
                                     }
                                   />
                                   <TextInput
+                                    label='Nationality'
                                     value={corporateMember.nationality}
-                                    placeholder={isMobile ? 'Nationality' : ''}
+                                    placeholder='Nationality'
                                     onChange={(e: any) =>
                                       changeCorporateMembers(
                                         'nationality',
@@ -1230,8 +1232,9 @@ export default function CorporateKycForm() {
                                     }
                                   />
                                   <TextInput
+                                    label='Designation'
                                     value={corporateMember.designation}
-                                    placeholder={isMobile ? 'Designation' : ''}
+                                    placeholder='Designation'
                                     onChange={(e: any) =>
                                       changeCorporateMembers(
                                         'designation',
@@ -1247,9 +1250,11 @@ export default function CorporateKycForm() {
                                       errors[`corporateMembers[${index}].designation`]
                                     }
                                   />
-                                  <ChooseFile
+                                </FormGrid>
+                                <FormGrid columns={1} key={index}>
+                                <ChooseFile
                                     file={corporateMember.proofOfIdentity}
-                                    label={isMobile ? 'Proof of Identity' : null}
+                                    label='Proof of Identity'
                                     onDrop={(file) =>
                                       changeCorporateMembers(
                                         'proofOfIdentity',
@@ -1275,18 +1280,17 @@ export default function CorporateKycForm() {
                                       )
                                     }
                                   />
-                                  {/* <TrashIcon
-                                    style={{ cursor: 'pointer', marginTop: '5px' }}
-                                    onClick={() =>
-                                      deleteCorporateMembers(
-                                        index,
-                                        values?.corporateMembers,
-                                        values?.removedCorporateMembers,
-                                        setFieldValue
-                                      )
-                                    }
-                                  /> */}
-                                  {/* </IconButton> */}
+                                  <ButtonText style={{ width: '100%', minHeight: 18, borderRadius: '8px', border: 'solid 1px #E6E6FF',padding: '18px 21px'}} onClick={(e) => {
+                                    e.preventDefault();
+                                    deleteCorporateMembers(
+                                      index,
+                                      values?.corporateMembers,
+                                      values?.removedCorporateMembers,
+                                      setFieldValue
+                                    )
+                                  }}>
+                                    <TrashNoBorder style={{ margin: 'auto' }} type="button" />
+                                  </ButtonText>
                                 </FormGrid>
                                 {values.corporateMembers.length - 1 > index && <Divider />}
                               </>
