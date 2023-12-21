@@ -27,6 +27,8 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { countriesList } from 'constants/countriesList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { DateInput } from 'components/DateInput'
+import moment from 'moment'
+import dayjs from 'dayjs'
 
 import { CorporateMembersTable, Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
@@ -618,7 +620,7 @@ export default function CorporateKycForm() {
                               error={errors.typeOfLegalEntity && errors.typeOfLegalEntity}
                             />
                           </FormGrid>
-                          <FormGrid columns={1}>
+                          {/* <FormGrid columns={1}>
                             <Checkbox
                               checked={values.inFatfJurisdiction}
                               onClick={() =>
@@ -626,7 +628,7 @@ export default function CorporateKycForm() {
                               }
                               label="Is The Ultimate Holding Company A Regulated Entity Or Listed Company In a FATF Jurisdiction?"
                             />
-                          </FormGrid>
+                          </FormGrid> */}
                         </Column>
                       </FormCard>
 
@@ -681,7 +683,7 @@ export default function CorporateKycForm() {
                           <FormGrid columns={1}>
                             <Uploader
                               title="Authorization Document"
-                              subtitle="Board Resolution, Power of Attorney, Partnership Deed, Trust Deed, and Others"
+                              subtitle="Board Resolution or equivalent dated within the last 3 months"
                               files={values.authorizationDocuments}
                               onDrop={(file) => {
                                 handleDropImage(file, values, 'authorizationDocuments', setFieldValue)
@@ -1008,12 +1010,15 @@ export default function CorporateKycForm() {
                       </FormCard>
 
                       <FormCard id="beneficial-owners">
-                        <RowBetween marginBottom="32px">
+                        <Box marginBottom="32px">
                           <TYPE.title7>
                             <Trans>Beneficial Owners Information</Trans>
                           </TYPE.title7>
+                          <TYPE.small>
+                            <Trans>Beneficial Owners Information with more than 10% Beneficial Interest</Trans>
+                          </TYPE.small>
                           {beneficialOwnersFilled && <StyledBigPassed />}
-                        </RowBetween>
+                        </Box>
                         <ExtraInfoCard style={{ marginBottom: 20 }}>
                           <TYPE.buttonMuted>
                             Please upload Proof of Identity (Passport, National ID or Driving License) dated within the
@@ -1021,10 +1026,9 @@ export default function CorporateKycForm() {
                           </TYPE.buttonMuted>
                         </ExtraInfoCard>
                         {/* <BeneficialOwnersTable data={values.beneficialOwners} /> */}
-                        <Column style={{ gap: '20px' }}>
-                          {values.beneficialOwners?.map((beneficiar: Record<string, string | any>, index: number) => (
-                            <>
-                              <FormGrid columns={2} key={index}>
+                        {values.beneficialOwners?.map((beneficiar: Record<string, string | any>, index: number) => (
+                            <Column style={{ gap: '20px', marginBottom: '24px', borderRadius: '8px', border: 'solid 1px #E6E6FF', padding: '24px 24px' }} key={index}>
+                              <FormGrid columns={2}>
                                 <TextInput
                                   value={beneficiar.fullName}
                                   placeholder='Full Name'
@@ -1063,6 +1067,7 @@ export default function CorporateKycForm() {
                                     errors[`beneficialOwners[${index}].nationality`]
                                   }
                                 />
+                                
                                 <TextInput
                                   value={beneficiar.address}
                                   placeholder='Address'
@@ -1103,7 +1108,7 @@ export default function CorporateKycForm() {
                                 />
                                 {/* </IconButton> */}
                               </FormGrid>
-                              <FormGrid columns={1} key={index}>
+                              <FormGrid columns={1}>
                                 <ChooseFile
                                     file={beneficiar.proofOfIdentity}
                                     label='Proof of Identity'
@@ -1155,16 +1160,15 @@ export default function CorporateKycForm() {
                                     <TrashNoBorder style={{ margin: 'auto' }} type="button" />
                                   </ButtonText>
                               </FormGrid>
-                              {values.beneficialOwners.length - 1 > index && <Divider />}
-                            </>
+                              {/* {values.beneficialOwners.length - 1 > index && <Divider />} */}
+                            </Column>
                           ))}
-                        </Column>
                         {errors.beneficialOwners && (
                           <TYPE.small marginTop="4px" color={'red1'}>{t`${errors.beneficialOwners}`}</TYPE.small>
                         )}
                         <ExtraInfoCardCountry
                           // type="button"
-                          style={{ marginTop: 32, fontSize: 16, padding: 15 }}
+                          style={{ fontSize: 16, padding: 15 }}
                           onClick={() => addBeneficiary(values.beneficialOwners, setFieldValue)}
                         >
                           <RowCenter style={{ color: '#6666FF' }}>
@@ -1188,115 +1192,115 @@ export default function CorporateKycForm() {
                           </TYPE.buttonMuted>
                         </ExtraInfoCard>
                         {/* <CorporateMembersTable data={values.corporateMembers} /> */}
-                        <Column style={{ gap: '20px' }}>
-                          {values.corporateMembers?.map(
-                            (corporateMember: Record<string, string | any>, index: number) => (
-                              <>
-                                <FormGrid columns={3} key={index}>
-                                  <TextInput
-                                    label='Full Name'
-                                    value={corporateMember.fullName}
-                                    placeholder='Full Name'
-                                    onChange={(e: any) =>
-                                      changeCorporateMembers(
-                                        'fullName',
-                                        e.currentTarget.value,
-                                        index,
-                                        values.corporateMembers,
-                                        setFieldValue,
-                                        `corporateMembers[${index}].fullName`
-                                      )
-                                    }
-                                    error={
-                                      errors[`corporateMembers[${index}].fullName`] &&
-                                      errors[`corporateMembers[${index}].fullName`]
-                                    }
-                                  />
-                                  <TextInput
-                                    label='Nationality'
-                                    value={corporateMember.nationality}
-                                    placeholder='Nationality'
-                                    onChange={(e: any) =>
-                                      changeCorporateMembers(
-                                        'nationality',
-                                        e.currentTarget.value,
-                                        index,
-                                        values.corporateMembers,
-                                        setFieldValue,
-                                        `corporateMembers[${index}].nationality`
-                                      )
-                                    }
-                                    error={
-                                      errors[`corporateMembers[${index}].nationality`] &&
-                                      errors[`corporateMembers[${index}].nationality`]
-                                    }
-                                  />
-                                  <TextInput
-                                    label='Designation'
-                                    value={corporateMember.designation}
-                                    placeholder='Designation'
-                                    onChange={(e: any) =>
-                                      changeCorporateMembers(
-                                        'designation',
-                                        e.currentTarget.value,
-                                        index,
-                                        values.corporateMembers,
-                                        setFieldValue,
-                                        `corporateMembers[${index}].designation`
-                                      )
-                                    }
-                                    error={
-                                      errors[`corporateMembers[${index}].designation`] &&
-                                      errors[`corporateMembers[${index}].designation`]
-                                    }
-                                  />
-                                </FormGrid>
-                                <FormGrid columns={1} key={index}>
-                                <ChooseFile
-                                    file={corporateMember.proofOfIdentity}
-                                    label='Proof of Identity'
-                                    onDrop={(file) =>
-                                      changeCorporateMembers(
-                                        'proofOfIdentity',
-                                        file,
-                                        index,
-                                        values.corporateMembers,
-                                        setFieldValue,
-                                        `corporateMembers[${index}].proofOfIdentity`
-                                      )
-                                    }
-                                    error={
-                                      errors[`corporateMembers[${index}].proofOfIdentity`] &&
-                                      errors[`corporateMembers[${index}].proofOfIdentity`]
-                                    }
-                                    handleDeleteClick={() =>
-                                      changeCorporateMembers(
-                                        'proofOfIdentity',
-                                        null,
-                                        index,
-                                        values.corporateMembers,
-                                        setFieldValue,
-                                        `corporateMembers[${index}].proofOfIdentity`
-                                      )
-                                    }
-                                  />
-                                  <ButtonText style={{ width: '100%', minHeight: 18, borderRadius: '8px', border: 'solid 1px #E6E6FF',padding: '18px 21px'}} onClick={(e) => {
-                                    e.preventDefault();
-                                    deleteCorporateMembers(
+                        
+                        {values.corporateMembers?.map(
+                          (corporateMember: Record<string, string | any>, index: number) => (
+                            <Column style={{ gap: '20px', marginBottom: '24px', borderRadius: '8px', border: 'solid 1px #E6E6FF', padding: '24px 24px' }} key={index}>
+                              <FormGrid columns={3}>
+                                <TextInput
+                                  label='Full Name'
+                                  value={corporateMember.fullName}
+                                  placeholder='Full Name'
+                                  onChange={(e: any) =>
+                                    changeCorporateMembers(
+                                      'fullName',
+                                      e.currentTarget.value,
                                       index,
-                                      values?.corporateMembers,
-                                      values?.removedCorporateMembers,
-                                      setFieldValue
+                                      values.corporateMembers,
+                                      setFieldValue,
+                                      `corporateMembers[${index}].fullName`
                                     )
-                                  }}>
-                                    <TrashNoBorder style={{ margin: 'auto' }} type="button" />
-                                  </ButtonText>
-                                </FormGrid>
-                                {values.corporateMembers.length - 1 > index && <Divider />}
-                              </>
-                            )
-                          )}
-                        </Column>
+                                  }
+                                  error={
+                                    errors[`corporateMembers[${index}].fullName`] &&
+                                    errors[`corporateMembers[${index}].fullName`]
+                                  }
+                                />
+                                <TextInput
+                                  label='Nationality'
+                                  value={corporateMember.nationality}
+                                  placeholder='Nationality'
+                                  onChange={(e: any) =>
+                                    changeCorporateMembers(
+                                      'nationality',
+                                      e.currentTarget.value,
+                                      index,
+                                      values.corporateMembers,
+                                      setFieldValue,
+                                      `corporateMembers[${index}].nationality`
+                                    )
+                                  }
+                                  error={
+                                    errors[`corporateMembers[${index}].nationality`] &&
+                                    errors[`corporateMembers[${index}].nationality`]
+                                  }
+                                />
+                                <TextInput
+                                  label='Designation'
+                                  value={corporateMember.designation}
+                                  placeholder='Designation'
+                                  onChange={(e: any) =>
+                                    changeCorporateMembers(
+                                      'designation',
+                                      e.currentTarget.value,
+                                      index,
+                                      values.corporateMembers,
+                                      setFieldValue,
+                                      `corporateMembers[${index}].designation`
+                                    )
+                                  }
+                                  error={
+                                    errors[`corporateMembers[${index}].designation`] &&
+                                    errors[`corporateMembers[${index}].designation`]
+                                  }
+                                />
+                              </FormGrid>
+                              <FormGrid columns={1}>
+                              <ChooseFile
+                                  file={corporateMember.proofOfIdentity}
+                                  label='Proof of Identity'
+                                  onDrop={(file) =>
+                                    changeCorporateMembers(
+                                      'proofOfIdentity',
+                                      file,
+                                      index,
+                                      values.corporateMembers,
+                                      setFieldValue,
+                                      `corporateMembers[${index}].proofOfIdentity`
+                                    )
+                                  }
+                                  error={
+                                    errors[`corporateMembers[${index}].proofOfIdentity`] &&
+                                    errors[`corporateMembers[${index}].proofOfIdentity`]
+                                  }
+                                  handleDeleteClick={() =>
+                                    changeCorporateMembers(
+                                      'proofOfIdentity',
+                                      null,
+                                      index,
+                                      values.corporateMembers,
+                                      setFieldValue,
+                                      `corporateMembers[${index}].proofOfIdentity`
+                                    )
+                                  }
+                                />
+                                <ButtonText style={{ width: '100%', minHeight: 18, borderRadius: '8px', border: 'solid 1px #E6E6FF',padding: '18px 21px'}} onClick={(e) => {
+                                  e.preventDefault();
+                                  deleteCorporateMembers(
+                                    index,
+                                    values?.corporateMembers,
+                                    values?.removedCorporateMembers,
+                                    setFieldValue
+                                  )
+                                }}>
+                                  <TrashNoBorder style={{ margin: 'auto' }} type="button" />
+                                </ButtonText>
+                              </FormGrid>
+                              {/* {values.corporateMembers.length - 1 > index && <Divider />} */}
+                            </Column>
+                          )
+                        )}
+                        
                         {errors.corporateMembers && (
                           <TYPE.small marginTop="4px" color={'red1'}>{t`${errors.corporateMembers}`}</TYPE.small>
                         )}
