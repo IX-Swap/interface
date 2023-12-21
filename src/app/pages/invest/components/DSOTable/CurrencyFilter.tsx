@@ -4,19 +4,20 @@ import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { ListItemText, SelectChangeEvent } from '@mui/material'
 import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-
-const CURRENCIES = ['SGD', 'USD']
+import { queryStatusRenderer } from 'components/form/renderUtils'
+import { useAssetsData } from 'hooks/asset/useAssetsData'
 
 interface FiltersFavProps {
-  setPage?: (page: number)=>void
+  setPage?: (page: number) => void
 }
 
-export const CurrencyFilter = (props:FiltersFavProps) => {
+export const CurrencyFilter = (props: FiltersFavProps) => {
   const { getFilterValue, updateFilter } = useQueryFilter()
   const currency = getFilterValue('currency')
+  const { status, data } = useAssetsData('Currency,Stablecoin')
 
   const handleChange = (event: SelectChangeEvent<any>) => {
-    props.setPage && props.setPage(0);
+    props.setPage && props.setPage(0)
     updateFilter(
       'currency',
       typeof event.target.value === 'string'
@@ -27,6 +28,8 @@ export const CurrencyFilter = (props:FiltersFavProps) => {
 
   const value = currency !== '' ? currency?.split(',') ?? [] : []
 
+  queryStatusRenderer(status)
+
   return (
     <Select
       placeholder='Currency'
@@ -35,10 +38,10 @@ export const CurrencyFilter = (props:FiltersFavProps) => {
       onChange={handleChange}
       displayEmpty
     >
-      {CURRENCIES.map(label => (
-        <SelectItem key={label} value={label} withCheckbox>
-          <UICheckbox checked={value.includes(label)} />
-          <ListItemText primary={label} />
+      {data.list.map(currency => (
+        <SelectItem key={currency.symbol} value={currency.symbol} withCheckbox>
+          <UICheckbox checked={value.includes(currency.symbol)} />
+          <ListItemText primary={currency.symbol} />
         </SelectItem>
       ))}
     </Select>
