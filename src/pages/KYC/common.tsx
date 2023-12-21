@@ -63,6 +63,7 @@ interface SelectProps {
   addCustom?: boolean
   id?: any
   value?: any
+  subText?: string
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
@@ -155,11 +156,13 @@ export const KycSelect: FC<SelectProps> = ({
   required,
   tooltipText,
   isDisabled,
+  subText,
   ...rest
 }: SelectProps) => {
   return (
     <Box>
       <KycInputLabel label={label} tooltipText={tooltipText} error={error} />
+      <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
       {isDisabled && selectedItem ? (
         <Row alignItems="center" style={{ columnGap: 4 }}>
           {selectedItem?.icon}
@@ -250,7 +253,7 @@ export const KycTextInput: FC<TextInputProps> = ({
   return (
     <Box>
       <KycInputLabel name={name} label={label} error={error} tooltipText={tooltipText} />
-      <p style={{ color: '#B8B8CC', fontSize: '13px', padding: '0px 80px 0px 0px' }}>{subText}</p>
+      <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
       {disabled && value ? (
         <div>
           {' '}

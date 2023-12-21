@@ -40,6 +40,8 @@ import {
   sourceOfFunds,
   promptValue,
   occupationList,
+  SecondaryContactDetails,
+  socialMediaPlatform,
 } from './mock'
 import {
   FormCard,
@@ -105,6 +107,7 @@ export default function IndividualKycForm() {
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
   const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
   const [referralCode, setReferralCode] = useState<string | null>(null)
+  const [selectedOption, setSelectedOption] = useState(null)
   const openConfirmationModal = useCallback(() => {
     setShowOptoutModal(false)
     setShowOptoutConfirmationModal(true)
@@ -305,6 +308,14 @@ export default function IndividualKycForm() {
     validationSeen(key)
   }
 
+  const onSelectChangeNew = (key: string, value: any, setFieldValue: any) => {
+    const formattedValue = value.label; // Assuming 'label' is the property that contains the display text
+  
+    setFieldValue(key, formattedValue, false);
+    validateValue(key, value);
+    validationSeen(key);
+  };
+
   const onRadioChange = (key: string, value: any, setFieldValue: any) => {
     setFieldValue(key, value, false)
     validateValue(key, value)
@@ -485,6 +496,10 @@ export default function IndividualKycForm() {
     []
   )
 
+  const onSecondaryContactDetailsChange = (item: { value: React.SetStateAction<null> }) => {
+    setSelectedOption(item.value)
+  }
+
   const saveProgress = useCallback(
     async (values: any) => {
       await formSubmitHandler(values, {
@@ -596,10 +611,7 @@ export default function IndividualKycForm() {
 
               const fatcaFilled = shouldValidate && isFilled('usTin') && isFilled('isUSTaxPayer')
               const filesFilled =
-                shouldValidate &&
-                isFilled('proofOfIdentity') &&
-                //  && isFilled('proofOfAddress')
-                isFilled('selfie')
+                shouldValidate && isFilled('proofOfIdentity') && isFilled('proofOfAddress') && isFilled('selfie')
 
               const investorStatusAcknowledgementFilled = shouldValidate && isFilled('confirmStatusDeclaration')
 
@@ -863,8 +875,8 @@ export default function IndividualKycForm() {
                               onSelect={(idType) => {
                                 onSelectChange('idType', idType, setFieldValue)
                                 if (
-                                  idType?.label === IdentityDocumentType.NATIONAL_ID ||
-                                  idType?.label === IdentityDocumentType.OTHERS
+                                  idType?.label === IdentityDocumentType.NATIONAL_ID
+                                  // idType?.label === IdentityDocumentType.OTHERS
                                 ) {
                                   setIdExpiryDateLabel('ID Expiration Date (Optional)')
                                 } else {
@@ -954,21 +966,113 @@ export default function IndividualKycForm() {
                               setFieldValue
                             )}
                           />
-                          <TextInput
-                            placeholder="Secondary Contact Details"
-                            subText='Please select one from the following options in the dropdown (Proof of Address Document, Business Email Address, or Social Media Handle)'
+
+                          <div>
+                            <Select
+                              subText="Please select one from the following options in the dropdown (Proof of Address Document, Business Email Address, or Social Media Handle)"
+                              withScroll
+                              label="Secondary Contact Details"
+                              placeholder="Secondary Contact Details"
+                              id="SecondaryContactDetails"
+                              selectedItem={selectedOption}
+                              items={SecondaryContactDetails}
+                              onSelect={(item) => {
+                                onSecondaryContactDetailsChange(item)
+                              }}
+                              
+                            />
+
+                            <div style={{ marginTop: '20px' }}>
+                              {selectedOption === 1 && (
+                                <Uploader
+                                  title="Proof of Address"
+                                  subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
+                                  error={errors.proofOfAddress}
+                                  files={values.proofOfAddress}
+                                  onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                                  handleDeleteClick={handleImageDelete(
+                                    values,
+                                    'proofOfAddress',
+                                    values.removedDocuments,
+                                    setFieldValue
+                                  )}
+                                />
+                              )}
+
+                              {selectedOption === 2 && (
+                                <TextInput
+                                  subText="Please input Business Email Address as alternative contact method"
+                                  placeholder="Business Email Address"
+                                  id="businessEmailAddress"
+                                  label="Business Email Address"
+                                  value={values.businessEmailAddress}
+                                  error={errors.businessEmailAddress}
+                                  onChange={(e: any) =>
+                                    onChangeInput('businessEmailAddress', e.currentTarget.value, values, setFieldValue)
+                                  }
+                                />
+                              )}
+                              {selectedOption === 3 && (
+                                <FormGrid>
+                                  <Select
+                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, or X.com)"
+                                    error={errors.socialPlatform}
+                                    withScroll
+                                    id="socialPlatform"
+                                    label="Social Media Platform"
+                                    placeholder="Social Media Platform"
+                                    selectedItem={values.socialPlatform}
+                                    items={socialMediaPlatform}
+                                    onSelect={(socialMediaPlatform) =>
+                                      onSelectChangeNew('socialPlatform', socialMediaPlatform, setFieldValue)
+                                    }
+                                  />
+
+                                  <TextInput
+                                    subText="Please provide your Social Media Handle in the selected Social Media Platform as alternative contact method"
+                                    placeholder="Social Media Handle"
+                                    id="handleName"
+                                    label="Social Media Handle"
+                                    value={values.handleName}
+                                    error={errors.handleName}
+                                    onChange={(e: any) =>
+                                      onChangeInput(
+                                        'handleName',
+                                        e.currentTarget.value,
+                                        values,
+                                        setFieldValue
+                                      )
+                                    }
+                                  />
+                                </FormGrid>
+                              )}
+                            </div>
+                            {/* Add additional conditions for other options if needed */}
+                          </div>
+                          {/* <Select
+                            withScroll
                             label="Secondary Contact Details"
-                            id="employerField"
-                            value={values.employer}
-                            // error={errors.employer}
-                            onChange={(e: any) =>
-                              onChangeInput('proofOfAddress', e.currentTarget.value, values, setFieldValue)
-                            }
-                            // title="Secondary Contact Details"
-                            // subtitle="Please select one from the following options in the dropdown (Proof of Address Document, Business Email Address, or Social Media Handle)"
-                          >
-                        
-                          </TextInput>
+                            placeholder="Secondary Contact Details"
+                            id="SecondaryContactDetails"
+                            selectedItem={values.sourceOfFunds}
+                            items={SecondaryContactDetails}
+                      
+                            onSelect={(item) => onSecondaryContactDetailsChange(item, values.SecondaryContactDetails, setFieldValue)}
+                          />
+
+                          <Uploader
+                            title="Proof of Address"
+                            subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
+                            error={errors.proofOfAddress}
+                            files={values.proofOfAddress}
+                            onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                            handleDeleteClick={handleImageDelete(
+                              values,
+                              'proofOfAddress',
+                              values.removedDocuments,
+                              setFieldValue
+                            )}
+                          /> */}
                         </Column>
                       </FormCard>
 
