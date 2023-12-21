@@ -1,11 +1,12 @@
 import { accountsURL } from 'config/apiURL'
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
+import { TokenType } from 'types/asset'
 
 interface DepositSTOProps {
   from: string
   to: string
-  type: 'Security' | 'Stablecoin'
+  type: TokenType
   amount: string
   assetId: string
   txHash: string

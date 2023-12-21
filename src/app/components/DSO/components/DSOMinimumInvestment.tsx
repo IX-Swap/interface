@@ -9,7 +9,7 @@ export const DSOMinimumInvestment = () => {
   const minimumUnitInvestment = watch('minimumInvestment')
   const unitPrice = watch('pricePerUnit')
   const assetId = watch('currency')
-  const { data } = useAssetsData('Currency')
+  const { data } = useAssetsData('Currency,Stablecoin')
   const currency = data?.map[assetId]?.symbol
 
   const minimumnInvestment =
