@@ -9,6 +9,7 @@ import { CorporateKyc } from 'state/admin/actions'
 import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 
+
 interface Props {
   data: CorporateKyc
 }
