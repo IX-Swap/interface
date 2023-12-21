@@ -9,13 +9,14 @@ import { CorporateKyc } from 'state/admin/actions'
 import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 
+
 interface Props {
   data: CorporateKyc
 }
 
 export const CompanyAuthorizedPersonnel: FC<Props> = ({ data }: Props) => {
   return (
-    <Block title="Company Authorized Personnel">
+    <Block title="Authorized Personnel">
       <GridContainer>
         {companyAuthorizedPersonnelKeys.map(({ key, label, width = {}, format }) => (
           <GridItem key={key} {...width}>

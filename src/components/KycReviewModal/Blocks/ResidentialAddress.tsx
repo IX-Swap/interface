@@ -11,7 +11,7 @@ interface Props {
 
 export const ResidentialAddress: FC<Props> = ({ data }: Props) => {
   return (
-    <Block title="Residential Address">
+    <Block title="Registered  Address">
       <GridContainer spacing={30}>
         {addressKeys.map(({ key, label, width = {} }) => (
           <GridItem key={key} {...width}>

@@ -11,11 +11,11 @@ interface Props {
   owners: any[]
 }
 
-export const BeneficialOwners: FC<Props> = ({ owners }: Props) => {
+export const CorporateMembers: FC<Props> = ({ owners }: Props) => {
   return (
-    <Block title="Beneficial Owners Information">
+    <Block title="Directors / Officers / Managers Information">
       <GridContainer>
-        {owners.map(({ fullName, nationality, address, shareholding, proofOfIdentity }, index) => (
+        {owners.map(({ fullName, nationality, designation, proofOfIdentity }, index) => (
           <React.Fragment key={`owner-${index}`}>
             <GridItem>
               <Field label="Full Name" value={fullName} />
@@ -26,11 +26,7 @@ export const BeneficialOwners: FC<Props> = ({ owners }: Props) => {
             </GridItem>
 
             <GridItem>
-              <Field label="Address" value={address} />
-            </GridItem>
-
-            <GridItem>
-              <Field label="Shareholding" value={shareholding} />
+              <Field label="Designation" value={designation} />
             </GridItem>
 
             <GridItemNew style={{ marginBottom: index !== owners.length - 1 ? 32 : 0, display: 'flex' }}>

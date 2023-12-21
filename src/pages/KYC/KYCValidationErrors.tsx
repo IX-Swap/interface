@@ -13,7 +13,7 @@ const errorLabelMap = [
   { field: 'lastName', label: 'Last Name' },
 
   { field: 'dateOfBirth', label: 'Date of Birth' },
-  { field: 'gender', label: 'Gender' },
+  // { field: 'gender', label: 'Gender' },
 
   { field: 'nationality', label: 'Nationality' },
   { field: 'citizenship', label: 'citizenship' },

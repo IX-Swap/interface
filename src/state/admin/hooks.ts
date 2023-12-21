@@ -428,6 +428,12 @@ export const resetKyc = async (data: { id: number; message?: string }) => {
   return result.data
 }
 
+export const resendEmail = async (params?: Record<string, string | number>) => {
+  const result = await apiService.post(admin.resendEmail, undefined, params)
+  return result.data
+}
+
+
 export function useResetKyc() {
   const dispatch = useDispatch<AppDispatch>()
   const getKycList = useGetKycList()
