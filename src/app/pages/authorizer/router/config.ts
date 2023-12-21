@@ -58,7 +58,7 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     icon: CashWithdrawalIcon
   },
   {
-    label: 'Security Token Withdrawals',
+    label: 'STO & Stablecoin Withdrawals',
     path: AuthorizerRoute.dsWithdrawals,
     icon: STWithdrawalIcon
   },

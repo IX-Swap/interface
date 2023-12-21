@@ -1,14 +1,17 @@
 import { NumberFormat } from './util'
 import { PaginationArgs } from 'services/api/types'
 
-export type AssetType = 'Currency' | 'Security'
+export type AssetType = 'Currency' | 'Security' | 'Currency,Stablecoin'
+export type TokenType = 'Security' | 'Stablecoin'
 
 export interface GetAssetsArgs extends PaginationArgs {
   type?: AssetType
+  isDeployed?: boolean
 }
 
 export interface Asset {
   _id: string
+  logo?: string
   deleted: boolean
   createdBy: string
   symbol: string
@@ -23,5 +26,8 @@ export interface Asset {
     maximumDeposit?: number
     minimumWithdrawal?: number
     maximumWithdrawal?: number
+  }
+  network: {
+    name: string
   }
 }

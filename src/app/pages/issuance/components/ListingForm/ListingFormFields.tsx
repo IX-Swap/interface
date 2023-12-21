@@ -27,11 +27,11 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
           />
         </FieldContainer>
       </Grid>
-      <Grid item>
-        <FieldContainer>
-          <ListingMarketInfo status={status} isNew={isNew} data={data} />
-        </FieldContainer>
-      </Grid>
+      {/* <Grid item>
+        <FieldContainer> */}
+      <ListingMarketInfo status={status} isNew={isNew} data={data} />
+      {/* </FieldContainer>
+      </Grid> */}
       <Grid item>
         <FieldContainer>
           <ComplianceDocuments />

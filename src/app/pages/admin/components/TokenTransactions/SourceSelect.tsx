@@ -2,7 +2,7 @@ import React from 'react'
 import { FormControl } from '@mui/material'
 // import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { SelectProps } from 'ui/Select/Select'
-import { Autocomplete } from 'ui/Select/Autocomplete'
+import { Autocomplete } from 'ui/Select/Autocomplete/Autocomplete'
 
 export const SourceSelect = (props: Partial<SelectProps>) => {
   const options = [
@@ -11,12 +11,16 @@ export const SourceSelect = (props: Partial<SelectProps>) => {
       value: 'STO_ISSUANCE'
     },
     {
+      label: 'EXCHANGE_TRADE',
+      value: 'EXCHANGE_TRADE'
+    },
+    {
       label: 'STO_WITHDRAWAL',
       value: 'STO_WITHDRAWAL'
     },
     {
-      label: 'EXCHANGE_TRADE',
-      value: 'EXCHANGE_TRADE'
+      label: 'STO_DEPOSIT',
+      value: 'STO_DEPOSIT'
     }
   ]
 

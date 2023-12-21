@@ -5,6 +5,7 @@ import { useAPIService } from 'hooks/useAPIService'
 import { KeyValueMap, PaginatedData } from 'services/api/types'
 import { BaseFilter } from 'types/util'
 // import { useLocation } from 'react-router-dom'
+import { TableStatus, useAppActions, useAppState } from 'app/hooks/useAppState'
 
 export interface UseTableWithPaginationReturnType<TData> {
   items: TData[]
@@ -52,6 +53,8 @@ export const useTableWithPagination = <TData>({
   const filter = defaultFilter
   const [sortOrder, setSortOrder] = useState('desc')
   const [sortField, setSortField] = useState('createdAt')
+  const { tableHasData } = useAppState()
+  const { setTableHasData } = useAppActions()
 
   useEffect(() => {
     if (disabledUseEffect !== undefined && !disabledUseEffect) {
@@ -83,6 +86,23 @@ export const useTableWithPagination = <TData>({
       localStorage.removeItem('isFavorite')
     }
 
+    const updateTableStatus = (tableName: string, newStatus: boolean) => {
+      const updatedTableStatus: TableStatus[] = [...tableHasData]
+      const tableIndex = updatedTableStatus.findIndex(
+        table => table.tableName === tableName
+      )
+
+      if (tableIndex !== -1) {
+        updatedTableStatus[tableIndex].status = newStatus
+        setTableHasData(updatedTableStatus)
+      } else {
+        setTableHasData([
+          ...updatedTableStatus,
+          { tableName, status: newStatus }
+        ])
+      }
+    }
+
     const payload: KeyValueMap<any> = {
       skip: p * r,
       limit: r,
@@ -90,12 +110,29 @@ export const useTableWithPagination = <TData>({
       sortField: sBy,
       ...(filter ?? {})
     }
-    const result =
-      method === 'POST'
-        ? await apiService.post<PaginatedData<TData>>(uri!, payload)
-        : await apiService.get<PaginatedData<TData>>(uri!, payload)
 
-    setTotalPage(result?.data[0]?.count)
+    let result: any = {}
+    let tableStatus = false
+
+    try {
+      result =
+        method === 'POST'
+          ? await apiService.post<PaginatedData<TData>>(uri!, payload)
+          : await apiService.get<PaginatedData<TData>>(uri!, payload)
+
+      const hasNoInitialResult =
+        // payload?.search === undefined && result?.data[0]?.count < 1
+        payload?.search === undefined && result?.data?.length < 1
+
+      tableStatus = !hasNoInitialResult
+
+      setTotalPage(result?.data[0]?.count)
+    } catch (error) {
+      console.log('error', error)
+    }
+
+    if (queryKey !== undefined) updateTableStatus(queryKey, tableStatus)
+
     return result
   }
 

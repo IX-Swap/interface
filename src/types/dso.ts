@@ -316,9 +316,22 @@ export interface DepositAddress {
   account_id: number
   wallet_name: string
   asset_ticker: string
-  deposit_address: string
+  address: string
   hd_path: string
   depositQRCodeUrl: string
+}
+
+export interface WithdrawalFeeData {
+  currency: string
+  balance: number
+  withdrawalFee: number
+}
+export interface WithdrawalFee {
+  //   valid: boolean
+  //   data: WithdrawalFeeData
+  currency: string
+  balance: number
+  withdrawalFee: number
 }
 
 export interface DSOFormActionsProps {

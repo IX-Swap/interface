@@ -6,6 +6,7 @@ import { Form } from 'components/form/Form'
 
 export interface FilterProps {
   type?: string
+  exportButtonId?: string
 }
 
 export const Filters = (props: FilterProps) => {
@@ -16,7 +17,7 @@ export const Filters = (props: FilterProps) => {
       {type === 'matched' ? (
         <SidebarSection>
           <Form>
-            <SearchAndDateFilter />
+            <SearchAndDateFilter exportButtonId={props.exportButtonId} />
           </Form>
         </SidebarSection>
       ) : (
@@ -27,7 +28,7 @@ export const Filters = (props: FilterProps) => {
 
           <SidebarSection style={{ paddingRight: '30px' }}>
             <Form>
-              <SearchAndDateFilter />
+              <SearchAndDateFilter exportButtonId={props.exportButtonId} />
             </Form>
           </SidebarSection>
         </>

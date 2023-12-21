@@ -60,7 +60,7 @@ export const personalInfoSchema = yup
 
 export const financialInfoSchema = (data?: IndividualIdentity) =>
   yup.object().shape<IndividualFinancialInfoFormValues>({
-    occupation: yup.string(),
+    occupation: yup.string().required(validationMessages.required),
     employer: yup
       .string()
       .max(50, 'Maximum of 50 characters')
@@ -201,6 +201,10 @@ export const individualInvestorStatusDeclarationSchema = yup
       //     .oneOf([true], 'Opt-In Requirement is required')
       //     .required(validationMessages.required),
       optInAgreementsSafeguards: yup
+        .bool()
+        .oneOf([true], 'Opt-In Requirement is required')
+        .required(validationMessages.required),
+      optInAgreementsExchange: yup
         .bool()
         .oneOf([true], 'Opt-In Requirement is required')
         .required(validationMessages.required),

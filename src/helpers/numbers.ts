@@ -31,7 +31,12 @@ export const addSymbol = (
 export const formatAmount = (value: number) => {
   if (value === undefined || value === null) return ''
 
-  return String(Number(value).toFixed(2)).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+  const truncatedNumber = Math.floor(value * 100) / 100 // Truncate to two decimal places
+
+  return String(Number(truncatedNumber).toFixed(2)).replace(
+    /\d(?=(\d{3})+\.)/g,
+    '$&,'
+  )
 }
 
 export const formatRoundedAmount = (value: number | string) => {

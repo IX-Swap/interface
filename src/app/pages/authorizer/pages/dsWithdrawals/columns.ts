@@ -1,37 +1,54 @@
 import { TableColumn } from 'types/util'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { renderAmount, renderAssetName, renderLastName } from 'helpers/tables'
+import { formatAmount } from 'helpers/numbers'
+import { renderAssetName, renderAssetSymbol } from 'helpers/tables'
+import { renderAddressColumn, renderTransactionHash } from 'helpers/rendering'
 
 export const columns: Array<TableColumn<DSWithdrawal>> = [
   {
+    key: 'txHash',
+    label: 'Transaction Hash',
+    render: (txHash, row) =>
+      renderTransactionHash(txHash, row.txExplorerLink, true)
+  },
+  {
     key: 'createdAt',
-    label: 'Date',
+    label: 'Created At',
     render: formatDateToMMDDYY
   },
   {
-    key: 'identity.individual.firstName',
-    label: 'Name',
-    render: renderLastName
+    key: 'user.name',
+    label: 'Username'
   },
-  {
-    key: 'level',
-    label: 'Level'
-  },
+  //   {
+  //     key: 'level',
+  //     label: 'Level'
+  //   },
   {
     key: 'asset',
-    label: 'Security Token',
+    label: 'STO Name',
     render: renderAssetName
   },
   {
-    key: 'recipientWallet',
-    label: 'Wallet'
+    key: 'asset',
+    label: 'STO Symbol',
+    render: renderAssetSymbol
+  },
+  {
+    key: 'withdrawalAddress.label',
+    label: 'Address Label'
+  },
+  {
+    key: 'withdrawalAddress.address',
+    label: 'Wallet Address',
+    render: renderAddressColumn
   },
   {
     key: 'amount',
-    label: 'Amount',
+    label: 'Amount of Tokens',
     align: 'right',
     headAlign: 'right',
-    render: renderAmount
+    render: formatAmount
   }
 ]

@@ -1,21 +1,45 @@
 import React from 'react'
+import { Box } from '@mui/material'
 import { renderSelectItems } from 'helpers/rendering'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+// import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
+import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
 
-const CURRENCIES = [
+export const CURRENCIES = [
+  //   {
+  //     label: (
+  //       <Box display={'flex'} alignItems={'center'}>
+  //         <SGDIcon style={{ marginRight: 16 }} />
+  //         SGD
+  //       </Box>
+  //     ),
+  //     value: 'SGD'
+  //   },
   {
-    label: 'SGD',
-    value: 'SGD'
+    label: (
+      <Box display={'flex'} alignItems={'center'}>
+        <USDIcon style={{ marginRight: 16 }} />
+        USD
+      </Box>
+    ),
+    value: 'USD'
   },
   {
-    label: 'USD',
-    value: 'USD'
+    label: (
+      <Box display={'flex'} alignItems={'center'}>
+        <USDCIcon style={{ marginRight: 16 }} />
+        USDC
+      </Box>
+    ),
+    value: 'USDC'
   }
 ]
 
 export const CurrencySelect = (props: any): JSX.Element => {
+  const options = props.options ?? CURRENCIES
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
@@ -24,11 +48,14 @@ export const CurrencySelect = (props: any): JSX.Element => {
         label={undefined}
         placeholder={String(props.label)}
         displayEmpty
+        renderValue={value =>
+          options.find(currency => currency.value === value)?.label
+        }
       >
         <SelectItem disabled value={undefined}>
-          Currency
+          Select Currency
         </SelectItem>
-        {renderSelectItems(CURRENCIES)}
+        {renderSelectItems(options)}
       </Select>
     </>
   )

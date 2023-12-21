@@ -3,6 +3,7 @@ import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccount
 import { DepositInfoProps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
 import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/shared.styles'
 import React from 'react'
+import { AccountIdInstructions } from './AccountIdInstructions'
 
 export const Tt = ({ accountId, currency }: DepositInfoProps) => {
   const theme = useTheme()
@@ -31,7 +32,8 @@ export const Tt = ({ accountId, currency }: DepositInfoProps) => {
     },
     {
       label: 'Beneficiary’s Bank Address:',
-      value: 'MARINA BAY FINANCIAL CENTRE TOWER 2, 48-01, 10 MARINA BOULEVARD, SINGAPORE'
+      value:
+        'MARINA BAY FINANCIAL CENTRE TOWER 2, 48-01, 10 MARINA BOULEVARD, SINGAPORE'
     },
     {
       label: 'Time Estimation for Deposit:',
@@ -47,6 +49,7 @@ export const Tt = ({ accountId, currency }: DepositInfoProps) => {
           </Grid>
         </Box>
       </Grid>
+      <AccountIdInstructions />
       <Grid item>
         <Paper className={paper}>
           <Box className={footerInfo}>

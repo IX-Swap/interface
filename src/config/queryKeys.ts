@@ -136,6 +136,7 @@ export const withdrawalAddressQueryKeys = {
 export const usersQueryKeys = {
   getList: 'user-list',
   getUserById: (id?: string) => generateQueryKey('user', id),
+  getUserByAccountId: (id?: string) => generateQueryKey('account', id),
   getCustomFields: (service?: string, feature?: string) =>
     generateQueryKey('customf-fields', service, feature)
 }
@@ -199,12 +200,14 @@ export const issuanceQueryKeys = {
   reportTemplate: 'report-template',
   totalStats: 'dashboard-total-stats',
   mostPopular: 'most-popular-deals',
-  upcoming: 'upcoming-deals'
+  upcoming: 'upcoming-deals',
+  getWhitelistedAddresses: 'whitelisted-addresses'
 }
 
 export const ledgerQueryKeys = {
   getTokenTransactions: 'token-transactions',
-  exportTokenTransactions: 'export-token-transactions'
+  exportTokenTransactions: 'export-token-transactions',
+  getTokenHoldings: 'token-holdings'
 }
 
 export const virtualAccountQueryKeys = {
@@ -264,6 +267,13 @@ export const tradingQueryKeys = {
 export const listingsQueryKeys = {
   getListingsList: 'listings-list',
   getCombinedList: 'listings-combined-list'
+}
+
+export const securityToken = {
+  getDeposits: 'security-token-deposits',
+  exportDeposits: 'export-security-token-deposits',
+  getWithdrawals: 'security-token-withdrawals',
+  exportWithdrawals: 'export-security-token-withdrawals'
 }
 
 export const exchangeListingsQueryKeys = {

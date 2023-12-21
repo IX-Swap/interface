@@ -9,6 +9,8 @@ import {
 } from 'app/pages/identity/types/forms'
 import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
+import { ReactComponent as USDTIcon } from 'assets/icons/stablecoins/usdt.svg'
+import { ReactComponent as USDCIcon } from 'assets/icons/stablecoins/usdc.svg'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { formatMoney } from 'helpers/numbers'
 import React from 'react'
@@ -41,6 +43,8 @@ export const renderClosureMinimumInvestment = (
 export const renderIncome = (i: string): string => `SGD ${i}`
 
 export const renderAssetName = (a: Asset): string => a.name
+
+export const renderAssetSymbol = (a: Asset): string => a.symbol
 
 export const renderAssetBalance = (val: string, row: AssetBalance): string =>
   `${row.name} (${val})`
@@ -289,7 +293,20 @@ export const renderUSDPrice = (price: string) => {
 }
 
 export const renderCurrencyLabel = (currency: string) => {
-  const Icon = currency === 'USD' ? USDIcon : SGDIcon
+  let Icon = SGDIcon
+
+  switch (currency) {
+    case 'USD':
+      Icon = USDIcon
+      break
+    case 'USDT':
+      Icon = USDTIcon
+      break
+    case 'USDC':
+      Icon = USDCIcon
+      break
+  }
+
   return (
     <Box display={'flex'} alignItems={'center'}>
       <Icon style={{ marginRight: 16 }} />

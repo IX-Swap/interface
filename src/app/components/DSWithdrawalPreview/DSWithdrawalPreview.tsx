@@ -3,7 +3,7 @@ import { Grid, Link } from '@mui/material'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { formatMoney } from 'helpers/numbers'
 import { LabelledValue } from 'components/LabelledValue'
-import { renderName } from 'helpers/tables'
+// import { renderName } from 'helpers/tables'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getOfferingName } from 'helpers/strings'
 
@@ -29,14 +29,16 @@ export const DSWithdrawalPreview = (props: DSWithdrawalPreviewProps) => {
         <Grid item xs={6}>
           <LabelledValue
             label='Withdrawal By'
-            value={renderName('', data.identity.individual)}
+            // value={renderName('', data.identity.individual)}
+            value={data.user.name}
           />
         </Grid>
 
         <Grid item xs={6}>
           <LabelledValue
             label='Blockchain Address'
-            value={data.recipientWallet}
+            // value={data.recipientWallet}
+            value={data.withdrawalAddress.address}
           />
         </Grid>
 

@@ -10,6 +10,7 @@ import {
 } from 'app/pages/identity/types/forms'
 import { DeclarationsListItem } from 'app/pages/identity/components/DeclarationsListItem/DeclarationsListItem'
 import { capitalizeFirstLetter } from 'helpers/strings'
+import { ExchangeAgreements } from '../InvestorDeclarationForm/ExchangeAgreements/ExchangeAgreements'
 
 export interface OptInViewProps {
   data: IndividualIdentity | CorporateIdentity
@@ -50,6 +51,12 @@ export const OptInView: React.FC<OptInViewProps> = ({ data }) => {
                 }
               />
             )}
+            <DeclarationsListItem
+              label={<ExchangeAgreements investorRole={investorRole} />}
+              value={
+                data?.declarations?.investorsStatus?.optInAgreementsExchange
+              }
+            />
           </Grid>
         </Grid>
       </Grid>

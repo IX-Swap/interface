@@ -33,7 +33,8 @@ export interface NumericInputAdornmentProps extends NumericInputProps {
 export const NumericInput = (
   props: NumericInputAdornmentProps & InputProps
 ): JSX.Element => {
-  const { numberFormat, variant, ...rest } = props
+  //   const { numberFormat, variant, ...rest } = props
+  const { numberFormat, ...rest } = props
 
   return (
     <InputComponent

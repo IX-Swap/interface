@@ -95,19 +95,29 @@ export const accountsURL = {
   cashWithdrawals: {
     create: (userId?: string) => `/accounts/cash/withdrawals/${userId}`
   },
-  digitalSecurities: {
-    getDepositAddress: '/custody/deposits/getDepositAddress'
+  securityToken: {
+    // getDepositAddress: '/custody/deposits/getDepositAddress'
+    getDepositAddress: (assetId: string) =>
+      `/deposits/deposit-address/${assetId}`,
+    deposit: `/deposits/token`,
+    getDeposits: `/accounts/security/deposit`,
+    exportDeposits: `/accounts/security/exportDeposit`,
+    getWithdrawals: `/accounts/security/withdrawal`,
+    exportWithdrawals: `/accounts/security/exportWithdrawal`
   },
   dsWithdrawals: {
     create: (userId?: string) => `/accounts/security/withdrawals/${userId}`,
-    createCustodyWithdrawal: '/custody/withdrawals'
+    createCustodyWithdrawal: '/custody/withdrawals',
+    getWithdrawalFee: (assetId?: string) =>
+      `/accounts/security/withdrawals/fee-currency?asset=${assetId}`
   },
   withdrawalAddresses: {
     getById: (userId?: string, withdrawalAddressId?: string) =>
       `accounts/withdrawal-addresses/${userId}/${withdrawalAddressId}`,
     create: (userId?: string) => `/accounts/withdrawal-addresses/${userId}`,
-    getAll: (userId?: string) =>
+    getByUser: (userId?: string) =>
       `/accounts/withdrawal-addresses/list/${userId}`,
+    getAll: (userId?: string) => `/accounts/withdrawal-addresses/list`,
     getAllNetworks: '/blockchain/networks'
   },
   assets: {
@@ -237,6 +247,11 @@ export const issuanceURL = {
     getReport: (reportId?: string) =>
       `/issuance/financial-report-file/${reportId}`,
     reportTemplate: '/issuance/financial-report-file/template/recent'
+  },
+  whitelist: {
+    getWhitelistedAddresses: '/issuance/whitelist/list',
+    addToWhitelist: '/issuance/whitelist/add',
+    removeFromWhitelist: '/issuance/whitelist/remove'
   }
 }
 
@@ -262,6 +277,8 @@ export const authURL = {
 
 export const userURL = {
   getUserById: (userId?: string) => `/auth/user/${userId}`,
+  getUserByAccountId: (accountId?: string) =>
+    `/auth/account/user?accountId=${accountId}`,
   getAll: '/auth/users/list',
   getUserProfile: (userId?: string) => `/auth/profiles/${userId}`,
   updateRoles: (userId?: string) => `/auth/users/${userId}/roles`,
@@ -302,7 +319,9 @@ export const bannerURL = {
 export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
-  getByUserId: (userId?: string) => `/virtual-accounts/${userId}`,
+  createManualTransaction: '/virtual-accounts/transactions/manual',
+  getByUserId: (userId: string, type?: 'Currency' | 'Stablecoin' | 'All') =>
+    `/virtual-accounts/${userId}${type != null ? `?type=${type}` : ''}`,
   assign: '/virtual-accounts/assign',
   unassign: (accountId?: string) => `/virtual-accounts/unassign/${accountId}`,
   uploadCSV: '/virtual-accounts/upload',

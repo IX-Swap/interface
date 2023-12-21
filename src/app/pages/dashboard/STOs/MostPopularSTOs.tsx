@@ -18,7 +18,7 @@ import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicat
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { useTheme } from '@emotion/react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 interface PopularSTO {
   _id: string
@@ -59,6 +59,9 @@ export const MostPopularSTOs = () => {
       <Typography variant='h5' color={'otpInput.color'}>
         Most Popular
       </Typography>
+      <Typography color={'text.secondary'} mt={2}>
+        Discover which STOs are trending among investors.
+      </Typography>
       <TableContainer component={Paper} sx={{ marginTop: '15px' }}>
         <Table aria-label='Most Popular STOs'>
           <TableHead>
@@ -80,7 +83,7 @@ export const MostPopularSTOs = () => {
                   <Box display={'flex'} gap={1} alignItems={'center'}>
                     <Link
                       component={AppRouterLinkComponent}
-                      to={IssuanceRoute.view}
+                      to={InvestRoute.view}
                       params={{ dsoId: sto._id, issuerId: sto.user }}
                     >
                       <DSOLogo
