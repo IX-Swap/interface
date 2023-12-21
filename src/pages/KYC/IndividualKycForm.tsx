@@ -1005,10 +1005,10 @@ export default function IndividualKycForm() {
                                   placeholder="Business Email Address"
                                   id="businessEmailAddress"
                                   label="Business Email Address"
-                                  value={values.businessEmailAddress}
-                                  error={errors.businessEmailAddress}
+                                  value={values.alternateEmail}
+                                  error={errors.alternateEmail}
                                   onChange={(e: any) =>
-                                    onChangeInput('businessEmailAddress', e.currentTarget.value, values, setFieldValue)
+                                    onChangeInput('alternateEmail', e.currentTarget.value, values, setFieldValue)
                                   }
                                 />
                               )}
