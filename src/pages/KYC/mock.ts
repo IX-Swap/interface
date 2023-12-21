@@ -21,6 +21,22 @@ export const sourceOfFunds = [
   'Others',
 ].map((name, index) => ({ value: ++index, label: name }))
 
+
+
+
+export const SecondaryContactDetails = [
+  'Proof of Address',
+  'Business Email Address',
+  'Social Media Handle',
+].map((name, index) => ({ value: ++index, label: name }))
+
+export const socialMediaPlatform = [
+  'Telegram',
+  'Discord',
+  'X.com',
+].map((name, index) => ({ value: ++index, label: name }))
+
+
 export const fatcaOptions = [
   'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus.',
   'Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.',
