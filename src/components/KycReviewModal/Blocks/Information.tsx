@@ -27,14 +27,14 @@ export const Information = ({ data, kycKey }: Props) => {
             <Field label={label} value={format ? format(data?.[key]) : data?.[key]} />
           </GridItem>
         ))}
-        {kycKey === 'corporate' && (
+        {/* {kycKey === 'corporate' && (
           <GridItemNew>
             <RowWithCheck
               text="Is The Ultimate Holding Company A Regulated Entity Or Listed Company In a FATF Jurisdiction?"
               isDone={data?.inFatfJurisdiction}
             />
           </GridItemNew>
-        )}
+        )} */}
       </GridContainer>
     </Block>
   )

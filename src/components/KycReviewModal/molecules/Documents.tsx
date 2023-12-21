@@ -9,7 +9,7 @@ import { EllipsisText, MEDIA_WIDTHS } from 'theme'
 import { Document } from 'state/admin/actions'
 import { KycDocPreviewModal } from 'components/KycDocPreviewModal'
 
-const headerCells = [t`File`, t`Type`, t`Uploaded At`]
+const headerCells = [t`File`, t`Uploaded At`]
 
 const formattedTypes = {
   identity: t`Proof of Identity`,
@@ -93,13 +93,13 @@ const Row = ({
           <EllipsisText>{name}</EllipsisText>
         </FileName>
       </div>
-      <div>
+      {/* <div>
         {isFirstRow && <ColumnHeader>{headerCells[1]}</ColumnHeader>}
 
         {formattedTypes[type] || type}
-      </div>
+      </div> */}
       <div>
-        {isFirstRow && <ColumnHeader>{headerCells[2]}</ColumnHeader>}
+        {isFirstRow && <ColumnHeader>{headerCells[1]}</ColumnHeader>}
         {dayjs(createdAt).format('MMM D, YYYY hh:mm:ss A')}
       </div>
     </BodyRow>
@@ -174,7 +174,7 @@ const BodyRow = styled.a`
   text-decoration: none;
   color: ${({ theme: { text1 } }) => text1};
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   column-gap: 200px;
   font-size: 13px;
   overflow: auto;

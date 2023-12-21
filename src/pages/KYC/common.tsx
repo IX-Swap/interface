@@ -635,7 +635,7 @@ const StyledInput = styled(Input)`
   font-weight: normal;
   font-size: 16px;
   border: ${({ error, theme }) => (error ? 'solid 1px' + theme.error : 'solid 1px #E6E6FF')};
-  background-color: ${({ theme: { bg0 } }) => bg0};
+  background-color: ${({ disabled, theme: { bg0, bg23 } }) => { return disabled ? bg23 : bg0 } };
   :focus {
     // background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};
     background-color: ${({ theme: { bg0 } }) => bg0};
