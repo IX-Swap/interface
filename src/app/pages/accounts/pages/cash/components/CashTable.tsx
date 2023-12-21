@@ -20,7 +20,6 @@ import {
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { renderActionButton } from './renderActionbutton'
 import { NoData } from '../../banks/pages/BanksList/NoData'
-import { AddBankAccountButton } from '../../withdraw/components/AddBankAccountButton'
 
 export const CashTable: React.FC = () => {
   const { user } = useAuth()
@@ -40,11 +39,7 @@ export const CashTable: React.FC = () => {
         actionHeader='Actions'
         paginationPlacement='none'
         noHeader={isTablet}
-        noDataComponent={
-          <NoData accountType='cash'>
-            <AddBankAccountButton variant='contained' />
-          </NoData>
-        }
+        noDataComponent={<NoData accountType='cash' />}
       >
         {isTablet
           ? (props: TableViewRendererProps<ConvertedAssetBalance>) => (

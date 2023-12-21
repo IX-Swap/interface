@@ -21,10 +21,12 @@ export const NoCashButtons = () => {
     useAssignVirtualAccount(handleClose)
 
   //   if (items?.length > 1 || isLoading) {
-  if (items?.length > 0 || isLoading) {
+  //   if (items?.length > 0 || isLoading) {
+  if (isLoading) {
     return null
   }
-  const necessaryAccounts: Array<'SGD' | 'USD'> = ['SGD', 'USD']
+  //   const necessaryAccounts: Array<'SGD' | 'USD'> = ['SGD', 'USD']
+  const necessaryAccounts: Array<'SGD' | 'USD'> = ['USD']
   const missingAccounts: Array<'SGD' | 'USD'> = necessaryAccounts.filter(
     currency => items?.find(item => currency === item?.currency) === undefined
   )
