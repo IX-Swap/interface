@@ -40,6 +40,8 @@ import {
   sourceOfFunds,
   promptValue,
   occupationList,
+  SecondaryContactDetails,
+  socialMediaPlatform,
 } from './mock'
 import {
   FormCard,
@@ -105,6 +107,7 @@ export default function IndividualKycForm() {
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
   const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
   const [referralCode, setReferralCode] = useState<string | null>(null)
+  const [selectedOption, setSelectedOption] = useState(null)
   const openConfirmationModal = useCallback(() => {
     setShowOptoutModal(false)
     setShowOptoutConfirmationModal(true)
@@ -233,8 +236,8 @@ export default function IndividualKycForm() {
   const onIsAdditionalChange = async (index: number, setFieldValue: any) => {
     const values = form.current.values
     if (!values.taxDeclarations[index].isAdditional) {
-      setFieldValue(`taxDeclarations[${index}].idNumber`, ''); // Clear TIN
-      setFieldValue(`taxDeclarations[${index}].country`, null); // Clear country
+      setFieldValue(`taxDeclarations[${index}].idNumber`, '') // Clear TIN
+      setFieldValue(`taxDeclarations[${index}].country`, null) // Clear country
     }
 
     const declaration = { ...values.taxDeclarations[index] }
@@ -304,6 +307,14 @@ export default function IndividualKycForm() {
     validateValue(key, value)
     validationSeen(key)
   }
+
+  const onSelectChangeNew = (key: string, value: any, setFieldValue: any) => {
+    const formattedValue = value.label; // Assuming 'label' is the property that contains the display text
+  
+    setFieldValue(key, formattedValue, false);
+    validateValue(key, value);
+    validationSeen(key);
+  };
 
   const onRadioChange = (key: string, value: any, setFieldValue: any) => {
     setFieldValue(key, value, false)
@@ -485,6 +496,10 @@ export default function IndividualKycForm() {
     []
   )
 
+  const onSecondaryContactDetailsChange = (item: { value: React.SetStateAction<null> }) => {
+    setSelectedOption(item.value)
+  }
+
   const saveProgress = useCallback(
     async (values: any) => {
       await formSubmitHandler(values, {
@@ -568,7 +583,7 @@ export default function IndividualKycForm() {
                 hasNoErrors('middleName') &&
                 isFilled('lastName') &&
                 isFilled('dateOfBirth') &&
-                isFilled('gender') &&
+                // isFilled('gender') &&
                 isFilled('nationality') &&
                 isFilled('citizenship') &&
                 isFilled('phoneNumber') &&
@@ -699,18 +714,6 @@ export default function IndividualKycForm() {
                               maxDate={moment().subtract(18, 'years')}
                             />
                             <Select
-                              error={errors.gender}
-                              id="genderDropdown"
-                              label="Gender"
-                              placeholder="Gender"
-                              selectedItem={values.gender}
-                              items={genders}
-                              onSelect={(gender) => onSelectChange('gender', gender, setFieldValue)}
-                            />
-                          </FormGrid>
-
-                          <FormGrid>
-                            <Select
                               error={errors.nationality}
                               withScroll
                               id="nationalityDropdown"
@@ -720,6 +723,18 @@ export default function IndividualKycForm() {
                               items={countries}
                               onSelect={(nationality) => onSelectChange('nationality', nationality, setFieldValue)}
                             />
+                            {/* <Select
+                              error={errors.gender}
+                              id="genderDropdown"
+                              label="Gender"
+                              placeholder="Gender"
+                              selectedItem={values.gender}
+                              items={genders}
+                              onSelect={(gender) => onSelectChange('gender', gender, setFieldValue)}
+                            /> */}
+                          </FormGrid>
+
+                          <FormGrid>
                             <Select
                               error={errors.citizenship}
                               withScroll
@@ -730,8 +745,7 @@ export default function IndividualKycForm() {
                               items={countries}
                               onSelect={(citizenship) => onSelectChange('citizenship', citizenship, setFieldValue)}
                             />
-                          </FormGrid>
-                          <FormGrid>
+
                             <PhoneInput
                               error={errors.phoneNumber}
                               value={values.phoneNumber}
@@ -741,17 +755,19 @@ export default function IndividualKycForm() {
                                 validationSeen('phoneNumber')
                               }}
                             />
-                            <TextInput
-                              placeholder="Email address"
-                              id="emailAddressField"
-                              label="Email address"
-                              value={values.email}
-                              error={errors.email}
-                              onChange={(e: any) =>
-                                onChangeInput('email', e.currentTarget.value, values, setFieldValue)
-                              }
-                            />
                           </FormGrid>
+                          {/* <FormGrid> */}
+                          <TextInput
+                            disabled={true}
+                            style={{ background: '#F7F7FA' }}
+                            placeholder="Email address"
+                            id="emailAddressField"
+                            label="Email address"
+                            value={values.email}
+                            error={errors.email}
+                            onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
+                          />
+                          {/* </FormGrid> */}
                         </Column>
 
                         <RowBetween marginBottom="32px" marginTop="64px">
@@ -859,8 +875,8 @@ export default function IndividualKycForm() {
                               onSelect={(idType) => {
                                 onSelectChange('idType', idType, setFieldValue)
                                 if (
-                                  idType?.label === IdentityDocumentType.NATIONAL_ID ||
-                                  idType?.label === IdentityDocumentType.OTHERS
+                                  idType?.label === IdentityDocumentType.NATIONAL_ID
+                                  // idType?.label === IdentityDocumentType.OTHERS
                                 ) {
                                   setIdExpiryDateLabel('ID Expiration Date (Optional)')
                                 } else {
@@ -917,12 +933,12 @@ export default function IndividualKycForm() {
 
                         <TYPE.description3>
                           Please upload the following documents. All account statements and documents should be dated
-                          within the last 3 months. Type of document format supported is PDF, JPEG, JPG, DOCX and PNG.
+                          within the last 3 months. Type of document format supported is PDF, JPG, and PNG.
                         </TYPE.description3>
 
                         <Column style={{ gap: '40px', marginTop: '32px' }}>
                           <Uploader
-                            subtitle="Proof of ID - Passport, Singapore NRIC, International Passport, National ID, Driving License or Others."
+                            subtitle="Passport, National ID, or Driving License"
                             error={errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
@@ -938,8 +954,8 @@ export default function IndividualKycForm() {
                           />
 
                           <SelfieUploader
-                            title=""
-                            subtitle="Selfie for Verification"
+                            title="Selfie with Proof of Identity"
+                            subtitle="Selfie displaying your face, your Proof of Identity, and the present date written down on a piece of paper"
                             error={errors.selfie}
                             files={values.selfie}
                             onDrop={(file) => handleDropImage(file, values, 'selfie', setFieldValue)}
@@ -949,6 +965,99 @@ export default function IndividualKycForm() {
                               values.removedDocuments,
                               setFieldValue
                             )}
+                          />
+
+                          <div>
+                            <Select
+                              subText="Please select one from the following options in the dropdown (Proof of Address Document, Business Email Address, or Social Media Handle)"
+                              withScroll
+                              label="Secondary Contact Details"
+                              placeholder="Secondary Contact Details"
+                              id="SecondaryContactDetails"
+                              selectedItem={selectedOption}
+                              items={SecondaryContactDetails}
+                              onSelect={(item) => {
+                                onSecondaryContactDetailsChange(item)
+                              }}
+                              
+                            />
+
+                            <div style={{ marginTop: '20px' }}>
+                              {selectedOption === 1 && (
+                                <Uploader
+                                  title="Proof of Address"
+                                  subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
+                                  error={errors.proofOfAddress}
+                                  files={values.proofOfAddress}
+                                  onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                                  handleDeleteClick={handleImageDelete(
+                                    values,
+                                    'proofOfAddress',
+                                    values.removedDocuments,
+                                    setFieldValue
+                                  )}
+                                />
+                              )}
+
+                              {selectedOption === 2 && (
+                                <TextInput
+                                  subText="Please input Business Email Address as alternative contact method"
+                                  placeholder="Business Email Address"
+                                  id="businessEmailAddress"
+                                  label="Business Email Address"
+                                  value={values.alternateEmail}
+                                  error={errors.alternateEmail}
+                                  onChange={(e: any) =>
+                                    onChangeInput('alternateEmail', e.currentTarget.value, values, setFieldValue)
+                                  }
+                                />
+                              )}
+                              {selectedOption === 3 && (
+                                <FormGrid>
+                                  <Select
+                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, or X.com)"
+                                    error={errors.socialPlatform}
+                                    withScroll
+                                    id="socialPlatform"
+                                    label="Social Media Platform"
+                                    placeholder="Social Media Platform"
+                                    selectedItem={values.socialPlatform}
+                                    items={socialMediaPlatform}
+                                    onSelect={(socialMediaPlatform) =>
+                                      onSelectChangeNew('socialPlatform', socialMediaPlatform, setFieldValue)
+                                    }
+                                  />
+
+                                  <TextInput
+                                    subText="Please provide your Social Media Handle in the selected Social Media Platform as alternative contact method"
+                                    placeholder="Social Media Handle"
+                                    id="handleName"
+                                    label="Social Media Handle"
+                                    value={values.handleName}
+                                    error={errors.handleName}
+                                    onChange={(e: any) =>
+                                      onChangeInput(
+                                        'handleName',
+                                        e.currentTarget.value,
+                                        values,
+                                        setFieldValue
+                                      )
+                                    }
+                                  />
+                                </FormGrid>
+                              )}
+                            </div>
+                            {/* Add additional conditions for other options if needed */}
+                          </div>
+                          {/* <Select
+                            withScroll
+                            label="Secondary Contact Details"
+                            placeholder="Secondary Contact Details"
+                            id="SecondaryContactDetails"
+                            selectedItem={values.sourceOfFunds}
+                            items={SecondaryContactDetails}
+                      
+                            onSelect={(item) => onSecondaryContactDetailsChange(item, values.SecondaryContactDetails, setFieldValue)}
                           />
 
                           <Uploader
@@ -963,7 +1072,7 @@ export default function IndividualKycForm() {
                               values.removedDocuments,
                               setFieldValue
                             )}
-                          />
+                          /> */}
                         </Column>
                       </FormCard>
 
@@ -1009,8 +1118,8 @@ export default function IndividualKycForm() {
                               }
                             />
                             <Select
-                              placeholder="Total Income (in SGD) in the Last 12 Months"
-                              label="Total Income (in SGD) in the Last 12 Months"
+                              placeholder="Total Income (in USD) in the Last 12 Months"
+                              label="Total Income (in USD) in the Last 12 Months"
                               id="incomeUsdDropdown"
                               items={incomes}
                               selectedItem={values.income}
@@ -1292,7 +1401,7 @@ export default function IndividualKycForm() {
                             />
                             {values.isUSTaxPayer === 1 && (
                               <TextInput
-                                style={{ width: 284 }}
+                                style={{ width: '100%' }}
                                 placeholder="ID Number.."
                                 value={values.usTin}
                                 onChange={(e: any) =>
@@ -1307,7 +1416,7 @@ export default function IndividualKycForm() {
                             id="notCitizenOfUS"
                             checked={values.isUSTaxPayer === 0}
                             onClick={() => onRadioChange('isUSTaxPayer', 0, setFieldValue)}
-                            label="I confirm that I am not a US citizen or resident in the US for tax purposes. "
+                            label="I confirm that I am not a US citizen or resident in the US for tax purposes "
                           />
                           {errors.isUSTaxPayer && (
                             <TYPE.small marginTop="-4px" color={'red1'}>

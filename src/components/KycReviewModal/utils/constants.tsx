@@ -32,12 +32,6 @@ export const corporateInfoKeys = [
     width: { xs: 12, sm: 6 },
   },
   { key: 'businessActivity', label: 'Business Activity', width: { xs: 12, sm: 6 } },
-  {
-    key: 'incorporationDate',
-    label: 'Date of Incorporation',
-    width: { xs: 12, sm: 6 },
-    format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
-  },
 ] as KycTypes
 
 export const personalInfoKeys = [
@@ -147,7 +141,7 @@ export const fatcaKeys = [
   },
   {
     key: 'fatca2',
-    label: 'I confirm that I am not a US citizen or resident in the US for tax purposes.  ',
+    label: 'I confirm that I am not a US citizen or resident in the US for tax purposes  ',
   },
 ]
 

@@ -8,6 +8,7 @@ import { ChevronRight, ChevronLeft, X } from 'react-feather'
 import { OfferFile, OfferFileType } from 'state/launchpad/types'
 
 import { ReactComponent as PlayButton } from 'assets/launchpad/svg/play-button.svg'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   initial?: OfferFile
@@ -193,12 +194,20 @@ const ViewerContainer = styled.div`
   z-index: 30;
   background: rgba(6, 6, 40, 0.6);
   backdrop-filter: blur(16px);
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 0px;
+  }
 `
 
 const ViewerActiveMedia = styled.div`
   grid-area: main-media;
   place-self: center;
-  height: 60vh;
+
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    height: auto;
+  }
 `
 
 const ViewerMediaSelector = styled.div`

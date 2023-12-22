@@ -9,15 +9,18 @@ import { createKYC, fetchGetMyKyc, updateKYC } from './actions'
 
 import { LONG_WAIT_RESPONSE } from 'constants/misc'
 import { KYCStatuses } from 'pages/KYC/enum'
+import React from 'react'
 
 const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity', 'selfie', 'evidenceOfAccreditation']
 const corporateKYCFiles = [
   'beneficialOwnersAddress',
   'beneficialOwnersIdentity',
+  'corporateMembersIdentity',
   'authorizationDocuments',
   'corporateDocuments',
   'financialDocuments',
   'authorizationDocuments',
+  'authorizationIdentity',
 ]
 
 export function useKYCState() {
@@ -68,6 +71,41 @@ export const getCorporateProgress = async () => {
     console.log(e)
   }
 }
+
+export const useEmailVerify = () => {
+  return React.useCallback(
+    async (email: string, identity: string) => {
+      try {
+        const response = await apiService.post(`/kyc/registerEmail`, { email, identity });
+        console.log(response);
+        return { success: true, response }; // Return success and response
+      } catch (error: any) {
+        // Handle errors here
+        console.error(error);
+        return { success: false, error };
+      }
+    },
+    []
+  );
+};
+
+
+export const useEmailVerifyCode = () => {
+  return React.useCallback(
+    async (code: string) => {
+      try {
+        const response = await apiService.put(`/kyc/verifyEmail`, { code });
+        console.log(response);
+        return { success: true, response }; // Return success and response
+      } catch (error: any) {
+        console.error(error);
+        return { success: false, error }; // Return failure and error
+      }
+    },
+    []
+  );
+};
+
 
 export const createIndividualKYC = async (newKYC: any, draft = false) => {
   const formData = new FormData()

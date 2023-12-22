@@ -82,14 +82,13 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
 
   return (
     <ModalContainer>
-
       <ExitIconContainer onClick={props.onClose}>
         <CrossIcon />
       </ExitIconContainer>
 
       {isMobile ? (
         <ContentWrapper>
-                 <HeaderRow>
+          <HeaderRow>
             <HoverText>
               <Trans>Connect to a wallet</Trans>
             </HoverText>
@@ -155,7 +154,6 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
         </ContentWrapper>
       ) : (
         <ContentWrapper>
-      
           {walletView === PromptView.options && (
             <>
               <ConnectionOptions onSelect={onSelect} />
