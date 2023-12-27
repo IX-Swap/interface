@@ -135,6 +135,7 @@ export const individualTransformApiData = (data: any, referralCode?: any) => {
     gender,
     nationality,
     income,
+    secondaryContactDetails,
     occupation,
     idType,
   } = data
@@ -164,6 +165,7 @@ export const individualTransformApiData = (data: any, referralCode?: any) => {
     employmentStatus: { value: 0, label: employmentStatus },
     gender: { value: 0, label: gender },
     occupation: { value: 0, label: occupation },
+    secondaryContactDetails: { value: 0, label: secondaryContactDetails },
     nationality: { value: 0, label: nationality },
     income: income && { value: 0, label: income },
     removedDocuments: [],
@@ -200,6 +202,7 @@ export const individualTransformKycDto = (values: any, referralCode?: any) => {
     income,
     isUSTaxPayer,
     occupation,
+    secondaryContactDetails,
     idIssueDate,
     idExpiryDate,
     idType,
@@ -233,6 +236,7 @@ export const individualTransformKycDto = (values: any, referralCode?: any) => {
       ...(sourceOfFunds.some((x: any) => (isLabel ? x.label === 'Others' : x === 'Others')) ? [otherFunds] : []),
     ].join(', '),
 
+    secondaryContactDetails: secondaryContactDetails?.label,
     occupation: occupation?.label,
     employmentStatus: employmentStatus?.label,
     income: income?.label,
