@@ -30,7 +30,7 @@ const sections = [
   { component: Address },
   // { component: Referral },
   { component: IndividualDocument },
-  { component: UploadedDocuments, dataKey: 'documents' },
+  { component: UploadedDocuments, dataKey: 'documents', kycKey: 'individual' },
   { component: Occupation },
   { component: SourceOfFunds, kycKey: 'individual' },
   { component: TaxDeclarations },

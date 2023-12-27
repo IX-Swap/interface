@@ -38,7 +38,7 @@ export const personalInfoKeys = [
   { key: 'firstName', label: 'First Name', width: { xs: 12, sm: 6, md: 4 } },
   { key: 'middleName', label: 'Middle Name', width: { xs: 12, sm: 6, md: 4 } },
   { key: 'lastName', label: 'Last Name', width: { xs: 12, sm: 6, md: 4 } },
-  { key: 'gender', label: 'Gender', width: { xs: 12, sm: 6 } },
+  // { key: 'gender', label: 'Gender', width: { xs: 12, sm: 6 } },
   {
     key: 'dateOfBirth',
     label: 'Date of Birth',
@@ -53,7 +53,7 @@ export const personalInfoKeys = [
     format: (value: string): string => `+${value}`,
     width: { xs: 12, sm: 6 },
   },
-  { key: 'email', label: 'Email address: ', width: { xs: 12, sm: 6 } },
+  { key: 'email', label: 'Email address', width: { xs: 12, sm: 6 } },
 ] as KycTypes
 
 export const individualDocumentKeys = [
@@ -67,7 +67,7 @@ export const individualDocumentKeys = [
       return IdentityDocumentType[key]
     },
   },
-  { key: 'idNumber', label: 'Document Number', width: { xs: 12, sm: 6 } },
+  { key: 'idNumber', label: 'ID Number', width: { xs: 12, sm: 6 } },
 
   {
     key: 'idIssueDate',
@@ -93,8 +93,8 @@ export const companyAuthorizedPersonnelKeys = [
 export const addressKeys = [
   { key: 'address', label: 'Address', width: { xs: 12, sm: 6 } },
   { key: 'postalCode', label: 'Postal Code', width: { xs: 12, sm: 6 } },
-  { key: 'city', label: 'City', width: { xs: 12, sm: 6 } },
   { key: 'country', label: 'Country', width: { xs: 12, sm: 6 } },
+  { key: 'city', label: 'City', width: { xs: 12, sm: 6 } },
 ]
 
 export const sourceOfFundsKeys = [

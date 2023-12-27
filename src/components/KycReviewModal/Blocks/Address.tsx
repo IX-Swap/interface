@@ -13,7 +13,7 @@ interface Props {
 
 export const Address = ({ data }: Props) => {
   return (
-    <Block title="Business Address">
+    <Block title="Address">
       <GridContainer spacing={30}>
         {addressKeys.map(({ key, label, width = {} }) => (
           <GridItem key={key} {...width}>
