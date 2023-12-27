@@ -54,7 +54,7 @@ export const IndividualForm = ({ data, riskJSON }: Props) => {
       {sections.map((section, index) => (
         <React.Fragment key={index}>
           <section.component title='Upload Documents' data={section.dataKey ? data?.[section.dataKey] : data} kycKey={section.kycKey} />
-          {index < sections.length - 1 && <Line />}
+          {index < sections.length - 1 && section.component.name !== 'SecondaryContactDetails' && <Line />}
         </React.Fragment>
       ))}
     </>

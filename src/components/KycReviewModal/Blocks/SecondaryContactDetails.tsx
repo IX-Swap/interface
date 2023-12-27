@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 import { businessEmailKeys, socialPlatformKeys } from '../utils/constants'
 import { SecondaryContactType } from 'pages/KYC/enum'
+import { Line } from 'components/Line'
 
 interface Props {
   data: IndividualKyc
@@ -16,15 +17,18 @@ export const SecondaryContactDetails = ({ data }: Props) => {
 
   return (
     data?.secondaryContactDetails !== SecondaryContactType.PROOF_OF_ADDRESS ?
-    <Block title="Secondary Contact Details">
-      <GridContainer>
-        {keys.map(({ key, label }, index) => (
-          <GridItem key={key} style={{ width: index === 1 || index === 2 ? '15%' : '35%' }}>
-            <Field label={label} value={data?.[key]} />
-          </GridItem>
-        ))}
-      </GridContainer>
-    </Block> : <></>
+    <>
+      <Block title="Secondary Contact Details">
+        <GridContainer>
+          {keys.map(({ key, label }, index) => (
+            <GridItem key={key} style={{ width: index === 1 || index === 2 ? '15%' : '35%' }}>
+              <Field label={label} value={data?.[key]} />
+            </GridItem>
+          ))}
+        </GridContainer>
+      </Block>
+      <Line />
+    </> : <></>
   )
 }
 
