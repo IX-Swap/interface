@@ -145,6 +145,15 @@ export const fatcaKeys = [
   },
 ]
 
+export const socialPlatformKeys = [
+  { key: 'socialPlatform', label: 'Social Media Platform', width: { xs: 12, sm: 6 } },
+  { key: 'handleName', label: 'Social Media Handle', width: { xs: 12, sm: 6 } },
+]
+
+export const businessEmailKeys = [
+  { key: 'alternateEmail', label: 'Business Email Address', width: { xs: 12, sm: 6 } },
+]
+
 export const ocupationKeys = [
   { key: 'occupation', label: 'Occupation', width: { xs: 12, sm: 6 } },
   { key: 'employmentStatus', label: 'Employment Status', width: { xs: 12, sm: 6 } },

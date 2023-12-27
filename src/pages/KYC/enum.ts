@@ -15,3 +15,9 @@ export enum IdentityDocumentType {
   DRIVING_LICENCE = 'Driving Licence',
   // OTHERS = 'Others',
 }
+
+export enum SecondaryContactType {
+  PROOF_OF_ADDRESS = 'Proof of Address',
+  BUSINESS_EMAIL_ADDRESS = 'Business Email Address',
+  SOCIAL_MEDIA_HANDLE = 'Social Media Handle',
+}
