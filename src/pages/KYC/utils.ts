@@ -46,15 +46,16 @@ export const corporateTransformApiData = (data: any) => {
     taxCountry: { value: 0, label: taxCountry },
     beneficialOwners:
       beneficialOwners.length > 0
-        ? beneficialOwners?.map(({ id, fullName, nationality, address, shareholding, proofOfIdentity }: any) => ({
+        ? beneficialOwners?.map(({ id, fullName, nationality, dateOfBirth, address, shareholding, proofOfIdentity }: any) => ({
             id,
             fullName,
             nationality, 
+            dateOfBirth,
             address,
             shareholding,
             proofOfIdentity,
           }))
-        : [{ fullName: '', nationality: '', address: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+        : [{ fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
     corporateMembers:
       corporateMembers.length > 0
         ? corporateMembers?.map(({ id, fullName, nationality, designation, proofOfIdentity }: any) => ({
@@ -100,10 +101,11 @@ export const corporateTransformKycDto = (values: any) => {
     taxCountry: taxCountry?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
     beneficialOwners: JSON.stringify(
-      beneficialOwners.map(({ id, fullName, nationality, address, shareholding, proofOfIdentity }: any) => ({
+      beneficialOwners.map(({ id, fullName, nationality, dateOfBirth, address, shareholding, proofOfIdentity }: any) => ({
         id: id || null,
         fullName,
         nationality,
+        dateOfBirth,
         address,
         shareholding: +shareholding,
         proofOfIdentity: proofOfIdentity?.id || null,

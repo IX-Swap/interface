@@ -25,7 +25,7 @@ export const CompanyAuthorizedPersonnel: FC<Props> = ({ data }: Props) => {
         ))}
         <div style={{ marginTop: '40px' }}>
           <Documents
-            documents={data.documents.filter(({ type }) => type === 'authorization')}
+            documents={data.documents.filter(({ type }) => type === 'authorization' || type === 'authorizationIdentity')}
             title="Authorization Document"
           />
         </div>

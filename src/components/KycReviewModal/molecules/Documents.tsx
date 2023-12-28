@@ -26,7 +26,7 @@ interface Props {
   title?: string
 }
 
-const extractDocType = (docName: any) => docName.substring(docName.lastIndexOf('.')).split('.')[1]
+const extractDocType = (docName: any) => docName?.substring(docName.lastIndexOf('.')).split('.')[1]
 
 const downloadFile = async (url: string, name: string, type: string) => {
   const link = document.createElement('a')
