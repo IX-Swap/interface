@@ -51,9 +51,9 @@ export const CorporateForm = ({ data, riskJSON }: Props) => {
       <Line />
       <CorporateMembers owners={data.corporateMembers} />
       <Line />
-      <UploadedDocuments title="Corporate Documents" data={data.documents.filter(({ type }) => type === 'corporate')} />
+      <UploadedDocuments kycKey="corporate" title="Corporate Documents" data={data.documents.filter(({ type }) => type === 'corporate')} />
       <Line />
-      <UploadedDocuments title="Additional Documents" data={data.documents.filter(({ type }) => type === 'financial')} />
+      <UploadedDocuments kycKey="corporate" title="Additional Documents" data={data.documents.filter(({ type }) => type === 'financial')} />
     </>
   )
 }

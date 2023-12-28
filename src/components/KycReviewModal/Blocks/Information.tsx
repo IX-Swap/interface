@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { IndividualKyc } from 'state/admin/actions'
+import { CorporateKyc, IndividualKyc } from 'state/admin/actions'
 // import { GridContainer, GridItem } from 'components/Grid'
 
 import { Block } from '../molecules/Block'
@@ -12,7 +12,7 @@ import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
-  data: IndividualKyc
+  data: IndividualKyc | CorporateKyc
   kycKey: any
 }
 

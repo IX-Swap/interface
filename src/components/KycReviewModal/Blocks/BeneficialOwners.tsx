@@ -44,6 +44,7 @@ export const BeneficialOwners: FC<Props> = ({ owners }: Props) => {
                 documents={[
                   { id: 0, type: 'Proof of Identity', asset: proofOfIdentity } as any,
                 ]}
+                kycKey="individual"
                 title="Documents"
               />
             </GridItemNew>

@@ -11,13 +11,14 @@ import { title } from 'process'
 interface Props {
   data: Array<Document>
   title: string
+  kycKey: any
 }
 
-export const UploadedDocuments = ({ data, title }: Props) => {
+export const UploadedDocuments = ({ data, title, kycKey }: Props) => {
   return (
     <Block title={title}>
       <Content>
-        <Documents documents={data} />
+        <Documents documents={data} kycKey={kycKey} />
       </Content>
     </Block>
   )
