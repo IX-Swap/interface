@@ -439,6 +439,10 @@ export interface IndividualKyc {
   middleName: string
   nationality: string
   occupation: string
+  secondaryContactDetails: string
+  alternateEmail: string
+  socialPlatform: string
+  handleName: string
   phoneNumber: string
   sourceOfFunds: string
   updatedAt: string

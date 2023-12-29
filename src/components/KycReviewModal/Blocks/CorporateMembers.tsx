@@ -35,6 +35,7 @@ export const CorporateMembers: FC<Props> = ({ owners }: Props) => {
                   { id: 0, type: 'Proof of Identity', asset: proofOfIdentity } as any,
                 ]}
                 title="Documents"
+                kycKey="individual"
               />
             </GridItemNew>
           </React.Fragment>

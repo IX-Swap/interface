@@ -27,6 +27,7 @@ export const CompanyAuthorizedPersonnel: FC<Props> = ({ data }: Props) => {
           <Documents
             documents={data.documents.filter(({ type }) => type === 'authorization')}
             title="Authorization Document"
+            kycKey="individual"
           />
         </div>
       </GridContainer>

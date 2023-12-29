@@ -974,9 +974,10 @@ export default function IndividualKycForm() {
                               label="Secondary Contact Details"
                               placeholder="Secondary Contact Details"
                               id="SecondaryContactDetails"
-                              selectedItem={selectedOption}
+                              selectedItem={values.secondaryContactDetails}
                               items={SecondaryContactDetails}
                               onSelect={(item) => {
+                                onSelectChange('secondaryContactDetails', item, setFieldValue)
                                 onSecondaryContactDetailsChange(item)
                               }}
                               
