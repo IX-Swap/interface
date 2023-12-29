@@ -17,7 +17,8 @@ const formattedTypes = {
   selfie: t`Selfie`,
   accreditation: t`Evidence of Accreditation`,
   financial: t`Additional Documents`,
-  authorization: t`Authorization document`,
+  authorization: t`Proof of Address`,
+  authorizationIdentity: t`Proof of Identity`,
   corporate: t`Corporate documents`,
 } as Record<string, string>
 
@@ -27,7 +28,7 @@ interface Props {
   kycKey: any
 }
 
-const extractDocType = (docName: any) => docName.substring(docName.lastIndexOf('.')).split('.')[1]
+const extractDocType = (docName: any) => docName?.substring(docName.lastIndexOf('.')).split('.')[1]
 
 const downloadFile = async (url: string, name: string, type: string) => {
   const link = document.createElement('a')

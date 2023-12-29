@@ -267,7 +267,7 @@ export const corporateFormInitialValues: IFormInitial = {
   usTin: '',
   taxCountry: null,
   taxNumber: '',
-  beneficialOwners: [{ fullName: '', nationality: '', address: '', shareholding: '', proofOfIdentity: null }],
+  beneficialOwners: [{ fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfIdentity: null }],
   corporateMembers: [{ fullName: '', nationality: '', designation: '', proofOfIdentity: null }],
   corporateDocuments: [],
   financialDocuments: [],

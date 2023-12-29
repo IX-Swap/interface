@@ -174,7 +174,7 @@ export default function CorporateKycForm() {
   const addBeneficiary = (owners: any, setFieldValue: any) => {
     setFieldValue(
       'beneficialOwners',
-      [...owners, { fullName: '', nationality: '', address: '', shareholding: '', proofOfIdentity: null }],
+      [...owners, { fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfIdentity: null }],
       false
     )
   }
@@ -187,7 +187,7 @@ export default function CorporateKycForm() {
     newData.splice(index, 1)
 
     if (!newData.length) {
-      newData.push({ fullName: '', nationality: '', address: '', shareholding: '', proofOfIdentity: null })
+      newData.push({ fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfIdentity: null })
     }
     setFieldValue('beneficialOwners', newData, false)
   }
@@ -1067,7 +1067,25 @@ export default function CorporateKycForm() {
                                     errors[`beneficialOwners[${index}].nationality`]
                                   }
                                 />
-                                
+                                <DateInput
+                                  // maxHeight={60}
+                                  error={errors[`beneficialOwners[${index}].dateOfBirth`] &&
+                                         errors[`beneficialOwners[${index}].dateOfBirth`]}
+                                  value={beneficiar.dateOfBirth}
+                                  id="dateOfBirthButton"
+                                  placeholder="Date of Birth"
+                                  onChange={(value) =>
+                                    changeBeneficiar(
+                                      'dateOfBirth',
+                                      dayjs(value).local().format('YYYY-MM-DD'),
+                                      index,
+                                      values.beneficialOwners,
+                                      setFieldValue,
+                                      `beneficialOwners[${index}].dateOfBirth`
+                                    )
+                                  }
+                                  maxDate={moment().subtract(18, 'years')}
+                                />
                                 <TextInput
                                   value={beneficiar.address}
                                   placeholder='Address'
@@ -1088,27 +1106,27 @@ export default function CorporateKycForm() {
                                   }
                                 />
                                 {/* </DeleteRow> */}
-                                <TextInput
-                                  type="number"
-                                  onWheel={() => (document.activeElement as HTMLElement).blur()}
-                                  placeholder='%'
-                                  label='% Beneficial Ownership'
-                                  value={beneficiar.shareholding}
-                                  onChange={(e: any) =>
-                                    changeBeneficiar(
-                                      'shareholding',
-                                      e.currentTarget.value,
-                                      index,
-                                      values.beneficialOwners,
-                                      setFieldValue,
-                                      `beneficialOwners[${index}].shareholding`
-                                    )
-                                  }
-                                  error={errors[`beneficialOwners[${index}].shareholding`] && 'Required'}
-                                />
                                 {/* </IconButton> */}
                               </FormGrid>
                               <FormGrid columns={1}>
+                                <TextInput
+                                    type="number"
+                                    onWheel={() => (document.activeElement as HTMLElement).blur()}
+                                    placeholder='%'
+                                    label='% Beneficial Ownership'
+                                    value={beneficiar.shareholding}
+                                    onChange={(e: any) =>
+                                      changeBeneficiar(
+                                        'shareholding',
+                                        e.currentTarget.value,
+                                        index,
+                                        values.beneficialOwners,
+                                        setFieldValue,
+                                        `beneficialOwners[${index}].shareholding`
+                                      )
+                                    }
+                                    error={errors[`beneficialOwners[${index}].shareholding`] && 'Required'}
+                                  />
                                 <ChooseFile
                                     file={beneficiar.proofOfIdentity}
                                     label='Proof of Identity'
