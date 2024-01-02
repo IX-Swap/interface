@@ -34,6 +34,11 @@ const errorLabelMap = [
   { field: 'proofOfAddress', label: 'Proof of Address' },
   { field: 'selfie', label: 'Selfie' },
 
+  { field: 'secondaryContactDetails', label: 'Secondary Contact Details' },
+  { field: 'alternateEmail', label: 'Business Email Address' },
+  { field: 'socialPlatform', label: 'Social Media Platform' },
+  { field: 'handleName', label: 'Social Media Handle' },
+
   { field: 'occupation', label: 'Occupation' },
   { field: 'employmentStatus', label: 'Employment Status' },
   { field: 'employer', label: 'Employer' },

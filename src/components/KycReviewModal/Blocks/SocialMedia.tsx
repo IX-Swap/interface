@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { CorporateKyc, IndividualKyc } from 'state/admin/actions'
+import { IndividualKyc } from 'state/admin/actions'
 // import { GridContainer, GridItem } from 'components/Grid'
 
 import { Block } from '../molecules/Block'
-import { corporateInfoKeys, personalInfoKeys } from '../utils/constants'
+import { corporateInfoKeys, personalInfoKeys, socialMediaKeys } from '../utils/constants'
 import { Field } from '../molecules/Field'
 import { RowWithCheck } from '../molecules/RowWithCheck'
 import { Line } from 'components/Line'
@@ -12,32 +12,40 @@ import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
-  data: IndividualKyc | CorporateKyc
+  data: IndividualKyc
   kycKey: any
 }
 
-export const Information = ({ data, kycKey }: Props) => {
-  const keys = kycKey === 'individual' ? personalInfoKeys : corporateInfoKeys
+interface SocialMediaKey {
+  key: string
+  label: string
+  width: { xs: number; sm: number }
+  format?: (value: any) => string
+}
+
+export const SocialMedia = ({ data, kycKey }: Props) => {
+  const keys: SocialMediaKey[] = socialMediaKeys
 
   return (
-    <Block title={`${kycKey === 'individual' ? 'Personal' : 'Corporate'} Information`}>
+    <Block title={`Secondary Contact Details`}>
       <GridContainer>
-        {keys.map(({ key, label, width = {}, format }) => (
-          <GridItem key={key} {...width}>
-            <Field label={label} value={format ? format(data?.[key]) : data?.[key]} />
-          </GridItem>
-        ))}
-        {/* {kycKey === 'corporate' && (
-          <GridItemNew>
-            <RowWithCheck
-              text="Is The Ultimate Holding Company A Regulated Entity Or Listed Company In a FATF Jurisdiction?"
-              isDone={data?.inFatfJurisdiction}
-            />
-          </GridItemNew>
-        )} */}
+        {keys.map(({ key, label, width = {}, format }) => {
+          const value = format ? format(data?.[key]) : data?.[key];
+
+          // Skip rendering if the value is falsy (undefined, null, or empty string)
+          if (!value) {
+            return null;
+          }
+
+          return (
+            <GridItem key={key} {...width}>
+              <Field label={label} value={value} />
+            </GridItem>
+          );
+        })}
       </GridContainer>
     </Block>
-  )
+  );
 }
 
 const GridContainer = styled.div`

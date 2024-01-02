@@ -46,15 +46,16 @@ export const corporateTransformApiData = (data: any) => {
     taxCountry: { value: 0, label: taxCountry },
     beneficialOwners:
       beneficialOwners.length > 0
-        ? beneficialOwners?.map(({ id, fullName, nationality, address, shareholding, proofOfIdentity }: any) => ({
+        ? beneficialOwners?.map(({ id, fullName, nationality, dateOfBirth, address, shareholding, proofOfIdentity }: any) => ({
             id,
             fullName,
             nationality, 
+            dateOfBirth,
             address,
             shareholding,
             proofOfIdentity,
           }))
-        : [{ fullName: '', nationality: '', address: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+        : [{ fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
     corporateMembers:
       corporateMembers.length > 0
         ? corporateMembers?.map(({ id, fullName, nationality, designation, proofOfIdentity }: any) => ({
@@ -100,10 +101,11 @@ export const corporateTransformKycDto = (values: any) => {
     taxCountry: taxCountry?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
     beneficialOwners: JSON.stringify(
-      beneficialOwners.map(({ id, fullName, nationality, address, shareholding, proofOfIdentity }: any) => ({
+      beneficialOwners.map(({ id, fullName, nationality, dateOfBirth, address, shareholding, proofOfIdentity }: any) => ({
         id: id || null,
         fullName,
         nationality,
+        dateOfBirth,
         address,
         shareholding: +shareholding,
         proofOfIdentity: proofOfIdentity?.id || null,
@@ -135,6 +137,7 @@ export const individualTransformApiData = (data: any, referralCode?: any) => {
     gender,
     nationality,
     income,
+    secondaryContactDetails,
     occupation,
     idType,
   } = data
@@ -164,6 +167,7 @@ export const individualTransformApiData = (data: any, referralCode?: any) => {
     employmentStatus: { value: 0, label: employmentStatus },
     gender: { value: 0, label: gender },
     occupation: { value: 0, label: occupation },
+    secondaryContactDetails: { value: 0, label: secondaryContactDetails },
     nationality: { value: 0, label: nationality },
     income: income && { value: 0, label: income },
     removedDocuments: [],
@@ -200,6 +204,7 @@ export const individualTransformKycDto = (values: any, referralCode?: any) => {
     income,
     isUSTaxPayer,
     occupation,
+    secondaryContactDetails,
     idIssueDate,
     idExpiryDate,
     idType,
@@ -233,6 +238,7 @@ export const individualTransformKycDto = (values: any, referralCode?: any) => {
       ...(sourceOfFunds.some((x: any) => (isLabel ? x.label === 'Others' : x === 'Others')) ? [otherFunds] : []),
     ].join(', '),
 
+    secondaryContactDetails: secondaryContactDetails?.label,
     occupation: occupation?.label,
     employmentStatus: employmentStatus?.label,
     income: income?.label,
