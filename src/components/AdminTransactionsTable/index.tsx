@@ -122,7 +122,7 @@ export const AdminTransactionsTable = () => {
   }
 
   return (
-    <div style={{ margin: '30px 80px 0px 40px' }}>
+    <div style={{ margin: isMobile ? '30px 10px 0px 20px'  : '30px 80px 0px 40px' }}>
       {adminLoading && (
         <Loader>
           <LoaderThin size={96} />

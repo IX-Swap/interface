@@ -91,7 +91,7 @@ const KYC = () => {
   const { config } = useWhitelabelState()
   const { kyc, loadingRequest } = useKYCState()
   const [isModalOpen, handleIsModalOpen] = useState(false)
-  const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false })
+  const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false, referralCode: '' })
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
   const [referralCode, setReferralCode] = useState<string | null>('')
@@ -100,6 +100,7 @@ const KYC = () => {
   interface ModalProps {
     isModalOpen: boolean
     kycType?: string
+    referralCode: string
   }
   const fetchMe = useCallback(async () => {
     const result = await getMe()
@@ -131,13 +132,16 @@ const KYC = () => {
     setModalProps({
       isModalOpen: true,
       kycType,
+      referralCode: new URL(window.location.href).href?.split('=')[1]
+        ? `/kyc/${kycType}?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
+        : `/kyc/${kycType}`,
       // Add more props as needed
     })
   }
 
   const closeModal = () => {
     console.log('Closing modal')
-    setModalProps({ isModalOpen: false })
+    setModalProps({ isModalOpen: false, referralCode: '', kycType: undefined })
   }
   const getKYCDescription = useCallback(() => {
     switch (status) {
@@ -209,9 +213,9 @@ const KYC = () => {
                   </Text>
                 </>
                 {/* <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate"> */}
-                  <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
-                    <Trans>Start Now</Trans>
-                  </Text>
+                <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
+                  <Trans>Start Now</Trans>
+                </Text>
                 {/* </Link> */}
               </Flex>
             </Flex>

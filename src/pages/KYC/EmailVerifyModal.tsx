@@ -16,9 +16,10 @@ interface Props {
   isModalOpen: boolean
   closeModal: () => void
   kycType?: string
+  referralCode: string
 }
 
-export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) => {
+export const EmailVerification = ({ isModalOpen, closeModal, kycType , referralCode}: Props) => {
   const [active, setActive] = React.useState(false)
   const [step, setStep] = React.useState(1)
   const emailVerify = useEmailVerify()
@@ -30,6 +31,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
   const history = useHistory()
   const [boxBorderColor, setBoxBorderColor] = React.useState('#E6E6FF')
   const [resetCodeInput, setResetCodeInput] = React.useState(false)
+
   React.useEffect(() => {
     let interval: NodeJS.Timeout
 
@@ -63,15 +65,9 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
       const result = await codeVerify(verificationCode)
 
       if (result.success) {
-        if (kycType === 'individual') {
-          // Redirect to the individual KYC page
-          history.push('/kyc/individual')
+          history.push(referralCode)
           window.location.reload()
-        } else if (kycType === 'corporate') {
-          // Redirect to the corporate KYC page
-          history.push('/kyc/corporate')
-          window.location.reload()
-        }
+        
         setTimer(60)
         setResetCodeInput(false);
       } else {
@@ -158,7 +154,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType }: Props) =
     }
   }
 
-  // console.log(isModalOpen, initialValues, 'isModalOpenisModalOpen')
+
   return (
     <RedesignedWideModal maxHeight={'100vh'} isOpen={isModalOpen} onDismiss={closeModal}>
       <ModalContainer style={{ width: '100%' }}>
