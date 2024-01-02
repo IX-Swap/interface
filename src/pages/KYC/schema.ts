@@ -173,6 +173,7 @@ export const corporateErrorsSchema = yup.object().shape({
       yup.object().shape({
         fullName: yup.string().required('Required'),
         nationality: yup.string().required('Required'),
+        dateOfBirth: yup.mixed().nullable().required('Required'),
         address: yup.string().required('Required'),
         shareholding: yup.number().min(1, 'Min 1').max(100, 'Max 10').required('Required'),
         proofOfIdentity: yup.mixed().nullable().required('Required'),

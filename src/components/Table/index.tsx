@@ -39,7 +39,7 @@ const rowStyle = css`
 `
 
 export const HeaderRow = styled.div`
-  ${rowStyle};
+  // ${rowStyle};
   > div {
     // padding: 10px 9px;
     font-weight: 500;

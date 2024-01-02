@@ -196,14 +196,15 @@ export const AdminSecurityCatalog: FC = () => {
               </Flex>
               <Line style={{ marginBottom: '40px' }} />
 
-              <FormGrid>
+              <FormGrid style={{ marginLeft: isMobile ? '0px' : '50px' }}>
+
                 <Box style={{ marginTop: '8px' }}>
                   <Label marginBottom="50px">
                     <TYPE.title11 color="text2">
                       <Trans>Logo</Trans>
                     </TYPE.title11>
                   </Label>
-                  <ButtonText style={{ marginLeft: '32px' }}>
+                  <ButtonText style={{ marginLeft: isMobile ? '0px' : '32px' }}>
                     <Upload
                       accept={AcceptFiles.IMAGE}
                       file={currentIssuer?.file}
@@ -213,8 +214,8 @@ export const AdminSecurityCatalog: FC = () => {
                         {currentIssuer?.filePath || currentIssuer?.logo?.public ? (
                           <img
                             style={{ borderRadius: '6px' }}
-                            width="146px"
-                            height="146px"
+                            width= {isMobile ? '60px' : "146px"}
+                            height={isMobile ? '60px' : "146px"}
                             src={currentIssuer?.filePath || currentIssuer?.logo?.public}
                           />
                         ) : (
@@ -285,7 +286,7 @@ export const AdminSecurityCatalog: FC = () => {
               marginBottom="10px"
             >
               <Box>
-                <TYPE.description7 color="#292933">Tokens</TYPE.description7>
+                <TYPE.description7 style={{margin: isMobile ? '10px' : '0px'}} color="#292933">Tokens</TYPE.description7>
                 {/* {showMode === 'edit_issuer' && (
                   <EditButton marginBottom="20px" onClick={() => handleEditTokenClick(null)}>
                     <TYPE.body3 color="white" fontWeight={600}>
@@ -355,7 +356,7 @@ export const AdminSecurityCatalog: FC = () => {
               </Box>
             </Box>
 
-            <RowEnd>
+            <RowEnd >
               <PinnedContentButton
                 onClick={handleSaveClick}
                 style={{ width: 226, color: '#B8B8CC', background: '#FFFFFF', border: '1px solid #E6E6FF' }}
