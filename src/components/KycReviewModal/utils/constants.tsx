@@ -97,6 +97,14 @@ export const addressKeys = [
   { key: 'country', label: 'Country', width: { xs: 12, sm: 6 } },
 ]
 
+
+export const socialMediaKeys = [
+  { key: 'socialPlatform', label: 'Social Media Platform', width: { xs: 12, sm: 6 } },
+  { key: 'handleName', label: 'Social Media Handle', width: { xs: 12, sm: 6 } },
+  { key: 'alternateEmail', label: 'Business Email Address', width: { xs: 12, sm: 6 } },
+
+]
+
 export const sourceOfFundsKeys = [
   { key: 'sourceOfFunds1', label: 'Inheritance/Gifts' },
   { key: 'sourceOfFunds2', label: 'Investments' },

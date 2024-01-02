@@ -18,6 +18,7 @@ import {
 
 import { Referral } from './Blocks/Referral'
 import { Line } from 'components/Line'
+import { SocialMedia } from './Blocks/SocialMedia'
 
 interface Props {
   data: IndividualKyc | undefined // Make sure data is optional
@@ -31,6 +32,7 @@ const sections = [
   // { component: Referral },
   { component: IndividualDocument },
   { component: UploadedDocuments, dataKey: 'documents' },
+  { component: SocialMedia },
   { component: Occupation },
   { component: SourceOfFunds, kycKey: 'individual' },
   { component: TaxDeclarations },
