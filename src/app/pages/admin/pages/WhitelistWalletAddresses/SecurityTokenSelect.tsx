@@ -7,7 +7,7 @@ import { useAssetsData } from 'hooks/asset/useAssetsData'
 import { SecurityTokenSelectItem } from 'ui/Select/SelectItem/SecurityToken/SecurityToken'
 
 export const SecurityTokenSelect = (props: Partial<SelectProps>) => {
-  const { data } = useAssetsData('Security', 500)
+  const { data } = useAssetsData('Security', 500, true)
 
   if (data === undefined || data.list.length < 1) {
     return null
