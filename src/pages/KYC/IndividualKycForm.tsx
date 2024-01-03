@@ -1014,9 +1014,10 @@ export default function IndividualKycForm() {
                                 />
                               )}
                               {selectedOption === 3 && (
+                                  
                                 <FormGrid>
                                   <Select
-                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, or X.com)"
+                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, Facebook, Instagram, LinkedIn or X.com)"
                                     error={errors.socialPlatform}
                                     withScroll
                                     id="socialPlatform"
@@ -1046,7 +1047,10 @@ export default function IndividualKycForm() {
                                     }
                                   />
                                 </FormGrid>
+                         
                               )}
+                                  <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>*Selecting a business email address or social media handle requires an acknowledgment process for identity verification. A verification message and/or email will be sent to your provided personal and/or business email address and/or social media account, that will require a response from you.</p>
+
                             </div>
                             {/* Add additional conditions for other options if needed */}
                           </div>
