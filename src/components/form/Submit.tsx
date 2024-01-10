@@ -28,8 +28,14 @@ export const Submit: React.FC<SubmitProps> = props => {
 
   return (
     <Button
-      disableElevation
+      //   disableElevation
       variant={variant}
+      style={{
+        fontWeight: 600,
+        fontSize: '18px',
+        height: '64px',
+        textTransform: 'none'
+      }}
       color={color}
       disabled={Boolean(disabled) || (watchIsDirty ? !isDirty : isSubmitting)}
       type='submit'

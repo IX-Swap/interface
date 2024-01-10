@@ -19,14 +19,15 @@ export const useStyles = makeStyles(theme => {
       position: 'relative',
       paddingTop: 0,
       paddingBottom: 0,
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('lg')]: {
         padding: theme.spacing(3, 2),
         height: 'auto',
         marginLeft: 0
       }
     },
     wrapper: {
-      width: '55%',
+      width: '20%',
+      marginLeft: '10%',
       height: '100%',
       minHeight: '100vh',
       position: 'relative',
@@ -34,7 +35,8 @@ export const useStyles = makeStyles(theme => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('lg')]: {
+        marginLeft: 0,
         width: '100%',
         overflowY: 'scroll'
       }
@@ -44,13 +46,13 @@ export const useStyles = makeStyles(theme => {
       marginBottom: 'auto',
       paddingTop: 50,
       paddingBottom: 50,
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('lg')]: {
         paddingTop: 24,
         paddingBottom: 24
       }
     },
     background: {
-      width: '45%',
+      width: '60%',
       paddingTop: theme.spacing(12.5),
       paddingBottom: theme.spacing(7.5),
       backgroundColor: theme.palette.backgrounds.default,
@@ -61,7 +63,7 @@ export const useStyles = makeStyles(theme => {
       top: 0,
       right: 0,
       height: '100vh',
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('lg')]: {
         display: 'none'
       }
     },

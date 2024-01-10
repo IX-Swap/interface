@@ -49,7 +49,7 @@ export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
             watchIsDirty={false}
             disabled={isLoading}
           >
-            Login
+            Connect Wallet
           </Submit>
         </Grid>
         <Grid item>

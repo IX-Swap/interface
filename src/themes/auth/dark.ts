@@ -28,18 +28,19 @@ const defaultPalette = {
     paper: '#132A57'
   },
   backgrounds: {
-    default: '#0E1F42',
+    default: '#6666FF',
     light: '#1c3e81',
     lighter: tinycolor('#132a57').lighten(20).toHex(),
+    alternative: '#FFF',
     // alternative: '#0E1A32',
-    alternative:
-      'radial-gradient(140.5% 224.8% at 149.5% 9.6%, rgba(65, 128, 255, 0.4) 1.56%, rgba(31, 106, 255, 0.4) 38.45%, rgba(0, 85, 255, 0) 100%), #0E1A32',
+    // alternative:
+    //   'radial-gradient(140.5% 224.8% at 149.5% 9.6%, rgba(65, 128, 255, 0.4) 1.56%, rgba(31, 106, 255, 0.4) 38.45%, rgba(0, 85, 255, 0) 100%), #0E1A32',
     alternativeLight: tinycolor('#132a57').lighten(20).toHex()
   },
   button: {
-    bgContained: '#0055FF',
-    bgContainedHover: '#4080ff!important',
-    bgContainedDisabled: '#0055FF20'
+    bgContained: '#6666FF',
+    bgContainedHover: '#6666FF70!important',
+    bgContainedDisabled: '#6666FF20'
   },
   input: {
     bgBase: '#1a397c40',

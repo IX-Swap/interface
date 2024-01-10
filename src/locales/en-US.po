@@ -1,0 +1,3659 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2023-02-28 16:06+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en-US\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/components/CollectionForm/index.tsx
+msgid "1000"
+msgstr "1000"
+
+#: src/components/earn/PoolCard.tsx
+msgid "${0}"
+msgstr "${0}"
+
+#: src/components/earn/PoolCard.tsx
+msgid "${0} {nativeCurrency}"
+msgstr "${0} {nativeCurrency}"
+
+#: src/pages/KYC/common.tsx
+msgid "% Shareholding"
+msgstr "% Shareholding"
+
+#: src/components/AdminSecurityCatalog/index.tsx
+msgid "+ Add issuer"
+msgstr "+ Add issuer"
+
+#: src/components/AdminSecurityCatalog/index.tsx
+msgid "+ Add token"
+msgstr "+ Add token"
+
+#: src/components/InputStepCounter/InputStepCounter.tsx
+msgid "+{feeAmountFormatted}%"
+msgstr "+{feeAmountFormatted}%"
+
+#: src/components/InputStepCounter/InputStepCounter.tsx
+msgid "-{feeAmountFormatted}%"
+msgstr "-{feeAmountFormatted}%"
+
+#: src/components/earn/PoolCard.tsx
+#: src/components/earn/PoolCard.tsx
+msgid "0 IXS / week"
+msgstr "0 IXS / week"
+
+#: src/components/FeeSelector/index.tsx
+msgid "0.05% fee"
+msgstr "0.05% fee"
+
+#: src/components/FeeSelector/index.tsx
+msgid "0.3% fee"
+msgstr "0.3% fee"
+
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "1 mln"
+msgstr "1 mln"
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "1 month — 18% APY"
+msgstr "1 month — 18% APY"
+
+#: src/components/FeeSelector/index.tsx
+msgid "1% fee"
+msgstr "1% fee"
+
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "2 mln"
+msgstr "2 mln"
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "2 month — 44% APY"
+msgstr "2 month — 44% APY"
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "3 month — 88% APY"
+msgstr "3 month — 88% APY"
+
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "500k"
+msgstr "500k"
+
+#: src/components/NavigationTabs/index.tsx
+msgid "<0>List My Token</0>"
+msgstr "<0>List My Token</0>"
+
+#: src/pages/Faucet/index.tsx
+#: src/pages/PoolFinder/index.tsx
+msgid "<0>Loading</0>"
+msgstr "<0>Loading</0>"
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "<0>{0}</0> tokens available for staking"
+msgstr "<0>{0}</0> tokens available for staking"
+
+#: src/pages/CreatePayoutEvent/Info.tsx
+msgid "A payout event allows issuers to distribute tokens to qualified token holders."
+msgstr "A payout event allows issuers to distribute tokens to qualified token holders."
+
+#: src/pages/CustodianV2/index.tsx
+msgid "ACCREDITED"
+msgstr "ACCREDITED"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "APY"
+msgstr "APY"
+
+#: src/pages/PayoutItem/InfoBlock.tsx
+msgid "ATTACHMENTS:"
+msgstr "ATTACHMENTS:"
+
+#: src/components/Vault/AboutWrapping.tsx
+#: src/components/Vault/DepositPopup.tsx
+#: src/components/Vault/DepositRequestForm.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "About Wrapping"
+msgstr "About Wrapping"
+
+#: src/components/swap/AcceptChanges.tsx
+#: src/components/swap/SwapModalHeader.tsx
+msgid "Accept"
+msgstr "Accept"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Account"
+msgstr "Account"
+
+#: src/components/Vault/NoVault.tsx
+msgid "Accreditation rejected"
+msgstr "Accreditation rejected"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+#: src/components/SearchModal/ImportRow.tsx
+msgid "Active"
+msgstr "Active"
+
+#: src/components/PositionCard/index.tsx
+#: src/pages/CreateNFT/LevelsPopup.tsx
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "Add"
+msgstr "Add"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+msgid "Add Beneficiary"
+msgstr "Add Beneficiary"
+
+#: src/components/NavigationTabs/index.tsx
+#: src/pages/Pool/AddLiquidityButton.tsx
+msgid "Add Liquidity"
+msgstr "Add Liquidity"
+
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Add Properties"
+msgstr "Add Properties"
+
+#: src/components/UsersList/index.tsx
+msgid "Add User"
+msgstr "Add User"
+
+#: src/pages/PoolFinder/index.tsx
+msgid "Add liquidity"
+msgstr "Add liquidity"
+
+#: src/components/Header/IXSBalanceModal.tsx
+#: src/components/Header/IXSBalanceModal.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Add to Metamask"
+msgstr "Add to Metamask"
+
+#: src/pages/Faucet/index.tsx
+msgid "Add {0} ({1}) to Metamask"
+msgstr "Add {0} ({1}) to Metamask"
+
+#: src/components/TransactionConfirmationModal/index.tsx
+msgid "Add {0} to Metamask"
+msgstr "Add {0} to Metamask"
+
+#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/index.tsx
+msgid "Add {0} {1} and {2} {3}"
+msgstr "Add {0} {1} and {2} {3}"
+
+#: src/components/TransactionConfirmationModal/index.tsx
+msgid "Added {0}"
+msgstr "Added {0}"
+
+#: src/pages/Faucet/index.tsx
+msgid "Added!"
+msgstr "Added!"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Address"
+msgstr "Address"
+
+#: src/components/Vault/enum.ts
+msgid "All"
+msgstr "All"
+
+#: src/components/UserPayoutEvents/index.tsx
+msgid "All Payout Events"
+msgstr "All Payout Events"
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "All tokens have been claimed back"
+msgstr "All tokens have been claimed back"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+msgid "Allow Deposit"
+msgstr "Allow Deposit"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+msgid "Allow Withdrawal"
+msgstr "Allow Withdrawal"
+
+#: src/components/Settings/SettingsModal.tsx
+msgid "Allow high price impact trades and skip the confirm screen. Use at your own risk."
+msgstr "Allow high price impact trades and skip the confirm screen. Use at your own risk."
+
+#: src/pages/Swap/ApproveButtons.tsx
+msgid "Allow {0} to use your {1}"
+msgstr "Allow {0} to use your {1}"
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "Already claimed:"
+msgstr "Already claimed:"
+
+#: src/components/Header/URLWarning.tsx
+msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
+msgstr "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
+
+#: src/components/AdminTransactionsTable/index.tsx
+#: src/components/Vault/HistoryTable.tsx
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Amount"
+msgstr "Amount"
+
+#: src/pages/Swap/handleSwap.ts
+msgid "Amount changed. Please repeat authorization"
+msgstr "Amount changed. Please repeat authorization"
+
+#: src/components/TmPayoutEvents/index.tsx
+#: src/pages/PayoutItem/History/index.tsx
+msgid "Amount claimed"
+msgstr "Amount claimed"
+
+#: src/state/stake/hooks.ts
+msgid "Amount exceeds balance"
+msgstr "Amount exceeds balance"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Amount of {0} to stake"
+msgstr "Amount of {0} to stake"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Amount of {0} to unstake"
+msgstr "Amount of {0} to unstake"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Amount:"
+msgstr "Amount:"
+
+#: src/state/withdraw/hooks.ts
+#: src/state/withdraw/hooks.ts
+msgid "An error occured. Could not submit withdraw request"
+msgstr "An error occured. Could not submit withdraw request"
+
+#: src/hooks/useSwapCallback.ts
+msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading."
+msgstr "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading."
+
+#: src/components/MultipleFilters/MobileFilters/index.tsx
+msgid "Apply"
+msgstr "Apply"
+
+#: src/components/KycReviewModal/index.tsx
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Approve"
+msgstr "Approve"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Approve IXSGov"
+msgstr "Approve IXSGov"
+
+#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approve {0}"
+msgstr "Approve {0}"
+
+#: src/state/stake/unstake/hooks.ts
+msgid "Approve {amount} IXSGov"
+msgstr "Approve {amount} IXSGov"
+
+#: src/state/stake/hooks.ts
+msgid "Approve {amount} {0}"
+msgstr "Approve {amount} {0}"
+
+#: src/components/AdminKyc/StatusCell.tsx
+#: src/pages/KYC/styleds.tsx
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Approved"
+msgstr "Approved"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approved {0}"
+msgstr "Approved {0}"
+
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Approving"
+msgstr "Approving"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Approving IXSGov"
+msgstr "Approving IXSGov"
+
+#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approving {0}"
+msgstr "Approving {0}"
+
+#: src/components/ReasonModal/index.tsx
+msgid "Are you sure you want to reject this KYC after it was approved?"
+msgstr "Are you sure you want to reject this KYC after it was approved?"
+
+#: src/components/UsersList/RemoveTokensWarning.tsx
+msgid "Are you sure you want to remove"
+msgstr "Are you sure you want to remove"
+
+#: src/components/Settings/ExpertModeModal.tsx
+msgid "Are you sure?"
+msgstr "Are you sure?"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+msgid "AtlasOne ID:"
+msgstr "AtlasOne ID:"
+
+#: src/components/KycReviewModal/molecules/Documents.tsx
+msgid "Authorization document"
+msgstr "Authorization document"
+
+#: src/pages/Swap/SwapButtons.tsx
+#: src/state/swap/hooks.ts
+msgid "Authorization missing"
+msgstr "Authorization missing"
+
+#: src/components/AdminSecurityCatalog/TokenAvailableFor.tsx
+msgid "Available for:"
+msgstr "Available for:"
+
+#: src/pages/CreatePayoutEvent/Summary.tsx
+msgid "Available on Record Date"
+msgstr "Available on Record Date"
+
+#: src/components/earn/StakingInputPercentage.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Available:"
+msgstr "Available:"
+
+#: src/components/ReasonModal/index.tsx
+msgid "BE AWARE: All connected accreditations will be deleted for this KYC!"
+msgstr "BE AWARE: All connected accreditations will be deleted for this KYC!"
+
+#: src/components/WalletModal/index.tsx
+msgid "Back"
+msgstr "Back"
+
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Balance of IXGov"
+msgstr "Balance of IXGov"
+
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Balance of {0}"
+msgstr "Balance of {0}"
+
+#: src/components/CurrencyInputPanel/index.tsx
+msgid "Balance: {0} {1}"
+msgstr "Balance: {0} {1}"
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Balances will be updated on the vesting page until the contracts are programmed."
+msgstr "Balances will be updated on the vesting page until the contracts are programmed."
+
+#: src/pages/KYC/CorporateKycForm.tsx
+msgid "Beneficial Owners Information"
+msgstr "Beneficial Owners Information"
+
+#: src/components/FeeSelector/index.tsx
+msgid "Best for exotic pairs."
+msgstr "Best for exotic pairs."
+
+#: src/components/FeeSelector/index.tsx
+msgid "Best for most pairs."
+msgstr "Best for most pairs."
+
+#: src/components/FeeSelector/index.tsx
+msgid "Best for stable pairs."
+msgstr "Best for stable pairs."
+
+#: src/components/Blocklist/index.tsx
+msgid "Blocked address"
+msgstr "Blocked address"
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Bridge IXS to Polygon"
+msgstr "Bridge IXS to Polygon"
+
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Broker - dealer:"
+msgstr "Broker - dealer:"
+
+#: src/components/AdminAccreditationTable/index.tsx
+msgid "Broker-Dealer status"
+msgstr "Broker-Dealer status"
+
+#: src/components/UserPayoutEvents/EmptyState.tsx
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "Buy Now"
+msgstr "Buy Now"
+
+#: src/components/SearchModal/ImportList.tsx
+msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
+msgstr "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
+
+#: src/components/WalletModal/index.tsx
+msgid "By connecting a wallet, you agree to {0}’s <0>Terms and Conditions</0> and acknowledge that you have read and understood the <1>{1} Privacy Policy</1>."
+msgstr "By connecting a wallet, you agree to {0}’s <0>Terms and Conditions</0> and acknowledge that you have read and understood the <1>{1} Privacy Policy</1>."
+
+#: src/components/Vault/DepositAboutWrapping.tsx
+msgid "By using wSEC, you will be able to leverage your original asset to participate in DeFi transactions or any other decentralized application within the Ethereum network, such as trading it with other ERC-20 tokens on {0}."
+msgstr "By using wSEC, you will be able to leverage your original asset to participate in DeFi transactions or any other decentralized application within the Ethereum network, such as trading it with other ERC-20 tokens on {0}."
+
+#: src/components/UsersList/RemoveTokensWarning.tsx
+#: src/components/UsersList/RoleChangeWarning.tsx
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/components/UsersList/RoleChangeWarning.tsx
+msgid "Change"
+msgstr "Change"
+
+#: src/components/AdminKyc/StatusCell.tsx
+msgid "Change requested"
+msgstr "Change requested"
+
+#: src/pages/KYC/styleds.tsx
+msgid "Changes Requested"
+msgstr "Changes Requested"
+
+#: src/components/UsersList/RoleChangeWarning.tsx
+msgid "Changing the role of the user,<0/>will lead to a change in his access to certain functionality.<1>Proceed with changes?</1>"
+msgstr "Changing the role of the user,<0/>will lead to a change in his access to certain functionality.<1>Proceed with changes?</1>"
+
+#: src/pages/CreateNFT/LevelsPopup.tsx
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Character"
+msgstr "Character"
+
+#: src/components/Footer/ProductsBlock.tsx
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Charts"
+msgstr "Charts"
+
+#: src/pages/Farming/Vesting/VestingSearch.tsx
+msgid "Check any address"
+msgstr "Check any address"
+
+#: src/pages/PayoutItem/ActionBlock/FetchingBalance.tsx
+msgid "Checking your balance"
+msgstr "Checking your balance"
+
+#: src/pages/KYC/common.tsx
+msgid "Choose File"
+msgstr "Choose File"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Choose one"
+msgstr "Choose one"
+
+#: src/state/mint/hooks.ts
+msgid "Choose pair"
+msgstr "Choose pair"
+
+#: src/components/CurrencyInputPanel/index.tsx
+#: src/pages/PoolFinder/CurrencyRow.tsx
+#: src/state/swap/hooks.ts
+msgid "Choose token"
+msgstr "Choose token"
+
+#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/index.tsx
+msgid "Choose token to create a pool"
+msgstr "Choose token to create a pool"
+
+#: src/pages/PoolFinder/PrerequisiteMessage.tsx
+msgid "Choose token to find your liquidity"
+msgstr "Choose token to find your liquidity"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Claim"
+msgstr "Claim"
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "Claim Back"
+msgstr "Claim Back"
+
+#: src/components/Menu/index.tsx
+msgid "Claim IXS"
+msgstr "Claim IXS"
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "Claim Now"
+msgstr "Claim Now"
+
+#: src/state/stake/hooks.ts
+msgid "Claim rewards {formattedAmount}"
+msgstr "Claim rewards {formattedAmount}"
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Claimable"
+msgstr "Claimable"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Claimable Rewards"
+msgstr "Claimable Rewards"
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Claimed"
+msgstr "Claimed"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Claimed rewards"
+msgstr "Claimed rewards"
+
+#: src/components/TmPayoutHistory/index.tsx
+msgid "Claimed tokens"
+msgstr "Claimed tokens"
+
+#: src/state/vesting/hooks.ts
+msgid "Claimed {0} {1}"
+msgstr "Claimed {0} {1}"
+
+#: src/components/MultipleFilters/MobileFilters/index.tsx
+msgid "Clear All"
+msgstr "Clear All"
+
+#: src/components/AccountDetails/index.tsx
+#: src/components/SearchModal/ManageTokens.tsx
+msgid "Clear all"
+msgstr "Clear all"
+
+#: src/components/GeneralModal/GeneralModal.tsx
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/DepositError.tsx
+#: src/components/Vault/WithDrawError.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
+msgid "Close"
+msgstr "Close"
+
+#: src/pages/CreateNFT/CreateForm.tsx
+#: src/pages/CreateNFT/NewCollectionPopup.tsx
+msgid "Collection"
+msgstr "Collection"
+
+#: src/components/CollectionForm/index.tsx
+#: src/pages/CreateNFT/NewCollectionPopup.tsx
+msgid "Collection Name..."
+msgstr "Collection Name..."
+
+#: src/components/CollectionForm/index.tsx
+#: src/pages/CreateNFT/NewCollectionPopup.tsx
+msgid "Collection Size"
+msgstr "Collection Size"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+msgid "Company Authorized Personnel"
+msgstr "Company Authorized Personnel"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+msgid "Company name:"
+msgstr "Company name:"
+
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
+msgid "Confirm"
+msgstr "Confirm"
+
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+msgid "Confirm Supply"
+msgstr "Confirm Supply"
+
+#: src/components/swap/ConfirmSwapModal.tsx
+#: src/components/swap/SwapModalFooter.tsx
+msgid "Confirm Swap"
+msgstr "Confirm Swap"
+
+#: src/pages/Swap/SwapButtons.tsx
+msgid "Confirm swap"
+msgstr "Confirm swap"
+
+#: src/components/ModalViews/index.tsx
+#: src/components/TransactionConfirmationModal/index.tsx
+msgid "Confirm this transaction in your wallet"
+msgstr "Confirm this transaction in your wallet"
+
+#: src/components/Vault/NoVault.tsx
+#: src/components/Web3Status/index.tsx
+#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/Farming/Staking/ConnectWalletButton.tsx
+#: src/pages/Farming/Vesting/ConnectWalletVesting.tsx
+#: src/pages/Pool/ConnectWallet.tsx
+#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
+#: src/state/burn/hooks.ts
+#: src/state/deposit/hooks.ts
+#: src/state/mint/hooks.ts
+#: src/state/stake/hooks.ts
+#: src/state/swap/hooks.ts
+#: src/state/withdraw/hooks.ts
+msgid "Connect Wallet"
+msgstr "Connect Wallet"
+
+#: src/pages/Pool/v2.tsx
+msgid "Connect a wallet to view your Liquidity."
+msgstr "Connect a wallet to view your Liquidity."
+
+#: src/pages/Custodian/EmptyState.tsx
+msgid "Connect a wallet to view your Securities."
+msgstr "Connect a wallet to view your Securities."
+
+#: src/components/WalletModal/index.tsx
+msgid "Connect to a wallet"
+msgstr "Connect to a wallet"
+
+#: src/pages/PoolFinder/PrerequisiteMessage.tsx
+msgid "Connect to a wallet to find pools"
+msgstr "Connect to a wallet to find pools"
+
+#: src/pages/Farming/Vesting/ConnectWalletVesting.tsx
+msgid "Connect to your Web3 wallet to view your vesting progress"
+msgstr "Connect to your Web3 wallet to view your vesting progress"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Connected with {name}"
+msgstr "Connected with {name}"
+
+#: src/pages/KYC/index.tsx
+msgid "Continue Pass KYC as Corporate"
+msgstr "Continue Pass KYC as Corporate"
+
+#: src/pages/KYC/index.tsx
+msgid "Continue Pass KYC as Individual"
+msgstr "Continue Pass KYC as Individual"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+msgid "Contract Address"
+msgstr "Contract Address"
+
+#: src/components/AccountDetails/Copy.tsx
+#: src/components/PlainCopy/PlainCopy.tsx
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/WithdrawPending.tsx
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Copied"
+msgstr "Copied"
+
+#: src/components/CopyAddress/index.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Copied!"
+msgstr "Copied!"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Copy Address"
+msgstr "Copy Address"
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Copy this address and send tokens to this wallet."
+msgstr "Copy this address and send tokens to this wallet."
+
+#: src/components/Footer/CopyrightBlock.tsx
+msgid "Copyright © {0} {year}"
+msgstr "Copyright © {0} {year}"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+msgid "Corporate Documents"
+msgstr "Corporate Documents"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+msgid "Corporate Information"
+msgstr "Corporate Information"
+
+#: src/components/KycReviewModal/molecules/Documents.tsx
+msgid "Corporate documents"
+msgstr "Corporate documents"
+
+#: src/state/nft/hooks.ts
+msgid "Could not create collection {0}"
+msgstr "Could not create collection {0}"
+
+#: src/state/user/hooks.tsx
+msgid "Could not get accredited because of login. Please try again"
+msgstr "Could not get accredited because of login. Please try again"
+
+#: src/state/faucet/hooks.ts
+msgid "Could not use the faucet. Please try again later"
+msgstr "Could not use the faucet. Please try again later"
+
+#: src/components/Vault/NoVault.tsx
+msgid "Could not verify KYC. Please check your account and/or KYC status on {0}. Retry passing accreditation once your KYC is approved by {1}. [retry]"
+msgstr "Could not verify KYC. Please check your account and/or KYC status on {0}. Retry passing accreditation once your KYC is approved by {1}. [retry]"
+
+#: src/components/AdminAccreditationTable/index.tsx
+msgid "Country"
+msgstr "Country"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+#: src/pages/SecTokenDetails/DetailsInfo.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Country:"
+msgstr "Country:"
+
+#: src/components/CollectionForm/Images.tsx
+msgid "Cover Image"
+msgstr "Cover Image"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/pages/CreateCollection/index.tsx
+msgid "Create Collection"
+msgstr "Create Collection"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/pages/CreateNFT/index.tsx
+msgid "Create NFT"
+msgstr "Create NFT"
+
+#: src/components/TmPayoutEvents/index.tsx
+#: src/pages/CreatePayoutEvent/index.tsx
+#: src/pages/TokenManager/index.tsx
+msgid "Create Payout Event"
+msgstr "Create Payout Event"
+
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+msgid "Create Pool & Supply"
+msgstr "Create Pool & Supply"
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Create a pair"
+msgstr "Create a pair"
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Create deposit request"
+msgstr "Create deposit request"
+
+#: src/pages/PoolFinder/index.tsx
+msgid "Create pool"
+msgstr "Create pool"
+
+#: src/components/Vault/NoVault.tsx
+msgid "Create {symbolText} Vault"
+msgstr "Create {symbolText} Vault"
+
+#: src/state/nft/hooks.ts
+msgid "Created your {name} collection successfully"
+msgstr "Created your {name} collection successfully"
+
+#: src/components/swap/CurrentRate.tsx
+msgid "Current Rate"
+msgstr "Current Rate"
+
+#: src/components/AdminAccreditationTable/index.tsx
+msgid "Custodian status"
+msgstr "Custodian status"
+
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Custodian:"
+msgstr "Custodian:"
+
+#: src/components/AdminTransactionsTable/index.tsx
+#: src/components/Vault/HistoryTable.tsx
+msgid "Date"
+msgstr "Date"
+
+#: src/components/MultipleFilters/index.tsx
+msgid "Date of claim"
+msgstr "Date of claim"
+
+#: src/components/AdminAccreditationTable/index.tsx
+#: src/components/AdminKyc/index.tsx
+msgid "Date of request"
+msgstr "Date of request"
+
+#: src/components/TmPayoutHistory/index.tsx
+#: src/pages/PayoutItem/History/index.tsx
+msgid "Date/Time of claim"
+msgstr "Date/Time of claim"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Date:"
+msgstr "Date:"
+
+#: src/components/TransactionSettings/index.tsx
+msgid "Deadline range is 1-180 minutes"
+msgstr "Deadline range is 1-180 minutes"
+
+#: src/components/AdminKyc/StatusCell.tsx
+msgid "Declined"
+msgstr "Declined"
+
+#: src/pages/CreatePayoutEvent/PayoutEventBlock.tsx
+msgid "Delete Draft"
+msgstr "Delete Draft"
+
+#: src/components/Vault/ExistingVault.tsx
+#: src/components/Vault/ExistingVault.tsx
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
+msgid "Deposit"
+msgstr "Deposit"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Deposit will be cancelled if no tokens are received until {0}"
+msgstr "Deposit will be cancelled if no tokens are received until {0}"
+
+#: src/components/Vault/DepositPopup.tsx
+msgid "Deposit {0} {1}"
+msgstr "Deposit {0} {1}"
+
+#: src/components/CollectionForm/index.tsx
+#: src/pages/CreateNFT/CreateForm.tsx
+#: src/pages/CreateNFT/NewCollectionPopup.tsx
+msgid "Description"
+msgstr "Description"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+msgid "Description:"
+msgstr "Description:"
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Details"
+msgstr "Details"
+
+#: src/components/Settings/SettingsModal.tsx
+msgid "Disable Multihops"
+msgstr "Disable Multihops"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Disconnect"
+msgstr "Disconnect"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Distribute"
+msgstr "Distribute"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Distributed"
+msgstr "Distributed"
+
+#: src/components/KycDocPreviewModal/index.tsx
+#: src/components/KycLightDocPreviewModal/index.tsx
+msgid "Documents"
+msgstr "Documents"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Don't see a pool you joined?"
+msgstr "Don't see a pool you joined?"
+
+#: src/components/AdminKyc/StatusCell.tsx
+msgid "Draft"
+msgstr "Draft"
+
+#: src/pages/KYC/styleds.tsx
+msgid "Draft Saved"
+msgstr "Draft Saved"
+
+#: src/components/CollectionForm/Images.tsx
+#: src/components/CollectionForm/Images.tsx
+msgid "Drag and Drop<0/> or <1>Upload</1>"
+msgstr "Drag and Drop<0/> or <1>Upload</1>"
+
+#: src/pages/Farming/Staking/StakingPlaceholder.tsx
+msgid "Due to high demand, new pools have been deployed in <0>IXSWAP.DEFITERM.IO</0>"
+msgstr "Due to high demand, new pools have been deployed in <0>IXSWAP.DEFITERM.IO</0>"
+
+#: src/pages/AddLiquidityV2/SecToSecWarning.tsx
+msgid ""
+"Due to increased risk and no reliable mechanism to mitigate IL risks we temporarily disabled the SEC to\n"
+"SEC pools"
+msgstr ""
+"Due to increased risk and no reliable mechanism to mitigate IL risks we temporarily disabled the SEC to\n"
+"SEC pools"
+
+#: src/components/AdminSecurityCatalog/BrokerDealerCard.tsx
+#: src/components/AdminSecurityCatalog/index.tsx
+#: src/components/TmPayoutEvents/index.tsx
+msgid "Edit"
+msgstr "Edit"
+
+#: src/pages/CreatePayoutEvent/EditPayoutEvent.tsx
+msgid "Edit Payout Event"
+msgstr "Edit Payout Event"
+
+#: src/pages/AddLiquidityV2/MitigationToggle.tsx
+msgid "Enable Mitigation"
+msgstr "Enable Mitigation"
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "End Date"
+msgstr "End Date"
+
+#: src/state/withdraw/hooks.ts
+msgid "Enter a receiver"
+msgstr "Enter a receiver"
+
+#: src/state/swap/hooks.ts
+msgid "Enter a recipient"
+msgstr "Enter a recipient"
+
+#: src/state/deposit/hooks.ts
+msgid "Enter a sender"
+msgstr "Enter a sender"
+
+#: src/components/TransactionSettings/index.tsx
+msgid "Enter a valid slippage percentage"
+msgstr "Enter a valid slippage percentage"
+
+#: src/state/burn/hooks.ts
+#: src/state/deposit/hooks.ts
+#: src/state/mint/hooks.ts
+#: src/state/stake/hooks.ts
+#: src/state/swap/hooks.ts
+#: src/state/withdraw/hooks.ts
+msgid "Enter an amount"
+msgstr "Enter an amount"
+
+#: src/components/SearchModal/ManageLists.tsx
+msgid "Enter valid list location"
+msgstr "Enter valid list location"
+
+#: src/components/SearchModal/ManageTokens.tsx
+msgid "Enter valid token address"
+msgstr "Enter valid token address"
+
+#: src/services/interceptors.ts
+msgid "Entity not found"
+msgstr "Entity not found"
+
+#: src/components/Web3Status/index.tsx
+#~ msgid "Error"
+#~ msgstr "Error"
+
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/DepositError.tsx
+#: src/components/Vault/WithDrawError.tsx
+msgid "Error Occurred"
+msgstr "Error Occurred"
+
+#: src/components/WalletModal/ErrorSection.tsx
+#: src/components/WalletModal/PendingView.tsx
+msgid "Error connecting"
+msgstr "Error connecting"
+
+#: src/components/WalletModal/ErrorSection.tsx
+msgid "Error connecting. Try refreshing the page."
+msgstr "Error connecting. Try refreshing the page."
+
+#: src/components/SearchModal/ManageLists.tsx
+msgid "Error importing list"
+msgstr "Error importing list"
+
+#: src/components/ErrorBoundary/index.tsx
+#~ msgid "Error occured while loading the content"
+#~ msgstr "Error occured while loading the content"
+
+#: src/pages/Faucet/index.tsx
+msgid "Error. Please try again later"
+msgstr "Error. Please try again later"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Estimated Rewards"
+msgstr "Estimated Rewards"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated lock period"
+msgstr "Estimated lock period"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated maturity time"
+msgstr "Estimated maturity time"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated rewards"
+msgstr "Estimated rewards"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid ""
+"Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied \n"
+"{0}\n"
+"If you partially or fully unstake your {1} before the end date - 5% APY will be applied to unstaked amount."
+msgstr ""
+"Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied \n"
+"{0}\n"
+"If you partially or fully unstake your {1} before the end date - 5% APY will be applied to unstaked amount."
+
+#: src/hooks/useSwitchChain.ts
+#: src/hooks/useSwitchChain.ts
+msgid "Ethereum"
+msgstr "Ethereum"
+
+#: src/components/KycReviewModal/molecules/Documents.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Evidence of Accreditation"
+msgstr "Evidence of Accreditation"
+
+#: src/pages/SecTokenDetails/AtlasInfo.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Exchange:"
+msgstr "Exchange:"
+
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "Expanded results from inactive Token Lists"
+msgstr "Expanded results from inactive Token Lists"
+
+#: src/components/Settings/SettingsModal.tsx
+msgid "Expert Mode"
+msgstr "Expert Mode"
+
+#: src/components/Settings/ExpertModeModal.tsx
+msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
+msgstr "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
+
+#: src/pages/CreateNFT/NSFWRadio.tsx
+msgid "Explicit & Sensitive Content"
+msgstr "Explicit & Sensitive Content"
+
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "External Link"
+msgstr "External Link"
+
+#: src/pages/KYC/styleds.tsx
+msgid "FAILED"
+msgstr "FAILED"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "FATCA"
+msgstr "FATCA"
+
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "FNFT"
+msgstr "FNFT"
+
+#: src/components/AdminKyc/StatusCell.tsx
+#: src/components/Vault/AccreditationStatus.tsx
+#: src/pages/CustodianV2/Status.tsx
+msgid "Failed"
+msgstr "Failed"
+
+#: src/state/user/hooks.tsx
+msgid "Failed to pass accreditation {0}"
+msgstr "Failed to pass accreditation {0}"
+
+#: src/components/Header/HeaderLinks.tsx
+msgid "Farming"
+msgstr "Farming"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Faucet"
+msgstr "Faucet"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+#: src/pages/CustodianV2/index.tsx
+msgid "Featured"
+msgstr "Featured"
+
+#: src/components/SearchModal/CommonBases.tsx
+msgid "Featured Tokens"
+msgstr "Featured Tokens"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Fee paid ({0} MATIC):"
+msgstr "Fee paid ({0} MATIC):"
+
+#: src/components/KycReviewModal/molecules/Documents.tsx
+msgid "File"
+msgstr "File"
+
+#: src/components/KycReviewModal/molecules/Documents.tsx
+msgid "Financial Documents"
+msgstr "Financial Documents"
+
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Financial Information"
+msgstr "Financial Information"
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Found address<0/>{0}<1/>doesn’t have {1} vesting"
+msgstr "Found address<0/>{0}<1/>doesn’t have {1} vesting"
+
+#: src/pages/CreateNFT/FreezeRadio.tsx
+msgid "Freeze metadata"
+msgstr "Freeze metadata"
+
+#: src/components/swap/CurrencyInput.tsx
+#: src/components/swap/SwapModalHeader.tsx
+msgid "From"
+msgstr "From"
+
+#: src/components/swap/CurrencyInput.tsx
+msgid "From (at most)"
+msgstr "From (at most)"
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "From my <0>{0} wallet:</0>"
+msgstr "From my <0>{0} wallet:</0>"
+
+#: src/pages/KYC/common.tsx
+msgid "Full Name"
+msgstr "Full Name"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Full amount of APY is applied only to amount of {0} staked till the end of staking period."
+msgstr "Full amount of APY is applied only to amount of {0} staked till the end of staking period."
+
+#: src/components/Vault/DepositWarningModal.tsx
+msgid "GOT IT"
+msgstr "GOT IT"
+
+#: src/pages/Farming/Staking/GasWarning.tsx
+msgid "Gas fees may be very high for staking/unstaking. Note that in order to submit staking, two transactions must be signed. The second transaction might be significantly more expensive than the first one. Please<0>check Gas fees</0>. Staking on Polygon might be a better alternative"
+msgstr "Gas fees may be very high for staking/unstaking. Note that in order to submit staking, two transactions must be signed. The second transaction might be significantly more expensive than the first one. Please<0>check Gas fees</0>. Staking on Polygon might be a better alternative"
+
+#: src/pages/Faucet/index.tsx
+msgid "Get {0} Playground Test Tokens"
+msgstr "Get {0} Playground Test Tokens"
+
+#: src/components/Pagination/index.tsx
+msgid "Go to Page"
+msgstr "Go to Page"
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Go to Telegram"
+msgstr "Go to Telegram"
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Got IXS on Ethereum? You can bridge them to Polygon. Use IXS contract address to find it on AlianceBridge {0}"
+msgstr "Got IXS on Ethereum? You can bridge them to Polygon. Use IXS contract address to find it on AlianceBridge {0}"
+
+#: src/components/Vault/HistoryBlock.tsx
+msgid "History of deposits and withdrawals"
+msgstr "History of deposits and withdrawals"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "I have read <0>Staking Conditions</0>"
+msgstr "I have read <0>Staking Conditions</0>"
+
+#: src/components/PlaygroundModal/index.tsx
+#: src/components/SearchModal/ImportList.tsx
+msgid "I understand"
+msgstr "I understand"
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "I want to deposit:"
+msgstr "I want to deposit:"
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "I want to withdraw:"
+msgstr "I want to withdraw:"
+
+#: src/components/TmPayoutEvents/index.tsx
+msgid "ID"
+msgstr "ID"
+
+#: src/components/Footer/InfoBlock.tsx
+msgid "IX Swap is a globally accessible decentralized finance platform which allows for exchange of security tokens and cryptocurrency. At IX Swap, we look to offer end-to-end infrastructure for the dealing, listing, trading and custody of digital assets. We have currently integrated with InvestaX in Singapore as a broker-dealer partner, as well as 1st Digital Trust in Hong Kong as our custody partner and also work with multiple licensed broker-dealers and distributors to provide access to such digital assets globally. At the blockchain level, we have integrated with the Ethereum and Polygon chains and a number of protocol integrations are underway."
+msgstr "IX Swap is a globally accessible decentralized finance platform which allows for exchange of security tokens and cryptocurrency. At IX Swap, we look to offer end-to-end infrastructure for the dealing, listing, trading and custody of digital assets. We have currently integrated with InvestaX in Singapore as a broker-dealer partner, as well as 1st Digital Trust in Hong Kong as our custody partner and also work with multiple licensed broker-dealers and distributors to provide access to such digital assets globally. At the blockchain level, we have integrated with the Ethereum and Polygon chains and a number of protocol integrations are underway."
+
+#: src/pages/Farming/Staking/StakingPlaceholder.tsx
+msgid "IXS Legacy Pools are at full capacity"
+msgstr "IXS Legacy Pools are at full capacity"
+
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
+msgid "IXS {0}/{1} Burned"
+msgstr "IXS {0}/{1} Burned"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "IXSGov to return"
+msgstr "IXSGov to return"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"IXSgov is a tokenized asset representing your staked {0} on a 1:1 basis. {1} distributes the IXSgov to your wallet.\n"
+"{2}\n"
+"You should swap your IXSgov back to {3} during the unstaking process. \n"
+"{4}\n"
+"*Do note that {5} received will be equal to your IXSgov holdings at the time of swap."
+msgstr ""
+"IXSgov is a tokenized asset representing your staked {0} on a 1:1 basis. {1} distributes the IXSgov to your wallet.\n"
+"{2}\n"
+"You should swap your IXSgov back to {3} during the unstaking process. \n"
+"{4}\n"
+"*Do note that {5} received will be equal to your IXSgov holdings at the time of swap."
+
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Identification"
+msgstr "Identification"
+
+#: src/components/AdminKyc/index.tsx
+msgid "Identity"
+msgstr "Identity"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "If you partially or fully unstake your {0} before the end date - 5% APY will be applied to unstaked amount."
+msgstr "If you partially or fully unstake your {0} before the end date - 5% APY will be applied to unstaked amount."
+
+#: src/components/SearchModal/ImportList.tsx
+msgid "If you purchase a token from this list, you may not be able to sell it back."
+msgstr "If you purchase a token from this list, you may not be able to sell it back."
+
+#: src/components/SearchModal/ImportList.tsx
+#: src/components/SearchModal/ImportRow.tsx
+#: src/components/SearchModal/ManageLists.tsx
+msgid "Import"
+msgstr "Import"
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Import List"
+msgstr "Import List"
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Import Pool"
+msgstr "Import Pool"
+
+#: src/components/SearchModal/ImportList.tsx
+msgid "Import at your own risk"
+msgstr "Import at your own risk"
+
+#: src/pages/Pool/ImportPool.tsx
+msgid "Import it."
+msgstr "Import it."
+
+#: src/pages/NftImport/index.tsx
+msgid "Import your collections"
+msgstr "Import your collections"
+
+#: src/components/Vault/DepositAboutWrapping.tsx
+msgid "In our upcoming updates, you can expect more functionalities to become available on the platform, such as managing your assets, trading, staking, etc."
+msgstr "In our upcoming updates, you can expect more functionalities to become available on the platform, such as managing your assets, trading, staking, etc."
+
+#: src/components/AdminKyc/StatusCell.tsx
+msgid "In progress"
+msgstr "In progress"
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "In range"
+msgstr "In range"
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "Inactive"
+msgstr "Inactive"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Indicated token amount will be allocated for distribution once payment for this event is confirmed."
+msgstr "Indicated token amount will be allocated for distribution once payment for this event is confirmed."
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+#: src/pages/SecTokenDetails/DetailsInfo.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Industry:"
+msgstr "Industry:"
+
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "Info"
+msgstr "Info"
+
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "Info:"
+msgstr "Info:"
+
+#: src/components/UsersList/UpdateSummary.tsx
+msgid "Information has been updated"
+msgstr "Information has been updated"
+
+#: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
+msgid "Initial prices and pool share"
+msgstr "Initial prices and pool share"
+
+#: src/components/WalletModal/PendingView.tsx
+msgid "Initializing..."
+msgstr "Initializing..."
+
+#: src/components/swap/OutputInfo.tsx
+#: src/components/swap/SwapModalHeader.tsx
+msgid "Input is estimated. You will sell at most <0>{0} {1}</0> or the transaction will revert."
+msgstr "Input is estimated. You will sell at most <0>{0} {1}</0> or the transaction will revert."
+
+#: src/components/WalletModal/index.tsx
+msgid "Install Metamask"
+msgstr "Install Metamask"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Instant reward payout today"
+msgstr "Instant reward payout today"
+
+#: src/state/withdraw/hooks.ts
+msgid "Insufficient balance"
+msgstr "Insufficient balance"
+
+#: src/pages/Swap/SwapButtons.tsx
+msgid "Insufficient liquidity for this trade"
+msgstr "Insufficient liquidity for this trade"
+
+#: src/pages/Swap/SwapButtons.tsx
+msgid "Insufficient liquidity for this trade. Try enabling multi-hop trades."
+msgstr "Insufficient liquidity for this trade. Try enabling multi-hop trades."
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Insufficient token amount."
+msgstr "Insufficient token amount."
+
+#: src/state/mint/hooks.ts
+#: src/state/mint/hooks.ts
+#: src/state/swap/hooks.ts
+msgid "Insufficient {0} balance"
+msgstr "Insufficient {0} balance"
+
+#: src/components/Settings/SettingsModal.tsx
+msgid "Interface Settings"
+msgstr "Interface Settings"
+
+#: src/pages/PoolFinder/index.tsx
+#: src/state/mint/hooks.ts
+msgid "Invalid pair"
+msgstr "Invalid pair"
+
+#: src/state/swap/hooks.ts
+msgid "Invalid recipient"
+msgstr "Invalid recipient"
+
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Investor Declaration"
+msgstr "Investor Declaration"
+
+#: src/components/AdminAccreditationTable/index.tsx
+msgid "Investor Status"
+msgstr "Investor Status"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+#~ msgid "Investor Status Declaration"
+#~ msgstr "Investor Status Declaration"
+
+#: src/components/KycReviewModal/Blocks/InvestorDeclaration.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Investor Status Declaration Acknowledgement"
+msgstr "Investor Status Declaration Acknowledgement"
+
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Issuance Dashboard"
+msgstr "Issuance Dashboard"
+
+#: src/pages/SecTokenDetails/AtlasInfo.tsx
+msgid "Issuance Date:"
+msgstr "Issuance Date:"
+
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Issuer:"
+msgstr "Issuer:"
+
+#: src/pages/SecTokenDetails/AtlasInfo.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Issuing price:"
+msgstr "Issuing price:"
+
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "Item name"
+msgstr "Item name"
+
+#: src/pages/Farming/Staking/StakingPlaceholder.tsx
+msgid "Join a new Staking Program"
+msgstr "Join a new Staking Program"
+
+#: src/components/KycReviewModal/index.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "KYC"
+msgstr "KYC"
+
+#: src/components/AdminKyc/index.tsx
+msgid "KYC Status"
+msgstr "KYC Status"
+
+#: src/components/Vault/NoVault.tsx
+msgid "KYC approved on {0}. Waiting for KYC approval on Custodian..."
+msgstr "KYC approved on {0}. Waiting for KYC approval on Custodian..."
+
+#: src/pages/KYC/CorporateKycForm.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "KYC as"
+msgstr "KYC as"
+
+#: src/components/AdminAccreditationTable/index.tsx
+msgid "KYC source"
+msgstr "KYC source"
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "KYC: APPROVED"
+msgstr "KYC: APPROVED"
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "KYC: CHANGE REQUESTED"
+msgstr "KYC: CHANGE REQUESTED"
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "KYC: NOT_SUBMITTED"
+msgstr "KYC: NOT_SUBMITTED"
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "KYC: PENDING"
+msgstr "KYC: PENDING"
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "KYC: REJECTED"
+msgstr "KYC: REJECTED"
+
+#: src/components/Footer/SocialBlock.tsx
+msgid "Keep in Touch"
+msgstr "Keep in Touch"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Launchpad"
+msgstr "Launchpad"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+#~ msgid "Legacy Pools (Closed)"
+#~ msgstr "Legacy Pools (Closed)"
+
+#: src/state/nft/types.ts
+msgid "Levels"
+msgstr "Levels"
+
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Liquidity Mining Program (Quickswap)"
+msgstr "Liquidity Mining Program (Quickswap)"
+
+#: src/pages/Pool/LiquidityTitle.tsx
+msgid "Liquidity Pool"
+msgstr "Liquidity Pool"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Liquidity Pools"
+msgstr "Liquidity Pools"
+
+#: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
+msgid "Liquidity Provider Fee"
+msgstr "Liquidity Provider Fee"
+
+#: src/components/Footer/ProductsBlock.tsx
+msgid "List My Token"
+msgstr "List My Token"
+
+#: src/components/SearchModal/Manage.tsx
+msgid "Lists"
+msgstr "Lists"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Live Pools"
+msgstr "Live Pools"
+
+#: src/components/SearchModal/ManageLists.tsx
+msgid "Loaded"
+msgstr "Loaded"
+
+#: src/components/PositionCard/CurrencyHeader.tsx
+#: src/components/SecurityCard/CurrencyHeader.tsx
+#: src/pages/Custodian/EmptyState.tsx
+#: src/pages/Pool/NoPairs.tsx
+msgid "Loading"
+msgstr "Loading"
+
+#: src/pages/CreatePayoutEvent/Summary.tsx
+msgid "Loading..."
+msgstr "Loading..."
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Lock Period"
+msgstr "Lock Period"
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid ""
+"Lock period means the time you won’t be able to unstake your {0} fully or partially. Please carefully consider the risks involved.\n"
+"{1}\n"
+"You will be able to redeem your staked {2} fully or partially after lock period."
+msgstr ""
+"Lock period means the time you won’t be able to unstake your {0} fully or partially. Please carefully consider the risks involved.\n"
+"{1}\n"
+"You will be able to redeem your staked {2} fully or partially after lock period."
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Locked till"
+msgstr "Locked till"
+
+#: src/components/CollectionForm/Images.tsx
+msgid "Logo Image"
+msgstr "Logo Image"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+#: src/components/AdminSecurityCatalog/index.tsx
+msgid "Logo:"
+msgstr "Logo:"
+
+#: src/pages/Admin/Navbar.tsx
+msgid "Logout"
+msgstr "Logout"
+
+#: src/components/earn/StakingInputPercentage.tsx
+#: src/pages/RemoveLiquidity/RemoveAmount.tsx
+msgid "MAX"
+msgstr "MAX"
+
+#: src/pages/KYC/index.tsx
+msgid "Make changes and resend KYC"
+msgstr "Make changes and resend KYC"
+
+#: src/components/Header/URLWarning.tsx
+msgid "Make sure the URL is<0>app.ixswap.io</0>"
+msgstr "Make sure the URL is<0>app.ixswap.io</0>"
+
+#: src/components/SearchModal/CurrencySearch.tsx
+msgid "Manage Token List"
+msgstr "Manage Token List"
+
+#: src/pages/PoolFinder/index.tsx
+msgid "Manage this Pool"
+msgstr "Manage this Pool"
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Manage tokens"
+msgstr "Manage tokens"
+
+#: src/pages/SecTokenDetails/AtlasInfo.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Market Capitalization:"
+msgstr "Market Capitalization:"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Maturity time is the final date of your staking period."
+msgstr "Maturity time is the final date of your staking period."
+
+#: src/components/CurrencyInputPanel/MaxButton.tsx
+#: src/components/CurrencyInputPanel/index.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Max"
+msgstr "Max"
+
+#: src/pages/CreateNFT/NewCollectionPopup.tsx
+msgid "Max 5mb."
+msgstr "Max 5mb."
+
+#: src/components/RangeSelector/index.tsx
+msgid "Max Price"
+msgstr "Max Price"
+
+#: src/constants/constants.ts
+msgid "Max size of 10Mb"
+msgstr "Max size of 10Mb"
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid ""
+"Maximum Capacity:\n"
+"{0}\n"
+"Staked {1} in Pool: \n"
+"{2} {3}\n"
+"{4}"
+msgstr ""
+"Maximum Capacity:\n"
+"{0}\n"
+"Staked {1} in Pool: \n"
+"{2} {3}\n"
+"{4}"
+
+#: src/components/ReasonModal/index.tsx
+msgid "Maximum is 1000 chars"
+msgstr "Maximum is 1000 chars"
+
+#: src/components/AdminAccreditationTable/RejectModal.tsx
+msgid "Maximum is 10000 chars"
+msgstr "Maximum is 10000 chars"
+
+#: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
+msgid "Maximum sent"
+msgstr "Maximum sent"
+
+#: src/components/RangeSelector/index.tsx
+msgid "Min Price"
+msgstr "Min Price"
+
+#: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
+msgid "Minimum received"
+msgstr "Minimum received"
+
+#: src/components/MitigationBadge/index.tsx
+msgid "Mitigation enabled - if the transaction price deviates too far from the time-weighted average price, the transaction will be blocked"
+msgstr "Mitigation enabled - if the transaction price deviates too far from the time-weighted average price, the transaction will be blocked"
+
+#: src/components/Header/HeaderLinks.tsx
+msgid "My Collections"
+msgstr "My Collections"
+
+#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
+msgid "My Liquidity"
+msgstr "My Liquidity"
+
+#: src/components/UserPayoutEvents/index.tsx
+msgid "My Payout Events"
+msgstr "My Payout Events"
+
+#: src/pages/Custodian/index.tsx
+msgid "My Securities"
+msgstr "My Securities"
+
+#: src/pages/Farming/Vesting/enum.ts
+msgid "My ongoing stakings"
+msgstr "My ongoing stakings"
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
+msgid "My pool share"
+msgstr "My pool share"
+
+#: src/pages/CustodianV2/index.tsx
+msgid "My security tokens"
+msgstr "My security tokens"
+
+#: src/components/Vault/ExistingVault.tsx
+msgid "My {symbolText} Vault"
+msgstr "My {symbolText} Vault"
+
+#: src/components/Header/HeaderLinks.tsx
+msgid "NFT"
+msgstr "NFT"
+
+#: src/components/Vault/NoVault.tsx
+msgid "NOT AVAILABLE"
+msgstr "NOT AVAILABLE"
+
+#: src/components/AdminKyc/index.tsx
+#: src/components/AdminSecurityCatalog/index.tsx
+#: src/components/AdminTransactionsTable/index.tsx
+#: src/components/CollectionForm/index.tsx
+#: src/components/UsersList/index.tsx
+#: src/pages/CreateNFT/CreateForm.tsx
+#: src/pages/CreateNFT/NewCollectionPopup.tsx
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Name"
+msgstr "Name"
+
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "Needs accreditation"
+msgstr "Needs accreditation"
+
+#: src/pages/CreateNFT/CollectionDropdown.tsx
+msgid "New Collection"
+msgstr "New Collection"
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Next Payment"
+msgstr "Next Payment"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Next rewards on"
+msgstr "Next rewards on"
+
+#: src/components/UserPayoutEvents/MyPayoutEvents.tsx
+msgid "No Available Payout Events"
+msgstr "No Available Payout Events"
+
+#: src/components/TmEmptyPage/index.tsx
+msgid "No Data"
+msgstr "No Data"
+
+#: src/components/TmEmptyPage/index.tsx
+msgid "No Payout Event Created"
+msgstr "No Payout Event Created"
+
+#: src/components/UserPayoutEvents/EmptyState.tsx
+msgid "No Payout Events!"
+msgstr "No Payout Events!"
+
+#: src/components/TmEmptyPage/index.tsx
+msgid "No Payout History"
+msgstr "No Payout History"
+
+#: src/components/TmEmptyPage/index.tsx
+msgid "No Tokens Added"
+msgstr "No Tokens Added"
+
+#: src/pages/Pool/EmptyLiquidity.tsx
+msgid "No liquidity found."
+msgstr "No liquidity found."
+
+#: src/pages/PoolFinder/index.tsx
+msgid "No pool found"
+msgstr "No pool found"
+
+#: src/components/AdminAccreditationTable/index.tsx
+#: src/components/AdminKyc/index.tsx
+#: src/components/AdminSecurityCatalog/index.tsx
+#: src/components/AdminTransactionsTable/index.tsx
+#: src/pages/CustodianV2/SecTokensTable.tsx
+msgid "No results"
+msgstr "No results"
+
+#: src/components/SearchModal/CurrencySearch.tsx
+#: src/components/Vault/HistoryTable.tsx
+#: src/pages/Custodian/AllSecTokens.tsx
+msgid "No results found."
+msgstr "No results found."
+
+#: src/pages/Custodian/EmptyState.tsx
+msgid "No securities found."
+msgstr "No securities found."
+
+#: src/components/AdminSecurityCatalog/BrokerDealerCard.tsx
+msgid "Non Tradable"
+msgstr "Non Tradable"
+
+#: src/pages/Faucet/FaucetTokenDropdown.tsx
+msgid "Non-Security Tokens"
+msgstr "Non-Security Tokens"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Not enough {0}"
+msgstr "Not enough {0}"
+
+#: src/pages/KYC/styleds.tsx
+msgid "Not submitted"
+msgstr "Not submitted"
+
+#: src/components/TmEmptyPage/index.tsx
+#: src/components/UserPayoutEvents/EmptyState.tsx
+msgid "Nothing found"
+msgstr "Nothing found"
+
+#: src/state/nft/types.ts
+msgid "Numerical traits that just show as numbers"
+msgstr "Numerical traits that just show as numbers"
+
+#: src/state/nft/types.ts
+msgid "Numerical traits that show as a progress bar"
+msgstr "Numerical traits that show as a progress bar"
+
+#: src/components/Settings/ExpertModeModal.tsx
+msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
+msgstr "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
+
+#: src/components/Vault/DepositAboutWrapping.tsx
+msgid "Once you deposit your SEC, its corresponding wSEC will be minted and transferred to your balance. Meanwhile, you simply have to unfold/unwrap your wSEC to exchange it for its SEC equivalent and get your original asset back."
+msgstr "Once you deposit your SEC, its corresponding wSEC will be minted and transferred to your balance. Meanwhile, you simply have to unfold/unwrap your wSEC to exchange it for its SEC equivalent and get your original asset back."
+
+#: src/components/Web3ReactManager/index.tsx
+#~ msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
+#~ msgstr "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
+
+#: src/components/UserPayoutEvents/EmptyState.tsx
+msgid "Oops, you do not have any upcoming payout events!"
+msgstr "Oops, you do not have any upcoming payout events!"
+
+#: src/pages/NFTCollection/NoNFTs.tsx
+msgid "Oops, you don't have any NFTs yet!"
+msgstr "Oops, you don't have any NFTs yet!"
+
+#: src/pages/NFTCollections/NoCollections.tsx
+msgid "Oops, you don't have any collection yet!"
+msgstr "Oops, you don't have any collection yet!"
+
+#: src/components/KycReviewModal/Blocks/InvestorDeclaration.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Opt-in requirement"
+msgstr "Opt-in requirement"
+
+#: src/pages/NftImport/index.tsx
+msgid "Or"
+msgstr "Or"
+
+#: src/pages/NftImport/index.tsx
+msgid "Or enter an opensea or rarible link to one of the collection's assets"
+msgstr "Or enter an opensea or rarible link to one of the collection's assets"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+msgid "Origin Chain"
+msgstr "Origin Chain"
+
+#: src/pages/Custodian/index.tsx
+msgid "Other"
+msgstr "Other"
+
+#: src/components/Footer/ProductsBlock.tsx
+msgid "Our Products"
+msgstr "Our Products"
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "Out of range"
+msgstr "Out of range"
+
+#: src/pages/AddLiquidityV2/ModalHeader.tsx
+#: src/pages/RemoveLiquidity/ModalHeader.tsx
+msgid "Output is estimated. If the price changes by more than {0}% your transaction will revert."
+msgstr "Output is estimated. If the price changes by more than {0}% your transaction will revert."
+
+#: src/components/swap/OutputInfo.tsx
+#: src/components/swap/SwapModalHeader.tsx
+msgid "Output is estimated. You will receive at least <0>{0} {1}</0> or the transaction will revert."
+msgstr "Output is estimated. You will receive at least <0>{0} {1}</0> or the transaction will revert."
+
+#: src/components/swap/SwapModalHeader.tsx
+msgid "Output will be sent to <0>{0}</0>"
+msgstr "Output will be sent to <0>{0}</0>"
+
+#: src/components/swap/OutputInfo.tsx
+msgid "Output will be sent to <0>{0}</0>."
+msgstr "Output will be sent to <0>{0}</0>."
+
+#: src/pages/CreatePayoutEvent/PayoutEventBlock.tsx
+msgid "PAYOUT EVENT"
+msgstr "PAYOUT EVENT"
+
+#: src/pages/PayoutItem/InfoBlock.tsx
+msgid "PAYOUT TOKEN:"
+msgstr "PAYOUT TOKEN:"
+
+#: src/pages/CustodianV2/index.tsx
+msgid "PENDING ACCREDITATION"
+msgstr "PENDING ACCREDITATION"
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "Paid was successful. Waiting for system confirmation."
+msgstr "Paid was successful. Waiting for system confirmation."
+
+#: src/components/Vault/NoVault.tsx
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "Pass Accreditation"
+msgstr "Pass Accreditation"
+
+#: src/pages/KYC/index.tsx
+msgid "Pass KYC as Corporate"
+msgstr "Pass KYC as Corporate"
+
+#: src/pages/KYC/index.tsx
+msgid "Pass KYC as Individual"
+msgstr "Pass KYC as Individual"
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Pass KYC on {0}"
+msgstr "Pass KYC on {0}"
+
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Passed"
+msgstr "Passed"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Passed staking period"
+msgstr "Passed staking period"
+
+#: src/components/SecurityCard/Status.tsx
+msgid "Passing KYC..."
+msgstr "Passing KYC..."
+
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Passing accreditation"
+msgstr "Passing accreditation"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Pay Later for This Event"
+msgstr "Pay Later for This Event"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Pay Now for This Event"
+msgstr "Pay Now for This Event"
+
+#: src/pages/CreatePayoutEvent/PayoutEventBlock.tsx
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "Pay for This Event"
+msgstr "Pay for This Event"
+
+#: src/pages/CreatePayoutEvent/PayoutEventBlock.tsx
+msgid "Pay for this event after the wrapped token amount will become available on the selected record date."
+msgstr "Pay for this event after the wrapped token amount will become available on the selected record date."
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Payment Deadline:"
+msgstr "Payment Deadline:"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Payment Details:"
+msgstr "Payment Details:"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Payment Start Date:"
+msgstr "Payment Start Date:"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Payment for this event should be received and confirmed prior to the start date of payout distribution."
+msgstr "Payment for this event should be received and confirmed prior to the start date of payout distribution."
+
+#: src/components/TmPayoutEvents/index.tsx
+msgid "Payment period"
+msgstr "Payment period"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Payout Event Summary"
+msgstr "Payout Event Summary"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Payout Information:"
+msgstr "Payout Information:"
+
+#: src/components/UserPayoutEvents/Card.tsx
+msgid "Payout Token:"
+msgstr "Payout Token:"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Payout Tokens:"
+msgstr "Payout Tokens:"
+
+#: src/pages/CreatePayoutEvent/PayoutType.tsx
+msgid "Payout Type"
+msgstr "Payout Type"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Payout Type:"
+msgstr "Payout Type:"
+
+#: src/pages/CreatePayoutEvent/PayoutEventBlock.tsx
+msgid "Payout token computed as of {0} at {1} {2} per SEC token"
+msgstr "Payout token computed as of {0} at {1} {2} per SEC token"
+
+#: src/components/TmPayoutEvents/index.tsx
+#: src/components/TmPayoutHistory/index.tsx
+msgid "Payout type"
+msgstr "Payout type"
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "Payout unavailable."
+msgstr "Payout unavailable."
+
+#: src/components/AdminKyc/StatusCell.tsx
+#: src/components/Vault/DepositPending.tsx
+msgid "Pending"
+msgstr "Pending"
+
+#: src/pages/KYC/styleds.tsx
+#: src/pages/KYC/styleds.tsx
+msgid "Pending approval"
+msgstr "Pending approval"
+
+#: src/pages/CustodianV2/Status.tsx
+msgid "Pending..."
+msgstr "Pending..."
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Period of staking"
+msgstr "Period of staking"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Period of vesting"
+msgstr "Period of vesting"
+
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Personal Information"
+msgstr "Personal Information"
+
+#: src/components/Launchpad/NetworkNotAvailable/index.tsx
+#: src/components/NotAvailablePage/index.tsx
+msgid "Playground"
+msgstr "Playground"
+
+#: src/theme/components.tsx
+msgid "Please connect to one of the following networks: Main Ethereum, Kovan, Polygon Mainnet, Polygon Mumbai."
+msgstr "Please connect to one of the following networks: Main Ethereum, Kovan, Polygon Mainnet, Polygon Mumbai."
+
+#: src/components/WalletModal/ErrorSection.tsx
+#~ msgid "Please connect to the appropriate Ethereum network."
+#~ msgstr "Please connect to the appropriate Ethereum network."
+
+#: src/components/Vault/DepositWarningModal.tsx
+msgid "Please execute the <0>Transaction of {0} Tokens</0> to the <1>Custodians wallet</1> address on the <2>{networkName} Blockchain</2>"
+msgstr "Please execute the <0>Transaction of {0} Tokens</0> to the <1>Custodians wallet</1> address on the <2>{networkName} Blockchain</2>"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Please indicate the Payout Amount."
+msgstr "Please indicate the Payout Amount."
+
+#: src/pages/Farming/Staking/StakingPlaceholder.tsx
+msgid "Please join our external Staking and Liquidity mining"
+msgstr "Please join our external Staking and Liquidity mining"
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "Please proceed with the payment before the payment start date."
+msgstr "Please proceed with the payment before the payment start date."
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "Please proceed with the payment."
+msgstr "Please proceed with the payment."
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Please provide sender’s address in order to approve this transaction. Other addresses will be rejected."
+msgstr "Please provide sender’s address in order to approve this transaction. Other addresses will be rejected."
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Please review all the information and ensure they are correct before publishing the event."
+msgstr "Please review all the information and ensure they are correct before publishing the event."
+
+#: src/components/Settings/ExpertModeModal.tsx
+msgid "Please type the word \"{confirmWord}\" to enable expert mode."
+msgstr "Please type the word \"{confirmWord}\" to enable expert mode."
+
+#: src/components/ErrorBoundary/index.tsx
+#~ msgid "Please, refresh the page"
+#~ msgstr "Please, refresh the page"
+
+#: src/hooks/useSwitchChain.ts
+#: src/hooks/useSwitchChain.ts
+msgid "Polygon"
+msgstr "Polygon"
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Pool"
+msgstr "Pool"
+
+#: src/pages/PoolFinder/index.tsx
+msgid "Pool Found!"
+msgstr "Pool Found!"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Pool limitation:"
+msgstr "Pool limitation:"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Pool limits exceeded"
+msgstr "Pool limits exceeded"
+
+#: src/components/earn/PoolCard.tsx
+msgid "Pool rate"
+msgstr "Pool rate"
+
+#: src/components/PositionCard/index.tsx
+#: src/components/PositionCard/index.tsx
+msgid "Pooled {0}"
+msgstr "Pooled {0}"
+
+#: src/components/Footer/ProductsBlock.tsx
+msgid "Pools"
+msgstr "Pools"
+
+#: src/components/swap/SwapModalHeader.tsx
+#: src/pages/RemoveLiquidity/ModalBottom.tsx
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Price"
+msgstr "Price"
+
+#: src/components/swap/AcceptChanges.tsx
+#: src/components/swap/SwapModalHeader.tsx
+msgid "Price Updated"
+msgstr "Price Updated"
+
+#: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
+msgid "Price impact"
+msgstr "Price impact"
+
+#: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
+msgid "Prices and pool share"
+msgstr "Prices and pool share"
+
+#: src/components/Footer/CopyrightBlock.tsx
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+#: src/pages/Farming/Staking/StakingPlaceholder.tsx
+msgid "Program powered by AllianceBlock on Polygon"
+msgstr "Program powered by AllianceBlock on Polygon"
+
+#: src/pages/Farming/Vesting/VestingTable.tsx
+msgid "Progress"
+msgstr "Progress"
+
+#: src/components/KycReviewModal/molecules/Documents.tsx
+#: src/pages/KYC/common.tsx
+msgid "Proof of Address"
+msgstr "Proof of Address"
+
+#: src/components/KycReviewModal/molecules/Documents.tsx
+#: src/pages/KYC/common.tsx
+msgid "Proof of Identity"
+msgstr "Proof of Identity"
+
+#: src/state/nft/types.ts
+msgid "Properties"
+msgstr "Properties"
+
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Properties show up underneath your item, are clickable, and can be filtered in your collection's sidebar."
+msgstr "Properties show up underneath your item, are clickable, and can be filtered in your collection's sidebar."
+
+#: src/pages/SecTokenDetails/AtlasInfo.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Protocol:"
+msgstr "Protocol:"
+
+#: src/pages/CreateNFT/NewCollectionPopup.tsx
+msgid "Provide a detailed description of your collection..."
+msgstr "Provide a detailed description of your collection..."
+
+#: src/components/CollectionForm/index.tsx
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "Provide a detailed description of your item"
+msgstr "Provide a detailed description of your item"
+
+#: src/pages/CreatePayoutEvent/PayoutEventBlock.tsx
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "Publish Event"
+msgstr "Publish Event"
+
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+msgid "Rates"
+msgstr "Rates"
+
+#: src/pages/PayoutItem/PayoutHeader.tsx
+#: src/pages/SecTokenDetails/DetailsInfo.tsx
+msgid "Read More"
+msgstr "Read More"
+
+#: src/components/swap/UnsupportedCurrencyFooter.tsx
+msgid "Read more about unsupported assets"
+msgstr "Read more about unsupported assets"
+
+#: src/pages/KYC/KYCProgressBar.tsx
+msgid "Reason of changes requested"
+msgstr "Reason of changes requested"
+
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Reason:"
+msgstr "Reason:"
+
+#: src/state/withdraw/hooks.ts
+msgid "Receiver is invalid"
+msgstr "Receiver is invalid"
+
+#: src/components/Vault/TransactionDetails.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Receiver's address:"
+msgstr "Receiver's address:"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Recent Transactions"
+msgstr "Recent Transactions"
+
+#: src/components/TmPayoutHistory/index.tsx
+#: src/pages/PayoutItem/History/index.tsx
+msgid "Recipient's wallet"
+msgstr "Recipient's wallet"
+
+#: src/components/UserPayoutEvents/Card.tsx
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Record Date:"
+msgstr "Record Date:"
+
+#: src/components/MultipleFilters/index.tsx
+#: src/components/TmPayoutEvents/index.tsx
+msgid "Record date"
+msgstr "Record date"
+
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Referral"
+msgstr "Referral"
+
+#: src/components/AdminAccreditationTable/RejectModal.tsx
+#: src/components/KycReviewModal/index.tsx
+msgid "Reject"
+msgstr "Reject"
+
+#: src/components/SecurityCard/Status.tsx
+#: src/components/Vault/AccreditationStatus.tsx
+#: src/pages/CustodianV2/Status.tsx
+#: src/pages/KYC/styleds.tsx
+msgid "Rejected"
+msgstr "Rejected"
+
+#: src/components/UsersList/RemoveTokensWarning.tsx
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Remove"
+msgstr "Remove"
+
+#: src/pages/RemoveLiquidity/RemoveAmount.tsx
+msgid "Remove Amount"
+msgstr "Remove Amount"
+
+#: src/components/NavigationTabs/index.tsx
+#: src/components/PositionCard/index.tsx
+msgid "Remove Liquidity"
+msgstr "Remove Liquidity"
+
+#: src/components/SearchModal/ManageLists.tsx
+msgid "Remove list"
+msgstr "Remove list"
+
+#: src/components/swap/EditRecipient.tsx
+msgid "Remove send"
+msgstr "Remove send"
+
+#: src/pages/RemoveLiquidity/index.tsx
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Remove {0} {1} and {2} {3}"
+msgstr "Remove {0} {1} and {2} {3}"
+
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
+msgstr "Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive."
+
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "Removing {0} {1} and {2} {3}"
+msgstr "Removing {0} {1} and {2} {3}"
+
+#: src/components/KycReviewModal/index.tsx
+msgid "Request a change"
+msgstr "Request a change"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+msgid "Residential Address"
+msgstr "Residential Address"
+
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Response"
+msgstr "Response"
+
+#: src/components/Settings/SettingsModal.tsx
+msgid "Restricts swaps to direct pairs only."
+msgstr "Restricts swaps to direct pairs only."
+
+#: src/components/KycReviewModal/index.tsx
+msgid "Resubmit"
+msgstr "Resubmit"
+
+#: src/components/Vault/NoVault.tsx
+msgid "Retry pass accreditation"
+msgstr "Retry pass accreditation"
+
+#: src/components/AdminKyc/MoreMenu.tsx
+msgid "Review"
+msgstr "Review"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Rewards in vesting"
+msgstr "Rewards in vesting"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Rewards to be vested (10% weekly)"
+msgstr "Rewards to be vested (10% weekly)"
+
+#: src/pages/Farming/Vesting/enum.ts
+msgid "Rewards vesting"
+msgstr "Rewards vesting"
+
+#: src/components/UsersList/index.tsx
+msgid "Role"
+msgstr "Role"
+
+#: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
+msgid "Route"
+msgstr "Route"
+
+#: src/components/TmPayoutEvents/index.tsx
+#: src/components/TmPayoutHistory/index.tsx
+msgid "SEC token"
+msgstr "SEC token"
+
+#: src/pages/CreatePayoutEvent/PayoutForm.tsx
+msgid "SECURITY TOKENS"
+msgstr "SECURITY TOKENS"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+#: src/components/AdminSecurityCatalog/index.tsx
+msgid "Save"
+msgstr "Save"
+
+#: src/pages/CreatePayoutEvent/PayoutEventBlock.tsx
+msgid "Save Changes"
+msgstr "Save Changes"
+
+#: src/pages/CreatePayoutEvent/PayoutEventBlock.tsx
+msgid "Save as Draft"
+msgstr "Save as Draft"
+
+#: src/components/AdminSecurityCatalog/index.tsx
+#: src/pages/CustodianV2/SecTokensTable.tsx
+msgid "Search"
+msgstr "Search"
+
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Search for Wallet"
+msgstr "Search for Wallet"
+
+#: src/components/SearchModal/CurrencySearch.tsx
+#: src/pages/Custodian/AllSecTokens.tsx
+msgid "Search or paste address"
+msgstr "Search or paste address"
+
+#: src/state/mint/hooks.ts
+msgid "Sec to sec pools forbidden"
+msgstr "Sec to sec pools forbidden"
+
+#: src/components/Footer/ProductsBlock.tsx
+msgid "Securities"
+msgstr "Securities"
+
+#: src/components/UsersList/index.tsx
+msgid "Security Token"
+msgstr "Security Token"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Security Token:"
+msgstr "Security Token:"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+#: src/components/NavigationTabs/index.tsx
+#: src/pages/Faucet/FaucetTokenDropdown.tsx
+#: src/pages/SecurityTokens/index.tsx
+msgid "Security Tokens"
+msgstr "Security Tokens"
+
+#: src/pages/CustodianV2/index.tsx
+msgid "Security tokens"
+msgstr "Security tokens"
+
+#: src/components/FeeSelector/index.tsx
+msgid "Select Pool"
+msgstr "Select Pool"
+
+#: src/components/Header/NetworkCard.tsx
+msgid "Select a network"
+msgstr "Select a network"
+
+#: src/components/FeeSelector/index.tsx
+msgid "Select a pool type based on your preferred liquidity provider fee."
+msgstr "Select a pool type based on your preferred liquidity provider fee."
+
+#: src/components/SearchModal/CurrencySearch.tsx
+#: src/components/swap/CurrencyInput.tsx
+msgid "Select a token to swap"
+msgstr "Select a token to swap"
+
+#: src/pages/Faucet/index.tsx
+msgid "Select token"
+msgstr "Select token"
+
+#: src/state/deposit/hooks.ts
+msgid "Sender is invalid"
+msgstr "Sender is invalid"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Sender's address:"
+msgstr "Sender's address:"
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "Sending Withdrawal Fee"
+msgstr "Sending Withdrawal Fee"
+
+#: src/components/Vault/WithdrawPending.tsx
+msgid "Sending {amount} {0} here"
+msgstr "Sending {amount} {0} here"
+
+#: src/pages/CreateNFT/NSFWRadio.tsx
+msgid "Set this item as explicit and sensitive content"
+msgstr "Set this item as explicit and sensitive content"
+
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+msgid "Share of Pool"
+msgstr "Share of Pool"
+
+#: src/pages/PayoutItem/PayoutHeader.tsx
+#: src/pages/SecTokenDetails/DetailsInfo.tsx
+msgid "Show Less"
+msgstr "Show Less"
+
+#: src/components/TransactionSettings/index.tsx
+#: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
+msgid "Slippage tolerance"
+msgstr "Slippage tolerance"
+
+#: src/components/swap/UnsupportedCurrencyFooter.tsx
+msgid "Some assets are not available through this interface because they may not work well with the smart contracts or we are unable to allow trading for legal reasons."
+msgstr "Some assets are not available through this interface because they may not work well with the smart contracts or we are unable to allow trading for legal reasons."
+
+#: src/components/ErrorBoundary/index.tsx
+msgid "Something went wrong"
+msgstr "Something went wrong"
+
+#: src/state/deposit/hooks.ts
+msgid "Something went wrong. Could not deposit amount"
+msgstr "Something went wrong. Could not deposit amount"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+msgid "Source of Funds"
+msgstr "Source of Funds"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Stake"
+msgstr "Stake"
+
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+msgid "Staked {amount} {0} for {1}"
+msgstr "Staked {amount} {0} for {1}"
+
+#: src/components/Footer/ProductsBlock.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Staking"
+msgstr "Staking"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Staking amount"
+msgstr "Staking amount"
+
+#: src/pages/Farming/Staking/PromoTokenCard.tsx
+msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your {0} account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
+msgstr "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your {0} account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "Staking options:"
+msgstr "Staking options:"
+
+#: src/pages/Farming/Staking/StakingTiers.tsx
+msgid "Staking will be opened soon. Wait for the official announcement on <0>our channels</0>."
+msgstr "Staking will be opened soon. Wait for the official announcement on <0>our channels</0>."
+
+#: src/pages/Farming/StakingTab.tsx
+msgid "Staking {0}"
+msgstr "Staking {0}"
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Start Date"
+msgstr "Start Date"
+
+#: src/components/AdminAccreditationTable/MoreActions.tsx
+msgid "Start again"
+msgstr "Start again"
+
+#: src/state/nft/types.ts
+msgid "Stats"
+msgstr "Stats"
+
+#: src/components/AdminKyc/StatusCell.tsx
+#: src/components/AdminTransactionsTable/index.tsx
+#: src/components/TmPayoutEvents/index.tsx
+#: src/components/Vault/HistoryTable.tsx
+#: src/pages/PayoutItem/History/index.tsx
+msgid "Status"
+msgstr "Status"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Status:"
+msgstr "Status:"
+
+#: src/pages/Faucet/index.tsx
+msgid "Submit"
+msgstr "Submit"
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Submit accreditation"
+msgstr "Submit accreditation"
+
+#: src/pages/Faucet/index.tsx
+msgid "Success!"
+msgstr "Success!"
+
+#: src/components/UsersList/UpdateSummary.tsx
+msgid "Summary:"
+msgstr "Summary:"
+
+#: src/pages/AddLiquidityV2/index.tsx
+msgid "Supply"
+msgstr "Supply"
+
+#: src/pages/AddLiquidityV2/index.tsx
+msgid "Supplying {0} {1} and {2} {3}"
+msgstr "Supplying {0} {1} and {2} {3}"
+
+#: src/components/Footer/ProductsBlock.tsx
+#: src/components/NavigationTabs/index.tsx
+#: src/components/swap/SwapHeader.tsx
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+#: src/pages/Swap/SwapButtons.tsx
+msgid "Swap"
+msgstr "Swap"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Swap/Trade"
+msgstr "Swap/Trade"
+
+#: src/components/swap/ConfirmSwapModal.tsx
+#: src/components/swap/PendingSuccesModals.tsx
+msgid "Swapping {0} {1} for {2} {3}"
+msgstr "Swapping {0} {1} for {2} {3}"
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "Switch to Polygon in your Web3 browser"
+msgstr "Switch to Polygon in your Web3 browser"
+
+#: src/components/Launchpad/NetworkNotAvailable/index.tsx
+#: src/components/NotAvailablePage/index.tsx
+msgid "Switch to<0> Ethereum Mainnet</0> if you have ongoing Staking or Vesting there"
+msgstr "Switch to<0> Ethereum Mainnet</0> if you have ongoing Staking or Vesting there"
+
+#: src/components/Launchpad/NetworkNotAvailable/index.tsx
+#: src/components/NotAvailablePage/index.tsx
+msgid "Switch to<0> Kovan Testnet</0> if you want to see the demo playground"
+msgstr "Switch to<0> Kovan Testnet</0> if you want to see the demo playground"
+
+#: src/components/Launchpad/NetworkNotAvailable/index.tsx
+#: src/components/NotAvailablePage/index.tsx
+msgid "Switch to<0> Mumbai Testnet</0> to get full functionality"
+msgstr "Switch to<0> Mumbai Testnet</0> to get full functionality"
+
+#: src/components/Launchpad/NetworkNotAvailable/index.tsx
+#: src/components/NotAvailablePage/index.tsx
+msgid "Switch to<0> Polygon Mainnet</0> to get full functionality"
+msgstr "Switch to<0> Polygon Mainnet</0> to get full functionality"
+
+#: src/components/Footer/InfoBlock.tsx
+msgid "THE IX SWAP PLATFORM IS PROVIDED ON \"AS IS\", AT YOUR OWN RISK, AND WITHOUT WARRANTIES OF ANY KIND. IX Swap platform is run by smart contracts deployed on the Ethereum blockchain. Upgrades and modifications to the protocol are managed in a community-driven way by holders of the IX Swap governance token. No developer or entity involved in creating the IX Swap will be liable for any claims or damages whatsoever associated with your use, inability to use, or your interaction with other users of, the IX Swap platform, including any direct, indirect, incidental, special, exemplary, punitive or consequential damages, or loss of profits, cryptocurrencies, tokens, or anything else of value."
+msgstr "THE IX SWAP PLATFORM IS PROVIDED ON \"AS IS\", AT YOUR OWN RISK, AND WITHOUT WARRANTIES OF ANY KIND. IX Swap platform is run by smart contracts deployed on the Ethereum blockchain. Upgrades and modifications to the protocol are managed in a community-driven way by holders of the IX Swap governance token. No developer or entity involved in creating the IX Swap will be liable for any claims or damages whatsoever associated with your use, inability to use, or your interaction with other users of, the IX Swap platform, including any direct, indirect, incidental, special, exemplary, punitive or consequential damages, or loss of profits, cryptocurrencies, tokens, or anything else of value."
+
+#: src/pages/PayoutItem/InfoBlock.tsx
+msgid "TYPE:"
+msgstr "TYPE:"
+
+#: src/pages/KYC/CorporateKycForm.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Tax Declaration"
+msgstr "Tax Declaration"
+
+#: src/components/Footer/CopyrightBlock.tsx
+msgid "Terms & Conditions"
+msgstr "Terms & Conditions"
+
+#: src/state/nft/types.ts
+msgid "Textual traits that show up as rectangles"
+msgstr "Textual traits that show up as rectangles"
+
+#: src/components/Footer/InfoBlock.tsx
+msgid "The IX Swap Platform is not meant for US investors or other FATF prohibited jurisdictions, potentially including Iran, Afghanistan, North Korea, Hong Kong, Singapore, and/or other jurisdictions. Users must pass sufficient KYC checks in order to use the IX Swap platform."
+msgstr "The IX Swap Platform is not meant for US investors or other FATF prohibited jurisdictions, potentially including Iran, Afghanistan, North Korea, Hong Kong, Singapore, and/or other jurisdictions. Users must pass sufficient KYC checks in order to use the IX Swap platform."
+
+#: src/hooks/useSwapCallback.ts
+msgid "The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
+msgstr "The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
+
+#: src/components/Vault/NoVault.tsx
+msgid "The accreditation is being verified by the custodian and can take up to 1-3 days. You need to complete this process for each security token you would like to trade."
+msgstr "The accreditation is being verified by the custodian and can take up to 1-3 days. You need to complete this process for each security token you would like to trade."
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "The event has been ended."
+msgstr "The event has been ended."
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "The event is not paid yet."
+msgstr "The event is not paid yet."
+
+#: src/hooks/useSwapCallback.ts
+msgid "The input token cannot be transferred. There may be an issue with the input token."
+msgstr "The input token cannot be transferred. There may be an issue with the input token."
+
+#: src/components/CurrencyInputPanel/index.tsx
+msgid "The market price is outside your specified price range. Single-asset deposit only."
+msgstr "The market price is outside your specified price range. Single-asset deposit only."
+
+#: src/hooks/useSwapCallback.ts
+#: src/hooks/useSwapCallback.ts
+msgid "The output token cannot be transferred. There may be an issue with the output token."
+msgstr "The output token cannot be transferred. There may be an issue with the output token."
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
+msgstr "The price of this pool is outside of your selected range. Your position is not currently earning fees."
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "The price of this pool is within your selected range. Your position is currently earning fees."
+msgstr "The price of this pool is within your selected range. Your position is currently earning fees."
+
+#: src/hooks/useSwapCallback.ts
+msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
+msgstr "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
+
+#: src/pages/Faucet/index.tsx
+msgid "These tokens are fake, they were made only for testing {0} Playground on Kovan"
+msgstr "These tokens are fake, they were made only for testing {0} Playground on Kovan"
+
+#: src/components/Vault/NoVault.tsx
+msgid "This Security Token is not available for your KYC type"
+msgstr "This Security Token is not available for your KYC type"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your {2} before the end date 5% APY will be applied to unstaked amount. \n"
+"{3}\n"
+"Please note your rewards will vest over 10 weeks after unstaking."
+msgstr ""
+"This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your {2} before the end date 5% APY will be applied to unstaked amount. \n"
+"{3}\n"
+"Please note your rewards will vest over 10 weeks after unstaking."
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "This event is not published and is not displayed in Payout Events list."
+msgstr "This event is not published and is not displayed in Payout Events list."
+
+#: src/pages/Faucet/index.tsx
+msgid "This faucet transfers test tokens on Kovan testnet. Confirm details before submitting."
+msgstr "This faucet transfers test tokens on Kovan testnet. Confirm details before submitting."
+
+#: src/components/PlaygroundModal/index.tsx
+msgid "This is just a playground and not a real product yet, this website is only made to experiment with."
+msgstr "This is just a playground and not a real product yet, this website is only made to experiment with."
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "This payout event is <0>delayed.</0>"
+msgstr "This payout event is <0>delayed.</0>"
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "This payout event is <0>ended.</0>"
+msgstr "This payout event is <0>ended.</0>"
+
+#: src/components/SearchModal/ImportToken.tsx
+msgid "This token doesn't appear on the active list(s). Make sure this is the token that you want to trade"
+msgstr "This token doesn't appear on the active list(s). Make sure this is the token that you want to trade"
+
+#: src/hooks/useSwapCallback.ts
+msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance."
+msgstr "This transaction will not succeed due to price movement. Try increasing your slippage tolerance."
+
+#: src/hooks/useSwapCallback.ts
+msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
+msgstr "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+msgid "Ticker"
+msgstr "Ticker"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Tier"
+msgstr "Tier"
+
+#: src/components/TipWithMessage/index.tsx
+msgid "Tip:"
+msgstr "Tip:"
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid ""
+"Tip: To unstake {0} tokens you need to have enough IXSgov tokens. \n"
+"You can unstake {1} tokens equal to the number of IXSgov tokens in your account."
+msgstr ""
+"Tip: To unstake {0} tokens you need to have enough IXSgov tokens. \n"
+"You can unstake {1} tokens equal to the number of IXSgov tokens in your account."
+
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/swap/CurrencyInput.tsx
+#: src/components/swap/SwapModalHeader.tsx
+msgid "To"
+msgstr "To"
+
+#: src/components/swap/CurrencyInput.tsx
+msgid "To (at least)"
+msgstr "To (at least)"
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "To buy {0} click on swap below or find us on our Telegram channel to learn more."
+msgstr "To buy {0} click on swap below or find us on our Telegram channel to learn more."
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "To my {networkName} wallet"
+msgstr "To my {networkName} wallet"
+
+#: src/pages/CustodianV2/Info.tsx
+msgid "To trade/swap Security Tokens make sure that you have passed issuer accreditation. To do this, click on the desired Security Token below."
+msgstr "To trade/swap Security Tokens make sure that you have passed issuer accreditation. To do this, click on the desired Security Token below."
+
+#: src/components/Vault/NoVault.tsx
+msgid "To trade/swap {symbolText} please pass accreditation."
+msgstr "To trade/swap {symbolText} please pass accreditation."
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "To your {0} wallet"
+msgstr "To your {0} wallet"
+
+#: src/pages/PayoutItem/Timeline/TodayIndicator.tsx
+msgid "Today"
+msgstr "Today"
+
+#: src/components/AdminAccreditationTable/index.tsx
+msgid "Token"
+msgstr "Token"
+
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Token Manager"
+msgstr "Token Manager"
+
+#: src/pages/CreatePayoutEvent/Summary.tsx
+msgid "Token Payout Summary"
+msgstr "Token Payout Summary"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Token Sale Distribution"
+msgstr "Token Sale Distribution"
+
+#: src/pages/SecTokenDetails/AtlasInfo.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Token Supply:"
+msgstr "Token Supply:"
+
+#: src/components/UsersList/UserModal.tsx
+msgid "Token manager's role can't be changed, while they have published payout events"
+msgstr "Token manager's role can't be changed, while they have published payout events"
+
+#: src/components/SearchModal/Manage.tsx
+msgid "Tokens"
+msgstr "Tokens"
+
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
+msgstr "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Total Vested"
+msgstr "Total Vested"
+
+#: src/pages/CreatePayoutEvent/Summary.tsx
+msgid "Total Wrapped Token Supply"
+msgstr "Total Wrapped Token Supply"
+
+#: src/components/earn/PoolCard.tsx
+msgid "Total deposited"
+msgstr "Total deposited"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Total rewards"
+msgstr "Total rewards"
+
+#: src/components/AdminSecurityCatalog/BrokerDealerCard.tsx
+msgid "Tradable"
+msgstr "Tradable"
+
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Trader's wallet"
+msgstr "Trader's wallet"
+
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Trading pair"
+msgstr "Trading pair"
+
+#: src/pages/PayoutItem/History/index.tsx
+msgid "Transaction"
+msgstr "Transaction"
+
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
+msgid "Transaction Submitted"
+msgstr "Transaction Submitted"
+
+#: src/components/TransactionSettings/index.tsx
+msgid "Transaction deadline"
+msgstr "Transaction deadline"
+
+#: src/components/Settings/SettingsModal.tsx
+msgid "Transaction settings"
+msgstr "Transaction settings"
+
+#: src/state/swapHelper/getMessage.ts
+msgid "Transaction was not authorized by the broker-dealer. Something went wrong, try again later."
+msgstr "Transaction was not authorized by the broker-dealer. Something went wrong, try again later."
+
+#: src/state/swapHelper/getMessage.ts
+msgid "Transaction was successfully authorized by the broker-dealer. You can proceed with swapping."
+msgstr "Transaction was successfully authorized by the broker-dealer. You can proceed with swapping."
+
+#: src/components/TmPayoutHistory/index.tsx
+msgid "Transactions"
+msgstr "Transactions"
+
+#: src/components/WalletModal/PendingView.tsx
+msgid "Try Again"
+msgstr "Try Again"
+
+#: src/components/Settings/ExpertModeModal.tsx
+msgid "Turn On Expert Mode"
+msgstr "Turn On Expert Mode"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Txn ID:"
+msgstr "Txn ID:"
+
+#: src/components/KycReviewModal/molecules/Documents.tsx
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Type"
+msgstr "Type"
+
+#: src/components/AdminSecurityCatalog/index.tsx
+msgid "URL"
+msgstr "URL"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+msgid "URL:"
+msgstr "URL:"
+
+#: src/hooks/useSwapCallback.ts
+msgid "Unknown error{0}. Try increasing your slippage tolerance."
+msgstr "Unknown error{0}. Try increasing your slippage tolerance."
+
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "Unlimited"
+msgstr "Unlimited"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Unstake"
+msgstr "Unstake"
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid "Unstake {0} {1}"
+msgstr "Unstake {0} {1}"
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid "Unstake {amount} {0}"
+msgstr "Unstake {amount} {0}"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Unstaking"
+msgstr "Unstaking"
+
+#: src/pages/AddLiquidityV2/index.tsx
+msgid "Unsupported Asset"
+msgstr "Unsupported Asset"
+
+#: src/components/swap/UnsupportedCurrencyFooter.tsx
+msgid "Unsupported Assets"
+msgstr "Unsupported Assets"
+
+#: src/pages/Swap/SwapButtons.tsx
+msgid "Unsupported asset"
+msgstr "Unsupported asset"
+
+#: src/pages/Swap/typings.ts
+msgid "Unwrap"
+msgstr "Unwrap"
+
+#: src/pages/UpdateCollection/index.tsx
+msgid "Update Collection"
+msgstr "Update Collection"
+
+#: src/components/SearchModal/ManageLists.tsx
+msgid "Update list"
+msgstr "Update list"
+
+#: src/pages/KYC/IndividualKycForm.tsx
+msgid "Upload Documents"
+msgstr "Upload Documents"
+
+#: src/components/KycReviewModal/molecules/Documents.tsx
+msgid "Uploaded At"
+msgstr "Uploaded At"
+
+#: src/pages/PoolFinder/index.tsx
+msgid "Use this tool to find pairs that don't automatically appear in the interface."
+msgstr "Use this tool to find pairs that don't automatically appear in the interface."
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "Users will be able to start claiming on"
+msgstr "Users will be able to start claiming on"
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Vesting Amount"
+msgstr "Vesting Amount"
+
+#: src/pages/Farming/VestingTab.tsx
+msgid "Vesting on {0}? Switch networks"
+msgstr "Vesting on {0}? Switch networks"
+
+#: src/pages/Farming/VestingTab.tsx
+msgid "Vesting {0}"
+msgstr "Vesting {0}"
+
+#: src/components/PayoutItem/PreviewModal/Attachements.tsx
+msgid "View Files"
+msgstr "View Files"
+
+#: src/components/SearchModal/ManageLists.tsx
+msgid "View list"
+msgstr "View list"
+
+#: src/components/AccountDetails/index.tsx
+msgid "View on Explorer"
+msgstr "View on Explorer"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "View on explorer"
+msgstr "View on explorer"
+
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
+msgid "View on {explorerName}"
+msgstr "View on {explorerName}"
+
+#: src/components/PositionCard/PoolInformation.tsx
+msgid "View pool information<0>↗</0>"
+msgstr "View pool information<0>↗</0>"
+
+#: src/components/ModalViews/index.tsx
+msgid "View transaction on {explorerName}"
+msgstr "View transaction on {explorerName}"
+
+#: src/components/Vault/DepositWarningModal.tsx
+msgid "WARNING!"
+msgstr "WARNING!"
+
+#: src/components/TransactionConfirmationModal/index.tsx
+msgid "Waiting For Confirmation"
+msgstr "Waiting For Confirmation"
+
+#: src/pages/Faucet/index.tsx
+msgid "Wallet Address"
+msgstr "Wallet Address"
+
+#: src/components/UsersList/UserModal.tsx
+msgid "Wallet Address:"
+msgstr "Wallet Address:"
+
+#: src/components/AdminAccreditationTable/index.tsx
+#: src/components/AdminKyc/index.tsx
+#: src/components/UsersList/index.tsx
+msgid "Wallet address"
+msgstr "Wallet address"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Warning:"
+msgstr "Warning:"
+
+#: src/components/TmEmptyPage/index.tsx
+#: src/components/UserPayoutEvents/EmptyState.tsx
+msgid "We couldn't find anything with this criteria"
+msgstr "We couldn't find anything with this criteria"
+
+#: src/pages/CreateNFT/NewCollectionPopup.tsx
+msgid "We recommend an image"
+msgstr "We recommend an image"
+
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Website:"
+msgstr "Website:"
+
+#: src/components/PlaygroundModal/index.tsx
+msgid "Welcome to the IX Swap Playground"
+msgstr "Welcome to the IX Swap Playground"
+
+#: src/components/NotAvailablePage/index.tsx
+msgid "Welcome to {0}"
+msgstr "Welcome to {0}"
+
+#: src/pages/CreatePayoutEvent/Info.tsx
+msgid "What is a payout event?"
+msgstr "What is a payout event?"
+
+#: src/pages/NftImport/index.tsx
+msgid "What is the address of your ERC721 contract on {0}?"
+msgstr "What is the address of your ERC721 contract on {0}?"
+
+#: src/pages/AddLiquidityV2/Tip.tsx
+#: src/pages/AddLiquidityV2/Tip.tsx
+msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
+msgstr "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "When your assets have been unstaked they will be transferred to your Metamask"
+msgstr "When your assets have been unstaked they will be transferred to your Metamask"
+
+#: src/components/UsersList/index.tsx
+msgid "Whitelisted"
+msgstr "Whitelisted"
+
+#: src/components/Vault/BalanceRow.tsx
+#: src/components/Vault/BalanceRow.tsx
+#: src/components/Vault/enum.ts
+msgid "Withdraw"
+msgstr "Withdraw"
+
+#: src/components/Vault/WithdrawPopup.tsx
+msgid "Withdraw from Custodian"
+msgstr "Withdraw from Custodian"
+
+#: src/state/withdraw/hooks.ts
+msgid "Withdraw {amount} {currencySymbol}"
+msgstr "Withdraw {amount} {currencySymbol}"
+
+#: src/components/Vault/enum.ts
+msgid "Withdrawal"
+msgstr "Withdrawal"
+
+#: src/pages/Swap/typings.ts
+msgid "Wrap"
+msgstr "Wrap"
+
+#: src/pages/CreatePayoutEvent/Summary.tsx
+msgid "Wrapped Tokens (Pools)"
+msgstr "Wrapped Tokens (Pools)"
+
+#: src/pages/CreatePayoutEvent/Summary.tsx
+msgid "Wrapped Tokens (Wallets)"
+msgstr "Wrapped Tokens (Wallets)"
+
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+msgid "Wrapped token address"
+msgstr "Wrapped token address"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "Wrapped token amounts to be computed and will become available on the Record Date you selected"
+msgstr "Wrapped token amounts to be computed and will become available on the Record Date you selected"
+
+#: src/pages/CreatePayoutEvent/Summary.tsx
+msgid "Wrapped token amounts to be computed and will become available on the Record Date you selected."
+msgstr "Wrapped token amounts to be computed and will become available on the Record Date you selected."
+
+#: src/pages/SecTokenDetails/AddToMetamask.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Wrapped {0}:"
+msgstr "Wrapped {0}:"
+
+#: src/components/Vault/DepositAboutWrapping.tsx
+msgid ""
+"Wrapping allows a non-native token to be used on a different blockchain or on DeFi platforms, essentially making unsupported assets interoperable with other tokens under a different token standard.\n"
+"When your security token (SEC) is deposited on {0}, the asset will be sent to a custodian address for safekeeping. In exchange, you will get a wrapped token (wSEC) that represents your asset and is worth exactly the same."
+msgstr ""
+"Wrapping allows a non-native token to be used on a different blockchain or on DeFi platforms, essentially making unsupported assets interoperable with other tokens under a different token standard.\n"
+"When your security token (SEC) is deposited on {0}, the asset will be sent to a custodian address for safekeeping. In exchange, you will get a wrapped token (wSEC) that represents your asset and is worth exactly the same."
+
+#: src/components/WalletModal/ErrorSection.tsx
+#: src/components/Web3Status/index.tsx
+#~ msgid "Wrong Network"
+#~ msgstr "Wrong Network"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Wrong {0} amount"
+msgstr "Wrong {0} amount"
+
+#: src/components/WalletModal/ErrorSection.tsx
+msgid "You already have a connection in progress. Please check your wallet extension/app"
+msgstr "You already have a connection in progress. Please check your wallet extension/app"
+
+#: src/pages/AddLiquidityV2/index.tsx
+msgid "You are creating a pool"
+msgstr "You are creating a pool"
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "You can Claim Back"
+msgstr "You can Claim Back"
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "You can now claim your payout of"
+msgstr "You can now claim your payout of"
+
+#: src/pages/Swap/ApproveButtons.tsx
+msgid "You can now trade {0}"
+msgstr "You can now trade {0}"
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "You don't have any {0} tokens available!"
+msgstr "You don't have any {0} tokens available!"
+
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "You don’t have enough IXSGov for unstake all available {0} ({stakeAmount} is available) 1 {1} = 1 IXGov"
+msgstr "You don’t have enough IXSGov for unstake all available {0} ({stakeAmount} is available) 1 {1} = 1 IXGov"
+
+#: src/pages/PoolFinder/index.tsx
+msgid "You don’t have liquidity in this pool yet"
+msgstr "You don’t have liquidity in this pool yet"
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "You have 0 SEC tokens as of record date."
+msgstr "You have 0 SEC tokens as of record date."
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "You have a payout of"
+msgstr "You have a payout of"
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "You have allocated for this event"
+msgstr "You have allocated for this event"
+
+#: src/pages/PayoutItem/ActionBlock/Claimed.tsx
+msgid "You have already claimed:"
+msgstr "You have already claimed:"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "You have no ongoing stakings at the moment"
+msgstr "You have no ongoing stakings at the moment"
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "You have no pending payout as you have 0 SEC tokens as of record date."
+msgstr "You have no pending payout as you have 0 SEC tokens as of record date."
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "You have no rewards at the moment"
+msgstr "You have no rewards at the moment"
+
+#: src/components/NFTConnectWallet/index.tsx
+msgid "You have to connect wallet to use this page"
+msgstr "You have to connect wallet to use this page"
+
+#: src/pages/Swap/ApproveButtons.tsx
+msgid "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
+msgstr "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
+
+#: src/pages/CustodianV2/Info.tsx
+msgid "You need to complete this process for each Security Tokens you would like to trade. The Accreditation is being verified by the Custodian and can take up to 1-3 days."
+msgstr "You need to complete this process for each Security Tokens you would like to trade. The Accreditation is being verified by the Custodian and can take up to 1-3 days."
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "You need to pass KYC and get accredited to be eligible for this payout."
+msgstr "You need to pass KYC and get accredited to be eligible for this payout."
+
+#: src/components/Vault/NoVault.tsx
+msgid "You need to pass accreditation to create a vault. Creating a vault is the equivalent of creating your own safe custodian vault for {symbolText} tokens to deposit and get wrapped tokens to start trading."
+msgstr "You need to pass accreditation to create a vault. Creating a vault is the equivalent of creating your own safe custodian vault for {symbolText} tokens to deposit and get wrapped tokens to start trading."
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "You will get wrapped {0}:"
+msgstr "You will get wrapped {0}:"
+
+#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/RemoveLiquidity/index.tsx
+msgid "You will receive"
+msgstr "You will receive"
+
+#: src/pages/Farming/Staking/StakingTiers.tsx
+msgid "You will receive 1 IXSGov for each 1 staked {0}."
+msgstr "You will receive 1 IXSGov for each 1 staked {0}."
+
+#: src/pages/Faucet/index.tsx
+msgid "You will receive {0} {1} tokens. The request can be repeated once every hour."
+msgstr "You will receive {0} {1} tokens. The request can be repeated once every hour."
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Your APY will be 5% in case of an early unstake"
+msgstr "Your APY will be 5% in case of an early unstake"
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Your address"
+msgstr "Your address"
+
+#: src/pages/PayoutItem/ActionBlock/Claimed.tsx
+msgid "Your claim request failed. Please contact support for further assistance."
+msgstr "Your claim request failed. Please contact support for further assistance."
+
+#: src/pages/PayoutItem/ActionBlock/Claimed.tsx
+msgid "Your claim request has been submitted. Waiting for system confirmation."
+msgstr "Your claim request has been submitted. Waiting for system confirmation."
+
+#: src/pages/Farming/Staking/StakingPlaceholder.tsx
+msgid "Your ongoing stakes and rewards are safe and sound, you can see them below in case you staked or unstaked previously."
+msgstr "Your ongoing stakes and rewards are safe and sound, you can see them below in case you staked or unstaked previously."
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "Your payout of"
+msgstr "Your payout of"
+
+#: src/components/PositionCard/index.tsx
+msgid "Your pool share"
+msgstr "Your pool share"
+
+#: src/components/PositionCard/index.tsx
+msgid "Your pool tokens"
+msgstr "Your pool tokens"
+
+#: src/components/PositionCard/MinimalPositionCard.tsx
+msgid "Your position"
+msgstr "Your position"
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "Your position has 0 liquidity, and is not earning fees."
+msgstr "Your position has 0 liquidity, and is not earning fees."
+
+#: src/components/earn/PoolCard.tsx
+msgid "Your rate"
+msgstr "Your rate"
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "Your record date has not come yet, tokens will be counted on {0}"
+msgstr "Your record date has not come yet, tokens will be counted on {0}"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"Your staked {0} will be locked for {1} till {2}. Until that time you won’t be able to unstake your {3} fully or partially. Please carefully consider the risks involved.\n"
+"{4}\n"
+"You will be able to redeem your staked {5} fully or partially after {6}."
+msgstr ""
+"Your staked {0} will be locked for {1} till {2}. Until that time you won’t be able to unstake your {3} fully or partially. Please carefully consider the risks involved.\n"
+"{4}\n"
+"You will be able to redeem your staked {5} fully or partially after {6}."
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Your tokens will be released linearly over time. You can claim the releasable amount right now. Come back later to claim more tokens until the full balance is claimed."
+msgstr "Your tokens will be released linearly over time. You can claim the releasable amount right now. Come back later to claim more tokens until the full balance is claimed."
+
+#: src/components/TransactionSettings/index.tsx
+msgid "Your transaction may be frontrun"
+msgstr "Your transaction may be frontrun"
+
+#: src/components/TransactionSettings/index.tsx
+msgid "Your transaction may fail"
+msgstr "Your transaction may fail"
+
+#: src/components/TransactionSettings/index.tsx
+msgid "Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min."
+msgstr "Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min."
+
+#: src/components/TransactionSettings/index.tsx
+msgid "Your transaction will revert if the price changes unfavorably by more than this percentage. Value range 0-50%"
+msgstr "Your transaction will revert if the price changes unfavorably by more than this percentage. Value range 0-50%"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Your transactions will appear here..."
+msgstr "Your transactions will appear here..."
+
+#: src/components/Footer/InfoBlock.tsx
+msgid "Your use of the IX Swap involves various risks, including, but not limited to, losses while digital assets are being supplied to the IX Swap protocol and losses due to the fluctuation of prices of tokens in a trading pair or liquidity pool. Before using IX Swap, you should review the relevant documentation to make sure you understand how IX Swap works."
+msgstr "Your use of the IX Swap involves various risks, including, but not limited to, losses while digital assets are being supplied to the IX Swap protocol and losses due to the fluctuation of prices of tokens in a trading pair or liquidity pool. Before using IX Swap, you should review the relevant documentation to make sure you understand how IX Swap works."
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "Your wrapped {0} will be extracted from your Polygon wallet and burnt automatically."
+msgstr "Your wrapped {0} will be extracted from your Polygon wallet and burnt automatically."
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "as of record date will become available once payout starts."
+msgstr "as of record date will become available once payout starts."
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "as of record date."
+msgstr "as of record date."
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "available"
+msgstr "available"
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "based on your Security token balance of"
+msgstr "based on your Security token balance of"
+
+#: src/components/Settings/ExpertModeModal.tsx
+msgid "confirm"
+msgstr "confirm"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "days"
+msgstr "days"
+
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "days (ended)"
+msgstr "days (ended)"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "days to go"
+msgstr "days to go"
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "ethereum"
+msgstr "ethereum"
+
+#: src/components/UsersList/RemoveTokensWarning.tsx
+msgid "from the management list of this manager?"
+msgstr "from the management list of this manager?"
+
+#: src/components/SearchModal/ManageLists.tsx
+msgid "https:// or ipfs:// or ENS name"
+msgstr "https:// or ipfs:// or ENS name"
+
+#: src/pages/AddLiquidityV2/MitigationToggle.tsx
+msgid "if the transaction price deviates too far from the time-weighted average price, the transaction will be blocked"
+msgstr "if the transaction price deviates too far from the time-weighted average price, the transaction will be blocked"
+
+#: src/pages/SecTokenDetails/DetailsInfo.tsx
+msgid "issued by"
+msgstr "issued by"
+
+#: src/state/nft/types.ts
+msgid "level"
+msgstr "level"
+
+#: src/components/TransactionSettings/index.tsx
+msgid "minutes"
+msgstr "minutes"
+
+#: src/pages/CreateNFT/LevelsPopup.tsx
+msgid "of"
+msgstr "of"
+
+#: src/pages/CreateNFT/NewCollectionPopup.tsx
+msgid "of at least 300x300. Gifs work too."
+msgstr "of at least 300x300. Gifs work too."
+
+#: src/components/Launchpad/NetworkNotAvailable/index.tsx
+#: src/components/NotAvailablePage/index.tsx
+msgid "on this Blockchain network"
+msgstr "on this Blockchain network"
+
+#: src/components/Vault/ExistingVault.tsx
+msgid "on {0} custodian"
+msgstr "on {0} custodian"
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "other pools on ethereum"
+msgstr "other pools on ethereum"
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "other pools on polygon"
+msgstr "other pools on polygon"
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "polygon"
+msgstr "polygon"
+
+#: src/state/nft/types.ts
+msgid "rectangle"
+msgstr "rectangle"
+
+#: src/pages/CreateNFT/LevelsPopup.tsx
+msgid "show up underneath your item, are clickable, and can be filtered in your collection's sidebar."
+msgstr "show up underneath your item, are clickable, and can be filtered in your collection's sidebar."
+
+#: src/state/nft/types.ts
+msgid "stat"
+msgstr "stat"
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "to increase possible payout."
+msgstr "to increase possible payout."
+
+#: src/pages/PayoutItem/ActionBlock/UserView.tsx
+msgid "to increase possible profits in future payout."
+msgstr "to increase possible profits in future payout."
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "tokens available for staking"
+msgstr "tokens available for staking"
+
+#: src/pages/PayoutItem/ActionBlock/ManagerView.tsx
+msgid "tokens."
+msgstr "tokens."
+
+#: src/components/SearchModal/ImportRow.tsx
+msgid "via {0}"
+msgstr "via {0}"
+
+#: src/components/AdminAccreditationTable/RejectModal.tsx
+#: src/components/AdminKyc/index.tsx
+#: src/components/AdminSecurityCatalog/TokenPopup.tsx
+#: src/components/AreYouSureModal/index.tsx
+#: src/components/AreYouSureModal/index.tsx
+#: src/components/AreYouSureModal/index.tsx
+#: src/components/CollectionForm/Images.tsx
+#: src/components/CollectionForm/Images.tsx
+#: src/components/Footer/LogoBlock.tsx
+#: src/components/Header/IXSBalanceModal.tsx
+#: src/components/KycReviewModal/index.tsx
+#: src/components/LaunchpadIssuance/utils/ConfirmPopup.tsx
+#: src/components/LaunchpadIssuance/utils/ConfirmPopup.tsx
+#: src/components/LaunchpadIssuance/utils/ConfirmPopup.tsx
+#: src/components/LaunchpadIssuance/utils/RequestChangesPopup.tsx
+#: src/components/LaunchpadIssuance/utils/RequestChangesPopup.tsx
+#: src/components/LaunchpadIssuance/utils/RequestChangesPopup.tsx
+#: src/components/PhoneInput/index.tsx
+#: src/components/ReasonModal/index.tsx
+#: src/components/Search/index.tsx
+#: src/components/Toggle/index.tsx
+#: src/components/UserPayoutEvents/Card.tsx
+#: src/components/UserPayoutEvents/MyPayoutEvents.tsx
+#: src/components/UsersList/UserModal.tsx
+#: src/components/UsersList/UserModal.tsx
+#: src/components/UsersList/index.tsx
+#: src/components/Vault/WithdrawRequestForm.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingTableTabs.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/KYC/CorporateKycForm.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+#: src/pages/KYC/IndividualKycForm.tsx
+#: src/pages/NFTAsset/SwitchRow.tsx
+#: src/pages/SecTokenDetails/AddToMetamask.tsx
+#: src/pages/SecTokenDetails/AddToMetamask.tsx
+msgid "{0}"
+msgstr "{0}"
+
+#: src/components/PositionCard/index.tsx
+msgid "{0} %"
+msgstr "{0} %"
+
+#: src/components/SearchModal/ManageTokens.tsx
+msgid "{0} Custom Tokens"
+msgstr "{0} Custom Tokens"
+
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+msgid "{0} Deposited"
+msgstr "{0} Deposited"
+
+#: src/components/earn/PoolCard.tsx
+#: src/components/earn/PoolCard.tsx
+msgid "{0} IXS / week"
+msgstr "{0} IXS / week"
+
+#: src/pages/KYC/index.tsx
+msgid "{0} KYC"
+msgstr "{0} KYC"
+
+#: src/components/Web3Status/index.tsx
+msgid "{0} Pending"
+msgstr "{0} Pending"
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "{0} in Telegram"
+msgstr "{0} in Telegram"
+
+#: src/components/Launchpad/NetworkNotAvailable/index.tsx
+#: src/components/NotAvailablePage/index.tsx
+msgid "{0} is available only on:"
+msgstr "{0} is available only on:"
+
+#: src/components/Launchpad/NetworkNotAvailable/index.tsx
+#: src/components/NotAvailablePage/index.tsx
+msgid "{0} is not available"
+msgstr "{0} is not available"
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{0} lock up"
+msgstr "{0} lock up"
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{0} lock up period"
+msgstr "{0} lock up period"
+
+#: src/pages/SecTokenDetails/DetailsInfo.tsx
+msgid "{0} token"
+msgstr "{0} token"
+
+#: src/components/SearchModal/ImportList.tsx
+msgid "{0} tokens"
+msgstr "{0} tokens"
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "{0} {1} from"
+msgstr "{0} {1} from"
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "{0} {1} tokens from your wallet {2} will be burned during withdrawal"
+msgstr "{0} {1} tokens from your wallet {2} will be burned during withdrawal"
+
+#: src/components/Vault/WithdrawPopup.tsx
+msgid "{0} {1} will be extracted from your Polygon wallet and burnt automatically."
+msgstr "{0} {1} will be extracted from your Polygon wallet and burnt automatically."
+
+#: src/components/Header/index.tsx
+msgid "{0} {nativeCurrency}"
+msgstr "{0} {nativeCurrency}"
+
+#: src/components/SearchModal/CurrencyList.tsx
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "{0} • Added by user"
+msgstr "{0} • Added by user"
+
+#: src/components/CurrencyInputPanel/FiatValue.tsx
+#: src/pages/AddLiquidityV2/ModalBottom.tsx
+msgid "{0}%"
+msgstr "{0}%"
+
+#: src/pages/SecTokenDetails/AddToMetamask.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "{0}:"
+msgstr "{0}:"
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{0}{shortLimit}"
+msgstr "{0}{shortLimit}"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "{0} {1}"
+msgstr "{0} {1}"
+
+#: src/components/SearchModal/ManageLists.tsx
+msgid "{activeTokensOnThisChain} tokens"
+msgstr "{activeTokensOnThisChain} tokens"
+
+#: src/pages/CreatePayoutEvent/PublishPayoutModal.tsx
+msgid "{buttonText}"
+msgstr "{buttonText}"
+
+#: src/components/Vault/FeeStatus.tsx
+msgid "{feeText}"
+msgstr "{feeText}"
+
+#: src/components/AreYouSureModal/index.tsx
+#: src/pages/NFTAsset/SwitchRow.tsx
+msgid "{info}"
+msgstr "{info}"
+
+#: src/components/ReasonModal/index.tsx
+msgid "{inputLabel}"
+msgstr "{inputLabel}"
+
+#: src/components/DateInput/index.tsx
+#: src/components/DateRangePicker/index.tsx
+#: src/components/KycReviewModal/molecules/Field.tsx
+#: src/components/KycReviewModal/molecules/Field.tsx
+#: src/components/UserPayoutEvents/MyPayoutEvents.tsx
+#: src/pages/Admin/index.tsx
+#: src/pages/PayoutItem/Timeline/TimelineDate.tsx
+#: src/pages/PayoutItem/Timeline/TimelineDate.tsx
+#: src/pages/SecurityTokens/index.tsx
+#: src/pages/TokenManager/index.tsx
+msgid "{label}"
+msgstr "{label}"
+
+#: src/components/GeneralModal/GeneralModal.tsx
+msgid "{modalTitle}"
+msgstr "{modalTitle}"
+
+#: src/components/AdminAccreditationTable/Pagination.tsx
+msgid "{page} of {totalPages}"
+msgstr "{page} of {totalPages}"
+
+#: src/components/MultipleFilters/FilterDropdown.tsx
+msgid "{placeholder}"
+msgstr "{placeholder}"
+
+#: src/components/MultipleFilters/MobileFilters/index.tsx
+#: src/components/MultipleFilters/index.tsx
+msgid "{searchPlaceholder}"
+msgstr "{searchPlaceholder}"
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{shortLimit}"
+msgstr "{shortLimit}"
+
+#: src/components/KycReviewModal/molecules/RowWithCheck.tsx
+#: src/components/Vault/DepositAboutWrapping.tsx
+msgid "{text}"
+msgstr "{text}"
+
+#: src/pages/SecTokenDetails/NotTradable.tsx
+msgid "{ticker} token is not ready to be traded on {0} yet. Please check later."
+msgstr "{ticker} token is not ready to be traded on {0} yet. Please check later."
+
+#: src/components/KycReviewModal/molecules/Block.tsx
+#: src/components/KycReviewModal/molecules/Documents.tsx
+#: src/components/PayoutItem/PreviewModal/Attachements.tsx
+#: src/components/ReasonModal/index.tsx
+#: src/pages/NFTAsset/SwitchRow.tsx
+#: src/pages/PayoutItem/PayoutHeader.tsx
+msgid "{title}"
+msgstr "{title}"
+
+#: src/components/InputStepCounter/InputStepCounter.tsx
+msgid "{tokenB} per {tokenA}"
+msgstr "{tokenB} per {tokenA}"
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "{tokenName} Accreditation"
+msgstr "{tokenName} Accreditation"
+
+#: src/components/CurrencyInputPanel/FiatValue.tsx
+msgid "~$ {0}"
+msgstr "~$ {0}"

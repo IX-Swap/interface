@@ -14,13 +14,13 @@ interface ThemesSet {
 const defaultPalette = {
   mode: 'light',
   primary: {
-    main: '#4C88FF',
+    main: '#6666FF',
     dark: '#3E70D2',
-    light: '#78A5FF',
+    light: '#6666FF70',
     contrastText: '#FFFFFF'
   },
   secondary: {
-    main: '#78A5FF',
+    main: '#6666FF70',
     dark: '#F0F2F7',
     light: '#EDF2FA'
   },
@@ -40,14 +40,14 @@ const defaultPalette = {
     fill: '#FFFFFF',
     bg: '#FFFFFF',
     border: '#DBE2EC',
-    borderHover: '#78A5FF',
+    borderHover: '#6666FF70',
     boxShadow: '#a2acbf',
     opacity: 0.6
   },
   switch: {
     bg: '#778194',
     bgDisabled: '#D3D9E5',
-    bgChecked: '#4C88FF',
+    bgChecked: '#6666FF',
     bgCheckedDisabled: '#D3D9E5',
     color: '#ffffff',
     colorDisabled: '#ffffff'
@@ -72,7 +72,7 @@ const defaultPalette = {
     activeBackground: '#0C469C'
   },
   newSlider: {
-    activeColor: '#4C88FF',
+    activeColor: '#6666FF',
     disabledColor: '#DBE2EC',
     color: '#DBE2EC',
     label: '#778194',
@@ -81,8 +81,8 @@ const defaultPalette = {
     boxShadow: tinycolor('#4c88ff').setAlpha(0.2).toRgbString()
   },
   button: {
-    bgContained: '#4C88FF',
-    bgContainedHover: '#78A5FF',
+    bgContained: '#6666FF',
+    bgContainedHover: '#6666FF70',
     bgContainedDisabled: '#EDF2FA',
     colorContainedDisabled: '#778194',
     bgOutlined: '#FFFFFF',
@@ -90,7 +90,7 @@ const defaultPalette = {
     bgTextHover: '#EDF2FA',
     colorTextDisabled: '#89A1CE',
     bgAlternate: '#FFFFFF',
-    bgAlternateHover: '#78A5FF',
+    bgAlternateHover: '#6666FF70',
     colorAlternate: '#778194',
     colorAlternateHover: '#FFFFFF',
     borderAlternateHover: tinycolor('#4c88ff').setAlpha(0.3).toRgbString(),
@@ -99,7 +99,7 @@ const defaultPalette = {
   buttonGroup: {
     bg: '#FFFFFF',
     bgHover: '#EDF2FA',
-    colorHover: '#4C88FF'
+    colorHover: '#6666FF'
   },
   iconButton: {
     fill: '#778194',
@@ -155,15 +155,15 @@ const defaultPalette = {
     color: '#778194',
     bg: '#FFFFFF',
     border: '#FFFFFF',
-    colorHover: '#4C88FF',
+    colorHover: '#6666FF',
     bgHover: '#FFFFFF',
-    borderHover: '#4C88FF20',
+    borderHover: '#6666FF20',
     colorDisabled: '#89A1CE',
     bgDisabled: '#EDF2FA',
     borderDisabled: '#EDF2FA',
     colorActive: '#FFFFFF',
-    bgActive: '#4C88FF',
-    borderActive: '#4C88FF'
+    bgActive: '#6666FF',
+    borderActive: '#6666FF'
   },
   tablePagination: {
     main: '#778194',
@@ -189,9 +189,9 @@ const defaultPalette = {
     bg: tinycolor('#BEC4CF1A').setAlpha(0.1).toRgbString(),
     color: '#BEC4CF',
     border: tinycolor('#BEC4CF1A').setAlpha(0.5).toRgbString(),
-    bgActive: tinycolor('#4C88FF').setAlpha(0.1).toRgbString(),
-    colorActive: '#4C88FF',
-    borderActive: tinycolor('#4C88FF').setAlpha(0.5).toRgbString(),
+    bgActive: tinycolor('#6666FF').setAlpha(0.1).toRgbString(),
+    colorActive: '#6666FF',
+    borderActive: tinycolor('#6666FF').setAlpha(0.5).toRgbString(),
     bgCompleted: tinycolor('#7DD32080').setAlpha(0.1).toRgbString(),
     colorCompleted: '#7DD32080',
     borderCompleted: tinycolor('#7DD32080').setAlpha(0.5).toRgbString(),
@@ -229,7 +229,7 @@ const defaultPalette = {
     color: '#3B4251',
     colorError: '#F56283',
     border: tinycolor('#d3d9e5').setAlpha(0.6).toRgbString(),
-    borderFocus: '#78A5FF',
+    borderFocus: '#6666FF70',
     borderError: tinycolor('#f56283').setAlpha(0.6).toRgbString(),
     placeholder: '#DBE2EC',
     placeholderFocus: '#77A5FE',
@@ -251,7 +251,7 @@ const defaultPalette = {
     light: tinycolor('#F56283').setAlpha(0.16).toRgbString()
   },
   info: {
-    main: '#4C88FF',
+    main: '#6666FF',
     light: '#ABB8CF',
     dark: tinycolor('#ABB8CF').setAlpha(0.2).toRgbString()
   },
