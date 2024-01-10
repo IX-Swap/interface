@@ -38,34 +38,41 @@ export const individualErrorsSchema = yup.object().shape({
 
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
 
-  secondaryContactDetails: yup.string().required('Required'),
+  secondaryContactDetails: yup
+  .object()
+  .nullable()
+  .required('Required')
+  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+    // Assuming that value is an object with a 'value' property
+    return value && value.value !== 0;
+  }),
 
   proofOfAddress: yup.array().when('secondaryContactDetails', {
-    is: '1',
+    is: (value: any) => value && value.value === 1,
     then: yup.array().min(1, 'Required').nullable(),
   }),
 
   alternateEmail: yup
-  .string().nullable()
+  .string()
+  .nullable()
   .when('secondaryContactDetails', {
-    is: '2', 
+    is: (value: any) => value && value.value === 2,
     then: yup.string().nullable().email('Invalid email').required('Required'),
   }),
-
 
   socialPlatform: yup
     .string()
     .nullable()
     .when('secondaryContactDetails', {
-      is: '3',
+      is: (value: any) => value && value.value === 3,
       then: yup.string().nullable().required('Required'),
     }),
 
-  handleName: yup
+    handleName: yup
     .string()
     .nullable()
     .when('secondaryContactDetails', {
-      is: '3',
+      is: (value: any) => value && value.value === 3,
       then: yup.string().nullable().required('Required'),
     }),
   // proofOfAddress: yup.array().min(1, 'Required').nullable(),

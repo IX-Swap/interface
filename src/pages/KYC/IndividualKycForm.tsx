@@ -41,7 +41,7 @@ import {
   promptValue,
   occupationList,
   // SecondaryContactDetails,
-  socialMediaPlatform,
+  // socialMediaPlatform,
 } from './mock'
 import {
   FormCard,
@@ -73,6 +73,16 @@ const SecondaryContactDetails = [
   { value: 1, label: 'Proof of Address Document' },
   { value: 2, label: 'Business Email Address' },
   { value: 3, label: 'Social Media Handle' },
+  // Add more items as needed
+]
+
+const socialMediaPlatform = [
+  { value: 'Telegram', label: 'Telegram' },
+  { value: 'Discord', label: 'Discord' },
+  { value: 'X.com', label: 'X.com' },
+  { value: 'Facebook', label: 'Facebook' },
+  { value: 'Instagram', label: 'Instagram' },
+  { value: 'LinkedIn', label: 'LinkedIn' },
   // Add more items as needed
 ]
 
@@ -114,7 +124,7 @@ export default function IndividualKycForm() {
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
   const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
   const [referralCode, setReferralCode] = useState<string | null>(null)
-  const [selectedOption, setSelectedOption] = useState(null)
+  const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const openConfirmationModal = useCallback(() => {
     setShowOptoutModal(false)
     setShowOptoutConfirmationModal(true)
@@ -132,6 +142,7 @@ export default function IndividualKycForm() {
   const prevAccount = usePrevious(account)
 
   useEffect(() => {
+  
     const code = new URL(window.location.href).href?.split('=')[1]
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
@@ -140,8 +151,7 @@ export default function IndividualKycForm() {
     } else if (storedReferralCode) {
       setReferralCode(storedReferralCode)
     }
-    // setReferralCode(code)
-    // localStorage.setItem('referralCode', code)
+
     if (account && prevAccount && account !== prevAccount) {
       history.push('/kyc')
     }
@@ -182,7 +192,7 @@ export default function IndividualKycForm() {
 
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
-
+    addPopup({ info: { success: true, summary: 'The email address has been verified successfully'} })
     return () => {
       window.removeEventListener('beforeunload', alertUser)
     }
@@ -503,18 +513,8 @@ export default function IndividualKycForm() {
   )
 
   const onSecondaryContactDetailsChange = (item: { value: number | null }) => {
-    const newValue = item?.value
-    setSelectedOption(newValue as unknown as null); // explicitly cast to null
-  
-    // Check if the selected value is null, and if so, set the error
-    if (newValue === null) {
-      setErrors({ ...errors, secondaryContactDetails: 'This field is required' });
-    } else {
-      // Clear the validation error when a value is selected
-      setErrors({ ...errors, secondaryContactDetails: undefined });
-    }
+    setSelectedOption(item?.value)
   }
-  
 
   const saveProgress = useCallback(
     async (values: any) => {
@@ -637,7 +637,6 @@ export default function IndividualKycForm() {
 
               const financialFailed = !financialFilled
               const statusDeclarationFailed = !statusDeclarationFilled
-
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
@@ -984,89 +983,159 @@ export default function IndividualKycForm() {
                             )}
                           />
 
-<div>
-  <Select
-    error={errors.secondaryContactDetails}
-    subText="Please select one from the following options in the dropdown (Proof of Address Document, Business Email Address, or Social Media Handle)"
-    withScroll
-    label="Secondary Contact Details"
-    placeholder="Secondary Contact Details"
-    id="SecondaryContactDetailsDropDown"
-    selectedItem={values.secondaryContactDetails}
-    items={SecondaryContactDetails}
-    onSelect={(secondaryContactDetails) => {
-      onSelectChange('secondaryContactDetails', secondaryContactDetails?.value, setFieldValue);
-      onSecondaryContactDetailsChange(secondaryContactDetails);
-    }}
-  />
+                          <div>
+                            <Select
+                              error={errors.secondaryContactDetails}
+                              subText="Please select one from the following options in the dropdown (Proof of Address Document, Business Email Address, or Social Media Handle)"
+                              withScroll
+                              label="Secondary Contact Details"
+                              placeholder="Secondary Contact Details"
+                              id="SecondaryContactDetailsDropDown"
+                              selectedItem={values.secondaryContactDetails}
+                              items={SecondaryContactDetails}
+                              onSelect={(secondaryContactDetails) => {
+                                onSelectChange('secondaryContactDetails', secondaryContactDetails, setFieldValue)
+                                onSecondaryContactDetailsChange(secondaryContactDetails)
+                              }}
+                            />
 
-  <div style={{ marginTop: '20px' }}>
-    {values.secondaryContactDetails === 1 && (
-      <Uploader
-        title="Proof of Address"
-        subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
-        error={errors.proofOfAddress}
-        files={values.proofOfAddress}
-        onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
-        handleDeleteClick={handleImageDelete(
-          values,
-          'proofOfAddress',
-          values.removedDocuments,
-          setFieldValue
-        )}
-      />
-    )}
+                            <div style={{ marginTop: '20px' }}>
+                              {(values?.secondaryContactDetails?.label === 'Social Media Handle' || selectedOption === 3) && (
+                                <FormGrid>
+                                  <Select
+                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, Facebook, Instagram, LinkedIn, or X.com)"
+                                    error={errors.socialPlatform}
+                                    withScroll
+                                    id="socialPlatform"
+                                    label="Social Media Platform"
+                                    placeholder="Social Media Platform"
+                                    selectedItem={values.socialPlatform}
+                                    items={socialMediaPlatform}
+                                    onSelect={(socialMediaPlatform) =>
+                                      onSelectChange('socialPlatform', socialMediaPlatform?.value, setFieldValue)
+                                    }
+                                  />
 
-    {values.secondaryContactDetails === 2 && (
-      <TextInput
-        subText="Please input Business Email Address as an alternative contact method"
-        placeholder="Business Email Address"
-        id="businessEmailAddress"
-        label="Business Email Address"
-        error={errors.alternateEmail}
-        value={values.alternateEmail}
-        onChange={(e: any) =>
-          onChangeInput('alternateEmail', e.currentTarget.value, values, setFieldValue)
-        }
-      />
-    )}
-    {values.secondaryContactDetails === 3 && (
-      <FormGrid>
-        <Select
-          subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, Facebook, Instagram, LinkedIn, or X.com)"
-          error={errors.socialPlatform}
-          withScroll
-          id="socialPlatform"
-          label="Social Media Platform"
-          placeholder="Social Media Platform"
-          selectedItem={values.socialPlatform}
-          items={socialMediaPlatform}
-          onSelect={(socialMediaPlatform) =>
-            onSelectChange('socialPlatform', socialMediaPlatform?.value, setFieldValue)
-          }
-        />
+                                  <TextInput
+                                    subText="Please provide your Social Media Handle in the selected Social Media Platform as an alternative contact method"
+                                    placeholder="Social Media Handle"
+                                    id="handleName"
+                                    label="Social Media Handle"
+                                    value={values.handleName}
+                                    error={errors.handleName}
+                                    onChange={(e) =>
+                                      onChangeInput('handleName', e.currentTarget.value, values, setFieldValue)
+                                    }
+                                  />
+                                </FormGrid>
+                              )}
 
-        <TextInput
-          subText="Please provide your Social Media Handle in the selected Social Media Platform as an alternative contact method"
-          placeholder="Social Media Handle"
-          id="handleName"
-          label="Social Media Handle"
-          value={values.handleName}
-          error={errors.handleName}
-          onChange={(e: any) =>
-            onChangeInput('handleName', e.currentTarget.value, values, setFieldValue)
-          }
-        />
-      </FormGrid>
-    )}
-    <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>
-      *Selecting a business email address or social media handle requires an acknowledgment
-      process for identity verification. A verification message and/or email will be sent to
-      your provided personal and/or business email address and/or social media account, that
-      will require a response from you.
-    </p>
-  </div>
-</div>
+                              {(values?.secondaryContactDetails?.label === 'Proof of Address Document' || selectedOption === 1) && (
+                                <Uploader
+                                  title="Proof of Address"
+                                  subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
+                                  error={errors.proofOfAddress}
+                                  files={values.proofOfAddress}
+                                  onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                                  handleDeleteClick={handleImageDelete(
+                                    values,
+                                    'proofOfAddress',
+                                    values.removedDocuments,
+                                    setFieldValue
+                                  )}
+                                />
+                              )}
+
+                              {(values?.secondaryContactDetails?.label === 'Business Email Address' || selectedOption === 2) && (
+                                <TextInput
+                                  subText="Please input Business Email Address as an alternative contact method"
+                                  placeholder="Business Email Address"
+                                  id="businessEmailAddress"
+                                  label="Business Email Address"
+                                  error={errors.alternateEmail}
+                                  value={values.alternateEmail}
+                                  onChange={(e) =>
+                                    onChangeInput('alternateEmail', e.currentTarget.value, values, setFieldValue)
+                                  }
+                                />
+                              )}
+
+                              <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>
+                                *Selecting a business email address or social media handle requires an acknowledgment
+                                process for identity verification. A verification message and/or email will be sent to
+                                your provided personal and/or business email address and/or social media account, that
+                                will require a response from you.
+                              </p>
+                            </div>
+
+                            {/* <div style={{ marginTop: '20px' }}>
+                              {(selectedOption === 1 ) && (
+                                <Uploader
+                                  title="Proof of Address"
+                                  subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
+                                  error={errors.proofOfAddress}
+                                  files={values.proofOfAddress}
+                                  onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                                  handleDeleteClick={handleImageDelete(
+                                    values,
+                                    'proofOfAddress',
+                                    values.removedDocuments,
+                                    setFieldValue
+                                  )}
+                                />
+                              )}
+
+                              {(selectedOption === 2) && (
+                                <TextInput
+                                  subText="Please input Business Email Address as an alternative contact method"
+                                  placeholder="Business Email Address"
+                                  id="businessEmailAddress"
+                                  label="Business Email Address"
+                                  error={errors.alternateEmail}
+                                  value={values.alternateEmail}
+                                  onChange={(e) =>
+                                    onChangeInput('alternateEmail', e.currentTarget.value, values, setFieldValue)
+                                  }
+                                />
+                              )}
+
+                              {(selectedOption === 3) && (
+                                <FormGrid>
+                                  <Select
+                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, Facebook, Instagram, LinkedIn, or X.com)"
+                                    error={errors.socialPlatform}
+                                    withScroll
+                                    id="socialPlatform"
+                                    label="Social Media Platform"
+                                    placeholder="Social Media Platform"
+                                    selectedItem={values.socialPlatform}
+                                    items={socialMediaPlatform}
+                                    onSelect={(socialMediaPlatform) =>
+                                      onSelectChange('socialPlatform', socialMediaPlatform?.value, setFieldValue)
+                                    }
+                                  />
+
+                                  <TextInput
+                                    subText="Please provide your Social Media Handle in the selected Social Media Platform as an alternative contact method"
+                                    placeholder="Social Media Handle"
+                                    id="handleName"
+                                    label="Social Media Handle"
+                                    value={values.handleName}
+                                    error={errors.handleName}
+                                    onChange={(e) =>
+                                      onChangeInput('handleName', e.currentTarget.value, values, setFieldValue)
+                                    }
+                                  />
+                                </FormGrid>
+                              )}
+                              <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>
+                                *Selecting a business email address or social media handle requires an acknowledgment
+                                process for identity verification. A verification message and/or email will be sent to
+                                your provided personal and/or business email address and/or social media account, that
+                                will require a response from you.
+                              </p>
+                            </div> */}
+                          </div>
 
                           {/* <Select
                             withScroll
