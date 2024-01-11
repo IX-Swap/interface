@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { IndividualKyc } from 'state/admin/actions'
+import { CorporateKyc, IndividualKyc } from 'state/admin/actions'
 
 import {
   IndividualDocument,
@@ -18,26 +18,12 @@ import {
 
 import { Referral } from './Blocks/Referral'
 import { Line } from 'components/Line'
+import SecondaryContactDetails from './Blocks/SecondaryContactDetails'
 
 interface Props {
-  data: IndividualKyc | undefined // Make sure data is optional
+  data: IndividualKyc | CorporateKyc | undefined // Make sure data is optional
   riskJSON: any
 }
-
-const sections = [
-  { component: Cynopsis },
-  { component: Information, kycKey: 'individual' },
-  { component: Address },
-  // { component: Referral },
-  { component: IndividualDocument },
-  { component: UploadedDocuments, dataKey: 'documents' },
-  { component: Occupation },
-  { component: SourceOfFunds, kycKey: 'individual' },
-  { component: TaxDeclarations },
-  { component: Fatca },
-  { component: InvestorStatusDeclaration, kycKey: 'individual' },
-  { component: InvestorDeclaration },
-]
 
 export const IndividualForm = ({ data, riskJSON }: Props) => {
   const filteredDocuments = data?.documents?.filter((document) => {
@@ -47,12 +33,28 @@ export const IndividualForm = ({ data, riskJSON }: Props) => {
     return document
   })
 
+  const sections = [
+    { component: Cynopsis },
+    { component: Information, kycKey: 'individual' },
+    { component: Address },
+    // { component: Referral },
+    { component: IndividualDocument },
+    { component: UploadedDocuments, dataKey: 'documents', kycKey: 'individual' },
+    { component: SecondaryContactDetails },
+    { component: Occupation },
+    { component: SourceOfFunds, kycKey: 'individual' },
+    { component: TaxDeclarations },
+    { component: Fatca },
+    { component: InvestorStatusDeclaration, kycKey: 'individual' },
+    { component: InvestorDeclaration },
+  ]
+
   return (
     <>
       {sections.map((section, index) => (
         <React.Fragment key={index}>
-          <section.component data={section.dataKey ? data?.[section.dataKey] : data} kycKey={section.kycKey} />
-          {index < sections.length - 1 && <Line />}
+          <section.component title='Upload Documents' data={section.dataKey ? data?.[section.dataKey] : data} kycKey={section.kycKey} />
+          {index < sections.length - 1 && section.component.name !== 'SecondaryContactDetails' && <Line />}
         </React.Fragment>
       ))}
     </>

@@ -51,6 +51,7 @@ interface Props {
 
 export const DepositRequestForm = ({ currency, token }: Props) => {
   const [isWarningOpen, handleIsWarningOpen] = useState(false)
+  const [amountInputValue, setAmountInputValue] = useState('');
 
   const theme = useTheme()
   const showAboutWrapping = useShowAboutWrappingCallback()
@@ -102,6 +103,11 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     makeDeposit()
   }
 
+  const onTypeAmountInternal = (typedValue: any) => {
+    onTypeAmount(typedValue);
+    setAmountInputValue(typedValue);
+  };
+
   return (
     <div style={{ position: 'relative' }}>
       {isWarningOpen && (
@@ -119,8 +125,8 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               token={token}
               currency={currency}
               originalDecimals={tokenInfo.originalDecimals}
-              value={amount ?? ''}
-              onUserInput={onTypeAmount}
+              value={amount ?? amountInputValue}
+              onUserInput={onTypeAmountInternal} 
               amount={parsedAmount}
             />
           </Column>
@@ -170,7 +176,8 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               token={token}
               currency={currency}
               originalDecimals={tokenInfo.originalDecimals}
-              value={amount ? `${amount} ${currency?.symbol || currency?.originalSymbol}` : ''}
+              // value={amount ? `${amount} ${currency?.symbol || currency?.originalSymbol}` : ''}
+              value={amount ? amount : ''}
               onUserInput={onTypeAmount}
               amount={parsedAmount}
               // rightItem={

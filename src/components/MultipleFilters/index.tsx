@@ -20,6 +20,7 @@ import { FilterDropdown } from './FilterDropdown'
 import { MobileFilters } from './MobileFilters'
 import { Option, useTokensList } from 'hooks/useTokensList'
 import { ReactComponent as IdentityIcon } from 'assets/images/identityIcon.svg'
+import { ReactComponent as CalanderIcon } from 'assets/images/newCalander.svg'
 import { PinnedContentButton } from 'components/Button'
 
 interface Props {
@@ -39,7 +40,7 @@ export const MultipleFilters = ({
   onFiltersChange,
   forManager = false,
 }: Props) => {
-  const isMobile = useMediaQuery(`(max-width:${MEDIA_WIDTHS.upToLarge}px)`)
+  // const isMobile = useMediaQuery(`(max-width:${MEDIA_WIDTHS.upToLarge}px)`)
 
   const { pathname } = useLocation()
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
@@ -119,10 +120,10 @@ export const MultipleFilters = ({
   useEffect(() => {
     clearTimeout(timer)
 
-    if (isMobile) return
+    // if (isMobile) return
 
     timer = setTimeout(() => submitForm(), 250)
-  }, [values, isMobile])
+  }, [values])
 
   const onSelectValueChange = (name: string, item: any) => {
     const { value } = item
@@ -150,7 +151,7 @@ export const MultipleFilters = ({
   }
 
   const onResetFilters = () => {
-    setValues({ ...initialValues, ...(withSearch && !isMobile && { search: values.search }) })
+    setValues({ ...initialValues, ...(withSearch  && { search: values.search }) })
   }
 
   const isEmpty = useMemo(() => Object.values(values).every((value) => !value || value?.length === 0), [values])
@@ -166,7 +167,7 @@ export const MultipleFilters = ({
     ),
     [FILTERS.ROLES]: (
       <>
-        <IdentityIcon style={{ position: 'relative', top: '0px', left: '130px', zIndex: '1' }} />
+        <IdentityIcon style={{ position: 'relative', top: '3px', left: '120px', zIndex: '1' }} />
         <FilterDropdown
           placeholder="Role"
           selectedItems={values[FILTERS.ROLES]}
@@ -182,12 +183,13 @@ export const MultipleFilters = ({
       // />
     ),
     [FILTERS.SEC_TOKENS]: (
-      <FilterDropdown
-        placeholder="Security token"
-        selectedItems={values[FILTERS.SEC_TOKENS]}
-        onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item)}
-        items={forManager ? managerSecTokensOptions : secTokensOptions}
-      />
+      <>  <CalanderIcon style={{ position: 'relative', top: '5px', left: '150px', zIndex: '1' }} />     <FilterDropdown
+      placeholder="Security token"
+      selectedItems={values[FILTERS.SEC_TOKENS]}
+      onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item)}
+      items={forManager ? managerSecTokensOptions : secTokensOptions}
+    /></>
+
     ),
     [FILTERS.STATUS]: (
       <FilterDropdown
@@ -277,23 +279,23 @@ export const MultipleFilters = ({
     ),
   } as Record<string, JSX.Element>
 
-  if (isMobile) {
-    return (
-      <MobileFilters
-        applyFilters={submitForm}
-        values={values}
-        setFieldValue={setFieldValue}
-        onSelectValueChange={onSelectValueChange}
-        haveValues={!isEmpty}
-        filters={filters}
-        searchPlaceholder={searchPlaceholder}
-        forManager={forManager}
-        managerSecTokensOptions={managerSecTokensOptions}
-        statusOptionsSorted={statusOptionsSorted}
-        onResetFilters={onResetFilters}
-      />
-    )
-  }
+  // if (isMobile) {
+  //   return (
+  //     <MobileFilters
+  //       applyFilters={submitForm}
+  //       values={values}
+  //       setFieldValue={setFieldValue}
+  //       onSelectValueChange={onSelectValueChange}
+  //       haveValues={!isEmpty}
+  //       filters={filters}
+  //       searchPlaceholder={searchPlaceholder}
+  //       forManager={forManager}
+  //       managerSecTokensOptions={managerSecTokensOptions}
+  //       statusOptionsSorted={statusOptionsSorted}
+  //       onResetFilters={onResetFilters}
+  //     />
+  //   )
+  // }
 
   return (
     <Container>

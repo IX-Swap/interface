@@ -8,6 +8,7 @@ import { useFormatOfferValue } from 'state/launchpad/hooks'
 
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { text2, text5 } from 'components/LaunchpadMisc/typography'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   borderless?: boolean
@@ -117,6 +118,9 @@ const SaleAllocationContainer = styled.div<{ borderless?: boolean }>`
     border-radius: 6px;
     border: 1px solid ${props.theme.launchpad.colors.border.default};
     padding: 1rem 1.5rem;
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+      padding: 0px 20px;
+     }
   `}
 `
 
@@ -124,9 +128,10 @@ const SaleAllocationTitle = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-
-  ${text5}
-  color: ${(props) => props.theme.launchpad.colors.text.body};
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 40px;
+  color: #292933;
 `
 
 const SaleAllocationEntry = styled.div`

@@ -16,6 +16,7 @@ import {
   TaxDeclaration,
   BeneficialOwners,
   UploadedDocuments,
+  CorporateMembers,
 } from './Blocks'
 import { Line } from 'components/Line'
 
@@ -48,7 +49,11 @@ export const CorporateForm = ({ data, riskJSON }: Props) => {
       <Line />
       <BeneficialOwners owners={data.beneficialOwners} />
       <Line />
-      <UploadedDocuments data={data.documents.filter(({ type }) => type !== 'authorization')} />
+      <CorporateMembers owners={data.corporateMembers} />
+      <Line />
+      <UploadedDocuments kycKey="corporate" title="Corporate Documents" data={data.documents.filter(({ type }) => type === 'corporate')} />
+      <Line />
+      <UploadedDocuments kycKey="corporate" title="Additional Documents" data={data.documents.filter(({ type }) => type === 'financial')} />
     </>
   )
 }

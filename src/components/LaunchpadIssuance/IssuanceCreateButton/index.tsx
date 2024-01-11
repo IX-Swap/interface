@@ -142,7 +142,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
 
   return (
     <>
-      <FlexVerticalCenter>
+      <FlexVerticalCenter          style={{ marginRight: '17px' }}>
         {showPin && (
           <OutlineButton
             onClick={() => setOpenPin(true)}

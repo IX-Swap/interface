@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { IndividualKyc } from 'state/admin/actions'
+import { CorporateKyc, IndividualKyc } from 'state/admin/actions'
 // import { GridContainer, GridItem } from 'components/Grid'
 
 import { Block } from '../molecules/Block'
@@ -12,7 +12,7 @@ import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
-  data: IndividualKyc
+  data: IndividualKyc | CorporateKyc
   kycKey: any
 }
 
@@ -27,14 +27,14 @@ export const Information = ({ data, kycKey }: Props) => {
             <Field label={label} value={format ? format(data?.[key]) : data?.[key]} />
           </GridItem>
         ))}
-        {kycKey === 'corporate' && (
+        {/* {kycKey === 'corporate' && (
           <GridItemNew>
             <RowWithCheck
               text="Is The Ultimate Holding Company A Regulated Entity Or Listed Company In a FATF Jurisdiction?"
               isDone={data?.inFatfJurisdiction}
             />
           </GridItemNew>
-        )}
+        )} */}
       </GridContainer>
     </Block>
   )

@@ -3,6 +3,7 @@ import { text48 } from 'components/LaunchpadMisc/typography'
 import React from 'react'
 import { X } from 'react-feather'
 import styled from 'styled-components'
+import { CloseIcon } from 'theme'
 
 interface Props {
   show: boolean
@@ -25,8 +26,11 @@ export const IssuanceDialog: React.FC<React.PropsWithChildren<Props>> = (props) 
     <Portal>
       <DialogWrapper onScroll={(e) => e.stopPropagation()}>
         <OuterContainer>
+
+        {/* <CloseIcon style={{ position: 'absolute', right: '20px', top: '100px', color: 'black' }} data-testid="cross"   onClick={props.onClose!} /> */}
+
           <DialogCloseButton onClick={props.onClose}>
-            <X size={14} />
+            <X  size={20} />
           </DialogCloseButton>
 
           <DialogContainer width={props.width} height={props.height} padding={props.padding}>
@@ -59,8 +63,8 @@ const DialogWrapper = styled.div`
 
 const DialogCloseButton = styled.div`
   position: absolute;
-  top: 1.5rem;
-  right: 2rem;
+  right: 20px;
+  top: 14px;
   display: grid;
   color: #b8b8cc;
   place-content: center;
@@ -73,13 +77,13 @@ const DialogCloseButton = styled.div`
   // border-radius: 16px;
   transition: transform 0.3s;
 
-  :hover {
-    transform: scale(1.1);
-  }
+  // :hover {
+  //   transform: scale(1.1);
+  // }
 
   @media screen and (max-height: 830px) {
-    top: 0;
-    right: -2.7rem;
+    right: 20px;
+    top: 14px;
   }
 `
 const OuterContainer = styled.div`

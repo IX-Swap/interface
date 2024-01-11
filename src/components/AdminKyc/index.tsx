@@ -21,7 +21,7 @@ import { ButtonGradientBorder } from 'components/Button'
 import { AdminParams } from 'pages/Admin'
 import { NoData } from 'components/UsersList/styleds'
 import { getStatusStats } from 'state/kyc/hooks'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { Link } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
@@ -59,18 +59,16 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
 
   return (
     <StyledBodyRow key={id}>
-      <Wallet>
+      <Wallet style={{ fontSize: '12px' }}>
         <CopyAddress address={ethAddress} />
       </Wallet>
-      <div>{fullName || '-'}</div>
-      <div>
-        <Trans>{`${individualKycId ? 'Individual' : 'Corporate'}`}</Trans>
-      </div>
-      <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-      <div>
+      <div style={{ fontSize: '12px' }}>{fullName || '-'}</div>
+      <div style={{ fontSize: '12px' }}><Trans>{`${individualKycId ? 'Individual' : 'Corporate'}`}</Trans></div>
+      <div style={{ fontSize: '12px' }}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+      <div style={{ fontSize: '12px' }}>
         <StatusCell status={status} />
       </div>
-      <div>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
+      <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
       {/* <div>risk level</div> */}
       {/* <Link to={`/admin/kyc/${item.id}`}>
         <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF">
@@ -192,7 +190,7 @@ export const AdminKycTable = () => {
   }, [id, getKyc])
 
   return (
-    <div style={{ marginTop: '30px' }} id="kyc-container">
+    <div style={{ margin: isMobile ? '30px 20px 0px 20px' : '30px 90px 0px 90px' }} id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} marginBottom="30px" data-testid="securityTokensTitle">
         <Trans>KYC</Trans>
@@ -287,16 +285,20 @@ export const StyledDoc = styled(File)`
 
 const StyledHeaderRow = styled(HeaderRow)`
   grid-template-columns: repeat(6, 1fr) 100px;
-  min-width: 1370px;
   padding-bottom: 15px;
   margin-bottom: 20px;
   border-bottom: 1px solid;
   border-color: rgba(102, 102, 128, 0.2);
+   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    min-width: 1370px;
+  }
 `
 
 const StyledBodyRow = styled(BodyRow)`
   grid-template-columns: repeat(6, 1fr) 100px;
-  min-width: 1370px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    min-width: 1370px;
+  }
 `
 
 const StyledReviewButton = styled(ButtonGradientBorder)`

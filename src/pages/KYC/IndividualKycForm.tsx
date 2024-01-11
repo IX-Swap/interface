@@ -40,6 +40,8 @@ import {
   sourceOfFunds,
   promptValue,
   occupationList,
+  // SecondaryContactDetails,
+  // socialMediaPlatform,
 } from './mock'
 import {
   FormCard,
@@ -66,6 +68,23 @@ type FormSubmitHanderArgs = {
   updateFn: (id: number, body: any) => any
   validate: boolean
 }
+
+const SecondaryContactDetails = [
+  { value: 1, label: 'Proof of Address Document' },
+  { value: 2, label: 'Business Email Address' },
+  { value: 3, label: 'Social Media Handle' },
+  // Add more items as needed
+]
+
+const socialMediaPlatform = [
+  { value: 'Telegram', label: 'Telegram' },
+  { value: 'Discord', label: 'Discord' },
+  { value: 'X.com', label: 'X.com' },
+  { value: 'Facebook', label: 'Facebook' },
+  { value: 'Instagram', label: 'Instagram' },
+  { value: 'LinkedIn', label: 'LinkedIn' },
+  // Add more items as needed
+]
 
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -105,6 +124,7 @@ export default function IndividualKycForm() {
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
   const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
   const [referralCode, setReferralCode] = useState<string | null>(null)
+  const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const openConfirmationModal = useCallback(() => {
     setShowOptoutModal(false)
     setShowOptoutConfirmationModal(true)
@@ -122,6 +142,7 @@ export default function IndividualKycForm() {
   const prevAccount = usePrevious(account)
 
   useEffect(() => {
+  
     const code = new URL(window.location.href).href?.split('=')[1]
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
@@ -130,8 +151,7 @@ export default function IndividualKycForm() {
     } else if (storedReferralCode) {
       setReferralCode(storedReferralCode)
     }
-    // setReferralCode(code)
-    // localStorage.setItem('referralCode', code)
+
     if (account && prevAccount && account !== prevAccount) {
       history.push('/kyc')
     }
@@ -172,7 +192,7 @@ export default function IndividualKycForm() {
 
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
-
+    addPopup({ info: { success: true, summary: 'The email address has been verified successfully'} })
     return () => {
       window.removeEventListener('beforeunload', alertUser)
     }
@@ -232,6 +252,10 @@ export default function IndividualKycForm() {
 
   const onIsAdditionalChange = async (index: number, setFieldValue: any) => {
     const values = form.current.values
+    if (!values.taxDeclarations[index].isAdditional) {
+      setFieldValue(`taxDeclarations[${index}].idNumber`, '') // Clear TIN
+      setFieldValue(`taxDeclarations[${index}].country`, null) // Clear country
+    }
 
     const declaration = { ...values.taxDeclarations[index] }
 
@@ -297,6 +321,13 @@ export default function IndividualKycForm() {
 
   const onSelectChange = (key: string, value: any, setFieldValue: any) => {
     setFieldValue(key, value, false)
+    validateValue(key, value)
+    validationSeen(key)
+  }
+
+  const onSelectChangeNew = (key: string, value: any, setFieldValue: any) => {
+    const formattedValue = value.label
+    setFieldValue(key, formattedValue, false)
     validateValue(key, value)
     validationSeen(key)
   }
@@ -481,6 +512,10 @@ export default function IndividualKycForm() {
     []
   )
 
+  const onSecondaryContactDetailsChange = (item: { value: number | null }) => {
+    setSelectedOption(item?.value)
+  }
+
   const saveProgress = useCallback(
     async (values: any) => {
       await formSubmitHandler(values, {
@@ -564,11 +599,12 @@ export default function IndividualKycForm() {
                 hasNoErrors('middleName') &&
                 isFilled('lastName') &&
                 isFilled('dateOfBirth') &&
-                isFilled('gender') &&
+                // isFilled('gender') &&
                 isFilled('nationality') &&
                 isFilled('citizenship') &&
                 isFilled('phoneNumber') &&
-                isFilled('email')
+                isFilled('email') &&
+                isFilled('secondaryContactDetails')
 
               const financialFilled =
                 shouldValidate &&
@@ -601,7 +637,6 @@ export default function IndividualKycForm() {
 
               const financialFailed = !financialFilled
               const statusDeclarationFailed = !statusDeclarationFilled
-
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
@@ -695,18 +730,6 @@ export default function IndividualKycForm() {
                               maxDate={moment().subtract(18, 'years')}
                             />
                             <Select
-                              error={errors.gender}
-                              id="genderDropdown"
-                              label="Gender"
-                              placeholder="Gender"
-                              selectedItem={values.gender}
-                              items={genders}
-                              onSelect={(gender) => onSelectChange('gender', gender, setFieldValue)}
-                            />
-                          </FormGrid>
-
-                          <FormGrid>
-                            <Select
                               error={errors.nationality}
                               withScroll
                               id="nationalityDropdown"
@@ -716,6 +739,18 @@ export default function IndividualKycForm() {
                               items={countries}
                               onSelect={(nationality) => onSelectChange('nationality', nationality, setFieldValue)}
                             />
+                            {/* <Select
+                              error={errors.gender}
+                              id="genderDropdown"
+                              label="Gender"
+                              placeholder="Gender"
+                              selectedItem={values.gender}
+                              items={genders}
+                              onSelect={(gender) => onSelectChange('gender', gender, setFieldValue)}
+                            /> */}
+                          </FormGrid>
+
+                          <FormGrid>
                             <Select
                               error={errors.citizenship}
                               withScroll
@@ -726,8 +761,7 @@ export default function IndividualKycForm() {
                               items={countries}
                               onSelect={(citizenship) => onSelectChange('citizenship', citizenship, setFieldValue)}
                             />
-                          </FormGrid>
-                          <FormGrid>
+
                             <PhoneInput
                               error={errors.phoneNumber}
                               value={values.phoneNumber}
@@ -737,17 +771,19 @@ export default function IndividualKycForm() {
                                 validationSeen('phoneNumber')
                               }}
                             />
-                            <TextInput
-                              placeholder="Email address"
-                              id="emailAddressField"
-                              label="Email address"
-                              value={values.email}
-                              error={errors.email}
-                              onChange={(e: any) =>
-                                onChangeInput('email', e.currentTarget.value, values, setFieldValue)
-                              }
-                            />
                           </FormGrid>
+                          {/* <FormGrid> */}
+                          <TextInput
+                            disabled={true}
+                            style={{ background: '#F7F7FA' }}
+                            placeholder="Email address"
+                            id="emailAddressField"
+                            label="Email address"
+                            value={values.email}
+                            error={errors.email}
+                            onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
+                          />
+                          {/* </FormGrid> */}
                         </Column>
 
                         <RowBetween marginBottom="32px" marginTop="64px">
@@ -855,8 +891,8 @@ export default function IndividualKycForm() {
                               onSelect={(idType) => {
                                 onSelectChange('idType', idType, setFieldValue)
                                 if (
-                                  idType.label === IdentityDocumentType.NATIONAL_ID ||
-                                  idType.label === IdentityDocumentType.OTHERS
+                                  idType?.label === IdentityDocumentType.NATIONAL_ID
+                                  // idType?.label === IdentityDocumentType.OTHERS
                                 ) {
                                   setIdExpiryDateLabel('ID Expiration Date (Optional)')
                                 } else {
@@ -913,12 +949,12 @@ export default function IndividualKycForm() {
 
                         <TYPE.description3>
                           Please upload the following documents. All account statements and documents should be dated
-                          within the last 3 months. Type of document format supported is PDF, JPEG, JPG, DOCX and PNG.
+                          within the last 3 months. Type of document format supported is PDF, JPG, and PNG.
                         </TYPE.description3>
 
                         <Column style={{ gap: '40px', marginTop: '32px' }}>
                           <Uploader
-                            subtitle="Proof of ID - Passport, Singapore NRIC, International Passport, National ID, Driving License or Others."
+                            subtitle="Passport, National ID, or Driving License"
                             error={errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
@@ -934,8 +970,8 @@ export default function IndividualKycForm() {
                           />
 
                           <SelfieUploader
-                            title=""
-                            subtitle="Selfie for Verification"
+                            title="Selfie with Proof of Identity"
+                            subtitle="Selfie displaying your face, your Proof of Identity, and the present date written down on a piece of paper"
                             error={errors.selfie}
                             files={values.selfie}
                             onDrop={(file) => handleDropImage(file, values, 'selfie', setFieldValue)}
@@ -945,6 +981,171 @@ export default function IndividualKycForm() {
                               values.removedDocuments,
                               setFieldValue
                             )}
+                          />
+
+                          <div>
+                            <Select
+                              error={errors.secondaryContactDetails}
+                              subText="Please select one from the following options in the dropdown (Proof of Address Document, Business Email Address, or Social Media Handle)"
+                              withScroll
+                              label="Secondary Contact Details"
+                              placeholder="Secondary Contact Details"
+                              id="SecondaryContactDetailsDropDown"
+                              selectedItem={values.secondaryContactDetails}
+                              items={SecondaryContactDetails}
+                              onSelect={(secondaryContactDetails) => {
+                                onSelectChange('secondaryContactDetails', secondaryContactDetails, setFieldValue)
+                                onSecondaryContactDetailsChange(secondaryContactDetails)
+                              }}
+                            />
+
+                            <div style={{ marginTop: '20px' }}>
+                              {(values?.secondaryContactDetails?.label === 'Social Media Handle' || selectedOption === 3) && (
+                                <FormGrid>
+                                  <Select
+                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, Facebook, Instagram, LinkedIn, or X.com)"
+                                    error={errors.socialPlatform}
+                                    withScroll
+                                    id="socialPlatform"
+                                    label="Social Media Platform"
+                                    placeholder="Social Media Platform"
+                                    selectedItem={values.socialPlatform}
+                                    items={socialMediaPlatform}
+                                    onSelect={(socialMediaPlatform) =>
+                                      onSelectChange('socialPlatform', socialMediaPlatform?.value, setFieldValue)
+                                    }
+                                  />
+
+                                  <TextInput
+                                    subText="Please provide your Social Media Handle in the selected Social Media Platform as an alternative contact method"
+                                    placeholder="Social Media Handle"
+                                    id="handleName"
+                                    label="Social Media Handle"
+                                    value={values.handleName}
+                                    error={errors.handleName}
+                                    onChange={(e) =>
+                                      onChangeInput('handleName', e.currentTarget.value, values, setFieldValue)
+                                    }
+                                  />
+                                </FormGrid>
+                              )}
+
+                              {(values?.secondaryContactDetails?.label === 'Proof of Address Document' || selectedOption === 1) && (
+                                <Uploader
+                                  title="Proof of Address"
+                                  subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
+                                  error={errors.proofOfAddress}
+                                  files={values.proofOfAddress}
+                                  onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                                  handleDeleteClick={handleImageDelete(
+                                    values,
+                                    'proofOfAddress',
+                                    values.removedDocuments,
+                                    setFieldValue
+                                  )}
+                                />
+                              )}
+
+                              {(values?.secondaryContactDetails?.label === 'Business Email Address' || selectedOption === 2) && (
+                                <TextInput
+                                  subText="Please input Business Email Address as an alternative contact method"
+                                  placeholder="Business Email Address"
+                                  id="businessEmailAddress"
+                                  label="Business Email Address"
+                                  error={errors.alternateEmail}
+                                  value={values.alternateEmail}
+                                  onChange={(e) =>
+                                    onChangeInput('alternateEmail', e.currentTarget.value, values, setFieldValue)
+                                  }
+                                />
+                              )}
+
+                              <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>
+                                *Selecting a business email address or social media handle requires an acknowledgment
+                                process for identity verification. A verification message and/or email will be sent to
+                                your provided personal and/or business email address and/or social media account, that
+                                will require a response from you.
+                              </p>
+                            </div>
+
+                            {/* <div style={{ marginTop: '20px' }}>
+                              {(selectedOption === 1 ) && (
+                                <Uploader
+                                  title="Proof of Address"
+                                  subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
+                                  error={errors.proofOfAddress}
+                                  files={values.proofOfAddress}
+                                  onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                                  handleDeleteClick={handleImageDelete(
+                                    values,
+                                    'proofOfAddress',
+                                    values.removedDocuments,
+                                    setFieldValue
+                                  )}
+                                />
+                              )}
+
+                              {(selectedOption === 2) && (
+                                <TextInput
+                                  subText="Please input Business Email Address as an alternative contact method"
+                                  placeholder="Business Email Address"
+                                  id="businessEmailAddress"
+                                  label="Business Email Address"
+                                  error={errors.alternateEmail}
+                                  value={values.alternateEmail}
+                                  onChange={(e) =>
+                                    onChangeInput('alternateEmail', e.currentTarget.value, values, setFieldValue)
+                                  }
+                                />
+                              )}
+
+                              {(selectedOption === 3) && (
+                                <FormGrid>
+                                  <Select
+                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, Facebook, Instagram, LinkedIn, or X.com)"
+                                    error={errors.socialPlatform}
+                                    withScroll
+                                    id="socialPlatform"
+                                    label="Social Media Platform"
+                                    placeholder="Social Media Platform"
+                                    selectedItem={values.socialPlatform}
+                                    items={socialMediaPlatform}
+                                    onSelect={(socialMediaPlatform) =>
+                                      onSelectChange('socialPlatform', socialMediaPlatform?.value, setFieldValue)
+                                    }
+                                  />
+
+                                  <TextInput
+                                    subText="Please provide your Social Media Handle in the selected Social Media Platform as an alternative contact method"
+                                    placeholder="Social Media Handle"
+                                    id="handleName"
+                                    label="Social Media Handle"
+                                    value={values.handleName}
+                                    error={errors.handleName}
+                                    onChange={(e) =>
+                                      onChangeInput('handleName', e.currentTarget.value, values, setFieldValue)
+                                    }
+                                  />
+                                </FormGrid>
+                              )}
+                              <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>
+                                *Selecting a business email address or social media handle requires an acknowledgment
+                                process for identity verification. A verification message and/or email will be sent to
+                                your provided personal and/or business email address and/or social media account, that
+                                will require a response from you.
+                              </p>
+                            </div> */}
+                          </div>
+
+                          {/* <Select
+                            withScroll
+                            label="Secondary Contact Details"
+                            placeholder="Secondary Contact Details"
+                            id="SecondaryContactDetails"
+                            selectedItem={values.sourceOfFunds}
+                            items={SecondaryContactDetails}
+                      
+                            onSelect={(item) => onSecondaryContactDetailsChange(item, values.SecondaryContactDetails, setFieldValue)}
                           />
 
                           <Uploader
@@ -959,7 +1160,7 @@ export default function IndividualKycForm() {
                               values.removedDocuments,
                               setFieldValue
                             )}
-                          />
+                          /> */}
                         </Column>
                       </FormCard>
 
@@ -1005,8 +1206,8 @@ export default function IndividualKycForm() {
                               }
                             />
                             <Select
-                              placeholder="Total Income (in SGD) in the Last 12 Months"
-                              label="Total Income (in SGD) in the Last 12 Months"
+                              placeholder="Total Income (in USD) in the Last 12 Months"
+                              label="Total Income (in USD) in the Last 12 Months"
                               id="incomeUsdDropdown"
                               items={incomes}
                               selectedItem={values.income}
@@ -1288,7 +1489,7 @@ export default function IndividualKycForm() {
                             />
                             {values.isUSTaxPayer === 1 && (
                               <TextInput
-                                style={{ width: 284 }}
+                                style={{ width: '100%' }}
                                 placeholder="ID Number.."
                                 value={values.usTin}
                                 onChange={(e: any) =>
@@ -1303,7 +1504,7 @@ export default function IndividualKycForm() {
                             id="notCitizenOfUS"
                             checked={values.isUSTaxPayer === 0}
                             onClick={() => onRadioChange('isUSTaxPayer', 0, setFieldValue)}
-                            label="I confirm that I am not a US citizen or resident in the US for tax purposes. "
+                            label="I confirm that I am not a US citizen or resident in the US for tax purposes "
                           />
                           {errors.isUSTaxPayer && (
                             <TYPE.small marginTop="-4px" color={'red1'}>
@@ -1312,439 +1513,6 @@ export default function IndividualKycForm() {
                           )}
                         </Column>
                       </FormCard>
-                      {/* 
-                      <FormCard id="status-declaration">
-                        <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
-                            <Trans>Investor Status Declaration</Trans>
-                          </TYPE.title6>
-                          {statusDeclarationFilled && <StyledBigPassed />}
-                          {statusDeclarationFailed && <InvalidFormInputIcon />}
-                        </RowBetween>
-
-                        <Column style={{ gap: '34px' }}>
-                          <Row style={{ gap: '12px' }} justifyContent="space-evenly">
-                            <BorderBox active={values.accredited === 0}>
-                              <Checkbox
-                                name="accredited"
-                                id="retailInvestor"
-                                isRadio
-                                checked={values.accredited === 0}
-                                onClick={() => onAccreditedChange(0, setFieldValue)}
-                                label="I declare I am a Retail Investor"
-                              />
-                            </BorderBox>
-                            <BorderBox active={values.accredited === 1}>
-                              <Checkbox
-                                name="accredited"
-                                isRadio
-                                checked={values.accredited === 1}
-                                onClick={() => onAccreditedChange(1, setFieldValue)}
-                                label={`I declare I am an Individual Accredited Investor`}
-                              />
-                            </BorderBox>
-                          </Row>
-
-                          {errors.accredited && (
-                            <TYPE.small marginTop="-4px" color={'red1'}>
-                              <Trans>Choose one</Trans>
-                            </TYPE.small>
-                          )}
-                        </Column>
-                      </FormCard> */}
-
-                      {/* {values.accredited === 1 && (
-                        <>
-                          <FormCard id="investor-declaration">
-                            <RowBetween marginBottom="32px">
-                              <TYPE.title7>
-                                <Trans>Investor Declaration</Trans>
-                              </TYPE.title7>
-                            </RowBetween>
-
-                            <Column style={{ margin: '1rem', marginLeft: 0, gap: '1rem' }}>
-                              <LabeledCheckBox>
-                                <Checkbox
-                                  name=""
-                                  label=""
-                                  checked={values.isTotalAssets}
-                                  onClick={() =>
-                                    onInvestorDeclarationChange(
-                                      'isTotalAssets',
-                                      !values.isTotalAssets,
-                                      values,
-                                      setFieldValue
-                                    )
-                                  }
-                                />
-                                <TYPE.description3>
-                                  My total net personal assets (including up to SGD 1 million of your primary residence)
-                                  exceed SGD 2 million
-                                </TYPE.description3>
-                              </LabeledCheckBox>
-
-                              <LabeledCheckBox>
-                                <Checkbox
-                                  name=""
-                                  label=""
-                                  checked={values.isAnnualIncome}
-                                  onClick={() =>
-                                    onInvestorDeclarationChange(
-                                      'isAnnualIncome',
-                                      !values.isAnnualIncome,
-                                      values,
-                                      setFieldValue
-                                    )
-                                  }
-                                />
-                                <TYPE.description3>
-                                  My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent
-                                  in a foreign currency)
-                                </TYPE.description3>
-                              </LabeledCheckBox>
-
-                              <LabeledCheckBox>
-                                <Checkbox
-                                  name=""
-                                  label=""
-                                  checked={values.isFinancialAssets}
-                                  onClick={() =>
-                                    onInvestorDeclarationChange(
-                                      'isFinancialAssets',
-                                      !values.isFinancialAssets,
-                                      values,
-                                      setFieldValue
-                                    )
-                                  }
-                                />
-                                <TYPE.description3>
-                                  My personal financial asset (e.g. deposits and investment product) exceed SGD 1
-                                  million or its equivalent (or its equivalent in foreign currency)
-                                </TYPE.description3>
-                              </LabeledCheckBox>
-
-                              <LabeledCheckBox>
-                                <Checkbox
-                                  name=""
-                                  label=""
-                                  checked={values.isJointIncome}
-                                  onClick={() =>
-                                    onInvestorDeclarationChange(
-                                      'isJointIncome',
-                                      !values.isJointIncome,
-                                      values,
-                                      setFieldValue
-                                    )
-                                  }
-                                />
-                                <TYPE.description3>
-                                  My jointly held account with my spouse/any individual meets any of the above
-                                </TYPE.description3>
-                              </LabeledCheckBox>
-                            </Column>
-
-                            {errors.investorDeclarationIsFilled && (
-                              <TYPE.small marginTop="-4px" color={'red1'}>
-                                <Trans>{errors.investorDeclarationIsFilled}</Trans>
-                              </TYPE.small>
-                            )}
-
-                            <RowBetween marginTop="64px">
-                              <TYPE.title7 style={{ textTransform: 'uppercase' }}>
-                                <Trans>Opt-in requirement</Trans>
-                              </TYPE.title7>
-                            </RowBetween>
-
-                            <Column style={{ gap: '1rem' }}>
-                              <TYPE.body3>I confirm to be treated as an “Accredited Investor” by InvestaX</TYPE.body3>
-
-                              <LabeledCheckBox>
-                                <Checkbox
-                                  label={''}
-                                  checked={values.acceptOfQualification}
-                                  onClick={() =>
-                                    onChangeInput(
-                                      'acceptOfQualification',
-                                      !values.acceptOfQualification,
-                                      values,
-                                      setFieldValue
-                                    )
-                                  }
-                                />
-
-                                <TYPE.description3>
-                                  I have been informed of and understand the consequences of my qualification as an
-                                  Accredited Investor, in particular the reduced regulatory investor
-                                  <InlineLinkButton type="button" onClick={() => setShowSafeguardModal(true)}>
-                                    safeguards
-                                  </InlineLinkButton>
-                                  for Accredited Investors.
-                                </TYPE.description3>
-
-                                <Modal isOpen={showSafeguardModal} onDismiss={() => setShowSafeguardModal(false)}>
-                                  <FormCard>
-                                    <Column style={{ alignItems: 'stretch' }}>
-                                      <TYPE.mediumHeader>
-                                        Accredited Investors And Their Special Treatment
-                                      </TYPE.mediumHeader>
-
-                                      <br />
-
-                                      <TYPE.description2 style={{ overflowY: 'scroll', maxHeight: '50vh' }}>
-                                        Accredited investors are considered to be sophisticated investors and hence
-                                        eligible to enjoy more flexible and swift investments not available to the
-                                        general public. Accredited investors are expected to understand more
-                                        sophisticated investment products and the risks associated with them, and have
-                                        the ability to conduct their own due diligence, therefore, allowing for reduced
-                                        investor disclosures and safeguards, including the following:
-                                        <br />
-                                        <br />
-                                        - We may provide you preliminary documents, and oral or written information in
-                                        their regard or regarding the prospectus, on securities, such as shares and
-                                        debentures, units in business trusts and collective investment schemes (commonly
-                                        referred to as mutual funds or investment funds) (“Investment Products”) before
-                                        the prospectus or profile statement is registered with the Monetary Authority of
-                                        Singapore (sec. 25(3) and (4)(a), 300(2A) and (2B)(a) SFA). You may thus receive
-                                        information that may not meet regulatory requirements for public distribution.
-                                        <br />
-                                        <br />
-                                        - We may offer you Investment Products without a prospectus, i.e. without the
-                                        full disclosures and warnings required for public offerings, or with lesser
-                                        periodic reporting as determined by the issuers of the Investment Products in
-                                        their sole discretion (sec. 275(1), 305, 305A(1)(b), (2)(i)(A) and (3)(i)(A)
-                                        SFA). Conversely, you may purchase Investment Products offered under these
-                                        limited disclosure requirements without additional requirements (sec. 276(1)(b),
-                                        (2)(b), (3)(i)(A) and (3)(i)(A)SFA).
-                                        <br />
-                                        <br />
-                                        - We do not hold any investment funds on your behalf, you will not be entitled
-                                        to any compensation for any monetary loss of funds from misappropriation of
-                                        funds in any Investment Products from us. (sec. 186(1) SFA, reg. 7(3) SF(LCB)
-                                        R).
-                                        <br />
-                                        <br />
-                                        - We may market and sell Investment Products to you without prior due diligence
-                                        to ascertain its suitability for targeted clients (reg. 18B(9) FAR). We may even
-                                        expressly or implicity make a recommendation with respect to any investment
-                                        product to you without ascertaining that the investment product meets your
-                                        investment objectives, financial situation and particular needs. When making a
-                                        recommendation to you without such consideration, we will however disclose this
-                                        fact to you (re. 34(1)(a), (2) FAR).
-                                        <br />
-                                        <br />
-                                        - We provide you research reports and analysis from 3rd party research houses,
-                                        we are not required to accept legal responsibility for the content of such
-                                        report or analysis (32C(1)(d) FAR).
-                                        <br />
-                                        <br />
-                                        - We are not required to disclose our interests from investment or underwriting
-                                        of the respective Investment Product, when we offer or recommend such Investment
-                                        Products to you (47A(3)(a)(i)SF(LCB)R).
-                                        <br />
-                                        <br />- A suitable representative of our Company may interact with you on
-                                        his/her own without passing all the examinations required by the Monetary
-                                        Authority of Singapore for representative retail clients (reg. 3A(5)(c)-(e) and
-                                        (7) SF(LCB)R; reg. 4A(6) FAR.
-                                      </TYPE.description2>
-
-                                      <PinnedContentButton
-                                        type="button"
-                                        onClick={() => setShowSafeguardModal(false)}
-                                        style={{ width: '100%', marginTop: '32px' }}
-                                      >
-                                        OK
-                                      </PinnedContentButton>
-                                    </Column>
-                                  </FormCard>
-                                </Modal>
-                              </LabeledCheckBox>
-
-                              {errors.acceptOfQualification && (
-                                <TYPE.small marginTop="-4px" color={'red1'}>
-                                  <Trans>{errors.acceptOfQualification}</Trans>
-                                </TYPE.small>
-                              )}
-
-                              <LabeledCheckBox>
-                                <Checkbox
-                                  label={''}
-                                  checked={values.acceptRefusalRight}
-                                  onClick={() =>
-                                    onChangeInput(
-                                      'acceptRefusalRight',
-                                      !values.acceptRefusalRight,
-                                      values,
-                                      setFieldValue
-                                    )
-                                  }
-                                />
-
-                                <TYPE.description3>
-                                  I have been informed of and understand my right to
-                                  <InlineLinkButton type="button" onClick={() => setShowOptoutModal(true)}>
-                                    opt out
-                                  </InlineLinkButton>
-                                  of the Accredited Investors status
-                                </TYPE.description3>
-
-                                <Modal isOpen={showOptoutModal} onDismiss={() => setShowOptoutModal(false)}>
-                                  <FormCard>
-                                    <Column style={{ alignItems: 'stretch' }}>
-                                      <TYPE.mediumHeader>Accredited Investor Opt-Out Form</TYPE.mediumHeader>
-
-                                      <br />
-
-                                      <TYPE.description2>
-                                        I/We (“Accredited Investor” or “AI”) wish to inform that I/WE would like to
-                                        withdraw my/our consent to be treated as an Accredited Investor (as defined in
-                                        section 4A of the Securities and Future Act, Chapter 289 of Singaport) by IX
-                                        Swap
-                                        <br />
-                                        <br />
-                                        I/We agree, understand and accept that this withdrawal of consent will be
-                                        subject to a processing time of 30 business days from the date of receipt of
-                                        this form by IX Swap will notify after my/our status has been updated as
-                                        Non-Accredited Investor (“NAI”) in its records and I/we will be treated as an AI
-                                        until InvestaX notifies me/us of the updated status as NAI (“Effective Date”)
-                                        <br />
-                                        <br />
-                                        From the Effective Date, I/we shall be treated as NAI by IX Swap for all or any
-                                        of the services mentioned above. Any transactions executed by me/us or
-                                        Services/Products availed by me/us prior to the Effective Date will not be
-                                        affected by such withdrawal of consent.
-                                      </TYPE.description2>
-
-                                      <FormGrid columns={2}>
-                                        <ButtonGradientBorder
-                                          type="button"
-                                          onClick={() => setShowOptoutModal(false)}
-                                          style={{ width: '100%', marginTop: '32px' }}
-                                        >
-                                          Cancel
-                                        </ButtonGradientBorder>
-
-                                        <PinnedContentButton
-                                          type="button"
-                                          onClick={openConfirmationModal}
-                                          style={{ width: '100%', marginTop: '32px' }}
-                                        >
-                                          Opt Out
-                                        </PinnedContentButton>
-                                      </FormGrid>
-                                    </Column>
-                                  </FormCard>
-                                </Modal>
-
-                                <Modal
-                                  isOpen={showOptoutConfirmationModal}
-                                  onDismiss={() => setShowOptoutConfirmationModal(false)}
-                                >
-                                  <FormCard>
-                                    <Column style={{ alignItems: 'stretch' }}>
-                                      <TYPE.mediumHeader>
-                                        If you choose to opt-out of the Accredited Investor status, please proceed with
-                                        KYC by declaring a different investor status.
-                                      </TYPE.mediumHeader>
-
-                                      <br />
-
-                                      <FormGrid columns={2}>
-                                        <ButtonGradientBorder
-                                          type="button"
-                                          onClick={() => setShowOptoutConfirmationModal(false)}
-                                          style={{ width: '100%', marginTop: '32px' }}
-                                        >
-                                          Cancel
-                                        </ButtonGradientBorder>
-
-                                        <PinnedContentButton
-                                          type="button"
-                                          onClick={() => confirmOptOut(setFieldValue)}
-                                          style={{ width: '100%', marginTop: '32px' }}
-                                        >
-                                          Ok
-                                        </PinnedContentButton>
-                                      </FormGrid>
-                                    </Column>
-                                  </FormCard>
-                                </Modal>
-                              </LabeledCheckBox>
-
-                              {errors.acceptRefusalRight && (
-                                <TYPE.small marginTop="-4px" color={'red1'}>
-                                  <Trans>{errors.acceptRefusalRight}</Trans>
-                                </TYPE.small>
-                              )}
-                            </Column>
-
-                            <RowBetween marginTop="64px">
-                              <TYPE.title7 style={{ textTransform: 'uppercase' }}>
-                                <Trans>Evidence of Accreditation</Trans>
-                              </TYPE.title7>
-                            </RowBetween>
-
-                            <Column>
-                              <TYPE.body3>
-                                Net Personal Asset Copy of latest investment portfolio holdings, e.g. bank, broker, fund
-                                manager account statements, copy bank statement, CPF statement
-                              </TYPE.body3>
-
-                              <Uploader
-                                title={''}
-                                error={errors.evidenceOfAccreditation}
-                                files={values.evidenceOfAccreditation}
-                                onDrop={(file) =>
-                                  handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
-                                }
-                                handleDeleteClick={handleImageDelete(
-                                  values,
-                                  'evidenceOfAccreditation',
-                                  values.removedDocuments,
-                                  setFieldValue
-                                )}
-                              />
-                            </Column>
-                          </FormCard>
-
-                          <FormCard id="acknowledgement">
-                            <RowBetween marginBottom="32px">
-                              <TYPE.title6 style={{ textTransform: 'uppercase' }}>
-                                <Trans>Investor Status Declaration Acknowledgement</Trans>
-                              </TYPE.title6>
-                              {investorStatusAcknowledgementFilled && <StyledBigPassed />}
-                            </RowBetween>
-
-                            <LabeledCheckBox>
-                              <Checkbox
-                                label={''}
-                                checked={values.confirmStatusDeclaration}
-                                onClick={() =>
-                                  onChangeInput(
-                                    'confirmStatusDeclaration',
-                                    !values.confirmStatusDeclaration,
-                                    values,
-                                    setFieldValue
-                                  )
-                                }
-                              />
-
-                              <TYPE.description3>
-                                I understand and acknowledge that any offer made to me via IX Swap is an exempt offer of
-                                securities in accordance with Section 275 of the Securities and Futures Act 2001 of
-                                Singapore and is not accompanied by a prospectus that is reviewed or vetted by the
-                                Monetary Authority of Singapore. I am interested in receiving and participating in such
-                                offers.
-                              </TYPE.description3>
-                            </LabeledCheckBox>
-
-                            {errors.confirmStatusDeclaration && (
-                              <TYPE.small marginTop="8px" color={'red1'}>
-                                {errors.confirmStatusDeclaration}
-                              </TYPE.small>
-                            )}
-                          </FormCard>
-                        </>
-                      )} */}
                     </Column>
                   </FormContainer>
 

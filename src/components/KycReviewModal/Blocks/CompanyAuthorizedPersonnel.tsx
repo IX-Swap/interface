@@ -9,13 +9,14 @@ import { CorporateKyc } from 'state/admin/actions'
 import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 
+
 interface Props {
   data: CorporateKyc
 }
 
 export const CompanyAuthorizedPersonnel: FC<Props> = ({ data }: Props) => {
   return (
-    <Block title="Company Authorized Personnel">
+    <Block title="Authorized Personnel">
       <GridContainer>
         {companyAuthorizedPersonnelKeys.map(({ key, label, width = {}, format }) => (
           <GridItem key={key} {...width}>
@@ -24,8 +25,9 @@ export const CompanyAuthorizedPersonnel: FC<Props> = ({ data }: Props) => {
         ))}
         <div style={{ marginTop: '40px' }}>
           <Documents
-            documents={data.documents.filter(({ type }) => type === 'authorization')}
+            documents={data.documents.filter(({ type }) => type === 'authorization' || type === 'authorizationIdentity')}
             title="Authorization Document"
+            kycKey="individual"
           />
         </div>
       </GridContainer>

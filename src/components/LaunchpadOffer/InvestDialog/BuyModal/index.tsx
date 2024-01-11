@@ -21,7 +21,9 @@ const ModalContent = styled(ModalContentWrapper)`
   color: ${(props) => props.theme.launchpad.colors.text.body};
   background-color: ${(props) => props.theme.launchpad.colors.background};
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    padding: 16px;
+    // padding: 16px;
+    width: 100%;
+    padding: 29px 10px 20px 10px;
   }
 `
 
@@ -47,6 +49,9 @@ const Row = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   margin-bottom: 16px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 const Column = styled.div`

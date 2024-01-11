@@ -63,12 +63,15 @@ interface SelectProps {
   addCustom?: boolean
   id?: any
   value?: any
+  subText?: string
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
   error?: any | JSX.Element
   required?: boolean
   tooltipText?: string | JSX.Element
+  isText?: boolean
+  subText?: string
 }
 
 interface KycInputLabelProps {
@@ -154,11 +157,13 @@ export const KycSelect: FC<SelectProps> = ({
   required,
   tooltipText,
   isDisabled,
+  subText,
   ...rest
 }: SelectProps) => {
   return (
     <Box>
       <KycInputLabel label={label} tooltipText={tooltipText} error={error} />
+      <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
       {isDisabled && selectedItem ? (
         <Row alignItems="center" style={{ columnGap: 4 }}>
           {selectedItem?.icon}
@@ -196,6 +201,7 @@ export const TextInput: FC<TextInputProps> = ({
   error = false,
   tooltipText,
   disabled = false,
+  isText = false,
 }: TextInputProps) => {
   return (
     <Box>
@@ -203,7 +209,7 @@ export const TextInput: FC<TextInputProps> = ({
         <Label label={label} htmlFor={name || ''} required={disabled ? false : required} tooltipText={tooltipText} />
       )}
 
-      {disabled && value ? (
+      {isText && value ? (
         <div>{value}</div>
       ) : (
         <StyledInput
@@ -244,13 +250,17 @@ export const KycTextInput: FC<TextInputProps> = ({
   error = false,
   tooltipText,
   disabled = false,
+  subText,
 }: TextInputProps) => {
   return (
     <Box>
       <KycInputLabel name={name} label={label} error={error} tooltipText={tooltipText} />
-
+      <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
       {disabled && value ? (
-        <div>{value}</div>
+        <div>
+          {' '}
+          <StyledInput style={{ background: '#F7F7FA' }} value={value} />
+        </div>
       ) : (
         <StyledInput
           onBlur={onBlur}
@@ -349,7 +359,7 @@ export const Uploader: FC<UploaderProps> = ({
       {!isDisabled && (
         <Upload
           isDisabled={isDisabled}
-          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}, ${AcceptFiles.FILLES} , ${AcceptFiles.NOT_HEIC}` as AcceptFiles}
           data-testid={id}
           file={null}
           onDrop={onDrop}
@@ -493,15 +503,34 @@ interface ChooseFileTypes {
 
 export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }: ChooseFileTypes) => {
   return (
-    <Box style={{ maxWidth: 200 }}>
+    <Box style={{ maxWidth: '100%' }}>
       {label && <Label label={label} />}
       {file ? (
         <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
       ) : (
-        <Upload file={file} onDrop={onDrop} data-testid={id}>
-          <ButtonOutlined type="button" style={{ height: 52, padding: '7px 16px' }}>
-            <EllipsisText>{(file as any)?.name || <Trans>Choose File</Trans>}</EllipsisText>
-          </ButtonOutlined>
+        // <Upload file={file} onDrop={onDrop} data-testid={id}>
+        //   <ButtonOutlined type="button" style={{ height: 52, padding: '7px 16px' }}>
+        //     <EllipsisText>{(file as any)?.name || <Trans>Choose File</Trans>}</EllipsisText>
+        //   </ButtonOutlined>
+        // </Upload>
+
+        <Upload
+          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          data-testid={id}
+          file={null}
+          onDrop={onDrop}
+        >
+          <UploaderCard>
+            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
+              <StyledUploadLogo />
+              <TYPE.small textAlign="center" marginTop="8px" color={'#666680'}>
+                Drag and Drop
+              </TYPE.small>
+              <TYPE.small display="flex" textAlign="center" color={'#666680'}>
+                or <Text style={{ marginLeft: 2, color: '#6666FF' }}>Upload</Text>
+              </TYPE.small>
+            </Flex>
+          </UploaderCard>
         </Upload>
       )}
       {error && (
@@ -516,8 +545,9 @@ export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }
 interface BeneficialOwnersTableTypes {
   data: Array<{
     fullName: string
+    nationality: string
+    address: string
     shareholding: string
-    proofOfAddress: FileWithPath | null
     proofOfIdentity: FileWithPath | null
   }>
 }
@@ -525,12 +555,36 @@ interface BeneficialOwnersTableTypes {
 export const BeneficialOwnersTable = ({}: BeneficialOwnersTableTypes) => {
   return (
     <BeneficialOwnersTableContainer>
-      <FormGrid columns={5}>
+      <FormGrid columns={6}>
         <Label label={`Full Name`} />
-        <Label label={`% Shareholding`} />
-        <Label label={`Proof of Address`} />
+        <Label label={`Nationality`} />
+        <Label label={`Address`} />
+        <Label label={`% Beneficial Ownership`} />
         <Label label={`Proof of Identity`} />
         <Label label={``} />
+      </FormGrid>
+    </BeneficialOwnersTableContainer>
+  )
+}
+
+interface CorporateMembersTableTypes {
+  data: Array<{
+    fullName: string
+    nationality: string
+    designation: string
+    proofOfIdentity: FileWithPath | null
+  }>
+}
+
+export const CorporateMembersTable = ({}: CorporateMembersTableTypes) => {
+  return (
+    <BeneficialOwnersTableContainer>
+      <FormGrid columns={6}>
+        <Label label={t`Full Name`} />
+        <Label label={t`Nationality`} />
+        <Label label={t`Designation`} />
+        <Label label={t`Proof of Identity`} />
+        <Label label={t``} />
       </FormGrid>
     </BeneficialOwnersTableContainer>
   )
@@ -584,10 +638,13 @@ const StyledInput = styled(Input)`
   font-weight: normal;
   font-size: 16px;
   border: ${({ error, theme }) => (error ? 'solid 1px' + theme.error : 'solid 1px #E6E6FF')};
-  background-color: ${({ theme: { bg0 } }) => bg0};
+  background-color: ${({ disabled, theme: { bg0, bg23 } }) => { return disabled ? bg23 : bg0 } };
   :focus {
     // background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};
     background-color: ${({ theme: { bg0 } }) => bg0};
+  }
+  :disabled {
+    color: #b8b8cc;
   }
 `
 

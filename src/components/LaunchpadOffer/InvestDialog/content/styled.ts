@@ -18,7 +18,7 @@ export const InvestFormContainer = styled.div<{ padding?: string; gap?: string }
 
   ${(props) => props.padding && `padding: ${props.padding};`}
 
-  gap: ${(props) => props.gap ?? '1rem'};
+  gap: ${(props) => props.gap ?? '0.6rem'};
 
   height: 100%;
 `

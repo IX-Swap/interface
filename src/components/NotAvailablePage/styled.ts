@@ -120,7 +120,7 @@ export const ConnectWalletContainer = styled(Container)<{ hasAnnouncement?: bool
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: ${({ hasAnnouncement }) => (hasAnnouncement ? 3 : 1)}rem;
+  // margin-top: ${({ hasAnnouncement }) => (hasAnnouncement ? 3 : 1)}rem;
 
   a {
     color: ${({ theme }) => theme.text1};

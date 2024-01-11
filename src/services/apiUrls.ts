@@ -21,6 +21,7 @@ export const admin = {
   addAdmin: () => '/metamask/admin',
   whitelistedList: 'users/whitelisted',
   addOrRemoveWhitelisted: (address: string) => `users/whitelist/address/${address}`,
+  resendEmail: '/kyc/resendEmailCode'
 }
 
 export const vesting = {

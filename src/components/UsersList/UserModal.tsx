@@ -26,6 +26,8 @@ import { RemoveTokensWarning } from './RemoveTokensWarning'
 import { RoleChangeWarning } from './RoleChangeWarning'
 import { UpdateSummary } from './UpdateSummary'
 import { Line } from 'components/Line'
+import { HelpCircle, Info } from 'react-feather'
+import { MouseoverTooltip } from 'components/Tooltip'
 
 interface Props {
   item: User | null
@@ -283,11 +285,26 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                   placeholder="Choose Security Tokens"
                 />
               )}
-              <Checkbox
-                checked={isWhitelisted}
-                onClick={() => setFieldValue('isWhitelisted', !isWhitelisted)}
-                label={`Add to Whitelist`}
-              />
+              <div style={{ display: 'flex' }}>
+                {' '}
+                <Checkbox
+                  checked={isWhitelisted}
+                  onClick={() => setFieldValue('isWhitelisted', !isWhitelisted)}
+                  label={`Waive Withdrawal Fees`}
+                />
+                <MouseoverTooltip
+                  text={
+                    <Trans>
+                      IXS custody service provider charges 20 USD withdrawal fees when users withdraw STOs from Vaults.
+                      IXS passes the withdrawal fees to the user by charging the user an equivalent amount in native
+                      tokens. By checking this box, the user will incur 1000% less withdrawal fees.
+                    </Trans>
+                  }
+                >
+                  <HelpCircle size="18" color={'#666680'} style={{ marginLeft: '8px', marginTop: '4px' }} />
+                </MouseoverTooltip>
+              </div>
+
               {item && role === ROLES.TOKEN_MANAGER && (
                 <TokensBlock
                   initialItems={initialValues?.managerOf || []}
@@ -307,6 +324,15 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
     </>
   )
 }
+
+const Tooltip = styled.div`
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 160%;
+  text-align: center;
+  color: ${({ theme }) => theme.text9};
+  max-width: 319px;
+`
 
 const ExistingWallet = styled.div`
   display: flex;

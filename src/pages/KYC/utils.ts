@@ -18,6 +18,7 @@ export const corporateTransformApiData = (data: any) => {
     taxCountry,
     sourceOfFunds,
     beneficialOwners,
+    corporateMembers,
     usTin,
   } = data
   const [funds, otherFunds = ''] = sourceOfFunds ? sourceOfFunds.split(', Others, ') : [null, null]
@@ -30,6 +31,7 @@ export const corporateTransformApiData = (data: any) => {
     },
     countryOfIncorporation: { value: 0, label: countryOfIncorporation },
     authorizationDocuments: documents?.filter(({ type }: any) => type === 'authorization'),
+    authorizationIdentity: documents?.filter(({ type }: any) => type === 'authorizationIdentity'),
     address: address.address,
     postalCode: address.postalCode,
     country: { value: 0, label: address.country },
@@ -44,18 +46,31 @@ export const corporateTransformApiData = (data: any) => {
     taxCountry: { value: 0, label: taxCountry },
     beneficialOwners:
       beneficialOwners.length > 0
-        ? beneficialOwners?.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+        ? beneficialOwners?.map(({ id, fullName, nationality, dateOfBirth, address, shareholding, proofOfIdentity }: any) => ({
             id,
             fullName,
+            nationality, 
+            dateOfBirth,
+            address,
             shareholding,
-            proofOfAddress,
             proofOfIdentity,
           }))
-        : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+        : [{ fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+    corporateMembers:
+      corporateMembers.length > 0
+        ? corporateMembers?.map(({ id, fullName, nationality, designation, proofOfIdentity }: any) => ({
+            id,
+            fullName,
+            nationality,
+            designation,
+            proofOfIdentity,
+          }))
+        : [{ fullName: '', nationality: '', designation: '',  proofOfIdentity: null }],
     corporateDocuments: documents?.filter(({ type }: any) => type === 'corporate'),
     financialDocuments: documents?.filter(({ type }: any) => type === 'financial'),
     removedDocuments: [],
     removedBeneficialOwners: [],
+    removedCorporateMembers: [],
   }
 }
 
@@ -70,7 +85,7 @@ export const corporateTransformKycDto = (values: any) => {
     isUSTaxPayer,
     taxCountry,
     beneficialOwners,
-    incorporationDate,
+    corporateMembers,
   } = values
 
   const newSourceOfFunds = sourceOfFunds ?? ''
@@ -78,8 +93,6 @@ export const corporateTransformKycDto = (values: any) => {
   return {
     ...values,
     ...(!isUSTaxPayer && { usTin: '' }),
-    incorporationDate:
-      typeof incorporationDate === 'string' ? incorporationDate : incorporationDate?.format('MM/DD/YYYY'),
     typeOfLegalEntity: typeOfLegalEntity?.label,
     sourceOfFunds: [...newSourceOfFunds, ...(newSourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
     countryOfIncorporation: countryOfIncorporation?.label,
@@ -88,15 +101,27 @@ export const corporateTransformKycDto = (values: any) => {
     taxCountry: taxCountry?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
     beneficialOwners: JSON.stringify(
-      beneficialOwners.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+      beneficialOwners.map(({ id, fullName, nationality, dateOfBirth, address, shareholding, proofOfIdentity }: any) => ({
         id: id || null,
         fullName,
+        nationality,
+        dateOfBirth,
+        address,
         shareholding: +shareholding,
-        proofOfAddress: proofOfAddress?.id || null,
+        proofOfIdentity: proofOfIdentity?.id || null,
+      }))
+    ),
+    corporateMembers: JSON.stringify(
+      corporateMembers?.map(({ id, fullName, nationality, designation, proofOfIdentity }: any) => ({
+        id: id || null,
+        fullName,
+        nationality,
+        designation,
         proofOfIdentity: proofOfIdentity?.id || null,
       }))
     ),
     beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),
+    corporateMembersIdentity: corporateMembers?.map(({ proofOfIdentity }: any) => proofOfIdentity),
     beneficialOwnersAddress: beneficialOwners.map(({ proofOfAddress }: any) => proofOfAddress),
   }
 }
@@ -112,6 +137,7 @@ export const individualTransformApiData = (data: any, referralCode?: any) => {
     gender,
     nationality,
     income,
+    secondaryContactDetails,
     occupation,
     idType,
   } = data
@@ -141,6 +167,7 @@ export const individualTransformApiData = (data: any, referralCode?: any) => {
     employmentStatus: { value: 0, label: employmentStatus },
     gender: { value: 0, label: gender },
     occupation: { value: 0, label: occupation },
+    secondaryContactDetails: { value: 0, label: secondaryContactDetails },
     nationality: { value: 0, label: nationality },
     income: income && { value: 0, label: income },
     removedDocuments: [],
@@ -177,6 +204,7 @@ export const individualTransformKycDto = (values: any, referralCode?: any) => {
     income,
     isUSTaxPayer,
     occupation,
+    secondaryContactDetails,
     idIssueDate,
     idExpiryDate,
     idType,
@@ -210,6 +238,7 @@ export const individualTransformKycDto = (values: any, referralCode?: any) => {
       ...(sourceOfFunds.some((x: any) => (isLabel ? x.label === 'Others' : x === 'Others')) ? [otherFunds] : []),
     ].join(', '),
 
+    secondaryContactDetails: secondaryContactDetails?.label,
     occupation: occupation?.label,
     employmentStatus: employmentStatus?.label,
     income: income?.label,

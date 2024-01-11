@@ -19,6 +19,9 @@ import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentTypeInfo } from './InvestmentTypeInfo'
 import { text1, text2, text4, text5, text58 } from 'components/LaunchpadMisc/typography'
 import { useActiveWeb3React } from 'hooks/web3'
+import { PreviewModal } from './PreviewModal'
+import { useKYCState } from 'state/kyc/hooks'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 interface Props {
   offer: any
@@ -36,9 +39,13 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
+  const [isModalOpen, handleIsModalOpen] = React.useState(false)
 
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
+
+const { kyc } = useKYCState()
+const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const isClosed = React.useMemo(
     () => !!offer.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status),
@@ -71,8 +78,12 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     }
   }, [canOpen, toggleKYCModal])
 
+  const openModal = () => handleIsModalOpen(true)
+  const closeModal = () => handleIsModalOpen(false)
+
   return (
     <>
+     <PreviewModal offer={offer}  isModalOpen={isModalOpen} closeModal={closeModal} />
       <InvestmentCardContainer>
         <InvestmentCardImage src={offer.cardPicture.public} />
 
@@ -164,6 +175,12 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
                 Learn More
               </InvestButton>
             )}
+
+            {!isKycApproved &&          <InvestButton style={{marginTop: '10px'}} type="button" onClick={openModal}>
+              Preview
+            </InvestButton>}
+
+   
           </InvestmentCardFooter>
         </InvestmentCardInfoContainer>
       </InvestmentCardContainer>
@@ -193,7 +210,7 @@ const InvestmentCardHeader = styled.header`
 `
 
 const InvestmentCardFooter = styled.footer`
-  z-index: 20;
+  // z-index: 20;
 `
 
 const InvestmentCardImage = styled.img`

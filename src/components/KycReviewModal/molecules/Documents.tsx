@@ -16,17 +16,19 @@ const formattedTypes = {
   address: `Proof of Address`,
   selfie: `Selfie`,
   accreditation: `Evidence of Accreditation`,
-  financial: `Financial Documents`,
-  authorization: `Authorization document`,
+  financial: `Additional Documents`,
+  authorization: `Proof of Address`,
+  authorizationIdentity: `Proof of Identity`,
   corporate: `Corporate documents`,
 } as Record<string, string>
 
 interface Props {
   documents: Array<Document>
   title?: string
+  kycKey: any
 }
 
-const extractDocType = (docName: any) => docName.substring(docName.lastIndexOf('.')).split('.')[1]
+const extractDocType = (docName: any) => docName?.substring(docName.lastIndexOf('.')).split('.')[1]
 
 const downloadFile = async (url: string, name: string, type: string) => {
   const link = document.createElement('a')
@@ -44,7 +46,7 @@ const downloadFile = async (url: string, name: string, type: string) => {
   document.body.removeChild(link)
 }
 
-export const Documents = ({ documents, title }: Props) => {
+export const Documents = ({ documents, title, kycKey }: Props) => {
   {
     return (
       <Container>
@@ -54,7 +56,7 @@ export const Documents = ({ documents, title }: Props) => {
           </Title>
         )}
         <Table>
-          <Body documents={documents} />
+          <Body documents={documents} kycKey={kycKey}/>
         </Table>
       </Container>
     )
@@ -70,10 +72,12 @@ const Row = ({
   },
   isFirstRow,
   setPreviewModal,
+  kycKey
 }: {
   file: Document
   isFirstRow: boolean
   setPreviewModal: (value: boolean) => void
+  kycKey: any
 }) => {
   const openModal = () => {
     setPreviewModal(true)
@@ -89,7 +93,7 @@ const Row = ({
   }
 
   return (
-    <BodyRow key={id} onClick={() => handleRowClick(publicUrl, name, mimeType)}>
+    <BodyRow key={id} gridColNo={kycKey === 'corporate' ? 2 : 3} onClick={() => handleRowClick(publicUrl, name, mimeType)}>
       <div>
         {isFirstRow && (
           <ColumnHeader>
@@ -101,15 +105,11 @@ const Row = ({
           <EllipsisText>{name}</EllipsisText>
         </FileName>
       </div>
-      <div>
-        {isFirstRow && (
-          <ColumnHeader>
-            <Trans>{headerCells[1]}</Trans>
-          </ColumnHeader>
-        )}
+      {kycKey === 'individual' && <div>
+        {isFirstRow && <ColumnHeader> <Trans>{headerCells[1]}</Trans></ColumnHeader>}
 
         <Trans>{formattedTypes[type] || type}</Trans>
-      </div>
+      </div>}
       <div>
         {isFirstRow && (
           <ColumnHeader>
@@ -122,10 +122,10 @@ const Row = ({
   )
 }
 
-const Body = ({ documents }: Pick<Props, 'documents'>) => {
+const Body = ({ documents, kycKey }: Omit<Props, 'title'>) => {
   const [openPreviewModal, setPreviewModal] = useState(false)
 
-  const filteredDocs = documents.filter((doc: any) => {
+  const filteredDocs = documents?.filter((doc: any) => {
     const docName = doc?.asset?.name
     const docType = extractDocType(docName)
 
@@ -142,8 +142,8 @@ const Body = ({ documents }: Pick<Props, 'documents'>) => {
         <KycDocPreviewModal isOpen onClose={closeModal} data={filteredDocs} downloadFile={downloadFile} />
       )}
 
-      {documents.map((item, index) => {
-        return <Row key={`kyc-table-${item.id}`} file={item} isFirstRow={!index} setPreviewModal={setPreviewModal} />
+      {documents?.map((item, index) => {
+        return <Row key={`kyc-table-${item.id}`} file={item} isFirstRow={!index} setPreviewModal={setPreviewModal} kycKey={kycKey}/>
       })}
     </>
   )
@@ -185,12 +185,12 @@ const ColumnHeader = styled.div`
   color: ${({ theme: { text11 } }) => `${text11}`};
 `
 
-const BodyRow = styled.a`
+const BodyRow = styled.a<{ gridColNo?: number }>`
   cursor: pointer;
   text-decoration: none;
   color: ${({ theme: { text1 } }) => text1};
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(${({ gridColNo }) => (gridColNo ? gridColNo : '3')}, 1fr);
   column-gap: 200px;
   font-size: 13px;
   overflow: auto;

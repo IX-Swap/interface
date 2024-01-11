@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { MobileDatePicker } from '@material-ui/pickers'
 import styled from 'styled-components'
 import { t } from '@lingui/macro'
@@ -39,6 +39,16 @@ export const DateInput = ({
   format,
   ...props
 }: Props & Partial<LabelProps>) => {
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+  const handleIconClick = () => {
+    setDatePickerOpen(true);
+  };
+  const handleCloseDatePicker = () => {
+    setDatePickerOpen(false);
+  };
+  const handleInputClick = () => {
+    setDatePickerOpen(true);
+  };
   return (
     <Container>
       <KycInputLabel label={`${label}`} error={error} tooltipText={tooltipText} />
@@ -48,6 +58,8 @@ export const DateInput = ({
         </Row>
       ) : (
         <MobileDatePicker
+        open={isDatePickerOpen}
+        onClose={handleCloseDatePicker}
           value={value || null}
           onChange={onChange}
           openTo={openTo ?? 'year'}
@@ -62,8 +74,9 @@ export const DateInput = ({
                 placeholder={placeholder}
                 disabled={isDisabled}
                 error={error}
+                onClick={handleInputClick} 
               />
-              <StyledCalendarIcon />
+              <StyledCalendarIcon onClick={handleIconClick}  />
             </TextFieldContainer>
           )}
           disabled={isDisabled}
@@ -88,6 +101,8 @@ const StyledCalendarIcon = styled(CalendarIcon)`
   position: absolute;
   right: 26px;
   top: 19px;
+  z-index: 1; 
+  cursor: pointer;
 `
 
 const TextField = styled(Input)<{ maxHeight?: number; error?: any }>`
@@ -99,6 +114,7 @@ const TextField = styled(Input)<{ maxHeight?: number; error?: any }>`
   font-size: 16px;
   border: ${({ error, theme }) => (error ? 'solid 1px' + theme.error : '1px solid #E6E6FF')};
   background-color: ${({ theme: { bg0 } }) => bg0};
+  cursor: pointer;
 `
 
 const Container = styled.div`

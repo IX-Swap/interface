@@ -139,7 +139,7 @@ export const HeaderLinks = () => {
 
       {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
-          disabled={!isApproved}
+          // disabled={!isApproved}
           data-testid="securityTokensButton"
           id={`stake-nav-link`}
           to={routes.securityTokens('tokens')}
@@ -215,11 +215,11 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      <StyledNavLink id={`issuance-nav-link`} to={'/launchpad'}>
+      <StyledNavLink  id={`issuance-nav-link`} to={'/launchpad'}>
         <Trans>Launchpad</Trans>
       </StyledNavLink>
       {showIssuance && <StyledNavLink to="/issuance">Issuance Dashboard</StyledNavLink>}
-      {isAdmin && <StyledNavLink to="/admin">Admin</StyledNavLink>}
+      {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && <StyledNavLink to="/admin">Admin</StyledNavLink>}
     </HeaderLinksWrap>
   )
 }
@@ -280,14 +280,14 @@ const navLinkStyles = css`
   font-weight: 500;
   &.${activeClassName} {
     opacity: 1;
-    color: ${({ theme }) => theme.config.text?.main || theme.text11};
+    color: #B8B8CC;
   }
 
   :hover,
   :focus {
     color: ${({ theme }) => darken(0.05, theme.text11)};
     &.${activeClassName} {
-      color: ${({ theme }) => theme.config.text?.main || theme.text1};
+      color: #B8B8CC;
     }
   }
   @media (max-width: 1500px) {

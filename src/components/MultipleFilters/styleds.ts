@@ -13,7 +13,8 @@ export const Container = styled.div`
     grid-template-columns: 1fr;
   }
   @media (max-width: ${MEDIA_WIDTHS.upToLarge}px) {
-    display: none;
+    grid-template-columns: 1fr;
+    // display: none;
   }
 `
 
@@ -22,16 +23,18 @@ export const FiltersContainer = styled.div`
   align-items: center;
   column-gap: 10px;
   .dropdown {
-    min-width: 160px;
+    // min-width: 160px;
     border-radius: 0;
   }
-  > div:first-child {
-    // border-top-left-radius: 30px;
-    // border-bottom-left-radius: 30px;
+  > div:nth-child(2) {
+    border-radius: 6px;
+    margin-left: -20px;
+  }
+  > div:second-child {
+    border-radius: 6px;
   }
   > div:last-child {
-    // border-top-right-radius: 30px;
-    // border-bottom-right-radius: 30px;
+ border-radius: 6px;
   }
 `
 
