@@ -44,7 +44,7 @@ export const individualErrorsSchema = yup.object().shape({
   .required('Required')
   .test('nonZeroValue', 'Value must not be 0', (value: any) => {
     // Assuming that value is an object with a 'value' property
-    return value && value.value !== 0;
+    return value && value.label !== null;
   }),
 
   proofOfAddress: yup.array().when('secondaryContactDetails', {
