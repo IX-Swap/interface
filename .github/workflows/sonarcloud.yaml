@@ -28,7 +28,7 @@ jobs:
       - name: Run Tests
         run: yarn test:ci
         env:
-          REACT_APP_API_URL: https://dev.api.mozork.com
+          IXSP_REACT_APP_API_URL: https://dev.api.mozork.com
 
       - name: Fix code coverage paths for Sonar
         working-directory: ./coverage

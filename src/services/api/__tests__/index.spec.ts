@@ -21,7 +21,7 @@ describe('apiService', () => {
     jest.spyOn(axios, 'create')
 
     expect(axios.create).toHaveBeenCalledTimes(1)
-    expect(axios.defaults.baseURL).toBe(process.env.REACT_APP_API_URL)
+    expect(axios.defaults.baseURL).toBe(process.env.IXSP_REACT_APP_API_URL)
     expect(axios.defaults.withCredentials).toBe(true)
   })
 

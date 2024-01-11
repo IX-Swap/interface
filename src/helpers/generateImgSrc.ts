@@ -4,7 +4,7 @@ export const generateImgSrc = (src: string) => {
 
   const relativePath = new RegExp('^/', 'i')
   if (relativePath.test(src))
-    return `${process.env.REACT_APP_API_URL ?? ''}${src}`
+    return `${process.env.IXSP_REACT_APP_API_URL ?? ''}${src}`
 
   return src
 }
