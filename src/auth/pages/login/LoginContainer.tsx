@@ -41,21 +41,5 @@ export const LoginContainer = () => {
     return <Locked email={email} />
   }
 
-  return (
-    <Form
-      data-testid='login-form'
-      defaultValues={loginFormInitialValues}
-      validationSchema={loginFormValidationSchema}
-      onSubmit={handleSubmit}
-    >
-      {attempts === MAX_LOGIN_ATTEMPTS && RECAPTCHA_KEY !== undefined ? (
-        <Recaptcha onVerify={resetAttempts} />
-      ) : (
-        <>
-          <Login hidden={isOtpStep} isLoading={isLoading} attempts={attempts} />
-          {isOtpStep ? <OTPFields isLoading={isLoading} /> : null}
-        </>
-      )}
-    </Form>
-  )
+  return <Login hidden={isOtpStep} isLoading={isLoading} attempts={attempts} />
 }

@@ -28,15 +28,5 @@ export const AppRoute = memo((props: AppRouteProps) => {
     }
   }
 
-  return (
-    <>
-      <ScrollToTop />
-      <SentryRoute {...rest} path={path}>
-        {breadcrumb !== undefined && (
-          <Breadcrumb label={breadcrumb} path={path} />
-        )}
-        {children}
-      </SentryRoute>
-    </>
-  )
+  return children
 })
