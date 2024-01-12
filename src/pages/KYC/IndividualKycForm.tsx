@@ -40,8 +40,8 @@ import {
   sourceOfFunds,
   promptValue,
   occupationList,
-  SecondaryContactDetails,
-  socialMediaPlatform,
+  // SecondaryContactDetails,
+  // socialMediaPlatform,
 } from './mock'
 import {
   FormCard,
@@ -68,6 +68,23 @@ type FormSubmitHanderArgs = {
   updateFn: (id: number, body: any) => any
   validate: boolean
 }
+
+const SecondaryContactDetails = [
+  { value: 1, label: 'Proof of Address Document' },
+  { value: 2, label: 'Business Email Address' },
+  { value: 3, label: 'Social Media Handle' },
+  // Add more items as needed
+]
+
+const socialMediaPlatform = [
+  { value: 'Telegram', label: 'Telegram' },
+  { value: 'Discord', label: 'Discord' },
+  { value: 'X.com', label: 'X.com' },
+  { value: 'Facebook', label: 'Facebook' },
+  { value: 'Instagram', label: 'Instagram' },
+  { value: 'LinkedIn', label: 'LinkedIn' },
+  // Add more items as needed
+]
 
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -107,7 +124,7 @@ export default function IndividualKycForm() {
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
   const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
   const [referralCode, setReferralCode] = useState<string | null>(null)
-  const [selectedOption, setSelectedOption] = useState(null)
+  const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const openConfirmationModal = useCallback(() => {
     setShowOptoutModal(false)
     setShowOptoutConfirmationModal(true)
@@ -133,8 +150,7 @@ export default function IndividualKycForm() {
     } else if (storedReferralCode) {
       setReferralCode(storedReferralCode)
     }
-    // setReferralCode(code)
-    // localStorage.setItem('referralCode', code)
+
     if (account && prevAccount && account !== prevAccount) {
       history.push('/kyc')
     }
@@ -175,6 +191,11 @@ export default function IndividualKycForm() {
 
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
+    const IsNewKyc = localStorage.getItem('newKyc')
+    if(IsNewKyc){
+      console.log(IsNewKyc, 'clearedclearedcleared')
+      addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } })
+    }
 
     return () => {
       window.removeEventListener('beforeunload', alertUser)
@@ -309,12 +330,11 @@ export default function IndividualKycForm() {
   }
 
   const onSelectChangeNew = (key: string, value: any, setFieldValue: any) => {
-    const formattedValue = value.label; // Assuming 'label' is the property that contains the display text
-  
-    setFieldValue(key, formattedValue, false);
-    validateValue(key, value);
-    validationSeen(key);
-  };
+    const formattedValue = value.label
+    setFieldValue(key, formattedValue, false)
+    validateValue(key, value)
+    validationSeen(key)
+  }
 
   const onRadioChange = (key: string, value: any, setFieldValue: any) => {
     setFieldValue(key, value, false)
@@ -454,6 +474,7 @@ export default function IndividualKycForm() {
 
   const formSubmitHandler = useCallback(
     async (values: any, { createFn, updateFn, validate = true }: FormSubmitHanderArgs) => {
+      localStorage.removeItem('newKyc')
       try {
         if (validate) {
           await individualErrorsSchema.validate(values, { abortEarly: false })
@@ -496,12 +517,13 @@ export default function IndividualKycForm() {
     []
   )
 
-  const onSecondaryContactDetailsChange = (item: { value: React.SetStateAction<null> }) => {
-    setSelectedOption(item.value)
+  const onSecondaryContactDetailsChange = (item: { value: number | null }) => {
+    setSelectedOption(item?.value)
   }
 
   const saveProgress = useCallback(
     async (values: any) => {
+      localStorage.removeItem('newKyc')
       await formSubmitHandler(values, {
         createFn: (body) => createIndividualKYC(body, true),
         updateFn: (id, body) => updateIndividualKYC(id, body, true),
@@ -528,6 +550,7 @@ export default function IndividualKycForm() {
             enableReinitialize
             onSubmit={async (values) => {
               try {
+                localStorage.removeItem('newKyc')
                 await individualErrorsSchema.validate(values, { abortEarly: false })
                 canLeavePage.current = true
 
@@ -587,7 +610,8 @@ export default function IndividualKycForm() {
                 isFilled('nationality') &&
                 isFilled('citizenship') &&
                 isFilled('phoneNumber') &&
-                isFilled('email')
+                isFilled('email') &&
+                isFilled('secondaryContactDetails')
 
               const financialFilled =
                 shouldValidate &&
@@ -620,7 +644,6 @@ export default function IndividualKycForm() {
 
               const financialFailed = !financialFilled
               const statusDeclarationFailed = !statusDeclarationFilled
-
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
@@ -969,22 +992,55 @@ export default function IndividualKycForm() {
 
                           <div>
                             <Select
+                              error={errors.secondaryContactDetails}
                               subText="Please select one from the following options in the dropdown (Proof of Address Document, Business Email Address, or Social Media Handle)"
                               withScroll
                               label="Secondary Contact Details"
                               placeholder="Secondary Contact Details"
-                              id="SecondaryContactDetails"
+                              id="SecondaryContactDetailsDropDown"
                               selectedItem={values.secondaryContactDetails}
                               items={SecondaryContactDetails}
-                              onSelect={(item) => {
-                                onSelectChange('secondaryContactDetails', item, setFieldValue)
-                                onSecondaryContactDetailsChange(item)
+                              onSelect={(secondaryContactDetails) => {
+                                onSelectChange('secondaryContactDetails', secondaryContactDetails, setFieldValue)
+                                onSecondaryContactDetailsChange(secondaryContactDetails)
                               }}
-                              
                             />
 
                             <div style={{ marginTop: '20px' }}>
-                              {selectedOption === 1 && (
+                              {(values?.secondaryContactDetails?.label === 'Social Media Handle' ||
+                                selectedOption === 3) && (
+                                <FormGrid>
+                                  <Select
+                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, Facebook, Instagram, LinkedIn, or X.com)"
+                                    error={errors.socialPlatform}
+                                    withScroll
+                                    id="socialPlatform"
+                                    label="Social Media Platform"
+                                    placeholder="Social Media Platform"
+                                    selectedItem={values.socialPlatform}
+                                    items={socialMediaPlatform}
+                                    onSelect={(socialMediaPlatform) =>
+                                      onSelectChange('socialPlatform', socialMediaPlatform?.value, setFieldValue)
+                                    }
+                                  />
+
+                                  <TextInput
+                                    style={{ marginTop: '14px' }}
+                                    subText="Please provide your Social Media Handle in the selected Social Media Platform as an alternative contact method"
+                                    placeholder="Social Media Handle"
+                                    id="handleName"
+                                    label="Social Media Handle"
+                                    value={values.handleName}
+                                    error={errors.handleName}
+                                    onChange={(e) =>
+                                      onChangeInput('handleName', e.currentTarget.value, values, setFieldValue)
+                                    }
+                                  />
+                                </FormGrid>
+                              )}
+
+                              {(values?.secondaryContactDetails?.label === 'Proof of Address Document' ||
+                                selectedOption === 1) && (
                                 <Uploader
                                   title="Proof of Address"
                                   subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
@@ -1000,23 +1056,64 @@ export default function IndividualKycForm() {
                                 />
                               )}
 
-                              {selectedOption === 2 && (
+                              {(values?.secondaryContactDetails?.label === 'Business Email Address' ||
+                                selectedOption === 2) && (
                                 <TextInput
-                                  subText="Please input Business Email Address as alternative contact method"
+                                  subText="Please input Business Email Address as an alternative contact method"
                                   placeholder="Business Email Address"
                                   id="businessEmailAddress"
                                   label="Business Email Address"
-                                  value={values.alternateEmail}
                                   error={errors.alternateEmail}
-                                  onChange={(e: any) =>
+                                  value={values.alternateEmail}
+                                  onChange={(e) =>
                                     onChangeInput('alternateEmail', e.currentTarget.value, values, setFieldValue)
                                   }
                                 />
                               )}
-                              {selectedOption === 3 && (
+
+                              <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>
+                                *Selecting a business email address or social media handle requires an acknowledgment
+                                process for identity verification. A verification message and/or email will be sent to
+                                your provided personal and/or business email address and/or social media account, that
+                                will require a response from you.
+                              </p>
+                            </div>
+
+                            {/* <div style={{ marginTop: '20px' }}>
+                              {(selectedOption === 1 ) && (
+                                <Uploader
+                                  title="Proof of Address"
+                                  subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
+                                  error={errors.proofOfAddress}
+                                  files={values.proofOfAddress}
+                                  onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                                  handleDeleteClick={handleImageDelete(
+                                    values,
+                                    'proofOfAddress',
+                                    values.removedDocuments,
+                                    setFieldValue
+                                  )}
+                                />
+                              )}
+
+                              {(selectedOption === 2) && (
+                                <TextInput
+                                  subText="Please input Business Email Address as an alternative contact method"
+                                  placeholder="Business Email Address"
+                                  id="businessEmailAddress"
+                                  label="Business Email Address"
+                                  error={errors.alternateEmail}
+                                  value={values.alternateEmail}
+                                  onChange={(e) =>
+                                    onChangeInput('alternateEmail', e.currentTarget.value, values, setFieldValue)
+                                  }
+                                />
+                              )}
+
+                              {(selectedOption === 3) && (
                                 <FormGrid>
                                   <Select
-                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, or X.com)"
+                                    subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, Facebook, Instagram, LinkedIn, or X.com)"
                                     error={errors.socialPlatform}
                                     withScroll
                                     id="socialPlatform"
@@ -1025,31 +1122,32 @@ export default function IndividualKycForm() {
                                     selectedItem={values.socialPlatform}
                                     items={socialMediaPlatform}
                                     onSelect={(socialMediaPlatform) =>
-                                      onSelectChangeNew('socialPlatform', socialMediaPlatform, setFieldValue)
+                                      onSelectChange('socialPlatform', socialMediaPlatform?.value, setFieldValue)
                                     }
                                   />
 
                                   <TextInput
-                                    subText="Please provide your Social Media Handle in the selected Social Media Platform as alternative contact method"
+                                    subText="Please provide your Social Media Handle in the selected Social Media Platform as an alternative contact method"
                                     placeholder="Social Media Handle"
                                     id="handleName"
                                     label="Social Media Handle"
                                     value={values.handleName}
                                     error={errors.handleName}
-                                    onChange={(e: any) =>
-                                      onChangeInput(
-                                        'handleName',
-                                        e.currentTarget.value,
-                                        values,
-                                        setFieldValue
-                                      )
+                                    onChange={(e) =>
+                                      onChangeInput('handleName', e.currentTarget.value, values, setFieldValue)
                                     }
                                   />
                                 </FormGrid>
                               )}
-                            </div>
-                            {/* Add additional conditions for other options if needed */}
+                              <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>
+                                *Selecting a business email address or social media handle requires an acknowledgment
+                                process for identity verification. A verification message and/or email will be sent to
+                                your provided personal and/or business email address and/or social media account, that
+                                will require a response from you.
+                              </p>
+                            </div> */}
                           </div>
+
                           {/* <Select
                             withScroll
                             label="Secondary Contact Details"

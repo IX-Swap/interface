@@ -16,7 +16,7 @@ const errorLabelMap = [
   // { field: 'gender', label: 'Gender' },
 
   { field: 'nationality', label: 'Nationality' },
-  { field: 'citizenship', label: 'citizenship' },
+  { field: 'citizenship', label: 'Citizenship' },
   { field: 'email', label: 'Email' },
   { field: 'phoneNumber', label: 'Phone Number' },
 
@@ -28,12 +28,12 @@ const errorLabelMap = [
   { field: 'idType', label: 'ID Type' },
   { field: 'idNumber', label: 'ID Number' },
   { field: 'idIssueDate', label: 'ID Issuance Date' },
-  { field: 'idExpiryDate', label: 'ID ExpirationDate' },
+  { field: 'idExpiryDate', label: 'ID Expiration Date' },
 
   { field: 'proofOfIdentity', label: 'Proof of Identity' },
-  { field: 'proofOfAddress', label: 'Proof of Address' },
   { field: 'selfie', label: 'Selfie' },
-
+  
+  { field: 'proofOfAddress', label: 'Proof of Address' },
   { field: 'secondaryContactDetails', label: 'Secondary Contact Details' },
   { field: 'alternateEmail', label: 'Business Email Address' },
   { field: 'socialPlatform', label: 'Social Media Platform' },
@@ -45,8 +45,8 @@ const errorLabelMap = [
   { field: 'income', label: 'Income' },
 
   { field: 'taxDeclarations', label: 'Tax Declarations' },
-  { field: 'country', label: 'Country of Tax Declaration' },
-  { field: 'idNumber', label: 'Tax Identification Number (TIN)' },
+  { field: 'countryOfTaxDeclaration', label: 'Country of Tax Declaration' },
+  { field: 'taxNumber', label: 'Tax Identification Number (TIN)' },
   { field: 'reason', label: 'Reason' },
 
   { field: 'sourceOfFunds', label: 'Source of Funds' },
@@ -61,14 +61,26 @@ const errorLabelMap = [
   { field: 'acceptRefusalRight', label: 'Opt-out Confirmation' },
   { field: 'evidenceOfAccreditation', label: 'Evidence of Accreditation' },
   { field: 'confirmStatusDeclaration', label: 'Investor Confirmation' },
-]
+];
+
 
 const findFieldLabel = (key: string): string | undefined => {
   if (key.startsWith('taxDeclarations')) {
     return `Tax Declarations - ${findFieldLabel(key.split('.').pop() ?? '') ?? ''}`.trim()
   }
 
-  return errorLabelMap.find((entry) => entry.field === key)?.label
+  switch (key) {
+    case 'secondaryContactDetails':
+      return 'Secondary Contact Details';
+    case 'alternateEmail':
+      return 'Business Email Address';
+    case 'socialPlatform':
+      return 'Social Media Platform';
+    case 'handleName':
+      return 'Social Media Handle';
+    default:
+      return errorLabelMap.find((entry) => entry.field === key)?.label;
+  }
 }
 
 export const KYCValidationErrors = ({ fields }: KYCValidationErrorsProps) => {

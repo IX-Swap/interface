@@ -31,13 +31,55 @@ export const individualErrorsSchema = yup.object().shape({
     .nullable()
     .when('idType', {
       is: (idType: any) => {
-        return idType?.label !== IdentityDocumentType.NATIONAL_ID && idType?.label 
+        return idType?.label !== IdentityDocumentType.NATIONAL_ID && idType?.label
       },
       then: yup.mixed().nullable().required('Required'),
     }),
 
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
+
+  secondaryContactDetails: yup
+  .object()
+  .nullable()
+  .required('Required')
+  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+    // Assuming that value is an object with a 'value' property
+    return value && value.label !== null;
+  }),
+
+  proofOfAddress: yup.array().when('secondaryContactDetails', {
+    is: (value: any) => value && value.value === 1,
+    then: yup.array().min(1, 'Required').nullable(),
+  }),
+
+  alternateEmail: yup
+  .string()
+  .nullable()
+  .when('secondaryContactDetails', {
+    is: (value: any) => value && value.value === 2,
+    then: yup.string().nullable().email('Invalid email').required('Required'),
+  }),
+
+  socialPlatform: yup
+    .string()
+    .nullable()
+    .when('secondaryContactDetails', {
+      is: (value: any) => value && value.value === 3,
+      then: yup.string().nullable().required('Required'),
+    }),
+
+    handleName: yup
+    .string()
+    .nullable()
+    .when('secondaryContactDetails', {
+      is: (value: any) => value && value.value === 3,
+      then: yup.string().nullable().required('Required'),
+    }),
   // proofOfAddress: yup.array().min(1, 'Required').nullable(),
+  // alternateEmail: yup.string().email('Invalid email').required('Required'),
+  // socialPlatform: yup.string().required('Required'),
+  // handleName: yup.string().required('Required'),
+
   selfie: yup.array().min(1, 'Required').nullable(),
   occupation: yup.object().nullable().required('Required'),
   employmentStatus: yup.object().nullable().required('Required'),
@@ -199,7 +241,7 @@ export const corporateErrorsSchema = yup.object().shape({
       })
     )
     .min(1, 'At least one corporate member')
-    .required('Required'),  
+    .required('Required'),
   corporateDocuments: yup.array().min(1, 'Required').nullable(),
   financialDocuments: yup.array().min(1, 'Required').nullable(),
 })
