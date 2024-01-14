@@ -131,12 +131,18 @@ export const HeaderLinks = () => {
 
   return (
     <HeaderLinksWrap links={7}>
-      {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink id={`swap-nav-link`} to={'/swap'} data-testid={`swap-nav-link`}>
-          <Trans>Swap/Trade</Trans>
-        </StyledNavLink>
+      {isAllowed('/charts') && account && isWhitelisted && (
+        <MenuExternalLink
+          disabled={!isApproved}
+          target="_self"
+          href={config?.chartsUrl || 'https://info.ixswap.io/home'}
+        >
+          <Trans>Charts</Trans>
+        </MenuExternalLink>
       )}
-
+      <StyledNavLink id={`issuance-nav-link`} to={'/launchpad'}>
+        <Trans>Launchpad</Trans>
+      </StyledNavLink>
       {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
           // disabled={!isApproved}
@@ -154,6 +160,11 @@ export const HeaderLinks = () => {
       {isAllowed('/pool') && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
           <Trans>Liquidity Pools</Trans>
+        </StyledNavLink>
+      )}
+      {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink id={`swap-nav-link`} to={'/swap'} data-testid={`swap-nav-link`}>
+          <Trans>Swap/Trade</Trans>
         </StyledNavLink>
       )}
 
@@ -199,27 +210,16 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {isAllowed('/charts') && account && isWhitelisted && (
-        <MenuExternalLink
-          disabled={!isApproved}
-          target="_self"
-          href={config?.chartsUrl || 'https://info.ixswap.io/home'}
-        >
-          <Trans>Charts</Trans>
-        </MenuExternalLink>
-      )}
-
       {isAllowed(routes.faucet) && account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
         <StyledNavLink disabled={!isApproved} id={`faucet-nav-link`} to={routes.faucet}>
           <Trans>Faucet</Trans>
         </StyledNavLink>
       )}
 
-      <StyledNavLink  id={`issuance-nav-link`} to={'/launchpad'}>
-        <Trans>Launchpad</Trans>
-      </StyledNavLink>
       {showIssuance && <StyledNavLink to="/issuance">Issuance Dashboard</StyledNavLink>}
-      {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && <StyledNavLink to="/admin">Admin</StyledNavLink>}
+      {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink to="/admin">Admin</StyledNavLink>
+      )}
     </HeaderLinksWrap>
   )
 }
@@ -280,14 +280,14 @@ const navLinkStyles = css`
   font-weight: 500;
   &.${activeClassName} {
     opacity: 1;
-    color: #B8B8CC;
+    color: #b8b8cc;
   }
 
   :hover,
   :focus {
     color: ${({ theme }) => darken(0.05, theme.text11)};
     &.${activeClassName} {
-      color: #B8B8CC;
+      color: #b8b8cc;
     }
   }
   @media (max-width: 1500px) {
