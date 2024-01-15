@@ -359,7 +359,7 @@ export const Uploader: FC<UploaderProps> = ({
       {!isDisabled && (
         <Upload
           isDisabled={isDisabled}
-          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}, ${AcceptFiles.FILLES} , ${AcceptFiles.NOT_HEIC}` as AcceptFiles}
           data-testid={id}
           file={null}
           onDrop={onDrop}

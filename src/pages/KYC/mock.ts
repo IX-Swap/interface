@@ -21,21 +21,13 @@ export const sourceOfFunds = [
   'Others',
 ].map((name, index) => ({ value: ++index, label: name }))
 
+export const SecondaryContactDetails = ['Proof of Address', 'Business Email Address', 'Social Media Handle'].map(
+  (name, index) => ({ value: ++index, label: name })
+)
 
-
-
-export const SecondaryContactDetails = [
-  'Proof of Address',
-  'Business Email Address',
-  'Social Media Handle',
-].map((name, index) => ({ value: ++index, label: name }))
-
-export const socialMediaPlatform = [
-  'Telegram',
-  'Discord',
-  'X.com',
-].map((name, index) => ({ value: ++index, label: name }))
-
+export const socialMediaPlatform = ['Telegram', 'Discord', 'X.com', 'Facebook', 'Instagram', 'LinkedIn'].map(
+  (name, index) => ({ value: ++index, label: name })
+)
 
 export const fatcaOptions = [
   'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus.',
@@ -267,7 +259,9 @@ export const corporateFormInitialValues: IFormInitial = {
   usTin: '',
   taxCountry: null,
   taxNumber: '',
-  beneficialOwners: [{ fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfIdentity: null }],
+  beneficialOwners: [
+    { fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfIdentity: null },
+  ],
   corporateMembers: [{ fullName: '', nationality: '', designation: '', proofOfIdentity: null }],
   corporateDocuments: [],
   financialDocuments: [],
