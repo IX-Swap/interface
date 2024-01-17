@@ -20,6 +20,7 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "7.0.2-alpha.0",
     "@web3-react/walletlink-connector": "^6.2.14",
+    "@web3modal/ethers5": "^3.5.6",
     "add": "^2.0.6",
     "axios": "^0.21.2",
     "buffer": "^6.0.3",
@@ -30,7 +31,7 @@
     "dompurify": "^2.3.1",
     "draft-js": "^0.11.5",
     "draftjs-to-html": "^0.9.1",
-    "ethers": "^5.6.2",
+    "ethers": "5.7.2",
     "kaktana-react-lightweight-charts": "^2.0.0",
     "lodash": "^4.17.21",
     "material-ui-phone-number": "^3.0.0",
@@ -166,14 +167,13 @@
     "typechain": "^8.0.0",
     "url-loader": "^4.1.1",
     "wait-on": "^6.0.0",
-    "webpack": "^5.65.0",
+    "webpack": "5.71",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.7.2"
   },
   "resolutions": {
-    "babel-loader": "8.1.0",
-    "@walletconnect/ethereum-provider": "1.6.5"
+    "babel-loader": "8.1.0"
   },
   "scripts": {
     "start": "NODE_ENV=development webpack serve --color --progress",
