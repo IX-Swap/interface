@@ -19,10 +19,6 @@ export const Header = () => {
 
   return (
     <AppBar position='fixed' elevation={0} className={classes.wrapper}>
-      <w3m-button />
-      <w3m-network-button />
-      <w3m-connect-button />
-      <w3m-account-button />
       <Toolbar className={classes.toolbar}>
         <NavDrawerToggle />
         <AppLogo />
