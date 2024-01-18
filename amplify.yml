@@ -9,6 +9,8 @@ frontend:
         - yarn install
     build:
       commands:
+        - nvm use $VERSION_NODE_18
+        - node -v
         - yarn run build
   artifacts:
     baseDirectory: build
