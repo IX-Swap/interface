@@ -3,6 +3,8 @@ frontend:
   phases:
     preBuild:
       commands:
+        - nvm use $VERSION_NODE_18
+        - node -v
         - yarn add -D rimraf
         - yarn pre-install
         - yarn add git+https://${CHARTING_LIBRARY_TOKEN}@github.com/InvestaX/charting_library.git#master
