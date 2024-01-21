@@ -138,11 +138,17 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
       console.log(result)
 
       // Reset the code values
-      console.log(boxBorderColor, 'boxBorderColor')
+
       // Reset the border color to the initial color (black)
       setBoxBorderColor('#E6E6FF')
       // resetCode();
 
+      addPopup({
+        info: {
+          success: true,
+          summary: `Your email verification code has been successfully resent. Please check your inbox and complete the verification process. `,
+        },
+      })
       // Reset the timer to 60 seconds
       setTimer(60)
     } catch (error) {
