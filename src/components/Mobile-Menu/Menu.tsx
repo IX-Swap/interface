@@ -145,7 +145,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
           {isAllowed(routes.securityTokens()) && chainId && chains.includes(chainId) && isWhitelisted && (
             <>
               <MenuListItem
-                disabled={!isApproved}
+                // disabled={!isApproved}
                 id={`security-nav-link`}
                 to={routes.securityTokens('tokens')}
                 onClick={close}
