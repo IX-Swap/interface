@@ -90,7 +90,6 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
 
   const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data.status as any)
-  console.log(kyc, 'jjjjjjj')
   return (
     <>
       <ReasonModal
