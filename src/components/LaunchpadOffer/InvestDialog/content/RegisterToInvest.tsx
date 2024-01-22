@@ -15,6 +15,7 @@ import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { text28, text59, text9 } from 'components/LaunchpadMisc/typography'
 import { useGetWarning } from '../utils/ConvertationField'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
+import { ReactComponent as NewEyeIcon } from '../../../../assets/images/NewEyeIcon.svg' 
 
 interface Props {
   offer: Offer
@@ -183,21 +184,22 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
           )}
 
           {!whitelist.loading && whitelist.status && whitelist.isInterested && (
-            <Column justifyContent="center" alignItems="center" gap="1rem" style={{ flexGrow: 1 }}>
+            <Column justifyContent="center" alignItems="center" gap="1rem" >
               <KYCPromptIconContainer>
                 {whitelist.status === WhitelistStatus.accepted && (
                   <Check color={theme.launchpad.colors.success} size="35" />
                 )}
                 {whitelist.status !== WhitelistStatus.accepted && (
-                  <Clock color={theme.launchpad.colors.primary} size="35" />
+                  <NewEyeIcon />
                 )}
               </KYCPromptIconContainer>
 
               <WhitelistMessage>
                 {whitelist.status === WhitelistStatus.pending && (
                   <>
-                    Thank you. Please check by <b>{moment(props.offer.timeframe.preSale).format('DD/MM/YYYY')}</b> for
-                    the result of your registration application.
+                  Thank you for your registration, we are still reviewing your registration to invest in the Pre-Sale stage.
+                    {/* Thank you. Please check by <b>{moment(props.offer.timeframe.preSale).format('DD/MM/YYYY')}</b> for
+                    the result of your registration application. */}
                   </>
                 )}
 
