@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie'
 import { CloseIcon, TYPE } from 'theme'
 
 import { Card } from './styleds'
+import { isMobile } from 'react-device-detect'
 
 export const Announcement: FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,15 +20,16 @@ export const Announcement: FC = () => {
 
   return (
     <Card>
-      <TYPE.title10 textAlign="center" marginRight="8px" color="bg1">
+      <TYPE.title10  textAlign="center" marginRight="8px" color="#FFFFFF">
         {annoumcementText}
       </TYPE.title10>
       <CloseIcon
         onClick={onClose}
         size="24px"
-        style={{ minWidth: 24, minHeight: 24 }} // for mobile
-        color="#1A123A"
+        style={{ minWidth: 24, minHeight: 24 , marginLeft: isMobile ? '' : '40px'}} // for mobile
+        color="#FFFFFF"
         data-testid="cross"
+
       />
     </Card>
   )
