@@ -92,9 +92,9 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data.status as any)
 
   const renderReferralInfo = () => {
-    const referredBy = data?.individual?.ReferredBy || data?.corporate?.ReferredBy || '-';
-    const referralCode = data?.individual?.referralCode || data?.corporate?.referralCode || '-';
-  
+    const referredBy = data?.individual?.referredBy || data?.corporate?.referredBy || '-'
+    const referralCode = data?.individual?.referralCode || data?.corporate?.referralCode || '-'
+
     return (
       <span
         style={{
@@ -107,8 +107,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
           fontWeight: '600',
         }}
       >
-        <span style={{ color: '#B8B8CC' }}>Referred by</span>{' '}
-        <span style={{ color: '#292933' }}>{referredBy}</span>
+        <span style={{ color: '#B8B8CC' }}>Referred by</span> <span style={{ color: '#292933' }}>{referredBy}</span>
         <span style={{ color: '#6666FF' }}>{referralCode}</span>
         <div
           style={{
@@ -127,12 +126,9 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
           </Copy>
         </div>
       </span>
-    );
-  };
-  
-  
+    )
+  }
 
-  
   return (
     <>
       <ReasonModal
@@ -175,8 +171,13 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
 
               {/* {referralCode && ( */}
 
-              {data?.individual?.ReferredBy || data?.corporate?.ReferredBy || data?.individual?.referralCode || data?.corporate?.referralCode ? renderReferralInfo() : ''}
-      
+              {data?.individual?.referredBy ||
+              data?.corporate?.referredBy ||
+              data?.individual?.referralCode ||
+              data?.corporate?.referralCode
+                ? renderReferralInfo()
+                : ''}
+
               {/* )} */}
 
               {/* <CloseIcon style={{ color: '#555566' }} data-testid="cross" onClick={onClose} /> */}
