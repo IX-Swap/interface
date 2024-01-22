@@ -44,6 +44,7 @@ export const NotAvailablePage = () => {
   const changeNetwork = (targetChain: number) => {
     if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
       switchToNetwork({ provider, chainId: targetChain })
+    } else {
     }
   }
 
@@ -101,6 +102,23 @@ export const NotAvailablePage = () => {
           <ConnectionDialog onConnect={onConnect} onClose={toggleModal} />
         </Modal>
       </ConnectWalletContainer>
+    )
+  }
+
+  if (!provider?.provider?.isMetaMask) {
+    return (
+      <Container>
+        <Title>
+          <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
+          <br /> <Trans>{`on this Blockchain network`}</Trans>
+        </Title>
+        <Info>
+          <Trans>
+            You have connected to Metamask through Wallet Connect. Please switch the network in your Metamask wallet in
+            your phone.
+          </Trans>
+        </Info>
+      </Container>
     )
   }
 

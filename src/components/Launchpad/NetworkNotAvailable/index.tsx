@@ -26,6 +26,23 @@ export const NetworkNotAvailable = () => {
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
+  if (!provider?.provider?.isMetaMask) {
+    return (
+      <Container>
+        <Title>
+          <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
+          <br /> <Trans>{`on this Blockchain network`}</Trans>
+        </Title>
+        <Info>
+          <Trans>
+            You have connected to Metamask through Wallet Connect. Please switch the network in your Metamask wallet in
+            your phone.
+          </Trans>
+        </Info>
+      </Container>
+    )
+  }
+
   return (
     <Container>
       <Title>
