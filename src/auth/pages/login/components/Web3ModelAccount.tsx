@@ -8,7 +8,7 @@ import {
 import { useCookies } from 'react-cookie'
 
 export function Web3ModelAccount() {
-  const { address, chainId, isConnected } = useWeb3ModalAccount()
+  const { address, isConnected } = useWeb3ModalAccount()
   const { signWallet, status } = useConnectMetamaskWalletWeb3Modal()
   const [cookies, setCookie] = useCookies(['isSigned'])
 
@@ -43,15 +43,6 @@ export function Web3ModelAccount() {
     }
   }, [status, setCookie, cookies])
 
-  return (
-    <>
-      <div>
-        <h1>Connected</h1>
-        <p>Address: {address}</p>
-        <p>ChainId: {chainId}</p>
-        <p>Status: {status}</p>
-      </div>
-    </>
-  )
+  return <></>
   // ...
 }
