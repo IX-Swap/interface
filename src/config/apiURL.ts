@@ -491,5 +491,7 @@ export const blockchainNetworksURL = {
     `/blockchain/settings/decimal/${network}/${decimal}`,
   generateWalletHash: '/blockchain/wallets/generateWalletHash',
   verifyWalletOwnership: '/blockchain/wallets/verifyOwnership',
-  checkAddress: `/blockchain/wallets/detectNetwork`
+  checkAddress: `/blockchain/wallets/detectNetwork`,
+  generateWalletHashWeb3Modal: '/auth/web3/authentication-salt',
+  verifyWalletOwnershipWeb3Modal: '/auth/web3/authenticate'
 }

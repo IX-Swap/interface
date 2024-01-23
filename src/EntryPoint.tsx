@@ -8,6 +8,7 @@ import { Redirect, Switch, useLocation } from 'react-router-dom'
 import { Page404 } from 'components/Page404/Page404'
 import { AuthRoute } from 'auth/router/config'
 import { Callback } from 'auth/pages/myinfo/Callback'
+import { useCookies } from 'react-cookie'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -22,6 +23,8 @@ const AppRoot = React.lazy(
 
 export const EntryPoint = () => {
   const { isSuccess, isFinished } = useAppInit()
+  const [cookies] = useCookies(['isSigned'])
+  const isSigned: boolean = cookies.isSigned
 
   const location = useLocation()
 
@@ -38,7 +41,7 @@ export const EntryPoint = () => {
             path='/app'
             exact={false}
             component={
-              isSuccess
+              isSuccess || isSigned
                 ? AppRoot
                 : () => (
                     <Redirect
@@ -51,11 +54,7 @@ export const EntryPoint = () => {
             }
           />
           <SentryRoute path='/auth' exact={false} component={AuthRoot} />
-          <SentryRoute
-            exact
-            path='/'
-            render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
-          />
+          <SentryRoute exact path='/' render={() => <Redirect to={'/app'} />} />
           <SentryRoute path={AuthRoute.callback}>
             <Callback />
           </SentryRoute>

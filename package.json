@@ -42,6 +42,7 @@
     "process": "^0.11.10",
     "pure-react-carousel": "^1.27.6",
     "react": "^18.2.0",
+    "react-cookie": "^7.0.1",
     "react-device-detect": "^2.1.2",
     "react-dom": "^18.2.0",
     "react-dropzone": "^11.2.4",
@@ -176,7 +177,7 @@
     "babel-loader": "8.1.0"
   },
   "scripts": {
-    "start": "NODE_ENV=development webpack serve --color --progress",
+    "start": "set NODE_ENV=development && webpack serve --color --progress",
     "build": "NODE_ENV=production webpack --color --progress",
     "test:e2e": "playwright test __tests__/tests --project chrome",
     "test:metamask": "xvfb-run playwright test __tests__/tests --project chrome-metamask --headed",

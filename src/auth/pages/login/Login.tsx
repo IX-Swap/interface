@@ -9,7 +9,7 @@ import React from 'react'
 // import { MAX_LOGIN_ATTEMPTS } from 'types/auth'
 import { useTenant } from 'auth/hooks/useTenant'
 import { createWeb3Modal, defaultConfig } from '@web3modal/ethers5/react'
-import { Web3ModelAccount } from './components/web3modal'
+import { Web3ModelAccount } from './components/Web3ModelAccount'
 
 // 1. Get projectId at https://cloud.walletconnect.com
 const projectId = '4dcfae48e83be7804beb4adf6acaf2fb'
@@ -60,8 +60,8 @@ export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
 
   return (
     <>
-      <Web3ModelAccount />
       <w3m-button />
+      <Web3ModelAccount />
       {/* <w3m-network-button />
       <w3m-connect-button />
       <w3m-account-button /> */}

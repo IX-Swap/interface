@@ -11,7 +11,6 @@ import { InvestRoot } from 'app/pages/invest/InvestRoot'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
 import { FundsManagementRoot } from 'app/pages/fundsManagement/FundsManagementRoot'
-import { RedirectToDefaultPage } from 'app/RedirectToDefaultPage'
 import {
   useIsAdmin,
   useIsAuthorizer,
@@ -92,7 +91,7 @@ export const AppRouter = () => {
         <Feedback />
       </AppRoute>
 
-      <RedirectToDefaultPage />
+      {/* <RedirectToDefaultPage /> */}
     </Switch>
   )
 }
