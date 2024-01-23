@@ -1,9 +1,9 @@
 import { Currency, Token, CurrencyAmount, Ether } from '@ixswap1/sdk-core'
 import JSBI from 'jsbi'
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useAllTokens } from '../../hooks/Tokens'
-import { useMulticall2Contract } from '../../hooks/useContract'
+import { useMulticall2Contract, useTokenContract } from '../../hooks/useContract'
 import { isAddress } from '../../utils'
 import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks'
 import { Interface } from '@ethersproject/abi'
@@ -47,25 +47,36 @@ export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
     [addresses, chainId, results]
   )
 }
+
 export function useSimpleTokenBalanceWithLoading(
   account?: string | null,
   currency?: Currency | null,
   tokenAddress?: string
 ) {
-  const ERC20Interface = new Interface(ERC20ABI) as Erc20Interface
-  const balance = useMultipleContractSingleData(
-    [tokenAddress],
-    ERC20Interface,
-    'balanceOf',
-    [account ?? undefined],
-    undefined,
-    100_000
-  )
-  const value = balance?.[0]?.result?.[0]
-  const loading = balance?.[0]?.loading
-  const amount = value && currency ? CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(value.toString())) : undefined
+  const tokenContract = useTokenContract(tokenAddress)
+  const [amount, setAmount] = useState(undefined as any)
+  const [loading, setLoading] = useState<boolean | undefined>(true)
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const balance = await tokenContract?.balanceOf(account ?? '')
+        const newAmount =
+          balance && currency ? CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(balance.toString())) : undefined
+        setAmount(newAmount as any)
+        setLoading(false)
+      } catch (error) {
+        console.error('Error fetching balance', error)
+      }
+    }
+
+    // Call the async function
+    fetchBalance()
+  }, [account, currency, tokenContract])
+
   return { amount, loading }
 }
+
 /**
  * Returns a map of token addresses to their eventually consistent token balances for a single account.
  */
