@@ -30,7 +30,8 @@ export function Web3ModelAccount() {
     signWalletAsync().catch(error => {
       console.log('error', error)
     })
-  }, [address, isConnected, signWallet])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address])
 
   // update isSigned and redirect to home page
   useEffect(() => {
