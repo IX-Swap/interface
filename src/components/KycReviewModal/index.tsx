@@ -92,8 +92,8 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data.status as any)
 
   const renderReferralInfo = () => {
-    const referredBy = data?.individual?.referredBy || data?.corporate?.referredBy || '-'
-    const referralCode = data?.individual?.referralCode || data?.corporate?.referralCode || '-'
+    const referredBy = data?.user?.referredBy || '-'
+    const referralCode = data?.user?.referralCode || '-'
 
     return (
       <span
