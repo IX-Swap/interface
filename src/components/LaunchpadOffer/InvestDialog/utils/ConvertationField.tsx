@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ArrowDown, ChevronDown } from 'react-feather'
@@ -10,11 +10,11 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { Option, useTokensList } from 'hooks/useTokensList'
 import { useCurrency } from 'hooks/Tokens'
 
-import { useCurrencyBalance } from 'state/wallet/hooks'
+import { useCurrencyBalance, useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { useFormatOfferValue, useDerivedBalanceInfo } from 'state/launchpad/hooks'
 import { text35 } from 'components/LaunchpadMisc/typography'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { Currency } from '@ixswap1/sdk-core'
+import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import Loader from 'components/Loader'
 import { RowBetween } from 'components/Row'
 import { InvestFormSubmitButton } from './InvestSubmitButton'
@@ -54,12 +54,7 @@ const getTokenInfo = (address: string, symbol: string, currency: Currency | null
 }
 
 export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
-  const { account } = useActiveWeb3React()
-  const inputCurrency = useCurrency(offer.investingTokenAddress)
-  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
-  const isSufficientBalance = useDerivedBalanceInfo(offer.id)
-
-  const getWarning = (value: string, availableToInvest?: number) => {
+  const getWarning = (value: string, isSufficientBalance?: boolean, availableToInvest?: number) => {
     const isPresale = offer.status !== OfferStatus.sale
     const realValue = value ? Number(value.replace(/,/g, '')) : 0
     const min = isPresale ? offer.presaleMinInvestment : offer.minInvestment
@@ -67,7 +62,6 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
     const total = isPresale ? offer.presaleAlocated : offer.hardCap
     const available = +total - offer.totalInvestment
 
-    const isInsufficientBalance = isCheckBalance ? !isSufficientBalance(value, inputCurrency, balance) : false
     let warning = ''
     if (value === '') {
       warning = ''
@@ -79,7 +73,7 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
       warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
     } else if (available < realValue) {
       warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
-    } else if (isInsufficientBalance) {
+    } else if (isCheckBalance && !isSufficientBalance) {
       warning = `Insufficient ${offer.investingTokenSymbol} balance`
     }
     return warning
@@ -103,6 +97,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
+
   const getWarning = useGetWarning(props.offer, true)
   const formatedValue = useFormatOfferValue()
   const insufficientWarning = `Insufficient ${investingTokenSymbol} balance`
@@ -111,12 +106,25 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const [warning, setWarning] = React.useState('')
   const { account } = useActiveWeb3React()
   const inputCurrency = useCurrency(investingTokenAddress)
-  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
+  // const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
+  const { amount: balance, loading: balanceIsLoading } = useSimpleTokenBalanceWithLoading(
+    account,
+    inputCurrency,
+    investingTokenAddress
+  )
   const [openPreviewModal, setPreviewModal] = React.useState(false)
+  const isSufficientBalanceFn = useDerivedBalanceInfo(props.offer.id)
+
+  console.info('balance is loading', balanceIsLoading)
+
   const changeValue = (value: string) => {
     setInputValue(value)
+    const isBalanceSufficient = isSufficientBalanceFn(value, inputCurrency, balance) || false
+    console.log('Balance', balance?.toExact(), balance?.toFixed(), balance?.toSignificant())
+    console.log('Value', value)
+    console.log('isBalanceSufficient', isBalanceSufficient)
+    const newWarning = getWarning(value, isBalanceSufficient, props.availableToInvest)
 
-    const newWarning = getWarning(value, props.availableToInvest)
     setWarning(newWarning)
     props.setDisabled(Boolean(newWarning) || !value)
 
@@ -127,6 +135,23 @@ export const ConvertationField: React.FC<Props> = (props) => {
         .join('')
     )
   }
+
+  const start: any = useRef<number>(0)
+  const end: any = useRef<number>(0)
+  useMemo(() => {
+    if (balanceIsLoading && start.current == 0) {
+      start.current = performance.now()
+      console.info('start', start)
+    }
+
+    if (!balanceIsLoading && end.current == 0) {
+      end.current = performance.now()
+      console.log('\x1B[31mtime to load balance', (end.current - start.current) / 1000)
+      start.current = 0
+      end.current = 0
+    }
+    console.log('Balance updated', balance?.toExact(), balance?.toFixed(), balance?.toSignificant())
+  }, [balance, balanceIsLoading])
 
   const convertedValue = React.useMemo(() => {
     if (inputValue) {
@@ -178,7 +203,6 @@ export const ConvertationField: React.FC<Props> = (props) => {
         />
         <InvestTextField
           type="number"
-          disabled
           value={convertedValue}
           onChange={() => null}
           trailing={<CurrencyDropdown disabled value={offerToken} />}
