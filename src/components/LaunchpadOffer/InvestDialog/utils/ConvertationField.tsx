@@ -96,7 +96,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const [warning, setWarning] = React.useState('')
   const { account } = useActiveWeb3React()
   const inputCurrency = useCurrency(investingTokenAddress)
-  const { amount: balance, loading: balanceIsLoading } = useSimpleTokenBalanceWithLoading(
+  const { amount: balance, loading: isBalanceLoading } = useSimpleTokenBalanceWithLoading(
     account,
     inputCurrency,
     investingTokenAddress
@@ -124,19 +124,19 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const start: any = useRef<number>(0)
   const end: any = useRef<number>(0)
   useMemo(() => {
-    if (balanceIsLoading && start.current == 0) {
+    if (isBalanceLoading && start.current == 0) {
       start.current = performance.now()
       console.log('start', start)
     }
 
-    if (!balanceIsLoading && end.current == 0) {
+    if (!isBalanceLoading && end.current == 0) {
       end.current = performance.now()
       console.log('\x1B[31mTime to load balance', (end.current - start.current) / 1000)
       start.current = 0
       end.current = 0
     }
     console.log('Balance updated', balance?.toExact(), balance?.toFixed(), balance?.toSignificant())
-  }, [balance, balanceIsLoading])
+  }, [balance, isBalanceLoading])
 
   const convertedValue = React.useMemo(() => {
     if (inputValue) {
@@ -179,6 +179,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
         <InvestTextField
           type="number"
           onChange={changeValue}
+          disabled={isBalanceLoading}
           trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
           caption={insufficientWarning === warning ? '' : warning === 'Loading' ? <Loader /> : warning}
           // height="85px"
@@ -191,6 +192,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
           value={convertedValue}
           onChange={() => null}
           trailing={<CurrencyDropdown disabled value={offerToken} />}
+          disabled
           // height="85px"
           fontSize="20px"
           lineHeight="20px"
