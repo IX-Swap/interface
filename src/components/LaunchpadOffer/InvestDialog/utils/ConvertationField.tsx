@@ -10,11 +10,11 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { Option, useTokensList } from 'hooks/useTokensList'
 import { useCurrency } from 'hooks/Tokens'
 
-import { useCurrencyBalance, useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
+import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { useFormatOfferValue, useDerivedBalanceInfo } from 'state/launchpad/hooks'
 import { text35 } from 'components/LaunchpadMisc/typography'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
+import { Currency } from '@ixswap1/sdk-core'
 import Loader from 'components/Loader'
 import { RowBetween } from 'components/Row'
 import { InvestFormSubmitButton } from './InvestSubmitButton'
@@ -120,9 +120,6 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const changeValue = (value: string) => {
     setInputValue(value)
     const isBalanceSufficient = isSufficientBalanceFn(value, inputCurrency, balance) || false
-    console.log('Balance', balance?.toExact(), balance?.toFixed(), balance?.toSignificant())
-    console.log('Value', value)
-    console.log('isBalanceSufficient', isBalanceSufficient)
     const newWarning = getWarning(value, isBalanceSufficient, props.availableToInvest)
 
     setWarning(newWarning)
@@ -136,17 +133,18 @@ export const ConvertationField: React.FC<Props> = (props) => {
     )
   }
 
+  // DEBUGGING CODE - DON'T REMOVE THIS
   const start: any = useRef<number>(0)
   const end: any = useRef<number>(0)
   useMemo(() => {
     if (balanceIsLoading && start.current == 0) {
       start.current = performance.now()
-      console.info('start', start)
+      console.log('start', start)
     }
 
     if (!balanceIsLoading && end.current == 0) {
       end.current = performance.now()
-      console.log('\x1B[31mtime to load balance', (end.current - start.current) / 1000)
+      console.log('\x1B[31mTime to load balance', (end.current - start.current) / 1000)
       start.current = 0
       end.current = 0
     }
