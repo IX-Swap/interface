@@ -5,12 +5,12 @@ import {
   WalletConnectionStatus,
   useConnectMetamaskWalletWeb3Modal
 } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useConnectMetamaskWalletWeb3Modal'
-import { useCookies } from 'react-cookie'
+import { useServices } from 'hooks/useServices'
 
 export function Web3ModelAccount() {
   const { address, isConnected } = useWeb3ModalAccount()
   const { signWallet, status } = useConnectMetamaskWalletWeb3Modal()
-  const [cookies, setCookie] = useCookies(['isSigned'])
+  const { storageService } = useServices()
 
   useEffect(() => {
     const signWalletAsync = async () => {
@@ -36,12 +36,12 @@ export function Web3ModelAccount() {
   // update isSigned and redirect to home page
   useEffect(() => {
     if (status === WalletConnectionStatus.SUCCESS) {
-      console.log('cookies', cookies)
-      setCookie('isSigned', true)
+      storageService.set('isSigned', true)
       // write code to redirect to home page
       window.location.href = '/'
     }
-  }, [status, setCookie, cookies])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status])
 
   return <></>
   // ...

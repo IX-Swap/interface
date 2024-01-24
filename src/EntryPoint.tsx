@@ -8,7 +8,7 @@ import { Redirect, Switch, useLocation } from 'react-router-dom'
 import { Page404 } from 'components/Page404/Page404'
 import { AuthRoute } from 'auth/router/config'
 import { Callback } from 'auth/pages/myinfo/Callback'
-import { useCookies } from 'react-cookie'
+import { useServices } from 'hooks/useServices'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -23,8 +23,8 @@ const AppRoot = React.lazy(
 
 export const EntryPoint = () => {
   const { isSuccess, isFinished } = useAppInit()
-  const [cookies] = useCookies(['isSigned'])
-  const isSigned: boolean = cookies.isSigned
+  const { storageService } = useServices()
+  const isSigned: boolean = storageService.get<boolean>('isSigned') ?? false
 
   const location = useLocation()
 
