@@ -88,7 +88,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
       return
     }
 
-    await setValue('isInterested', value)
+    setValue('isInterested', value)
     setFieldTouched('isInterested', true)
 
     if(!value) {
@@ -184,22 +184,21 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
           )}
 
           {!whitelist.loading && whitelist.status && whitelist.isInterested && (
-            <Column justifyContent="center" alignItems="center" gap="1rem" >
+            <Column justifyContent="center" alignItems="center" gap="1rem">
               <KYCPromptIconContainer>
                 {whitelist.status === WhitelistStatus.accepted && (
                   <Check color={theme.launchpad.colors.success} size="35" />
                 )}
                 {whitelist.status !== WhitelistStatus.accepted && (
-                  <NewEyeIcon />
+                  <Clock color={theme.launchpad.colors.primary} size="35" />
                 )}
               </KYCPromptIconContainer>
 
               <WhitelistMessage>
                 {whitelist.status === WhitelistStatus.pending && (
                   <>
-                  Thank you for your registration, we are still reviewing your registration to invest in the Pre-Sale stage.
-                    {/* Thank you. Please check by <b>{moment(props.offer.timeframe.preSale).format('DD/MM/YYYY')}</b> for
-                    the result of your registration application. */}
+                    {whitelist.status} Thank you. Please check by <b>{moment(props.offer.timeframe.preSale).format('DD/MM/YYYY')}</b> for
+                    the result of your registration application.
                   </>
                 )}
 

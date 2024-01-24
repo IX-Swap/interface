@@ -21,7 +21,7 @@ export default function SwapHeader() {
 
   const Disclaimer = styled.p`
     border: 1px solid #e6e6ff;
-    padding: 25px;
+    padding: 35px;
     font-size: 13px;
     color: #666680;
     line-height: 19.5px;
@@ -43,7 +43,7 @@ export default function SwapHeader() {
       {disclaimerVisible && (
         <Disclaimer>
           <div style={{ display: 'flex' }}>
-            <InfoIcon style={{ cursor: 'pointer', position: 'absolute', left: isMobile ? '16px' : '45px' }} />
+            <InfoIcon style={{ cursor: 'pointer', position: 'absolute', left: isMobile ? '16px' : '50px' }} />
             <span style={{ fontSize: '14px', color: '#292933', fontWeight: '700' }}>Disclaimer:</span>
             <CloseIcon
               style={{ cursor: 'pointer', position: 'absolute', right: '60px' }}
