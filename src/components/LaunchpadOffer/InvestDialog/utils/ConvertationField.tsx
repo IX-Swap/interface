@@ -11,15 +11,13 @@ import { Option, useTokensList } from 'hooks/useTokensList'
 import { useCurrency } from 'hooks/Tokens'
 
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
-import { useFormatOfferValue, useDerivedBalanceInfo } from 'state/launchpad/hooks'
+import { useDerivedBalanceInfo } from 'state/launchpad/hooks'
 import { text35 } from 'components/LaunchpadMisc/typography'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { Currency } from '@ixswap1/sdk-core'
 import Loader from 'components/Loader'
 import { RowBetween } from 'components/Row'
-import { InvestFormSubmitButton } from './InvestSubmitButton'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
-import { KycLightDocPreviewModal } from 'components/KycLightDocPreviewModal'
 import { BuyModal } from '../BuyModal'
 
 interface Props {
@@ -85,28 +83,19 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
-  const {
-    tokenPrice,
-    tokenAddress,
-    tokenSymbol,
-    investingTokenAddress,
-    investingTokenSymbol,
-    investingTokenDecimals,
-    decimals,
-  } = props.offer
+  const { tokenPrice, tokenAddress, tokenSymbol, investingTokenAddress, investingTokenSymbol, investingTokenDecimals } =
+    props.offer
 
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
 
   const getWarning = useGetWarning(props.offer, true)
-  const formatedValue = useFormatOfferValue()
   const insufficientWarning = `Insufficient ${investingTokenSymbol} balance`
 
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
   const { account } = useActiveWeb3React()
   const inputCurrency = useCurrency(investingTokenAddress)
-  // const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
   const { amount: balance, loading: balanceIsLoading } = useSimpleTokenBalanceWithLoading(
     account,
     inputCurrency,
@@ -114,8 +103,6 @@ export const ConvertationField: React.FC<Props> = (props) => {
   )
   const [openPreviewModal, setPreviewModal] = React.useState(false)
   const isSufficientBalanceFn = useDerivedBalanceInfo(props.offer.id)
-
-  console.info('balance is loading', balanceIsLoading)
 
   const changeValue = (value: string) => {
     setInputValue(value)
