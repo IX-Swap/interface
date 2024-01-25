@@ -197,7 +197,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
               <WhitelistMessage>
                 {whitelist.status === WhitelistStatus.pending && (
                   <>
-                    {whitelist.status} Thank you. Please check by <b>{moment(props.offer.timeframe.preSale).format('DD/MM/YYYY')}</b> for
+                    Thank you. Please check by <b>{moment(props.offer.timeframe.preSale).format('DD/MM/YYYY')}</b> for
                     the result of your registration application.
                   </>
                 )}
