@@ -92,8 +92,8 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data.status as any)
 
   const renderReferralInfo = () => {
-    const referredBy = data?.user?.referredBy || '-'
-    const referralCode = data?.user?.referralCode || '-'
+    const referredBy = data?.individual?.referredBy || '-'
+    const referralCode = data?.individual?.referralCode || '-'
 
     return (
       <span
@@ -121,8 +121,8 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
             justifyContent: 'center',
           }}
         >
-          <Copy isAdmin={true} toCopy={`${shortenAddress(data.user.ethAddress)}`}>
-            {t`${shortenAddress(data.user.ethAddress)}`}
+          <Copy isAdmin={true} toCopy={`${shortenAddress(data.individual?.referralAddress)}`}>
+            {t`${shortenAddress(data.individual?.referralAddress)}`}
           </Copy>
         </div>
       </span>
@@ -171,8 +171,8 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
 
               {/* {referralCode && ( */}
 
-              {data?.user?.referredBy ||
-              data?.user?.referralCode
+              {data?.individual?.referredBy ||
+              data?.individual?.referralCode
                 ? renderReferralInfo()
                 : ''}
 
