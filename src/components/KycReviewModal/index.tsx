@@ -93,6 +93,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
 
   const renderReferralInfo = () => {
     const referredBy = data?.individual?.referredBy || '-'
+    const referredByName = data?.individual?.referredByName || '-'
     const referralCode = data?.individual?.referralCode || '-'
 
     return (
@@ -107,7 +108,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
           fontWeight: '600',
         }}
       >
-        <span style={{ color: '#B8B8CC' }}>Referred by</span> <span style={{ color: '#292933' }}>{referredBy} </span>
+        <span style={{ color: '#B8B8CC' }}>Referred by</span> <span style={{ color: '#292933' }}>{referredByName} </span>
         <span style={{ color: '#6666FF' }}>{referralCode}</span>
         <div
           style={{
