@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react'
 import styled, { useTheme } from 'styled-components'
 import Row from 'components/Row'
-import { CheckCircle, Info } from 'react-feather'
+import { CheckCircle, Eye, Info } from 'react-feather'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import {
@@ -29,8 +29,9 @@ import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { IXSALE_ADDRESS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/shared/fields/IssuanceTooltip'
-import { Column, FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
+import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
 import { OfferStageStatus } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
+import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 
 interface Props {
   offer: Offer
@@ -208,6 +209,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
   if (stageStatus === OfferStageStatus.disabled) {
     return (
       <InvestFormContainer style={{ alignItems: 'center' }}>
+        <KYCPromptIconContainer>
+          <Eye color={theme.launchpad.colors.primary} size="35" />
+        </KYCPromptIconContainer>
         <WhitelistMessage>
           <>
             Thank you for your registration, we are still reviewing your registration to invest in the Pre-Sale stage.
