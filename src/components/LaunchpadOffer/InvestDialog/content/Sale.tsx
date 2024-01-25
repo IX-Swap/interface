@@ -11,6 +11,7 @@ import {
   Offer,
   OfferFileType,
   OfferStatus,
+  WhitelistStatus,
 } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { InvestFormSubmitButton, InvestSubmitState, useInvestSubmitState } from '../utils/InvestSubmitButton'
@@ -18,8 +19,8 @@ import { ConvertationField } from '../utils/ConvertationField'
 import { TokenClaimMessage } from '../utils/TokenClaimMessage'
 import { OfferLinks } from '../utils/OfferLinks'
 import { BaseCheckbox } from '../utils/Checkbox'
-import { useInvest, useInvestPublicSaleStructData, usePresaleProof } from 'state/launchpad/hooks'
-import { text10, text11 } from 'components/LaunchpadMisc/typography'
+import { useGetWhitelistStatus, useInvest, useInvestPublicSaleStructData, usePresaleProof } from 'state/launchpad/hooks'
+import { text10, text11, text59 } from 'components/LaunchpadMisc/typography'
 import { useLaunchpadInvestmentContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
 import { useApproveCallback } from 'hooks/useApproveCallback'
@@ -28,7 +29,8 @@ import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { IXSALE_ADDRESS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/shared/fields/IssuanceTooltip'
-import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
+import { Column, FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
+import { OfferStageStatus } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
 
 interface Props {
   offer: Offer
@@ -68,6 +70,25 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
   const [otherDocumentsAgreed, setOtherDocumentsAgreed] = useState(false)
   const formatter = useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
   const isPresale = useMemo(() => status === OfferStatus.preSale, [status])
+  const { status: whitelistedStatus } = useGetWhitelistStatus(offer.id)
+
+  const stageStatus = React.useMemo(() => {
+    switch (offer.status) {
+      case OfferStatus.preSale:
+        return whitelistedStatus && whitelistedStatus === WhitelistStatus.accepted
+          ? OfferStageStatus.active
+          : OfferStageStatus.disabled
+
+      case OfferStatus.sale:
+        return OfferStageStatus.active
+
+      case OfferStatus.approved:
+        return OfferStageStatus.disabled
+
+      default:
+        return OfferStageStatus.notStarted
+    }
+  }, [whitelistedStatus, offer.status])
 
   const conditions = useMemo(
     () => [
@@ -183,6 +204,18 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       submitState.setError()
     }
   }, [invest, submitState, status])
+
+  if (stageStatus === OfferStageStatus.disabled) {
+    return (
+      <InvestFormContainer style={{ alignItems: 'center' }}>
+        <WhitelistMessage>
+          <>
+            Thank you for your registration, we are still reviewing your registration to invest in the Pre-Sale stage.
+          </>
+        </WhitelistMessage>
+      </InvestFormContainer>
+    )
+  }
 
   return (
     <InvestFormContainer padding="0 0 2rem 0">
@@ -378,4 +411,16 @@ const AgreementText = styled.div`
 
 const AgreementCheckbox = styled(BaseCheckbox)`
   background: ${(props) => props.theme.launchpad.colors.primary};
+`
+
+const WhitelistMessage = styled.div`
+  ${text59}
+
+  text-align: center;
+  max-width: 80%;
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+
+  b {
+    color: ${(props) => props.theme.launchpad.colors.primary};
+  }
 `

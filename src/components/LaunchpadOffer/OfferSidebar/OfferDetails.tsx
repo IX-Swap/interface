@@ -27,7 +27,7 @@ interface Props {
   offer: Offer
 }
 
-enum OfferStageStatus {
+export enum OfferStageStatus {
   disabled,
   notStarted,
   active,
