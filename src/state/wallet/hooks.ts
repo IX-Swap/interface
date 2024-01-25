@@ -5,7 +5,7 @@ import { useActiveWeb3React } from '../../hooks/web3'
 import { useAllTokens } from '../../hooks/Tokens'
 import { useMulticall2Contract, useTokenContract } from '../../hooks/useContract'
 import { isAddress } from '../../utils'
-import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks'
+import { useMultipleContractSingleData, useSingleCallResult, useSingleContractMultipleData } from '../multicall/hooks'
 import { Interface } from '@ethersproject/abi'
 import ERC20ABI from 'abis/erc20.json'
 import { Erc20Interface } from 'abis/types/Erc20'
@@ -54,27 +54,10 @@ export function useSimpleTokenBalanceWithLoading(
   tokenAddress?: string
 ) {
   const tokenContract = useTokenContract(tokenAddress)
-  const [amount, setAmount] = useState(undefined as any)
-  const [loading, setLoading] = useState<boolean | undefined>(true)
-
-  useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        const balance = await tokenContract?.balanceOf(account ?? '')
-        const newAmount =
-          balance && currency ? CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(balance.toString())) : undefined
-        setAmount(newAmount as any)
-        setLoading(false)
-      } catch (error) {
-        console.error('Error fetching balance', error)
-      }
-    }
-
-    // Call the async function
-    fetchBalance()
-  }, [account, currency, tokenContract])
-
-  return { amount, loading }
+  const balance = useSingleCallResult(tokenContract, 'balanceOf', [account ?? undefined])
+  const value = balance?.result
+  const amount = value && currency ? CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(value.toString())) : undefined
+  return { amount, loading: balance?.loading }
 }
 
 /**

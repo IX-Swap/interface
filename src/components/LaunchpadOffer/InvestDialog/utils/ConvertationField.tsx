@@ -10,6 +10,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { Option, useTokensList } from 'hooks/useTokensList'
 import { useCurrency } from 'hooks/Tokens'
 
+import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { useDerivedBalanceInfo } from 'state/launchpad/hooks'
 import { text35 } from 'components/LaunchpadMisc/typography'
@@ -175,6 +176,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   return (
     <>
       {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
+      <LoadingIndicator isLoading={isBalanceLoading} />
       <ConvertationContainer>
         <InvestTextField
           type="number"
