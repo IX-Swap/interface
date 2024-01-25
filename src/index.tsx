@@ -69,7 +69,7 @@ function Updaters() {
 }
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DNS,
+  dsn: process.env.REACT_APP_SENTRY_DNS || '',
   integrations: [
     new Sentry.BrowserTracing({}),
     new Sentry.Replay({
