@@ -23,15 +23,7 @@
     "downlevelIteration": true,
     "allowSyntheticDefaultImports": true,
     "types": ["react-spring", "jest"],
-    "baseUrl": "src",
-    "sourceMap": true,
-    "inlineSources": true,
-    "strictPropertyInitialization": false,
-
-    // Set `sourceRoot` to  "/" to strip the build path prefix
-    // from generated source code references.
-    // This improves issue grouping in Sentry.
-    "sourceRoot": "/"
+    "baseUrl": "src"
   },
   "exclude": ["node_modules", "cypress"],
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/components/Confetti/index.js"]
