@@ -27,7 +27,7 @@ interface Props {
   offer: Offer
 }
 
-enum OfferStageStatus {
+export enum OfferStageStatus {
   disabled,
   notStarted,
   active,
@@ -83,7 +83,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const daysTillClosed = props.offer.daysTillClosed ?? 0
 
   const [showSuccess, setShowSuccess] = React.useState(false)
-
+console.log(stageStatus, 'stageStatus')
   return (
     <Container>
       <OfferSidebarSummary>
@@ -138,13 +138,14 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </OfferStats>
 
         <InvestButtonContainer>
-          {stageStatus !== OfferStageStatus.disabled && (
+          {/* {stageStatus !== OfferStageStatus.disabled && ( */}
             <InvestButton onClick={openInvestDialog}>
+            {stageStatus === OfferStageStatus.disabled && 'Check Status'}
               {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
               {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
             </InvestButton>
-          )}
+          {/* )} */}
         </InvestButtonContainer>
 
         {showSuccess && <InvestSuccessModal show={showSuccess} onClose={() => setShowSuccess(false)} />}

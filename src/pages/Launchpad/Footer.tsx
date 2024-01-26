@@ -5,8 +5,8 @@ import { Formik } from 'formik'
 import { object, string } from 'yup'
 
 import { ReactComponent as DotSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
-import { ReactComponent as Logo } from 'assets/images/FooterlogoNew.svg'
-
+// import { ReactComponent as Logo } from 'assets/images/FooterlogoNew.svg'
+import { ReactComponent as Logo } from 'assets/images/ix-swapNew.svg'
 import { ReactComponent as TelegramLogo } from 'assets/launchpad/svg/social/telegram.svg'
 import { ReactComponent as TwitterLogo } from 'assets/launchpad/svg/social/twitter.svg'
 import { ReactComponent as MLogo } from 'assets/launchpad/svg/social/m.svg'

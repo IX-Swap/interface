@@ -76,7 +76,7 @@ export const InvestDialog: React.FC<Props> = (props) => {
                 </aside>
               )}
 
-              <header>
+              {/* <header> */}
                 <DialogHeader>
                   {isMobile ? (
                     <DialogHeaderTitle style={{ marginBottom: '20px' }}>
@@ -92,7 +92,7 @@ export const InvestDialog: React.FC<Props> = (props) => {
                     <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
                   </DialogHeaderExit>
                 </DialogHeader>
-              </header>
+              {/* </header> */}
 
               <main>
                 {stage === StageForm.register && <RegisterToInvestStage {...props} />}
@@ -184,8 +184,8 @@ const DialogContainer = styled.article`
 
 const DialogHeader = styled.div`
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-around;
+  // flex-flow: row nowrap;
+  // justify-content: flex-around;
   align-items: center;
 `
 
@@ -204,6 +204,6 @@ const DialogHeaderExit = styled.button`
   background: none;
   cursor: pointer;
   max-height: fit-content;
-  padding: 0;
+  padding: 0px 20px;
   margin: 0;
 `

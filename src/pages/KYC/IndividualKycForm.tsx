@@ -62,6 +62,7 @@ import { HrLine } from 'pages/CreateNFT/styleds'
 import { Plus } from 'react-feather'
 import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
 import { KYCValidationErrors } from './KYCValidationErrors'
+import { error } from 'console'
 
 type FormSubmitHanderArgs = {
   createFn: (body: any) => any
@@ -193,7 +194,6 @@ export default function IndividualKycForm() {
     window.addEventListener('beforeunload', alertUser)
     const IsNewKyc = localStorage.getItem('newKyc')
     if(IsNewKyc){
-      console.log(IsNewKyc, 'clearedclearedcleared')
       addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } })
     }
 
@@ -532,6 +532,7 @@ export default function IndividualKycForm() {
     },
     [formSubmitHandler]
   )
+
 
   return (
     <Loadable loading={!isLoggedIn}>
@@ -1183,6 +1184,7 @@ export default function IndividualKycForm() {
                           {/* {financialFilled && <StyledBigPassed />}
                           {financialFailed && <InvalidFormInputIcon />} */}
                         </RowBetween>
+                        
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={2}>
                             <Select

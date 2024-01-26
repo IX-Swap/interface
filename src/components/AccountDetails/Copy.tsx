@@ -6,6 +6,7 @@ import { ReactComponent as CopySvg } from '../../assets/images/newCopyIcon.svg'
 import useCopyClipboard from '../../hooks/useCopyClipboard'
 import { LinkStyledButton } from '../../theme'
 import { IconWrapperWithBg } from './styleds'
+import { admin as adminApiUrls } from 'services/apiUrls' // Rename the import to avoid conflict
 
 const CopyIcon = styled(LinkStyledButton)`
   color: ${({ theme }) => theme.text3};
@@ -28,16 +29,27 @@ const TransactionStatusText = styled.span`
   align-items: center;
 `
 
-export default function CopyHelper(props: { toCopy: string; children?: React.ReactNode }) {
+export default function CopyHelper(props: { toCopy: string; children?: React.ReactNode; isAdmin?: boolean }) {
   const [isCopied, setCopied] = useCopyClipboard()
+  const { toCopy, children, isAdmin } = props
+
   return (
-    <CopyIcon onClick={() => setCopied(props.toCopy)}>
-      <TransactionStatusText>
-        {/* <IconWrapperWithBg size={8}> */}
-        <CopySvg style={{ marginRight: '5px' }} />
-        {/* </IconWrapperWithBg> */}
-      </TransactionStatusText>
-      {isCopied ? t`Copied` : props.children}
+    <CopyIcon onClick={() => setCopied(toCopy)}>
+      {isAdmin === true ? (
+        <>
+              {isCopied ? t`Copied` : children}
+          <TransactionStatusText></TransactionStatusText>
+          <CopySvg style={{ marginLeft: '10px', width: '30px', height: '15px'}} />
+        </>
+      ) : (
+        <>
+          <CopySvg style={{ marginRight: '5px' }} /> 
+          <TransactionStatusText></TransactionStatusText>
+          {isCopied ? t`Copied` : children}
+        </>
+      )}
+
+
     </CopyIcon>
   )
 }

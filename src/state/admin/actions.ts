@@ -527,6 +527,8 @@ export interface KycItem {
     role: string
     tenant: string
     updatedAt: string
+    referredBy?: string
+    referralCode?: string
   }
   userId: number
 }
