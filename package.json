@@ -138,14 +138,13 @@
   "scripts": {
     "compile-contract-types": "yarn compile-external-abi-types",
     "compile-external-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types \"./src/abis/**/*.json\"",
-    "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-scripts --no-warnings --optimize_for_size --max_old_space_size=6144 build && yarn sentry:sourcemaps",
+    "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-scripts --no-warnings --optimize_for_size --max_old_space_size=6144 build",
     "i18n:extract": "lingui extract --locale en-US",
     "i18n:compile": "lingui compile",
     "integration-test": "cd e2e_tests && xvfb-run npx playwright test",
     "postinstall": "yarn compile-contract-types",
     "start": "set GENERATE_SOURCEMAP=true && yarn compile-contract-types && react-scripts start",
-    "test": "react-scripts test --env=jsdom",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org investax-ze --project javascript-react ./build && sentry-cli sourcemaps upload --org investax-ze --project javascript-react ./build"
+    "test": "react-scripts test --env=jsdom"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -172,8 +171,6 @@
     "@material-ui/pickers": "4.0.0-alpha.12",
     "@mui/material": "^5.13.6",
     "@mui/x-date-pickers": "^6.9.1",
-    "@sentry/cli": "^2.25.0",
-    "@sentry/react": "^7.93.0",
     "async-wait-until": "^2.0.7",
     "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
