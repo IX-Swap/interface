@@ -32,6 +32,7 @@ export enum OfferStageStatus {
   notStarted,
   active,
   closed,
+  checkStatus,
 }
 
 export const OfferDetails: React.FC<Props> = (props) => {
@@ -58,7 +59,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
       case OfferStatus.preSale:
         return whitelistedStatus && whitelistedStatus === WhitelistStatus.accepted
           ? OfferStageStatus.active
-          : OfferStageStatus.disabled
+          : OfferStageStatus.checkStatus
 
       case OfferStatus.sale:
         return OfferStageStatus.active
@@ -68,7 +69,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
         return amountToClaim && amountToClaim > 0 ? OfferStageStatus.closed : OfferStageStatus.disabled
 
       case OfferStatus.approved:
-        return OfferStageStatus.disabled
+        return OfferStageStatus.checkStatus
 
       default:
         return OfferStageStatus.notStarted
@@ -138,14 +139,14 @@ console.log(stageStatus, 'stageStatus')
         </OfferStats>
 
         <InvestButtonContainer>
-          {/* {stageStatus !== OfferStageStatus.disabled && ( */}
+          {stageStatus !== OfferStageStatus.disabled && (
             <InvestButton onClick={openInvestDialog}>
-            {stageStatus === OfferStageStatus.disabled && 'Check Status'}
+              {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
               {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
               {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
             </InvestButton>
-          {/* )} */}
+          )}
         </InvestButtonContainer>
 
         {showSuccess && <InvestSuccessModal show={showSuccess} onClose={() => setShowSuccess(false)} />}
