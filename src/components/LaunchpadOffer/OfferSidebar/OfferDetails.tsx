@@ -69,7 +69,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
         return amountToClaim && amountToClaim > 0 ? OfferStageStatus.closed : OfferStageStatus.disabled
 
       case OfferStatus.approved:
-        return OfferStageStatus.checkStatus
+        return OfferStageStatus.disabled
 
       default:
         return OfferStageStatus.notStarted
