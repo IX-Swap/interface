@@ -360,8 +360,8 @@ export default function WalletModal({
       <RedesignedWideModal
         isOpen={walletModalOpen}
         onDismiss={toggleWalletModal}
-        minHeight={60}
-        maxHeight={50}
+        minHeight={70}
+        maxHeight={70}
         mobileMaxHeight={80}
         isright
       >

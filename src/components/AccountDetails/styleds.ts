@@ -60,9 +60,11 @@ export const YourAccount = styled.div`
 
 export const LowerSection = styled.div`
   ${({ theme }) => theme.flexColumnNoWrap}
-  padding: 10px 2.5rem;
+  padding: 0px 2.5rem;
+  // margin-top: 10px;
   flex-grow: 1;
   overflow: auto;
+  margin-bottom: 40px;
   background-color: ${({ theme }) => theme.bg0};
 
   h5 {

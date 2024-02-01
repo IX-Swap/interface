@@ -18,6 +18,7 @@ import { IndividualForm } from './IndividualForm'
 
 import { ReactComponent as ArrowLeft } from '../../assets/images/newBack.svg'
 import { isMobile } from 'react-device-detect'
+import Copy from 'components/AccountDetails/Copy'
 
 interface Props {
   isOpen: boolean
@@ -89,6 +90,47 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
 
   const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data.status as any)
+
+  const renderReferralInfo = () => {
+    const referredBy = data?.individual?.referredBy || '-'
+    const referredByName = data?.individual?.referredByName || '-'
+    const referralCode = data?.individual?.referralCode || '-'
+
+    return (
+      <span
+        style={{
+          border: '1px solid #E6E6FF',
+          background: '#F7F7F8',
+          padding: isMobile ? '8px' : '12px 16px',
+          borderRadius: '6px',
+          fontSize: '14px',
+          marginLeft: '20px',
+          fontWeight: '600',
+        }}
+      >
+        <span style={{ color: '#B8B8CC' }}>Referred by</span>{' '}
+        <span style={{ color: '#292933' }}>{referredByName} </span>
+        <span style={{ color: '#6666FF' }}>{referralCode}</span>
+        <div
+          style={{
+            padding: isMobile ? '5px' : '10px',
+            border: '1px solid #E6E6FF',
+            background: '#FFFFFF',
+            marginTop: '10px',
+            textAlign: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Copy isAdmin={true} toCopy={`${data.individual?.referralAddress}`}>
+            {t`${shortenAddress(data.individual?.referralAddress)}`}
+          </Copy>
+        </div>
+      </span>
+    )
+  }
+
   return (
     <>
       <ReasonModal
@@ -112,19 +154,30 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
           <ModalContent>
             <TitleContainer>
               <Title>
-                {/* <div>
+                <div>
                   <Trans>
                     <ArrowLeft style={{ cursor: 'pointer' }} data-testid="cross" onClick={onClose} />
                   </Trans>
                   &nbsp;&nbsp;
-                </div> */}
-                <TYPE.title7 fontWeight="800" fontSize={isMobile ? '18px' : '24px'}>
-                  {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`})
-                  {/* {data?.individual?.fullName || data?.corporate?.fullName || ''} */}
+                </div>
+                <TYPE.title7
+                  fontWeight="800"
+                  lineHeight={isMobile ? '16px' : '40px'}
+                  fontSize={isMobile ? '12px' : '24px'}
+                >
+                  {/* {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
+                  {data?.individual?.fullName || data?.corporate?.fullName || ''}
                 </TYPE.title7>
                 {/* {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
               </Title>
-              <CloseIcon style={{ color: '#555566' }} data-testid="cross" onClick={onClose} />
+
+              {/* {referralCode && ( */}
+
+              {data?.individual?.referredBy || data?.individual?.referralCode ? renderReferralInfo() : ''}
+
+              {/* )} */}
+
+              {/* <CloseIcon style={{ color: '#555566' }} data-testid="cross" onClick={onClose} /> */}
             </TitleContainer>
             <Body>
               {data.individualKycId ? (

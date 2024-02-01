@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { RowBetween } from 'components/Row'
@@ -13,7 +13,7 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
   const showFakeApproval = useFakeApprovalState()
   const setShowFakeApproval = useToggleFakeApproval()
   const { authorizationInProgress } = useSwapHelpersState()
-
+  const [clickedAddress, setClickedAddress] = useState<string | null>(null);
   const brokerDealerDTO = useBrokerDealerState()
   const submitToBrokerDealer = useSubmitBrokerDealerForm()
 
@@ -25,33 +25,33 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
   const authorizeFirstStep = useSwapAuthorizeFirstStep(trade, allowedSlippage, formRef)
 
   useEffect(() => {
-    if (showFakeApproval) {
+    if (showFakeApproval && authorizationInProgress) {
       setTimeout(() => {
-        setShowFakeApproval(false)
+        setShowFakeApproval(false);
         submitToBrokerDealer({
-          dto: { ...brokerDealerDTO, pairAddress: authorizationInProgress?.pairAddress },
+          dto: { ...brokerDealerDTO, pairAddress: authorizationInProgress.pairAddress },
           formRef,
-        })
-      }, 5000)
+        });
+      }, 5000);
     }
-  }, [
-    setShowFakeApproval,
-    brokerDealerDTO,
-    formRef,
-    submitToBrokerDealer,
-    showFakeApproval,
-    authorizationInProgress?.pairAddress,
-  ])
+  }, [setShowFakeApproval, brokerDealerDTO, formRef, submitToBrokerDealer, showFakeApproval, authorizationInProgress?.pairAddress]);
 
   const startFirstStep = useCallback(
     (address: any) => {
-      authorizeFirstStep(secTokens[address])
+      setClickedAddress(address);
+      authorizeFirstStep(secTokens[address]);
     },
-    [authorizeFirstStep, secTokens]
-  )
+    [setClickedAddress, authorizeFirstStep, secTokens]
+  );
 
   if (!missingAuthorizations || missingAuthorizations?.length === 0 || insufficientBalance) {
     return null
+  }
+
+
+
+  if (!missingAuthorizations || missingAuthorizations.length === 0 || insufficientBalance) {
+    return null;
   }
 
   return (
@@ -60,12 +60,8 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
         <React.Fragment key={address}>
           {address && secTokens[address] && allowSwap && (
             <>
-              {Boolean(authorizationInProgress) ? (
-                <PinnedContentButton
-                  disabled
-                  style={{ width: '100%' }}
-                  data-testid={'authorize' + secTokens[address]?.symbol + 'button'}
-                >
+              {clickedAddress === address ? (
+                <PinnedContentButton disabled style={{ width: '100%' }} data-testid={'authorize' + secTokens[address]?.symbol + 'button'}>
                   Confirming transaction with broker...
                 </PinnedContentButton>
               ) : (
@@ -82,5 +78,5 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
         </React.Fragment>
       ))}
     </RowBetween>
-  )
+  );
 }

@@ -27,11 +27,12 @@ interface Props {
   offer: Offer
 }
 
-enum OfferStageStatus {
+export enum OfferStageStatus {
   disabled,
   notStarted,
   active,
   closed,
+  checkStatus,
 }
 
 export const OfferDetails: React.FC<Props> = (props) => {
@@ -58,7 +59,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
       case OfferStatus.preSale:
         return whitelistedStatus && whitelistedStatus === WhitelistStatus.accepted
           ? OfferStageStatus.active
-          : OfferStageStatus.disabled
+          : OfferStageStatus.checkStatus
 
       case OfferStatus.sale:
         return OfferStageStatus.active
@@ -83,7 +84,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const daysTillClosed = props.offer.daysTillClosed ?? 0
 
   const [showSuccess, setShowSuccess] = React.useState(false)
-
+console.log(stageStatus, 'stageStatus')
   return (
     <Container>
       <OfferSidebarSummary>
@@ -140,6 +141,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
         <InvestButtonContainer>
           {stageStatus !== OfferStageStatus.disabled && (
             <InvestButton onClick={openInvestDialog}>
+              {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
               {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
               {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}

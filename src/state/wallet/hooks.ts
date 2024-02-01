@@ -1,11 +1,11 @@
 import { Currency, Token, CurrencyAmount, Ether } from '@ixswap1/sdk-core'
 import JSBI from 'jsbi'
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useAllTokens } from '../../hooks/Tokens'
-import { useMulticall2Contract } from '../../hooks/useContract'
+import { useMulticall2Contract, useTokenContract } from '../../hooks/useContract'
 import { isAddress } from '../../utils'
-import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks'
+import { useMultipleContractSingleData, useSingleCallResult, useSingleContractMultipleData } from '../multicall/hooks'
 import { Interface } from '@ethersproject/abi'
 import ERC20ABI from 'abis/erc20.json'
 import { Erc20Interface } from 'abis/types/Erc20'
@@ -47,25 +47,19 @@ export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
     [addresses, chainId, results]
   )
 }
+
 export function useSimpleTokenBalanceWithLoading(
   account?: string | null,
   currency?: Currency | null,
   tokenAddress?: string
 ) {
-  const ERC20Interface = new Interface(ERC20ABI) as Erc20Interface
-  const balance = useMultipleContractSingleData(
-    [tokenAddress],
-    ERC20Interface,
-    'balanceOf',
-    [account ?? undefined],
-    undefined,
-    100_000
-  )
-  const value = balance?.[0]?.result?.[0]
-  const loading = balance?.[0]?.loading
+  const tokenContract = useTokenContract(tokenAddress)
+  const balance = useSingleCallResult(tokenContract, 'balanceOf', [account ?? undefined])
+  const value = balance?.result
   const amount = value && currency ? CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(value.toString())) : undefined
-  return { amount, loading }
+  return { amount, loading: balance?.loading }
 }
+
 /**
  * Returns a map of token addresses to their eventually consistent token balances for a single account.
  */
