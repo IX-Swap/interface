@@ -2,7 +2,7 @@ import React from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
-import { ReactComponent as CheckIcon } from 'assets/images/CheckOutline.svg'
+import { ReactComponent as CheckIcon } from 'assets/images/newRoundCheck.svg'
 import { marginLeft } from 'styled-system'
 
 interface Props {
@@ -41,7 +41,7 @@ export const Field = ({ label, value }: Props) => {
         <span>{t`${label}`}</span>
         <div>
           <span>{value || 'Not completed'}</span>
-          <span style={{ marginLeft: '5px' }}>{label === 'Email address' ? <CheckIcon /> : ''}</span>
+          <span style={{  position: 'absolute', marginLeft: '10px' }}>{label === 'Email address' ? <CheckIcon /> : ''}</span>
         </div>
       </Container>
     )
