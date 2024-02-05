@@ -184,8 +184,8 @@ const DialogContainer = styled.article`
 
 const DialogHeader = styled.div`
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-around;
+  // flex-flow: row nowrap;
+  // justify-content: flex-around;
   align-items: center;
 `
 
@@ -204,6 +204,6 @@ const DialogHeaderExit = styled.button`
   background: none;
   cursor: pointer;
   max-height: fit-content;
-  padding: 0;
+  padding: 0px 20px;
   margin: 0;
 `

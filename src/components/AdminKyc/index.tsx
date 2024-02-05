@@ -63,7 +63,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <CopyAddress address={ethAddress} />
       </Wallet>
       <div style={{ fontSize: '12px' }}>{fullName || '-'}</div>
-      <div style={{ fontSize: '12px' }}><Trans>{`${individualKycId ? 'Individual' : 'Corporate'}`}</Trans></div>
+      <div style={{ fontSize: '12px' }}>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>
       <div style={{ fontSize: '12px' }}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
       <div style={{ fontSize: '12px' }}>
         <StatusCell status={status} />
@@ -225,7 +225,7 @@ export const AdminKycTable = () => {
                 <StyledHeaderRow>
                   {headerCells.map((cell) => (
                     <HeaderCell key={cell.key} onClick={() => onChangeSort(cell.key)}>
-                      <Trans>{cell.label}</Trans>
+                      {cell.label}
 
                       {cell.show && <SortIcon type={order[cell.key as keyof KycOrderConfig]} />}
                     </HeaderCell>

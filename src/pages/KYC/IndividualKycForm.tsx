@@ -62,6 +62,7 @@ import { HrLine } from 'pages/CreateNFT/styleds'
 import { Plus } from 'react-feather'
 import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
 import { KYCValidationErrors } from './KYCValidationErrors'
+import { error } from 'console'
 
 type FormSubmitHanderArgs = {
   createFn: (body: any) => any
@@ -192,7 +193,11 @@ export default function IndividualKycForm() {
 
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
-    addPopup({ info: { success: true, summary: 'The email address has been verified successfully'} })
+    const IsNewKyc = localStorage.getItem('newKyc')
+    if(IsNewKyc){
+      addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } })
+    }
+
     return () => {
       window.removeEventListener('beforeunload', alertUser)
     }
@@ -470,6 +475,7 @@ export default function IndividualKycForm() {
 
   const formSubmitHandler = useCallback(
     async (values: any, { createFn, updateFn, validate = true }: FormSubmitHanderArgs) => {
+      localStorage.removeItem('newKyc')
       try {
         if (validate) {
           await individualErrorsSchema.validate(values, { abortEarly: false })
@@ -518,6 +524,7 @@ export default function IndividualKycForm() {
 
   const saveProgress = useCallback(
     async (values: any) => {
+      localStorage.removeItem('newKyc')
       await formSubmitHandler(values, {
         createFn: (body) => createIndividualKYC(body, true),
         updateFn: (id, body) => updateIndividualKYC(id, body, true),
@@ -526,6 +533,7 @@ export default function IndividualKycForm() {
     },
     [formSubmitHandler]
   )
+
 
   return (
     <Loadable loading={!isLoggedIn}>
@@ -544,6 +552,7 @@ export default function IndividualKycForm() {
             enableReinitialize
             onSubmit={async (values) => {
               try {
+                localStorage.removeItem('newKyc')
                 await individualErrorsSchema.validate(values, { abortEarly: false })
                 canLeavePage.current = true
 
@@ -1000,7 +1009,8 @@ export default function IndividualKycForm() {
                             />
 
                             <div style={{ marginTop: '20px' }}>
-                              {(values?.secondaryContactDetails?.label === 'Social Media Handle' || selectedOption === 3) && (
+                              {(values?.secondaryContactDetails?.label === 'Social Media Handle' ||
+                                selectedOption === 3) && (
                                 <FormGrid>
                                   <Select
                                     subText="Please select one from the following Social Media Platform options in the dropdown (Telegram, Discord, Facebook, Instagram, LinkedIn, or X.com)"
@@ -1017,6 +1027,7 @@ export default function IndividualKycForm() {
                                   />
 
                                   <TextInput
+                                    style={{ marginTop: '14px' }}
                                     subText="Please provide your Social Media Handle in the selected Social Media Platform as an alternative contact method"
                                     placeholder="Social Media Handle"
                                     id="handleName"
@@ -1030,7 +1041,8 @@ export default function IndividualKycForm() {
                                 </FormGrid>
                               )}
 
-                              {(values?.secondaryContactDetails?.label === 'Proof of Address Document' || selectedOption === 1) && (
+                              {(values?.secondaryContactDetails?.label === 'Proof of Address Document' ||
+                                selectedOption === 1) && (
                                 <Uploader
                                   title="Proof of Address"
                                   subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
@@ -1046,7 +1058,8 @@ export default function IndividualKycForm() {
                                 />
                               )}
 
-                              {(values?.secondaryContactDetails?.label === 'Business Email Address' || selectedOption === 2) && (
+                              {(values?.secondaryContactDetails?.label === 'Business Email Address' ||
+                                selectedOption === 2) && (
                                 <TextInput
                                   subText="Please input Business Email Address as an alternative contact method"
                                   placeholder="Business Email Address"
@@ -1172,6 +1185,7 @@ export default function IndividualKycForm() {
                           {/* {financialFilled && <StyledBigPassed />}
                           {financialFailed && <InvalidFormInputIcon />} */}
                         </RowBetween>
+                        
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={2}>
                             <Select

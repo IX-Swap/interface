@@ -45,7 +45,7 @@ export const NetworkNotAvailable = () => {
   return (
     <Container>
       <Title>
-        <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
+        <Trans>{`${config?.name || 'IX Swap'} is not available 2`}</Trans>
         <br /> <Trans>{`on this Blockchain network`}</Trans>
       </Title>
       <Info>

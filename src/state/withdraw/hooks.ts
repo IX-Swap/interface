@@ -34,6 +34,7 @@ import { useAddPopup, useToggleTransactionModal } from 'state/application/hooks'
 import { setLogItem } from 'state/eventLog/actions'
 import { formatRpcError } from 'utils/formatRpcError'
 import { NETWORK_ADDRESS_PATTERNS } from 'state/wallet/constants'
+import { calculateGasPriceMargin } from 'utils/calculateGasPriceMargin'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -113,8 +114,9 @@ export function useDerivedWithdrawInfo(): {
 
   let formattedTo = isAddress(receiver)
   if (!receiver) {
-    inputError = inputError ?? `Enter a receiver`
-  } else{//if (!formattedTo) {
+    inputError = inputError ?? t`Enter a receiver`
+  } else {
+    //if (!formattedTo) {
     const network = networkName || 'Ethereum'
     const currency = walletValidator.findCurrency(network)
     let isValidForNetwork = true
@@ -122,7 +124,7 @@ export function useDerivedWithdrawInfo(): {
     if (currency) {
       isValidForNetwork = walletValidator.validate(receiver, network)
     } else {
-      isValidForNetwork = manualValidation(receiver, network);
+      isValidForNetwork = manualValidation(receiver, network)
     }
 
     if (!isValidForNetwork) {
@@ -179,7 +181,7 @@ export function useWithdrawCallback(
   currencyId?: string,
   currencySymbol?: string
 ): ({ id, amount, onSuccess, onError }: WithdrawProps) => Promise<void> {
-  const { library } = useActiveWeb3React()
+  const { library, account, chainId } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const router = useBurnWSecContract(currencyId)
   const getEvents = useGetEventCallback()
@@ -191,6 +193,7 @@ export function useWithdrawCallback(
   return useCallback(
     async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
       const web3 = new Web3(library?.provider)
+
       dispatch(withdrawCurrency.pending())
       dispatch(setLogItem({ logItem: null }))
       let withdrawId = null
@@ -205,6 +208,7 @@ export function useWithdrawCallback(
         const { operator, amount: sum, deadline, v, r, s } = signature
 
         const gasPrice = await web3.eth.getGasPrice()
+
         const burned = await router?.burn(
           operator,
           BigNumber.from(sum.hex),
@@ -213,12 +217,14 @@ export function useWithdrawCallback(
           utils.hexlify(r.data),
           utils.hexlify(s.data),
           {
-            gasPrice: gasPrice ?? web3.utils.toWei('80', 'gwei'),
+            gasPrice: calculateGasPriceMargin(chainId, gasPrice),
           }
         )
+
         if (!burned.hash) {
           throw new Error(`An error occured. Could not submit withdraw request`)
         }
+
         getEvents({ tokenId, filter: 'all' })
         addTransaction(burned, { summary: `Withdraw ${amount} ${currencySymbol}` })
         dispatch(setTransaction({ tx: burned.hash }))
@@ -332,7 +338,7 @@ export const useCreateDraftWitdraw = () => {
 
 export const usePayFee = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { library, account } = useActiveWeb3React()
+  const { library, account, chainId } = useActiveWeb3React()
   const web3 = new Web3(library?.provider)
   const paidFee = usePaidWithdrawFee()
   const paidFeeRejected = useFeeRejected()
@@ -349,7 +355,7 @@ export const usePayFee = () => {
           from: account,
           to: feeContractAddress,
           value: web3.utils.toWei(`${feeAmount}`, 'ether'),
-          gasPrice: gasPrice ?? web3.utils.toWei('80', 'gwei'),
+          gasPrice: calculateGasPriceMargin(chainId, gasPrice),
         }
 
         await web3.eth

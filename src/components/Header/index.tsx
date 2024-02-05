@@ -279,7 +279,7 @@ export default function Header() {
             <HeaderRow marginLeft={50}>
               <Title href={config?.defaultUrl || '.'}>
                 <IXSIcon>
-                  <NewLogo width="auto" height="47px" {...config?.customStyles?.logo} />
+                  <NewLogo width="130px" height="80px" {...config?.customStyles?.logo} />
                 </IXSIcon>
               </Title>
             </HeaderRow>

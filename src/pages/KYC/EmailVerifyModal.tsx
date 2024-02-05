@@ -19,7 +19,7 @@ interface Props {
   referralCode: string
 }
 
-export const EmailVerification = ({ isModalOpen, closeModal, kycType , referralCode}: Props) => {
+export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCode }: Props) => {
   const [active, setActive] = React.useState(false)
   const [step, setStep] = React.useState(1)
   const emailVerify = useEmailVerify()
@@ -65,19 +65,19 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType , referralC
       const result = await codeVerify(verificationCode)
 
       if (result.success) {
-          history.push(referralCode)
-          window.location.reload()
-        
+        localStorage.setItem('newKyc', 'newKyc')
+        history.push(referralCode)
+        window.location.reload()
+
         setTimer(60)
-        setResetCodeInput(false);
+        setResetCodeInput(false)
       } else {
         // Handle error
         console.error(result.error)
         setHasCodeError(true)
         // setResetCodeInput(true);
         // setErrorMessage( 'Invalid code. Please try again or get a new code.')
-        setErrorMessage(String((result.error as MyError).message));
-
+        setErrorMessage(String((result.error as MyError).message))
       }
     } catch (error) {
       console.error(error)
@@ -90,7 +90,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType , referralC
     setHasCodeError(false) // Reset code error status
     setErrorMessage('') // Reset error message
     setStep((prevStep) => Math.max(1, prevStep - 1))
-    setTimer(60);
+    setTimer(60)
   }
 
   const schema = object().shape({
@@ -112,7 +112,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType , referralC
               setStep(2)
             } else {
               // Handle the case when verification is not successful
-              addPopup({ info: { success: false, summary: result?.error?.message ||'Email verification failed' } })
+              addPopup({ info: { success: false, summary: result?.error?.message || 'Email verification failed' } })
             }
           }
         } else if (step === 2) {
@@ -131,29 +131,34 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType , referralC
   const handleGetNewCodeClick = async () => {
     try {
       setHasCodeError(false)
-      setResetCodeInput((prevValue) => !prevValue);
+      setResetCodeInput((prevValue) => !prevValue)
       // Call the resendEmail function obtained from the hook
       const result = await resendEmail()
       // Now you can use the result if needed
       console.log(result)
 
       // Reset the code values
-      console.log(boxBorderColor, 'boxBorderColor')
+
       // Reset the border color to the initial color (black)
       setBoxBorderColor('#E6E6FF')
-      // resetCode(); 
+      // resetCode();
 
+      addPopup({
+        info: {
+          success: true,
+          summary: `Your email verification code has been successfully resent. Please check your inbox and complete the verification process. `,
+        },
+      })
       // Reset the timer to 60 seconds
       setTimer(60)
     } catch (error) {
       console.error(error)
       setHasCodeError(true)
       // Handle error if necessary
-      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
-      setErrorMessage(errorMessage);
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
+      setErrorMessage(errorMessage)
     }
   }
-
 
   return (
     <RedesignedWideModal maxHeight={'100vh'} isOpen={isModalOpen} onDismiss={closeModal}>
@@ -221,14 +226,14 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType , referralC
           {step === 2 && (
             <>
               <CodeInput
-          key={resetCodeInput}
+                key={resetCodeInput}
                 numberOfBoxes={6}
                 boxBackgroundColor="#F7F7FA"
                 boxBorderColor={hasCodeError ? 'red' : boxBorderColor}
                 gapBetweenBoxes={5}
                 handleNextClick={handleNextClick}
                 reset={resetCodeInput}
-                // resetCode={() => setCode(Array(6).fill(''))} 
+                // resetCode={() => setCode(Array(6).fill(''))}
               />
 
               <TimerContainer>
@@ -461,15 +466,12 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, h
     }
   }, [reset, numberOfBoxes])
 
-  
-  
-
   const handleCodeChange = (index: number, value: string) => {
     const newCode = [...code]
 
-  if (newCode[index] !== value) {
-    newCode[index] = '';
-  }
+    if (newCode[index] !== value) {
+      newCode[index] = ''
+    }
 
     if (/^[a-zA-Z0-9]*$/.test(value)) {
       newCode[index] = value
@@ -495,23 +497,23 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, h
 
   return (
     <CodeInputContainer key={reset}>
-    <CodeRow>
-      {Array.from({ length: numberOfBoxes }).map((_, index) => (
-        <CodeBox
-          placeholder="0"
-          key={index}
-          value={code[index]}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleCodeChange(index, e.target.value)}
-          borderColor={boxBorderColor}
-          backgroundColor={boxBackgroundColor}
-          ref={inputRefs[index]}
-        />
-      ))}
-    </CodeRow>
+      <CodeRow>
+        {Array.from({ length: numberOfBoxes }).map((_, index) => (
+          <CodeBox
+            placeholder="0"
+            key={index}
+            value={code[index]}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleCodeChange(index, e.target.value)}
+            borderColor={boxBorderColor}
+            backgroundColor={boxBackgroundColor}
+            ref={inputRefs[index]}
+          />
+        ))}
+      </CodeRow>
 
-    <SubscriptionFormSubmitButton disabled={!isCodeComplete} onClick={handleCodeSubmit}>
-      Next
-    </SubscriptionFormSubmitButton>
-  </CodeInputContainer>
+      <SubscriptionFormSubmitButton disabled={!isCodeComplete} onClick={handleCodeSubmit}>
+        Next
+      </SubscriptionFormSubmitButton>
+    </CodeInputContainer>
   )
 }

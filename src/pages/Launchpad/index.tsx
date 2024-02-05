@@ -14,6 +14,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { Banner } from './Banner'
 import { Footer } from './Footer'
 import Header from 'components/Header'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 // import { Header } from './Header'
 
 export default function Launchpad() {
@@ -42,7 +43,7 @@ export default function Launchpad() {
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NetworkNotAvailable />
+          <NotAvailablePage />
         </CenteredFixed>
       </Portal>
     )

@@ -14,6 +14,17 @@ import { WalletConnect } from '@web3-react/walletconnect-v2'
 
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
 import { text13 } from 'components/LaunchpadMisc/typography'
+import { Trans } from '@lingui/macro'
+import { ButtonOutlined } from 'components/Button'
+import Column from 'components/Column'
+import { HeaderRow } from 'components/Table'
+import { ContentWrapper, HoverText } from 'components/WalletModal/styleds'
+import { isMobile } from 'react-device-detect'
+import { TYPE } from 'theme'
+import metamaskmobile from 'assets/images/metamaskmobile.png'
+import trust from 'assets/images/trust.png'
+import coinbase from 'assets/images/coinbase.png'
+import { style } from 'styled-system'
 
 export enum PromptView {
   options,
@@ -63,24 +74,94 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
       <ExitIconContainer onClick={props.onClose}>
         <CrossIcon />
       </ExitIconContainer>
-      {walletView === PromptView.options && (
-        <>
-          <ConnectionOptions onSelect={onSelect} />
-        </>
+      {isMobile ? (
+        <ContentWrapper>
+          <HeaderRow>
+            <HoverText>
+              <Trans>Connect to a wallet</Trans>
+            </HoverText>
+          </HeaderRow>
+          <Column style={{ alignItems: 'stretch' }}>
+            <br />
+            <TYPE.description2>
+              You are accessing IX Swap through a mobile phone. To connect a wallet, we recommend using browsers from
+              Metamask, Trust Wallet, Coinbase Wallet. See links below for more information:
+              <br />
+            </TYPE.description2>
+
+            <ButtonOutlined
+              type="button"
+              onClick={() =>
+                location.replace(
+                  'https://support.metamask.io/hc/en-us/articles/6356387482523-How-to-use-the-MetaMask-Mobile-Browser'
+                )
+              }
+              style={{
+                width: '100%',
+                marginTop: '32px',
+                color: 'black',
+                justifyContent: 'left',
+                fontSize: '13px',
+              }}
+            >
+              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={metamaskmobile} alt="homeImg" />
+              Metamask Browser
+            </ButtonOutlined>
+            <ButtonOutlined
+              type="button"
+              onClick={() => location.replace('https://trustwallet.com/dapp/')}
+              style={{
+                width: '100%',
+                marginTop: '32px',
+                color: 'black',
+
+                justifyContent: 'left',
+                fontSize: '13px',
+              }}
+            >
+              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={trust} alt="groupImg" />
+              Trust Wallet Browser
+            </ButtonOutlined>
+
+            <ButtonOutlined
+              type="button"
+              onClick={() => location.replace('https://help.coinbase.com/en/wallet/other-topics/what-is-a-dapp')}
+              style={{
+                width: '100%',
+                marginTop: '32px',
+                color: 'black',
+                justifyContent: 'left',
+                fontSize: '12px',
+              }}
+            >
+              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={coinbase} alt="groupImg" />
+              Coinbased Wallet Browser
+            </ButtonOutlined>
+          </Column>
+          {/* </FormCard> */}
+        </ContentWrapper>
+      ) : (
+        <ContentWrapper>
+          {walletView === PromptView.options && (
+            <>
+              <ConnectionOptions onSelect={onSelect} />
+            </>
+          )}
+          {walletView === PromptView.pending && <ConnectionLoader />}
+          <AgreementNotice>
+            By connecting a wallet, you agree to IX Swap’s
+            <a href="https://ixswap.io/terms-and-conditions/" target="_blank" rel="noreferrer">
+              {' '}
+              Terms and Conditions
+            </a>{' '}
+            and acknowledge that you have read and understood the IX Swap
+            <a href="https://ixswap.io/privacy-policy/" target="_blank" rel="noreferrer">
+              {' '}
+              Privacy Policy.
+            </a>
+          </AgreementNotice>
+        </ContentWrapper>
       )}
-      {walletView === PromptView.pending && <ConnectionLoader />}
-      <AgreementNotice>
-        By connecting a wallet, you agree to IX Swap’s
-        <a href="https://ixswap.io/terms-and-conditions/" target="_blank" rel="noreferrer">
-          {' '}
-          Terms and Conditions
-        </a>{' '}
-        and acknowledge that you have read and understood the IX Swap
-        <a href="https://ixswap.io/privacy-policy/" target="_blank" rel="noreferrer">
-          {' '}
-          Privacy Policy.
-        </a>
-      </AgreementNotice>
     </ModalContainer>
   )
 }

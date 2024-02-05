@@ -47,6 +47,7 @@ import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import Header from 'components/Header'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 const DEFAULT_REMOVE_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(5, 100)
 
@@ -315,7 +316,7 @@ export default function RemoveLiquidity({
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NetworkNotAvailable />
+          <NotAvailablePage />
         </CenteredFixed>
       </Portal>
     )
@@ -403,7 +404,9 @@ export default function RemoveLiquidity({
                           }}
                           disabled={!isValid || signatureData === null}
                         >
-                          <Text color={ !isValid || signatureData === null ? '#f8c0c0' : '#FF6161'}>{<Trans>Remove</Trans>}</Text>
+                          <Text color={!isValid || signatureData === null ? '#f8c0c0' : '#FF6161'}>
+                            {<Trans>Remove</Trans>}
+                          </Text>
                         </NewApproveButton>
                       </RowBetween>
                     </>

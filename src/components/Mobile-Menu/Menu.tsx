@@ -124,19 +124,28 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         </CloseContainer>
 
         <MenuList>
-          {isAllowed('/swap') && chainId && chains.includes(chainId) && isWhitelisted && (
+          {isWhitelisted && (
             <>
-              <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} data-testid={`swap-nav-link`}>
-                <Trans>Swap/Trade</Trans>
-              </MenuListItem>{' '}
+              <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
+                <Trans>Charts</Trans>
+              </ExternalListItem>
+
               <Line />
             </>
           )}
 
+          <>
+            <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
+              <Trans>Launchpad</Trans>
+            </MenuListItem>
+
+            <Line />
+          </>
+
           {isAllowed(routes.securityTokens()) && chainId && chains.includes(chainId) && isWhitelisted && (
             <>
               <MenuListItem
-                disabled={!isApproved}
+                // disabled={!isApproved}
                 id={`security-nav-link`}
                 to={routes.securityTokens('tokens')}
                 onClick={close}
@@ -156,6 +165,15 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             </>
           )}
 
+          {isAllowed('/swap') && chainId && chains.includes(chainId) && isWhitelisted && (
+            <>
+              <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} data-testid={`swap-nav-link`}>
+                <Trans>Swap/Trade</Trans>
+              </MenuListItem>{' '}
+              <Line />
+            </>
+          )}
+
           {/* {chainId && chains.includes(chainId) && isWhitelisted && (
             <ExternalListItem
               disabled={!isApproved}
@@ -165,16 +183,6 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
               <Trans>FNFT</Trans>
             </ExternalListItem>
           )} */}
-
-          {isWhitelisted && (
-            <>
-              <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
-                <Trans>Charts</Trans>
-              </ExternalListItem>
-
-              <Line />
-            </>
-          )}
 
           {isAllowed('/faucet') && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
             <MenuListItem disabled={!isApproved} id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
@@ -203,14 +211,6 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
               <Line />
             </>
           )}
-
-          <>
-            <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
-              <Trans>Launchpad</Trans>
-            </MenuListItem>
-
-            <Line />
-          </>
 
           {/* <>
             <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
