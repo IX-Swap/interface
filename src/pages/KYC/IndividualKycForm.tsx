@@ -255,7 +255,9 @@ export default function IndividualKycForm() {
   }
 
   const onIsAdditionalChange = async (index: number, setFieldValue: any) => {
+
     const values = form.current.values
+    console.log(values.taxDeclarations[index].isAdditional, 'kkkkk')
     if (!values.taxDeclarations[index].isAdditional) {
       setFieldValue(`taxDeclarations[${index}].idNumber`, '') // Clear TIN
       setFieldValue(`taxDeclarations[${index}].country`, null) // Clear country

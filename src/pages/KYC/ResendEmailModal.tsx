@@ -19,7 +19,7 @@ interface Props {
   referralCode: string
 }
 
-export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCode }: Props) => {
+export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCode }: Props) => {
   const [active, setActive] = React.useState(false)
   const [step, setStep] = React.useState(1)
   const emailVerify = useEmailVerify()
@@ -169,7 +169,7 @@ console.log(kycType, 'kycTypekycType')
           onClick={closeModal}
         />
         <ModalContent style={{ width: '100%' }}>
-          {step === 1 && <IXSTitle>Welcome to IX Swap</IXSTitle>}
+          {step === 1 && <IXSTitle></IXSTitle>}
           {step === 2 && (
             <FlexContainer>
               <ArrowBack
@@ -180,7 +180,7 @@ console.log(kycType, 'kycTypekycType')
             </FlexContainer>
           )}
 
-          {step === 1 && <IXSSubTitle>Verify your email</IXSSubTitle>}
+          {step === 1 && <IXSSubTitle>Change your email</IXSSubTitle>}
           {step === 2 && <IXSSubTitle> Enter the code</IXSSubTitle>}
           {step === 1 && (
             <IXSSubTitleSub>
