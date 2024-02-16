@@ -8,9 +8,10 @@ import { marginLeft } from 'styled-system'
 interface Props {
   label: string
   value: string
+  data?: any
 }
 
-export const Field = ({ label, value }: Props) => {
+export const Field = ({ label, value, data }: Props) => {
   // if (label === 'Reason') {
   //   switch (value) {
   //     case 'A':
@@ -36,14 +37,19 @@ export const Field = ({ label, value }: Props) => {
   //     </Container>
   //   )
   // } else {
+    const showCheckIcon = data?.isEmailVerified;
     return (
       <Container>
-        <span>{t`${label}`}</span>
-        <div>
-          <span>{value || 'Not completed'}</span>
-          <span style={{  position: 'absolute', marginLeft: '10px' }}>{label === 'Email address' ? <CheckIcon /> : ''}</span>
-        </div>
-      </Container>
+      <span>{t`${label}`}</span>
+      <div>
+        <span>{value || 'Not completed'}</span>
+        {label === 'Email address' && showCheckIcon && (
+          <span style={{ position: 'absolute', marginLeft: '10px' }}>
+            <CheckIcon />
+          </span>
+        )}
+      </div>
+    </Container>
     )
   // }
 }
