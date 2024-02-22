@@ -150,8 +150,11 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
           {stageStatus !== OfferStageStatus.disabled && stageStatus !== OfferStageStatus.checkStatus && (
             <InvestButton onClick={openInvestDialog}>
-              {stageStatus === OfferStageStatus.notStarted ? 'Register To Invest' : 'Invest'}
-              {stageStatus === OfferStageStatus.closed && 'Open Dashboard'}
+              {stageStatus === OfferStageStatus.notStarted
+                ? 'Register To Invest'
+                : stageStatus === OfferStageStatus.closed
+                ? 'Open Dashboard'
+                : 'Invest'}
             </InvestButton>
           )}
         </InvestButtonContainer>
