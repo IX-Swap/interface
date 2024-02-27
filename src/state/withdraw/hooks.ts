@@ -34,6 +34,7 @@ import { useAddPopup, useToggleTransactionModal } from 'state/application/hooks'
 import { setLogItem } from 'state/eventLog/actions'
 import { formatRpcError } from 'utils/formatRpcError'
 import { NETWORK_ADDRESS_PATTERNS } from 'state/wallet/constants'
+import { WITHDRAW_FLOW_EVENT, WalletEvent } from 'utils/event-logs'
 import { calculateGasPriceMargin } from 'utils/calculateGasPriceMargin'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -221,6 +222,23 @@ export function useWithdrawCallback(
           }
         )
 
+        new WalletEvent(WITHDRAW_FLOW_EVENT.CREATE_BURN_TX)
+          .walletAddress(account || '')
+          .data({
+            tx: {
+              operator,
+              amount: BigNumber.from(sum.hex).toString(),
+              deadline,
+            },
+            chainId,
+            gasPrice: gasPrice,
+            txHash: burned?.hash,
+            receiver,
+            amount,
+            id,
+          })
+          .info(t`Withdraw ${amount} ${currencySymbol}`)
+
         if (!burned.hash) {
           throw new Error(t`An error occured. Could not submit withdraw request`)
         }
@@ -365,6 +383,23 @@ export const usePayFee = () => {
           })
           .on('receipt', async (receipt: any) => {
             if (receipt.transactionHash) {
+              new WalletEvent(WITHDRAW_FLOW_EVENT.WITHDRAW_FEE_PAID)
+                .walletAddress(account || '')
+                .data({
+                  transaction: {
+                    from: tx.from,
+                    to: tx.to,
+                    value: tx.value,
+                    gasPrice: tx.gasPrice,
+                  },
+                  feeTxHash: receipt.transactionHash,
+                  feeAmount,
+                  feeContractAddress,
+                  tokenId,
+                  id,
+                })
+                .info('User has paid withdraw fee for tokenId: ' + tokenId)
+
               await paidFee({ tokenId, id, feeTxHash: receipt.transactionHash })
             }
           })
