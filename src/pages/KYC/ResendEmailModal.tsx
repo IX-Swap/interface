@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 import { Formik } from 'formik'
 import { object, string } from 'yup'
 import { useAddPopup } from 'state/application/hooks'
-import { useEmailVerify, useEmailVerifyCode } from 'state/kyc/hooks'
+import { useEmailEdit, useEmailVerify, useEmailVerifyCode, useKYCState } from 'state/kyc/hooks'
 import { ReactComponent as ArrowBack } from 'assets/images/newBack.svg'
 import { useHistory } from 'react-router-dom'
 import { resendEmail } from 'state/admin/hooks'
@@ -22,7 +22,7 @@ interface Props {
 export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCode }: Props) => {
   const [active, setActive] = React.useState(false)
   const [step, setStep] = React.useState(1)
-  const emailVerify = useEmailVerify()
+  const emailEdit = useEmailEdit()
   const codeVerify = useEmailVerifyCode()
   const addPopup = useAddPopup()
   const [timer, setTimer] = React.useState(60)
@@ -31,6 +31,7 @@ export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCod
   const history = useHistory()
   const [boxBorderColor, setBoxBorderColor] = React.useState('#E6E6FF')
   const [resetCodeInput, setResetCodeInput] = React.useState(false)
+  const { kyc, loadingRequest } = useKYCState()
 
   React.useEffect(() => {
     let interval: NodeJS.Timeout
@@ -73,7 +74,7 @@ export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCod
         setResetCodeInput(false)
       } else {
         // Handle error
-        console.error(result.error)
+        // console.error(result.error)
         setHasCodeError(true)
         // setResetCodeInput(true);
         // setErrorMessage( 'Invalid code. Please try again or get a new code.')
@@ -105,10 +106,10 @@ export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCod
         if (step === 1) {
           if (kycType) {
             // Assuming emailVerify is an asynchronous function
-            const result = await emailVerify(values.email, kycType)
+            const result = await emailEdit(values.email, kyc?.corporateKycId ? 'corporate' : 'individual',)
 
             if (result.success) {
-              console.log(values.email, kycType, result, 'kycType')
+              // console.log(values.email, kycType, result, 'kycType')
               setStep(2)
             } else {
               // Handle the case when verification is not successful
@@ -121,11 +122,11 @@ export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCod
 
         // addPopup({ info: { success: true, summary: `You have subscribed successfully` } })
       } catch (err) {
-        console.error('Error during email verification:', err)
+        // console.error('Error during email verification:', err)
         addPopup({ info: { success: false, summary: 'An error occurred during email verification' } })
       }
     },
-    [step, addPopup, emailVerify, kycType]
+    [step, addPopup, emailEdit, kycType]
   )
 
   const handleGetNewCodeClick = async () => {
@@ -135,7 +136,7 @@ export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCod
       // Call the resendEmail function obtained from the hook
       const result = await resendEmail()
       // Now you can use the result if needed
-      console.log(result)
+      // console.log(result)
 
       // Reset the code values
 
@@ -159,7 +160,7 @@ export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCod
       setErrorMessage(errorMessage)
     }
   }
-console.log(kycType, 'kycTypekycType')
+
   return (
     <RedesignedWideModal maxHeight={'100vh'} isOpen={isModalOpen} onDismiss={closeModal}>
       <ModalContainer style={{ width: '100%' }}>

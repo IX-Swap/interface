@@ -95,11 +95,11 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     () => [
       {
         label: 'Min. Investment Size',
-        value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${investingTokenSymbol}`,
+        value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${investingTokenSymbol}.e`,
       },
       {
         label: 'Max. Investment Size',
-        value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${investingTokenSymbol}`,
+        value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${investingTokenSymbol}.e`,
       },
     ],
     [isPresale, presaleMaxInvestment, presaleMinInvestment, maxInvestment, minInvestment, investingTokenSymbol]
@@ -119,8 +119,8 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       }
     }
     return [
-      { label: 'Available to invest', value: `${formatter.format(availableToInvest)} ${investingTokenSymbol}` },
-      { label: 'Already invested', value: `${formatter.format(amountInvested)} ${investingTokenSymbol}` },
+      { label: 'Available to invest', value: `${formatter.format(availableToInvest)} ${investingTokenSymbol}.e` },
+      { label: 'Already invested', value: `${formatter.format(amountInvested)} ${investingTokenSymbol}.e` },
       {
         label: (
           <FlexVerticalCenter>
