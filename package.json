@@ -145,7 +145,7 @@
     "postinstall": "yarn compile-contract-types",
     "start": "set GENERATE_SOURCEMAP=true && yarn compile-contract-types && react-scripts start",
     "test": "react-scripts test --env=jsdom",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org investax-ze --project javascript-react ./build && sentry-cli sourcemaps upload --org investax-ze --project javascript-react ./build"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org investax-ze --project $SENTRY_PROJECT_NAME ./build && sentry-cli sourcemaps upload --org investax-ze --project $SENTRY_PROJECT_NAME ./build"
   },
   "eslintConfig": {
     "extends": "react-app",

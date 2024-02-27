@@ -6,12 +6,30 @@ import { saveAccount } from 'state/user/actions'
 import { auth, metamask } from './apiUrls'
 import { responseSuccessInterceptor } from './interceptors'
 import { APIServiceRequestConfig, KeyValueMap, RequestConfig } from './types'
-import { LONG_WAIT_RESPONSE, LONG_WAIT_RESPONSE_CODE } from 'constants/misc'
+import { LONG_WAIT_RESPONSE, LONG_WAIT_RESPONSE_CODE, OK_RESPONSE_CODE, CREATED_RESPONSE_CODE } from 'constants/misc'
+import * as Sentry from '@sentry/react'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
 
 _axios.interceptors.response.use(responseSuccessInterceptor, async function responseErrorInterceptor(error: any) {
+  if (error.response.status !== OK_RESPONSE_CODE || error.response.status !== CREATED_RESPONSE_CODE) {
+    // only log errors if the URL contain kyc
+    if (error?.response?.config?.url?.includes('kyc')) {
+      Sentry.addBreadcrumb({
+        category: 'api',
+        level: 'error',
+        message: error?.response?.data?.message,
+        data: error?.response?.data,
+      })
+
+      const message = `API Error ${error?.response?.config?.method?.toUpperCase()} ${error?.response?.config?.url}: ${
+        error?.response?.data?.message
+      }`
+      Sentry.captureMessage(message)
+    }
+  }
+
   const originalConfig = error?.config
   const shouldRetry = () => {
     const loginUrLs = [metamask.login, metamask.challenge]

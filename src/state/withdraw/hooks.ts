@@ -190,7 +190,6 @@ export function useWithdrawCallback(
   const addTransaction = useTransactionAdder()
   const cancelAction = useCancelDepositCallback()
   const toggle = useToggleTransactionModal()
-  const { chainId, account } = useActiveWeb3React()
 
   return useCallback(
     async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
