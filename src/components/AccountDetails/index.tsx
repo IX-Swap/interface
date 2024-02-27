@@ -167,11 +167,10 @@ export default function AccountDetails({
   // }, [])
 
   const closeModal = () => {
-    console.log('Closing modal')
     setModalProps({ isModalOpen: false, referralCode: '', kycType: undefined })
   }
   const openModal = (kycType: string) => {
-    console.log('Opening modal for', kycType)
+
     // Pass additional props based on the selected KYC type
     setModalProps({
       isModalOpen: true,
@@ -297,7 +296,7 @@ export default function AccountDetails({
 
               <span
                 onClick={() => openModal('resend')}
-                style={{ color: '#6666FF', fontSize: '13px', fontWeight: '400' }}
+                style={{cursor: 'pointer', color: '#6666FF', fontSize: '13px', fontWeight: '400' }}
               >
                 Change Email
               </span>
