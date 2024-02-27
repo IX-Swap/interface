@@ -13,6 +13,8 @@ import { routes } from 'utils/routes'
 import { ReactComponent as KYC } from 'assets/images/kyc.svg'
 import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
 import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
+
+import { ReactComponent as NewDropdown } from 'assets/images/dropdownIcon.svg'
 import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
@@ -33,6 +35,7 @@ import { isMobile } from 'react-device-detect'
 import { useWeb3React } from '@web3-react/core'
 import { ReactComponent as NewAddIcon } from 'assets/images/newAddIcon.svg'
 import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
+import { useWalletModalToggle } from 'state/application/hooks'
 
 const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
   display: grid;
@@ -193,6 +196,7 @@ const HeaderWrapper = styled.div`
 
 const IconWrapper = styled.div`
   display: block;
+  cursor: pointer;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     display: none;
@@ -211,6 +215,7 @@ export default function Header() {
   const { isTokenManager } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [openPreviewModal, setPreviewModal] = React.useState(false)
+  const toggleWalletModal = useWalletModalToggle()
 
   const isAllowed = useCallback(
     (path: string) => {
@@ -297,18 +302,7 @@ export default function Header() {
                   </HeaderElement>
                 </IconWrapper>
               )}
-              {isAllowed(routes.kyc) && isWhitelisted && (
-                <IconWrapper>
-                  <HeaderElement>
-                    <NavLink
-                      style={{ textDecoration: 'none', color: 'inherit', marginRight: 16, marginTop: 5 }}
-                      to="/kyc"
-                    >
-                      {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
-                    </NavLink>
-                  </HeaderElement>
-                </IconWrapper>
-              )}
+
               {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
                 <HeaderElement>
                   <IXSBalance />
@@ -317,8 +311,59 @@ export default function Header() {
               <HeaderElement>
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
+                {isAllowed(routes.kyc) && isWhitelisted && (
+                  <IconWrapper>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <div
+                        style={{
+                          height: '32px',
+                          borderLeft: '1px solid #B8B8CC',
+                          opacity: '0.4',
+                        }}
+                      ></div>
+
+                      <HeaderElement onClick={toggleWalletModal}>
+                        <div style={{ display: 'flex', gap: '5px' }}>
+                          <span
+                            style={{
+                              background: '#6666FF',
+                              padding: '8px 13px',
+                              color: '#FFFFFF',
+                              borderRadius: '100%',
+                              fontWeight: '600',
+                              margin: '0px 0px 0px 10px',
+                            }}
+                          >
+                            {kyc?.individual?.firstName ? kyc.individual.firstName.charAt(0).toUpperCase() : ''}
+                          </span>
+
+                          <NewDropdown style={{ marginTop: '14px', marginRight: '10px' }} />
+                        </div>
+                        {/* <NavLink
+                          style={{ textDecoration: 'none', color: 'inherit', marginRight: 16, marginTop: 5 }}
+                           to="/kyc"
+                           >
+                          {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
+                        </NavLink> */}
+                      </HeaderElement>
+                      <div
+                        style={{
+                          height: '32px',
+                          borderRight: '1px solid #B8B8CC',
+                          opacity: '0.4',
+                        }}
+                      ></div>
+                    </div>
+                  </IconWrapper>
+                )}
                 <div
-                onClick={openModal}
+                  onClick={openModal}
                   style={{
                     border: '1.3px solid #E6E6FF',
                     borderRadius: '8px',

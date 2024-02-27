@@ -318,7 +318,6 @@ export default function WalletModal({
           </ContentWrapper>
         ) : (
           <ContentWrapper>
-            {/* <TermsCard style={{ marginBottom: '16px' }}>  */}
             <AutoRow style={{ flexWrap: 'nowrap' }}>
               <Text style={{ fontSize: '13px', color: '#666680', fontWeight: '400', lineHeight: '19.5px' }}>
                 <Trans>
@@ -332,7 +331,6 @@ export default function WalletModal({
                 </Trans>
               </Text>
             </AutoRow>
-            {/* </TermsCard> */}
             {walletView === WALLET_VIEWS.PENDING ? (
               <PendingView
                 connector={pendingWallet}

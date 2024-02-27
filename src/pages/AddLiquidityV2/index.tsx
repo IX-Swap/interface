@@ -336,6 +336,8 @@ export default function AddLiquidity({
 
   const addIsUnsupported = useIsSwapUnsupported(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
 
+  console.log(currencyA, currencyB, 'currencyBcurrencyB')
+
   return (
     <>
       {showConfirm && (

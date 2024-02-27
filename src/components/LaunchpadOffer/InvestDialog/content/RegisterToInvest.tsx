@@ -40,7 +40,7 @@ const initialValues: FormValues = {
 
 const schema = object().shape({
   email: string().email('Please enter a valid email'),
-  isInterested: boolean().nullable(false).required('Please, specify if you are interested in this deal'),
+  isInterested: boolean().nullable(false).required(''),
   amount: number().when('isInterested', {
     is: true,
     then: number().required('Please enter amount of your estimated investment'),

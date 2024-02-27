@@ -84,7 +84,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const daysTillClosed = props.offer.daysTillClosed ?? 0
 
   const [showSuccess, setShowSuccess] = React.useState(false)
-console.log(stageStatus, 'stageStatus')
+  console.log(props.offer.status, 'stageStatus')
   return (
     <Container>
       <OfferSidebarSummary>
@@ -139,12 +139,22 @@ console.log(stageStatus, 'stageStatus')
         </OfferStats>
 
         <InvestButtonContainer>
-          {stageStatus !== OfferStageStatus.disabled && (
+          {/* {stageStatus !== OfferStageStatus.disabled && (
             <InvestButton onClick={openInvestDialog}>
               {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
               {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
               {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
+            </InvestButton>
+          )} */}
+
+          {stageStatus !== OfferStageStatus.disabled && stageStatus !== OfferStageStatus.checkStatus && (
+            <InvestButton onClick={openInvestDialog}>
+              {stageStatus === OfferStageStatus.notStarted
+                ? 'Register To Invest'
+                : stageStatus === OfferStageStatus.closed
+                ? 'Open Dashboard'
+                : 'Invest'}
             </InvestButton>
           )}
         </InvestButtonContainer>
@@ -260,7 +270,7 @@ const Container = styled.div`
 
   gap: 2rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-   padding: 20px;
+    padding: 20px;
   }
 `
 
