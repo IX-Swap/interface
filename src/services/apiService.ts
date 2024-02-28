@@ -14,10 +14,11 @@ _axios.defaults.baseURL = API_URL
 
 _axios.interceptors.response.use(responseSuccessInterceptor, async function responseErrorInterceptor(error: any) {
   if (error.response.status !== OK_RESPONSE_CODE || error.response.status !== CREATED_RESPONSE_CODE) {
+    const method = error?.response?.config?.method
     // only log errors if the URL contain kyc
-    if (error?.response?.config?.url?.includes('kyc')) {
+    if (error?.response?.config?.url?.includes('kyc') && (method === 'post' || method === 'put')) {
       Sentry.addBreadcrumb({
-        category: 'api',
+        category: 'KYC',
         level: 'error',
         message: error?.response?.data?.message,
         data: error?.response?.data,
