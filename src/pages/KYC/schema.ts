@@ -33,12 +33,13 @@ export const individualErrorsSchema = yup.object().shape({
   address: yup.string().required('Required'),
   postalCode: yup.string().required('Required'),
   country: yup
-    .object()
-    .nullable()
-    .required('Required')
-    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-      return value && value.label !== undefined
-    }),
+  .object()
+  .nullable()
+  .required('Required')
+  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+    return value && value.label !== undefined && value.label !== null;
+  }),
+
   city: yup.string().required('Required'),
 
   idType: yup
