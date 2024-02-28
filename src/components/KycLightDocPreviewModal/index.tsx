@@ -2,7 +2,7 @@ import React from 'react'
 import { isFirefox } from 'react-device-detect'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
-import FileViewer from 'react-file-viewer'
+// import FileViewer from 'react-file-viewer'
 import { Download } from 'react-feather'
 
 import { ModalLightBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, EllipsisText } from 'theme'
@@ -60,7 +60,7 @@ export const KycLightDocPreviewModal = ({ isOpen, onClose, data, downloadFile }:
                         </StyledDocPreviewButton>
                       </div>
                       <FileContainer>
-                        <FileViewer fileType="pdf" filePath={asset.public} height="70vh" />
+                        {/* <FileViewer fileType="pdf" filePath={asset.public} height="70vh" /> */}
                       </FileContainer>
                     </div>
                   ) : (
