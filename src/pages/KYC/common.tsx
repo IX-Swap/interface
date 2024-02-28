@@ -433,7 +433,7 @@ export const SelfieUploader: FC<UploaderProps> = ({
       {!isDisabled && (
         <Upload
           isDisabled={isDisabled}
-          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
           data-testid={id}
           file={null}
           onDrop={onDrop}
@@ -516,7 +516,7 @@ export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }
         // </Upload>
 
         <Upload
-          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+        accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
           data-testid={id}
           file={null}
           onDrop={onDrop}

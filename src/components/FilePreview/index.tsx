@@ -26,8 +26,6 @@ export const FilePreview: FC<Props> = ({
   withBackground = true,
   isDisabled = false,
 }: Props) => {
-  // const deleteIcon = KYCStatusIcons[KYCStatuses.REJECTED]
-
   return (
     <Wrapper withBackground={withBackground} marginBottom="10px" alignItems="center" style={style}>
       <FileNew style={{ minWidth: 14, minHeight: 14 }} />
@@ -46,9 +44,15 @@ export const FilePreview: FC<Props> = ({
       </TYPE.subHeader1>
       {!isDisabled && (
         <ButtonText style={{ minWidth: 18, minHeight: 18 }}>
-          <TrashNoBorder style={{ marginLeft: 'auto' }} onClick={handleDeleteClick} type="button" />
+          <TrashNoBorder
+            style={{ marginLeft: 'auto', cursor: 'pointer' }}
+            onClick={(event) => {
+              event.preventDefault(); // Prevent default form submission
+              handleDeleteClick(); // Invoke delete handler
+            }}
+          />
         </ButtonText>
       )}
     </Wrapper>
-  )
-}
+  );
+};
