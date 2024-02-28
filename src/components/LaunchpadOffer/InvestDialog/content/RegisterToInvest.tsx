@@ -148,7 +148,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
                 <InvestTextField
                   type="number"
                   label="How much will be your estimated investment?"
-                  trailing={<CurrencyLabel>{props.offer.investingTokenSymbol}</CurrencyLabel>}
+                  trailing={<CurrencyLabel>{props.offer.investingTokenSymbol}.e</CurrencyLabel>}
                   value={amount}
                   onChange={(value) => onChangeAmount(value, setFieldValue)}
                   disabled={!values.isInterested}
