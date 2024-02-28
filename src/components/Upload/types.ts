@@ -19,4 +19,5 @@ export enum AcceptFiles {
   FILLES = 'image/*,video/*,audio/*',
   PDF = 'application/pdf',
   NOT_HEIC = 'image/*,video/*,audio/*,application/pdf', 
+  HEIC = 'image/heic',
 }
