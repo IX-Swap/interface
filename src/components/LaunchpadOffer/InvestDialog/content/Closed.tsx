@@ -120,7 +120,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
           {amountLoading && <Loader />}
           {!amountLoading && !amountError && (
             <MyInvestmentAmount>
-              {isSuccessfull ? amountClaim : amount} {isSuccessfull ? tokenSymbol : investingTokenSymbol}
+              {isSuccessfull ? amountClaim : amount} {isSuccessfull ? tokenSymbol : investingTokenSymbol}.e
             </MyInvestmentAmount>
           )}
           {amountError}
