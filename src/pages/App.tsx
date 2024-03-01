@@ -79,6 +79,17 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: b
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
+const initSafary = () => {
+  const script = document.createElement('script');
+  script.src = 'https://tag.safary.club/stag-0.1.5.js';
+  script.defer = true;
+  script.setAttribute('data-name', 'safary-sdk');
+  script.setAttribute('data-product-id', 'prd_z2suvagAL5');
+  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM=';
+  script.crossOrigin = 'anonymous';
+  document.head.appendChild(script);
+};
+
 export default function App() {
   const getMe = useGetMe()
 
@@ -101,6 +112,10 @@ export default function App() {
     }
     getCountryCode()
   }, [])
+
+  useEffect(() => {
+    initSafary();
+  }, []);
 
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
@@ -228,7 +243,7 @@ export default function App() {
 
   return (
     <>
-      {isMobile && !window.ethereum && <ConnectWalletModal />}
+      {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
       {/* {countryCode === 'SG' && <RestrictedModal />} */}
       <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
