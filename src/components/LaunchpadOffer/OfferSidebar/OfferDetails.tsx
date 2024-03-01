@@ -103,7 +103,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
           {stageStatus !== OfferStageStatus.notStarted && (
             <>
               <OfferInvestmentAmount>
-                {props.offer.investingTokenSymbol} {formatter.format(props.offer.totalInvestment)}
+                {props.offer.investingTokenSymbol}.e {formatter.format(props.offer.totalInvestment)}
               </OfferInvestmentAmount>
 
               <Row alignItems="center" gap="1rem">
@@ -241,17 +241,17 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
         },
         {
           label: 'Token Price',
-          value: `${props.investingTokenSymbol}  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}`,
+          value: `${props.investingTokenSymbol}.e  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}`,
         },
         {
           label: 'Max. Investment Size',
-          value: `${props.investingTokenSymbol} ${
+          value: `${props.investingTokenSymbol}.e ${
             formatedValue(props.maxInvestment) ?? 'N/A'
           } / ${maxTokenInvestment} ${props.tokenSymbol}`,
         },
         {
           label: 'Min. Investment Size',
-          value: `${props.investingTokenSymbol}  ${
+          value: `${props.investingTokenSymbol}.e  ${
             formatedValue(props.minInvestment) ?? 'N/A'
           } / ${minTokenInvestment} ${props.tokenSymbol}`,
         },

@@ -33,11 +33,11 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
       <SaleAllocationEntry>
         <div>
           <span className="bold">
-            {props.investingTokenSymbol} {formatedValue(props.softCap) ?? 'N/A'}
+            {props.investingTokenSymbol}.e {formatedValue(props.softCap) ?? 'N/A'}
           </span>{' '}
           Soft Cap /
           <span className="bold">
-            {props.investingTokenSymbol} {formatedValue(props.hardCap) ?? 'N/A'}
+            {props.investingTokenSymbol}.e {formatedValue(props.hardCap) ?? 'N/A'}
           </span>{' '}
           Hard Cap
         </div>
@@ -50,7 +50,7 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
           <SaleAllocationEntry>
             <div>
               <span className="bold">
-                {props.investingTokenSymbol} {formatedValue(props.presaleAlocated)}
+                {props.investingTokenSymbol}.e {formatedValue(props.presaleAlocated)}
               </span>{' '}
               Allocated for Pre-Sale
             </div>
@@ -62,7 +62,7 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
       <SaleAllocationEntry>
         <div>
           <span className="bold">
-            {props.investingTokenSymbol} {allocatedPublicSale}
+            {props.investingTokenSymbol}.e {allocatedPublicSale}
           </span>{' '}
           Allocated for Public Sale
         </div>
@@ -95,7 +95,7 @@ export const OfferPreSaleInfo: React.FC<PresaleProps> = (props) => {
       <SaleAllocationEntry>
         <EntryLabel>Max. Investment Size</EntryLabel>
         <EntryValue>
-          {props.investingTokenSymbol} {formatedValue(formatter.format(Number(props.presaleMaxInvestment)))}
+          {props.investingTokenSymbol}.e {formatedValue(formatter.format(Number(props.presaleMaxInvestment)))}
         </EntryValue>
       </SaleAllocationEntry>
 
@@ -104,7 +104,7 @@ export const OfferPreSaleInfo: React.FC<PresaleProps> = (props) => {
       <SaleAllocationEntry>
         <EntryLabel>Min. Investment Size</EntryLabel>
         <EntryValue>
-          {props.investingTokenSymbol} {formatedValue(formatter.format(Number(props.presaleMinInvestment)))}
+          {props.investingTokenSymbol}.e {formatedValue(formatter.format(Number(props.presaleMinInvestment)))}
         </EntryValue>
       </SaleAllocationEntry>
     </SaleAllocationContainer>

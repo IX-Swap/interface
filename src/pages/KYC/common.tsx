@@ -163,7 +163,10 @@ export const KycSelect: FC<SelectProps> = ({
   return (
     <Box>
       <KycInputLabel label={label} tooltipText={tooltipText} error={error} />
-      <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
+      {label !== 'Nationality' && (
+        <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
+      )}
+
       {isDisabled && selectedItem ? (
         <Row alignItems="center" style={{ columnGap: 4 }}>
           {selectedItem?.icon}
@@ -433,7 +436,7 @@ export const SelfieUploader: FC<UploaderProps> = ({
       {!isDisabled && (
         <Upload
           isDisabled={isDisabled}
-          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
           data-testid={id}
           file={null}
           onDrop={onDrop}
@@ -516,7 +519,7 @@ export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }
         // </Upload>
 
         <Upload
-          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
           data-testid={id}
           file={null}
           onDrop={onDrop}

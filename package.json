@@ -6,7 +6,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@ethersproject/experimental": "^5.2.0",
-    "@ixswap1/default-token-list": "^1.3.8",
+    "@ixswap1/default-token-list": "^1.4.1",
     "@ixswap1/sdk-core": "^1.3.2",
     "@ixswap1/v2-core": "^1.0.11",
     "@ixswap1/v2-periphery": "^1.0.10",
@@ -141,14 +141,15 @@
   "scripts": {
     "compile-contract-types": "yarn compile-external-abi-types",
     "compile-external-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types \"./src/abis/**/*.json\"",
-    "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-app-rewired --no-warnings --optimize_for_size --max_old_space_size=6144 build",
+    "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-app-rewired --no-warnings --optimize_for_size --max_old_space_size=6144 build && yarn sentry:sourcemaps",
     "i18n:extract": "lingui extract --locale en-US",
     "i18n:compile": "lingui compile",
     "integration-test": "cd e2e_tests && xvfb-run npx playwright test",
     "postinstall": "yarn compile-contract-types",
-    "start": "yarn compile-contract-types && react-app-rewired start",
+    "start": "set GENERATE_SOURCEMAP=true && yarn compile-contract-types && react-app-rewired start",
     "test": "react-app-rewired test --env=jsdom",
-    "serve": "serve -s build -l 3000"
+    "serve": "serve -s build -l 3000",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org investax-ze --project $SENTRY_PROJECT_NAME ./build && sentry-cli sourcemaps upload --org investax-ze --project $SENTRY_PROJECT_NAME ./build"
   },
   "browserslist": {
     "production": [
@@ -174,9 +175,12 @@
     "@web3-react/core": "^8.2.0",
     "@web3-react/metamask": "8.2.0",
     "@web3-react/walletconnect-v2": "^8.3.7",
+    "@sentry/cli": "^2.25.0",
+    "@sentry/react": "^7.93.0",
     "async-wait-until": "^2.0.7",
     "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
+    "heic2any": "^0.0.4",
     "moment": "^2.29.1",
     "react-cookie": "^4.1.1",
     "react-file-viewer": "^1.2.1",

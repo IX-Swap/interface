@@ -40,3 +40,6 @@ export const ONE_HUNDRED_PERCENT = new Percent('1')
 
 export const LONG_WAIT_RESPONSE = 'LONG_WAIT_RESPONSE_FROM_SERVER'
 export const LONG_WAIT_RESPONSE_CODE = 504
+
+export const OK_RESPONSE_CODE = 200
+export const CREATED_RESPONSE_CODE = 201

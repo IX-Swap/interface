@@ -174,7 +174,6 @@ export const Select = ({
 
   const selectedValue = useMemo(() => {
     if (isMulti) {
-      console.log(isMulti, 'jjjjjjj')
       return value.map((el: any) =>
         options.find((option) => option.label === (el?.label || el) || option.value === (el?.value || el))
       )

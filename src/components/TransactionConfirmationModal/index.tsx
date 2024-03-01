@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
@@ -43,6 +43,18 @@ export const StyledTitle = styled(TYPE.title7)`
     text-align: center;
   }
 `
+
+type AdditionalParams = {
+  [key: string]: any // Customize the type based on your requirements
+}
+
+const trackEvent = (eventType: string, eventName: string, additionalParams?: AdditionalParams) => {
+  // Use type assertion to inform TypeScript that 'safary' exists on 'window'
+  if ((window as any).safary && (window as any).safary.track) {
+    // Call the 'track' function
+    ;(window as any).safary.track(eventType, eventName, additionalParams)
+  }
+}
 
 export function ConfirmationPendingContent({
   onDismiss,
@@ -89,17 +101,34 @@ export function TransactionSubmittedContent({
   chainId,
   hash,
   currencyToAdd,
+  trade,
 }: {
   onDismiss: () => void
   hash: string | undefined
   chainId: number
   currencyToAdd?: Currency | undefined
   inline?: boolean // not in modal
+  trade?: any
 }) {
   const { library } = useActiveWeb3React()
 
   const { addToken, success } = useAddTokenToMetamask(currencyToAdd)
   const explorerName = useExplorerName()
+
+
+  const trackTransactionSubmission = () => {
+    trackEvent('swap', 'ixs-swap', {
+      fromAmount: trade?.inputAmount?.toSignificant(6),
+      fromCurrency: trade?.inputAmount?.currency?.symbol,
+      contractAddress: '0x72f54BEbabE8A26794B8BFeA832b65B7Bd88da37',
+      toAmount: trade?.outputAmount?.toSignificant(6),
+      toCurrency: trade?.outputAmount?.currency?.symbol,
+    })
+  }
+
+  useEffect(() => {
+    trackTransactionSubmission()
+  }, [])
 
   return (
     <ModalBlurWrapper>
@@ -214,6 +243,7 @@ export interface ConfirmationModalProps {
   attemptingTxn: boolean
   pendingText: ReactNode
   currencyToAdd?: Currency | undefined
+  trade?: any
 }
 
 export default function ConfirmationModalContent({
@@ -224,12 +254,22 @@ export default function ConfirmationModalContent({
   pendingText,
   content,
   currencyToAdd,
+  trade,
 }: ConfirmationModalProps) {
   const { chainId } = useActiveWeb3React()
 
   if (!chainId) return null
 
   // confirmation screen
+
+  // console.log(
+  //   currencyToAdd,
+  //   trade,
+  //   trade?.inputAmount?.toSignificant(6),
+  //   trade?.inputAmount?.currency?.symbol,
+  //   trade?.outputAmount?.toSignificant(6),
+  //   trade?.outputAmount?.currency?.symbol, 'log new 22'
+  // )
   return (
     <ModalBlurWrapper data-testid="TransactionPopup">
       <StyledModalContentWrapper>
@@ -242,6 +282,7 @@ export default function ConfirmationModalContent({
               hash={hash}
               onDismiss={onDismiss}
               currencyToAdd={currencyToAdd}
+              trade={trade}
             />
           ) : (
             content()
