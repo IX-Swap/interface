@@ -28,7 +28,7 @@ import { useLiquidityRouterContract } from '../../hooks/useContract'
 import { useIsSwapUnsupported } from '../../hooks/useIsSwapUnsupported'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { PairState } from '../../hooks/useV2Pairs'
-import { useActiveWeb3React } from '../../hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { Field } from '../../state/mint/actions'
 import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
@@ -77,7 +77,7 @@ export default function AddLiquidity({
   },
   history,
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider: library } = useWeb3React()
   const theme = useContext(ThemeContext)
   const addLiquidity = useAddLiquidity()
 

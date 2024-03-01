@@ -2,7 +2,6 @@ import { useCallback, useMemo } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Router, Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
-import { t } from '@lingui/macro'
 
 import { useSecTokens } from 'state/secTokens/hooks'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
@@ -17,7 +16,7 @@ import { useArgentWalletContract } from './useArgentWalletContract'
 import { useSwapRouterContract } from './useContract'
 import useENS from './useENS'
 import useTransactionDeadline from './useTransactionDeadline'
-import { useActiveWeb3React } from './web3'
+import { useWeb3React } from '@web3-react/core'
 
 export enum SwapCallbackState {
   INVALID,
@@ -144,7 +143,7 @@ function useSwapCallArguments(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): () => Promise<SwapCall[]> {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider: library } = useWeb3React()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
@@ -266,7 +265,7 @@ export function useSwapCallbackError(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): { state: SwapCallbackState; error: string | null } {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider: library } = useWeb3React()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
@@ -296,7 +295,7 @@ export function useSwapCallback(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): () => Promise<{ callback: null | (() => Promise<string>) }> {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider: library } = useWeb3React()
   const getSwapCalls = useSwapCallArguments(trade, allowedSlippage, recipientAddressOrName)
 
   const addTransaction = useTransactionAdder()
