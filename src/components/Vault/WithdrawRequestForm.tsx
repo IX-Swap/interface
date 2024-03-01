@@ -203,7 +203,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
               <Trans>{`Sending Withdrawal Fee`}</Trans>
             </WaitingWitdrawalFee>
           ) : (
-            <>{inputError ?? <Trans>`${paid ? 'Withdraw' : 'Pay withdraw fee'}`</Trans>}</>
+            <>{inputError ?? <Trans>{paid ? 'Withdraw' : 'Pay withdraw fee'}</Trans>}</>
           )}
         </PinnedContentButton>
       </Row>
