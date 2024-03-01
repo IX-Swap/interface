@@ -32,6 +32,7 @@ export const PendingSuccesModals = ({ trade, swapErrorMessage, onDismiss, attemp
       content={confirmationContent}
       pendingText={pendingText}
       currencyToAdd={trade?.outputAmount.currency}
+      trade={trade}
     />
   )
 }
