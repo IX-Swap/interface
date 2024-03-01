@@ -112,6 +112,7 @@ export default function ConfirmSwapModal({
       content={confirmationContent}
       pendingText={pendingText}
       currencyToAdd={trade?.outputAmount.currency}
+      trade={trade}
     />
   )
 }
