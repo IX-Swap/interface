@@ -1,4 +1,4 @@
-import { useActiveWeb3React } from 'hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { useCallback } from 'react'
 
 export interface UseAddTokenByDetailsToMetamaskArgs {
@@ -9,7 +9,7 @@ export interface UseAddTokenByDetailsToMetamaskArgs {
   onSuccess: (success: boolean) => void
 }
 export default function useAddToMetamask() {
-  const { library, chainId } = useActiveWeb3React()
+  const { provider: library, chainId } = useWeb3React()
 
   return useCallback(
     (args: UseAddTokenByDetailsToMetamaskArgs) => {
@@ -30,7 +30,10 @@ export default function useAddToMetamask() {
           .then((success: any) => {
             onSuccess(success)
           })
-          .catch(() => onSuccess(false))
+          .catch((err) => {
+            console.error('Failed to add token to metamask', err)
+            onSuccess(false)
+          })
       } else {
         onSuccess(false)
       }

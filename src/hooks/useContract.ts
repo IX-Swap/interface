@@ -1,13 +1,21 @@
 import { Contract } from '@ethersproject/contracts'
 import { WETH9 } from '@ixswap1/sdk-core'
 import { Web3Provider } from '@ethersproject/providers'
-import IIxsV2PairABI from '@ixswap1/v2-core/build/IIxsV2Pair.json'
-import IIxsWSecABI from '@ixswap1/v2-core/build/IIxsWSec.json'
+import IIxsV2Pair from '@ixswap1/v2-core/build/IIxsV2Pair.json'
+import IIxsWSec from '@ixswap1/v2-core/build/IIxsWSec.json'
 import IxsGovernanceToken from '@ixswap1/v2-core/build/IxsGovernanceToken.json'
 import IxsReturningStakeBankPostIdoV1 from '@ixswap1/v2-core/build/IxsReturningStakeBankPostIdoV1.json'
 import IxsToken from '@ixswap1/v2-core/build/IxsToken.json'
 import IIxsVestedDistribution from '@ixswap1/v2-core/build/IXSVestedDistribution.json'
 import IIxsV2LiquidityRouter from '@ixswap1/v2-periphery/build/IIxsV2LiquidityRouter.json'
+
+const IIxsV2PairABI = IIxsV2Pair.abi
+const IIxsWSecABI = IIxsWSec.abi
+const IxsGovernanceTokenABI = IxsGovernanceToken.abi
+const IxsReturningStakeBankPostIdoV1ABI = IxsReturningStakeBankPostIdoV1.abi
+const IxsTokenABI = IxsToken.abi
+const IIxsVestedDistributionABI = IIxsVestedDistribution.abi
+const IIxsV2LiquidityRouterABI = IIxsV2LiquidityRouter.abi
 
 import IIxsV2SwapRouter from 'abis/IxsV2SwapRouter.json'
 import PAYOUT_ABI from 'abis/payout.json'
@@ -42,7 +50,7 @@ import { useMemo } from 'react'
 import { getContract } from 'utils'
 
 import { ArgentWalletDetector, EnsPublicResolver, EnsRegistrar, Erc20, Multicall2, Weth } from '../abis/types'
-import { useActiveWeb3React } from './web3'
+import { useWeb3React } from '@web3-react/core'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -50,7 +58,7 @@ export function useContract<T extends Contract = Contract>(
   ABI: any,
   withSignerIfPossible = true
 ): T | null {
-  const { provider: library, account, chainId } = useActiveWeb3React()
+  const { provider: library, account, chainId } = useWeb3React()
 
   return useMemo(
     () => getContractInstance({ addressOrAddressMap, ABI, withSignerIfPossible, library, chainId, account }),
@@ -111,23 +119,23 @@ export function getNftContract({
   return getContractInstance({ addressOrAddressMap, library, chainId, account, ABI: NFT_ABI })
 }
 export function useVestingContract() {
-  return useContract(IXS_VESTING_ADDRESS, IIxsVestedDistribution, true)
+  return useContract(IXS_VESTING_ADDRESS, IIxsVestedDistributionABI, true)
 }
 
 export function useIXSStakingContract() {
-  return useContract(IXS_STAKING_V1_ADDRESS, IxsReturningStakeBankPostIdoV1, true)
+  return useContract(IXS_STAKING_V1_ADDRESS, IxsReturningStakeBankPostIdoV1ABI, true)
 }
 
 export function useIXSTokenContract() {
-  return useContract(IXS_ADDRESS, IxsToken, true)
+  return useContract(IXS_ADDRESS, IxsTokenABI, true)
 }
 
 export function useIXSGovTokenContract() {
-  return useContract(IXS_GOVERNANCE_ADDRESS, IxsGovernanceToken, true)
+  return useContract(IXS_GOVERNANCE_ADDRESS, IxsGovernanceTokenABI, true)
 }
 
 export function useWETHContract(withSignerIfPossible?: boolean) {
-  const { chainId } = useActiveWeb3React()
+  const { chainId } = useWeb3React()
   return useContract<Weth>(chainId ? WETH9[chainId]?.address : undefined, WETH_ABI, withSignerIfPossible)
 }
 
@@ -159,7 +167,7 @@ export function useSwapRouterContract(): Contract | null {
   return useContract(SWAP_ROUTER_ADDRESS, IIxsV2SwapRouter, true)
 }
 export function useLiquidityRouterContract(): Contract | null {
-  return useContract(LIQUIDITY_ROUTER_ADDRESS, IIxsV2LiquidityRouter, true)
+  return useContract(LIQUIDITY_ROUTER_ADDRESS, IIxsV2LiquidityRouterABI, true)
 }
 export function useMulticall2Contract() {
   return useContract<Multicall2>(MULTICALL2_ADDRESSES, MULTICALL_ABI, false) as Multicall2
