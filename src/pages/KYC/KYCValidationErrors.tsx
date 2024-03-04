@@ -27,7 +27,7 @@ const errorLabelMap = [
 
   { field: 'idType', label: 'ID Type' },
   { field: 'idNumber', label: 'ID Number' },
-  // { field: 'idIssueDate', label: 'ID Issuance Date' },
+  { field: 'idIssueDate', label: 'ID Issuance Date' },
   { field: 'idExpiryDate', label: 'ID Expiration Date' },
 
   { field: 'proofOfIdentity', label: 'Proof of Identity' },
