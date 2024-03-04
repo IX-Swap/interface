@@ -61,6 +61,16 @@ export const individualErrorsSchema = yup.object().shape({
       then: yup.mixed().nullable().required('Required'),
     }),
 
+    idIssueDate: yup
+    .mixed()
+    .nullable()
+    .when('idType', {
+      is: (idType: any) => {
+        return idType?.label !== IdentityDocumentType.NATIONAL_ID && idType?.label
+      },
+      then: yup.mixed().nullable().required('Required'),
+    }),
+
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
 
   secondaryContactDetails: yup

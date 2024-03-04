@@ -45,7 +45,7 @@ export const StyledTitle = styled(TYPE.title7)`
 `
 
 type AdditionalParams = {
-  [key: string]: any // Customize the type based on your requirements
+  [key: string]: any 
 }
 
 const trackEvent = (eventType: string, eventName: string, additionalParams?: AdditionalParams) => {
@@ -115,18 +115,31 @@ export function TransactionSubmittedContent({
 
 
   const trackTransactionSubmission = () => {
-    trackEvent('swap', 'ixs-swap', {
-      fromAmount: trade?.inputAmount?.toSignificant(6),
-      fromCurrency: trade?.inputAmount?.currency?.symbol,
-      contractAddress: '0x72f54BEbabE8A26794B8BFeA832b65B7Bd88da37',
-      toAmount: trade?.outputAmount?.toSignificant(6),
-      toCurrency: trade?.outputAmount?.currency?.symbol,
-    })
-  }
-
+    try {
+      if (trade && trade.inputAmount && trade.outputAmount) {
+        const additionalParams = {
+          fromAmount: trade.inputAmount.toSignificant(6),
+          fromCurrency: trade.inputAmount.currency?.symbol,
+          contractAddress: '0x72f54BEbabE8A26794B8BFeA832b65B7Bd88da37',
+          toAmount: trade.outputAmount.toSignificant(6),
+          toCurrency: trade.outputAmount.currency?.symbol,
+        };
+  
+        console.log('Tracking Transaction Submission:', additionalParams);
+  
+        trackEvent('swap', 'ixs-swap', additionalParams);
+      } else {
+        console.warn('Invalid trade data for tracking transaction submission:', trade);
+      }
+    } catch (error) {
+      console.error('Error tracking transaction submission:', error);
+    }
+  };
+  
   useEffect(() => {
-    trackTransactionSubmission()
-  }, [])
+    trackTransactionSubmission();
+  }, [trade]);
+  
 
   return (
     <ModalBlurWrapper>
