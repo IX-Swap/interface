@@ -97,8 +97,8 @@
     "prettier": "^2.2.1",
     "process": "^0.11.10",
     "qs": "^6.9.4",
-    "react-app-rewired": "^2.2.1",
     "react": "^18.2.0",
+    "react-app-rewired": "^2.2.1",
     "react-chartjs-2": "^3.0.4",
     "react-confetti": "^6.0.0",
     "react-device-detect": "^1.6.2",
@@ -172,12 +172,12 @@
     "@metamask/detect-provider": "^2.0.0",
     "@mui/material": "^5.13.6",
     "@mui/x-date-pickers": "^6.9.1",
+    "@sentry/cli": "^2.25.0",
+    "@sentry/react": "^7.93.0",
     "@walletconnect/environment": "^1.0.1",
     "@web3-react/core": "^8.2.0",
     "@web3-react/metamask": "8.2.0",
     "@web3-react/walletconnect-v2": "^8.3.7",
-    "@sentry/cli": "^2.25.0",
-    "@sentry/react": "^7.93.0",
     "async-wait-until": "^2.0.7",
     "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
@@ -192,6 +192,6 @@
     "react-usestateref": "^1.0.8",
     "truffle-privatekey-provider": "^1.2.0",
     "use-draggable-scroll": "^0.1.0",
-    "web3": "^1.4.0"
+    "web3": "^4.5.0"
   }
 }
