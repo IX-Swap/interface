@@ -2,7 +2,6 @@ import React from 'react';
 import { isFirefox } from 'react-device-detect';
 import styled from 'styled-components';
 import { Trans } from '@lingui/macro';
-import FileViewer from 'react-file-viewer';
 import { Download } from 'react-feather';
 import heic2any from 'heic2any';
 
