@@ -5,7 +5,7 @@ import { splitSignature } from 'ethers/lib/utils'
 import { useMemo, useState } from 'react'
 import { IXS, USDC } from '../constants/tokens'
 import { useSingleCallResult } from '../state/multicall/hooks'
-import { useActiveWeb3React } from './web3'
+import { useWeb3React } from '@web3-react/core'
 import { useEIP2612Contract } from './useContract'
 import useIsArgentWallet from './useIsArgentWallet'
 import useTransactionDeadline from './useTransactionDeadline'
@@ -127,13 +127,15 @@ export function useERC20Permit(
   state: UseERC20PermitState
   gatherPermitSignature: null | (() => Promise<void>)
 } {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider: library } = useWeb3React()
   const transactionDeadline = useTransactionDeadline()
+
   const tokenAddress = currencyAmount?.currency?.isToken ? currencyAmount.currency.address : undefined
   const eip2612Contract = useEIP2612Contract(tokenAddress)
   const isArgentWallet = useIsArgentWallet()
   const nonceInputs = useMemo(() => [account ?? undefined], [account])
   const tokenNonceState = useSingleCallResult(eip2612Contract, 'nonces', nonceInputs)
+
   const permitInfo =
     overridePermitInfo ?? (chainId && tokenAddress ? PERMITTABLE_TOKENS[chainId][tokenAddress] : undefined)
 

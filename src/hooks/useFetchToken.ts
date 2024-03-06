@@ -5,7 +5,7 @@ import { metamask } from 'services/apiUrls'
 
 import { login } from './login'
 import { sign } from './personalSign'
-import { useActiveWeb3React } from './web3'
+import { useWeb3React } from '@web3-react/core'
 
 /* eslint-disable react/display-name */
 
@@ -13,7 +13,7 @@ interface Hash {
   hash: string
 }
 export const useFetchToken = () => {
-  const { account, provider, deactivate } = useActiveWeb3React()
+  const { account, provider } = useWeb3React()
 
   // const fetchToken = useCallback(async () => {
   //   if (!account) {
@@ -45,7 +45,6 @@ export const useFetchToken = () => {
     }
     const result = await sign({ hash: data.hash, account, provider })
     if (!result) {
-      await deactivate()
       throw new Error('Login sign failed')
     }
     const loginData = await login({ hash: result, account })
