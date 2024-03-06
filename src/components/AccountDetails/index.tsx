@@ -14,7 +14,7 @@ import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
 import { metaMask } from '../../connectors/metaMask'
 import { walletConnectV2 } from '../../connectors/walletConnectV2'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
-import { useActiveWeb3React } from '../../hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { AppDispatch } from '../../state'
 import { clearAllTransactions } from '../../state/transactions/actions'
 import { LinkStyledButton, TYPE } from '../../theme'
@@ -80,7 +80,7 @@ export default function AccountDetails({
   confirmedTransactions,
   ENSName,
 }: AccountDetailsProps) {
-  const { chainId, account, connector } = useActiveWeb3React()
+  const { chainId, account, connector } = useWeb3React()
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const getMe = useGetMe()
   const fetchMe = useCallback(async () => {

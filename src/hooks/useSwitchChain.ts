@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { ALL_SUPPORTED_CHAIN_IDS, SupportedChainId } from 'constants/chains'
-import { useActiveWeb3React } from 'hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { useCallback } from 'react'
 import { switchToNetwork } from './switchToNetwork'
 
@@ -21,7 +21,7 @@ export const CHAIN_SWITCH_STRINGS: { [key in SupportedChainId]: string } = {
 export default function useSwitchChain(): {
   addChain: () => void
 } {
-  const { provider, chainId } = useActiveWeb3React()
+  const { provider, chainId } = useWeb3React()
   const addChain = useCallback(async () => {
     if (
       provider &&

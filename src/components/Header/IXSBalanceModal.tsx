@@ -10,7 +10,7 @@ import { IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import useIXSCurrency from 'hooks/useIXSCurrency'
-import { useActiveWeb3React } from 'hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import JSBI from 'jsbi'
 import React, { useCallback } from 'react'
 import { ApplicationModal } from 'state/application/actions'
@@ -41,7 +41,7 @@ export const IXSBalanceModal = () => {
   const isOpen = useModalOpen(ApplicationModal.IXS_BALANCE)
   const toggle = useToggleModal(ApplicationModal.IXS_BALANCE)
   const onClose = useCallback(() => toggle(), [toggle])
-  const { library, chainId } = useActiveWeb3React()
+  const { provider: library, chainId } = useWeb3React()
   const IXSCurrency = useIXSCurrency()
   const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
   const addIXS = useAddTokenToMetamask(IXSCurrency ?? undefined)

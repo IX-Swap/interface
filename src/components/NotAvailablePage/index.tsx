@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie'
 
 import ethereumIcon from 'assets/images/ethereum-clear-logo.svg'
 import polygonIcon from 'assets/images/polygon.svg'
-import { useActiveWeb3React } from 'hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { switchToNetwork } from 'hooks/switchToNetwork'
 import { SupportedChainId } from 'constants/chains'
 import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
@@ -31,7 +31,7 @@ import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 
 // Define the NotAvailablePage component
 export const NotAvailablePage = () => {
-  const { chainId, provider, account } = useActiveWeb3React()
+  const { chainId, provider, account } = useWeb3React()
   const { pathname } = useLocation()
   const [cookies] = useCookies(['announcementsSeen'])
   const { config } = useWhitelabelState()

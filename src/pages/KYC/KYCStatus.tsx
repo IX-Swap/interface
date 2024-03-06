@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react'
 import { Flex } from 'rebass'
 
-import { useActiveWeb3React } from 'hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { shortAddress } from 'utils'
 import { TYPE } from 'theme'
 
@@ -55,7 +55,7 @@ function StatusIcon({ connector }: { connector: any }) {
 }
 
 export const KYCStatus: FC<Props> = ({ status }: Props) => {
-  const { account, connector } = useActiveWeb3React()
+  const { account, connector } = useWeb3React()
   const { icon, text, color } = getStatusInfo(status)
   const allTransactions = useAllTransactions()
   const sortedRecentTransactions = useMemo(() => {

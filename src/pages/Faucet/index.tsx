@@ -11,7 +11,7 @@ import { WarningCard } from 'components/WarningCard'
 import { testStableCoinsTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
-import { useActiveWeb3React } from 'hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import AppBody from 'pages/AppBody'
 import { Dots } from 'pages/Pool/styleds'
 import { useDistributeToken, useFaucetState } from 'state/faucet/hooks'
@@ -60,7 +60,7 @@ const TopContent: FC = () => {
 }
 
 export default function Faucet() {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider: library } = useWeb3React()
   const [selectedToken, setSelectedToken] = useState<IFaucetToken>(testStableCoinsTokens[0])
   const distributeToken = useDistributeToken(selectedToken)
   const selectedCurrency = useCurrency(selectedToken.address)
