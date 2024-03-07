@@ -22,6 +22,7 @@ import { ReactComponent as SuccessIcon } from 'assets/images/check-2.svg'
 import { ReactComponent as ErrorIcon } from 'assets/images/newCloseIcon.svg'
 import { ReactComponent as PendingIcon } from 'assets/images/NewPendingIcon.svg'
 import { Line } from 'components/Line'
+import { Trans } from '@lingui/macro'
 
 interface Props {
   row: LogItem
@@ -64,7 +65,9 @@ export const TransactionHistoryRow = ({ row, currency, icon }: Props) => {
     // <div style={{ borderBottom: '1px solid red' }}>
     <HistoryRowWraper data-testid="row" key={`history-item-${row.createdAt}`} onClick={() => openModal()}>
       <td>
-        <TYPE.small>{ActionTypeText[row.type]}</TYPE.small>
+        <TYPE.small>
+          <Trans>{ActionTypeText[row.type]}</Trans>
+        </TYPE.small>
       </td>
       {amount && (
         <td>

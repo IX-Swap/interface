@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ArrowDown, ChevronDown } from 'react-feather'
@@ -8,18 +8,19 @@ import { InvestTextField } from './InvestTextField'
 
 import { useActiveWeb3React } from 'hooks/web3'
 import { Option, useTokensList } from 'hooks/useTokensList'
-import { useCurrency } from 'hooks/Tokens'
+import { useAllTokens, useCurrency } from 'hooks/Tokens'
 
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
-import { useDerivedBalanceInfo } from 'state/launchpad/hooks'
+import { useDerivedBalanceInfo, useFormatOfferValue } from 'state/launchpad/hooks'
 import { text35 } from 'components/LaunchpadMisc/typography'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { Currency } from '@ixswap1/sdk-core'
+import { Currency, Token } from '@ixswap1/sdk-core'
 import Loader from 'components/Loader'
 import { RowBetween } from 'components/Row'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { BuyModal } from '../BuyModal'
+import { Web3Helpers } from '../../../../helpers/web3/web3'
 
 interface Props {
   offer: Offer

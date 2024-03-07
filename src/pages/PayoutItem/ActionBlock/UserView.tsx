@@ -99,12 +99,12 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const getContentByStatus = useCallback(() => {
     const recordDateText = (
       <Flex style={{ color: '#edceff80' }} marginBottom="24px" alignItems="center">
-        <Box marginRight="4px">{t`based on your Security token balance of`}</Box>
+        <Box marginRight="4px"><Trans>{`based on your Security token balance of`}</Trans></Box>
         <CurrencyLogo currency={secPayoutToken} size="20px" />
         <Box marginX="4px">{`${(tokenInfo as any).originalSymbol ?? tokenInfo.symbol} ${myAmount.toFixed(
           decimals
         )}`}</Box>
-        <Box>{t`as of record date.`}</Box>
+        <Box><Trans>{`as of record date.`}</Trans></Box>
       </Flex>
     )
 
@@ -119,7 +119,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
         ) : (
           <>
             <Flex alignItems="center" marginBottom="4px" fontWeight={600}>
-              <Box fontSize="20px" lineHeight="30px" marginRight="4px">{t`You can now claim your payout of`}</Box>
+              <Box fontSize="20px" lineHeight="30px" marginRight="4px"><Trans>{`You can now claim your payout of`}</Trans></Box>
               <CurrencyLogo size="24px" currency={payoutToken} />
               <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
                 amountToClaim || '0'
@@ -132,7 +132,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
         return (
           <>
             <Flex alignItems="center" marginBottom="4px" fontWeight={600}>
-              <Box fontSize="20px" lineHeight="30px" marginRight="4px">{t`You have a payout of`}</Box>
+              <Box fontSize="20px" lineHeight="30px" marginRight="4px"><Trans>{`You have a payout of`}</Trans></Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
               <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
                 amountToClaim || '0'
@@ -150,19 +150,19 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
               </Trans>
             </div>
             <div>
-              <Box>{t`Your payout of`}</Box>
+              <Box><Trans>{`Your payout of`}</Trans></Box>
               <Flex fontSize={24} fontWeight={600} style={{ gap: 4 }} alignItems="center">
                 <CurrencyLogo currency={payoutToken} />
                 <Box>{`${payoutToken.symbol} ${Number(amountToClaim || '0')}`}</Box>
               </Flex>
-              <Box>{t`based on your Security token balance of`}</Box>
+              <Box><Trans>{`based on your Security token balance of`}</Trans></Box>
             </div>
             <div>
               <CurrencyLogo currency={secPayoutToken} size="20px" />
               <Box marginX="4px">{`${(tokenInfo as any).originalSymbol ?? tokenInfo.symbol} ${myAmount.toFixed(
                 decimals
               )}`}</Box>
-              <Box>{t`as of record date will become available once payout starts.`}</Box>
+              <Box><Trans>{`as of record date will become available once payout starts.`}</Trans></Box>
             </div>
           </DelayedContainer>
         )
@@ -186,7 +186,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
             <StyledButtonIXSGradient
               disabled={status !== PAYOUT_STATUS.STARTED || isLoading}
               onClick={claim}
-            >{t`Claim Now`}</StyledButtonIXSGradient>
+            ><Trans>{`Claim Now`}</Trans></StyledButtonIXSGradient>
           )}
         </Container>
       )}
@@ -207,12 +207,12 @@ const NotTokenHoldersView: FC<{ payoutToken: any; status: PAYOUT_STATUS }> = ({ 
       case PAYOUT_STATUS.ANNOUNCED:
         return (
           <Flex marginBottom="24px">
-            <Box marginX="4px">{t`Add`}</Box>
+            <Box marginX="4px"><Trans>{`Add`}</Trans></Box>
             <CurrencyLogo currency={payoutToken} size="24px" />
             <Box marginX="4px" fontWeight="bold">
               {payoutToken.symbol}{' '}
             </Box>
-            <Box>{t`to increase possible payout.`}</Box>
+            <Box><Trans>{`to increase possible payout.`}</Trans></Box>
           </Flex>
         )
       case PAYOUT_STATUS.DELAYED:
@@ -223,14 +223,14 @@ const NotTokenHoldersView: FC<{ payoutToken: any; status: PAYOUT_STATUS }> = ({ 
                 This payout event is <strong style={{ marginLeft: '4px', color: '#ED0376' }}>delayed.</strong>
               </Trans>
             </Flex>
-            <Box marginBottom="24px">{t`You have no pending payout as you have 0 SEC tokens as of record date.`}</Box>
+            <Box marginBottom="24px"><Trans>{`You have no pending payout as you have 0 SEC tokens as of record date.`}</Trans></Box>
           </>
         )
       default:
         return (
           <>
-            <Box marginBottom="4px">{t`Payout unavailable.`}</Box>
-            <Box marginBottom="24px">{t`You have 0 SEC tokens as of record date.`}</Box>
+            <Box marginBottom="4px"><Trans>{`Payout unavailable.`}</Trans></Box>
+            <Box marginBottom="24px"><Trans>{`You have 0 SEC tokens as of record date.`}</Trans></Box>
           </>
         )
     }
@@ -238,7 +238,7 @@ const NotTokenHoldersView: FC<{ payoutToken: any; status: PAYOUT_STATUS }> = ({ 
   return (
     <Container>
       {getContentByStatus()}
-      <StyledButtonIXSGradient onClick={onBuyClick}>{t`Buy Now`}</StyledButtonIXSGradient>
+      <StyledButtonIXSGradient onClick={onBuyClick}><Trans>{`Buy Now`}</Trans></StyledButtonIXSGradient>
     </Container>
   )
 }
@@ -252,8 +252,8 @@ const NotAccreditedView: FC<{ secTokenId: any }> = ({ secTokenId }) => {
 
   return (
     <Container>
-      <Box marginBottom="24px">{t`You need to pass KYC and get accredited to be eligible for this payout.`}</Box>
-      <StyledButtonIXSGradient onClick={redirect}>{t`Pass Accreditation`}</StyledButtonIXSGradient>
+      <Box marginBottom="24px"><Trans>{`You need to pass KYC and get accredited to be eligible for this payout.`}</Trans></Box>
+      <StyledButtonIXSGradient onClick={redirect}><Trans>{`Pass Accreditation`}</Trans></StyledButtonIXSGradient>
     </Container>
   )
 }
@@ -279,13 +279,13 @@ const FuturePayout: FC<{ secToken: any }> = ({ secToken }) => {
     <FuturePayoutContainer>
       <Flex marginBottom="12px" alignItems="center" justifyContent="center" flexWrap="wrap" style={{ gap: 4 }}>
         <Flex alignItems="center" style={{ gap: 4 }}>
-          {t`Add`}
+          <Trans>{`Add`}</Trans>
           <CurrencyLogo currency={secToken} size="20px" />
           <Box fontWeight={600}>{secToken.symbol}</Box>
         </Flex>
-        {t`to increase possible profits in future payout.`}
+        <Trans>{`to increase possible profits in future payout.`}</Trans>
       </Flex>
-      <StyledButtonIXSGradient onClick={onBuyClick}>{t`Buy Now`}</StyledButtonIXSGradient>
+      <StyledButtonIXSGradient onClick={onBuyClick}><Trans>{`Buy Now`}</Trans></StyledButtonIXSGradient>
     </FuturePayoutContainer>
   )
 }

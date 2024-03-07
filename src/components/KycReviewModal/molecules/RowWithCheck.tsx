@@ -1,5 +1,5 @@
 import React from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 
 import checkIcon from 'assets/images/newCheckIcon.svg'
@@ -15,7 +15,9 @@ export const RowWithCheck = ({ text, isDone }: Props) => {
   return (
     <Container>
       {isDone ? <img src={checkIcon} alt="status-icon" /> : '-'}
-      <Text>{t`${isDone ? text : text}`}</Text>
+      <Text>
+        <Trans>{`${isDone ? text : text}`}</Trans>
+      </Text>
     </Container>
   )
 }

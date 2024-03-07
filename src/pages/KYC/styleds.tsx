@@ -249,14 +249,14 @@ export const KYCStatusIcons = {
 }
 
 const KYCStatusText = {
-  [KYCStatuses.PENDING]: t`Pending approval`,
-  [KYCStatuses.APPROVED]: t`Approved`,
-  [KYCStatuses.NOT_SUBMITTED]: t`Not submitted`,
-  [KYCStatuses.CHANGES_REQUESTED]: t`Changes Requested`,
-  [KYCStatuses.REJECTED]: t`Rejected`,
-  [KYCStatuses.DRAFT]: t`Draft Saved`,
-  [KYCStatuses.IN_PROGRESS]: t`Pending approval`,
-  [KYCStatuses.FAILED]: t`FAILED`,
+  [KYCStatuses.PENDING]: `Pending approval`,
+  [KYCStatuses.APPROVED]: `Approved`,
+  [KYCStatuses.NOT_SUBMITTED]: `Not submitted`,
+  [KYCStatuses.CHANGES_REQUESTED]: `Changes Requested`,
+  [KYCStatuses.REJECTED]: `Rejected`,
+  [KYCStatuses.DRAFT]: `Draft Saved`,
+  [KYCStatuses.IN_PROGRESS]: `Pending approval`,
+  [KYCStatuses.FAILED]: `FAILED`,
 }
 
 const KYCStatusColors = {

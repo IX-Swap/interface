@@ -36,7 +36,11 @@ export const Attachments = ({ attachments, title }: Props) => {
   {
     return (
       <Container>
-        {title && <Title>{t`${title}`}</Title>}
+        {title && (
+          <Title>
+            <Trans>{`${title}`}</Trans>
+          </Title>
+        )}
         <Table>
           <Body attachments={attachments} />
         </Table>
@@ -67,11 +71,9 @@ const Body = ({ attachments }: Pick<Props, 'attachments'>) => {
       openModal()
     }
 
-    downloadedDocs.map(item => {
+    downloadedDocs.map((item) => {
       const {
-        asset: {
-          name, public: publicUrl, mimeType
-        }
+        asset: { name, public: publicUrl, mimeType },
       } = item
 
       downloadFile(publicUrl, name, mimeType)

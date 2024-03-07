@@ -1,6 +1,5 @@
-import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 import { CookiesProvider } from 'react-cookie'
-import React, { StrictMode } from 'react'
+import { StrictMode } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
@@ -9,12 +8,12 @@ import { HashRouter } from 'react-router-dom'
 import { LocalizationProvider } from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import 'react-phone-input-2/lib/bootstrap.css'
+import { Web3ReactProvider } from '@web3-react/core'
+import { connectors } from 'connectors'
 
-import getLibrary from './utils/getLibrary'
 import { MuiThemeProvider } from './theme/muiTheme'
 import { CustomHeaders } from './components/CustomHeaders'
 import Blocklist from './components/Blocklist'
-import { NetworkContextName } from './constants/misc'
 import { LanguageProvider } from './i18n'
 import './index.css'
 import App from './pages/App'
@@ -29,7 +28,7 @@ import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import * as Sentry from '@sentry/react'
 
-const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
+/* eslint-disable react/display-name */
 
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
@@ -91,24 +90,22 @@ ReactDOM.render(
     <Provider store={store}>
       <HashRouter>
         <LanguageProvider>
-          <Web3ReactProvider getLibrary={getLibrary}>
-            <Web3ProviderNetwork getLibrary={getLibrary}>
-              <Blocklist>
-                <Updaters />
-                <ThemeProvider>
-                  <ThemedGlobalStyle />
-                  <MuiThemeProvider>
-                    <LocalizationProvider dateAdapter={DayJsUtils}>
-                      <CookiesProvider>
-                        <CustomHeaders />
+          <Web3ReactProvider connectors={connectors}>
+            <Blocklist>
+              <Updaters />
+              <ThemeProvider>
+                <ThemedGlobalStyle />
+                <MuiThemeProvider>
+                  <LocalizationProvider dateAdapter={DayJsUtils}>
+                    <CookiesProvider>
+                      <CustomHeaders />
 
-                        <App />
-                      </CookiesProvider>
-                    </LocalizationProvider>
-                  </MuiThemeProvider>
-                </ThemeProvider>
-              </Blocklist>
-            </Web3ProviderNetwork>
+                      <App />
+                    </CookiesProvider>
+                  </LocalizationProvider>
+                </MuiThemeProvider>
+              </ThemeProvider>
+            </Blocklist>
           </Web3ReactProvider>
         </LanguageProvider>
       </HashRouter>

@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Trans } from '@lingui/macro'
-import { AbstractConnector } from '@web3-react/abstract-connector'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { Connector } from '@web3-react/types'
+import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import ReactGA from 'react-ga'
 import { isMobile } from 'react-device-detect'
@@ -11,7 +11,7 @@ import { AutoRow } from 'components/Row'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import MetamaskIcon from '../../assets/images/metamask.png'
-import { injected } from '../../connectors'
+import { metaMask } from '../../connectors/metaMask'
 // import { OVERLAY_READY } from '../../connectors/Fortmatic'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import usePrevious from '../../hooks/usePrevious'
@@ -20,15 +20,8 @@ import { useModalOpen, useWalletModalToggle } from '../../state/application/hook
 import { ExternalLink, TYPE } from '../../theme'
 import AccountDetails from '../AccountDetails'
 import Modal from '../Modal'
-import { ErrorSection } from './ErrorSection'
 import Option from './Option'
 import PendingView from './PendingView'
-import Column from 'components/Column'
-
-import metamaskmobile from 'assets/images/metamaskmobile.png'
-import trust from 'assets/images/trust.png'
-import coinbase from 'assets/images/coinbase.png'
-// import { FormCard } from './styleds'
 import {
   CloseColor,
   CloseIcon,
@@ -43,6 +36,10 @@ import {
 import { ButtonIXSGradient, ButtonOutlined } from 'components/Button'
 import { ReactComponent as TooltipIcon } from 'assets/images/infoBlue.svg'
 import { Line } from 'components/Line'
+import Column from 'components/Column'
+import metamaskmobile from 'assets/images/metamaskmobile.png'
+import trust from 'assets/images/trust.png'
+import coinbase from 'assets/images/coinbase.png'
 
 const WALLET_VIEWS = {
   OPTIONS: 'options',
@@ -61,11 +58,11 @@ export default function WalletModal({
   ENSName?: string
 }) {
   // important that these are destructed from the account-specific web3-react context
-  const { active, account, connector, activate, error } = useWeb3React()
+  const { account, connector, active } = useWeb3React()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
-  const [pendingWallet, setPendingWallet] = useState<AbstractConnector | undefined>()
+  const [pendingWallet, setPendingWallet] = useState<Connector | undefined>()
 
   const [pendingError, setPendingError] = useState<boolean>()
 
@@ -93,14 +90,14 @@ export default function WalletModal({
   const activePrevious = usePrevious(active)
   const connectorPrevious = usePrevious(connector)
   useEffect(() => {
-    if (walletModalOpen && ((active && !activePrevious) || (connector && connector !== connectorPrevious && !error))) {
+    if (walletModalOpen && ((active && !activePrevious) || (connector && connector !== connectorPrevious))) {
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
-  }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
+  }, [setWalletView, active, connector, walletModalOpen, activePrevious, connectorPrevious])
 
   // Adjust tryActivation() function to handle Coinbase Wallet activation
   const tryActivation = useCallback(
-    async (connector: AbstractConnector | undefined) => {
+    async (connector: Connector | undefined) => {
       let name = ''
       Object.keys(SUPPORTED_WALLETS).map((key) => {
         if (connector === SUPPORTED_WALLETS[key].connector) {
@@ -125,18 +122,20 @@ export default function WalletModal({
       }
       if (connector) {
         try {
-          await activate(connector, undefined, true)
+          await connector.activate()
         } catch (error) {
           if (error instanceof UnsupportedChainIdError) {
-            activate(connector)
+            connector.activate()
           } else {
-            activate(connector)
+            connector.activate()
             setPendingError(true)
           }
+          connector.activate() // a little janky...can't use setError because the connector isn't set
+          setPendingError(true)
         }
       }
     },
-    [activate]
+    [active]
   )
 
   function checkMetamaskAppInstalled() {
@@ -174,6 +173,8 @@ export default function WalletModal({
 
   // Update getOptions() function to handle Coinbase Wallet
   function getOptions() {
+    const isMetamask = window.ethereum && window.ethereum.isMetaMask
+    
     const isMetamaskAppInstalled = checkMetamaskAppInstalled()
 
     return Object.keys(SUPPORTED_WALLETS).map((key) => {
@@ -205,6 +206,55 @@ export default function WalletModal({
             icon={option.iconURL}
           />
         )
+      }
+      //   if (!window.web3 && !window.ethereum && option.mobile) {
+      //     return (
+      //       <Option
+      //         onClick={() => {
+      //           option.connector !== connector && !option.href && tryActivation(option.connector)
+      //         }}
+      //         id={`connect-${key}`}
+      //         key={key}
+      //         active={option.connector && option.connector === connector}
+      //         color={option.color}
+      //         link={option.href}
+      //         header={option.name}
+      //         subheader={null}
+      //         icon={option.iconURL}
+      //       />
+      //     )
+      //   }
+      //   return null
+      // }
+
+      // overwrite injected when needed
+      if (option.connector === metaMask) {
+        // don't show injected if there's no injected provider
+        if (!(window.web3 || window.ethereum)) {
+          if (option.name === 'MetaMask') {
+            return (
+              <Option
+                id={`connect-${key}`}
+                key={key}
+                color={'#E8831D'}
+                header={<Trans>Install Metamask</Trans>}
+                subheader={null}
+                link={'https://metamask.io/'}
+                icon={MetamaskIcon}
+              />
+            )
+          } else {
+            return null //dont want to return install twice
+          }
+        }
+        // don't return metamask if injected provider isn't metamask
+        else if (option.name === 'MetaMask' && !isMetamask) {
+          return null
+        }
+        // likewise for generic
+        else if (option.name === 'Injected' && isMetamask) {
+          return null
+        }
       }
 
       // Handle Coinbase Wallet option
@@ -254,9 +304,6 @@ export default function WalletModal({
   }
 
   function getModalContent() {
-    if (error) {
-      return <ErrorSection error={error} toggleWalletModal={toggleWalletModal} />
-    }
     return (
       <UpperSection>
         <CloseIcon onClick={toggleWalletModal}>
@@ -337,8 +384,8 @@ export default function WalletModal({
       <RedesignedWideModal
         isOpen={walletModalOpen}
         onDismiss={toggleWalletModal}
-        minHeight={70}
-        maxHeight={70}
+        minHeight={60}
+        maxHeight={50}
         mobileMaxHeight={80}
         isright
       >

@@ -34,13 +34,15 @@ export const StyledCopy = styled(Copy)`
   height: 17px;
 `
 
-const headerCells = [t`Date`, t`Name`, t`Trader's wallet`, t`Trading pair`, t`Amount`, t`Response`, t`Status`]
+const headerCells = [`Date`, `Name`, `Trader's wallet`, `Trading pair`, `Amount`, `Response`, `Status`]
 
 const Header = () => {
   return (
     <StyledHeaderRow>
       {headerCells.map((cell) => (
-        <div key={cell}>{cell}</div>
+        <div key={cell}>
+          <Trans>{cell}</Trans>
+        </div>
       ))}
     </StyledHeaderRow>
   )
@@ -137,7 +139,7 @@ export const AdminTransactionsTable = () => {
       >
         <Trans>Broker Dealer Transactions</Trans>
       </TYPE.title4>
-      <Search setSearchValue={setSearchValue} placeholder={t`Search for Wallet`} />
+      <Search setSearchValue={setSearchValue} placeholder={`Search for Wallet`} />
       {items?.length === 0 ? (
         <NoData>
           <Trans>No results</Trans>

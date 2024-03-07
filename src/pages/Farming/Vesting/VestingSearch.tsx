@@ -49,7 +49,7 @@ export const VestingSearch = () => {
     <InputWrapper>
       <Input
         value={address}
-        placeholder={account || t`Check any address`}
+        placeholder={account || `Check any address`}
         onChange={onChange}
         addressChecked={addressChecked}
       />

@@ -214,7 +214,6 @@ export default function Header() {
   const { config } = useWhitelabelState()
   const { isTokenManager } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-  const { connector, error } = useWeb3React()
   const [openPreviewModal, setPreviewModal] = React.useState(false)
   const toggleWalletModal = useWalletModalToggle()
 

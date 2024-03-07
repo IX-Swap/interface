@@ -118,7 +118,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
         </WarningContainer>
         <StakingInputPercentage
           {...{
-            fieldTitle: t`Amount of ${currency?.symbol} to unstake`,
+            fieldTitle: `Amount of ${currency?.symbol} to unstake`,
             maxAvailable: stakeIXSCurrencyAmount,
             typedValue,
             onUserInput,
@@ -137,7 +137,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
       <ModalBottom>
         <StakeInfoContainer>
           <TextRow
-            textLeft={t`IXSGov to return`}
+            textLeft={`IXSGov to return`}
             textRight={
               <EllipsedText>
                 <div>
@@ -148,13 +148,13 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
             }
           />
           <TextRow
-            textLeft={t`APY`}
+            textLeft={`APY`}
             textRight={
               <TextWithTooltipWrapper>
                 <span style={{ color: theme.bg14 }}>5%</span>
                 <MouseoverTooltip
                   style={{ whiteSpace: 'pre-line' }}
-                  text={t`If you partially or fully unstake your ${currency?.symbol} before the end date - 5% APY will be applied to unstaked amount.`}
+                  text={`If you partially or fully unstake your ${currency?.symbol} before the end date - 5% APY will be applied to unstaked amount.`}
                 >
                   <IconWrapper size={20} style={{ marginLeft: '4px' }}>
                     <InfoIcon />
@@ -163,9 +163,9 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
               </TextWithTooltipWrapper>
             }
           />
-          <TextRow textLeft={t`Total rewards `} textRight={`${formatAmount(+stake.reward)} ${currency?.symbol}`} />
+          <TextRow textLeft={`Total rewards `} textRight={`${formatAmount(+stake.reward)} ${currency?.symbol}`} />
           <TextRow
-            textLeft={t`Instant reward payout today`}
+            textLeft={`Instant reward payout today`}
             textRight={
               <EllipsedText>
                 <div>
@@ -175,7 +175,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
             }
           />
           <TextRow
-            textLeft={t`Rewards to be vested (10% weekly)`}
+            textLeft={`Rewards to be vested (10% weekly)`}
             textRight={
               <EllipsedText>
                 <div>
@@ -185,7 +185,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
             }
           />
           <TextRow
-            textLeft={t`Passed staking period`}
+            textLeft={`Passed staking period`}
             textRight={
               <EllipsedText style={{ color: theme.bg14, display: 'block' }}>
                 <span>{calcPassedStakingDays()}</span>&nbsp;<Trans>days</Trans>&nbsp;(

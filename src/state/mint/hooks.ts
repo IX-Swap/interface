@@ -186,32 +186,32 @@ export function useDerivedMintInfo(
   let error: string | undefined
 
   if (!account) {
-    error = t`Connect Wallet`
+    error = `Connect Wallet`
   }
 
   if (!currencyA || !currencyB) {
-    error = error ?? t`Choose pair`
+    error = error ?? `Choose pair`
   }
 
   if (pairState === PairState.INVALID) {
-    error = error ?? t`Invalid pair`
+    error = error ?? `Invalid pair`
   }
 
   if (!parsedAmounts[Field.CURRENCY_A] || !parsedAmounts[Field.CURRENCY_B]) {
-    error = error ?? t`Enter an amount`
+    error = error ?? `Enter an amount`
   }
 
   const { [Field.CURRENCY_A]: currencyAAmount, [Field.CURRENCY_B]: currencyBAmount } = parsedAmounts
 
   if (currencyAAmount && currencyBalances?.[Field.CURRENCY_A]?.lessThan(currencyAAmount)) {
-    error = t`Insufficient ${currencies[Field.CURRENCY_A]?.symbol} balance`
+    error = `Insufficient ${currencies[Field.CURRENCY_A]?.symbol} balance`
   }
 
   if (currencyBAmount && currencyBalances?.[Field.CURRENCY_B]?.lessThan(currencyBAmount)) {
-    error = t`Insufficient ${currencies[Field.CURRENCY_B]?.symbol} balance`
+    error = `Insufficient ${currencies[Field.CURRENCY_B]?.symbol} balance`
   }
   if (areBothSecTokens) {
-    error = t`Sec to sec pools forbidden`
+    error = `Sec to sec pools forbidden`
   }
   return {
     dependentField,

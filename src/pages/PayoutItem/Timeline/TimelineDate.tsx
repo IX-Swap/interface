@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styled, { css } from 'styled-components'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
@@ -24,7 +24,9 @@ export const TimelineDate: FC<Props> = ({ date, label, withBackground = true, en
             {formatDate(date)}
             {/* {isSameDay && <TodayIndicator overlay />} */}
           </StyledButtonIXSGradient>
-          <TYPE.buttonMuted>{t`${label}`}</TYPE.buttonMuted>
+          <TYPE.buttonMuted>
+            <Trans>{`${label}`}</Trans>
+          </TYPE.buttonMuted>
         </>
       ) : (
         <>
@@ -32,7 +34,9 @@ export const TimelineDate: FC<Props> = ({ date, label, withBackground = true, en
             {formatDate(date)}
             {/* {isSameDay && <TodayIndicator overlay />} */}
           </StyledButtonGradientBorder>
-          <TYPE.body3 color={'text1'}>{t`${label}`}</TYPE.body3>
+          <TYPE.body3 color={'text1'}>
+            <Trans>{`${label}`}</Trans>
+          </TYPE.body3>
         </>
       )}
     </Container>

@@ -93,9 +93,9 @@ export const ExpertModeModal = ({ showConfirmation = false, toggleConfirmation }
   const theme = useContext(ThemeContext)
 
   const confirmExpertMode = useCallback(() => {
-    const confirmWord = t`confirm`
+    const confirmWord = `confirm`
 
-    if (window.prompt(t`Please type the word "${confirmWord}" to enable expert mode.`) === confirmWord) {
+    if (window.prompt(`Please type the word "${confirmWord}" to enable expert mode.`) === confirmWord) {
       toggleExpertMode()
       toggleConfirmation(false)
     }
