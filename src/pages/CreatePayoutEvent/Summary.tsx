@@ -42,8 +42,8 @@ export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture, set
   }, [isRecordFuture])
 
   const getValue = (amount: number) => {
-    if (isLoading) return t`Loading...`
-    if (isRecordFuture) return t`Available on Record Date`
+    if (isLoading) return `Loading...`
+    if (isRecordFuture) return `Available on Record Date`
     if (amount) return `${amount} tokens`
     return '-'
   }
@@ -51,7 +51,7 @@ export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture, set
   return (
     <>
       <Label
-        label={t`Token Payout Summary`}
+        label={`Token Payout Summary`}
         tooltipText="Shows the total amount of tokens both held in wallets and contributed to liquidity pools. It also indicates the number of tokens to be distributed for this payout event."
       />
 
@@ -83,7 +83,9 @@ export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture, set
 
       {isRecordFuture && (
         <ExtraInfoCard style={{ marginTop: 16 }}>
-          <TYPE.title10 color="error">{t`Wrapped token amounts to be computed and will become available on the Record Date you selected.`}</TYPE.title10>
+          <TYPE.title10 color="error">
+            <Trans>{`Wrapped token amounts to be computed and will become available on the Record Date you selected.`}</Trans>
+          </TYPE.title10>
         </ExtraInfoCard>
       )}
     </>

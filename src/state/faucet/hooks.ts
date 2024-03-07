@@ -58,7 +58,7 @@ export const useDistributeToken = ({
       }
     } catch (e) {
       dispatch(setFaucetLoading({ loading: false }))
-      showError(t`Could not use the faucet. Please try again later`)
+      showError(`Could not use the faucet. Please try again later`)
     }
   }, [faucetContract, stableFaucetContract, IXSFaucetContract, address, symbol, addTransaction, addPopup, showError])
 }

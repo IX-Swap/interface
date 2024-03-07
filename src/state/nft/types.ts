@@ -52,19 +52,19 @@ export enum TraitType {
 }
 
 export const traitsTitle = {
-  [TraitType.RECTANGLE]: t`Properties`,
-  [TraitType.PROGRESS]: t`Levels`,
-  [TraitType.NUMBER]: t`Stats`,
+  [TraitType.RECTANGLE]: `Properties`,
+  [TraitType.PROGRESS]: `Levels`,
+  [TraitType.NUMBER]: `Stats`,
 }
 export const displayType = {
-  [TraitType.RECTANGLE]: t`rectangle`,
-  [TraitType.PROGRESS]: t`level`,
-  [TraitType.NUMBER]: t`stat`,
+  [TraitType.RECTANGLE]: `rectangle`,
+  [TraitType.PROGRESS]: `level`,
+  [TraitType.NUMBER]: `stat`,
 }
 export const traitsSubtitle = {
-  [TraitType.RECTANGLE]: t`Textual traits that show up as rectangles`,
-  [TraitType.PROGRESS]: t`Numerical traits that show as a progress bar`,
-  [TraitType.NUMBER]: t`Numerical traits that just show as numbers`,
+  [TraitType.RECTANGLE]: `Textual traits that show up as rectangles`,
+  [TraitType.PROGRESS]: `Numerical traits that show as a progress bar`,
+  [TraitType.NUMBER]: `Numerical traits that just show as numbers`,
 }
 
 export interface Trait {

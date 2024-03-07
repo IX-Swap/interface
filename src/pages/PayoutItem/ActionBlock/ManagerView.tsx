@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import dayjs from 'dayjs'
@@ -114,7 +114,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
       case PAYOUT_STATUS.STARTED:
         return (
           <>
-            {t`Already claimed:`}
+            <Trans>{`Already claimed:`}</Trans>
             <Flex alignItems="center" fontWeight={600}>
               <CurrencyLogo currency={payoutToken} size="24px" />
               <Flex marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
@@ -126,15 +126,15 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
       case PAYOUT_STATUS.SCHEDULED:
         return !isPaid && !paidTxHash ? (
           <>
-            <Box marginBottom="4px">{t`The event is not paid yet.`}</Box>
-            <Box marginBottom="24px">{t`Please proceed with the payment before the payment start date.`}</Box>
-            <StyledButtonIXSGradient onClick={goToEdit}>{t`Pay for This Event`}</StyledButtonIXSGradient>
+            <Box marginBottom="4px"><Trans>{`The event is not paid yet.`}</Trans></Box>
+            <Box marginBottom="24px"><Trans>{`Please proceed with the payment before the payment start date.`}</Trans></Box>
+            <StyledButtonIXSGradient onClick={goToEdit}><Trans>{`Pay for This Event`}</Trans></StyledButtonIXSGradient>
           </>
         ) : !isPaid && paidTxHash ? (
           <>
             <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
               <Box marginRight="4px" fontSize="20px" lineHeight="30px">
-                {t`Paid was successful. Waiting for system confirmation.`}
+              <Trans>{`Paid was successful. Waiting for system confirmation.`}</Trans>
               </Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
               <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
@@ -145,14 +145,14 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
         ) : (
           <>
             <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
-              <Box marginRight="4px" fontSize="20px" lineHeight="30px">{t`You have allocated for this event`}</Box>
+              <Box marginRight="4px" fontSize="20px" lineHeight="30px"><Trans>{`You have allocated for this event`}</Trans></Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
               <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
                 payoutToken?.symbol ?? 'Payout Token'
               } ${tokenAmount}`}</Box>
             </Flex>
             <Flex>
-              <Box marginRight="4px">{t`Users will be able to start claiming on`}</Box>
+              <Box marginRight="4px"><Trans>{`Users will be able to start claiming on`}</Trans></Box>
               <Box fontWeight={600}>{formatDate(dayjs(startDate))}</Box>
             </Flex>
           </>
@@ -161,8 +161,8 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
         if (payout?.isReturned) {
           return (
             <Column style={{ gap: '4px', alignItems: 'center' }}>
-              <Box>{t`The event has been ended.`}</Box>
-              <Box>{t`All tokens have been claimed back`}</Box>
+              <Box><Trans>{`The event has been ended.`}</Trans></Box>
+              <Box><Trans>{`All tokens have been claimed back`}</Trans></Box>
             </Column>
           )
         }
@@ -170,14 +170,14 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
         return (
           <>
             <Column style={{ gap: '4px', alignItems: 'center', marginBottom: 24 }}>
-              <Box>{t`The event has been ended.`}</Box>
+              <Box><Trans>{`The event has been ended.`}</Trans></Box>
               <Flex alignItems="center">
-                <Box marginRight="4px">{t`You can Claim Back`}</Box>
+                <Box marginRight="4px"><Trans>{`You can Claim Back`}</Trans></Box>
                 <CurrencyLogo currency={payoutToken} size="20px" />
                 <Box marginX="4px" fontWeight={600}>
                   {payoutToken?.symbol ?? 'Payout Token'}
                 </Box>
-                {t`tokens.`}
+                <Trans>{`tokens.`}</Trans>
               </Flex>
               <Flex alignItems="center">
                 <CurrencyLogo currency={payoutToken} size="24px" />
@@ -189,7 +189,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
             <LoadingIndicator isLoading={isLoading} />
             {!isLoading && (
               <StyledButtonIXSGradient onClick={claimBack}>
-                <Box marginX="8px">{t`Claim Back `}</Box>
+                <Box marginX="8px"><Trans>{`Claim Back `}</Trans></Box>
                 <CurrencyLogo currency={payoutToken} size="24px" />
                 <Box marginX="2px">{payoutToken?.symbol}</Box>
               </StyledButtonIXSGradient>
@@ -199,20 +199,20 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
       case PAYOUT_STATUS.DELAYED:
         return (
           <>
-            <Box marginBottom="4px">{t`The event is not paid yet.`}</Box>
-            <Box marginBottom="24px">{t`Please proceed with the payment.`}</Box>
-            <StyledButtonIXSGradient onClick={goToEdit}>{t`Pay for This Event`}</StyledButtonIXSGradient>
+            <Box marginBottom="4px"><Trans>{`The event is not paid yet.`}</Trans></Box>
+            <Box marginBottom="24px"><Trans>{`Please proceed with the payment.`}</Trans></Box>
+            <StyledButtonIXSGradient onClick={goToEdit}><Trans>{`Pay for This Event`}</Trans></StyledButtonIXSGradient>
           </>
         )
       case PAYOUT_STATUS.DRAFT:
         return (
           <>
-            <Box marginBottom="24px">{t`This event is not published and is not displayed in Payout Events list.`}</Box>
-            <StyledButtonIXSGradient onClick={goToEdit}>{t`Publish Event`}</StyledButtonIXSGradient>
+            <Box marginBottom="24px"><Trans>{`This event is not published and is not displayed in Payout Events list.`}</Trans></Box>
+            <StyledButtonIXSGradient onClick={goToEdit}><Trans>{`Publish Event`}</Trans></StyledButtonIXSGradient>
           </>
         )
       case PAYOUT_STATUS.ANNOUNCED:
-        return t`Your record date has not come yet, tokens will be counted on ${formatDate(recordDate)}`
+        return `Your record date has not come yet, tokens will be counted on ${formatDate(recordDate)}`
       default:
         return null
     }

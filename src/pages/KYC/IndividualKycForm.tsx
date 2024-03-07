@@ -144,6 +144,7 @@ export default function IndividualKycForm() {
   const prevAccount = usePrevious(account)
 
   useEffect(() => {
+  
     const code = new URL(window.location.href).href?.split('=')[1]
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {

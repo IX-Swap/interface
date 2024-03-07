@@ -26,5 +26,5 @@ export const getError = (error: any) => {
 }
 
 export const HTTP_ERRORS: { [id: string]: string } = {
-  NOT_FOUND: t`Entity not found`,
+  NOT_FOUND: `Entity not found`,
 }

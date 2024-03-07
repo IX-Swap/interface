@@ -170,9 +170,9 @@ export const PayoutEventBlock: FC<Props> = ({
         {!isRecordFuture && recordDate && tokenAmount && token && secToken && (
           <ExtraInfoCard>
             <TYPE.description2 fontWeight={400}>
-              {t`Payout token computed as of ${formatDate(recordDate, 'LL')} at ${(
+              <Trans>{`Payout token computed as of ${formatDate(recordDate, 'LL')} at ${(
                 +tokenAmount / totalSecTokenSum
-              ).toFixed(2)} ${token.label} per SEC token`}
+              ).toFixed(2)} ${token.label} per SEC token`}</Trans>
             </TYPE.description2>
           </ExtraInfoCard>
         )}
@@ -277,7 +277,7 @@ export const PayoutEventBlock: FC<Props> = ({
             <MouseoverTooltip
               text={
                 isRecordFuture
-                  ? t`Pay for this event after the wrapped token amount will become available on the selected record date.`
+                  ? `Pay for this event after the wrapped token amount will become available on the selected record date.`
                   : ''
               }
               placement="top"

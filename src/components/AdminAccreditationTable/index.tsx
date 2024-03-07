@@ -21,14 +21,14 @@ import { TYPE } from 'theme'
 import { isMobile } from 'react-device-detect'
 
 const headerCells = [
-  t`Token`,
-  t`Wallet address`,
-  t`Country`,
-  t`Date of request`,
-  t`Investor Status`,
-  t`KYC source`,
-  t`Broker-Dealer status`,
-  t`Custodian status`,
+  `Token`,
+  `Wallet address`,
+  `Country`,
+  `Date of request`,
+  `Investor Status`,
+  `KYC source`,
+  `Broker-Dealer status`,
+  `Custodian status`,
 ]
 
 const statusLegend = {
@@ -48,7 +48,9 @@ const Header = () => {
   return (
     <StyledHeaderRow>
       {headerCells.map((cell) => (
-        <div key={cell}>{cell}</div>
+        <div key={cell}>
+          <Trans>{cell}</Trans>
+        </div>
       ))}
     </StyledHeaderRow>
   )

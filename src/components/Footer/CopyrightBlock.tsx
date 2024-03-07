@@ -28,7 +28,9 @@ export const CopyrightBlock = () => {
           <Trans>Privacy Policy</Trans>
         </a>
       </div>
-      <div>&quot;{t`Copyright © ${config?.name || 'IX Swap'} ${year}`}&quot;</div>
+      <div>
+        &quot;<Trans>{`Copyright © ${config?.name || 'IX Swap'} ${year}`}</Trans>&quot;
+      </div>
     </CopyrightBlockContainer>
   )
 }

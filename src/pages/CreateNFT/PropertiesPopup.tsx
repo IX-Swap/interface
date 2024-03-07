@@ -119,7 +119,7 @@ export const PropertiesPopup = ({
                     </div>
                     <StyledInput
                       onChange={(e: any) => updateLocalProperties({ index, trait_type: e?.target?.value })}
-                      placeholder={t`Character`}
+                      placeholder={`Character`}
                       className={`type-input`}
                       type="text"
                       autoComplete="off"
@@ -133,7 +133,7 @@ export const PropertiesPopup = ({
                     />
                     <StyledInput
                       onChange={(e: any) => updateLocalProperties({ index, value: e?.target?.value })}
-                      placeholder={t`Name`}
+                      placeholder={`Name`}
                       className={`name-input`}
                       type="text"
                       autoComplete="off"

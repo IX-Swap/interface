@@ -35,7 +35,7 @@ export function useIncreaseIXSGovAllowance() {
         dispatch(increaseIXSGovAllowance.fulfilled({ data: tx.status }))
         checkAllowance()
         addTransaction(allowanceTx, {
-          summary: t`Approve ${amount} IXSGov`,
+          summary: `Approve ${amount} IXSGov`,
         })
       } catch (error) {
         dispatch(increaseIXSGovAllowance.rejected({ errorMessage: error as string }))

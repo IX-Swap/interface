@@ -56,7 +56,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
   }
 
   interface MyError {
-    message: string
+    message: string;
   }
 
   const handleNextClick = async (verificationCode: string) => {

@@ -46,7 +46,7 @@ const Header = () => {
         </div>
         <MouseoverTooltip
           style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
-          text={t`Full amount of APY is applied only to amount of ${currency?.symbol} staked till the end of staking period.`}
+          text={`Full amount of APY is applied only to amount of ${currency?.symbol} staked till the end of staking period.`}
         >
           <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />
@@ -71,7 +71,7 @@ const Header = () => {
         </div>
         <MouseoverTooltip
           style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
-          text={t`Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied 
+          text={`Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied 
                   ${'' ?? ''}
                   If you partially or fully unstake your ${
                     currency?.symbol

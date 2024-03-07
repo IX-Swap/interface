@@ -66,7 +66,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
       </Flex>
 
       <ReadMoreContainer>
-        <ReadMore more={t`Read More`} less={t`Show Less`} lines={8}>
+        <ReadMore more={`Read More`} less={`Show Less`} lines={8}>
           {description}
         </ReadMore>
       </ReadMoreContainer>

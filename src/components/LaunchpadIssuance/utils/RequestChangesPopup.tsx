@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import styled, { useTheme } from 'styled-components'
 
@@ -52,7 +52,9 @@ export const RequestChangesPopup = ({
     <IssuanceDialog show={isOpen} onClose={onDecline} width="480px">
       <Container>
         <UpdateMessage>
-          <Title>{t`${title || 'Are you sure?'}`}</Title>
+          <Title>
+            <Trans>{`${title || 'Are you sure?'}`}</Trans>
+          </Title>
           {subtitle && <MessageSubtitle>{subtitle}</MessageSubtitle>}
         </UpdateMessage>
         <FormField
@@ -78,9 +80,9 @@ export const RequestChangesPopup = ({
           error={messageError}
         />
         <ButtonRow>
-          <OutlineButton style={{ border: '1px solid #6666FF33' }} width="200px" onClick={onDecline}>{t`${
-            declineText || 'No'
-          }`}</OutlineButton>
+          <OutlineButton style={{ border: '1px solid #6666FF33' }} width="200px" onClick={onDecline}>
+            <Trans>{`${declineText || 'No'}`}</Trans>
+          </OutlineButton>
 
           <FilledButton
             width="200px"
@@ -88,7 +90,7 @@ export const RequestChangesPopup = ({
             disabled={!message || !reason || !!messageError}
             onClick={onAccept}
           >
-            {t`${acceptText || 'Yes'}`}
+            <Trans>{`${acceptText || 'Yes'}`}</Trans>
           </FilledButton>
         </ButtonRow>
       </Container>

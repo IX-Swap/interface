@@ -17,7 +17,7 @@ const MitigationBadge = () => {
 
   const open = useCallback(() => setShow(true), [setShow])
   const close = useCallback(() => setShow(false), [setShow])
-  const mitigationText = t`Mitigation enabled - if the transaction price deviates too far from the time-weighted average price, the transaction will be blocked`
+  const mitigationText = `Mitigation enabled - if the transaction price deviates too far from the time-weighted average price, the transaction will be blocked`
   return (
     <span style={{ marginLeft: 2, display: 'flex', alignItems: 'center', height: 'fit-content' }}>
       <Tooltip text={mitigationText} show={show} style={{ height: 'fit-content' }}>

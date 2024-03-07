@@ -183,7 +183,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               <Trans>Transaction deadline</Trans>
             </TYPE.black>
             <QuestionHelper
-              text={t`Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min.`}
+              text={`Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min.`}
             />
           </RowFixed>
 

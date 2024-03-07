@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import styled, { css } from 'styled-components'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 
 import { ReactComponent as SuccessIcon } from 'assets/images/check-2.svg'
 
@@ -25,7 +25,9 @@ export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
   return (
     <Container paid={paid}>
       <li>
-        <span style={{ color: '#666680', marginRight: '4px' }}>{t`Withdrawal fee: `}</span>
+        <span style={{ color: '#666680', marginRight: '4px' }}>
+          <Trans>{`Withdrawal fee: `}</Trans>
+        </span>
         <FeeAmount paid={paid}>{feeText}</FeeAmount>
         {paid && <SuccessIcon />}
       </li>

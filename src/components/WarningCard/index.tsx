@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import Attention from 'assets/images/attention.svg'
 import { DarkCard } from 'components/Card'
 import { AutoColumn } from 'components/Column'
@@ -20,9 +21,13 @@ export const WarningCard = ({
         <RowCenter style={{ gap: '12px' }}>
           <SvgIconWrapper size={24}>{/* <img src={Attention} alt={'Error'} /> */}</SvgIconWrapper>
           {name === 'liquidPage' ? (
-            <TYPE.body1 color={'#B8B8CC'}>{message}</TYPE.body1>
+            <TYPE.body1 color={'#B8B8CC'}>
+              <Trans>{message}</Trans>
+            </TYPE.body1>
           ) : (
-            <TYPE.body1>{message}</TYPE.body1>
+            <TYPE.body1>
+              <Trans>{message}</Trans>
+            </TYPE.body1>
           )}
         </RowCenter>
       </AutoColumn>

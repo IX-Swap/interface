@@ -35,6 +35,7 @@ import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import Header from 'components/Header'
 import { isMobile } from 'react-device-detect'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 const LinkTitle = styled(TYPE.body1)`
   color: ${({ theme }) => theme.text1};
@@ -109,7 +110,7 @@ export default function Pool() {
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NetworkNotAvailable />
+          <NotAvailablePage />
         </CenteredFixed>
       </Portal>
     )

@@ -267,7 +267,7 @@ export const CreateForm = () => {
           <StyledInput
             id={'item-name'}
             onChange={(e: any) => onSetName(e?.target?.value)}
-            placeholder={t`Item name`}
+            placeholder={`Item name`}
             className="item-name-input"
             type="text"
             autoComplete="off"
@@ -319,7 +319,7 @@ export const CreateForm = () => {
           </Label>
           <StyledTextarea
             onChange={(e: any) => onSetDescription(e?.target?.value)}
-            placeholder={t`Provide a detailed description of your item`}
+            placeholder={`Provide a detailed description of your item`}
           />
 
           {descriptionError && <TYPE.error error>{descriptionError}</TYPE.error>}

@@ -1,13 +1,13 @@
 import React, { useMemo, useState } from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 
 import { AllPayoutEvents } from './AllPayoutEvents'
 import { MyPayouts } from './MyPayoutEvents'
 import { Container, Tab, Tabs, Body } from './styleds'
 
 const tabs = [
-  { label: t`All Payout Events`, value: 'all' },
-  { label: t`My Payout Events`, value: 'my' },
+  { label: `All Payout Events`, value: 'all' },
+  { label: `My Payout Events`, value: 'my' },
 ]
 
 export const UserPayoutEvents = () => {
@@ -29,7 +29,7 @@ export const UserPayoutEvents = () => {
       <Tabs>
         {tabs.map(({ label, value }) => (
           <Tab key={value} active={tab === value} onClick={() => handleTab(value)}>
-            {label}
+            <Trans>{label}</Trans>
           </Tab>
         ))}
       </Tabs>

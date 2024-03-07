@@ -20,27 +20,27 @@ export const StakingOtherNetworkCard = () => {
     () => ({
       [SupportedChainId.MAINNET]: {
         icon: PolygonRound,
-        name: t`polygon`,
-        options: [t`1 month — 18% APY`, t`2 month — 44% APY`, t`3 month — 88% APY`],
-        switchTitle: t`other pools on polygon`,
+        name: `polygon`,
+        options: [`1 month — 18% APY`, `2 month — 44% APY`, `3 month — 88% APY`],
+        switchTitle: `other pools on polygon`,
       },
       [SupportedChainId.KOVAN]: {
         icon: PolygonRound,
-        name: t`polygon`,
-        options: [t`1 month — 18% APY`, t`2 month — 44% APY`, t`3 month — 88% APY`],
-        switchTitle: t`other pools on polygon`,
+        name: `polygon`,
+        options: [`1 month — 18% APY`, `2 month — 44% APY`, `3 month — 88% APY`],
+        switchTitle: `other pools on polygon`,
       },
       [SupportedChainId.MATIC]: {
         icon: EthereumRound,
-        name: t`ethereum`,
-        options: [t`2 month — 44% APY`, t`3 month — 88% APY`],
-        switchTitle: t`other pools on ethereum`,
+        name: `ethereum`,
+        options: [`2 month — 44% APY`, `3 month — 88% APY`],
+        switchTitle: `other pools on ethereum`,
       },
       [SupportedChainId.MUMBAI]: {
         icon: EthereumRound,
-        name: t`ethereum`,
+        name: `ethereum`,
         options: [],
-        switchTitle: t`other pools on ethereum`,
+        switchTitle: `other pools on ethereum`,
       },
     }),
     []
@@ -78,7 +78,9 @@ export const StakingOtherNetworkCard = () => {
           <Trans>Staking options:</Trans>
           <OptionList>
             {computedSwitchToParams?.options?.map((key) => (
-              <li key={key}>{key}</li>
+              <li key={key}>
+                <Trans>{key}</Trans>
+              </li>
             ))}
           </OptionList>
         </TYPE.body1>
