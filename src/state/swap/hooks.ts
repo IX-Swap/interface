@@ -159,27 +159,27 @@ export function useDerivedSwapInfo(): {
   }
   let inputError: string | undefined
   if (!account) {
-    inputError = t`Connect Wallet`
+    inputError = `Connect Wallet`
   }
 
   if (!parsedAmount) {
-    inputError = inputError ?? t`Enter an amount`
+    inputError = inputError ?? `Enter an amount`
   }
 
   if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
-    inputError = inputError ?? t`Choose token`
+    inputError = inputError ?? `Choose token`
   }
 
   const formattedTo = isAddress(to)
   if (!to || !formattedTo) {
-    inputError = inputError ?? t`Enter a recipient`
+    inputError = inputError ?? `Enter a recipient`
   } else {
     if (
       BAD_RECIPIENT_ADDRESSES[formattedTo] ||
       (V2TradeExactIn && involvesAddress(V2TradeExactIn, formattedTo)) ||
       (V2TradeExactOut && involvesAddress(V2TradeExactOut, formattedTo))
     ) {
-      inputError = inputError ?? t`Invalid recipient`
+      inputError = inputError ?? `Invalid recipient`
     }
   }
 
@@ -194,7 +194,7 @@ export function useDerivedSwapInfo(): {
   const insufficientBalance = Boolean(balanceIn && amountIn && balanceIn.lessThan(amountIn))
 
   if (insufficientBalance) {
-    inputError = t`Insufficient ${amountIn?.currency?.symbol} balance`
+    inputError = `Insufficient ${amountIn?.currency?.symbol} balance`
   }
 
   const missingAuthorizations = useMissingAuthorizations(v2Trade)
@@ -203,7 +203,7 @@ export function useDerivedSwapInfo(): {
     if (swapErrorMessage) {
       inputError = swapErrorMessage
     } else {
-      inputError = t`Authorization missing`
+      inputError = `Authorization missing`
     }
   }
   return {

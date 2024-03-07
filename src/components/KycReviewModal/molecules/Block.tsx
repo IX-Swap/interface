@@ -1,5 +1,5 @@
 import React from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 
@@ -13,7 +13,7 @@ export const Block = ({ title, children, additionalTitleInfo }: Props) => {
   return (
     <Container>
       <Title>
-        {t`${title}`}
+        <Trans>{`${title}`}</Trans>
         {additionalTitleInfo && <>{additionalTitleInfo}</>}
       </Title>
       {children}

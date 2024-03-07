@@ -40,7 +40,7 @@ export const DateRangePickerInput = ({
 }: Props) => {
   return (
     <Container>
-      {label && <StyledLabel label={t`${label}`} required={required} tooltipText={tooltipText} />}
+      {label && <StyledLabel label={`${label}`} required={required} tooltipText={tooltipText} />}
       <MobileDateRangePicker
         calendars={calendars}
         value={value}

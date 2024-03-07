@@ -2,7 +2,7 @@ import { Interface } from '@ethersproject/abi'
 import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
-import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
+import STAKING_REWARDS_ABI from '@uniswap/liquidity-staker/build/StakingRewards.json'
 import { IXS_STAKING_V1_ADDRESS, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { BIG_INT_ZERO } from 'constants/misc'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
@@ -45,7 +45,7 @@ import {
 } from './actions'
 import { claimsAdapter, payoutsAdapter, rewardsAdapter, stakingsAdapter } from './utils'
 
-export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
+export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI.abi)
 
 export const REWARDS_DURATION_DAYS = 60
 
@@ -261,13 +261,13 @@ export function useDerivedIXSStakeInfo({ typedValue, currencyId }: { typedValue:
 
   let error: string | undefined
   if (!account) {
-    error = t`Connect Wallet`
+    error = `Connect Wallet`
   }
   if (!parsedAmount) {
-    error = error ?? t`Enter an amount`
+    error = error ?? `Enter an amount`
   }
   if (parsedAmount && JSBI.greaterThan(parsedAmount.quotient, maxAmountInput?.quotient ?? JSBI.BigInt('0'))) {
-    error = error ?? t`Amount exceeds balance`
+    error = error ?? `Amount exceeds balance`
   }
   return {
     parsedAmount,
@@ -397,7 +397,7 @@ export function useIncreaseAllowance() {
         }
         dispatch(increaseAllowance.fulfilled({ data: allowanceTx?.hash }))
         addTransaction(allowanceTx, {
-          summary: t`Approve ${amount} ${IXSCurrency?.symbol}`,
+          summary: `Approve ${amount} ${IXSCurrency?.symbol}`,
         })
       } catch (error: any) {
         dispatch(increaseAllowance.rejected({ errorMessage: error }))
@@ -455,7 +455,7 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             addTransaction(stakeTx, {
-              summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_WEEK}`,
+              summary: `Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_WEEK}`,
             })
             break
           }
@@ -473,7 +473,7 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             addTransaction(stakeTx, {
-              summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_MONTH}`,
+              summary: `Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_MONTH}`,
             })
             break
           }
@@ -490,7 +490,7 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             addTransaction(stakeTx, {
-              summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.TWO_MONTHS}`,
+              summary: `Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.TWO_MONTHS}`,
             })
             break
           }
@@ -508,7 +508,7 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             addTransaction(stakeTx, {
-              summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.THREE_MONTHS}`,
+              summary: `Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.THREE_MONTHS}`,
             })
             break
           }
@@ -758,7 +758,7 @@ export function useClaimRewards() {
           ? formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, availableClaim), currency?.decimals ?? 18)
           : ''
         addTransaction(transaction, {
-          summary: t`Claim rewards ${formattedAmount}`,
+          summary: `Claim rewards ${formattedAmount}`,
         })
         await transaction.wait()
         getRewards()

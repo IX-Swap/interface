@@ -1,5 +1,5 @@
 import React from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, MEDIA_WIDTHS } from 'theme'
@@ -22,13 +22,25 @@ export const AreYouSureModal = ({ isOpen, title, acceptText, declineText, info, 
       <ModalBlurWrapper data-testid="areYouSureModal" style={{ minWidth: '360px' }}>
         <ModalContent>
           <Title>
-            {<span>{t`${title || 'Are you sure?'}`}</span>}
+            {
+              <span>
+                <Trans>{`${title || 'Are you sure?'}`}</Trans>
+              </span>
+            }
             <CloseIcon data-testid="cross" onClick={onDecline} />
           </Title>
-          {info && <Info>{t`${info}`}</Info>}
+          {info && (
+            <Info>
+              <Trans>{`${info}`}</Trans>
+            </Info>
+          )}
           <ButtonsContainer>
-            <ButtonIXSGradient color={'black'} onClick={onAccept}>{t`${acceptText || 'Yes'}`}</ButtonIXSGradient>
-            <ButtonPinkBorder onClick={onDecline}>{t`${declineText || 'No'}`}</ButtonPinkBorder>
+            <ButtonIXSGradient color={'black'} onClick={onAccept}>
+              <Trans>{`${acceptText || 'Yes'}`}</Trans>
+            </ButtonIXSGradient>
+            <ButtonPinkBorder onClick={onDecline}>
+              <Trans>{`${declineText || 'No'}`}</Trans>
+            </ButtonPinkBorder>
           </ButtonsContainer>
         </ModalContent>
       </ModalBlurWrapper>

@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { TYPE } from 'theme'
 import { ReactComponent as Info } from 'assets/images/info-filled.svg'
+import { Trans } from '@lingui/macro'
 
 export interface Props {
   label: string | JSX.Element
@@ -18,7 +19,9 @@ export interface Props {
 
 export const Label: FC<Props> = ({ label, marginBottom, htmlFor, tooltipText, required = false, color }) => (
   <RebassLabel marginBottom={marginBottom ?? '8px'} htmlFor={htmlFor}>
-    <TYPE.title11 color={'text5'}>{label}</TYPE.title11>
+    <TYPE.title11 color={'text5'}>
+      <Trans>{label}</Trans>
+    </TYPE.title11>
     {required && (
       <TYPE.title11 fontWeight={400} color="error">
         *

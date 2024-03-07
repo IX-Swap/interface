@@ -1182,7 +1182,9 @@ export default function CorporateKycForm() {
                             </Column>
                           ))}
                         {errors.beneficialOwners && (
-                          <TYPE.small marginTop="4px" color={'red1'}>{t`${errors.beneficialOwners}`}</TYPE.small>
+                          <TYPE.small marginTop="4px" color={'red1'}>
+                            <Trans>{`${errors.beneficialOwners}`}</Trans>
+                          </TYPE.small>
                         )}
                         <ExtraInfoCardCountry
                           // type="button"

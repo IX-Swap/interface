@@ -14,6 +14,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { Banner } from './Banner'
 import { Footer } from './Footer'
 import Header from 'components/Header'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 // import { Header } from './Header'
 
 export default function Launchpad() {
@@ -29,16 +30,20 @@ export default function Launchpad() {
     }
   }, [])
 
-  const blurred = React.useMemo(
-    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0),
-    [account, chainId]
-  )
+  const blurred = React.useMemo(() => {
+    const apiUrl = process.env.REACT_APP_API_URL
+    if (apiUrl?.includes('dev') || apiUrl?.includes('staging')) {
+      return chainId && ![...TGE_CHAINS_WITH_STAKING].includes(chainId || 0)
+    } else {
+      return chainId && ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0)
+    }
+  }, [account, chainId])
 
   if (blurred) {
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NetworkNotAvailable />
+          <NotAvailablePage />
         </CenteredFixed>
       </Portal>
     )

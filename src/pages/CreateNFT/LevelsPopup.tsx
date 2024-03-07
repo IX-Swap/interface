@@ -98,14 +98,14 @@ export const LevelsPopup = ({
         <StyledModalContentWrapper>
           <RowBetween>
             <TYPE.title5>
-              <Trans>Add</Trans> {traitsTitle[traitType]}
+              <Trans>Add</Trans> <Trans>{traitsTitle[traitType]}</Trans>
             </TYPE.title5>
             <CloseIcon data-testid="cross" onClick={toggle} />
           </RowBetween>
           <Column style={{ margin: '12px 0px', padding: '0' }}>
             <Row>
               <TYPE.description2 color={`${theme.text2}80`}>
-                {traitsTitle[traitType]}{' '}
+                <Trans>{traitsTitle[traitType]}</Trans>{' '}
                 <Trans>
                   show up underneath your item, are clickable, and can be filtered in your collection&apos;s sidebar.
                 </Trans>
@@ -122,7 +122,7 @@ export const LevelsPopup = ({
                     </div>
                     <StyledInput
                       onChange={(e: any) => updateLocalLevels({ index, trait_type: e?.target?.value })}
-                      placeholder={t`Character`}
+                      placeholder={`Character`}
                       className={`type-input`}
                       type="text"
                       autoComplete="off"

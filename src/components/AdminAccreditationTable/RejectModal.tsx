@@ -23,7 +23,7 @@ export const RejectModal = ({ searchValue, isModalOpen, closeModal, id }: Props)
 
   const valdiate = useCallback(() => {
     if (value.length > 10000) {
-      handleError(t`Maximum is 10000 chars`)
+      handleError(`Maximum is 10000 chars`)
     } else {
       handleError('')
     }

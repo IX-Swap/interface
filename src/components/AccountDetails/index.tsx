@@ -11,9 +11,10 @@ import { ReactComponent as NewExplore } from '../../assets/images/newExplore.svg
 
 import { ReactComponent as NewEmail } from '../../assets/images/newEmail.svg'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
-import { injected, walletconnect } from '../../connectors'
+import { metaMask } from '../../connectors/metaMask'
+import { walletConnectV2 } from '../../connectors/walletConnectV2'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
-import { useActiveWeb3React } from '../../hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { AppDispatch } from '../../state'
 import { clearAllTransactions } from '../../state/transactions/actions'
 import { LinkStyledButton, TYPE } from '../../theme'
@@ -79,7 +80,7 @@ export default function AccountDetails({
   confirmedTransactions,
   ENSName,
 }: AccountDetailsProps) {
-  const { chainId, account, connector } = useActiveWeb3React()
+  const { chainId, account, connector } = useWeb3React()
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const getMe = useGetMe()
   const fetchMe = useCallback(async () => {
@@ -102,24 +103,26 @@ export default function AccountDetails({
     const name = Object.keys(SUPPORTED_WALLETS)
       .filter(
         (k) =>
-          SUPPORTED_WALLETS[k].connector === connector && (connector !== injected || isMetaMask === (k === 'METAMASK'))
+          SUPPORTED_WALLETS[k].connector === connector && (connector !== metaMask || isMetaMask === (k === 'METAMASK'))
       )
       .map((k) => SUPPORTED_WALLETS[k].name)[0]
     return (
       <Box style={{ display: 'flex' }}>
-        <TYPE.description3>{t`Connected with ${name}`}</TYPE.description3>
+        <TYPE.description3>
+          <Trans>{`Connected with ${name}`}</Trans>
+        </TYPE.description3>
       </Box>
     )
   }
 
   function getStatusIcon() {
-    if (connector === injected) {
+    if (connector === metaMask) {
       return (
         <IconWrapper size={33}>
           <Identicon size={33} />
         </IconWrapper>
       )
-    } else if (connector === walletconnect) {
+    } else if (connector === walletConnectV2) {
       return (
         <IconWrapper size={33}>
           <img src={WalletConnectIcon} alt={'WalletConnect logo'} />
@@ -212,7 +215,7 @@ export default function AccountDetails({
                 <Line style={{ margin: '20px 0px' }} />
                 {/* {formatConnectorName()} */}
                 <div>
-                  {connector !== injected && (
+                  {connector !== metaMask && (
                     <WalletAction
                       style={{
                         fontSize: '13px',
@@ -222,10 +225,10 @@ export default function AccountDetails({
                         marginBottom: '12px',
                       }}
                       onClick={() => {
-                        ;(connector as any).close()
+                        ;(connector as any).deactivate()
                       }}
                     >
-                      {t`Disconnect`}
+                      <Trans>{`Disconnect`}</Trans>
                     </WalletAction>
                   )}
                 </div>
@@ -279,7 +282,9 @@ export default function AccountDetails({
                       <FlexContainer>
                         <Copy
                           toCopy={`${new URL(window.location.href).href?.split('?')[0]}?referralCode=${referralCode}`}
-                        >{t`Copy Referral Link`}</Copy>
+                        >
+                          <Trans>{`Copy Referral Link`}</Trans>
+                        </Copy>
                         {/* <CopyIcon /> */}
                         {/* <TextSpan>Copy Referral Link</TextSpan> */}
                       </FlexContainer>

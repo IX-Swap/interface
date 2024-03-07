@@ -119,7 +119,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
                 onChange={(e: any) => setName(e?.target?.value)}
                 name="name"
                 onBlur={setTouched}
-                placeholder={t`Collection Name...`}
+                placeholder={`Collection Name...`}
                 className="item-name-input"
                 type="text"
                 autoComplete="off"
@@ -146,7 +146,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
                 onChange={(e: any) => setMaxSupply(e?.target?.valueAsNumber)}
                 name="maxSupply"
                 onBlur={setTouched}
-                placeholder={t`1000`}
+                placeholder={`1000`}
                 type="number"
                 autoComplete="off"
                 autoCorrect="off"
@@ -175,7 +175,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
               onBlur={setTouched}
               style={{ height: '126px' }}
               onChange={(e: any) => setDescription(e?.target?.value)}
-              placeholder={t`Provide a detailed description of your item`}
+              placeholder={`Provide a detailed description of your item`}
               value={description}
             />
             {errors.description && touched.description && <TYPE.error error>{errors.description}</TYPE.error>}

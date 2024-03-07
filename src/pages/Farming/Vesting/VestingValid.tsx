@@ -48,7 +48,7 @@ export const VestingValid = () => {
           </TYPE.title6>
           <MouseoverTooltip
             placement="top"
-            text={t`Your tokens will be released linearly over time. You can claim the releasable amount right now. Come back later to claim more tokens until the full balance is claimed.`}
+            text={`Your tokens will be released linearly over time. You can claim the releasable amount right now. Come back later to claim more tokens until the full balance is claimed.`}
           >
             <InfoIcon />
           </MouseoverTooltip>

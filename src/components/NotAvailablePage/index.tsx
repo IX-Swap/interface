@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie'
 
 import ethereumIcon from 'assets/images/ethereum-clear-logo.svg'
 import polygonIcon from 'assets/images/polygon.svg'
-import { useActiveWeb3React } from 'hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { switchToNetwork } from 'hooks/switchToNetwork'
 import { SupportedChainId } from 'constants/chains'
 import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
@@ -26,22 +26,31 @@ import {
   PlaygroundBadge,
   ConnectWalletContainer,
 } from './styled'
+import Modal from 'components/Modal'
+import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 
 // Define the NotAvailablePage component
 export const NotAvailablePage = () => {
-  const { chainId, library, account } = useActiveWeb3React()
+  const { chainId, provider, account } = useWeb3React()
   const { pathname } = useLocation()
   const [cookies] = useCookies(['announcementsSeen'])
   const { config } = useWhitelabelState()
   const toggleWalletModal = useWalletModalToggle()
+  const [showConnectModal, setShowConnectModal] = React.useState(false)
+  const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
   const farming = ['/vesting', '/staking'].includes(pathname)
 
   const changeNetwork = (targetChain: number) => {
-    if (chainId !== targetChain && library && library?.provider?.isMetaMask) {
-      switchToNetwork({ library, chainId: targetChain })
+    if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
+      switchToNetwork({ provider, chainId: targetChain })
+    } else {
     }
   }
+
+  const onConnect = React.useCallback(() => {
+    console.log('Connected')
+  }, [])
 
   if (!account) {
     return (
@@ -52,7 +61,9 @@ export const NotAvailablePage = () => {
         <div>
           Please Connect <br /> your Wallet to use <br /> the Application.
         </div>
-        <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleWalletModal}>
+        {/* <div>Please connect your wallet to use the application.</div> */}
+        {/* <ButtonIXSGradient onClick={toggleModal}>Connect Wallet</ButtonIXSGradient> */}
+        <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleModal}>
           <Text className="connect-wallet-button">
             <Trans>Connect Wallet</Trans>
           </Text>
@@ -87,7 +98,26 @@ export const NotAvailablePage = () => {
           </a>
           .
         </span>
+        <Modal isOpen={showConnectModal} onDismiss={toggleModal} maxWidth="430px" maxHeight="310px">
+          <ConnectionDialog onConnect={onConnect} onClose={toggleModal} />
+        </Modal>
       </ConnectWalletContainer>
+    )
+  }
+
+  if (!provider?.provider?.isMetaMask) {
+    return (
+      <Container>
+        <Title>
+          <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
+          <br /> <Trans>{`on this Blockchain network`}</Trans>
+        </Title>
+        <Info>
+          <Trans>
+            You have connected to Metamask through WalletConnect. Please switch the network in your Metamask wallet in your phone.
+          </Trans>
+        </Info>
+      </Container>
     )
   }
 
@@ -96,10 +126,12 @@ export const NotAvailablePage = () => {
   return (
     <Container>
       <Title>
-        {t`${config?.name || 'IX Swap'} is not available`}
-        <br /> {t`on this Blockchain network`}
+        <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
+        <br /> <Trans>{`on this Blockchain network`}</Trans>
       </Title>
-      <Info>{t`${config?.name || 'IX Swap'} is available only on:`}</Info>
+      <Info>
+        <Trans>{`${config?.name || 'IX Swap'} is available only on:`}</Trans>
+      </Info>
 
       <NetworksRow elements={farming ? chains.length + 1 : chains.length}>
         {(chains.includes(SupportedChainId.MAINNET) || farming) && (

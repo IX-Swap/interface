@@ -173,7 +173,7 @@ export const SwapButtons = ({
           )}
           {showWrapButton && (
             <PinnedContentButton disabled={Boolean(wrapInputError)} onClick={onWrap} data-testid="wrap">
-              {wrapInputError ?? WrapText[wrapType] ?? null}
+              <Trans>{wrapInputError ?? WrapText[wrapType] ?? null}</Trans>
             </PinnedContentButton>
           )}
           {showInsufficientLiquidity && (

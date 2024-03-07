@@ -51,7 +51,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
         attemptingTxn: false,
         tradeToConfirm,
         showConfirm: false,
-        swapErrorMessage: t`Amount changed. Please repeat authorization`,
+        swapErrorMessage: `Amount changed. Please repeat authorization`,
         txHash: undefined,
       })
       return

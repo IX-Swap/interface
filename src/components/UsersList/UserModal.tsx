@@ -265,7 +265,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                 onSelect={(selectedRole) => setFieldValue('role', selectedRole.value)}
                 error={
                   canNotEditRole
-                    ? t`Token manager's role can't be changed, while they have published payout events`
+                    ? `Token manager's role can't be changed, while they have published payout events`
                     : touched.role && errors.role
                 }
                 placeholder="Choose Role of User"

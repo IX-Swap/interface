@@ -92,16 +92,16 @@ export function useDerivedDepositInfo(): {
 
   let inputError: string | undefined
   if (!account) {
-    inputError = t`Connect Wallet`
+    inputError = `Connect Wallet`
   }
 
   if (!parsedAmount) {
-    inputError = inputError ?? t`Enter an amount`
+    inputError = inputError ?? `Enter an amount`
   }
 
   let formattedFrom = isAddress(sender)
   if (!sender) {
-    inputError = inputError ?? t`Enter a sender`
+    inputError = inputError ?? `Enter a sender`
   } else {//if (!formattedFrom) {
     const network = networkName || 'Ethereum'
     const currency = walletValidator.findCurrency(network)
@@ -114,7 +114,7 @@ export function useDerivedDepositInfo(): {
     }
 
     if (!isValidForNetwork) {
-      inputError = inputError ?? t`Sender is invalid`
+      inputError = inputError ?? `Sender is invalid`
     }
     if (isValidForNetwork) {
       formattedFrom = sender
@@ -186,7 +186,7 @@ export function useDepositCallback(): ({ id, amount }: DepositProps) => Promise<
       try {
         const response = await depositToken({ tokenId: id, amount, fromAddress })
         if (!response?.data) {
-          throw new Error(t`Something went wrong. Could not deposit amount`)
+          throw new Error(`Something went wrong. Could not deposit amount`)
         }
         dispatch(setLogItem({ logItem: response.data }))
         dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))

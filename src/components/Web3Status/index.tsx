@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Trans } from '@lingui/macro'
-import { AbstractConnector } from '@web3-react/abstract-connector'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { Connector } from '@web3-react/types'
+import { useWeb3React } from '@web3-react/core'
 import { darken } from 'polished'
 import { Activity } from 'react-feather'
 import styled, { css } from 'styled-components'
@@ -10,7 +10,8 @@ import styled, { css } from 'styled-components'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 // import PortisIcon from '../../assets/images/portisIcon.png'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
-import { injected, walletconnect } from '../../connectors'
+import { metaMask } from '../../connectors/metaMask'
+import { walletConnectV2 } from '../../connectors/walletConnectV2'
 import { NetworkContextName } from '../../constants/misc'
 import useENSName from '../../hooks/useENSName'
 import { useWalletModalToggle } from '../../state/application/hooks'
@@ -26,7 +27,6 @@ import { IXSBalance } from 'components/Header/IXSBalance'
 import { useETHBalances } from 'state/wallet/hooks'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { formatAmount } from 'utils/formatCurrencyAmount'
-import { isMobile } from 'react-device-detect'
 
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
@@ -94,7 +94,7 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
   background: ${({ theme }) => theme.config.text?.main || theme.bg25};
   opacity: ${({ pending }) => (pending ? '0.7' : '1')};
-  padding: 2px 0px 2px 5px;
+  padding: 10px 5px 10px 10px;
   color: ${({ theme }) => theme.black};
   // font-weight: 600;
   border-radius: 4px;
@@ -170,10 +170,10 @@ function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
 }
 
 // eslint-disable-next-line react/prop-types
-function StatusIcon({ connector }: { connector: AbstractConnector }) {
-  if (connector === injected) {
+function StatusIcon({ connector }: { connector: Connector }) {
+  if (connector === metaMask) {
     return <Identicon />
-  } else if (connector === walletconnect) {
+  } else if (connector === walletConnectV2) {
     return (
       <IconWrapper size={16}>
         <img src={WalletConnectIcon} alt={'WalletConnect'} />
@@ -204,7 +204,7 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
 }
 
 function Web3StatusInner() {
-  const { account, connector, error } = useWeb3React()
+  const { account, connector } = useWeb3React()
 
   const { ENSName } = useENSName(account ?? undefined)
 
@@ -231,53 +231,25 @@ function Web3StatusInner() {
   if (account) {
     return (
       <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal} pending={hasPendingTransactions}>
-        <AccountElement style={{ pointerEvents: 'auto', color: '#6666FF', fontWeight: '600', marginRight: isMobile? '10px' : '' }}>
+        {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
+        {hasPendingTransactions ? (
+          <RowBetween>
+            <Text style={{ margin: '4px 13px 4px 0' }}>
+              <Trans>{pending?.length} Pending</Trans>
+            </Text>{' '}
+            <Loader stroke="white" />
+          </RowBetween>
+        ) : (
+          <Text style={{ margin: '4px 13px 4px 5px', width: '100%' }}>{ENSName || shortenAddress(account)}</Text>
+        )}
+        <AccountElement style={{ pointerEvents: 'auto' }}>
           {account && userEthBalance ? (
             <Trans>
               {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
             </Trans>
           ) : null}
         </AccountElement>
-        {/* {!hasPendingTransactions && connector && <StatusIcon connector={connector} />} */}
-        {hasPendingTransactions ? (
-          <RowBetween>
-            <Text
-              style={{ margin: '4px 13px 4px 0', border: '1px solid #E6E6FF', padding: '10px', borderRadius: '4px' }}
-            >
-              <Trans>{pending?.length} Pending</Trans>
-            </Text>{' '}
-            <Loader stroke="white" />
-          </RowBetween>
-        ) : (
-          <>
-            {isMobile ? (
-              <Text>{ENSName || shortenAddress(account)}</Text>
-            ) : (
-              <Text
-                style={{
-                  margin: '4px 3px 4px 5px',
-                  width: '100%',
-                  border: '1px solid #E6E6FF',
-                  padding: '10px',
-                  borderRadius: '4px',
-                  color: '#B8B8CC',
-                }}
-              >
-                {ENSName || shortenAddress(account)}
-              </Text>
-            )}{' '}
-          </>
-        )}
       </Web3StatusConnected>
-    )
-  } else if (error) {
-    return (
-      <Web3StatusError onClick={toggleWalletModal}>
-        <NetworkIcon />
-        <Text style={{ margin: '4px 0px 4px 13px' }}>
-          {error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}
-        </Text>
-      </Web3StatusError>
     )
   } else {
     return (
@@ -297,8 +269,8 @@ function Web3StatusInner() {
 }
 
 export default function Web3Status() {
-  const { active, account } = useWeb3React()
-  const contextNetwork = useWeb3React(NetworkContextName)
+  const { isActive, account } = useWeb3React()
+  const contextNetwork = useWeb3React()
 
   const { ENSName } = useENSName(account ?? undefined)
 
@@ -312,7 +284,7 @@ export default function Web3Status() {
   const pending = sortedRecentTransactions.filter((tx) => !tx.receipt).map((tx) => tx.hash)
   const confirmed = sortedRecentTransactions.filter((tx) => tx.receipt).map((tx) => tx.hash)
 
-  if (!contextNetwork.active && !active) {
+  if (!contextNetwork.isActive && !isActive) {
     return null
   }
 

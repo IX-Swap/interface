@@ -1,5 +1,5 @@
 import React, { CSSProperties, useCallback, useMemo } from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 
 import { RowCenter } from 'components/Row'
 import { TYPE } from 'theme'
@@ -59,7 +59,7 @@ export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder }: 
           overflow="hidden"
           style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
         >
-          {t`${placeholder}`}
+          <Trans>{`${placeholder}`}</Trans>
         </TYPE.main1>
       </DarkBlueCard>
       <StyledPopover
