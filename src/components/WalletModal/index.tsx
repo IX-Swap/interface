@@ -1,8 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Trans } from '@lingui/macro'
 import { Connector } from '@web3-react/types'
-import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import { useWeb3React } from '@web3-react/core'
 import ReactGA from 'react-ga'
 import { isMobile } from 'react-device-detect'
 import { Text } from 'rebass'
@@ -17,7 +16,7 @@ import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import usePrevious from '../../hooks/usePrevious'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useWalletModalToggle } from '../../state/application/hooks'
-import { ExternalLink, TYPE } from '../../theme'
+import { ExternalLink } from '../../theme'
 import AccountDetails from '../AccountDetails'
 import Modal from '../Modal'
 import Option from './Option'
@@ -29,14 +28,11 @@ import {
   HeaderRow,
   HoverText,
   OptionGrid,
-  TermsCard,
   UpperSection,
   Wrapper,
 } from './styleds'
-import { ButtonIXSGradient, ButtonOutlined } from 'components/Button'
 import { ReactComponent as TooltipIcon } from 'assets/images/infoBlue.svg'
 import { Line } from 'components/Line'
-import Column from 'components/Column'
 import metamaskmobile from 'assets/images/metamaskmobile.png'
 import trust from 'assets/images/trust.png'
 import coinbase from 'assets/images/coinbase.png'
@@ -58,7 +54,7 @@ export default function WalletModal({
   ENSName?: string
 }) {
   // important that these are destructed from the account-specific web3-react context
-  const { account, connector, active } = useWeb3React()
+  const { account, connector, isActive } = useWeb3React()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -87,13 +83,13 @@ export default function WalletModal({
   }, [walletModalOpen])
 
   // close modal when a connection is successful
-  const activePrevious = usePrevious(active)
+  const activePrevious = usePrevious(isActive)
   const connectorPrevious = usePrevious(connector)
   useEffect(() => {
-    if (walletModalOpen && ((active && !activePrevious) || (connector && connector !== connectorPrevious))) {
+    if (walletModalOpen && ((isActive && !activePrevious) || (connector && connector !== connectorPrevious))) {
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
-  }, [setWalletView, active, connector, walletModalOpen, activePrevious, connectorPrevious])
+  }, [setWalletView, isActive, connector, walletModalOpen, activePrevious, connectorPrevious])
 
   // Adjust tryActivation() function to handle Coinbase Wallet activation
   const tryActivation = useCallback(
@@ -117,25 +113,16 @@ export default function WalletModal({
       setPendingWallet(connector)
       setWalletView(WALLET_VIEWS.PENDING)
 
-      if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
-        connector.walletConnectProvider = undefined
-      }
       if (connector) {
         try {
           await connector.activate()
         } catch (error) {
-          if (error instanceof UnsupportedChainIdError) {
-            connector.activate()
-          } else {
-            connector.activate()
-            setPendingError(true)
-          }
           connector.activate() // a little janky...can't use setError because the connector isn't set
           setPendingError(true)
         }
       }
     },
-    [active]
+    [isActive]
   )
 
   function checkMetamaskAppInstalled() {
@@ -174,7 +161,7 @@ export default function WalletModal({
   // Update getOptions() function to handle Coinbase Wallet
   function getOptions() {
     const isMetamask = window.ethereum && window.ethereum.isMetaMask
-    
+
     const isMetamaskAppInstalled = checkMetamaskAppInstalled()
 
     return Object.keys(SUPPORTED_WALLETS).map((key) => {
@@ -367,11 +354,13 @@ export default function WalletModal({
         </div>
         <Line style={{ marginTop: '70px' }} />
 
-        <div style={{fontSize: '13px', justifyContent: 'center', marginTop: '20px', color: '#666680' }}>
+        <div style={{ fontSize: '13px', justifyContent: 'center', marginTop: '20px', color: '#666680' }}>
           By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
-          <ExternalLink style={{color: '#6666FF'}} href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
-          acknowledge that you have read and understood the{' '}
-          <ExternalLink style={{color: '#6666FF'}} href="https://ixswap.io/privacy-policy/">
+          <ExternalLink style={{ color: '#6666FF' }} href="https://ixswap.io/terms-and-conditions/">
+            Terms and Conditions
+          </ExternalLink>{' '}
+          and acknowledge that you have read and understood the{' '}
+          <ExternalLink style={{ color: '#6666FF' }} href="https://ixswap.io/privacy-policy/">
             {config?.name || 'IX Swap'} Privacy Policy
           </ExternalLink>
           .
