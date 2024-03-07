@@ -84,7 +84,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const daysTillClosed = props.offer.daysTillClosed ?? 0
 
   const [showSuccess, setShowSuccess] = React.useState(false)
-console.log(stageStatus, 'stageStatus')
+  console.log(props.offer.status, 'stageStatus')
   return (
     <Container>
       <OfferSidebarSummary>
@@ -103,7 +103,7 @@ console.log(stageStatus, 'stageStatus')
           {stageStatus !== OfferStageStatus.notStarted && (
             <>
               <OfferInvestmentAmount>
-                {props.offer.investingTokenSymbol} {formatter.format(props.offer.totalInvestment)}
+                {props.offer.investingTokenSymbol}.e {formatter.format(props.offer.totalInvestment)}
               </OfferInvestmentAmount>
 
               <Row alignItems="center" gap="1rem">
@@ -139,12 +139,22 @@ console.log(stageStatus, 'stageStatus')
         </OfferStats>
 
         <InvestButtonContainer>
-          {stageStatus !== OfferStageStatus.disabled && (
+          {/* {stageStatus !== OfferStageStatus.disabled && (
             <InvestButton onClick={openInvestDialog}>
               {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
               {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
               {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
+            </InvestButton>
+          )} */}
+
+          {stageStatus !== OfferStageStatus.disabled && stageStatus !== OfferStageStatus.checkStatus && (
+            <InvestButton onClick={openInvestDialog}>
+              {stageStatus === OfferStageStatus.notStarted
+                ? 'Register To Invest'
+                : stageStatus === OfferStageStatus.closed
+                ? 'Open Dashboard'
+                : 'Invest'}
             </InvestButton>
           )}
         </InvestButtonContainer>
@@ -231,17 +241,17 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
         },
         {
           label: 'Token Price',
-          value: `${props.investingTokenSymbol}  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}`,
+          value: `${props.investingTokenSymbol}.e  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}`,
         },
         {
           label: 'Max. Investment Size',
-          value: `${props.investingTokenSymbol} ${
+          value: `${props.investingTokenSymbol}.e ${
             formatedValue(props.maxInvestment) ?? 'N/A'
           } / ${maxTokenInvestment} ${props.tokenSymbol}`,
         },
         {
           label: 'Min. Investment Size',
-          value: `${props.investingTokenSymbol}  ${
+          value: `${props.investingTokenSymbol}.e  ${
             formatedValue(props.minInvestment) ?? 'N/A'
           } / ${minTokenInvestment} ${props.tokenSymbol}`,
         },
@@ -260,7 +270,7 @@ const Container = styled.div`
 
   gap: 2rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-   padding: 20px;
+    padding: 20px;
   }
 `
 

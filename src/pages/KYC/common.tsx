@@ -163,7 +163,10 @@ export const KycSelect: FC<SelectProps> = ({
   return (
     <Box>
       <KycInputLabel label={label} tooltipText={tooltipText} error={error} />
-      <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
+      {label !== 'Nationality' && (
+        <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
+      )}
+
       {isDisabled && selectedItem ? (
         <Row alignItems="center" style={{ columnGap: 4 }}>
           {selectedItem?.icon}
@@ -359,7 +362,7 @@ export const Uploader: FC<UploaderProps> = ({
       {!isDisabled && (
         <Upload
           isDisabled={isDisabled}
-          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}, ${AcceptFiles.FILLES} , ${AcceptFiles.NOT_HEIC}` as AcceptFiles}
+          accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
           data-testid={id}
           file={null}
           onDrop={onDrop}
@@ -377,6 +380,7 @@ export const Uploader: FC<UploaderProps> = ({
           </UploaderCard>
         </Upload>
       )}
+
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}
@@ -432,7 +436,7 @@ export const SelfieUploader: FC<UploaderProps> = ({
       {!isDisabled && (
         <Upload
           isDisabled={isDisabled}
-          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
           data-testid={id}
           file={null}
           onDrop={onDrop}
@@ -515,7 +519,7 @@ export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }
         // </Upload>
 
         <Upload
-          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
           data-testid={id}
           file={null}
           onDrop={onDrop}
@@ -638,7 +642,9 @@ const StyledInput = styled(Input)`
   font-weight: normal;
   font-size: 16px;
   border: ${({ error, theme }) => (error ? 'solid 1px' + theme.error : 'solid 1px #E6E6FF')};
-  background-color: ${({ disabled, theme: { bg0, bg23 } }) => { return disabled ? bg23 : bg0 } };
+  background-color: ${({ disabled, theme: { bg0, bg23 } }) => {
+    return disabled ? bg23 : bg0
+  }};
   :focus {
     // background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};
     background-color: ${({ theme: { bg0 } }) => bg0};

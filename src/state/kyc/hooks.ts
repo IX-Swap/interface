@@ -89,6 +89,23 @@ export const useEmailVerify = () => {
   );
 };
 
+export const useEmailEdit = () => {
+  return React.useCallback(
+    async (email: string, identity: string) => {
+      try {
+        const response = await apiService.post(`/kyc/editEmail `, { email, identity });
+        console.log(response);
+        return { success: true, response }; // Return success and response
+      } catch (error: any) {
+        // Handle errors here
+        console.error(error);
+        return { success: false, error };
+      }
+    },
+    []
+  );
+};
+
 
 export const useEmailVerifyCode = () => {
   return React.useCallback(

@@ -131,19 +131,19 @@ export const HeaderLinks = () => {
 
   return (
     <HeaderLinksWrap links={7}>
-      {isAllowed('/charts') && account && isWhitelisted && (
+      {/* {isAllowed('/charts') && account && isWhitelisted && ( */}
         <MenuExternalLink
-          disabled={!isApproved}
+          // disabled={!isApproved}
           target="_self"
           href={config?.chartsUrl || 'https://info.ixswap.io/home'}
         >
           <Trans>Charts</Trans>
         </MenuExternalLink>
-      )}
+      {/* )} */}
       <StyledNavLink id={`issuance-nav-link`} to={'/launchpad'}>
         <Trans>Launchpad</Trans>
       </StyledNavLink>
-      {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {/* {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && ( */}
         <StyledNavLink
           // disabled={!isApproved}
           data-testid="securityTokensButton"
@@ -155,18 +155,18 @@ export const HeaderLinks = () => {
         >
           <Trans>Security Tokens</Trans>
         </StyledNavLink>
-      )}
+      {/* )} */}
 
-      {isAllowed('/pool') && account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {/* {isAllowed('/pool') && account && chainId && chains.includes(chainId) && isWhitelisted && ( */}
         <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
           <Trans>Liquidity Pools</Trans>
         </StyledNavLink>
-      )}
-      {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {/* )} */}
+      {/* {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && ( */}
         <StyledNavLink id={`swap-nav-link`} to={'/swap'} data-testid={`swap-nav-link`}>
           <Trans>Swap/Trade</Trans>
         </StyledNavLink>
-      )}
+      {/* )} */}
 
       {/* {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <MenuExternalLink
@@ -194,7 +194,7 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )} */}
 
-      {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && (
+      {/* {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && ( */}
         <StyledNavLink
           ref={farmNode as any}
           id={`farming-nav-link`}
@@ -208,7 +208,7 @@ export const HeaderLinks = () => {
             </RowFixed>
           </Popover>
         </StyledNavLink>
-      )}
+      {/* )} */}
 
       {isAllowed(routes.faucet) && account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
         <StyledNavLink disabled={!isApproved} id={`faucet-nav-link`} to={routes.faucet}>

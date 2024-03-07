@@ -40,7 +40,7 @@ const initialValues: FormValues = {
 
 const schema = object().shape({
   email: string().email('Please enter a valid email'),
-  isInterested: boolean().nullable(false).required('Please, specify if you are interested in this deal'),
+  isInterested: boolean().nullable(false).required(''),
   amount: number().when('isInterested', {
     is: true,
     then: number().required('Please enter amount of your estimated investment'),
@@ -148,7 +148,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
                 <InvestTextField
                   type="number"
                   label="How much will be your estimated investment?"
-                  trailing={<CurrencyLabel>{props.offer.investingTokenSymbol}</CurrencyLabel>}
+                  trailing={<CurrencyLabel>{props.offer.investingTokenSymbol}.e</CurrencyLabel>}
                   value={amount}
                   onChange={(value) => onChangeAmount(value, setFieldValue)}
                   disabled={!values.isInterested}

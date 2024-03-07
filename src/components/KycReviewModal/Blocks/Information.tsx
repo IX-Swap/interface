@@ -18,13 +18,13 @@ interface Props {
 
 export const Information = ({ data, kycKey }: Props) => {
   const keys = kycKey === 'individual' ? personalInfoKeys : corporateInfoKeys
-
+  console.log(keys, 'jjjj')
   return (
     <Block title={`${kycKey === 'individual' ? 'Personal' : 'Corporate'} Information`}>
       <GridContainer>
         {keys.map(({ key, label, width = {}, format }) => (
           <GridItem key={key} {...width}>
-            <Field label={label} value={format ? format(data?.[key]) : data?.[key]} />
+            <Field data={data} label={label} value={format ? format(data?.[key]) : data?.[key]} />
           </GridItem>
         ))}
         {/* {kycKey === 'corporate' && (

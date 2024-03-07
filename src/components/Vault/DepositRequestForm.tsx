@@ -68,9 +68,9 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const computedAddress = networkName === 'Ethereum' ? address : sender
   const accountNetwork = chainId ? chainIdToNetworkName(chainId as SupportedChainId) : ''
 
-  useEffect(() => {
-    onResetDeposit()
-  }, [])
+  // useEffect(() => {
+  //   onResetDeposit()
+  // }, [])
 
   const makeDeposit = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id

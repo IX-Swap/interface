@@ -141,12 +141,6 @@ export function TransactionSubmittedContent({
   }, [trade]);
   
 
-
-  
-
-
-  
-
   return (
     <ModalBlurWrapper>
       <StyledModalContentWrapper>

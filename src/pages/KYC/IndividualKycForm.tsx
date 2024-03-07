@@ -124,6 +124,7 @@ export default function IndividualKycForm() {
   const [showOptoutModal, setShowOptoutModal] = useState(false)
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
   const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
+  const [idIssuanceLabel, setIdIssuanceLabel] = useState('ID Issuance Date')
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const openConfirmationModal = useCallback(() => {
@@ -191,16 +192,18 @@ export default function IndividualKycForm() {
   }, [kyc])
 
   useEffect(() => {
-    window.addEventListener('beforeunload', alertUser)
-    const IsNewKyc = localStorage.getItem('newKyc')
-    if(IsNewKyc){
-      addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } })
+    window.addEventListener('beforeunload', alertUser);
+    const IsNewKyc = localStorage.getItem('newKyc');
+    if (IsNewKyc) {
+      addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } });
+      localStorage.removeItem('newKyc'); // Remove the item so it doesn't trigger again
     }
-
+  
     return () => {
-      window.removeEventListener('beforeunload', alertUser)
-    }
-  }, [])
+      window.removeEventListener('beforeunload', alertUser);
+    };
+  }, []);
+  
 
   const alertUser = (e: any) => {
     e.preventDefault()
@@ -255,7 +258,9 @@ export default function IndividualKycForm() {
   }
 
   const onIsAdditionalChange = async (index: number, setFieldValue: any) => {
+
     const values = form.current.values
+    console.log(values.taxDeclarations[index].isAdditional, 'kkkkk')
     if (!values.taxDeclarations[index].isAdditional) {
       setFieldValue(`taxDeclarations[${index}].idNumber`, '') // Clear TIN
       setFieldValue(`taxDeclarations[${index}].country`, null) // Clear country
@@ -532,7 +537,8 @@ export default function IndividualKycForm() {
     },
     [formSubmitHandler]
   )
-
+  
+  console.log(errors, 'jsjsjsjsj')
 
   return (
     <Loadable loading={!isLoggedIn}>
@@ -626,6 +632,7 @@ export default function IndividualKycForm() {
 
               const identityDocumentFilled =
                 shouldValidate && isFilled('idType') && isFilled('idNumber') && isFilled('idIssueDate')
+                
 
               const addressFilled =
                 shouldValidate &&
@@ -903,8 +910,10 @@ export default function IndividualKycForm() {
                                   // idType?.label === IdentityDocumentType.OTHERS
                                 ) {
                                   setIdExpiryDateLabel('ID Expiration Date (Optional)')
+                                  setIdIssuanceLabel('ID Issuance Date (Optional)')
                                 } else {
                                   setIdExpiryDateLabel('ID Expiration Date')
+                                  setIdIssuanceLabel('ID Issuance Date')
                                 }
                               }}
                             />
@@ -922,7 +931,7 @@ export default function IndividualKycForm() {
 
                           <FormGrid>
                             <DateInput
-                              label="ID Issuance Date"
+                              label={idIssuanceLabel}
                               placeholder="ID Issuance Date"
                               id="documentIssueDateButton"
                               maxHeight={60}
@@ -937,11 +946,13 @@ export default function IndividualKycForm() {
                             <DateInput
                               label={idExpiryDateLabel}
                               id="documentExpiryDateButton"
+                              placeholder="ID Expiration Date"
                               maxHeight={60}
                               error={errors.idExpiryDate}
                               value={values.idExpiryDate}
                               onChange={(value) => {
                                 setFieldValue('idExpiryDate', dayjs(value).local().format('YYYY-MM-DD'), false)
+                                validationSeen('idExpiryDate')
                               }}
                               minDate={new Date()}
                             />

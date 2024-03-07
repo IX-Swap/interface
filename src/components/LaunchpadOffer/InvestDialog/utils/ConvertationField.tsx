@@ -65,15 +65,15 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
     if (value === '') {
       warning = ''
     } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
-      warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}`
+      warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}.e`
     } else if (Number(min) > realValue) {
-      warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
+      warning = `Min. investment size ${min} ${offer.investingTokenSymbol}.e`
     } else if (Number(max) < realValue) {
-      warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
+      warning = `Max. investment size ${max} ${offer.investingTokenSymbol}.e`
     } else if (available < realValue) {
-      warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
+      warning = `Available to invest ${available} ${offer.investingTokenSymbol}.e`
     } else if (isCheckBalance && !isSufficientBalance) {
-      warning = `Insufficient ${offer.investingTokenSymbol} balance`
+      warning = `Insufficient ${offer.investingTokenSymbol}.e balance`
     }
     return warning
   }
@@ -91,7 +91,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
 
   const getWarning = useGetWarning(props.offer, true)
-  const insufficientWarning = `Insufficient ${investingTokenSymbol} balance`
+  const insufficientWarning = `Insufficient ${investingTokenSymbol}.e balance`
 
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
@@ -160,10 +160,10 @@ export const ConvertationField: React.FC<Props> = (props) => {
     () => getTokenInfo(tokenAddress, tokenSymbol, offerTokenCurrency, mixedTokens),
     [tokenAddress, tokenSymbol, offerTokenCurrency, mixedTokens]
   )
-  const offerInvestmentToken = React.useMemo(
+  const offerInvestmentToken: TokenOption | undefined = React.useMemo(
     () => getTokenInfo(investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens),
     [investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens]
-  )
+  );
 
   const openModal = () => {
     setPreviewModal(true)
@@ -182,7 +182,8 @@ export const ConvertationField: React.FC<Props> = (props) => {
           type="number"
           onChange={changeValue}
           disabled={isBalanceLoading}
-          trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
+          trailing={<CurrencyDropdown disabled value={offerInvestmentToken ? { ...offerInvestmentToken, name: offerInvestmentToken.name + ".e" } : undefined} />}
+
           caption={insufficientWarning === warning ? '' : warning === 'Loading' ? <Loader /> : warning}
           // height="85px"
           fontSize="20px"
