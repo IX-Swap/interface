@@ -165,11 +165,11 @@ const TokenListPreview = (props: TokenListPreviewProps) => {
   const { tokens } = useSecTokenState()
 
   const icons = useMemo(() => {
-    const ids = props.items.slice(0, 5).map((i) => i.token.id)
+    const ids = props.items.slice(0, 5).map((i) => i.token?.id)
 
     return tokens
-      ?.filter((token) => ids.includes(token.id))
-      ?.map((token) => <CurrencyLogo key={`logo-${token.id}`} size="28px" currency={new WrappedTokenInfo(token)} />)
+      ?.filter((token) => ids.includes(token?.id))
+      ?.map((token) => <CurrencyLogo key={`logo-${token?.id}`} size="28px" currency={new WrappedTokenInfo(token)} />)
   }, [props.items, tokens])
 
   return <TokenList>{icons}</TokenList>
@@ -244,7 +244,7 @@ const Body: FC<BodyProps> = ({ items, changeUser }) => {
   return (
     <>
       {items.map((item) => (
-        <Row changeUser={changeUser} item={item} key={`kyc-table-${item.id}`} />
+        <Row changeUser={changeUser} item={item} key={`kyc-table-${item?.id}`} />
       ))}
     </>
   )
