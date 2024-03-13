@@ -66,21 +66,32 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
     if (value === '') {
       warning = ''
     } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
-      warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}.e`
+      warning = `Max Amount to invest ${availableToInvest} ${
+        (offer.investingTokenSymbol === 'USDC') ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
+      }`
     } else if (Number(min) > realValue) {
-      warning = `Min. investment size ${min} ${offer.investingTokenSymbol}.e`
+      warning = `Min. investment size ${min} ${
+        (offer.investingTokenSymbol === 'USDC') ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
+      }`
     } else if (Number(max) < realValue) {
-      warning = `Max. investment size ${max} ${offer.investingTokenSymbol}.e`
+      warning = `Max. investment size ${max} ${
+        (offer.investingTokenSymbol === 'USDC') ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
+      }`
     } else if (available < realValue) {
-      warning = `Available to invest ${available} ${offer.investingTokenSymbol}.e`
+      warning = `Available to invest ${available} ${
+        (offer.investingTokenSymbol === 'USDC') ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
+      }`
     } else if (isCheckBalance && !isSufficientBalance) {
-      warning = `Insufficient ${offer.investingTokenSymbol}.e balance`
+      warning = `Insufficient ${
+        (offer.investingTokenSymbol === 'USDC') ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
+      } balance`
     }
     return warning
   }
 
   return getWarning
 }
+
 
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
@@ -92,7 +103,10 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
 
   const getWarning = useGetWarning(props.offer, true)
-  const insufficientWarning = `Insufficient ${investingTokenSymbol}.e balance`
+  const insufficientWarning = `Insufficient ${
+    (investingTokenSymbol === 'USDC') ? `${investingTokenSymbol}.e` : investingTokenSymbol
+  } balance`;
+  
 
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
@@ -183,7 +197,17 @@ export const ConvertationField: React.FC<Props> = (props) => {
           type="number"
           onChange={changeValue}
           disabled={isBalanceLoading}
-          trailing={<CurrencyDropdown disabled value={offerInvestmentToken ? { ...offerInvestmentToken, name: offerInvestmentToken.name + ".e" } : undefined} />}
+          trailing={<CurrencyDropdown
+            disabled
+            value={
+              offerInvestmentToken
+                ? {
+                    ...offerInvestmentToken,
+                    name: offerInvestmentToken.name + (offerInvestmentToken.name === 'USDC' ? '.e' : ''),
+                  }
+                : undefined
+            }
+          />}
 
           caption={insufficientWarning === warning ? '' : warning === 'Loading' ? <Loader /> : warning}
           // height="85px"

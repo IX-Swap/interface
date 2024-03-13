@@ -18,12 +18,15 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
 
   const isMetaMask = window.ethereum && window.ethereum.isMetaMask
 
+  const handleMetaMaskMobile = () => {
+    if (isMobile && isMetaMask) {
+      window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
+    }
+  }
+
   return (
     <OptionList>
-      <PromptTitle>Connect Wallet </PromptTitle>
       {Object.entries(SUPPORTED_WALLETS).map(([key, option]) => {
-
-
         if (option.connector === metaMask) {
           if (!(window.web3 || window.ethereum)) {
             if (option.name === 'MetaMask') {
@@ -31,15 +34,15 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
                 <Option
                   id={`connect-${key}`}
                   key={key}
-                  header="Install Metamask"
-                  link={'https://metamask.io/'}
+                  header="Metamask"
+                  link={`https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc`}
                   icon={MetamaskIcon}
                   color={theme.launchpad.colors.primary}
                   subheader={null}
                 />
               )
             } else {
-              return null //dont want to return install twice
+              return null //don't want to return install twice
             }
           } else if ((option.name === 'MetaMask' && !isMetaMask) || (option.name === 'Injected' && isMetaMask)) {
             return null
@@ -51,16 +54,14 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
             id={`connect-${key}`}
             onClick={() => {
               props.onSelect(option)
-              // option.connector === connector
-              //   ? setWalletView(WALLET_VIEWS.ACCOUNT)
-              //   : !option.href && tryActivation(option.connector)
+              handleMetaMaskMobile()
             }}
             key={key}
             active={option.connector === connector}
             color={option.color}
             link={option.href}
             header={option.name}
-            subheader={null} //use option.descriptio to bring back multi-line
+            subheader={null}
             icon={option.iconURL}
           />
         )
@@ -91,18 +92,17 @@ const Option: React.FC<OptionsProps> = (props: OptionsProps) => {
 
   const optionButton = (
     <OptionContainer id={props.id} onClick={onClick} clickable={props.clickable && !props.active}>
-      <OptionLabel>
-        {props.active && (
-          <CircleWrapper>
-            <GreenCircle />
-          </CircleWrapper>
-        )}
-        {props.header}
-      </OptionLabel>
-
       <IconWrapper size={props.size}>
         <img src={props.icon} alt={'Icon'} />
       </IconWrapper>
+      <OptionLabel>
+        {/* {props.active && (
+          <CircleWrapper>
+            <GreenCircle />
+          </CircleWrapper>
+        )} */}
+        {props.header}
+      </OptionLabel>
     </OptionContainer>
   )
 
@@ -114,7 +114,7 @@ const Option: React.FC<OptionsProps> = (props: OptionsProps) => {
 }
 
 const PromptTitle = styled.div`
-  text-align: center;
+  text-align: left;
   ${text14}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
@@ -131,10 +131,11 @@ const OptionList = styled.div`
 const OptionContainer = styled.button<{ clickable?: boolean }>`
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  height: 40px;
+  gap: 10px;
+  height: 10px;
   width: 100%;
   cursor: pointer;
   background: ${(props) => props.theme.launchpad.colors.background};
