@@ -1447,14 +1447,14 @@ export default function IndividualKycForm() {
                           )}
                         </FieldArray>
 
-                        <RowBetween marginBottom="32px" marginTop="64px">
+                        {/* <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title7>
                             <Trans>FATCA</Trans>
                           </TYPE.title7>
-                          {/* {fatcaFilled && <StyledBigPassed />} */}
-                        </RowBetween>
+                       
+                        </RowBetween> */}
 
-                        <ExtraInfoCard>
+                        {/* <ExtraInfoCard>
                           <RowBetween>
                             <TYPE.buttonMuted>Declaration of US Citizenship or US residence for FATCA</TYPE.buttonMuted>
                             <LinkButton type="button" onClick={() => setShowFATCAModal(true)}>
@@ -1524,7 +1524,7 @@ export default function IndividualKycForm() {
                               <Trans>Choose one</Trans>
                             </TYPE.small>
                           )}
-                        </Column>
+                        </Column> */}
                       </FormCard>
                     </Column>
                   </FormContainer>
