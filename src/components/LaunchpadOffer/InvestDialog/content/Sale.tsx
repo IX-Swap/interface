@@ -91,19 +91,21 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     }
   }, [whitelistedStatus, offer.status])
 
-  const conditions = useMemo(
-    () => [
-      {
-        label: 'Min. Investment Size',
-        value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${investingTokenSymbol}.e`,
-      },
-      {
-        label: 'Max. Investment Size',
-        value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${investingTokenSymbol}.e`,
-      },
-    ],
-    [isPresale, presaleMaxInvestment, presaleMinInvestment, maxInvestment, minInvestment, investingTokenSymbol]
-  )
+  const conditions = useMemo(() => [
+    {
+      label: 'Min. Investment Size',
+      value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${
+        (investingTokenSymbol === 'USDC') ? `${investingTokenSymbol}.e` : investingTokenSymbol
+      }`,
+    },
+    {
+      label: 'Max. Investment Size',
+      value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${
+        (investingTokenSymbol === 'USDC') ? `${investingTokenSymbol}.e` : investingTokenSymbol
+      }`,
+    },
+  ], [isPresale, presaleMaxInvestment, presaleMinInvestment, maxInvestment, minInvestment, investingTokenSymbol]);
+  
 
   const investmentAllowance = useMemo(() => {
     const getColor = (status: INVESTMENT_STATUSES | null) => {
@@ -119,8 +121,12 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       }
     }
     return [
-      { label: 'Available to invest', value: `${formatter.format(availableToInvest)} ${investingTokenSymbol}.e` },
-      { label: 'Already invested', value: `${formatter.format(amountInvested)} ${investingTokenSymbol}.e` },
+      { label: 'Available to invest', value: `${formatter.format(availableToInvest)} ${
+        (investingTokenSymbol === 'USDC') ? `${investingTokenSymbol}.e` : investingTokenSymbol
+      }` },
+      { label: 'Already invested', value: `${formatter.format(amountInvested)} ${
+        (investingTokenSymbol === 'USDC') ? `${investingTokenSymbol}.e` : investingTokenSymbol
+      }` },
       {
         label: (
           <FlexVerticalCenter>
@@ -132,7 +138,8 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           <span style={{ color: getColor(lastStatus) }}>{lastStatus ? InvestmentStatusesLabels[lastStatus] : '-'}</span>
         ),
       },
-    ]
+    ];
+    
   }, [availableToInvest, amountInvested, investingTokenSymbol, formatter, lastStatus])
 
   const purchaseAgreement = files.find((x) => x.type === OfferFileType.purchaseAgreement)

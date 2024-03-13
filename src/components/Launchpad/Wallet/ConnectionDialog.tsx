@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactGA from 'react-ga'
 
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import { SUPPORTED_WALLETS, WalletInfo } from 'constants/wallet'
 
@@ -13,18 +13,24 @@ import { useWeb3React } from '@web3-react/core'
 import { WalletConnect } from '@web3-react/walletconnect-v2'
 
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
-import { text13 } from 'components/LaunchpadMisc/typography'
+import { text13, text14 } from 'components/LaunchpadMisc/typography'
 import { Trans } from '@lingui/macro'
 import { ButtonOutlined } from 'components/Button'
 import Column from 'components/Column'
 import { HeaderRow } from 'components/Table'
-import { ContentWrapper, HoverText } from 'components/WalletModal/styleds'
+import { ContentWrapper, HoverText, OptionGrid } from 'components/WalletModal/styleds'
 import { isMobile } from 'react-device-detect'
-import { TYPE } from 'theme'
+import { ExternalLink, TYPE } from 'theme'
 import metamaskmobile from 'assets/images/metamaskmobile.png'
 import trust from 'assets/images/trust.png'
 import coinbase from 'assets/images/coinbase.png'
 import { style } from 'styled-system'
+import { Text } from 'rebass'
+import { AutoRow } from 'components/Row'
+import { ReactComponent as TooltipIcon } from 'assets/images/infoBlue.svg'
+import { Line } from 'components/Line'
+import PendingView from 'components/WalletModal/PendingView'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export enum PromptView {
   options,
@@ -38,10 +44,19 @@ interface Props {
   onClose: () => void
 }
 
+const WALLET_VIEWS = {
+  OPTIONS: 'options',
+  OPTIONS_SECONDARY: 'options_secondary',
+  ACCOUNT: 'account',
+  PENDING: 'pending',
+}
+
 export const ConnectionDialog: React.FC<Props> = (props) => {
   const [walletView, setWalletView] = React.useState(PromptView.options)
   const [pendingWallet, setPendingWallet] = React.useState<Connector | undefined>()
   const [pendingError, setPendingError] = React.useState<boolean>()
+  const theme = useTheme()
+  const { config } = useWhitelabelState()
 
   const tryActivation = async (connector: Connector | undefined) => {
     const wallet = Object.values(SUPPORTED_WALLETS).find((wallet) => wallet.connector === connector)
@@ -69,107 +84,97 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
 
   const onSelect = React.useCallback((option: WalletInfo) => tryActivation(option.connector), [tryActivation])
 
+  const handleInstallMetaMask = () => {
+    window.location.href = 'https://metamask.io/'
+  }
+  const isMetamaskInstalled = typeof window.ethereum !== 'undefined'
+  const isMobileWithMetamask = isMobile && isMetamaskInstalled
   return (
-    <ModalContainer>
+    <ModalContainer style={{overflow: 'auto',  maxHeight: '90vh'}}>
+      <PromptTitle>Connect your Wallet </PromptTitle>
+      <ContentWrapper style={{ marginTop: '10px' }}>
+        <AutoRow style={{ flexWrap: 'nowrap' }}>
+          <Text style={{ fontSize: '13px', color: '#666680', fontWeight: '400', lineHeight: '19.5px' }}>
+            <Trans>
+              Connecting your wallet allows IX Swap to see your wallet address and, consequently, the funds you hold on
+              the blockchain. This does not grant IX Swap the ability to manage or transfer your tokens; for that, you
+              will be asked to sign a token approval.
+              {/* By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
+                  <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
+                  acknowledge that you have read and understood the{' '}
+                  <ExternalLink href="https://ixswap.io/privacy-policy/">
+                    {config?.name || 'IX Swap'} Privacy Policy
+                  </ExternalLink>
+                  . */}
+            </Trans>
+            <br /> <br />
+            <Trans>Select your wallet from the options below to get started</Trans>
+          </Text>
+        </AutoRow>
+      </ContentWrapper>
       <ExitIconContainer onClick={props.onClose}>
         <CrossIcon />
       </ExitIconContainer>
-      {isMobile ? (
-        <ContentWrapper>
-          <HeaderRow>
-            <HoverText>
-              <Trans>Connect to a wallet</Trans>
-            </HoverText>
-          </HeaderRow>
-          <Column style={{ alignItems: 'stretch' }}>
-            <br />
-            <TYPE.description2>
-              You are accessing IX Swap through a mobile phone. To connect a wallet, we recommend using browsers from
-              Metamask, Trust Wallet, Coinbase Wallet. See links below for more information:
-              <br />
-            </TYPE.description2>
 
-            <ButtonOutlined
-              type="button"
-              onClick={() =>
-                location.replace(
-                  'https://support.metamask.io/hc/en-us/articles/6356387482523-How-to-use-the-MetaMask-Mobile-Browser'
-                )
-              }
-              style={{
-                width: '100%',
-                marginTop: '32px',
-                color: 'black',
-                justifyContent: 'left',
-                fontSize: '13px',
-              }}
-            >
-              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={metamaskmobile} alt="homeImg" />
-              Metamask Browser
-            </ButtonOutlined>
-            <ButtonOutlined
-              type="button"
-              onClick={() => location.replace('https://trustwallet.com/dapp/')}
-              style={{
-                width: '100%',
-                marginTop: '32px',
-                color: 'black',
+      <ContentWrapper>
+        {walletView === PromptView.options && (
+          <>
+            <ConnectionOptions onSelect={onSelect} />
+          </>
+        )}
+        {walletView === PromptView.pending && <ConnectionLoader />}
+        {!isMobile && !isMetamaskInstalled && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'left',
+              gap: '5px',
+              border: '1px solid #FF616180',
+              borderRadius: '6px',
+              backgroundColor: '#FFF8F7',
+              marginTop: '10px',
+            }}
+          >
+            <p style={{ color: '#FF6161', fontSize: '13px', marginLeft: '8px' }}>
+              Please install Metamask to use this wallet.
+            </p>
+          </div>
+        )}
+      </ContentWrapper>
 
-                justifyContent: 'left',
-                fontSize: '13px',
-              }}
-            >
-              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={trust} alt="groupImg" />
-              Trust Wallet Browser
-            </ButtonOutlined>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '5px' }}>
+        <WalletInstallationLink onClick={handleInstallMetaMask}>I do not have a wallet yet</WalletInstallationLink>
+        <TooltipIcon />
+      </div>
 
-            <ButtonOutlined
-              type="button"
-              onClick={() => location.replace('https://help.coinbase.com/en/wallet/other-topics/what-is-a-dapp')}
-              style={{
-                width: '100%',
-                marginTop: '32px',
-                color: 'black',
-                justifyContent: 'left',
-                fontSize: '12px',
-              }}
-            >
-              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={coinbase} alt="groupImg" />
-              Coinbased Wallet Browser
-            </ButtonOutlined>
-          </Column>
-          {/* </FormCard> */}
-        </ContentWrapper>
-      ) : (
-        <ContentWrapper>
-          {walletView === PromptView.options && (
-            <>
-              <ConnectionOptions onSelect={onSelect} />
-            </>
-          )}
-          {walletView === PromptView.pending && <ConnectionLoader />}
-          <AgreementNotice>
-            By connecting a wallet, you agree to IX Swap’s
-            <a href="https://ixswap.io/terms-and-conditions/" target="_blank" rel="noreferrer">
-              {' '}
-              Terms and Conditions
-            </a>{' '}
-            and acknowledge that you have read and understood the IX Swap
-            <a href="https://ixswap.io/privacy-policy/" target="_blank" rel="noreferrer">
-              {' '}
-              Privacy Policy.
-            </a>
-          </AgreementNotice>
-        </ContentWrapper>
-      )}
+      <Line style={{ marginTop: isMobile ? '20px' : '70px' }} />
+
+      <div style={{ fontSize: '13px', justifyContent: 'center', marginTop: '20px', color: '#666680' }}>
+        By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
+        <ExternalLink style={{ color: '#6666FF' }} href="https://ixswap.io/terms-and-conditions/">
+          Terms and Conditions
+        </ExternalLink>{' '}
+        and acknowledge that you have read and understood the{' '}
+        <ExternalLink style={{ color: '#6666FF' }} href="https://ixswap.io/privacy-policy/">
+          {config?.name || 'IX Swap'} Privacy Policy
+        </ExternalLink>
+        .
+      </div>
     </ModalContainer>
   )
 }
 
+const PromptTitle = styled.div`
+  margin-left: 16px;
+  text-align: left;
+  ${text14}
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+`
+
 const ModalContainer = styled.div`
   background: ${(props) => props.theme.launchpad.colors.background};
   border-radius: 10px;
-  padding: 2rem 4rem;
+  padding: 2rem 2rem;
   position: relative;
 `
 
@@ -195,4 +200,12 @@ const ExitIconContainer = styled.div`
   svg {
     fill: ${(props) => props.theme.launchpad.colors.text.body};
   }
+`
+
+const WalletInstallationLink = styled.a`
+  font-size: 13px;
+  color: #6666ff;
+  font-weight: 600;
+  text-decoration: none; /* Remove underline */
+  cursor: pointer; /* Change cursor to pointer on hover */
 `

@@ -1459,11 +1459,11 @@ export default function IndividualKycForm() {
                           )}
                         </FieldArray>
 
-                        <RowBetween marginBottom="32px" marginTop="64px">
+                        {/* <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title7>
                             <Trans>FATCA</Trans>
                           </TYPE.title7>
-                          {/* {fatcaFilled && <StyledBigPassed />} */}
+           
                         </RowBetween>
 
                         <ExtraInfoCard>
@@ -1536,7 +1536,7 @@ export default function IndividualKycForm() {
                               <Trans>Choose one</Trans>
                             </TYPE.small>
                           )}
-                        </Column>
+                        </Column> */}
                       </FormCard>
                     </Column>
                   </FormContainer>

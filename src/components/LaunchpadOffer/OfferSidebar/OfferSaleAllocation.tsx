@@ -31,42 +31,51 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
       <Separator />
 
       <SaleAllocationEntry>
-        <div>
-          <span className="bold">
-            {props.investingTokenSymbol}.e {formatedValue(props.softCap) ?? 'N/A'}
-          </span>{' '}
-          Soft Cap /
-          <span className="bold">
-            {props.investingTokenSymbol}.e {formatedValue(props.hardCap) ?? 'N/A'}
-          </span>{' '}
-          Hard Cap
-        </div>
-      </SaleAllocationEntry>
+  <div>
+    <span className="bold">
+      {props.investingTokenSymbol === 'USDC' ? props.investingTokenSymbol + '.e' : props.investingTokenSymbol}{' '}
+      {formatedValue(props.softCap) ?? 'N/A'}
+    </span>{' '}
+    Soft Cap /
+    <span className="bold">
+      {props.investingTokenSymbol === 'USDC' ? props.investingTokenSymbol + '.e' : props.investingTokenSymbol}{' '}
+      {formatedValue(props.hardCap) ?? 'N/A'}
+    </span>{' '}
+    Hard Cap
+  </div>
+</SaleAllocationEntry>
+
+
+
 
       <Separator />
 
       {props.hasPresale && (
         <>
-          <SaleAllocationEntry>
-            <div>
-              <span className="bold">
-                {props.investingTokenSymbol}.e {formatedValue(props.presaleAlocated)}
-              </span>{' '}
-              Allocated for Pre-Sale
-            </div>
-          </SaleAllocationEntry>
+<SaleAllocationEntry>
+  <div>
+    <span className="bold">
+      {props.investingTokenSymbol === 'USDC' ? props.investingTokenSymbol + '.e' : props.investingTokenSymbol}{' '}
+      {formatedValue(props.presaleAlocated)}
+    </span>{' '}
+    Allocated for Pre-Sale
+  </div>
+</SaleAllocationEntry>
+
           <Separator />
         </>
       )}
 
-      <SaleAllocationEntry>
-        <div>
-          <span className="bold">
-            {props.investingTokenSymbol}.e {allocatedPublicSale}
-          </span>{' '}
-          Allocated for Public Sale
-        </div>
-      </SaleAllocationEntry>
+<SaleAllocationEntry>
+  <div>
+    <span className="bold">
+      {props.investingTokenSymbol === 'USDC' ? props.investingTokenSymbol + '.e' : props.investingTokenSymbol}{' '}
+      {allocatedPublicSale}
+    </span>{' '}
+    Allocated for Public Sale
+  </div>
+</SaleAllocationEntry>
+
     </SaleAllocationContainer>
   )
 }
@@ -93,20 +102,23 @@ export const OfferPreSaleInfo: React.FC<PresaleProps> = (props) => {
       <Separator />
 
       <SaleAllocationEntry>
-        <EntryLabel>Max. Investment Size</EntryLabel>
-        <EntryValue>
-          {props.investingTokenSymbol}.e {formatedValue(formatter.format(Number(props.presaleMaxInvestment)))}
-        </EntryValue>
-      </SaleAllocationEntry>
+  <EntryLabel>Max. Investment Size</EntryLabel>
+  <EntryValue>
+    {props.investingTokenSymbol === 'USDC' ? props.investingTokenSymbol + '.e' : props.investingTokenSymbol}{' '}
+    {formatedValue(formatter.format(Number(props.presaleMaxInvestment)))}
+  </EntryValue>
+</SaleAllocationEntry>
+
 
       <Separator />
-
       <SaleAllocationEntry>
-        <EntryLabel>Min. Investment Size</EntryLabel>
-        <EntryValue>
-          {props.investingTokenSymbol}.e {formatedValue(formatter.format(Number(props.presaleMinInvestment)))}
-        </EntryValue>
-      </SaleAllocationEntry>
+  <EntryLabel>Min. Investment Size</EntryLabel>
+  <EntryValue>
+    {props.investingTokenSymbol === 'USDC' ? props.investingTokenSymbol + '.e' : props.investingTokenSymbol}{' '}
+    {formatedValue(formatter.format(Number(props.presaleMinInvestment)))}
+  </EntryValue>
+</SaleAllocationEntry>
+
     </SaleAllocationContainer>
   )
 }
