@@ -44,7 +44,7 @@ export const IndividualForm = ({ data, riskJSON }: Props) => {
     { component: Occupation },
     { component: SourceOfFunds, kycKey: 'individual' },
     { component: TaxDeclarations },
-    { component: Fatca },
+    // { component: Fatca },
     { component: InvestorStatusDeclaration, kycKey: 'individual' },
     { component: InvestorDeclaration },
   ]
