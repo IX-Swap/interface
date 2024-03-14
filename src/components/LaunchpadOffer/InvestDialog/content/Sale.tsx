@@ -95,11 +95,15 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     () => [
       {
         label: 'Min. Investment Size',
-        value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${investingTokenSymbol}`,
+        value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${
+          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
+        }`,
       },
       {
         label: 'Max. Investment Size',
-        value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${investingTokenSymbol}`,
+        value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${
+          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
+        }`,
       },
     ],
     [isPresale, presaleMaxInvestment, presaleMinInvestment, maxInvestment, minInvestment, investingTokenSymbol]
@@ -119,8 +123,18 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       }
     }
     return [
-      { label: 'Available to invest', value: `${formatter.format(availableToInvest)} ${investingTokenSymbol}` },
-      { label: 'Already invested', value: `${formatter.format(amountInvested)} ${investingTokenSymbol}` },
+      {
+        label: 'Available to invest',
+        value: `${formatter.format(availableToInvest)} ${
+          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
+        }`,
+      },
+      {
+        label: 'Already invested',
+        value: `${formatter.format(amountInvested)} ${
+          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
+        }`,
+      },
       {
         label: (
           <FlexVerticalCenter>
