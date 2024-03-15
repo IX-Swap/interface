@@ -68,7 +68,7 @@ export const PresaleBlock = ({ offer }: Props) => {
       <StyledGridItem xs={12}>
         <OfferWhitelistInfo data={statistics} />
       </StyledGridItem>
-      <StyledGridItem xs={12}>
+      {/* <StyledGridItem xs={12}> */}
         <OfferWhitelistApprove
           offerId={offerId}
           totalItems={data.totalItems}
@@ -78,8 +78,8 @@ export const PresaleBlock = ({ offer }: Props) => {
           }}
           disabledManage={disabledManage}
         />
-      </StyledGridItem>
-      <StyledGridItem xs={12} noPadding>
+      {/* </StyledGridItem> */}
+      {/* <StyledGridItem xs={12} noPadding> */}
         <OfferWhitelistList
           data={data}
           refreshWhitelists={() => {
@@ -98,7 +98,7 @@ export const PresaleBlock = ({ offer }: Props) => {
           disabledManage={disabledManage}
           offer={offer}
         />
-      </StyledGridItem>
+      {/* </StyledGridItem> */}
     </GridContainer>
   )
 }

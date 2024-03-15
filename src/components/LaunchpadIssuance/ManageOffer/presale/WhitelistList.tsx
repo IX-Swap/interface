@@ -22,6 +22,7 @@ import { IssuancePagination } from 'components/LaunchpadIssuance/IssuanceDashboa
 import { ExtractButton, ExtractText, HeaderLabel, TableTitle } from '../shared/styled'
 import { DiscreteInternalLink } from 'theme'
 import { text46 } from 'components/LaunchpadMisc/typography'
+import { style } from 'styled-system'
 
 interface Props {
   data: PaginationRes<OfferPresaleWhitelist>
@@ -125,25 +126,10 @@ export const OfferWhitelistList = ({
     <Container>
       <Header>
         <TableTitle>Approve Manually</TableTitle>
-        <ButtonsContainer>
-          <ExtractButton as={DiscreteInternalLink} to={extractLink}>
+        <ExtractButton as={DiscreteInternalLink} to={extractLink}>
             <MoreHorizontal color={theme.launchpad.colors.primary} size={13} />
             <ExtractText>Extract Data</ExtractText>
           </ExtractButton>
-          <OutlineButton color={theme.launchpad.colors.error} width="180px" onClick={rejectSelected} padding="0 1rem">
-            <ButtonLabel disabled={actionsDisabled}>Reject Selected</ButtonLabel>
-            <X size={13} />
-          </OutlineButton>
-          <OutlineButton
-            color={theme.launchpad.colors.primary}
-            width="180px"
-            onClick={approveSelected}
-            padding="0 1rem"
-          >
-            <ButtonLabel disabled={actionsDisabled}>Approve Selected</ButtonLabel>
-            <Check size={13} />
-          </OutlineButton>
-        </ButtonsContainer>
       </Header>
       {items.length > 0 && (
         <IssuanceTable maxWidth="100%">
@@ -184,13 +170,29 @@ export const OfferWhitelistList = ({
       )}
       {!isLoading && !totalItems && <EmptyTable title="No users" containerMaxWidth="100%" hideBorder />}
       <IssuancePagination
-        totalItems={totalItems}
-        totalPages={totalPages}
-        currentPage={page}
-        pageSize={pageSize}
-        onChangePageSize={setPageSize}
-        onChangePage={onChangePage}
-      />
+          totalItems={totalItems}
+          totalPages={totalPages}
+          currentPage={page}
+          pageSize={pageSize}
+          onChangePageSize={setPageSize}
+          onChangePage={onChangePage}
+        />
+
+      <ButtonsContainer>
+        <OutlineButton color={theme.launchpad.colors.error} width="180px" onClick={rejectSelected} padding="0 1rem">
+          <ButtonLabel disabled={actionsDisabled}>Reject Selected</ButtonLabel>
+          <X size={13} />
+        </OutlineButton>
+        <OutlineButton
+          color={theme.launchpad.colors.primary}
+          width="180px"
+          onClick={approveSelected}
+          padding="0 1rem"
+        >
+          <ButtonLabel disabled={actionsDisabled}>Approve Selected</ButtonLabel>
+          <Check size={13} />
+        </OutlineButton>
+      </ButtonsContainer>
     </Container>
   )
 }
@@ -198,17 +200,24 @@ export const OfferWhitelistList = ({
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 `
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 22px;
 `
+
+const IssuancePaginationContainer = styled.div`
+  display: flex;
+  align-items: end;
+  justify-content: end;
+`
+
 const ButtonsContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  justify-content: center;
+  display: flex;
+  align-items: end;
+  justify-content: end;
   gap: 16px;
 `
 const ButtonLabel = styled.span<{ disabled: boolean }>`
