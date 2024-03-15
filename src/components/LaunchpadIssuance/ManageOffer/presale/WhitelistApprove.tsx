@@ -6,7 +6,7 @@ import { useApproveRandomPresaleWhitelists, useManagePresaleWhitelists } from 's
 import { IssuanceTextField } from '../../utils/TextField'
 import { useShowError } from 'state/application/hooks'
 import { ConfirmModal } from '../shared/ConfirmModal'
-import { text1, text39, text51 } from 'components/LaunchpadMisc/typography'
+import { text1, text2, text51 } from 'components/LaunchpadMisc/typography'
 import { integerNumberFilter } from 'utils/input'
 
 interface Props {
@@ -155,7 +155,7 @@ const Title = styled.div`
 `
 
 const SmallTitle = styled.div`
-  ${text39}
+  ${text2}
   color: ${(props) => props.theme.launchpad.colors.text.title};
   margin-bottom: 17px;
 `

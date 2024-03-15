@@ -23,6 +23,7 @@ import { ExtractButton, ExtractText, HeaderLabel, TableTitle } from '../shared/s
 import { DiscreteInternalLink } from 'theme'
 import { text46 } from 'components/LaunchpadMisc/typography'
 import { style } from 'styled-system'
+import { Line } from 'components/Line'
 
 interface Props {
   data: PaginationRes<OfferPresaleWhitelist>
@@ -124,6 +125,7 @@ export const OfferWhitelistList = ({
 
   return (
     <Container>
+      <Line/>
       <Header>
         <TableTitle>Approve Manually</TableTitle>
         <ExtractButton as={DiscreteInternalLink} to={extractLink}>
@@ -179,18 +181,18 @@ export const OfferWhitelistList = ({
         />
 
       <ButtonsContainer>
-        <OutlineButton color={theme.launchpad.colors.error} width="180px" onClick={rejectSelected} padding="0 1rem">
-          <ButtonLabel disabled={actionsDisabled}>Reject Selected</ButtonLabel>
-          <X size={13} />
-        </OutlineButton>
         <OutlineButton
-          color={theme.launchpad.colors.primary}
+          color={theme.launchpad.colors.success}
           width="180px"
           onClick={approveSelected}
           padding="0 1rem"
         >
           <ButtonLabel disabled={actionsDisabled}>Approve Selected</ButtonLabel>
           <Check size={13} />
+        </OutlineButton>
+        <OutlineButton color={theme.launchpad.colors.error} width="180px" onClick={rejectSelected} padding="0 1rem">
+          <ButtonLabel disabled={actionsDisabled}>Reject Selected</ButtonLabel>
+          <X size={13} />
         </OutlineButton>
       </ButtonsContainer>
     </Container>
@@ -200,18 +202,12 @@ export const OfferWhitelistList = ({
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 `
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 22px;
-`
-
-const IssuancePaginationContainer = styled.div`
-  display: flex;
-  align-items: end;
-  justify-content: end;
+  margin-top: 1rem;
 `
 
 const ButtonsContainer = styled.div`
@@ -219,6 +215,7 @@ const ButtonsContainer = styled.div`
   align-items: end;
   justify-content: end;
   gap: 16px;
+  margin: 0.5rem 0;
 `
 const ButtonLabel = styled.span<{ disabled: boolean }>`
   font-weight: 600;

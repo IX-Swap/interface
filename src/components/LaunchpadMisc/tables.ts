@@ -53,7 +53,7 @@ export const TableHeader = styled.div<{ tab: IssuanceFilter }>`
   gap: ${(props) => (props.tab === IssuanceFilter.pending ? '2rem' : '1rem')};
   height: 65px;
   width: 100%;
-  padding: 0.25rem 1.5rem;
+  padding: 0.25rem 0;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
