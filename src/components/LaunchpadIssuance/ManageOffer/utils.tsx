@@ -1,7 +1,7 @@
 import moment from "moment"
 
 export const formatDates = (startDate: Date, endDate?: Date) => {
-  const formatDate = (date: Date) => new Date(date).toLocaleDateString('en-GB', { hour: "2-digit", minute: '2-digit' })
+  const formatDate = (date: Date) => new Date(date).toLocaleDateString('en-GB')
   if (!endDate) {
     return formatDate(startDate)
   }

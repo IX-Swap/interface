@@ -75,6 +75,17 @@ export const Raw = styled.div`
   white-space: nowrap;
 `
 
+export const IconRaw = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-family: ${(props) => props.theme.launchpad.font};
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+
 export const DefaultRaw = styled.div`
   ${text42}
   opacity: 0.8;

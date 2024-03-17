@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { GridItem, GridContainer } from 'components/Grid'
 import {
+  ApprovedRejectedOrderConfig,
   ManagedOffer,
   OfferPresaleStatistics,
   OfferPresaleWhitelist,
@@ -14,6 +15,7 @@ import { OfferWhitelistInfo } from './WhitelistInfo'
 import { OfferWhitelistApprove } from './WhitelistApprove'
 import { OfferWhitelistList } from './WhitelistList'
 import { alpha } from '@material-ui/core/styles'
+import { OfferApproveRejectList } from './ApproveRejectList'
 
 interface Props {
   offer: ManagedOffer
@@ -26,18 +28,21 @@ export const PresaleBlock = ({ offer }: Props) => {
   const getWhitelists = useGetManagedOfferPresaleWhitelists()
 
   const [data, setData] = useState<PaginationRes<OfferPresaleWhitelist>>()
+  const [approvedRejectedData, setApprovedRejectedData] = useState<PaginationRes<OfferPresaleWhitelist>>()
   const [statistics, setStatistics] = useState<OfferPresaleStatistics>()
 
   const [page, setPage] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(8)
   const [order, setOrder] = useState<PresaleOrderConfig>({})
+
+  const [ARListsOrder, setARListsOrder] = useState<ApprovedRejectedOrderConfig>({})
   const [isLoading, setLoading] = useState<boolean>(false)
   const startLoading = () => setLoading(true)
   const stopLoading = () => setLoading(false)
 
   const refreshWhitelists = useCallback(() => {
     startLoading()
-    getWhitelists(offerId, page, order, pageSize).then((res: PaginationRes<OfferPresaleWhitelist>) => {
+    getWhitelists(offerId, page, true, order, pageSize).then((res: PaginationRes<OfferPresaleWhitelist>) => {
       setData(res)
       stopLoading()
     })
@@ -45,6 +50,17 @@ export const PresaleBlock = ({ offer }: Props) => {
   useEffect(() => {
     refreshWhitelists()
   }, [refreshWhitelists])
+
+  const refreshApprovedRejectedLists = useCallback(() => {
+    startLoading()
+    getWhitelists(offerId, page, false, ARListsOrder, pageSize).then((res: PaginationRes<OfferPresaleWhitelist>) => {
+      setApprovedRejectedData(res)
+      stopLoading()
+    })
+  }, [offerId, page, ARListsOrder, pageSize])
+  useEffect(() => {
+    refreshApprovedRejectedLists()
+  }, [refreshApprovedRejectedLists])
 
   const refreshStatistics = useCallback(() => {
     startLoading()
@@ -59,7 +75,7 @@ export const PresaleBlock = ({ offer }: Props) => {
 
   const disabledManage = useMemo(() => ![OfferStatus.whitelist, OfferStatus.preSale].includes(status), [status])
 
-  if (!data || !statistics) {
+  if (!data || !approvedRejectedData || !statistics) {
     return <></>
   }
 
@@ -99,6 +115,24 @@ export const PresaleBlock = ({ offer }: Props) => {
           offer={offer}
         />
       {/* </StyledGridItem> */}
+      <OfferApproveRejectList
+          data={approvedRejectedData}
+          refreshWhitelists={() => {
+            refreshApprovedRejectedLists()
+            setPage(1)
+          }}
+          order={order}
+          setOrder={setARListsOrder}
+          page={page}
+          setPage={setPage}
+          startLoading={startLoading}
+          stopLoading={stopLoading}
+          isLoading={isLoading}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          disabledManage={disabledManage}
+          offer={offer}
+        />
     </GridContainer>
   )
 }
