@@ -32,10 +32,14 @@ export const PresaleBlock = ({ offer }: Props) => {
   const [statistics, setStatistics] = useState<OfferPresaleStatistics>()
 
   const [page, setPage] = useState<number>(1)
-  const [pageSize, setPageSize] = useState<number>(8)
-  const [order, setOrder] = useState<PresaleOrderConfig>({})
+  const [ARListsPage, setARListsPage] = useState<number>(1)
 
+  const [pageSize, setPageSize] = useState<number>(8)
+  const [ARListsPageSize, setARListsPageSize] = useState<number>(8)
+  
+  const [order, setOrder] = useState<PresaleOrderConfig>({})
   const [ARListsOrder, setARListsOrder] = useState<ApprovedRejectedOrderConfig>({})
+
   const [isLoading, setLoading] = useState<boolean>(false)
   const startLoading = () => setLoading(true)
   const stopLoading = () => setLoading(false)
@@ -119,17 +123,17 @@ export const PresaleBlock = ({ offer }: Props) => {
           data={approvedRejectedData}
           refreshWhitelists={() => {
             refreshApprovedRejectedLists()
-            setPage(1)
+            setARListsPage(1)
           }}
-          order={order}
+          order={ARListsOrder}
           setOrder={setARListsOrder}
-          page={page}
-          setPage={setPage}
+          page={ARListsPage}
+          setPage={setARListsPage}
           startLoading={startLoading}
           stopLoading={stopLoading}
           isLoading={isLoading}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
+          pageSize={ARListsPageSize}
+          setPageSize={setARListsPageSize}
           disabledManage={disabledManage}
           offer={offer}
         />

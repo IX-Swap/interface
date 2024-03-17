@@ -119,7 +119,7 @@ export const OfferApproveRejectList = ({
               Application Date
             </HeaderLabel>
             <HeaderLabel onClick={() => onChangeOrder('status')}>
-              <SortIcon type={order.status} />
+              <SortIcon type={order?.status} />
               Status
             </HeaderLabel>
           </TableHeader>
@@ -135,8 +135,8 @@ export const OfferApproveRejectList = ({
                 <Raw>{(+item.amount).toLocaleString() + ' ' + investingTokenSymbol}</Raw>
                 <Raw>{formatDates(item.createdAt)}</Raw>
                 <IconRaw>
-                  <img src={getStatusIcon(item.status)} alt="icon" width="20px" height="20px" />
-                  {item.status === WhitelistStatus.accepted ? 'Approved' : 'Rejected'}
+                  <img src={getStatusIcon(item?.status)} alt="icon" width="20px" height="20px" />
+                  {item?.status === WhitelistStatus.accepted ? 'Approved' : 'Rejected'}
                 </IconRaw>
               </IssuanceRow>
             ))}

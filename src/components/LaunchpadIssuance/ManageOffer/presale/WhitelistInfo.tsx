@@ -66,7 +66,8 @@ export const OfferWhitelistInfo = ({ data }: Props) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 75%;
+  width: fit-content;
+  max-width: 75%;
 `
 const GridContainer = styled.div`
   display: grid;
