@@ -136,6 +136,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
       const result = await resendEmail()
       // Now you can use the result if needed
       console.log(result)
+      
 
       // Reset the code values
 
@@ -489,11 +490,19 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, h
   const handleCodeSubmit = () => {
     const verificationCode = code.join('')
     if (verificationCode.length === numberOfBoxes) {
-      handleNextClick(verificationCode) // Pass verificationCode as a single argument
+      setTimeout(() => {
+        setCode(Array(numberOfBoxes).fill(''));
+      }, 1000);
+      handleNextClick(verificationCode); // Pass verificationCode as a single argument
     } else {
       // Set the error message
+      setTimeout(() => {
+        setCode(Array(numberOfBoxes).fill(''));
+      }, 2000);
     }
   }
+  
+  
 
   return (
     <CodeInputContainer key={reset}>
