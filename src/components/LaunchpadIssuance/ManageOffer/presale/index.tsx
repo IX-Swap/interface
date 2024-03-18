@@ -44,6 +44,10 @@ export const PresaleBlock = ({ offer }: Props) => {
   const startLoading = () => setLoading(true)
   const stopLoading = () => setLoading(false)
 
+  const [isARLoading, setARLoading] = useState<boolean>(false)
+  const startARLoading = () => setARLoading(true)
+  const stopARLoading = () => setARLoading(false)
+
   const refreshWhitelists = useCallback(() => {
     startLoading()
     getWhitelists(offerId, page, true, order, pageSize).then((res: PaginationRes<OfferPresaleWhitelist>) => {
@@ -57,11 +61,11 @@ export const PresaleBlock = ({ offer }: Props) => {
 
   const refreshApprovedRejectedLists = useCallback(() => {
     startLoading()
-    getWhitelists(offerId, page, false, ARListsOrder, pageSize).then((res: PaginationRes<OfferPresaleWhitelist>) => {
+    getWhitelists(offerId, ARListsPage, false, ARListsOrder, ARListsPageSize).then((res: PaginationRes<OfferPresaleWhitelist>) => {
       setApprovedRejectedData(res)
       stopLoading()
     })
-  }, [offerId, page, ARListsOrder, pageSize])
+  }, [offerId, ARListsPage, ARListsOrder, ARListsPageSize])
   useEffect(() => {
     refreshApprovedRejectedLists()
   }, [refreshApprovedRejectedLists])
@@ -129,9 +133,9 @@ export const PresaleBlock = ({ offer }: Props) => {
           setOrder={setARListsOrder}
           page={ARListsPage}
           setPage={setARListsPage}
-          startLoading={startLoading}
-          stopLoading={stopLoading}
-          isLoading={isLoading}
+          startLoading={startARLoading}
+          stopLoading={stopARLoading}
+          isLoading={isARLoading}
           pageSize={ARListsPageSize}
           setPageSize={setARListsPageSize}
           disabledManage={disabledManage}
