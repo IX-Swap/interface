@@ -5,12 +5,14 @@ import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { useManagePresaleWhitelists, useOnChangeOrder } from 'state/launchpad/hooks'
 import {
   AbstractOrder,
+  ApprovedRejectedOrderConfig,
   ManagedOffer,
   OfferPresaleWhitelist,
   PaginationRes,
   PresaleOrderConfig,
+  WhitelistStatus,
 } from 'state/launchpad/types'
-import { IssuanceTable, TableHeader, IssuanceRow, Raw } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableHeader, IssuanceRow, Raw, IconRaw } from 'components/LaunchpadMisc/tables'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { IssuanceFilter } from 'components/LaunchpadIssuance/types'
 import { formatDates } from '../utils'
@@ -24,12 +26,14 @@ import { DiscreteInternalLink } from 'theme'
 import { text46 } from 'components/LaunchpadMisc/typography'
 import { style } from 'styled-system'
 import { Line } from 'components/Line'
+import rejectedIcon from 'assets/images/newReject.svg'
+import approvedIcon from 'assets/images/newRightCheck.svg'
 
 interface Props {
   data: PaginationRes<OfferPresaleWhitelist>
   refreshWhitelists: () => any
-  order: PresaleOrderConfig
-  setOrder: (order: PresaleOrderConfig) => void
+  order: ApprovedRejectedOrderConfig
+  setOrder: (order: ApprovedRejectedOrderConfig) => void
   page: number
   setPage: (page: number) => void
   startLoading: () => any
@@ -41,7 +45,7 @@ interface Props {
   offer: ManagedOffer
 }
 
-export const OfferWhitelistList = ({
+export const OfferApproveRejectList = ({
   data,
   refreshWhitelists,
   order,
@@ -83,55 +87,21 @@ export const OfferWhitelistList = ({
     })
   }
 
-  const onSelectAll = useCallback(() => {
-    if (disabledManage) return
-    const ids = items.map((i) => i.id)
-    if (ids.length === selected.length) {
-      setSelected([])
-    } else {
-      setSelected(ids)
-    }
-  }, [disabledManage, items, selected])
-
-  const onToggleOne = useCallback(
-    (id: number) => {
-      if (disabledManage) return
-      const shouldAdd = !selected.includes(id)
-      const res = [...selected]
-      if (shouldAdd) {
-        res.push(id)
-      } else {
-        const index = res.indexOf(id)
-        if (index !== -1) {
-          res.splice(index, 1)
-        }
-      }
-      setSelected([...new Set(res)])
-    },
-    [disabledManage, selected]
-  )
-  const getIsSelected = useCallback(
-    (id: number) => {
-      const isSelected = selected.includes(id)
-      return isSelected
-    },
-    [selected]
-  )
   const onChangePage = (newPage: number) => {
     setPage(newPage)
     setSelected([])
   }
   const extractLink = useMemo(() => `/issuance/extract/${issuanceId}?tab=registration&page=1`, [issuanceId])
 
+  const getStatusIcon = (status: string) => {
+    if (status === WhitelistStatus.declined) return rejectedIcon
+    else return approvedIcon
+  }
+
   return (
     <Container>
-      <Line/>
       <Header>
-        <TableTitle>Approve Manually</TableTitle>
-        <ExtractButton as={DiscreteInternalLink} to={extractLink}>
-            <MoreHorizontal color={theme.launchpad.colors.primary} size={13} />
-            <ExtractText>Extract Data</ExtractText>
-          </ExtractButton>
+        <TableTitle>Recent Approved/Rejected Registrations to Invest</TableTitle>
       </Header>
       {items.length > 0 && (
         <IssuanceTable maxWidth="100%">
@@ -148,9 +118,10 @@ export const OfferWhitelistList = ({
               <SortIcon type={order.createdAt} />
               Application Date
             </HeaderLabel>
-            <SelectAll disabled={disabledManage} onClick={onSelectAll}>
-              Select All
-            </SelectAll>
+            <HeaderLabel onClick={() => onChangeOrder('status')}>
+              <SortIcon type={order?.status} />
+              Status
+            </HeaderLabel>
           </TableHeader>
           {isLoading && (
             <Centered>
@@ -163,9 +134,10 @@ export const OfferWhitelistList = ({
                 <Raw>{item.name || '<Name Uknown>'}</Raw>
                 <Raw>{(+item.amount).toLocaleString() + ' ' + investingTokenSymbol}</Raw>
                 <Raw>{formatDates(item.createdAt)}</Raw>
-                <CheckBoxContainer>
-                  <BaseCheckbox state={getIsSelected(item.id)} toggle={() => onToggleOne(item.id)} />
-                </CheckBoxContainer>
+                <IconRaw>
+                  <img src={getStatusIcon(item?.status)} alt="icon" width="20px" height="20px" />
+                  {item?.status === WhitelistStatus.accepted ? 'Approved' : 'Rejected'}
+                </IconRaw>
               </IssuanceRow>
             ))}
         </IssuanceTable>
@@ -179,22 +151,6 @@ export const OfferWhitelistList = ({
           onChangePageSize={setPageSize}
           onChangePage={onChangePage}
         />
-
-      <ButtonsContainer>
-        <OutlineButton
-          color={theme.launchpad.colors.success}
-          width="180px"
-          onClick={approveSelected}
-          padding="0 1rem"
-        >
-          <ButtonLabel disabled={actionsDisabled}>Approve Selected</ButtonLabel>
-          <Check size={13} />
-        </OutlineButton>
-        <OutlineButton color={theme.launchpad.colors.error} width="180px" onClick={rejectSelected} padding="0 1rem">
-          <ButtonLabel disabled={actionsDisabled}>Reject Selected</ButtonLabel>
-          <X size={13} />
-        </OutlineButton>
-      </ButtonsContainer>
     </Container>
   )
 }

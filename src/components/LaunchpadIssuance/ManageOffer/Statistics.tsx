@@ -183,8 +183,8 @@ const PresaleContainer = styled.div`
   grid-template-areas:
     'presale-title sale-title total-title'
     'presale-participants sale-participants total-participants'
-    'presale-max sale-max .'
-    'presale-min sale-min total-closes';
+    'presale-max sale-max total-closes'
+    'presale-min sale-min .';
 `
 const NoPresaleContainer = styled.div`
   display: grid;
@@ -228,7 +228,7 @@ const FlexColumn = styled.div`
 `
 const Line = styled.div`
   background: ${(props) => props.theme.launchpad.colors.accent};
-  opacity: 0.8;
+  opacity: 0;
   height: 1px;
   width: 100%;
   margin-top: 16px;

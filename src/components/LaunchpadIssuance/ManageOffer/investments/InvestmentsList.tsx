@@ -113,7 +113,7 @@ const Container = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 22px;
+  padding: 22px 0;
 `
 const ButtonsContainer = styled.div`
   display: flex;
