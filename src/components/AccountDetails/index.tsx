@@ -173,7 +173,6 @@ export default function AccountDetails({
     setModalProps({ isModalOpen: false, referralCode: '', kycType: undefined })
   }
   const openModal = (kycType: string) => {
-
     // Pass additional props based on the selected KYC type
     setModalProps({
       isModalOpen: true,
@@ -184,6 +183,7 @@ export default function AccountDetails({
       // Add more props as needed
     })
   }
+
   return (
     <>
       <UpperSection>
@@ -200,9 +200,11 @@ export default function AccountDetails({
                 margin: '0px 10px 0px 10px',
               }}
             >
-              {kyc?.individual?.firstName ? kyc.individual.firstName.charAt(0).toUpperCase() : ''}
+              {kyc?.individual?.firstName
+                ? kyc.individual.firstName.charAt(0).toUpperCase()
+                : kyc?.corporate?.corporateName?.charAt(0).toUpperCase()}
             </span>
-            <span> {kyc?.individual?.fullName ? kyc.individual.fullName : ''}</span>
+            <span> {kyc?.individual?.fullName ? kyc.individual.fullName : kyc?.corporate?.corporateName}</span>
           </TYPE.title7>
           <CloseIcon onClick={toggleWalletModal}>
             <CloseColor />
@@ -296,12 +298,12 @@ export default function AccountDetails({
               <Line style={{ marginTop: '10px' }} />
               <div style={{ display: 'flex', gap: '10px' }}>
                 <NewEmail />
-                <span style={{ fontSize: '13px', color: '#292933', fontWeight: '500' }}>{kyc?.individual?.email}</span>
+                <span style={{ fontSize: '13px', color: '#292933', fontWeight: '500' }}>{kyc?.individual?.email ?kyc?.individual?.email : kyc?.corporate?.email }</span>
               </div>
 
               <span
                 onClick={() => openModal('resend')}
-                style={{cursor: 'pointer', color: '#6666FF', fontSize: '13px', fontWeight: '400' }}
+                style={{ cursor: 'pointer', color: '#6666FF', fontSize: '13px', fontWeight: '400' }}
               >
                 Change Email
               </span>
