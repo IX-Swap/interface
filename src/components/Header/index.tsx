@@ -347,12 +347,7 @@ export default function Header() {
 
                           <NewDropdown style={{ marginTop: '14px', marginRight: '10px' }} />
                         </div>
-                        {/* <NavLink
-                          style={{ textDecoration: 'none', color: 'inherit', marginRight: 16, marginTop: 5 }}
-                           to="/kyc"
-                           >
-                          {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
-                        </NavLink> */}
+
                       </HeaderElement>
                       <div
                         style={{
@@ -361,10 +356,16 @@ export default function Header() {
                           opacity: '0.4',
                         }}
                       ></div>
+                                              <NavLink
+                          style={{ textDecoration: 'none', color: 'inherit', marginRight: 16, marginTop: 5 }}
+                           to="/kyc"
+                           >
+                          {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
+                        </NavLink>
                     </div>
                   </IconWrapper>
                 )}
-                <div
+                {/* <div
                   onClick={openModal}
                   style={{
                     border: '1.3px solid #E6E6FF',
@@ -376,7 +377,7 @@ export default function Header() {
                 >
                   <NewAddIcon />
                   <span style={{ color: '#6666FF', fontSize: '13px', fontWeight: '600', marginLeft: '8px' }}>Buy</span>
-                </div>
+                </div> */}
                 {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
               </HeaderElement>
             </HeaderControls>

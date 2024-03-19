@@ -100,7 +100,7 @@ export const AdminKycTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
   const [isLoading, handleIsLoading] = useState(false)
   const [stats, setStats] = useState<TStats[]>([])
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>(['total'])
+  const [selectedStatuses, setSelectedStatuses] = useState(['approved', 'rejected', 'pending', 'changes-requested']);
   const [endDate, setEndDate] = useState(null)
   const [searchValue, setSearchValue] = useState('')
   const [sortBy, setSortBy] = useState('')
