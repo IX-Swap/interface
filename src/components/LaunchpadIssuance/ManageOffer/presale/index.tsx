@@ -109,6 +109,8 @@ export const PresaleBlock = ({ offer }: Props) => {
           refreshWhitelists={() => {
             refreshWhitelists()
             setPage(1)
+            refreshApprovedRejectedLists()
+            setARListsPage(1)
           }}
           order={order}
           setOrder={setOrder}
@@ -117,6 +119,8 @@ export const PresaleBlock = ({ offer }: Props) => {
           startLoading={startLoading}
           stopLoading={stopLoading}
           isLoading={isLoading}
+          startARLoading={startARLoading}
+          stopARLoading={stopARLoading}
           pageSize={pageSize}
           setPageSize={setPageSize}
           disabledManage={disabledManage}
