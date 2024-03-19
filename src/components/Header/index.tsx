@@ -340,7 +340,9 @@ export default function Header() {
                               margin: '0px 0px 0px 10px',
                             }}
                           >
-                            {kyc?.individual?.firstName ? kyc.individual.firstName.charAt(0).toUpperCase() : ''}
+                            {kyc?.individual?.firstName
+                              ? kyc.individual.firstName.charAt(0).toUpperCase()
+                              : kyc?.corporate?.corporateName?.charAt(0).toUpperCase()}
                           </span>
 
                           <NewDropdown style={{ marginTop: '14px', marginRight: '10px' }} />

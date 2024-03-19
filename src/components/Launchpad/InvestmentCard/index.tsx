@@ -220,7 +220,7 @@ const InvestmentCardImage = styled.img`
   width: 380px;
   overflow-x: hidden;
   border-radius: 6px;
-  height: 280px;
+  height: 300px;
 `
 
 const InvestmentCardTagsContainer = styled.header`
@@ -271,6 +271,12 @@ const InvestmentCardTitle = styled.div`
   font-family: ${(props) => props.theme.launchpad.font};
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical;
 `
 const InvestmentCardDescription = styled.div`
   ${text4}
@@ -279,7 +285,7 @@ const InvestmentCardDescription = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; 
+  -webkit-line-clamp: 1; 
   -webkit-box-orient: vertical;
 `
 
