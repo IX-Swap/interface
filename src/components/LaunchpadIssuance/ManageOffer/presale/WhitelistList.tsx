@@ -35,6 +35,8 @@ interface Props {
   startLoading: () => any
   stopLoading: () => any
   isLoading: boolean
+  startARLoading: () => any
+  stopARLoading: () => any
   pageSize: number
   setPageSize: (page: number) => void
   disabledManage: boolean
@@ -51,6 +53,8 @@ export const OfferWhitelistList = ({
   startLoading,
   stopLoading,
   isLoading,
+  startARLoading,
+  stopARLoading,
   pageSize,
   setPageSize,
   disabledManage,
@@ -67,8 +71,10 @@ export const OfferWhitelistList = ({
   const approveSelected = () => {
     if (actionsDisabled) return
     startLoading()
+    startARLoading()
     manageWhitelists.load(offerId, { approveIds: selected }).then(() => {
       stopLoading()
+      stopARLoading()
       setSelected([])
       refreshWhitelists()
     })
@@ -76,8 +82,10 @@ export const OfferWhitelistList = ({
   const rejectSelected = () => {
     if (actionsDisabled) return
     startLoading()
+    startARLoading()
     manageWhitelists.load(offerId, { rejectIds: selected }).then(() => {
       stopLoading()
+      stopARLoading
       setSelected([])
       refreshWhitelists()
     })
