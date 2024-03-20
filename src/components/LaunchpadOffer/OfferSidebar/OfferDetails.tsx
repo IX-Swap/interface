@@ -56,10 +56,15 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
   const stageStatus = React.useMemo(() => {
     switch (props.offer.status) {
-      case OfferStatus.preSale:
+      case OfferStatus.preSale: {
+        if (!whitelistedStatus) {
+          return OfferStageStatus.disabled
+        }
+
         return whitelistedStatus && whitelistedStatus === WhitelistStatus.accepted
           ? OfferStageStatus.active
           : OfferStageStatus.checkStatus
+      }
 
       case OfferStatus.sale:
         return OfferStageStatus.active
@@ -142,22 +147,12 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </OfferStats>
 
         <InvestButtonContainer>
-          {/* {stageStatus !== OfferStageStatus.disabled && (
+          {stageStatus !== OfferStageStatus.disabled && (
             <InvestButton onClick={openInvestDialog}>
               {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
               {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
               {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
-            </InvestButton>
-          )} */}
-
-          {stageStatus !== OfferStageStatus.disabled && stageStatus !== OfferStageStatus.checkStatus && (
-            <InvestButton onClick={openInvestDialog}>
-              {stageStatus === OfferStageStatus.notStarted
-                ? 'Register To Invest'
-                : stageStatus === OfferStageStatus.closed
-                ? 'Open Dashboard'
-                : 'Invest'}
             </InvestButton>
           )}
         </InvestButtonContainer>
