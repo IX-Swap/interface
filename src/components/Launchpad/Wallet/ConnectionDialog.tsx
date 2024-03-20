@@ -90,7 +90,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
   const isMetamaskInstalled = typeof window.ethereum !== 'undefined'
   const isMobileWithMetamask = isMobile && isMetamaskInstalled
   return (
-    <ModalContainer style={{overflow: 'auto',  maxHeight: '90vh'}}>
+    <ModalContainer style={{ overflow: 'auto', maxHeight: '90vh' }}>
       <PromptTitle>Connect your Wallet </PromptTitle>
       <ContentWrapper style={{ marginTop: '10px' }}>
         <AutoRow style={{ flexWrap: 'nowrap' }}>
@@ -136,7 +136,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
             }}
           >
             <p style={{ color: '#FF6161', fontSize: '13px', marginLeft: '8px' }}>
-              Please install Metamask to use this wallet.
+              Please install Metamask to use the application.
             </p>
           </div>
         )}
