@@ -58,7 +58,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     window.ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
     ReactGA.event({ category: 'Wallet', action: 'Change Wallet', label: wallet?.name ?? '' })
 
-    setPendingWallet(connector) // set wallet for pending view
+    setPendingWallet(connector)
     setWalletView(PromptView.pending)
     setShowPendingScreen(true)
 
