@@ -104,12 +104,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, onClose }: Isssuanc
   const disableSubmit = offer?.status !== OfferStatus.approved || Boolean(issuanceError) || isDistributionDisabled
 
   const confirmFeeDisabled = useMemo(() => {
-    return (
-      Boolean(issuanceError) ||
-      notAprrovedDisabled ||
-      isLoading ||
-      Number(offer?.feeRate) === issuanceFee
-    )
+    return Boolean(issuanceError) || notAprrovedDisabled || isLoading || Number(offer?.feeRate) === issuanceFee
   }, [issuanceError, notAprrovedDisabled, offer, issuanceFee, isLoading])
 
   const vettingLink = useMemo(() => {
@@ -150,7 +145,11 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, onClose }: Isssuanc
 
       showSuccess(`Offer #${offer?.id} - ${offer?.title} deployed successfully`)
     } catch (e: any) {
-      showError(e?.message ?? '')
+      if (e?.response && e?.response?.status === 504) {
+        showError('Gateway Timeout')
+      } else {
+        showError(e?.message ?? '')
+      }
     }
     loadOffer()
     setIsLoading(false)
