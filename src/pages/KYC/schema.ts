@@ -157,18 +157,7 @@ export const individualErrorsSchema = yup.object().shape({
     .of(
       yup.object().shape({
         isAdditional: yup.bool(),
-        country: yup.object().when('isAdditional', {
-          is: true || undefined,
-          then: yup.object().nullable(),
-          otherwise: yup
-            .object()
-            .nullable()
-            .required('Required')
-            .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-              console.log(value, 'schema')
-              return (value && value.label !== null) || undefined
-            }),
-        }),
+        country: yup.object().nullable().required('Required'),
         idNumber: yup.string().when('isAdditional', {
           is: true,
           then: yup.string().nullable(),

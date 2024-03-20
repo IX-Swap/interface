@@ -1181,11 +1181,11 @@ export default function CorporateKycForm() {
                               {/* {values.beneficialOwners.length - 1 > index && <Divider />} */}
                             </Column>
                           ))}
-                        {errors.beneficialOwners && (
+                        {/* {errors.beneficialOwners && (
                           <TYPE.small marginTop="4px" color={'red1'}>
                             <Trans>{`${errors.beneficialOwners}`}</Trans>
                           </TYPE.small>
-                        )}
+                        )} */}
                         <ExtraInfoCardCountry
                           // type="button"
                           style={{ fontSize: 16, padding: 15 }}
