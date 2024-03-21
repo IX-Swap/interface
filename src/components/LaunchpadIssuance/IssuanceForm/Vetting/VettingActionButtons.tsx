@@ -52,7 +52,6 @@ export const VettingActionButtons = ({
       await approve()
       showSuccess('Vetting approved successfully')
       setShowApprove(false)
-      window.location.reload()
     } catch (e: any) {
       showError(e?.message)
     }
@@ -63,7 +62,6 @@ export const VettingActionButtons = ({
       showSuccess('Vetting rejected successfully')
       setShowConfirmReject(false)
       setShowReject(false)
-      window.location.reload()
     } catch (e: any) {
       showError(e?.message)
     }
@@ -74,7 +72,6 @@ export const VettingActionButtons = ({
       showSuccess('Requested changes for vetting successfully')
       setShowConfirmUpdate(false)
       setShowUpdate(false)
-      window.location.reload()
     } catch (e: any) {
       showError(e?.message)
     }
