@@ -77,7 +77,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     if (tokenId && !error && parsedAmount && !inputError && computedAddress) {
       deposit({
         id: tokenId,
-        amount: `${Number(parsedAmount)}`,
+        amount: `${parsedAmount.toExact()}`,
         fromAddress: computedAddress || '',
       })
     }
