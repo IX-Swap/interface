@@ -12,6 +12,7 @@ import { useReviewVetting } from 'state/issuance/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import Column from 'components/Column'
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { useHistory } from 'react-router-dom'
 
 export interface VettingActionButtonsProps {
   onSaveDraft: () => void
@@ -20,6 +21,7 @@ export interface VettingActionButtonsProps {
   draftDisabled: boolean
   submitDisabled: boolean
   vettingId: string
+  issuanceId: number
   status?: IssuanceStatus
   isReset: boolean
 }
@@ -30,6 +32,7 @@ export const VettingActionButtons = ({
   draftDisabled,
   submitDisabled,
   vettingId,
+  issuanceId,
   status,
   isReset,
 }: VettingActionButtonsProps) => {
@@ -47,11 +50,13 @@ export const VettingActionButtons = ({
   const [changesRejected, setChangesRejected] = useState('')
   const showError = useShowError()
   const showSuccess = useShowSuccess()
+  const history = useHistory()
   const onApprove = async () => {
     try {
       await approve()
       showSuccess('Vetting approved successfully')
       setShowApprove(false)
+      history.replace(`/issuance/view/vetting?id=${issuanceId}`)
     } catch (e: any) {
       showError(e?.message)
     }
@@ -62,6 +67,7 @@ export const VettingActionButtons = ({
       showSuccess('Vetting rejected successfully')
       setShowConfirmReject(false)
       setShowReject(false)
+      history.replace(`/issuance/view/vetting?id=${issuanceId}`)
     } catch (e: any) {
       showError(e?.message)
     }
@@ -72,6 +78,7 @@ export const VettingActionButtons = ({
       showSuccess('Requested changes for vetting successfully')
       setShowConfirmUpdate(false)
       setShowUpdate(false)
+      history.replace(`/issuance/view/vetting?id=${issuanceId}`)
     } catch (e: any) {
       showError(e?.message)
     }
