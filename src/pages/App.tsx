@@ -46,7 +46,6 @@ import { walletConnectV2 } from 'connectors/walletConnectV2'
 import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
 import { Footer } from './Launchpad/Footer'
-import console from 'console'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -240,7 +239,7 @@ export default function App() {
         console.debug('Failed to connect eagerly to walletconnect', error)
       })
     }
-    
+
     const roleGuard =
       route.conditions?.rolesSupported !== undefined &&
       !(route.conditions?.rolesSupported.includes(userRole) && account)
