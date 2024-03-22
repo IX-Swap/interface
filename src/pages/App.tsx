@@ -84,15 +84,15 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: b
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
 const initSafary = () => {
-  const script = document.createElement('script')
-  script.src = 'https://tag.safary.club/stag-0.1.5.js'
-  script.defer = true
-  script.setAttribute('data-name', 'safary-sdk')
-  script.setAttribute('data-product-id', 'prd_z2suvagAL5')
-  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM='
-  script.crossOrigin = 'anonymous'
-  document.head.appendChild(script)
-}
+  const script = document.createElement('script');
+  script.src = 'https://tag.safary.club/stag-0.1.5.js';
+  script.defer = true;
+  script.setAttribute('data-name', 'safary-sdk');
+  script.setAttribute('data-product-id', 'prd_z2suvagAL5');
+  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM=';
+  script.crossOrigin = 'anonymous';
+  document.head.appendChild(script);
+};
 
 export default function App() {
   const getMe = useGetMe()
@@ -118,8 +118,8 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    initSafary()
-  }, [])
+    initSafary();
+  }, []);
 
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
@@ -191,7 +191,7 @@ export default function App() {
   }, [token, getMe])
 
   useEffect(() => {
-    clearLocaleStorage()
+    // clearLocaleStorage()
   }, [])
 
   useEffect(() => {
@@ -227,31 +227,34 @@ export default function App() {
 
   const userRole = useRawRole()
 
-  const routeGenerator = (route: RouteMapEntry) => {
-    const roleGuard =
-      route.conditions?.rolesSupported !== undefined &&
-      !(route.conditions?.rolesSupported.includes(userRole) && account)
-    const guards = [
-      !isAllowed(route),
-      route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
-      route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
-      route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
-      route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
-      route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
-      roleGuard,
-    ]
+  const routeGenerator = useCallback(
+    (route: RouteMapEntry) => {
+      const roleGuard =
+        route.conditions?.rolesSupported !== undefined &&
+        !(route.conditions?.rolesSupported.includes(userRole) && account)
+      const guards = [
+        !isAllowed(route),
+        route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
+        route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
+        route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
+        route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
+        route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
+        roleGuard,
+      ]
 
-    if (guards.some((guard) => guard === true)) {
-      if (roleGuard) {
-        return (
-          <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
-        )
+      if (guards.some((guard) => guard === true)) {
+        if (roleGuard) {
+          return (
+            <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
+          )
+        }
+        return null
       }
-      return null
-    }
 
-    return <Route exact strict path={route.path} component={route.component} render={route.render} />
-  }
+      return <Route exact strict path={route.path} component={route.component} render={route.render} />
+    },
+    [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
+  )
 
   const useRedirect = account ? kyc !== null : true
   if (!config) {
