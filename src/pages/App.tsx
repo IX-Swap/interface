@@ -243,7 +243,7 @@ export default function App() {
       ]
 
       if (guards.some((guard) => guard === true)) {
-        if (roleGuard && account) {
+        if (roleGuard && !account) {
           return (
             <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
           )
