@@ -84,15 +84,15 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: b
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
 const initSafary = () => {
-  const script = document.createElement('script');
-  script.src = 'https://tag.safary.club/stag-0.1.5.js';
-  script.defer = true;
-  script.setAttribute('data-name', 'safary-sdk');
-  script.setAttribute('data-product-id', 'prd_z2suvagAL5');
-  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM=';
-  script.crossOrigin = 'anonymous';
-  document.head.appendChild(script);
-};
+  const script = document.createElement('script')
+  script.src = 'https://tag.safary.club/stag-0.1.5.js'
+  script.defer = true
+  script.setAttribute('data-name', 'safary-sdk')
+  script.setAttribute('data-product-id', 'prd_z2suvagAL5')
+  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM='
+  script.crossOrigin = 'anonymous'
+  document.head.appendChild(script)
+}
 
 export default function App() {
   const getMe = useGetMe()
@@ -118,8 +118,8 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    initSafary();
-  }, []);
+    initSafary()
+  }, [])
 
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
@@ -152,7 +152,10 @@ export default function App() {
   )
 
   const defaultPage = useMemo(() => {
-    const defaultPath = [routes.launchpad, routes.issuance].includes(pathname) ? routes.launchpad : routes.kyc
+    const defaultPath = pathname.includes(routes.launchpad) ||
+      pathname.includes(routes.issuance)
+        ? pathname
+        : routes.kyc
     if (isAllowed({ path: routes.kyc }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
       return defaultPath
     }
