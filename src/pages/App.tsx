@@ -84,15 +84,15 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: b
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
 const initSafary = () => {
-  const script = document.createElement('script');
-  script.src = 'https://tag.safary.club/stag-0.1.5.js';
-  script.defer = true;
-  script.setAttribute('data-name', 'safary-sdk');
-  script.setAttribute('data-product-id', 'prd_z2suvagAL5');
-  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM=';
-  script.crossOrigin = 'anonymous';
-  document.head.appendChild(script);
-};
+  const script = document.createElement('script')
+  script.src = 'https://tag.safary.club/stag-0.1.5.js'
+  script.defer = true
+  script.setAttribute('data-name', 'safary-sdk')
+  script.setAttribute('data-product-id', 'prd_z2suvagAL5')
+  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM='
+  script.crossOrigin = 'anonymous'
+  document.head.appendChild(script)
+}
 
 export default function App() {
   const getMe = useGetMe()
@@ -118,8 +118,8 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    initSafary();
-  }, []);
+    initSafary()
+  }, [])
 
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
@@ -229,6 +229,17 @@ export default function App() {
 
   const routeGenerator = useCallback(
     (route: RouteMapEntry) => {
+      if (!account) {
+        // connect eagerly for metamask
+        void metaMask.connectEagerly().catch(() => {
+          console.debug('Failed to connect eagerly to metamask')
+        })
+
+        // connect eagerly for walletConnectV2
+        walletConnectV2.connectEagerly().catch((error) => {
+          console.debug('Failed to connect eagerly to walletconnect', error)
+        })
+      }
       const roleGuard =
         route.conditions?.rolesSupported !== undefined &&
         !(route.conditions?.rolesSupported.includes(userRole) && account)
@@ -243,7 +254,7 @@ export default function App() {
       ]
 
       if (guards.some((guard) => guard === true)) {
-        if (roleGuard && !account) {
+        if (roleGuard) {
           return (
             <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
           )
