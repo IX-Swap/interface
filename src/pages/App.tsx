@@ -152,7 +152,8 @@ export default function App() {
   )
 
   const defaultPage = useMemo(() => {
-    const defaultPath = pathname.includes(routes.issuance) ? pathname : routes.kyc
+    const defaultPath =
+      pathname.includes(routes.launchpad) || pathname.includes(routes.issuance) ? routes.launchpad : routes.kyc
     if (isAllowed({ path: routes.kyc }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
       return defaultPath
     }
