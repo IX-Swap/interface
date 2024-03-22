@@ -232,7 +232,7 @@ export default function App() {
     (route: RouteMapEntry) => {
       const roleGuard =
         route.conditions?.rolesSupported !== undefined &&
-        !(route.conditions?.rolesSupported.includes(userRole) && account)
+        !(route.conditions?.rolesSupported.includes(userRole))
       const guards = [
         !isAllowed(route),
         route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
