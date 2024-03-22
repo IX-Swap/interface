@@ -34,6 +34,23 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
                 <Option
                   id={`connect-${key}`}
                   key={key}
+                  color={'#E8831D'}
+                  header={<p>Install Metamask</p>}
+                  subheader={null}
+                  link={'https://metamask.io/'}
+                  icon={MetamaskIcon}
+                />
+              )
+            } else {
+              return null //dont want to return install twice
+            }
+          }
+          else if (!(window.web3 || window.ethereum)) {
+            if (option.name === 'MetaMask') {
+              return (
+                <Option
+                  id={`connect-${key}`}
+                  key={key}
                   header="Metamask"
                   link={`https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc`}
                   icon={MetamaskIcon}

@@ -38,22 +38,13 @@ interface Props {
   onClose: () => void
 }
 
-const WALLET_VIEWS = {
-  OPTIONS: 'options',
-  OPTIONS_SECONDARY: 'options_secondary',
-  ACCOUNT: 'account',
-  PENDING: 'pending',
-}
 
 export const ConnectionDialog: React.FC<Props> = (props) => {
   const [walletView, setWalletView] = React.useState(PromptView.options)
-  const [pendingWallet, setPendingWallet] = React.useState<Connector | undefined>()
-  const [pendingError, setPendingError] = React.useState<boolean>()
-  const theme = useTheme()
   const { config } = useWhitelabelState()
   const [showPendingScreen, setShowPendingScreen] = React.useState(false)
   const [userSelected, setUserSelected] = React.useState(false) // Define userSelected state
-  const [showInstallAlert, setShowInstallAlert] = React.useState(false)
+
   const [isMetaMaskClicked, setIsMetaMaskClicked] = React.useState(false)
 
   const tryActivation = async (connector: Connector | undefined) => {
@@ -62,7 +53,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     window.ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
     ReactGA.event({ category: 'Wallet', action: 'Change Wallet', label: wallet?.name ?? '' })
 
-    setPendingWallet(connector)
+
     setWalletView(PromptView.pending)
     setShowPendingScreen(true)
 
@@ -77,7 +68,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
       props.onClose()
     } catch (error) {
       connector.activate()
-      setPendingError(true)
+
     }
   }
 
@@ -161,9 +152,9 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
           <ContentWrapper>
             {walletView === PromptView.options && <ConnectionOptions onSelect={onSelect} />}
 
-            {!isMobile && !isMetamaskInstalled && userSelected && (
+            {/* {!isMobile && !isMetamaskInstalled && userSelected && (
               <MetamaskInstallAlert>Please install MetaMask to use this application.</MetamaskInstallAlert>
-            )}
+            )} */}
           </ContentWrapper>
           <InstallLinkContainer>
             <WalletInstallationLink onClick={handleInstallMetaMask}>I do not have a wallet yet</WalletInstallationLink>
