@@ -56,7 +56,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
   }
 
   interface MyError {
-    message: string;
+    message: string
   }
 
   const handleNextClick = async (verificationCode: string) => {
@@ -97,36 +97,10 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
     email: string()
       .required('Email address is required.')
       .email('Invalid email address. Please try again.')
-      .test(
-        'is-valid-email',
-        'Invalid email address. Please try again.',
-        (value) => /^[^\s!#$%^&*()_+={}[\]\\|/;:'",<>?-]*$/.test(value || '')
-      )
-      .test(
-        'is-valid-domain',
-        'Invalid email address. Please try again.',
-        (value: any) => {
-          if (value) {
-            const [name, domain] = value.split('@');
-            return (
-              !name.startsWith('.') &&
-              !name.endsWith('.') &&
-              !name.includes('..') &&
-              domain &&
-              !domain.startsWith('.') &&
-              !domain.endsWith('.') &&
-              !domain.includes('..') &&
-              domain.includes('.')
-            );
-          }
-          return false;
-        }
+      .test('is-valid-email', 'Invalid email address. Please try again.', (value) =>
+        /^[^\s!#$%^&*()={}[\]\\|/;:'",<>?]*$/.test(value || '')
       ),
-  });
-  
-  
-
-
+  })
 
   const submit = React.useCallback(
     async (values: { email: string }) => {
@@ -165,7 +139,6 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
       const result = await resendEmail()
       // Now you can use the result if needed
       console.log(result)
-      
 
       // Reset the code values
 
@@ -189,7 +162,6 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
       setErrorMessage(errorMessage)
     }
   }
-
 
   return (
     <RedesignedWideModal maxHeight={'100vh'} isOpen={isModalOpen} onDismiss={closeModal}>
@@ -521,18 +493,16 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, h
     const verificationCode = code.join('')
     if (verificationCode.length === numberOfBoxes) {
       setTimeout(() => {
-        setCode(Array(numberOfBoxes).fill(''));
-      }, 1000);
-      handleNextClick(verificationCode); // Pass verificationCode as a single argument
+        setCode(Array(numberOfBoxes).fill(''))
+      }, 1000)
+      handleNextClick(verificationCode) // Pass verificationCode as a single argument
     } else {
       // Set the error message
       setTimeout(() => {
-        setCode(Array(numberOfBoxes).fill(''));
-      }, 2000);
+        setCode(Array(numberOfBoxes).fill(''))
+      }, 2000)
     }
   }
-  
-  
 
   return (
     <CodeInputContainer key={reset}>
