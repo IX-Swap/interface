@@ -46,6 +46,7 @@ import { walletConnectV2 } from 'connectors/walletConnectV2'
 import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
 import { Footer } from './Launchpad/Footer'
+import console from 'console'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -227,35 +228,45 @@ export default function App() {
 
   const userRole = useRawRole()
 
-  const routeGenerator = useCallback(
-    (route: RouteMapEntry) => {
-      const roleGuard =
-        route.conditions?.rolesSupported !== undefined &&
-        !(route.conditions?.rolesSupported.includes(userRole) && account)
-      console.log('account', account)
-      const guards = [
-        !isAllowed(route),
-        route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
-        route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
-        route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
-        route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
-        route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
-        roleGuard,
-      ]
+  const routeGenerator = (route: RouteMapEntry) => {
+    if (!account) {
+      // connect eagerly for metamask
+      void metaMask.connectEagerly().catch(() => {
+        console.debug('Failed to connect eagerly to metamask')
+      })
 
-      if (guards.some((guard) => guard === true)) {
-        if (roleGuard) {
-          return (
-            <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
-          )
-        }
-        return null
+      // connect eagerly for walletConnectV2
+      walletConnectV2.connectEagerly().catch((error) => {
+        console.debug('Failed to connect eagerly to walletconnect', error)
+      })
+    }
+    
+    const roleGuard =
+      route.conditions?.rolesSupported !== undefined &&
+      !(route.conditions?.rolesSupported.includes(userRole) && account)
+    console.log('userRole', userRole)
+    console.log('account', account)
+    const guards = [
+      !isAllowed(route),
+      route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
+      route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
+      route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
+      route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
+      route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
+      roleGuard,
+    ]
+
+    if (guards.some((guard) => guard === true)) {
+      if (roleGuard) {
+        return (
+          <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
+        )
       }
+      return null
+    }
 
-      return <Route exact strict path={route.path} component={route.component} render={route.render} />
-    },
-    [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
-  )
+    return <Route exact strict path={route.path} component={route.component} render={route.render} />
+  }
 
   const useRedirect = account ? kyc !== null : true
   if (!config) {

@@ -173,25 +173,30 @@ export const routeConfigs: RouteMapEntry[] = [
   {
     path: routes.issuance,
     component: LaunchpadIssuanceDashboard,
+    ...onlyOfferManager,
   },
-  { path: routes.viewVetting, component: LaunchpadIssuanceVettingFormView },
-  { path: routes.issuanceCreate, component: LaunchpadIssuanceForm },
+  { path: routes.viewVetting, component: LaunchpadIssuanceVettingFormView, ...onlyOfferManager },
+  { path: routes.issuanceCreate, component: LaunchpadIssuanceForm, ...onlyOfferManager },
   {
     path: routes.createVetting,
     component: LaunchpadIssuanceVettingForm,
+    ...onlyOfferManager,
   },
   {
     path: routes.createOffer,
     component: LaunchpadIssuanceInformationForm,
+    ...onlyOfferManager,
   },
   {
     path: routes.editOffer,
     component: LaunchpadIssuanceInformationEditForm,
+    ...onlyOfferManager,
   },
-  { path: routes.reviewOffer, component: LaunchpadIssuanceInformationReview },
+  { path: routes.reviewOffer, component: LaunchpadIssuanceInformationReview, ...onlyOfferManager },
   {
     path: routes.issuanceReport,
     component: LaunchpadIssuanceReport,
+    ...onlyOfferManager,
   },
-  { path: routes.manageOffer, component: ManageOffer },
+  { path: routes.manageOffer, component: ManageOffer, ...onlyOfferManager },
 ]
