@@ -152,7 +152,8 @@ export default function App() {
   )
 
   const defaultPage = useMemo(() => {
-    const defaultPath = [routes.launchpad, routes.issuance].includes(pathname) ? routes.launchpad : routes.kyc
+    const defaultPath =
+      pathname.includes(routes.launchpad) || pathname.includes(routes.issuance) ? pathname : routes.kyc
     if (isAllowed({ path: routes.kyc }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
       return defaultPath
     }
@@ -290,11 +291,11 @@ export default function App() {
               <Switch>
                 {routeConfigs.map(routeGenerator).filter((route) => !!route)}
 
-                {/* {useRedirect && (
+                {useRedirect && (
                   <Route
                     component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
                   />
-                )} */}
+                )}
               </Switch>
             </Suspense>
             {/* </Web3ReactManager> */}
