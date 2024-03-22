@@ -84,15 +84,15 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: b
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
 const initSafary = () => {
-  const script = document.createElement('script');
-  script.src = 'https://tag.safary.club/stag-0.1.5.js';
-  script.defer = true;
-  script.setAttribute('data-name', 'safary-sdk');
-  script.setAttribute('data-product-id', 'prd_z2suvagAL5');
-  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM=';
-  script.crossOrigin = 'anonymous';
-  document.head.appendChild(script);
-};
+  const script = document.createElement('script')
+  script.src = 'https://tag.safary.club/stag-0.1.5.js'
+  script.defer = true
+  script.setAttribute('data-name', 'safary-sdk')
+  script.setAttribute('data-product-id', 'prd_z2suvagAL5')
+  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM='
+  script.crossOrigin = 'anonymous'
+  document.head.appendChild(script)
+}
 
 export default function App() {
   const getMe = useGetMe()
@@ -118,8 +118,8 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    initSafary();
-  }, []);
+    initSafary()
+  }, [])
 
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
@@ -290,11 +290,11 @@ export default function App() {
               <Switch>
                 {routeConfigs.map(routeGenerator).filter((route) => !!route)}
 
-                {useRedirect && (
+                {/* {useRedirect && (
                   <Route
                     component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
                   />
-                )}
+                )} */}
               </Switch>
             </Suspense>
             {/* </Web3ReactManager> */}
