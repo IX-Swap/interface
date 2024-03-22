@@ -95,9 +95,38 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
 
   const schema = object().shape({
     email: string()
-      .required('Invalid email address. Please try again.')
-      .email('Invalid email address. Please try again.'),
-  })
+      .required('Email address is required.')
+      .email('Invalid email address. Please try again.')
+      .test(
+        'is-valid-email',
+        'Invalid email address. Please try again.',
+        (value) => /^[^\s!#$%^&*()_+={}[\]\\|/;:'",<>?-]*$/.test(value || '')
+      )
+      .test(
+        'is-valid-domain',
+        'Invalid email address. Please try again.',
+        (value: any) => {
+          if (value) {
+            const [name, domain] = value.split('@');
+            return (
+              !name.startsWith('.') &&
+              !name.endsWith('.') &&
+              !name.includes('..') &&
+              domain &&
+              !domain.startsWith('.') &&
+              !domain.endsWith('.') &&
+              !domain.includes('..') &&
+              domain.includes('.')
+            );
+          }
+          return false;
+        }
+      ),
+  });
+  
+  
+
+
 
   const submit = React.useCallback(
     async (values: { email: string }) => {
@@ -160,7 +189,8 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
       setErrorMessage(errorMessage)
     }
   }
-console.log(kycType, 'kycTypekycType')
+
+
   return (
     <RedesignedWideModal maxHeight={'100vh'} isOpen={isModalOpen} onDismiss={closeModal}>
       <ModalContainer style={{ width: '100%' }}>
