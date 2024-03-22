@@ -228,18 +228,16 @@ export default function App() {
   const userRole = useRawRole()
 
   const routeGenerator = (route: RouteMapEntry) => {
-    if (!account) {
-      // connect eagerly for metamask
-      void metaMask.connectEagerly().catch(() => {
-        console.debug('Failed to connect eagerly to metamask')
-      })
+    // connect eagerly for metamask
+    void metaMask.connectEagerly().catch(() => {
+      console.debug('Failed to connect eagerly to metamask')
+    })
 
-      // connect eagerly for walletConnectV2
-      walletConnectV2.connectEagerly().catch((error) => {
-        console.debug('Failed to connect eagerly to walletconnect', error)
-      })
-    }
-
+    // connect eagerly for walletConnectV2
+    walletConnectV2.connectEagerly().catch((error) => {
+      console.debug('Failed to connect eagerly to walletconnect', error)
+    })
+    
     const roleGuard =
       route.conditions?.rolesSupported !== undefined &&
       !(route.conditions?.rolesSupported.includes(userRole) && account)
