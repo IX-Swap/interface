@@ -3,6 +3,9 @@ import { createTheme, MuiThemeProvider as ThemeProvider } from '@material-ui/cor
 import { DefaultTheme } from 'styled-components'
 
 import useTheme from 'hooks/useTheme'
+import { useActiveWeb3React } from 'hooks/web3'
+import { metaMask } from 'connectors/metaMask'
+import { walletConnectV2 } from 'connectors/walletConnectV2'
 
 export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, config }: DefaultTheme) =>
   createTheme({
@@ -251,6 +254,19 @@ interface Props {
 
 export const MuiThemeProvider = ({ children }: Props) => {
   const theme = useTheme()
+
+  const { account } = useActiveWeb3React()
+  if (!account) {
+    // connect eagerly for metamask
+    void metaMask.connectEagerly().catch(() => {
+      console.debug('Failed to connect eagerly to metamask')
+    })
+
+    // connect eagerly for walletConnectV2
+    walletConnectV2.connectEagerly().catch((error) => {
+      console.debug('Failed to connect eagerly to walletconnect', error)
+    })
+  }
 
   return <ThemeProvider theme={muiTheme(theme)}>{children}</ThemeProvider>
 }

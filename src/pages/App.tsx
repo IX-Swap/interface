@@ -15,7 +15,6 @@ import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import Header from 'components/Header'
 import Popups from 'components/Popups'
 import ErrorBoundary from 'components/ErrorBoundary'
-import Web3ReactManager from 'components/Web3ReactManager'
 import GoogleAnalyticsReporter from 'components/analytics/GoogleAnalyticsReporter'
 
 // import { Footer } from 'components/Footer'
@@ -192,28 +191,22 @@ export default function App() {
 
   useEffect(() => {
     clearLocaleStorage()
-
-    // connect eagerly for metamask
-    void metaMask.connectEagerly().catch(() => {
-      console.debug('Failed to connect eagerly to metamask')
-    })
-
-    // wallet connect
-    // log URI when available
-    walletConnectV2.events.on(URI_AVAILABLE, (uri: string) => {
-      console.log(`uri: ${uri}`)
-    })
-
-    // connect eagerly for walletConnectV2
-    walletConnectV2.connectEagerly().catch((error) => {
-      console.debug('Failed to connect eagerly to walletconnect', error)
-    })
   }, [])
 
   useEffect(() => {
     if (window.location.host.split('.')[1] !== 'ixswap') {
       getWitelabelConfig()
     }
+
+    // connect eagerly for metamask
+    void metaMask.connectEagerly().catch(() => {
+      console.debug('Failed to connect eagerly to metamask')
+    })
+
+    // connect eagerly for walletConnectV2
+    walletConnectV2.connectEagerly().catch((error) => {
+      console.debug('Failed to connect eagerly to walletconnect', error)
+    })
   }, [])
 
   useEffect(() => {
@@ -227,43 +220,34 @@ export default function App() {
 
   const userRole = useRawRole()
 
-  const routeGenerator = (route: RouteMapEntry) => {
-    // connect eagerly for metamask
-    void metaMask.connectEagerly().catch(() => {
-      console.debug('Failed to connect eagerly to metamask')
-    })
+  const routeGenerator = useCallback(
+    (route: RouteMapEntry) => {
+      const roleGuard =
+        route.conditions?.rolesSupported !== undefined &&
+        !(route.conditions?.rolesSupported.includes(userRole) && account)
+      const guards = [
+        !isAllowed(route),
+        route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
+        route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
+        route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
+        route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
+        route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
+        roleGuard,
+      ]
 
-    // connect eagerly for walletConnectV2
-    walletConnectV2.connectEagerly().catch((error) => {
-      console.debug('Failed to connect eagerly to walletconnect', error)
-    })
-    
-    const roleGuard =
-      route.conditions?.rolesSupported !== undefined &&
-      !(route.conditions?.rolesSupported.includes(userRole) && account)
-    console.log('userRole', userRole)
-    console.log('account', account)
-    const guards = [
-      !isAllowed(route),
-      route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
-      route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
-      route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
-      route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
-      route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
-      roleGuard,
-    ]
-
-    if (guards.some((guard) => guard === true)) {
-      if (roleGuard) {
-        return (
-          <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
-        )
+      if (guards.some((guard) => guard === true)) {
+        if (roleGuard) {
+          return (
+            <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
+          )
+        }
+        return null
       }
-      return null
-    }
 
-    return <Route exact strict path={route.path} component={route.component} render={route.render} />
-  }
+      return <Route exact strict path={route.path} component={route.component} render={route.render} />
+    },
+    [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
+  )
 
   const useRedirect = account ? kyc !== null : true
   if (!config) {
