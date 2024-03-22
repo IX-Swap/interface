@@ -60,9 +60,7 @@ export default class ErrorBoundary extends React.Component<unknown, ErrorBoundar
   render() {
     const { error, isChunkError } = this.state
 
-    if (error !== null && isChunkError) {
-      // window.location.reload()
-    } else if (error !== null) {
+    if (error !== null) {
       // find out what is this const encodedBody = encodeURIComponent(issueBody(error))
       return (
         <FallbackWrapper>
