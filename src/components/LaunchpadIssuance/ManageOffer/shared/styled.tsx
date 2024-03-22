@@ -1,4 +1,4 @@
-import { text17, text45, text51 } from 'components/LaunchpadMisc/typography'
+import { text17, text2, text45, text51 } from 'components/LaunchpadMisc/typography'
 import styled from 'styled-components'
 
 export const HeaderLabel = styled.div`
@@ -21,6 +21,6 @@ export const ExtractText = styled.div`
   margin-left: 10px;
 `
 export const TableTitle = styled.div`
-  ${text51}
+  ${text2}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `

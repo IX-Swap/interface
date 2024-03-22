@@ -98,7 +98,7 @@ const PaginationRow = styled.div<{ smallMargin?: boolean }>`
   gap: 0.5rem;
   height: 40px;
   max-width: 1320px;
-  ${(props) => (props.smallMargin ? `margin: 1rem auto 0 auto;` : `margin: 1rem auto;`)}
+  ${(props) => (props.smallMargin ? `margin: 1rem 0 0 0;` : `margin: 1rem 0;`)}
 `
 
 const PageCount = styled.div`
@@ -115,13 +115,13 @@ const PageButton = styled.button`
   ${text18}
 
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
-  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
+  border: 0px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
 
   ${(props) =>
     props.disabled &&
     `
-    background: ${props.theme.launchpad.colors.disabled};
+    background: ${props.theme.launchpad.colors.background};
   `}
 
   ${(props) =>
@@ -132,7 +132,7 @@ const PageButton = styled.button`
     transition: all 0.3s;
 
     :hover {
-      background: ${props.theme.launchpad.colors.foreground};
+      background: ${props.theme.launchpad.colors.background};
       transform: scale(1.1);
     }
   `}

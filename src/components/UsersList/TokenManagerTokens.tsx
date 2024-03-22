@@ -51,9 +51,9 @@ export const TokenManagerTokens = ({ items }: Props) => {
       return secTokens.reduce(
         (acc, token) => ({
           ...acc,
-          [token.id]: {
-            label: token.name,
-            value: token.id,
+          [token?.id]: {
+            label: token?.name,
+            value: token?.id,
             icon: <CurrencyLogo size="28px" currency={new WrappedTokenInfo(token)} />,
           },
         }),
@@ -64,7 +64,7 @@ export const TokenManagerTokens = ({ items }: Props) => {
     return {}
   }, [secTokens])
 
-  const data = useMemo(() => items.map((item) => tokensOptions[item.token.id]), [items, tokensOptions])
+  const data = useMemo(() => items.map((item) => tokensOptions[item.token?.id]), [items, tokensOptions])
 
   const redirectToEvent = (id: number) => {
     history.push(routes.payoutItem(id))
@@ -78,41 +78,41 @@ export const TokenManagerTokens = ({ items }: Props) => {
     <>
       {/* <Hr /> */}
       <Container>
-      {data
-        ?.filter((item) => item) 
-        .map(({ icon, value, label }, idx) => {
-          return (
-            <React.Fragment key={value}>
-              <TokenRow>
-                <TokenHeader onClick={() => redirectToToken(+value)}>
-                  {icon}
-                  <div>{label}</div>
-                </TokenHeader>
-                {Boolean(items[idx].token.payoutEvents.length) && (
-                  <TokenPayoutEventList>
-                    {items[idx].token.payoutEvents.map((event) => (
-                      <TokenPayoutEventEntry
-                        key={`token-${value}-${event.id}`}
-                        onClick={() => redirectToEvent(event.id)}
-                      >
-                        <TokenPayoutEventType>{capitalize(event.type)}</TokenPayoutEventType>-
-                        <TokenPayoutEventStatus
-                          color={getStatusColor(event.status)}
-                          text={getStatusTextColor(event.status)}
+        {data
+          ?.filter((item) => item)
+          .map(({ icon, value, label }, idx) => {
+            return (
+              <React.Fragment key={value}>
+                <TokenRow>
+                  <TokenHeader onClick={() => redirectToToken(+value)}>
+                    {icon}
+                    <div>{label}</div>
+                  </TokenHeader>
+                  {Boolean(items[idx].token?.payoutEvents.length) && (
+                    <TokenPayoutEventList>
+                      {items[idx].token?.payoutEvents.map((event) => (
+                        <TokenPayoutEventEntry
+                          key={`token-${value}-${event?.id}`}
+                          onClick={() => redirectToEvent(event?.id)}
                         >
-                          {capitalize(event.status)}
-                        </TokenPayoutEventStatus>
-                      </TokenPayoutEventEntry>
-                    ))}
-                  </TokenPayoutEventList>
-                )}
-              </TokenRow>
+                          <TokenPayoutEventType>{capitalize(event.type)}</TokenPayoutEventType>-
+                          <TokenPayoutEventStatus
+                            color={getStatusColor(event.status)}
+                            text={getStatusTextColor(event.status)}
+                          >
+                            {capitalize(event.status)}
+                          </TokenPayoutEventStatus>
+                        </TokenPayoutEventEntry>
+                      ))}
+                    </TokenPayoutEventList>
+                  )}
+                </TokenRow>
 
-              {idx < data.length - 1 && <RowSeparator />}
-            </React.Fragment>
-          );
-        })}
-    </Container>
+                {idx < data.length - 1 && <RowSeparator />}
+              </React.Fragment>
+            )
+          })}
+      </Container>
     </>
   )
 }

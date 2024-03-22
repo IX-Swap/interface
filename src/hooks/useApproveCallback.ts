@@ -1,5 +1,5 @@
 import { MaxUint256 } from '@ethersproject/constants'
-import { TransactionResponse } from '@ethersproject/providers'
+import { TransactionResponse, TransactionReceipt } from '@ethersproject/providers'
 import { Currency, CurrencyAmount, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { useCallback, useMemo } from 'react'
@@ -86,6 +86,10 @@ export function useApproveCallback(
           summary: 'Approve ' + amountToApprove.currency.symbol,
           approval: { tokenAddress: token.address, spender: spender },
         })
+        return response.wait()
+      })
+      .then((receipt: TransactionReceipt) => {
+        console.log('Transaction confirmed:', receipt)
       })
       .catch((error: Error) => {
         throw error

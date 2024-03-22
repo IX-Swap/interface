@@ -23,7 +23,7 @@ interface Props extends StylingProps {
   disabled?: boolean
 
   error?: string
-
+  isNoDecimals?: boolean
   value?: string
   decimalsLimit?: number
   onChange?: (value: string) => void
@@ -43,7 +43,7 @@ export const InvestTextField: React.FC<Props> = (props) => {
     let value = event.target.value
 
     if (props.type === 'number') {
-      value = formatedValue(value, props.decimalsLimit)
+      value = props?.isNoDecimals ? value.replace(/[^\d]/g, '') : formatedValue(value, props.decimalsLimit) // Remove all non-digit characters
     }
 
     setInputValue(value)

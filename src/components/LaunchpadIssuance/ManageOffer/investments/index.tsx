@@ -50,7 +50,7 @@ export const InvestmentsBlock = ({ offer, chosenStage }: Props) => {
   }
   return (
     <GridContainer style={{ display: 'block' }}>
-      <StyledGridItem xs={12}>
+      {/* <StyledGridItem xs={12}> */}
         <OfferInvestmentsList
           data={data}
           order={order}
@@ -62,7 +62,7 @@ export const InvestmentsBlock = ({ offer, chosenStage }: Props) => {
           setPageSize={setPageSize}
           offer={offer}
         />
-      </StyledGridItem>
+      {/* </StyledGridItem> */}
     </GridContainer>
   )
 }

@@ -43,7 +43,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
     () => ({ file: props.offer?.cardPicture, type: OfferFileType.image, videoUrl: '' }),
     []
   )
-  const gallery = React.useMemo(() => props.offer?.files.filter((x) => x.type !== OfferFileType.document), [])
+  const gallery = React.useMemo(() => props.offer?.files.filter((x) => x.type === OfferFileType.video || x.type === OfferFileType.image), [])
 
   const openViewer = React.useCallback((file?: OfferFile) => {
     setShowViewer(true)

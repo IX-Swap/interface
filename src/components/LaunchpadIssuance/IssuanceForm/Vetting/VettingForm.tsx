@@ -141,6 +141,7 @@ export const VettingForm = (props: Props) => {
           draftDisabled={draftDisabled}
           submitDisabled={submitDisabled}
           vettingId={String(vettingId)}
+          issuanceId={issuanceId}
           status={initialValues?.status}
           isReset={isReset}
         />

@@ -9,6 +9,9 @@ interface GridContainerProps {
 export const GridContainer = styled.div<GridContainerProps>`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
+  gap: 30px;
+
   margin: ${({ spacing = 0 }) => `${-spacing}px`};
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {

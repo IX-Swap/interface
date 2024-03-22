@@ -18,7 +18,6 @@ interface Props {
 
 export const Information = ({ data, kycKey }: Props) => {
   const keys = kycKey === 'individual' ? personalInfoKeys : corporateInfoKeys
-  console.log(keys, 'jjjj')
   return (
     <Block title={`${kycKey === 'individual' ? 'Personal' : 'Corporate'} Information`}>
       <GridContainer>

@@ -431,6 +431,7 @@ export interface OfferPresaleStatistics {
 export interface OfferPresaleWhitelist {
   id: number
   amount: number
+  status: string
   createdAt: Date
   name: string | null
 }
@@ -451,6 +452,13 @@ export interface PresaleOrderConfig {
   name?: OrderType
   amount?: OrderType
   createdAt?: OrderType
+}
+
+export interface ApprovedRejectedOrderConfig {
+  name?: OrderType
+  amount?: OrderType
+  createdAt?: OrderType
+  status?: OrderType
 }
 
 export interface ManagedOfferInvestment {

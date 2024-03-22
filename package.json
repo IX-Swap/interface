@@ -147,7 +147,7 @@
     "i18n:compile": "lingui compile",
     "integration-test": "cd e2e_tests && xvfb-run npx playwright test",
     "postinstall": "yarn compile-contract-types",
-    "start": "set GENERATE_SOURCEMAP=true && yarn compile-contract-types && react-app-rewired start",
+    "start": "set GENERATE_SOURCEMAP=true && yarn compile-contract-types && npx react-app-rewired start --host 192.168.29.63",
     "winstart": "yarn compile-contract-types && react-app-rewired start",
     "test": "react-app-rewired test --env=jsdom",
     "serve": "serve -s build -l 3000",

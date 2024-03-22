@@ -11,7 +11,7 @@ export const OfferTerms: React.FC<Props> = (props) => {
   const terms = React.useMemo(
     () => [
       { label: 'Investment Structure', value: props.terms.investmentStructure || 'N/A' },
-      { label: 'Divident Yield', value: props.terms.dividentYield || 'N/A' },
+      { label: 'Dividend Yield', value: props.terms.dividentYield || 'N/A' },
       { label: 'Investment Period', value: props.terms.investmentPeriod || 'N/A' },
       { label: 'Gross IRR (%)', value: props.terms.grossIrr || 'N/A' },
       {

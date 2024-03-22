@@ -182,9 +182,9 @@ export const TransactionDetails = ({ currency }: Props) => {
                   )} */}
                 </RowBetween>
 
-                <LiniarProgressContainer statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
+                {/* <LiniarProgressContainer statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
                   <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
-                </LiniarProgressContainer>
+                </LiniarProgressContainer> */}
               </div>
             )}
 
