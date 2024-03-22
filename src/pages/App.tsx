@@ -191,7 +191,7 @@ export default function App() {
   }, [token, getMe])
 
   useEffect(() => {
-    // clearLocaleStorage()
+    clearLocaleStorage()
   }, [])
 
   useEffect(() => {
@@ -232,6 +232,7 @@ export default function App() {
       const roleGuard =
         route.conditions?.rolesSupported !== undefined &&
         !(route.conditions?.rolesSupported.includes(userRole) && account)
+      console.log('account', account)
       const guards = [
         !isAllowed(route),
         route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
