@@ -24,6 +24,8 @@ import { Line } from 'components/Line'
 import PendingView from 'components/WalletModal/PendingView'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import back from 'assets/images/newBack.svg'
+import { MetaMask } from '@web3-react/metamask'
+import WalletConnectIcon from '../../../assets/images/walletConnectIcon.svg'
 
 export enum PromptView {
   options,
@@ -37,20 +39,13 @@ interface Props {
   onClose: () => void
 }
 
-const WALLET_VIEWS = {
-  OPTIONS: 'options',
-  OPTIONS_SECONDARY: 'options_secondary',
-  ACCOUNT: 'account',
-  PENDING: 'pending',
-}
-
 export const ConnectionDialog: React.FC<Props> = (props) => {
   const [walletView, setWalletView] = React.useState(PromptView.options)
-  const [pendingWallet, setPendingWallet] = React.useState<Connector | undefined>()
-  const [pendingError, setPendingError] = React.useState<boolean>()
-  const theme = useTheme()
   const { config } = useWhitelabelState()
   const [showPendingScreen, setShowPendingScreen] = React.useState(false)
+  const [userSelected, setUserSelected] = React.useState(false) // Define userSelected state
+
+  const [isMetaMaskClicked, setIsMetaMaskClicked] = React.useState(false)
 
   const tryActivation = async (connector: Connector | undefined) => {
     const wallet = Object.values(SUPPORTED_WALLETS).find((wallet) => wallet.connector === connector)
@@ -58,7 +53,6 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     window.ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
     ReactGA.event({ category: 'Wallet', action: 'Change Wallet', label: wallet?.name ?? '' })
 
-    setPendingWallet(connector)
     setWalletView(PromptView.pending)
     setShowPendingScreen(true)
 
@@ -70,14 +64,24 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
       await connector.activate()
       setWalletView(PromptView.account)
       props.onConnect()
-      props.onClose(); 
+      props.onClose()
     } catch (error) {
       connector.activate()
-      setPendingError(true)
     }
   }
 
-  const onSelect = React.useCallback((option: WalletInfo) => tryActivation(option.connector), [tryActivation])
+  const onSelect = React.useCallback(
+    (option: WalletInfo) => {
+      tryActivation(option.connector)
+      if (option.connector instanceof MetaMask) {
+        setIsMetaMaskClicked(true)
+      } else {
+        setIsMetaMaskClicked(false)
+      }
+      setUserSelected(true) // Set userSelected to true when user selects a wallet
+    },
+    [tryActivation]
+  )
 
   const handleInstallMetaMask = () => {
     window.location.href = 'https://metamask.io/'
@@ -89,18 +93,25 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
   }
 
   const isMetamaskInstalled = typeof window.ethereum !== 'undefined'
-  const isMobileWithMetamask = isMobile && isMetamaskInstalled
 
   return (
     <ModalContainer style={{ overflow: 'auto', maxHeight: '90vh' }}>
       {walletView === PromptView.pending && showPendingScreen ? (
         <>
-          <PromptTitle>Connecting to Metamask.. </PromptTitle>
+          <PromptTitle>
+            {' '}
+            {isMetaMaskClicked ? 'Connecting to Metamask..' : 'Connecting to WalletConnect.. '}
+          </PromptTitle>
           <ContentWrapper>
             <AutoRow>
               <TextContent>
-                <ConnectingContainer style={{width: isMobile ? '264px' : '350px'}}>
-                  <ConnectingImage src={metamaskmobile} alt="Metamask" />
+                <ConnectingContainer style={{ width: isMobile ? '264px' : '350px' }}>
+                  {isMetaMaskClicked ? (
+                    <ConnectingImage src={metamaskmobile} alt="Metamask" />
+                  ) : (
+                    <ConnectingImage src={WalletConnectIcon} alt="Metamask" />
+                  )}
+
                   <ConnectingText>Connecting...</ConnectingText>
                 </ConnectingContainer>
                 <BackToSelection onClick={handleBackToSelection}>
@@ -108,7 +119,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
                   <BackText>Back to wallet selection</BackText>
                 </BackToSelection>
                 <AgreementNotice>
-                  <Line style={{marginBottom: '20px'}} />
+                  <Line style={{ marginBottom: '20px' }} />
                   By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
                   <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
                   acknowledge that you have read and understood the{' '}
@@ -147,9 +158,9 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
           <ContentWrapper>
             {walletView === PromptView.options && <ConnectionOptions onSelect={onSelect} />}
 
-            {!isMobile && !isMetamaskInstalled && (
-              <MetamaskInstallAlert>Please install Metamask to use this wallet.</MetamaskInstallAlert>
-            )}
+            {/* {!isMobile && !isMetamaskInstalled && userSelected && (
+              <MetamaskInstallAlert>Please install MetaMask to use this application.</MetamaskInstallAlert>
+            )} */}
           </ContentWrapper>
           <InstallLinkContainer>
             <WalletInstallationLink onClick={handleInstallMetaMask}>I do not have a wallet yet</WalletInstallationLink>
@@ -238,7 +249,7 @@ const AgreementNotice = styled.div`
 
   a {
     text-decoration: none;
-    color: #6666FF;
+    color: #6666ff;
   }
 `
 
@@ -277,6 +288,7 @@ const MetamaskInstallAlert = styled.div`
   color: #ff6161;
   font-size: 13px;
   margin-top: 10px;
+  padding: 16px;
 `
 
 export default ConnectionDialog
