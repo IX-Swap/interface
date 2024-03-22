@@ -25,6 +25,7 @@ import PendingView from 'components/WalletModal/PendingView'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import back from 'assets/images/newBack.svg'
 import { MetaMask } from '@web3-react/metamask'
+import WalletConnectIcon from '../../../assets/images/walletConnectIcon.svg'
 
 export enum PromptView {
   options,
@@ -37,7 +38,6 @@ interface Props {
   onConnect: () => void
   onClose: () => void
 }
-
 
 export const ConnectionDialog: React.FC<Props> = (props) => {
   const [walletView, setWalletView] = React.useState(PromptView.options)
@@ -53,7 +53,6 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     window.ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
     ReactGA.event({ category: 'Wallet', action: 'Change Wallet', label: wallet?.name ?? '' })
 
-
     setWalletView(PromptView.pending)
     setShowPendingScreen(true)
 
@@ -68,7 +67,6 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
       props.onClose()
     } catch (error) {
       connector.activate()
-
     }
   }
 
@@ -98,14 +96,22 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
 
   return (
     <ModalContainer style={{ overflow: 'auto', maxHeight: '90vh' }}>
-      {walletView === PromptView.pending && showPendingScreen && isMetaMaskClicked ? (
+      {walletView === PromptView.pending && showPendingScreen && (
         <>
-          <PromptTitle>Connecting to Metamask.. </PromptTitle>
+          <PromptTitle>
+            {' '}
+            {isMetaMaskClicked ? 'Connecting to Metamask..' : 'Connecting to WalletConnect.. '}
+          </PromptTitle>
           <ContentWrapper>
             <AutoRow>
               <TextContent>
                 <ConnectingContainer style={{ width: isMobile ? '264px' : '350px' }}>
-                  <ConnectingImage src={metamaskmobile} alt="Metamask" />
+                  {isMetaMaskClicked ? (
+                    <ConnectingImage src={metamaskmobile} alt="Metamask" />
+                  ) : (
+                    <ConnectingImage src={WalletConnectIcon} alt="Metamask" />
+                  )}
+
                   <ConnectingText>Connecting...</ConnectingText>
                 </ConnectingContainer>
                 <BackToSelection onClick={handleBackToSelection}>
@@ -128,48 +134,6 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
           <ExitIconContainer onClick={props.onClose}>
             <CrossIcon />
           </ExitIconContainer>
-        </>
-      ) : (
-        <>
-          <PromptTitle>Connect your Wallet</PromptTitle>
-          <ContentWrapper>
-            <AutoRow>
-              <TextContent>
-                <Trans>
-                  Connecting your wallet allows IX Swap to see your wallet address and, consequently, the funds you hold
-                  on the blockchain. This does not grant IX Swap the ability to manage or transfer your tokens; for
-                  that, you will be asked to sign a token approval.
-                </Trans>
-                <br />
-                <br />
-                <Trans>Select your wallet from the options below to get started</Trans>
-              </TextContent>
-            </AutoRow>
-          </ContentWrapper>
-          <ExitIconContainer onClick={props.onClose}>
-            <CrossIcon />
-          </ExitIconContainer>
-          <ContentWrapper>
-            {walletView === PromptView.options && <ConnectionOptions onSelect={onSelect} />}
-
-            {/* {!isMobile && !isMetamaskInstalled && userSelected && (
-              <MetamaskInstallAlert>Please install MetaMask to use this application.</MetamaskInstallAlert>
-            )} */}
-          </ContentWrapper>
-          <InstallLinkContainer>
-            <WalletInstallationLink onClick={handleInstallMetaMask}>I do not have a wallet yet</WalletInstallationLink>
-            <TooltipIcon />
-          </InstallLinkContainer>
-          <Line />
-          <AgreementNotice>
-            By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
-            <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
-            acknowledge that you have read and understood the{' '}
-            <ExternalLink href="https://ixswap.io/privacy-policy/">
-              {config?.name || 'IX Swap'} Privacy Policy
-            </ExternalLink>
-            .
-          </AgreementNotice>
         </>
       )}
     </ModalContainer>
