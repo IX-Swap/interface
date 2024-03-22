@@ -96,7 +96,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
 
   return (
     <ModalContainer style={{ overflow: 'auto', maxHeight: '90vh' }}>
-      {walletView === PromptView.pending && showPendingScreen && (
+      {walletView === PromptView.pending && showPendingScreen ? (
         <>
           <PromptTitle>
             {' '}
@@ -134,6 +134,48 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
           <ExitIconContainer onClick={props.onClose}>
             <CrossIcon />
           </ExitIconContainer>
+        </>
+      ) : (
+        <>
+          <PromptTitle>Connect your Wallet</PromptTitle>
+          <ContentWrapper>
+            <AutoRow>
+              <TextContent>
+                <Trans>
+                  Connecting your wallet allows IX Swap to see your wallet address and, consequently, the funds you hold
+                  on the blockchain. This does not grant IX Swap the ability to manage or transfer your tokens; for
+                  that, you will be asked to sign a token approval.
+                </Trans>
+                <br />
+                <br />
+                <Trans>Select your wallet from the options below to get started</Trans>
+              </TextContent>
+            </AutoRow>
+          </ContentWrapper>
+          <ExitIconContainer onClick={props.onClose}>
+            <CrossIcon />
+          </ExitIconContainer>
+          <ContentWrapper>
+            {walletView === PromptView.options && <ConnectionOptions onSelect={onSelect} />}
+
+            {/* {!isMobile && !isMetamaskInstalled && userSelected && (
+              <MetamaskInstallAlert>Please install MetaMask to use this application.</MetamaskInstallAlert>
+            )} */}
+          </ContentWrapper>
+          <InstallLinkContainer>
+            <WalletInstallationLink onClick={handleInstallMetaMask}>I do not have a wallet yet</WalletInstallationLink>
+            <TooltipIcon />
+          </InstallLinkContainer>
+          <Line />
+          <AgreementNotice>
+            By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
+            <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
+            acknowledge that you have read and understood the{' '}
+            <ExternalLink href="https://ixswap.io/privacy-policy/">
+              {config?.name || 'IX Swap'} Privacy Policy
+            </ExternalLink>
+            .
+          </AgreementNotice>
         </>
       )}
     </ModalContainer>
