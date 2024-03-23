@@ -191,12 +191,6 @@ export default function App() {
 
   useEffect(() => {
     clearLocaleStorage()
-  }, [])
-
-  useEffect(() => {
-    if (window.location.host.split('.')[1] !== 'ixswap') {
-      getWitelabelConfig()
-    }
 
     // connect eagerly for metamask
     void metaMask.connectEagerly().catch(() => {
@@ -207,6 +201,12 @@ export default function App() {
     walletConnectV2.connectEagerly().catch((error) => {
       console.debug('Failed to connect eagerly to walletconnect', error)
     })
+  }, [])
+
+  useEffect(() => {
+    if (window.location.host.split('.')[1] !== 'ixswap') {
+      getWitelabelConfig()
+    }
   }, [])
 
   useEffect(() => {

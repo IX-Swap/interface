@@ -255,18 +255,5 @@ interface Props {
 export const MuiThemeProvider = ({ children }: Props) => {
   const theme = useTheme()
 
-  const { account } = useActiveWeb3React()
-  if (!account) {
-    // connect eagerly for metamask
-    void metaMask.connectEagerly().catch(() => {
-      console.debug('Failed to connect eagerly to metamask')
-    })
-
-    // connect eagerly for walletConnectV2
-    walletConnectV2.connectEagerly().catch((error) => {
-      console.debug('Failed to connect eagerly to walletconnect', error)
-    })
-  }
-
   return <ThemeProvider theme={muiTheme(theme)}>{children}</ThemeProvider>
 }
