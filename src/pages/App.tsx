@@ -201,6 +201,10 @@ export default function App() {
     walletConnectV2.connectEagerly().catch((error) => {
       console.debug('Failed to connect eagerly to walletconnect', error)
     })
+
+    if (!account) {
+      localStorage.removeItem('account')
+    }
   }, [])
 
   useEffect(() => {
