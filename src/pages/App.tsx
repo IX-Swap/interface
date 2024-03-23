@@ -45,6 +45,7 @@ import { walletConnectV2 } from 'connectors/walletConnectV2'
 import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
 import { Footer } from './Launchpad/Footer'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -223,8 +224,7 @@ export default function App() {
   const routeGenerator = useCallback(
     (route: RouteMapEntry) => {
       const roleGuard =
-        route.conditions?.rolesSupported !== undefined &&
-        !(route.conditions?.rolesSupported.includes(userRole) && chainId)
+        route.conditions?.rolesSupported !== undefined && !route.conditions?.rolesSupported.includes(userRole)
       const guards = [
         !isAllowed(route),
         route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
@@ -252,6 +252,10 @@ export default function App() {
   const useRedirect = account ? kyc !== null : true
   if (!config) {
     return <LoadingIndicator isLoading />
+  }
+
+  if (!account) {
+    return <NotAvailablePage />
   }
 
   return (
