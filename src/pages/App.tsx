@@ -255,7 +255,17 @@ export default function App() {
   }
 
   if (!account) {
-    return <NotAvailablePage />
+    return (
+      <AppWrapper>
+        <ToggleableBody
+          isVisible={visibleBody}
+          {...(isAdminKyc && { style: { marginTop: 26 } })}
+          hideHeader={hideHeader}
+        >
+          <NotAvailablePage />
+        </ToggleableBody>
+      </AppWrapper>
+    )
   }
 
   return (
