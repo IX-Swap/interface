@@ -254,20 +254,6 @@ export default function App() {
     return <LoadingIndicator isLoading />
   }
 
-  if (!account) {
-    return (
-      <AppWrapper>
-        <ToggleableBody
-          isVisible={visibleBody}
-          {...(isAdminKyc && { style: { marginTop: 26 } })}
-          hideHeader={hideHeader}
-        >
-          <NotAvailablePage />
-        </ToggleableBody>
-      </AppWrapper>
-    )
-  }
-
   return (
     <>
       {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
