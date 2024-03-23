@@ -56,16 +56,6 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
   ReactGA.initialize('test', { testMode: true, debug: true })
 }
 
-// connect eagerly for metamask
-void metaMask.connectEagerly().catch(() => {
-  console.debug('Failed to connect eagerly to metamask')
-})
-
-// connect eagerly for walletConnectV2
-walletConnectV2.connectEagerly().catch((error) => {
-  console.debug('Failed to connect eagerly to walletconnect', error)
-})
-
 function Updaters() {
   return (
     <>

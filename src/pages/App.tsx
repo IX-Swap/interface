@@ -108,7 +108,6 @@ export default function App() {
   const { kyc } = useKYCState()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [countryCode, setCountryCode] = useState()
-  const [accountToCheck, setAccountToCheck] = useState()
   useEffect(() => {
     const getCountryCode = async () => {
       const response = await axios.get(ip.getIPAddress)
@@ -205,26 +204,6 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (!account) {
-      // connect eagerly for metamask
-      void metaMask.connectEagerly().catch(() => {
-        console.debug('Failed to connect eagerly to metamask')
-      })
-
-      // connect eagerly for walletConnectV2
-      walletConnectV2.connectEagerly().catch((error) => {
-        console.debug('Failed to connect eagerly to walletconnect', error)
-      })
-    } else {
-      setAccountToCheck(account)
-    }
-  }, [account])
-
-  // useEffect(() => {
-  //   localStorage.setItem('account', account)
-  // }, [account])
-
-  useEffect(() => {
     if (window.location.host.split('.')[1] !== 'ixswap') {
       getWitelabelConfig()
     }
@@ -243,10 +222,9 @@ export default function App() {
 
   const routeGenerator = useCallback(
     (route: RouteMapEntry) => {
-      // let accountToCheck = account || localStorage.getItem('account')
       const roleGuard =
         route.conditions?.rolesSupported !== undefined &&
-        !(route.conditions?.rolesSupported.includes(userRole) && account)
+        !(route.conditions?.rolesSupported.includes(userRole) && chainId)
       const guards = [
         !isAllowed(route),
         route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
