@@ -40,7 +40,7 @@ import axios from 'axios'
 import { ip } from 'services/apiUrls'
 import { isMobile } from 'react-device-detect'
 import { ConnectWalletModal } from './Connect Wallet Modal'
-import { metaMask, hooks } from 'connectors/metaMask'
+import { metaMask } from 'connectors/metaMask'
 import { walletConnectV2 } from 'connectors/walletConnectV2'
 import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
@@ -98,8 +98,7 @@ export default function App() {
 
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
-  const { chainId } = useActiveWeb3React()
-  const account = hooks.useAccount()
+  const { chainId, account } = useActiveWeb3React()
   const getMyKyc = useGetMyKyc()
   const { token } = useAuthState()
   const dispatch = useDispatch()
@@ -204,9 +203,9 @@ export default function App() {
     })
   }, [])
 
-  // useEffect(() => {
-  //   localStorage.setItem('account', account)
-  // }, [account])
+  useEffect(() => {
+    localStorage.setItem('account', account)
+  }, [account])
 
   useEffect(() => {
     if (window.location.host.split('.')[1] !== 'ixswap') {
@@ -227,10 +226,10 @@ export default function App() {
 
   const routeGenerator = useCallback(
     (route: RouteMapEntry) => {
-      // let accountToCheck = account || localStorage.getItem('account')
+      let accountToCheck = account || localStorage.getItem('account')
       const roleGuard =
         route.conditions?.rolesSupported !== undefined &&
-        !(route.conditions?.rolesSupported.includes(userRole) && account)
+        !(route.conditions?.rolesSupported.includes(userRole) && accountToCheck)
       const guards = [
         !isAllowed(route),
         route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
