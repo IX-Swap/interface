@@ -204,6 +204,10 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    localStorage.setItem('account', account)
+  }, [account])
+
+  useEffect(() => {
     if (window.location.host.split('.')[1] !== 'ixswap') {
       getWitelabelConfig()
     }
@@ -222,9 +226,10 @@ export default function App() {
 
   const routeGenerator = useCallback(
     (route: RouteMapEntry) => {
+      let accountToCheck = account || localStorage.getItem('account')
       const roleGuard =
         route.conditions?.rolesSupported !== undefined &&
-        !(route.conditions?.rolesSupported.includes(userRole) && account)
+        !(route.conditions?.rolesSupported.includes(userRole) && accountToCheck)
       const guards = [
         !isAllowed(route),
         route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
