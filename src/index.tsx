@@ -27,6 +27,8 @@ import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import * as Sentry from '@sentry/react'
+import { metaMask } from 'connectors/metaMask'
+import { walletConnectV2 } from 'connectors/walletConnectV2'
 
 /* eslint-disable react/display-name */
 
@@ -53,6 +55,16 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
 } else {
   ReactGA.initialize('test', { testMode: true, debug: true })
 }
+
+// connect eagerly for metamask
+void metaMask.connectEagerly().catch(() => {
+  console.debug('Failed to connect eagerly to metamask')
+})
+
+// connect eagerly for walletConnectV2
+walletConnectV2.connectEagerly().catch((error) => {
+  console.debug('Failed to connect eagerly to walletconnect', error)
+})
 
 function Updaters() {
   return (
