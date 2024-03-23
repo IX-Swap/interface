@@ -108,6 +108,7 @@ export default function App() {
   const { kyc } = useKYCState()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [countryCode, setCountryCode] = useState()
+  const [accountToCheck, setAccountToCheck] = useState()
   useEffect(() => {
     const getCountryCode = async () => {
       const response = await axios.get(ip.getIPAddress)
@@ -191,6 +192,16 @@ export default function App() {
 
   useEffect(() => {
     clearLocaleStorage()
+
+    // connect eagerly for metamask
+    void metaMask.connectEagerly().catch(() => {
+      console.debug('Failed to connect eagerly to metamask')
+    })
+
+    // connect eagerly for walletConnectV2
+    walletConnectV2.connectEagerly().catch((error) => {
+      console.debug('Failed to connect eagerly to walletconnect', error)
+    })
   }, [])
 
   useEffect(() => {
@@ -204,6 +215,8 @@ export default function App() {
       walletConnectV2.connectEagerly().catch((error) => {
         console.debug('Failed to connect eagerly to walletconnect', error)
       })
+    } else {
+      setAccountToCheck(account)
     }
   }, [account])
 
