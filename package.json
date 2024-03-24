@@ -167,6 +167,7 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@coinbase/wallet-sdk": "^3.7.2",
     "@cyntler/react-doc-viewer": "^1.14.1",
     "@date-io/dayjs": "1.x",
     "@material-ui/core": "^4.12.3",
@@ -177,6 +178,7 @@
     "@sentry/cli": "^2.25.0",
     "@sentry/react": "^7.93.0",
     "@walletconnect/environment": "^1.0.1",
+    "@web3-react/coinbase-wallet": "^8.2.0",
     "@web3-react/core": "^8.2.0",
     "@web3-react/metamask": "8.2.0",
     "@web3-react/walletconnect-v2": "^8.3.7",
