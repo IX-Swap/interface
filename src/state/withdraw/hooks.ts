@@ -283,8 +283,8 @@ export const useGetWithdrawStatus = () => {
   )
 }
 
-export const getFeePriceReq = async (id: string | number) => {
-  const response = await apiService.get(custody.feePrice(id))
+export const getFeePriceReq = async (id: string | number, amount: string) => {
+  const response = await apiService.get(custody.feePrice(id, amount))
   return response.data
 }
 
@@ -292,10 +292,10 @@ export const useGetFeePrice = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(
-    async (id: string | number) => {
+    async (id: string | number, amount: string) => {
       try {
         dispatch(getFeePrice.pending())
-        const response = await getFeePriceReq(id)
+        const response = await getFeePriceReq(id, amount)
         dispatch(getFeePrice.fulfilled(response))
       } catch (error: any) {
         dispatch(getFeePrice.rejected({ errorMessage: error.message }))
