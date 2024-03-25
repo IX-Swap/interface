@@ -172,17 +172,17 @@ export default function WalletModal({
           <Option
             id={`connect-${key}`}
             onClick={() => {
-              if (isMobile) {
-                if (isMetamaskAppInstalled) {
-                  window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
-                } else {
-                  console.log('Metamask app is not installed')
-                }
-              } else {
-                option.connector === connector
-                  ? setWalletView(WALLET_VIEWS.ACCOUNT)
-                  : !option.href && tryActivation(option.connector)
-              }
+              // if (isMobile) {
+              //   if (isMetamaskAppInstalled) {
+              //     window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
+              //   } else {
+              //     console.log('Metamask app is not installed')
+              //   }
+              // } else {
+              option.connector === connector
+                ? setWalletView(WALLET_VIEWS.ACCOUNT)
+                : !option.href && tryActivation(option.connector)
+              // }
             }}
             key={key}
             active={option.connector === connector}
