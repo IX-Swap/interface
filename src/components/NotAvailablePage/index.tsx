@@ -28,6 +28,7 @@ import {
 } from './styled'
 import Modal from 'components/Modal'
 import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
+import { PRODUCTION_APP_URL } from 'config'
 
 // Define the NotAvailablePage component
 export const NotAvailablePage = () => {
@@ -105,6 +106,7 @@ export const NotAvailablePage = () => {
     )
   }
 
+  const network = window.location.href.includes(PRODUCTION_APP_URL) ? 'Polygon' : 'Mumbai'
   if (!provider?.provider?.isMetaMask) {
     return (
       <Container>
@@ -114,7 +116,8 @@ export const NotAvailablePage = () => {
         </Title>
         <Info>
           <Trans>
-            You have connected to Metamask through WalletConnect. Please switch the network in your Metamask wallet in your phone.
+            You have connected to Metamask through WalletConnect. Please switch the network to ${network} in your
+            wallet.
           </Trans>
         </Info>
       </Container>
