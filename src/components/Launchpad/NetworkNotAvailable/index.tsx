@@ -9,6 +9,7 @@ import { SupportedChainId } from 'constants/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, PlaygroundBadge } from './styled'
+import { PRODUCTION_APP_URL } from 'config'
 
 export const NetworkNotAvailable = () => {
   const { chainId, provider } = useActiveWeb3React()
@@ -26,6 +27,8 @@ export const NetworkNotAvailable = () => {
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
+  const network = window.location.href.includes(PRODUCTION_APP_URL) ? 'Polygon' : 'Mumbai'
+
   if (!provider?.provider?.isMetaMask) {
     return (
       <Container>
@@ -35,7 +38,7 @@ export const NetworkNotAvailable = () => {
         </Title>
         <Info>
           <Trans>
-            You have connected to Metamask through WalletConnect. Please switch the network in your Metamask wallet in your phone.
+            You have connected to Metamask through WalletConnect. Please switch the network to ${network} in your wallet.
           </Trans>
         </Info>
       </Container>
