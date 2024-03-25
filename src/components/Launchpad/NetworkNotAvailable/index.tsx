@@ -38,7 +38,7 @@ export const NetworkNotAvailable = () => {
         </Title>
         <Info>
           <Trans>
-            You have connected to Metamask through WalletConnect. Please switch the network to ${network} in your wallet.
+            You have connected to Metamask through WalletConnect. Please switch the network to {network} in your wallet.
           </Trans>
         </Info>
       </Container>
