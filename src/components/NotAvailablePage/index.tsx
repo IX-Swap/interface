@@ -116,7 +116,7 @@ export const NotAvailablePage = () => {
         </Title>
         <Info>
           <Trans>
-            You have connected to Metamask through WalletConnect. Please switch the network to ${network} in your
+            You have connected to Metamask through WalletConnect. Please switch the network to {network} in your
             wallet.
           </Trans>
         </Info>
