@@ -13,58 +13,93 @@ interface ConnectionOptionsProps {
 }
 
 export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
-  const theme = useTheme()
   const { connector } = useWeb3React()
 
-  const isMetaMask = window.ethereum && window.ethereum.isMetaMask
+  // const isMetaMask = window.ethereum && window.ethereum.isMetaMask
 
-  const handleMetaMaskMobile = () => {
-    if (isMobile && isMetaMask) {
-      window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
-    }
+  // const handleMetaMaskMobile = () => {
+  //   if (isMobile && isMetaMask) {
+  //     window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
+  //   }
+  // }
+
+  function checkMetamaskAppInstalled() {
+    const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+    const metamaskAppScheme = 'ethereum:'
+
+    const testLink = document.createElement('a')
+    testLink.href = metamaskAppScheme
+    const isMetamaskAppInstalled = isMobileDevice && typeof testLink.href === 'string'
+
+    return isMetamaskAppInstalled
   }
+  const isMetamaskAppInstalled = checkMetamaskAppInstalled()
 
   return (
     <OptionList>
       {Object.entries(SUPPORTED_WALLETS).map(([key, option]) => {
-        // if (option.connector === metaMask) {
-        //   if (!(window.web3 || window.ethereum)) {
-        //     if (option.name === 'MetaMask') {
-        //       return (
-        //         <Option
-        //           id={`connect-${key}`}
-        //           key={key}
-        //           color={'#E8831D'}
-        //           header={<p>Install Metamask</p>}
-        //           subheader={null}
-        //           link={'https://metamask.io/'}
-        //           icon={MetamaskIcon}
-        //         />
-        //       )
-        //     } else {
-        //       return null //dont want to return install twice
-        //     }
-        //   }
-        //   else if (!(window.web3 || window.ethereum)) {
-        //     if (option.name === 'MetaMask') {
-        //       return (
-        //         <Option
-        //           id={`connect-${key}`}
-        //           key={key}
-        //           header="Metamask"
-        //           link={`https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc`}
-        //           icon={MetamaskIcon}
-        //           color={theme.launchpad.colors.primary}
-        //           subheader={null}
-        //         />
-        //       )
-        //     } else {
-        //       return null //don't want to return install twice
-        //     }
-        //   } else if ((option.name === 'MetaMask' && !isMetaMask) || (option.name === 'Injected' && isMetaMask)) {
-        //     return null
-        //   }
-        // }
+        if (isMobile && isMetamaskAppInstalled && option.name === 'MetaMask') {
+          return (
+            <Option
+              id={`connect-${key}`}
+              onClick={() => {
+                if (isMobile) {
+                  if (isMetamaskAppInstalled) {
+                    window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
+                  } else {
+                    console.log('Metamask app is not installed')
+                  }
+                }
+              }}
+              key={key}
+              active={option.connector === connector}
+              color={option.color}
+              link={option.href}
+              header={option.name}
+              subheader={null}
+              icon={option.iconURL}
+            />
+          )
+        }
+        if (option.connector === metaMask) {
+          if (!(window.web3 || window.ethereum)) {
+            if (option.name === 'MetaMask') {
+              return (
+                <Option
+                  id={`connect-${key}`}
+                  key={key}
+                  color={'#E8831D'}
+                  header={<p>Install Metamask</p>}
+                  subheader={null}
+                  link={'https://metamask.io/'}
+                  icon={MetamaskIcon}
+                />
+              )
+            } else {
+              return null //dont want to return install twice
+            }
+          }
+          // else if (!(window.web3 || window.ethereum)) {
+          //   if (option.name === 'MetaMask') {
+          //     return (
+          //       <Option
+          //         id={`connect-${key}`}
+          //         key={key}
+          //         header="Metamask"
+          //         link={`https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc`}
+          //         icon={MetamaskIcon}
+          //         color={theme.launchpad.colors.primary}
+          //         subheader={null}
+          //       />
+          //     )
+          //   } else {
+          //     return null //don't want to return install twice
+          //   }
+          // } else if ((option.name === 'MetaMask' && !isMetaMask) || (option.name === 'Injected' && isMetaMask)) {
+          //   return null
+          // }
+        }
 
         return (
           <Option
@@ -130,11 +165,11 @@ const Option: React.FC<OptionsProps> = (props: OptionsProps) => {
   return optionButton
 }
 
-const PromptTitle = styled.div`
-  text-align: left;
-  ${text14}
-  color: ${(props) => props.theme.launchpad.colors.text.title};
-`
+// const PromptTitle = styled.div`
+//   text-align: left;
+//   ${text14}
+//   color: ${(props) => props.theme.launchpad.colors.text.title};
+// `
 
 const OptionList = styled.div`
   display: flex;
@@ -173,27 +208,27 @@ const OptionLabel = styled.div`
   color: ${(props) => props.theme.launchpad.colors.primary};
 `
 
-const GreenCircle = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  margin-left: -16px;
-  &:first-child {
-    height: 8px;
-    width: 8px;
-    margin-right: 8px;
-    background-color: ${({ theme }) => theme.green1};
-    border-radius: 50%;
-  }
-`
+// const GreenCircle = styled.div`
+//   display: flex;
+//   flex-flow: row nowrap;
+//   justify-content: center;
+//   align-items: center;
+//   margin-left: -16px;
+//   &:first-child {
+//     height: 8px;
+//     width: 8px;
+//     margin-right: 8px;
+//     background-color: ${({ theme }) => theme.green1};
+//     border-radius: 50%;
+//   }
+// `
 
-const CircleWrapper = styled.div`
-  color: ${({ theme }) => theme.green1};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+// const CircleWrapper = styled.div`
+//   color: ${({ theme }) => theme.green1};
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `
 
 const IconWrapper = styled.div<{ size?: number | null }>`
   display: grid;
