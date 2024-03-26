@@ -43,15 +43,16 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
           return (
             <Option
               id={`connect-${key}`}
-              // onClick={() => {
-              //   if (isMobile) {
-              //     if (isMetamaskAppInstalled) {
-              //       window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
-              //     } else {
-              //       console.log('Metamask app is not installed')
-              //     }
-              //   }
-              // }}
+              onClick={() => {
+                props.onSelect(option)
+                // if (isMobile) {
+                //   if (isMetamaskAppInstalled) {
+                //     window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
+                //   } else {
+                //     console.log('Metamask app is not installed')
+                //   }
+                // }
+              }}
               key={key}
               active={option.connector === connector}
               color={option.color}
