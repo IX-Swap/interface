@@ -103,7 +103,12 @@ export const individualErrorsSchema = yup.object().shape({
     .when('secondaryContactDetails', {
       is: (value: any) => value && value.value === 2,
       then: yup.string().nullable().email('Invalid email').required('Required'),
-    }),
+    })
+    .test(
+      'dupplicatedEmail',
+      ' ',
+      (value, context) => value !== context.parent.email
+    ),
 
   socialPlatform: yup
     .string()
