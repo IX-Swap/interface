@@ -74,9 +74,9 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
   useEffect(() => {
     if (tokenInfo.id) {
       getWithdrawStatus(tokenInfo.id)
-      getFeePrice(tokenInfo.id)
+      getFeePrice(tokenInfo.id, amount || '0')
     }
-  }, [tokenInfo.id, getWithdrawStatus, getFeePrice])
+  }, [tokenInfo.id, getWithdrawStatus, getFeePrice, amount])
 
   useEffect(() => {
     if (networkName) {
