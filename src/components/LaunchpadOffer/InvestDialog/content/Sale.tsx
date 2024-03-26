@@ -32,6 +32,7 @@ import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/share
 import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
 import { OfferStageStatus } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
+import { WalletEvent, INVEST_FLOW_EVENTS } from 'utils/event-logs'
 
 interface Props {
   offer: Offer
@@ -91,21 +92,23 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
     }
   }, [whitelistedStatus, offer.status])
 
-  const conditions = useMemo(() => [
-    {
-      label: 'Min. Investment Size',
-      value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${
-        (investingTokenSymbol === 'USDC') ? `${investingTokenSymbol}.e` : investingTokenSymbol
-      }`,
-    },
-    {
-      label: 'Max. Investment Size',
-      value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${
-        (investingTokenSymbol === 'USDC') ? `${investingTokenSymbol}.e` : investingTokenSymbol
-      }`,
-    },
-  ], [isPresale, presaleMaxInvestment, presaleMinInvestment, maxInvestment, minInvestment, investingTokenSymbol]);
-  
+  const conditions = useMemo(
+    () => [
+      {
+        label: 'Min. Investment Size',
+        value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${
+          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
+        }`,
+      },
+      {
+        label: 'Max. Investment Size',
+        value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${
+          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
+        }`,
+      },
+    ],
+    [isPresale, presaleMaxInvestment, presaleMinInvestment, maxInvestment, minInvestment, investingTokenSymbol]
+  )
 
   const investmentAllowance = useMemo(() => {
     const getColor = (status: INVESTMENT_STATUSES | null) => {
@@ -121,12 +124,18 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
       }
     }
     return [
-      { label: 'Available to invest', value: `${formatter.format(availableToInvest)} ${
-        (investingTokenSymbol === 'USDC') ? `${investingTokenSymbol}.e` : investingTokenSymbol
-      }` },
-      { label: 'Already invested', value: `${formatter.format(amountInvested)} ${
-        (investingTokenSymbol === 'USDC') ? `${investingTokenSymbol}.e` : investingTokenSymbol
-      }` },
+      {
+        label: 'Available to invest',
+        value: `${formatter.format(availableToInvest)} ${
+          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
+        }`,
+      },
+      {
+        label: 'Already invested',
+        value: `${formatter.format(amountInvested)} ${
+          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
+        }`,
+      },
       {
         label: (
           <FlexVerticalCenter>
@@ -138,8 +147,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
           <span style={{ color: getColor(lastStatus) }}>{lastStatus ? InvestmentStatusesLabels[lastStatus] : '-'}</span>
         ),
       },
-    ];
-    
+    ]
   }, [availableToInvest, amountInvested, investingTokenSymbol, formatter, lastStatus])
 
   const purchaseAgreement = files.find((x) => x.type === OfferFileType.purchaseAgreement)
@@ -203,11 +211,20 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
             txHash: receipt.transactionHash,
           })
 
+          new WalletEvent(INVEST_FLOW_EVENTS.INVEST(status))
+            .walletAddress(account || '')
+            .data({
+              amount,
+              txHash: receipt.transactionHash,
+            })
+            .info(`Invest ${amount} ${investingTokenSymbol} INTO ${tokenSymbol}`)
+
           submitState.setSuccess()
           openSuccess()
         }
       }
     } catch (e) {
+      new WalletEvent(INVEST_FLOW_EVENTS.INVEST(status)).walletAddress(account || '').error((e as any).toString())
       console.error(e)
       submitState.setError()
     }
