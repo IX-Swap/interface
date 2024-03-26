@@ -5,6 +5,10 @@ export const WITHDRAW_FLOW_EVENT = {
   CREATE_BURN_TX: 'WITHDRAW:CREATE_BURN_TX',
 }
 
+export const INVEST_FLOW_EVENTS = {
+  INVEST: (stage: string) => `INVEST:${stage}`,
+}
+
 export class WalletEvent {
   private eventType: string
   private _data: Record<string, any> = {}
@@ -32,12 +36,16 @@ export class WalletEvent {
   }
 
   info(message: string) {
-    Sentry.addBreadcrumb({
-      category: 'blockchain',
-      level: 'info',
-      data: this._data,
-    })
-    Sentry.captureMessage(`[Wallet Event FE] ${this.eventType.toUpperCase()} ${message} ${this._walletAddress}`)
+    try {
+      Sentry.addBreadcrumb({
+        category: 'blockchain',
+        level: 'info',
+        data: this._data,
+      })
+      Sentry.captureMessage(`[Wallet Event FE] ${this.eventType.toUpperCase()} ${message} ${this._walletAddress}`)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   error(message: string) {
