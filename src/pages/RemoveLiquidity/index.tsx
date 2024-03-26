@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
@@ -23,15 +24,14 @@ import TransactionConfirmationModal from '../../components/TransactionConfirmati
 import { useCurrency } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
 import { useLiquidityRouterContract, usePairContract } from '../../hooks/useContract'
-import { useV2LiquidityTokenPermit } from '../../hooks/useERC20Permit'
+import { UseERC20PermitState, useV2LiquidityTokenPermit } from '../../hooks/useERC20Permit'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
-import { useActiveWeb3React } from '../../hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { Field } from '../../state/burn/actions'
 import { useBurnState, useDerivedBurnInfo } from '../../state/burn/hooks'
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useUserSlippageToleranceWithDefault } from '../../state/user/hooks'
-import { ModalBlurWrapper } from '../../theme'
 import { calculateGasMargin } from '../../utils/calculateGasMargin'
 import { calculateSlippageAmount } from '../../utils/calculateSlippageAmount'
 import { ModalBottom } from './ModalBottom'
@@ -47,6 +47,7 @@ import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import Header from 'components/Header'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 const DEFAULT_REMOVE_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(5, 100)
 
@@ -57,9 +58,8 @@ export default function RemoveLiquidity({
   },
 }: RouteComponentProps<{ currencyIdA: string; currencyIdB: string }>) {
   const [currencyA, currencyB] = [useCurrency(currencyIdA) ?? undefined, useCurrency(currencyIdB) ?? undefined]
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider } = useWeb3React()
   const [tokenA, tokenB] = useMemo(() => [currencyA?.wrapped, currencyB?.wrapped], [currencyA, currencyB])
-
   // toggle wallet when disconnected
   const toggleWalletModal = useWalletModalToggle()
   const setCurrentPoolTransctionHash = setPoolTransactionHash()
@@ -100,14 +100,34 @@ export default function RemoveLiquidity({
   const router = useLiquidityRouterContract()
 
   // allowance handling
-  const { gatherPermitSignature, signatureData } = useV2LiquidityTokenPermit(
+  const { gatherPermitSignature, signatureData, state } = useV2LiquidityTokenPermit(
     parsedAmounts[Field.LIQUIDITY],
     router?.address
   )
+
   const [approval, approveCallback] = useApproveCallback(parsedAmounts[Field.LIQUIDITY], router?.address)
 
+  // useEffect(() => {
+  //   const getSignature = async () => {
+  //     try {
+  //       if (gatherPermitSignature) {
+  //         await gatherPermitSignature()
+  //       }
+  //     } catch (error: any) {
+  //       // try to approve if gatherPermitSignature failed for any reason other than the user rejecting it
+  //       if (error?.code !== 4001) {
+  //         await approveCallback()
+  //       }
+  //     }
+  //   }
+
+  //   if (state != UseERC20PermitState.SIGNED && approval === ApprovalState.APPROVED) {
+  //     getSignature()
+  //   }
+  // }, [state, gatherPermitSignature, approval])
+
   async function onAttemptToApprove() {
-    if (!pairContract || !pair || !library || !deadline) throw new Error('missing dependencies')
+    if (!pairContract || !pair || !provider || !deadline) throw new Error('missing dependencies')
     const liquidityAmount = parsedAmounts[Field.LIQUIDITY]
     if (!liquidityAmount) throw new Error('missing liquidity amount')
 
@@ -132,7 +152,7 @@ export default function RemoveLiquidity({
 
   async function onRemove() {
     setCurrentPoolTransctionHash(null)
-    if (!chainId || !library || !account || !deadline || !router) throw new Error('missing dependencies')
+    if (!chainId || !provider || !account || !deadline || !router) throw new Error('missing dependencies')
     const { [Field.CURRENCY_A]: currencyAmountA, [Field.CURRENCY_B]: currencyAmountB } = parsedAmounts
     if (!currencyAmountA || !currencyAmountB) {
       throw new Error('missing currency amounts')
@@ -250,7 +270,7 @@ export default function RemoveLiquidity({
           setAttemptingTxn(false)
 
           addTransaction(response, {
-            summary: t`Remove ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
+            summary: `Remove ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
               currencyA?.symbol
             } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencyB?.symbol}`,
           })
@@ -279,7 +299,7 @@ export default function RemoveLiquidity({
 
   const modalBottom = () => <ModalBottom {...{ currencyA, currencyB, approval, signatureData, onRemove }} />
 
-  const pendingText = t`Removing ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
+  const pendingText = `Removing ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
     currencyA?.symbol
   } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${currencyB?.symbol}`
 
@@ -315,7 +335,7 @@ export default function RemoveLiquidity({
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NetworkNotAvailable />
+          <NotAvailablePage />
         </CenteredFixed>
       </Portal>
     )
@@ -403,7 +423,9 @@ export default function RemoveLiquidity({
                           }}
                           disabled={!isValid || signatureData === null}
                         >
-                          <Text color={ !isValid || signatureData === null ? '#f8c0c0' : '#FF6161'}>{<Trans>Remove</Trans>}</Text>
+                          <Text color={!isValid || signatureData === null ? '#f8c0c0' : '#FF6161'}>
+                            {<Trans>Remove</Trans>}
+                          </Text>
                         </NewApproveButton>
                       </RowBetween>
                     </>

@@ -224,15 +224,17 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
             <CloseIcon data-testid="cross" onClick={close} />
           </Title>
           <Subtitle>
-            {t`Please review all the information and ensure they are correct before publishing the event.`}
+            <Trans>{`Please review all the information and ensure they are correct before publishing the event.`}</Trans>
           </Subtitle>
         </ModalHeader>
 
         <ModalBody>
           <Card marginBottom="18px">
-            <span>{t`Payout Information:`}</span>
+            <span>
+              <Trans>{`Payout Information:`}</Trans>
+            </span>
             <Data
-              label={t`Security Token:`}
+              label={`Security Token:`}
               value={
                 <Flex alignItems="center">
                   {secToken.icon}
@@ -240,20 +242,22 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
                 </Flex>
               }
             />
-            <Data label={t`Payout Type:`} value={type} />
-            <Data label={t`Record Date:`} value={formatDate(recordDate)} />
-            <Data label={t`Payment Start Date:`} value={formatDate(startDate)} />
-            {endDate && <Data label={t`Payment Deadline:`} value={formatDate(endDate)} />}
+            <Data label={`Payout Type:`} value={type} />
+            <Data label={`Record Date:`} value={formatDate(recordDate)} />
+            <Data label={`Payment Start Date:`} value={formatDate(startDate)} />
+            {endDate && <Data label={`Payment Deadline:`} value={formatDate(endDate)} />}
           </Card>
           <Card marginBottom="24px">
-            <span>{t`Payment Details:`}</span>
+            <span>
+              <Trans>{`Payment Details:`}</Trans>
+            </span>
             {isRecordFuture ? (
               <TYPE.title10 padding="0px 32px" color={'error'} textAlign="center">
-                {t`Wrapped token amounts to be computed and will become available on the Record Date you selected`}
+                <Trans>{`Wrapped token amounts to be computed and will become available on the Record Date you selected`}</Trans>
               </TYPE.title10>
             ) : (
               <Data
-                label={t`Payout Tokens:`}
+                label={`Payout Tokens:`}
                 value={
                   <Flex alignItems="center">
                     {token.icon}
@@ -274,10 +278,12 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               onClick={() => handlePayNow(true)}
               label={
                 <Box>
-                  <TYPE.body3 fontWeight={700}>{t`Pay Now for This Event`}</TYPE.body3>
-                  <TYPE.description2
-                    fontStyle={'italic'}
-                  >{t`Indicated token amount will be allocated for distribution once payment for this event is confirmed.`}</TYPE.description2>
+                  <TYPE.body3 fontWeight={700}>
+                    <Trans>{`Pay Now for This Event`}</Trans>
+                  </TYPE.body3>
+                  <TYPE.description2 fontStyle={'italic'}>
+                    <Trans>{`Indicated token amount will be allocated for distribution once payment for this event is confirmed.`}</Trans>
+                  </TYPE.description2>
                 </Box>
               }
             />
@@ -289,10 +295,12 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               onClick={() => handlePayNow(false)}
               label={
                 <Box>
-                  <TYPE.body3 fontWeight={700}>{t`Pay Later for This Event`}</TYPE.body3>
-                  <TYPE.description2
-                    fontStyle={'italic'}
-                  >{t`Payment for this event should be received and confirmed prior to the start date of payout distribution.`}</TYPE.description2>
+                  <TYPE.body3 fontWeight={700}>
+                    <Trans>{`Pay Later for This Event`}</Trans>
+                  </TYPE.body3>
+                  <TYPE.description2 fontStyle={'italic'}>
+                    <Trans>{`Payment for this event should be received and confirmed prior to the start date of payout distribution.`}</Trans>
+                  </TYPE.description2>
                 </Box>
               }
             />
@@ -300,14 +308,14 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
           {!tokenAmount && (
             <Card marginBottom="32px">
               <TYPE.title10 padding="0px 32px" color={'error'} textAlign="center">
-                {t`Please indicate the Payout Amount.`}
+                <Trans>{`Please indicate the Payout Amount.`}</Trans>
               </TYPE.title10>
             </Card>
           )}
           {+tokenBalance < +tokenAmount && (
             <Card marginBottom="32px">
               <TYPE.title10 padding="0px 32px" color={'error'} textAlign="center">
-                {t`Insufficient token amount.`}
+                <Trans>{`Insufficient token amount.`}</Trans>
               </TYPE.title10>
             </Card>
           )}
@@ -315,7 +323,9 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
             type="button"
             onClick={() => (onlyPay || payNow ? publishAndPaid() : onlyPublish())}
             disabled={!tokenAmount || (payNow && +tokenBalance < +tokenAmount)}
-          >{t`${buttonText}`}</StyledButtonIXSGradient>
+          >
+            <Trans>{`${buttonText}`}</Trans>
+          </StyledButtonIXSGradient>
         </ModalBody>
       </ModalBlurWrapper>
     </RedesignedWideModal>
@@ -325,7 +335,9 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 const Data: FC<DataProps> = ({ label, value }) => {
   return (
     <Wrapper>
-      <div>{label}</div>
+      <div>
+        <Trans>{label}</Trans>
+      </div>
       <div>{value}</div>
     </Wrapper>
   )

@@ -138,7 +138,7 @@ export const Select: FC<SelectProps> = ({
       )}
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
-          {error}
+          <Trans>{error}</Trans>
         </TYPE.small>
       )}
     </Box>
@@ -560,12 +560,12 @@ export const BeneficialOwnersTable = ({}: BeneficialOwnersTableTypes) => {
   return (
     <BeneficialOwnersTableContainer>
       <FormGrid columns={6}>
-        <Label label={t`Full Name`} />
-        <Label label={t`Nationality`} />
-        <Label label={t`Address`} />
-        <Label label={t`% Beneficial Ownership`} />
-        <Label label={t`Proof of Identity`} />
-        <Label label={t``} />
+        <Label label={`Full Name`} />
+        <Label label={`Nationality`} />
+        <Label label={`Address`} />
+        <Label label={`% Beneficial Ownership`} />
+        <Label label={`Proof of Identity`} />
+        <Label label={``} />
       </FormGrid>
     </BeneficialOwnersTableContainer>
   )

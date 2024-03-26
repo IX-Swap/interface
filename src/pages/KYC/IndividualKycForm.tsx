@@ -144,6 +144,7 @@ export default function IndividualKycForm() {
   const prevAccount = usePrevious(account)
 
   useEffect(() => {
+  
     const code = new URL(window.location.href).href?.split('=')[1]
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
@@ -270,6 +271,7 @@ export default function IndividualKycForm() {
 
     declaration.isAdditional = !values.taxDeclarations[index].isAdditional
     declaration.idNumber = ''
+    declaration.country = ""
     declaration.reason = ''
 
     const root = { ...values }
@@ -280,6 +282,7 @@ export default function IndividualKycForm() {
       `taxDeclarations[${index}].isAdditional`,
       `taxDeclarations[${index}].idNumber`,
       `taxDeclarations[${index}].reason`,
+      `taxDeclarations[${index}].country`,
     ]
 
     const validationErrors: Record<string, string> = {}
@@ -317,6 +320,7 @@ export default function IndividualKycForm() {
     setFieldValue(`taxDeclarations[${index}].isAdditional`, declaration.isAdditional, false)
     setFieldValue(`taxDeclarations[${index}].idNumber`, declaration.idNumber, false)
     setFieldValue(`taxDeclarations[${index}].reason`, declaration.reason, false)
+    setFieldValue(`taxDeclarations[${index}].country`, declaration.country, false)
   }
 
   const onChangeInput = (key: string, value: any, values: any, setFieldValue: any) => {
@@ -332,6 +336,8 @@ export default function IndividualKycForm() {
     setFieldValue(key, value, false)
     validateValue(key, value)
     validationSeen(key)
+
+    console.log(key, value, 'new value')
   }
 
   const onSelectChangeNew = (key: string, value: any, setFieldValue: any) => {
@@ -1348,12 +1354,12 @@ export default function IndividualKycForm() {
                                           }
                                           error={errors[`taxDeclarations[${index}].country`]}
                                         />
-
+{/* 
                                         {errors[`taxDeclarations[${index}].country`] && (
                                           <TYPE.small marginTop="8px" color={'red1'}>
                                             {errors[`taxDeclarations[${index}].country`]}
                                           </TYPE.small>
-                                        )}
+                                        )} */}
                                       </div>
 
                                       <div>
@@ -1377,11 +1383,11 @@ export default function IndividualKycForm() {
                                             )
                                           }
                                         />
-                                        {errors[`taxDeclarations[${index}].idNumber`] && (
+                                        {/* {errors[`taxDeclarations[${index}].idNumber`] && (
                                           <TYPE.small marginTop="8px" color={'red1'}>
                                             {errors[`taxDeclarations[${index}].idNumber`]}
                                           </TYPE.small>
-                                        )}
+                                        )} */}
                                       </div>
                                     </FormGrid>
 
@@ -1458,11 +1464,11 @@ export default function IndividualKycForm() {
                           )}
                         </FieldArray>
 
-                        <RowBetween marginBottom="32px" marginTop="64px">
+                        {/* <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title7>
                             <Trans>FATCA</Trans>
                           </TYPE.title7>
-                          {/* {fatcaFilled && <StyledBigPassed />} */}
+           
                         </RowBetween>
 
                         <ExtraInfoCard>
@@ -1535,7 +1541,7 @@ export default function IndividualKycForm() {
                               <Trans>Choose one</Trans>
                             </TYPE.small>
                           )}
-                        </Column>
+                        </Column> */}
                       </FormCard>
                     </Column>
                   </FormContainer>

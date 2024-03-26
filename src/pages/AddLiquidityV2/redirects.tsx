@@ -11,6 +11,7 @@ import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useTokens } from 'pages/Pool/useTokens'
 import Header from 'components/Header'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 export const AddWhiteBGContainer = styled.div<{ background?: string }>`
   display: flex;
@@ -81,7 +82,7 @@ export const RedirectDuplicateTokenIdsV2: React.FC<
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NetworkNotAvailable />
+          <NotAvailablePage />
         </CenteredFixed>
       </Portal>
     )

@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useActiveWeb3React } from '../../hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { updateBlockNumber } from '../application/actions'
 import { useAddPopup, useBlockNumber } from '../application/hooks'
 import { AppDispatch, AppState } from '../index'
@@ -31,7 +31,7 @@ export function shouldCheck(lastBlockNumber: number, tx: TxInterface): boolean {
 }
 
 export default function Updater(): null {
-  const { chainId, library } = useActiveWeb3React()
+  const { chainId, provider } = useWeb3React()
 
   const lastBlockNumber = useBlockNumber()
 
@@ -44,14 +44,14 @@ export default function Updater(): null {
   const addPopup = useAddPopup()
 
   useEffect(() => {
-    if (!chainId || !library || !lastBlockNumber) return
+    if (!chainId || !provider || !lastBlockNumber) return
 
     Object.keys(transactions)
       .filter((hash) => shouldCheck(lastBlockNumber, transactions[hash]))
       .forEach((hash) => {
-        library
+        provider
           .getTransactionReceipt(hash)
-          .then((receipt) => {
+          .then((receipt: any) => {
             if (receipt) {
               dispatch(
                 finalizeTransaction({
@@ -89,11 +89,11 @@ export default function Updater(): null {
               dispatch(checkedTransaction({ chainId, hash, blockNumber: lastBlockNumber }))
             }
           })
-          .catch((error) => {
+          .catch((error: any) => {
             console.error(`failed to check transaction hash: ${hash}`, error)
           })
       })
-  }, [chainId, library, transactions, lastBlockNumber, dispatch, addPopup])
+  }, [chainId, provider, transactions, lastBlockNumber, dispatch, addPopup])
 
   return null
 }

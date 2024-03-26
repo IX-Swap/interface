@@ -3,6 +3,9 @@ import { createTheme, MuiThemeProvider as ThemeProvider } from '@material-ui/cor
 import { DefaultTheme } from 'styled-components'
 
 import useTheme from 'hooks/useTheme'
+import { useActiveWeb3React } from 'hooks/web3'
+import { metaMask } from 'connectors/metaMask'
+import { walletConnectV2 } from 'connectors/walletConnectV2'
 
 export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, config }: DefaultTheme) =>
   createTheme({

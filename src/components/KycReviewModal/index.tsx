@@ -166,9 +166,9 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
                   fontSize={isMobile ? '12px' : '24px'}
                 >
                   {/* {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
-                  {data?.individual?.fullName || data?.corporate?.fullName || ''}
+                  <Trans>{data?.individual?.fullName || data?.corporate?.corporateName || ''}</Trans>
                 </TYPE.title7>
-                {/* {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
+                {/* {shortenAddress(data.user.ethAddress)} ({`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
               </Title>
 
               {/* {referralCode && ( */}

@@ -9,7 +9,7 @@ import { OrderConfig, SearchConfig } from 'components/LaunchpadIssuance/Issuance
 
 import { AppState } from 'state'
 import { tryParseAmount } from 'state/swap/helpers'
-import { InvestedData, OfferFile, OrderTypes } from './types'
+import { ApprovedRejectedOrderConfig, InvestedData, OfferFile, OrderTypes } from './types'
 
 import {
   Asset,
@@ -1480,11 +1480,12 @@ export const useGetManagedOfferPresaleStatistics = () => {
 }
 
 export const useGetManagedOfferPresaleWhitelists = () => {
-  return React.useCallback(async (offerId: string, page: number, order?: PresaleOrderConfig, size = 8) => {
+  return React.useCallback(async (offerId: string, page: number, isPending: boolean, order?: PresaleOrderConfig | ApprovedRejectedOrderConfig, size = 8) => {
     const query = {
       page,
       offset: size,
       order,
+      isPending
     } as { [key: string]: any }
     const result = await apiService
       .get(`/offers/${offerId}/whitelists`, { paramsSerializer }, query)

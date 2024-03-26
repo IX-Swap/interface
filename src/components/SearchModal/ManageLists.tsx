@@ -384,7 +384,7 @@ export function ManageLists({
     async function fetchTempList() {
       fetchList(listUrlInput, false)
         .then((list) => setTempList(list))
-        .catch(() => setAddError(t`Error importing list`))
+        .catch(() => setAddError(`Error importing list`))
     }
     // if valid url, fetch details for card
     if (validUrl) {
@@ -392,7 +392,7 @@ export function ManageLists({
       setAddError('')
     } else {
       setTempList(undefined)
-      listUrlInput !== '' && setAddError(t`Enter valid list location`)
+      listUrlInput !== '' && setAddError(`Enter valid list location`)
     }
 
     // reset error
@@ -419,7 +419,7 @@ export function ManageLists({
           <SearchInput
             type="text"
             id="list-add-input"
-            placeholder={t`https:// or ipfs:// or ENS name`}
+            placeholder={`https:// or ipfs:// or ENS name`}
             value={listUrlInput}
             onChange={handleInput}
           />

@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Flex, Box } from 'rebass'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 
 import CurrencyLogo from 'components/CurrencyLogo'
 
@@ -20,7 +20,7 @@ export const Claimed: FC<Props> = ({ payoutToken, amountToClaim, claimStatus }) 
       return (
         <>
           <Box marginBottom="4px" fontSize="20px" lineHeight="30px" fontWeight={600}>
-            {t`You have already claimed:`}
+            <Trans>{`You have already claimed:`}</Trans>
           </Box>
           <Flex alignItems="center">
             <CurrencyLogo currency={payoutToken} size="24px" />
@@ -38,7 +38,7 @@ export const Claimed: FC<Props> = ({ payoutToken, amountToClaim, claimStatus }) 
       return (
         <>
           <Box marginBottom="4px" fontSize="20px" lineHeight="30px" fontWeight={600}>
-            {t`Your claim request has been submitted. Waiting for system confirmation.`}
+          <Trans>{`Your claim request has been submitted. Waiting for system confirmation.`}</Trans>
           </Box>
           <Flex alignItems="center">
             <CurrencyLogo currency={payoutToken} size="24px" />
@@ -56,7 +56,7 @@ export const Claimed: FC<Props> = ({ payoutToken, amountToClaim, claimStatus }) 
       return (
         <>
           <Box marginBottom="4px" fontSize="20px" lineHeight="30px" fontWeight={600} color="#FF6161">
-            {t`Your claim request failed. Please contact support for further assistance.`}
+          <Trans>{`Your claim request failed. Please contact support for further assistance.`}</Trans>
           </Box>
           <Flex alignItems="center">
             <CurrencyLogo currency={payoutToken} size="24px" />

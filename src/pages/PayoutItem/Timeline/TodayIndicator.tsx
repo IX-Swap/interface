@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled, { css } from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 
@@ -12,7 +12,9 @@ interface Props {
 export const TodayIndicator: FC<Props> = ({ offset, overlay, isTodayStartDate }) => {
   return (
     <Container offset={offset} overlay={overlay} isTodayStartDate={isTodayStartDate}>
-      <Label overlay={overlay}>{t`Today`}</Label>
+      <Label overlay={overlay}>
+        <Trans>{`Today`}</Trans>
+      </Label>
       <Indicator overlay={overlay} isTodayStartDate={isTodayStartDate}>
         <Line />
         <Bullet overlay={overlay} isTodayStartDate={isTodayStartDate} />

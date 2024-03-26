@@ -248,11 +248,11 @@ export const useDeployCollection = () => {
         }
 
         const result = await library.getSigner().sendTransaction(params)
-        addTransaction(result, { summary: t`Created your ${name} collection successfully` })
+        addTransaction(result, { summary: `Created your ${name} collection successfully` })
         const resp = await result.wait()
         return resp?.contractAddress
       } catch (e) {
-        showError(t`Could not create collection ${(e as Error)?.message}`)
+        showError(`Could not create collection ${(e as Error)?.message}`)
       }
     },
     [account, addTransaction, library, showError]

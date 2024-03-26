@@ -156,7 +156,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
         </TYPE.body1>
         <MouseoverTooltip
           style={{ whiteSpace: 'pre-line' }}
-          text={t`Maximum Capacity:
+          text={`Maximum Capacity:
                   ${
                     isTierUnlimited
                       ? 'Unlimited\n'
@@ -192,7 +192,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
               whiteSpace: 'pre-line',
               textAlign: 'center',
             }}
-            text={t`Lock period means the time you won’t be able to unstake your ${
+            text={`Lock period means the time you won’t be able to unstake your ${
               ixsCurrency?.symbol
             } fully or partially. Please carefully consider the risks involved.
                 ${'' ?? ''}

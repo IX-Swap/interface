@@ -30,12 +30,12 @@ import { useOnChangeOrder } from 'state/launchpad/hooks'
 import { AbstractOrder, KycOrderConfig, OrderTypes } from 'state/launchpad/types'
 import { OrderType } from 'state/launchpad/types'
 const headerCells = [
-  { key: 'ethAddress', label: t`Wallet address`, show: false },
-  { key: 'fullName', label: t`Name`, show: false },
-  { key: 'identity', label: t`Identity`, show: false },
-  { key: 'createdAt', label: t`Date of request`, show: true },
-  { key: 'status', label: t`KYC Status`, show: false },
-  { key: 'updatedAt', label: t`Updated At`, show: true },
+  { key: 'ethAddress', label: 'Wallet address', show: false },
+  { key: 'fullName', label: 'Name', show: false },
+  { key: 'identity', label: 'Identity', show: false },
+  { key: 'createdAt', label: 'Date of request', show: true },
+  { key: 'status', label: 'KYC Status', show: false },
+  { key: 'updatedAt', label: 'Updated At', show: true },
 ]
 interface RowProps {
   item: KycItem
@@ -100,7 +100,7 @@ export const AdminKycTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
   const [isLoading, handleIsLoading] = useState(false)
   const [stats, setStats] = useState<TStats[]>([])
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>(['total'])
+  const [selectedStatuses, setSelectedStatuses] = useState(['approved', 'rejected', 'pending', 'changes-requested']);
   const [endDate, setEndDate] = useState(null)
   const [searchValue, setSearchValue] = useState('')
   const [sortBy, setSortBy] = useState('')

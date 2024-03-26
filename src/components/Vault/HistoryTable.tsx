@@ -36,7 +36,9 @@ const FilterPopover = ({ options, tokenId }: { options: ActionFilterTabs[]; toke
     <PopOverContent>
       {options.map((option) => (
         <UnpaddedLinkStyledButton key={option} onClick={() => getEvents({ filter: option, tokenId })}>
-          <TYPE.popOver>{ActionTypeTextHeader[option]}</TYPE.popOver>
+          <TYPE.popOver>
+            <Trans>{ActionTypeTextHeader[option]}</Trans>
+          </TYPE.popOver>
         </UnpaddedLinkStyledButton>
       ))}
     </PopOverContent>

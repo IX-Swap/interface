@@ -2,7 +2,6 @@ import React from 'react'
 import { isFirefox } from 'react-device-detect'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
-import FileViewer from 'react-file-viewer'
 import { Download } from 'react-feather'
 
 import { ModalLightBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, EllipsisText } from 'theme'
@@ -12,6 +11,7 @@ import RedesignedLightWideModal from 'components/Modal/RedesignedLightWideModal'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonGradient } from 'components/Button'
 import { AcceptFiles } from 'components/Upload/types'
+import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer'
 
 export const Image = styled.img`
   max-width: 100%;
@@ -45,29 +45,34 @@ export const KycLightDocPreviewModal = ({ isOpen, onClose, data, downloadFile }:
               </Title>
             </TitleContainer>
             <Body className="file-viewer-canvas-wrapper">
-              {data?.map(({ asset, id }: any) => (
-                <>
-                  {asset.mimeType === AcceptFiles.PDF ? (
-                    <div>
-                      <div className="file-viewer-title">
-                        <EllipsisText style={{ width: 'calc(100% - 40px)', whiteSpace: 'pre-wrap' }}>
-                          {asset.name}
-                        </EllipsisText>
-                        <StyledDocPreviewButton onClick={() => downloadFile(asset.public, asset.name, asset.mimeType)}>
-                          <IconWrapper style={{ margin: 0 }} size={18}>
-                            <StyledDownload />
-                          </IconWrapper>
-                        </StyledDocPreviewButton>
+              {data?.map(({ asset, id }: any) => {
+                const docs = [{ uri: asset.public }]
+                return (
+                  <>
+                    {asset.mimeType === AcceptFiles.PDF ? (
+                      <div>
+                        <div className="file-viewer-title">
+                          <EllipsisText style={{ width: 'calc(100% - 40px)', whiteSpace: 'pre-wrap' }}>
+                            {asset.name}
+                          </EllipsisText>
+                          <StyledDocPreviewButton
+                            onClick={() => downloadFile(asset.public, asset.name, asset.mimeType)}
+                          >
+                            <IconWrapper style={{ margin: 0 }} size={18}>
+                              <StyledDownload />
+                            </IconWrapper>
+                          </StyledDocPreviewButton>
+                        </div>
+                        <FileContainer>
+                          <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+                        </FileContainer>
                       </div>
-                      <FileContainer>
-                        <FileViewer fileType="pdf" filePath={asset.public} height="70vh" />
-                      </FileContainer>
-                    </div>
-                  ) : (
-                    <Image key={id} src={asset.public} alt="" />
-                  )}
-                </>
-              ))}
+                    ) : (
+                      <Image key={id} src={asset.public} alt="" />
+                    )}
+                  </>
+                )
+              })}
             </Body>
           </ModalContent>
         </ModalLightBlurWrapper>

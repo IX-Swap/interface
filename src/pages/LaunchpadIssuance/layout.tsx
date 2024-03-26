@@ -5,6 +5,8 @@ import { LaunchpadContainer } from 'pages/Launchpad'
 
 import { useSetHideHeader } from 'state/application/hooks'
 import Header from 'components/Header'
+import { useWeb3React } from '@web3-react/core'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 interface Props {
   background?: string
@@ -12,6 +14,7 @@ interface Props {
 
 export const IssuancePageLayout: React.FC<React.PropsWithChildren<Props>> = (props) => {
   const hideHeader = useSetHideHeader()
+  const { account } = useWeb3React()
 
   React.useEffect(() => {
     hideHeader(true)
@@ -20,6 +23,8 @@ export const IssuancePageLayout: React.FC<React.PropsWithChildren<Props>> = (pro
       hideHeader(false)
     }
   }, [])
+
+  if (!account) return <NotAvailablePage />
 
   return (
     <>

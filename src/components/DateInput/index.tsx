@@ -51,7 +51,7 @@ export const DateInput = ({
   };
   return (
     <Container>
-      <KycInputLabel label={t`${label}`} error={error} tooltipText={tooltipText} />
+      <KycInputLabel label={`${label}`} error={error} tooltipText={tooltipText} />
       {isDisabled && value ? (
         <Row>
           {dayjs(value).format(format || 'MMM DD, YYYY')} <CalendarIcon style={{ marginLeft: 9 }} />

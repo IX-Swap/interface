@@ -39,7 +39,7 @@ import { TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
 import { UserMobileFilters } from './userMobileFilters'
 
-const headerCells = [t`Wallet address`, t`Role`, t`Name`, t`Security Token`, t`Waive Withdrawal Fees`, '']
+const headerCells = [`Wallet address`, `Role`, `Name`, t`Security Token`, `Waive Withdrawal Fees`, '']
 
 interface BodyProps {
   changeUser: (item: User) => void
@@ -114,7 +114,7 @@ export const UsersList: FC = () => {
         </StyledButtonGradientBorder>
       </Flex>
       <Flex>
-        {/* <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={t`Search`} /> */}
+        {/* <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={`Search`} /> */}
       </Flex>
       {/* </div> */}
       {modalOpen && <UserModal item={selectedItem} close={closeUpdateModal} filters={filters} />}
@@ -165,11 +165,11 @@ const TokenListPreview = (props: TokenListPreviewProps) => {
   const { tokens } = useSecTokenState()
 
   const icons = useMemo(() => {
-    const ids = props.items.slice(0, 5).map((i) => i.token.id)
+    const ids = props.items.slice(0, 5).map((i) => i.token?.id)
 
     return tokens
-      ?.filter((token) => ids.includes(token.id))
-      ?.map((token) => <CurrencyLogo key={`logo-${token.id}`} size="28px" currency={new WrappedTokenInfo(token)} />)
+      ?.filter((token) => ids.includes(token?.id))
+      ?.map((token) => <CurrencyLogo key={`logo-${token?.id}`} size="28px" currency={new WrappedTokenInfo(token)} />)
   }, [props.items, tokens])
 
   return <TokenList>{icons}</TokenList>
@@ -244,7 +244,7 @@ const Body: FC<BodyProps> = ({ items, changeUser }) => {
   return (
     <>
       {items.map((item) => (
-        <Row changeUser={changeUser} item={item} key={`kyc-table-${item.id}`} />
+        <Row changeUser={changeUser} item={item} key={`kyc-table-${item?.id}`} />
       ))}
     </>
   )
@@ -254,7 +254,9 @@ const Header = () => {
   return (
     <StyledHeaderRow>
       {headerCells.map((cell) => (
-        <div key={cell}>{cell}</div>
+        <div key={cell}>
+          <Trans>{cell}</Trans>
+        </div>
       ))}
     </StyledHeaderRow>
   )

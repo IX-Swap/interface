@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { ButtonEmpty } from 'components/Button'
 import React, { useState } from 'react'
 import Truncate from 'react-truncate'
@@ -49,7 +50,10 @@ export const ReadMore = ({
         lines={!expanded && lines}
         ellipsis={
           <span>
-            ...<ReadMoreButton onClick={toggleLines}>{more}</ReadMoreButton>
+            ...
+            <ReadMoreButton onClick={toggleLines}>
+              <Trans>{more}</Trans>
+            </ReadMoreButton>
           </span>
         }
         onTruncate={handleTruncate}
@@ -58,7 +62,9 @@ export const ReadMore = ({
       </Truncate>
       {!truncated && expanded && (
         <span>
-          <ReadMoreButton onClick={toggleLines}>{less}</ReadMoreButton>
+          <ReadMoreButton onClick={toggleLines}>
+            <Trans>{less}</Trans>
+          </ReadMoreButton>
         </span>
       )}
     </div>

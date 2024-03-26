@@ -1,7 +1,7 @@
 import React, { ReactChildren } from 'react'
 import ReactPhoneInput from 'react-phone-input-2'
 import styled from 'styled-components'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 
 import { TYPE } from 'theme'
 

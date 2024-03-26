@@ -29,23 +29,23 @@ export const AccreditationStatus = ({ brokerDealerStatus, custodianStatus, messa
       case AccreditationStatusEnum.DECLINED:
         return {
           color: 'error',
-          text: t`Rejected`,
+          text: `Rejected`,
         }
       case AccreditationStatusEnum.FAILED:
         return {
           color: 'error',
-          text: t`Failed`,
+          text: `Failed`,
         }
       case AccreditationStatusEnum.APPROVED:
         return {
           color: 'green1',
-          text: t`Passed`,
+          text: `Passed`,
         }
       case AccreditationStatusEnum.PENDING:
       default:
         return {
           color: 'text1',
-          text: t`Passing accreditation`,
+          text: `Passing accreditation`,
           icon: <LoaderThin size={20} />,
         }
     }
@@ -58,7 +58,7 @@ export const AccreditationStatus = ({ brokerDealerStatus, custodianStatus, messa
           <Trans>Broker - Dealer:</Trans>
         </TYPE.title10>
         <Box marginLeft="13px" display="flex" alignItems="center">
-          <TYPE.body3>{getStatusInfo(brokerDealerStatus).text}</TYPE.body3>
+          <TYPE.body3><Trans>{getStatusInfo(brokerDealerStatus).text}</Trans></TYPE.body3>
           {getStatusInfo(brokerDealerStatus).icon && (
             <Box marginLeft="9px" display="flex" justifyContent="center">
               <IconWrapper size={20}>{getStatusInfo(brokerDealerStatus).icon}</IconWrapper>
@@ -71,7 +71,7 @@ export const AccreditationStatus = ({ brokerDealerStatus, custodianStatus, messa
           <Trans>Custodian:</Trans>
         </TYPE.title10>
         <Box marginLeft="13px" display="flex" alignItems="center">
-          <TYPE.body3>{getStatusInfo(custodianStatus).text}</TYPE.body3>
+          <TYPE.body3><Trans>{getStatusInfo(custodianStatus).text}</Trans></TYPE.body3>
           {getStatusInfo(custodianStatus).icon && (
             <Box marginLeft="9px" display="flex" justifyContent="center">
               <IconWrapper size={20}>{getStatusInfo(custodianStatus).icon}</IconWrapper>

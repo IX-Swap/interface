@@ -140,7 +140,7 @@ const verifyMitigation = (
 
 const getTokenReserve = async (
   token: string,
-  pairContract: Contract,
+  pairContract: any,
   token0: string,
   token1: string
 ): Promise<BigNumber> => {
@@ -154,12 +154,7 @@ const getTokenReserve = async (
   throw new Error(`Token ${token} not inside pair`)
 }
 
-const isPairTokenSec = async (
-  token: string,
-  pairContract: Contract,
-  token0: string,
-  token1: string
-): Promise<boolean> => {
+const isPairTokenSec = async (token: string, pairContract: any, token0: string, token1: string): Promise<boolean> => {
   let isTokenSec = false
 
   if (utils.getAddress(token) == utils.getAddress(token0)) {

@@ -93,7 +93,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
       <ModalBottom>
         <StakeInfoContainer>
           <TextRow
-            textLeft={t`IXSGov to return`}
+            textLeft={`IXSGov to return`}
             textRight={
               <EllipsedText>
                 <div>
@@ -103,10 +103,10 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
               </EllipsedText>
             }
           />
-          <TextRow textLeft={t`APY`} textRight={`${stake.apy}%`} />
-          <TextRow textLeft={t`Total rewards `} textRight={`${formatAmount(+stake.reward)} ${IXSCurrency?.symbol}`} />
+          <TextRow textLeft={`APY`} textRight={`${stake.apy}%`} />
+          <TextRow textLeft={`Total rewards `} textRight={`${formatAmount(+stake.reward)} ${IXSCurrency?.symbol}`} />
           <TextRow
-            textLeft={t`Instant reward payout today`}
+            textLeft={`Instant reward payout today`}
             textRight={
               <EllipsedText>
                 <div>
@@ -116,7 +116,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             }
           />
           <TextRow
-            textLeft={t`Rewards to be vested (10% weekly)`}
+            textLeft={`Rewards to be vested (10% weekly)`}
             textRight={
               <EllipsedText>
                 <div>
@@ -126,7 +126,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             }
           />
           <TextRow
-            textLeft={t`Passed staking period`}
+            textLeft={`Passed staking period`}
             textRight={
               <EllipsedText>
                 <div>

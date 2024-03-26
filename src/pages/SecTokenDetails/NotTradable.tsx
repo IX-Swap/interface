@@ -1,5 +1,5 @@
 import React from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Box } from 'rebass'
 
 import { TYPE } from 'theme'
@@ -17,9 +17,11 @@ export const NotTradable = ({ ticker }: Props) => {
     <ValutContainer>
       <NotTradableContainer>
         <TYPE.title6>Not tradable yet</TYPE.title6>
-        <Box textAlign="center">{t`${ticker} token is not ready to be traded on ${
-          config?.name || 'IX Swap'
-        } yet. Please check later.`}</Box>
+        <Box textAlign="center">
+          <Trans>{`${ticker} token is not ready to be traded on ${
+            config?.name || 'IX Swap'
+          } yet. Please check later.`}</Trans>
+        </Box>
       </NotTradableContainer>
     </ValutContainer>
   )

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ArrowDown, ChevronDown } from 'react-feather'
@@ -8,18 +8,19 @@ import { InvestTextField } from './InvestTextField'
 
 import { useActiveWeb3React } from 'hooks/web3'
 import { Option, useTokensList } from 'hooks/useTokensList'
-import { useCurrency } from 'hooks/Tokens'
+import { useAllTokens, useCurrency } from 'hooks/Tokens'
 
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
-import { useDerivedBalanceInfo } from 'state/launchpad/hooks'
+import { useDerivedBalanceInfo, useFormatOfferValue } from 'state/launchpad/hooks'
 import { text35 } from 'components/LaunchpadMisc/typography'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { Currency } from '@ixswap1/sdk-core'
+import { Currency, Token } from '@ixswap1/sdk-core'
 import Loader from 'components/Loader'
 import { RowBetween } from 'components/Row'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { BuyModal } from '../BuyModal'
+import { Web3Helpers } from '../../../../helpers/web3/web3'
 
 interface Props {
   offer: Offer
@@ -65,15 +66,25 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
     if (value === '') {
       warning = ''
     } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
-      warning = `Max Amount to invest ${availableToInvest} ${offer.investingTokenSymbol}.e`
+      warning = `Max Amount to invest ${availableToInvest} ${
+        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
+      }`
     } else if (Number(min) > realValue) {
-      warning = `Min. investment size ${min} ${offer.investingTokenSymbol}.e`
+      warning = `Min. investment size ${min} ${
+        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
+      }`
     } else if (Number(max) < realValue) {
-      warning = `Max. investment size ${max} ${offer.investingTokenSymbol}.e`
+      warning = `Max. investment size ${max} ${
+        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
+      }`
     } else if (available < realValue) {
-      warning = `Available to invest ${available} ${offer.investingTokenSymbol}.e`
+      warning = `Available to invest ${available} ${
+        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
+      }`
     } else if (isCheckBalance && !isSufficientBalance) {
-      warning = `Insufficient ${offer.investingTokenSymbol}.e balance`
+      warning = `Insufficient ${
+        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
+      } balance`
     }
     return warning
   }
@@ -91,7 +102,9 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
 
   const getWarning = useGetWarning(props.offer, true)
-  const insufficientWarning = `Insufficient ${investingTokenSymbol}.e balance`
+  const insufficientWarning = `Insufficient ${
+    investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
+  } balance`
 
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
@@ -163,7 +176,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const offerInvestmentToken: TokenOption | undefined = React.useMemo(
     () => getTokenInfo(investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens),
     [investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens]
-  );
+  )
 
   const openModal = () => {
     setPreviewModal(true)
@@ -172,6 +185,13 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const closeModal = () => {
     setPreviewModal(false)
   }
+
+  const formatTokenOption = (tokenOption: any) => {
+    if (!tokenOption) return undefined;
+    const formattedName = tokenOption.name + (tokenOption.name === 'USDC' ? '.e' : '');
+    return { ...tokenOption, name: formattedName };
+  };
+  
 
   return (
     <>
@@ -182,13 +202,18 @@ export const ConvertationField: React.FC<Props> = (props) => {
           type="number"
           onChange={changeValue}
           disabled={isBalanceLoading}
-          trailing={<CurrencyDropdown disabled value={offerInvestmentToken ? { ...offerInvestmentToken, name: offerInvestmentToken.name + ".e" } : undefined} />}
-
+          trailing={
+            <CurrencyDropdown
+              disabled
+              value={formatTokenOption(offerInvestmentToken)}
+            />
+          }
           caption={insufficientWarning === warning ? '' : warning === 'Loading' ? <Loader /> : warning}
           // height="85px"
           fontSize="20px"
           lineHeight="20px"
           decimalsLimit={investingTokenDecimals}
+          isNoDecimals ={true}
         />
         <InvestTextField
           type="number"

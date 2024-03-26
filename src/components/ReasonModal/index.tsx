@@ -31,7 +31,7 @@ export const ReasonModal = ({
   const [error, handleError] = useState('')
   const valdiate = useCallback(() => {
     if (value.length > 1000) {
-      handleError(t`Maximum is 1000 chars`)
+      handleError(`Maximum is 1000 chars`)
     } else {
       handleError('')
     }
@@ -54,7 +54,11 @@ export const ReasonModal = ({
       <ModalBlurWrapper data-testid="depositPopup">
         <ModalContent>
           <Title>
-            {title && <span>{t`${title}`}</span>}
+            {title && (
+              <span>
+                <Trans>{`${title}`}</Trans>
+              </span>
+            )}
             <CloseIcon data-testid="cross" onClick={onClose} />
           </Title>
           {isRejectingApprovedKYC && (
@@ -68,12 +72,14 @@ export const ReasonModal = ({
             </>
           )}
           <LabelContainer>
-            <Label>{t`${inputLabel}`}</Label>
+            <Label>
+              <Trans>{`${inputLabel}`}</Trans>
+            </Label>
             {/* <img src={clipboardTextIcon} alt="clipboardTextIcon" /> */}
           </LabelContainer>
           <Textarea onChange={onValueChange} value={value} />
           <PinnedContentButton disabled={Boolean(error) || !value} onClick={onSubmit}>
-            {t`${error || actionBtnText}`}
+            <Trans>{`${error || actionBtnText}`}</Trans>
           </PinnedContentButton>
         </ModalContent>
       </ModalBlurWrapper>

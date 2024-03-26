@@ -55,7 +55,6 @@ export const IssuanceActionButtons = ({
       await approve()
       showSuccess('Offer approved successfully')
       setShowApprove(false)
-      window.location.reload()
     } catch (e: any) {
       showError(e?.message)
     }
@@ -66,7 +65,6 @@ export const IssuanceActionButtons = ({
       showSuccess('Offer rejected successfully')
       setShowConfirmReject(false)
       setShowReject(false)
-      window.location.reload()
     } catch (e: any) {
       showError(e?.message)
     }
@@ -77,7 +75,6 @@ export const IssuanceActionButtons = ({
       showSuccess('Requested changes for offer successfully')
       setShowConfirmUpdate(false)
       setShowUpdate(false)
-      window.location.reload()
     } catch (e: any) {
       showError(e?.message)
     }

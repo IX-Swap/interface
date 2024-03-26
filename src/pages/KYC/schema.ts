@@ -1,6 +1,15 @@
 import * as yup from 'yup'
 import { IdentityDocumentType } from './enum'
 
+interface TaxDeclaration {
+  isAdditional: boolean
+  country?: {
+    value: string
+  } | null
+  idNumber: string | null
+  reason: string | null
+}
+
 export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   middleName: yup.string().max(50, 'Too Long!'),
@@ -26,6 +35,7 @@ export const individualErrorsSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Required'),
   phoneNumber: yup
     .string()
+    .nullable()
     .required('Required')
     .min(10, 'Must be valid phone number')
     .max(15, 'Must be valid phone number'),
@@ -33,12 +43,12 @@ export const individualErrorsSchema = yup.object().shape({
   address: yup.string().required('Required'),
   postalCode: yup.string().required('Required'),
   country: yup
-  .object()
-  .nullable()
-  .required('Required')
-  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-    return value && value.label !== undefined && value.label !== null;
-  }),
+    .object()
+    .nullable()
+    .required('Required')
+    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+      return value && value.label !== undefined && value.label !== null
+    }),
 
   city: yup.string().required('Required'),
 
@@ -61,7 +71,7 @@ export const individualErrorsSchema = yup.object().shape({
       then: yup.mixed().nullable().required('Required'),
     }),
 
-    idIssueDate: yup
+  idIssueDate: yup
     .mixed()
     .nullable()
     .when('idType', {
@@ -141,23 +151,13 @@ export const individualErrorsSchema = yup.object().shape({
   isAnnualIncome: yup.boolean(),
   isFinancialAssets: yup.boolean(),
   isJointIncome: yup.boolean(),
-
+  isAdditional: yup.bool(),
   taxDeclarations: yup
     .array()
     .of(
       yup.object().shape({
         isAdditional: yup.bool(),
-        country: yup.object().when('isAdditional', {
-          is: true,
-          then: yup
-            .object()
-            .nullable()
-            .required('Required')
-            .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-              return value && value.value !== undefined
-            }),
-          otherwise: yup.object().nullable(),
-        }),
+        country: yup.object().nullable().required('Required'),
         idNumber: yup.string().when('isAdditional', {
           is: true,
           then: yup.string().nullable(),
@@ -301,13 +301,17 @@ export const corporateErrorsSchema = yup.object().shape({
         nationality: yup.string().required('Required'),
         dateOfBirth: yup.mixed().nullable().required('Required'),
         address: yup.string().required('Required'),
-        shareholding: yup.number().min(1, 'Min 1').max(100, 'Max 10').required('Required'),
+        shareholding: yup
+          .number()
+          .min(1, 'Min 1')
+          .max(100, 'Total sum of shareholding must be max 100')
+          .required('Required'),
         proofOfIdentity: yup.mixed().nullable().required('Required'),
       })
     )
     .min(1, 'At least one beneficial owner')
     .required('Required')
-    .test('isShareholdingAmountValid', 'Total sum of shareholding must be max 100', (value = []) => {
+    .test('isShareholdingAmountValid', (value = []) => {
       const sum = value.reduce((acc, next) => acc + Number(next.shareholding || 0), 0)
       if (sum > 100) {
         return false

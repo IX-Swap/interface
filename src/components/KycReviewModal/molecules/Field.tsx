@@ -1,5 +1,5 @@
 import React from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 import { MEDIA_WIDTHS } from 'theme'
 import { ReactComponent as CheckIcon } from 'assets/images/newRoundCheck.svg'
@@ -40,7 +40,7 @@ export const Field = ({ label, value, data }: Props) => {
     const showCheckIcon = data?.isEmailVerified;
     return (
       <Container>
-      <span>{t`${label}`}</span>
+      <span>{`${label}`}</span>
       <div>
         <span>{value || 'Not completed'}</span>
         {label === 'Email address' && showCheckIcon && (

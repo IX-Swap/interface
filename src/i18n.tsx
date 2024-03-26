@@ -7,10 +7,8 @@ import { SupportedLocale } from 'constants/locales'
 
 export async function dynamicActivate(locale: SupportedLocale) {
   try {
-    const { messages } = await import(`@lingui/loader!./locales/${locale}.po`)
-    i18n.loadLocaleData(locale, { plurals: () => null })
-    i18n.load(locale, messages)
-    i18n.activate(locale)
+    const { messages } = await import(`./locales/${locale}`)
+    i18n.loadAndActivate({locale, messages})
   } catch (e) {}
 }
 
@@ -33,7 +31,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   if (!loaded) return null
 
   return (
-    <I18nProvider forceRenderOnLocaleChange={false} i18n={i18n}>
+    <I18nProvider i18n={i18n}>
       {children}
     </I18nProvider>
   )

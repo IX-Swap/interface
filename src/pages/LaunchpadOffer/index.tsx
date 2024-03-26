@@ -29,6 +29,7 @@ import { DiscreteInternalLink, MEDIA_WIDTHS } from 'theme'
 import { ArrowLeft } from 'react-feather'
 import { routes } from 'utils/routes'
 import Header from 'components/Header'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 interface OfferPageParams {
   offerId: string
@@ -97,7 +98,7 @@ export default function LaunchpadOffer() {
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NetworkNotAvailable />
+          <NotAvailablePage />
         </CenteredFixed>
       </Portal>
     )
