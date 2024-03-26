@@ -1077,7 +1077,7 @@ export default function IndividualKycForm() {
                               {(values?.secondaryContactDetails?.label === 'Business Email Address' ||
                                 selectedOption === 2) && (
                                 <TextInput
-                                  subText="Please input Business Email Address as an alternative contact method"
+                                  subText="Please input Business Email Address as alternative contact method. The business email address needs to be different from your primary email address."
                                   placeholder="Business Email Address"
                                   id="businessEmailAddress"
                                   label="Business Email Address"

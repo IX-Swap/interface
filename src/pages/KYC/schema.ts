@@ -106,7 +106,7 @@ export const individualErrorsSchema = yup.object().shape({
     })
     .test(
       'dupplicatedEmail',
-      'Please input Business Email Address as alternative contact method. The business email address needs to be different from your primary email address.',
+      ' ',
       (value, context) => value !== context.parent.email
     ),
 
