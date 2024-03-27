@@ -39,30 +39,30 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
   return (
     <OptionList>
       {Object.entries(SUPPORTED_WALLETS).map(([key, option]) => {
-        if (isMobile && isMetamaskAppInstalled && option.name === 'MetaMask') {
-          return (
-            <Option
-              id={`connect-${key}`}
-              onClick={() => {
-                props.onSelect(option)
-                // if (isMobile) {
-                //   if (isMetamaskAppInstalled) {
-                //     window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
-                //   } else {
-                //     console.log('Metamask app is not installed')
-                //   }
-                // }
-              }}
-              key={key}
-              active={option.connector === connector}
-              color={option.color}
-              link={option.href}
-              header={option.name}
-              subheader={null}
-              icon={option.iconURL}
-            />
-          )
-        }
+        // if (isMobile && isMetamaskAppInstalled && option.name === 'MetaMask') {
+        //   return (
+        //     <Option
+        //       id={`connect-${key}`}
+        //       onClick={() => {
+        //         props.onSelect(option)
+        //         // if (isMobile) {
+        //         //   if (isMetamaskAppInstalled) {
+        //         //     window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
+        //         //   } else {
+        //         //     console.log('Metamask app is not installed')
+        //         //   }
+        //         // }
+        //       }}
+        //       key={key}
+        //       active={option.connector === connector}
+        //       color={option.color}
+        //       link={option.href}
+        //       header={option.name}
+        //       subheader={null}
+        //       icon={option.iconURL}
+        //     />
+        //   )
+        // }
         if (option.connector === metaMask) {
           if (!(window.web3 || window.ethereum)) {
             if (option.name === 'MetaMask') {
