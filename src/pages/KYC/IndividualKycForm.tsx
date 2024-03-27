@@ -1471,7 +1471,7 @@ export default function IndividualKycForm() {
            
                         </RowBetween>
 
-                        <ExtraInfoCard>
+                        {/* <ExtraInfoCard>
                           <RowBetween>
                             <TYPE.buttonMuted>Declaration of US Citizenship or US residence for FATCA</TYPE.buttonMuted>
                             <LinkButton type="button" onClick={() => setShowFATCAModal(true)}>
