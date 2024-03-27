@@ -1,14 +1,13 @@
 name: Release - build & deploy
 
-
 env:
-  CI: "true"
-  AWS_REGION: "ap-southeast-1"
-  AWS_APP_NAME: "ix-swap-web"
-  AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-  AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-  NPM_REG_ATUH_TOKEN: "${{ secrets.NPM_REG_ATUH_TOKEN }}"
-  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  CI: 'true'
+  AWS_REGION: 'ap-southeast-1'
+  AWS_APP_NAME: 'ix-swap-web'
+  AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+  AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+  NPM_REG_ATUH_TOKEN: '${{ secrets.NPM_REG_ATUH_TOKEN }}'
+  GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
 on:
   push:
@@ -39,9 +38,8 @@ jobs:
     needs: bump_version
     if: ${{ needs.bump_version.outputs.new_tag != null }}
     env:
-      ENVIRONMENT: "production"
+      ENVIRONMENT: 'production'
     steps:
-
       - name: Config terraform
         run: |
           mkdir $HOME/terraform/  && \
@@ -63,7 +61,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v2
         with:
-          node-version: 14.17
+          node-version: 18.14
           registry-url: https://registry.npmjs.org
 
       - name: create .npmrc file
@@ -78,6 +76,9 @@ jobs:
           cp -v .env .env.$ENVIRONMENT
 
       - name: Install dep's & build
+        env:
+          SENTRY_PROJECT_NAME: '${{ secrets.SENTRY_PROJECT_NAME }}'
+          SENTRY_AUTH_TOKEN: '${{ secrets.SENTRY_AUTH_TOKEN }}'
         run: |
           export CI=false   && \
           yarn install --frozen-lockfile  &&\
