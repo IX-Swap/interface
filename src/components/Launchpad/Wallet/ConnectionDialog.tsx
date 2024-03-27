@@ -83,8 +83,8 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     [tryActivation]
   )
 
-  const handleInstallMetaMask = () => {
-    window.location.href = 'https://metamask.io/'
+  const handleInstallWallet = () => {
+    window.location.href = 'https://www.ixswap.io/search?query=dapp'
   }
 
   const handleBackToSelection = () => {
@@ -163,7 +163,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
             )} */}
           </ContentWrapper>
           <InstallLinkContainer>
-            <WalletInstallationLink onClick={handleInstallMetaMask}>I do not have a wallet yet</WalletInstallationLink>
+            <WalletInstallationLink onClick={handleInstallWallet}>I do not have a wallet yet</WalletInstallationLink>
             <TooltipIcon />
           </InstallLinkContainer>
           <Line />
