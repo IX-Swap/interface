@@ -9,9 +9,10 @@ import { SupportedChainId } from 'constants/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, PlaygroundBadge } from './styled'
+import { PRODUCTION_APP_URL } from 'config'
 
 export const NetworkNotAvailable = () => {
-  const { chainId, library } = useActiveWeb3React()
+  const { chainId, provider } = useActiveWeb3React()
   const { pathname } = useLocation()
 
   const { config } = useWhitelabelState()
@@ -19,20 +20,40 @@ export const NetworkNotAvailable = () => {
   const farming = ['/vesting', '/staking'].includes(pathname)
 
   const changeNetwork = (targetChain: number) => {
-    if (chainId !== targetChain && library && library?.provider?.isMetaMask) {
-      switchToNetwork({ library, chainId: targetChain })
+    if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
+      switchToNetwork({ provider, chainId: targetChain })
     }
   }
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
+  const network = window.location.href.includes(PRODUCTION_APP_URL) ? 'Polygon' : 'Mumbai'
+
+  if (!provider?.provider?.isMetaMask) {
+    return (
+      <Container>
+        <Title>
+          <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
+          <br /> <Trans>{`on this Blockchain network`}</Trans>
+        </Title>
+        <Info>
+          <Trans>
+            You have connected to Metamask through WalletConnect. Please switch the network to {network} in your wallet.
+          </Trans>
+        </Info>
+      </Container>
+    )
+  }
+
   return (
     <Container>
       <Title>
-        {t`${config?.name || 'IX Swap'} is not available`}
-        <br /> {t`on this Blockchain network`}
+        <Trans>{`${config?.name || 'IX Swap'} is not available 2`}</Trans>
+        <br /> <Trans>{`on this Blockchain network`}</Trans>
       </Title>
-      <Info>{t`${config?.name || 'IX Swap'} is available only on:`}</Info>
+      <Info>
+        <Trans>{`${config?.name || 'IX Swap'} is available only on:`}</Trans>
+      </Info>
 
       <NetworksRow elements={farming ? chains.length + 1 : chains.length}>
         {(chains.includes(SupportedChainId.MAINNET) || farming) && (

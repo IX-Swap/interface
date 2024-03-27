@@ -58,6 +58,7 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
               Allocated for Pre-Sale
             </div>
           </SaleAllocationEntry>
+
           <Separator />
         </>
       )}
@@ -105,7 +106,6 @@ export const OfferPreSaleInfo: React.FC<PresaleProps> = (props) => {
       </SaleAllocationEntry>
 
       <Separator />
-
       <SaleAllocationEntry>
         <EntryLabel>Min. Investment Size</EntryLabel>
         <EntryValue>

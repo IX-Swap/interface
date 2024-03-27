@@ -2,7 +2,6 @@ import { useCallback, useMemo } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Router, Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
-import { t } from '@lingui/macro'
 
 import { useSecTokens } from 'state/secTokens/hooks'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
@@ -17,7 +16,7 @@ import { useArgentWalletContract } from './useArgentWalletContract'
 import { useSwapRouterContract } from './useContract'
 import useENS from './useENS'
 import useTransactionDeadline from './useTransactionDeadline'
-import { useActiveWeb3React } from './web3'
+import { useWeb3React } from '@web3-react/core'
 
 export enum SwapCallbackState {
   INVALID,
@@ -144,7 +143,7 @@ function useSwapCallArguments(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): () => Promise<SwapCall[]> {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider: library } = useWeb3React()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
@@ -236,28 +235,28 @@ export function swapErrorToUserReadableMessage(error: any): string {
   if (reason?.indexOf('execution reverted: ') === 0) reason = reason.substr('execution reverted: '.length)
   switch (reason) {
     case 'IxsV2Router: EXPIRED':
-      return t`The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low.`
+      return `The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low.`
     case 'IxsV2Router: INSUFFICIENT_OUTPUT_AMOUNT':
     case 'IxsV2Router: EXCESSIVE_INPUT_AMOUNT':
-      return t`This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance.`
+      return `This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance.`
     case 'TransferHelper: TRANSFER_FROM_FAILED':
-      return t`The input token cannot be transferred. There may be an issue with the input token.`
+      return `The input token cannot be transferred. There may be an issue with the input token.`
     case 'IxsV2: TRANSFER_FAILED':
-      return t`The output token cannot be transferred. There may be an issue with the output token.`
+      return `The output token cannot be transferred. There may be an issue with the output token.`
     case 'IxsV2: K':
-      return t`The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer.`
+      return `The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer.`
     case 'Too little received':
     case 'Too much requested':
     case 'STF':
-      return t`This transaction will not succeed due to price movement. Try increasing your slippage tolerance.`
+      return `This transaction will not succeed due to price movement. Try increasing your slippage tolerance.`
     case 'TF':
-      return t`The output token cannot be transferred. There may be an issue with the output token.`
+      return `The output token cannot be transferred. There may be an issue with the output token.`
     default:
       if (reason?.indexOf('undefined is not an object') !== -1) {
         console.error(error, reason)
-        return t`An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading.`
+        return `An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading.`
       }
-      return t`Unknown error${reason ? `: "${reason}"` : ''}. Try increasing your slippage tolerance.`
+      return `Unknown error${reason ? `: "${reason}"` : ''}. Try increasing your slippage tolerance.`
   }
 }
 
@@ -266,7 +265,7 @@ export function useSwapCallbackError(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): { state: SwapCallbackState; error: string | null } {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider: library } = useWeb3React()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
@@ -296,7 +295,7 @@ export function useSwapCallback(
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): () => Promise<{ callback: null | (() => Promise<string>) }> {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId, provider: library } = useWeb3React()
   const getSwapCalls = useSwapCallArguments(trade, allowedSlippage, recipientAddressOrName)
 
   const addTransaction = useTransactionAdder()
@@ -331,7 +330,7 @@ export function useSwapCallback(
                   }
             return library
               .estimateGas(tx)
-              .then((gasEstimate) => {
+              .then((gasEstimate: any) => {
                 return {
                   call,
                   gasEstimate,
@@ -349,7 +348,7 @@ export function useSwapCallback(
                   .then(() => {
                     return { call, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
                   })
-                  .catch((callError) => {
+                  .catch((callError: any) => {
                     const errorMessage = formatRpcError(gasError)
 
                     return {
@@ -396,7 +395,7 @@ export function useSwapCallback(
             }),
             ...(value && !isZero(value) ? { value } : {}),
           })
-          .then((response) => {
+          .then((response: any) => {
             const inputSymbol = trade.inputAmount.currency.symbol
             const outputSymbol = trade.outputAmount.currency.symbol
             const inputAmount = trade.inputAmount.toSignificant(4)
@@ -420,7 +419,7 @@ export function useSwapCallback(
 
             return response.hash
           })
-          .catch((error) => {
+          .catch((error: any) => {
             // if the user rejected the tx, pass this along
             if (error?.code === 4001) {
               throw new Error('Transaction rejected.')

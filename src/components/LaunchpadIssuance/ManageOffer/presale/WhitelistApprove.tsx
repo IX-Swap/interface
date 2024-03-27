@@ -6,7 +6,7 @@ import { useApproveRandomPresaleWhitelists, useManagePresaleWhitelists } from 's
 import { IssuanceTextField } from '../../utils/TextField'
 import { useShowError } from 'state/application/hooks'
 import { ConfirmModal } from '../shared/ConfirmModal'
-import { text1, text51 } from 'components/LaunchpadMisc/typography'
+import { text1, text2, text51 } from 'components/LaunchpadMisc/typography'
 import { integerNumberFilter } from 'utils/input'
 
 interface Props {
@@ -23,8 +23,8 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
   const [count, setCount] = useState('')
   const showError = useShowError()
 
-  const [openApproveAll, setOpenApproveAll] = useState(false)
-  const [openRejectAll, setOpenRejectAll] = useState(false)
+  // const [openApproveAll, setOpenApproveAll] = useState(false)
+  // const [openRejectAll, setOpenRejectAll] = useState(false)
   const [openApproveRandom, setOpenApproveRandom] = useState(false)
 
   const refresh = () => {
@@ -55,18 +55,18 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
       refresh()
     })
   }
-  const onApproveAll = () => {
-    if (!totalItems) return
-    manageWhitelists.load(offerId, { approveAll: true }).then(() => {
-      refresh()
-    })
-  }
-  const onRejectAll = () => {
-    if (!totalItems) return
-    manageWhitelists.load(offerId, { rejectAll: true }).then(() => {
-      refresh()
-    })
-  }
+  // const onApproveAll = () => {
+  //   if (!totalItems) return
+  //   manageWhitelists.load(offerId, { approveAll: true }).then(() => {
+  //     refresh()
+  //   })
+  // }
+  // const onRejectAll = () => {
+  //   if (!totalItems) return
+  //   manageWhitelists.load(offerId, { rejectAll: true }).then(() => {
+  //     refresh()
+  //   })
+  // }
   const onClickManage = (disabled: boolean, setMethod: (foo: boolean) => void) => {
     if (!disabled) {
       setMethod(true)
@@ -83,17 +83,18 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
   }
   return (
     <Container>
-      <ConfirmModal isOpen={openApproveAll} setOpen={setOpenApproveAll} onAccept={onApproveAll} />
-      <ConfirmModal isOpen={openRejectAll} setOpen={setOpenRejectAll} onAccept={onRejectAll} />
+      {/* <ConfirmModal isOpen={openApproveAll} setOpen={setOpenApproveAll} onAccept={onApproveAll} />
+      <ConfirmModal isOpen={openRejectAll} setOpen={setOpenRejectAll} onAccept={onRejectAll} /> */}
       <ConfirmModal isOpen={openApproveRandom} setOpen={setOpenApproveRandom} onAccept={onApproveRandom} />
 
-      <Title>Approve Registration</Title>
+      <Title>Approve Registration to Invest</Title>
       <GridContainer>
+        <SmallTitle>Approve Randomly</SmallTitle>
         <GridItem>
           <FieldContainer>
             <IssuanceTextField
               onChange={setCount}
-              label="Approve randomly"
+              // label="Approve randomly"
               placeholder="Approve randomly"
               inputFilter={integerNumberFilter}
               disabled={disabledManage}
@@ -105,7 +106,7 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
             </EndAdornment>
           </FieldContainer>
         </GridItem>
-        <GridItem>
+        {/* <GridItem>
           <OutlineButton
             color={theme.launchpad.colors.success}
             width="165px"
@@ -124,7 +125,7 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
             <ButtonLabel disabled={disabledAll}>Reject All</ButtonLabel>
             <X size={13} />
           </OutlineButton>
-        </GridItem>
+        </GridItem> */}
       </GridContainer>
     </Container>
   )
@@ -136,11 +137,11 @@ const Container = styled.div`
 `
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: auto 155px 155px;
+  grid-template-columns: auto;
   grid-template-rows: auto;
   grid-template-areas:
-    'row1 row2 row3'
-    'error error error';
+    'row1'
+    'error';
   gap: 0 20px;
 `
 const GridItem = styled.div`
@@ -152,17 +153,24 @@ const Title = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
   margin-bottom: 17px;
 `
+
+const SmallTitle = styled.div`
+  ${text2}
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+  margin-bottom: 17px;
+`
+
 const ButtonLabel = styled.span<{ disabled: boolean }>`
   font-weight: 600;
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `
 const FieldContainer = styled.div`
   position: relative;
-  max-width: 759px;
+  max-width: 100%;
 `
 const EndAdornment = styled.div<{ disabled: boolean }>`
   position: absolute;
-  top: 28px;
+  top: 18px;
   right: 32px;
   cursor: pointer;
   z-index: 20;

@@ -31,13 +31,13 @@ import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton,
 import { PAYOUT_TYPE_LABEL } from './constants'
 
 const headerCells = [
-  t`ID`,
-  t`Status`,
-  t`Payout type`,
-  t`SEC token`,
-  t`Payment period`,
-  t`Record date`,
-  t`Amount claimed`,
+  `ID`,
+  `Status`,
+  `Payout type`,
+  `SEC token`,
+  `Payment period`,
+  `Record date`,
+  `Amount claimed`,
   '',
 ]
 
@@ -227,7 +227,9 @@ const Header = () => {
   return (
     <StyledHeaderRow>
       {headerCells.map((cell) => (
-        <div key={cell}>{cell}</div>
+        <div key={cell}>
+          <Trans>{cell}</Trans>
+        </div>
       ))}
     </StyledHeaderRow>
   )

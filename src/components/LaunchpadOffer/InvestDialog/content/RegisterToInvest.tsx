@@ -15,7 +15,7 @@ import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { text28, text59, text9 } from 'components/LaunchpadMisc/typography'
 import { useGetWarning } from '../utils/ConvertationField'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
-import { ReactComponent as NewEyeIcon } from '../../../../assets/images/NewEyeIcon.svg' 
+import { ReactComponent as NewEyeIcon } from '../../../../assets/images/NewEyeIcon.svg'
 
 interface Props {
   offer: Offer
@@ -40,7 +40,7 @@ const initialValues: FormValues = {
 
 const schema = object().shape({
   email: string().email('Please enter a valid email'),
-  isInterested: boolean().nullable(false).required('Please, specify if you are interested in this deal'),
+  isInterested: boolean().nullable(false).required(''),
   amount: number().when('isInterested', {
     is: true,
     then: number().required('Please enter amount of your estimated investment'),
@@ -64,7 +64,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
   const whitelist = useGetWhitelistStatus(props.offer.id)
   const requestWhitelist = useRequestWhitelist(props.offer.id)
   const disableForm = React.useMemo(() => whitelist.status === WhitelistStatus.accepted, [whitelist])
-  const [amount, setAmount] = React.useState("")
+  const [amount, setAmount] = React.useState('')
   const showError = useShowError()
   const showSuccess = useShowSuccess()
   const submit = React.useCallback(
@@ -91,12 +91,11 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     setValue('isInterested', value)
     setFieldTouched('isInterested', true)
 
-    if(!value) {
-      setAmount("")
+    if (!value) {
+      setAmount('')
       setValue('amount', 0)
-      setWarning("")
+      setWarning('')
     }
-
   }
 
   const onChangeAmount = (value: any, setValue: ValueSetter) => {

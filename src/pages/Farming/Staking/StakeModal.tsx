@@ -138,17 +138,17 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
         const fTypedIXSAmount = parseFloat(cleanedValue)
         const fIXSbalance = balanceNum
         if (fTypedIXSAmount > fIXSbalance) {
-          setError(t`Not enough ${currency?.symbol}`)
+          setError(`Not enough ${currency?.symbol}`)
         } else if (fTypedIXSAmount <= 0 || !fTypedIXSAmount) {
-          setError(t`Wrong ${currency?.symbol} amount`)
+          setError(`Wrong ${currency?.symbol} amount`)
         } else if (poolLimitation && fTypedIXSAmount > parseFloat(poolLimitation)) {
-          setError(t`Pool limits exceeded`)
+          setError(`Pool limits exceeded`)
         } else {
           setError('')
         }
       }
     } else if (!isStaking && !isApprovingIXS) {
-      setError(t`Wrong ${currency?.symbol} amount`)
+      setError(`Wrong ${currency?.symbol} amount`)
       setTypedValue('')
     }
   }
@@ -220,7 +220,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
             <Trans>Approving {currency?.symbol}</Trans>
           </Dots>
         ) : (
-          <>{isAmountApproved ? t`Approved ${currency?.symbol}` : t`Approve ${currency?.symbol}`}</>
+          <>
+            <Trans>{isAmountApproved ? `Approved ${currency?.symbol}` : `Approve ${currency?.symbol}`}</Trans>
+          </>
         )}
       </ButtonIXSWide>
     ),
@@ -306,7 +308,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   <RowFixed>
                     <MouseoverTooltip
                       style={{ whiteSpace: 'pre-line' }}
-                      text={t`IXSgov is a tokenized asset representing your staked ${
+                      text={`IXSgov is a tokenized asset representing your staked ${
                         currency?.symbol
                       } on a 1:1 basis. ${config?.name || 'IX Swap'} distributes the IXSgov to your wallet.
                               ${'' ?? ''}
@@ -327,15 +329,15 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
           </ModalTop>
           <ModalBottom>
             <StakeInfoContainer>
-              <TextRow textLeft={t`Period of staking`} textRight={selectedTier?.period} />
+              <TextRow textLeft={`Period of staking`} textRight={selectedTier?.period} />
               <TextRow
-                textLeft={t`Distribute`}
+                textLeft={`Distribute`}
                 textRight={
                   <EllipsedText>
                     <div>{typedValue ? formatAmount(+typedValue) : 0}&nbsp;IXSgov</div>
                   </EllipsedText>
                 }
-                tooltipText={t`IXSgov is a tokenized asset representing your staked ${
+                tooltipText={`IXSgov is a tokenized asset representing your staked ${
                   currency?.symbol
                 } on a 1:1 basis. ${config?.name || 'IX Swap'} distributes the IXSgov to your wallet.
                               ${'' ?? ''}
@@ -345,9 +347,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                                 currency?.symbol
                               } received will be equal to your IXSgov holdings at the time of swap.`}
               />
-              <TextRow textLeft={t`APY`} textRight={`${selectedTier?.APY}%`} />
+              <TextRow textLeft={`APY`} textRight={`${selectedTier?.APY}%`} />
               <TextRow
-                textLeft={t`Staking amount`}
+                textLeft={`Staking amount`}
                 textRight={
                   <EllipsedText>
                     <div>
@@ -357,14 +359,14 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 }
               />
               <TextRow
-                textLeft={t`Estimated maturity time`}
+                textLeft={`Estimated maturity time`}
                 textRight={estimateMaturityTime()}
-                tooltipText={t`Maturity time is the final date of your staking period.`}
+                tooltipText={`Maturity time is the final date of your staking period.`}
               />
               <TextRow
-                textLeft={t`Estimated lock period`}
+                textLeft={`Estimated lock period`}
                 textRight={estimateLockPeriod()}
-                tooltipText={t`Your staked ${currency?.symbol} will be locked for ${
+                tooltipText={`Your staked ${currency?.symbol} will be locked for ${
                   selectedTier?.lockupPeriod
                 } till ${estimateLockPeriod()}. Until that time you won’t be able to unstake your ${
                   currency?.symbol
@@ -375,7 +377,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                               } fully or partially after ${estimateLockPeriod()}.`}
               />
               <TextRow
-                textLeft={t`Estimated rewards`}
+                textLeft={`Estimated rewards`}
                 textRight={
                   <EllipsedText>
                     <div>
@@ -383,7 +385,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                     </div>
                   </EllipsedText>
                 }
-                tooltipText={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
+                tooltipText={`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
                   selectedTier?.period
                 }. In this case your APY will be ${selectedTier?.APY}%. If you partially or fully unstake your ${
                   currency?.symbol

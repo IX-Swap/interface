@@ -1,5 +1,5 @@
 import React from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components/macro'
 
 import { ReactComponent as CopySvg } from '../../assets/images/newCopyIcon.svg'

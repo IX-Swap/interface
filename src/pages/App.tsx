@@ -15,7 +15,6 @@ import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import Header from 'components/Header'
 import Popups from 'components/Popups'
 import ErrorBoundary from 'components/ErrorBoundary'
-import Web3ReactManager from 'components/Web3ReactManager'
 import GoogleAnalyticsReporter from 'components/analytics/GoogleAnalyticsReporter'
 
 // import { Footer } from 'components/Footer'
@@ -41,7 +40,12 @@ import axios from 'axios'
 import { ip } from 'services/apiUrls'
 import { isMobile } from 'react-device-detect'
 import { ConnectWalletModal } from './Connect Wallet Modal'
+import { metaMask } from 'connectors/metaMask'
+import { walletConnectV2 } from 'connectors/walletConnectV2'
+import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
+/* eslint-disable react/display-name */
 import { Footer } from './Launchpad/Footer'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -80,15 +84,15 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: b
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
 const initSafary = () => {
-  const script = document.createElement('script');
-  script.src = 'https://tag.safary.club/stag-0.1.5.js';
-  script.defer = true;
-  script.setAttribute('data-name', 'safary-sdk');
-  script.setAttribute('data-product-id', 'prd_z2suvagAL5');
-  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM=';
-  script.crossOrigin = 'anonymous';
-  document.head.appendChild(script);
-};
+  const script = document.createElement('script')
+  script.src = 'https://tag.safary.club/stag-0.1.5.js'
+  script.defer = true
+  script.setAttribute('data-name', 'safary-sdk')
+  script.setAttribute('data-product-id', 'prd_z2suvagAL5')
+  script.integrity = 'sha256-sFvG3ANXkfEJBbfj+oozHwPgzQSoq4uDCv3xrLblnmM='
+  script.crossOrigin = 'anonymous'
+  document.head.appendChild(script)
+}
 
 export default function App() {
   const getMe = useGetMe()
@@ -114,8 +118,8 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    initSafary();
-  }, []);
+    initSafary()
+  }, [])
 
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
@@ -188,6 +192,16 @@ export default function App() {
 
   useEffect(() => {
     clearLocaleStorage()
+
+    // connect eagerly for metamask
+    void metaMask.connectEagerly().catch(() => {
+      console.debug('Failed to connect eagerly to metamask')
+    })
+
+    // connect eagerly for walletConnectV2
+    walletConnectV2.connectEagerly().catch((error) => {
+      console.debug('Failed to connect eagerly to walletconnect', error)
+    })
   }, [])
 
   useEffect(() => {
@@ -210,8 +224,7 @@ export default function App() {
   const routeGenerator = useCallback(
     (route: RouteMapEntry) => {
       const roleGuard =
-        route.conditions?.rolesSupported !== undefined &&
-        !(route.conditions?.rolesSupported.includes(userRole) && account)
+        route.conditions?.rolesSupported !== undefined && !route.conditions?.rolesSupported.includes(userRole)
       const guards = [
         !isAllowed(route),
         route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
@@ -259,25 +272,25 @@ export default function App() {
             hideHeader={hideHeader}
           >
             <IXSBalanceModal />
-            <Web3ReactManager>
-              <Suspense
-                fallback={
-                  <>
-                    <LoadingIndicator isLoading />
-                  </>
-                }
-              >
-                <Switch>
-                  {routeConfigs.map(routeGenerator).filter((route) => !!route)}
+            {/* <Web3ReactManager> */}
+            <Suspense
+              fallback={
+                <>
+                  <LoadingIndicator isLoading />
+                </>
+              }
+            >
+              <Switch>
+                {routeConfigs.map(routeGenerator).filter((route) => !!route)}
 
-                  {useRedirect && (
-                    <Route
-                      component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                    />
-                  )}
-                </Switch>
-              </Suspense>
-            </Web3ReactManager>
+                {useRedirect && (
+                  <Route
+                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                  />
+                )}
+              </Switch>
+            </Suspense>
+            {/* </Web3ReactManager> */}
           </ToggleableBody>
           {!hideHeader && <Footer />}
         </AppWrapper>

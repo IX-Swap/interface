@@ -4,6 +4,7 @@ import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
 import { useBurnWSecContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
@@ -34,9 +35,10 @@ import { useAddPopup, useToggleTransactionModal } from 'state/application/hooks'
 import { setLogItem } from 'state/eventLog/actions'
 import { formatRpcError } from 'utils/formatRpcError'
 import { NETWORK_ADDRESS_PATTERNS } from 'state/wallet/constants'
+import { WITHDRAW_FLOW_EVENT, WalletEvent } from 'utils/event-logs'
+import { calculateGasPriceMargin } from 'utils/calculateGasPriceMargin'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
 
 export function useWithdrawState(): AppState['withdraw'] {
   return useSelector<AppState, AppState['withdraw']>((state) => state.withdraw)
@@ -104,17 +106,18 @@ export function useDerivedWithdrawInfo(): {
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
   let inputError: string | undefined
   if (!account) {
-    inputError = t`Connect Wallet`
+    inputError = `Connect Wallet`
   }
 
   if (!parsedAmount) {
-    inputError = inputError ?? t`Enter an amount`
+    inputError = inputError ?? `Enter an amount`
   }
 
   let formattedTo = isAddress(receiver)
   if (!receiver) {
     inputError = inputError ?? t`Enter a receiver`
-  } else{//if (!formattedTo) {
+  } else {
+    //if (!formattedTo) {
     const network = networkName || 'Ethereum'
     const currency = walletValidator.findCurrency(network)
     let isValidForNetwork = true
@@ -122,11 +125,11 @@ export function useDerivedWithdrawInfo(): {
     if (currency) {
       isValidForNetwork = walletValidator.validate(receiver, network)
     } else {
-      isValidForNetwork = manualValidation(receiver, network);
+      isValidForNetwork = manualValidation(receiver, network)
     }
 
     if (!isValidForNetwork) {
-      inputError = inputError ?? t`Receiver is invalid`
+      inputError = inputError ?? `Receiver is invalid`
     }
     if (isValidForNetwork) {
       formattedTo = receiver
@@ -135,7 +138,7 @@ export function useDerivedWithdrawInfo(): {
 
   const sufficientBalance = parsedAmount && balance && !balance.lessThan(parsedAmount)
   if (!sufficientBalance) {
-    inputError = inputError ?? t`Insufficient balance`
+    inputError = inputError ?? `Insufficient balance`
   }
   return {
     parsedAmount,
@@ -179,7 +182,7 @@ export function useWithdrawCallback(
   currencyId?: string,
   currencySymbol?: string
 ): ({ id, amount, onSuccess, onError }: WithdrawProps) => Promise<void> {
-  const { library } = useActiveWeb3React()
+  const { provider, account, chainId } = useWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const router = useBurnWSecContract(currencyId)
   const getEvents = useGetEventCallback()
@@ -190,7 +193,6 @@ export function useWithdrawCallback(
 
   return useCallback(
     async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
-      const web3 = new Web3(library?.provider)
       dispatch(withdrawCurrency.pending())
       dispatch(setLogItem({ logItem: null }))
       let withdrawId = null
@@ -198,13 +200,14 @@ export function useWithdrawCallback(
         const response = await withdrawToken({ id, amount, receiver })
         const data = response?.data
         if (!data) {
-          throw new Error(response?.message || t`An error occured. Could not submit withdraw request`)
+          throw new Error(response?.message || `An error occured. Could not submit withdraw request`)
         }
         const { withdrawRequest, signature } = data
         withdrawId = withdrawRequest.id
         const { operator, amount: sum, deadline, v, r, s } = signature
 
-        const gasPrice = await web3.eth.getGasPrice()
+        const gasPrice = await provider?.getGasPrice()
+
         const burned = await router?.burn(
           operator,
           BigNumber.from(sum.hex),
@@ -213,14 +216,33 @@ export function useWithdrawCallback(
           utils.hexlify(r.data),
           utils.hexlify(s.data),
           {
-            gasPrice: gasPrice ?? web3.utils.toWei('80', 'gwei'),
+            gasPrice: calculateGasPriceMargin(chainId, gasPrice),
           }
         )
+
+        new WalletEvent(WITHDRAW_FLOW_EVENT.CREATE_BURN_TX)
+          .walletAddress(account || '')
+          .data({
+            tx: {
+              operator,
+              amount: BigNumber.from(sum.hex).toString(),
+              deadline,
+            },
+            chainId,
+            gasPrice: gasPrice,
+            txHash: burned?.hash,
+            receiver,
+            amount,
+            id,
+          })
+          .info(t`Withdraw ${amount} ${currencySymbol}`)
+
         if (!burned.hash) {
-          throw new Error(t`An error occured. Could not submit withdraw request`)
+          throw new Error(`An error occured. Could not submit withdraw request`)
         }
+
         getEvents({ tokenId, filter: 'all' })
-        addTransaction(burned, { summary: t`Withdraw ${amount} ${currencySymbol}` })
+        addTransaction(burned, { summary: `Withdraw ${amount} ${currencySymbol}` })
         dispatch(setTransaction({ tx: burned.hash }))
         dispatch(withdrawCurrency.fulfilled())
         dispatch(setLogItem({ logItem: withdrawRequest }))
@@ -261,8 +283,8 @@ export const useGetWithdrawStatus = () => {
   )
 }
 
-export const getFeePriceReq = async (id: string | number) => {
-  const response = await apiService.get(custody.feePrice(id))
+export const getFeePriceReq = async (id: string | number, amount: string) => {
+  const response = await apiService.get(custody.feePrice(id, amount))
   return response.data
 }
 
@@ -270,10 +292,10 @@ export const useGetFeePrice = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(
-    async (id: string | number) => {
+    async (id: string | number, amount: string) => {
       try {
         dispatch(getFeePrice.pending())
-        const response = await getFeePriceReq(id)
+        const response = await getFeePriceReq(id, amount)
         dispatch(getFeePrice.fulfilled(response))
       } catch (error: any) {
         dispatch(getFeePrice.rejected({ errorMessage: error.message }))
@@ -332,8 +354,7 @@ export const useCreateDraftWitdraw = () => {
 
 export const usePayFee = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { library, account } = useActiveWeb3React()
-  const web3 = new Web3(library?.provider)
+  const { provider, account, chainId } = useWeb3React()
   const paidFee = usePaidWithdrawFee()
   const paidFeeRejected = useFeeRejected()
   const getEvents = useGetEventCallback()
@@ -343,25 +364,44 @@ export const usePayFee = () => {
       try {
         dispatch(payFee.pending())
 
-        const gasPrice = await web3.eth.getGasPrice()
+        const gasPrice = await provider?.getGasPrice()
+
+        const singer = provider?.getSigner(account)
 
         const tx = {
           from: account,
           to: feeContractAddress,
-          value: web3.utils.toWei(`${feeAmount}`, 'ether'),
-          gasPrice: gasPrice ?? web3.utils.toWei('80', 'gwei'),
+          value: utils.parseEther(feeAmount.toString()),
+          gasPrice: calculateGasPriceMargin(chainId, gasPrice),
         }
 
-        await web3.eth
-          .sendTransaction(tx)
-          .on('transactionHash', async (hash: string) => {
-            await postPrepareFeeReq({ id, feeTxHash: hash })
-          })
-          .on('receipt', async (receipt: any) => {
-            if (receipt.transactionHash) {
-              await paidFee({ tokenId, id, feeTxHash: receipt.transactionHash })
-            }
-          })
+        const txResponse = await singer?.sendTransaction(tx)
+        if (txResponse?.hash) {
+          await postPrepareFeeReq({ id, feeTxHash: txResponse?.hash })
+        }
+
+        const receipt = await txResponse?.wait()
+
+        if (receipt?.transactionHash) {
+          new WalletEvent(WITHDRAW_FLOW_EVENT.WITHDRAW_FEE_PAID)
+            .walletAddress(account || '')
+            .data({
+              transaction: {
+                from: tx.from,
+                to: tx.to,
+                value: tx.value,
+                gasPrice: tx.gasPrice,
+              },
+              feeTxHash: receipt.transactionHash,
+              feeAmount,
+              feeContractAddress,
+              tokenId,
+              id,
+            })
+            .info('User has paid withdraw fee for tokenId: ' + tokenId)
+
+          await paidFee({ tokenId, id, feeTxHash: receipt.transactionHash })
+        }
 
         getEvents({ tokenId, filter: 'all' })
         dispatch(payFee.fulfilled())

@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Flex } from 'rebass'
 import { TYPE } from 'theme'
 import styled from 'styled-components'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 
 import { useCurrency } from 'hooks/Tokens'
 import { Document } from 'state/admin/actions'
@@ -26,10 +26,10 @@ export const InfoBlock: FC<Props> = ({ type, token, attachments }) => {
 
   return (
     <Container>
-      <Item title={t`TYPE:`} content={<div style={{ textTransform: 'uppercase' }}>{type}</div>} />
+      <Item title={`TYPE:`} content={<div style={{ textTransform: 'uppercase' }}>{type}</div>} />
       {currency && (
         <Item
-          title={t`PAYOUT TOKEN:`}
+          title={`PAYOUT TOKEN:`}
           content={
             <>
               <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
@@ -39,7 +39,7 @@ export const InfoBlock: FC<Props> = ({ type, token, attachments }) => {
         />
       )}
       {Boolean(attachments.length) && (
-        <Item title={t`ATTACHMENTS:`} content={<Attachments attachments={attachments} />} />
+        <Item title={`ATTACHMENTS:`} content={<Attachments attachments={attachments} />} />
       )}
     </Container>
   )
@@ -48,7 +48,9 @@ export const InfoBlock: FC<Props> = ({ type, token, attachments }) => {
 const Item: FC<ItemProps> = ({ title, content }) => {
   return (
     <Flex>
-      <TYPE.titleSmall marginRight="12px">{title}</TYPE.titleSmall>
+      <TYPE.titleSmall marginRight="12px">
+        <Trans>{title}</Trans>
+      </TYPE.titleSmall>
       <Content>{content}</Content>
     </Flex>
   )

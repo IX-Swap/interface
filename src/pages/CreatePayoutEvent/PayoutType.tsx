@@ -32,7 +32,7 @@ export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) =>
     <Box marginBottom="24px">
       <Label
         marginBottom="8px"
-        label={t`Payout Type`}
+        label={`Payout Type`}
         required={availableForEditing.includes('type')}
         tooltipText="Select the type of payout applicable for this payout event."
       />

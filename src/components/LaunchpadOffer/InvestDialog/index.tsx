@@ -63,12 +63,36 @@ export const InvestDialog: React.FC<Props> = (props) => {
   }, [props.investedData.load])
   useInterval(updateCallback, 30 * 1000)
   const labelToShow = allLabels.find((label) => label.value === props.offer.status)?.label
+
+  console.log(props.offer.status, 'kklklk')
   return (
     <>
       <ModalContainer>
         <Portal>
           {/* <ModalPadding> */}
           <ModalWrapper>
+            {isMobile && (
+              <DialogHeader>
+                {isMobile ? (
+                  <>
+                    <DialogHeaderExit style={{position: 'absolute', right: '10px', top: '24px'}} onClick={props.onClose}>
+                      <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
+                    </DialogHeaderExit>
+                    <DialogHeaderTitle style={{ marginBottom: '20px' }}>
+                      <DialogHeaderTitle> Dashboard</DialogHeaderTitle>
+
+                      <div
+                        style={{ margin: '10px', border: '1px solid #E6E6FF', padding: '3px 20px', borderRadius: '8px', width: 'fit-content' }}
+                      >
+                        {labelToShow || props.offer.status}
+                      </div>
+                    </DialogHeaderTitle>
+                  </>
+                ) : (
+                  <DialogHeaderTitle>Dashboard</DialogHeaderTitle>
+                )}
+              </DialogHeader>
+            )}
             <DialogContainer>
               {!isMobile && (
                 <aside>
@@ -77,12 +101,14 @@ export const InvestDialog: React.FC<Props> = (props) => {
               )}
 
               {/* <header> */}
+              {!isMobile && (
                 <DialogHeader>
                   {isMobile ? (
                     <DialogHeaderTitle style={{ marginBottom: '20px' }}>
-                      <span style={{ border: '1px solid #E6E6FF', padding: '10px 30px', borderRadius: '8px' }}>
+                      <DialogHeaderTitle> Dashboard</DialogHeaderTitle>
+                      <div style={{ border: '1px solid #E6E6FF', padding: '10px 30px', borderRadius: '8px' }}>
                         {labelToShow || props.offer.status}
-                      </span>
+                      </div>
                     </DialogHeaderTitle>
                   ) : (
                     <DialogHeaderTitle> Dashboard</DialogHeaderTitle>
@@ -92,6 +118,8 @@ export const InvestDialog: React.FC<Props> = (props) => {
                     <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
                   </DialogHeaderExit>
                 </DialogHeader>
+              )}
+
               {/* </header> */}
 
               <main>
@@ -191,7 +219,8 @@ const DialogHeader = styled.div`
 
 const DialogHeaderTitle = styled.div`
   flex-grow: 1;
-  text-align: center;
+  text-align: -webkit-center;
+  margin-top: 20px;
 
   ${text26}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
@@ -206,4 +235,8 @@ const DialogHeaderExit = styled.button`
   max-height: fit-content;
   padding: 0px 20px;
   margin: 0;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    // float: right;
+  }
 `

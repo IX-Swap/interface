@@ -7,6 +7,7 @@ import { TYPE } from 'theme'
 import { ReactComponent as AddIcon } from 'assets/images/add.svg'
 
 import { StyledBarChart, StyledListIcon, StyledStarIcon, PlusButton } from './styleds'
+import { Trans } from '@lingui/macro'
 
 export const TraitsPanel = ({ type }: { type: TraitType }) => {
   const getIcon = useCallback(() => {
@@ -26,7 +27,9 @@ export const TraitsPanel = ({ type }: { type: TraitType }) => {
         <RowStart>
           {getIcon()}
           <Column>
-            <TYPE.body fontWeight={600}>{traitsTitle[type]}</TYPE.body>
+            <TYPE.body fontWeight={600}>
+              <Trans>{traitsTitle[type]}</Trans>
+            </TYPE.body>
           </Column>
         </RowStart>
         <PlusButton>

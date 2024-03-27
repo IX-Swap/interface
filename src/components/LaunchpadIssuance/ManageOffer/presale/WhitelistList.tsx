@@ -22,6 +22,8 @@ import { IssuancePagination } from 'components/LaunchpadIssuance/IssuanceDashboa
 import { ExtractButton, ExtractText, HeaderLabel, TableTitle } from '../shared/styled'
 import { DiscreteInternalLink } from 'theme'
 import { text46 } from 'components/LaunchpadMisc/typography'
+import { style } from 'styled-system'
+import { Line } from 'components/Line'
 
 interface Props {
   data: PaginationRes<OfferPresaleWhitelist>
@@ -33,6 +35,8 @@ interface Props {
   startLoading: () => any
   stopLoading: () => any
   isLoading: boolean
+  startARLoading: () => any
+  stopARLoading: () => any
   pageSize: number
   setPageSize: (page: number) => void
   disabledManage: boolean
@@ -49,6 +53,8 @@ export const OfferWhitelistList = ({
   startLoading,
   stopLoading,
   isLoading,
+  startARLoading,
+  stopARLoading,
   pageSize,
   setPageSize,
   disabledManage,
@@ -65,8 +71,10 @@ export const OfferWhitelistList = ({
   const approveSelected = () => {
     if (actionsDisabled) return
     startLoading()
+    startARLoading()
     manageWhitelists.load(offerId, { approveIds: selected }).then(() => {
       stopLoading()
+      stopARLoading()
       setSelected([])
       refreshWhitelists()
     })
@@ -74,8 +82,10 @@ export const OfferWhitelistList = ({
   const rejectSelected = () => {
     if (actionsDisabled) return
     startLoading()
+    startARLoading()
     manageWhitelists.load(offerId, { rejectIds: selected }).then(() => {
       stopLoading()
+      stopARLoading()
       setSelected([])
       refreshWhitelists()
     })
@@ -123,27 +133,13 @@ export const OfferWhitelistList = ({
 
   return (
     <Container>
+      <Line />
       <Header>
         <TableTitle>Approve Manually</TableTitle>
-        <ButtonsContainer>
-          <ExtractButton as={DiscreteInternalLink} to={extractLink}>
-            <MoreHorizontal color={theme.launchpad.colors.primary} size={13} />
-            <ExtractText>Extract Data</ExtractText>
-          </ExtractButton>
-          <OutlineButton color={theme.launchpad.colors.error} width="180px" onClick={rejectSelected} padding="0 1rem">
-            <ButtonLabel disabled={actionsDisabled}>Reject Selected</ButtonLabel>
-            <X size={13} />
-          </OutlineButton>
-          <OutlineButton
-            color={theme.launchpad.colors.primary}
-            width="180px"
-            onClick={approveSelected}
-            padding="0 1rem"
-          >
-            <ButtonLabel disabled={actionsDisabled}>Approve Selected</ButtonLabel>
-            <Check size={13} />
-          </OutlineButton>
-        </ButtonsContainer>
+        <ExtractButton as={DiscreteInternalLink} to={extractLink}>
+          <MoreHorizontal color={theme.launchpad.colors.primary} size={13} />
+          <ExtractText>Extract Data</ExtractText>
+        </ExtractButton>
       </Header>
       {items.length > 0 && (
         <IssuanceTable maxWidth="100%">
@@ -191,6 +187,17 @@ export const OfferWhitelistList = ({
         onChangePageSize={setPageSize}
         onChangePage={onChangePage}
       />
+
+      <ButtonsContainer>
+        <OutlineButton color={theme.launchpad.colors.success} width="180px" onClick={approveSelected} padding="0 1rem">
+          <ButtonLabel disabled={actionsDisabled}>Approve Selected</ButtonLabel>
+          <Check size={13} />
+        </OutlineButton>
+        <OutlineButton color={theme.launchpad.colors.error} width="180px" onClick={rejectSelected} padding="0 1rem">
+          <ButtonLabel disabled={actionsDisabled}>Reject Selected</ButtonLabel>
+          <X size={13} />
+        </OutlineButton>
+      </ButtonsContainer>
     </Container>
   )
 }
@@ -198,18 +205,20 @@ export const OfferWhitelistList = ({
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
 `
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 22px;
+  margin-top: 1rem;
 `
+
 const ButtonsContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  justify-content: center;
+  display: flex;
+  align-items: end;
+  justify-content: end;
   gap: 16px;
+  margin: 0.5rem 0;
 `
 const ButtonLabel = styled.span<{ disabled: boolean }>`
   font-weight: 600;

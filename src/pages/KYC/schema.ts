@@ -1,6 +1,15 @@
 import * as yup from 'yup'
 import { IdentityDocumentType } from './enum'
 
+interface TaxDeclaration {
+  isAdditional: boolean
+  country?: {
+    value: string
+  } | null
+  idNumber: string | null
+  reason: string | null
+}
+
 export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   middleName: yup.string().max(50, 'Too Long!'),
@@ -10,44 +19,46 @@ export const individualErrorsSchema = yup.object().shape({
   // gender: yup.object().nullable().required('Required'),
 
   nationality: yup
-  .object()
-  .nullable()
-  .required('Required')
-  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-    return value && value.label !== null;
-  }),
+    .object()
+    .nullable()
+    .required('Required')
+    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+      return value && value.label !== null
+    }),
   citizenship: yup
-  .object()
-  .nullable()
-  .required('Required')
-  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-    return value && value.label !== null;
-  }),
+    .object()
+    .nullable()
+    .required('Required')
+    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+      return value && value.label !== null
+    }),
   email: yup.string().email('Invalid email').required('Required'),
   phoneNumber: yup
     .string()
+    .nullable()
     .required('Required')
     .min(10, 'Must be valid phone number')
     .max(15, 'Must be valid phone number'),
 
   address: yup.string().required('Required'),
   postalCode: yup.string().required('Required'),
-  country:yup
-  .object()
-  .nullable()
-  .required('Required')
-  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-    return value && value.label !== undefined;
-  }),
+  country: yup
+    .object()
+    .nullable()
+    .required('Required')
+    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+      return value && value.label !== undefined && value.label !== null
+    }),
+
   city: yup.string().required('Required'),
 
   idType: yup
-  .object()
-  .nullable()
-  .required('Required')
-  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-    return value && value.label !== undefined;
-  }),
+    .object()
+    .nullable()
+    .required('Required')
+    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+      return value && value.label !== undefined
+    }),
   idNumber: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   // idIssueDate: yup.mixed().nullable().required('Required'),
   idExpiryDate: yup
@@ -60,16 +71,26 @@ export const individualErrorsSchema = yup.object().shape({
       then: yup.mixed().nullable().required('Required'),
     }),
 
+  idIssueDate: yup
+    .mixed()
+    .nullable()
+    .when('idType', {
+      is: (idType: any) => {
+        return idType?.label !== IdentityDocumentType.NATIONAL_ID && idType?.label
+      },
+      then: yup.mixed().nullable().required('Required'),
+    }),
+
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
 
   secondaryContactDetails: yup
-  .object()
-  .nullable()
-  .required('Required')
-  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-    // Assuming that value is an object with a 'value' property
-    return value && value.label !== null;
-  }),
+    .object()
+    .nullable()
+    .required('Required')
+    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+      // Assuming that value is an object with a 'value' property
+      return value && value.label !== null
+    }),
 
   proofOfAddress: yup.array().when('secondaryContactDetails', {
     is: (value: any) => value && value.value === 1,
@@ -77,12 +98,17 @@ export const individualErrorsSchema = yup.object().shape({
   }),
 
   alternateEmail: yup
-  .string()
-  .nullable()
-  .when('secondaryContactDetails', {
-    is: (value: any) => value && value.value === 2,
-    then: yup.string().nullable().email('Invalid email').required('Required'),
-  }),
+    .string()
+    .nullable()
+    .when('secondaryContactDetails', {
+      is: (value: any) => value && value.value === 2,
+      then: yup.string().nullable().email('Invalid email').required('Required'),
+    })
+    .test(
+      'dupplicatedEmail',
+      ' ',
+      (value, context) => value !== context.parent.email
+    ),
 
   socialPlatform: yup
     .string()
@@ -92,7 +118,7 @@ export const individualErrorsSchema = yup.object().shape({
       then: yup.string().nullable().required('Required'),
     }),
 
-    handleName: yup
+  handleName: yup
     .string()
     .nullable()
     .when('secondaryContactDetails', {
@@ -106,19 +132,19 @@ export const individualErrorsSchema = yup.object().shape({
 
   selfie: yup.array().min(1, 'Required').nullable(),
   occupation: yup
-  .object()
-  .nullable()
-  .required('Required')
-  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-    return value && value.label !== null;
-  }),
+    .object()
+    .nullable()
+    .required('Required')
+    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+      return value && value.label !== null
+    }),
   employmentStatus: yup
-  .object()
-  .nullable()
-  .required('Required')
-  .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-    return value && value.label !== null;
-  }),
+    .object()
+    .nullable()
+    .required('Required')
+    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
+      return value && value.label !== null
+    }),
   employer: yup.string().required('Required'),
   income: yup.object().nullable().required('Required'),
 
@@ -130,13 +156,13 @@ export const individualErrorsSchema = yup.object().shape({
   isAnnualIncome: yup.boolean(),
   isFinancialAssets: yup.boolean(),
   isJointIncome: yup.boolean(),
-
+  isAdditional: yup.bool(),
   taxDeclarations: yup
     .array()
     .of(
       yup.object().shape({
         isAdditional: yup.bool(),
-        country: yup.object().shape({ label: yup.string() }).nullable().required('Required'),
+        country: yup.object().nullable().required('Required'),
         idNumber: yup.string().when('isAdditional', {
           is: true,
           then: yup.string().nullable(),
@@ -151,6 +177,33 @@ export const individualErrorsSchema = yup.object().shape({
     )
     .min(1, 'Add at least 1 tax declaration')
     .required('Required'),
+
+  // taxDeclarations: yup
+  // .array()
+  // .of(
+  //   yup.object().shape({
+  //     isAdditional: yup.bool(),
+  //     country: yup
+  //       .object()
+  //       .nullable()
+  //       .required('Required')
+  //       .test('nonZeroValue', 'Required', (value: any) => {
+  //         return value && value.value !== undefined;
+  //       }),
+  //     idNumber: yup.string().when('isAdditional', {
+  //       is: true,
+  //       then: yup.string().nullable(),
+  //       otherwise: yup.string().required('Required'),
+  //     }),
+  //     reason: yup.string().when('isAdditional', {
+  //       is: true,
+  //       then: yup.string().required('Required'),
+  //       otherwise: yup.string().nullable(),
+  //     }),
+  //   })
+  // )
+  // .min(1, 'Add at least 1 tax declaration')
+  // .required('Required'),
 
   taxIdentification: yup
     .string()
@@ -253,13 +306,17 @@ export const corporateErrorsSchema = yup.object().shape({
         nationality: yup.string().required('Required'),
         dateOfBirth: yup.mixed().nullable().required('Required'),
         address: yup.string().required('Required'),
-        shareholding: yup.number().min(1, 'Min 1').max(100, 'Max 10').required('Required'),
+        shareholding: yup
+          .number()
+          .min(1, 'Min 1')
+          .max(100, 'Total sum of shareholding must be max 100')
+          .required('Required'),
         proofOfIdentity: yup.mixed().nullable().required('Required'),
       })
     )
     .min(1, 'At least one beneficial owner')
     .required('Required')
-    .test('isShareholdingAmountValid', 'Total sum of shareholding must be max 100', (value = []) => {
+    .test('isShareholdingAmountValid', (value = []) => {
       const sum = value.reduce((acc, next) => acc + Number(next.shareholding || 0), 0)
       if (sum > 100) {
         return false

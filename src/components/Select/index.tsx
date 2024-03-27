@@ -76,15 +76,19 @@ const colourStyles = {
       fontWeight: 600,
     }
   },
-  valueContainer: (styles: Record<string, any>) => {
+  valueContainer: (styles: Record<string, any>, { isMulti }: { isMulti: boolean }) => {
     return {
       ...styles,
       width: '100%',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
-      flexWrap: 'nowrap',
+      // flexWrap: 'nowrap',
       display: 'flex',
+
+
+      flexDirection: isMulti ? 'row' : '',
+      flexWrap: 'wrap',
     }
   },
   control: (styles: Record<string, any>) => {
@@ -197,8 +201,10 @@ export const Select = ({
       error={error}
       options={customOptions}
       isSearchable={isSearchable}
+      blurInputOnSelect={!isMulti}
       isClearable={isClearable}
       isMulti={isMulti}
+      closeMenuOnSelect={!isMulti}
       inputId={id}
       onChange={(option: unknown) => {
         onSelect(option as Option)
@@ -211,7 +217,6 @@ export const Select = ({
       borderRadius={borderRadius}
       isDisabled={isDisabled}
       hideSelectedOptions={false}
-      closeMenuOnSelect={!isMulti}
       isOptionDisabled={(option: any) => option.isDisabled}
     />
   )

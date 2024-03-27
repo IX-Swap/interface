@@ -21,7 +21,7 @@ export const admin = {
   addAdmin: () => '/metamask/admin',
   whitelistedList: 'users/whitelisted',
   addOrRemoveWhitelisted: (address: string) => `users/whitelist/address/${address}`,
-  resendEmail: '/kyc/resendEmailCode'
+  resendEmail: '/kyc/resendEmailCode',
 }
 
 export const vesting = {
@@ -154,7 +154,7 @@ export const custody = {
     filters += getQueryParam({ param: 'page', value: page, isFirst: !Boolean(tokenId || filter) })
     return `/custody/request?${filters}`
   },
-  feePrice: (id: number | string) => `/token/price/${id}`,
+  feePrice: (id: number | string, amount: string) => `/custody/withdraw/fee?tokenId=${id}&amount=${amount}`,
   withdrawStatus: (id: number | string) => `/custody/withdraw/fee-status/${id}`,
   draftWithdraw: '/custody/withdraw/prepare-whitelist',
   preparePaidFee: '/custody/withdraw/prepare-fee',

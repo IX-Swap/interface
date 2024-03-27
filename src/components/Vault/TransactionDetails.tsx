@@ -98,6 +98,8 @@ export const TransactionDetails = ({ currency }: Props) => {
   const originalNetworkName = getOriginalNetworkFromToken(currency)
   const networkName = getNetworkFromToken(currency)
 
+  console.log(status, 'hhhhhhhh')
+
   return (
     <RedesignedWideModal
       isOpen={isOpen}
@@ -161,8 +163,15 @@ export const TransactionDetails = ({ currency }: Props) => {
                 }}
               >
                 <RowBetween>
-                  <TYPE.description2 color={statusColor}>{statusText} </TYPE.description2>
-                  {isSuccess ? (
+                  {/* <TYPE.description2 color={statusColor}>{statusText} </TYPE.description2> */}
+                  <LiniarProgressContainer style={{width: '100%'}} statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
+                    <TYPE.description2 marginBottom={'10px'} color={statusColor}>
+                      {statusText}
+                    </TYPE.description2>
+                    <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
+                  </LiniarProgressContainer>
+
+                  {/* {isSuccess ? (
                     <SuccessIcon />
                   ) : data?.status === 'pending' ? (
                     ''
@@ -170,12 +179,12 @@ export const TransactionDetails = ({ currency }: Props) => {
                     <PendingIcon />
                   ) : (
                     <ErrorIcon />
-                  )}
+                  )} */}
                 </RowBetween>
 
-                <LiniarProgressContainer statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
+                {/* <LiniarProgressContainer statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
                   <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
-                </LiniarProgressContainer>
+                </LiniarProgressContainer> */}
               </div>
             )}
 

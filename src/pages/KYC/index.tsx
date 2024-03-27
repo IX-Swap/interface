@@ -369,7 +369,9 @@ const KYC = () => {
                       <FlexContainer>
                         <Copy
                           toCopy={`${new URL(window.location.href).href?.split('?')[0]}?referralCode=${referralCode}`}
-                        >{t`Copy Referral Link`}</Copy>
+                        >
+                          <Trans>{`Copy Referral Link`}</Trans>
+                        </Copy>
                         {/* <TextSpan></TextSpan> */}
                       </FlexContainer>
                     </StyledDiv>

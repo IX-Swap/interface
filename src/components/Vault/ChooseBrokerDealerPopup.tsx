@@ -116,17 +116,17 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
   const getText = (status: string | undefined) => {
     switch (status) {
       case KYCStatuses.APPROVED:
-        return t`KYC: APPROVED`
+        return `KYC: APPROVED`
       case KYCStatuses.REJECTED:
-        return t`KYC: REJECTED`
+        return `KYC: REJECTED`
       case KYCStatuses.PENDING:
-        return t`KYC: PENDING`
+        return `KYC: PENDING`
       case KYCStatuses.CHANGES_REQUESTED:
-        return t`KYC: CHANGE REQUESTED`
+        return `KYC: CHANGE REQUESTED`
       case KYCStatuses.NOT_SUBMITTED:
-        return t`KYC: NOT_SUBMITTED`
+        return `KYC: NOT_SUBMITTED`
       default:
-        return t`Pass KYC on ${config?.name || 'IX Swap'}`
+        return `Pass KYC on ${config?.name || 'IX Swap'}`
     }
   }
 
@@ -169,7 +169,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <div style={{ display: 'flex' }}>
           <Button onClick={requestKyc} disabled={kyc?.status === KYCStatuses.APPROVED}>
             <TYPE.title10 color={kyc?.status === KYCStatuses.APPROVED ? '#0ECC88' : '#292933'}>
-              {statusDesc}
+              <Trans>{statusDesc}</Trans>
             </TYPE.title10>
           </Button>
           {kyc?.status === KYCStatuses.APPROVED ? (

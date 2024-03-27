@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 
 import { ChevronElement } from 'components/ChevronElement'
@@ -60,7 +60,9 @@ export const CollectionDropdown = ({
         <RowBetween>
           {(myCollections.length || newCollectionName) && (
             <RowStart>
-              <TYPE.body2>{selectedCollection?.name || newCollectionName || t`New Collection`}</TYPE.body2>
+              <TYPE.body2>
+                <Trans>{selectedCollection?.name || newCollectionName || `New Collection`}</Trans>
+              </TYPE.body2>
             </RowStart>
           )}
         </RowBetween>

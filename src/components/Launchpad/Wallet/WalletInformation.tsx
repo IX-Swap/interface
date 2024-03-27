@@ -14,14 +14,14 @@ import { VioletCard } from 'components/Card'
 
 import useTheme from 'hooks/useTheme'
 
-import { useActiveWeb3React } from 'hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { switchToNetwork } from 'hooks/switchToNetwork'
 
 import { ChevronDown } from 'react-feather'
 import { text10, text16, text8 } from 'components/LaunchpadMisc/typography'
 
 export const WalletInformation = () => {
-  const { chainId, library, account } = useActiveWeb3React()
+  const { chainId, provider, account } = useWeb3React()
 
   const theme = useTheme()
 
@@ -34,12 +34,12 @@ export const WalletInformation = () => {
 
   const onNetworkSelect = React.useCallback(
     (targetChain: number) => {
-      if (chainId !== targetChain && library && library?.provider?.isMetaMask) {
-        switchToNetwork({ library, chainId: targetChain })
+      if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
+        switchToNetwork({ provider, chainId: targetChain })
         toggleNetworkMenu()
       }
     },
-    [chainId, library, toggleNetworkMenu]
+    [chainId, provider, toggleNetworkMenu]
   )
 
   return (

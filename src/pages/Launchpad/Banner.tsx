@@ -42,7 +42,8 @@ const BannerContainer = styled.div`
 
 const BannerTitle = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
-  font-family: ${(props) => props.theme.launchpad.font};
+  font-family: system-ui;
+
   ${text52}
   margin-bottom: 2rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {

@@ -18,9 +18,13 @@ export const SwitchRow = ({ data, title, info }: NftNsfwProps) => {
       <Warning />
       <Column>
         <TYPE.body fontWeight={600} paddingRight="7px">
-          {t`${title}`}
+          <Trans>{`${title}`}</Trans>
         </TYPE.body>
-        {info && <Info>{t`${info}`}</Info>}
+        {info && (
+          <Info>
+            <Trans>{`${info}`}</Trans>
+          </Info>
+        )}
       </Column>
       <TYPE.body fontWeight={600}>
         <Trans>{data ? 'On' : 'Off'}</Trans>

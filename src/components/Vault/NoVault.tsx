@@ -42,20 +42,20 @@ function getStatusMessage(
   const status = accreditationRequest?.status
   switch (status) {
     case AccreditationStatusEnum.PENDING:
-      return t`KYC approved on ${platform?.name || 'primary issuer'}. Waiting for KYC approval on Custodian...`
+      return `KYC approved on ${platform?.name || 'primary issuer'}. Waiting for KYC approval on Custodian...`
     case AccreditationStatusEnum.FAILED:
       return (
         accreditationRequest?.message ||
-        t`Could not verify KYC. Please check your account and/or KYC status on ${removeProtocolFromUrl(
+        `Could not verify KYC. Please check your account and/or KYC status on ${removeProtocolFromUrl(
           platform?.website || 'primary issuer website'
         )}. Retry passing accreditation once your KYC is approved by ${platform?.name || 'primary issuer'}. [retry]`
       )
     case AccreditationStatusEnum.DECLINED: {
-      return accreditationRequest?.message || t`Accreditation rejected`
+      return accreditationRequest?.message || `Accreditation rejected`
     }
     case undefined:
     default:
-      return t`To trade/swap ${symbolText} please pass accreditation.`
+      return `To trade/swap ${symbolText} please pass accreditation.`
   }
 }
 export const NoVault = ({
@@ -114,7 +114,9 @@ export const NoVault = ({
       {userHaveValidAccount && (
         <>
           <VaultStatusDescription style={{ order: statuses.includes(AccreditationStatusEnum.DECLINED) ? 3 : 2 }}>
-            <TYPE.body1>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.body1>
+            <TYPE.body1>
+              <Trans>{getStatusMessage(accreditationRequest, symbolText, platform)}</Trans>
+            </TYPE.body1>
           </VaultStatusDescription>
 
           {(custodianStatus || brokerDealerStatus) && (

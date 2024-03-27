@@ -1,7 +1,7 @@
 import React, { ReactChildren } from 'react'
 import ReactPhoneInput from 'react-phone-input-2'
 import styled from 'styled-components'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 
 import { TYPE } from 'theme'
 
@@ -16,7 +16,7 @@ interface Props {
 export const PhoneInput = ({ value, onChange, label, onBlur, error }: Props) => {
   return (
     <Container>
-      <Label style={{ color: '#555566', fontSize: '13px', fontWeight: 500 }}>{t`${label || 'Phone Number'}`}</Label>
+      <Label style={{ marginTop: '15px', color: '#555566', fontSize: '13px', fontWeight: 500 }}>{t`${label || 'Phone Number'}`}</Label>
       <ReactPhoneInput placeholder="Phone Number" onBlur={onBlur} country={'us'} value={value} onChange={onChange} />
       {error && (
         <TYPE.small marginTop="-8px" color={'red1'}>

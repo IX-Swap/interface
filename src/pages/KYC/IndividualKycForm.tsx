@@ -124,6 +124,7 @@ export default function IndividualKycForm() {
   const [showOptoutModal, setShowOptoutModal] = useState(false)
   const [showOptoutConfirmationModal, setShowOptoutConfirmationModal] = useState(false)
   const [idExpiryDateLabel, setIdExpiryDateLabel] = useState('ID Expiration Date')
+  const [idIssuanceLabel, setIdIssuanceLabel] = useState('ID Issuance Date')
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const openConfirmationModal = useCallback(() => {
@@ -143,6 +144,7 @@ export default function IndividualKycForm() {
   const prevAccount = usePrevious(account)
 
   useEffect(() => {
+  
     const code = new URL(window.location.href).href?.split('=')[1]
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
@@ -191,16 +193,18 @@ export default function IndividualKycForm() {
   }, [kyc])
 
   useEffect(() => {
-    window.addEventListener('beforeunload', alertUser)
-    const IsNewKyc = localStorage.getItem('newKyc')
-    if(IsNewKyc){
-      addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } })
+    window.addEventListener('beforeunload', alertUser);
+    const IsNewKyc = localStorage.getItem('newKyc');
+    if (IsNewKyc) {
+      addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } });
+      localStorage.removeItem('newKyc'); // Remove the item so it doesn't trigger again
     }
-
+  
     return () => {
-      window.removeEventListener('beforeunload', alertUser)
-    }
-  }, [])
+      window.removeEventListener('beforeunload', alertUser);
+    };
+  }, []);
+  
 
   const alertUser = (e: any) => {
     e.preventDefault()
@@ -255,7 +259,9 @@ export default function IndividualKycForm() {
   }
 
   const onIsAdditionalChange = async (index: number, setFieldValue: any) => {
+
     const values = form.current.values
+    console.log(values.taxDeclarations[index].isAdditional, 'kkkkk')
     if (!values.taxDeclarations[index].isAdditional) {
       setFieldValue(`taxDeclarations[${index}].idNumber`, '') // Clear TIN
       setFieldValue(`taxDeclarations[${index}].country`, null) // Clear country
@@ -265,6 +271,7 @@ export default function IndividualKycForm() {
 
     declaration.isAdditional = !values.taxDeclarations[index].isAdditional
     declaration.idNumber = ''
+    declaration.country = ""
     declaration.reason = ''
 
     const root = { ...values }
@@ -275,6 +282,7 @@ export default function IndividualKycForm() {
       `taxDeclarations[${index}].isAdditional`,
       `taxDeclarations[${index}].idNumber`,
       `taxDeclarations[${index}].reason`,
+      `taxDeclarations[${index}].country`,
     ]
 
     const validationErrors: Record<string, string> = {}
@@ -312,6 +320,7 @@ export default function IndividualKycForm() {
     setFieldValue(`taxDeclarations[${index}].isAdditional`, declaration.isAdditional, false)
     setFieldValue(`taxDeclarations[${index}].idNumber`, declaration.idNumber, false)
     setFieldValue(`taxDeclarations[${index}].reason`, declaration.reason, false)
+    setFieldValue(`taxDeclarations[${index}].country`, declaration.country, false)
   }
 
   const onChangeInput = (key: string, value: any, values: any, setFieldValue: any) => {
@@ -327,6 +336,8 @@ export default function IndividualKycForm() {
     setFieldValue(key, value, false)
     validateValue(key, value)
     validationSeen(key)
+
+    console.log(key, value, 'new value')
   }
 
   const onSelectChangeNew = (key: string, value: any, setFieldValue: any) => {
@@ -532,7 +543,8 @@ export default function IndividualKycForm() {
     },
     [formSubmitHandler]
   )
-
+  
+  console.log(errors, 'jsjsjsjsj')
 
   return (
     <Loadable loading={!isLoggedIn}>
@@ -626,6 +638,7 @@ export default function IndividualKycForm() {
 
               const identityDocumentFilled =
                 shouldValidate && isFilled('idType') && isFilled('idNumber') && isFilled('idIssueDate')
+                
 
               const addressFilled =
                 shouldValidate &&
@@ -903,8 +916,10 @@ export default function IndividualKycForm() {
                                   // idType?.label === IdentityDocumentType.OTHERS
                                 ) {
                                   setIdExpiryDateLabel('ID Expiration Date (Optional)')
+                                  setIdIssuanceLabel('ID Issuance Date (Optional)')
                                 } else {
                                   setIdExpiryDateLabel('ID Expiration Date')
+                                  setIdIssuanceLabel('ID Issuance Date')
                                 }
                               }}
                             />
@@ -922,7 +937,7 @@ export default function IndividualKycForm() {
 
                           <FormGrid>
                             <DateInput
-                              label="ID Issuance Date"
+                              label={idIssuanceLabel}
                               placeholder="ID Issuance Date"
                               id="documentIssueDateButton"
                               maxHeight={60}
@@ -937,11 +952,13 @@ export default function IndividualKycForm() {
                             <DateInput
                               label={idExpiryDateLabel}
                               id="documentExpiryDateButton"
+                              placeholder="ID Expiration Date"
                               maxHeight={60}
                               error={errors.idExpiryDate}
                               value={values.idExpiryDate}
                               onChange={(value) => {
                                 setFieldValue('idExpiryDate', dayjs(value).local().format('YYYY-MM-DD'), false)
+                                validationSeen('idExpiryDate')
                               }}
                               minDate={new Date()}
                             />
@@ -1060,7 +1077,7 @@ export default function IndividualKycForm() {
                               {(values?.secondaryContactDetails?.label === 'Business Email Address' ||
                                 selectedOption === 2) && (
                                 <TextInput
-                                  subText="Please input Business Email Address as an alternative contact method"
+                                  subText="Please input Business Email Address as alternative contact method. The business email address needs to be different from your primary email address."
                                   placeholder="Business Email Address"
                                   id="businessEmailAddress"
                                   label="Business Email Address"
@@ -1337,12 +1354,12 @@ export default function IndividualKycForm() {
                                           }
                                           error={errors[`taxDeclarations[${index}].country`]}
                                         />
-
+{/* 
                                         {errors[`taxDeclarations[${index}].country`] && (
                                           <TYPE.small marginTop="8px" color={'red1'}>
                                             {errors[`taxDeclarations[${index}].country`]}
                                           </TYPE.small>
-                                        )}
+                                        )} */}
                                       </div>
 
                                       <div>
@@ -1366,11 +1383,11 @@ export default function IndividualKycForm() {
                                             )
                                           }
                                         />
-                                        {errors[`taxDeclarations[${index}].idNumber`] && (
+                                        {/* {errors[`taxDeclarations[${index}].idNumber`] && (
                                           <TYPE.small marginTop="8px" color={'red1'}>
                                             {errors[`taxDeclarations[${index}].idNumber`]}
                                           </TYPE.small>
-                                        )}
+                                        )} */}
                                       </div>
                                     </FormGrid>
 
@@ -1451,8 +1468,8 @@ export default function IndividualKycForm() {
                           <TYPE.title7>
                             <Trans>FATCA</Trans>
                           </TYPE.title7>
-                       
-                        </RowBetween> */}
+           
+                        </RowBetween>
 
                         {/* <ExtraInfoCard>
                           <RowBetween>

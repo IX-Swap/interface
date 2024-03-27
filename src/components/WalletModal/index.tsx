@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Trans } from '@lingui/macro'
-import { AbstractConnector } from '@web3-react/abstract-connector'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import { Connector } from '@web3-react/types'
+import { useWeb3React } from '@web3-react/core'
 import ReactGA from 'react-ga'
 import { isMobile } from 'react-device-detect'
 import { Text } from 'rebass'
@@ -11,24 +10,17 @@ import { AutoRow } from 'components/Row'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import MetamaskIcon from '../../assets/images/metamask.png'
-import { injected } from '../../connectors'
+import { metaMask } from '../../connectors/metaMask'
 // import { OVERLAY_READY } from '../../connectors/Fortmatic'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import usePrevious from '../../hooks/usePrevious'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useWalletModalToggle } from '../../state/application/hooks'
-import { ExternalLink, TYPE } from '../../theme'
+import { ExternalLink } from '../../theme'
 import AccountDetails from '../AccountDetails'
 import Modal from '../Modal'
-import { ErrorSection } from './ErrorSection'
 import Option from './Option'
 import PendingView from './PendingView'
-import Column from 'components/Column'
-
-import metamaskmobile from 'assets/images/metamaskmobile.png'
-import trust from 'assets/images/trust.png'
-import coinbase from 'assets/images/coinbase.png'
-// import { FormCard } from './styleds'
 import {
   CloseColor,
   CloseIcon,
@@ -36,11 +28,14 @@ import {
   HeaderRow,
   HoverText,
   OptionGrid,
-  TermsCard,
   UpperSection,
   Wrapper,
 } from './styleds'
-import { ButtonIXSGradient, ButtonOutlined } from 'components/Button'
+import { ReactComponent as TooltipIcon } from 'assets/images/infoBlue.svg'
+import { Line } from 'components/Line'
+import metamaskmobile from 'assets/images/metamaskmobile.png'
+import trust from 'assets/images/trust.png'
+import coinbase from 'assets/images/coinbase.png'
 
 const WALLET_VIEWS = {
   OPTIONS: 'options',
@@ -59,11 +54,11 @@ export default function WalletModal({
   ENSName?: string
 }) {
   // important that these are destructed from the account-specific web3-react context
-  const { active, account, connector, activate, error } = useWeb3React()
+  const { account, connector, isActive } = useWeb3React()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
-  const [pendingWallet, setPendingWallet] = useState<AbstractConnector | undefined>()
+  const [pendingWallet, setPendingWallet] = useState<Connector | undefined>()
 
   const [pendingError, setPendingError] = useState<boolean>()
 
@@ -88,16 +83,17 @@ export default function WalletModal({
   }, [walletModalOpen])
 
   // close modal when a connection is successful
-  const activePrevious = usePrevious(active)
+  const activePrevious = usePrevious(isActive)
   const connectorPrevious = usePrevious(connector)
   useEffect(() => {
-    if (walletModalOpen && ((active && !activePrevious) || (connector && connector !== connectorPrevious && !error))) {
+    if (walletModalOpen && ((isActive && !activePrevious) || (connector && connector !== connectorPrevious))) {
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
-  }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
+  }, [setWalletView, isActive, connector, walletModalOpen, activePrevious, connectorPrevious])
 
+  // Adjust tryActivation() function to handle Coinbase Wallet activation
   const tryActivation = useCallback(
-    async (connector: AbstractConnector | undefined) => {
+    async (connector: Connector | undefined) => {
       let name = ''
       Object.keys(SUPPORTED_WALLETS).map((key) => {
         if (connector === SUPPORTED_WALLETS[key].connector) {
@@ -105,7 +101,6 @@ export default function WalletModal({
         }
         return true
       })
-      // log selected wallet
 
       const { ym } = window
       ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
@@ -115,28 +110,37 @@ export default function WalletModal({
         action: 'Change Wallet',
         label: name,
       })
-      setPendingWallet(connector) // set wallet for pending view
+      setPendingWallet(connector)
       setWalletView(WALLET_VIEWS.PENDING)
 
-      // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
-      if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
-        connector.walletConnectProvider = undefined
-      }
       if (connector) {
         try {
-          await activate(connector, undefined, true)
+          await connector.activate()
         } catch (error) {
-          if (error instanceof UnsupportedChainIdError) {
-            activate(connector) // a little janky...can't use setError because the connector isn't set
-          } else {
-            activate(connector) // a little janky...can't use setError because the connector isn't set
-            setPendingError(true)
-          }
+          connector.activate() // a little janky...can't use setError because the connector isn't set
+          setPendingError(true)
         }
       }
     },
-    [activate]
+    [isActive]
   )
+
+  function checkMetamaskAppInstalled() {
+    // Check if the user agent indicates a mobile device
+    const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+    // Define the Metamask app URL scheme
+    const metamaskAppScheme = 'ethereum:' // This is just a placeholder, the actual scheme might differ
+
+    // Try to open the Metamask app URL scheme
+    const testLink = document.createElement('a')
+    testLink.href = metamaskAppScheme
+    const isMetamaskAppInstalled = isMobileDevice && typeof testLink.href === 'string'
+
+    return isMetamaskAppInstalled
+  }
+
+  // Usage
 
   // useEffect(() => {
   //   const isWalletConnect = localStorage.getItem('walletconnect')
@@ -153,17 +157,43 @@ export default function WalletModal({
   // }, [toggleWalletModal])
 
   // get wallets user can switch too, depending on device/browser
+
+  // Update getOptions() function to handle Coinbase Wallet
   function getOptions() {
     const isMetamask = window.ethereum && window.ethereum.isMetaMask
+
+    const isMetamaskAppInstalled = checkMetamaskAppInstalled()
+
     return Object.keys(SUPPORTED_WALLETS).map((key) => {
       const option = SUPPORTED_WALLETS[key]
-      // check for mobile options
-      // if (isMobile) {
-      //   //disable portis on mobile for now
-      //   // if (option.connector === portis) {
-      //   //   return null
-      //   // }
 
+      if (isMobile && isMetamaskAppInstalled && option.name === 'MetaMask') {
+        return (
+          <Option
+            id={`connect-${key}`}
+            onClick={() => {
+              // if (isMobile) {
+              //   if (isMetamaskAppInstalled) {
+              //     window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
+              //   } else {
+              //     console.log('Metamask app is not installed')
+              //   }
+              // } else {
+              option.connector === connector
+                ? setWalletView(WALLET_VIEWS.ACCOUNT)
+                : !option.href && tryActivation(option.connector)
+              // }
+            }}
+            key={key}
+            active={option.connector === connector}
+            color={option.color}
+            link={option.href}
+            header={option.name}
+            subheader={null}
+            icon={option.iconURL}
+          />
+        )
+      }
       //   if (!window.web3 && !window.ethereum && option.mobile) {
       //     return (
       //       <Option
@@ -185,7 +215,7 @@ export default function WalletModal({
       // }
 
       // overwrite injected when needed
-      if (option.connector === injected) {
+      if (option.connector === metaMask) {
         // don't show injected if there's no injected provider
         if (!(window.web3 || window.ethereum)) {
           if (option.name === 'MetaMask') {
@@ -214,34 +244,53 @@ export default function WalletModal({
         }
       }
 
-      // return rest of options
-      return (
-        // !isMobile &&
-        // !option.mobileOnly && (
-        <Option
-          id={`connect-${key}`}
-          onClick={() => {
-            option.connector === connector
-              ? setWalletView(WALLET_VIEWS.ACCOUNT)
-              : !option.href && tryActivation(option.connector)
-          }}
-          key={key}
-          active={option.connector === connector}
-          color={option.color}
-          link={option.href}
-          header={option.name}
-          subheader={null} //use option.descriptio to bring back multi-line
-          icon={option.iconURL}
-        />
-        // )
-      )
+      // Handle Coinbase Wallet option
+      else if (isMobile && option.name === 'Coinbase Wallet') {
+        return (
+          <Option
+            id={`connect-${key}`}
+            onClick={() => {
+              if (isMetamaskAppInstalled) {
+                // Open Coinbase Wallet app
+                window.location.href = 'coinbasewallet://crypto?_a=connect&url=https://app.ixswap.io/#/kyc'
+              } else {
+                // Handle the case where Coinbase Wallet app is not installed
+                console.log('Coinbase Wallet app is not installed')
+              }
+            }}
+            key={key}
+            active={option.connector === connector}
+            color={option.color}
+            link={option.href}
+            header={option.name}
+            subheader={null}
+            icon={coinbase} // Use the Coinbase Wallet icon here
+          />
+        )
+      } else {
+        // Handle other wallet options
+        return (
+          <Option
+            id={`connect-${key}`}
+            onClick={() => {
+              option.connector === connector
+                ? setWalletView(WALLET_VIEWS.ACCOUNT)
+                : !option.href && tryActivation(option.connector)
+            }}
+            key={key}
+            active={option.connector === connector}
+            color={option.color}
+            link={option.href}
+            header={option.name}
+            subheader={null}
+            icon={option.iconURL}
+          />
+        )
+      }
     })
   }
 
   function getModalContent() {
-    if (error) {
-      return <ErrorSection error={error} toggleWalletModal={toggleWalletModal} />
-    }
     return (
       <UpperSection>
         <CloseIcon onClick={toggleWalletModal}>
@@ -266,78 +315,23 @@ export default function WalletModal({
           </HeaderRow>
         )}
 
-
-{isMobile ?         <ContentWrapper>
-          <Column style={{ alignItems: 'stretch' }}>
-            <br />
-            <TYPE.description2>
-              You are accessing IX Swap through a mobile phone. To connect a wallet, we recommend using browsers from
-              Metamask, Trust Wallet, Coinbase Wallet. See links below for more information:
-              <br />
-            </TYPE.description2>
-
-            <ButtonOutlined
-              type="button"
-              onClick={() =>
-                location.replace(
-                  'https://support.metamask.io/hc/en-us/articles/6356387482523-How-to-use-the-MetaMask-Mobile-Browser'
-                )
-              }
-              style={{
-                width: '100%',
-                marginTop: '32px',
-                color: 'black',
-                justifyContent: 'left',
-                fontSize: '13px',
-              }}
-            >
-              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={metamaskmobile} alt="homeImg" />
-              Metamask Browser
-            </ButtonOutlined>
-            <ButtonOutlined
-              type="button"
-              onClick={() => location.replace('https://trustwallet.com/dapp/')}
-              style={{
-                width: '100%',
-                marginTop: '32px',
-                color: 'black',
-     
-                justifyContent: 'left',
-                fontSize: '13px',
-              }}
-            >
-              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={trust} alt="groupImg" />
-              Trust Wallet Browser
-            </ButtonOutlined>
-
-            <ButtonOutlined
-              type="button"
-              onClick={() => location.replace('https://help.coinbase.com/en/wallet/other-topics/what-is-a-dapp')}
-              style={{
-                width: '100%',
-                marginTop: '32px',
-                color: 'black',
-                justifyContent: 'left',
-                fontSize: '12px',
-              }}
-            >
-              <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={coinbase} alt="groupImg" />
-              Coinbased Wallet Browser
-            </ButtonOutlined>
-          </Column>
-          {/* </FormCard> */}
-        </ContentWrapper> :         <ContentWrapper>
+        <ContentWrapper>
           <AutoRow style={{ flexWrap: 'nowrap' }}>
             <Text style={{ fontSize: '13px', color: '#666680', fontWeight: '400', lineHeight: '19.5px' }}>
               <Trans>
-                By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
-                <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
-                acknowledge that you have read and understood the{' '}
-                <ExternalLink href="https://ixswap.io/privacy-policy/">
-                  {config?.name || 'IX Swap'} Privacy Policy
-                </ExternalLink>
-                .
+                Connecting your wallet allows IX Swap to see your wallet address and, consequently, the funds you hold
+                on the blockchain. This does not grant IX Swap the ability to manage or transfer your tokens; for that,
+                you will be asked to sign a token approval.
+                {/* By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
+                  <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
+                  acknowledge that you have read and understood the{' '}
+                  <ExternalLink href="https://ixswap.io/privacy-policy/">
+                    {config?.name || 'IX Swap'} Privacy Policy
+                  </ExternalLink>
+                  . */}
               </Trans>
+              <br /> <br />
+              <Trans>Select your wallet from the options below to get started</Trans>
             </Text>
           </AutoRow>
           {walletView === WALLET_VIEWS.PENDING ? (
@@ -350,8 +344,27 @@ export default function WalletModal({
           ) : (
             <OptionGrid>{getOptions()}</OptionGrid>
           )}
-        </ContentWrapper> }
+        </ContentWrapper>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '5px' }}>
+          {' '}
+          <div style={{ fontSize: '13px', color: '#6666FF', fontWeight: '600', textAlign: 'center' }}>
+            I do not have a wallet yet
+          </div>
+          <TooltipIcon />
+        </div>
+        <Line style={{ marginTop: '70px' }} />
 
+        <div style={{ fontSize: '13px', justifyContent: 'center', marginTop: '20px', color: '#666680' }}>
+          By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
+          <ExternalLink style={{ color: '#6666FF' }} href="https://ixswap.io/terms-and-conditions/">
+            Terms and Conditions
+          </ExternalLink>{' '}
+          and acknowledge that you have read and understood the{' '}
+          <ExternalLink style={{ color: '#6666FF' }} href="https://ixswap.io/privacy-policy/">
+            {config?.name || 'IX Swap'} Privacy Policy
+          </ExternalLink>
+          .
+        </div>
       </UpperSection>
     )
   }
@@ -360,8 +373,8 @@ export default function WalletModal({
       <RedesignedWideModal
         isOpen={walletModalOpen}
         onDismiss={toggleWalletModal}
-        minHeight={70}
-        maxHeight={70}
+        // minHeight={60}
+        // maxHeight={50}
         mobileMaxHeight={80}
         isright
       >

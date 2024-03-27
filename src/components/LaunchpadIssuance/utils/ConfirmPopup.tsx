@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
@@ -42,16 +42,18 @@ export const ConfirmPopup: React.FC<Props> = ({
               {type === 'error' && <Delete color={theme.launchpad.colors.error} size="42" strokeWidth={1} />}
             </Icon>
           )}
-          <Title>{t`${title || 'Are you sure?'}`}</Title>
+          <Title>
+            <Trans>{`${title || 'Are you sure?'}`}</Trans>
+          </Title>
           {subtitle && <MessageSubtitle>{subtitle}</MessageSubtitle>}
         </Message>
 
-        <OutlineButton style={{ border: '1px solid #6666FF33' }} onClick={onDecline}>{t`${
-          declineText || 'No'
-        }`}</OutlineButton>
+        <OutlineButton style={{ border: '1px solid #6666FF33' }} onClick={onDecline}>
+          <Trans>{`${declineText || 'No'}`}</Trans>
+        </OutlineButton>
 
         <FilledButton background={background} onClick={onAccept}>
-          {t`${acceptText || 'Yes'}`}
+          <Trans>{`${acceptText || 'Yes'}`}</Trans>
         </FilledButton>
       </Container>
     </IssuanceDialog>

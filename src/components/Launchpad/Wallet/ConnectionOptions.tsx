@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-// import { isMobile } from 'react-device-detect'
-import { injected } from 'connectors'
+import { isMobile } from 'react-device-detect'
+import { metaMask } from 'connectors/metaMask'
 import { useWeb3React } from '@web3-react/core'
 import { SUPPORTED_WALLETS, WalletInfo } from 'constants/wallet'
 import { ExternalLink } from 'theme'
@@ -13,37 +13,94 @@ interface ConnectionOptionsProps {
 }
 
 export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
-  const theme = useTheme()
   const { connector } = useWeb3React()
 
-  const isMetaMask = window.ethereum && window.ethereum.isMetaMask
+  // const isMetaMask = window.ethereum && window.ethereum.isMetaMask
+
+  // const handleMetaMaskMobile = () => {
+  //   if (isMobile && isMetaMask) {
+  //     window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
+  //   }
+  // }
+
+  function checkMetamaskAppInstalled() {
+    const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+    const metamaskAppScheme = 'ethereum:'
+
+    const testLink = document.createElement('a')
+    testLink.href = metamaskAppScheme
+    const isMetamaskAppInstalled = isMobileDevice && typeof testLink.href === 'string'
+
+    return isMetamaskAppInstalled
+  }
+  const isMetamaskAppInstalled = checkMetamaskAppInstalled()
 
   return (
     <OptionList>
-      <PromptTitle>Connect Wallet </PromptTitle>
       {Object.entries(SUPPORTED_WALLETS).map(([key, option]) => {
-
-
-        if (option.connector === injected) {
+        // if (isMobile && isMetamaskAppInstalled && option.name === 'MetaMask') {
+        //   return (
+        //     <Option
+        //       id={`connect-${key}`}
+        //       onClick={() => {
+        //         props.onSelect(option)
+        //         // if (isMobile) {
+        //         //   if (isMetamaskAppInstalled) {
+        //         //     window.location.href = 'https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc'
+        //         //   } else {
+        //         //     console.log('Metamask app is not installed')
+        //         //   }
+        //         // }
+        //       }}
+        //       key={key}
+        //       active={option.connector === connector}
+        //       color={option.color}
+        //       link={option.href}
+        //       header={option.name}
+        //       subheader={null}
+        //       icon={option.iconURL}
+        //     />
+        //   )
+        // }
+        if (option.connector === metaMask) {
           if (!(window.web3 || window.ethereum)) {
             if (option.name === 'MetaMask') {
               return (
                 <Option
                   id={`connect-${key}`}
                   key={key}
-                  header="Install Metamask"
+                  color={'#E8831D'}
+                  header={<p>Install Metamask</p>}
+                  subheader={null}
                   link={'https://metamask.io/'}
                   icon={MetamaskIcon}
-                  color={theme.launchpad.colors.primary}
-                  subheader={null}
                 />
               )
-            } else {
-              return null //dont want to return install twice
             }
-          } else if ((option.name === 'MetaMask' && !isMetaMask) || (option.name === 'Injected' && isMetaMask)) {
-            return null
+            //  else {
+            //   return null //dont want to return install twice
+            // }
           }
+          // else if (!(window.web3 || window.ethereum)) {
+          //   if (option.name === 'MetaMask') {
+          //     return (
+          //       <Option
+          //         id={`connect-${key}`}
+          //         key={key}
+          //         header="Metamask"
+          //         link={`https://metamask.app.link/dapp/https://app.ixswap.io/#/kyc`}
+          //         icon={MetamaskIcon}
+          //         color={theme.launchpad.colors.primary}
+          //         subheader={null}
+          //       />
+          //     )
+          //   } else {
+          //     return null //don't want to return install twice
+          //   }
+          // } else if ((option.name === 'MetaMask' && !isMetaMask) || (option.name === 'Injected' && isMetaMask)) {
+          //   return null
+          // }
         }
 
         return (
@@ -51,16 +108,14 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
             id={`connect-${key}`}
             onClick={() => {
               props.onSelect(option)
-              // option.connector === connector
-              //   ? setWalletView(WALLET_VIEWS.ACCOUNT)
-              //   : !option.href && tryActivation(option.connector)
+              // handleMetaMaskMobile()
             }}
             key={key}
             active={option.connector === connector}
             color={option.color}
             link={option.href}
             header={option.name}
-            subheader={null} //use option.descriptio to bring back multi-line
+            subheader={null}
             icon={option.iconURL}
           />
         )
@@ -91,18 +146,17 @@ const Option: React.FC<OptionsProps> = (props: OptionsProps) => {
 
   const optionButton = (
     <OptionContainer id={props.id} onClick={onClick} clickable={props.clickable && !props.active}>
-      <OptionLabel>
-        {props.active && (
-          <CircleWrapper>
-            <GreenCircle />
-          </CircleWrapper>
-        )}
-        {props.header}
-      </OptionLabel>
-
       <IconWrapper size={props.size}>
         <img src={props.icon} alt={'Icon'} />
       </IconWrapper>
+      <OptionLabel>
+        {/* {props.active && (
+          <CircleWrapper>
+            <GreenCircle />
+          </CircleWrapper>
+        )} */}
+        {props.header}
+      </OptionLabel>
     </OptionContainer>
   )
 
@@ -113,11 +167,11 @@ const Option: React.FC<OptionsProps> = (props: OptionsProps) => {
   return optionButton
 }
 
-const PromptTitle = styled.div`
-  text-align: center;
-  ${text14}
-  color: ${(props) => props.theme.launchpad.colors.text.title};
-`
+// const PromptTitle = styled.div`
+//   text-align: left;
+//   ${text14}
+//   color: ${(props) => props.theme.launchpad.colors.text.title};
+// `
 
 const OptionList = styled.div`
   display: flex;
@@ -131,10 +185,11 @@ const OptionList = styled.div`
 const OptionContainer = styled.button<{ clickable?: boolean }>`
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  height: 40px;
+  gap: 10px;
+  height: 10px;
   width: 100%;
   cursor: pointer;
   background: ${(props) => props.theme.launchpad.colors.background};
@@ -155,27 +210,27 @@ const OptionLabel = styled.div`
   color: ${(props) => props.theme.launchpad.colors.primary};
 `
 
-const GreenCircle = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  margin-left: -16px;
-  &:first-child {
-    height: 8px;
-    width: 8px;
-    margin-right: 8px;
-    background-color: ${({ theme }) => theme.green1};
-    border-radius: 50%;
-  }
-`
+// const GreenCircle = styled.div`
+//   display: flex;
+//   flex-flow: row nowrap;
+//   justify-content: center;
+//   align-items: center;
+//   margin-left: -16px;
+//   &:first-child {
+//     height: 8px;
+//     width: 8px;
+//     margin-right: 8px;
+//     background-color: ${({ theme }) => theme.green1};
+//     border-radius: 50%;
+//   }
+// `
 
-const CircleWrapper = styled.div`
-  color: ${({ theme }) => theme.green1};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+// const CircleWrapper = styled.div`
+//   color: ${({ theme }) => theme.green1};
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `
 
 const IconWrapper = styled.div<{ size?: number | null }>`
   display: grid;

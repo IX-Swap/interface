@@ -56,10 +56,15 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
   const stageStatus = React.useMemo(() => {
     switch (props.offer.status) {
-      case OfferStatus.preSale:
+      case OfferStatus.preSale: {
+        if (!whitelistedStatus) {
+          return OfferStageStatus.disabled
+        }
+
         return whitelistedStatus && whitelistedStatus === WhitelistStatus.accepted
           ? OfferStageStatus.active
           : OfferStageStatus.checkStatus
+      }
 
       case OfferStatus.sale:
         return OfferStageStatus.active
@@ -84,7 +89,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const daysTillClosed = props.offer.daysTillClosed ?? 0
 
   const [showSuccess, setShowSuccess] = React.useState(false)
-console.log(stageStatus, 'stageStatus')
+  console.log(props.offer.investingTokenSymbol, 'stageStatus')
   return (
     <Container>
       <OfferSidebarSummary>
@@ -265,7 +270,7 @@ const Container = styled.div`
 
   gap: 2rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-   padding: 20px;
+    padding: 20px;
   }
 `
 

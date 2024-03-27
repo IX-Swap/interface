@@ -11,7 +11,7 @@ import { AppDispatch } from 'state'
 import { ApplicationModal } from 'state/application/actions'
 import { useDepositModalToggle, useModalOpen } from 'state/application/hooks'
 import { setError, setLoading, setModalView } from 'state/deposit/actions'
-import { useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hooks'
+import { useDepositActionHandlers, useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hooks'
 import { DepositModalView } from 'state/deposit/reducer'
 import { useUserSecTokens } from 'state/user/hooks'
 import { ModalBlurWrapper, ModalContentWrapper, ModalPadding, CloseIcon, TYPE } from 'theme'
@@ -37,8 +37,10 @@ export const DepositPopup = ({ currency, token }: Props) => {
   const dispatch = useDispatch<AppDispatch>()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const networkName = getOriginalNetworkFromToken(tokenInfo)
+  const {  onResetDeposit } = useDepositActionHandlers()
 
   const onClose = useCallback(() => {
+    onResetDeposit()
     dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
     dispatch(setError({ errorMessage: '' }))
     dispatch(setLoading({ loading: false }))

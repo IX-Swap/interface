@@ -109,7 +109,7 @@ export default function CorporateKycForm() {
         const formData = { ...transformedData }
 
         setFormData(formData)
-        form.current.setValues(formData)
+        form?.current?.setValues(formData)
 
         if (kyc?.status === KYCStatuses.DRAFT) {
           setCanSubmit(true)
@@ -1125,7 +1125,7 @@ export default function CorporateKycForm() {
                                         `beneficialOwners[${index}].shareholding`
                                       )
                                     }
-                                    error={errors[`beneficialOwners[${index}].shareholding`] && 'Required'}
+                                    error={errors[`beneficialOwners[${index}].shareholding`] }
                                   />
                                 <ChooseFile
                                     file={beneficiar.proofOfIdentity}
@@ -1181,9 +1181,11 @@ export default function CorporateKycForm() {
                               {/* {values.beneficialOwners.length - 1 > index && <Divider />} */}
                             </Column>
                           ))}
-                        {errors.beneficialOwners && (
-                          <TYPE.small marginTop="4px" color={'red1'}>{t`${errors.beneficialOwners}`}</TYPE.small>
-                        )}
+                        {/* {errors.beneficialOwners && (
+                          <TYPE.small marginTop="4px" color={'red1'}>
+                            <Trans>{`${errors.beneficialOwners}`}</Trans>
+                          </TYPE.small>
+                        )} */}
                         <ExtraInfoCardCountry
                           // type="button"
                           style={{ fontSize: 16, padding: 15 }}

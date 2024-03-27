@@ -32,6 +32,7 @@ import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/share
 import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
 import { OfferStageStatus } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
+import { WalletEvent, INVEST_FLOW_EVENTS } from 'utils/event-logs'
 
 interface Props {
   offer: Offer
@@ -210,11 +211,20 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
             txHash: receipt.transactionHash,
           })
 
+          new WalletEvent(INVEST_FLOW_EVENTS.INVEST(status))
+            .walletAddress(account || '')
+            .data({
+              amount,
+              txHash: receipt.transactionHash,
+            })
+            .info(`Invest ${amount} ${investingTokenSymbol} INTO ${tokenSymbol}`)
+
           submitState.setSuccess()
           openSuccess()
         }
       }
     } catch (e) {
+      new WalletEvent(INVEST_FLOW_EVENTS.INVEST(status)).walletAddress(account || '').error((e as any).toString())
       console.error(e)
       submitState.setError()
     }

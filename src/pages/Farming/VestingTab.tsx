@@ -56,7 +56,9 @@ export const VestingTab = () => {
           </TYPE.title4>
           {library?.provider?.isMetaMask && chainId && !isMobile && (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <VestingText>Vesting on {CHAIN_SWITCH_STRINGS[chainId as SupportedChainId]}?</VestingText>
+              <VestingText>
+                Vesting on <Trans>{CHAIN_SWITCH_STRINGS[chainId as SupportedChainId]}</Trans>?
+              </VestingText>
 
               <PinnedContentButton
                 style={{ background: 'none', color: '#6666FF', border: '1px solid #E6E6FF', marginLeft: '15px' }}

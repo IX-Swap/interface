@@ -13,6 +13,8 @@ import { routes } from 'utils/routes'
 import { ReactComponent as KYC } from 'assets/images/kyc.svg'
 import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
 import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
+
+import { ReactComponent as NewDropdown } from 'assets/images/dropdownIcon.svg'
 import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
@@ -33,6 +35,10 @@ import { isMobile } from 'react-device-detect'
 import { useWeb3React } from '@web3-react/core'
 import { ReactComponent as NewAddIcon } from 'assets/images/newAddIcon.svg'
 import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
+import { useWalletModalToggle } from 'state/application/hooks'
+import { PinnedContentButton } from 'components/Button'
+import Modal from 'components/Modal'
+import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
 
 const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
   display: grid;
@@ -193,6 +199,7 @@ const HeaderWrapper = styled.div`
 
 const IconWrapper = styled.div`
   display: block;
+  cursor: pointer;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     display: none;
@@ -210,8 +217,10 @@ export default function Header() {
   const { config } = useWhitelabelState()
   const { isTokenManager } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-  const { connector, error } = useWeb3React()
   const [openPreviewModal, setPreviewModal] = React.useState(false)
+  const toggleWalletModal = useWalletModalToggle()
+  const [showConnectModal, setShowConnectModal] = React.useState(false)
+  const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
   const isAllowed = useCallback(
     (path: string) => {
@@ -231,6 +240,9 @@ export default function Header() {
   const closeModal = () => {
     setPreviewModal(false)
   }
+  const onConnect = React.useCallback(() => {
+    console.log('Connected')
+  }, [])
 
   return (
     <>
@@ -298,18 +310,7 @@ export default function Header() {
                   </HeaderElement>
                 </IconWrapper>
               )}
-              {isAllowed(routes.kyc) && isWhitelisted && (
-                <IconWrapper>
-                  <HeaderElement>
-                    <NavLink
-                      style={{ textDecoration: 'none', color: 'inherit', marginRight: 16, marginTop: 5 }}
-                      to="/kyc"
-                    >
-                      {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
-                    </NavLink>
-                  </HeaderElement>
-                </IconWrapper>
-              )}
+
               {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
                 <HeaderElement>
                   <IXSBalance />
@@ -318,8 +319,65 @@ export default function Header() {
               <HeaderElement>
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
-                <div
-                onClick={openModal}
+                {isAllowed(routes.kyc) && isWhitelisted && (
+                  <IconWrapper>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <div
+                        style={{
+                          height: '32px',
+                          borderLeft: '1px solid #B8B8CC',
+                          opacity: '0.4',
+                        }}
+                      ></div>
+                      {account && (
+                        <HeaderElement onClick={toggleWalletModal}>
+                          <div style={{ display: 'flex', gap: '5px' }}>
+                            <span
+                              style={{
+                                background: '#6666FF',
+                                padding: '8px 13px',
+                                color: '#FFFFFF',
+                                borderRadius: '100%',
+                                fontWeight: '600',
+                                margin: '0px 0px 0px 10px',
+                              }}
+                            >
+                              {kyc?.individual?.firstName
+                                ? kyc.individual.firstName.charAt(0).toUpperCase()
+                                : kyc?.corporate?.corporateName?.charAt(0).toUpperCase()}
+                            </span>
+
+                            <NewDropdown style={{ marginTop: '14px', marginRight: '10px' }} />
+                          </div>
+                        </HeaderElement>
+                      )}
+
+                      {/* <div
+                        style={{
+                          height: '32px',
+                          borderRight: '1px solid #B8B8CC',
+                          opacity: '0.4',
+                        }}
+                      ></div> */}
+                      {account && (
+                        <NavLink
+                          style={{ textDecoration: 'none', color: 'inherit', marginRight: 16, marginTop: 5 }}
+                          to="/kyc"
+                        >
+                          {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
+                        </NavLink>
+                      )}
+                    </div>
+                  </IconWrapper>
+                )}
+                {/* <div
+                  onClick={openModal}
                   style={{
                     border: '1.3px solid #E6E6FF',
                     borderRadius: '8px',
@@ -330,7 +388,18 @@ export default function Header() {
                 >
                   <NewAddIcon />
                   <span style={{ color: '#6666FF', fontSize: '13px', fontWeight: '600', marginLeft: '8px' }}>Buy</span>
-                </div>
+                </div> */}
+                {!account && (
+                  <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleModal}>
+                    <Text className="connect-wallet-button">
+                      <Trans>Connect Wallet</Trans>
+                    </Text>
+                  </PinnedContentButton>
+                )}
+
+                <Modal isOpen={showConnectModal} onDismiss={toggleModal} maxWidth="430px" maxHeight="310px">
+                  <ConnectionDialog onConnect={onConnect} onClose={toggleModal} />
+                </Modal>
                 {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
               </HeaderElement>
             </HeaderControls>

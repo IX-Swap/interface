@@ -124,7 +124,7 @@ export const MobileFilters = ({
       <Search
         value={values[FILTERS.SEARCH]}
         setSearchValue={(value: string) => setFieldValue(FILTERS.SEARCH, value)}
-        placeholder={t`${searchPlaceholder}`}
+        placeholder={`${searchPlaceholder}`}
         style={{ margin: 0 }}
       />
     ),

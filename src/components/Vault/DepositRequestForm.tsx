@@ -51,7 +51,7 @@ interface Props {
 
 export const DepositRequestForm = ({ currency, token }: Props) => {
   const [isWarningOpen, handleIsWarningOpen] = useState(false)
-  const [amountInputValue, setAmountInputValue] = useState('');
+  const [amountInputValue, setAmountInputValue] = useState('')
 
   const theme = useTheme()
   const showAboutWrapping = useShowAboutWrappingCallback()
@@ -68,16 +68,16 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const computedAddress = networkName === 'Ethereum' ? address : sender
   const accountNetwork = chainId ? chainIdToNetworkName(chainId as SupportedChainId) : ''
 
-  useEffect(() => {
-    onResetDeposit()
-  }, [])
+  // useEffect(() => {
+  //   onResetDeposit()
+  // }, [])
 
   const makeDeposit = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError && computedAddress) {
       deposit({
         id: tokenId,
-        amount: `${Number(parsedAmount?.toFixed(currency?.decimals || currency?.tokenInfo?.decimals || 2))}`,
+        amount: `${parsedAmount.toExact()}`,
         fromAddress: computedAddress || '',
       })
     }
@@ -104,9 +104,9 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   }
 
   const onTypeAmountInternal = (typedValue: any) => {
-    onTypeAmount(typedValue);
-    setAmountInputValue(typedValue);
-  };
+    onTypeAmount(typedValue)
+    setAmountInputValue(typedValue)
+  }
 
   return (
     <div style={{ position: 'relative' }}>
@@ -126,7 +126,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               currency={currency}
               originalDecimals={tokenInfo.originalDecimals}
               value={amount ?? amountInputValue}
-              onUserInput={onTypeAmountInternal} 
+              onUserInput={onTypeAmountInternal}
               amount={parsedAmount}
             />
           </Column>

@@ -95,8 +95,11 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
 
   const schema = object().shape({
     email: string()
-      .required('Invalid email address. Please try again.')
-      .email('Invalid email address. Please try again.'),
+      .required('Email address is required.')
+      .email('Invalid email address. Please try again.')
+      .test('is-valid-email', 'Invalid email address. Please try again.', (value) =>
+        /^[^\s!#$%^&*()={}[\]\\|/;:'",<>?]*$/.test(value || '')
+      ),
   })
 
   const submit = React.useCallback(
@@ -489,9 +492,15 @@ const CodeInput = ({ numberOfBoxes, boxBackgroundColor, boxBorderColor, reset, h
   const handleCodeSubmit = () => {
     const verificationCode = code.join('')
     if (verificationCode.length === numberOfBoxes) {
+      setTimeout(() => {
+        setCode(Array(numberOfBoxes).fill(''))
+      }, 1000)
       handleNextClick(verificationCode) // Pass verificationCode as a single argument
     } else {
       // Set the error message
+      setTimeout(() => {
+        setCode(Array(numberOfBoxes).fill(''))
+      }, 2000)
     }
   }
 

@@ -7,6 +7,7 @@ import { Text } from 'rebass'
 import CurrencyLogo from '../CurrencyLogo'
 import { RowFixed } from '../Row'
 import { FixedHeightRow } from './styleds'
+import { Trans } from '@lingui/macro'
 
 interface Props {
   textLeft: React.ReactNode
@@ -19,7 +20,9 @@ export const TextRow = ({ textLeft, textRight, currency, tooltipText }: Props) =
   return (
     <FixedHeightRow data-testid="tableRow">
       <RowFixed className="text-row">
-        <Text color={'#B8B8CC'}>{textLeft}</Text>
+        <Text color={'#B8B8CC'}>
+          <Trans>{textLeft}</Trans>
+        </Text>
         {tooltipText && (
           <MouseoverTooltip style={{ whiteSpace: 'pre-line' }} text={tooltipText}>
             <IconWrapper size={20} style={{ marginLeft: '12px' }}>
