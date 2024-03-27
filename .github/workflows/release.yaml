@@ -80,7 +80,7 @@ jobs:
           SENTRY_PROJECT_NAME: '${{ secrets.SENTRY_PROJECT_NAME }}'
           SENTRY_AUTH_TOKEN: '${{ secrets.SENTRY_AUTH_TOKEN }}'
         run: |
-          export CI=false && export DISABLE_ESLINT_PLUGIN=true  \
+          export CI=false && export DISABLE_ESLINT_PLUGIN=true &&\
           yarn install --frozen-lockfile  &&\
           npm ls babel-loader
           yarn run build
