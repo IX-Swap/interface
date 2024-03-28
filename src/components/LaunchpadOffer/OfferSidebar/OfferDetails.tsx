@@ -111,7 +111,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
                 {props.offer.investingTokenSymbol === 'USDC'
                   ? `${props.offer.investingTokenSymbol}.e `
                   : props.offer.investingTokenSymbol}
-                {formatter.format(props.offer.totalInvestment)}
+                &nbsp;{formatter.format(props.offer.totalInvestment)}
               </OfferInvestmentAmount>
 
               <Row alignItems="center" gap="1rem">

@@ -9,7 +9,7 @@ interface GridContainerProps {
 export const GridContainer = styled.div<GridContainerProps>`
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: row;
   gap: 30px;
 
   margin: ${({ spacing = 0 }) => `${-spacing}px`};

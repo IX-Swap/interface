@@ -52,7 +52,7 @@ import {
   StyledBigPassed,
   ExtraInfoCardCountry,
 } from './styleds'
-import { individualErrorsSchema } from './schema'
+import { FinancialRequiredCoutries, individualErrorsSchema } from './schema'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
 import { KYCStatuses, IdentityDocumentType } from './enum'
 import { Box } from 'rebass'
@@ -132,6 +132,11 @@ export default function IndividualKycForm() {
     setShowOptoutConfirmationModal(true)
   }, [])
 
+  const [nationalityState, setNationalityState] = useState('')
+  const [countryState, setCountryState] = useState('')
+  const [citizenshipState, setCitizenshipState] = useState('')
+  const [requiredFinancial, setRequiredFinancial] = useState(false)
+
   const confirmOptOut = useCallback((setFieldValue: any) => {
     setShowOptoutConfirmationModal(false)
     setFieldValue('accredited', 0, false)
@@ -144,7 +149,6 @@ export default function IndividualKycForm() {
   const prevAccount = usePrevious(account)
 
   useEffect(() => {
-  
     const code = new URL(window.location.href).href?.split('=')[1]
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
@@ -179,6 +183,16 @@ export default function IndividualKycForm() {
         if (kyc?.status === KYCStatuses.DRAFT) {
           setCanSubmit(true)
         }
+
+        if (
+          FinancialRequiredCoutries.includes(formData?.nationality?.label) ||
+          FinancialRequiredCoutries.includes(formData?.country?.label) ||
+          FinancialRequiredCoutries.includes(formData?.citizenship?.label)
+        ) {
+          setRequiredFinancial(true)
+        } else {
+          setRequiredFinancial(false)
+        }
       }
     }
 
@@ -193,18 +207,29 @@ export default function IndividualKycForm() {
   }, [kyc])
 
   useEffect(() => {
-    window.addEventListener('beforeunload', alertUser);
-    const IsNewKyc = localStorage.getItem('newKyc');
+    window.addEventListener('beforeunload', alertUser)
+    const IsNewKyc = localStorage.getItem('newKyc')
     if (IsNewKyc) {
-      addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } });
-      localStorage.removeItem('newKyc'); // Remove the item so it doesn't trigger again
+      addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } })
+      localStorage.removeItem('newKyc') // Remove the item so it doesn't trigger again
     }
-  
+
     return () => {
-      window.removeEventListener('beforeunload', alertUser);
-    };
-  }, []);
-  
+      window.removeEventListener('beforeunload', alertUser)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (
+      FinancialRequiredCoutries.includes(nationalityState) ||
+      FinancialRequiredCoutries.includes(countryState) ||
+      FinancialRequiredCoutries.includes(citizenshipState)
+    ) {
+      setRequiredFinancial(true)
+    } else {
+      setRequiredFinancial(false)
+    }
+  }, [nationalityState, countryState, citizenshipState])
 
   const alertUser = (e: any) => {
     e.preventDefault()
@@ -259,7 +284,6 @@ export default function IndividualKycForm() {
   }
 
   const onIsAdditionalChange = async (index: number, setFieldValue: any) => {
-
     const values = form.current.values
     console.log(values.taxDeclarations[index].isAdditional, 'kkkkk')
     if (!values.taxDeclarations[index].isAdditional) {
@@ -271,7 +295,7 @@ export default function IndividualKycForm() {
 
     declaration.isAdditional = !values.taxDeclarations[index].isAdditional
     declaration.idNumber = ''
-    declaration.country = ""
+    declaration.country = ''
     declaration.reason = ''
 
     const root = { ...values }
@@ -337,7 +361,9 @@ export default function IndividualKycForm() {
     validateValue(key, value)
     validationSeen(key)
 
-    console.log(key, value, 'new value')
+    if (key === 'nationality') setNationalityState(value?.label)
+    if (key === 'country') setCountryState(value?.label)
+    if (key === 'citizenship') setCitizenshipState(value?.label)
   }
 
   const onSelectChangeNew = (key: string, value: any, setFieldValue: any) => {
@@ -543,7 +569,7 @@ export default function IndividualKycForm() {
     },
     [formSubmitHandler]
   )
-  
+
   console.log(errors, 'jsjsjsjsj')
 
   return (
@@ -638,7 +664,6 @@ export default function IndividualKycForm() {
 
               const identityDocumentFilled =
                 shouldValidate && isFilled('idType') && isFilled('idNumber') && isFilled('idIssueDate')
-                
 
               const addressFilled =
                 shouldValidate &&
@@ -1195,13 +1220,20 @@ export default function IndividualKycForm() {
 
                       <FormCard id="financial">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title7>
-                            <Trans>Financial Information</Trans>
-                          </TYPE.title7>
-                          {/* {financialFilled && <StyledBigPassed />}
+                          <Flex>
+                            <TYPE.title7>
+                              <Trans>Financial Information</Trans>
+                            </TYPE.title7>
+                            {/* {financialFilled && <StyledBigPassed />}
                           {financialFailed && <InvalidFormInputIcon />} */}
+                            {requiredFinancial ? (
+                              <RequiredBadge>Required</RequiredBadge>
+                            ) : (
+                              <OptionalBadge>Optional</OptionalBadge>
+                            )}
+                          </Flex>
                         </RowBetween>
-                        
+
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={2}>
                             <Select
@@ -1354,7 +1386,7 @@ export default function IndividualKycForm() {
                                           }
                                           error={errors[`taxDeclarations[${index}].country`]}
                                         />
-{/* 
+                                        {/* 
                                         {errors[`taxDeclarations[${index}].country`] && (
                                           <TYPE.small marginTop="8px" color={'red1'}>
                                             {errors[`taxDeclarations[${index}].country`]}
@@ -1613,6 +1645,29 @@ const BorderBox = styled.div<{ active: boolean }>`
     border-radius: inherit;
     background: ${({ active }) => (active ? 'linear-gradient(86.36deg, #6B2EE6 29.09%, #FF0080 107.32%)' : 'none')};
   }
+`
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+
+const OptionalBadge = styled.div`
+  background-color: #f7f7fa;
+  color: #c3c3d4;
+  padding: 4px 8px;
+  text-align: center;
+  border-radius: 5px;
+`
+
+const RequiredBadge = styled.div`
+  background-color: #fff0f0;
+  color: #ff6161;
+  border-color: #ffd3d3;
+  padding: 4px 8px;
+  text-align: center;
+  border-radius: 5px;
 `
 
 const LabeledCheckBox = styled.div`

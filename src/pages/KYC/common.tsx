@@ -279,12 +279,6 @@ export const KycTextInput: FC<TextInputProps> = ({
           error={error}
         />
       )}
-
-      {error && (
-        <TYPE.small marginTop="4px" color={'red1'}>
-          {error}
-        </TYPE.small>
-      )}
     </Box>
   )
 }
