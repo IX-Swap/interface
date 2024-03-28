@@ -10,6 +10,26 @@ interface TaxDeclaration {
   reason: string | null
 }
 
+const financialRequiredCoutries = ['Russian Federation', 'Nigeria', 'Turkey']
+
+const validateFinancialSection = (value: any, context: yup.TestContext) => {
+  const { nationality, country, citizenship } = context.parent
+  console.log('nationality', nationality)
+  console.log('country', country)
+  console.log('citizenship', citizenship)
+
+  if (
+    (financialRequiredCoutries.includes(nationality?.label) ||
+      financialRequiredCoutries.includes(country?.label) ||
+      financialRequiredCoutries.includes(citizenship?.label)) &&
+    (!value || value.label === null)
+  ) {
+    return false
+  } else {
+    return true
+  }
+}
+
 export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   middleName: yup.string().max(50, 'Too Long!'),
@@ -104,11 +124,7 @@ export const individualErrorsSchema = yup.object().shape({
       is: (value: any) => value && value.value === 2,
       then: yup.string().nullable().email('Invalid email').required('Required'),
     })
-    .test(
-      'dupplicatedEmail',
-      ' ',
-      (value, context) => value !== context.parent.email
-    ),
+    .test('dupplicatedEmail', ' ', (value, context) => value !== context.parent.email),
 
   socialPlatform: yup
     .string()
@@ -131,22 +147,10 @@ export const individualErrorsSchema = yup.object().shape({
   // handleName: yup.string().required('Required'),
 
   selfie: yup.array().min(1, 'Required').nullable(),
-  occupation: yup
-    .object()
-    .nullable()
-    .required('Required')
-    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-      return value && value.label !== null
-    }),
-  employmentStatus: yup
-    .object()
-    .nullable()
-    .required('Required')
-    .test('nonZeroValue', 'Value must not be 0', (value: any) => {
-      return value && value.label !== null
-    }),
-  employer: yup.string().required('Required'),
-  income: yup.object().nullable().required('Required'),
+  occupation: yup.object().nullable().test('requiredOnSomeCountries', ' ', validateFinancialSection),
+  employmentStatus: yup.object().nullable().test('requiredOnSomeCountries', ' ', validateFinancialSection),
+  employer: yup.string().test('requiredOnSomeCountries', ' ', validateFinancialSection),
+  income: yup.object().nullable().test('requiredOnSomeCountries', ' ', validateFinancialSection),
 
   // investorDeclarationIsFilled: yup
   //   .boolean()
@@ -210,7 +214,7 @@ export const individualErrorsSchema = yup.object().shape({
     .when('taxCountry', { is: (country: any) => !!country, then: yup.string().required('Required') }),
   taxIdentificationReason: yup.string().when('taxisAdditional', { is: true, then: yup.string().required('Required') }),
 
-  sourceOfFunds: yup.array().min(1, 'Choose one').required('Required'),
+  sourceOfFunds: yup.array().test('requiredOnSomeCountries', ' ', validateFinancialSection),
   otherFunds: yup.string().when('sourceOfFunds', {
     is: (sourceOfFunds: string[]) => sourceOfFunds.includes('Others'),
     then: yup.string().required('Required'),
