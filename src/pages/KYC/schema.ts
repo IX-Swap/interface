@@ -10,7 +10,7 @@ interface TaxDeclaration {
   reason: string | null
 }
 
-const financialRequiredCoutries = ['Russian Federation', 'Nigeria', 'Turkey']
+export const FinancialRequiredCoutries = ['Russian Federation', 'Nigeria', 'Turkey']
 
 const validateFinancialSection = (value: any, context: yup.TestContext) => {
   const { nationality, country, citizenship } = context.parent
@@ -19,9 +19,9 @@ const validateFinancialSection = (value: any, context: yup.TestContext) => {
   console.log('citizenship', citizenship)
 
   if (
-    (financialRequiredCoutries.includes(nationality?.label) ||
-      financialRequiredCoutries.includes(country?.label) ||
-      financialRequiredCoutries.includes(citizenship?.label)) &&
+    (FinancialRequiredCoutries.includes(nationality?.label) ||
+      FinancialRequiredCoutries.includes(country?.label) ||
+      FinancialRequiredCoutries.includes(citizenship?.label)) &&
     (!value || value.label === null || value.length < 1)
   ) {
     return false
