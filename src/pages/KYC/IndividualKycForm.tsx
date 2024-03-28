@@ -144,7 +144,6 @@ export default function IndividualKycForm() {
   const prevAccount = usePrevious(account)
 
   useEffect(() => {
-  
     const code = new URL(window.location.href).href?.split('=')[1]
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
@@ -193,18 +192,17 @@ export default function IndividualKycForm() {
   }, [kyc])
 
   useEffect(() => {
-    window.addEventListener('beforeunload', alertUser);
-    const IsNewKyc = localStorage.getItem('newKyc');
+    window.addEventListener('beforeunload', alertUser)
+    const IsNewKyc = localStorage.getItem('newKyc')
     if (IsNewKyc) {
-      addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } });
-      localStorage.removeItem('newKyc'); // Remove the item so it doesn't trigger again
+      addPopup({ info: { success: true, summary: 'The email address has been verified successfully' } })
+      localStorage.removeItem('newKyc') // Remove the item so it doesn't trigger again
     }
-  
+
     return () => {
-      window.removeEventListener('beforeunload', alertUser);
-    };
-  }, []);
-  
+      window.removeEventListener('beforeunload', alertUser)
+    }
+  }, [])
 
   const alertUser = (e: any) => {
     e.preventDefault()
@@ -259,7 +257,6 @@ export default function IndividualKycForm() {
   }
 
   const onIsAdditionalChange = async (index: number, setFieldValue: any) => {
-
     const values = form.current.values
     console.log(values.taxDeclarations[index].isAdditional, 'kkkkk')
     if (!values.taxDeclarations[index].isAdditional) {
@@ -271,7 +268,7 @@ export default function IndividualKycForm() {
 
     declaration.isAdditional = !values.taxDeclarations[index].isAdditional
     declaration.idNumber = ''
-    declaration.country = ""
+    declaration.country = ''
     declaration.reason = ''
 
     const root = { ...values }
@@ -543,7 +540,7 @@ export default function IndividualKycForm() {
     },
     [formSubmitHandler]
   )
-  
+
   console.log(errors, 'jsjsjsjsj')
 
   return (
@@ -638,7 +635,6 @@ export default function IndividualKycForm() {
 
               const identityDocumentFilled =
                 shouldValidate && isFilled('idType') && isFilled('idNumber') && isFilled('idIssueDate')
-                
 
               const addressFilled =
                 shouldValidate &&
@@ -1195,13 +1191,16 @@ export default function IndividualKycForm() {
 
                       <FormCard id="financial">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title7>
-                            <Trans>Financial Information</Trans>
-                          </TYPE.title7>
-                          {/* {financialFilled && <StyledBigPassed />}
+                          <Flex>
+                            <TYPE.title7>
+                              <Trans>Financial Information</Trans>
+                            </TYPE.title7>
+                            {/* {financialFilled && <StyledBigPassed />}
                           {financialFailed && <InvalidFormInputIcon />} */}
+                            <Badge>Optional</Badge>
+                          </Flex>
                         </RowBetween>
-                        
+
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={2}>
                             <Select
@@ -1354,7 +1353,7 @@ export default function IndividualKycForm() {
                                           }
                                           error={errors[`taxDeclarations[${index}].country`]}
                                         />
-{/* 
+                                        {/* 
                                         {errors[`taxDeclarations[${index}].country`] && (
                                           <TYPE.small marginTop="8px" color={'red1'}>
                                             {errors[`taxDeclarations[${index}].country`]}
@@ -1613,6 +1612,20 @@ const BorderBox = styled.div<{ active: boolean }>`
     border-radius: inherit;
     background: ${({ active }) => (active ? 'linear-gradient(86.36deg, #6B2EE6 29.09%, #FF0080 107.32%)' : 'none')};
   }
+`
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+
+const Badge = styled.div`
+  background-color: #f7f7fa;
+  color: #c3c3d4;
+  padding: 4px 8px;
+  text-align: center;
+  border-radius: 5px;
 `
 
 const LabeledCheckBox = styled.div`

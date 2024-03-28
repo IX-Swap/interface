@@ -22,7 +22,7 @@ const validateFinancialSection = (value: any, context: yup.TestContext) => {
     (financialRequiredCoutries.includes(nationality?.label) ||
       financialRequiredCoutries.includes(country?.label) ||
       financialRequiredCoutries.includes(citizenship?.label)) &&
-    (!value || value.label === null)
+    (!value || value.label === null || value.length < 1)
   ) {
     return false
   } else {
