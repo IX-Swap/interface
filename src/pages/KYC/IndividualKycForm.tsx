@@ -1219,7 +1219,7 @@ export default function IndividualKycForm() {
                       </FormCard>
 
                       <FormCard id="financial">
-                        <RowBetween marginBottom="32px">
+                        <RowBetween marginBottom="10px">
                           <Flex>
                             <TYPE.title7>
                               <Trans>Financial Information</Trans>
@@ -1233,6 +1233,15 @@ export default function IndividualKycForm() {
                             )}
                           </Flex>
                         </RowBetween>
+
+                        {requiredFinancial && (
+                          <RowBetween marginBottom="32px">
+                            <TYPE.description3>
+                              Based on our initial due diligence checks, you are required to please fill in this
+                              Financial Information Section as well.
+                            </TYPE.description3>
+                          </RowBetween>
+                        )}
 
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={2}>
