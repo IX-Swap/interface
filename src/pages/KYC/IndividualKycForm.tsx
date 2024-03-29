@@ -229,7 +229,6 @@ export default function IndividualKycForm() {
       setRequiredFinancial(true)
     } else {
       setRequiredFinancial(false)
-      setCanSubmit(true)
     }
   }, [nationalityState, countryState, citizenshipState])
 
