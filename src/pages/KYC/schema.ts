@@ -18,15 +18,33 @@ const validateFinancialSection = (value: any, context: yup.TestContext) => {
   console.log('country', country)
   console.log('citizenship', citizenship)
 
-  if (
-    (FinancialRequiredCoutries.includes(nationality?.label) ||
-      FinancialRequiredCoutries.includes(country?.label) ||
-      FinancialRequiredCoutries.includes(citizenship?.label)) &&
-    (!value || value.label === null || value.length < 1)
-  ) {
-    return false
-  } else {
-    return true
+  if (Array.isArray(value)) {
+    return (
+      !(
+        FinancialRequiredCoutries.includes(nationality?.label) ||
+        FinancialRequiredCoutries.includes(country?.label) ||
+        FinancialRequiredCoutries.includes(citizenship?.label)
+      ) ||
+      (value && value.length > 0)
+    )
+  } else if (typeof value === 'string') {
+    return (
+      !(
+        FinancialRequiredCoutries.includes(nationality?.label) ||
+        FinancialRequiredCoutries.includes(country?.label) ||
+        FinancialRequiredCoutries.includes(citizenship?.label)
+      ) ||
+      (value && value !== '')
+    )
+  } else if (typeof value === 'object') {
+    return (
+      !(
+        FinancialRequiredCoutries.includes(nationality?.label) ||
+        FinancialRequiredCoutries.includes(country?.label) ||
+        FinancialRequiredCoutries.includes(citizenship?.label)
+      ) ||
+      (value && value.label !== null)
+    )
   }
 }
 
@@ -124,7 +142,7 @@ export const individualErrorsSchema = yup.object().shape({
       is: (value: any) => value && value.value === 2,
       then: yup.string().nullable().email('Invalid email').required('Required'),
     })
-    .test('dupplicatedEmail', ' ', (value, context) => value !== context.parent.email),
+    .test('dupplicatedEmail', ' ', (value, context) => value?.toLowerCase() !== context.parent.email?.toLowerCase()),
 
   socialPlatform: yup
     .string()
