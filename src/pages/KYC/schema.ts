@@ -14,37 +14,36 @@ export const FinancialRequiredCoutries = ['Russian Federation', 'Nigeria', 'Turk
 
 const validateFinancialSection = (value: any, context: yup.TestContext) => {
   const { nationality, country, citizenship } = context.parent
-  console.log('nationality', nationality)
-  console.log('country', country)
-  console.log('citizenship', citizenship)
+
+  if (!nationality.label && !country.label && !citizenship.label) return true
 
   if (Array.isArray(value)) {
-    return (
+    const result =
       !(
         FinancialRequiredCoutries.includes(nationality?.label) ||
         FinancialRequiredCoutries.includes(country?.label) ||
         FinancialRequiredCoutries.includes(citizenship?.label)
       ) ||
       (value && value.length > 0)
-    )
+    return result
   } else if (typeof value === 'string') {
-    return (
+    const result =
       !(
         FinancialRequiredCoutries.includes(nationality?.label) ||
         FinancialRequiredCoutries.includes(country?.label) ||
         FinancialRequiredCoutries.includes(citizenship?.label)
       ) ||
       (value && value !== '')
-    )
+    return result
   } else if (typeof value === 'object') {
-    return (
+    const result =
       !(
         FinancialRequiredCoutries.includes(nationality?.label) ||
         FinancialRequiredCoutries.includes(country?.label) ||
         FinancialRequiredCoutries.includes(citizenship?.label)
       ) ||
       (value && value.label !== null)
-    )
+    return result
   }
 }
 
@@ -167,7 +166,7 @@ export const individualErrorsSchema = yup.object().shape({
   selfie: yup.array().min(1, 'Required').nullable(),
   occupation: yup.object().nullable().test('requiredOnSomeCountries', ' ', validateFinancialSection),
   employmentStatus: yup.object().nullable().test('requiredOnSomeCountries', ' ', validateFinancialSection),
-  employer: yup.string().test('requiredOnSomeCountries', ' ', validateFinancialSection),
+  employer: yup.string().nullable().test('requiredOnSomeCountries', ' ', validateFinancialSection),
   income: yup.object().nullable().test('requiredOnSomeCountries', ' ', validateFinancialSection),
 
   // investorDeclarationIsFilled: yup
