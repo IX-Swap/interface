@@ -86,6 +86,13 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
     onClose()
     // TO DO - handle action
   }
+  const constructName = (data: KycItem) => {
+    if (data?.individualKycId) {
+      return `${data?.individual?.firstName} ${data?.individual?.middleName || ''} ${data?.individual?.lastName || ''}`
+    } else {
+      return data?.corporate?.corporateName || ''
+    }
+  }
 
   if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
 
@@ -166,7 +173,8 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
                   fontSize={isMobile ? '12px' : '24px'}
                 >
                   {/* {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
-                  <Trans>{data?.individual?.fullName || data?.corporate?.corporateName || ''}</Trans>
+                  <Trans>{constructName(data)}</Trans>
+      
                 </TYPE.title7>
                 {/* {shortenAddress(data.user.ethAddress)} ({`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
               </Title>
