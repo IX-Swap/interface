@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Trans } from '@lingui/macro';
-import { TextInput } from 'pages/KYC/common';
-import { TYPE } from 'theme';
-import { RowStart } from 'components/Row';
-import { Line } from 'components/Line';
-import { DateInput } from 'components/DateInput'; // Import the DateInput component
-import dayjs from 'dayjs';
-import Stack from '@mui/material/Stack';
-import Slider from '@mui/material/Slider';
-import { FormGrid } from 'pages/KYC/styleds';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Trans } from '@lingui/macro'
+import { TextInput } from 'pages/KYC/common'
+import { TYPE } from 'theme'
+import { RowStart } from 'components/Row'
+import { Line } from 'components/Line'
+import { DateInput } from 'components/DateInput' // Import the DateInput component
+import dayjs from 'dayjs'
+import Stack from '@mui/material/Stack'
+import Slider from '@mui/material/Slider'
+import { FormGrid } from 'pages/KYC/styleds'
 
 const TokenomicsContainer = styled.div`
   width: 100%;
@@ -19,11 +19,11 @@ const TokenomicsContainer = styled.div`
   background: #f7f7fa;
   padding: 12px 18px;
   margin-bottom: 10px;
-`;
+`
 
 const TokenomicsItem = styled.div`
   margin-bottom: 8px;
-`;
+`
 
 const Select = styled.select`
   flex: 1;
@@ -31,11 +31,11 @@ const Select = styled.select`
   border: none;
   padding: 8px;
   margin-right: 8px;
-`;
+`
 
 const Option = styled.option`
   padding: 8px;
-`;
+`
 
 const Span = styled.span`
   color: #8f8fb2;
@@ -47,7 +47,7 @@ const Span = styled.span`
   border-radius: 6px;
   width: fit-content;
   margin: 0 auto;
-`;
+`
 
 const Input = styled.input`
   border: none;
@@ -65,11 +65,11 @@ const Input = styled.input`
     color: #bdbddb;
     font-weight: 700;
   }
-`;
+`
 
 const MaxWrapper = styled.div`
   text-align: center;
-`;
+`
 
 const WeightsContainer = styled.div`
   width: 100%;
@@ -77,7 +77,7 @@ const WeightsContainer = styled.div`
   justify-content: space-between;
   padding: 12px 18px;
   margin-bottom: 10px;
-`;
+`
 const SpanBal = styled.span`
   display: block;
   color: #8f8fb2;
@@ -86,32 +86,32 @@ const SpanBal = styled.span`
   margin-top: 8px;
 `
 const Tokenomics = () => {
-  const [valueStart, setStartValue] = useState<number>(30);
-  const [valueEnd, setEndValue] = useState<number>(30);
-  const [valueStartDate, setStartDate] = useState('');
-  const [valueEndDate, setEndDate] = useState('');
+  const [valueStart, setStartValue] = useState<number>(30)
+  const [valueEnd, setEndValue] = useState<number>(30)
+  const [valueStartDate, setStartDate] = useState('')
+  const [valueEndDate, setEndDate] = useState('')
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
-    setStartValue(newValue as number);
-  };
+    setStartValue(newValue as number)
+  }
 
   const handleChangeEnd = (event: Event, newValue: number | number[]) => {
-    setEndValue(newValue as number);
-  };
+    setEndValue(newValue as number)
+  }
 
   const handleStartDateChange = (date: Date | null) => {
     if (date) {
-      const newStartDate = dayjs(date).local().format('YYYY-MM-DD');
-      setStartDate(newStartDate);
+      const newStartDate = dayjs(date).local().format('YYYY-MM-DD')
+      setStartDate(newStartDate)
     }
-  };
+  }
 
   const handleEndDateChange = (date: Date | null) => {
     if (date) {
-      const newEndDate = dayjs(date).local().format('YYYY-MM-DD');
-      setEndDate(newEndDate);
+      const newEndDate = dayjs(date).local().format('YYYY-MM-DD')
+      setEndDate(newEndDate)
     }
-  };
+  }
 
   return (
     <>
@@ -245,8 +245,13 @@ const Tokenomics = () => {
           minDate={new Date()}
         />
       </FormGrid>
+      <Line style={{ margin: '20px' }} />
+      <FormGrid>
+        <TextInput placeholder="$1.00" id="title" label="Min. price" />
+        <TextInput placeholder="$0.00" id="title" label="Max. price" />
+      </FormGrid>
     </>
-  );
-};
+  )
+}
 
-export default Tokenomics;
+export default Tokenomics

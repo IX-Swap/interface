@@ -9,20 +9,22 @@ import { TYPE } from 'theme'
 import Branding from './components/Branding'
 import ProjectInfo from './components/ProjectInfo'
 import Tokenomics from './components/Tokenomics'
+import Approvals from './components/Approvals'
 
 export default function LBPForm() {
   return (
-    <FormRow style={{width: '70%'}}>
-      <FormContainer style={{ gap: '35px' }}>
-        <TYPE.title4
-          fontWeight={'800'}
-          fontSize={isMobile ? 24 : 24}
-          style={{ whiteSpace: 'nowrap' }}
-          marginLeft="10px"
-        >
-          <Trans>Serenity</Trans>
-        </TYPE.title4>
-        <Column style={{ gap: '35px' }}>
+    <FormRow>
+      <Column style={{ gap: '35px' }}>
+        <FormContainer>
+          <TYPE.title4
+            fontWeight={'800'}
+            fontSize={isMobile ? 24 : 24}
+            style={{ whiteSpace: 'nowrap' }}
+            marginLeft="10px"
+          >
+            <Trans>Serenity</Trans>
+          </TYPE.title4>
+
           <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="personal">
             <RowStart marginBottom="32px">
               <TYPE.title7>
@@ -52,11 +54,22 @@ export default function LBPForm() {
               </TYPE.title7>
             </RowStart>
             <Column style={{ gap: '20px' }}>
-              <Tokenomics/>
+              <Tokenomics />
             </Column>
           </FormCard>
-        </Column>
-      </FormContainer>
+
+          <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="personal">
+            <RowStart marginBottom="32px">
+              <TYPE.title7>
+                <Trans>Approvals</Trans>
+              </TYPE.title7>
+            </RowStart>
+            <Column style={{ gap: '20px' }}>
+              <Approvals />
+            </Column>
+          </FormCard>
+        </FormContainer>
+      </Column>
     </FormRow>
   )
 }
