@@ -74,7 +74,7 @@ export const StyledInput = styled(Input)`
   height: 60px;
 `
 export const StyledTextarea = styled(Textarea)`
-  ${inputStyles}
+
   margin-bottom: 0;
 `
 export const Row = styled.div`

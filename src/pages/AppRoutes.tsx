@@ -19,6 +19,7 @@ import AdminSecurityCatalog from 'components/AdminSecurityCatalog'
 import AdminTransactionsTable from 'components/AdminTransactionsTable'
 import { AdminKycTable } from 'components/AdminKyc'
 import { KycReviewModal } from 'components/KycReviewModal'
+import LBPForm from './LBP/LbpForm'
 
 const Admin = lazy(() => import('pages/Admin'))
 const Swap = lazy(() => import('pages/Swap'))
@@ -199,4 +200,7 @@ export const routeConfigs: RouteMapEntry[] = [
     ...onlyOfferManager,
   },
   { path: routes.manageOffer, component: ManageOffer, ...onlyOfferManager },
+
+    /* LBP routes */
+    { path: routes.LBP, component: LBPForm },
 ]

@@ -6,7 +6,7 @@ import { FileWithPath } from 'react-dropzone'
 
 import { Input, Textarea } from 'components/Input'
 import { ButtonGradient, ButtonOutlined, PinnedContentButton } from 'components/Button'
-import { TYPE, EllipsisText, MEDIA_WIDTHS } from 'theme'
+import { TYPE, EllipsisText, MEDIA_WIDTHS, LinkStyledButton } from 'theme'
 import { Label } from 'components/Label'
 import Upload from 'components/Upload'
 import { FilePreview } from 'components/FilePreview'
@@ -15,6 +15,7 @@ import { Select as ReactSelect } from 'components/Select'
 import { AcceptFiles } from 'components/Upload/types'
 
 import { ReactComponent as UploadLogo } from 'assets/images/NewDownloads.svg'
+import { ReactComponent as UploadLogoLbp } from 'assets/images/Browse.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
 
@@ -24,11 +25,13 @@ import { ReactComponent as ThreeIcon } from 'assets/images/three .svg'
 import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
 import { Text } from 'rebass'
 
-import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
-import Row from 'components/Row'
+import { UploaderCard, FormGrid, BeneficialOwnersTableContainer, ExtraInfoCardCountry } from './styleds'
+import Row, { RowCenter } from 'components/Row'
 import SelfieImage from 'assets/images/selfie.svg'
 import { alignItems } from 'styled-system'
 import { isMobile } from 'react-device-detect'
+import { ImagePreview } from 'components/FilePreview/ImagePreview'
+import { Plus } from 'react-feather'
 
 export interface UploaderProps {
   files: FileWithPath[]
@@ -505,6 +508,155 @@ interface ChooseFileTypes {
   id?: any
 }
 
+export const UploaderLBP: FC<UploaderProps> = ({
+  id,
+  title,
+  subtitle,
+  files,
+  required,
+  error,
+  handleDeleteClick,
+  onDrop,
+  optional = false,
+  tooltipText,
+  isDisabled = false,
+}: UploaderProps) => {
+  return (
+    <Box>
+      <Flex>
+        <Label label={title} required={required} tooltipText={tooltipText} />
+        {optional && (
+          <>
+            <TYPE.body1 marginLeft="4px" marginRight="8px" color={`text9`}>
+              (optional)
+            </TYPE.body1>
+            <InfoLogo />
+          </>
+        )}
+      </Flex>
+      {subtitle && <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>}
+      {files && files.length > 0 ? (
+        <Flex flexWrap="wrap">
+          {files.map((file: any, index) => (
+            <ImagePreview
+              key={`file-${index}-${file.name}`}
+              file={file?.asset ? file.asset : file}
+              handleDeleteClick={() => {
+                handleDeleteClick(index)
+              }}
+              isDisabled={isDisabled}
+              style={{ marginRight: index !== files.length - 1 ? 0 : 0 }}
+              index={0}
+            />
+          ))}
+        </Flex>
+      ) : (
+        <Upload
+          isDisabled={isDisabled}
+          accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
+          data-testid={id}
+          file={null}
+          onDrop={onDrop}
+        >
+          <UploaderCard style={{height: '350px'}}>
+            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
+              <StyledUploadLogoLbp />
+              <TYPE.subHeader1 lineHeight={'20px'} textAlign="center" color={'#555566'}>
+                Share Logo
+              </TYPE.subHeader1>
+              <TYPE.title10 width={'max-content'} textAlign="center" color={'#8F8FB2'}>
+                PNG, JPG, and SVG files only.
+              </TYPE.title10>
+              <TYPE.small display="flex" textAlign="center" color={'#666680'}>
+                <Text style={{ marginLeft: 2, color: '#6666FF' }}>Browse</Text>
+              </TYPE.small>
+            </Flex>
+          </UploaderCard>
+        </Upload>
+      )}
+
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
+    </Box>
+  )
+}
+
+export const UploaderDocs: FC<UploaderProps> = ({
+  id,
+  title,
+  subtitle,
+  files,
+  required,
+  error,
+  handleDeleteClick,
+  onDrop,
+  optional = false,
+  tooltipText,
+  isDisabled = false,
+}: UploaderProps) => {
+  return (
+    <Box>
+      <Flex>
+        <Label label={title} required={required} tooltipText={tooltipText} />
+        {optional && (
+          <>
+            <TYPE.body1 marginLeft="4px" marginRight="8px" color={`text9`}>
+              (optional)
+            </TYPE.body1>
+            <InfoLogo />
+          </>
+        )}
+      </Flex>
+      {subtitle && <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>}
+      {files && files.length > 0 && (
+        <Flex flexWrap="wrap">
+          {files.map((file: any, index) => (
+            <FilePreview
+              key={`file-${index}-${file.name}`}
+              file={file?.asset ? file.asset : file}
+              index={1}
+              handleDeleteClick={() => {
+                handleDeleteClick(index)
+              }}
+              isDisabled={isDisabled}
+              // style={{ marginRight: index !== files.length - 1 ? 0 : 0 }}
+            />
+          ))}
+        </Flex>
+      )}
+      {!isDisabled && (
+        <Upload
+          isDisabled={isDisabled}
+          accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
+          data-testid={id}
+          file={null}
+          onDrop={onDrop}
+        >
+
+            <LinkButton type="button" style={{ marginTop: '5px', width: '100%', textDecoration: 'none' }}>
+              <ExtraInfoCardCountry>
+                <RowCenter>
+                  <Plus style={{ width: '20px', marginRight: '5px' }} />
+                  <Box> Add Documents </Box>
+                </RowCenter>
+              </ExtraInfoCardCountry>
+            </LinkButton>
+
+        </Upload>
+      )}
+
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
+    </Box>
+  )
+}
+
 export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }: ChooseFileTypes) => {
   return (
     <Box style={{ maxWidth: '100%' }}>
@@ -611,6 +763,17 @@ export const DeleteRow = ({ children, onClick }: DeleteRowTypes) => {
 }
 
 const StyledUploadLogo = styled(UploadLogo)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      path {
+        stroke: ${theme.config.elements?.main};
+        fill: none;
+      }
+    `}
+`
+
+const StyledUploadLogoLbp = styled(UploadLogoLbp)`
   ${({ theme }) =>
     theme.config.elements?.main &&
     css`
@@ -756,4 +919,7 @@ export const SelfieUploaderCard = styled.div`
     display: block;
     height: 720px;
   }
+`
+const LinkButton = styled(LinkStyledButton)`
+  color: #6666ff;
 `
