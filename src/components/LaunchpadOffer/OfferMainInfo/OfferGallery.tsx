@@ -87,7 +87,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
             {socialMedialLinks
               .filter((link) => link.url)
               .map((link, idx) => (
-                <SocialMediaLink key={`link-${idx}`} href={link.url}>
+                <SocialMediaLink  key={`link-${idx}`} href={link.url}>
                   {link.logo}
                 </SocialMediaLink>
               ))}
@@ -95,12 +95,12 @@ export const OfferGallery: React.FC<Props> = (props) => {
         </>
       ) : (
         <SocialMediaLinks>
-          <SocialMediaLink href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
+          <SocialMediaLink target="_blank" rel="noopener noreferrer" href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
           {props.offer?.whitepaperUrl && <SocialMediaLink href={props.offer.whitepaperUrl}>Dataroom</SocialMediaLink>}
           {socialMedialLinks
             .filter((link) => link.url)
             .map((link, idx) => (
-              <SocialMediaLink key={`link-${idx}`} href={link.url}>
+              <SocialMediaLink target="_blank" rel="noopener noreferrer" key={`link-${idx}`} href={link.url}>
                 {link.logo}
               </SocialMediaLink>
             ))}
@@ -225,4 +225,8 @@ const SocialMediaLink = styled.a`
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: 42%;
   }
-`
+  cursor: pointer;
+  target: '_blank';
+  rel: 'noopener noreferrer';
+`;
+
