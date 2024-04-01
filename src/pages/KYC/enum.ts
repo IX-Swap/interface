@@ -10,7 +10,7 @@ export enum KYCStatuses {
 }
 
 export enum IdentityDocumentType {
-  PASSPORT = 'International Passport',
+  INTERNATIONAL_PASSPORT = 'International Passport',
   NATIONAL_ID = 'National ID',
   DRIVING_LICENCE = 'Driving Licence',
   // OTHERS = 'Others',
