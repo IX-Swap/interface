@@ -14,6 +14,10 @@ import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg'
 import { useShowError } from 'state/application/hooks'
 import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants'
 
+interface ProjectInfoProps {
+  onChange: (data: any) => void 
+}
+
 // Reusable form array component
 const FormArray = ({ label, items, addItem, removeItem, handleChange }: any) => {
   return (
@@ -50,12 +54,37 @@ const FormArray = ({ label, items, addItem, removeItem, handleChange }: any) => 
   )
 }
 
-export default function ProjectInfo() {
+export default function ProjectInfo({ onChange }: ProjectInfoProps) {
+  const [projectInfoData, setProjectInfoData] = useState({
+    title: '',
+    description: '',
+    website: '',
+    socialLinks: [],
+    whitepapers: [],
+    uploadDocs: [],
+  })
   const [socialLinks, setSocialLinks] = useState<string[]>([''])
   const [whitepapers, setWhitepapers] = useState<string[]>([''])
   const [values, setValues] = useState<any>({
     uploadDocs: [],
   })
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setProjectInfoData(prevData => ({ ...prevData, [name]: value }));
+    
+
+    const updatedData = {
+      ...projectInfoData,
+      [name]: value,
+      socialLinks: socialLinks,
+      whitepapers: whitepapers, 
+    };
+    
+    onChange(updatedData);
+  }
+  
+  
 
   const handleDropImage = (acceptedFiles: any, key: string) => {
     const files = Array.isArray(acceptedFiles) ? acceptedFiles : [acceptedFiles]
@@ -88,7 +117,14 @@ export default function ProjectInfo() {
 
   return (
     <>
-      <TextInput placeholder="Title" id="title" label="Title" />
+      <TextInput
+        placeholder="Title"
+        id="title"
+        name="title"
+        label="Title"
+        value={projectInfoData.title}
+        onChange={handleInputChange}
+      />
       <Box width={1} mb={3}>
         <Label htmlFor="description" flexDirection="column" mb={2}>
           <Box>
@@ -100,14 +136,26 @@ export default function ProjectInfo() {
             </TYPE.description3>
           </Box>
         </Label>
-        <StyledTextarea name="LBP Description" style={{ height: '126px' }} />
+        <StyledTextarea
+          value={projectInfoData.description}
+          onChange={handleInputChange}
+          name="description"
+          style={{ height: '126px' }}
+        />
       </Box>
-      <TextInput placeholder="Official Website" id="website" label="Official Website" />
+      <TextInput
+        name="website"
+        value={projectInfoData.website}
+        onChange={handleInputChange}
+        placeholder="Official Website"
+        id="website"
+        label="Official Website"
+      />
 
       {/* Social Links */}
       <FormArray
         label="Social Links"
-        items={socialLinks}
+        items={socialLinks} 
         addItem={() => handleAddItem(setSocialLinks)}
         removeItem={(index: number) => handleRemoveItem(index, setSocialLinks)}
         handleChange={(value: string, index: number) => handleChangeItem(value, index, setSocialLinks)}
@@ -128,7 +176,10 @@ export default function ProjectInfo() {
             <Trans>Upload Documents</Trans>
           </TYPE.subHeader1>
           <TYPE.description3>
-            <Trans>All documents should be dated within the last 3 months. Type of document format supported is PDF, JPG, and PNG.</Trans>
+            <Trans>
+              All documents should be dated within the last 3 months. Type of document format supported is PDF, JPG, and
+              PNG.
+            </Trans>
           </TYPE.description3>
         </Box>
       </Label>
