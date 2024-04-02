@@ -12,24 +12,6 @@ interface TaxDeclaration {
 
 export const FinancialRequiredCoutries = ['Russian Federation', 'Nigeria', 'Turkey']
 
-const validateFinancialSection = (value: any, context: yup.TestContext) => {
-  const { nationality, country, citizenship } = context.parent
-  console.log('nationality', nationality)
-  console.log('country', country)
-  console.log('citizenship', citizenship)
-
-  if (
-    (FinancialRequiredCoutries.includes(nationality?.label) ||
-      FinancialRequiredCoutries.includes(country?.label) ||
-      FinancialRequiredCoutries.includes(citizenship?.label)) &&
-    (!value || value.label === null || value.length < 1)
-  ) {
-    return false
-  } else {
-    return true
-  }
-}
-
 export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   middleName: yup.string().max(50, 'Too Long!'),
@@ -124,7 +106,7 @@ export const individualErrorsSchema = yup.object().shape({
       is: (value: any) => value && value.value === 2,
       then: yup.string().nullable().email('Invalid email').required('Required'),
     })
-    .test('dupplicatedEmail', ' ', (value, context) => value !== context.parent.email),
+    .test('dupplicatedEmail', ' ', (value, context) => value?.toLowerCase() !== context.parent.email?.toLowerCase()),
 
   socialPlatform: yup
     .string()
@@ -147,10 +129,46 @@ export const individualErrorsSchema = yup.object().shape({
   // handleName: yup.string().required('Required'),
 
   selfie: yup.array().min(1, 'Required').nullable(),
-  occupation: yup.object().nullable().test('requiredOnSomeCountries', ' ', validateFinancialSection),
-  employmentStatus: yup.object().nullable().test('requiredOnSomeCountries', ' ', validateFinancialSection),
-  employer: yup.string().test('requiredOnSomeCountries', ' ', validateFinancialSection),
-  income: yup.object().nullable().test('requiredOnSomeCountries', ' ', validateFinancialSection),
+  occupation: yup
+    .object()
+    .nullable()
+    .when(['nationality', 'country', 'citizenship'], {
+      is: (nationality: any, country: any, citizenship: any) =>
+        (nationality && FinancialRequiredCoutries.includes(nationality.label)) ||
+        (country && FinancialRequiredCoutries.includes(country.label)) ||
+        (citizenship && FinancialRequiredCoutries.includes(citizenship.label)),
+      then: yup.object().nullable().required('Required'),
+    }),
+  employmentStatus: yup
+    .object()
+    .nullable()
+    .when(['nationality', 'country', 'citizenship'], {
+      is: (nationality: any, country: any, citizenship: any) =>
+        (nationality && FinancialRequiredCoutries.includes(nationality.label)) ||
+        (country && FinancialRequiredCoutries.includes(country.label)) ||
+        (citizenship && FinancialRequiredCoutries.includes(citizenship.label)),
+      then: yup.object().nullable().required('Required'),
+    }),
+  employer: yup
+    .string()
+    .nullable()
+    .when(['nationality', 'country', 'citizenship'], {
+      is: (nationality: any, country: any, citizenship: any) =>
+        (nationality && FinancialRequiredCoutries.includes(nationality.label)) ||
+        (country && FinancialRequiredCoutries.includes(country.label)) ||
+        (citizenship && FinancialRequiredCoutries.includes(citizenship.label)),
+      then: yup.string().nullable().required('Required'),
+    }),
+  income: yup
+    .object()
+    .nullable()
+    .when(['nationality', 'country', 'citizenship'], {
+      is: (nationality: any, country: any, citizenship: any) =>
+        (nationality && FinancialRequiredCoutries.includes(nationality.label)) ||
+        (country && FinancialRequiredCoutries.includes(country.label)) ||
+        (citizenship && FinancialRequiredCoutries.includes(citizenship.label)),
+      then: yup.object().nullable().required('Required'),
+    }),
 
   // investorDeclarationIsFilled: yup
   //   .boolean()
@@ -214,7 +232,13 @@ export const individualErrorsSchema = yup.object().shape({
     .when('taxCountry', { is: (country: any) => !!country, then: yup.string().required('Required') }),
   taxIdentificationReason: yup.string().when('taxisAdditional', { is: true, then: yup.string().required('Required') }),
 
-  sourceOfFunds: yup.array().test('requiredOnSomeCountries', ' ', validateFinancialSection),
+  sourceOfFunds: yup.array().when(['nationality', 'country', 'citizenship'], {
+    is: (nationality: any, country: any, citizenship: any) =>
+      (nationality && FinancialRequiredCoutries.includes(nationality.label)) ||
+      (country && FinancialRequiredCoutries.includes(country.label)) ||
+      (citizenship && FinancialRequiredCoutries.includes(citizenship.label)),
+    then: yup.array().nullable().min(1, ' ').required('Required'),
+  }),
   otherFunds: yup.string().when('sourceOfFunds', {
     is: (sourceOfFunds: string[]) => sourceOfFunds.includes('Others'),
     then: yup.string().required('Required'),
