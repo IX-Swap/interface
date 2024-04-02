@@ -5,11 +5,18 @@ import { TextInput } from 'pages/KYC/common'
 import { TYPE } from 'theme'
 import { RowStart } from 'components/Row'
 import { Line } from 'components/Line'
-import { DateInput } from 'components/DateInput' // Import the DateInput component
+import { DateInput } from 'components/DateInput'
 import dayjs from 'dayjs'
 import Stack from '@mui/material/Stack'
 import Slider from '@mui/material/Slider'
 import { FormGrid } from 'pages/KYC/styleds'
+import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
+import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
+
+
+const Container = styled.div`
+  width: 100%;
+`
 
 const TokenomicsContainer = styled.div`
   width: 100%;
@@ -18,7 +25,8 @@ const TokenomicsContainer = styled.div`
   border: 1px solid #e6e6ff;
   background: #f7f7fa;
   padding: 12px 18px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  margin-top: 15px;
 `
 
 const TokenomicsItem = styled.div`
@@ -69,6 +77,7 @@ const Input = styled.input`
 
 const MaxWrapper = styled.div`
   text-align: center;
+  
 `
 
 const WeightsContainer = styled.div`
@@ -78,6 +87,7 @@ const WeightsContainer = styled.div`
   padding: 12px 18px;
   margin-bottom: 10px;
 `
+
 const SpanBal = styled.span`
   display: block;
   color: #8f8fb2;
@@ -85,24 +95,44 @@ const SpanBal = styled.span`
   padding: 8px;
   margin-top: 8px;
 `
-const Tokenomics = () => {
+
+// Refactored Tokenomics component
+const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
   const [valueStartDate, setStartDate] = useState('')
   const [valueEndDate, setEndDate] = useState('')
+  const [formData, setFormData] = useState<any>({
+    shareAddress: '',
+    shareInput: '',
+    assetInput: '',
+    maxSupply: '',
+    minPrice: '',
+    maxPrice: '',
+    startWeight: 30,
+    endWeight: 30,
+    idIssuanceDate: '',
+    idExpirationDate: '',
+  })
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     setStartValue(newValue as number)
+    setFormData({ ...formData, startWeight: newValue })
+    onChange({ ...formData, startWeight: newValue })
   }
 
   const handleChangeEnd = (event: Event, newValue: number | number[]) => {
     setEndValue(newValue as number)
+    setFormData({ ...formData, endWeight: newValue })
+    onChange({ ...formData, endWeight: newValue })
   }
 
   const handleStartDateChange = (date: Date | null) => {
     if (date) {
       const newStartDate = dayjs(date).local().format('YYYY-MM-DD')
       setStartDate(newStartDate)
+      setFormData({ ...formData, idIssuanceDate: newStartDate })
+      onChange({ ...formData, idIssuanceDate: newStartDate })
     }
   }
 
@@ -110,12 +140,27 @@ const Tokenomics = () => {
     if (date) {
       const newEndDate = dayjs(date).local().format('YYYY-MM-DD')
       setEndDate(newEndDate)
+      setFormData({ ...formData, idExpirationDate: newEndDate })
+      onChange({ ...formData, idExpirationDate: newEndDate })
     }
   }
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+    setFormData({ ...formData, [name]: value })
+    onChange({ ...formData, [name]: value })
+  }
+
   return (
-    <>
-      <TextInput placeholder="Share Address" id="title" label="Share Address" />
+    <Container>
+      <TextInput
+        placeholder="Share Address"
+        id="shareAddress"
+        label="Share Address"
+        name="shareAddress"
+        onChange={handleInputChange}
+      />
+      <Line style={{ margin: '40px 0px 30px 0px' }} />
       <RowStart marginBottom="32px">
         <TYPE.label>
           <Trans>Configure Quantities</Trans>
@@ -135,13 +180,15 @@ const Tokenomics = () => {
             </SpanBal>
           </TokenomicsItem>
           <TokenomicsItem>
-            <Input type="text" placeholder="0.00" />
+            <Input type="text" placeholder="0.00" name="shareInput" onChange={handleInputChange} />
             <MaxWrapper>
-              <Span>Max</Span>
+            <Span style={{padding: '10px 20px', cursor: 'pointer'}}>Max</Span>
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
       </>
+
+      {/* Asset section */}
 
       <>
         Asset
@@ -157,16 +204,22 @@ const Tokenomics = () => {
             </SpanBal>
           </TokenomicsItem>
           <TokenomicsItem>
-            <Input type="text" placeholder="0.00" />
+            <Input type="text" placeholder="0.00" name="assetInput" onChange={handleInputChange} />
             <MaxWrapper>
-              <Span>Max</Span>
+            <Span style={{padding: '10px 20px', cursor: 'pointer'}}>Max</Span>
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
       </>
 
-      <TextInput placeholder="Max. Supply" id="Max" label="Share Max. Supply Max. Supply" />
-      <Line style={{ margin: '20px' }} />
+      <TextInput
+        placeholder="Max. Supply"
+        id="maxSupply"
+        label="Share Max. Supply"
+        name="maxSupply"
+        onChange={handleInputChange}
+      />
+      <Line style={{ margin: '40px 0px 30px 0px' }} />
 
       <RowStart marginBottom="32px">
         <TYPE.label>
@@ -175,51 +228,135 @@ const Tokenomics = () => {
       </RowStart>
       <>
         Start Weight
-        <WeightsContainer>
-          <TokenomicsItem>
-            <Select>
-              <Option value="option1">Option 1</Option>
-              <Option value="option2">Option 2</Option>
-              <Option value="option3">Option 3</Option>
-            </Select>
+        <WeightsContainer style={{ padding: '12px 0px' }}>
+        <TokenomicsItem>
+            <div
+              style={{
+                border: '1px solid #E6E6FF',
+                padding: '0px 0px',
+                borderRadius: '6px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Serenity />{' '}
+              <div
+                style={{
+                  borderRight: '1px solid #E6E6FF',
+                  paddingRight: '10px',
+                  marginRight: '10px',
+                  paddingBottom: '2px',
+                  marginLeft: '5px',
+                }}
+              >
+                Serenity
+              </div>
+              <div style={{ padding: '10px 20px' }}>{valueStart}%</div>
+            </div>
           </TokenomicsItem>
           <TokenomicsItem>
-            <MaxWrapper>
-              <Span>Max</Span>
-            </MaxWrapper>
-            {/* <Input type="text" placeholder="0.00" /> */}
+            <TokenomicsItem>
+              <div
+                style={{
+                  border: '1px solid #E6E6FF',
+                  padding: '0px 10px',
+                  borderRadius: '6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <div style={{ padding: '10px 20px' }}>{Math.abs(valueStart - 100)}%</div>{' '}
+                <div
+                  style={{
+                    borderRight: '1px solid #E6E6FF',
+                    paddingRight: '10px',
+                    marginRight: '10px',
+                    paddingBottom: '2px',
+                    marginLeft: '5px',
+                  }}
+                >
+                  USDC
+                </div>
+                <USDC />
+              </div>
+            </TokenomicsItem>
           </TokenomicsItem>
         </WeightsContainer>
         <div>
           <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-            <Slider aria-label="Volume" style={{ color: '#6666FF' }} value={valueStart} onChange={handleChangeStart} />
+            <Slider
+              aria-label="Start Weight"
+              style={{ color: '#6666FF' }}
+              value={valueStart}
+              onChange={handleChangeStart}
+            />
           </Stack>
         </div>
       </>
       <>
         End Weight
-        <WeightsContainer>
+        <WeightsContainer style={{ padding: '12px 0px' }}>
           <TokenomicsItem>
-            <Select>
-              <Option value="option1">Option 1</Option>
-              <Option value="option2">Option 2</Option>
-              <Option value="option3">Option 3</Option>
-            </Select>
+            <div
+              style={{
+                border: '1px solid #E6E6FF',
+                padding: '0px 0px',
+                borderRadius: '6px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Serenity />{' '}
+              <div
+                style={{
+                  borderRight: '1px solid #E6E6FF',
+                  paddingRight: '10px',
+                  marginRight: '10px',
+                  paddingBottom: '2px',
+                  marginLeft: '5px',
+                }}
+              >
+                Serenity
+              </div>
+              <div style={{ padding: '10px 20px' }}>{valueEnd}%</div>
+            </div>
           </TokenomicsItem>
           <TokenomicsItem>
-            <MaxWrapper>
-              <Span>Max</Span>
-            </MaxWrapper>
+            <TokenomicsItem>
+              <div
+                style={{
+                  border: '1px solid #E6E6FF',
+                  padding: '0px 10px',
+                  borderRadius: '6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <div style={{ padding: '10px 20px' }}>{Math.abs(valueEnd - 100)}%</div>{' '}
+                <div
+                  style={{
+                    borderRight: '1px solid #E6E6FF',
+                    paddingRight: '10px',
+                    marginRight: '10px',
+                    paddingBottom: '2px',
+                    marginLeft: '5px',
+                  }}
+                >
+                  USDC
+                </div>
+                <USDC />
+              </div>
+            </TokenomicsItem>
           </TokenomicsItem>
         </WeightsContainer>
       </>
       <div>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          <Slider aria-label="Volume" style={{ color: '#6666FF' }} value={valueEnd} onChange={handleChangeEnd} />
+          <Slider aria-label="End Weight" style={{ color: '#6666FF' }} value={valueEnd} onChange={handleChangeEnd} />
         </Stack>
       </div>
-      <Line style={{ margin: '20px' }} />
-      <RowStart marginTop="32px">
+      <Line style={{ margin: '40px 0px 30px 0px' }} />
+      <RowStart marginTop="32px" marginBottom={'30px'}>
         <TYPE.label>
           <Trans>Configure Duration</Trans>
         </TYPE.label>
@@ -245,12 +382,12 @@ const Tokenomics = () => {
           minDate={new Date()}
         />
       </FormGrid>
-      <Line style={{ margin: '20px' }} />
+      <Line style={{ margin: '50px 0px 50px 0px' }} />
       <FormGrid>
-        <TextInput placeholder="$1.00" id="title" label="Min. price" />
-        <TextInput placeholder="$0.00" id="title" label="Max. price" />
+        <TextInput placeholder="$1.00" id="minPrice" label="Min. price" name="minPrice" onChange={handleInputChange} />
+        <TextInput placeholder="$0.00" id="maxPrice" label="Max. price" name="maxPrice" onChange={handleInputChange} />
       </FormGrid>
-    </>
+    </Container>
   )
 }
 
