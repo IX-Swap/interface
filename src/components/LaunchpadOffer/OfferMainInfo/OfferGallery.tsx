@@ -96,7 +96,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
       ) : (
         <SocialMediaLinks>
           <SocialMediaLink target="_blank" rel="noopener noreferrer" href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
-          {props.offer?.whitepaperUrl && <SocialMediaLink href={props.offer.whitepaperUrl}>Dataroom</SocialMediaLink>}
+          {props.offer?.whitepaperUrl && <SocialMediaLink target="_blank" rel="noopener noreferrer" href={props.offer.whitepaperUrl}>Dataroom</SocialMediaLink>}
           {socialMedialLinks
             .filter((link) => link.url)
             .map((link, idx) => (
