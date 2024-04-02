@@ -136,6 +136,7 @@ export default function IndividualKycForm() {
   const [countryState, setCountryState] = useState('')
   const [citizenshipState, setCitizenshipState] = useState('')
   const [requiredFinancial, setRequiredFinancial] = useState(false)
+  const [financialFilledState, setFinancialFilled] = useState(false)
 
   const confirmOptOut = useCallback((setFieldValue: any) => {
     setShowOptoutConfirmationModal(false)
@@ -570,8 +571,6 @@ export default function IndividualKycForm() {
     [formSubmitHandler]
   )
 
-  console.log(errors, 'jsjsjsjsj')
-
   return (
     <Loadable loading={!isLoggedIn}>
       <Prompt when={!canLeavePage.current} message={promptValue} />
@@ -653,12 +652,18 @@ export default function IndividualKycForm() {
                 isFilled('secondaryContactDetails')
 
               const financialFilled =
-                shouldValidate &&
-                isFilled('occupation') &&
-                isFilled('employmentStatus') &&
-                isFilled('employer') &&
-                isFilled('income') &&
-                isFilled('sourceOfFunds')
+                FinancialRequiredCoutries.includes(formData?.nationality?.label) ||
+                FinancialRequiredCoutries.includes(formData?.country?.label) ||
+                FinancialRequiredCoutries.includes(formData?.citizenship?.label)
+                  ? shouldValidate &&
+                    isFilled('occupation') &&
+                    isFilled('employmentStatus') &&
+                    isFilled('employer') &&
+                    isFilled('income') &&
+                    isFilled('sourceOfFunds')
+                  : true
+
+              setFinancialFilled(financialFilled)
 
               const statusDeclarationFilled = shouldValidate && isFilled('accredited')
 
@@ -1595,8 +1600,8 @@ export default function IndividualKycForm() {
                         {
                           title: 'Financial Information',
                           href: 'financial',
-                          passed: financialFilled,
-                          failed: financialFailed,
+                          passed: financialFilledState,
+                          failed: !financialFilledState,
                         },
                         // {
                         //   title: 'Investor Status Declaration',

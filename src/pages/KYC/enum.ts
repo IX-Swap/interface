@@ -10,7 +10,7 @@ export enum KYCStatuses {
 }
 
 export enum IdentityDocumentType {
-  PASSPORT = 'Passport',
+  INTERNATIONAL_PASSPORT = 'International Passport',
   NATIONAL_ID = 'National ID',
   DRIVING_LICENCE = 'Driving Licence',
   // OTHERS = 'Others',
@@ -21,3 +21,4 @@ export enum SecondaryContactType {
   BUSINESS_EMAIL_ADDRESS = 'Business Email Address',
   SOCIAL_MEDIA_HANDLE = 'Social Media Handle',
 }
+
