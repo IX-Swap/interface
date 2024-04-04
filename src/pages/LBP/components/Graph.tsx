@@ -42,8 +42,8 @@ export default function Graph({ graphData, step }: GraphProps) {
 
     //startWeight endWeight
 
-    const shareStartWeight = 90
-    const shareEndWeight = 30
+    const shareStartWeight = 0.9
+    const shareEndWeight = 0.3
 
     //shareInput assetInput
 
