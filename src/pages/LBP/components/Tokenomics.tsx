@@ -69,18 +69,28 @@ const Input = styled.input`
   font-size: 32px;
   font-weight: 700;
   color: #292933;
-  max-width: 200px;
+  max-width: 350px;
   width: calc(100% - 48px);
   margin-bottom: 10px;
+  outline: none;
+  
+
   &::placeholder {
     font-size: 32px;
     color: #bdbddb;
     font-weight: 700;
   }
-`
+
+
+  &:focus {
+    border: none;
+    outline: none; 
+  }
+`;
 
 const MaxWrapper = styled.div`
-  text-align: center;
+  text-align: right;
+  margin-right: 60px;
 `
 
 const WeightsContainer = styled.div`
@@ -112,29 +122,31 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
     maxSupply: '',
     minPrice: '',
     maxPrice: '',
-    startWeight: 30,
-    endWeight: 30,
+    startWeight: 0.3,
+    endWeight: 0.0,
     idIssuanceDate: '',
     idExpirationDate: '',
   })
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
-    const newStartValue = newValue as number
-    const newEndValue = Math.max(valueEnd, newStartValue - 3) // Ensure end value is at least 3 less than start value
-    setStartValue(newStartValue)
-    setEndValue(newEndValue)
-    setFormData({ ...formData, startWeight: newStartValue, endWeight: newEndValue })
-    onChange({ ...formData, startWeight: newStartValue, endWeight: newEndValue })
-  }
-
+    const newStartValue = Math.min(Math.max(newValue as number, 3), 100); 
+    const newEndValue = Math.min(valueEnd, newStartValue - 3); 
+    setStartValue(newStartValue);
+    setEndValue(newEndValue);
+    setFormData({ ...formData, startWeight: newStartValue, endWeight: newEndValue });
+    onChange({ ...formData, startWeight: newStartValue, endWeight: newEndValue });
+  };
+  
   const handleChangeEnd = (event: Event, newValue: number | number[]) => {
-    const newEndValue = newValue as number
-    const newStartValue = Math.min(valueStart, newEndValue + 3) // Ensure start value is at least 3 more than end value
-    setStartValue(newStartValue)
-    setEndValue(newEndValue)
-    setFormData({ ...formData, startWeight: newStartValue, endWeight: newEndValue })
-    onChange({ ...formData, startWeight: newStartValue, endWeight: newEndValue })
-  }
+    const newEndValue = Math.min(Math.max(newValue as number, 0), 97); 
+    const newStartValue = Math.max(valueStart, newEndValue + 3); 
+    setStartValue(newStartValue);
+    setEndValue(newEndValue);
+    setFormData({ ...formData, startWeight: newStartValue, endWeight: newEndValue });
+    onChange({ ...formData, startWeight: newStartValue, endWeight: newEndValue });
+  };
+  
+  
 
   const handleStartDateChange = (date: Date | null) => {
     if (date) {
@@ -391,15 +403,15 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
           minDate={new Date()}
         /> */}
 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DateTimePicker']}>
+        <LocalizationProvider  dateAdapter={AdapterDayjs}>
+          <DemoContainer  components={['DateTimePicker']}>
             <DateTimePicker onChange={handleStartDateChange} label="ID Issuance Date" />
           </DemoContainer>
         </LocalizationProvider>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker onChange={handleEndDateChange} label="ID Expiration Date" />
+            <DateTimePicker onChange={handleEndDateChange}  label="ID Expiration Date" />
           </DemoContainer>
         </LocalizationProvider>
 
@@ -414,3 +426,4 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
 }
 
 export default Tokenomics
+

@@ -113,7 +113,7 @@ export default function LBPForm() {
         </Column>
       </FormContainer>
       <div style={{ display: 'block' }}>
-        <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px' }}>
+        <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px', marginBottom: '1075px' }}>
           <KYCProgressBar
             disabled={!canSubmit}
             handleSubmit={handleSubmit}
@@ -140,11 +140,7 @@ export default function LBPForm() {
           />
         </StyledStickyBox>
 
-        <Graph  step={1} graphData={formData.tokenomics} />
-
-        {/* <Card style={{ marginTop: '200px', width: '300px', height: '400px', background: '#FFFFFF', position: 'fixed' }}>
-          <div></div>
-        </Card> */}
+        <Graph step={1} graphData={formData.tokenomics} />
       </div>
     </FormRow>
   )
