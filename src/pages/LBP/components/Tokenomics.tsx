@@ -124,8 +124,8 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
     maxPrice: '',
     startWeight: 0.3,
     endWeight: 0.0,
-    idIssuanceDate: '',
-    idExpirationDate: '',
+    startDate: '',
+    endDate: '',
   })
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
@@ -152,16 +152,16 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
     if (date) {
       const newStartDate = dayjs(date).local().format('YYYY-MM-DD HH:mm:ss');
       setStartDate(newStartDate);
-      setFormData({ ...formData, idIssuanceDate: newStartDate });
-      onChange({ ...formData, idIssuanceDate: newStartDate });
+      setFormData({ ...formData, startDate: newStartDate });
+      onChange({ ...formData, startDate: newStartDate });
     }
   };
   const handleEndDateChange = (date: Date | null) => {
     if (date) {
       const newEndDate = dayjs(date).local().format('YYYY-MM-DD HH:mm:ss');
       setEndDate(newEndDate);
-      setFormData({ ...formData, idExpirationDate: newEndDate });
-      onChange({ ...formData, idExpirationDate: newEndDate });
+      setFormData({ ...formData, endDate: newEndDate });
+      onChange({ ...formData, endDate: newEndDate });
     }
   };
   
@@ -405,13 +405,13 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
 
         <LocalizationProvider  dateAdapter={AdapterDayjs}>
           <DemoContainer  components={['DateTimePicker']}>
-            <DateTimePicker onChange={handleStartDateChange} label="ID Issuance Date" />
+            <DateTimePicker onChange={handleStartDateChange} label="Start Date" />
           </DemoContainer>
         </LocalizationProvider>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker onChange={handleEndDateChange}  label="ID Expiration Date" />
+            <DateTimePicker onChange={handleEndDateChange}  label="End Date" />
           </DemoContainer>
         </LocalizationProvider>
 

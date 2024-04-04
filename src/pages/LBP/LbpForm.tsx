@@ -113,7 +113,7 @@ export default function LBPForm() {
         </Column>
       </FormContainer>
       <div style={{ display: 'block' }}>
-        <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px', marginBottom: '1075px' }}>
+        <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px', marginBottom: '1700px' }}>
           <KYCProgressBar
             disabled={!canSubmit}
             handleSubmit={handleSubmit}

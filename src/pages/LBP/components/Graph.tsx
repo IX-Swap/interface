@@ -68,8 +68,8 @@ export default function Graph({ graphData, step }: GraphProps) {
     return ((shareEndWeight - shareStartWeight) * step) / totalStep
   }
   const generateChartData = (step: number) => {
-    const issuanceDate = new Date(graphData.idIssuanceDate).getTime()
-    const expirationDate = new Date(graphData.idExpirationDate).getTime()
+    const issuanceDate = new Date(graphData.startDate).getTime()
+    const expirationDate = new Date(graphData.endDate).getTime()
     const totalDays = Math.ceil((expirationDate - issuanceDate) / (1000 * 60 * 60 * 24))
 
     const chartData = []
@@ -115,6 +115,8 @@ export default function Graph({ graphData, step }: GraphProps) {
       description: '$10,000.00 — $15,000.00',
     },
   ]
+
+  console.log(graphData)
 
   return (
     <StyledCard>
