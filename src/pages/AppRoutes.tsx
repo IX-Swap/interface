@@ -20,6 +20,7 @@ import AdminTransactionsTable from 'components/AdminTransactionsTable'
 import { AdminKycTable } from 'components/AdminKyc'
 import { KycReviewModal } from 'components/KycReviewModal'
 import LBPForm from './LBP/LbpForm'
+import LbpDashboardPage from './LBP/Dashboard'
 
 const Admin = lazy(() => import('pages/Admin'))
 const Swap = lazy(() => import('pages/Swap'))
@@ -201,6 +202,7 @@ export const routeConfigs: RouteMapEntry[] = [
   },
   { path: routes.manageOffer, component: ManageOffer, ...onlyOfferManager },
 
-    /* LBP routes */
-    { path: routes.LBP, component: LBPForm },
+  /* LBP routes */
+  { path: routes.LBP, component: LBPForm },
+  { path: routes.lbpDashboard, component: LbpDashboardPage },
 ]
