@@ -48,6 +48,7 @@ export const routes = {
   manageOffer: `/issuance/manage/:issuanceId`,
   newAdmin: '/admin/accreditation',
   LBP: '/lbp',
+  lbpDashboard: '/lbp/dashboard',
 
   //admin urls
 
