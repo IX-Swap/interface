@@ -1,7 +1,6 @@
 import styled from 'styled-components'
-import { LbpStatus } from '../types';
-import { text42, text53 } from 'components/LaunchpadMisc/typography';
-
+import { LbpStatus } from '../types'
+import { text42, text53 } from 'components/LaunchpadMisc/typography'
 
 export const TableTitle = styled.div`
   grid-area: title;
@@ -38,19 +37,10 @@ export const LbpTable = styled.div<{ maxWidth?: string; hideBorder?: boolean }>`
 export const TableHeader = styled.div<{ tab: LbpStatus }>`
   display: grid;
   grid-template-rows: 60px;
-  ${(props) =>
-    props.tab === LbpStatus.pending &&
-    `
-    grid-template-columns: repeat(4, 1fr);
-  `}
-  ${(props) =>
-    props.tab !== LbpStatus.pending &&
-    `
-    grid-template-columns: 1.5fr repeat(6,1fr) 1.5fr;
-  `}
+  grid-template-columns: repeat(3, 1fr);
   place-content: center start;
   align-items: center;
-  gap: ${(props) => (props.tab === LbpStatus.pending ? '2rem' : '1rem')};
+  gap: 25rem;
   height: 65px;
   width: 100%;
   padding: 0.25rem 0;

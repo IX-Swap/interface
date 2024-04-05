@@ -29,13 +29,8 @@ interface Props {
 }
 
 const HEADERS = [
-  { key: 'lbpName', label: 'Lbps' },
-  { key: 'countInvestors', label: 'Investors' },
-  { key: 'commitment', label: 'Commitment' },
-  { key: 'progressPercent', label: 'Progress' },
-  { key: 'hardCap', label: 'Total Funding' },
-  { key: 'closeDate', label: 'Close Date' },
-  { key: 'status', label: 'Stage' },
+  { key: 'name', label: 'Name' },
+  { key: 'startDate', label: 'Start Date and Time' },
 ]
 
 export const LbpsFull: React.FC<Props> = (props) => {
@@ -44,16 +39,18 @@ export const LbpsFull: React.FC<Props> = (props) => {
 
   const getLbps = async (page: any, filter: any, order: any, type: any, pageSize: any) => {
     console.log(page, filter, order, type, pageSize)
-    return [
-      {
-        name: 'Test 1',
-        startDate: new Date(),
-      },
-      {
-        name: 'Test 2',
-        startDate: new Date(),
-      },
-    ]
+    return {
+      items: [
+        {
+          name: 'Test 1',
+          startDate: new Date(),
+        },
+        {
+          name: 'Test 2',
+          startDate: new Date(),
+        },
+      ],
+    }
   }
 
   const container = React.useRef<HTMLDivElement>(null)
@@ -173,10 +170,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
             lbps.map((lbp, idx) => (
               <LbpRow key={idx} tab={LbpStatus.live}>
                 <Raw>{lbp.name}</Raw>
-                <CountRow>{lbp?.startDate ? moment(lbp?.startDate).format('DD/MM/YYYY') : ''}</CountRow>
-
-                <DefaultRaw>{LbpStatus[lbp.status]}</DefaultRaw>
-
+                <CountRow>{lbp?.startDate ? moment(lbp?.startDate).format('DD/MM/YYYY hh:mmA') : ''}</CountRow>
                 <ActionButtons>
                   <OutlineButton
                     color={theme.launchpad.colors.primary + '80'}
