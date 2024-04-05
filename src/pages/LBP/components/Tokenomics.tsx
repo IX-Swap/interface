@@ -12,6 +12,10 @@ import Slider from '@mui/material/Slider'
 import { FormGrid } from 'pages/KYC/styleds'
 import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
 import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 
 
 const Container = styled.div`
@@ -65,19 +69,28 @@ const Input = styled.input`
   font-size: 32px;
   font-weight: 700;
   color: #292933;
-  max-width: 200px;
+  max-width: 350px;
   width: calc(100% - 48px);
   margin-bottom: 10px;
+  outline: none;
+  
+
   &::placeholder {
     font-size: 32px;
     color: #bdbddb;
     font-weight: 700;
   }
-`
+
+
+  &:focus {
+    border: none;
+    outline: none; 
+  }
+`;
 
 const MaxWrapper = styled.div`
-  text-align: center;
-  
+  text-align: right;
+  margin-right: 60px;
 `
 
 const WeightsContainer = styled.div`
@@ -109,41 +122,49 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
     maxSupply: '',
     minPrice: '',
     maxPrice: '',
-    startWeight: 30,
-    endWeight: 30,
-    idIssuanceDate: '',
-    idExpirationDate: '',
+    startWeight: 0.3,
+    endWeight: 0.0,
+    startDate: '',
+    endDate: '',
   })
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
-    setStartValue(newValue as number)
-    setFormData({ ...formData, startWeight: newValue })
-    onChange({ ...formData, startWeight: newValue })
-  }
-
+    const newStartValue = Math.min(Math.max(newValue as number, 3), 100); 
+    const newEndValue = Math.min(valueEnd, newStartValue - 3); 
+    setStartValue(newStartValue);
+    setEndValue(newEndValue);
+    setFormData({ ...formData, startWeight: newStartValue, endWeight: newEndValue });
+    onChange({ ...formData, startWeight: newStartValue, endWeight: newEndValue });
+  };
+  
   const handleChangeEnd = (event: Event, newValue: number | number[]) => {
-    setEndValue(newValue as number)
-    setFormData({ ...formData, endWeight: newValue })
-    onChange({ ...formData, endWeight: newValue })
-  }
+    const newEndValue = Math.min(Math.max(newValue as number, 0), 97); 
+    const newStartValue = Math.max(valueStart, newEndValue + 3); 
+    setStartValue(newStartValue);
+    setEndValue(newEndValue);
+    setFormData({ ...formData, startWeight: newStartValue, endWeight: newEndValue });
+    onChange({ ...formData, startWeight: newStartValue, endWeight: newEndValue });
+  };
+  
+  
 
   const handleStartDateChange = (date: Date | null) => {
     if (date) {
-      const newStartDate = dayjs(date).local().format('YYYY-MM-DD')
-      setStartDate(newStartDate)
-      setFormData({ ...formData, idIssuanceDate: newStartDate })
-      onChange({ ...formData, idIssuanceDate: newStartDate })
+      const newStartDate = dayjs(date).local().format('YYYY-MM-DD HH:mm:ss');
+      setStartDate(newStartDate);
+      setFormData({ ...formData, startDate: newStartDate });
+      onChange({ ...formData, startDate: newStartDate });
     }
-  }
-
+  };
   const handleEndDateChange = (date: Date | null) => {
     if (date) {
-      const newEndDate = dayjs(date).local().format('YYYY-MM-DD')
-      setEndDate(newEndDate)
-      setFormData({ ...formData, idExpirationDate: newEndDate })
-      onChange({ ...formData, idExpirationDate: newEndDate })
+      const newEndDate = dayjs(date).local().format('YYYY-MM-DD HH:mm:ss');
+      setEndDate(newEndDate);
+      setFormData({ ...formData, endDate: newEndDate });
+      onChange({ ...formData, endDate: newEndDate });
     }
-  }
+  };
+  
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -182,7 +203,7 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
           <TokenomicsItem>
             <Input type="text" placeholder="0.00" name="shareInput" onChange={handleInputChange} />
             <MaxWrapper>
-            <Span style={{padding: '10px 20px', cursor: 'pointer'}}>Max</Span>
+              <Span style={{ padding: '10px 20px', cursor: 'pointer' }}>Max</Span>
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
@@ -206,7 +227,7 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
           <TokenomicsItem>
             <Input type="text" placeholder="0.00" name="assetInput" onChange={handleInputChange} />
             <MaxWrapper>
-            <Span style={{padding: '10px 20px', cursor: 'pointer'}}>Max</Span>
+              <Span style={{ padding: '10px 20px', cursor: 'pointer' }}>Max</Span>
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
@@ -229,7 +250,7 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
       <>
         Start Weight
         <WeightsContainer style={{ padding: '12px 0px' }}>
-        <TokenomicsItem>
+          <TokenomicsItem>
             <div
               style={{
                 border: '1px solid #E6E6FF',
@@ -363,7 +384,7 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
       </RowStart>
 
       <FormGrid>
-        <DateInput
+        {/* <DateTimeInput
           label={''}
           placeholder="ID Issuance Date"
           id="documentIssueDateButton"
@@ -372,7 +393,7 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
           onChange={handleStartDateChange}
           maxDate={new Date()}
         />
-        <DateInput
+        <DateTimeInput
           label={''}
           id="documentExpiryDateButton"
           placeholder="ID Expiration Date"
@@ -380,7 +401,20 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
           value={valueEndDate}
           onChange={handleEndDateChange}
           minDate={new Date()}
-        />
+        /> */}
+
+        <LocalizationProvider  dateAdapter={AdapterDayjs}>
+          <DemoContainer  components={['DateTimePicker']}>
+            <DateTimePicker onChange={handleStartDateChange} label="Start Date" />
+          </DemoContainer>
+        </LocalizationProvider>
+
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DateTimePicker']}>
+            <DateTimePicker onChange={handleEndDateChange}  label="End Date" />
+          </DemoContainer>
+        </LocalizationProvider>
+
       </FormGrid>
       <Line style={{ margin: '50px 0px 50px 0px' }} />
       <FormGrid>
@@ -392,3 +426,4 @@ const Tokenomics = ({ onChange }: { onChange: (data: any) => void }) => {
 }
 
 export default Tokenomics
+
