@@ -23,6 +23,7 @@ import { text17, text18, text19, text30 } from 'components/LaunchpadMisc/typogra
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { ITEM_ROWS } from 'components/LaunchpadIssuance/utils/constants'
 import { TitleBox } from 'components/LaunchpadIssuance/IssuanceDashboard/TitleBox'
+import { useGetLbpsFull } from 'state/lbp/hooks'
 
 interface Props {
   type: string
@@ -37,21 +38,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
   const theme = useTheme()
   const history = useHistory()
 
-  const getLbps = async (page: any, filter: any, order: any, type: any, pageSize: any) => {
-    console.log(page, filter, order, type, pageSize)
-    return {
-      items: [
-        {
-          name: 'Test 1',
-          startDate: new Date(),
-        },
-        {
-          name: 'Test 2',
-          startDate: new Date(),
-        },
-      ],
-    }
-  }
+  const getLbps = useGetLbpsFull()
 
   const container = React.useRef<HTMLDivElement>(null)
 
