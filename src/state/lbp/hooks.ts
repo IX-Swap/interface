@@ -3,6 +3,7 @@ import { DashboardLbp } from 'components/LBP/types'
 import React from 'react'
 import apiService from 'services/apiService'
 import { PaginateResponse } from 'types/pagination'
+import { Lbp } from './types'
 
 export const useGetLbpsFull = () => {
   return React.useCallback(
@@ -43,4 +44,12 @@ export const useGetLbpsFull = () => {
     },
     []
   )
+}
+
+export const useGetLbpByName = () => {
+  return React.useCallback((name: string) => apiService.get('/lbp/by-name?name=' + name).then((res) => res.data as Lbp), [])
+}
+
+export const useCreateLbp = () => {
+  return React.useCallback((name: string) => apiService.post('/lbp/draft', { name }).then((res) => res.data as Lbp), [])
 }
