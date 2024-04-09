@@ -34,6 +34,7 @@ class Web3 {
       '42': 'kovan',
       '137': 'matic',
       '80001': 'maticmum',
+      '80002': 'amoy',
     } as Record<string, string>
 
     let host = ''
@@ -49,6 +50,9 @@ class Web3 {
         break
       case 'maticmum':
         host = 'polygon-mumbai.infura.io'
+        break
+      case 'amoy':
+        host = 'polygon-amoy.infura.io'
         break
       default:
         break
