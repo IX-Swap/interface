@@ -83,7 +83,7 @@ export const LbpCreateButton: React.FC<Props> = (props) => {
               <Label style={{ margin: '6px 0px 0px 0px' }}>Name</Label>
               <IssuanceTextField
                 // label="Name"
-                placeholder="Name of Asset"
+                placeholder="Name"
                 value={values.name}
                 onChange={(v) => setFieldValue('name', v)}
                 inputFilter={textFilter}
