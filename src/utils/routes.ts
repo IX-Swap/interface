@@ -47,8 +47,8 @@ export const routes = {
   issuanceReport: `/issuance/extract/:issuanceId`,
   manageOffer: `/issuance/manage/:issuanceId`,
   newAdmin: '/admin/accreditation',
-  LBP: '/lbp',
-  lbpDashboard: '/lbp/dashboard',
+  lbpDashboard: '/lbp',
+  lbpEdit: '/lbp/edit',
 
   //admin urls
 

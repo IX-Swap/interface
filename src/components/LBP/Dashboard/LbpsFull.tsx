@@ -60,7 +60,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
   }, [filter])
   const [order, setOrder] = React.useState<OrderConfig>({})
 
-  const viewItem = React.useCallback((id: number) => history.push(`/lbps/${id}`), [history])
+  const createLbp = React.useCallback((id: number) => history.push(`/lbp/edit?id=${id}`), [history])
 
   const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
 
@@ -163,7 +163,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
                     color={theme.launchpad.colors.primary + '80'}
                     borderType="tiny"
                     height="34px"
-                    onClick={() => viewItem(lbp.id)}
+                    onClick={() => createLbp(lbp.id)}
                   >
                     Edit <EditIcon />
                   </OutlineButton>
