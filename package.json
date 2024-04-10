@@ -11,7 +11,7 @@
     "@ixswap1/sdk-core": "^1.3.3",
     "@ixswap1/v2-core": "^1.0.11",
     "@ixswap1/v2-periphery": "^1.0.10",
-    "@ixswap1/v2-sdk": "^1.3.3",
+    "@ixswap1/v2-sdk": "^1.3.4",
     "@lingui/cli": "^4.5.0",
     "@lingui/loader": "^4.5.0",
     "@lingui/macro": "^4.5.0",

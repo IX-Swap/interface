@@ -19,6 +19,7 @@ export const NFT_ADDRESS = {
   [5]: '',
   [42]: '0x4DB7dc4bDc3848F4E948A8a8bB31a9d2021D05a6',
   [80001]: '',
+  [80002]: '',
   [137]: '',
 }
 
