@@ -1,17 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ReactComponent as TelegramLogo } from 'assets/launchpad/svg/social/telegram.svg'
-import { ReactComponent as TwitterLogo } from 'assets/launchpad/svg/social/twitter.svg'
-import { ReactComponent as MLogo } from 'assets/launchpad/svg/social/m.svg'
-import { ReactComponent as DiscordLogo } from 'assets/launchpad/svg/social/discord.svg'
-import { ReactComponent as YoutubeLogo } from 'assets/launchpad/svg/social/youtube.svg'
-import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/linkedin.svg'
-import { ReactComponent as RedditLogo } from 'assets/launchpad/svg/social/reddit.svg'
-import { ReactComponent as CoingeckoLogo } from 'assets/launchpad/svg/social/coingecko.svg'
+import { ReactComponent as TelegramLogo } from 'assets/images/telegramIcon.svg'
+import { ReactComponent as TwitterLogo } from 'assets/images/xIcon.svg'
+import { ReactComponent as DiscordLogo } from 'assets/images/discordNew.svg'
+import { ReactComponent as YoutubeLogo } from 'assets/images/youtubeIcon.svg'
+import { ReactComponent as CoingeckoLogo } from 'assets/images/coinMarketNew.svg'
 
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
-
 
 interface Props {
   links: any
@@ -22,12 +18,9 @@ export const Links: React.FC<Props> = (props) => {
     () => [
       { url: !props.links?.socialMedia?.twitter, logo: <TwitterLogo /> },
       { url: !props.links?.socialMedia?.telegram, logo: <TelegramLogo /> },
-      { url: !props.links?.socialMedia?.linkedin, logo: <LinkedInLogo /> },
       { url: !props.links?.socialMedia?.youtube, logo: <YoutubeLogo /> },
-      { url: !props.links?.socialMedia?.coinmarketcap, logo: <MLogo /> },
       { url: !props.links?.socialMedia?.coingecko, logo: <CoingeckoLogo /> },
-      { url: !props.links?.socialMedia?.discord, logo: <DiscordLogo /> },
-      { url: props.links?.socialMedia?.reddit, logo: <RedditLogo /> },
+      { url: props.links?.socialMedia?.discord, logo: <DiscordLogo /> },
     ],
     []
   )
@@ -79,9 +72,7 @@ const SocialMediaLink = styled.a`
     transition: transform 0.3s;
   }
 
-  svg path {
-    fill: rgba(184, 184, 204, 0.8);
-  }
+
 
   :hover svg {
     transform: scale(1.2);

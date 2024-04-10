@@ -11,11 +11,15 @@ import VolumeData from './VolumeData'
 import { EmptyTable } from '../Dashboard/EmptyTable'
 import { LbpsFull } from '../Dashboard/LbpsFull'
 import TradeHistory from './HistoryTable'
+import AdditionalDocuments from './DocumentSec'
+import ComingSoon from './ComingSoon'
+import EndedSideBar from './Ended'
+import CloseSideBar from './ClosedSideBar'
 
 const MiddleSectionWrapper = styled.div`
   background: #ffffff;
-  padding: 0 80px;
-  width: 100vw;
+  padding: 0px 80px;
+  margin: 0px 200px;
 
 `
 
@@ -73,6 +77,10 @@ export default function MiddleSection() {
         </Column>
         <Column>
           <SideBar />
+          {/* <ComingSoon/> */}
+          {/* <EndedSideBar/> */}
+          {/* <CloseSideBar/> */}
+          <AdditionalDocuments/>
         </Column>
       </MiddleSectionContainer>
       <TradeHistory/>

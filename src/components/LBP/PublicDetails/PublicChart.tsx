@@ -1,35 +1,76 @@
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
-import styled from 'styled-components';
+import React from "react";
+import { LineChart, Line, XAxis, YAxis, ReferenceLine, Tooltip, Text } from "recharts";
+import styled from "styled-components";
 
-const data = [
-  { name: '25 Apr.', pv: 2400 },
-  { name: '26 Apr.', pv: 1398 },
-  { name: '27 Apr.', pv: 9800 },
-  { name: '28 Apr.', pv: 3908 },
-  { name: '29 Apr.', pv: 4800 },
-  { name: '30 Apr.', pv: 3800 },
-  { name: '01 May', pv: 4300 },
-];
-
-export default function DetailsChart() {
-  return (
-    <ChartContainer>
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data}>
-          <XAxis dataKey="name" tick={{ fontSize: 12 }} axisLine={false} />
-          <YAxis tick={{ fontSize: 12 }} tickFormatter={(value) => `$${value}`} axisLine={false} />
-          <Tooltip />
-          <Line type="monotone" dataKey="pv"  stroke="#8884d8" strokeWidth={2} />
-        </LineChart>
-      </ResponsiveContainer>
-    </ChartContainer>
-  );
+interface DataPoint {
+  year: number;
+  value: number;
 }
 
+const data: DataPoint[] = [];
+const launchDate = 2004;
+
+const rand = 300;
+for (let i = 0; i < 7; i++) {
+  const year = 2000 + i;
+  const value = Math.random() * (rand + 50) + 100;
+  let d: DataPoint = {
+    year: year,
+    value: value
+  };
+  data.push(d);
+}
+
+const type = "monotone";
+
+const percentage = 100 - ((7 - 4 - 1) / (7 - 1)) * 100;
+
+const DetailsChart: React.FC = () => (
+  <ChartContainer>
+    <LineChart
+      width={800}
+      height={400}
+      data={data}
+      margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+    >
+      <defs>
+        <linearGradient id="gradient" x1="0" y1="0" x2="100%" y2="0">
+          <stop offset="0%" stopColor="#AFAFCD" />
+          <stop offset={`${percentage}%`} stopColor="#AFAFCD" />
+          <stop offset={`${percentage}%`} stopColor="#6666FF" />
+          <stop offset="100%" stopColor="#6666FF" />
+        </linearGradient>
+      </defs>
+      <Tooltip />
+      <Line type={type} dataKey="value" strokeWidth={2} stroke="url(#gradient)" dot={false} />
+      <XAxis dataKey="year" tick={{ fontSize: 14 }} axisLine={false} />
+      <YAxis tick={{ fontSize: 14 }} tickFormatter={(value) => `$${value}`} axisLine={false} />
+      <ReferenceLine
+        x={launchDate}
+        label={
+            <g transform="translate(570, 30)">
+            <circle cx={0} cy={0} r={5} fill="#BDBDDB" />
+            <Text fontSize={'14px'}  x={10} y={5}>Historical Price</Text>
+          </g>
+        }
+      />
+      <ReferenceLine
+        x={launchDate}
+        y={rand}
+        label={
+          <g transform="translate(700, 30)">
+            <circle cx={0} cy={0} r={5} fill="#6666FF" />
+            <Text fontSize={'14px'} x={10} y={5}>Future Price</Text>
+          </g>
+        }
+      />
+    </LineChart>
+  </ChartContainer>
+);
+
+export default DetailsChart;
+
 const ChartContainer = styled.div`
-  width: 100%;
-  height: 400px;
   margin-top: 20px;
   border-radius: 8px;
   border: 1px solid #e6e6ff;
