@@ -203,6 +203,6 @@ export const routeConfigs: RouteMapEntry[] = [
   { path: routes.manageOffer, component: ManageOffer, ...onlyOfferManager },
 
   /* LBP routes */
-  { path: routes.LBP, component: LBPForm },
+  { path: routes.lbpEdit, component: LBPForm },
   { path: routes.lbpDashboard, component: LbpDashboardPage },
 ]

@@ -37,3 +37,41 @@ export interface DashboardLbp {
   updatedAt: Date
   deletedAt: Date
 }
+
+export interface LbpFile {
+  id?: number
+  file: File
+}
+
+export interface LbpFormValues {
+  id?: number
+  name: string
+  title: string
+  description: string
+  officialWebsite: string
+  socialMedia: INameValue[]
+  whitePaper: INameValue[]
+  logoId?: number
+  bannerId?: number
+  additionalDocumentIds: number[]
+  LBPLogo: LbpFile
+  LBPBanner: LbpFile
+  uploadDocs: LbpFile[]
+  contractAddress?: string
+  shareAddress: string
+  shareAmount: number
+  shareMaxSupply: number
+  assetTokenId?: number
+  assetTokenAmount: number
+  startWeight: number
+  endWeight: number
+  startDate: Date
+  endDate: Date
+  minPrice: number
+  maxPrice: number
+  creatorId?: number
+  status?: LbpStatus
+  createdAt?: Date
+  updatedAt?: Date
+  deletedAt?: Date
+}

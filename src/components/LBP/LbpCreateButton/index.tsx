@@ -57,7 +57,7 @@ export const LbpCreateButton: React.FC<Props> = (props) => {
       setLoading(false)
 
       setShowLbpDialog(false)
-      history.push(`/lbp/create?id=${result.id}`)
+      history.push(`/lbp/edit?id=${result.id}`)
     },
     [history]
   )

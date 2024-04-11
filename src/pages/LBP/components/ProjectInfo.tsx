@@ -27,6 +27,7 @@ interface LinkData {
 }
 
 interface ProjectInfoData {
+  name: string;
   title: string;
   description: string;
   website: string;
@@ -83,6 +84,7 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) =
 
 export default function ProjectInfo({ onChange }: ProjectInfoProps) {
   const [projectInfoData, setProjectInfoData] = useState<ProjectInfoData>({
+    name: '',
     title: '',
     description: '',
     website: '',
