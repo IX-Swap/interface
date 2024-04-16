@@ -12,7 +12,7 @@ const tabs = [
   { title: 'Draft', value: LbpStatus.draft },
   { title: 'Pending', value: LbpStatus.pending },
   { title: 'Live', value: LbpStatus.live },
-  { title: 'Closed', value: LbpStatus.closed },
+  { title: 'Ended', value: LbpStatus.ended },
 ]
 
 interface TabsProps {
@@ -65,7 +65,7 @@ export const LbpDashboard = () => {
 
         {activeTab === LbpStatus.live && <LbpsFull type={LbpStatus.live} />}
 
-        {activeTab === LbpStatus.closed && <LbpsFull type={LbpStatus.closed} />}
+        {activeTab === LbpStatus.ended && <LbpsFull type={LbpStatus.ended} />}
       </Body>
 
       <Footer />
