@@ -40,3 +40,8 @@ export enum SMART_CONTRACT_STRATEGIES {
   nonOriginalWithAccess = 'nonOriginalWithAccess', // Non-IXS Originated Primary Offering with Smart Contract Minting & Whitelisting Access
   nonOriginalWithNoAccess = 'nonOriginalWithNoAccess', // Non-IXS Originated Primary Offering with NO access to Token Smart Contract
 }
+
+export enum PublicDetails { 
+  buy = 'buy',
+  sell = 'sell',
+}
