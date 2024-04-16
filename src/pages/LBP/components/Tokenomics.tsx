@@ -325,8 +325,8 @@ const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
 
     const updatedFormData = {
       ...formDataTokenomics,
-      shareName: selectedOption.tokenSymbol,
-      logo: selectedOption.logo,
+      shareName: selectedOption,
+      // logo: selectedOption.logo,
     }
     setFormData(updatedFormData)
     onChange(updatedFormData)
