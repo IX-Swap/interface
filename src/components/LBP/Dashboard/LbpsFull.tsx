@@ -144,7 +144,9 @@ export const LbpsFull: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      <TableTitle>{props.type}</TableTitle>
+      <TitleContainer>
+        <TableTitle>{props.type}</TableTitle>
+      </TitleContainer>
       <SearchFilter search={filter.search} onFilter={onSearch} />
 
       {!loading && lbps?.length === 0 && <EmptyTable isSearch={Boolean(filter?.search)} />}
@@ -336,9 +338,18 @@ const PageSizeOption = styled.div`
   }
 `
 
+const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: auto;
+  max-width: 1320px;
+`
+
 export const TableTitle = styled.div`
   ${text53}
-
+  text-transform: capitalize;
   padding: 0 0 1.25rem;
   font-family: ${(props) => props.theme.launchpad.font};
   color: ${(props) => props.theme.launchpad.colors.text.title};
