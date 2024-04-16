@@ -608,7 +608,7 @@ export const useGetFieldArrayId = (numeric = true) => {
   }, [numeric])
 }
 
-interface FileUpload {
+export interface FileUpload {
   name: string
   file: File
 }

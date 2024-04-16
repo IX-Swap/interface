@@ -192,6 +192,7 @@
     "react-select": "^5.2.2",
     "react-sticky-box": "^0.9.3",
     "react-usestateref": "^1.0.8",
+    "recharts": "^2.12.3",
     "truffle-privatekey-provider": "^1.2.0",
     "use-draggable-scroll": "^0.1.0",
     "web3": "^4.5.0"
