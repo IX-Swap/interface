@@ -3,6 +3,8 @@ export enum LbpStatus {
   pending = 'pending',
   live = 'live',
   closed = 'closed',
+  paused = 'paused',
+  ended = 'ended',
 }
 
 export interface INameValue {

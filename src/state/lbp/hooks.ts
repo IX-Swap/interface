@@ -9,7 +9,7 @@ import { LBP_ACTION_TYPES } from './constants'
 
 export const useGetLbpsFull = () => {
   return React.useCallback(
-    async (page: number, filter?: SearchConfig, order?: OrderConfig, type?: string, size = 10) => {
+    async (page: number, filter?: SearchConfig, order?: OrderConfig, size = 10, isPublic: boolean = false) => {
       let query = [`page=${page}`, `offset=${size}`]
 
       if (filter) {
@@ -30,10 +30,11 @@ export const useGetLbpsFull = () => {
         )
       }
 
-      query = query.concat(`stage=${type?.toLocaleLowerCase()}`)
+      // query = query.concat(`stage=${type?.toLocaleLowerCase()}`)
 
+      const path = isPublic ? '/lbp/public' : '/lbp'
       const result = await apiService
-        .get(`/lbp?${query.join('&')}`)
+        .get(`${path}?${query.join('&')}`)
         .then((res) => res.data as PaginateResponse<DashboardLbp>)
 
       return {

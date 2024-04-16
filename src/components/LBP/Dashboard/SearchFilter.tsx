@@ -2,10 +2,12 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.svg'
+import { LbpStatus } from '../types'
+import { FilterOption } from 'components/Launchpad/InvestmentList/FilterDropdown'
 
 export interface SearchConfig {
   search: string
-  onlyMine: string
+  stage: FilterOption<string>[] 
 }
 
 export interface OrderConfig {

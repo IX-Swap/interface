@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
@@ -19,11 +19,12 @@ import { useOnChangeOrder } from 'state/launchpad/hooks'
 import { ReactComponent as EditIcon } from 'assets/svg/edit.svg'
 
 import { DiscreteInternalLink } from 'theme'
-import { text17, text18, text19, text30 } from 'components/LaunchpadMisc/typography'
+import { text17, text18, text19, text30, text53 } from 'components/LaunchpadMisc/typography'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { ITEM_ROWS } from 'components/LaunchpadIssuance/utils/constants'
 import { TitleBox } from 'components/LaunchpadIssuance/IssuanceDashboard/TitleBox'
 import { useGetLbpsFull } from 'state/lbp/hooks'
+import { FilterOption } from 'components/Launchpad/InvestmentList/FilterDropdown'
 
 interface Props {
   type: string
@@ -53,8 +54,22 @@ export const LbpsFull: React.FC<Props> = (props) => {
   const [pageSize, setPageSize] = React.useState(10)
   const [filter, setFilter] = React.useState<SearchConfig>(() => {
     const newFilter = localStorage.getItem('lbpsFullFilter')
-    return newFilter ? (JSON.parse(newFilter) as SearchConfig) : { search: '', onlyMine: 'false' }
+    return newFilter ? (JSON.parse(newFilter) as SearchConfig) : { search: '', stage: [] }
   })
+
+  useEffect(() => {
+    const stage: FilterOption<string>[] = [
+      {
+        value: props.type,
+        label: props.type,
+      },
+    ]
+    setFilter((filter: SearchConfig) => ({
+      ...filter,
+      stage,
+    }))
+  }, [])
+
   React.useEffect(() => {
     localStorage.setItem('lbpsFullFilter', JSON.stringify(filter))
   }, [filter])
@@ -88,7 +103,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
   React.useEffect(() => {
     setLoading(true)
 
-    getLbps(page, filter, order, props.type, pageSize)
+    getLbps(page, filter, order, pageSize)
       .then((page: any) => {
         setLbps(page.items)
         setTotalItems(page.totalItems)
@@ -128,7 +143,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      <TitleBox title={props.type} onlyMine={filter.onlyMine} setFilter={setFilter} />
+      <TableTitle>{props.type}</TableTitle>
       <SearchFilter search={filter.search} onFilter={onSearch} />
 
       {!loading && lbps?.length === 0 && <EmptyTable isSearch={Boolean(filter?.search)} />}
@@ -318,4 +333,12 @@ const PageSizeOption = styled.div`
   :hover {
     background: ${(props) => props.theme.launchpad.colors.foreground};
   }
+`
+
+export const TableTitle = styled.div`
+  ${text53}
+
+  padding: 0 0 1.25rem;
+  font-family: ${(props) => props.theme.launchpad.font};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `

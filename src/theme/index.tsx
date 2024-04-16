@@ -10,6 +10,7 @@ import styled, {
 } from 'styled-components'
 import { useIsDarkMode } from '../state/user/hooks'
 import { Colors } from './styled'
+import { background } from 'styled-system'
 
 export * from './components'
 
@@ -228,6 +229,31 @@ export function theme(darkMode: boolean, config: Whitelabel | null): DefaultThem
     `,
 
     launchpad: launchpadTheme(),
+    lbp: lbpTheme(),
+  }
+}
+
+export function lbpTheme() {
+  return {
+    colors: {
+      status: {
+        background: {
+          live: 'rgba(31, 186, 102, 0.05)',
+          pending: 'rgba(102, 102, 255, 0.05)',
+          paused: 'rgba(255, 168, 0, 0.05)',
+        },
+        border: {
+          live: '1px solid rgba(31, 186, 102, 0.2)',
+          pending: '1px solid rgba(102, 102, 255, 0.2)',
+          paused: '1px solid rgba(255, 168, 0, 0.2)',
+        },
+        color: {
+          live: 'rgba(31, 186, 102, 1)',
+          pending: 'rgba(102, 102, 255, 1)',
+          paused: 'rgba(255, 168, 0, 1)',
+        },
+      },
+    },
   }
 }
 
