@@ -34,6 +34,7 @@ class Web3 {
       '42': 'kovan',
       '137': 'matic',
       '80001': 'maticmum',
+      '80002': 'amoy',
     } as Record<string, string>
 
     let host = ''
@@ -49,6 +50,9 @@ class Web3 {
         break
       case 'maticmum':
         host = 'polygon-mumbai.infura.io'
+        break
+      case 'amoy':
+        host = 'polygon-amoy.infura.io'
         break
       default:
         break
@@ -201,6 +205,8 @@ export async function verifySwap(trade: V2Trade<Currency, Currency, TradeType>, 
 
     const swapRouterAddress = web3.utils.toChecksumAddress(SWAP_ROUTER_ADDRESS[chainID])
     const routerContract = new web3.eth.Contract(SWAP_ROUTER_ABI, swapRouterAddress)
+
+    
 
     const path = [] // from addresses
     const isSecs = []

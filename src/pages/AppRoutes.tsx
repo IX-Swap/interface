@@ -63,7 +63,6 @@ const LaunchpadIssuanceReport = lazy(() => import('pages/LaunchpadIssuance/Repor
 
 export interface RouteMapEntry {
   path: string
-
   render?: () => JSX.Element
   component?: React.ComponentType<any>
 

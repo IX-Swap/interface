@@ -116,7 +116,7 @@ export default function Graph({ graphData, step }: GraphProps) {
     },
   ]
 
-  console.log(graphData)
+  // console.log(graphData)
 
   return (
     <StyledCard>
