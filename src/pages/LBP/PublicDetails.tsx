@@ -1,41 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import Background from 'components/LBP/PublicDetails/Background';
-import MiddleSection from 'components/LBP/PublicDetails/MiddleSection';
-import { useGetLbp } from 'state/lbp/hooks';
-import { LbpFormValues } from 'components/LBP/types';
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import Background from 'components/LBP/PublicDetails/Background'
+import MiddleSection from 'components/LBP/PublicDetails/MiddleSection'
+import { useGetLbp } from 'state/lbp/hooks'
+import { LbpFormValues } from 'components/LBP/types'
+
+interface RouteParams {
+  id: string
+}
 
 export default function PublicDetails() {
-  const getLbps = useGetLbp();
-  const [lbpData, setLbpData] = useState<LbpFormValues | null>(null);
+  const { id } = useParams<RouteParams>()
+  const getLbps = useGetLbp()
+  const [lbpData, setLbpData] = useState<LbpFormValues | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const id = extractIdFromUrl(window.location.href);
-        const data = await getLbps(id);
-        setLbpData(data);
-        console.log(data, 'result');
+        const data = await getLbps(parseInt(id))
+        setLbpData(data)
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error', error)
       }
-    };
-
-    fetchData();
-  }, [getLbps]);
-
-  const extractIdFromUrl = (url: string): number => {
-    const match = url.match(/\/lbp\/(\d+)/);
-    if (match && match[1]) {
-      return parseInt(match[1]);
-    } else {
-      throw new Error('Unable to extract id from URL');
     }
-  };
+
+    fetchData()
+  }, [getLbps, id])
 
   return (
     <>
-      <Background lbpData={lbpData}  />
-      <MiddleSection  lbpData={lbpData}  />
+      <Background lbpData={lbpData} />
+      <MiddleSection lbpData={lbpData} />
     </>
-  );
+  )
 }
