@@ -3,10 +3,14 @@ import Column, { AutoColumn } from 'components/Column'
 import { RowBetween } from 'components/Row'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
-import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
 import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
+import { LbpFormValues } from '../types'
 
-export default function QuantitiesAndWeight() {
+interface MiddleSectionProps {
+  lbpData: LbpFormValues | null
+}
+
+const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData }) => {
   return (
     <Column>
       <AutoColumn style={{ marginBottom: '20px' }} justify="center" gap="md">
@@ -15,31 +19,31 @@ export default function QuantitiesAndWeight() {
             <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
             <TokenWrapper>
               <>
-                <Serenity />
-                <TYPE.label fontSize={'14px'}>500.00 </TYPE.label>
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+                <TYPE.label fontSize={'14px'}>{lbpData?.shareAmount}</TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                  Serenity{' '}
+                  {lbpData?.name}
                 </TYPE.body3>
               </>
               <VerticalLine />
               <>
                 <USDC />
-                <TYPE.label fontSize={'14px'}>500.00 </TYPE.label>
+                <TYPE.label fontSize={'14px'}>{lbpData?.assetTokenAmount}</TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                  USDC{' '}
+                {lbpData?.assetTokenSymbol}
                 </TYPE.body3>
               </>
             </TokenWrapper>
           </QuantitiesBox>
 
           <QuantitiesBox>
-            <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
+            <TYPE.subHeader1 color={'#555566'}>Current Quantities</TYPE.subHeader1>
             <TokenWrapper>
               <>
-                <Serenity />
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>500.00 </TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                  Serenity{' '}
+                {lbpData?.name}
                 </TYPE.body3>
               </>
               <VerticalLine />
@@ -47,7 +51,7 @@ export default function QuantitiesAndWeight() {
                 <USDC />
                 <TYPE.label fontSize={'14px'}>500.00 </TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                  USDC{' '}
+                {lbpData?.assetTokenSymbol}
                 </TYPE.body3>
               </>
             </TokenWrapper>
@@ -58,24 +62,24 @@ export default function QuantitiesAndWeight() {
       <AutoColumn justify="center" gap="md">
         <RowBetween style={{gap: '25px'}}>
           <WeightBox>
-            <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
+            <TYPE.subHeader1 color={'#555566'}>Start Weight</TYPE.subHeader1>
             <TokenWrapper>
               <>
-                <Serenity />
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>50% </TYPE.label>
               </>
               <VerticalLine />
               <>
                 <USDC />
-                <TYPE.label fontSize={'14px'}>50% </TYPE.label>
+                <TYPE.label fontSize={'14px'}>{lbpData?.startWeight}% </TYPE.label>
               </>
             </TokenWrapper>
           </WeightBox>
           <WeightBox>
-            <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
+            <TYPE.subHeader1 color={'#555566'}>Current Weight</TYPE.subHeader1>
             <TokenWrapper>
               <>
-                <Serenity />
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>40% </TYPE.label>
               </>
               <VerticalLine />
@@ -86,16 +90,16 @@ export default function QuantitiesAndWeight() {
             </TokenWrapper>
           </WeightBox>
           <WeightBox>
-            <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
+            <TYPE.subHeader1 color={'#555566'}>End Weight</TYPE.subHeader1>
             <TokenWrapper>
               <>
-                <Serenity />
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>56% </TYPE.label>
               </>
               <VerticalLine />
               <>
                 <USDC />
-                <TYPE.label fontSize={'14px'}>90% </TYPE.label>
+                <TYPE.label fontSize={'14px'}>{lbpData?.endWeight}% </TYPE.label>
               </>
             </TokenWrapper>
           </WeightBox>
@@ -104,6 +108,18 @@ export default function QuantitiesAndWeight() {
     </Column>
   )
 }
+
+const LogoIcon = styled.img`
+  // position: absolute;
+  // bottom: 21%;
+  // left: 11%;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+
+`;
+
+export default QuantitiesAndWeight
 
 const WeightBox = styled.div`
   border: 1px solid #e6e6ff;
