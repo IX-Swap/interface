@@ -152,3 +152,16 @@ export const testSecTokens = [
   { name: 'Coinbase', symbol: 'COIN', address: '0x6a2951cc518efadd7beec657a99554d17a7a85cd' },
   { name: 'Tesla', symbol: 'TSLA', address: '0x1d722f4334ad3f0154e3e3711378f534a07e4329' },
 ]
+
+export const TOKEN_ADDRESSES: { [key: string]: { [key: number]: string } } = {
+  'USDC.e': {
+    [137]: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+  },
+  USDC: {
+    [137]: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
+    [80002]: '0xA9bc9D3F0fF05AB339D1E195982794B15beA0f88',
+  },
+  USDT: {
+    [137]: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+  },
+}
