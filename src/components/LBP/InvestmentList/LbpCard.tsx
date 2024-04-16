@@ -30,7 +30,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   )
 
   const onClick = React.useCallback(() => {
-    history.push(`/lbps/${lbp.id}`)
+    history.push(`/lbp/${lbp.id}`)
   }, [])
 
   useEffect(() => {
@@ -50,6 +50,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
         break
     }
   }, [lbp])
+  
 
   return (
     <>
