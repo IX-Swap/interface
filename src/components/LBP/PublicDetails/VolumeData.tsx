@@ -5,8 +5,13 @@ import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
 import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
+import { LbpFormValues } from '../types'
 
-export default function VolumeData() {
+interface MiddleSectionProps {
+  lbpData: LbpFormValues | null
+}
+
+const VolumeData: React.FC<MiddleSectionProps> = ({ lbpData }) => {
   return (
     <Column>
       <AutoColumn style={{ marginBottom: '20px', }} justify="center" gap="md">
@@ -92,3 +97,4 @@ const VerticalLine = styled.div`
   background-color: #e5e5ff;
   margin: 7px 10px;
 `
+export default VolumeData
