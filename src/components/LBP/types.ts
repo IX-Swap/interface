@@ -41,11 +41,15 @@ export interface DashboardLbp {
 }
 
 export interface LbpFile {
+  mimeType: string | undefined
+  name: string
+  public?: string
   id?: number
-  file: File
+  file?: File
 }
 
 export interface LbpFormValues {
+  [x: string]: any
   id?: number
   name: string
   title: string
@@ -67,13 +71,43 @@ export interface LbpFormValues {
   assetTokenAmount: number
   startWeight: number
   endWeight: number
-  startDate: Date
-  endDate: Date
+  startDate: string
+  endDate: string
   minPrice: number
   maxPrice: number
   creatorId?: number
   status?: LbpStatus
-  createdAt?: Date
-  updatedAt?: Date
-  deletedAt?: Date
+  createdAt?: string
+  updatedAt?: string
+  deletedAt?: string
 }
+
+export interface TokenomicsProps {
+  shareAddress: string;
+  shareInput: number;
+  maxSupply: number;
+  assetInput: number;
+  startWeight: number;
+  endDate: string;
+  minPrice: number;
+  maxPrice: number;
+  startDate: string;
+  endWeight: number;
+}
+
+
+export interface ProjectInfoProps {
+  name: string;
+  title: string;
+  description: string;
+  website: string;
+  socialLinks: INameValue[];
+  whitepapers: INameValue[];
+  uploadDocs: LbpFile[];
+}
+
+export interface BrandingProps {
+  LBPLogo: LbpFile;
+  LBPBanner: LbpFile;
+}
+

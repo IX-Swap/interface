@@ -206,6 +206,8 @@ export async function verifySwap(trade: V2Trade<Currency, Currency, TradeType>, 
     const swapRouterAddress = web3.utils.toChecksumAddress(SWAP_ROUTER_ADDRESS[chainID])
     const routerContract = new web3.eth.Contract(SWAP_ROUTER_ABI, swapRouterAddress)
 
+    
+
     const path = [] // from addresses
     const isSecs = []
     const pairContracts = []

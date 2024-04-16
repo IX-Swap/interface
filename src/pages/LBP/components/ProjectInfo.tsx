@@ -1,46 +1,71 @@
-import React, { useState, ChangeEvent } from 'react';
-import { Box, Flex } from 'rebass';
-import { Trans } from '@lingui/macro';
-import { Label } from '@rebass/forms';
-import { StyledTextarea } from 'components/CollectionForm/styled';
-import { TextInput, UploaderDocs } from 'pages/KYC/common';
-import { LinkStyledButton, TYPE } from 'theme';
-import { RowCenter } from 'components/Row';
-import { ExtraInfoCardCountry } from 'pages/KYC/styleds';
-import { Plus } from 'react-feather';
-import styled from 'styled-components';
-import { IconButton } from '@material-ui/core';
-import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg';
-import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants';
-import { ButtonOutlined, PinnedContentButton } from 'components/Button';
-import RedesignedWideModal from 'components/Modal/RedesignedWideModal';
-import closeIcon from '../../../assets/images/newCross.svg';
-import { color } from 'styled-system';
+import React, { useState, ChangeEvent, useEffect } from 'react'
+import { Box, Flex } from 'rebass'
+import { Trans } from '@lingui/macro'
+import { Label } from '@rebass/forms'
+import { StyledTextarea } from 'components/CollectionForm/styled'
+import { TextInput, UploaderDocs } from 'pages/KYC/common'
+import { LinkStyledButton, TYPE } from 'theme'
+import { RowCenter } from 'components/Row'
+import { ExtraInfoCardCountry } from 'pages/KYC/styleds'
+import { Plus } from 'react-feather'
+import styled from 'styled-components'
+import { IconButton } from '@material-ui/core'
+import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg'
+import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants'
+import { ButtonOutlined, PinnedContentButton } from 'components/Button'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import closeIcon from '../../../assets/images/newCross.svg'
+import * as Yup from 'yup'
+import { useFormik } from 'formik'
 
 interface ProjectInfoProps {
-  onChange: (data: any) => void;
+  onChange: (data: any) => void
+  formData: ProjectInfoData
 }
 
 interface LinkData {
-  name: string;
-  url: string;
+  name: string
+  url: string
 }
 
 interface ProjectInfoData {
-  name: string;
-  title: string;
-  description: string;
-  website: string;
-  socialLinks: LinkData[];
-  whitepapers: LinkData[];
-  uploadDocs: string[];
-  [key: string]: any;
+  name: string
+  title: string
+  description: string
+  website: string
+  socialLinks: any
+  whitepapers: any
+  uploadDocs: any
+  [key: string]: any
 }
+
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required('Title is required'),
+  name: Yup.string().required('Name is required'),
+  description: Yup.string().required('Description is required'),
+  website: Yup.string().required('Website URL required'),
+  socialLinks: Yup.array()
+    .of(
+      Yup.object().shape({
+        name: Yup.string().required('Link Name is required'),
+        url: Yup.string().required('URL is required'),
+      })
+    )
+    .min(1, 'At least one social link is required'),
+
+  whitepapers: Yup.array().of(
+    Yup.object().shape({
+      name: Yup.string().required('Link Name is required'),
+      url: Yup.string().required('URL is required'),
+    })
+  ),
+  uploadDocs: Yup.array().of(Yup.string()).required('Upload Documents are required'),
+})
 
 const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) => {
   const handleInternalChange = (value: string, index: number) => {
-    handleChange(value, index, label);
-  };
+    handleChange(value, index, label)
+  }
 
   return (
     <>
@@ -49,14 +74,14 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) =
           <Trans>{label}</Trans>
         </TYPE.subHeader1>
       </Label>
-      {items.map((item: string, index: number) => (
+      {items?.map((item: string, index: number) => (
         <Flex key={index} mb={2} alignItems="center" justifyContent="space-between">
           <Box width={1}>
             <TextInput
               placeholder={label}
               value={item}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                handleInternalChange(e.target.value, index);
+                handleInternalChange(e.target.value, index)
               }}
               style={{ width: '100%' }}
             />
@@ -66,11 +91,7 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) =
           </IconButton>
         </Flex>
       ))}
-      <LinkButton
-        type="button"
-        onClick={() => openModal(label)}
-        style={{ width: '100%', textDecoration: 'none' }}
-      >
+      <LinkButton type="button" onClick={() => openModal(label)} style={{ width: '100%', textDecoration: 'none' }}>
         <ExtraInfoCardCountry>
           <RowCenter>
             <Plus style={{ width: '20px', marginRight: '5px' }} />
@@ -79,10 +100,10 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) =
         </ExtraInfoCardCountry>
       </LinkButton>
     </>
-  );
-};
+  )
+}
 
-export default function ProjectInfo({ onChange }: ProjectInfoProps) {
+export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
   const [projectInfoData, setProjectInfoData] = useState<ProjectInfoData>({
     name: '',
     title: '',
@@ -91,96 +112,122 @@ export default function ProjectInfo({ onChange }: ProjectInfoProps) {
     socialLinks: [],
     whitepapers: [],
     uploadDocs: [],
-  });
+  })
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      title: '',
+      description: '',
+      website: '',
+      socialLinks: [],
+      whitepapers: [],
+      uploadDocs: [],
+    },
+    validationSchema: validationSchema,
+    onSubmit: () => {},
+  })
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newLinkName, setNewLinkName] = useState('');
-  const [newLinkUrl, setNewLinkUrl] = useState('');
-  const [linkType, setLinkType] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [newLinkName, setNewLinkName] = useState('')
+  const [newLinkUrl, setNewLinkUrl] = useState('')
+  const [linkType, setLinkType] = useState<string>('')
   const [values, setValues] = useState<any>({
     uploadDocs: [],
-  });
+  })
+
+  useEffect(() => {
+    setProjectInfoData({
+      ...formData,
+    });
+  }, [formData]);
 
   const handleAddLink = () => {
-    let updatedData: ProjectInfoData | undefined;
+    let updatedData: ProjectInfoData | undefined
 
     const newLink: LinkData = {
       name: newLinkName,
       url: newLinkUrl,
-    };
+    }
 
     if (linkType === 'Social Links') {
       updatedData = {
         ...projectInfoData,
         socialLinks: [...projectInfoData.socialLinks, newLink],
-      };
+      }
     } else if (linkType === 'Whitepapers') {
       updatedData = {
         ...projectInfoData,
         whitepapers: [...projectInfoData.whitepapers, newLink],
-      };
+      }
     }
 
     if (updatedData) {
-      setProjectInfoData(updatedData);
-      setIsModalOpen(false);
-      setNewLinkName('');
-      setNewLinkUrl('');
-      onChange(updatedData);
+      setProjectInfoData(updatedData)
+      setIsModalOpen(false)
+      setNewLinkName('')
+      setNewLinkUrl('')
+      onChange(updatedData)
     }
-  };
+  }
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    formik.handleChange(event)
     const { name, value } = e.target;
-    setProjectInfoData((prevData) => ({ ...prevData, [name]: value }));
+    setProjectInfoData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
     onChange({ ...projectInfoData, [name]: value });
   };
+  
 
   const openModal = (type: string) => {
-    setLinkType(type);
-    setIsModalOpen(true);
-  };
+    setLinkType(type)
+    setIsModalOpen(true)
+  }
 
   const handleRemoveItem = (index: number, label: string) => {
     setProjectInfoData((prevData) => {
-      const updatedItems = [...prevData[label]];
-      updatedItems.splice(index, 1);
-      return { ...prevData, [label]: updatedItems };
-    });
+      const updatedItems = [...prevData[label]]
+      updatedItems.splice(index, 1)
+      return { ...prevData, [label]: updatedItems }
+    })
 
-    onChange({ ...projectInfoData, [label]: projectInfoData[label].filter((_: any, i: number) => i !== index) });
-  };
+    onChange({ ...projectInfoData, [label]: projectInfoData[label].filter((_: any, i: number) => i !== index) })
+  }
 
   const handleDropImage = (acceptedFiles: any, key: string) => {
-    const files = Array.isArray(acceptedFiles) ? acceptedFiles : [acceptedFiles];
+    const files = Array.isArray(acceptedFiles) ? acceptedFiles : [acceptedFiles]
 
-    const filteredFiles = files.filter((file: any) => file.size <= MAX_FILE_UPLOAD_SIZE);
+    const filteredFiles = files.filter((file: any) => file.size <= MAX_FILE_UPLOAD_SIZE)
 
-    const updatedFiles = [...values[key], ...filteredFiles];
-    setValues({ ...values, [key]: updatedFiles });
-    onChange({ ...projectInfoData, [key]: updatedFiles });
-  };
+    const updatedFiles = [...values[key], ...filteredFiles]
+    setValues({ ...values, [key]: updatedFiles })
+    onChange({ ...projectInfoData, [key]: updatedFiles })
+  }
 
   const handleImageDelete = (index: number, key: string) => {
-    const updatedFiles = values[key].filter((_: any, i: number) => i !== index);
-    setValues({ ...values, [key]: updatedFiles });
-    onChange({ ...projectInfoData, [key]: updatedFiles });
-  };
+    const updatedFiles = values[key].filter((_: any, i: number) => i !== index)
+    setValues({ ...values, [key]: updatedFiles })
+    onChange({ ...projectInfoData, [key]: updatedFiles })
+  }
 
   const handleFormArrayChange = (value: string, index: number, label: string) => {
     if (!Array.isArray(projectInfoData[label])) {
-      return;
+      return
     }
 
     if (value === '' && index > 0) {
-      return;
+      return
     }
 
-    const updatedItems = [...projectInfoData[label]];
-    updatedItems[index] = value;
-    setProjectInfoData((prevData) => ({ ...prevData, [label]: updatedItems }));
-    onChange({ ...projectInfoData, [label]: updatedItems });
-  };
+    const updatedItems = [...projectInfoData[label]]
+    updatedItems[index] = value
+    setProjectInfoData((prevData) => ({ ...prevData, [label]: updatedItems }))
+    onChange({ ...projectInfoData, [label]: updatedItems })
+  }
+
+
 
   return (
     <>
@@ -197,18 +244,24 @@ export default function ProjectInfo({ onChange }: ProjectInfoProps) {
           <div style={{ justifyContent: 'center' }}>
             <h2>{linkType}</h2>
             <TextInput
+              name="name"
+              id="name"
               label="Link Name"
               style={{ marginBottom: '10px' }}
               placeholder="Link Name"
               value={newLinkName}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setNewLinkName(e.target.value)}
+     
             />
             <TextInput
+              name="url"
               label="URL"
               placeholder="URL"
               value={newLinkUrl}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setNewLinkUrl(e.target.value)}
+              onBlur={formik.handleBlur}
             />
+
             <div style={{ display: 'flex', margin: '20px 0px', gap: '10px' }}>
               <PinnedContentButton onClick={handleAddLink}>Add</PinnedContentButton>
               <ButtonOutlined onClick={() => setIsModalOpen(false)}>Cancel</ButtonOutlined>
@@ -221,9 +274,12 @@ export default function ProjectInfo({ onChange }: ProjectInfoProps) {
         id="title"
         name="title"
         label="Title"
-        value={projectInfoData.title}
+        value={formData.title}
         onChange={handleInputChange}
+        onBlur={formik.handleBlur}
+        // value={formik.values.title}
       />
+      {formik.touched.title && formik.errors.title ? <ErrorText>{formik.errors.title}</ErrorText> : null}
       <Box width={1} mb={3}>
         <Label htmlFor="description" flexDirection="column" mb={2}>
           <Box>
@@ -236,32 +292,44 @@ export default function ProjectInfo({ onChange }: ProjectInfoProps) {
           </Box>
         </Label>
         <StyledTextarea
-          value={projectInfoData.description}
+          value={formData.description}
           onChange={handleInputChange}
           name="description"
+          onBlur={formik.handleBlur}
           style={{ height: '126px' }}
         />
+        {formik.touched.description && formik.errors.description ? (
+          <ErrorText>{formik.errors.description}</ErrorText>
+        ) : null}
       </Box>
       <TextInput
         name="website"
-        value={projectInfoData.website}
+        value={formData.website}
         onChange={handleInputChange}
         placeholder="Official Website"
         id="website"
         label="Official Website"
+        onBlur={formik.handleBlur}
       />
+      {formik.touched.website && formik.errors.website ? <ErrorText>{formik.errors.website}</ErrorText> : null}
 
       <FormArray
         label="Social Links"
-        items={projectInfoData.socialLinks.map((link) => link.url)}
+        name="socialLinks"
+        id="socialLinks"
+        items={projectInfoData?.socialLinks?.map((link: any) => link.url)}
         removeItem={(index: number) => handleRemoveItem(index, 'socialLinks')}
         handleChange={handleFormArrayChange}
         openModal={openModal}
+        onBlur={formik.handleBlur}
       />
+      {formik.touched.socialLinks && formik.errors.socialLinks ? (
+        <ErrorText>{formik.errors.socialLinks}</ErrorText>
+      ) : null}
 
       <FormArray
         label="Whitepapers"
-        items={projectInfoData.whitepapers.map((whitepaper) => whitepaper.url)}
+        items={projectInfoData?.whitepapers?.map((whitepaper: any) => whitepaper.url)}
         removeItem={(index: number) => handleRemoveItem(index, 'whitepapers')}
         handleChange={handleFormArrayChange}
         openModal={openModal}
@@ -284,19 +352,19 @@ export default function ProjectInfo({ onChange }: ProjectInfoProps) {
         title=""
         files={values.uploadDocs}
         onDrop={(acceptedFiles: any[]) => {
-          handleDropImage(acceptedFiles, 'uploadDocs');
+          handleDropImage(acceptedFiles, 'uploadDocs')
         }}
         handleDeleteClick={(index: number) => {
-          handleImageDelete(index, 'uploadDocs');
+          handleImageDelete(index, 'uploadDocs')
         }}
       />
     </>
-  );
+  )
 }
 
 const LinkButton = styled(LinkStyledButton)`
   color: #6666ff;
-`;
+`
 
 const ModalContainer = styled.div`
   background: white;
@@ -310,4 +378,13 @@ const ModalContainer = styled.div`
     border-radius: 12px;
     margin: 0 auto;
   }
-`;
+`
+
+const ErrorText = styled.span`
+  border: none;
+  color: red;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 15px;
+  margin-top: 10px;
+`
