@@ -25,6 +25,7 @@ import { ITEM_ROWS } from 'components/LaunchpadIssuance/utils/constants'
 import { TitleBox } from 'components/LaunchpadIssuance/IssuanceDashboard/TitleBox'
 import { useGetLbpsFull } from 'state/lbp/hooks'
 import { FilterOption } from 'components/Launchpad/InvestmentList/FilterDropdown'
+import { FilterConfig } from '../InvestmentList/Filter'
 
 interface Props {
   type: string
@@ -52,9 +53,9 @@ export const LbpsFull: React.FC<Props> = (props) => {
   const [totalPages, setTotalPages] = React.useState(0)
   const [totalItems, setTotalItems] = React.useState(0)
   const [pageSize, setPageSize] = React.useState(10)
-  const [filter, setFilter] = React.useState<SearchConfig>(() => {
+  const [filter, setFilter] = React.useState<FilterConfig>(() => {
     const newFilter = localStorage.getItem('lbpsFullFilter')
-    return newFilter ? (JSON.parse(newFilter) as SearchConfig) : { search: '', stage: [] }
+    return newFilter ? (JSON.parse(newFilter) as FilterConfig) : { search: '', stage: [] }
   })
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
         label: props.type,
       },
     ]
-    setFilter((filter: SearchConfig) => ({
+    setFilter((filter: FilterConfig) => ({
       ...filter,
       stage,
     }))
@@ -130,7 +131,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
 
   const onSearch = useCallback(
     (search: string) => {
-      setFilter((state: SearchConfig) => ({
+      setFilter((state: FilterConfig) => ({
         ...state,
         search,
       }))

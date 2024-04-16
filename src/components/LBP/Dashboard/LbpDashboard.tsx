@@ -59,13 +59,13 @@ export const LbpDashboard = () => {
       </Header>
 
       <Body>
-        {activeTab === LbpStatus.draft && <LbpsFull type={'Draft'} />}
+        {activeTab === LbpStatus.draft && <LbpsFull type={LbpStatus.draft} />}
 
-        {activeTab === LbpStatus.pending && <LbpsFull type={'Pending'} />}
+        {activeTab === LbpStatus.pending && <LbpsFull type={LbpStatus.pending} />}
 
-        {activeTab === LbpStatus.live && <LbpsFull type={'Live'} />}
+        {activeTab === LbpStatus.live && <LbpsFull type={LbpStatus.live} />}
 
-        {activeTab === LbpStatus.closed && <LbpsFull type={'Closed'} />}
+        {activeTab === LbpStatus.closed && <LbpsFull type={LbpStatus.closed} />}
       </Body>
 
       <Footer />
