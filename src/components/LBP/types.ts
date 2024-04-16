@@ -83,31 +83,31 @@ export interface LbpFormValues {
 }
 
 export interface TokenomicsProps {
-  shareAddress: string;
-  shareInput: number;
-  maxSupply: number;
-  assetInput: number;
-  startWeight: number;
-  endDate: string;
-  minPrice: number;
-  maxPrice: number;
-  startDate: string;
-  endWeight: number;
+  shareAddress: string
+  assetTokenAddress: string
+  assetTokenSymbol: string
+  shareInput: number
+  maxSupply: number
+  assetInput: number
+  startWeight: number
+  endDate: string
+  minPrice: number
+  maxPrice: number
+  startDate: string
+  endWeight: number
 }
 
-
 export interface ProjectInfoProps {
-  name: string;
-  title: string;
-  description: string;
-  website: string;
-  socialLinks: INameValue[];
-  whitepapers: INameValue[];
-  uploadDocs: LbpFile[];
+  name: string
+  title: string
+  description: string
+  website: string
+  socialLinks: INameValue[]
+  whitepapers: INameValue[]
+  uploadDocs: LbpFile[]
 }
 
 export interface BrandingProps {
-  LBPLogo: LbpFile;
-  LBPBanner: LbpFile;
+  LBPLogo: LbpFile
+  LBPBanner: LbpFile
 }
-

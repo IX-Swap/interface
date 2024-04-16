@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
+import React, { useState, useMemo } from 'react'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { TextInput } from 'pages/KYC/common'
@@ -22,8 +22,8 @@ import ixsDropDown from '../../../assets/images/ixsToken.svg'
 import usdtropDown from '../../../assets/images/usdtNewToken.svg'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
-
-
+import { IXS_ADDRESS, TOKEN_ADDRESSES } from 'constants/addresses'
+import { useWeb3React } from '@web3-react/core'
 
 const Container = styled.div`
   width: 100%;
@@ -150,47 +150,41 @@ const ErrorText = styled.span`
   margin-top: 10px;
 `
 
-const langOptions = {
-  [80001]: [
-    {
-      tokenSymbol: 'IXS',
-      tokenAddress: '',
-      tokenDecimals: 18,
-      label: 'IXS',
-      logo: ixsDropDown,
-    },
-  ],
-  [80002]: [
-    {
-      value: 'USDC',
-      tokenAddress: '',
-      tokenDecimals: 18,
-      tokenSymbol: 'USDC',
-      logo: usdcDropDown,
-    },
-  ],
-  [80003]: [
-    {
-      value: 'USDC.e',
-      tokenAddress: '',
-      tokenDecimals: 18,
-      tokenSymbol: 'USDC.e',
-      logo: usdcDropDown,
-    },
-  ],
-  [80004]: [
-    {
-      value: 'USDT',
-      tokenAddress: '',
-      tokenDecimals: 18,
-      tokenSymbol: 'USDT',
-      logo: usdtropDown,
-    },
-  ],
-}
+export const TokenOptions = (chainId: number) => [
+  {
+    value: 'USDC',
+    tokenAddress: TOKEN_ADDRESSES.USDC[chainId],
+    tokenDecimals: 6,
+    tokenSymbol: 'USDC',
+    logo: usdcDropDown,
+  },
+  {
+    value: 'USDC.e',
+    tokenAddress: TOKEN_ADDRESSES['USDC.e'][chainId],
+    tokenDecimals: 6,
+    tokenSymbol: 'USDC.e',
+    logo: usdcDropDown,
+  },
+  {
+    value: 'USDT',
+    tokenAddress: TOKEN_ADDRESSES.USDT[chainId],
+    tokenDecimals: 18,
+    tokenSymbol: 'USDT',
+    logo: usdtropDown,
+  },
+  {
+    tokenSymbol: 'IXS',
+    tokenAddress: IXS_ADDRESS[chainId],
+    tokenDecimals: 18,
+    label: 'IXS',
+    logo: ixsDropDown,
+  },
+]
 
 interface TokenomicsData {
   shareAddress: string
+  assetTokenAddress: string
+  assetTokenSymbol: string
   shareInput: number
   assetInput: number
   maxSupply: number
@@ -228,8 +222,13 @@ const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
     tokenSymbol: 'IXS',
     logo: ixsDropDown,
   })
+
+  const { chainId } = useWeb3React()
+
   const [formData, setFormData] = useState<TokenomicsData>({
     shareAddress: formDataTokenomics.shareAddress,
+    assetTokenAddress: formDataTokenomics.assetTokenAddress,
+    assetTokenSymbol: formDataTokenomics.assetTokenSymbol,
     shareInput: formDataTokenomics.shareInput,
     assetInput: formDataTokenomics.assetInput,
     maxSupply: formDataTokenomics.maxSupply,
@@ -326,12 +325,21 @@ const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
     const updatedFormData = {
       ...formDataTokenomics,
       shareName: selectedOption,
+      assetTokenAddress: selectedOption.tokenAddress,
+      assetTokenSymbol: selectedOption.tokenSymbol,
       // logo: selectedOption.logo,
     }
+
     setFormData(updatedFormData)
     onChange(updatedFormData)
   }
 
+  const tokenOptions = useMemo(() => {
+    // exclude tokens that has tokenAddress of undefined
+    return TokenOptions(chainId || 0).filter((option) => option.tokenAddress)
+  }, [chainId])
+
+  console.info('tokenOptions', tokenOptions)
 
   return (
     <Container>
@@ -408,25 +416,23 @@ const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
                 {selectedToken.tokenSymbol}
               </Options>
               <LanguageOptions className={isOpen ? 'open' : ''}>
-                {Object.keys(langOptions).map((key) =>
-                  langOptions[key as unknown as keyof typeof langOptions].map((option, index) => (
-                    <div
-                      style={{
-                        display: 'flex',
-                        gap: '10px',
-                        marginTop: '10px',
-                        marginBottom: '8px',
-                        padding: '10px',
-                        cursor: 'pointer',
-                      }}
-                      key={index}
-                      onClick={() => handleSelect(option)}
-                    >
-                      <img src={option.logo} alt={option.tokenSymbol} />
-                      <span>{option.tokenSymbol}</span>
-                    </div>
-                  ))
-                )}
+                {tokenOptions.map((option, index) => (
+                  <div
+                    style={{
+                      display: 'flex',
+                      gap: '10px',
+                      marginTop: '10px',
+                      marginBottom: '8px',
+                      padding: '10px',
+                      cursor: 'pointer',
+                    }}
+                    key={index}
+                    onClick={() => handleSelect(option)}
+                  >
+                    <img src={option.logo} alt={option.tokenSymbol} />
+                    <span>{option.tokenSymbol}</span>
+                  </div>
+                ))}
               </LanguageOptions>
             </LanguageSelectContainer>
             <SpanBal>
@@ -613,27 +619,27 @@ const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
         </TYPE.label>
       </RowStart>
 
-<FormGrid>
-  <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <DemoContainer components={['DateTimePicker']}>
-      <DateTimePicker
-        onChange={handleStartDateChange}
-        label="Start Date"
-        // defaultValue={dayjs(formDataTokenomics.startDate).toDate() as Date} 
-      />
-    </DemoContainer>
-  </LocalizationProvider>
+      <FormGrid>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DateTimePicker']}>
+            <DateTimePicker
+              onChange={handleStartDateChange}
+              label="Start Date"
+              // defaultValue={dayjs(formDataTokenomics.startDate).toDate() as Date}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
 
-  <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <DemoContainer components={['DateTimePicker']}>
-      <DateTimePicker
-        onChange={handleEndDateChange}
-        label="End Date"
-        // value={formDataTokenomics.endDate ? new Date(formDataTokenomics.endDate) : null}
-      />
-    </DemoContainer>
-  </LocalizationProvider>
-</FormGrid>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DateTimePicker']}>
+            <DateTimePicker
+              onChange={handleEndDateChange}
+              label="End Date"
+              // value={formDataTokenomics.endDate ? new Date(formDataTokenomics.endDate) : null}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+      </FormGrid>
 
       <Line style={{ margin: '50px 0px 50px 0px' }} />
       <FormGrid>
