@@ -3,7 +3,6 @@ import styled from 'styled-components/macro'
 import Column, { AutoColumn, ColumnCenter } from 'components/Column'
 import { TYPE } from 'theme'
 import SideBar from './SideBar'
-import { Links } from './Links'
 import QuantitiesAndWeight from './QuantitiesAndWeight'
 import { Line } from 'components/Line'
 import DetailsChart from './PublicChart'
@@ -15,12 +14,17 @@ import AdditionalDocuments from './DocumentSec'
 import ComingSoon from './ComingSoon'
 import EndedSideBar from './Ended'
 import CloseSideBar from './ClosedSideBar'
+import { LbpFormValues } from '../types'
+import Links from './Links'
+
+interface MiddleSectionProps {
+  lbpData: LbpFormValues | null
+}
 
 const MiddleSectionWrapper = styled.div`
   background: #ffffff;
   padding: 0px 80px;
   margin: 0px 200px;
-
 `
 
 const MiddleSectionContainer = styled.div`
@@ -28,7 +32,6 @@ const MiddleSectionContainer = styled.div`
   background: #ffffff;
   display: flex;
   gap: 50px;
-  
 `
 
 const ContentColumn = styled(ColumnCenter)`
@@ -49,13 +52,13 @@ const MoreText = styled.span`
   cursor: pointer;
 `
 
-export default function MiddleSection() {
+const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
   const [showMore, setShowMore] = useState(false)
 
   const sampleText = useMemo(
     () =>
-      `Serenity is a blockchain-based project aimed at revolutionizing the digital asset management landscape. With its innovative platform, Serenity offers users a seamless and secure environment to engage in decentralized finance (DeFi) activities, including trading, lending, and staking. Built on cutting-edge technology, Serenity prioritizes user privacy and security, ensuring that transactions are executed swiftly and transparently. Whether you're a seasoned investor or new to the world of cryptocurrencies, Serenity provides a user-friendly interface and robust tools to empower individuals to maximize their financial potential. Join the Serenity ecosystem today and experience the future of decentralized finance firsthand.`,
-    []
+      `${lbpData?.description}`,
+    [lbpData]
   )
 
   const isTextLong = useMemo(() => sampleText.length > 300, [sampleText])
@@ -69,21 +72,23 @@ export default function MiddleSection() {
             {isTextLong && !showMore && <MoreText onClick={() => setShowMore(true)}>Read More</MoreText>}
             {showMore && <MoreText onClick={() => setShowMore(false)}>Read Less</MoreText>}
           </TYPE.body1>
-          <Links links={undefined} />
+          <Links lbpData={lbpData} />
           <Line style={{ margin: '40px 0px' }} />
-          <QuantitiesAndWeight />
+          <QuantitiesAndWeight lbpData={lbpData} />
           <DetailsChart />
-          <VolumeData />
+          <VolumeData lbpData={lbpData} />
         </Column>
         <Column>
-          <SideBar />
+          <SideBar lbpData={lbpData} />
           {/* <ComingSoon/> */}
           {/* <EndedSideBar/> */}
           {/* <CloseSideBar/> */}
-          <AdditionalDocuments/>
+          <AdditionalDocuments />
         </Column>
       </MiddleSectionContainer>
-      <TradeHistory/>
+      <TradeHistory />
     </MiddleSectionWrapper>
   )
 }
+
+export default MiddleSection

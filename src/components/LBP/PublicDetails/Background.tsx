@@ -1,9 +1,14 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import backgroundImg from '../../../assets/images/background.jpg';
-import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg';
-import { ReactComponent as ArrowUp } from '../../../assets/images/varyArrow.svg';
-import { TYPE } from 'theme';
+import React from 'react'
+import styled, { css } from 'styled-components'
+import backgroundImg from '../../../assets/images/background.jpg'
+// import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
+import { ReactComponent as ArrowUp } from '../../../assets/images/varyArrow.svg'
+import { TYPE } from 'theme'
+import { LbpFormValues } from '../types'
+
+interface BackgroundProps {
+  lbpData: LbpFormValues | null
+}
 
 const FullWidthContainer = styled.div`
   position: relative;
@@ -11,51 +16,55 @@ const FullWidthContainer = styled.div`
   max-width: 100vw;
   height: 400px;
   overflow: hidden;
-`;
+`
 
 const FullWidthImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`;
+`
 
-const SerenityIcon = styled(Serenity)`
+const LogoIcon = styled.img`
   position: absolute;
-  bottom: 20%;
-  left: 5%;
-  height: 15%;
-  width: 15%;
+  bottom: 21%;
+  left: 11%;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
 `;
 
 const Description = styled(TYPE.description7)`
   position: absolute;
   bottom: 22%;
   left: 15.5%;
-  color: #FFFFFF;
-`;
+  color: #ffffff;
+`
 
 const Amount = styled(TYPE.description7)`
   position: absolute;
   bottom: 22%;
   right: 10%;
-  color: #FFFFFF;
-`;
+  color: #ffffff;
+`
 
 const Vary = styled.div<{ positive: boolean }>`
   position: absolute;
   bottom: 23%;
   right: 18.5%;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 8px 10px;
   border-radius: 6px;
   display: flex;
   align-items: center;
-  ${({ positive }) => positive ? `
+  ${({ positive }) =>
+    positive
+      ? `
     background: #1FBA66;
-  ` : `
+  `
+      : `
     background: #FF6161;
   `}
-`;
+`
 
 const Arrow = styled.div<{ rotateArrow?: boolean }>`
   margin-right: 5px;
@@ -64,17 +73,19 @@ const Arrow = styled.div<{ rotateArrow?: boolean }>`
     css`
       transform: rotate(180deg);
     `}
-`;
+`
 
-export default function Background() {
-  const varyValue = 3.28; 
-  const isPositive = varyValue > 0;
+const Background: React.FC<BackgroundProps> = ({ lbpData }) => {
+  const varyValue = 3.28
+  const isPositive = varyValue > 0
 
   return (
     <FullWidthContainer>
-      <FullWidthImage src={backgroundImg} alt="Background" />
-      <SerenityIcon />
-      <Description fontSize={'48px'}>Serenity</Description>
+        <FullWidthImage src={lbpData?.banner.public} alt="Background" />
+        {lbpData && lbpData.logo && (
+        <LogoIcon as="img" src={lbpData.logo.public} alt="Serenity Logo" />
+      )}
+      <Description fontSize={'48px'}>{lbpData?.name}</Description>
       <Amount fontSize={'40px'}>$1.32</Amount>
       <Vary positive={isPositive}>
         <Arrow rotateArrow={!isPositive}>
@@ -83,5 +94,6 @@ export default function Background() {
         {Math.abs(varyValue)}%
       </Vary>
     </FullWidthContainer>
-  );
+  )
 }
+export default Background

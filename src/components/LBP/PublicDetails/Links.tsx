@@ -8,34 +8,35 @@ import { ReactComponent as CoingeckoLogo } from 'assets/images/coinMarketNew.svg
 
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
+import { LbpFormValues } from '../types'
+import { useFetchToken } from 'hooks/useFetchToken'
 
-interface Props {
-  links: any
+
+interface LinksProps {
+  lbpData: LbpFormValues | null
 }
-
-export const Links: React.FC<Props> = (props) => {
-  const socialMedialLinks = React.useMemo(
-    () => [
-      { url: !props.links?.socialMedia?.twitter, logo: <TwitterLogo /> },
-      { url: !props.links?.socialMedia?.telegram, logo: <TelegramLogo /> },
-      { url: !props.links?.socialMedia?.youtube, logo: <YoutubeLogo /> },
-      { url: !props.links?.socialMedia?.coingecko, logo: <CoingeckoLogo /> },
-      { url: props.links?.socialMedia?.discord, logo: <DiscordLogo /> },
-    ],
-    []
-  )
+const Links: React.FC<LinksProps> = ({ lbpData }) => {
+  // const socialMedialLinks = React.useMemo(
+  //   () => [
+  //     { url: lbpData?.socialMedia?.twitter, logo: <TwitterLogo /> },
+  //     { url: lbpData?.socialMedia?.telegram, logo: <TelegramLogo /> },
+  //     { url: lbpData?.socialMedia?.youtube, logo: <YoutubeLogo /> },
+  //     { url: lbpData?.socialMedia?.coingecko, logo: <CoingeckoLogo /> },
+  //     { url: lbpData?.socialMedia?.discord, logo: <DiscordLogo /> },
+  //   ],
+  //   []
+  // )
 
   return (
     <div>
       <SocialMediaLinks>
-        <SocialMediaLink href={props.links?.issuerWebsite}>Website</SocialMediaLink>
-        <SocialMediaLink href={props.links?.issuerWebsite}>Whitepaper</SocialMediaLink>
-        {props.links?.whitepaperUrl && <SocialMediaLink href={props.links.whitepaperUrl}>Dataroom</SocialMediaLink>}
-        {socialMedialLinks
-          .filter((link) => link.url)
+        {/* <SocialMediaLink href={lbpData?.links?.issuerWebsite}>Website</SocialMediaLink>
+        <SocialMediaLink href={lbpData?.links?.issuerWebsite}>Whitepaper</SocialMediaLink> */}
+        {/* {lbpData?.whitepaperUrl && <SocialMediaLink href={lbpData.links.whitepaperUrl}>Dataroom</SocialMediaLink>} */}
+        {lbpData?.socialMedia.filter((link) => link?.url)
           .map((link, idx) => (
-            <SocialMediaLink key={`link-${idx}`} href={link.url}>
-              {link.logo}
+            <SocialMediaLink key={`link-${idx}`} >
+              {link.name}
             </SocialMediaLink>
           ))}
       </SocialMediaLinks>
@@ -81,3 +82,5 @@ const SocialMediaLink = styled.a`
     width: 42%;
   }
 `
+
+export default Links

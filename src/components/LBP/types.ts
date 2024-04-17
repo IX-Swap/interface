@@ -8,6 +8,7 @@ export enum LbpStatus {
 }
 
 export interface INameValue {
+  url?: unknown
   name: string
   value: string
 }
@@ -80,6 +81,9 @@ export interface LbpFormValues {
   createdAt?: string
   updatedAt?: string
   deletedAt?: string
+  banner?: any
+  logo?: any
+  assetTokenSymbol?: any 
 }
 
 export interface TokenomicsProps {
