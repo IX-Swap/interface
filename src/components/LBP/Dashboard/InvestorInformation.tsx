@@ -13,13 +13,14 @@ import {
   TableTitle,
 } from 'components/LaunchpadIssuance/ManageOffer/shared/styled'
 import { useOnChangeOrder } from 'state/launchpad/hooks'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useShowError } from 'state/application/hooks'
-import { useGetManagedLbpInvestors } from 'state/lbp/hooks'
+import { useGetAllLbpInvestors, useGetPaginatedLbpInvestors } from 'state/lbp/hooks'
 import { GridContainer } from 'components/Grid'
 import { IssuancePagination } from 'components/LaunchpadIssuance/IssuanceDashboard/IssuancePagination'
 import { IssuanceFilter } from 'components/LaunchpadIssuance/types'
 import { CSVLink } from 'react-csv'
+import Link from 'react-csv/components/Link'
 
 const HEADERS = [
   { key: 'username', label: 'Name' },
@@ -31,7 +32,7 @@ interface Props {
 }
 
 export const InvestorInformation = ({ lbpId }: Props) => {
-  const { load, error, isLoading, data } = useGetManagedLbpInvestors(lbpId)
+  const { load, error, isLoading, data } = useGetPaginatedLbpInvestors(lbpId)
   const showError = useShowError()
 
   const [page, setPage] = useState<number>(1)
@@ -40,6 +41,9 @@ export const InvestorInformation = ({ lbpId }: Props) => {
   const { totalItems, totalPages, items } = data as PaginationRes<ManagedLbpInvestment>
   const theme = useTheme()
   const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
+  const csvRef = useRef<any>()
+  const [csvData, setCsvData] = useState<ManagedLbpInvestment[]>([])
+  const getAllInvestors = useGetAllLbpInvestors()
 
   const headers = [
     { label: 'Name', key: 'username' },
@@ -47,13 +51,16 @@ export const InvestorInformation = ({ lbpId }: Props) => {
     { label: 'Wallet Address', key: 'walletAddress' },
   ]
 
-  const csvReport = {
-    data: items,
-    headers: headers,
-    filename: `lbp-${lbpId}-investors.csv`,
+  const handleExtractData = () => {
+    const data = getAllInvestors(lbpId)
+    setCsvData(data)
   }
 
-  const handleExtractData = () => {}
+  useEffect(() => {
+    if (csvData && csvData.length > 0 && csvRef && csvRef.current) {
+      csvRef.current.link.click()
+    }
+  }, [csvData])
 
   useEffect(() => {
     load({
@@ -62,6 +69,7 @@ export const InvestorInformation = ({ lbpId }: Props) => {
       offset: pageSize,
     })
   }, [page, order, pageSize])
+
   useEffect(() => {
     if (error) {
       showError(error)
@@ -73,12 +81,19 @@ export const InvestorInformation = ({ lbpId }: Props) => {
       <Container>
         <Header>
           <TableTitle>Investor Information</TableTitle>
-          <ButtonsContainer>
-            <CSVLink {...csvReport}>
-              <MoreHorizontal color={theme.launchpad.colors.primary} size={13} />
-              <ExtractText>Extract Data</ExtractText>
-            </CSVLink>
+          <ButtonsContainer onClick={handleExtractData}>
+            <MoreHorizontal color={theme.launchpad.colors.primary} size={13} />
+            <ExtractText>Extract Data</ExtractText>
           </ButtonsContainer>
+          <HiddenBlock>
+            <CSVLink
+              data={csvData}
+              headers={headers}
+              filename={`lbp-${lbpId}-investors.csv`}
+              ref={csvRef}
+              target="_blank"
+            ></CSVLink>
+          </HiddenBlock>
         </Header>
         {items.length > 0 && (
           <LbpTable maxWidth="100%" hideBorder>
@@ -131,6 +146,7 @@ const ButtonsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `
 
 export const LbpTable = styled.div<{ maxWidth?: string; hideBorder?: boolean }>`
@@ -180,4 +196,8 @@ export const Raw = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`
+
+export const HiddenBlock = styled.div`
+  display: none;
 `

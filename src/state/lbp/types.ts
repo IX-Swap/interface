@@ -6,7 +6,6 @@ export interface Lbp {
 }
 
 export interface ManagedLbpInvestment {
-  id: number
   username: string | null
   tokenAmount: number
   walletAddress: string

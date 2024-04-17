@@ -1,11 +1,10 @@
 import { InvestorInformation } from 'components/LBP/Dashboard/InvestorInformation'
-import { useQueryParams } from 'hooks/useParams'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const AdminLbpDetail = () => {
-  const {
-    objectParams: { id: lbpId },
-  } = useQueryParams<{ id: number }>(['id'])
+  const { id } = useParams<{ id: string }>()
+  const lbpId = parseInt(id)
   return (
     <Wrapper style={{ padding: '0px 8%' }}>
       {/* Charts */}
