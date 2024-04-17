@@ -18,9 +18,9 @@ import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import { LbpFormValues } from '../types'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
-import { BigNumber } from 'ethers'
-import { useLBPShareContract } from 'hooks/useContract'
-
+import { BigNumber, ethers } from 'ethers'
+import { useLBPContract } from 'hooks/useContract'
+import LBP_ABI from 'abis/LiquiidtyBoostrapPool.json'
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
   { title: 'SELL', value: PublicDetails.sell },
@@ -72,29 +72,30 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
   const [isBlurred, setIsBlurred] = useState(false)
   const [tokenBalance, setTokenBalance] = useState('')
   const [tokenDecimals, setTokenDecimals] = useState(0)
-  const { account } = useActiveWeb3React()
+  const { account , provider} = useActiveWeb3React()
   const [shareBalance, setShareBalance] = useState<string | null>(null)
   const [tokenOptions, setTokenOptions] = useState<any | null>(null)
-  const lbp = useLBPShareContract(lbpData?.contractAddress ?? '')
-
+  const lbp = useLBPContract(lbpData?.contractAddress ?? '')
   const inputCurrency = useCurrency(lbpData?.assetTokenAddress)
   const { amount: balance, loading: isBalanceLoading } = useSimpleTokenBalanceWithLoading(
     account,
     inputCurrency,
     lbpData?.assetTokenAddress
-  )
+  )  
 
   const fetchShareBalance = async () => {
     try {
       if (lbp && account) {
-        const balance: BigNumber = await lbp.purchasedShares(account)
-        const balanceString: string = balance.toString()
-        setShareBalance(balanceString)
+        const balance = await lbp.purchasedShares(account);
+        
+        // Decimals are hardcoded for now. We need to change it to retrieve the token's decimal value using the ERC20.decimals RPC call
+        const parsedBalance = ethers.utils.formatUnits(balance, 9); 
+        setShareBalance(parsedBalance);
       } else {
-        console.error('LBP contract or account not available')
+        console.error('LBP contract or account not available');
       }
     } catch (error) {
-      console.error('Error fetching share balance:', error)
+      console.error('Error fetching share balance:', error);
     }
   }
 
