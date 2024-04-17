@@ -6,6 +6,7 @@ import { PaginateResponse } from 'types/pagination'
 import { Lbp } from './types'
 import { FileUpload, useUploadFiles } from 'state/launchpad/hooks'
 import { LBP_ACTION_TYPES } from './constants'
+import { PaginationRes } from 'state/launchpad/types'
 
 export const useGetLbpsFull = () => {
   return React.useCallback(
@@ -119,4 +120,82 @@ export const useSaveOrSubmitLbp = () => {
     },
     [uploadFiles]
   )
+}
+
+export const useGetPaginatedLbpInvestors = (id: number) => {
+  // return useGenericPaginationFetch(`/lbp/${id}/investors`) // TODO: API Integration
+
+  // Mock data
+  return {
+    load: ({ page, order, offset }: any) => {},
+    error: null,
+    isLoading: false,
+    data: {
+      hasMore: true,
+      items: [
+        {
+          username: 'Test 1',
+          tokenAmount: 11,
+          walletAddress: '0x1234123412512512563756',
+        },
+        {
+          username: 'Test 2',
+          tokenAmount: 12,
+          walletAddress: '0x1234123135134114353231',
+        },
+        {
+          username: 'Test 3',
+          tokenAmount: 13,
+          walletAddress: '0x1234123412595678567885',
+        },
+        {
+          username: 'Test 4',
+          tokenAmount: 14,
+          walletAddress: '0x1234123135134114353231',
+        },
+      ],
+      totalPages: 1,
+      totalItems: 4,
+    } as PaginationRes<any>,
+  }
+}
+
+export const useGetAllLbpInvestors = () => {
+  // TODO: API Integration
+
+  // Mock data
+  return useCallback((lbpId: number) => {
+    return [
+      {
+        username: 'Test 1',
+        tokenAmount: 11,
+        walletAddress: '0x1234123412512512563756',
+      },
+      {
+        username: 'Test 2',
+        tokenAmount: 12,
+        walletAddress: '0x1234123135134114353231',
+      },
+      {
+        username: 'Test 3',
+        tokenAmount: 13,
+        walletAddress: '0x1234123412595678567885',
+      },
+      {
+        username: 'Test 4',
+        tokenAmount: 14,
+        walletAddress: '0x1234123135134114353231',
+      },
+      {
+        username: 'Test 5',
+        tokenAmount: 15,
+        walletAddress: '0x1234123412512512563756',
+      },
+      {
+        username: 'Test 6',
+        tokenAmount: 16,
+        walletAddress: '0x1234123135134114353231',
+      },
+    ]
+  }, [])
 }

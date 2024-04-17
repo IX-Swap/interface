@@ -23,6 +23,7 @@ import LBPForm from './LBP/LbpForm'
 import LbpDashboardPage from './LBP/Dashboard'
 import publicDetails from './LBP/PublicDetails'
 import PublicDetails from './LBP/PublicDetails'
+import { AdminLbpDetail } from './LBP/AdminLbpDetail'
 
 const Admin = lazy(() => import('pages/Admin'))
 const Swap = lazy(() => import('pages/Swap'))
@@ -207,4 +208,5 @@ export const routeConfigs: RouteMapEntry[] = [
   { path: routes.lbpEdit, component: LBPForm },
   { path: routes.lbpDashboard, component: LbpDashboardPage },
   { path: routes.publicDetails, component: PublicDetails },
+  { path: routes.adminDetails, component: AdminLbpDetail },
 ]

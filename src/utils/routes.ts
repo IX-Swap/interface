@@ -50,6 +50,7 @@ export const routes = {
   lbpDashboard: '/lbp',
   lbpEdit: '/lbp/edit',
   publicDetails: '/lbp/:id',
+  adminDetails: '/lbp/admin-detail/:id',
 
   //admin urls
 
