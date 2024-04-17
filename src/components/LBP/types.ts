@@ -64,7 +64,7 @@ export interface LbpFormValues {
   LBPLogo: LbpFile
   LBPBanner: LbpFile
   uploadDocs: LbpFile[]
-  contractAddress?: string
+  contractAddress?: string 
   shareAddress: string
   shareAmount: number
   shareMaxSupply: number

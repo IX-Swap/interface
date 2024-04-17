@@ -17,6 +17,9 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import { LbpFormValues } from '../types'
+import { TokenOptions } from 'pages/LBP/components/Tokenomics'
+import { BigNumber } from 'ethers'
+import { useLBPShareContract } from 'hooks/useContract'
 
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
@@ -55,7 +58,6 @@ const TradeTabs: React.FC<SideTabsBarProps> = ({ currentTab, onTabSelect }) => {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
-
   const [remainingTime, setRemainingTime] = useState(28 * 24 * 60 * 60)
   const [activeTab, setActiveTab] = React.useState<PublicDetails>(() => {
     const savedTab = localStorage.getItem('ActiveTab')
@@ -69,21 +71,58 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
   const [isPaused, setIsPaused] = useState(false)
   const [isBlurred, setIsBlurred] = useState(false)
   const [tokenBalance, setTokenBalance] = useState('')
+  const [tokenDecimals, setTokenDecimals] = useState(0)
   const { account } = useActiveWeb3React()
+  const [shareBalance, setShareBalance] = useState<string | null>(null)
+  const [tokenOptions, setTokenOptions] = useState<any | null>(null)
+  const lbp = useLBPShareContract(lbpData?.contractAddress ?? '')
+
   const inputCurrency = useCurrency(lbpData?.assetTokenAddress)
   const { amount: balance, loading: isBalanceLoading } = useSimpleTokenBalanceWithLoading(
     account,
     inputCurrency,
     lbpData?.assetTokenAddress
   )
-  
+
+  const fetchShareBalance = async () => {
+    try {
+      if (lbp && account) {
+        const balance: BigNumber = await lbp.purchasedShares(account)
+        const balanceString: string = balance.toString()
+        setShareBalance(balanceString)
+      } else {
+        console.error('LBP contract or account not available')
+      }
+    } catch (error) {
+      console.error('Error fetching share balance:', error)
+    }
+  }
 
   useEffect(() => {
-    if (balance !== undefined && !isBalanceLoading) {
-      setTokenBalance(balance?.toExact() || '');
-    }
-  }, [balance, isBalanceLoading]);
+    const fetchData = async () => {
+      try {
+        await fetchShareBalance();
   
+        if (balance !== undefined && !isBalanceLoading) {
+          const exactBalance = balance.toExact() || '';
+          setTokenBalance(exactBalance);
+  
+          const currentChainId = balance.currency?.chainId || 0;
+          const tokenOption = TokenOptions(currentChainId).find(
+            (option) => option.tokenSymbol === balance.currency?.symbol
+          );
+          setTokenDecimals(tokenOption?.tokenDecimals || 0);
+          setTokenOptions(tokenOption);
+        }
+      } catch (error) {
+        console.error('Error fetching share balance:', error);
+      }
+    };
+  
+    fetchData();
+  }, [balance, isBalanceLoading, fetchShareBalance]);
+  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setRemainingTime((prevTime) => prevTime - 1)
@@ -156,7 +195,16 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
           </TabRow>
         </Header>
         <Body>
-          <BuySellFields assetTokenAddress={lbpData?.assetTokenAddress} tokenBalance={tokenBalance} activeTab={activeTab} slippage={slippage} />
+          <BuySellFields
+            tokenDecimals={tokenDecimals}
+            contractAddress={lbpData?.contractAddress}
+            assetTokenAddress={lbpData?.assetTokenAddress}
+            tokenBalance={tokenBalance}
+            activeTab={activeTab}
+            slippage={slippage}
+            shareBalance={shareBalance}
+            tokenOptions={tokenOptions}
+          />
         </Body>
       </Container>
 
