@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { TYPE } from 'theme'
@@ -13,6 +13,10 @@ import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import { TextInput } from 'pages/KYC/common'
 import { PinnedContentButton } from 'components/Button'
+import { useActiveWeb3React } from 'hooks/web3'
+import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
+import { useCurrency } from 'hooks/Tokens'
+import { LbpFormValues } from '../types'
 
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
@@ -24,12 +28,16 @@ interface TabProps {
   currentTab: PublicDetails
 }
 
-interface SideBarProps {
+interface SideTabsBarProps {
   currentTab: PublicDetails
   onTabSelect: (value: PublicDetails) => void
 }
 
-const TradeTabs: React.FC<SideBarProps> = ({ currentTab, onTabSelect }) => {
+interface SideBarProps {
+  lbpData: LbpFormValues | null
+}
+
+const TradeTabs: React.FC<SideTabsBarProps> = ({ currentTab, onTabSelect }) => {
   return (
     <TabContainer>
       {TabsData.map((tab) => (
@@ -46,7 +54,8 @@ const TradeTabs: React.FC<SideBarProps> = ({ currentTab, onTabSelect }) => {
   )
 }
 
-export default function SideBar() {
+const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
+
   const [remainingTime, setRemainingTime] = useState(28 * 24 * 60 * 60)
   const [activeTab, setActiveTab] = React.useState<PublicDetails>(() => {
     const savedTab = localStorage.getItem('ActiveTab')
@@ -59,7 +68,22 @@ export default function SideBar() {
   const [slippage, setSlippage] = useState<any>('')
   const [isPaused, setIsPaused] = useState(false)
   const [isBlurred, setIsBlurred] = useState(false)
+  const [tokenBalance, setTokenBalance] = useState('')
+  const { account } = useActiveWeb3React()
+  const inputCurrency = useCurrency(lbpData?.assetTokenAddress)
+  const { amount: balance, loading: isBalanceLoading } = useSimpleTokenBalanceWithLoading(
+    account,
+    inputCurrency,
+    lbpData?.assetTokenAddress
+  )
+  
 
+  useEffect(() => {
+    if (balance !== undefined && !isBalanceLoading) {
+      setTokenBalance(balance?.toExact() || '');
+    }
+  }, [balance, isBalanceLoading]);
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setRemainingTime((prevTime) => prevTime - 1)
@@ -90,6 +114,7 @@ export default function SideBar() {
 
   const remainingDays = Math.floor(remainingTime / (24 * 60 * 60))
   const remainingHours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))
+
 
   return (
     <SideBarContainer>
@@ -131,7 +156,7 @@ export default function SideBar() {
           </TabRow>
         </Header>
         <Body>
-          <BuySellFields activeTab={activeTab} slippage={slippage} />
+          <BuySellFields assetTokenAddress={lbpData?.assetTokenAddress} tokenBalance={tokenBalance} activeTab={activeTab} slippage={slippage} />
         </Body>
       </Container>
 
@@ -176,6 +201,8 @@ export default function SideBar() {
     </SideBarContainer>
   )
 }
+
+export default SideBar
 
 const SideBarContainer = styled.div`
   border: 1px solid #e6e6ff;

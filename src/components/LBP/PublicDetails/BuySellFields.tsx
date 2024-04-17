@@ -4,18 +4,37 @@ import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
 import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
 import { TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
+import { useApproveCallback } from 'hooks/useApproveCallback'
+import { useCurrency } from 'hooks/Tokens'
+import { CurrencyAmount } from '@ixswap1/sdk-core'
+import { ethers } from 'ethers'
+import { IXSALE_ADDRESS } from 'constants/addresses'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface BuySellFieldsProps {
   activeTab: string
   slippage: string
+  tokenBalance: string
+  assetTokenAddress: string
 }
 
-export default function BuySellFields({ activeTab, slippage }: BuySellFieldsProps) {
+interface BuySellFieldsInputProps {
+  assetExceedsBalance?: boolean;
+}
+
+export default function BuySellFields({ activeTab, slippage, tokenBalance, assetTokenAddress }: BuySellFieldsProps) {
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(true)
-
-  console.log(activeTab, slippage, 'activeTab')
+  const tokenCurrency = useCurrency(assetTokenAddress)
+  const { chainId = 137 } = useActiveWeb3React()
+  const [approval, approveCallback] = useApproveCallback(
+    tokenCurrency
+      ? CurrencyAmount.fromRawAmount(tokenCurrency, ethers.utils.parseUnits(assetValue || '0', 8) as any)
+      : undefined,
+      assetTokenAddress || IXSALE_ADDRESS[chainId]
+  )
+  const assetExceedsBalance = parseFloat(assetValue) > parseFloat(tokenBalance);
 
   useEffect(() => {
     if (shareValue.trim() !== '' && assetValue.trim() !== '') {
@@ -37,20 +56,35 @@ export default function BuySellFields({ activeTab, slippage }: BuySellFieldsProp
     setShareValue(inputValue !== '' ? (parseFloat(inputValue) * 2).toFixed(2) : '')
   }
 
+  const handleButtonClick = async () => {
+    if (approval === 'APPROVED') {
+      console.log('Buying...')
+    } else {
+      try {
+        await approveCallback()
+        console.log('Approval successful')
+      } catch (error) {
+        console.error('Approval failed', error)
+      }
+    }
+  }
+
   return (
     <>
       {/* Share section */}
-      <BuySellFieldsContainer>
+      <BuySellFieldsContainer >
         <BuySellFieldsItem>
           <BuySellFieldsWrapper>
             <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
           </BuySellFieldsWrapper>
           <BuySellFieldsInput
+          
             type="text"
             placeholder="0.00"
             name="ShareInput"
             value={shareValue}
             onChange={handleShareInputChange}
+      
           />
         </BuySellFieldsItem>
         <BuySellFieldsItem>
@@ -65,7 +99,7 @@ export default function BuySellFields({ activeTab, slippage }: BuySellFieldsProp
       </BuySellFieldsContainer>
 
       {/* Asset section */}
-      <BuySellFieldsContainer>
+      <BuySellFieldsContainer assetExceedsBalance={assetExceedsBalance}>
         <BuySellFieldsItem>
           <BuySellFieldsWrapper>
             <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Asset</BuySellFieldsSpan>
@@ -76,7 +110,12 @@ export default function BuySellFields({ activeTab, slippage }: BuySellFieldsProp
             name="assetInput"
             value={assetValue}
             onChange={handleAssetInputChange}
+            assetExceedsBalance={assetExceedsBalance} 
+        
           />
+             {assetExceedsBalance && (
+            <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>
+          )}
         </BuySellFieldsItem>
         <BuySellFieldsItem>
           <BuySellFieldsSelect>
@@ -84,7 +123,7 @@ export default function BuySellFields({ activeTab, slippage }: BuySellFieldsProp
             <TYPE.body4 fontSize={'14px'}> USDC</TYPE.body4>
           </BuySellFieldsSelect>
           <BuySellFieldsSpanBal>
-            Balance: <b style={{ color: '#292933' }}>1,000.00</b>
+            Balance: <b style={{ color: '#292933' }}>{tokenBalance ? tokenBalance: 'Loding..'} </b>
           </BuySellFieldsSpanBal>
         </BuySellFieldsItem>
       </BuySellFieldsContainer>
@@ -106,7 +145,9 @@ export default function BuySellFields({ activeTab, slippage }: BuySellFieldsProp
 
       <TabRow style={{ marginTop: '20px' }}>
         {activeTab === 'buy' ? (
-          <PinnedContentButton disabled={buttonDisabled}>Buy</PinnedContentButton>
+          <PinnedContentButton onClick={handleButtonClick} disabled={buttonDisabled || assetExceedsBalance}>
+            {approval === 'APPROVED' ? 'Buy' : 'Approve'}
+          </PinnedContentButton>
         ) : (
           <PinnedContentButton style={{ backgroundColor: buttonDisabled ? '' : '#FF6161' }} disabled={buttonDisabled}>
             Sell
@@ -126,15 +167,17 @@ const BuySellFieldsWrapper = styled.div`
   margin-right: 60px;
 `
 
-const BuySellFieldsContainer = styled.div`
+const BuySellFieldsContainer = styled.div<BuySellFieldsInputProps>`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border: 1px solid #e6e6ff;
+  border: 1px solid ${({ assetExceedsBalance }) => (assetExceedsBalance ? '#FF6161' : '#e6e6ff')}; 
   background: #f7f7fa;
   padding: 12px 18px 0px 18px;
   margin-bottom: 20px;
-`
+`;
+
+
 
 const BuySellFieldsItem = styled.div`
   margin-bottom: 8px;
@@ -170,14 +213,14 @@ const BuySellFieldsSpanBal = styled.span`
   gap: 3px;
 `
 
-const BuySellFieldsInput = styled.input`
+const BuySellFieldsInput = styled.input<BuySellFieldsInputProps>`
   border: none;
   padding: 8px;
   text-align: left;
   background: none;
   font-size: 32px;
   font-weight: 700;
-  color: #292933;
+  color: ${({ assetExceedsBalance }) => (assetExceedsBalance ? '#FF6161' : '#292933')};
   max-width: 210px;
   width: auto;
   margin-bottom: 10px;
@@ -192,8 +235,10 @@ const BuySellFieldsInput = styled.input`
   &:focus {
     border: none;
     outline: none;
+    border-color: transparent;
   }
-`
+`;
+
 
 const TabRow = styled.div`
   display: flex;

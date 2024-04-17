@@ -79,7 +79,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
           <VolumeData lbpData={lbpData} />
         </Column>
         <Column>
-          <SideBar />
+          <SideBar lbpData={lbpData} />
           {/* <ComingSoon/> */}
           {/* <EndedSideBar/> */}
           {/* <CloseSideBar/> */}

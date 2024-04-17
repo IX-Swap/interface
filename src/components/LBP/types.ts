@@ -83,7 +83,7 @@ export interface LbpFormValues {
   deletedAt?: string
   banner?: any
   logo?: any
-  assetTokenSymbol?: string
+  assetTokenSymbol?: any 
 }
 
 export interface TokenomicsProps {
