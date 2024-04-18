@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
-import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
 import { TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
 import { useApproveCallback } from 'hooks/useApproveCallback'
@@ -10,6 +9,7 @@ import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers, constants } from 'ethers'
 import { useLBPContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
+import { useGetLBPAuthorization } from 'state/lbp/hooks'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -35,7 +35,6 @@ interface BuySellFieldsInputProps {
 
 export default function BuySellFields({
   activeTab,
-  slippage,
   tokenBalance,
   assetTokenAddress,
   contractAddress,
@@ -44,12 +43,13 @@ export default function BuySellFields({
 }: BuySellFieldsProps) {
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
-  const lbpContractInstance = useLBPContract(contractAddress ?? '')
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const tokenCurrency = useCurrency(assetTokenAddress)
   const [buttonText, setButtonText] = useState('Approve')
+  const [authorization, setAuthorization] = useState<any>()
   const { account } = useActiveWeb3React()
   const contractAddressValue = contractAddress !== undefined ? contractAddress : ''
+  const getLBPAuthorization = useGetLBPAuthorization()
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
@@ -60,17 +60,27 @@ export default function BuySellFields({
     contractAddressValue
   )
   const assetExceedsBalance = parseFloat(assetValue) > parseFloat(tokenBalance)
-
+  const lbpContractInstance = useLBPContract(contractAddress ?? '')
   const parseUnit = (amount: number, decimals: number): ethers.BigNumber => {
     return ethers.utils.parseUnits(amount.toString(), decimals)
   }
 
   useEffect(() => {
-    if (shareValue.trim() !== '' && assetValue.trim() !== '') {
-      setButtonDisabled(false)
-    } else {
-      setButtonDisabled(true)
+    const fetchData = async () => {
+      try {
+        const authorization = await getLBPAuthorization()
+        setAuthorization(authorization)
+        if (shareValue.trim() !== '' && assetValue.trim() !== '') {
+          setButtonDisabled(false)
+        } else {
+          setButtonDisabled(true)
+        }
+      } catch (error) {
+        console.error('Error fetching authorization:', error)
+      }
     }
+
+    fetchData()
   }, [shareValue, assetValue])
 
   // const handleShareInputChange = async (event: any) => {
@@ -94,25 +104,19 @@ export default function BuySellFields({
     if (inputValue !== '' && lbpContractInstance) {
       const amount = parseFloat(inputValue)
 
-      console.log(amount, "amount")
-
       try {
         let result
         if (activeTab === 'buy') {
           if (inputType === 'share') {
             result = await buyExactShares(amount)
-            console.log(result, 'buy', 'share',)
           } else {
             result = await buyExactAssetsForShares(amount)
-            console.log(result, 'buy', 'asset',)
           }
         } else {
           if (inputType === 'share') {
             result = await sellExactSharesForAssets(amount)
-            console.log(result, 'sell', 'share',)
           } else {
             result = await sellExactAssets(amount)
-            console.log(result, 'sell', 'asset',)
           }
         }
         oppositeValue(result)
@@ -130,15 +134,14 @@ export default function BuySellFields({
     const recipient = account
     const referrer = constants.AddressZero
 
-    console.log(maxAssetsIn, recipient,referrer, 'buyExactShares')
-    // const authData = actionAuthorizationData
+    const authData = authorization
 
-    const assetAmount = await lbpContractInstance.swapAssetsForExactShares(
+    const assetAmount = await lbpContractInstance?.swapAssetsForExactShares(
       parseUnit(shareAmount, 18), // Convert share amount to smallest denomination
       maxAssetsIn,
       recipient,
       referrer,
-      // authData
+      authData
     )
     return assetAmount.toString()
   }
@@ -148,14 +151,13 @@ export default function BuySellFields({
     const minSharesOut = 0
     const recipient = account
     const referrer = constants.AddressZero
-    // const authData = actionAuthorizationData
-    console.log(minSharesOut, recipient,referrer, 'buyExactAssetsForShares')
+    const authData = authorization
     const shareAmount = await lbpContractInstance.swapExactAssetsForShares(
       parseUnit(assetAmount, tokenOptions?.tokenDecimals || 18), // Convert asset amount to smallest denomination
       minSharesOut,
       recipient,
       referrer,
-      // authData
+      authData
     )
 
     return shareAmount.toString()
@@ -165,13 +167,12 @@ export default function BuySellFields({
     if (!lbpContractInstance) return ''
     const minAssetsOut = 0
     const recipient = account
-    // const authData = actionAuthorizationData
-    console.log(minAssetsOut, recipient, 'sellExactSharesForAssets')
+    const authData = authorization
     const assetAmount = await lbpContractInstance.swapExactSharesForAssets(
       parseUnit(shareAmount, 18),
       minAssetsOut,
       recipient,
-      // authData
+      authData
     )
 
     return assetAmount.toString()
@@ -181,13 +182,12 @@ export default function BuySellFields({
     if (!lbpContractInstance) return ''
     const maxSharesIn = ethers.constants.MaxUint256
     const recipient = account
-    // const authData = actionAuthorizationData
-    console.log(maxSharesIn, recipient, 'sellExactAssets')
+    const authData = authorization
     const shareAmount = await lbpContractInstance.swapSharesForExactAssets(
       parseUnit(assetAmount, tokenOptions?.tokenDecimals || 18),
       maxSharesIn,
       recipient,
-      // authData
+      authData
     )
 
     return shareAmount.toString()
