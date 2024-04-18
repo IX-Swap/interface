@@ -20,7 +20,6 @@ import { LbpFormValues } from '../types'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
 import { BigNumber, ethers } from 'ethers'
 import { useLBPContract } from 'hooks/useContract'
-import LBP_ABI from 'abis/LiquiidtyBoostrapPool.json'
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
   { title: 'SELL', value: PublicDetails.sell },
@@ -72,7 +71,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
   const [isBlurred, setIsBlurred] = useState(false)
   const [tokenBalance, setTokenBalance] = useState('')
   const [tokenDecimals, setTokenDecimals] = useState(0)
-  const { account , provider} = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const [shareBalance, setShareBalance] = useState<string | null>(null)
   const [tokenOptions, setTokenOptions] = useState<any | null>(null)
   const lbp = useLBPContract(lbpData?.contractAddress ?? '')
@@ -87,9 +86,8 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
     try {
       if (lbp && account) {
         const balance = await lbp.purchasedShares(account);
-        
         // Decimals are hardcoded for now. We need to change it to retrieve the token's decimal value using the ERC20.decimals RPC call
-        const parsedBalance = ethers.utils.formatUnits(balance, 9); 
+        const parsedBalance = ethers?.utils?.formatUnits(balance, 18); 
         setShareBalance(parsedBalance);
       } else {
         console.error('LBP contract or account not available');

@@ -7,7 +7,9 @@ import { PinnedContentButton } from 'components/Button'
 import { useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
-import { ethers } from 'ethers'
+import { ethers, constants } from 'ethers'
+import { useLBPContract } from 'hooks/useContract'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -37,23 +39,31 @@ export default function BuySellFields({
   tokenBalance,
   assetTokenAddress,
   contractAddress,
-  tokenDecimals,
   shareBalance,
   tokenOptions,
 }: BuySellFieldsProps) {
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
+  const lbpContractInstance = useLBPContract(contractAddress ?? '')
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const tokenCurrency = useCurrency(assetTokenAddress)
   const [buttonText, setButtonText] = useState('Approve')
+  const { account } = useActiveWeb3React()
   const contractAddressValue = contractAddress !== undefined ? contractAddress : ''
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
-      ? CurrencyAmount.fromRawAmount(tokenCurrency, ethers.utils.parseUnits(assetValue || '0', tokenOptions?.tokenDecimals) as any)
+      ? CurrencyAmount.fromRawAmount(
+          tokenCurrency,
+          ethers.utils.parseUnits(assetValue || '0', tokenOptions?.tokenDecimals) as any
+        )
       : undefined,
     contractAddressValue
   )
   const assetExceedsBalance = parseFloat(assetValue) > parseFloat(tokenBalance)
+
+  const parseUnit = (amount: number, decimals: number): ethers.BigNumber => {
+    return ethers.utils.parseUnits(amount.toString(), decimals)
+  }
 
   useEffect(() => {
     if (shareValue.trim() !== '' && assetValue.trim() !== '') {
@@ -63,16 +73,124 @@ export default function BuySellFields({
     }
   }, [shareValue, assetValue])
 
-  const handleShareInputChange = (event: any) => {
+  // const handleShareInputChange = async (event: any) => {
+  //   const inputValue = event.target.value
+  //   setShareValue(inputValue)
+  //   console.log(lbpContractInstance, 'test')
+  // }
+
+  // const handleAssetInputChange = (event: any) => {
+  //   const inputValue = event.target.value
+  //   setAssetValue(inputValue)
+  // }
+
+  const handleInputChange = async (event: any, inputType: 'share' | 'asset') => {
     const inputValue = event.target.value
-    setShareValue(inputValue)
-    setAssetValue(inputValue !== '' ? (parseFloat(inputValue) / 2).toFixed(2) : '')
+    const setValue = inputType === 'share' ? setShareValue : setAssetValue
+    const oppositeValue = inputType === 'share' ? setAssetValue : setShareValue
+
+    setValue(inputValue)
+
+    if (inputValue !== '' && lbpContractInstance) {
+      const amount = parseFloat(inputValue)
+
+      console.log(amount, "amount")
+
+      try {
+        let result
+        if (activeTab === 'buy') {
+          if (inputType === 'share') {
+            result = await buyExactShares(amount)
+            console.log(result, 'buy', 'share',)
+          } else {
+            result = await buyExactAssetsForShares(amount)
+            console.log(result, 'buy', 'asset',)
+          }
+        } else {
+          if (inputType === 'share') {
+            result = await sellExactSharesForAssets(amount)
+            console.log(result, 'sell', 'share',)
+          } else {
+            result = await sellExactAssets(amount)
+            console.log(result, 'sell', 'asset',)
+          }
+        }
+        oppositeValue(result)
+      } catch (error) {
+        console.error('Error occurred:', error)
+      }
+    } else {
+      oppositeValue('')
+    }
   }
 
-  const handleAssetInputChange = (event: any) => {
-    const inputValue = event.target.value
-    setAssetValue(inputValue)
-    setShareValue(inputValue !== '' ? (parseFloat(inputValue) * 2).toFixed(2) : '')
+  const buyExactShares = async (shareAmount: number): Promise<string> => {
+    if (!lbpContractInstance) return ''
+    const maxAssetsIn = ethers.constants.MaxUint256
+    const recipient = account
+    const referrer = constants.AddressZero
+
+    console.log(maxAssetsIn, recipient,referrer, 'buyExactShares')
+    // const authData = actionAuthorizationData
+
+    const assetAmount = await lbpContractInstance.swapAssetsForExactShares(
+      parseUnit(shareAmount, 18), // Convert share amount to smallest denomination
+      maxAssetsIn,
+      recipient,
+      referrer,
+      // authData
+    )
+    return assetAmount.toString()
+  }
+
+  const buyExactAssetsForShares = async (assetAmount: number): Promise<string> => {
+    if (!lbpContractInstance) return ''
+    const minSharesOut = 0
+    const recipient = account
+    const referrer = constants.AddressZero
+    // const authData = actionAuthorizationData
+    console.log(minSharesOut, recipient,referrer, 'buyExactAssetsForShares')
+    const shareAmount = await lbpContractInstance.swapExactAssetsForShares(
+      parseUnit(assetAmount, tokenOptions?.tokenDecimals || 18), // Convert asset amount to smallest denomination
+      minSharesOut,
+      recipient,
+      referrer,
+      // authData
+    )
+
+    return shareAmount.toString()
+  }
+
+  const sellExactSharesForAssets = async (shareAmount: number): Promise<string> => {
+    if (!lbpContractInstance) return ''
+    const minAssetsOut = 0
+    const recipient = account
+    // const authData = actionAuthorizationData
+    console.log(minAssetsOut, recipient, 'sellExactSharesForAssets')
+    const assetAmount = await lbpContractInstance.swapExactSharesForAssets(
+      parseUnit(shareAmount, 18),
+      minAssetsOut,
+      recipient,
+      // authData
+    )
+
+    return assetAmount.toString()
+  }
+
+  const sellExactAssets = async (assetAmount: number): Promise<string> => {
+    if (!lbpContractInstance) return ''
+    const maxSharesIn = ethers.constants.MaxUint256
+    const recipient = account
+    // const authData = actionAuthorizationData
+    console.log(maxSharesIn, recipient, 'sellExactAssets')
+    const shareAmount = await lbpContractInstance.swapSharesForExactAssets(
+      parseUnit(assetAmount, tokenOptions?.tokenDecimals || 18),
+      maxSharesIn,
+      recipient,
+      // authData
+    )
+
+    return shareAmount.toString()
   }
 
   const handleButtonClick = async () => {
@@ -97,7 +215,6 @@ export default function BuySellFields({
     }
   }
 
-
   return (
     <>
       {/* Share section */}
@@ -111,7 +228,7 @@ export default function BuySellFields({
             placeholder="0.00"
             name="ShareInput"
             value={shareValue}
-            onChange={handleShareInputChange}
+            onChange={(event) => handleInputChange(event, 'share')}
           />
         </BuySellFieldsItem>
         <BuySellFieldsItem>
@@ -136,14 +253,14 @@ export default function BuySellFields({
             placeholder="0.00"
             name="assetInput"
             value={assetValue}
-            onChange={handleAssetInputChange}
+            onChange={(event) => handleInputChange(event, 'asset')}
             assetExceedsBalance={assetExceedsBalance}
           />
           {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
         </BuySellFieldsItem>
         <BuySellFieldsItem>
           <BuySellFieldsSelect>
-            <img src={tokenOptions?.logo}/>
+            <img src={tokenOptions?.logo} />
             {/* <USDC /> */}
             <TYPE.body4 fontSize={'14px'}> {tokenOptions?.tokenSymbol}</TYPE.body4>
           </BuySellFieldsSelect>
