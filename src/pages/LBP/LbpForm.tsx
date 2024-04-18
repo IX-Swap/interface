@@ -66,6 +66,7 @@ export default function LBPForm() {
     },
   })
   const [canSubmit, setCanSubmit] = useState(false)
+  const [showSummary, setShowSummary] = useState(false)
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
@@ -140,6 +141,7 @@ export default function LBPForm() {
 
   const handleSubmit = async () => {
     await saveLbp(LBP_ACTION_TYPES.submit)
+    setShowSummary(true)
   }
 
   const handleSaveDraft = async () => {
