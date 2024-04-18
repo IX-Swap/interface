@@ -8,33 +8,52 @@ import { useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers } from 'ethers'
-import { IXSALE_ADDRESS } from 'constants/addresses'
-import { useActiveWeb3React } from 'hooks/web3'
 
 interface BuySellFieldsProps {
   activeTab: string
   slippage: string
   tokenBalance: string
   assetTokenAddress: string
+  contractAddress?: string
+  tokenDecimals?: number
+  shareBalance?: any
+  tokenOptions?: TokenOption
+}
+interface TokenOption {
+  value: string
+  tokenAddress: string
+  tokenDecimals: number
+  tokenSymbol: string
+  logo: string
 }
 
 interface BuySellFieldsInputProps {
-  assetExceedsBalance?: boolean;
+  assetExceedsBalance?: boolean
 }
 
-export default function BuySellFields({ activeTab, slippage, tokenBalance, assetTokenAddress }: BuySellFieldsProps) {
+export default function BuySellFields({
+  activeTab,
+  slippage,
+  tokenBalance,
+  assetTokenAddress,
+  contractAddress,
+  tokenDecimals,
+  shareBalance,
+  tokenOptions,
+}: BuySellFieldsProps) {
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const tokenCurrency = useCurrency(assetTokenAddress)
-  const { chainId = 137 } = useActiveWeb3React()
+  const [buttonText, setButtonText] = useState('Approve')
+  const contractAddressValue = contractAddress !== undefined ? contractAddress : ''
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
-      ? CurrencyAmount.fromRawAmount(tokenCurrency, ethers.utils.parseUnits(assetValue || '0', 8) as any)
+      ? CurrencyAmount.fromRawAmount(tokenCurrency, ethers.utils.parseUnits(assetValue || '0', tokenOptions?.tokenDecimals) as any)
       : undefined,
-      assetTokenAddress || IXSALE_ADDRESS[chainId]
+    contractAddressValue
   )
-  const assetExceedsBalance = parseFloat(assetValue) > parseFloat(tokenBalance);
+  const assetExceedsBalance = parseFloat(assetValue) > parseFloat(tokenBalance)
 
   useEffect(() => {
     if (shareValue.trim() !== '' && assetValue.trim() !== '') {
@@ -57,34 +76,42 @@ export default function BuySellFields({ activeTab, slippage, tokenBalance, asset
   }
 
   const handleButtonClick = async () => {
+    console.log(approval)
     if (approval === 'APPROVED') {
       console.log('Buying...')
+      setButtonText('Buy')
+      setButtonDisabled(false)
     } else {
+      setButtonDisabled(true)
+      setButtonText('Approving..')
       try {
         await approveCallback()
         console.log('Approval successful')
+        setButtonText('Buy')
+        setButtonDisabled(false)
       } catch (error) {
         console.error('Approval failed', error)
+        setButtonDisabled(false)
+        setButtonText('Approve')
       }
     }
   }
 
+
   return (
     <>
       {/* Share section */}
-      <BuySellFieldsContainer >
+      <BuySellFieldsContainer>
         <BuySellFieldsItem>
           <BuySellFieldsWrapper>
             <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
           </BuySellFieldsWrapper>
           <BuySellFieldsInput
-          
             type="text"
             placeholder="0.00"
             name="ShareInput"
             value={shareValue}
             onChange={handleShareInputChange}
-      
           />
         </BuySellFieldsItem>
         <BuySellFieldsItem>
@@ -93,7 +120,7 @@ export default function BuySellFields({ activeTab, slippage, tokenBalance, asset
             <TYPE.body4 fontSize={'14px'}> Serenity</TYPE.body4>
           </BuySellFieldsSelect>
           <BuySellFieldsSpanBal>
-            Balance: <b style={{ color: '#292933' }}>4,000.00</b>
+            Balance: <b style={{ color: '#292933' }}>{shareBalance}</b>
           </BuySellFieldsSpanBal>
         </BuySellFieldsItem>
       </BuySellFieldsContainer>
@@ -110,20 +137,18 @@ export default function BuySellFields({ activeTab, slippage, tokenBalance, asset
             name="assetInput"
             value={assetValue}
             onChange={handleAssetInputChange}
-            assetExceedsBalance={assetExceedsBalance} 
-        
+            assetExceedsBalance={assetExceedsBalance}
           />
-             {assetExceedsBalance && (
-            <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>
-          )}
+          {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
         </BuySellFieldsItem>
         <BuySellFieldsItem>
           <BuySellFieldsSelect>
-            <USDC />
-            <TYPE.body4 fontSize={'14px'}> USDC</TYPE.body4>
+            <img src={tokenOptions?.logo}/>
+            {/* <USDC /> */}
+            <TYPE.body4 fontSize={'14px'}> {tokenOptions?.tokenSymbol}</TYPE.body4>
           </BuySellFieldsSelect>
           <BuySellFieldsSpanBal>
-            Balance: <b style={{ color: '#292933' }}>{tokenBalance ? tokenBalance: 'Loding..'} </b>
+            Balance: <b style={{ color: '#292933' }}>{tokenBalance ? tokenBalance : 'Loding..'} </b>
           </BuySellFieldsSpanBal>
         </BuySellFieldsItem>
       </BuySellFieldsContainer>
@@ -146,7 +171,7 @@ export default function BuySellFields({ activeTab, slippage, tokenBalance, asset
       <TabRow style={{ marginTop: '20px' }}>
         {activeTab === 'buy' ? (
           <PinnedContentButton onClick={handleButtonClick} disabled={buttonDisabled || assetExceedsBalance}>
-            {approval === 'APPROVED' ? 'Buy' : 'Approve'}
+            {approval === 'APPROVED' ? 'Buy' : buttonText}
           </PinnedContentButton>
         ) : (
           <PinnedContentButton style={{ backgroundColor: buttonDisabled ? '' : '#FF6161' }} disabled={buttonDisabled}>
@@ -171,13 +196,11 @@ const BuySellFieldsContainer = styled.div<BuySellFieldsInputProps>`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border: 1px solid ${({ assetExceedsBalance }) => (assetExceedsBalance ? '#FF6161' : '#e6e6ff')}; 
+  border: 1px solid ${({ assetExceedsBalance }) => (assetExceedsBalance ? '#FF6161' : '#e6e6ff')};
   background: #f7f7fa;
   padding: 12px 18px 0px 18px;
   margin-bottom: 20px;
-`;
-
-
+`
 
 const BuySellFieldsItem = styled.div`
   margin-bottom: 8px;
@@ -237,8 +260,7 @@ const BuySellFieldsInput = styled.input<BuySellFieldsInputProps>`
     outline: none;
     border-color: transparent;
   }
-`;
-
+`
 
 const TabRow = styled.div`
   display: flex;
