@@ -104,7 +104,7 @@ export default function BuySellFields({
       <BuySellFieldsContainer>
         <BuySellFieldsItem>
           <BuySellFieldsWrapper>
-            <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
+            <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Project Token</BuySellFieldsSpan>
           </BuySellFieldsWrapper>
           <BuySellFieldsInput
             type="text"
@@ -113,6 +113,7 @@ export default function BuySellFields({
             value={shareValue}
             onChange={handleShareInputChange}
           />
+            {/* <TYPE.description3 color={'#FF6161'}>Max amount to invest 1,000</TYPE.description3> should be render if enter amount is greater than max amount */}
         </BuySellFieldsItem>
         <BuySellFieldsItem>
           <BuySellFieldsSelect>
@@ -129,7 +130,7 @@ export default function BuySellFields({
       <BuySellFieldsContainer assetExceedsBalance={assetExceedsBalance}>
         <BuySellFieldsItem>
           <BuySellFieldsWrapper>
-            <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Asset</BuySellFieldsSpan>
+            <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Base Token</BuySellFieldsSpan>
           </BuySellFieldsWrapper>
           <BuySellFieldsInput
             type="text"
@@ -181,7 +182,7 @@ export default function BuySellFields({
       </TabRow>
       {/* hide for now
       <TabRow style={{padding: '10px 40px', textAlign: 'center'}}><TYPE.title10 color={'#FF6161'}>Price change exceeds slippage tolerance. Adjust and retry.</TYPE.title10> </TabRow> */}
-
+      {/* <TabRow style={{padding: '10px 40px', textAlign: 'center'}}><TYPE.title10 color={'#FF6161'}>No tokens are available for purchase at the moment. Please stay tuned for potential future availability.</TYPE.title10> </TabRow>  */}
       <AddWalletText>Add Asset to Wallet</AddWalletText>
     </>
   )
