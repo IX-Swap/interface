@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
-import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
 import { TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
 import { useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers } from 'ethers'
+import BuySellModal from './Modals/BuySellModal'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -46,13 +46,18 @@ export default function BuySellFields({
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const tokenCurrency = useCurrency(assetTokenAddress)
   const [buttonText, setButtonText] = useState('Approve')
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const contractAddressValue = contractAddress !== undefined ? contractAddress : ''
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
-      ? CurrencyAmount.fromRawAmount(tokenCurrency, ethers.utils.parseUnits(assetValue || '0', tokenOptions?.tokenDecimals) as any)
+      ? CurrencyAmount.fromRawAmount(
+          tokenCurrency,
+          ethers.utils.parseUnits(assetValue || '0', tokenOptions?.tokenDecimals) as any
+        )
       : undefined,
     contractAddressValue
   )
+  const [amount, setAmount] = useState('') // Define amount state variable
   const assetExceedsBalance = parseFloat(assetValue) > parseFloat(tokenBalance)
 
   useEffect(() => {
@@ -79,6 +84,7 @@ export default function BuySellFields({
     console.log(approval)
     if (approval === 'APPROVED') {
       console.log('Buying...')
+      handleOpenModal('buy')
       setButtonText('Buy')
       setButtonDisabled(false)
     } else {
@@ -97,9 +103,23 @@ export default function BuySellFields({
     }
   }
 
+  const handleOpenModal = (action: any) => {
+    setIsModalOpen(true)
+  }
+
+  const handleModalClose = () => {
+    setIsModalOpen(false)
+  }
 
   return (
     <>
+      <BuySellModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        shareValue={shareValue}
+        buyBtnText={activeTab}
+        assetValue={assetValue}
+      />
       {/* Share section */}
       <BuySellFieldsContainer>
         <BuySellFieldsItem>
@@ -113,7 +133,6 @@ export default function BuySellFields({
             value={shareValue}
             onChange={handleShareInputChange}
           />
-            {/* <TYPE.description3 color={'#FF6161'}>Max amount to invest 1,000</TYPE.description3> should be render if enter amount is greater than max amount */}
         </BuySellFieldsItem>
         <BuySellFieldsItem>
           <BuySellFieldsSelect>
@@ -144,8 +163,7 @@ export default function BuySellFields({
         </BuySellFieldsItem>
         <BuySellFieldsItem>
           <BuySellFieldsSelect>
-            <img src={tokenOptions?.logo}/>
-            {/* <USDC /> */}
+            <img src={tokenOptions?.logo} />
             <TYPE.body4 fontSize={'14px'}> {tokenOptions?.tokenSymbol}</TYPE.body4>
           </BuySellFieldsSelect>
           <BuySellFieldsSpanBal>
@@ -175,14 +193,15 @@ export default function BuySellFields({
             {approval === 'APPROVED' ? 'Buy' : buttonText}
           </PinnedContentButton>
         ) : (
-          <PinnedContentButton style={{ backgroundColor: buttonDisabled ? '' : '#FF6161' }} disabled={buttonDisabled}>
+          <PinnedContentButton
+            onClick={() => handleOpenModal('sell')}
+            style={{ backgroundColor: buttonDisabled ? '' : '#FF6161' }}
+            disabled={buttonDisabled}
+          >
             Sell
           </PinnedContentButton>
         )}
       </TabRow>
-      {/* hide for now
-      <TabRow style={{padding: '10px 40px', textAlign: 'center'}}><TYPE.title10 color={'#FF6161'}>Price change exceeds slippage tolerance. Adjust and retry.</TYPE.title10> </TabRow> */}
-      {/* <TabRow style={{padding: '10px 40px', textAlign: 'center'}}><TYPE.title10 color={'#FF6161'}>No tokens are available for purchase at the moment. Please stay tuned for potential future availability.</TYPE.title10> </TabRow>  */}
       <AddWalletText>Add Asset to Wallet</AddWalletText>
     </>
   )
