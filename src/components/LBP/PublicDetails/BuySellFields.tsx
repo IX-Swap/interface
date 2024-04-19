@@ -10,6 +10,8 @@ import { ethers, constants } from 'ethers'
 import { useLBPContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useGetLBPAuthorization } from 'state/lbp/hooks'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { Centered } from 'components/LaunchpadMisc/styled'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -41,7 +43,7 @@ export default function BuySellFields({
   contractAddress,
   shareBalance,
   tokenOptions,
-  id
+  id,
 }: BuySellFieldsProps) {
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
@@ -52,6 +54,7 @@ export default function BuySellFields({
   const { account } = useActiveWeb3React()
   const contractAddressValue = contractAddress !== undefined ? contractAddress : ''
   const getLBPAuthorization = useGetLBPAuthorization()
+  const [isLoading, setIsLoading] = useState(true)
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
@@ -70,34 +73,22 @@ export default function BuySellFields({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (id) {
-          const authorization = await getLBPAuthorization(id)
-          setAuthorization(authorization)
-          if (shareValue.trim() !== '' && assetValue.trim() !== '') {
-            setButtonDisabled(false)
-          } else {
-            setButtonDisabled(true)
-          }
+        if (!id) return
+        const authorization = await getLBPAuthorization(id)
+        setAuthorization(authorization)
+        const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
+        setButtonDisabled(isButtonDisabled)
+        if (tokenBalance) {
+          setIsLoading(false)
         }
       } catch (error) {
+        setIsLoading(false)
         console.error('Error fetching authorization:', error)
       }
     }
-  
+
     fetchData()
-  }, [shareValue, assetValue, id])
-  
-
-  // const handleShareInputChange = async (event: any) => {
-  //   const inputValue = event.target.value
-  //   setShareValue(inputValue)
-  //   console.log(lbpContractInstance, 'test')
-  // }
-
-  // const handleAssetInputChange = (event: any) => {
-  //   const inputValue = event.target.value
-  //   setAssetValue(inputValue)
-  // }
+  }, [shareValue, assetValue, id, tokenBalance])
 
   const handleInputChange = async (event: any, inputType: 'share' | 'asset') => {
     const inputValue = event.target.value
@@ -219,93 +210,99 @@ export default function BuySellFields({
       }
     }
   }
-  
 
   return (
     <>
-      {/* Share section */}
-      <BuySellFieldsContainer>
-        <BuySellFieldsItem>
-          <BuySellFieldsWrapper>
-            <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
-          </BuySellFieldsWrapper>
-          <BuySellFieldsInput
-            type="text"
-            placeholder="0.00"
-            name="ShareInput"
-            value={shareValue}
-            onChange={(event) => handleInputChange(event, 'share')}
-          />
-        </BuySellFieldsItem>
-        <BuySellFieldsItem>
-          <BuySellFieldsSelect>
-            <Serenity />
-            <TYPE.body4 fontSize={'14px'}> Serenity</TYPE.body4>
-          </BuySellFieldsSelect>
-          <BuySellFieldsSpanBal>
-            Balance: <b style={{ color: '#292933' }}>{shareBalance}</b>
-          </BuySellFieldsSpanBal>
-        </BuySellFieldsItem>
-      </BuySellFieldsContainer>
-
-      {/* Asset section */}
-      <BuySellFieldsContainer assetExceedsBalance={assetExceedsBalance}>
-        <BuySellFieldsItem>
-          <BuySellFieldsWrapper>
-            <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Asset</BuySellFieldsSpan>
-          </BuySellFieldsWrapper>
-          <BuySellFieldsInput
-            type="text"
-            placeholder="0.00"
-            name="assetInput"
-            value={assetValue}
-            onChange={(event) => handleInputChange(event, 'asset')}
-            assetExceedsBalance={assetExceedsBalance}
-          />
-          {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
-        </BuySellFieldsItem>
-        <BuySellFieldsItem>
-          <BuySellFieldsSelect>
-            <img src={tokenOptions?.logo} />
-            {/* <USDC /> */}
-            <TYPE.body4 fontSize={'14px'}> {tokenOptions?.tokenSymbol}</TYPE.body4>
-          </BuySellFieldsSelect>
-          <BuySellFieldsSpanBal>
-            Balance: <b style={{ color: '#292933' }}>{tokenBalance ? tokenBalance : 'Loding..'} </b>
-          </BuySellFieldsSpanBal>
-        </BuySellFieldsItem>
-      </BuySellFieldsContainer>
-
-      <TabRow>
-        <SlippageWrapper>
-          <TYPE.body3>Fees: </TYPE.body3>
-          <TYPE.body3 color={'#292933'} fontWeight={'700'}>
-            0.5%
-          </TYPE.body3>
-        </SlippageWrapper>
-        <SlippageWrapper>
-          <TYPE.body3>Price Impact: </TYPE.body3>
-          <TYPE.body3 color={'#292933'} fontWeight={'700'}>
-            0.5%
-          </TYPE.body3>
-        </SlippageWrapper>
-      </TabRow>
-
-      <TabRow style={{ marginTop: '20px' }}>
-        {activeTab === 'buy' ? (
-          <PinnedContentButton onClick={handleButtonClick} disabled={buttonDisabled || assetExceedsBalance}>
-            {approval === 'APPROVED' ? 'Buy' : buttonText}
-          </PinnedContentButton>
-        ) : (
-          <PinnedContentButton style={{ backgroundColor: buttonDisabled ? '' : '#FF6161' }} disabled={buttonDisabled}>
-            Sell
-          </PinnedContentButton>
-        )}
-      </TabRow>
-      {/* hide for now
+      {isLoading ? (
+        <Centered>
+          <Loader />
+        </Centered>
+      ) : (
+        <>
+          {/* Share section */}
+          <BuySellFieldsContainer>
+            <BuySellFieldsItem>
+              <BuySellFieldsWrapper>
+                <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
+              </BuySellFieldsWrapper>
+              <BuySellFieldsInput
+                type="text"
+                placeholder="0.00"
+                name="ShareInput"
+                value={shareValue}
+                onChange={(event) => handleInputChange(event, 'share')}
+              />
+            </BuySellFieldsItem>
+            <BuySellFieldsItem>
+              <BuySellFieldsSelect>
+                <Serenity />
+                <TYPE.body4 fontSize={'14px'}> Serenity</TYPE.body4>
+              </BuySellFieldsSelect>
+              <BuySellFieldsSpanBal>
+                Balance: <b style={{ color: '#292933' }}>{shareBalance}</b>
+              </BuySellFieldsSpanBal>
+            </BuySellFieldsItem>
+          </BuySellFieldsContainer>
+          {/* Asset section */}
+          <BuySellFieldsContainer assetExceedsBalance={assetExceedsBalance}>
+            <BuySellFieldsItem>
+              <BuySellFieldsWrapper>
+                <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Asset</BuySellFieldsSpan>
+              </BuySellFieldsWrapper>
+              <BuySellFieldsInput
+                type="text"
+                placeholder="0.00"
+                name="assetInput"
+                value={assetValue}
+                onChange={(event) => handleInputChange(event, 'asset')}
+                assetExceedsBalance={assetExceedsBalance}
+              />
+              {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
+            </BuySellFieldsItem>
+            <BuySellFieldsItem>
+              <BuySellFieldsSelect>
+                <img src={tokenOptions?.logo} />
+                {/* <USDC /> */}
+                <TYPE.body4 fontSize={'14px'}> {tokenOptions?.tokenSymbol}</TYPE.body4>
+              </BuySellFieldsSelect>
+              <BuySellFieldsSpanBal>
+                Balance: <b style={{ color: '#292933' }}>{tokenBalance} </b>
+              </BuySellFieldsSpanBal>
+            </BuySellFieldsItem>
+          </BuySellFieldsContainer>
+          <TabRow>
+            <SlippageWrapper>
+              <TYPE.body3>Fees: </TYPE.body3>
+              <TYPE.body3 color={'#292933'} fontWeight={'700'}>
+                0.5%
+              </TYPE.body3>
+            </SlippageWrapper>
+            <SlippageWrapper>
+              <TYPE.body3>Price Impact: </TYPE.body3>
+              <TYPE.body3 color={'#292933'} fontWeight={'700'}>
+                0.5%
+              </TYPE.body3>
+            </SlippageWrapper>
+          </TabRow>
+          <TabRow style={{ marginTop: '20px' }}>
+            {activeTab === 'buy' ? (
+              <PinnedContentButton onClick={handleButtonClick} disabled={buttonDisabled || assetExceedsBalance}>
+                {approval === 'APPROVED' ? 'Buy' : buttonText}
+              </PinnedContentButton>
+            ) : (
+              <PinnedContentButton
+                style={{ backgroundColor: buttonDisabled ? '' : '#FF6161' }}
+                disabled={buttonDisabled}
+              >
+                Sell
+              </PinnedContentButton>
+            )}
+          </TabRow>
+          {/* hide for now
       <TabRow style={{padding: '10px 40px', textAlign: 'center'}}><TYPE.title10 color={'#FF6161'}>Price change exceeds slippage tolerance. Adjust and retry.</TYPE.title10> </TabRow> */}
-
-      <AddWalletText>Add Asset to Wallet</AddWalletText>
+          <AddWalletText>Add Asset to Wallet</AddWalletText>
+        </>
+      )}
     </>
   )
 }
