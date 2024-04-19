@@ -20,6 +20,7 @@ interface BuySellFieldsProps {
   tokenDecimals?: number
   shareBalance?: any
   tokenOptions?: TokenOption
+  id: any
 }
 interface TokenOption {
   value: string
@@ -40,6 +41,7 @@ export default function BuySellFields({
   contractAddress,
   shareBalance,
   tokenOptions,
+  id
 }: BuySellFieldsProps) {
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
@@ -68,20 +70,23 @@ export default function BuySellFields({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const authorization = await getLBPAuthorization()
-        setAuthorization(authorization)
-        if (shareValue.trim() !== '' && assetValue.trim() !== '') {
-          setButtonDisabled(false)
-        } else {
-          setButtonDisabled(true)
+        if (id) {
+          const authorization = await getLBPAuthorization(id)
+          setAuthorization(authorization)
+          if (shareValue.trim() !== '' && assetValue.trim() !== '') {
+            setButtonDisabled(false)
+          } else {
+            setButtonDisabled(true)
+          }
         }
       } catch (error) {
         console.error('Error fetching authorization:', error)
       }
     }
-
+  
     fetchData()
-  }, [shareValue, assetValue])
+  }, [shareValue, assetValue, id])
+  
 
   // const handleShareInputChange = async (event: any) => {
   //   const inputValue = event.target.value
@@ -214,6 +219,7 @@ export default function BuySellFields({
       }
     }
   }
+  
 
   return (
     <>

@@ -203,6 +203,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
             slippage={slippage}
             shareBalance={shareBalance}
             tokenOptions={tokenOptions}
+            id={lbpData?.id}
           />
         </Body>
       </Container>
