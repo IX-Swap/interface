@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { AutoColumn, ColumnCenter } from 'components/Column'
-import { ReactComponent as ComingSoonIcon } from '../../../assets/images/NoToken.svg'
+import { ReactComponent as ComingSoonIcon } from '../../../assets/images/noTokensAvaliable.svg'
 import { TYPE } from 'theme'
 
 export default function NoTokenSidebar() {
   return (
     <SideBarContainer>
       <MiddleSection>
-        <ComingSoonIcon />
+        <ComingSoonIcon  />
         <TYPE.body5 margin={'12px 0px'} color={'#292933'}>
           No tokens are <br />
           available for purchase
@@ -39,12 +39,9 @@ const DesContainer = styled.div`
 `
 
 const SideBarContainer = styled.div`
-//   border: 1px solid #e6e6ff;
   border-radius: 8px;
   height: auto;
-  padding: 20px;
   width: 400px;
-  margin-bottom: 20px;
   @media (max-width: 768px) {
     width: 100%;
   }
