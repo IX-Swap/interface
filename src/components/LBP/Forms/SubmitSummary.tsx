@@ -1,110 +1,232 @@
 import { PinnedContentButton, ButtonOutlined } from 'components/Button'
 import styled from 'styled-components'
+import usdcDropDown from '../../../assets/images/usdcNew.svg'
+import ixsDropDown from '../../../assets/images/ixsToken.svg'
+import usdtropDown from '../../../assets/images/usdtNewToken.svg'
+import { FormData } from 'pages/LBP/LbpForm'
+import dayjs from 'dayjs'
+import { useWeb3React } from '@web3-react/core'
+import { TokenOptions } from 'pages/LBP/components/Tokenomics'
+import { useMemo } from 'react'
+import { useHistory } from 'react-router-dom'
 
-export const SubmitSummary = () => {
+interface Props {
+  formData: FormData
+  onCancel: () => void
+}
+
+export const SubmitSummary = ({ formData, onCancel }: Props) => {
+  const { chainId } = useWeb3React()
+  const history = useHistory()
+
+  const tokenOptions = useMemo(() => {
+    // exclude tokens that has tokenAddress of undefined
+    return TokenOptions(chainId || 0).filter((option) => option.tokenAddress)
+  }, [chainId])
+
+  const assetToken = tokenOptions.find((option) => option.tokenAddress === formData.tokenomics.assetTokenAddress)
+
+  const handleCancel = () => {
+    onCancel()
+  }
+
+  const handleDeploy = () => {
+    console.log('Please implement handleDeploy function')
+  }
+
   return (
     <SummaryContainer>
       <SummaryTitle>Quick Summary</SummaryTitle>
       <AddressField>
         <FieldLabel>Pool Address</FieldLabel>
-        <FieldValue>0x1a5b3F4589d82aB367B680b7e3Be3b72E5B4246f</FieldValue>
+        <FieldValue>{formData.tokenomics.assetTokenAddress}</FieldValue>
       </AddressField>
-      <Row>
-        <TextBlock>
-          <FieldLabel>Swap Fee</FieldLabel>
-          <FieldValue>1.00%</FieldValue>
-        </TextBlock>
-        <TextBlock>
-          <FieldLabel>Platform Fee</FieldLabel>
-          <FieldValue>5.00%</FieldValue>
-        </TextBlock>
-      </Row>
-      <Row>
-        <TextBlock>
-          <FieldLabel>Start Date</FieldLabel>
-          <FieldValue>05/05/2024 09:30AM</FieldValue>
-        </TextBlock>
-        <TextBlock>
-          <FieldLabel>End Date</FieldLabel>
-          <FieldValue>06/05/2024 09:30AM </FieldValue>
-        </TextBlock>
-      </Row>
-      <SectionTitle>Quantities</SectionTitle>
-      <Row>
-        <FieldBlock>
-          <FieldLabel>Project Token</FieldLabel>
-          <TokenBlock>
-            <TokenRow>
-              <img />
-              <span>Serenity</span>
-            </TokenRow>
-            <TokenPrice>500,000.00</TokenPrice>
-          </TokenBlock>
-        </FieldBlock>
-        <FieldBlock>
-          <FieldLabel>Base Token</FieldLabel>
-          <TokenBlock>
-            <TokenRow>
-              <img />
-              <span>USDC</span>
-            </TokenRow>
-            <TokenPrice>20,000.00</TokenPrice>
-          </TokenBlock>
-        </FieldBlock>
-      </Row>
-      <SectionTitle>Weights</SectionTitle>
-      <Row>
-        <FieldBlock>
-          <FieldLabel>Start Weights</FieldLabel>
-          <TokenBlock>
-            <TokenRow>
-              <img />
-              <span>Serenity</span>
-            </TokenRow>
-            <TokenPrice>56%</TokenPrice>
-          </TokenBlock>
-        </FieldBlock>
-        <FieldBlock>
-          <FieldLabel></FieldLabel>
-          <TokenBlock>
-            <TokenRow>
-              <img />
-              <span>USDC</span>
-            </TokenRow>
-            <TokenPrice>44%</TokenPrice>
-          </TokenBlock>
-        </FieldBlock>
-      </Row>
-      <Row>
-        <TextBlock>
-          <FieldLabel>Start Price</FieldLabel>
-          <FieldValue>$3.00</FieldValue>
-        </TextBlock>
-        <TextBlock>
-          <FieldLabel>Start Market Cap</FieldLabel>
-          <FieldValue>$100,000.00 </FieldValue>
-        </TextBlock>
-      </Row>
-      <ButtonOutlined style={{ width: '100%' }}>Cancel</ButtonOutlined>
-      <PinnedContentButton type="submit" data-testid="deployButton" style={{ width: '100%' }} marginY="24px">
-        Deploy
-      </PinnedContentButton>
+      <Section>
+        <Row>
+          <TextBlock>
+            <FieldLabel>Swap Fee</FieldLabel>
+            <FieldValue>1.00%</FieldValue>
+          </TextBlock>
+          <TextBlock>
+            <FieldLabel>Platform Fee</FieldLabel>
+            <FieldValue>5.00%</FieldValue>
+          </TextBlock>
+        </Row>
+      </Section>
+      <Section>
+        <Row>
+          <TextBlock>
+            <FieldLabel>Start Date</FieldLabel>
+            <FieldValue>{dayjs(formData.tokenomics.startDate).local().format('YYYY-MM-DD HH:mm:ss')}</FieldValue>
+          </TextBlock>
+          <TextBlock>
+            <FieldLabel>End Date</FieldLabel>
+            <FieldValue>{dayjs(formData.tokenomics.endDate).local().format('YYYY-MM-DD HH:mm:ss')}</FieldValue>
+          </TextBlock>
+        </Row>
+      </Section>
+      <Section>
+        <SectionTitle>Quantities</SectionTitle>
+        <Row>
+          <FieldBlock>
+            <FieldLabel>Project Token</FieldLabel>
+            <TokenBlock>
+              <TokenRow>
+                <img src={ixsDropDown} alt="Serenity" />
+                <span>Serenity</span>
+              </TokenRow>
+              <TokenPrice>500,000.00</TokenPrice>
+            </TokenBlock>
+          </FieldBlock>
+          <FieldBlock>
+            <FieldLabel>Base Token</FieldLabel>
+            <TokenBlock>
+              <TokenRow>
+                <img src={assetToken?.logo} alt={assetToken?.tokenSymbol} />
+                <span>{assetToken?.tokenSymbol}</span>
+              </TokenRow>
+              <TokenPrice>{formData.tokenomics.assetInput}</TokenPrice>
+            </TokenBlock>
+          </FieldBlock>
+        </Row>
+      </Section>
+      <Section>
+        <SectionTitle>Weights</SectionTitle>
+        <Row>
+          <FieldBlock>
+            <FieldLabel>Start Weights</FieldLabel>
+            <TokenBlock>
+              <TokenRow>
+                <img src={ixsDropDown} alt="Serenity" />
+                <span>Serenity</span>
+              </TokenRow>
+              <TokenPrice>{formData.tokenomics.startWeight}%</TokenPrice>
+            </TokenBlock>
+          </FieldBlock>
+          <FieldBlock>
+            <FieldLabel></FieldLabel>
+            <TokenBlock>
+              <TokenRow>
+                <img src={assetToken?.logo} alt={assetToken?.tokenSymbol} />
+                <span>{assetToken?.tokenSymbol}</span>
+              </TokenRow>
+              <TokenPrice>{formData.tokenomics.endWeight}%</TokenPrice>
+            </TokenBlock>
+          </FieldBlock>
+        </Row>
+      </Section>
+      <Section>
+        <Row>
+          <TextBlock>
+            <FieldLabel>Start Price</FieldLabel>
+            <FieldValue>{formData.tokenomics.minPrice}</FieldValue>
+          </TextBlock>
+          <TextBlock>
+            <FieldLabel>Start Market Cap</FieldLabel>
+            <FieldValue>{formData.tokenomics.maxSupply}</FieldValue>
+          </TextBlock>
+        </Row>
+      </Section>
+      <ButtonBar>
+        <ButtonOutlined style={{ width: '100%' }} onClick={handleCancel}>
+          Cancel
+        </ButtonOutlined>
+        <PinnedContentButton
+          type="submit"
+          data-testid="deployButton"
+          style={{ width: '100%' }}
+          marginY="24px"
+          onClick={handleDeploy}
+        >
+          Deploy
+        </PinnedContentButton>
+      </ButtonBar>
     </SummaryContainer>
   )
 }
 
 const SummaryContainer = styled.div`
+  margin-left: 10px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 14px;
 `
 
-const SummaryTitle = styled.h1``
-const SectionTitle = styled.h2``
-const AddressField = styled.div``
-const Row = styled.div``
-const TextBlock = styled.div``
-const FieldBlock = styled.div``
-const TokenBlock = styled.div``
-const FieldLabel = styled.span``
-const FieldValue = styled.p``
-const TokenRow = styled.div``
-const TokenPrice = styled.div``
+const SummaryTitle = styled.h2``
+const Section = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(102, 102, 255, 0.1);
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+  padding-top: 20px;
+`
+const SectionTitle = styled.h3`
+  align-self: start;
+  margin: 0px;
+  margin-bottom: 15px;
+`
+const AddressField = styled.div`
+  width: 479px;
+  border: 1px solid rgba(230, 230, 255, 1);
+  background-color: rgba(247, 247, 250, 1);
+  padding: 16px;
+  border-radius: 8px;
+`
+const Row = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+`
+const TextBlock = styled.div`
+  width: 50%;
+`
+const FieldBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  justify-content: end;
+`
+const TokenBlock = styled.div`
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  border: 1px solid rgba(230, 230, 255, 1);
+  border-radius: 8px;
+  padding: 15px;
+  gap: 10px;
+`
+const FieldLabel = styled.span`
+  color: rgba(85, 85, 102, 1);
+`
+const FieldValue = styled.p`
+  color: rgba(41, 41, 51, 1);
+`
+const TokenRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  > span {
+    color: rgba(41, 41, 51, 1);
+    font-weight: 600;
+  }
+`
+const TokenPrice = styled.div`
+  color: rgba(41, 41, 51, 1);
+  font-weight: 700;
+  font-size: 20px;
+`
+const ButtonBar = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+`
