@@ -75,7 +75,7 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
                 <img src={ixsDropDown} alt="Serenity" />
                 <span>Serenity</span>
               </TokenRow>
-              <TokenPrice>500,000.00</TokenPrice>
+              <TokenPrice>{formData.tokenomics.shareInput}</TokenPrice>
             </TokenBlock>
           </FieldBlock>
           <FieldBlock>
