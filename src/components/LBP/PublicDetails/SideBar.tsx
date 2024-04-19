@@ -197,8 +197,8 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
           </TabRow>
         </Header>
         <Body>
-          <NoTokenSidebar/>
-          {/* <BuySellFields
+          {/* <NoTokenSidebar/> Hiding for now will render conditionals. */}
+          <BuySellFields
             tokenDecimals={tokenDecimals}
             contractAddress={lbpData?.contractAddress}
             assetTokenAddress={lbpData?.assetTokenAddress}
@@ -207,7 +207,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
             slippage={slippage}
             shareBalance={shareBalance}
             tokenOptions={tokenOptions}
-          /> */}
+          />
         </Body>
       </Container>
 
