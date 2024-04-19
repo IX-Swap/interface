@@ -1,68 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { AutoColumn, ColumnCenter } from 'components/Column'
+import { ColumnCenter } from 'components/Column'
 import { ReactComponent as ComingSoonIcon } from '../../../assets/images/comingSoon.svg'
 import { TYPE } from 'theme'
-import { Button } from 'rebass'
+
+
 
 export default function ComingSoon() {
-  const [days, setDays] = useState(2)
-  const [hours, setHours] = useState(18)
-  const [minutes, setMinutes] = useState(12)
-  const [seconds, setSeconds] = useState(8)
+  const [days, setDays] = useState(2);
+  const [hours, setHours] = useState(18);
+  const [minutes, setMinutes] = useState(12);
+  const [seconds, setSeconds] = useState(8);
+
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (days > 0) {
-        if (seconds > 0) {
-          setSeconds(seconds - 1)
-        } else {
-          if (minutes > 0) {
-            setSeconds(59)
-            setMinutes(minutes - 1)
-          } else {
-            if (hours > 0) {
-              setSeconds(59)
-              setMinutes(59)
-              setHours(hours - 1)
-            }
-          }
-        }
+      const totalSeconds = calculateTotalSeconds(days, hours, minutes, seconds);
+      if (totalSeconds > 0) {
+        const remainingSeconds = totalSeconds - 1;
+        setDays(Math.floor(remainingSeconds / (24 * 60 * 60)));
+        setHours(Math.floor((remainingSeconds % (24 * 60 * 60)) / (60 * 60)));
+        setMinutes(Math.floor((remainingSeconds % (60 * 60)) / 60));
+        setSeconds(remainingSeconds % 60);
       } else {
-        if (hours > 0) {
-          if (seconds > 0) {
-            setSeconds(seconds - 1)
-          } else {
-            if (minutes > 0) {
-              setSeconds(59)
-              setMinutes(minutes - 1)
-            } else {
-              setSeconds(59)
-              setMinutes(59)
-              setHours(hours - 1)
-            }
-          }
-        } else {
-          if (minutes > 0) {
-            if (seconds > 0) {
-              setSeconds(seconds - 1)
-            } else {
-              setSeconds(59)
-              setMinutes(minutes - 1)
-            }
-          } else {
-            if (seconds > 0) {
-              setSeconds(seconds - 1)
-            } else {
-              clearInterval(interval)
-            }
-          }
-        }
+        clearInterval(interval);
       }
-    }, 1000)
+    }, 1000);
 
-    return () => clearInterval(interval)
-  }, [days, hours, minutes, seconds])
+    return () => clearInterval(interval);
+  }, [days, hours, minutes, seconds]);
+
+  const calculateTotalSeconds = (days: number, hours: number, minutes: number, seconds: number): number => {
+    return days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds;
+  };
+
 
   return (
     <SideBarContainer>
