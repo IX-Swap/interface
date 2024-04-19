@@ -21,6 +21,7 @@ import { TokenOptions } from 'pages/LBP/components/Tokenomics'
 import { BigNumber, ethers } from 'ethers'
 import { useLBPContract } from 'hooks/useContract'
 import LBP_ABI from 'abis/LiquiidtyBoostrapPool.json'
+import NoTokenSidebar from './NoTokensSideBar'
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
   { title: 'SELL', value: PublicDetails.sell },
@@ -196,6 +197,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
           </TabRow>
         </Header>
         <Body>
+          {/* <NoTokenSidebar/> Hiding for now will render conditionals. */}
           <BuySellFields
             tokenDecimals={tokenDecimals}
             contractAddress={lbpData?.contractAddress}
