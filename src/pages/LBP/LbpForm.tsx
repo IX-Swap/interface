@@ -20,8 +20,12 @@ import { useLoader } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { useHistory } from 'react-router-dom'
 import { TYPE } from 'theme'
+import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
+import Modal from 'components/Modal'
+import { SubmitSummary } from 'components/LBP/Forms/SubmitSummary'
+import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 
-interface FormData {
+export interface FormData {
   id: number
   branding: BrandingProps
   projectInfo: ProjectInfoProps
@@ -66,6 +70,8 @@ export default function LBPForm() {
     },
   })
   const [canSubmit, setCanSubmit] = useState(false)
+  const [showSummary, setShowSummary] = useState(false)
+  const toggleModal = React.useCallback(() => setShowSummary((state) => !state), [])
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
@@ -130,7 +136,6 @@ export default function LBPForm() {
       await saveOrSubmitLbp(actionType, data)
       const summary = actionType === LBP_ACTION_TYPES.save ? 'LBP saved successfully' : 'LBP submitted successfully'
       addPopup({ info: { success: true, summary } })
-      history.push('/lbp')
     } catch (err: any) {
       addPopup({ info: { success: false, summary: err?.toString() } })
     } finally {
@@ -140,10 +145,12 @@ export default function LBPForm() {
 
   const handleSubmit = async () => {
     await saveLbp(LBP_ACTION_TYPES.submit)
+    setShowSummary(true)
   }
 
   const handleSaveDraft = async () => {
     await saveLbp(LBP_ACTION_TYPES.save)
+    history.push('/lbp')
   }
 
   const transformDataForSaving = (formData: FormData) => {
@@ -289,6 +296,10 @@ export default function LBPForm() {
 
         <Graph step={1} graphData={formData.tokenomics} />
       </div>
+
+      <IssuanceDialog show={showSummary} onClose={toggleModal} width="550px">
+        <SubmitSummary formData={formData} onCancel={toggleModal} />
+      </IssuanceDialog>
     </FormRow>
   )
 }
