@@ -195,5 +195,6 @@ export function useLaunchpadInvestmentContract(contractAddress: string) {
 }
 
 export function useLBPContract(contractAddress: string) {
-  return useContract(contractAddress, LBP_ABI)
+  return useContract(contractAddress, LBP_ABI, true)
 }
+
