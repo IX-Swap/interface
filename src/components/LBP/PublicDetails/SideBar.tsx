@@ -13,13 +13,13 @@ import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import { TextInput } from 'pages/KYC/common'
 import { PinnedContentButton } from 'components/Button'
-import { useActiveWeb3React } from 'hooks/web3'
+import { useWeb3React } from '@web3-react/core'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import { LbpFormValues } from '../types'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
 import { BigNumber, ethers } from 'ethers'
-import { useLBPContract } from 'hooks/useContract'
+import { useLBPContract, useTokenContract } from 'hooks/useContract'
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
   { title: 'SELL', value: PublicDetails.sell },
@@ -71,56 +71,53 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
   const [isBlurred, setIsBlurred] = useState(false)
   const [tokenBalance, setTokenBalance] = useState('')
   const [tokenDecimals, setTokenDecimals] = useState(0)
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useWeb3React()
   const [shareBalance, setShareBalance] = useState<string | null>(null)
-  const [tokenOptions, setTokenOptions] = useState<any | null>(null)
+  const [tokenOption, setTokenOption] = useState<any | null>(null)
   const lbp = useLBPContract(lbpData?.contractAddress ?? '')
-  const inputCurrency = useCurrency(lbpData?.assetTokenAddress)
-  const { amount: balance, loading: isBalanceLoading } = useSimpleTokenBalanceWithLoading(
-    account,
-    inputCurrency,
-    lbpData?.assetTokenAddress
-  )  
+  const assetTokenContract = useTokenContract(lbpData?.assetTokenAddress ?? '')
 
   const fetchShareBalance = async () => {
     try {
       if (lbp && account) {
-        const balance = await lbp.purchasedShares(account);
+        const balance = await lbp.purchasedShares(account)
         // Decimals are hardcoded for now. We need to change it to retrieve the token's decimal value using the ERC20.decimals RPC call
-        const parsedBalance = ethers?.utils?.formatUnits(balance, 18); 
-        setShareBalance(parsedBalance);
+        const parsedBalance = ethers?.utils?.formatUnits(balance, 18)
+        setShareBalance(parsedBalance)
       } else {
-        console.error('LBP contract or account not available');
+        console.error('LBP contract or account not available')
       }
     } catch (error) {
-      console.error('Error fetching share balance:', error);
+      console.error('Error fetching share balance:', error)
     }
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchShareBalance();
-  
-        if (balance !== undefined && !isBalanceLoading) {
-          const exactBalance = balance.toExact() || '';
-          setTokenBalance(exactBalance);
-  
-          const currentChainId = balance.currency?.chainId || 0;
-          const tokenOption = TokenOptions(currentChainId).find(
-            (option) => option.tokenSymbol === balance.currency?.symbol
-          );
-          setTokenDecimals(tokenOption?.tokenDecimals || 0);
-          setTokenOptions(tokenOption);
+        if (!assetTokenContract || !account) return
+        const balance = await assetTokenContract.balanceOf(account)
+
+        await fetchShareBalance()
+
+        if (balance !== undefined) {
+          const tokenOption = TokenOptions(chainId as number).find(
+            (option) => option.tokenAddress === lbpData?.assetTokenAddress
+          )
+
+          const exactBalance = ethers.utils.formatUnits(balance, tokenOption?.tokenDecimals ?? 18)
+          setTokenBalance(exactBalance)
+
+          setTokenDecimals(tokenOption?.tokenDecimals || 0)
+          setTokenOption(tokenOption)
         }
       } catch (error) {
-        console.error('Error fetching share balance:', error);
+        console.error('Error fetching share balance:', error)
       }
-    };
-  
-    fetchData();
-  }, [balance, isBalanceLoading, fetchShareBalance]);
-  
+    }
+
+    fetchData()
+  }, [assetTokenContract, account, fetchShareBalance, lbpData, chainId])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -152,7 +149,6 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
 
   const remainingDays = Math.floor(remainingTime / (24 * 60 * 60))
   const remainingHours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))
-
 
   return (
     <SideBarContainer>
@@ -202,7 +198,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
             activeTab={activeTab}
             slippage={slippage}
             shareBalance={shareBalance}
-            tokenOptions={tokenOptions}
+            tokenOption={tokenOption}
             id={lbpData?.id}
           />
         </Body>
