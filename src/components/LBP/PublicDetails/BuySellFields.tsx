@@ -69,7 +69,10 @@ export default function BuySellFields({
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
   const [inputType, setInputType] = useState<InputType>(InputType.None)
-  const [isConverting, setIsConverting] = useState(false)
+  const [convertingState, setIsConvertingState] = useState({
+    inputType: InputType.None,
+    converting: false,
+  })
   const [isExecuting, setIsExecuting] = useState(false)
 
   // Web3 States
@@ -116,14 +119,22 @@ export default function BuySellFields({
     setValue(inputAmount)
 
     if (inputAmount !== '') {
-      setIsConverting(true)
+      setIsConvertingState({
+        inputType: inputType === InputType.Share ? InputType.Asset : InputType.Share,
+        converting: true,
+      })
       const converted = await handleConversion(
         inputType,
         inputAmount,
         inputType == 'share' ? 18 : 6,
         inputType == 'share' ? 6 : 18
       )
-      setIsConverting(false)
+      setIsConvertingState((prevState) => {
+        return {
+          ...prevState,
+          converting: false,
+        }
+      })
       setOpposite(converted)
     }
   }
@@ -331,6 +342,8 @@ export default function BuySellFields({
 
   const handleSellButtonClick = useCallback(async () => {
     await trade(inputType, inputType == InputType.Asset ? assetValue : shareValue)
+    setShareValue('')
+    setAssetValue('')
   }, [assetValue, shareValue])
 
   return (
@@ -343,11 +356,11 @@ export default function BuySellFields({
         <>
           {/* Share section */}
           <BuySellFieldsContainer>
-            {isConverting ? 'Converting...' : ''}
             <BuySellFieldsItem>
               <BuySellFieldsWrapper>
                 <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
               </BuySellFieldsWrapper>
+              {convertingState.inputType === InputType.Share && convertingState.converting ? 'converting...' : ''}
               <BuySellFieldsInput
                 type="text"
                 placeholder="0.00"
@@ -372,6 +385,7 @@ export default function BuySellFields({
               <BuySellFieldsWrapper>
                 <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Asset</BuySellFieldsSpan>
               </BuySellFieldsWrapper>
+              {convertingState.inputType === InputType.Asset && convertingState.converting ? 'converting...' : ''}
               <BuySellFieldsInput
                 type="text"
                 placeholder="0.00"
