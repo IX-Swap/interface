@@ -116,8 +116,6 @@ export default function BuySellFields({
     setValue(inputAmount)
 
     if (inputAmount !== '') {
-      const amount = parseFloat(inputAmount)
-
       setIsConverting(true)
       const converted = await handleConversion(
         inputType,
@@ -166,44 +164,66 @@ export default function BuySellFields({
   )
 
   const trade = async (inputType: string, amount: number | string) => {
-    const authorization = await getLBPAuthorization(id)
-    if (activeTab === 'buy') {
-      if (inputType === 'share') {
-        await buyExactShares(Number(amount), authorization)
-      } else {
-        await buyExactAssetsForShares(Number(amount), authorization)
+    try {
+      setIsExecuting(true)
+      const authorization = await getLBPAuthorization(id)
+
+      const tradeFunctions = {
+        buy: {
+          share: buyExactShares,
+          asset: buyExactAssetsForShares,
+        },
+        sell: {
+          share: sellExactSharesForAssets,
+          asset: sellExactAssets,
+        },
       }
-    } else {
-      if (inputType === 'share') {
-        await sellExactSharesForAssets(Number(amount), authorization)
-      } else {
-        await sellExactAssets(Number(amount), authorization)
+
+      const action = activeTab === 'buy' ? 'buy' : 'sell'
+      const method = inputType === 'share' ? 'share' : 'asset'
+
+      const tradeFunction = tradeFunctions[action][method]
+
+      if (!tradeFunction) {
+        console.error('Trade function not found')
+        return
       }
+
+      const tx: any = await tradeFunction(Number(amount), authorization)
+      if (tx) {
+        await tx.wait()
+        setIsExecuting(false)
+      }
+    } catch (error) {
+      console.error('Error executing trade:', error)
+      setIsExecuting(false)
+      // TODO: handle ERROR UI
     }
   }
 
   const buyExactShares = useCallback(
-    async (shareAmount: number, authorization: any): Promise<string> => {
-      if (!lbpContractInstance) return ''
+    async (shareAmount: number, authorization: any): Promise<any> => {
+      if (!lbpContractInstance) return
 
       const maxAssetsIn = ethers.constants.MaxUint256
       const recipient = account
       const referrer = constants.AddressZero
-      const assetAmount = await lbpContractInstance?.swapAssetsForExactShares(
+      const tx = await lbpContractInstance?.swapAssetsForExactShares(
         parseUnit(shareAmount, 18), // Convert share amount to smallest denomination
         maxAssetsIn,
         recipient,
         referrer,
         authorization
       )
-      return assetAmount.toString()
+
+      return tx
     },
     [lbpContractInstance]
   )
 
   const buyExactAssetsForShares = useCallback(
-    async (assetAmount: number, authorization: any): Promise<string> => {
-      if (!lbpContractInstance) return ''
+    async (assetAmount: number, authorization: any): Promise<any> => {
+      if (!lbpContractInstance) return
       const minSharesOut = 0
       const recipient = account
 
@@ -216,52 +236,52 @@ export default function BuySellFields({
       )
 
       const referrer = constants.AddressZero
-      const shareAmount = await lbpContractInstance.swapExactAssetsForShares(
+      const tx = await lbpContractInstance.swapExactAssetsForShares(
         parseUnit(assetAmount, tokenOption?.tokenDecimals || 18), // Convert asset amount to smallest denomination
         minSharesOut,
         recipient,
         referrer,
         authorization,
         {
-          gasLimit: 500000,
+          gasLimit: 500000, // temporary hardcode as it sometimes fails due to gas limit is low
         }
       )
 
-      return shareAmount.toString()
+      return tx
     },
     [lbpContractInstance, tokenOption]
   )
 
   const sellExactSharesForAssets = useCallback(
-    async (shareAmount: number, authorization: any): Promise<string> => {
-      if (!lbpContractInstance) return ''
+    async (shareAmount: number, authorization: any): Promise<any> => {
+      if (!lbpContractInstance) return
       const minAssetsOut = 0
       const recipient = account
-      const assetAmount = await lbpContractInstance.swapExactSharesForAssets(
+      const tx = await lbpContractInstance.swapExactSharesForAssets(
         parseUnit(shareAmount, 18),
         minAssetsOut,
         recipient,
         authorization
       )
 
-      return assetAmount.toString()
+      return tx
     },
     [lbpContractInstance]
   )
 
   const sellExactAssets = useCallback(
-    async (assetAmount: number, authorization: any): Promise<string> => {
-      if (!lbpContractInstance) return ''
+    async (assetAmount: number, authorization: any): Promise<any> => {
+      if (!lbpContractInstance) return
       const maxSharesIn = ethers.constants.MaxUint256
       const recipient = account
-      const shareAmount = await lbpContractInstance.swapSharesForExactAssets(
+      const tx = await lbpContractInstance.swapSharesForExactAssets(
         parseUnit(assetAmount, tokenOption?.tokenDecimals || 18),
         maxSharesIn,
         recipient,
         authorization
       )
 
-      return shareAmount.toString()
+      return tx
     },
     [lbpContractInstance, tokenOption]
   )
@@ -270,9 +290,7 @@ export default function BuySellFields({
     console.info('approval', approval)
     if (approval === 'APPROVED') {
       // Reset the input fields
-      setIsExecuting(true)
       await trade(inputType, inputType == InputType.Asset ? assetValue : shareValue)
-      setIsExecuting(false)
       setShareValue('')
       setAssetValue('')
     } else {
@@ -289,6 +307,7 @@ export default function BuySellFields({
   }, [approval, assetValue, shareValue])
 
   const buttonText = useMemo(() => {
+    console.info('approval', approval)
     if (isExecuting) {
       return 'Executing...'
     }
@@ -311,9 +330,7 @@ export default function BuySellFields({
   }, [approval])
 
   const handleSellButtonClick = useCallback(async () => {
-    setIsExecuting(true)
     await trade(inputType, inputType == InputType.Asset ? assetValue : shareValue)
-    setIsExecuting(false)
   }, [assetValue, shareValue])
 
   return (
