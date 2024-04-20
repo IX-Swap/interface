@@ -56,6 +56,7 @@ export default function LBPForm() {
     },
     tokenomics: {
       shareAddress: '',
+      contractAddress: '',
       assetTokenAddress: '',
       assetTokenSymbol: '',
       shareInput: 0,
@@ -213,6 +214,7 @@ export default function LBPForm() {
       },
       tokenomics: {
         shareAddress: data.shareAddress,
+        contractAddress: data.contractAddress,
         assetTokenAddress: data.assetTokenAddress,
         assetTokenSymbol: data.assetTokenSymbol,
         shareInput: data.shareAmount,
@@ -263,7 +265,7 @@ export default function LBPForm() {
               <Trans>Tokenomics</Trans>
             </RowStart>
             <Column style={{ gap: '20px' }}>
-              <Tokenomics formDataTokenomics={formData.tokenomics} onChange={handleTokenomicsChange} />
+              <Tokenomics formDataTokenomics={formData.tokenomics} onChange={handleTokenomicsChange} shareTitle={formData.projectInfo.title} />
             </Column>
           </FormCard>
 
@@ -272,7 +274,7 @@ export default function LBPForm() {
               <Trans>Approvals</Trans>
             </RowStart>
             <Column style={{ gap: '20px' }}>
-              <Approvals />
+              <Approvals addressA={formData.tokenomics.contractAddress} addressB={formData.tokenomics.assetTokenAddress} />
             </Column>
           </FormCard>
         </Column>

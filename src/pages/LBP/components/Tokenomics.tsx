@@ -212,10 +212,11 @@ const validationSchema = Yup.object().shape({
 interface ProjectInfoProps {
   onChange: (data: any) => void
   formDataTokenomics: TokenomicsData
+  shareTitle: string
 }
 
 // Refactored Tokenomics component
-const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
+const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
   const [isOpen, setIsOpen] = useState(false)
@@ -415,7 +416,7 @@ const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
               }}
             >
               <Disabled />
-              <TYPE.label fontSize={'14px'}>Serenity</TYPE.label>
+              <TYPE.label fontSize={'14px'}>{shareTitle}</TYPE.label>
             </div>
             <SpanBal>
               Balance: <b>{balances?.shareBalance}</b>
