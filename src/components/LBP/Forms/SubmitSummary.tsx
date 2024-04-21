@@ -7,8 +7,13 @@ import { FormData } from 'pages/LBP/LbpForm'
 import dayjs from 'dayjs'
 import { useWeb3React } from '@web3-react/core'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
-import { useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useMemo, useEffect, useState } from 'react'
+import { useLBPFactory } from 'hooks/useContract'
+import { LBP_FACTORY_ADDRESS, LBP_XTOKEN_PROXY } from 'constants/addresses'
+import { ethers } from 'ethers'
+import { toUnixTimeSeconds } from 'utils/time'
+
+export const MAX_UINT88 = ethers.BigNumber.from('309485009821345068724781055')
 
 interface Props {
   formData: FormData
@@ -17,7 +22,9 @@ interface Props {
 
 export const SubmitSummary = ({ formData, onCancel }: Props) => {
   const { chainId } = useWeb3React()
-  const history = useHistory()
+  const [predictedLBPAddress, setPredictedLBPAddress] = useState<string>('')
+
+  const lbpFactory = useLBPFactory(LBP_FACTORY_ADDRESS[chainId || 0] || '')
 
   const tokenOptions = useMemo(() => {
     // exclude tokens that has tokenAddress of undefined
@@ -30,6 +37,35 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
     onCancel()
   }
 
+  useEffect(() => {
+    const predictLBPAddress = async () => {
+      if (!lbpFactory || !formData || !chainId) return ''
+      const args = {
+        asset: formData.tokenomics.assetTokenAddress,
+        share: formData.tokenomics.shareAddress,
+        shareWhitelistProxy: LBP_XTOKEN_PROXY[chainId || 0],
+        virtualAssets: 0,
+        virtualShares: 0,
+        maxAssetsIn: MAX_UINT88,
+        maxSharePrice: MAX_UINT88,
+        maxSharesOut: MAX_UINT88,
+        weightStart: ethers.utils.parseEther(Number(formData.tokenomics.endWeight / 100).toString()), //  start weight and end weight are reversed in the smart contract
+        weightEnd: ethers.utils.parseEther(Number(formData.tokenomics.startWeight / 100).toString()),
+        saleStart: toUnixTimeSeconds(new Date(formData.tokenomics.startDate)),
+        saleEnd: toUnixTimeSeconds(new Date(formData.tokenomics.endDate)),
+        sellingAllowed: true,
+        authorized: true,
+      }
+
+      const salt = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(formData?.id.toString()))
+      const predictedAddress = await lbpFactory.predictDeterministicAddress(args, salt)
+      console.info('predictedAddress', predictedAddress, 'args', args)
+      setPredictedLBPAddress(predictedAddress)
+    }
+
+    predictLBPAddress()
+  }, [lbpFactory, formData, chainId])
+
   const handleDeploy = () => {
     console.log('Please implement handleDeploy function')
   }
@@ -39,7 +75,7 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
       <SummaryTitle>Quick Summary</SummaryTitle>
       <AddressField>
         <FieldLabel>Pool Address</FieldLabel>
-        <FieldValue>{formData.tokenomics.assetTokenAddress}</FieldValue>
+        <FieldValue>{predictedLBPAddress}</FieldValue>
       </AddressField>
       <Section>
         <Row>
