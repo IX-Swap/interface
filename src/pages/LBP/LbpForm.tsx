@@ -124,8 +124,20 @@ export default function LBPForm() {
     const hasSocialLinks = formData.projectInfo.socialLinks?.length > 0
     const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
     const hasUploadDocs = formData.projectInfo.uploadDocs?.length > 0
+
+    // TODO: remove console logs
+    console.info('formData', formData)
+
+    console.info('brandingComplete', brandingComplete)
+    console.info('projectInfoComplete', projectInfoComplete)
+    console.info('tokenomicsComplete', tokenomicsComplete)
+    console.info('hasSocialLinks', hasSocialLinks)
+    console.info('hasWhitepapers', hasWhitepapers)
     setCanSubmit(
-      brandingComplete && projectInfoComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers && hasUploadDocs
+      // TODO: enable check check projectInfoComplete, hasUploadDocs after fixing uploading docs
+      // temporarily not check projectInfoComplete, hasUploadDocs as there is a bug documents are not loaded
+      brandingComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers
+      // brandingComplete && projectInfoComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers && hasUploadDocs
     )
   }
 
