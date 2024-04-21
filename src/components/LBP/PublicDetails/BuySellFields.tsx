@@ -12,6 +12,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useGetLBPAuthorization } from 'state/lbp/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
+import BuySellModal from './Modals/BuySellModal'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -65,6 +66,7 @@ export default function BuySellFields({
   const [buttonDisabled, setButtonDisabled] = useState(true)
   // const [buttonText, setButtonText] = useState('Approve')
   const [isLoading, setIsLoading] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
@@ -108,6 +110,14 @@ export default function BuySellFields({
 
     fetchData()
   }, [shareValue, assetValue, id, tokenBalance])
+
+  const handleOpenModal = (action: any) => {
+    setIsModalOpen(true)
+  }
+
+  const handleModalClose = () => {
+    setIsModalOpen(false)
+  }
 
   const handleInputChange = async (event: any, inputType: InputType) => {
     const inputAmount = event.target.value
@@ -301,6 +311,7 @@ export default function BuySellFields({
     console.info('approval', approval)
     if (approval === 'APPROVED') {
       // Reset the input fields
+      // handleOpenModal('buy')
       await trade(inputType, inputType == InputType.Asset ? assetValue : shareValue)
       setShareValue('')
       setAssetValue('')
@@ -354,6 +365,13 @@ export default function BuySellFields({
         </Centered>
       ) : (
         <>
+          <BuySellModal
+            isOpen={isModalOpen}
+            onClose={handleModalClose}
+            shareValue={shareValue}
+            buyBtnText={activeTab}
+            assetValue={assetValue}
+          />
           {/* Share section */}
           <BuySellFieldsContainer>
             <BuySellFieldsItem>

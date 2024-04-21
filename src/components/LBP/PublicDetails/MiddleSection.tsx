@@ -16,6 +16,7 @@ import EndedSideBar from './Ended'
 import CloseSideBar from './ClosedSideBar'
 import { LbpFormValues } from '../types'
 import Links from './Links'
+import RedeemedSideBar from './RedeemedSideBar'
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
@@ -83,6 +84,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
           {/* <ComingSoon/> */}
           {/* <EndedSideBar/> */}
           {/* <CloseSideBar/> */}
+          {/* <RedeemedSideBar/> */}
           <AdditionalDocuments />
         </Column>
       </MiddleSectionContainer>
