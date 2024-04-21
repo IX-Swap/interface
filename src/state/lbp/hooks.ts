@@ -114,7 +114,11 @@ export const useSaveOrSubmitLbp = () => {
         payload.logoId = uploadedFiles.find((x) => x.name === 'LBPLogo')?.id
         payload.bannerId = uploadedFiles.find((x) => x.name === 'LBPBanner')?.id
         for (let i = 0; i < payload.uploadDocs?.length; i++) {
-          payload.additionalDocumentIds[i] = uploadedFiles.find((x) => x.name === `uploadDocs.${i}`)?.id || 0
+          if (payload.uploadDocs[i].id) {
+            payload.additionalDocumentIds[i] = payload.uploadDocs[i].id as number
+          } else {
+            payload.additionalDocumentIds[i] = uploadedFiles.find((x) => x.name === `uploadDocs.${i}`)?.id || 0
+          }
         }
       }
 

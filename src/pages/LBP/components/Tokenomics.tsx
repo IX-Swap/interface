@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react'
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { TextInput } from 'pages/KYC/common'
@@ -25,6 +26,11 @@ import { IXS_ADDRESS, TOKEN_ADDRESSES } from 'constants/addresses'
 import { useWeb3React } from '@web3-react/core'
 import { useTokenContract } from 'hooks/useContract'
 import { formatUnits } from 'ethers/lib/utils'
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Asia/Singapore');
 
 const Container = styled.div`
   width: 100%;
@@ -266,7 +272,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
       maxPrice: '',
       startWeight: 0.3,
       endWeight: 0.0,
-      startDate: '',
+      startDate: null,
       endDate: '',
     },
     validationSchema: validationSchema,
@@ -330,7 +336,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
     onChange(updatedFormData)
   }
 
-  const handleStartDateChange = (date: Date | null) => {
+  const handleStartDateChange = (date: Dayjs | null) => {
     if (date) {
       const newStartDate = dayjs(date).local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
@@ -341,7 +347,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
       onChange(updatedFormData)
     }
   }
-  const handleEndDateChange = (date: Date | null) => {
+  const handleEndDateChange = (date: Dayjs | null) => {
     if (date) {
       const newEndDate = dayjs(date).local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
@@ -670,7 +676,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
             <DateTimePicker
               onChange={handleStartDateChange}
               label="Start Date"
-              // defaultValue={dayjs(formDataTokenomics.startDate).toDate() as Date}
+              value={dayjs(formDataTokenomics.startDate)}
             />
           </DemoContainer>
         </LocalizationProvider>
@@ -680,7 +686,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
             <DateTimePicker
               onChange={handleEndDateChange}
               label="End Date"
-              // value={formDataTokenomics.endDate ? new Date(formDataTokenomics.endDate) : null}
+              value={dayjs(formDataTokenomics.endDate)}
             />
           </DemoContainer>
         </LocalizationProvider>
