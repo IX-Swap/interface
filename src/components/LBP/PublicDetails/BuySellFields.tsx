@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
 import { TYPE } from 'theme'
@@ -6,7 +6,12 @@ import { PinnedContentButton } from 'components/Button'
 import { useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
-import { ethers } from 'ethers'
+import { ethers, constants } from 'ethers'
+import { useLBPContract } from 'hooks/useContract'
+import { useActiveWeb3React } from 'hooks/web3'
+import { useGetLBPAuthorization } from 'state/lbp/hooks'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { Centered } from 'components/LaunchpadMisc/styled'
 import BuySellModal from './Modals/BuySellModal'
 
 interface BuySellFieldsProps {
@@ -17,8 +22,10 @@ interface BuySellFieldsProps {
   contractAddress?: string
   tokenDecimals?: number
   shareBalance?: any
-  tokenOptions?: TokenOption
+  tokenOption?: TokenOption
+  id: any
 }
+
 interface TokenOption {
   value: string
   tokenAddress: string
@@ -31,77 +38,78 @@ interface BuySellFieldsInputProps {
   assetExceedsBalance?: boolean
 }
 
+enum InputType {
+  None = '',
+  Asset = 'asset',
+  Share = 'share',
+}
+
+enum TradeAction {
+  Buy = 'buy',
+  Sell = 'sell',
+}
+
+const parseUnit = (amount: number, decimals: number): ethers.BigNumber => {
+  return ethers.utils.parseUnits(amount.toString(), decimals)
+}
+
 export default function BuySellFields({
   activeTab,
-  slippage,
   tokenBalance,
   assetTokenAddress,
   contractAddress,
-  tokenDecimals,
   shareBalance,
-  tokenOptions,
+  tokenOption,
+  id,
 }: BuySellFieldsProps) {
+  // UI States
+  const [buttonDisabled, setButtonDisabled] = useState(true)
+  // const [buttonText, setButtonText] = useState('Approve')
+  const [isLoading, setIsLoading] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
-  const [buttonDisabled, setButtonDisabled] = useState(true)
+  const [inputType, setInputType] = useState<InputType>(InputType.None)
+  const [convertingState, setIsConvertingState] = useState({
+    inputType: InputType.None,
+    converting: false,
+  })
+  const [isExecuting, setIsExecuting] = useState(false)
+
+  // Web3 States
+  const lbpContractInstance = useLBPContract(contractAddress ?? '')
   const tokenCurrency = useCurrency(assetTokenAddress)
-  const [buttonText, setButtonText] = useState('Approve')
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const contractAddressValue = contractAddress !== undefined ? contractAddress : ''
+  const { account } = useActiveWeb3React()
+  const getLBPAuthorization = useGetLBPAuthorization()
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
           tokenCurrency,
-          ethers.utils.parseUnits(assetValue || '0', tokenOptions?.tokenDecimals) as any
+          ethers.utils.parseUnits(assetValue || '0', tokenOption?.tokenDecimals) as any
         )
       : undefined,
-    contractAddressValue
+    contractAddress || ''
   )
-  const [amount, setAmount] = useState('') // Define amount state variable
   const assetExceedsBalance = parseFloat(assetValue) > parseFloat(tokenBalance)
 
   useEffect(() => {
-    if (shareValue.trim() !== '' && assetValue.trim() !== '') {
-      setButtonDisabled(false)
-    } else {
-      setButtonDisabled(true)
-    }
-  }, [shareValue, assetValue])
-
-  const handleShareInputChange = (event: any) => {
-    const inputValue = event.target.value
-    setShareValue(inputValue)
-    setAssetValue(inputValue !== '' ? (parseFloat(inputValue) / 2).toFixed(2) : '')
-  }
-
-  const handleAssetInputChange = (event: any) => {
-    const inputValue = event.target.value
-    setAssetValue(inputValue)
-    setShareValue(inputValue !== '' ? (parseFloat(inputValue) * 2).toFixed(2) : '')
-  }
-
-  const handleButtonClick = async () => {
-    console.log(approval)
-    if (approval === 'APPROVED') {
-      console.log('Buying...')
-      handleOpenModal('buy')
-      setButtonText('Buy')
-      setButtonDisabled(false)
-    } else {
-      setButtonDisabled(true)
-      setButtonText('Approving..')
+    const fetchData = async () => {
       try {
-        await approveCallback()
-        console.log('Approval successful')
-        setButtonText('Buy')
-        setButtonDisabled(false)
+        if (!id) return
+        const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
+        setButtonDisabled(isButtonDisabled)
+        if (tokenBalance) {
+          setIsLoading(false)
+        }
       } catch (error) {
-        console.error('Approval failed', error)
-        setButtonDisabled(false)
-        setButtonText('Approve')
+        setIsLoading(false)
+        console.error('Error fetching authorization:', error)
       }
     }
-  }
+
+    fetchData()
+  }, [shareValue, assetValue, id, tokenBalance])
 
   const handleOpenModal = (action: any) => {
     setIsModalOpen(true)
@@ -111,98 +119,349 @@ export default function BuySellFields({
     setIsModalOpen(false)
   }
 
+  const handleInputChange = async (event: any, inputType: InputType) => {
+    const inputAmount = event.target.value
+
+    const setValue = inputType === InputType.Share ? setShareValue : setAssetValue
+    const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
+
+    setInputType(inputType)
+    setValue(inputAmount)
+
+    if (inputAmount !== '') {
+      setIsConvertingState({
+        inputType: inputType === InputType.Share ? InputType.Asset : InputType.Share,
+        converting: true,
+      })
+      const converted = await handleConversion(
+        inputType,
+        inputAmount,
+        inputType == 'share' ? 18 : 6,
+        inputType == 'share' ? 6 : 18
+      )
+      setIsConvertingState((prevState) => {
+        return {
+          ...prevState,
+          converting: false,
+        }
+      })
+      setOpposite(converted)
+    }
+  }
+
+  const handleConversion = useCallback(
+    async (
+      inputType: InputType,
+      inputAmount: number,
+      inputDecimals: number,
+      outputDecimals: number
+    ): Promise<string> => {
+      if (!lbpContractInstance) return ''
+
+      const amount = parseUnit(inputAmount, inputDecimals)
+      let method: any
+      const action: TradeAction = activeTab as TradeAction
+      switch (action) {
+        case TradeAction.Buy:
+          method = inputType === InputType.Asset ? 'previewSharesOut' : 'previewAssetsIn'
+          break
+        case TradeAction.Sell:
+          method = inputType === InputType.Asset ? 'previewSharesIn' : 'previewAssetsOut'
+          break
+        default:
+          break
+      }
+
+      if (method) {
+        console.info('Converting amount:', amount.toString(), 'inputType', inputType, 'method:', method)
+        const result = await lbpContractInstance[method](amount)
+        const parsedAmount = ethers.utils.formatUnits(result.toString(), outputDecimals)
+        return parsedAmount
+      }
+
+      return ''
+    },
+    [lbpContractInstance]
+  )
+
+  const trade = async (inputType: string, amount: number | string) => {
+    try {
+      setIsExecuting(true)
+      const authorization = await getLBPAuthorization(id)
+
+      const tradeFunctions = {
+        buy: {
+          share: buyExactShares,
+          asset: buyExactAssetsForShares,
+        },
+        sell: {
+          share: sellExactSharesForAssets,
+          asset: sellExactAssets,
+        },
+      }
+
+      const action = activeTab === 'buy' ? 'buy' : 'sell'
+      const method = inputType === 'share' ? 'share' : 'asset'
+
+      const tradeFunction = tradeFunctions[action][method]
+
+      if (!tradeFunction) {
+        console.error('Trade function not found')
+        return
+      }
+
+      const tx: any = await tradeFunction(Number(amount), authorization)
+      if (tx) {
+        await tx.wait()
+        setIsExecuting(false)
+      }
+    } catch (error) {
+      console.error('Error executing trade:', error)
+      setIsExecuting(false)
+      // TODO: handle ERROR UI
+    }
+  }
+
+  const buyExactShares = useCallback(
+    async (shareAmount: number, authorization: any): Promise<any> => {
+      if (!lbpContractInstance) return
+
+      const maxAssetsIn = ethers.constants.MaxUint256
+      const recipient = account
+      const referrer = constants.AddressZero
+      const tx = await lbpContractInstance?.swapAssetsForExactShares(
+        parseUnit(shareAmount, 18), // Convert share amount to smallest denomination
+        maxAssetsIn,
+        recipient,
+        referrer,
+        authorization
+      )
+
+      return tx
+    },
+    [lbpContractInstance]
+  )
+
+  const buyExactAssetsForShares = useCallback(
+    async (assetAmount: number, authorization: any): Promise<any> => {
+      if (!lbpContractInstance) return
+      const minSharesOut = 0
+      const recipient = account
+
+      console.info('token decimals', tokenOption)
+      console.info('assetAmount', assetAmount)
+      console.info(
+        'buyExactAssetsForShares',
+        'amount',
+        parseUnit(assetAmount, tokenOption?.tokenDecimals || 18).toString()
+      )
+
+      const referrer = constants.AddressZero
+      const tx = await lbpContractInstance.swapExactAssetsForShares(
+        parseUnit(assetAmount, tokenOption?.tokenDecimals || 18), // Convert asset amount to smallest denomination
+        minSharesOut,
+        recipient,
+        referrer,
+        authorization,
+        {
+          gasLimit: 500000, // temporary hardcode as it sometimes fails due to gas limit is low
+        }
+      )
+
+      return tx
+    },
+    [lbpContractInstance, tokenOption]
+  )
+
+  const sellExactSharesForAssets = useCallback(
+    async (shareAmount: number, authorization: any): Promise<any> => {
+      if (!lbpContractInstance) return
+      const minAssetsOut = 0
+      const recipient = account
+      const tx = await lbpContractInstance.swapExactSharesForAssets(
+        parseUnit(shareAmount, 18),
+        minAssetsOut,
+        recipient,
+        authorization
+      )
+
+      return tx
+    },
+    [lbpContractInstance]
+  )
+
+  const sellExactAssets = useCallback(
+    async (assetAmount: number, authorization: any): Promise<any> => {
+      if (!lbpContractInstance) return
+      const maxSharesIn = ethers.constants.MaxUint256
+      const recipient = account
+      const tx = await lbpContractInstance.swapSharesForExactAssets(
+        parseUnit(assetAmount, tokenOption?.tokenDecimals || 18),
+        maxSharesIn,
+        recipient,
+        authorization
+      )
+
+      return tx
+    },
+    [lbpContractInstance, tokenOption]
+  )
+
+  const handleButtonClick = useCallback(async () => {
+    console.info('approval', approval)
+    if (approval === 'APPROVED') {
+      // Reset the input fields
+      // handleOpenModal('buy')
+      await trade(inputType, inputType == InputType.Asset ? assetValue : shareValue)
+      setShareValue('')
+      setAssetValue('')
+    } else {
+      setButtonDisabled(true)
+      try {
+        await approveCallback()
+        console.log('Approval successful')
+        setButtonDisabled(false)
+      } catch (error) {
+        console.error('Approval failed', error)
+        setButtonDisabled(false)
+      }
+    }
+  }, [approval, assetValue, shareValue])
+
+  const buttonText = useMemo(() => {
+    console.info('approval', approval)
+    if (isExecuting) {
+      return 'Executing...'
+    }
+
+    if (approval === 'PENDING') {
+      return 'Approving..'
+    } else if (approval === 'NOT_APPROVED') {
+      return 'Approve'
+    }
+
+    return 'Buy'
+  }, [approval, isExecuting, assetValue, shareValue])
+
+  useEffect(() => {
+    if (approval === 'PENDING') {
+      setButtonDisabled(true)
+    } else {
+      setButtonDisabled(false)
+    }
+  }, [approval])
+
+  const handleSellButtonClick = useCallback(async () => {
+    await trade(inputType, inputType == InputType.Asset ? assetValue : shareValue)
+    setShareValue('')
+    setAssetValue('')
+  }, [assetValue, shareValue])
+
   return (
     <>
-      <BuySellModal
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        shareValue={shareValue}
-        buyBtnText={activeTab}
-        assetValue={assetValue}
-      />
-      {/* Share section */}
-      <BuySellFieldsContainer>
-        <BuySellFieldsItem>
-          <BuySellFieldsWrapper>
-            <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Project Token</BuySellFieldsSpan>
-          </BuySellFieldsWrapper>
-          <BuySellFieldsInput
-            type="text"
-            placeholder="0.00"
-            name="ShareInput"
-            value={shareValue}
-            onChange={handleShareInputChange}
+      {isLoading ? (
+        <Centered>
+          <Loader />
+        </Centered>
+      ) : (
+        <>
+          <BuySellModal
+            isOpen={isModalOpen}
+            onClose={handleModalClose}
+            shareValue={shareValue}
+            buyBtnText={activeTab}
+            assetValue={assetValue}
           />
-        </BuySellFieldsItem>
-        <BuySellFieldsItem>
-          <BuySellFieldsSelect>
-            <Serenity />
-            <TYPE.body4 fontSize={'14px'}> Serenity</TYPE.body4>
-          </BuySellFieldsSelect>
-          <BuySellFieldsSpanBal>
-            Balance: <b style={{ color: '#292933' }}>{shareBalance}</b>
-          </BuySellFieldsSpanBal>
-        </BuySellFieldsItem>
-      </BuySellFieldsContainer>
-
-      {/* Asset section */}
-      <BuySellFieldsContainer assetExceedsBalance={assetExceedsBalance}>
-        <BuySellFieldsItem>
-          <BuySellFieldsWrapper>
-            <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Base Token</BuySellFieldsSpan>
-          </BuySellFieldsWrapper>
-          <BuySellFieldsInput
-            type="text"
-            placeholder="0.00"
-            name="assetInput"
-            value={assetValue}
-            onChange={handleAssetInputChange}
-            assetExceedsBalance={assetExceedsBalance}
-          />
-          {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
-        </BuySellFieldsItem>
-        <BuySellFieldsItem>
-          <BuySellFieldsSelect>
-            <img src={tokenOptions?.logo} />
-            <TYPE.body4 fontSize={'14px'}> {tokenOptions?.tokenSymbol}</TYPE.body4>
-          </BuySellFieldsSelect>
-          <BuySellFieldsSpanBal>
-            Balance: <b style={{ color: '#292933' }}>{tokenBalance ? tokenBalance : 'Loding..'} </b>
-          </BuySellFieldsSpanBal>
-        </BuySellFieldsItem>
-      </BuySellFieldsContainer>
-
-      <TabRow>
-        <SlippageWrapper>
-          <TYPE.body3>Fees: </TYPE.body3>
-          <TYPE.body3 color={'#292933'} fontWeight={'700'}>
-            0.5%
-          </TYPE.body3>
-        </SlippageWrapper>
-        <SlippageWrapper>
-          <TYPE.body3>Price Impact: </TYPE.body3>
-          <TYPE.body3 color={'#292933'} fontWeight={'700'}>
-            0.5%
-          </TYPE.body3>
-        </SlippageWrapper>
-      </TabRow>
-
-      <TabRow style={{ marginTop: '20px' }}>
-        {activeTab === 'buy' ? (
-          <PinnedContentButton onClick={handleButtonClick} disabled={buttonDisabled || assetExceedsBalance}>
-            {approval === 'APPROVED' ? 'Buy' : buttonText}
-          </PinnedContentButton>
-        ) : (
-          <PinnedContentButton
-            onClick={() => handleOpenModal('sell')}
-            style={{ backgroundColor: buttonDisabled ? '' : '#FF6161' }}
-            disabled={buttonDisabled}
-          >
-            Sell
-          </PinnedContentButton>
-        )}
-      </TabRow>
-      <AddWalletText>Add Asset to Wallet</AddWalletText>
+          {/* Share section */}
+          <BuySellFieldsContainer>
+            <BuySellFieldsItem>
+              <BuySellFieldsWrapper>
+                <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
+              </BuySellFieldsWrapper>
+              {convertingState.inputType === InputType.Share && convertingState.converting ? 'converting...' : ''}
+              <BuySellFieldsInput
+                type="text"
+                placeholder="0.00"
+                name="ShareInput"
+                value={shareValue}
+                onChange={(event) => handleInputChange(event, InputType.Share)}
+              />
+            </BuySellFieldsItem>
+            <BuySellFieldsItem>
+              <BuySellFieldsSelect>
+                <Serenity />
+                <TYPE.body4 fontSize={'14px'}> Serenity</TYPE.body4>
+              </BuySellFieldsSelect>
+              <BuySellFieldsSpanBal>
+                Balance: <b style={{ color: '#292933' }}>{shareBalance}</b>
+              </BuySellFieldsSpanBal>
+            </BuySellFieldsItem>
+          </BuySellFieldsContainer>
+          {/* Asset section */}
+          <BuySellFieldsContainer assetExceedsBalance={assetExceedsBalance}>
+            <BuySellFieldsItem>
+              <BuySellFieldsWrapper>
+                <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Asset</BuySellFieldsSpan>
+              </BuySellFieldsWrapper>
+              {convertingState.inputType === InputType.Asset && convertingState.converting ? 'converting...' : ''}
+              <BuySellFieldsInput
+                type="text"
+                placeholder="0.00"
+                name="assetInput"
+                value={assetValue}
+                onChange={(event) => handleInputChange(event, InputType.Asset)}
+                assetExceedsBalance={assetExceedsBalance}
+              />
+              {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
+            </BuySellFieldsItem>
+            <BuySellFieldsItem>
+              <BuySellFieldsSelect>
+                <img src={tokenOption?.logo} />
+                {/* <USDC /> */}
+                <TYPE.body4 fontSize={'14px'}> {tokenOption?.tokenSymbol}</TYPE.body4>
+              </BuySellFieldsSelect>
+              <BuySellFieldsSpanBal>
+                Balance: <b style={{ color: '#292933' }}>{tokenBalance} </b>
+              </BuySellFieldsSpanBal>
+            </BuySellFieldsItem>
+          </BuySellFieldsContainer>
+          <TabRow>
+            <SlippageWrapper>
+              <TYPE.body3>Fees: </TYPE.body3>
+              <TYPE.body3 color={'#292933'} fontWeight={'700'}>
+                0.5%
+              </TYPE.body3>
+            </SlippageWrapper>
+            <SlippageWrapper>
+              <TYPE.body3>Price Impact: </TYPE.body3>
+              <TYPE.body3 color={'#292933'} fontWeight={'700'}>
+                0.5%
+              </TYPE.body3>
+            </SlippageWrapper>
+          </TabRow>
+          <TabRow style={{ marginTop: '20px' }}>
+            {activeTab === 'buy' ? (
+              <PinnedContentButton
+                onClick={handleButtonClick}
+                disabled={assetExceedsBalance || isExecuting || buttonDisabled}
+              >
+                {buttonText}
+              </PinnedContentButton>
+            ) : (
+              <PinnedContentButton
+                onClick={handleSellButtonClick}
+                style={{ backgroundColor: buttonDisabled ? '' : '#FF6161' }}
+                disabled={isExecuting}
+              >
+                {isExecuting ? 'Executing...' : 'Sell'}
+              </PinnedContentButton>
+            )}
+          </TabRow>
+          {/* hide for now
+      <TabRow style={{padding: '10px 40px', textAlign: 'center'}}><TYPE.title10 color={'#FF6161'}>Price change exceeds slippage tolerance. Adjust and retry.</TYPE.title10> </TabRow> */}
+          <AddWalletText>Add Asset to Wallet</AddWalletText>
+        </>
+      )}
     </>
   )
 }

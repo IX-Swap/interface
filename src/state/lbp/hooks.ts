@@ -61,6 +61,18 @@ export const useGetLbpByName = () => {
   )
 }
 
+export const useGetLBPAuthorization = () => {
+  return React.useCallback((id: number) => apiService.get(`/lbp/${id}/authorization`).then((res) => res.data as LbpFormValues), [])
+}
+
+
+// export const useGetLBPAuthorization = () => {
+//   return React.useCallback(
+//     () => apiService.get('/lbp/2/authorization').then((res) => res.data as Lbp),
+//     []
+//   )
+// }
+
 export const useCreateLbp = () => {
   return React.useCallback((name: string) => apiService.post('/lbp/draft', { name }).then((res) => res.data as Lbp), [])
 }
