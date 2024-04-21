@@ -9,7 +9,7 @@ import { text8 } from 'components/LaunchpadMisc/typography'
 import { LbpCreateButton } from '../LbpCreateButton'
 
 const tabs = [
-  { title: 'Draft', value: LbpStatus.draft },
+  { title: 'Drafts', value: LbpStatus.draft },
   { title: 'Pending', value: LbpStatus.pending },
   { title: 'Live', value: LbpStatus.live },
   { title: 'Ended', value: LbpStatus.ended },
