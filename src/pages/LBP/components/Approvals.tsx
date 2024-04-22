@@ -4,7 +4,7 @@ import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers } from 'ethers'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useMemo } from 'react'
 import { getTokenOption } from './Tokenomics'
 import { ReactComponent as Checked } from '../../../assets/images/check-2.svg'
 
@@ -61,7 +61,7 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
 
   const [approvalA, approveACallback] = useApproveCallback(
     tokenCurrencyA
-      ? CurrencyAmount.fromRawAmount(tokenCurrencyA, ethers.utils.parseUnits(assetValue?.toString() || '0', 18) as any)
+      ? CurrencyAmount.fromRawAmount(tokenCurrencyA, ethers.utils.parseUnits(shareValue?.toString() || '0', 18) as any)
       : undefined,
     contractAddress || ''
   )
@@ -70,19 +70,25 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
     tokenCurrencyB
       ? CurrencyAmount.fromRawAmount(
           tokenCurrencyB,
-          ethers.utils.parseUnits(shareValue?.toString() || '0', tokenBOption?.tokenDecimals) as any
+          ethers.utils.parseUnits(assetValue?.toString() || '0', tokenBOption?.tokenDecimals) as any
         )
       : undefined,
     contractAddress || ''
   )
 
-  const [buttonTextA, setButtonTextA] = useState('Approve Asset')
-  const [buttonTextB, setButtonTextB] = useState('Approve Share')
+  const getApprovalButtonText = (approvalState: ApprovalState) => {
+    switch (approvalState) {
+      case ApprovalState.APPROVED:
+        return 'Approved'
+      case ApprovalState.PENDING:
+        return 'Approving...'
+      default:
+        return 'Approve Asset'
+    }
+  }
 
-  useEffect(() => {
-    setButtonTextA(approvalA === 'APPROVED' ? 'Approved' : approvalA === 'PENDING' ? 'Approving...' : 'Approve Asset')
-    setButtonTextB(approvalB === 'APPROVED' ? 'Approved' : approvalB === 'PENDING' ? 'Approving...' : 'Approve Share')
-  }, [approvalA, approvalB])
+  const buttonTextA = useMemo(() => getApprovalButtonText(approvalA), [approvalA])
+  const buttonTextB = useMemo(() => getApprovalButtonText(approvalB), [approvalB])
 
   const handleButtonAssetClick = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
