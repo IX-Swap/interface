@@ -1,12 +1,12 @@
 import styled from 'styled-components'
-import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
-import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
+import { ReactComponent as SerenityIcon } from '../../../assets/images/serenity.svg'
 import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
-import { NewApproveButton } from 'components/Button'
-import { ReactComponent as ExternalIcon } from '../../../assets/images/rightcheck.svg'
-import { useAccreditedToken } from 'state/user/hooks'
-import { useDerivedMintInfo } from 'state/mint/hooks'
-import { Field } from 'state/mint/actions'
+import { useCurrency } from 'hooks/Tokens'
+import { CurrencyAmount } from '@ixswap1/sdk-core'
+import { ethers } from 'ethers'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { getTokenOption } from './Tokenomics'
+import { ReactComponent as Checked } from '../../../assets/images/check-2.svg'
 
 const CardContainer = styled.div`
   display: flex;
@@ -17,12 +17,13 @@ const CardContainer = styled.div`
   }
 `
 
-const Card = styled.div`
+const Card = styled.div<{ approved: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid #e6e6ff;
+  border: 1px solid ${({ approved }) => (approved ? '#24E49F' : '#e6e6ff')};
+  background: ${({ approved }) => (approved ? '#e9fcf6' : '#ffffff')};
   border-radius: 6px;
   width: calc(50% - 10px);
   height: 200px;
@@ -33,60 +34,122 @@ const Card = styled.div`
   }
 `
 
-const Button = styled.button`
-  border: 1px solid #e6e6ff;
-  color: #6666ff;
+const Button = styled.button<{ approved: boolean }>`
+  border: 1px solid ${({ approved }) => (approved ? '#24E49F' : '#e6e6ff')};
+  background: ${({ approved }) => (approved ? '#e9fcf6' : '#ffffff')};
+  color: ${({ approved }) => (approved ? '#292933E5' : '#6666ff')};
   width: 250px;
   height: 48px;
   border-radius: 6px;
-  background-color: #ffffff;
   cursor: pointer;
   font-size: 16px;
+  position: relative;
 `
 
 interface Props {
   addressA?: string
   addressB: string
+  shareValue: number
+  assetValue: number
+  contractAddress: string
 }
 
-export default function Approvals({ addressA, addressB }: Props) {
-  const currencyA = useAccreditedToken({ currencyId: addressA }) as any
-  const currencyB = useAccreditedToken({ currencyId: addressB }) as any
-  const {
-    parsedAmounts,
-  } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
-  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], addressA)
-  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], addressB)
+export default function Approvals({ addressA, addressB, assetValue, shareValue, contractAddress }: Props) {
+  const tokenCurrencyA = useCurrency(addressA)
+  const tokenCurrencyB = useCurrency(addressB)
+  const tokenBOption = useMemo(() => getTokenOption(addressB, tokenCurrencyB?.chainId || 1), [addressB, tokenCurrencyB])
+
+  const [approvalA, approveACallback] = useApproveCallback(
+    useMemo(
+      () =>
+        tokenCurrencyA
+          ? CurrencyAmount.fromRawAmount(
+              tokenCurrencyA,
+              ethers.utils.parseUnits(assetValue?.toString() || '0', 18) as any
+            )
+          : undefined,
+      [tokenCurrencyA, assetValue]
+    ),
+    useMemo(() => contractAddress || '', [contractAddress])
+  )
+
+  const [approvalB, approveBCallback] = useApproveCallback(
+    useMemo(
+      () =>
+        tokenCurrencyB
+          ? CurrencyAmount.fromRawAmount(
+              tokenCurrencyB,
+              ethers.utils.parseUnits(shareValue?.toString() || '0', tokenBOption?.tokenDecimals) as any
+            )
+          : undefined,
+      [tokenCurrencyB, shareValue, tokenBOption]
+    ),
+    useMemo(() => contractAddress || '', [contractAddress])
+  )
+
+  const buttonTextA = useMemo(
+    () => (approvalA === 'APPROVED' ? 'Approved' : approvalA === 'PENDING' ? 'Approving...' : 'Approve Asset'),
+    [approvalA]
+  )
+
+  const buttonTextB = useMemo(
+    () => (approvalB === 'APPROVED' ? 'Approved' : approvalB === 'PENDING' ? 'Approving...' : 'Approve Share'),
+    [approvalB]
+  )
+
+  const handleButtonAssetClick = useCallback(
+    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      event.preventDefault()
+      try {
+        await approveACallback()
+      } catch (error) {
+        console.error('Approval failed', error)
+      }
+    },
+    [approveACallback]
+  )
+
+  const handleButtonShareClick = useCallback(
+    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      event.preventDefault()
+      try {
+        await approveBCallback()
+      } catch (error) {
+        console.error('Approval failed', error)
+      }
+    },
+    [approveBCallback]
+  )
 
   return (
     <CardContainer>
-      <Card>
-        <Serenity />
+      <Card approved={approvalA === 'APPROVED'}>
+        <SerenityIcon />
         <p style={{ color: '#292933', fontWeight: '600', fontSize: '16px', textAlign: 'center' }}>Approve Serenity</p>
-        {approvalA !== ApprovalState.APPROVED && <Button onClick={approveACallback}>Approve Share</Button>}
-        {approvalA === ApprovalState.APPROVED && (
-          <NewApproveButton
-            data-testid="approved-currency-a"
-            style={{ flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2, gap: '10px' }}
-          >
-            <ExternalIcon />
-            <span>Approved Share</span>
-          </NewApproveButton>
-        )}
+
+        <Button
+          approved={approvalA === 'APPROVED'}
+          disabled={approvalA === 'APPROVED'}
+          onClick={handleButtonAssetClick}
+        >
+          {approvalA === 'APPROVED' && <Checked style={{ position: 'absolute', left: '24%' }} />}
+
+          {buttonTextA}
+        </Button>
       </Card>
-      <Card>
-        <USDC />
-        <p style={{ color: '#292933', fontWeight: '600', fontSize: '16px', textAlign: 'center' }}>Approve USDC</p>
-        {approvalA !== ApprovalState.APPROVED && <Button onClick={approveBCallback}>Approve Asset</Button>}
-        {approvalB === ApprovalState.APPROVED && (
-          <NewApproveButton
-            data-testid="approved-currency-b"
-            style={{ flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2, gap: '10px' }}
-          >
-            <ExternalIcon />
-            <span>Approved Asset</span>
-          </NewApproveButton>
-        )}
+      <Card approved={approvalB === 'APPROVED'}>
+        <img src={tokenBOption?.logo} alt={`${tokenBOption?.tokenSymbol} logo`} />
+        <p style={{ color: '#292933', fontWeight: '600', fontSize: '16px', textAlign: 'center' }}>
+          Approve {tokenBOption?.tokenSymbol}
+        </p>
+        <Button
+          approved={approvalB === 'APPROVED'}
+          disabled={approvalB === 'APPROVED'}
+          onClick={handleButtonShareClick}
+        >
+          {approvalB === 'APPROVED' && <Checked style={{ position: 'absolute', left: '24%' }} />}
+          {buttonTextB}
+        </Button>
       </Card>
     </CardContainer>
   )

@@ -278,7 +278,13 @@ export default function LBPForm() {
               <Trans>Approvals</Trans>
             </RowStart>
             <Column style={{ gap: '20px' }}>
-              <Approvals addressA={formData.tokenomics.shareAddress} addressB={formData.tokenomics.assetTokenAddress} />
+              <Approvals
+                shareValue={formData?.tokenomics?.shareInput}
+                assetValue={formData?.tokenomics?.assetInput}
+                addressA={formData.tokenomics.shareAddress}
+                addressB={formData.tokenomics.assetTokenAddress}
+                contractAddress={formData?.tokenomics?.contractAddress || ''}
+              />
             </Column>
           </FormCard>
         </Column>
