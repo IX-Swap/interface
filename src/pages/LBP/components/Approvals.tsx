@@ -54,6 +54,11 @@ interface Props {
   contractAddress: string
 }
 
+enum ApprovalType {
+  ASSET = 'asset',
+  SHARE = 'share',
+}
+
 export default function Approvals({ addressA, addressB, assetValue, shareValue, contractAddress }: Props) {
   const tokenCurrencyA = useCurrency(addressA)
   const tokenCurrencyB = useCurrency(addressB)
@@ -76,20 +81,20 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
     contractAddress || ''
   )
 
-  const getApprovalButtonText = (approvalState: ApprovalState) => {
+  const getApprovalButtonText = (approvalState: ApprovalState, type: ApprovalType) => {
     switch (approvalState) {
       case ApprovalState.APPROVED:
         return 'Approved'
       case ApprovalState.PENDING:
-        return 'Approving...'
+        return `Approving ${type === ApprovalType.ASSET ? 'Asset' : 'Share'}...`
       default:
-        return 'Approve Asset'
+        return `Approve ${type === ApprovalType.ASSET ? 'Asset' : 'Share'}`
     }
   }
 
-  const buttonTextA = useMemo(() => getApprovalButtonText(approvalA), [approvalA])
-  const buttonTextB = useMemo(() => getApprovalButtonText(approvalB), [approvalB])
-
+  const buttonTextA = useMemo(() => getApprovalButtonText(approvalA, ApprovalType.ASSET), [approvalA])
+  const buttonTextB = useMemo(() => getApprovalButtonText(approvalB, ApprovalType.SHARE), [approvalB])
+  
   const handleButtonAssetClick = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       event.preventDefault()
@@ -114,6 +119,7 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
     [approveBCallback]
   )
 
+  console.log(approvalA, approvalB)
   return (
     <CardContainer>
       <Card approved={approvalA === 'APPROVED'}>
