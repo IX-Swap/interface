@@ -26,7 +26,6 @@ export function useApproveCallback(
   const token = amountToApprove?.currency?.isToken ? amountToApprove.currency : undefined
   const currentAllowance = useTokenAllowance(token, account ?? undefined, spender)
   const pendingApproval = useHasPendingApproval(token?.address, spender)
-
   // check the current approval status
   const approvalState: ApprovalState = useMemo(() => {
     if (!amountToApprove || !spender) return ApprovalState.UNKNOWN
@@ -44,6 +43,7 @@ export function useApproveCallback(
 
   const tokenContract = useTokenContract(token?.address)
   const addTransaction = useTransactionAdder()
+
 
   const approve = useCallback(async (): Promise<void> => {
     if (approvalState !== ApprovalState.NOT_APPROVED) {

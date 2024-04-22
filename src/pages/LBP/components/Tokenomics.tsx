@@ -181,6 +181,12 @@ export const TokenOptions = (chainId: number) => [
     logo: ixsDropDown,
   },
 ]
+export const getTokenOption = (tokenAddress: string, chainId: number) => {
+  const tokenOption = TokenOptions(chainId).find(option => option.tokenAddress === tokenAddress);
+  return tokenOption;
+};
+
+
 
 interface TokenomicsData {
   shareAddress: string
