@@ -20,8 +20,6 @@ import { useLoader } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { useHistory } from 'react-router-dom'
 import { TYPE } from 'theme'
-import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
-import Modal from 'components/Modal'
 import { SubmitSummary } from 'components/LBP/Forms/SubmitSummary'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 
@@ -86,9 +84,11 @@ export default function LBPForm() {
 
   useEffect(() => {
     const getLbpAsync = async () => {
-      const lbp = await getLbp(lbpId)
-      const loadedFormData = transformDataForLoading(lbp)
-      setFormData(loadedFormData)
+      if (lbpId) {
+        const lbp = await getLbp(lbpId)
+        const loadedFormData = transformDataForLoading(lbp)
+        setFormData(loadedFormData)
+      }
     }
 
     getLbpAsync()
