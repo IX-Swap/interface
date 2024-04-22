@@ -81,9 +81,7 @@ export const InvestmentList: React.FC<Props> = (props) => {
           {props.hasMore && <PaginationTrigger isLoading={props.isLoading} onTriggered={props.fetchMore} />}
         </div>
       )}
-      {activeTab === InvesmentTabs.lbp && (
-        <LbpList />
-      )}
+      {activeTab === InvesmentTabs.lbp && <LbpList />}
     </InvestmentListContainer>
   )
 }
@@ -128,12 +126,13 @@ const Tabs = styled.div`
   align-items: center;
   gap: 1rem;
   height: 100%;
+  padding: 0.5rem 0rem;
 `
 
 const Tab = styled.div<{ active: boolean }>`
   display: grid;
   place-content: center;
-  padding: 0.25rem 1rem;
+  padding: 1.5rem 1rem;
   height: 100%;
   cursor: pointer;
 
