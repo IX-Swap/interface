@@ -119,7 +119,6 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
     [approveBCallback]
   )
 
-  console.log(approvalA, approvalB)
   return (
     <CardContainer>
       <Card approved={approvalA === 'APPROVED'}>
