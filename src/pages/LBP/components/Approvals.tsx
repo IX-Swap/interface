@@ -4,7 +4,7 @@ import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers } from 'ethers'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { getTokenOption } from './Tokenomics'
 import { ReactComponent as Checked } from '../../../assets/images/check-2.svg'
 
@@ -57,45 +57,32 @@ interface Props {
 export default function Approvals({ addressA, addressB, assetValue, shareValue, contractAddress }: Props) {
   const tokenCurrencyA = useCurrency(addressA)
   const tokenCurrencyB = useCurrency(addressB)
-  const tokenBOption = useMemo(() => getTokenOption(addressB, tokenCurrencyB?.chainId || 1), [addressB, tokenCurrencyB])
+  const tokenBOption = getTokenOption(addressB, tokenCurrencyB?.chainId || 1)
 
   const [approvalA, approveACallback] = useApproveCallback(
-    useMemo(
-      () =>
-        tokenCurrencyA
-          ? CurrencyAmount.fromRawAmount(
-              tokenCurrencyA,
-              ethers.utils.parseUnits(assetValue?.toString() || '0', 18) as any
-            )
-          : undefined,
-      [tokenCurrencyA, assetValue]
-    ),
-    useMemo(() => contractAddress || '', [contractAddress])
+    tokenCurrencyA
+      ? CurrencyAmount.fromRawAmount(tokenCurrencyA, ethers.utils.parseUnits(assetValue?.toString() || '0', 18) as any)
+      : undefined,
+    contractAddress || ''
   )
 
   const [approvalB, approveBCallback] = useApproveCallback(
-    useMemo(
-      () =>
-        tokenCurrencyB
-          ? CurrencyAmount.fromRawAmount(
-              tokenCurrencyB,
-              ethers.utils.parseUnits(shareValue?.toString() || '0', tokenBOption?.tokenDecimals) as any
-            )
-          : undefined,
-      [tokenCurrencyB, shareValue, tokenBOption]
-    ),
-    useMemo(() => contractAddress || '', [contractAddress])
+    tokenCurrencyB
+      ? CurrencyAmount.fromRawAmount(
+          tokenCurrencyB,
+          ethers.utils.parseUnits(shareValue?.toString() || '0', tokenBOption?.tokenDecimals) as any
+        )
+      : undefined,
+    contractAddress || ''
   )
 
-  const buttonTextA = useMemo(
-    () => (approvalA === 'APPROVED' ? 'Approved' : approvalA === 'PENDING' ? 'Approving...' : 'Approve Asset'),
-    [approvalA]
-  )
+  const [buttonTextA, setButtonTextA] = useState('Approve Asset')
+  const [buttonTextB, setButtonTextB] = useState('Approve Share')
 
-  const buttonTextB = useMemo(
-    () => (approvalB === 'APPROVED' ? 'Approved' : approvalB === 'PENDING' ? 'Approving...' : 'Approve Share'),
-    [approvalB]
-  )
+  useEffect(() => {
+    setButtonTextA(approvalA === 'APPROVED' ? 'Approved' : approvalA === 'PENDING' ? 'Approving...' : 'Approve Asset')
+    setButtonTextB(approvalB === 'APPROVED' ? 'Approved' : approvalB === 'PENDING' ? 'Approving...' : 'Approve Share')
+  }, [approvalA, approvalB])
 
   const handleButtonAssetClick = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
