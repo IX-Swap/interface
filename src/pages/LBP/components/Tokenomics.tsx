@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { TextInput } from 'pages/KYC/common'
@@ -24,6 +23,8 @@ import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { IXS_ADDRESS, TOKEN_ADDRESSES } from 'constants/addresses'
 import { useWeb3React } from '@web3-react/core'
+import { useTokenContract } from 'hooks/useContract'
+import { formatUnits } from 'ethers/lib/utils'
 
 const Container = styled.div`
   width: 100%;
@@ -211,10 +212,11 @@ const validationSchema = Yup.object().shape({
 interface ProjectInfoProps {
   onChange: (data: any) => void
   formDataTokenomics: TokenomicsData
+  shareTitle: string
 }
 
 // Refactored Tokenomics component
-const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
+const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
   const [isOpen, setIsOpen] = useState(false)
@@ -223,7 +225,15 @@ const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
     logo: ixsDropDown,
   })
 
-  const { chainId } = useWeb3React()
+  const [decimals, setDecimals] = useState<any>({
+    shareDecimals: 0,
+    assetDecimals: 0,
+  })
+
+  const [balances, setBalances] = useState<any>({
+    assetBalance: '',
+    shareBalance: '',
+  })
 
   const [formData, setFormData] = useState<TokenomicsData>({
     shareAddress: formDataTokenomics.shareAddress,
@@ -256,6 +266,35 @@ const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
     validationSchema: validationSchema,
     onSubmit: () => {},
   })
+
+  const assetTokenContract = useTokenContract(formDataTokenomics.assetTokenAddress ?? '')
+  const shareTokenContract = useTokenContract(formDataTokenomics.shareAddress ?? '')
+
+  const { chainId, account } = useWeb3React()
+
+  useEffect(() => {
+    if (!assetTokenContract || !shareTokenContract || !account) return
+
+    const loadBalance = async () => {
+      const assetBalance = await assetTokenContract.balanceOf(account)
+      const assetDecimals = await assetTokenContract.decimals()
+
+      const shareBalance = await shareTokenContract.balanceOf(account)
+      const shareDecimals = await shareTokenContract.decimals()
+
+      setBalances({
+        assetBalance: formatUnits(assetBalance, assetDecimals),
+        shareBalance: formatUnits(shareBalance, shareDecimals),
+      })
+
+      setDecimals({
+        shareDecimals: shareDecimals,
+        assetDecimals: assetDecimals,
+      })
+    }
+
+    loadBalance()
+  }, [account, assetTokenContract, shareTokenContract])
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     const newStartValue = Math.min(Math.max(newValue as number, 3), 100)
@@ -377,10 +416,10 @@ const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
               }}
             >
               <Disabled />
-              <TYPE.label fontSize={'14px'}>Serenity</TYPE.label>
+              <TYPE.label fontSize={'14px'}>{shareTitle}</TYPE.label>
             </div>
             <SpanBal>
-              Balance: <b>4,000.00</b>
+              Balance: <b>{balances?.shareBalance}</b>
             </SpanBal>
           </TokenomicsItem>
           <TokenomicsItem>
@@ -436,7 +475,7 @@ const Tokenomics = ({ onChange, formDataTokenomics }: ProjectInfoProps) => {
               </LanguageOptions>
             </LanguageSelectContainer>
             <SpanBal>
-              Balance: <b>4,000.00</b>
+              Balance: <b>{balances?.assetBalance}</b>
             </SpanBal>
           </TokenomicsItem>
           <TokenomicsItem>

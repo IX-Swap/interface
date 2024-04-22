@@ -1,0 +1,813 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "implementation_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "feeRecipient",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "proxyManager",
+        "type": "address"
+      },
+      {
+        "internalType": "uint48",
+        "name": "platformFee",
+        "type": "uint48"
+      },
+      {
+        "internalType": "uint48",
+        "name": "referrerFee",
+        "type": "uint48"
+      },
+      {
+        "internalType": "uint48",
+        "name": "swapFee",
+        "type": "uint48"
+      },
+      {
+        "internalType": "address[]",
+        "name": "operators",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "AccessControlBadConfirmation",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "neededRole",
+        "type": "bytes32"
+      }
+    ],
+    "name": "AccessControlUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidAssetOrShare",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidAssetValue",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidWeightConfig",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MaxFeeExceeded",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SalePeriodLow",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
+    ],
+    "name": "FeeRecipientSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "fee",
+        "type": "uint256"
+      }
+    ],
+    "name": "PlatformFeeSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pool",
+        "type": "address"
+      }
+    ],
+    "name": "PoolCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "manager",
+        "type": "address"
+      }
+    ],
+    "name": "ProxyManagerSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "fee",
+        "type": "uint256"
+      }
+    ],
+    "name": "ReferrerFeeSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "previousAdminRole",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "newAdminRole",
+        "type": "bytes32"
+      }
+    ],
+    "name": "RoleAdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "RoleGranted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "RoleRevoked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "fee",
+        "type": "uint256"
+      }
+    ],
+    "name": "SwapFeeSet",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "DEFAULT_ADMIN_ROLE",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "OPERATOR_ROLE",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "asset",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "share",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "shareWhitelistProxy",
+            "type": "address"
+          },
+          {
+            "internalType": "uint88",
+            "name": "virtualAssets",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "virtualShares",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "maxSharePrice",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "maxSharesOut",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "maxAssetsIn",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint64",
+            "name": "weightStart",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "weightEnd",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint40",
+            "name": "saleStart",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "saleEnd",
+            "type": "uint40"
+          },
+          {
+            "internalType": "bool",
+            "name": "sellingAllowed",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "authorized",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct PoolSettings",
+        "name": "args",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "assets",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "salt",
+        "type": "bytes32"
+      }
+    ],
+    "name": "createLiquidityBootstrapPool",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "pool",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "factorySettings",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "feeRecipient",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "proxyManager",
+        "type": "address"
+      },
+      {
+        "internalType": "uint48",
+        "name": "platformFee",
+        "type": "uint48"
+      },
+      {
+        "internalType": "uint48",
+        "name": "referrerFee",
+        "type": "uint48"
+      },
+      {
+        "internalType": "uint48",
+        "name": "swapFee",
+        "type": "uint48"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getRoleAdmin",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "grantRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "hasRole",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "feeRecipient",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "proxyManager",
+        "type": "address"
+      },
+      {
+        "internalType": "uint48",
+        "name": "platformFee",
+        "type": "uint48"
+      },
+      {
+        "internalType": "uint48",
+        "name": "referrerFee",
+        "type": "uint48"
+      },
+      {
+        "internalType": "uint48",
+        "name": "swapFee",
+        "type": "uint48"
+      }
+    ],
+    "name": "modifySettings",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "asset",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "share",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "shareWhitelistProxy",
+            "type": "address"
+          },
+          {
+            "internalType": "uint88",
+            "name": "virtualAssets",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "virtualShares",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "maxSharePrice",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "maxSharesOut",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "maxAssetsIn",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint64",
+            "name": "weightStart",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "weightEnd",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint40",
+            "name": "saleStart",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "saleEnd",
+            "type": "uint40"
+          },
+          {
+            "internalType": "bool",
+            "name": "sellingAllowed",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "authorized",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct PoolSettings",
+        "name": "args",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "salt",
+        "type": "bytes32"
+      }
+    ],
+    "name": "predictDeterministicAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "asset",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "share",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "shareWhitelistProxy",
+            "type": "address"
+          },
+          {
+            "internalType": "uint88",
+            "name": "virtualAssets",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "virtualShares",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "maxSharePrice",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "maxSharesOut",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint88",
+            "name": "maxAssetsIn",
+            "type": "uint88"
+          },
+          {
+            "internalType": "uint64",
+            "name": "weightStart",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "weightEnd",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint40",
+            "name": "saleStart",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "saleEnd",
+            "type": "uint40"
+          },
+          {
+            "internalType": "bool",
+            "name": "sellingAllowed",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "authorized",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct PoolSettings",
+        "name": "args",
+        "type": "tuple"
+      }
+    ],
+    "name": "predictInitCodeHash",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "callerConfirmation",
+        "type": "address"
+      }
+    ],
+    "name": "renounceRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "revokeRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
+    ],
+    "name": "setFeeRecipient",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint48",
+        "name": "fee",
+        "type": "uint48"
+      }
+    ],
+    "name": "setPlatformFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "manager",
+        "type": "address"
+      }
+    ],
+    "name": "setProxyManager",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint48",
+        "name": "fee",
+        "type": "uint48"
+      }
+    ],
+    "name": "setReferrerFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint48",
+        "name": "fee",
+        "type": "uint48"
+      }
+    ],
+    "name": "setSwapFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
+      }
+    ],
+    "name": "supportsInterface",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

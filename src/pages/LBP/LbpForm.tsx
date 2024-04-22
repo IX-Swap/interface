@@ -56,6 +56,7 @@ export default function LBPForm() {
     },
     tokenomics: {
       shareAddress: '',
+      contractAddress: '',
       assetTokenAddress: '',
       assetTokenSymbol: '',
       shareInput: 0,
@@ -124,8 +125,20 @@ export default function LBPForm() {
     const hasSocialLinks = formData.projectInfo.socialLinks?.length > 0
     const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
     const hasUploadDocs = formData.projectInfo.uploadDocs?.length > 0
+
+    // TODO: remove console logs
+    console.info('formData', formData)
+
+    console.info('brandingComplete', brandingComplete)
+    console.info('projectInfoComplete', projectInfoComplete)
+    console.info('tokenomicsComplete', tokenomicsComplete)
+    console.info('hasSocialLinks', hasSocialLinks)
+    console.info('hasWhitepapers', hasWhitepapers)
     setCanSubmit(
-      brandingComplete && projectInfoComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers && hasUploadDocs
+      // TODO: enable check check projectInfoComplete, hasUploadDocs after fixing uploading docs
+      // temporarily not check projectInfoComplete, hasUploadDocs as there is a bug documents are not loaded
+      brandingComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers
+      // brandingComplete && projectInfoComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers && hasUploadDocs
     )
   }
 
@@ -201,6 +214,7 @@ export default function LBPForm() {
       },
       tokenomics: {
         shareAddress: data.shareAddress,
+        contractAddress: data.contractAddress,
         assetTokenAddress: data.assetTokenAddress,
         assetTokenSymbol: data.assetTokenSymbol,
         shareInput: data.shareAmount,
@@ -251,7 +265,11 @@ export default function LBPForm() {
               <Trans>Tokenomics</Trans>
             </RowStart>
             <Column style={{ gap: '20px' }}>
-              <Tokenomics formDataTokenomics={formData.tokenomics} onChange={handleTokenomicsChange} />
+              <Tokenomics
+                formDataTokenomics={formData.tokenomics}
+                onChange={handleTokenomicsChange}
+                shareTitle={formData.projectInfo.title}
+              />
             </Column>
           </FormCard>
 
@@ -260,7 +278,7 @@ export default function LBPForm() {
               <Trans>Approvals</Trans>
             </RowStart>
             <Column style={{ gap: '20px' }}>
-              <Approvals />
+              <Approvals addressA={formData.tokenomics.shareAddress} addressB={formData.tokenomics.assetTokenAddress} />
             </Column>
           </FormCard>
         </Column>
