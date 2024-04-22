@@ -294,7 +294,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
     }
 
     loadBalance()
-  }, [assetTokenContract, shareTokenContract])
+  }, [account, assetTokenContract, shareTokenContract])
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     const newStartValue = Math.min(Math.max(newValue as number, 3), 100)
