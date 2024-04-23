@@ -150,14 +150,16 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
     }
 
     if (linkType === 'Social Links') {
+      const socialLinks = Array.isArray(projectInfoData.socialLinks) ? projectInfoData.socialLinks : [];
       updatedData = {
         ...projectInfoData,
-        socialLinks: [...projectInfoData.socialLinks, newLink],
+        socialLinks: [...socialLinks, newLink],
       }
     } else if (linkType === 'Whitepapers') {
+      const whitepapers = Array.isArray(projectInfoData.whitepapers) ? projectInfoData.whitepapers : [];
       updatedData = {
         ...projectInfoData,
-        whitepapers: [...projectInfoData.whitepapers, newLink],
+        whitepapers: [...whitepapers, newLink],
       }
     }
 
@@ -279,7 +281,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         onBlur={formik.handleBlur}
         // value={formik.values.title}
       />
-      {formik.touched.title && formik.errors.title ? <ErrorText>{formik.errors.title}</ErrorText> : null}
+      {formik.touched.title && !formData.title ? <ErrorText>{formik.errors.title}</ErrorText> : null}
       <Box width={1} mb={3}>
         <Label htmlFor="description" flexDirection="column" mb={2}>
           <Box>
@@ -298,7 +300,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
           onBlur={formik.handleBlur}
           style={{ height: '126px' }}
         />
-        {formik.touched.description && formik.errors.description ? (
+        {formik.touched.description && !formData.description ? (
           <ErrorText>{formik.errors.description}</ErrorText>
         ) : null}
       </Box>
@@ -311,7 +313,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         label="Official Website"
         onBlur={formik.handleBlur}
       />
-      {formik.touched.website && formik.errors.website ? <ErrorText>{formik.errors.website}</ErrorText> : null}
+      {formik.touched.website && !formData.website ? <ErrorText>{formik.errors.website}</ErrorText> : null}
 
       <FormArray
         label="Social Links"
@@ -323,23 +325,26 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         openModal={openModal}
         onBlur={formik.handleBlur}
       />
-      {formik.touched.socialLinks && formik.errors.socialLinks ? (
+      {formik.touched.socialLinks && !formData.socialLinks ? (
         <ErrorText>{formik.errors.socialLinks}</ErrorText>
       ) : null}
 
       <FormArray
         label="Whitepapers"
+        name='whitepapers'
+        id="whitepapers"
         items={projectInfoData?.whitepapers?.map((whitepaper: any) => whitepaper.url)}
         removeItem={(index: number) => handleRemoveItem(index, 'whitepapers')}
         handleChange={handleFormArrayChange}
         openModal={openModal}
+        onBlur={formik.handleBlur}
       />
 
       <Label htmlFor="description" flexDirection="column" mb={2}>
         <Box>
-          <TYPE.subHeader1>
-            <Trans>Upload Documents</Trans>
-          </TYPE.subHeader1>
+          {/* <TYPE.subHeader1> */}
+            <TYPE.label marginBottom={'6px'} fontSize={'16px'}>Upload Documents</TYPE.label>
+          {/* </TYPE.subHeader1> */}
           <TYPE.description3 color={'#666680'}>
             <Trans>
               All documents should be dated within the last 3 months. Type of document format supported is PDF, JPG, and

@@ -45,13 +45,20 @@ const Button = styled.button<{ approved: boolean }>`
   font-size: 16px;
   position: relative;
 `
+const LogoIcon = styled.img`
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+`
 
 interface Props {
   addressA?: string
   addressB: string
-  shareValue: number
-  assetValue: number
-  contractAddress: string
+  shareValue?: number
+  assetValue?: number
+  contractAddress?: string
+  shareName?: string
+  shareLogo?: any
 }
 
 enum ApprovalType {
@@ -59,7 +66,15 @@ enum ApprovalType {
   SHARE = 'share',
 }
 
-export default function Approvals({ addressA, addressB, assetValue, shareValue, contractAddress }: Props) {
+export default function Approvals({
+  addressA,
+  addressB,
+  assetValue,
+  shareValue,
+  contractAddress,
+  shareName,
+  shareLogo,
+}: Props) {
   const tokenCurrencyA = useCurrency(addressA)
   const tokenCurrencyB = useCurrency(addressB)
   const tokenBOption = getTokenOption(addressB, tokenCurrencyB?.chainId || 1)
@@ -92,9 +107,9 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
     }
   }
 
-  const buttonTextA = useMemo(() => getApprovalButtonText(approvalA, ApprovalType.ASSET), [approvalA])
-  const buttonTextB = useMemo(() => getApprovalButtonText(approvalB, ApprovalType.SHARE), [approvalB])
-  
+  const buttonTextA = useMemo(() => getApprovalButtonText(approvalA, ApprovalType.SHARE), [approvalA])
+  const buttonTextB = useMemo(() => getApprovalButtonText(approvalB, ApprovalType.ASSET), [approvalB])
+
   const handleButtonAssetClick = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       event.preventDefault()
@@ -119,11 +134,36 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
     [approveBCallback]
   )
 
+  const renderLogo = (shareLogo: any) => {
+    return (
+      shareLogo && typeof shareLogo === 'object' && shareLogo.public ? (
+        <LogoIcon
+          as="img"
+          src={shareLogo.public}
+          alt="Serenity Logo"
+        />
+      ) : (
+        shareLogo && (typeof shareLogo === 'string' || shareLogo instanceof File) ? (
+          <LogoIcon
+            as="img"
+            src={shareLogo instanceof File ? URL.createObjectURL(shareLogo) : shareLogo}
+            alt="Serenity Logo"
+          />
+        ) : (
+          <SerenityIcon />
+        )
+      )
+    );
+  }
+  
+
   return (
     <CardContainer>
       <Card approved={approvalA === 'APPROVED'}>
-        <SerenityIcon />
-        <p style={{ color: '#292933', fontWeight: '600', fontSize: '16px', textAlign: 'center' }}>Approve Serenity</p>
+        {renderLogo(shareLogo)}
+        <p style={{ color: '#292933', fontWeight: '600', fontSize: '16px', textAlign: 'center' }}>
+          Approve {shareName ? shareName : 'Share'}{' '}
+        </p>
 
         <Button
           approved={approvalA === 'APPROVED'}
@@ -136,9 +176,9 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
         </Button>
       </Card>
       <Card approved={approvalB === 'APPROVED'}>
-        <img src={tokenBOption?.logo} alt={`${tokenBOption?.tokenSymbol} logo`} />
+        {tokenBOption?.logo ? <img src={tokenBOption?.logo} /> : <SerenityIcon />}
         <p style={{ color: '#292933', fontWeight: '600', fontSize: '16px', textAlign: 'center' }}>
-          Approve {tokenBOption?.tokenSymbol}
+          Approve {tokenBOption?.tokenSymbol ? tokenBOption?.tokenSymbol : 'Asset'}
         </p>
         <Button
           approved={approvalB === 'APPROVED'}

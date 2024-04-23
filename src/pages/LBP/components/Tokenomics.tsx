@@ -111,7 +111,7 @@ const SpanBal = styled.span`
   margin-top: 8px;
 `
 
-const LanguageSelectContainer = styled.div`
+const TokenSelectContainer = styled.div`
   margin-top: 20px;
 `
 
@@ -128,7 +128,7 @@ const Options = styled.span`
   align-items: center;
 `
 
-const LanguageOptions = styled.div`
+const TokenOptionsWrapper = styled.div`
   display: none;
   width: 100%;
   padding: 10px 24px;
@@ -182,11 +182,9 @@ export const TokenOptions = (chainId: number) => [
   },
 ]
 export const getTokenOption = (tokenAddress: string, chainId: number) => {
-  const tokenOption = TokenOptions(chainId).find(option => option.tokenAddress === tokenAddress);
-  return tokenOption;
-};
-
-
+  const tokenOption = TokenOptions(chainId).find((option) => option.tokenAddress === tokenAddress)
+  return tokenOption
+}
 
 interface TokenomicsData {
   shareAddress: string
@@ -227,8 +225,8 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
   const [valueEnd, setEndValue] = useState<number>(30)
   const [isOpen, setIsOpen] = useState(false)
   const [selectedToken, setSelectedToken] = useState<any>({
-    tokenSymbol: 'IXS',
-    logo: ixsDropDown,
+    tokenSymbol: 'USDC.e',
+    logo: usdcDropDown,
   })
 
   const [decimals, setDecimals] = useState<any>({
@@ -303,8 +301,8 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
   }, [account, assetTokenContract, shareTokenContract])
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
-    const newStartValue = Math.min(Math.max(newValue as number, 3), 100)
-    const newEndValue = Math.min(valueEnd, newStartValue - 3)
+    const newStartValue = Math.min(Math.max(newValue as number, 1), 99)
+    const newEndValue = Math.min(valueEnd, newStartValue - 1)
     setStartValue(newStartValue)
     setEndValue(newEndValue)
     const updatedFormData = {
@@ -317,8 +315,8 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
   }
 
   const handleChangeEnd = (event: Event, newValue: number | number[]) => {
-    const newEndValue = Math.min(Math.max(newValue as number, 0), 97)
-    const newStartValue = Math.max(valueStart, newEndValue + 3)
+    const newEndValue = Math.min(Math.max(newValue as number, 1), 99)
+    const newStartValue = Math.max(valueStart, newEndValue + 1)
     setStartValue(newStartValue)
     setEndValue(newEndValue)
     const updatedFormData = {
@@ -384,7 +382,15 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
     return TokenOptions(chainId || 0).filter((option) => option.tokenAddress)
   }, [chainId])
 
-  console.info('tokenOptions', tokenOptions)
+  const renderTokenImage = (symbol: string) => {
+    const chainId = 1
+    const tokenOption = TokenOptions(chainId).find((option) => option.tokenSymbol === symbol)
+    if (tokenOption && tokenOption.logo) {
+      return <img src={tokenOption.logo} alt={symbol} />
+    } else {
+      return null
+    }
+  }
 
   return (
     <Container>
@@ -397,12 +403,13 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
         onBlur={formik.handleBlur}
         value={formDataTokenomics.shareAddress}
       />
-      {formik.touched.shareAddress && formik.errors.shareAddress ? (
+      {formik.touched.shareAddress && !formDataTokenomics.shareAddress ? (
         <ErrorText>{formik.errors.shareAddress}</ErrorText>
       ) : null}
+
       <Line style={{ margin: '40px 0px 30px 0px' }} />
       <RowStart marginBottom="32px">
-        <TYPE.label>
+        <TYPE.label fontSize={'16px'}>
           <Trans>Configure Quantities</Trans>
         </TYPE.label>
       </RowStart>
@@ -444,7 +451,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {formik.touched.shareInput && formik.errors.shareInput ? (
+        {formik.touched.shareInput && !formDataTokenomics.shareInput ? (
           <ErrorText>{formik.errors.shareInput}</ErrorText>
         ) : null}
       </>
@@ -455,12 +462,20 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
         Base Token
         <TokenomicsContainer>
           <TokenomicsItem>
-            <LanguageSelectContainer>
+            <TokenSelectContainer>
               <Options onClick={() => setIsOpen(!isOpen)}>
-                <img src={selectedToken.logo} alt={selectedToken.tokenSymbol} />
-                {selectedToken.tokenSymbol}
+                {renderTokenImage(formDataTokenomics.assetTokenSymbol)}
+                {formDataTokenomics?.assetTokenSymbol
+                  ? formDataTokenomics?.assetTokenSymbol
+                  : selectedToken.tokenSymbol}
               </Options>
-              <LanguageOptions className={isOpen ? 'open' : ''}>
+              {/* <Options onClick={() => setIsOpen(!isOpen)}>
+                <img src={selectedToken.logo} alt={selectedToken.tokenSymbol} />
+                {formDataTokenomics?.assetTokenSymbol
+                  ? formDataTokenomics?.assetTokenSymbol
+                  : selectedToken.tokenSymbol}
+              </Options> */}
+              <TokenOptionsWrapper className={isOpen ? 'open' : ''}>
                 {tokenOptions.map((option, index) => (
                   <div
                     style={{
@@ -478,8 +493,8 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
                     <span>{option.tokenSymbol}</span>
                   </div>
                 ))}
-              </LanguageOptions>
-            </LanguageSelectContainer>
+              </TokenOptionsWrapper>
+            </TokenSelectContainer>
             <SpanBal>
               Balance: <b>{balances?.assetBalance}</b>
             </SpanBal>
@@ -499,7 +514,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {formik.touched.assetInput && formik.errors.assetInput ? (
+        {formik.touched.assetInput && !formDataTokenomics.assetInput ? (
           <ErrorText>{formik.errors.assetInput}</ErrorText>
         ) : null}
       </>
@@ -515,11 +530,13 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}
       />
-      {formik.touched.maxSupply && formik.errors.maxSupply ? <ErrorText>{formik.errors.maxSupply}</ErrorText> : null}
+      {formik.touched.maxSupply && !formDataTokenomics.maxSupply ? (
+        <ErrorText>{formik.errors.maxSupply}</ErrorText>
+      ) : null}
       <Line style={{ margin: '40px 0px 30px 0px' }} />
 
       <RowStart marginBottom="32px">
-        <TYPE.label>
+        <TYPE.label fontSize={'16px'}>
           <Trans>Configure Weights</Trans>
         </TYPE.label>
       </RowStart>
@@ -659,7 +676,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
       </div>
       <Line style={{ margin: '40px 0px 30px 0px' }} />
       <RowStart marginTop="32px" marginBottom={'30px'}>
-        <TYPE.label>
+        <TYPE.label fontSize={'16px'}>
           <Trans>Configure Duration</Trans>
         </TYPE.label>
       </RowStart>
@@ -699,7 +716,9 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
             onBlur={formik.handleBlur}
             value={formDataTokenomics.minPrice}
           />
-          {formik.touched.minPrice && formik.errors.minPrice ? <ErrorText>{formik.errors.minPrice}</ErrorText> : null}
+          {formik.touched.minPrice && !formDataTokenomics.minPrice ? (
+            <ErrorText>{formik.errors.minPrice}</ErrorText>
+          ) : null}
         </div>
 
         <div style={{ display: 'block' }}>
@@ -713,7 +732,9 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
             onBlur={formik.handleBlur}
             value={formDataTokenomics.maxPrice}
           />
-          {formik.touched.maxPrice && formik.errors.maxPrice ? <ErrorText>{formik.errors.maxPrice}</ErrorText> : null}
+          {formik.touched.maxPrice && !formDataTokenomics.maxPrice ? (
+            <ErrorText>{formik.errors.maxPrice}</ErrorText>
+          ) : null}
         </div>
       </FormGrid>
     </Container>
