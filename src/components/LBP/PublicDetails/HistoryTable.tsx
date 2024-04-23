@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import {
   Table,
   TableBody,
@@ -15,6 +15,11 @@ import { TYPE } from 'theme'
 import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
 import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
 import { EmptyTable } from '../Dashboard/EmptyTable'
+import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
+import { useWeb3React } from '@web3-react/core'
+import { unixTimeToFormat } from 'utils/time'
+import { ethers } from 'ethers'
+import { getTokenOption } from 'pages/LBP/components/Tokenomics'
 
 interface Trade {
   time: string
@@ -143,12 +148,40 @@ const VerticalLine = styled('div')({
   margin: '7px 10px',
 })
 
+const composeLatestTradeQuery = (lbpAddress: string) => {
+  return `
+    {
+      trades(where:{ pool_:{ id:"${lbpAddress}"}}, orderBy: blockTimestamp, orderDirection: desc) {
+          amountOut
+          amountIn
+          blockNumber
+          blockTimestamp
+          swapFee
+          transactionHash
+          type
+          usdPrice
+          id
+          pool {
+            id
+            shareAddress
+            assetAddress
+          }
+          caller {
+            id
+          }
+      }
+    }
+  `
+}
+
 export default function TradeHistory() {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [data, setData] = useState<Trade[]>(initialData)
   const [orderBy, setOrderBy] = useState<string>('')
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
+
+  const { chainId } = useWeb3React()
 
   const handleSort = (property: keyof Trade) => {
     const isAsc = orderBy === property && order === 'asc'
@@ -169,6 +202,34 @@ export default function TradeHistory() {
       })
     )
   }
+
+  const getShareDecimals = (tokenAddress: string) => 18 // hardcoded for now
+
+  const getAssetTokenDecimals = useCallback(
+    (tokenAddress: string) => {
+      if (!chainId) return 0
+
+      const token = getTokenOption(ethers.utils.getAddress(tokenAddress), chainId)
+      const decimals = token?.tokenDecimals
+      console.info('Decimals of token', tokenAddress, 'is', decimals)
+      return decimals
+    },
+    [chainId]
+  )
+
+  const subgraphData = useSubgraphQuery({
+    feature: 'LBP',
+    chainId,
+    query: composeLatestTradeQuery('0x66b4e8ee377e5026edf2c48238d17068560af0e5'),
+    pollingInterval: 2000,
+    autoPolling: true,
+  })
+
+  const trades = useMemo(() => {
+    return subgraphData?.trades || []
+  }, [subgraphData])
+
+  console.info('trades', trades)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -242,20 +303,37 @@ export default function TradeHistory() {
                   </TableCell>
                 </TableRow>
               ) : (
-                data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+                trades.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any, index: number) => (
                   <TableRow key={index}>
                     <TableCell>
-                      <span>{row.time.split(' ')[0]}</span>{' '}
-                      <span style={{ color: '#8F8FB2' }}>{row.time.split(' ')[1]}</span>{' '}
+                      <span>{unixTimeToFormat({ time: row.blockTimestamp })}</span>{' '}
+                      {/* <span style={{ color: '#8F8FB2' }}>{row.time.split(' ')[1]}</span>{' '} */}
                     </TableCell>
-                    <TableCell>${row.tokenPrice}</TableCell>
-                    <TableCell style={{ color: '#8F8FB2' }}>{row.address}</TableCell>
+                    <TableCell>${parseFloat(row.usdPrice || 0).toFixed(2)}</TableCell>
+                    <TableCell style={{ color: '#8F8FB2' }}>{row?.caller?.id}</TableCell>
                     <TableCell style={{ display: 'flex', gap: '8px' }}>
-                      <Serenity />
-                      {row.amount}k <VerticalLine /> <USDC />{' '}
-                      <span style={{ color: index <= 4 ? '#FF6161' : '#1FBA66' }}>{row.changedAmt}k </span>
+                      {parseFloat(
+                        ethers.utils.formatUnits(
+                          row.amountIn,
+                          row.type === 'BUY'
+                            ? getAssetTokenDecimals(row.pool.assetAddress)
+                            : getShareDecimals(row.pool.shareAddress)
+                        )
+                      ).toFixed(3)}
+                      {row.type == 'BUY' ? <USDC /> : <Serenity />}
+                      <VerticalLine />
+                      {parseFloat(
+                        ethers.utils.formatUnits(
+                          row.amountOut,
+                          row.type === 'SELL'
+                            ? getAssetTokenDecimals(row.pool.assetAddress)
+                            : getShareDecimals(row.pool.shareAddress)
+                        )
+                      ).toFixed(3)}
+                      {row.type == 'SELL' ? <USDC /> : <Serenity />}
+                      <span style={{ color: index <= 4 ? '#FF6161' : '#1FBA66' }}>{row.changedAmt} </span>
                     </TableCell>
-                    {row.type === 'Buy' ? (
+                    {row.type === 'BUY' ? (
                       <StyledTableCell>
                         <StyledDivBuy>{row.type}</StyledDivBuy>
                       </StyledTableCell>
