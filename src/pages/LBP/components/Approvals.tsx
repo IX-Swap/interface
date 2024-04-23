@@ -7,6 +7,8 @@ import { ethers } from 'ethers'
 import { useCallback, useEffect, useState, useMemo } from 'react'
 import { getTokenOption } from './Tokenomics'
 import { ReactComponent as Checked } from '../../../assets/images/check-2.svg'
+import { LBP_FACTORY_ADDRESS, LBP_XTOKEN_PROXY } from 'constants/addresses'
+import { useWeb3React } from '@web3-react/core'
 
 const CardContainer = styled.div`
   display: flex;
@@ -78,12 +80,13 @@ export default function Approvals({
   const tokenCurrencyA = useCurrency(addressA)
   const tokenCurrencyB = useCurrency(addressB)
   const tokenBOption = getTokenOption(addressB, tokenCurrencyB?.chainId || 1)
+  const { chainId } = useWeb3React()
 
   const [approvalA, approveACallback] = useApproveCallback(
     tokenCurrencyA
       ? CurrencyAmount.fromRawAmount(tokenCurrencyA, ethers.utils.parseUnits(shareValue?.toString() || '0', 18) as any)
       : undefined,
-    contractAddress || ''
+    LBP_FACTORY_ADDRESS[chainId || 0] || ''
   )
 
   const [approvalB, approveBCallback] = useApproveCallback(
@@ -93,7 +96,7 @@ export default function Approvals({
           ethers.utils.parseUnits(assetValue?.toString() || '0', tokenBOption?.tokenDecimals) as any
         )
       : undefined,
-    contractAddress || ''
+    LBP_FACTORY_ADDRESS[chainId || 0] || ''
   )
 
   const getApprovalButtonText = (approvalState: ApprovalState, type: ApprovalType) => {

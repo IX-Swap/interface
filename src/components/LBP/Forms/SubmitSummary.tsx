@@ -81,6 +81,11 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
   const handleDeploy = useCallback(async () => {
     if (!lbpFactory || !lbpArgs || !assetTokenContract || !shareTokenContract) return
 
+    if (formData?.tokenomics?.contractAddress) {
+      console.log('Contract already deployed')
+      return
+    }
+
     const salt = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(formData?.id.toString()))
     const assetDecimals = await assetTokenContract.decimals()
     const shareDecimals = await shareTokenContract.decimals()
@@ -88,6 +93,7 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
     const shareAmount = ethers.utils.parseUnits(formData.tokenomics.shareInput.toString(), shareDecimals)
     const assetAmount = ethers.utils.parseUnits(formData.tokenomics.assetInput.toString(), assetDecimals)
 
+    console.info('deploying lbp with args', lbpArgs)
     console.info('Asset Amount', assetAmount.toString())
     console.info('share Amount', shareAmount.toString())
     await lbpFactory.createLiquidityBootstrapPool(lbpArgs, shareAmount, assetAmount, salt, {
