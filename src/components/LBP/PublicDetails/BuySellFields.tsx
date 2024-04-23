@@ -7,7 +7,7 @@ import { useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers, constants } from 'ethers'
-import { useLBPContract } from 'hooks/useContract'
+import { useLBPContract, useTokenContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useGetLBPAuthorization } from 'state/lbp/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
@@ -23,6 +23,7 @@ interface BuySellFieldsProps {
   tokenDecimals?: number
   shareBalance?: any
   tokenOption?: TokenOption
+  shareTokenAddress?: string
   id: any
 }
 
@@ -60,6 +61,7 @@ export default function BuySellFields({
   contractAddress,
   shareBalance,
   tokenOption,
+  shareTokenAddress,
   id,
 }: BuySellFieldsProps) {
   // UI States
@@ -67,7 +69,7 @@ export default function BuySellFields({
   // const [buttonText, setButtonText] = useState('Approve')
   const [isLoading, setIsLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
-
+  const [shareSymbol, setShareSymbol] = useState<any>('')
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
   const [inputType, setInputType] = useState<InputType>(InputType.None)
@@ -82,6 +84,7 @@ export default function BuySellFields({
   const tokenCurrency = useCurrency(assetTokenAddress)
   const { account } = useActiveWeb3React()
   const getLBPAuthorization = useGetLBPAuthorization()
+  const shareTokenContract = useTokenContract(shareTokenAddress ?? '')
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
@@ -96,20 +99,19 @@ export default function BuySellFields({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!id) return
+        const shareSymbol = await shareTokenContract?.symbol()
+        setShareSymbol(shareSymbol)
+        if (!id || !tokenBalance) return
         const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
         setButtonDisabled(isButtonDisabled)
-        if (tokenBalance) {
-          setIsLoading(false)
-        }
+        setIsLoading(false)
       } catch (error) {
         setIsLoading(false)
-        console.error('Error fetching authorization:', error)
+        console.error('Error fetching data:', error)
       }
     }
-
     fetchData()
-  }, [shareValue, assetValue, id, tokenBalance])
+  }, [shareValue, assetValue, id, tokenBalance, shareTokenContract])
 
   const handleOpenModal = (action: any) => {
     setIsModalOpen(true)
@@ -145,7 +147,10 @@ export default function BuySellFields({
           converting: false,
         }
       })
-      setOpposite(converted)
+      setOpposite(formatNumberWithDecimal(converted, 4))
+    } else {
+      // Clear the opposite value if the input is cleared
+      setOpposite('')
     }
   }
 
@@ -357,6 +362,12 @@ export default function BuySellFields({
     setAssetValue('')
   }, [assetValue, shareValue])
 
+  function formatNumberWithDecimal(number: number | string, decimalPlaces: number): string {
+    const parsedNumber = typeof number === 'string' ? parseFloat(number) : number
+    if (isNaN(parsedNumber)) return ''
+    return parsedNumber.toFixed(decimalPlaces)
+  }
+
   return (
     <>
       {isLoading ? (
@@ -378,9 +389,13 @@ export default function BuySellFields({
               <BuySellFieldsWrapper>
                 <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
               </BuySellFieldsWrapper>
-              {convertingState.inputType === InputType.Share && convertingState.converting ? 'converting...' : ''}
+              {convertingState.inputType === InputType.Share && convertingState.converting ? (
+                <Loader size="25px" />
+              ) : (
+                ''
+              )}
               <BuySellFieldsInput
-                type="text"
+                type="number"
                 placeholder="0.00"
                 name="ShareInput"
                 value={shareValue}
@@ -390,10 +405,10 @@ export default function BuySellFields({
             <BuySellFieldsItem>
               <BuySellFieldsSelect>
                 <Serenity />
-                <TYPE.body4 fontSize={'14px'}> Serenity</TYPE.body4>
+                <TYPE.body4 fontSize={'14px'}> {shareSymbol}</TYPE.body4>
               </BuySellFieldsSelect>
               <BuySellFieldsSpanBal>
-                Balance: <b style={{ color: '#292933' }}>{shareBalance}</b>
+                Balance: <b style={{ color: '#292933' }}> {formatNumberWithDecimal(shareBalance, 2)}</b>
               </BuySellFieldsSpanBal>
             </BuySellFieldsItem>
           </BuySellFieldsContainer>
@@ -403,9 +418,13 @@ export default function BuySellFields({
               <BuySellFieldsWrapper>
                 <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Asset</BuySellFieldsSpan>
               </BuySellFieldsWrapper>
-              {convertingState.inputType === InputType.Asset && convertingState.converting ? 'converting...' : ''}
+              {convertingState.inputType === InputType.Asset && convertingState.converting ? (
+                <Loader size="25px" />
+              ) : (
+                ''
+              )}
               <BuySellFieldsInput
-                type="text"
+                type="number"
                 placeholder="0.00"
                 name="assetInput"
                 value={assetValue}
@@ -421,7 +440,7 @@ export default function BuySellFields({
                 <TYPE.body4 fontSize={'14px'}> {tokenOption?.tokenSymbol}</TYPE.body4>
               </BuySellFieldsSelect>
               <BuySellFieldsSpanBal>
-                Balance: <b style={{ color: '#292933' }}>{tokenBalance} </b>
+                Balance: <b style={{ color: '#292933' }}>{formatNumberWithDecimal(tokenBalance, 2)} </b>
               </BuySellFieldsSpanBal>
             </BuySellFieldsItem>
           </BuySellFieldsContainer>
@@ -443,15 +462,19 @@ export default function BuySellFields({
             {activeTab === 'buy' ? (
               <PinnedContentButton
                 onClick={handleButtonClick}
-                disabled={assetExceedsBalance || isExecuting || buttonDisabled}
+                disabled={
+                  assetExceedsBalance || isExecuting || buttonDisabled || (shareValue === '' && assetValue === '')
+                }
               >
                 {buttonText}
               </PinnedContentButton>
             ) : (
               <PinnedContentButton
                 onClick={handleSellButtonClick}
-                style={{ backgroundColor: buttonDisabled ? '' : '#FF6161' }}
-                disabled={isExecuting}
+                disabled={isExecuting || (shareValue === '' && assetValue === '')}
+                style={{
+                  backgroundColor: isExecuting ? '' : shareValue === '' && assetValue === '' ? '' : '#FF6161',
+                }}
               >
                 {isExecuting ? 'Executing...' : 'Sell'}
               </PinnedContentButton>
@@ -538,6 +561,15 @@ const BuySellFieldsInput = styled.input<BuySellFieldsInputProps>`
     border: none;
     outline: none;
     border-color: transparent;
+  }
+
+  &[type=number]::-webkit-inner-spin-button,
+  &[type=number]::-webkit-outer-spin-button,
+  /* Firefox */
+  &[type=number]::-webkit-outer-spin-button,
+  &[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 `
 
