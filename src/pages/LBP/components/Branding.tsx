@@ -16,6 +16,7 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
     LBPLogo: null,
     LBPBanner: null,
   });
+  const [loading, setLoading] = useState<boolean>(true); // Initialize loading state
 
   const showError = useShowError();
 
@@ -44,6 +45,7 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
         fetchFileData(brandingData.LBPLogo, 'LBPLogo'),
         fetchFileData(brandingData.LBPBanner, 'LBPBanner'),
       ]);
+      setLoading(false); // Once files are fetched, set loading to false
     };
 
     fetchData();
@@ -75,32 +77,42 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
   };
 
   return (
-    <FormGrid columns={2}>
-      <div>
-        <UploaderLBP
-          name="logo"
-          onChange={(e) => handleInputChange(e, 'LBPLogo')}
-          title=""
-          files={values.LBPLogo ? [values.LBPLogo] : []}
-          onDrop={(file) => handleDropImage(file, 'LBPLogo')}
-          handleDeleteClick={() => handleImageDelete('LBPLogo')}
-        />
-        {values.LBPLogo === null && <ErrorText>Please upload a logo</ErrorText>}
-      </div>
-      <div>
-        <UploaderLBP
-          name="banner"
-          onChange={(e) => handleInputChange(e, 'LBPBanner')}
-          title=""
-          files={values.LBPBanner ? [values.LBPBanner] : []}
-          onDrop={(file) => handleDropImage(file, 'LBPBanner')}
-          handleDeleteClick={() => handleImageDelete('LBPBanner')}
-        />
-        {values.LBPBanner === null && <ErrorText>Please upload a banner</ErrorText>}
-      </div>
-    </FormGrid>
+    <>
+      {loading && <LoadingIndicator>Loading...</LoadingIndicator>}
+      {!loading && (
+        <FormGrid columns={2}>
+          <div>
+            <UploaderLBP
+              name="logo"
+              onChange={(e) => handleInputChange(e, 'LBPLogo')}
+              title=""
+              files={values.LBPLogo ? [values.LBPLogo] : []}
+              onDrop={(file) => handleDropImage(file, 'LBPLogo')}
+              handleDeleteClick={() => handleImageDelete('LBPLogo')}
+            />
+            {values.LBPLogo === null && <ErrorText>Please upload a logo</ErrorText>}
+          </div>
+          <div>
+            <UploaderLBP
+              name="banner"
+              onChange={(e) => handleInputChange(e, 'LBPBanner')}
+              title=""
+              files={values.LBPBanner ? [values.LBPBanner] : []}
+              onDrop={(file) => handleDropImage(file, 'LBPBanner')}
+              handleDeleteClick={() => handleImageDelete('LBPBanner')}
+            />
+            {values.LBPBanner === null && <ErrorText>Please upload a banner</ErrorText>}
+          </div>
+        </FormGrid>
+      )}
+    </>
   );
 }
+
+const LoadingIndicator = styled.div`
+  text-align: center;
+  margin-top: 20px;
+`;
 
 const ErrorText = styled.span`
   border: none;

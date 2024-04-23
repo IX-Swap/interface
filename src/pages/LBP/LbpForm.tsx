@@ -244,7 +244,7 @@ export default function LBPForm() {
         <Column style={{ gap: '35px' }}>
           <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Branding">
             <RowStart marginBottom="20px">
-              <Trans>Branding</Trans>
+              <TYPE.label>Branding</TYPE.label>
             </RowStart>
             <Column style={{ gap: '20px' }}>
               <Branding brandingData={formData.branding} onChange={handleBrandingChange} />
@@ -253,7 +253,7 @@ export default function LBPForm() {
 
           <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="ProjectInfo">
             <RowStart marginBottom="32px">
-              <Trans>Project information</Trans>
+              <TYPE.label>Project information</TYPE.label>
             </RowStart>
             <Column style={{ gap: '20px' }}>
               <ProjectInfo formData={formData.projectInfo} onChange={handleProjectInfoChange} />
@@ -262,7 +262,7 @@ export default function LBPForm() {
 
           <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Tokenomics">
             <RowStart marginBottom="32px">
-              <Trans>Tokenomics</Trans>
+              <TYPE.label>Tokenomics</TYPE.label>
             </RowStart>
             <Column style={{ gap: '20px' }}>
               <Tokenomics
@@ -275,7 +275,7 @@ export default function LBPForm() {
 
           <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Approvals">
             <RowStart marginBottom="32px">
-              <Trans>Approvals</Trans>
+              <TYPE.label>Approvals</TYPE.label>
             </RowStart>
             <Column style={{ gap: '20px' }}>
               <Approvals
@@ -284,6 +284,8 @@ export default function LBPForm() {
                 addressA={formData.tokenomics.shareAddress}
                 addressB={formData.tokenomics.assetTokenAddress}
                 contractAddress={formData?.tokenomics?.contractAddress || ''}
+                shareName={formData?.projectInfo?.name}
+                shareLogo={formData?.branding?.LBPLogo}
               />
             </Column>
           </FormCard>
