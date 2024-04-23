@@ -472,7 +472,9 @@ export default function BuySellFields({
               <PinnedContentButton
                 onClick={handleSellButtonClick}
                 disabled={isExecuting || (shareValue === '' && assetValue === '')}
-                style={{ backgroundColor: shareValue === '' && assetValue === '' ? '' : '#FF6161' }}
+                style={{
+                  backgroundColor: isExecuting ? '' : shareValue === '' && assetValue === '' ? '' : '#FF6161',
+                }}
               >
                 {isExecuting ? 'Executing...' : 'Sell'}
               </PinnedContentButton>
