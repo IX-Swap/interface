@@ -195,6 +195,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
             tokenDecimals={tokenDecimals}
             contractAddress={lbpData?.contractAddress}
             assetTokenAddress={lbpData?.assetTokenAddress}
+            shareTokenAddress={lbpData?.shareAddress}
             tokenBalance={tokenBalance}
             activeTab={activeTab}
             slippage={slippage}
