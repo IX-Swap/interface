@@ -16,7 +16,6 @@ export const useSubgraphQuery = ({
   autoPolling = false,
   pollingInterval = 3000,
 }: SubgraphQueryProps) => {
-  console.info('chainId', chainId)
   if (!chainId) {
     return null
   }
