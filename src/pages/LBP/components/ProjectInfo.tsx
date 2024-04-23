@@ -138,8 +138,9 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
   useEffect(() => {
     setProjectInfoData({
       ...formData,
-    });
-  }, [formData]);
+    })
+    setValues({ ...values, uploadDocs: formData.uploadDocs })
+  }, [formData, formData.uploadDocs])
 
   const handleAddLink = () => {
     let updatedData: ProjectInfoData | undefined
@@ -172,14 +173,13 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     formik.handleChange(event)
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setProjectInfoData((prevData) => ({
       ...prevData,
       [name]: value,
-    }));
-    onChange({ ...projectInfoData, [name]: value });
-  };
-  
+    }))
+    onChange({ ...projectInfoData, [name]: value })
+  }
 
   const openModal = (type: string) => {
     setLinkType(type)
@@ -201,7 +201,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
 
     const filteredFiles = files.filter((file: any) => file.size <= MAX_FILE_UPLOAD_SIZE)
 
-    const updatedFiles = [...values[key], ...filteredFiles]
+    const updatedFiles = values[key] ? [...values[key], ...filteredFiles] : [...filteredFiles]
     setValues({ ...values, [key]: updatedFiles })
     onChange({ ...projectInfoData, [key]: updatedFiles })
   }
@@ -227,8 +227,6 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
     onChange({ ...projectInfoData, [label]: updatedItems })
   }
 
-
-
   return (
     <>
       <RedesignedWideModal isOpen={isModalOpen} onDismiss={() => setIsModalOpen(false)}>
@@ -251,7 +249,6 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
               placeholder="Link Name"
               value={newLinkName}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setNewLinkName(e.target.value)}
-     
             />
             <TextInput
               name="url"
