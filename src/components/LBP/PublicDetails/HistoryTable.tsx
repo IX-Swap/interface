@@ -12,14 +12,13 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/system'
 import { TYPE } from 'theme'
-import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
-import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
 import { EmptyTable } from '../Dashboard/EmptyTable'
 import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
 import { useWeb3React } from '@web3-react/core'
 import { unixTimeToFormat } from 'utils/time'
 import { ethers } from 'ethers'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
+import { useCurrency } from 'hooks/Tokens'
 
 interface Trade {
   time: string
@@ -30,88 +29,11 @@ interface Trade {
   changedAmt: number
 }
 
-const initialData: Trade[] = [
-  {
-    time: '01/10/2024 03:48AM SGT',
-    tokenPrice: 100,
-    address: '0x123456789',
-    amount: 10,
-    changedAmt: 10.03,
-    type: 'Buy',
-  },
-  {
-    time: '01/10/2024 03:48AM SGT',
-    tokenPrice: 110,
-    address: '0x987654321',
-    amount: 20,
-    changedAmt: 8.03,
-    type: 'Sell',
-  },
-  {
-    time: '01/10/2024 03:48AM SGT',
-    tokenPrice: 100,
-    address: '0x123456789',
-    amount: 10,
-    changedAmt: 12.03,
-    type: 'Buy',
-  },
-  {
-    time: '01/10/2024 03:48AM SGT',
-    tokenPrice: 110,
-    address: '0x987654321',
-    amount: 20,
-    changedAmt: 11.03,
-    type: 'Sell',
-  },
-  {
-    time: '01/10/2024 03:48AM SGT',
-    tokenPrice: 100,
-    address: '0x123456789',
-    amount: 10,
-    changedAmt: 7.03,
-    type: 'Buy',
-  },
-  {
-    time: '01/10/2024 03:48AM SGT',
-    tokenPrice: 110,
-    address: '0x987654321',
-    amount: 20,
-    changedAmt: 1.03,
-    type: 'Sell',
-  },
-  {
-    time: '01/10/2024 03:48AM SGT',
-    tokenPrice: 100,
-    address: '0x123456789',
-    amount: 10,
-    changedAmt: 80.3,
-    type: 'Buy',
-  },
-  {
-    time: '01/10/2024 03:48AM SGT',
-    tokenPrice: 110,
-    address: '0x987654321',
-    amount: 20,
-    changedAmt: 10.3,
-    type: 'Sell',
-  },
-  {
-    time: '01/10/2024 03:48AM SGT',
-    tokenPrice: 100,
-    address: '0x123456789',
-    amount: 10,
-    changedAmt: 10.3,
-    type: 'Buy',
-  },
-  {
-    time: '01/10/2024 03:48AM SGT',
-    tokenPrice: 110,
-    address: '0x987654321',
-    amount: 20,
-    changedAmt: 10.3,
-    type: 'Sell',
-  },
-]
+interface TableProps {
+  contractAddress?: any
+  assetTokenAddress?: string
+  shareToken?: any
+}
 
 const StyledTableCell = styled(TableCell)({
   fontSize: '14px',
@@ -148,6 +70,13 @@ const VerticalLine = styled('div')({
   margin: '7px 10px',
 })
 
+const StyledImage = styled('img')({
+  height: '20px',
+  width: '20px',
+  borderRadius: '100%',
+});
+
+
 const composeLatestTradeQuery = (lbpAddress: string) => {
   return `
     {
@@ -174,33 +103,19 @@ const composeLatestTradeQuery = (lbpAddress: string) => {
   `
 }
 
-export default function TradeHistory() {
+export default function TradeHistory({ contractAddress, assetTokenAddress, shareToken }: TableProps) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
-  const [data, setData] = useState<Trade[]>(initialData)
   const [orderBy, setOrderBy] = useState<string>('')
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
 
   const { chainId } = useWeb3React()
-
+  const tokenCurrency = useCurrency(assetTokenAddress)
+  const tokenOption = getTokenOption(assetTokenAddress || '', tokenCurrency?.chainId || 1)
   const handleSort = (property: keyof Trade) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrderBy(property)
     setOrder(isAsc ? 'desc' : 'asc')
-    setData((prevData) =>
-      [...prevData].sort((a, b) => {
-        const aValue = a[property]
-        const bValue = b[property]
-
-        if (typeof aValue === 'number' && typeof bValue === 'number') {
-          return isAsc ? aValue - bValue : bValue - aValue
-        }
-
-        return isAsc
-          ? aValue.toString().localeCompare(bValue.toString())
-          : bValue.toString().localeCompare(aValue.toString())
-      })
-    )
   }
 
   const getShareDecimals = (tokenAddress: string) => 18 // hardcoded for now
@@ -220,7 +135,7 @@ export default function TradeHistory() {
   const subgraphData = useSubgraphQuery({
     feature: 'LBP',
     chainId,
-    query: composeLatestTradeQuery('0x66b4e8ee377e5026edf2c48238d17068560af0e5'),
+    query: contractAddress ? composeLatestTradeQuery(contractAddress.toLowerCase()) : '',
     pollingInterval: 2000,
     autoPolling: true,
   })
@@ -229,7 +144,6 @@ export default function TradeHistory() {
     return subgraphData?.trades || []
   }, [subgraphData])
 
-  console.info('trades', trades)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -239,6 +153,27 @@ export default function TradeHistory() {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
+
+  const sortedTrades = useMemo(() => {
+    if (orderBy && order) {
+      return [...trades].sort((a, b) => {
+        const aValue = a[orderBy]
+        const bValue = b[orderBy]
+
+        if (typeof aValue === 'undefined' || aValue === null) return 1
+        if (typeof bValue === 'undefined' || bValue === null) return -1
+
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return order === 'asc' ? aValue - bValue : bValue - aValue
+        }
+
+        return order === 'asc'
+          ? aValue.toString().localeCompare(bValue.toString())
+          : bValue.toString().localeCompare(aValue.toString())
+      })
+    }
+    return trades
+  }, [trades, orderBy, order])
 
   return (
     <>
@@ -296,54 +231,63 @@ export default function TradeHistory() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.length === 0 ? (
+              {sortedTrades.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5}>
                     <EmptyTable isSearch={true} />
                   </TableCell>
                 </TableRow>
               ) : (
-                trades.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any, index: number) => (
-                  <TableRow key={index}>
-                    <TableCell>
-                      <span>{unixTimeToFormat({ time: row.blockTimestamp })}</span>{' '}
-                      {/* <span style={{ color: '#8F8FB2' }}>{row.time.split(' ')[1]}</span>{' '} */}
-                    </TableCell>
-                    <TableCell>${parseFloat(row.usdPrice || 0).toFixed(2)}</TableCell>
-                    <TableCell style={{ color: '#8F8FB2' }}>{row?.caller?.id}</TableCell>
-                    <TableCell style={{ display: 'flex', gap: '8px' }}>
-                      {parseFloat(
-                        ethers.utils.formatUnits(
-                          row.amountIn,
-                          row.type === 'BUY'
-                            ? getAssetTokenDecimals(row.pool.assetAddress)
-                            : getShareDecimals(row.pool.shareAddress)
-                        )
-                      ).toFixed(3)}
-                      {row.type == 'BUY' ? <USDC /> : <Serenity />}
-                      <VerticalLine />
-                      {parseFloat(
-                        ethers.utils.formatUnits(
-                          row.amountOut,
-                          row.type === 'SELL'
-                            ? getAssetTokenDecimals(row.pool.assetAddress)
-                            : getShareDecimals(row.pool.shareAddress)
-                        )
-                      ).toFixed(3)}
-                      {row.type == 'SELL' ? <USDC /> : <Serenity />}
-                      <span style={{ color: index <= 4 ? '#FF6161' : '#1FBA66' }}>{row.changedAmt} </span>
-                    </TableCell>
-                    {row.type === 'BUY' ? (
-                      <StyledTableCell>
-                        <StyledDivBuy>{row.type}</StyledDivBuy>
-                      </StyledTableCell>
-                    ) : (
-                      <StyledTableCell>
-                        <StyledDivSell>{row.type}</StyledDivSell>
-                      </StyledTableCell>
-                    )}
-                  </TableRow>
-                ))
+                sortedTrades
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: any, index: number) => (
+                    <TableRow key={index}>
+                      <TableCell>
+                        <span>{unixTimeToFormat({ time: row.blockTimestamp })}</span>
+                      </TableCell>
+                      <TableCell>${parseFloat(row.usdPrice || 0).toFixed(2)}</TableCell>
+                      <TableCell style={{ color: '#8F8FB2' }}>{row?.caller?.id}</TableCell>
+                      <TableCell style={{ display: 'flex', gap: '8px' }}>
+                        {parseFloat(
+                          ethers.utils.formatUnits(
+                            row.amountIn,
+                            row.type === 'BUY'
+                              ? getAssetTokenDecimals(row.pool.assetAddress)
+                              : getShareDecimals(row.pool.shareAddress)
+                          )
+                        ).toFixed(3)}
+                        {row.type == 'BUY' ? (
+                <StyledImage src={tokenOption?.logo} />
+                        ) : (
+                          <StyledImage src={shareToken.public} />
+                        )}
+                        <VerticalLine />
+                        {parseFloat(
+                          ethers.utils.formatUnits(
+                            row.amountOut,
+                            row.type === 'SELL'
+                              ? getAssetTokenDecimals(row.pool.assetAddress)
+                              : getShareDecimals(row.pool.shareAddress)
+                          )
+                        ).toFixed(3)}
+                        {row.type == 'SELL' ? (
+                <StyledImage src={tokenOption?.logo} />
+                        ) : (
+                          <StyledImage src={shareToken.public} />
+                        )}
+                        <span style={{ color: index <= 4 ? '#FF6161' : '#1FBA66' }}>{row.changedAmt} </span>
+                      </TableCell>
+                      {row.type === 'BUY' ? (
+                        <StyledTableCell>
+                          <StyledDivBuy>{row.type}</StyledDivBuy>
+                        </StyledTableCell>
+                      ) : (
+                        <StyledTableCell>
+                          <StyledDivSell>{row.type}</StyledDivSell>
+                        </StyledTableCell>
+                      )}
+                    </TableRow>
+                  ))
               )}
             </TableBody>
           </Table>
@@ -351,7 +295,7 @@ export default function TradeHistory() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={data.length}
+          count={sortedTrades.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

@@ -56,13 +56,10 @@ const MoreText = styled.span`
 const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
   const [showMore, setShowMore] = useState(false)
 
-  const sampleText = useMemo(
-    () =>
-      `${lbpData?.description}`,
-    [lbpData]
-  )
+  const sampleText = useMemo(() => `${lbpData?.description}`, [lbpData])
 
   const isTextLong = useMemo(() => sampleText.length > 300, [sampleText])
+
 
   return (
     <MiddleSectionWrapper>
@@ -88,7 +85,11 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
           <AdditionalDocuments />
         </Column>
       </MiddleSectionContainer>
-      <TradeHistory />
+      <TradeHistory
+        contractAddress={lbpData?.contractAddress}
+        assetTokenAddress={lbpData?.assetTokenAddress}
+        shareToken={lbpData?.logo}
+      />
     </MiddleSectionWrapper>
   )
 }
