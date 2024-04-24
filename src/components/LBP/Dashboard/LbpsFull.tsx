@@ -7,22 +7,20 @@ import { ChevronDown, ChevronLeft, ChevronRight } from 'react-feather'
 import { AbstractOrder } from 'state/launchpad/types'
 import { DashboardLbp, LbpStatus } from '../types'
 
-import { SearchFilter, SearchConfig, OrderConfig } from './SearchFilter'
+import { SearchFilter, OrderConfig } from './SearchFilter'
 import { EmptyTable } from './EmptyTable'
 
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
-import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { LbpTable, TableHeader, LbpRow, Raw, DefaultRaw, CountRow, Title } from './tables'
+import { BaseButton } from 'components/LaunchpadMisc/buttons'
+import { LbpTable, TableHeader, LbpRow, Raw, CountRow, Title } from './tables'
 
 import { useOnChangeOrder } from 'state/launchpad/hooks'
 import { ReactComponent as EditIcon } from 'assets/svg/edit.svg'
 
-import { DiscreteInternalLink } from 'theme'
 import { text17, text18, text19, text30, text53 } from 'components/LaunchpadMisc/typography'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { ITEM_ROWS } from 'components/LaunchpadIssuance/utils/constants'
-import { TitleBox } from 'components/LaunchpadIssuance/IssuanceDashboard/TitleBox'
 import { useGetLbpsFull } from 'state/lbp/hooks'
 import { FilterOption } from 'components/Launchpad/InvestmentList/FilterDropdown'
 import { FilterConfig } from '../InvestmentList/Filter'
@@ -145,7 +143,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
   return (
     <Container>
       <TitleContainer>
-        <TableTitle>{props.type}</TableTitle>
+        <TableTitle>{props.type === 'draft' ? 'drafts' : props.type}</TableTitle>
       </TitleContainer>
       <SearchFilter search={filter.search} onFilter={onSearch} />
 
@@ -177,14 +175,14 @@ export const LbpsFull: React.FC<Props> = (props) => {
                 <Raw>{lbp.name}</Raw>
                 <CountRow>{lbp?.startDate ? moment(lbp?.startDate).format('DD/MM/YYYY hh:mmA') : ''}</CountRow>
                 <ActionButtons>
-                  <OutlineButton
+                  <NoFrameButton
                     color={theme.launchpad.colors.primary + '80'}
                     borderType="tiny"
                     height="34px"
                     onClick={() => createLbp(lbp.id)}
                   >
                     Edit <EditIcon />
-                  </OutlineButton>
+                  </NoFrameButton>
                 </ActionButtons>
               </LbpRow>
             ))}
@@ -353,4 +351,25 @@ export const TableTitle = styled.div`
   padding: 0 0 1.25rem;
   font-family: ${(props) => props.theme.launchpad.font};
   color: ${(props) => props.theme.launchpad.colors.text.title};
+`
+
+export const NoFrameButton = styled(BaseButton)<{
+  borderColor?: string
+  color?: string
+  background?: string
+  borderType?: string
+}>`
+  color: ${(props) => props.color ?? props.theme.launchpad.colors.primary};
+  font-family: ${(props) => props.theme.launchpad.font};
+  ${(props) => props.background && `background: ${props.background}`};
+  ${(props) => props.borderType && `padding: 0 0.75rem;`}
+  ${(props) =>
+    props.disabled &&
+    `
+    cursor: not-allowed;
+    opacity: 0.5;
+  `}
+  :hover {
+    color: rgba(102, 102, 255, 1);
+  }
 `

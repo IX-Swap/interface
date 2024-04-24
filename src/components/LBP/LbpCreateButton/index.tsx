@@ -45,7 +45,7 @@ export const LbpCreateButton: React.FC<Props> = (props) => {
       <FlexVerticalCenter style={{ marginRight: '17px' }}>
         <OutlineButton onClick={openLbpForm} background={props.background} color={props.color} padding="0 1.5rem">
           <Plus size="15" color={props.color ?? theme.launchpad.colors.primary} />
-          <NewLbpLabel>New Lbp</NewLbpLabel>
+          <NewLbpLabel>New LBP</NewLbpLabel>
         </OutlineButton>
       </FlexVerticalCenter>
     </>
