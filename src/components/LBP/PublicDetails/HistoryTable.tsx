@@ -111,7 +111,7 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
   const { chainId } = useWeb3React()
   const tokenCurrency = useCurrency(assetTokenAddress)
   const tokenOption = getTokenOption(assetTokenAddress || '', tokenCurrency?.chainId || 1)
-  const handleSort = (property: keyof Trade) => {
+  const handleSort = (property: string) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrderBy(property)
     setOrder(isAsc ? 'desc' : 'asc')
@@ -183,18 +183,18 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
               <TableRow>
                 <StyledTableCell>
                   <TableSortLabel
-                    active={orderBy === 'time'}
-                    direction={orderBy === 'time' ? order : 'asc'}
-                    onClick={() => handleSort('time')}
+                    active={orderBy === 'blockTimestamp'}
+                    direction={orderBy === 'blockTimestamp' ? order : 'asc'}
+                    onClick={() => handleSort('blockTimestamp')}
                   >
                     Time
                   </TableSortLabel>
                 </StyledTableCell>
                 <StyledTableCell>
                   <TableSortLabel
-                    active={orderBy === 'tokenPrice'}
-                    direction={orderBy === 'tokenPrice' ? order : 'asc'}
-                    onClick={() => handleSort('tokenPrice')}
+                    active={orderBy === 'usdPrice'}
+                    direction={orderBy === 'usdPrice' ? order : 'asc'}
+                    onClick={() => handleSort('usdPrice')}
                   >
                     Token Price
                   </TableSortLabel>
