@@ -74,8 +74,7 @@ const StyledImage = styled('img')({
   height: '20px',
   width: '20px',
   borderRadius: '100%',
-});
-
+})
 
 const composeLatestTradeQuery = (lbpAddress: string) => {
   return `
@@ -143,7 +142,6 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
   const trades = useMemo(() => {
     return subgraphData?.trades || []
   }, [subgraphData])
-
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -257,7 +255,7 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
                           )
                         ).toFixed(3)}
                         {row.type == 'BUY' ? (
-                <StyledImage src={tokenOption?.logo} />
+                          <StyledImage src={tokenOption?.logo} />
                         ) : (
                           <StyledImage src={shareToken.public} />
                         )}
@@ -271,7 +269,7 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
                           )
                         ).toFixed(3)}
                         {row.type == 'SELL' ? (
-                <StyledImage src={tokenOption?.logo} />
+                          <StyledImage src={tokenOption?.logo} />
                         ) : (
                           <StyledImage src={shareToken.public} />
                         )}
