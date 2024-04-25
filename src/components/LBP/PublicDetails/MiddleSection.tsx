@@ -14,7 +14,7 @@ import AdditionalDocuments from './DocumentSec'
 import ComingSoon from './ComingSoon'
 import EndedSideBar from './Ended'
 import CloseSideBar from './ClosedSideBar'
-import { LbpFormValues, MarketData } from '../types'
+import { LbpFormValues, MarketData, LbpStatus } from '../types'
 import Links from './Links'
 import RedeemedSideBar from './RedeemedSideBar'
 
@@ -61,6 +61,21 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
 
   const isTextLong = useMemo(() => sampleText.length > 300, [sampleText])
 
+  const SideBarByStatus = useMemo(() => {
+    switch (lbpData?.status) {
+      case LbpStatus.pending:
+        return <ComingSoon />
+      case LbpStatus.live:
+        return <SideBar lbpData={lbpData} />
+      case LbpStatus.ended:
+        return <EndedSideBar />
+      case LbpStatus.closed:
+        return <CloseSideBar />
+      case LbpStatus.closed:
+        return <RedeemedSideBar />
+    }
+  }, [lbpData])
+
   return (
     <MiddleSectionWrapper>
       <MiddleSectionContainer>
@@ -85,11 +100,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
            <StatisticData statsData={statsData}  lbpData={lbpData} />
         </Column>
         <Column>
-          <SideBar lbpData={lbpData} />
-          {/* <ComingSoon/> */}
-          {/* <EndedSideBar/> */}
-          {/* <CloseSideBar/> */}
-          {/* <RedeemedSideBar/> */}
+          {SideBarByStatus}
           <AdditionalDocuments />
         </Column>
       </MiddleSectionContainer>
