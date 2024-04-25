@@ -103,7 +103,7 @@ export default function DetailsChart({
 
     const trades = subgraphData?.trades || []
     const lastTrade = trades.length ? trades[trades.length - 1] : null
-    const lastTradeTimestamp = lastTrade ? new Date(Number(lastTrade.blockTimestamp) * 1000) : new Date()
+    const lastTradeTimestamp = lastTrade ? new Date(Number(lastTrade.blockTimestamp) * 1000) : new Date(0)
     const lastPrice = lastTrade ? lastTrade.usdPrice : 0
 
     // Group trades by bucket index and find the highest price for each bucket
@@ -154,7 +154,7 @@ export default function DetailsChart({
         )
 
         // only show future data points if the future price is less than the last trade price
-        if (price > lastPrice) {
+        if (trades.length && price > lastPrice) {
           continue
         }
 
