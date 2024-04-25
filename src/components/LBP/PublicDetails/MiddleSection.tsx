@@ -60,7 +60,6 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
 
   const isTextLong = useMemo(() => sampleText.length > 300, [sampleText])
 
-
   return (
     <MiddleSectionWrapper>
       <MiddleSectionContainer>
@@ -73,7 +72,15 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
           <Links lbpData={lbpData} />
           <Line style={{ margin: '40px 0px' }} />
           <QuantitiesAndWeight lbpData={lbpData} />
-          <DetailsChart />
+          <DetailsChart
+            contractAddress={lbpData?.contractAddress}
+            startDate={lbpData?.startDate}
+            endDate={lbpData?.endDate}
+            startWeight={lbpData?.startWeight}
+            endWeight={lbpData?.endWeight}
+            shareAmount={lbpData?.shareAmount}
+            assetAmount={lbpData?.assetTokenAmount}
+          />
           <VolumeData lbpData={lbpData} />
         </Column>
         <Column>

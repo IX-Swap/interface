@@ -110,7 +110,11 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
 
   const { chainId } = useWeb3React()
   const tokenCurrency = useCurrency(assetTokenAddress)
-  const tokenOption = getTokenOption(assetTokenAddress || '', tokenCurrency?.chainId || 1)
+  const tokenOption = useMemo(
+    () => getTokenOption(assetTokenAddress || '', tokenCurrency?.chainId || 1),
+    [assetTokenAddress]
+  )
+
   const handleSort = (property: string) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrderBy(property)
@@ -125,7 +129,6 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
 
       const token = getTokenOption(ethers.utils.getAddress(tokenAddress), chainId)
       const decimals = token?.tokenDecimals
-      console.info('Decimals of token', tokenAddress, 'is', decimals)
       return decimals
     },
     [chainId]
@@ -243,7 +246,7 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
                       <TableCell>
                         <span>{unixTimeToFormat({ time: row.blockTimestamp })}</span>
                       </TableCell>
-                      <TableCell>${parseFloat(row.usdPrice || 0).toFixed(2)}</TableCell>
+                      <TableCell>${parseFloat(row.usdPrice || 0).toFixed(4)}</TableCell>
                       <TableCell style={{ color: '#8F8FB2' }}>{row?.caller?.id}</TableCell>
                       <TableCell style={{ display: 'flex', gap: '8px' }}>
                         {parseFloat(
