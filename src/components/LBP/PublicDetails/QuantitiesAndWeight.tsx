@@ -54,7 +54,7 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
             <TokenWrapper>
               <>
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>500.00 </TYPE.label>
+                <TYPE.label fontSize={'14px'}>{useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)} </TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
                   {lbpData?.name}
                 </TYPE.body3>
@@ -62,7 +62,7 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
               <VerticalLine />
               <>
               <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>500.00 </TYPE.label>
+                <TYPE.label fontSize={'14px'}>{useFormatNumberWithDecimal(statsData?.currentAssetReserve || '', 2)} </TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
                   {lbpData?.assetTokenSymbol}
                 </TYPE.body3>
@@ -79,12 +79,13 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
             <TokenWrapper>
               <>
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.startWeight || 0)}% </TYPE.label>
+                <TYPE.label fontSize={'14px'}>{lbpData?.startWeight}% </TYPE.label>
+  
               </>
               <VerticalLine />
               <>
               <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>{lbpData?.startWeight}% </TYPE.label>
+              <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.startWeight || 0)}% </TYPE.label>
               </>
             </TokenWrapper>
           </WeightBox>
@@ -111,12 +112,13 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
             <TokenWrapper>
               <>
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.endWeight || 0)}% </TYPE.label>
+                <TYPE.label fontSize={'14px'}>{lbpData?.endWeight}% </TYPE.label>
+   
               </>
               <VerticalLine />
               <>
               <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>{lbpData?.endWeight}% </TYPE.label>
+              <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.endWeight || 0)}% </TYPE.label>
               </>
             </TokenWrapper>
           </WeightBox>

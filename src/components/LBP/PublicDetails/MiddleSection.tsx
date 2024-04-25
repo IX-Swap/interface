@@ -61,7 +61,6 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
 
   const isTextLong = useMemo(() => sampleText.length > 300, [sampleText])
 
-console.log(statsData, 'statsData1')
   return (
     <MiddleSectionWrapper>
       <MiddleSectionContainer>

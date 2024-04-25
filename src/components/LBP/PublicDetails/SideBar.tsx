@@ -18,7 +18,6 @@ import { LbpFormValues } from '../types'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
 import { ethers } from 'ethers'
 import { useLBPContract, useTokenContract } from 'hooks/useContract'
-import LBP_ABI from 'abis/LiquiidtyBoostrapPool.json'
 import NoTokenSidebar from './NoTokensSideBar'
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
@@ -143,11 +142,28 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
   }
 
   const togglePaused = () => {
-    setIsPaused((prev) => !prev)
-    setIsBlurred((prev) => !prev)
+    // setIsPaused((prev) => !prev)
+    // setIsBlurred((prev) => !prev)
   }
 
-  const remainingDays = Math.floor(remainingTime / (24 * 60 * 60))
+  useEffect(() => {
+    const calculateRemainingTime = () => {
+      if (lbpData && lbpData.startDate && lbpData.endDate) {
+        const endDate = new Date(lbpData.endDate).getTime()
+        const currentTime = new Date().getTime()
+        const remainingTimeInSeconds = Math.max(0, endDate - currentTime) / 1000
+        setRemainingTime(remainingTimeInSeconds)
+      }
+    }
+    calculateRemainingTime()
+    const interval = setInterval(() => {
+      calculateRemainingTime()
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [lbpData])
+
+  const remainingDays = Math.ceil(remainingTime / (24 * 60 * 60))
   const remainingHours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))
 
   return (
@@ -157,7 +173,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
           <ContentColumn style={{ gridColumn: '1 / span 1' }}>
             <TYPE.subHeader1 style={{ marginRight: 'auto', color: '#555566' }}> LBP closes in</TYPE.subHeader1>
             <TYPE.label style={{ fontSize: '16px', marginRight: 'auto' }}>
-              {remainingDays > 0 ? `${remainingDays} Days` : `${remainingHours} Hours`}{' '}
+              {remainingDays > 0 ? `${remainingDays} Days` : `${remainingHours} Hours`}
             </TYPE.label>
           </ContentColumn>
 
