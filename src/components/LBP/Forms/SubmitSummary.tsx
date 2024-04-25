@@ -45,6 +45,9 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
       return null
     }
 
+    const startAssetWeight = 100 - formData.tokenomics.startWeight
+    const endAssetWeight = 100 - formData.tokenomics.endWeight
+
     const args = {
       asset: formData.tokenomics.assetTokenAddress,
       share: formData.tokenomics.shareAddress,
@@ -55,8 +58,8 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
       maxSharePrice: MAX_UINT88,
       maxSharesOut: MAX_UINT88,
       //  start weight and end weight are reversed in the smart contract
-      weightStart: ethers.utils.parseEther(Number(formData.tokenomics.endWeight / 100).toString()),
-      weightEnd: ethers.utils.parseEther(Number(formData.tokenomics.startWeight / 100).toString()),
+      weightStart: ethers.utils.parseEther(Number(startAssetWeight / 100).toString()),
+      weightEnd: ethers.utils.parseEther(Number(endAssetWeight / 100).toString()),
       saleStart: toUnixTimeSeconds(new Date(formData.tokenomics.startDate)),
       saleEnd: toUnixTimeSeconds(new Date(formData.tokenomics.endDate)),
       sellingAllowed: true,
@@ -94,8 +97,6 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
     const assetAmount = ethers.utils.parseUnits(formData.tokenomics.assetInput.toString(), assetDecimals)
 
     console.info('deploying lbp with args', lbpArgs)
-    console.info('Asset Amount', assetAmount.toString())
-    console.info('share Amount', shareAmount.toString())
     await lbpFactory.createLiquidityBootstrapPool(lbpArgs, shareAmount, assetAmount, salt, {
       gasLimit: 500_000,
     })

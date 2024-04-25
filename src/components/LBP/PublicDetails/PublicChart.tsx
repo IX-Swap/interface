@@ -104,10 +104,7 @@ export default function DetailsChart({
     const trades = subgraphData?.trades || []
     const lastTrade = trades.length ? trades[trades.length - 1] : null
     const lastTradeTimestamp = lastTrade ? new Date(Number(lastTrade.blockTimestamp) * 1000) : new Date()
-
-    const highestPrice = trades.reduce((acc: number, trade: any) => {
-      return Math.max(acc, trade.usdPrice)
-    }, 0)
+    const lastPrice = lastTrade ? lastTrade.usdPrice : 0
 
     // Group trades by bucket index and find the highest price for each bucket
     const bucketMap = trades.reduce((acc: any, trade: any) => {
@@ -119,6 +116,7 @@ export default function DetailsChart({
         blockTimestamp: trade.blockTimestamp,
         date: unixTimeToFormat({ time: trade.blockTimestamp, format: 'MMM DD' }),
         price: parseFloat(trade.usdPrice).toFixed(PRICE_PRECISION),
+        isHistorical: true,
       }
 
       // Update bucket if current trade has a higher price
@@ -155,7 +153,8 @@ export default function DetailsChart({
           PRICE_PRECISION
         )
 
-        if (price > highestPrice) {
+        // only show future data points if the future price is less than the last trade price
+        if (price > lastPrice) {
           continue
         }
 
@@ -164,7 +163,7 @@ export default function DetailsChart({
           date: unixTimeToFormat({ time: time / 1000, format: 'MMM DD' }),
           blockTimestamp: 0,
           price: price,
-          isHistorical: true,
+          isHistorical: false,
         }
       }
     }
