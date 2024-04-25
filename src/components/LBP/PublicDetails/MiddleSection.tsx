@@ -6,7 +6,7 @@ import SideBar from './SideBar'
 import QuantitiesAndWeight from './QuantitiesAndWeight'
 import { Line } from 'components/Line'
 import DetailsChart from './PublicChart'
-import VolumeData from './VolumeData'
+import StatisticData from './StatisticData'
 import { EmptyTable } from '../Dashboard/EmptyTable'
 import { LbpsFull } from '../Dashboard/LbpsFull'
 import TradeHistory from './HistoryTable'
@@ -82,7 +82,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
             shareAmount={lbpData?.shareAmount}
             assetAmount={lbpData?.assetTokenAmount}
           />
-           <VolumeData statsData={statsData}  lbpData={lbpData} />
+           <StatisticData statsData={statsData}  lbpData={lbpData} />
         </Column>
         <Column>
           <SideBar lbpData={lbpData} />

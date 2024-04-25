@@ -47,7 +47,7 @@ const PublicDetails: React.FC = () => {
         </Loader>
       ) : (
         <>
-          <Background lbpData={lbpData} />
+          <Background currentSharePriceUSD={statsData?.currentSharePriceUSD} lbpData={lbpData} />
           <MiddleSection statsData={statsData} lbpData={lbpData} />
         </>
       )}

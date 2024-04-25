@@ -1,48 +1,58 @@
-import React from 'react';
-import Column, { AutoColumn } from 'components/Column';
-import { RowBetween } from 'components/Row';
-import styled from 'styled-components';
-import { TYPE } from 'theme';
-import { LbpFormValues, MarketData } from '../types';
-import { useFormatNumberWithDecimal } from 'state/lbp/hooks';
+import React from 'react'
+import Column, { AutoColumn } from 'components/Column'
+import { RowBetween } from 'components/Row'
+import styled from 'styled-components'
+import { TYPE } from 'theme'
+import { LbpFormValues, MarketData } from '../types'
+import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 
 interface MiddleSectionProps {
-  lbpData: LbpFormValues | null;
-  statsData?: MarketData;
+  lbpData: LbpFormValues | null
+  statsData?: MarketData
 }
 
-const VolumeData: React.FC<MiddleSectionProps> = ({ statsData, lbpData }) => {
+const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData }) => {
   const calculateFundsRaised = () => {
-    if (!statsData || !lbpData) return 0;
-    const { currentAssetReserve, currentAssetPriceUSD } = statsData;
-    const { assetTokenAmount } = lbpData;
-    const reserve = parseFloat(currentAssetReserve) || 0;
-    const tokenAmount = parseFloat(assetTokenAmount?.toString()) || 0;
-    const priceUSD = parseFloat(currentAssetPriceUSD) || 0;
-    return (reserve - tokenAmount) * priceUSD;
-  };
+    if (!statsData || !lbpData) return 0
+    const { currentAssetReserve, currentAssetPriceUSD } = statsData
+    const { assetTokenAmount } = lbpData
+    const reserve = parseFloat(currentAssetReserve) || 0
+    const tokenAmount = parseFloat(assetTokenAmount?.toString()) || 0
+    const priceUSD = parseFloat(currentAssetPriceUSD) || 0
+    return (reserve - tokenAmount) * priceUSD
+  }
 
   function calculatePercentage(currentShareReserve: string | undefined, shareAmount: number | undefined) {
-    const currentShareReserveValue = parseFloat(currentShareReserve || '0');
-    const shareAmountValue = parseFloat(shareAmount?.toString() || '0');
-  
+    const currentShareReserveValue = parseFloat(currentShareReserve || '0')
+    const shareAmountValue = parseFloat(shareAmount?.toString() || '0')
+
     if (isNaN(currentShareReserveValue) || isNaN(shareAmountValue) || shareAmountValue <= 0) {
-      return 0;
+      return 0
     }
-  
-    const percentage = (currentShareReserveValue / shareAmountValue) * 100;
-    return Math.min(percentage, 100);
+
+    const percentage = (currentShareReserveValue / shareAmountValue) * 100
+    return Math.min(percentage, 100)
   }
-  
 
   const formatValueWithSuffix = (value: number): string => {
-    const suffixes = ['', 'K', 'M', 'B'];
-    const magnitude = Math.floor(Math.log10(Math.abs(value)) / 3);
-    const scaledValue = value / Math.pow(10, magnitude * 3);
-    return `${scaledValue.toFixed(2)}${suffixes[magnitude]}`;
-  };
+    const suffixes = ['', 'K', 'M', 'B']
+    const magnitude = Math.floor(Math.log10(Math.abs(value)) / 3)
+    const scaledValue = value / Math.pow(10, magnitude * 3)
+    return `${scaledValue.toFixed(2)}${suffixes[magnitude]}`
+  }
 
-  console.log(statsData, lbpData);
+  function calculateTokensReleased(lbpData: LbpFormValues | null, statsData: MarketData | undefined): string {
+    if (!lbpData || !statsData) return '0'
+
+    const shareAmount = parseFloat(lbpData?.shareAmount?.toString() || '0')
+    const currentShareReserve = parseFloat(statsData?.currentShareReserve?.toString() || '0')
+
+    const tokensReleased = shareAmount - currentShareReserve
+
+    return formatValueWithSuffix(tokensReleased)
+  }
+
+  const tokensReleased = calculateTokensReleased(lbpData, statsData)
 
   return (
     <Column>
@@ -93,8 +103,7 @@ const VolumeData: React.FC<MiddleSectionProps> = ({ statsData, lbpData }) => {
             <TYPE.subHeader1 color={'#555566'}>Tokens Released</TYPE.subHeader1>
             <TokenWrapper style={{ placeContent: 'space-between' }}>
               <TYPE.label fontSize={'14px'}>
-                {formatValueWithSuffix(parseFloat(statsData?.currentShareReserve || '0'))}/
-                {formatValueWithSuffix(parseFloat(lbpData?.shareAmount?.toString() || '0'))}
+                {tokensReleased}/{formatValueWithSuffix(parseFloat(lbpData?.shareAmount?.toString() || '0'))}
               </TYPE.label>
 
               <TYPE.label color={'#6666FF'} fontSize={'14px'}>
@@ -105,8 +114,8 @@ const VolumeData: React.FC<MiddleSectionProps> = ({ statsData, lbpData }) => {
         </RowBetween>
       </AutoColumn>
     </Column>
-  );
-};
+  )
+}
 
 const QuantitiesBox = styled.div`
   border: 1px solid #e6e6ff;
@@ -115,12 +124,12 @@ const QuantitiesBox = styled.div`
   gap: 20px;
   padding: 16px;
   min-width: 270px;
-`;
+`
 
 const TokenWrapper = styled.div`
   display: flex;
   gap: 5px;
   align-items: center;
-`;
+`
 
-export default VolumeData;
+export default  StatisticData
