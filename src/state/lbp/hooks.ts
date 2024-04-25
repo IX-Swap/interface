@@ -21,6 +21,9 @@ export const useGetLbpsFull = () => {
       let query = [`page=${page}`, `offset=${size}`]
 
       if (filter) {
+        if (type) {
+          filter.stage = []
+        }
         query = query.concat(
           Object.entries(filter)
             .filter(([, value]) => value.length > 0)
