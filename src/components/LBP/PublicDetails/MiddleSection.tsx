@@ -72,7 +72,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
           </TYPE.body1>
           <Links lbpData={lbpData} />
           <Line style={{ margin: '40px 0px' }} />
-          <QuantitiesAndWeight lbpData={lbpData} />
+          <QuantitiesAndWeight statsData={statsData} lbpData={lbpData} />
           <DetailsChart
             contractAddress={lbpData?.contractAddress}
             startDate={lbpData?.startDate}
