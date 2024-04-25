@@ -56,19 +56,6 @@ export const LbpsFull: React.FC<Props> = (props) => {
     return newFilter ? (JSON.parse(newFilter) as FilterConfig) : { search: '', stage: [] }
   })
 
-  useEffect(() => {
-    const stage: FilterOption<string>[] = [
-      {
-        value: props.type,
-        label: props.type,
-      },
-    ]
-    setFilter((filter: FilterConfig) => ({
-      ...filter,
-      stage,
-    }))
-  }, [])
-
   React.useEffect(() => {
     localStorage.setItem('lbpsFullFilter', JSON.stringify(filter))
   }, [filter])
@@ -102,7 +89,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
   React.useEffect(() => {
     setLoading(true)
 
-    getLbps(page, filter, order, pageSize)
+    getLbps(page, filter, order, pageSize, false, props.type)
       .then((page: any) => {
         setLbps(page.items)
         setTotalItems(page.totalItems)
