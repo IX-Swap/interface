@@ -87,12 +87,12 @@ const Background: React.FC<BackgroundProps> = ({ lbpData }) => {
       )}
       <Description fontSize={'48px'}>{lbpData?.name}</Description>
       <Amount fontSize={'40px'}>$1.32</Amount>
-      <Vary positive={isPositive}>
+      {/* <Vary positive={isPositive}>
         <Arrow rotateArrow={!isPositive}>
           <ArrowUp />
         </Arrow>
         {Math.abs(varyValue)}%
-      </Vary>
+      </Vary> */}
     </FullWidthContainer>
   )
 }

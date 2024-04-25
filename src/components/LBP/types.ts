@@ -116,3 +116,16 @@ export interface BrandingProps {
   LBPLogo: LbpFile
   LBPBanner: LbpFile
 }
+
+export interface MarketData {
+  circMarketCapUSD: string;
+  currentAssetPriceUSD: string;
+  currentAssetReserve: string;
+  currentAssetWeight: string;
+  currentSharePriceUSD: string;
+  currentShareReserve: string;
+  currentShareWeight: string;
+  fdvMarketCapUSD: string;
+  liquidityUSD: string;
+}
+

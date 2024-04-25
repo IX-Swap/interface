@@ -125,7 +125,6 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
 
       const token = getTokenOption(ethers.utils.getAddress(tokenAddress), chainId)
       const decimals = token?.tokenDecimals
-      console.info('Decimals of token', tokenAddress, 'is', decimals)
       return decimals
     },
     [chainId]
@@ -172,7 +171,6 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
     }
     return trades
   }, [trades, orderBy, order])
-
   return (
     <>
       <TYPE.title5 style={{ marginTop: '30px' }}>Trade History</TYPE.title5>

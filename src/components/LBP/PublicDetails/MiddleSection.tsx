@@ -14,12 +14,13 @@ import AdditionalDocuments from './DocumentSec'
 import ComingSoon from './ComingSoon'
 import EndedSideBar from './Ended'
 import CloseSideBar from './ClosedSideBar'
-import { LbpFormValues } from '../types'
+import { LbpFormValues, MarketData } from '../types'
 import Links from './Links'
 import RedeemedSideBar from './RedeemedSideBar'
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
+  statsData?: MarketData
 }
 
 const MiddleSectionWrapper = styled.div`
@@ -53,14 +54,14 @@ const MoreText = styled.span`
   cursor: pointer;
 `
 
-const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
+const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => {
   const [showMore, setShowMore] = useState(false)
 
   const sampleText = useMemo(() => `${lbpData?.description}`, [lbpData])
 
   const isTextLong = useMemo(() => sampleText.length > 300, [sampleText])
 
-
+console.log(statsData, 'statsData1')
   return (
     <MiddleSectionWrapper>
       <MiddleSectionContainer>
@@ -72,9 +73,9 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
           </TYPE.body1>
           <Links lbpData={lbpData} />
           <Line style={{ margin: '40px 0px' }} />
-          <QuantitiesAndWeight lbpData={lbpData} />
+          <QuantitiesAndWeight statsData={statsData} lbpData={lbpData} />
           <DetailsChart />
-          <VolumeData lbpData={lbpData} />
+          <VolumeData statsData={statsData}  lbpData={lbpData} />
         </Column>
         <Column>
           <SideBar lbpData={lbpData} />

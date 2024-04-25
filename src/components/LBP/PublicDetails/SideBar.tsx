@@ -202,6 +202,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
             shareBalance={shareBalance}
             tokenOption={tokenOption}
             id={lbpData?.id}
+            logo={lbpData?.logo}
           />
         </Body>
       </Container>
