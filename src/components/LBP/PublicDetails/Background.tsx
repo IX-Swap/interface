@@ -5,9 +5,11 @@ import backgroundImg from '../../../assets/images/background.jpg'
 import { ReactComponent as ArrowUp } from '../../../assets/images/varyArrow.svg'
 import { TYPE } from 'theme'
 import { LbpFormValues } from '../types'
+import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 
 interface BackgroundProps {
   lbpData: LbpFormValues | null
+  currentSharePriceUSD?: string
 }
 
 const FullWidthContainer = styled.div`
@@ -75,7 +77,7 @@ const Arrow = styled.div<{ rotateArrow?: boolean }>`
     `}
 `
 
-const Background: React.FC<BackgroundProps> = ({ lbpData }) => {
+const Background: React.FC<BackgroundProps> = ({ lbpData, currentSharePriceUSD }) => {
   const varyValue = 3.28
   const isPositive = varyValue > 0
 
@@ -86,13 +88,13 @@ const Background: React.FC<BackgroundProps> = ({ lbpData }) => {
         <LogoIcon as="img" src={lbpData.logo.public} alt="Serenity Logo" />
       )}
       <Description fontSize={'48px'}>{lbpData?.name}</Description>
-      <Amount fontSize={'40px'}>$1.32</Amount>
-      <Vary positive={isPositive}>
+      <Amount fontSize={'40px'}>${useFormatNumberWithDecimal(currentSharePriceUSD || 0, 3)}</Amount>
+      {/* <Vary positive={isPositive}>
         <Arrow rotateArrow={!isPositive}>
           <ArrowUp />
         </Arrow>
         {Math.abs(varyValue)}%
-      </Vary>
+      </Vary> */}
     </FullWidthContainer>
   )
 }

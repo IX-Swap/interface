@@ -6,7 +6,7 @@ import SideBar from './SideBar'
 import QuantitiesAndWeight from './QuantitiesAndWeight'
 import { Line } from 'components/Line'
 import DetailsChart from './PublicChart'
-import VolumeData from './VolumeData'
+import StatisticData from './StatisticData'
 import { EmptyTable } from '../Dashboard/EmptyTable'
 import { LbpsFull } from '../Dashboard/LbpsFull'
 import TradeHistory from './HistoryTable'
@@ -14,12 +14,13 @@ import AdditionalDocuments from './DocumentSec'
 import ComingSoon from './ComingSoon'
 import EndedSideBar from './Ended'
 import CloseSideBar from './ClosedSideBar'
-import { LbpFormValues } from '../types'
+import { LbpFormValues, MarketData } from '../types'
 import Links from './Links'
 import RedeemedSideBar from './RedeemedSideBar'
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
+  statsData?: MarketData
 }
 
 const MiddleSectionWrapper = styled.div`
@@ -53,7 +54,7 @@ const MoreText = styled.span`
   cursor: pointer;
 `
 
-const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
+const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => {
   const [showMore, setShowMore] = useState(false)
 
   const sampleText = useMemo(() => `${lbpData?.description}`, [lbpData])
@@ -71,7 +72,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
           </TYPE.body1>
           <Links lbpData={lbpData} />
           <Line style={{ margin: '40px 0px' }} />
-          <QuantitiesAndWeight lbpData={lbpData} />
+          <QuantitiesAndWeight statsData={statsData} lbpData={lbpData} />
           <DetailsChart
             contractAddress={lbpData?.contractAddress}
             startDate={lbpData?.startDate}
@@ -81,7 +82,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData }) => {
             shareAmount={lbpData?.shareAmount}
             assetAmount={lbpData?.assetTokenAmount}
           />
-          <VolumeData lbpData={lbpData} />
+           <StatisticData statsData={statsData}  lbpData={lbpData} />
         </Column>
         <Column>
           <SideBar lbpData={lbpData} />

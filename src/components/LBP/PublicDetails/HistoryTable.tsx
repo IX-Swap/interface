@@ -175,7 +175,6 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
     }
     return trades
   }, [trades, orderBy, order])
-
   return (
     <>
       <TYPE.title5 style={{ marginTop: '30px' }}>Trade History</TYPE.title5>

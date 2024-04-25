@@ -9,7 +9,7 @@ import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers, constants } from 'ethers'
 import { useLBPContract, useTokenContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useGetLBPAuthorization } from 'state/lbp/hooks'
+import { useFormatNumberWithDecimal, useGetLBPAuthorization } from 'state/lbp/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import BuySellModal from './Modals/BuySellModal'
@@ -25,6 +25,7 @@ interface BuySellFieldsProps {
   tokenOption?: TokenOption
   shareTokenAddress?: string
   id: any
+  logo?: any
 }
 
 interface TokenOption {
@@ -63,6 +64,7 @@ export default function BuySellFields({
   tokenOption,
   shareTokenAddress,
   id,
+  logo
 }: BuySellFieldsProps) {
   // UI States
   const [buttonDisabled, setButtonDisabled] = useState(true)
@@ -147,7 +149,7 @@ export default function BuySellFields({
           converting: false,
         }
       })
-      setOpposite(formatNumberWithDecimal(converted, 4))
+      setOpposite(useFormatNumberWithDecimal(converted, 4))
     } else {
       // Clear the opposite value if the input is cleared
       setOpposite('')
@@ -362,11 +364,7 @@ export default function BuySellFields({
     setAssetValue('')
   }, [assetValue, shareValue])
 
-  function formatNumberWithDecimal(number: number | string, decimalPlaces: number): string {
-    const parsedNumber = typeof number === 'string' ? parseFloat(number) : number
-    if (isNaN(parsedNumber)) return ''
-    return parsedNumber.toFixed(decimalPlaces)
-  }
+
 
   return (
     <>
@@ -404,11 +402,11 @@ export default function BuySellFields({
             </BuySellFieldsItem>
             <BuySellFieldsItem>
               <BuySellFieldsSelect>
-                <Serenity />
+              <img style={{ borderRadius: '100p%' }} width="25px" height="25px" src={logo?.public} />
                 <TYPE.body4 fontSize={'14px'}> {shareSymbol}</TYPE.body4>
               </BuySellFieldsSelect>
               <BuySellFieldsSpanBal>
-                Balance: <b style={{ color: '#292933' }}> {formatNumberWithDecimal(shareBalance, 2)}</b>
+                Balance: <b style={{ color: '#292933' }}> {useFormatNumberWithDecimal(shareBalance, 2)}</b>
               </BuySellFieldsSpanBal>
             </BuySellFieldsItem>
           </BuySellFieldsContainer>
@@ -440,7 +438,7 @@ export default function BuySellFields({
                 <TYPE.body4 fontSize={'14px'}> {tokenOption?.tokenSymbol}</TYPE.body4>
               </BuySellFieldsSelect>
               <BuySellFieldsSpanBal>
-                Balance: <b style={{ color: '#292933' }}>{formatNumberWithDecimal(tokenBalance, 2)} </b>
+                Balance: <b style={{ color: '#292933' }}>{useFormatNumberWithDecimal(tokenBalance, 2)} </b>
               </BuySellFieldsSpanBal>
             </BuySellFieldsItem>
           </BuySellFieldsContainer>

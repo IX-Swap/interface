@@ -1,5 +1,5 @@
 import { OrderConfig, SearchConfig } from 'components/LBP/Dashboard/SearchFilter'
-import { DashboardLbp, LbpFormValues } from 'components/LBP/types'
+import { DashboardLbp, LbpFormValues, MarketData } from 'components/LBP/types'
 import React, { useCallback } from 'react'
 import apiService from 'services/apiService'
 import { PaginateResponse } from 'types/pagination'
@@ -54,6 +54,10 @@ export const useGetLbp = () => {
   return React.useCallback((id: number) => apiService.get('/lbp/' + id).then((res) => res.data as LbpFormValues), [])
 }
 
+export const useGetLbpStats = () => {
+  return React.useCallback((id: number) => apiService.get(`/lbp/${id}/stats`).then((res) => res.data as MarketData), [])
+}
+
 export const useGetLbpByName = () => {
   return React.useCallback(
     (name: string) => apiService.get('/lbp/by-name?name=' + name).then((res) => res.data as Lbp),
@@ -62,16 +66,12 @@ export const useGetLbpByName = () => {
 }
 
 export const useGetLBPAuthorization = () => {
-  return React.useCallback((id: number) => apiService.get(`/lbp/${id}/authorization`).then((res) => res.data as LbpFormValues), [])
+  return React.useCallback(
+    (id: number) => apiService.get(`/lbp/${id}/authorization`).then((res) => res.data as LbpFormValues),
+    []
+  )
 }
 
-
-// export const useGetLBPAuthorization = () => {
-//   return React.useCallback(
-//     () => apiService.get('/lbp/2/authorization').then((res) => res.data as Lbp),
-//     []
-//   )
-// }
 
 export const useCreateLbp = () => {
   return React.useCallback((name: string) => apiService.post('/lbp/draft', { name }).then((res) => res.data as Lbp), [])
@@ -174,6 +174,12 @@ export const useGetPaginatedLbpInvestors = (id: number) => {
       totalItems: 4,
     } as PaginationRes<any>,
   }
+}
+
+export function useFormatNumberWithDecimal(initialNumber: number | string, decimalPlaces: number): string {
+  const parsedNumber = typeof initialNumber === 'string' ? parseFloat(initialNumber) : initialNumber;
+  const formattedNumber = isNaN(parsedNumber) ? '' : parsedNumber.toFixed(decimalPlaces);
+  return formattedNumber;
 }
 
 export const useGetAllLbpInvestors = () => {
