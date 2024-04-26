@@ -44,7 +44,6 @@ export default function LBPForm() {
       },
     },
     projectInfo: {
-      name: '',
       title: '',
       description: '',
       website: '',
@@ -117,7 +116,6 @@ export default function LBPForm() {
   }
 
   const updateSubmitButtonState = (formData: FormData) => {
-    formData.projectInfo.name = formData?.projectInfo?.name
     const isComplete = (data: any) => Object.values(data).every((val) => !!val)
     const brandingComplete = isComplete(formData.branding)
     const projectInfoComplete = isComplete(formData.projectInfo)
@@ -149,6 +147,11 @@ export default function LBPForm() {
       await saveOrSubmitLbp(actionType, data)
       const summary = actionType === LBP_ACTION_TYPES.save ? 'LBP saved successfully' : 'LBP submitted successfully'
       addPopup({ info: { success: true, summary } })
+      if (actionType === LBP_ACTION_TYPES.submit) {
+        setShowSummary(true)
+      } else {
+        history.push('/lbp')
+      }
     } catch (err: any) {
       addPopup({ info: { success: false, summary: err?.toString() } })
     } finally {
@@ -158,18 +161,15 @@ export default function LBPForm() {
 
   const handleSubmit = async () => {
     await saveLbp(LBP_ACTION_TYPES.submit)
-    setShowSummary(true)
   }
 
   const handleSaveDraft = async () => {
     await saveLbp(LBP_ACTION_TYPES.save)
-    history.push('/lbp')
   }
 
   const transformDataForSaving = (formData: FormData) => {
     const result: LbpFormValues = {
       id: formData.id,
-      name: formData.projectInfo?.name,
       title: formData.projectInfo?.title,
       description: formData.projectInfo?.description,
       officialWebsite: formData.projectInfo?.website,
@@ -239,7 +239,7 @@ export default function LBPForm() {
           style={{ whiteSpace: 'nowrap' }}
           marginLeft="10px"
         >
-          <Trans>{formData?.projectInfo?.name}</Trans>
+          <Trans>{formData?.projectInfo?.title}</Trans>
         </TYPE.title4>
         <Column style={{ gap: '35px' }}>
           <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Branding">
@@ -284,7 +284,7 @@ export default function LBPForm() {
                 addressA={formData.tokenomics.shareAddress}
                 addressB={formData.tokenomics.assetTokenAddress}
                 contractAddress={formData?.tokenomics?.contractAddress || ''}
-                shareName={formData?.projectInfo?.name}
+                shareName={formData?.projectInfo?.title}
                 shareLogo={formData?.branding?.LBPLogo}
               />
             </Column>
