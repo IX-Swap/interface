@@ -7,12 +7,14 @@ import { useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers, constants } from 'ethers'
-import { useLBPContract, useTokenContract } from 'hooks/useContract'
+import { useLBPContract, useTokenContract, useLBPFactory } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useFormatNumberWithDecimal, useGetLBPAuthorization } from 'state/lbp/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import BuySellModal from './Modals/BuySellModal'
+import { useWeb3React } from '@web3-react/core'
+import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -64,7 +66,7 @@ export default function BuySellFields({
   tokenOption,
   shareTokenAddress,
   id,
-  logo
+  logo,
 }: BuySellFieldsProps) {
   // UI States
   const [buttonDisabled, setButtonDisabled] = useState(true)
@@ -74,6 +76,7 @@ export default function BuySellFields({
   const [shareSymbol, setShareSymbol] = useState<any>('')
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
+  const [swapFee, setSwapFee] = useState(0)
   const [inputType, setInputType] = useState<InputType>(InputType.None)
   const [convertingState, setIsConvertingState] = useState({
     inputType: InputType.None,
@@ -82,6 +85,8 @@ export default function BuySellFields({
   const [isExecuting, setIsExecuting] = useState(false)
 
   // Web3 States
+  const { chainId } = useWeb3React()
+  const lbpFactory = useLBPFactory(LBP_FACTORY_ADDRESS[chainId || 0] || '')
   const lbpContractInstance = useLBPContract(contractAddress ?? '')
   const tokenCurrency = useCurrency(assetTokenAddress)
   const { account } = useActiveWeb3React()
@@ -101,7 +106,14 @@ export default function BuySellFields({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const shareSymbol = await shareTokenContract?.symbol()
+        if (!shareTokenContract || !lbpFactory) return
+
+        const [shareSymbol, factorySettings] = await Promise.all([
+          shareTokenContract?.symbol(),
+          lbpFactory?.factorySettings(),
+        ])
+
+        setSwapFee((factorySettings?.swapFee || 0) / 100)
         setShareSymbol(shareSymbol)
         if (!id || !tokenBalance) return
         const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
@@ -113,7 +125,7 @@ export default function BuySellFields({
       }
     }
     fetchData()
-  }, [shareValue, assetValue, id, tokenBalance, shareTokenContract])
+  }, [shareValue, assetValue, id, swapFee, tokenBalance, shareTokenContract, lbpFactory])
 
   const handleOpenModal = (action: any) => {
     setIsModalOpen(true)
@@ -364,8 +376,6 @@ export default function BuySellFields({
     setAssetValue('')
   }, [assetValue, shareValue])
 
-
-
   return (
     <>
       {isLoading ? (
@@ -402,7 +412,7 @@ export default function BuySellFields({
             </BuySellFieldsItem>
             <BuySellFieldsItem>
               <BuySellFieldsSelect>
-              <img style={{ borderRadius: '100p%' }} width="25px" height="25px" src={logo?.public} />
+                <img style={{ borderRadius: '100p%' }} width="25px" height="25px" src={logo?.public} />
                 <TYPE.body4 fontSize={'14px'}> {shareSymbol}</TYPE.body4>
               </BuySellFieldsSelect>
               <BuySellFieldsSpanBal>
@@ -446,7 +456,7 @@ export default function BuySellFields({
             <SlippageWrapper>
               <TYPE.body3>Fees: </TYPE.body3>
               <TYPE.body3 color={'#292933'} fontWeight={'700'}>
-                0.5%
+                {swapFee}%
               </TYPE.body3>
             </SlippageWrapper>
             <SlippageWrapper>
