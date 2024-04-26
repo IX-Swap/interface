@@ -84,9 +84,16 @@ export const useGetLBPAuthorization = () => {
   )
 }
 
-
 export const useCreateLbp = () => {
   return React.useCallback((name: string) => apiService.post('/lbp/draft', { name }).then((res) => res.data as Lbp), [])
+}
+
+export const useChangeLbpStatus = () => {
+  return React.useCallback(
+    (id: string, status: 'paused' | 'live' | 'closed' | string) =>
+      apiService.put(`/lbp/${id}/changeStatus`, { status }),
+    []
+  )
 }
 
 export const useUploadLbpFiles = () => {
@@ -189,9 +196,20 @@ export const useGetPaginatedLbpInvestors = (id: number) => {
 }
 
 export function useFormatNumberWithDecimal(initialNumber: number | string, decimalPlaces: number): string {
-  const parsedNumber = typeof initialNumber === 'string' ? parseFloat(initialNumber) : initialNumber;
-  const formattedNumber = isNaN(parsedNumber) ? '' : parsedNumber.toFixed(decimalPlaces);
-  return formattedNumber;
+  const parsedNumber = typeof initialNumber === 'string' ? parseFloat(initialNumber) : initialNumber
+  if (isNaN(parsedNumber)) {
+    return ''
+  }
+  let formattedNumber = parsedNumber.toFixed(decimalPlaces)
+
+  if (decimalPlaces > 0) {
+    formattedNumber = formattedNumber.replace(/\.?0*$/, '')
+  }
+  const parts = formattedNumber.split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  formattedNumber = parts.join('.')
+
+  return formattedNumber
 }
 
 export const useGetAllLbpInvestors = () => {

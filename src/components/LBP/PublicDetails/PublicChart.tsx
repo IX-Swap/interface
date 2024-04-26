@@ -50,6 +50,7 @@ interface DetailsChartProps {
   endWeight?: number
   shareAmount?: number
   assetAmount?: number
+  chartWidth?: number
 }
 
 const DATA_POINT_COUNT = 100
@@ -63,6 +64,7 @@ export default function DetailsChart({
   endWeight,
   shareAmount,
   assetAmount,
+  chartWidth
 }: DetailsChartProps) {
   const { chainId } = useWeb3React()
 
@@ -175,7 +177,7 @@ export default function DetailsChart({
 
   return (
     <ChartContainer>
-      <LineChart width={800} height={400} data={dataPoints} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+      <LineChart width={chartWidth? chartWidth : 800} height={400} data={dataPoints} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
         <defs>
           <linearGradient id="gradient" x1="0" y1="0" x2="100%" y2="0">
             <stop offset="0%" stopColor="#AFAFCD" />
