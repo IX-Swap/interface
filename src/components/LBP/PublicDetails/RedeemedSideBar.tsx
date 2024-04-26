@@ -1,14 +1,36 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ColumnCenter } from 'components/Column'
 import { ReactComponent as ComingSoonIcon } from '../../../assets/images/colsedIcon.svg'
 import { TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
-import { ReactComponent as ShareToken } from '../../../assets/images/serenity.svg'
-import { ReactComponent as Checked } from '../../../assets/images/check-2.svg'
+import { useActiveWeb3React } from 'hooks/web3'
+import { useLBPPurchasedShares } from 'state/lbp/hooks'
+import { useLBPContract } from 'hooks/useContract'
 
-export default function RedeemedSideBar() {
+interface RedeemedProps {
+  contractAddress: string | null
+  shareLogo: any
+  shareName: string
+}
+
+const RedeemedSideBar: React.FC<RedeemedProps> = ({ contractAddress, shareLogo, shareName }) => {
+  const { account } = useActiveWeb3React()
+  const getLBPPurchasedShares = useLBPPurchasedShares(contractAddress || '', account)
+  const lbpContractInstance = useLBPContract(contractAddress ?? '')
+
+  const handleRedeem = async () => {
+    if (!lbpContractInstance) return
+
+    try {
+      const receipt = await lbpContractInstance.redeem(account, false)
+      console.log('Redeem transaction receipt:', receipt)
+    } catch (error) {
+      console.error('Error redeeming tokens:', error)
+    }
+  }
+
+  console.log(getLBPPurchasedShares.shareBalance, 'getLBPPurchasedShares')
   return (
     <SideBarContainer>
       <MiddleSection>
@@ -29,27 +51,38 @@ export default function RedeemedSideBar() {
             <TYPE.description2 fontWeight={'400'} color={'#8F8FB2'}>
               Redeemed Project Tokens
             </TYPE.description2>
-            <TYPE.description7 color={'#292933'}>3,800.00</TYPE.description7>
+            <TYPE.description7 color={'#292933'}>{getLBPPurchasedShares?.shareBalance}</TYPE.description7>
           </RedeemedText>
           <RedeemedText>
             <ShareTokenWrapper>
-              <ShareToken />
-              <TYPE.label fontSize={'14px'}>Serenity</TYPE.label>
+              <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={shareLogo?.public} />
+              <TYPE.label style={{ inlineSize: 'max-content', alignSelf: 'center' }} fontSize={'14px'}>
+                {shareName}
+              </TYPE.label>
             </ShareTokenWrapper>
           </RedeemedText>
         </ShareWrapper>
         <Line style={{ margin: '20px 8px' }} />
-
         <PinnedContentButton
+          onClick={handleRedeem}
+          disabled={parseFloat(getLBPPurchasedShares.shareBalance || '') === 0}
+          margin={'0px 15px'}
+        >
+          Redeem
+        </PinnedContentButton>
+
+        {/* <PinnedContentButton
           style={{ border: '1px solid #1FBA6680', background: '#E9F8F0', color: '#1FBA66' }}
           margin={'0px 15px'}
         >
           <Checked style={{ marginRight: '5px' }} /> Redeemed
-        </PinnedContentButton>
+        </PinnedContentButton> */}
       </MiddleSection>
     </SideBarContainer>
   )
 }
+
+export default RedeemedSideBar
 
 const ShareTokenWrapper = styled.div`
   border: 1px solid #e6e6ff;

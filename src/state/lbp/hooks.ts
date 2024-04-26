@@ -1,12 +1,42 @@
 import { OrderConfig, SearchConfig } from 'components/LBP/Dashboard/SearchFilter'
 import { DashboardLbp, LbpFormValues, MarketData } from 'components/LBP/types'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import apiService from 'services/apiService'
 import { PaginateResponse } from 'types/pagination'
 import { Lbp } from './types'
 import { FileUpload, useUploadFiles } from 'state/launchpad/hooks'
 import { LBP_ACTION_TYPES } from './constants'
 import { PaginationRes } from 'state/launchpad/types'
+import { ethers } from 'ethers'
+import { useLBPContract } from 'hooks/useContract'
+
+export const useLBPPurchasedShares = (lbpAddress: string, account: string) => {
+  const lbp = useLBPContract(lbpAddress || '')
+  const [shareBalance, setShareBalance] = useState<string | null>(null)
+  const [isLoading, setLoading] = useState<boolean>(false)
+  const fetchShareBalance = useCallback(async () => {
+    try {
+      if (lbp && account) {
+        setLoading(true)
+        const balance = await lbp.purchasedShares(account)
+        // Decimals are hardcoded for now. We need to change it to retrieve the token's decimal value using the ERC20.decimals RPC call
+        const parsedBalance = ethers?.utils?.formatUnits(balance, 18)
+        setShareBalance(parsedBalance)
+        setLoading(false)
+      } else {
+        console.error('LBP contract or account not available')
+      }
+    } catch (error) {
+      console.error('Error fetching share balance:', error)
+    }
+  }, [lbp, account])
+
+  useEffect(() => {
+    fetchShareBalance()
+  }, [lbp, fetchShareBalance])
+
+  return { isLoading, shareBalance, fetchShareBalance }
+}
 
 export const useGetLbpsFull = () => {
   return React.useCallback(
@@ -84,9 +114,16 @@ export const useGetLBPAuthorization = () => {
   )
 }
 
-
 export const useCreateLbp = () => {
   return React.useCallback((name: string) => apiService.post('/lbp/draft', { name }).then((res) => res.data as Lbp), [])
+}
+
+export const useChangeLbpStatus = () => {
+  return React.useCallback(
+    (id: string, status: 'paused' | 'live' | 'closed' | string) =>
+      apiService.put(`/lbp/${id}/changeStatus`, { status }),
+    []
+  )
 }
 
 export const useUploadLbpFiles = () => {
@@ -189,9 +226,20 @@ export const useGetPaginatedLbpInvestors = (id: number) => {
 }
 
 export function useFormatNumberWithDecimal(initialNumber: number | string, decimalPlaces: number): string {
-  const parsedNumber = typeof initialNumber === 'string' ? parseFloat(initialNumber) : initialNumber;
-  const formattedNumber = isNaN(parsedNumber) ? '' : parsedNumber.toFixed(decimalPlaces);
-  return formattedNumber;
+  const parsedNumber = typeof initialNumber === 'string' ? parseFloat(initialNumber) : initialNumber
+  if (isNaN(parsedNumber)) {
+    return ''
+  }
+  let formattedNumber = parsedNumber.toFixed(decimalPlaces)
+
+  if (decimalPlaces > 0) {
+    formattedNumber = formattedNumber.replace(/\.?0*$/, '')
+  }
+  const parts = formattedNumber.split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  formattedNumber = parts.join('.')
+
+  return formattedNumber
 }
 
 export const useGetAllLbpInvestors = () => {
