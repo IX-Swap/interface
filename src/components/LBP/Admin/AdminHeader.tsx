@@ -130,7 +130,7 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({ lbpShareLogo, lbpShareName,
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleOpenModal = () => {
-    if (status === 'paused' || status === 'live' || status === 'closed') {
+    if (status === 'paused' || status === 'live' || status === 'ended') {
       setIsModalOpen(true)
     }
   }
