@@ -11,7 +11,7 @@ export interface SearchConfig {
 }
 
 export interface OrderConfig {
-  name?: string | null
+  title?: string | null
   startDate?: string | null
   endDate?: string | null
 }

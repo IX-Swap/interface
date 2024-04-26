@@ -159,7 +159,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
           {!loading &&
             lbps.map((lbp, idx) => (
               <LbpRow key={idx} tab={LbpStatus.live}>
-                <Raw>{lbp.name}</Raw>
+                <Raw>{lbp.title}</Raw>
                 <CountRow>{lbp?.startDate ? moment(lbp?.startDate).format('DD/MM/YYYY hh:mmA') : ''}</CountRow>
                 <ActionButtons>
                   <NoFrameButton

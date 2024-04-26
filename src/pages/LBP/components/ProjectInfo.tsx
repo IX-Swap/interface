@@ -29,7 +29,6 @@ interface LinkData {
 }
 
 interface ProjectInfoData {
-  name: string
   title: string
   description: string
   website: string
@@ -41,7 +40,6 @@ interface ProjectInfoData {
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
-  name: Yup.string().required('Name is required'),
   description: Yup.string().required('Description is required'),
   website: Yup.string().required('Website URL required'),
   socialLinks: Yup.array()
@@ -105,7 +103,6 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) =
 
 export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
   const [projectInfoData, setProjectInfoData] = useState<ProjectInfoData>({
-    name: '',
     title: '',
     description: '',
     website: '',
@@ -115,7 +112,6 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
   })
   const formik = useFormik({
     initialValues: {
-      name: '',
       title: '',
       description: '',
       website: '',
