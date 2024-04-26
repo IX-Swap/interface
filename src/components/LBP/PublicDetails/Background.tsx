@@ -87,7 +87,7 @@ const Background: React.FC<BackgroundProps> = ({ lbpData, currentSharePriceUSD }
         {lbpData && lbpData.logo && (
         <LogoIcon as="img" src={lbpData.logo.public} alt="Serenity Logo" />
       )}
-      <Description fontSize={'48px'}>{lbpData?.name}</Description>
+      <Description fontSize={'48px'}>{lbpData?.title}</Description>
       <Amount fontSize={'40px'}>${useFormatNumberWithDecimal(currentSharePriceUSD || 0, 3)}</Amount>
       {/* <Vary positive={isPositive}>
         <Arrow rotateArrow={!isPositive}>

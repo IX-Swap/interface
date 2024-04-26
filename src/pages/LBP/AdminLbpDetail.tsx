@@ -52,7 +52,7 @@ export const AdminLbpDetail = () => {
           <AdminHeader
             lbpId={id}
             status={status || lbpData?.status || ''}
-            lbpShareName={lbpData?.name}
+            lbpShareName={lbpData?.title}
             lbpShareLogo={lbpData?.logo}
             updateStatus={updateStatus}
           />
