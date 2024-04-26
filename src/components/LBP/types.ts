@@ -52,7 +52,6 @@ export interface LbpFile {
 export interface LbpFormValues {
   [x: string]: any
   id?: number
-  name: string
   title: string
   description: string
   officialWebsite: string
@@ -103,7 +102,6 @@ export interface TokenomicsProps {
 }
 
 export interface ProjectInfoProps {
-  name: string
   title: string
   description: string
   website: string
