@@ -39,7 +39,6 @@ export function useOptimizedApproveCallback(
     if (!tokenContract || !account || !spender) return
     const fetchAllowance = async () => {
       const allowance = await tokenContract.allowance(account, spender)
-      console.info('Refresh allowance: ', ethers.utils.formatUnits(allowance, 6))
       setCurrentAllowance(allowance)
       setApproving(false) // reset approving state
     }

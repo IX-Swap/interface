@@ -26,11 +26,11 @@ import { IXS_ADDRESS, TOKEN_ADDRESSES } from 'constants/addresses'
 import { useWeb3React } from '@web3-react/core'
 import { useTokenContract } from 'hooks/useContract'
 import { formatUnits } from 'ethers/lib/utils'
-import timezone from "dayjs/plugin/timezone";
+import timezone from 'dayjs/plugin/timezone'
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault('Asia/Singapore');
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault('Asia/Singapore')
 
 const Container = styled.div`
   width: 100%;
@@ -187,7 +187,7 @@ export const TokenOptions = (chainId: number) => [
     logo: ixsDropDown,
   },
 ]
-export const getTokenOption = (tokenAddress: string, chainId: number) => {
+export const getTokenOption = (tokenAddress: string, chainId: number = 0) => {
   const tokenOption = TokenOptions(chainId).find((option) => option.tokenAddress === tokenAddress)
   return tokenOption
 }
@@ -206,7 +206,6 @@ interface TokenomicsData {
   startDate: any
   endDate: string
 }
-type ChangeHandler = (data: Partial<TokenomicsData>) => void
 
 const validationSchema = Yup.object().shape({
   shareAddress: Yup.string().required('Share Address is required'),
@@ -231,13 +230,8 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
   const [valueEnd, setEndValue] = useState<number>(30)
   const [isOpen, setIsOpen] = useState(false)
   const [selectedToken, setSelectedToken] = useState<any>({
-    tokenSymbol: 'USDC.e',
+    tokenSymbol: 'USDC',
     logo: usdcDropDown,
-  })
-
-  const [decimals, setDecimals] = useState<any>({
-    shareDecimals: 0,
-    assetDecimals: 0,
   })
 
   const [balances, setBalances] = useState<any>({
@@ -295,11 +289,6 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
       setBalances({
         assetBalance: formatUnits(assetBalance, assetDecimals),
         shareBalance: formatUnits(shareBalance, shareDecimals),
-      })
-
-      setDecimals({
-        shareDecimals: shareDecimals,
-        assetDecimals: assetDecimals,
       })
     }
 
@@ -700,11 +689,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker
-              onChange={handleEndDateChange}
-              label="End Date"
-              value={dayjs(formDataTokenomics.endDate)}
-            />
+            <DateTimePicker onChange={handleEndDateChange} label="End Date" value={dayjs(formDataTokenomics.endDate)} />
           </DemoContainer>
         </LocalizationProvider>
       </FormGrid>
