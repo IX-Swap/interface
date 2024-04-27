@@ -1,8 +1,6 @@
 import { PinnedContentButton, ButtonOutlined } from 'components/Button'
 import styled from 'styled-components'
-import usdcDropDown from '../../../assets/images/usdcNew.svg'
 import ixsDropDown from '../../../assets/images/ixsToken.svg'
-import usdtropDown from '../../../assets/images/usdtNewToken.svg'
 import { FormData } from 'pages/LBP/LbpForm'
 import dayjs from 'dayjs'
 import { useWeb3React } from '@web3-react/core'
@@ -13,6 +11,7 @@ import { LBP_FACTORY_ADDRESS, LBP_XTOKEN_PROXY } from 'constants/addresses'
 import { ethers } from 'ethers'
 import { toUnixTimeSeconds } from 'utils/time'
 import { useTokenContract } from 'hooks/useContract'
+import { useDeployLbp } from 'state/lbp/hooks'
 
 export const MAX_UINT88 = ethers.BigNumber.from('309485009821345068724781055')
 
@@ -28,6 +27,7 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
   const assetTokenContract = useTokenContract(formData.tokenomics.assetTokenAddress ?? '')
   const shareTokenContract = useTokenContract(formData.tokenomics.shareAddress ?? '')
   const lbpFactory = useLBPFactory(LBP_FACTORY_ADDRESS[chainId || 0] || '')
+  const deployLbp = useDeployLbp()
 
   const tokenOptions = useMemo(() => {
     // exclude tokens that has tokenAddress of undefined
@@ -97,10 +97,17 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
     const assetAmount = ethers.utils.parseUnits(formData.tokenomics.assetInput.toString(), assetDecimals)
 
     console.info('deploying lbp with args', lbpArgs)
-    await lbpFactory.createLiquidityBootstrapPool(lbpArgs, shareAmount, assetAmount, salt, {
+    const tx = await lbpFactory.createLiquidityBootstrapPool(lbpArgs, shareAmount, assetAmount, salt, {
       gasLimit: 500_000,
     })
-  }, [lbpFactory, lbpArgs, formData, assetTokenContract, shareTokenContract])
+    const receipt = await tx.wait()
+    if (receipt.status === 1) {
+      console.log('Transaction successful!')
+      await deployLbp(formData?.id?.toString(), predictedLBPAddress)
+    } else {
+      console.error('Deployment failed!')
+    }
+  }, [lbpFactory, lbpArgs, formData, assetTokenContract, shareTokenContract, predictedLBPAddress])
 
   return (
     <SummaryContainer>

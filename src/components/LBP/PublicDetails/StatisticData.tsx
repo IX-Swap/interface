@@ -53,7 +53,7 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
     const shareAmount = parseFloat(lbpData?.shareAmount?.toString() || '0')
     const currentShareReserve = parseFloat(statsData?.currentShareReserve?.toString() || '0')
     const tokensReleased = shareAmount - currentShareReserve
-    if (!tokensReleased || tokensReleased < 0) return 'N/A'
+    if (!tokensReleased || tokensReleased < 0) return '0'
 
     return formatValueWithSuffix(tokensReleased)
   }
