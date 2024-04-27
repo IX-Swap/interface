@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
-import { ApprovalState, useOptimizedApproveCallback } from 'hooks/useApproveCallback'
+import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
 import { ethers, constants } from 'ethers'
 import { useLBPContract, useTokenContract, useLBPFactory } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -19,7 +19,7 @@ interface BuySellFieldsProps {
   activeTab: string
   slippage: string
   tokenBalance: string
-  assetTokenAddress: string
+  assetTokenAddress?: string
   contractAddress?: string
   tokenDecimals?: number
   shareBalance?: any
@@ -96,7 +96,7 @@ export default function BuySellFields({
   const shareTokenContract = useTokenContract(shareTokenAddress ?? '')
   const [reservesAndWeights, setReservesAndWeights] = useState<any>(null)
 
-  const [approval, approveCallback, refreshAllowance] = useOptimizedApproveCallback(
+  const [approval, approveCallback, refreshAllowance] = useAllowance(
     assetTokenAddress,
     ethers.utils.parseUnits(assetValue || '0', assetDecimals),
     contractAddress || ''

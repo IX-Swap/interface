@@ -20,7 +20,8 @@ export enum ApprovalState {
   APPROVED = 'APPROVED',
 }
 
-export function useOptimizedApproveCallback(
+// useAllowance is an enhanced version of the useApproveCallback hook that has better speed
+export function useAllowance(
   tokenAddress?: string,
   amountToApprove?: BigNumber,
   spender?: string
@@ -49,14 +50,14 @@ export function useOptimizedApproveCallback(
   // // check the current approval status
 
   const approvalState: ApprovalState = useMemo(() => {
-    if (!amountToApprove || !spender || !currentAllowance) return ApprovalState.UNKNOWN
+    if (!amountToApprove || !spender || !currentAllowance || !tokenContract) return ApprovalState.UNKNOWN
     if (approving) return ApprovalState.PENDING
     // we might not have enough data to know whether or not we need to approve
     if (!currentAllowance) return ApprovalState.UNKNOWN
 
     // amountToApprove will be defined if currentAllowance is
     return currentAllowance.lt(amountToApprove) ? ApprovalState.NOT_APPROVED : ApprovalState.APPROVED
-  }, [amountToApprove, currentAllowance, spender])
+  }, [amountToApprove, currentAllowance, spender, tokenContract])
 
   const addTransaction = useTransactionAdder()
 
@@ -107,7 +108,7 @@ export function useOptimizedApproveCallback(
   return [approvalState, approve, refreshAllowance]
 }
 
-// DEPRECATED: useApproveCallback use multicalls that result in extremely slow performance please use useOptimizedApproveCallback hook instead,
+// DEPRECATED: useApproveCallback use multicalls that result in extremely slow performance please use `useAllowance` hook instead,
 // usage: returns a variable indicating the state of the approval and a function which approves if necessary or early returns
 export function useApproveCallback(
   amountToApprove?: CurrencyAmount<Currency>,

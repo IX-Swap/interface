@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { ReactComponent as SerenityIcon } from '../../../assets/images/serenity.svg'
-import { ApprovalState, useOptimizedApproveCallback } from 'hooks/useApproveCallback'
+import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers } from 'ethers'
@@ -73,14 +73,14 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
   const tokenBOption = getTokenOption(addressB, chainId)
 
   // share
-  const [approvalA, approveACallback] = useOptimizedApproveCallback(
+  const [approvalA, approveACallback] = useAllowance(
     addressA,
     ethers.utils.parseUnits(shareValue?.toString() || '0', 18),
     LBP_FACTORY_ADDRESS[chainId || 0] || ''
   )
 
   // asset
-  const [approvalB, approveBCallback] = useOptimizedApproveCallback(
+  const [approvalB, approveBCallback] = useAllowance(
     addressB,
     ethers.utils.parseUnits(assetValue?.toString() || '0', tokenBOption?.tokenDecimals) as any,
     LBP_FACTORY_ADDRESS[chainId || 0] || ''
