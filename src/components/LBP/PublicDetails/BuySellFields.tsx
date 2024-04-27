@@ -530,7 +530,11 @@ export default function BuySellFields({
               <PinnedContentButton
                 onClick={handleButtonClick}
                 disabled={
-                  assetExceedsBalance || isExecuting || buttonDisabled || (shareValue === '' && assetValue === '')
+                  assetExceedsBalance ||
+                  isExecuting ||
+                  buttonDisabled ||
+                  (shareValue === '' && assetValue === '') ||
+                  errorMessage !== ''
                 }
               >
                 {buttonText}
@@ -538,7 +542,7 @@ export default function BuySellFields({
             ) : (
               <PinnedContentButton
                 onClick={handleSellButtonClick}
-                disabled={isExecuting || (shareValue === '' && assetValue === '')}
+                disabled={isExecuting || (shareValue === '' && assetValue === '') || errorMessage !== ''}
                 style={{
                   backgroundColor: isExecuting ? '' : shareValue === '' && assetValue === '' ? '' : '#FF6161',
                 }}
