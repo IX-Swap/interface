@@ -14,7 +14,7 @@ import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import BuySellModal from './Modals/BuySellModal'
 import { useWeb3React } from '@web3-react/core'
-import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
+import { LBP_FACTORY_ADDRESS, LBP_XTOKEN_PROXY } from 'constants/addresses'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -84,6 +84,8 @@ export default function BuySellFields({
   })
   const [isExecuting, setIsExecuting] = useState(false)
 
+  const [errorMessage, setErrorMessage] = useState('')
+
   // Web3 States
   const { chainId } = useWeb3React()
   const lbpFactory = useLBPFactory(LBP_FACTORY_ADDRESS[chainId || 0] || '')
@@ -106,7 +108,8 @@ export default function BuySellFields({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!shareTokenContract || !lbpFactory) return
+        console.info('Fetch data')
+        if (!shareTokenContract || !lbpFactory || !id || !tokenBalance || !shareBalance) return
 
         const [shareSymbol, factorySettings] = await Promise.all([
           shareTokenContract?.symbol(),
@@ -115,9 +118,7 @@ export default function BuySellFields({
 
         setSwapFee((factorySettings?.swapFee || 0) / 100)
         setShareSymbol(shareSymbol)
-        if (!id || !tokenBalance) return
-        const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
-        setButtonDisabled(isButtonDisabled)
+        // const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
         setIsLoading(false)
       } catch (error) {
         setIsLoading(false)
@@ -125,7 +126,12 @@ export default function BuySellFields({
       }
     }
     fetchData()
-  }, [shareValue, assetValue, id, swapFee, tokenBalance, shareTokenContract, lbpFactory])
+  }, [shareTokenContract, lbpFactory, id, tokenBalance, shareBalance])
+
+  useEffect(() => {
+    const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
+    setButtonDisabled(isButtonDisabled)
+  }, [shareValue, assetValue])
 
   const handleOpenModal = (action: any) => {
     setIsModalOpen(true)
@@ -135,38 +141,44 @@ export default function BuySellFields({
     setIsModalOpen(false)
   }
 
-  const handleInputChange = async (event: any, inputType: InputType) => {
-    const inputAmount = event.target.value
+  const handleInputChange = useCallback(
+    async (event: any, inputType: InputType) => {
+      if (errorMessage) setErrorMessage('')
+      const inputAmount = event.target.value
 
-    const setValue = inputType === InputType.Share ? setShareValue : setAssetValue
-    const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
+      const assetDecimals = tokenOption?.tokenDecimals || 18
 
-    setInputType(inputType)
-    setValue(inputAmount)
+      const setValue = inputType === InputType.Share ? setShareValue : setAssetValue
+      const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
 
-    if (inputAmount !== '') {
-      setIsConvertingState({
-        inputType: inputType === InputType.Share ? InputType.Asset : InputType.Share,
-        converting: true,
-      })
-      const converted = await handleConversion(
-        inputType,
-        inputAmount,
-        inputType == 'share' ? 18 : 6,
-        inputType == 'share' ? 6 : 18
-      )
-      setIsConvertingState((prevState) => {
-        return {
-          ...prevState,
-          converting: false,
-        }
-      })
-      setOpposite(useFormatNumberWithDecimal(converted, 4))
-    } else {
-      // Clear the opposite value if the input is cleared
-      setOpposite('')
-    }
-  }
+      setInputType(inputType)
+      setValue(inputAmount)
+
+      if (inputAmount !== '') {
+        setIsConvertingState({
+          inputType: inputType === InputType.Share ? InputType.Asset : InputType.Share,
+          converting: true,
+        })
+        const converted = await handleConversion(
+          inputType,
+          inputAmount,
+          inputType == 'share' ? 18 : assetDecimals,
+          inputType == 'share' ? assetDecimals : 18
+        )
+        setIsConvertingState((prevState) => {
+          return {
+            ...prevState,
+            converting: false,
+          }
+        })
+        setOpposite(useFormatNumberWithDecimal(converted, 4))
+      } else {
+        // Clear the opposite value if the input is cleared
+        setOpposite('')
+      }
+    },
+    [errorMessage, tokenOption]
+  )
 
   const handleConversion = useCallback(
     async (
@@ -177,25 +189,30 @@ export default function BuySellFields({
     ): Promise<string> => {
       if (!lbpContractInstance) return ''
 
-      const amount = parseUnit(inputAmount, inputDecimals)
-      let method: any
-      const action: TradeAction = activeTab as TradeAction
-      switch (action) {
-        case TradeAction.Buy:
-          method = inputType === InputType.Asset ? 'previewSharesOut' : 'previewAssetsIn'
-          break
-        case TradeAction.Sell:
-          method = inputType === InputType.Asset ? 'previewSharesIn' : 'previewAssetsOut'
-          break
-        default:
-          break
-      }
+      try {
+        const amount = parseUnit(inputAmount, inputDecimals)
+        let method: any
+        const action: TradeAction = activeTab as TradeAction
+        switch (action) {
+          case TradeAction.Buy:
+            method = inputType === InputType.Asset ? 'previewSharesOut' : 'previewAssetsIn'
+            break
+          case TradeAction.Sell:
+            method = inputType === InputType.Asset ? 'previewSharesIn' : 'previewAssetsOut'
+            break
+          default:
+            break
+        }
 
-      if (method) {
-        console.info('Converting amount:', amount.toString(), 'inputType', inputType, 'method:', method)
-        const result = await lbpContractInstance[method](amount)
-        const parsedAmount = ethers.utils.formatUnits(result.toString(), outputDecimals)
-        return parsedAmount
+        if (method) {
+          console.info('Converting amount:', amount.toString(), 'inputType', inputType, 'method:', method)
+          const result = await lbpContractInstance[method](amount)
+          const parsedAmount = ethers.utils.formatUnits(result.toString(), outputDecimals)
+          return parsedAmount
+        }
+      } catch (err: any) {
+        console.error('Error converting amount:', err.errorName)
+        setErrorMessage(err.errorName)
       }
 
       return ''
@@ -452,6 +469,11 @@ export default function BuySellFields({
               </BuySellFieldsSpanBal>
             </BuySellFieldsItem>
           </BuySellFieldsContainer>
+          {errorMessage ? (
+            <TYPE.error error style={{ marginBottom: '10px' }}>
+              {errorMessage}
+            </TYPE.error>
+          ) : null}
           <TabRow>
             <SlippageWrapper>
               <TYPE.body3>Fees: </TYPE.body3>
