@@ -145,7 +145,7 @@ export default function BuySellFields({
 
   const handleInputChange = useCallback(
     async (event: any, inputType: InputType) => {
-      if (errorMessage) setErrorMessage('')
+      if (errorMessage !== '') setErrorMessage('')
       const inputAmount = event.target.value
       const setValue = inputType === InputType.Share ? setShareValue : setAssetValue
       const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
@@ -171,7 +171,8 @@ export default function BuySellFields({
             converting: false,
           }
         })
-        setOpposite(useFormatNumberWithDecimal(converted, 4))
+
+        setOpposite(converted ? parseFloat(converted).toFixed(4) : '')
       } else {
         // Clear the opposite value if the input is cleared
         setOpposite('')
@@ -205,7 +206,6 @@ export default function BuySellFields({
         }
 
         if (method) {
-          console.info('Converting amount:', amount.toString(), 'inputType', inputType, 'method:', method)
           const result = await lbpContractInstance[method](amount)
           const parsedAmount = ethers.utils.formatUnits(result.toString(), outputDecimals)
           return parsedAmount
@@ -215,7 +215,7 @@ export default function BuySellFields({
         setErrorMessage(err.errorName)
       }
 
-      return ''
+      return '0'
     },
     [lbpContractInstance]
   )
