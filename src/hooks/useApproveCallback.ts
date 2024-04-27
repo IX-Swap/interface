@@ -108,7 +108,8 @@ export function useOptimizedApproveCallback(
   return [approvalState, approve, refreshAllowance]
 }
 
-// returns a variable indicating the state of the approval and a function which approves if necessary or early returns
+// DEPRECATED: useApproveCallback use multicalls that result in extremely slow performance please use useOptimizedApproveCallback hook instead,
+// usage: returns a variable indicating the state of the approval and a function which approves if necessary or early returns
 export function useApproveCallback(
   amountToApprove?: CurrencyAmount<Currency>,
   spender?: string
