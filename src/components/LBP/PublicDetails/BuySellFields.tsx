@@ -15,6 +15,7 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import BuySellModal from './Modals/BuySellModal'
 import { useWeb3React } from '@web3-react/core'
 import { LBP_FACTORY_ADDRESS, LBP_XTOKEN_PROXY } from 'constants/addresses'
+import { getPriceFromRawReservesAndWeights } from '../utils/calculation'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -83,8 +84,10 @@ export default function BuySellFields({
     converting: false,
   })
   const [isExecuting, setIsExecuting] = useState(false)
-
   const [errorMessage, setErrorMessage] = useState('')
+
+  const assetDecimals = useMemo(() => tokenOption?.tokenDecimals || 0, [tokenOption])
+  const shareDecimals = useMemo(() => 18, []) // for now hardcode share decimals to 18 but can change it later
 
   // Web3 States
   const { chainId } = useWeb3React()
@@ -94,6 +97,8 @@ export default function BuySellFields({
   const { account } = useActiveWeb3React()
   const getLBPAuthorization = useGetLBPAuthorization()
   const shareTokenContract = useTokenContract(shareTokenAddress ?? '')
+  const [reservesAndWeights, setReservesAndWeights] = useState<any>(null)
+
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
@@ -108,15 +113,17 @@ export default function BuySellFields({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.info('Fetch data')
-        if (!shareTokenContract || !lbpFactory || !id || !tokenBalance || !shareBalance) return
+        console.info('Fetch data LBP buy/sells')
+        if (!shareTokenContract || !lbpFactory || !lbpContractInstance || !id || !tokenBalance || !shareBalance) return
 
-        const [shareSymbol, factorySettings] = await Promise.all([
+        const [shareSymbol, factorySettings, reservesAndWeights] = await Promise.all([
           shareTokenContract?.symbol(),
           lbpFactory?.factorySettings(),
+          lbpContractInstance?.reservesAndWeights(),
         ])
 
         setSwapFee((factorySettings?.swapFee || 0) / 100)
+        setReservesAndWeights(reservesAndWeights)
         setShareSymbol(shareSymbol)
         // const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
         setIsLoading(false)
@@ -126,7 +133,7 @@ export default function BuySellFields({
       }
     }
     fetchData()
-  }, [shareTokenContract, lbpFactory, id, tokenBalance, shareBalance])
+  }, [shareTokenContract, lbpFactory, lbpContractInstance, id, tokenBalance, shareBalance])
 
   useEffect(() => {
     const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
@@ -145,9 +152,6 @@ export default function BuySellFields({
     async (event: any, inputType: InputType) => {
       if (errorMessage) setErrorMessage('')
       const inputAmount = event.target.value
-
-      const assetDecimals = tokenOption?.tokenDecimals || 18
-
       const setValue = inputType === InputType.Share ? setShareValue : setAssetValue
       const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
 
@@ -162,8 +166,8 @@ export default function BuySellFields({
         const converted = await handleConversion(
           inputType,
           inputAmount,
-          inputType == 'share' ? 18 : assetDecimals,
-          inputType == 'share' ? assetDecimals : 18
+          inputType == 'share' ? shareDecimals : assetDecimals,
+          inputType == 'share' ? assetDecimals : shareDecimals
         )
         setIsConvertingState((prevState) => {
           return {
@@ -177,7 +181,7 @@ export default function BuySellFields({
         setOpposite('')
       }
     },
-    [errorMessage, tokenOption]
+    [errorMessage, shareDecimals, assetDecimals]
   )
 
   const handleConversion = useCallback(
@@ -308,6 +312,38 @@ export default function BuySellFields({
     },
     [lbpContractInstance, tokenOption]
   )
+
+  const priceImpact = useMemo(() => {
+    if (!reservesAndWeights || !assetDecimals || !shareDecimals || !shareValue || !assetValue) return 0
+    const { assetReserve, shareReserve, assetWeight, shareWeight } = reservesAndWeights
+    const isBuy = activeTab === TradeAction.Buy
+
+    const deltaAssetReserve = ethers.utils.parseUnits(assetValue, assetDecimals)
+    const deltaShareReserve = ethers.utils.parseUnits(shareValue, shareDecimals)
+
+    const marketPrice = getPriceFromRawReservesAndWeights({
+      currentAssetReserve: assetReserve,
+      currentShareReserve: shareReserve,
+      currentAssetWeight: assetWeight,
+      currentShareWeight: shareWeight,
+      assetDecimals: assetDecimals,
+      shareDecimals: shareDecimals,
+    })
+
+    const newPrice = getPriceFromRawReservesAndWeights({
+      currentAssetReserve: isBuy ? assetReserve.add(deltaAssetReserve) : assetReserve.sub(deltaAssetReserve),
+      currentShareReserve: isBuy ? shareReserve.sub(deltaShareReserve) : shareReserve.add(deltaShareReserve),
+      currentAssetWeight: assetWeight,
+      currentShareWeight: shareWeight,
+      assetDecimals: assetDecimals,
+      shareDecimals: shareDecimals,
+    })
+
+    const marketPriceFloat = parseFloat(marketPrice)
+    const priceDifference = parseFloat(newPrice) - marketPriceFloat
+    const priceImpactPercentage = Math.abs((priceDifference / marketPriceFloat) * 100)
+    return priceImpactPercentage.toFixed(3)
+  }, [activeTab, reservesAndWeights, assetValue, shareValue, assetDecimals, shareDecimals])
 
   const sellExactSharesForAssets = useCallback(
     async (shareAmount: number, authorization: any): Promise<any> => {
@@ -484,7 +520,7 @@ export default function BuySellFields({
             <SlippageWrapper>
               <TYPE.body3>Price Impact: </TYPE.body3>
               <TYPE.body3 color={'#292933'} fontWeight={'700'}>
-                0.5%
+                {priceImpact}%
               </TYPE.body3>
             </SlippageWrapper>
           </TabRow>
