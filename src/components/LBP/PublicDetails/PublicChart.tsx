@@ -19,6 +19,8 @@ const composeHistoricalPriceQuery = (lbpAddress: string) => {
 
 interface DetailsChartProps {
   contractAddress?: string
+  currentShareReserve?: string
+  currentAssetReserve?: string
   startDate?: string
   endDate?: string
   startWeight?: number
@@ -61,10 +63,11 @@ export default function DetailsChart({
   endWeight,
   shareAmount,
   assetAmount,
+  currentShareReserve,
+  currentAssetReserve,
   chartWidth,
 }: DetailsChartProps) {
   const { chainId } = useWeb3React()
-
   const subgraphData = useSubgraphQuery({
     feature: 'LBP',
     chainId,
@@ -110,7 +113,17 @@ export default function DetailsChart({
   )
 
   const dataPoints = useMemo(() => {
-    if (!startWeight || !endWeight || !shareAmount || !assetAmount || !bucketSize || !startDate) return []
+    if (
+      !startWeight ||
+      !endWeight ||
+      !shareAmount ||
+      !assetAmount ||
+      !currentAssetReserve ||
+      !currentShareReserve ||
+      !bucketSize ||
+      !startDate
+    )
+      return []
 
     const trades = subgraphData?.trades || []
     const lastTrade = trades.length ? trades[trades.length - 1] : null
@@ -161,9 +174,13 @@ export default function DetailsChart({
         const decay = getDecayAtStep(shareStartWeight, shareEndWeight, i, DATA_POINT_COUNT)
         const currentShareWeight = shareStartWeight + decay
         const currentAssetWeight = 1 - currentShareWeight
-        const price = getPrice(shareAmount, currentShareWeight, assetAmount, currentAssetWeight).toFixed(
-          PRICE_PRECISION
-        )
+
+        const price = getPrice(
+          parseFloat(currentShareReserve),
+          currentShareWeight,
+          parseFloat(currentAssetReserve),
+          currentAssetWeight
+        ).toFixed(PRICE_PRECISION)
 
         // only show future data points if the future price is less than the last trade price
         if (trades.length && price > lastPrice) {
@@ -183,7 +200,18 @@ export default function DetailsChart({
     // Convert bucketMap object to array and sort by bucketIndex
     const result = Object.values(bucketMap).sort((a: any, b: any) => a.bucketIndex - b.bucketIndex)
     return result
-  }, [subgraphData, startDate, getBucketIndex, startWeight, endWeight, assetAmount, shareAmount, bucketSize])
+  }, [
+    subgraphData,
+    startDate,
+    getBucketIndex,
+    startWeight,
+    endWeight,
+    currentShareReserve,
+    currentAssetReserve,
+    shareAmount,
+    assetAmount,
+    bucketSize,
+  ])
 
   return (
     <ChartContainer>

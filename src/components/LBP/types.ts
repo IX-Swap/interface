@@ -63,11 +63,11 @@ export interface LbpFormValues {
   LBPLogo: LbpFile
   LBPBanner: LbpFile
   uploadDocs: LbpFile[]
-  contractAddress?: string 
+  contractAddress?: string
   shareAddress: string
   shareAmount: number
   shareMaxSupply: number
-  assetTokenId?: number
+  assetTokenAddress: string
   assetTokenAmount: number
   startWeight: number
   endWeight: number
@@ -82,7 +82,7 @@ export interface LbpFormValues {
   deletedAt?: string
   banner?: any
   logo?: any
-  assetTokenSymbol?: any 
+  assetTokenSymbol?: any
 }
 
 export interface TokenomicsProps {
@@ -116,14 +116,13 @@ export interface BrandingProps {
 }
 
 export interface MarketData {
-  circMarketCapUSD: string;
-  currentAssetPriceUSD: string;
-  currentAssetReserve: string;
-  currentAssetWeight: string;
-  currentSharePriceUSD: string;
-  currentShareReserve: string;
-  currentShareWeight: string;
-  fdvMarketCapUSD: string;
-  liquidityUSD: string;
+  circMarketCapUSD: string
+  currentAssetPriceUSD: string
+  currentAssetReserve: string
+  currentAssetWeight: string
+  currentSharePriceUSD: string
+  currentShareReserve: string
+  currentShareWeight: string
+  fdvMarketCapUSD: string
+  liquidityUSD: string
 }
-

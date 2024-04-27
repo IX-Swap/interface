@@ -100,6 +100,7 @@ export function useAllowance(
         refreshAllowance()
       })
       .catch((error: Error) => {
+        setApproving(false) // reset approving state
         throw error
       })
   }, [approvalState, tokenContract, amountToApprove, spender, addTransaction])
