@@ -1,11 +1,8 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
-import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
 import { TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
-import { useApproveCallback } from 'hooks/useApproveCallback'
-import { useCurrency } from 'hooks/Tokens'
-import { CurrencyAmount } from '@ixswap1/sdk-core'
+import { ApprovalState, useOptimizedApproveCallback } from 'hooks/useApproveCallback'
 import { ethers, constants } from 'ethers'
 import { useLBPContract, useTokenContract, useLBPFactory } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -14,8 +11,9 @@ import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import BuySellModal from './Modals/BuySellModal'
 import { useWeb3React } from '@web3-react/core'
-import { LBP_FACTORY_ADDRESS, LBP_XTOKEN_PROXY } from 'constants/addresses'
+import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
 import { getPriceFromRawReservesAndWeights } from '../utils/calculation'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -93,21 +91,18 @@ export default function BuySellFields({
   const { chainId } = useWeb3React()
   const lbpFactory = useLBPFactory(LBP_FACTORY_ADDRESS[chainId || 0] || '')
   const lbpContractInstance = useLBPContract(contractAddress ?? '')
-  const tokenCurrency = useCurrency(assetTokenAddress)
   const { account } = useActiveWeb3React()
   const getLBPAuthorization = useGetLBPAuthorization()
   const shareTokenContract = useTokenContract(shareTokenAddress ?? '')
   const [reservesAndWeights, setReservesAndWeights] = useState<any>(null)
 
-  const [approval, approveCallback] = useApproveCallback(
-    tokenCurrency
-      ? CurrencyAmount.fromRawAmount(
-          tokenCurrency,
-          ethers.utils.parseUnits(assetValue || '0', tokenOption?.tokenDecimals) as any
-        )
-      : undefined,
+  const [approval, approveCallback, refreshAllowance] = useOptimizedApproveCallback(
+    assetTokenAddress,
+    ethers.utils.parseUnits(assetValue || '0', assetDecimals),
     contractAddress || ''
   )
+
+  const addTransaction = useTransactionAdder()
   const assetExceedsBalance = parseFloat(assetValue) > parseFloat(tokenBalance)
 
   useEffect(() => {
@@ -255,6 +250,10 @@ export default function BuySellFields({
       if (tx) {
         await tx.wait()
         setIsExecuting(false)
+        refreshAllowance()
+        addTransaction(tx, {
+          summary: 'Transaction is successful!',
+        })
       }
     } catch (error) {
       console.error('Error executing trade:', error)
@@ -532,6 +531,7 @@ export default function BuySellFields({
                 disabled={
                   assetExceedsBalance ||
                   isExecuting ||
+                  approval == ApprovalState.PENDING ||
                   buttonDisabled ||
                   (shareValue === '' && assetValue === '') ||
                   errorMessage !== ''
