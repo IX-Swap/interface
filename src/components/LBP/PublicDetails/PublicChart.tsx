@@ -64,7 +64,7 @@ export default function DetailsChart({
   endWeight,
   shareAmount,
   assetAmount,
-  chartWidth
+  chartWidth,
 }: DetailsChartProps) {
   const { chainId } = useWeb3React()
 
@@ -85,6 +85,18 @@ export default function DetailsChart({
     const differenceInMs = end - start
     const bucketSize = differenceInMs / DATA_POINT_COUNT
     return bucketSize
+  }, [startDate, endDate])
+
+  const progressPercentage = useMemo(() => {
+    const start: any = new Date(startDate || '')
+    const end: any = new Date(endDate || '')
+    const currentTime: any = new Date()
+    // Calculate total duration in milliseconds
+    const totalDuration = end - start
+    // Calculate elapsed duration from start to last trade time in milliseconds
+    const elapsedDuration = currentTime - start
+    const progressPercentage = (elapsedDuration / totalDuration) * 100
+    return progressPercentage
   }, [startDate, endDate])
 
   // get bucket index for a given timestamp
@@ -117,6 +129,7 @@ export default function DetailsChart({
         bucketIndex: bucketIndex,
         blockTimestamp: trade.blockTimestamp,
         date: unixTimeToFormat({ time: trade.blockTimestamp, format: 'MMM DD' }),
+        dateWithTime: unixTimeToFormat({ time: trade.blockTimestamp, format: 'MMM DD, HH:mm:ss' }),
         price: parseFloat(trade.usdPrice).toFixed(PRICE_PRECISION),
         isHistorical: true,
       }
@@ -163,6 +176,7 @@ export default function DetailsChart({
         bucketMap[i] = {
           bucketIndex: i,
           date: unixTimeToFormat({ time: time / 1000, format: 'MMM DD' }),
+          dateWithTime: unixTimeToFormat({ time: time / 1000, format: 'MMM DD, HH:mm:ss' }),
           blockTimestamp: 0,
           price: price,
           isHistorical: false,
@@ -177,12 +191,17 @@ export default function DetailsChart({
 
   return (
     <ChartContainer>
-      <LineChart width={chartWidth? chartWidth : 800} height={400} data={dataPoints} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+      <LineChart
+        width={chartWidth ? chartWidth : 800}
+        height={400}
+        data={dataPoints}
+        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+      >
         <defs>
           <linearGradient id="gradient" x1="0" y1="0" x2="100%" y2="0">
             <stop offset="0%" stopColor="#AFAFCD" />
-            <stop offset={`${percentage}%`} stopColor="#AFAFCD" />
-            <stop offset={`${percentage}%`} stopColor="#6666FF" />
+            <stop offset={`${progressPercentage}%`} stopColor="#AFAFCD" />
+            <stop offset={`${progressPercentage}%`} stopColor="#6666FF" />
             <stop offset="100%" stopColor="#6666FF" />
           </linearGradient>
         </defs>
@@ -190,29 +209,29 @@ export default function DetailsChart({
         <Line type={type} dataKey="price" strokeWidth={2} stroke="url(#gradient)" dot={false} />
         <XAxis dataKey="date" tick={{ fontSize: 14 }} axisLine={false} />
         <YAxis tick={{ fontSize: 14 }} tickFormatter={(value) => `$${value}`} axisLine={false} />
-        <ReferenceLine
-          x={launchDate}
-          label={
-            <g transform="translate(570, 30)">
-              <circle cx={0} cy={0} r={5} fill="#BDBDDB" />
-              <Text fontSize={'14px'} x={10} y={5}>
-                Historical Price
-              </Text>
-            </g>
-          }
-        />
-        <ReferenceLine
-          x={launchDate}
-          y={rand}
-          label={
-            <g transform="translate(700, 30)">
-              <circle cx={0} cy={0} r={5} fill="#6666FF" />
-              <Text fontSize={'14px'} x={10} y={5}>
-                Future Price
-              </Text>
-            </g>
-          }
-        />
+        {/* <ReferenceLine */}
+        {/*   x={launchDate} */}
+        {/*   label={ */}
+        {/*     <g transform="translate(570, 30)"> */}
+        {/*       <circle cx={0} cy={0} r={5} fill="#BDBDDB" /> */}
+        {/*       <Text fontSize={'14px'} x={10} y={5}> */}
+        {/*         Historical Price */}
+        {/*       </Text> */}
+        {/*     </g> */}
+        {/*   } */}
+        {/* /> */}
+        {/* <ReferenceLine */}
+        {/*   x={launchDate} */}
+        {/*   y={rand} */}
+        {/*   label={ */}
+        {/*     <g transform="translate(700, 30)"> */}
+        {/*       <circle cx={0} cy={0} r={5} fill="#6666FF" /> */}
+        {/*       <Text fontSize={'14px'} x={10} y={5}> */}
+        {/*         Future Price */}
+        {/*       </Text> */}
+        {/*     </g> */}
+        {/*   } */}
+        {/* /> */}
       </LineChart>
     </ChartContainer>
   )
