@@ -163,6 +163,7 @@ export default function BuySellFields({
           inputType: inputType === InputType.Share ? InputType.Asset : InputType.Share,
           converting: true,
         })
+        setOpposite('')
         const converted = await handleConversion(
           inputType,
           inputAmount,
