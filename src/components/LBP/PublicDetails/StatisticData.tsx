@@ -31,7 +31,12 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
       return 0
     }
 
-    const percentage = (currentShareReserveValue / shareAmountValue) * 100
+    const released = shareAmountValue - currentShareReserveValue
+    if (released <= 0) {
+      return 0
+    }
+
+    const percentage = (released / shareAmountValue) * 100
     return Math.min(percentage, 100)
   }
 
