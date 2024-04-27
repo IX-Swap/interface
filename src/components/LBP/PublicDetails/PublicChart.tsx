@@ -1,35 +1,10 @@
 import { useCallback, useMemo } from 'react'
-import { LineChart, Line, XAxis, YAxis, ReferenceLine, Tooltip, Text } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, Tooltip, DefaultTooltipContent } from 'recharts'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
 import { unixTimeToFormat } from 'utils/time'
 import { getPrice, getDecayAtStep } from '../utils/calculation'
-
-interface DataPoint {
-  year: number
-  value: number
-}
-
-const data: DataPoint[] = []
-const launchDate = 2004
-
-const rand = 300
-for (let i = 0; i < 7; i++) {
-  const year = 2000 + i
-  const value = Math.random() * (rand + 50) + 100
-  let d: DataPoint = {
-    year: year,
-    value: value,
-  }
-  data.push(d)
-}
-
-console.info('data', data)
-
-const type = 'monotone'
-
-const percentage = 100 - ((7 - 4 - 1) / (7 - 1)) * 100
 
 const composeHistoricalPriceQuery = (lbpAddress: string) => {
   return `
@@ -55,6 +30,28 @@ interface DetailsChartProps {
 
 const DATA_POINT_COUNT = 100
 const PRICE_PRECISION = 4
+
+const CustomTooltip: React.FC<{ active?: boolean; payload?: any }> = (props) => {
+  if (props.payload[0] != null) {
+    // mutating props directly is against react's conventions
+    // so we create a new payload with the name and value fields set to what we want
+    const newPayload = [
+      ...props.payload,
+      {
+        name: 'time',
+        // all your data which created the tooltip is located in the .payload property
+        value: props.payload[0].payload.dateWithTime,
+        // you can also add "unit" here if you need it
+      },
+    ]
+
+    // we render the default, but with our overridden payload
+    return <DefaultTooltipContent {...props} payload={newPayload} />
+  }
+
+  // we just render the default
+  return <DefaultTooltipContent {...props} />
+}
 
 export default function DetailsChart({
   contractAddress,
@@ -131,7 +128,6 @@ export default function DetailsChart({
         date: unixTimeToFormat({ time: trade.blockTimestamp, format: 'MMM DD' }),
         dateWithTime: unixTimeToFormat({ time: trade.blockTimestamp, format: 'MMM DD, HH:mm:ss' }),
         price: parseFloat(trade.usdPrice).toFixed(PRICE_PRECISION),
-        isHistorical: true,
       }
 
       // Update bucket if current trade has a higher price
@@ -153,6 +149,7 @@ export default function DetailsChart({
     bucketMap[-1] = {
       bucketIndex: -1,
       date: unixTimeToFormat({ time: start.getTime() / 1000, format: 'MMM DD' }),
+      dateWithTime: unixTimeToFormat({ time: start.getTime() / 1000, format: 'MMM DD, HH:mm:ss' }),
       blockTimestamp: 0,
       price: initialPrice,
     }
@@ -179,7 +176,6 @@ export default function DetailsChart({
           dateWithTime: unixTimeToFormat({ time: time / 1000, format: 'MMM DD, HH:mm:ss' }),
           blockTimestamp: 0,
           price: price,
-          isHistorical: false,
         }
       }
     }
@@ -205,9 +201,10 @@ export default function DetailsChart({
             <stop offset="100%" stopColor="#6666FF" />
           </linearGradient>
         </defs>
-        <Tooltip />
-        <Line type={type} dataKey="price" strokeWidth={2} stroke="url(#gradient)" dot={false} />
-        <XAxis dataKey="date" tick={{ fontSize: 14 }} axisLine={false} />
+        <Tooltip content={<CustomTooltip />} labelFormatter={() => ''} /> {/* Disable default label */}
+        <Line type="monotone" dataKey="price" strokeWidth={2} stroke="url(#gradient)" dot={false} />
+        <XAxis dataKey="date" axisLine={false} tick={false} />
+        <XAxis xAxisId="1" dataKey="date" allowDuplicatedCategory={false} axisLine={false} />
         <YAxis tick={{ fontSize: 14 }} tickFormatter={(value) => `$${value}`} axisLine={false} />
         {/* <ReferenceLine */}
         {/*   x={launchDate} */}
