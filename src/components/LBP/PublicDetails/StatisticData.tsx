@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Column, { AutoColumn } from 'components/Column'
 import { RowBetween } from 'components/Row'
 import styled from 'styled-components'
@@ -47,13 +47,13 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
 
     const shareAmount = parseFloat(lbpData?.shareAmount?.toString() || '0')
     const currentShareReserve = parseFloat(statsData?.currentShareReserve?.toString() || '0')
-
     const tokensReleased = shareAmount - currentShareReserve
+    if (!tokensReleased || tokensReleased < 0) return 'N/A'
 
     return formatValueWithSuffix(tokensReleased)
   }
 
-  const tokensReleased = calculateTokensReleased(lbpData, statsData)
+  const tokensReleased = useMemo(() => calculateTokensReleased(lbpData, statsData), [lbpData, statsData])
 
   return (
     <Column style={{ display: isAdmin ? '-webkit-box' : '' }}>
@@ -124,8 +124,8 @@ const QuantitiesBox = styled.div<{ isAdmin?: boolean }>`
   height: 80px;
   gap: 20px;
   padding: 16px;
-  min-width: ${props => (props.isAdmin ? '190px' : '270px')};
-  margin-right: ${props => (props.isAdmin ? '20px' : '0')};
+  min-width: ${(props) => (props.isAdmin ? '190px' : '270px')};
+  margin-right: ${(props) => (props.isAdmin ? '20px' : '0')};
 `
 
 const TokenWrapper = styled.div`
