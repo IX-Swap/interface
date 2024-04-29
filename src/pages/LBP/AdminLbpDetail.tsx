@@ -58,6 +58,8 @@ export const AdminLbpDetail = () => {
           />
           <DetailsChart
             contractAddress={lbpData?.contractAddress}
+            currentAssetReserve={statsData?.currentAssetReserve}
+            currentShareReserve={statsData?.currentShareReserve}
             startDate={lbpData?.startDate}
             endDate={lbpData?.endDate}
             startWeight={lbpData?.startWeight}

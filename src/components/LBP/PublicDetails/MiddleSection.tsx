@@ -96,8 +96,10 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
             endWeight={lbpData?.endWeight}
             shareAmount={lbpData?.shareAmount}
             assetAmount={lbpData?.assetTokenAmount}
+            currentShareReserve={statsData?.currentShareReserve}
+            currentAssetReserve={statsData?.currentAssetReserve}
           />
-           <StatisticData statsData={statsData}  lbpData={lbpData} />
+          <StatisticData statsData={statsData} lbpData={lbpData} />
         </Column>
         <Column>
           {SideBarByStatus}
