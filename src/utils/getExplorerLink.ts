@@ -5,7 +5,7 @@ const ETHERSCAN_PREFIXES: { [chainId: number]: string } = {
   5: 'goerli.',
   42: 'kovan.',
   80001: 'mumbai.',
-  80002: 'okxlink.com/',
+  80002: 'oklink.com/',
   137: '',
 }
 const CHAIN_EXPLORERS: { [chainId: number]: string } = {

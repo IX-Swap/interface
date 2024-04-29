@@ -138,7 +138,7 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
     feature: 'LBP',
     chainId,
     query: contractAddress ? composeLatestTradeQuery(contractAddress.toLowerCase()) : '',
-    pollingInterval: 2000,
+    pollingInterval: 5000,
     autoPolling: true,
   })
 

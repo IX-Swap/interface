@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 import { ReactComponent as SerenityIcon } from '../../../assets/images/serenity.svg'
-import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
+import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers } from 'ethers'
-import { useCallback, useEffect, useState, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { getTokenOption } from './Tokenomics'
 import { ReactComponent as Checked } from '../../../assets/images/check-2.svg'
-import { LBP_FACTORY_ADDRESS, LBP_XTOKEN_PROXY } from 'constants/addresses'
+import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
 import { useWeb3React } from '@web3-react/core'
 
 const CardContainer = styled.div`
@@ -68,34 +68,21 @@ enum ApprovalType {
   SHARE = 'share',
 }
 
-export default function Approvals({
-  addressA,
-  addressB,
-  assetValue,
-  shareValue,
-  contractAddress,
-  shareName,
-  shareLogo,
-}: Props) {
-  const tokenCurrencyA = useCurrency(addressA)
-  const tokenCurrencyB = useCurrency(addressB)
-  const tokenBOption = getTokenOption(addressB, tokenCurrencyB?.chainId || 1)
+export default function Approvals({ addressA, addressB, assetValue, shareValue, shareName, shareLogo }: Props) {
   const { chainId } = useWeb3React()
+  const tokenBOption = getTokenOption(addressB, chainId)
 
-  const [approvalA, approveACallback] = useApproveCallback(
-    tokenCurrencyA
-      ? CurrencyAmount.fromRawAmount(tokenCurrencyA, ethers.utils.parseUnits(shareValue?.toString() || '0', 18) as any)
-      : undefined,
+  // share
+  const [approvalA, approveACallback] = useAllowance(
+    addressA,
+    ethers.utils.parseUnits(shareValue?.toString() || '0', 18),
     LBP_FACTORY_ADDRESS[chainId || 0] || ''
   )
 
-  const [approvalB, approveBCallback] = useApproveCallback(
-    tokenCurrencyB
-      ? CurrencyAmount.fromRawAmount(
-          tokenCurrencyB,
-          ethers.utils.parseUnits(assetValue?.toString() || '0', tokenBOption?.tokenDecimals) as any
-        )
-      : undefined,
+  // asset
+  const [approvalB, approveBCallback] = useAllowance(
+    addressB,
+    ethers.utils.parseUnits(assetValue?.toString() || '0', tokenBOption?.tokenDecimals) as any,
     LBP_FACTORY_ADDRESS[chainId || 0] || ''
   )
 
@@ -138,27 +125,18 @@ export default function Approvals({
   )
 
   const renderLogo = (shareLogo: any) => {
-    return (
-      shareLogo && typeof shareLogo === 'object' && shareLogo.public ? (
-        <LogoIcon
-          as="img"
-          src={shareLogo.public}
-          alt="Serenity Logo"
-        />
-      ) : (
-        shareLogo && (typeof shareLogo === 'string' || shareLogo instanceof File) ? (
-          <LogoIcon
-            as="img"
-            src={shareLogo instanceof File ? URL.createObjectURL(shareLogo) : shareLogo}
-            alt="Serenity Logo"
-          />
-        ) : (
-          <SerenityIcon />
-        )
-      )
-    );
+    return shareLogo && typeof shareLogo === 'object' && shareLogo.public ? (
+      <LogoIcon as="img" src={shareLogo.public} alt="Serenity Logo" />
+    ) : shareLogo && (typeof shareLogo === 'string' || shareLogo instanceof File) ? (
+      <LogoIcon
+        as="img"
+        src={shareLogo instanceof File ? URL.createObjectURL(shareLogo) : shareLogo}
+        alt="Serenity Logo"
+      />
+    ) : (
+      <SerenityIcon />
+    )
   }
-  
 
   return (
     <CardContainer>

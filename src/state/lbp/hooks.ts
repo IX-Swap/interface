@@ -96,6 +96,18 @@ export const useChangeLbpStatus = () => {
   )
 }
 
+export const useDeployLbp = () => {
+  return React.useCallback(
+    (id: string, contractAddress: string) =>
+      apiService
+        .put(`/lbp/deploy/${id}`, {
+          contractAddress,
+        })
+        .then((res) => res.data),
+    []
+  )
+}
+
 export const useUploadLbpFiles = () => {
   const uploadFiles = useUploadFiles()
 

@@ -135,7 +135,8 @@ export default function LBPForm() {
     setCanSubmit(
       // TODO: enable check check projectInfoComplete, hasUploadDocs after fixing uploading docs
       // temporarily not check projectInfoComplete, hasUploadDocs as there is a bug documents are not loaded
-      brandingComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers
+      // brandingComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers
+      brandingComplete && hasSocialLinks && hasWhitepapers
       // brandingComplete && projectInfoComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers && hasUploadDocs
     )
   }
