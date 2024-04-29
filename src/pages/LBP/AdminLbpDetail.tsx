@@ -1,5 +1,4 @@
 import AdminHeader from 'components/LBP/Admin/AdminHeader'
-import { InvestorInformation } from 'components/LBP/Dashboard/InvestorInformation'
 import DetailsChart from 'components/LBP/PublicDetails/PublicChart'
 import { LbpFormValues, MarketData } from 'components/LBP/types'
 import { useEffect, useState } from 'react'
@@ -9,6 +8,7 @@ import styled from 'styled-components'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Loader } from 'components/AdminTransactionsTable'
 import StatisticData from 'components/LBP/PublicDetails/StatisticData'
+import InvestorInformation from 'components/LBP/Dashboard/InvestorInformation'
 
 export const AdminLbpDetail = () => {
   const { id } = useParams<{ id: string }>()
