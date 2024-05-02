@@ -76,6 +76,8 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
     }
   }, [lbpData])
 
+  console.log(lbpData, 'lbpData')
+
   return (
     <MiddleSectionWrapper>
       <MiddleSectionContainer>
@@ -103,7 +105,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
         </Column>
         <Column>
           {SideBarByStatus}
-          <AdditionalDocuments />
+          <AdditionalDocuments uploadDocs={lbpData?.uploadDocs} />
         </Column>
       </MiddleSectionContainer>
       <TradeHistory
