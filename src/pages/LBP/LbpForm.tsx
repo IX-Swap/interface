@@ -47,8 +47,8 @@ export default function LBPForm() {
       title: '',
       description: '',
       website: '',
-      socialLinks: [{ name: '', value: '' }],
-      whitepapers: [{ name: '', value: '' }],
+      socialLinks: [],
+      whitepapers: [],
       uploadDocs: [] as LbpFile[],
     },
     tokenomics: {
