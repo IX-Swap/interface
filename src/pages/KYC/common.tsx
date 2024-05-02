@@ -509,6 +509,7 @@ interface ChooseFileTypes {
   error?: any
   handleDeleteClick: () => void
   id?: any
+  name?: string
 }
 
 export const UploaderLBP: FC<UploaderProps> = ({
@@ -523,6 +524,7 @@ export const UploaderLBP: FC<UploaderProps> = ({
   optional = false,
   tooltipText,
   isDisabled = false,
+  name
 }: UploaderProps) => {
   return (
     <Box>
@@ -565,7 +567,7 @@ export const UploaderLBP: FC<UploaderProps> = ({
             <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
               <StyledUploadLogoLbp />
               <TYPE.subHeader1 lineHeight={'20px'} textAlign="center" color={'#555566'}>
-                Share Logo
+              Share {name && name.charAt(0).toUpperCase() + name.slice(1)}
               </TYPE.subHeader1>
               <TYPE.title10 width={'max-content'} textAlign="center" color={'#8F8FB2'}>
                 PNG, JPG, and SVG files only.
