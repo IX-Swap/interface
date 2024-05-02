@@ -22,6 +22,7 @@ import { useHistory } from 'react-router-dom'
 import { TYPE } from 'theme'
 import { SubmitSummary } from 'components/LBP/Forms/SubmitSummary'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
+import { constants } from 'ethers'
 
 export interface FormData {
   id: number
@@ -122,22 +123,9 @@ export default function LBPForm() {
     const tokenomicsComplete = isComplete(formData.tokenomics)
     const hasSocialLinks = formData.projectInfo.socialLinks?.length > 0
     const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
-    const hasUploadDocs = formData.projectInfo.uploadDocs?.length > 0
-
-    // TODO: remove console logs
-    console.info('formData', formData)
-
-    console.info('brandingComplete', brandingComplete)
-    console.info('projectInfoComplete', projectInfoComplete)
-    console.info('tokenomicsComplete', tokenomicsComplete)
-    console.info('hasSocialLinks', hasSocialLinks)
-    console.info('hasWhitepapers', hasWhitepapers)
+    const hasUploadDocs = formData.projectInfo.uploadDocs?.length > 2
     setCanSubmit(
-      // TODO: enable check check projectInfoComplete, hasUploadDocs after fixing uploading docs
-      // temporarily not check projectInfoComplete, hasUploadDocs as there is a bug documents are not loaded
-      // brandingComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers
-      brandingComplete && hasSocialLinks && hasWhitepapers
-      // brandingComplete && projectInfoComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers && hasUploadDocs
+      brandingComplete && hasSocialLinks && hasWhitepapers && hasUploadDocs && projectInfoComplete && tokenomicsComplete
     )
   }
 
@@ -201,7 +189,7 @@ export default function LBPForm() {
     return {
       id: data.id || 0,
       projectInfo: {
-        name: data.name,
+        name: data.title,
         title: data.title,
         description: data.description,
         website: data.officialWebsite,
@@ -215,7 +203,7 @@ export default function LBPForm() {
       },
       tokenomics: {
         shareAddress: data.shareAddress,
-        contractAddress: data.contractAddress,
+        contractAddress: data.contractAddshress || constants.AddressZero,
         assetTokenAddress: data.assetTokenAddress,
         assetTokenSymbol: data.assetTokenSymbol,
         shareInput: data.shareAmount,
