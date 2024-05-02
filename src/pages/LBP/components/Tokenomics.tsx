@@ -30,7 +30,6 @@ import timezone from 'dayjs/plugin/timezone'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
-dayjs.tz.setDefault('Asia/Singapore')
 
 const Container = styled.div`
   width: 100%;
@@ -155,6 +154,13 @@ const ErrorText = styled.span`
   display: block;
   margin-bottom: 15px;
   margin-top: 10px;
+`
+
+const LogoIcon = styled.img`
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  margib-right: 20px;
 `
 
 export const TokenOptions = (chainId: number) => [
@@ -325,7 +331,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
 
   const handleStartDateChange = (date: Dayjs | null) => {
     if (date) {
-      const newStartDate = dayjs(date).local().format('YYYY-MM-DD HH:mm:ss')
+      const newStartDate = dayjs(date)?.format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
         startDate: newStartDate,
@@ -336,10 +342,10 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
   }
   const handleEndDateChange = (date: Dayjs | null) => {
     if (date) {
-      const newEndDate = dayjs(date).local().format('YYYY-MM-DD HH:mm:ss')
+      const formattedEndDate = date.format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
-        endDate: newEndDate,
+        endDate: formattedEndDate,
       }
       setFormData(updatedFormData)
       onChange(updatedFormData)
@@ -386,7 +392,18 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
       return null
     }
   }
+  const handleMaxClick = (balance: string, field: string) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [field]: balance,
+    }))
+    onChange({ ...formDataTokenomics, [field]: balance })
+  }
 
+  const endDate: Dayjs = dayjs(formDataTokenomics.endDate, 'YYYY-MM-DD HH:mm:ss')
+  const startDate: Dayjs = dayjs(formDataTokenomics.startDate, 'YYYY-MM-DD HH:mm:ss')
+
+  console.log(endDate, startDate)
   return (
     <Container>
       <TextInput
@@ -441,7 +458,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
               onChange={handleInputChange}
             />
 
-            <MaxWrapper>
+            <MaxWrapper onClick={() => handleMaxClick(balances?.shareBalance, 'shareInput')}>
               <Span style={{ padding: '10px 20px', cursor: 'pointer' }}>Max</Span>
             </MaxWrapper>
           </TokenomicsItem>
@@ -504,7 +521,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
               // value={formik.values.assetInput}
               value={formDataTokenomics.assetInput}
             />
-            <MaxWrapper>
+            <MaxWrapper onClick={() => handleMaxClick(balances?.assetBalance, 'assetInput')}>
               <Span style={{ padding: '10px 20px', cursor: 'pointer' }}>Max</Span>
             </MaxWrapper>
           </TokenomicsItem>
@@ -548,7 +565,6 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
                 alignItems: 'center',
               }}
             >
-              <Serenity />{' '}
               <div
                 style={{
                   borderRight: '1px solid #E6E6FF',
@@ -558,7 +574,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
                   marginLeft: '5px',
                 }}
               >
-                Serenity
+                {shareTitle ? shareTitle : 'Share'}
               </div>
               <div style={{ padding: '10px 20px' }}>{formDataTokenomics.startWeight}%</div>
             </div>
@@ -615,7 +631,6 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
                 alignItems: 'center',
               }}
             >
-              <Serenity />{' '}
               <div
                 style={{
                   borderRight: '1px solid #E6E6FF',
@@ -625,7 +640,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
                   marginLeft: '5px',
                 }}
               >
-                Serenity
+                {shareTitle ? shareTitle : 'Share'}
               </div>
               <div style={{ padding: '10px 20px' }}>{formDataTokenomics.endWeight}%</div>
             </div>
@@ -679,17 +694,13 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
       <FormGrid>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker
-              onChange={handleStartDateChange}
-              label="Start Date"
-              value={dayjs(formDataTokenomics.startDate)}
-            />
+            <DateTimePicker onChange={handleStartDateChange} label="Start Date" value={startDate} />
           </DemoContainer>
         </LocalizationProvider>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker onChange={handleEndDateChange} label="End Date" value={dayjs(formDataTokenomics.endDate)} />
+            <DateTimePicker onChange={handleEndDateChange} label="End Date" value={endDate} />
           </DemoContainer>
         </LocalizationProvider>
       </FormGrid>
