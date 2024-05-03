@@ -23,6 +23,7 @@ interface Props {
 export const SubmitSummary = ({ formData, onCancel }: Props) => {
   const { chainId } = useWeb3React()
   const [predictedLBPAddress, setPredictedLBPAddress] = useState<string>('')
+  const [amounts, setAmounts] = useState<{ [key: string]: any }>({})
 
   const assetTokenContract = useTokenContract(formData.tokenomics.assetTokenAddress ?? '')
   const shareTokenContract = useTokenContract(formData.tokenomics.shareAddress ?? '')
@@ -70,16 +71,28 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
 
   useEffect(() => {
     const predictLBPAddress = async () => {
-      if (!lbpFactory || !formData || !chainId) return ''
+      if (!lbpFactory || !formData || !chainId || !assetTokenContract || !shareTokenContract || !lbpArgs) return ''
+
+      const assetDecimals = await assetTokenContract.decimals()
+      const shareDecimals = await shareTokenContract.decimals()
+      const shareAmount = ethers.utils.parseUnits(formData.tokenomics.shareInput.toString(), shareDecimals)
+      const assetAmount = ethers.utils.parseUnits(formData.tokenomics.assetInput.toString(), assetDecimals)
+
+      setAmounts({
+        assetAmount: assetAmount,
+        shareAmount: shareAmount,
+      })
+
+      const args = { ...lbpArgs, assets: assetAmount, shares: shareAmount }
 
       const salt = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(formData?.id.toString()))
-      const predictedAddress = await lbpFactory.predictDeterministicAddress(lbpArgs, salt)
-      console.info('predictedAddress', predictedAddress, 'args', lbpArgs)
+      const predictedAddress = await lbpFactory.predictDeterministicAddress(args, salt)
+      console.info('predictedAddress', predictedAddress, 'args', args)
       setPredictedLBPAddress(predictedAddress)
     }
 
     predictLBPAddress()
-  }, [lbpFactory, formData, chainId])
+  }, [lbpFactory, formData, chainId, assetTokenContract, shareTokenContract, lbpArgs])
 
   const handleDeploy = useCallback(async () => {
     if (!lbpFactory || !lbpArgs || !assetTokenContract || !shareTokenContract) return
@@ -90,14 +103,9 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
     }
 
     const salt = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(formData?.id.toString()))
-    const assetDecimals = await assetTokenContract.decimals()
-    const shareDecimals = await shareTokenContract.decimals()
 
-    const shareAmount = ethers.utils.parseUnits(formData.tokenomics.shareInput.toString(), shareDecimals)
-    const assetAmount = ethers.utils.parseUnits(formData.tokenomics.assetInput.toString(), assetDecimals)
-
-    console.info('deploying lbp with args', lbpArgs)
-    const tx = await lbpFactory.createLiquidityBootstrapPool(lbpArgs, shareAmount, assetAmount, salt, {
+    const args = { ...lbpArgs, assets: amounts.assetAmount, shares: amounts.shareAmount }
+    const tx = await lbpFactory.createLiquidityBootstrapPool(args, salt, {
       gasLimit: 500_000,
     })
     const receipt = await tx.wait()
@@ -107,7 +115,7 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
     } else {
       console.error('Deployment failed!')
     }
-  }, [lbpFactory, lbpArgs, formData, assetTokenContract, shareTokenContract, predictedLBPAddress])
+  }, [lbpFactory, lbpArgs, formData, predictedLBPAddress, amounts])
 
   return (
     <SummaryContainer>
