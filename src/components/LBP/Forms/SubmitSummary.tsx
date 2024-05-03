@@ -97,7 +97,10 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
   const handleDeploy = useCallback(async () => {
     if (!lbpFactory || !lbpArgs || !assetTokenContract || !shareTokenContract) return
 
-    if (formData?.tokenomics?.contractAddress) {
+    if (
+      formData?.tokenomics?.contractAddress &&
+      formData?.tokenomics?.contractAddress !== ethers.constants.AddressZero
+    ) {
       console.log('Contract already deployed')
       return
     }
