@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Trans } from '@lingui/macro'
+import dayjs, { Dayjs } from 'dayjs'
 import Column from 'components/Column'
 import { RowStart } from 'components/Row'
 import { FormContainer, FormRow } from 'pages/KYC/IndividualKycForm'
@@ -118,10 +119,10 @@ export default function LBPForm() {
 
   const updateSubmitButtonState = (formData: FormData) => {
     const isComplete = (data: any) => {
-      const keysToCheck = Object.keys(data).filter(key => key !== 'maxPrice' && key !== 'maxSupply');
-      return keysToCheck.every(key => !!data[key]);
-    };
-  
+      const keysToCheck = Object.keys(data).filter((key) => key !== 'maxPrice' && key !== 'maxSupply')
+      return keysToCheck.every((key) => !!data[key])
+    }
+
     // const isComplete = (data: any) => Object.values(data).every((val) => !!val)
     const brandingComplete = isComplete(formData.branding)
     const projectInfoComplete = isComplete(formData.projectInfo)
@@ -129,9 +130,7 @@ export default function LBPForm() {
     const hasSocialLinks = formData.projectInfo.socialLinks?.length > 0
     const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
     // const hasUploadDocs = formData.projectInfo.uploadDocs?.length > 2
-    setCanSubmit(
-      brandingComplete && hasSocialLinks && hasWhitepapers && projectInfoComplete && tokenomicsComplete
-    )
+    setCanSubmit(brandingComplete && hasSocialLinks && hasWhitepapers && projectInfoComplete && tokenomicsComplete)
   }
 
   const saveLbp = async (actionType: string) => {
@@ -180,8 +179,8 @@ export default function LBPForm() {
       assetTokenSymbol: formData.tokenomics?.assetTokenSymbol,
       startWeight: formData.tokenomics?.startWeight,
       endWeight: formData.tokenomics?.endWeight,
-      startDate: formData.tokenomics?.startDate,
-      endDate: formData.tokenomics?.endDate,
+      startDate: dayjs(formData.tokenomics?.startDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
+      endDate: dayjs(formData.tokenomics?.endDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
       minPrice: formData.tokenomics?.minPrice,
       maxPrice: formData.tokenomics?.maxPrice,
       additionalDocumentIds: [],
@@ -215,10 +214,10 @@ export default function LBPForm() {
         maxSupply: data.shareMaxSupply,
         assetInput: data.assetTokenAmount,
         startWeight: data.startWeight,
-        endDate: data.endDate,
+        startDate: dayjs(data.startDate)?.local()?.format('YYYY-MM-DD HH:mm:ss'),
+        endDate: dayjs(data.endDate)?.local()?.format('YYYY-MM-DD HH:mm:ss'),
         minPrice: data.minPrice,
         maxPrice: data.maxPrice || 0,
-        startDate: data.startDate,
         endWeight: data.endWeight,
       },
     }

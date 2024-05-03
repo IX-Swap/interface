@@ -332,7 +332,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
 
   const handleStartDateChange = (date: Dayjs | null) => {
     if (date) {
-      const newStartDate = dayjs(date)?.utc()?.format('YYYY-MM-DD HH:mm:ss')
+      const newStartDate = dayjs(date)?.local()?.format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
         startDate: newStartDate,
@@ -343,7 +343,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   }
   const handleEndDateChange = (date: Dayjs | null) => {
     if (date) {
-      const newEndDate = dayjs(date)?.utc().format('YYYY-MM-DD HH:mm:ss')
+      const newEndDate = dayjs(date)?.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
         endDate: newEndDate,
