@@ -169,42 +169,11 @@ export const useSaveOrSubmitLbp = () => {
   )
 }
 
-export const useGetPaginatedLbpInvestors = (id: number) => {
-  // return useGenericPaginationFetch(`/lbp/${id}/investors`) // TODO: API Integration
-
-  // Mock data
-  return {
-    load: ({ page, order, offset }: any) => {},
-    error: null,
-    isLoading: false,
-    data: {
-      hasMore: true,
-      items: [
-        {
-          username: 'Test 1',
-          tokenAmount: 11,
-          walletAddress: '0x1234123412512512563756',
-        },
-        {
-          username: 'Test 2',
-          tokenAmount: 12,
-          walletAddress: '0x1234123135134114353231',
-        },
-        {
-          username: 'Test 3',
-          tokenAmount: 13,
-          walletAddress: '0x1234123412595678567885',
-        },
-        {
-          username: 'Test 4',
-          tokenAmount: 14,
-          walletAddress: '0x1234123135134114353231',
-        },
-      ],
-      totalPages: 1,
-      totalItems: 4,
-    } as PaginationRes<any>,
-  }
+export const useGetInvestorInfo = () => {
+  return React.useCallback(
+    (id: number) => apiService.get(`/lbp/${id}/investor-information`).then((res) => res.data as LbpFormValues),
+    []
+  )
 }
 
 export function useFormatNumberWithDecimal(initialNumber: number | string, decimalPlaces: number): string {

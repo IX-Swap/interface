@@ -3,7 +3,7 @@ import { Box, Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
 import { StyledTextarea } from 'components/CollectionForm/styled'
-import { TextInput, UploaderDocs } from 'pages/KYC/common'
+import { Select, TextInput, UploaderDocs } from 'pages/KYC/common'
 import { LinkStyledButton, TYPE } from 'theme'
 import { RowCenter } from 'components/Row'
 import { ExtraInfoCardCountry } from 'pages/KYC/styleds'
@@ -17,6 +17,7 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import closeIcon from '../../../assets/images/newCross.svg'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
+import { socialMediaPlatform } from 'pages/KYC/mock'
 
 interface ProjectInfoProps {
   onChange: (data: any) => void
@@ -72,12 +73,14 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) =
           <Trans>{label}</Trans>
         </TYPE.subHeader1>
       </Label>
-      {items?.map((item: string, index: number) => (
+      {items?.map((item: any, index: number) => (
         <Flex key={index} mb={2} alignItems="center" justifyContent="space-between">
           <Box width={1}>
+            <TYPE.body1 style={{ marginBottom: '5px' }}> {item?.name}</TYPE.body1>
+
             <TextInput
               placeholder={label}
-              value={item}
+              value={item?.url}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 handleInternalChange(e.target.value, index)
               }}
@@ -85,10 +88,11 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) =
             />
           </Box>
           <IconButton onClick={() => removeItem(index)} style={{ padding: '0 1rem' }}>
-            <TrashIcon />
+            <TrashIcon style={{ marginTop: '28px' }} />
           </IconButton>
         </Flex>
       ))}
+
       <LinkButton type="button" onClick={() => openModal(label)} style={{ width: '100%', textDecoration: 'none' }}>
         <ExtraInfoCardCountry>
           <RowCenter>
@@ -147,13 +151,13 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
     }
 
     if (linkType === 'Social Links') {
-      const socialLinks = Array.isArray(projectInfoData.socialLinks) ? projectInfoData.socialLinks : [];
+      const socialLinks = Array.isArray(projectInfoData.socialLinks) ? projectInfoData.socialLinks : []
       updatedData = {
         ...projectInfoData,
         socialLinks: [...socialLinks, newLink],
       }
     } else if (linkType === 'Whitepapers') {
-      const whitepapers = Array.isArray(projectInfoData.whitepapers) ? projectInfoData.whitepapers : [];
+      const whitepapers = Array.isArray(projectInfoData.whitepapers) ? projectInfoData.whitepapers : []
       updatedData = {
         ...projectInfoData,
         whitepapers: [...whitepapers, newLink],
@@ -225,6 +229,11 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
     onChange({ ...projectInfoData, [label]: updatedItems })
   }
 
+  const onSelectChange = (field: string, value: any) => {
+    setValues({ ...values, [field]: value })
+    setNewLinkName(value.label)
+  }
+
   return (
     <>
       <RedesignedWideModal isOpen={isModalOpen} onDismiss={() => setIsModalOpen(false)}>
@@ -239,15 +248,29 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
           />
           <div style={{ justifyContent: 'center' }}>
             <h2>{linkType}</h2>
-            <TextInput
-              name="name"
-              id="name"
-              label="Link Name"
-              style={{ marginBottom: '10px' }}
-              placeholder="Link Name"
-              value={newLinkName}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setNewLinkName(e.target.value)}
-            />
+            {linkType === 'Social Links' ? (
+              <Select
+                withScroll
+                name="name"
+                id="name"
+                label="Social Media Platform"
+                placeholder="Social Media Platform"
+                selectedItem={values.socialPlatform}
+                items={socialMediaPlatform}
+                onSelect={(selectedItem) => onSelectChange('socialPlatform', selectedItem)}
+              />
+            ) : (
+              <TextInput
+                name="name"
+                id="name"
+                label="Link Name"
+                style={{ marginBottom: '10px' }}
+                placeholder="Link Name"
+                value={newLinkName}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setNewLinkName(e.target.value)}
+              />
+            )}
+
             <TextInput
               name="url"
               label="URL"
@@ -312,21 +335,19 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         label="Social Links"
         name="socialLinks"
         id="socialLinks"
-        items={projectInfoData?.socialLinks?.map((link: any) => link.url)}
+        items={projectInfoData?.socialLinks?.map((link: any) => link)}
         removeItem={(index: number) => handleRemoveItem(index, 'socialLinks')}
         handleChange={handleFormArrayChange}
         openModal={openModal}
         onBlur={formik.handleBlur}
       />
-      {formik.touched.socialLinks && !formData.socialLinks ? (
-        <ErrorText>{formik.errors.socialLinks}</ErrorText>
-      ) : null}
+      {formik.touched.socialLinks && !formData.socialLinks ? <ErrorText>{formik.errors.socialLinks}</ErrorText> : null}
 
       <FormArray
         label="Whitepapers"
-        name='whitepapers'
+        name="whitepapers"
         id="whitepapers"
-        items={projectInfoData?.whitepapers?.map((whitepaper: any) => whitepaper.url)}
+        items={projectInfoData?.whitepapers?.map((whitepaper: any) => whitepaper)}
         removeItem={(index: number) => handleRemoveItem(index, 'whitepapers')}
         handleChange={handleFormArrayChange}
         openModal={openModal}
@@ -336,7 +357,9 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
       <Label htmlFor="description" flexDirection="column" mb={2}>
         <Box>
           {/* <TYPE.subHeader1> */}
-            <TYPE.label marginBottom={'6px'} fontSize={'16px'}>Upload Documents</TYPE.label>
+          <TYPE.label marginBottom={'6px'} fontSize={'16px'}>
+            Upload Documents
+          </TYPE.label>
           {/* </TYPE.subHeader1> */}
           <TYPE.description3 color={'#666680'}>
             <Trans>

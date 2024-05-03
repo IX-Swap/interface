@@ -48,8 +48,8 @@ export default function LBPForm() {
       title: '',
       description: '',
       website: '',
-      socialLinks: [{ name: '', value: '' }],
-      whitepapers: [{ name: '', value: '' }],
+      socialLinks: [],
+      whitepapers: [],
       uploadDocs: [] as LbpFile[],
     },
     tokenomics: {
@@ -263,6 +263,7 @@ export default function LBPForm() {
                 formDataTokenomics={formData.tokenomics}
                 onChange={handleTokenomicsChange}
                 shareTitle={formData.projectInfo.title}
+                shareLogo={formData?.branding?.LBPLogo}
               />
             </Column>
           </FormCard>
