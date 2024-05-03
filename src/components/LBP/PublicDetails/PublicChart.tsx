@@ -1,35 +1,10 @@
 import { useCallback, useMemo } from 'react'
-import { LineChart, Line, XAxis, YAxis, ReferenceLine, Tooltip, Text } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, Tooltip, DefaultTooltipContent } from 'recharts'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
 import { unixTimeToFormat } from 'utils/time'
 import { getPrice, getDecayAtStep } from '../utils/calculation'
-
-interface DataPoint {
-  year: number
-  value: number
-}
-
-const data: DataPoint[] = []
-const launchDate = 2004
-
-const rand = 300
-for (let i = 0; i < 7; i++) {
-  const year = 2000 + i
-  const value = Math.random() * (rand + 50) + 100
-  let d: DataPoint = {
-    year: year,
-    value: value,
-  }
-  data.push(d)
-}
-
-console.info('data', data)
-
-const type = 'monotone'
-
-const percentage = 100 - ((7 - 4 - 1) / (7 - 1)) * 100
 
 const composeHistoricalPriceQuery = (lbpAddress: string) => {
   return `
@@ -44,16 +19,41 @@ const composeHistoricalPriceQuery = (lbpAddress: string) => {
 
 interface DetailsChartProps {
   contractAddress?: string
+  currentShareReserve?: string
+  currentAssetReserve?: string
   startDate?: string
   endDate?: string
   startWeight?: number
   endWeight?: number
   shareAmount?: number
   assetAmount?: number
+  chartWidth?: number
 }
 
 const DATA_POINT_COUNT = 100
 const PRICE_PRECISION = 4
+
+const CustomTooltip: React.FC<{ active?: boolean; payload?: any }> = (props) => {
+  if (props.payload[0] != null) {
+    // mutating props directly is against react's conventions
+    // so we create a new payload with the name and value fields set to what we want
+    const newPayload = [
+      ...props.payload,
+      {
+        name: 'time',
+        // all your data which created the tooltip is located in the .payload property
+        value: props.payload[0].payload.dateWithTime,
+        // you can also add "unit" here if you need it
+      },
+    ]
+
+    // we render the default, but with our overridden payload
+    return <DefaultTooltipContent {...props} payload={newPayload} />
+  }
+
+  // we just render the default
+  return <DefaultTooltipContent {...props} />
+}
 
 export default function DetailsChart({
   contractAddress,
@@ -63,9 +63,11 @@ export default function DetailsChart({
   endWeight,
   shareAmount,
   assetAmount,
+  currentShareReserve,
+  currentAssetReserve,
+  chartWidth,
 }: DetailsChartProps) {
   const { chainId } = useWeb3React()
-
   const subgraphData = useSubgraphQuery({
     feature: 'LBP',
     chainId,
@@ -85,6 +87,18 @@ export default function DetailsChart({
     return bucketSize
   }, [startDate, endDate])
 
+  const progressPercentage = useMemo(() => {
+    const start: any = new Date(startDate || '')
+    const end: any = new Date(endDate || '')
+    const currentTime: any = new Date()
+    // Calculate total duration in milliseconds
+    const totalDuration = end - start
+    // Calculate elapsed duration from start to last trade time in milliseconds
+    const elapsedDuration = currentTime - start
+    const progressPercentage = (elapsedDuration / totalDuration) * 100
+    return progressPercentage
+  }, [startDate, endDate])
+
   // get bucket index for a given timestamp
   const getBucketIndex = useCallback(
     (timestamp: any) => {
@@ -99,7 +113,17 @@ export default function DetailsChart({
   )
 
   const dataPoints = useMemo(() => {
-    if (!startWeight || !endWeight || !shareAmount || !assetAmount || !bucketSize || !startDate) return []
+    if (
+      !startWeight ||
+      !endWeight ||
+      !shareAmount ||
+      !assetAmount ||
+      !currentAssetReserve ||
+      !currentShareReserve ||
+      !bucketSize ||
+      !startDate
+    )
+      return []
 
     const trades = subgraphData?.trades || []
     const lastTrade = trades.length ? trades[trades.length - 1] : null
@@ -115,8 +139,8 @@ export default function DetailsChart({
         bucketIndex: bucketIndex,
         blockTimestamp: trade.blockTimestamp,
         date: unixTimeToFormat({ time: trade.blockTimestamp, format: 'MMM DD' }),
+        dateWithTime: unixTimeToFormat({ time: trade.blockTimestamp, format: 'MMM DD, HH:mm:ss' }),
         price: parseFloat(trade.usdPrice).toFixed(PRICE_PRECISION),
-        isHistorical: true,
       }
 
       // Update bucket if current trade has a higher price
@@ -138,6 +162,7 @@ export default function DetailsChart({
     bucketMap[-1] = {
       bucketIndex: -1,
       date: unixTimeToFormat({ time: start.getTime() / 1000, format: 'MMM DD' }),
+      dateWithTime: unixTimeToFormat({ time: start.getTime() / 1000, format: 'MMM DD, HH:mm:ss' }),
       blockTimestamp: 0,
       price: initialPrice,
     }
@@ -149,9 +174,13 @@ export default function DetailsChart({
         const decay = getDecayAtStep(shareStartWeight, shareEndWeight, i, DATA_POINT_COUNT)
         const currentShareWeight = shareStartWeight + decay
         const currentAssetWeight = 1 - currentShareWeight
-        const price = getPrice(shareAmount, currentShareWeight, assetAmount, currentAssetWeight).toFixed(
-          PRICE_PRECISION
-        )
+
+        const price = getPrice(
+          parseFloat(currentShareReserve),
+          currentShareWeight,
+          parseFloat(currentAssetReserve),
+          currentAssetWeight
+        ).toFixed(PRICE_PRECISION)
 
         // only show future data points if the future price is less than the last trade price
         if (trades.length && price > lastPrice) {
@@ -161,9 +190,9 @@ export default function DetailsChart({
         bucketMap[i] = {
           bucketIndex: i,
           date: unixTimeToFormat({ time: time / 1000, format: 'MMM DD' }),
+          dateWithTime: unixTimeToFormat({ time: time / 1000, format: 'MMM DD, HH:mm:ss' }),
           blockTimestamp: 0,
           price: price,
-          isHistorical: false,
         }
       }
     }
@@ -171,46 +200,63 @@ export default function DetailsChart({
     // Convert bucketMap object to array and sort by bucketIndex
     const result = Object.values(bucketMap).sort((a: any, b: any) => a.bucketIndex - b.bucketIndex)
     return result
-  }, [subgraphData, startDate, getBucketIndex, startWeight, endWeight, assetAmount, shareAmount, bucketSize])
+  }, [
+    subgraphData,
+    startDate,
+    getBucketIndex,
+    startWeight,
+    endWeight,
+    currentShareReserve,
+    currentAssetReserve,
+    shareAmount,
+    assetAmount,
+    bucketSize,
+  ])
 
   return (
     <ChartContainer>
-      <LineChart width={800} height={400} data={dataPoints} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+      <LineChart
+        width={chartWidth ? chartWidth : 800}
+        height={400}
+        data={dataPoints}
+        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+      >
         <defs>
           <linearGradient id="gradient" x1="0" y1="0" x2="100%" y2="0">
             <stop offset="0%" stopColor="#AFAFCD" />
-            <stop offset={`${percentage}%`} stopColor="#AFAFCD" />
-            <stop offset={`${percentage}%`} stopColor="#6666FF" />
+            <stop offset={`${progressPercentage}%`} stopColor="#AFAFCD" />
+            <stop offset={`${progressPercentage}%`} stopColor="#6666FF" />
             <stop offset="100%" stopColor="#6666FF" />
           </linearGradient>
         </defs>
-        <Tooltip />
-        <Line type={type} dataKey="price" strokeWidth={2} stroke="url(#gradient)" dot={false} />
-        <XAxis dataKey="date" tick={{ fontSize: 14 }} axisLine={false} />
+        <Tooltip content={<CustomTooltip />} labelFormatter={() => ''} /> {/* Disable default label */}
+        <Line type="monotone" dataKey="price" strokeWidth={2} stroke="url(#gradient)" dot={false} />
+        <XAxis dataKey="date" axisLine={false} tick={false} />
+        <XAxis xAxisId="1" dataKey="date" allowDuplicatedCategory={false} axisLine={false} />
         <YAxis tick={{ fontSize: 14 }} tickFormatter={(value) => `$${value}`} axisLine={false} />
-        <ReferenceLine
-          x={launchDate}
-          label={
-            <g transform="translate(570, 30)">
-              <circle cx={0} cy={0} r={5} fill="#BDBDDB" />
-              <Text fontSize={'14px'} x={10} y={5}>
-                Historical Price
-              </Text>
-            </g>
-          }
-        />
-        <ReferenceLine
-          x={launchDate}
-          y={rand}
-          label={
-            <g transform="translate(700, 30)">
-              <circle cx={0} cy={0} r={5} fill="#6666FF" />
-              <Text fontSize={'14px'} x={10} y={5}>
-                Future Price
-              </Text>
-            </g>
-          }
-        />
+        {/* <ReferenceLine */}
+        {/*   x={launchDate} */}
+        {/*   label={ */}
+        {/*     <g transform="translate(570, 30)"> */}
+        {/*       <circle cx={0} cy={0} r={5} fill="#BDBDDB" /> */}
+        {/*       <Text fontSize={'14px'} x={10} y={5}> */}
+        {/*         Historical Price */}
+        {/*       </Text> */}
+        {/*     </g> */}
+        {/*   } */}
+        {/* /> */}
+        {/* <ReferenceLine */}
+        {/*   x={launchDate} */}
+        {/*   y={rand} */}
+        {/*   label={ */}
+        {/*     <g transform="translate(700, 30)"> */}
+        {/*       <circle cx={0} cy={0} r={5} fill="#6666FF" /> */}
+        {/*       <Text fontSize={'14px'} x={10} y={5}> */}
+        {/*         Future Price */}
+        {/*       </Text> */}
+        {/*     </g> */}
+        {/*   } */}
+        {/* /> */}
       </LineChart>
     </ChartContainer>
   )

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { MaxUint256 } from '@ethersproject/constants'
 import { TransactionResponse, TransactionReceipt } from '@ethersproject/providers'
 import { Currency, CurrencyAmount, Percent, TradeType } from '@ixswap1/sdk-core'
@@ -9,6 +10,8 @@ import { calculateGasMargin } from '../utils/calculateGasMargin'
 import { useTokenContract } from './useContract'
 import { useTokenAllowance } from './useTokenAllowance'
 import { useActiveWeb3React } from './web3'
+import { useWeb3React } from '@web3-react/core'
+import { ethers, BigNumber } from 'ethers'
 
 export enum ApprovalState {
   UNKNOWN = 'UNKNOWN',
@@ -17,7 +20,97 @@ export enum ApprovalState {
   APPROVED = 'APPROVED',
 }
 
-// returns a variable indicating the state of the approval and a function which approves if necessary or early returns
+// useAllowance is an enhanced version of the useApproveCallback hook that has better speed
+export function useAllowance(
+  tokenAddress?: string,
+  amountToApprove?: BigNumber,
+  spender?: string
+): [ApprovalState, () => Promise<void>, () => void] {
+  const { account } = useWeb3React()
+  const tokenContract = useTokenContract(tokenAddress || '')
+  const [currentAllowance, setCurrentAllowance] = useState<any>(ethers.constants.Zero)
+  const [shouldRefereshAllowance, setShouldRefereshAllowance] = useState<boolean>(false)
+  const [approving, setApproving] = useState<boolean>(false)
+
+  const refreshAllowance = useCallback(() => {
+    setShouldRefereshAllowance((prev) => !prev)
+  }, [setShouldRefereshAllowance])
+
+  useEffect(() => {
+    if (!tokenContract || !account || !spender) return
+    const fetchAllowance = async () => {
+      const allowance = await tokenContract.allowance(account, spender)
+      setCurrentAllowance(allowance)
+      setApproving(false) // reset approving state
+    }
+    fetchAllowance()
+  }, [tokenContract, account, spender, shouldRefereshAllowance])
+
+  // const pendingApproval = useHasPendingApproval(tokenAddress, spender)
+  // // check the current approval status
+
+  const approvalState: ApprovalState = useMemo(() => {
+    if (!amountToApprove || !spender || !currentAllowance || !tokenContract) return ApprovalState.UNKNOWN
+    if (approving) return ApprovalState.PENDING
+    // we might not have enough data to know whether or not we need to approve
+    if (!currentAllowance) return ApprovalState.UNKNOWN
+
+    // amountToApprove will be defined if currentAllowance is
+    return currentAllowance.lt(amountToApprove) ? ApprovalState.NOT_APPROVED : ApprovalState.APPROVED
+  }, [amountToApprove, currentAllowance, spender, tokenContract])
+
+  const addTransaction = useTransactionAdder()
+
+  const approve = useCallback(async (): Promise<void> => {
+    if (approvalState !== ApprovalState.NOT_APPROVED) {
+      console.error('approve was called unnecessarily')
+      return
+    }
+
+    if (!tokenContract) {
+      console.error('tokenContract is null')
+      return
+    }
+
+    if (!amountToApprove) {
+      console.error('missing amount to approve')
+      return
+    }
+
+    if (!spender) {
+      console.error('no spender')
+      return
+    }
+
+    const estimatedGas = await tokenContract.estimateGas.approve(spender, amountToApprove)
+    setApproving(true)
+    return tokenContract
+      .approve(spender, amountToApprove, {
+        gasLimit: calculateGasMargin(estimatedGas),
+      })
+      .then((response: TransactionResponse) => {
+        addTransaction(response, {
+          summary: 'Approve token spending',
+          approval: { tokenAddress: tokenAddress || '', spender: spender },
+        })
+        return response.wait()
+      })
+      .then((receipt: TransactionReceipt) => {
+        console.log('Transaction confirmed:', receipt)
+        refreshAllowance()
+      })
+      .catch((error: Error) => {
+        setApproving(false) // reset approving state
+        throw error
+      })
+  }, [approvalState, tokenContract, amountToApprove, spender, addTransaction])
+
+  // return [approvalState, approve]
+  return [approvalState, approve, refreshAllowance]
+}
+
+// DEPRECATED: useApproveCallback use multicalls that result in extremely slow performance please use `useAllowance` hook instead,
+// usage: returns a variable indicating the state of the approval and a function which approves if necessary or early returns
 export function useApproveCallback(
   amountToApprove?: CurrencyAmount<Currency>,
   spender?: string
@@ -43,7 +136,6 @@ export function useApproveCallback(
 
   const tokenContract = useTokenContract(token?.address)
   const addTransaction = useTransactionAdder()
-
 
   const approve = useCallback(async (): Promise<void> => {
     if (approvalState !== ApprovalState.NOT_APPROVED) {

@@ -1,24 +1,25 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
-import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
 import { TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
-import { useApproveCallback } from 'hooks/useApproveCallback'
-import { useCurrency } from 'hooks/Tokens'
-import { CurrencyAmount } from '@ixswap1/sdk-core'
+import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
 import { ethers, constants } from 'ethers'
-import { useLBPContract, useTokenContract } from 'hooks/useContract'
+import { useLBPContract, useTokenContract, useLBPFactory } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useFormatNumberWithDecimal, useGetLBPAuthorization } from 'state/lbp/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import BuySellModal from './Modals/BuySellModal'
+import { useWeb3React } from '@web3-react/core'
+import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
+import { getPriceFromRawReservesAndWeights } from '../utils/calculation'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 interface BuySellFieldsProps {
   activeTab: string
   slippage: string
   tokenBalance: string
-  assetTokenAddress: string
+  assetTokenAddress?: string
   contractAddress?: string
   tokenDecimals?: number
   shareBalance?: any
@@ -64,7 +65,7 @@ export default function BuySellFields({
   tokenOption,
   shareTokenAddress,
   id,
-  logo
+  logo,
 }: BuySellFieldsProps) {
   // UI States
   const [buttonDisabled, setButtonDisabled] = useState(true)
@@ -74,38 +75,52 @@ export default function BuySellFields({
   const [shareSymbol, setShareSymbol] = useState<any>('')
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
+  const [swapFee, setSwapFee] = useState(0)
   const [inputType, setInputType] = useState<InputType>(InputType.None)
   const [convertingState, setIsConvertingState] = useState({
     inputType: InputType.None,
     converting: false,
   })
   const [isExecuting, setIsExecuting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const assetDecimals = useMemo(() => tokenOption?.tokenDecimals || 0, [tokenOption])
+  const shareDecimals = useMemo(() => 18, []) // for now hardcode share decimals to 18 but can change it later
 
   // Web3 States
+  const { chainId } = useWeb3React()
+  const lbpFactory = useLBPFactory(LBP_FACTORY_ADDRESS[chainId || 0] || '')
   const lbpContractInstance = useLBPContract(contractAddress ?? '')
-  const tokenCurrency = useCurrency(assetTokenAddress)
   const { account } = useActiveWeb3React()
   const getLBPAuthorization = useGetLBPAuthorization()
   const shareTokenContract = useTokenContract(shareTokenAddress ?? '')
-  const [approval, approveCallback] = useApproveCallback(
-    tokenCurrency
-      ? CurrencyAmount.fromRawAmount(
-          tokenCurrency,
-          ethers.utils.parseUnits(assetValue || '0', tokenOption?.tokenDecimals) as any
-        )
-      : undefined,
+  const [reservesAndWeights, setReservesAndWeights] = useState<any>(null)
+
+  const [approval, approveCallback, refreshAllowance] = useAllowance(
+    assetTokenAddress,
+    ethers.utils.parseUnits(assetValue || '0', assetDecimals),
     contractAddress || ''
   )
+
+  const addTransaction = useTransactionAdder()
   const assetExceedsBalance = parseFloat(assetValue) > parseFloat(tokenBalance)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const shareSymbol = await shareTokenContract?.symbol()
+        console.info('Fetch data LBP buy/sells')
+        if (!shareTokenContract || !lbpFactory || !lbpContractInstance || !id || !tokenBalance || !shareBalance) return
+
+        const [shareSymbol, factorySettings, reservesAndWeights] = await Promise.all([
+          shareTokenContract?.symbol(),
+          lbpFactory?.factorySettings(),
+          lbpContractInstance?.reservesAndWeights(),
+        ])
+
+        setSwapFee((factorySettings?.swapFee || 0) / 100)
+        setReservesAndWeights(reservesAndWeights)
         setShareSymbol(shareSymbol)
-        if (!id || !tokenBalance) return
-        const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
-        setButtonDisabled(isButtonDisabled)
+        // const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
         setIsLoading(false)
       } catch (error) {
         setIsLoading(false)
@@ -113,7 +128,12 @@ export default function BuySellFields({
       }
     }
     fetchData()
-  }, [shareValue, assetValue, id, tokenBalance, shareTokenContract])
+  }, [shareTokenContract, lbpFactory, lbpContractInstance, id, tokenBalance, shareBalance])
+
+  useEffect(() => {
+    const isButtonDisabled = shareValue.trim() === '' || assetValue.trim() === ''
+    setButtonDisabled(isButtonDisabled)
+  }, [shareValue, assetValue])
 
   const handleOpenModal = (action: any) => {
     setIsModalOpen(true)
@@ -123,38 +143,43 @@ export default function BuySellFields({
     setIsModalOpen(false)
   }
 
-  const handleInputChange = async (event: any, inputType: InputType) => {
-    const inputAmount = event.target.value
+  const handleInputChange = useCallback(
+    async (event: any, inputType: InputType) => {
+      if (errorMessage !== '') setErrorMessage('')
+      const inputAmount = event.target.value
+      const setValue = inputType === InputType.Share ? setShareValue : setAssetValue
+      const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
 
-    const setValue = inputType === InputType.Share ? setShareValue : setAssetValue
-    const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
+      setInputType(inputType)
+      setValue(inputAmount)
 
-    setInputType(inputType)
-    setValue(inputAmount)
+      if (inputAmount !== '') {
+        setIsConvertingState({
+          inputType: inputType === InputType.Share ? InputType.Asset : InputType.Share,
+          converting: true,
+        })
+        setOpposite('')
+        const converted = await handleConversion(
+          inputType,
+          inputAmount,
+          inputType == 'share' ? shareDecimals : assetDecimals,
+          inputType == 'share' ? assetDecimals : shareDecimals
+        )
+        setIsConvertingState((prevState) => {
+          return {
+            ...prevState,
+            converting: false,
+          }
+        })
 
-    if (inputAmount !== '') {
-      setIsConvertingState({
-        inputType: inputType === InputType.Share ? InputType.Asset : InputType.Share,
-        converting: true,
-      })
-      const converted = await handleConversion(
-        inputType,
-        inputAmount,
-        inputType == 'share' ? 18 : 6,
-        inputType == 'share' ? 6 : 18
-      )
-      setIsConvertingState((prevState) => {
-        return {
-          ...prevState,
-          converting: false,
-        }
-      })
-      setOpposite(useFormatNumberWithDecimal(converted, 4))
-    } else {
-      // Clear the opposite value if the input is cleared
-      setOpposite('')
-    }
-  }
+        setOpposite(converted ? parseFloat(converted).toFixed(4) : '')
+      } else {
+        // Clear the opposite value if the input is cleared
+        setOpposite('')
+      }
+    },
+    [errorMessage, shareDecimals, assetDecimals]
+  )
 
   const handleConversion = useCallback(
     async (
@@ -165,28 +190,32 @@ export default function BuySellFields({
     ): Promise<string> => {
       if (!lbpContractInstance) return ''
 
-      const amount = parseUnit(inputAmount, inputDecimals)
-      let method: any
-      const action: TradeAction = activeTab as TradeAction
-      switch (action) {
-        case TradeAction.Buy:
-          method = inputType === InputType.Asset ? 'previewSharesOut' : 'previewAssetsIn'
-          break
-        case TradeAction.Sell:
-          method = inputType === InputType.Asset ? 'previewSharesIn' : 'previewAssetsOut'
-          break
-        default:
-          break
+      try {
+        const amount = parseUnit(inputAmount, inputDecimals)
+        let method: any
+        const action: TradeAction = activeTab as TradeAction
+        switch (action) {
+          case TradeAction.Buy:
+            method = inputType === InputType.Asset ? 'previewSharesOut' : 'previewAssetsIn'
+            break
+          case TradeAction.Sell:
+            method = inputType === InputType.Asset ? 'previewSharesIn' : 'previewAssetsOut'
+            break
+          default:
+            break
+        }
+
+        if (method) {
+          const result = await lbpContractInstance[method](amount)
+          const parsedAmount = ethers.utils.formatUnits(result.toString(), outputDecimals)
+          return parsedAmount
+        }
+      } catch (err: any) {
+        console.error('Error converting amount:', err.errorName)
+        setErrorMessage(err.errorName)
       }
 
-      if (method) {
-        console.info('Converting amount:', amount.toString(), 'inputType', inputType, 'method:', method)
-        const result = await lbpContractInstance[method](amount)
-        const parsedAmount = ethers.utils.formatUnits(result.toString(), outputDecimals)
-        return parsedAmount
-      }
-
-      return ''
+      return '0'
     },
     [lbpContractInstance]
   )
@@ -221,6 +250,10 @@ export default function BuySellFields({
       if (tx) {
         await tx.wait()
         setIsExecuting(false)
+        refreshAllowance()
+        addTransaction(tx, {
+          summary: 'Transaction is successful!',
+        })
       }
     } catch (error) {
       console.error('Error executing trade:', error)
@@ -279,6 +312,38 @@ export default function BuySellFields({
     },
     [lbpContractInstance, tokenOption]
   )
+
+  const priceImpact = useMemo(() => {
+    if (!reservesAndWeights || !assetDecimals || !shareDecimals || !shareValue || !assetValue) return 0
+    const { assetReserve, shareReserve, assetWeight, shareWeight } = reservesAndWeights
+    const isBuy = activeTab === TradeAction.Buy
+
+    const deltaAssetReserve = ethers.utils.parseUnits(assetValue, assetDecimals)
+    const deltaShareReserve = ethers.utils.parseUnits(shareValue, shareDecimals)
+
+    const marketPrice = getPriceFromRawReservesAndWeights({
+      currentAssetReserve: assetReserve,
+      currentShareReserve: shareReserve,
+      currentAssetWeight: assetWeight,
+      currentShareWeight: shareWeight,
+      assetDecimals: assetDecimals,
+      shareDecimals: shareDecimals,
+    })
+
+    const newPrice = getPriceFromRawReservesAndWeights({
+      currentAssetReserve: isBuy ? assetReserve.add(deltaAssetReserve) : assetReserve.sub(deltaAssetReserve),
+      currentShareReserve: isBuy ? shareReserve.sub(deltaShareReserve) : shareReserve.add(deltaShareReserve),
+      currentAssetWeight: assetWeight,
+      currentShareWeight: shareWeight,
+      assetDecimals: assetDecimals,
+      shareDecimals: shareDecimals,
+    })
+
+    const marketPriceFloat = parseFloat(marketPrice)
+    const priceDifference = parseFloat(newPrice) - marketPriceFloat
+    const priceImpactPercentage = Math.abs((priceDifference / marketPriceFloat) * 100)
+    return priceImpactPercentage.toFixed(3)
+  }, [activeTab, reservesAndWeights, assetValue, shareValue, assetDecimals, shareDecimals])
 
   const sellExactSharesForAssets = useCallback(
     async (shareAmount: number, authorization: any): Promise<any> => {
@@ -364,8 +429,6 @@ export default function BuySellFields({
     setAssetValue('')
   }, [assetValue, shareValue])
 
-
-
   return (
     <>
       {isLoading ? (
@@ -442,17 +505,22 @@ export default function BuySellFields({
               </BuySellFieldsSpanBal>
             </BuySellFieldsItem>
           </BuySellFieldsContainer>
+          {errorMessage ? (
+            <TYPE.error error style={{ marginBottom: '10px' }}>
+              {errorMessage}
+            </TYPE.error>
+          ) : null}
           <TabRow>
             <SlippageWrapper>
               <TYPE.body3>Fees: </TYPE.body3>
               <TYPE.body3 color={'#292933'} fontWeight={'700'}>
-                0.5%
+                {swapFee}%
               </TYPE.body3>
             </SlippageWrapper>
             <SlippageWrapper>
               <TYPE.body3>Price Impact: </TYPE.body3>
               <TYPE.body3 color={'#292933'} fontWeight={'700'}>
-                0.5%
+                {priceImpact}%
               </TYPE.body3>
             </SlippageWrapper>
           </TabRow>
@@ -461,7 +529,12 @@ export default function BuySellFields({
               <PinnedContentButton
                 onClick={handleButtonClick}
                 disabled={
-                  assetExceedsBalance || isExecuting || buttonDisabled || (shareValue === '' && assetValue === '')
+                  assetExceedsBalance ||
+                  isExecuting ||
+                  approval == ApprovalState.PENDING ||
+                  buttonDisabled ||
+                  (shareValue === '' && assetValue === '') ||
+                  errorMessage !== ''
                 }
               >
                 {buttonText}
@@ -469,7 +542,7 @@ export default function BuySellFields({
             ) : (
               <PinnedContentButton
                 onClick={handleSellButtonClick}
-                disabled={isExecuting || (shareValue === '' && assetValue === '')}
+                disabled={isExecuting || (shareValue === '' && assetValue === '') || errorMessage !== ''}
                 style={{
                   backgroundColor: isExecuting ? '' : shareValue === '' && assetValue === '' ? '' : '#FF6161',
                 }}

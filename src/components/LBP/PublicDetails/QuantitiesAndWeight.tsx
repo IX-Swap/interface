@@ -35,7 +35,7 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>{lbpData?.shareAmount}</TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                  {lbpData?.name}
+                  {lbpData?.title}
                 </TYPE.body3>
               </>
               <VerticalLine />
@@ -56,7 +56,7 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>{useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)} </TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                  {lbpData?.name}
+                  {lbpData?.title}
                 </TYPE.body3>
               </>
               <VerticalLine />
