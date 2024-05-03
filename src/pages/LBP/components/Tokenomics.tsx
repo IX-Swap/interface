@@ -211,9 +211,8 @@ const validationSchema = Yup.object().shape({
   shareAddress: Yup.string().required('Share Address is required'),
   shareInput: Yup.string().required('Share Amount is required'),
   assetInput: Yup.string().required('Asset Amount is required'),
-  maxSupply: Yup.string().required('Max. Supply is required'),
+  // maxSupply: Yup.string().required('Max. Supply is required'),
   minPrice: Yup.string().required('Min. price is required'),
-  maxPrice: Yup.string().required('Max. price is required'),
   startDate: Yup.string().required('Start Date is required'),
   endDate: Yup.string().required('End Date is required'),
 })
@@ -521,13 +520,13 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
         label="Share Max. Supply"
         name="maxSupply"
         onChange={handleInputChange}
-        onBlur={formik.handleBlur}
+        // onBlur={formik.handleBlur}
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}
       />
-      {formik.touched.maxSupply && !formDataTokenomics.maxSupply ? (
+      {/* {formik.touched.maxSupply && !formDataTokenomics.maxSupply ? (
         <ErrorText>{formik.errors.maxSupply}</ErrorText>
-      ) : null}
+      ) : null} */}
       <Line style={{ margin: '40px 0px 30px 0px' }} />
 
       <RowStart marginBottom="32px">
@@ -723,9 +722,9 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle }: ProjectInfoPro
             onBlur={formik.handleBlur}
             value={formDataTokenomics.maxPrice}
           />
-          {formik.touched.maxPrice && !formDataTokenomics.maxPrice ? (
+          {/* {formik.touched.maxPrice && !formDataTokenomics.maxPrice ? (
             <ErrorText>{formik.errors.maxPrice}</ErrorText>
-          ) : null}
+          ) : null} */}
         </div>
       </FormGrid>
     </Container>

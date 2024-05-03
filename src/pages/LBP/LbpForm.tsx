@@ -117,15 +117,20 @@ export default function LBPForm() {
   }
 
   const updateSubmitButtonState = (formData: FormData) => {
-    const isComplete = (data: any) => Object.values(data).every((val) => !!val)
+    const isComplete = (data: any) => {
+      const keysToCheck = Object.keys(data).filter(key => key !== 'maxPrice' && key !== 'maxSupply');
+      return keysToCheck.every(key => !!data[key]);
+    };
+  
+    // const isComplete = (data: any) => Object.values(data).every((val) => !!val)
     const brandingComplete = isComplete(formData.branding)
     const projectInfoComplete = isComplete(formData.projectInfo)
     const tokenomicsComplete = isComplete(formData.tokenomics)
     const hasSocialLinks = formData.projectInfo.socialLinks?.length > 0
     const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
-    const hasUploadDocs = formData.projectInfo.uploadDocs?.length > 2
+    // const hasUploadDocs = formData.projectInfo.uploadDocs?.length > 2
     setCanSubmit(
-      brandingComplete && hasSocialLinks && hasWhitepapers && hasUploadDocs && projectInfoComplete && tokenomicsComplete
+      brandingComplete && hasSocialLinks && hasWhitepapers && projectInfoComplete && tokenomicsComplete
     )
   }
 
@@ -212,7 +217,7 @@ export default function LBPForm() {
         startWeight: data.startWeight,
         endDate: data.endDate,
         minPrice: data.minPrice,
-        maxPrice: data.maxPrice,
+        maxPrice: data.maxPrice || 0,
         startDate: data.startDate,
         endWeight: data.endWeight,
       },
