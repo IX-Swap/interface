@@ -5,38 +5,45 @@ import { ReactComponent as TwitterLogo } from 'assets/images/xIcon.svg'
 import { ReactComponent as DiscordLogo } from 'assets/images/discordNew.svg'
 import { ReactComponent as YoutubeLogo } from 'assets/images/youtubeIcon.svg'
 import { ReactComponent as CoingeckoLogo } from 'assets/images/coinMarketNew.svg'
-
-import { text8 } from 'components/LaunchpadMisc/typography'
+import { ReactComponent as WebSiteIcon } from 'assets/images/websiteIcon.svg'
 import { MEDIA_WIDTHS } from 'theme'
 import { LbpFormValues } from '../types'
-import { useFetchToken } from 'hooks/useFetchToken'
-
 
 interface LinksProps {
   lbpData: LbpFormValues | null
 }
+
+const socialMediaIcons = {
+  'x.com': <TwitterLogo />,
+  telegram: <TelegramLogo />,
+  youtube: <YoutubeLogo />,
+  coingecko: <CoingeckoLogo />,
+  discord: <DiscordLogo />,
+}
+
 const Links: React.FC<LinksProps> = ({ lbpData }) => {
-  // const socialMedialLinks = React.useMemo(
-  //   () => [
-  //     { url: lbpData?.socialMedia?.twitter, logo: <TwitterLogo /> },
-  //     { url: lbpData?.socialMedia?.telegram, logo: <TelegramLogo /> },
-  //     { url: lbpData?.socialMedia?.youtube, logo: <YoutubeLogo /> },
-  //     { url: lbpData?.socialMedia?.coingecko, logo: <CoingeckoLogo /> },
-  //     { url: lbpData?.socialMedia?.discord, logo: <DiscordLogo /> },
-  //   ],
-  //   []
-  // )
+  const handleClick = (url: string) => {
+    window.open(url, '_blank')
+  }
 
   return (
     <div>
       <SocialMediaLinks>
-        {/* <SocialMediaLink href={lbpData?.links?.issuerWebsite}>Website</SocialMediaLink>
-        <SocialMediaLink href={lbpData?.links?.issuerWebsite}>Whitepaper</SocialMediaLink> */}
-        {/* {lbpData?.whitepaperUrl && <SocialMediaLink href={lbpData.links.whitepaperUrl}>Dataroom</SocialMediaLink>} */}
-        {lbpData?.socialMedia.filter((link) => link?.url)
+        <WebsiteLink target="_blank" rel="noopener noreferrer" href={lbpData?.officialWebsite}>
+          <WebSiteIcon />
+          Website
+        </WebsiteLink>
+        {lbpData?.whitePaper &&
+          lbpData.whitePaper.map((paper, idx) => (
+            <SocialMediaLink key={`whitepaper-${idx}`} onClick={() => handleClick((paper as { url: string }).url)}>
+              {paper.name}
+            </SocialMediaLink>
+          ))}
+        {lbpData?.socialMedia
+          .filter((link) => link?.url)
           .map((link, idx) => (
-            <SocialMediaLink key={`link-${idx}`} >
-              {link.name}
+            <SocialMediaLink key={`link-${idx}`} onClick={() => handleClick((link as any).url)}>
+              {socialMediaIcons[link.name.toLowerCase() as keyof typeof socialMediaIcons]}
             </SocialMediaLink>
           ))}
       </SocialMediaLinks>
@@ -57,29 +64,29 @@ const SocialMediaLinks = styled.div`
 `
 
 const SocialMediaLink = styled.a`
-  display: grid;
-  place-content: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
   height: 36px;
-  padding: 1rem;
+  padding: 0 1rem;
   text-decoration: none;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
-
-  ${text8}
   color: ${(props) => props.theme.launchpad.colors.text.title};
-
   svg {
     transition: transform 0.3s;
   }
-
-
-
   :hover svg {
     transform: scale(1.2);
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: 42%;
+  }
+`
+
+const WebsiteLink = styled(SocialMediaLink)`
+  svg {
+    margin-right: 10px;
   }
 `
 

@@ -220,8 +220,6 @@ const validationSchema = Yup.object().shape({
   assetInput: Yup.string().required('Asset Amount is required'),
   // maxSupply: Yup.string().required('Max. Supply is required'),
   minPrice: Yup.string().required('Min. price is required'),
-  startDate: Yup.string().required('Start Date is required'),
-  endDate: Yup.string().required('End Date is required'),
 })
 
 interface ProjectInfoProps {
@@ -236,6 +234,8 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
   const [isOpen, setIsOpen] = useState(false)
+  const [startDateError, setStartDateError] = useState<string>('')
+  const [endDateError, setEndDateError] = useState<string>('')
   const [selectedToken, setSelectedToken] = useState<any>({
     tokenSymbol: 'USDC',
     logo: usdcDropDown,
@@ -278,28 +278,39 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     onSubmit: () => {},
   })
 
-  const assetTokenContract = useTokenContract(formDataTokenomics.assetTokenAddress ?? '')
+  const assetTokenContract = useTokenContract(
+    formDataTokenomics.assetTokenAddress
+      ? formDataTokenomics.assetTokenAddress
+      : '0xA9bc9D3F0fF05AB339D1E195982794B15beA0f88'
+  )
   const shareTokenContract = useTokenContract(formDataTokenomics.shareAddress ?? '')
 
   const { chainId, account } = useWeb3React()
 
   useEffect(() => {
-    if (!assetTokenContract || !shareTokenContract || !account) return
+    console.log(assetTokenContract, shareTokenContract)
+    if (!account) return
+    const loadBalances = async () => {
+      if (assetTokenContract) {
+        const assetBalance = await assetTokenContract.balanceOf(account)
+        const assetDecimals = await assetTokenContract.decimals()
+        setBalances((prevBalances: any) => ({
+          ...prevBalances,
+          assetBalance: formatUnits(assetBalance, assetDecimals),
+        }))
+      }
 
-    const loadBalance = async () => {
-      const assetBalance = await assetTokenContract.balanceOf(account)
-      const assetDecimals = await assetTokenContract.decimals()
-
-      const shareBalance = await shareTokenContract.balanceOf(account)
-      const shareDecimals = await shareTokenContract.decimals()
-
-      setBalances({
-        assetBalance: formatUnits(assetBalance, assetDecimals),
-        shareBalance: formatUnits(shareBalance, shareDecimals),
-      })
+      if (shareTokenContract) {
+        const shareBalance = await shareTokenContract.balanceOf(account)
+        const shareDecimals = await shareTokenContract.decimals()
+        setBalances((prevBalances: any) => ({
+          ...prevBalances,
+          shareBalance: formatUnits(shareBalance, shareDecimals),
+        }))
+      }
     }
 
-    loadBalance()
+    loadBalances()
   }, [account, assetTokenContract, shareTokenContract])
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
@@ -332,7 +343,14 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
 
   const handleStartDateChange = (date: Dayjs | null) => {
     if (date) {
-      const newStartDate = dayjs(date)?.local()?.format('YYYY-MM-DD HH:mm:ss')
+      const now = dayjs()
+      if (date.isBefore(now, 'day')) {
+        setStartDateError("Start date can't be in the past")
+        return
+      } else {
+        setStartDateError('')
+      }
+      const newStartDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
         startDate: newStartDate,
@@ -343,7 +361,15 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   }
   const handleEndDateChange = (date: Dayjs | null) => {
     if (date) {
-      const newEndDate = dayjs(date)?.local().format('YYYY-MM-DD HH:mm:ss')
+      const startDate = dayjs(formDataTokenomics.startDate)
+      const minimumEndDate = startDate.add(1, 'day')
+      if (date.isBefore(minimumEndDate, 'day')) {
+        setEndDateError('End date should be at least 1 day bigger than Start Date')
+        return
+      } else {
+        setEndDateError('')
+      }
+      const newEndDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
         endDate: newEndDate,
@@ -390,7 +416,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     if (tokenOption && tokenOption.logo) {
       return <img src={tokenOption.logo} alt={symbol} />
     } else {
-      return null
+      return <img src={usdcDropDown} alt={symbol} />
     }
   }
   const handleMaxClick = (balance: string, field: string) => {
@@ -693,19 +719,21 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
 
       <FormGrid>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DateTimePicker']}>
+          <div style={{ display: 'grid' }}>
             <DateTimePicker
               onChange={handleStartDateChange}
               label="Start Date"
               value={dayjs(formDataTokenomics.startDate)}
             />
-          </DemoContainer>
+            {startDateError && <span style={{ color: 'red', marginTop: '6px' }}>{startDateError}</span>}
+          </div>
         </LocalizationProvider>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DateTimePicker']}>
+          <div style={{ display: 'grid' }}>
             <DateTimePicker onChange={handleEndDateChange} label="End Date" value={dayjs(formDataTokenomics.endDate)} />
-          </DemoContainer>
+            {endDateError && <span style={{ color: 'red', marginTop: '6px' }}>{endDateError}</span>}
+          </div>
         </LocalizationProvider>
       </FormGrid>
 
