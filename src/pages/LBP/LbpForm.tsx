@@ -72,6 +72,7 @@ export default function LBPForm() {
   const [canSubmit, setCanSubmit] = useState(false)
   const [showSummary, setShowSummary] = useState(false)
   const toggleModal = React.useCallback(() => setShowSummary((state) => !state), [])
+  const [isValidDates, setIsValidDates] = useState(false)
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
@@ -123,14 +124,38 @@ export default function LBPForm() {
       return keysToCheck.every((key) => !!data[key])
     }
 
+    const isStartDateValid = (startDate: Dayjs) => {
+      const currentDate = dayjs()
+      return !startDate.isBefore(currentDate, 'day')
+    }
+
+    const isEndDateValid = (startDate: Dayjs, endDate: Dayjs) => {
+      const startOfDay = startDate.startOf('day')
+      const endOfDay = endDate.startOf('day')
+      const minEndDate = startOfDay.add(1, 'day')
+      return endOfDay.isAfter(minEndDate)
+    }
+
     // const isComplete = (data: any) => Object.values(data).every((val) => !!val)
     const brandingComplete = isComplete(formData.branding)
     const projectInfoComplete = isComplete(formData.projectInfo)
     const tokenomicsComplete = isComplete(formData.tokenomics)
     const hasSocialLinks = formData.projectInfo.socialLinks?.length > 0
     const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
-    // const hasUploadDocs = formData.projectInfo.uploadDocs?.length > 2
-    setCanSubmit(brandingComplete && hasSocialLinks && hasWhitepapers && projectInfoComplete && tokenomicsComplete)
+    const startDate = dayjs(formData.tokenomics.startDate)
+    const endDate = dayjs(formData.tokenomics.endDate)
+    const isStartValid = isStartDateValid(startDate)
+    const isEndValid = isEndDateValid(startDate, endDate)
+
+    setCanSubmit(
+      brandingComplete &&
+        hasSocialLinks &&
+        hasWhitepapers &&
+        projectInfoComplete &&
+        tokenomicsComplete &&
+        isStartValid &&
+        isEndValid
+    )
   }
 
   const saveLbp = async (actionType: string) => {
@@ -202,8 +227,8 @@ export default function LBPForm() {
         uploadDocs: data.uploadDocs,
       },
       branding: {
-        LBPLogo: data.banner,
-        LBPBanner: data.logo,
+        LBPLogo: data.logo,
+        LBPBanner: data.banner,
       },
       tokenomics: {
         shareAddress: data.shareAddress,

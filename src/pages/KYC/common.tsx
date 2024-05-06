@@ -45,9 +45,8 @@ export interface UploaderProps {
   tooltipText?: string | JSX.Element
   isDisabled?: boolean
   id?: any
-  name?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-
+  name?: string
+  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
 }
 
 interface SelectProps {
@@ -509,7 +508,7 @@ interface ChooseFileTypes {
   error?: any
   handleDeleteClick: () => void
   id?: any
-  name?: string
+  title?: string
 }
 
 export const UploaderLBP: FC<UploaderProps> = ({
@@ -524,7 +523,7 @@ export const UploaderLBP: FC<UploaderProps> = ({
   optional = false,
   tooltipText,
   isDisabled = false,
-  name
+  name,
 }: UploaderProps) => {
   return (
     <Box>
@@ -563,11 +562,11 @@ export const UploaderLBP: FC<UploaderProps> = ({
           file={null}
           onDrop={onDrop}
         >
-          <UploaderCard style={{height: '350px'}}>
+          <UploaderCard style={{ height: '350px' }}>
             <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
               <StyledUploadLogoLbp />
-              <TYPE.subHeader1 lineHeight={'20px'} textAlign="center" color={'#555566'}>
-              Share {name && name.charAt(0).toUpperCase() + name.slice(1)}
+              <TYPE.subHeader1 style={{inlineSize: 'max-content'}} lineHeight={'20px'} textAlign="center" color={'#555566'}>
+                {title}
               </TYPE.subHeader1>
               <TYPE.title10 width={'max-content'} textAlign="center" color={'#8F8FB2'}>
                 PNG, JPG, and SVG files only.
@@ -640,16 +639,14 @@ export const UploaderDocs: FC<UploaderProps> = ({
           file={null}
           onDrop={onDrop}
         >
-
-            <LinkButton type="button" style={{ marginTop: '5px', width: '100%', textDecoration: 'none' }}>
-              <ExtraInfoCardCountry>
-                <RowCenter>
-                  <Plus style={{ width: '20px', marginRight: '5px' }} />
-                  <Box> Add Documents </Box>
-                </RowCenter>
-              </ExtraInfoCardCountry>
-            </LinkButton>
-
+          <LinkButton type="button" style={{ marginTop: '5px', width: '100%', textDecoration: 'none' }}>
+            <ExtraInfoCardCountry>
+              <RowCenter>
+                <Plus style={{ width: '20px', marginRight: '5px' }} />
+                <Box> Add Documents </Box>
+              </RowCenter>
+            </ExtraInfoCardCountry>
+          </LinkButton>
         </Upload>
       )}
 
