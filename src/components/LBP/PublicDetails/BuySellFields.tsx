@@ -494,7 +494,7 @@ export default function BuySellFields({
             </BuySellFieldsItem>
             <BuySellFieldsItem>
               <BuySellFieldsSelect>
-                <img style={{ borderRadius: '100p%' }} width="25px" height="25px" src={logo?.public} />
+              <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={logo?.public} />
                 <TYPE.body4 fontSize={'14px'}> {shareSymbol}</TYPE.body4>
               </BuySellFieldsSelect>
               <BuySellFieldsSpanBal>
