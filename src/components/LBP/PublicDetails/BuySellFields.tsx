@@ -66,6 +66,7 @@ export default function BuySellFields({
   shareTokenAddress,
   id,
   logo,
+  slippage,
 }: BuySellFieldsProps) {
   // UI States
   const [buttonDisabled, setButtonDisabled] = useState(true)
@@ -96,14 +97,33 @@ export default function BuySellFields({
   const shareTokenContract = useTokenContract(shareTokenAddress ?? '')
   const [reservesAndWeights, setReservesAndWeights] = useState<any>(null)
 
+  const assetValueWithSlippage = useMemo(() => {
+    // only applicable if active tab is buy, and input type is share
+    if (!assetValue || !slippage) {
+      return ''
+    }
+    if (activeTab === TradeAction.Buy && inputType === InputType.Share) {
+      const maxAssetIn = parseFloat(assetValue) * (1 + parseFloat(slippage) / 100)
+      return maxAssetIn.toFixed(4)
+    }
+
+    return assetValue
+  }, [slippage, assetValue, inputType, activeTab])
+
   const [approval, approveCallback, refreshAllowance] = useAllowance(
     assetTokenAddress,
-    ethers.utils.parseUnits(assetValue || '0', assetDecimals),
+    ethers.utils.parseUnits(assetValueWithSlippage || '0', assetDecimals),
     contractAddress || ''
   )
 
   const addTransaction = useTransactionAdder()
-  const assetExceedsBalance = parseFloat(assetValue) > parseFloat(tokenBalance)
+  const assetExceedsBalance = useMemo(() => {
+    if (!tokenBalance || !assetValueWithSlippage) {
+      return false
+    }
+
+    return parseFloat(assetValueWithSlippage) > parseFloat(tokenBalance)
+  }, [assetValueWithSlippage, tokenBalance])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -264,13 +284,16 @@ export default function BuySellFields({
 
   const buyExactShares = useCallback(
     async (shareAmount: number, authorization: any): Promise<any> => {
-      if (!lbpContractInstance) return
+      if (!lbpContractInstance || !assetValueWithSlippage || !assetValue || !shareDecimals) return
 
-      const maxAssetsIn = ethers.constants.MaxUint256
+      const maxAssetsIn = ethers.utils.parseUnits(assetValueWithSlippage, assetDecimals)
+
+      console.info('maxAssetsIn', maxAssetsIn.toString())
+
       const recipient = account
       const referrer = constants.AddressZero
       const tx = await lbpContractInstance?.swapAssetsForExactShares(
-        parseUnit(shareAmount, 18), // Convert share amount to smallest denomination
+        parseUnit(shareAmount, shareDecimals), // Convert share amount to smallest denomination
         maxAssetsIn,
         recipient,
         referrer,
@@ -279,26 +302,22 @@ export default function BuySellFields({
 
       return tx
     },
-    [lbpContractInstance]
+    [lbpContractInstance, assetValueWithSlippage, assetDecimals, shareDecimals]
   )
 
   const buyExactAssetsForShares = useCallback(
     async (assetAmount: number, authorization: any): Promise<any> => {
-      if (!lbpContractInstance) return
-      const minSharesOut = 0
+      if (!lbpContractInstance || !tokenOption || !assetDecimals || !shareDecimals || !shareValue || !slippage) return
+
+      const minSharesOutValue = parseFloat(shareValue) * (1 - parseFloat(slippage) / 100)
+      const minSharesOut = ethers.utils.parseUnits(minSharesOutValue.toFixed(4), shareDecimals)
       const recipient = account
 
-      console.info('token decimals', tokenOption)
-      console.info('assetAmount', assetAmount)
-      console.info(
-        'buyExactAssetsForShares',
-        'amount',
-        parseUnit(assetAmount, tokenOption?.tokenDecimals || 18).toString()
-      )
+      console.info('minSharesOut', minSharesOut.toString())
 
       const referrer = constants.AddressZero
       const tx = await lbpContractInstance.swapExactAssetsForShares(
-        parseUnit(assetAmount, tokenOption?.tokenDecimals || 18), // Convert asset amount to smallest denomination
+        parseUnit(assetAmount, tokenOption?.tokenDecimals || 0), // Convert asset amount to smallest denomination
         minSharesOut,
         recipient,
         referrer,
@@ -310,7 +329,7 @@ export default function BuySellFields({
 
       return tx
     },
-    [lbpContractInstance, tokenOption]
+    [lbpContractInstance, shareValue, tokenOption, assetDecimals, shareDecimals, slippage]
   )
 
   const priceImpact = useMemo(() => {
@@ -347,11 +366,16 @@ export default function BuySellFields({
 
   const sellExactSharesForAssets = useCallback(
     async (shareAmount: number, authorization: any): Promise<any> => {
-      if (!lbpContractInstance) return
-      const minAssetsOut = 0
+      if (!lbpContractInstance || !assetValue || !assetDecimals || !shareDecimals || !slippage) return
+
+      const minAssetOutValue = parseFloat(assetValue) * (1 - parseFloat(slippage) / 100)
+      const minAssetsOut = ethers.utils.parseUnits(minAssetOutValue.toFixed(4), assetDecimals)
+
+      console.info('minAssetsOut', minAssetsOut.toString())
+
       const recipient = account
       const tx = await lbpContractInstance.swapExactSharesForAssets(
-        parseUnit(shareAmount, 18),
+        parseUnit(shareAmount, shareDecimals),
         minAssetsOut,
         recipient,
         authorization
@@ -359,16 +383,21 @@ export default function BuySellFields({
 
       return tx
     },
-    [lbpContractInstance]
+    [lbpContractInstance, assetValue, assetDecimals, shareDecimals]
   )
 
   const sellExactAssets = useCallback(
     async (assetAmount: number, authorization: any): Promise<any> => {
-      if (!lbpContractInstance) return
-      const maxSharesIn = ethers.constants.MaxUint256
+      if (!lbpContractInstance || !shareValue || !assetDecimals || !shareDecimals || !slippage) return
+
+      const maxSharesInValue = parseFloat(shareValue) * (1 + parseFloat(slippage) / 100)
+      const maxSharesIn = ethers.utils.parseUnits(maxSharesInValue.toFixed(4), shareDecimals)
+
+      console.info('maxSharesIn', maxSharesIn.toString())
+
       const recipient = account
       const tx = await lbpContractInstance.swapSharesForExactAssets(
-        parseUnit(assetAmount, tokenOption?.tokenDecimals || 18),
+        parseUnit(assetAmount, assetDecimals),
         maxSharesIn,
         recipient,
         authorization
@@ -376,7 +405,7 @@ export default function BuySellFields({
 
       return tx
     },
-    [lbpContractInstance, tokenOption]
+    [lbpContractInstance, shareValue, assetDecimals, shareDecimals]
   )
 
   const handleButtonClick = useCallback(async () => {
@@ -398,7 +427,7 @@ export default function BuySellFields({
         setButtonDisabled(false)
       }
     }
-  }, [approval, assetValue, shareValue])
+  }, [approval, assetValue, shareValue, approveCallback])
 
   const buttonText = useMemo(() => {
     console.info('approval', approval)

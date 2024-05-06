@@ -87,18 +87,6 @@ export default function DetailsChart({
     return bucketSize
   }, [startDate, endDate])
 
-  const progressPercentage = useMemo(() => {
-    const start: any = new Date(startDate || '')
-    const end: any = new Date(endDate || '')
-    const currentTime: any = new Date()
-    // Calculate total duration in milliseconds
-    const totalDuration = end - start
-    // Calculate elapsed duration from start to last trade time in milliseconds
-    const elapsedDuration = currentTime - start
-    const progressPercentage = (elapsedDuration / totalDuration) * 100
-    return progressPercentage
-  }, [startDate, endDate])
-
   // get bucket index for a given timestamp
   const getBucketIndex = useCallback(
     (timestamp: any) => {
@@ -212,6 +200,15 @@ export default function DetailsChart({
     assetAmount,
     bucketSize,
   ])
+
+  const progressPercentage = useMemo(() => {
+    if (!getBucketIndex || !dataPoints || !dataPoints.length) return 0
+    const currentTime: any = new Date()
+    const bucketIndex = getBucketIndex(currentTime.getTime())
+    const currentPointIndex = dataPoints.findIndex((point: any) => point.bucketIndex === bucketIndex)
+    const progressPercentage = ((currentPointIndex + 1) / dataPoints.length) * 100
+    return progressPercentage
+  }, [getBucketIndex, dataPoints])
 
   return (
     <ChartContainer>
