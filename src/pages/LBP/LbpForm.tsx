@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Trans } from '@lingui/macro'
+import dayjs, { Dayjs } from 'dayjs'
 import Column from 'components/Column'
 import { RowStart } from 'components/Row'
 import { FormContainer, FormRow } from 'pages/KYC/IndividualKycForm'
@@ -22,6 +23,7 @@ import { useHistory } from 'react-router-dom'
 import { TYPE } from 'theme'
 import { SubmitSummary } from 'components/LBP/Forms/SubmitSummary'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
+import { constants } from 'ethers'
 
 export interface FormData {
   id: number
@@ -70,6 +72,7 @@ export default function LBPForm() {
   const [canSubmit, setCanSubmit] = useState(false)
   const [showSummary, setShowSummary] = useState(false)
   const toggleModal = React.useCallback(() => setShowSummary((state) => !state), [])
+  const [isValidDates, setIsValidDates] = useState(false)
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
@@ -116,28 +119,42 @@ export default function LBPForm() {
   }
 
   const updateSubmitButtonState = (formData: FormData) => {
-    const isComplete = (data: any) => Object.values(data).every((val) => !!val)
+    const isComplete = (data: any) => {
+      const keysToCheck = Object.keys(data).filter((key) => key !== 'maxPrice' && key !== 'maxSupply')
+      return keysToCheck.every((key) => !!data[key])
+    }
+
+    const isStartDateValid = (startDate: Dayjs) => {
+      const currentDate = dayjs()
+      return !startDate.isBefore(currentDate, 'day')
+    }
+
+    const isEndDateValid = (startDate: Dayjs, endDate: Dayjs) => {
+      const startOfDay = startDate.startOf('day')
+      const endOfDay = endDate.startOf('day')
+      const minEndDate = startOfDay.add(1, 'day')
+      return endOfDay.isAfter(minEndDate)
+    }
+
+    // const isComplete = (data: any) => Object.values(data).every((val) => !!val)
     const brandingComplete = isComplete(formData.branding)
     const projectInfoComplete = isComplete(formData.projectInfo)
     const tokenomicsComplete = isComplete(formData.tokenomics)
     const hasSocialLinks = formData.projectInfo.socialLinks?.length > 0
     const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
-    const hasUploadDocs = formData.projectInfo.uploadDocs?.length > 0
+    const startDate = dayjs(formData.tokenomics.startDate)
+    const endDate = dayjs(formData.tokenomics.endDate)
+    const isStartValid = isStartDateValid(startDate)
+    const isEndValid = isEndDateValid(startDate, endDate)
 
-    // TODO: remove console logs
-    console.info('formData', formData)
-
-    console.info('brandingComplete', brandingComplete)
-    console.info('projectInfoComplete', projectInfoComplete)
-    console.info('tokenomicsComplete', tokenomicsComplete)
-    console.info('hasSocialLinks', hasSocialLinks)
-    console.info('hasWhitepapers', hasWhitepapers)
     setCanSubmit(
-      // TODO: enable check check projectInfoComplete, hasUploadDocs after fixing uploading docs
-      // temporarily not check projectInfoComplete, hasUploadDocs as there is a bug documents are not loaded
-      // brandingComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers
-      brandingComplete && hasSocialLinks && hasWhitepapers
-      // brandingComplete && projectInfoComplete && tokenomicsComplete && hasSocialLinks && hasWhitepapers && hasUploadDocs
+      brandingComplete &&
+        hasSocialLinks &&
+        hasWhitepapers &&
+        projectInfoComplete &&
+        tokenomicsComplete &&
+        isStartValid &&
+        isEndValid
     )
   }
 
@@ -187,8 +204,8 @@ export default function LBPForm() {
       assetTokenSymbol: formData.tokenomics?.assetTokenSymbol,
       startWeight: formData.tokenomics?.startWeight,
       endWeight: formData.tokenomics?.endWeight,
-      startDate: formData.tokenomics?.startDate,
-      endDate: formData.tokenomics?.endDate,
+      startDate: dayjs(formData.tokenomics?.startDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
+      endDate: dayjs(formData.tokenomics?.endDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
       minPrice: formData.tokenomics?.minPrice,
       maxPrice: formData.tokenomics?.maxPrice,
       additionalDocumentIds: [],
@@ -201,7 +218,7 @@ export default function LBPForm() {
     return {
       id: data.id || 0,
       projectInfo: {
-        name: data.name,
+        name: data.title,
         title: data.title,
         description: data.description,
         website: data.officialWebsite,
@@ -210,22 +227,22 @@ export default function LBPForm() {
         uploadDocs: data.uploadDocs,
       },
       branding: {
-        LBPLogo: data.banner,
-        LBPBanner: data.logo,
+        LBPLogo: data.logo,
+        LBPBanner: data.banner,
       },
       tokenomics: {
         shareAddress: data.shareAddress,
-        contractAddress: data.contractAddress,
+        contractAddress: data.contractAddshress || constants.AddressZero,
         assetTokenAddress: data.assetTokenAddress,
         assetTokenSymbol: data.assetTokenSymbol,
         shareInput: data.shareAmount,
         maxSupply: data.shareMaxSupply,
         assetInput: data.assetTokenAmount,
         startWeight: data.startWeight,
-        endDate: data.endDate,
+        startDate: dayjs(data.startDate)?.local()?.format('YYYY-MM-DD HH:mm:ss'),
+        endDate: dayjs(data.endDate)?.local()?.format('YYYY-MM-DD HH:mm:ss'),
         minPrice: data.minPrice,
-        maxPrice: data.maxPrice,
-        startDate: data.startDate,
+        maxPrice: data.maxPrice || 0,
         endWeight: data.endWeight,
       },
     }

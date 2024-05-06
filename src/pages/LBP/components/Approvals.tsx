@@ -91,9 +91,9 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
       case ApprovalState.APPROVED:
         return 'Approved'
       case ApprovalState.PENDING:
-        return `Approving ${type === ApprovalType.ASSET ? 'Asset' : 'Share'}...`
+        return `Approving ${type === ApprovalType.ASSET ? 'Base Token' : 'Project Token'}...`
       default:
-        return `Approve ${type === ApprovalType.ASSET ? 'Asset' : 'Share'}`
+        return `Approve ${type === ApprovalType.ASSET ? 'Base Token' : 'Project Token'}`
     }
   }
 
@@ -143,7 +143,7 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
       <Card approved={approvalA === 'APPROVED'}>
         {renderLogo(shareLogo)}
         <p style={{ color: '#292933', fontWeight: '600', fontSize: '16px', textAlign: 'center' }}>
-          Approve {shareName ? shareName : 'Share'}{' '}
+          Approve {shareName ? shareName : 'Project Token'}{' '}
         </p>
 
         <Button
@@ -159,7 +159,7 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
       <Card approved={approvalB === 'APPROVED'}>
         {tokenBOption?.logo ? <img src={tokenBOption?.logo} /> : <SerenityIcon />}
         <p style={{ color: '#292933', fontWeight: '600', fontSize: '16px', textAlign: 'center' }}>
-          Approve {tokenBOption?.tokenSymbol ? tokenBOption?.tokenSymbol : 'Asset'}
+          Approve {tokenBOption?.tokenSymbol ? tokenBOption?.tokenSymbol : 'Base Token'}
         </p>
         <Button
           approved={approvalB === 'APPROVED'}

@@ -64,7 +64,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
   const SideBarByStatus = useMemo(() => {
     switch (lbpData?.status) {
       case LbpStatus.pending:
-        return <ComingSoon />
+        return <ComingSoon lbpData={lbpData}  />
       case LbpStatus.live:
         return <SideBar lbpData={lbpData} />
       case LbpStatus.ended:

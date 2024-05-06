@@ -215,14 +215,11 @@ interface TokenomicsData {
 }
 
 const validationSchema = Yup.object().shape({
-  shareAddress: Yup.string().required('Share Address is required'),
-  shareInput: Yup.string().required('Share Amount is required'),
-  assetInput: Yup.string().required('Asset Amount is required'),
-  maxSupply: Yup.string().required('Max. Supply is required'),
+  shareAddress: Yup.string().required('Project Token Address is required'),
+  shareInput: Yup.string().required('Project Token Amount is required'),
+  assetInput: Yup.string().required('Base Token Amount is required'),
+  // maxSupply: Yup.string().required('Max. Supply is required'),
   minPrice: Yup.string().required('Min. price is required'),
-  maxPrice: Yup.string().required('Max. price is required'),
-  startDate: Yup.string().required('Start Date is required'),
-  endDate: Yup.string().required('End Date is required'),
 })
 
 interface ProjectInfoProps {
@@ -237,6 +234,9 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
   const [isOpen, setIsOpen] = useState(false)
+  const [startDateError, setStartDateError] = useState<string>('')
+  const [endDateError, setEndDateError] = useState<string>('')
+  const { chainId, account } = useWeb3React()
   const [selectedToken, setSelectedToken] = useState<any>({
     tokenSymbol: 'USDC',
     logo: usdcDropDown,
@@ -279,29 +279,53 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     onSubmit: () => {},
   })
 
-  const assetTokenContract = useTokenContract(formDataTokenomics.assetTokenAddress ?? '')
+  const assetTokenContract = useTokenContract(
+    formDataTokenomics.assetTokenAddress ? formDataTokenomics.assetTokenAddress : TOKEN_ADDRESSES.USDC[chainId || 0]
+  )
   const shareTokenContract = useTokenContract(formDataTokenomics.shareAddress ?? '')
 
-  const { chainId, account } = useWeb3React()
-
   useEffect(() => {
-    if (!assetTokenContract || !shareTokenContract || !account) return
+    console.log(assetTokenContract, shareTokenContract)
+    if (!account) return
+    const loadBalances = async () => {
+      if (assetTokenContract) {
+        const assetBalance = await assetTokenContract.balanceOf(account)
+        const assetDecimals = await assetTokenContract.decimals()
+        setBalances((prevBalances: any) => ({
+          ...prevBalances,
+          assetBalance: formatUnits(assetBalance, assetDecimals),
+        }))
+      }
 
-    const loadBalance = async () => {
-      const assetBalance = await assetTokenContract.balanceOf(account)
-      const assetDecimals = await assetTokenContract.decimals()
-
-      const shareBalance = await shareTokenContract.balanceOf(account)
-      const shareDecimals = await shareTokenContract.decimals()
-
-      setBalances({
-        assetBalance: formatUnits(assetBalance, assetDecimals),
-        shareBalance: formatUnits(shareBalance, shareDecimals),
-      })
+      if (shareTokenContract) {
+        const shareBalance = await shareTokenContract.balanceOf(account)
+        const shareDecimals = await shareTokenContract.decimals()
+        setBalances((prevBalances: any) => ({
+          ...prevBalances,
+          shareBalance: formatUnits(shareBalance, shareDecimals),
+        }))
+      }
     }
 
-    loadBalance()
+    loadBalances()
   }, [account, assetTokenContract, shareTokenContract])
+
+  useEffect(() => {
+    if (!formDataTokenomics.assetTokenSymbol) {
+      const defaultTokenOption = TokenOptions(chainId || 0).find((option) => option.tokenSymbol === 'USDC')
+      if (defaultTokenOption) {
+        setSelectedToken(defaultTokenOption)
+        const updatedFormData = {
+          ...formDataTokenomics,
+          shareName: defaultTokenOption,
+          assetTokenAddress: defaultTokenOption.tokenAddress,
+          assetTokenSymbol: defaultTokenOption.tokenSymbol,
+        }
+        setFormData(updatedFormData)
+        onChange(updatedFormData)
+      }
+    }
+  }, [formDataTokenomics.assetTokenSymbol, chainId])
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     const newStartValue = Math.min(Math.max(newValue as number, 1), 99)
@@ -333,7 +357,14 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
 
   const handleStartDateChange = (date: Dayjs | null) => {
     if (date) {
-      const newStartDate = dayjs(date)?.utc()?.format('YYYY-MM-DD HH:mm:ss')
+      const now = dayjs()
+      if (date.isBefore(now, 'day')) {
+        setStartDateError("Start date can't be in the past")
+        return
+      } else {
+        setStartDateError('')
+      }
+      const newStartDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
         startDate: newStartDate,
@@ -344,7 +375,15 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   }
   const handleEndDateChange = (date: Dayjs | null) => {
     if (date) {
-      const newEndDate = dayjs(date)?.utc().format('YYYY-MM-DD HH:mm:ss')
+      const startDate = dayjs(formDataTokenomics.startDate)
+      const minimumEndDate = startDate.add(1, 'day')
+      if (date.isBefore(minimumEndDate, 'day')) {
+        setEndDateError('End date should be at least 1 day bigger than Start Date')
+        return
+      } else {
+        setEndDateError('')
+      }
+      const newEndDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
         endDate: newEndDate,
@@ -391,7 +430,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     if (tokenOption && tokenOption.logo) {
       return <img src={tokenOption.logo} alt={symbol} />
     } else {
-      return null
+      return <img src={usdcDropDown} alt={symbol} />
     }
   }
   const handleMaxClick = (balance: string, field: string) => {
@@ -405,9 +444,9 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   return (
     <Container>
       <TextInput
-        placeholder="Share Address"
+        placeholder="Project Token Address"
         id="shareAddress"
-        label="Share Address"
+        label="Project Token Address"
         name="shareAddress"
         onChange={handleInputChange}
         onBlur={formik.handleBlur}
@@ -533,16 +572,16 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
         type="number"
         placeholder="Max. Supply"
         id="maxSupply"
-        label="Share Max. Supply"
+        label="Project Token Max. Supply"
         name="maxSupply"
         onChange={handleInputChange}
-        onBlur={formik.handleBlur}
+        // onBlur={formik.handleBlur}
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}
       />
-      {formik.touched.maxSupply && !formDataTokenomics.maxSupply ? (
+      {/* {formik.touched.maxSupply && !formDataTokenomics.maxSupply ? (
         <ErrorText>{formik.errors.maxSupply}</ErrorText>
-      ) : null}
+      ) : null} */}
       <Line style={{ margin: '40px 0px 30px 0px' }} />
 
       <RowStart marginBottom="32px">
@@ -574,7 +613,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
                   marginLeft: '5px',
                 }}
               >
-                {shareTitle ? shareTitle : 'Share'}
+                {shareTitle ? shareTitle : 'Project Token'}
               </div>
               <div style={{ padding: '10px 20px' }}>{formDataTokenomics.startWeight}%</div>
             </div>
@@ -641,7 +680,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
                   marginLeft: '5px',
                 }}
               >
-                {shareTitle ? shareTitle : 'Share'}
+                {shareTitle ? shareTitle : 'Project Token'}
               </div>
               <div style={{ padding: '10px 20px' }}>{formDataTokenomics.endWeight}%</div>
             </div>
@@ -694,19 +733,21 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
 
       <FormGrid>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DateTimePicker']}>
+          <div style={{ display: 'grid' }}>
             <DateTimePicker
               onChange={handleStartDateChange}
               label="Start Date"
               value={dayjs(formDataTokenomics.startDate)}
             />
-          </DemoContainer>
+            {startDateError && <span style={{ color: 'red', marginTop: '6px' }}>{startDateError}</span>}
+          </div>
         </LocalizationProvider>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DateTimePicker']}>
+          <div style={{ display: 'grid' }}>
             <DateTimePicker onChange={handleEndDateChange} label="End Date" value={dayjs(formDataTokenomics.endDate)} />
-          </DemoContainer>
+            {endDateError && <span style={{ color: 'red', marginTop: '6px' }}>{endDateError}</span>}
+          </div>
         </LocalizationProvider>
       </FormGrid>
 
@@ -739,9 +780,9 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
             onBlur={formik.handleBlur}
             value={formDataTokenomics.maxPrice}
           />
-          {formik.touched.maxPrice && !formDataTokenomics.maxPrice ? (
+          {/* {formik.touched.maxPrice && !formDataTokenomics.maxPrice ? (
             <ErrorText>{formik.errors.maxPrice}</ErrorText>
-          ) : null}
+          ) : null} */}
         </div>
       </FormGrid>
     </Container>
