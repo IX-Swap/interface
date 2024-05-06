@@ -19,7 +19,8 @@ export default function ComingSoon({ lbpData }: ComingBarProps) {
     return 0
   }, [lbpData])
 
-  const remainingTime = useMemo(() => calculateRemainingTime(), [calculateRemainingTime])
+  const remainingTime = useMemo(calculateRemainingTime, [calculateRemainingTime])
+
 
   const remainingDays = Math.ceil(remainingTime / (24 * 60 * 60))
   const remainingHours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))

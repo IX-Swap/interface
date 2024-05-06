@@ -87,7 +87,7 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
             <UploaderLBP
               name="logo"
               onChange={(e) => handleInputChange(e, 'LBPLogo')}
-              title=""
+              title="Project Token Logo"
               files={values.LBPLogo ? [values.LBPLogo] : []}
               onDrop={(file) => handleDropImage(file, 'LBPLogo')}
               handleDeleteClick={() => handleImageDelete('LBPLogo')}
@@ -104,7 +104,7 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
             <UploaderLBP
               name="banner"
               onChange={(e) => handleInputChange(e, 'LBPBanner')}
-              title=""
+              title="LBP Banner"
               files={values.LBPBanner ? [values.LBPBanner] : []}
               onDrop={(file) => handleDropImage(file, 'LBPBanner')}
               handleDeleteClick={() => handleImageDelete('LBPBanner')}

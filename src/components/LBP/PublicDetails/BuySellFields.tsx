@@ -477,7 +477,7 @@ export default function BuySellFields({
           <BuySellFieldsContainer assetExceedsBalance={assetExceedsBalance}>
             <BuySellFieldsItem>
               <BuySellFieldsWrapper>
-                <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Asset</BuySellFieldsSpan>
+                <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Base Token</BuySellFieldsSpan>
               </BuySellFieldsWrapper>
               {convertingState.inputType === InputType.Asset && convertingState.converting ? (
                 <Loader size="25px" />
@@ -553,7 +553,7 @@ export default function BuySellFields({
           </TabRow>
           {/* hide for now
       <TabRow style={{padding: '10px 40px', textAlign: 'center'}}><TYPE.title10 color={'#FF6161'}>Price change exceeds slippage tolerance. Adjust and retry.</TYPE.title10> </TabRow> */}
-          <AddWalletText>Add Asset to Wallet</AddWalletText>
+          <AddWalletText>Add Base Token to Wallet</AddWalletText>
         </>
       )}
     </>

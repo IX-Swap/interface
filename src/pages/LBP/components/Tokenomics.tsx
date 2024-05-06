@@ -215,9 +215,9 @@ interface TokenomicsData {
 }
 
 const validationSchema = Yup.object().shape({
-  shareAddress: Yup.string().required('Share Address is required'),
-  shareInput: Yup.string().required('Share Amount is required'),
-  assetInput: Yup.string().required('Asset Amount is required'),
+  shareAddress: Yup.string().required('Project Token Address is required'),
+  shareInput: Yup.string().required('Project Token Amount is required'),
+  assetInput: Yup.string().required('Base Token Amount is required'),
   // maxSupply: Yup.string().required('Max. Supply is required'),
   minPrice: Yup.string().required('Min. price is required'),
 })
@@ -236,6 +236,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   const [isOpen, setIsOpen] = useState(false)
   const [startDateError, setStartDateError] = useState<string>('')
   const [endDateError, setEndDateError] = useState<string>('')
+  const { chainId, account } = useWeb3React()
   const [selectedToken, setSelectedToken] = useState<any>({
     tokenSymbol: 'USDC',
     logo: usdcDropDown,
@@ -279,13 +280,9 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   })
 
   const assetTokenContract = useTokenContract(
-    formDataTokenomics.assetTokenAddress
-      ? formDataTokenomics.assetTokenAddress
-      : '0xA9bc9D3F0fF05AB339D1E195982794B15beA0f88'
+    formDataTokenomics.assetTokenAddress ? formDataTokenomics.assetTokenAddress : TOKEN_ADDRESSES.USDC[chainId || 0]
   )
   const shareTokenContract = useTokenContract(formDataTokenomics.shareAddress ?? '')
-
-  const { chainId, account } = useWeb3React()
 
   useEffect(() => {
     console.log(assetTokenContract, shareTokenContract)
@@ -312,6 +309,23 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
 
     loadBalances()
   }, [account, assetTokenContract, shareTokenContract])
+
+  useEffect(() => {
+    if (!formDataTokenomics.assetTokenSymbol) {
+      const defaultTokenOption = TokenOptions(chainId || 0).find((option) => option.tokenSymbol === 'USDC')
+      if (defaultTokenOption) {
+        setSelectedToken(defaultTokenOption)
+        const updatedFormData = {
+          ...formDataTokenomics,
+          shareName: defaultTokenOption,
+          assetTokenAddress: defaultTokenOption.tokenAddress,
+          assetTokenSymbol: defaultTokenOption.tokenSymbol,
+        }
+        setFormData(updatedFormData)
+        onChange(updatedFormData)
+      }
+    }
+  }, [formDataTokenomics.assetTokenSymbol, chainId])
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     const newStartValue = Math.min(Math.max(newValue as number, 1), 99)
@@ -430,9 +444,9 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   return (
     <Container>
       <TextInput
-        placeholder="Share Address"
+        placeholder="Project Token Address"
         id="shareAddress"
-        label="Share Address"
+        label="Project Token Address"
         name="shareAddress"
         onChange={handleInputChange}
         onBlur={formik.handleBlur}
@@ -558,7 +572,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
         type="number"
         placeholder="Max. Supply"
         id="maxSupply"
-        label="Share Max. Supply"
+        label="Project Token Max. Supply"
         name="maxSupply"
         onChange={handleInputChange}
         // onBlur={formik.handleBlur}
@@ -599,7 +613,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
                   marginLeft: '5px',
                 }}
               >
-                {shareTitle ? shareTitle : 'Share'}
+                {shareTitle ? shareTitle : 'Project Token'}
               </div>
               <div style={{ padding: '10px 20px' }}>{formDataTokenomics.startWeight}%</div>
             </div>
@@ -666,7 +680,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
                   marginLeft: '5px',
                 }}
               >
-                {shareTitle ? shareTitle : 'Share'}
+                {shareTitle ? shareTitle : 'Project Token'}
               </div>
               <div style={{ padding: '10px 20px' }}>{formDataTokenomics.endWeight}%</div>
             </div>
