@@ -29,6 +29,7 @@ const Wrapper = styled.div`
 const ImageSection = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 `
 
 const LogoIcon = styled.img`
@@ -36,6 +37,7 @@ const LogoIcon = styled.img`
   height: 50px;
   width: 50px;
   border-radius: 50%;
+  left: 0px;
 `
 
 const Description = styled(TYPE.description7)`
@@ -180,7 +182,9 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({ lbpShareLogo, lbpShareName,
       />
       <ImageSection>
         <LogoIcon src={lbpShareLogo?.public} alt="Serenity Logo" />
-        <Description fontSize={'32px'}>{lbpShareName}</Description>
+        <Description style={{ minInlineSize: 'max-content', marginLeft: '60px' }} fontSize={'32px'}>
+          {lbpShareName}
+        </Description>
       </ImageSection>
       <TextSection>
         <StatusButton onClick={handleOpenModal} status={status}>
