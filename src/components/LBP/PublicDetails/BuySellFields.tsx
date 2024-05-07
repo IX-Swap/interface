@@ -231,6 +231,7 @@ export default function BuySellFields({
           return parsedAmount
         }
       } catch (err: any) {
+        console.error('Error converting amount full:', err)
         console.error('Error converting amount:', err.errorName)
         setErrorMessage(err.errorName)
       }
@@ -268,15 +269,21 @@ export default function BuySellFields({
 
       const tx: any = await tradeFunction(Number(amount), authorization)
       if (tx) {
-        await tx.wait()
+        const receipt = await tx.wait()
+        if (receipt.status === 0) {
+          setErrorMessage('Execution error')
+        } else {
+          refreshAllowance()
+          addTransaction(tx, {
+            summary: 'Transaction is successful!',
+          })
+        }
+
         setIsExecuting(false)
-        refreshAllowance()
-        addTransaction(tx, {
-          summary: 'Transaction is successful!',
-        })
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error executing trade:', error)
+      setErrorMessage(error?.errorName || 'Execution error')
       setIsExecuting(false)
       // TODO: handle ERROR UI
     }
@@ -292,12 +299,16 @@ export default function BuySellFields({
 
       const recipient = account
       const referrer = constants.AddressZero
+
       const tx = await lbpContractInstance?.swapAssetsForExactShares(
         parseUnit(shareAmount, shareDecimals), // Convert share amount to smallest denomination
         maxAssetsIn,
         recipient,
         referrer,
-        authorization
+        authorization,
+        {
+          gasLimit: 300000, // temporary hardcode as it sometimes fails due to gas limit is low
+        }
       )
 
       return tx
@@ -316,14 +327,15 @@ export default function BuySellFields({
       console.info('minSharesOut', minSharesOut.toString())
 
       const referrer = constants.AddressZero
+
       const tx = await lbpContractInstance.swapExactAssetsForShares(
-        parseUnit(assetAmount, tokenOption?.tokenDecimals || 0), // Convert asset amount to smallest denomination
+        parseUnit(assetAmount, assetDecimals), // Convert asset amount to smallest denomination
         minSharesOut,
         recipient,
         referrer,
         authorization,
         {
-          gasLimit: 500000, // temporary hardcode as it sometimes fails due to gas limit is low
+          gasLimit: 300000, // temporary hardcode as it sometimes fails due to gas limit is low
         }
       )
 
@@ -374,11 +386,15 @@ export default function BuySellFields({
       console.info('minAssetsOut', minAssetsOut.toString())
 
       const recipient = account
+
       const tx = await lbpContractInstance.swapExactSharesForAssets(
         parseUnit(shareAmount, shareDecimals),
         minAssetsOut,
         recipient,
-        authorization
+        authorization,
+        {
+          gasLimit: 300000, // temporary hardcode as it sometimes fails due to gas limit is low on amoy testnet
+        }
       )
 
       return tx
@@ -400,7 +416,10 @@ export default function BuySellFields({
         parseUnit(assetAmount, assetDecimals),
         maxSharesIn,
         recipient,
-        authorization
+        authorization,
+        {
+          gasLimit: 300000, // temporary hardcode as it sometimes fails due to gas limit is low on amoy testnet
+        }
       )
 
       return tx
@@ -494,7 +513,7 @@ export default function BuySellFields({
             </BuySellFieldsItem>
             <BuySellFieldsItem>
               <BuySellFieldsSelect>
-              <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={logo?.public} />
+                <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={logo?.public} />
                 <TYPE.body4 fontSize={'14px'}> {shareSymbol}</TYPE.body4>
               </BuySellFieldsSelect>
               <BuySellFieldsSpanBal>
