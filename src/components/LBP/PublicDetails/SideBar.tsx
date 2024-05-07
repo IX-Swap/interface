@@ -36,6 +36,7 @@ interface SideTabsBarProps {
 
 interface SideBarProps {
   lbpData: LbpFormValues | null
+  isPausedSideBar?: boolean
 }
 
 const TradeTabs: React.FC<SideTabsBarProps> = ({ currentTab, onTabSelect }) => {
@@ -55,7 +56,7 @@ const TradeTabs: React.FC<SideTabsBarProps> = ({ currentTab, onTabSelect }) => {
   )
 }
 
-const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
+const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
   const [remainingTime, setRemainingTime] = useState(28 * 24 * 60 * 60)
   const [activeTab, setActiveTab] = React.useState<PublicDetails>(() => {
     const savedTab = localStorage.getItem('ActiveTab')
@@ -66,8 +67,8 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData }) => {
   const handleClose = () => setOpen(false)
   const [clickedButton, setClickedButton] = useState<any>(null)
   const [slippage, setSlippage] = useState<any>('0.25')
-  const [isPaused, setIsPaused] = useState(false)
-  const [isBlurred, setIsBlurred] = useState(false)
+  const [isPaused, setIsPaused] = useState(isPausedSideBar)
+  const [isBlurred, setIsBlurred] = useState(isPausedSideBar)
   const [tokenBalance, setTokenBalance] = useState('')
   const [tokenDecimals, setTokenDecimals] = useState(0)
   const { account, chainId } = useWeb3React()
