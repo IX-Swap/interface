@@ -17,6 +17,7 @@ import { LbpTable, TableHeader, LbpRow, Raw, CountRow, Title } from './tables'
 
 import { useOnChangeOrder } from 'state/launchpad/hooks'
 import { ReactComponent as EditIcon } from 'assets/svg/edit.svg'
+import { ReactComponent as SettingIcon } from 'assets/images/settings2.svg'
 
 import { text17, text18, text19, text30, text53 } from 'components/LaunchpadMisc/typography'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
@@ -24,6 +25,7 @@ import { ITEM_ROWS } from 'components/LaunchpadIssuance/utils/constants'
 import { useGetLbpsFull } from 'state/lbp/hooks'
 import { FilterOption } from 'components/Launchpad/InvestmentList/FilterDropdown'
 import { FilterConfig } from '../InvestmentList/Filter'
+import { ReactComponent as Disabled } from '../../../assets/images/newCurrencyLogo.svg'
 
 interface Props {
   type: string
@@ -32,6 +34,7 @@ interface Props {
 const HEADERS = [
   { key: 'name', label: 'Name' },
   { key: 'startDate', label: 'Start Date and Time' },
+  { key: 'endDate', label: 'End Date and Time' },
 ]
 
 export const LbpsFull: React.FC<Props> = (props) => {
@@ -61,7 +64,16 @@ export const LbpsFull: React.FC<Props> = (props) => {
   }, [filter])
   const [order, setOrder] = React.useState<OrderConfig>({})
 
-  const createLbp = React.useCallback((id: number) => history.push(`/lbp/edit?id=${id}`), [history])
+  const createLbp = React.useCallback(
+    (id: number) => {
+      if (['pending', 'live', 'ended'].includes(props.type)) {
+        history.push(`/lbp/admin-detail/${id}`)
+      } else {
+        history.push(`/lbp/edit?id=${id}`)
+      }
+    },
+    [history, props.type]
+  )
 
   const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
 
@@ -126,6 +138,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
     },
     [setFilter, page, setPage]
   )
+  console.log(lbps, 'lbp')
 
   return (
     <Container>
@@ -138,14 +151,15 @@ export const LbpsFull: React.FC<Props> = (props) => {
 
       {lbps?.length > 0 && (
         <LbpTable>
-          <TableHeader tab={LbpStatus.live}>
+          <TableHeader type={props.type} tab={LbpStatus.live}>
             <>
-              {HEADERS.map((header) => (
-                <Title key={header.key} onClick={() => onChangeOrder(header.key)}>
-                  {' '}
-                  <SortIcon type={order[header.key as keyof OrderConfig]} /> {header.label}
-                </Title>
-              ))}
+              {HEADERS.map((header) =>
+                header.key !== 'endDate' || props.type !== 'draft' ? (
+                  <Title key={header.key} onClick={() => onChangeOrder(header.key)}>
+                    <SortIcon type={order[header.key as keyof OrderConfig]} /> {header.label}
+                  </Title>
+                ) : null
+              )}
             </>
             <div> Action</div>
           </TableHeader>
@@ -158,17 +172,29 @@ export const LbpsFull: React.FC<Props> = (props) => {
 
           {!loading &&
             lbps.map((lbp, idx) => (
-              <LbpRow key={idx} tab={LbpStatus.live}>
-                <Raw>{lbp.title}</Raw>
+              <LbpRow type={props.type} key={idx} tab={LbpStatus.live}>
+                <Raw>
+                  {lbp?.logo?.public ? (
+                    <img
+                      style={{ marginRight: '20px', borderRadius: 24, position: 'absolute' }}
+                      width="30px"
+                      height="30px"
+                      src={lbp?.logo?.public}
+                    />
+                  ) : (
+                    <Disabled style={{ marginRight: '20px', borderRadius: 24, position: 'absolute' }} />
+                  )}
+
+                  <p style={{ marginLeft: '45px', marginTop: '5px' }}> {lbp.title}</p>
+                </Raw>
                 <CountRow>{lbp?.startDate ? moment(lbp?.startDate).format('DD/MM/YYYY hh:mmA') : ''}</CountRow>
+                {props.type !== 'draft' && (
+                  <CountRow>{lbp?.endDate ? moment(lbp?.endDate).format('DD/MM/YYYY hh:mmA') : ''}</CountRow>
+                )}
                 <ActionButtons>
-                  <NoFrameButton
-                    color={theme.launchpad.colors.primary + '80'}
-                    borderType="tiny"
-                    height="34px"
-                    onClick={() => createLbp(lbp.id)}
-                  >
-                    Edit <EditIcon />
+                  <NoFrameButton color={'#8F8FB2'} borderType="tiny" height="34px" onClick={() => createLbp(lbp.id)}>
+                    {['pending', 'live', 'ended'].includes(props.type) ? 'Settings' : 'Edit'}
+                    {['pending', 'live', 'ended'].includes(props.type) ? <SettingIcon /> : <EditIcon />}
                   </NoFrameButton>
                 </ActionButtons>
               </LbpRow>

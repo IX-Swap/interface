@@ -34,13 +34,13 @@ export const LbpTable = styled.div<{ maxWidth?: string; hideBorder?: boolean }>`
   }
 `
 
-export const TableHeader = styled.div<{ tab: LbpStatus }>`
+export const TableHeader = styled.div<{ tab: LbpStatus; type: string }>`
   display: grid;
   grid-template-rows: 60px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: ${(props) => (props.type === 'draft' ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)')};
+  gap: ${(props) => (props.type === 'draft' ? '25rem' : '10rem')};
   place-content: center start;
   align-items: center;
-  gap: 25rem;
   height: 65px;
   width: 100%;
   padding: 0.25rem 0;

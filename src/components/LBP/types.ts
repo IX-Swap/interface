@@ -39,6 +39,7 @@ export interface DashboardLbp {
   createdAt: Date
   updatedAt: Date
   deletedAt: Date
+  logo: any
 }
 
 export interface LbpFile {

@@ -10,7 +10,7 @@ import { LbpCreateButton } from '../LbpCreateButton'
 
 const tabs = [
   { title: 'Drafts', value: LbpStatus.draft },
-  { title: 'Pending', value: LbpStatus.pending },
+  { title: 'Coming Soon', value: LbpStatus.pending },
   { title: 'Live', value: LbpStatus.live },
   { title: 'Ended', value: LbpStatus.ended },
 ]
