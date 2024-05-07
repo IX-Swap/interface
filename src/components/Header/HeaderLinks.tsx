@@ -221,9 +221,11 @@ export const HeaderLinks = () => {
         <StyledNavLink to="/admin">Admin</StyledNavLink>
       )}
 
-      <StyledNavLink id={`swap-nav-link`} to={'/lbp'} data-testid={`lbp-nav-link`}>
-        <Trans>LBP</Trans>
-      </StyledNavLink>
+      {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink to={'/lbp'} data-testid={`lbp-nav-link`}>
+          <Trans>LBP</Trans>
+        </StyledNavLink>
+      )}
     </HeaderLinksWrap>
   )
 }

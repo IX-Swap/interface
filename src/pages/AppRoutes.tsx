@@ -21,7 +21,6 @@ import { AdminKycTable } from 'components/AdminKyc'
 import { KycReviewModal } from 'components/KycReviewModal'
 import LBPForm from './LBP/LbpForm'
 import LbpDashboardPage from './LBP/Dashboard'
-import publicDetails from './LBP/PublicDetails'
 import PublicDetails from './LBP/PublicDetails'
 import { AdminLbpDetail } from './LBP/AdminLbpDetail'
 
@@ -93,6 +92,14 @@ export const routeConfigs: RouteMapEntry[] = [
     component: CreateNFT,
     conditions: { isWhitelisted: true },
   },
+
+  /* LBP routes */
+  { path: routes.lbpEdit, component: LBPForm },
+  { path: routes.lbpDashboard, component: LbpDashboardPage },
+  { path: routes.publicDetails, component: PublicDetails },
+  { path: routes.adminDetails, component: AdminLbpDetail },
+  
+
   { path: routes.nftList, component: ListNFT, conditions: { isWhitelisted: true } },
   {
     path: routes.nftCollections,
@@ -203,10 +210,4 @@ export const routeConfigs: RouteMapEntry[] = [
     ...onlyOfferManager,
   },
   { path: routes.manageOffer, component: ManageOffer, ...onlyOfferManager },
-
-  /* LBP routes */
-  { path: routes.lbpEdit, component: LBPForm },
-  { path: routes.lbpDashboard, component: LbpDashboardPage },
-  { path: routes.publicDetails, component: PublicDetails },
-  { path: routes.adminDetails, component: AdminLbpDetail },
 ]
