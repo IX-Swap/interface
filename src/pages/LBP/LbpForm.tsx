@@ -232,7 +232,7 @@ export default function LBPForm() {
       },
       tokenomics: {
         shareAddress: data.shareAddress,
-        contractAddress: data.contractAddshress || constants.AddressZero,
+        contractAddress: data.contractAddress || constants.AddressZero,
         assetTokenAddress: data.assetTokenAddress,
         assetTokenSymbol: data.assetTokenSymbol,
         shareInput: data.shareAmount,

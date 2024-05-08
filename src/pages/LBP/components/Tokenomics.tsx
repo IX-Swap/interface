@@ -200,6 +200,7 @@ export const getTokenOption = (tokenAddress: string, chainId: number = 0) => {
 }
 
 interface TokenomicsData {
+  contractAddress?: string
   shareAddress: string
   assetTokenAddress: string
   assetTokenSymbol: string
@@ -262,6 +263,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     endWeight: formDataTokenomics.endWeight,
     startDate: formDataTokenomics.startDate,
     endDate: formDataTokenomics.endDate,
+    contractAddress: formDataTokenomics.contractAddress,
   })
 
   const formik = useFormik({
@@ -330,16 +332,29 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   }, [formDataTokenomics.assetTokenSymbol, chainId])
 
   useEffect(() => {
+    // skip if already deployed
+    const isDeployed = Boolean(formData?.contractAddress)
+    if (isDeployed || !formData.endDate || !formData.startDate) {
+      return
+    }
+
     // Check if the current start date is in the past when formDataTokenomics changes
     if (startDate.isBefore(dayjs())) {
-      setStartDateError("Start date can't be in the past");
+      setStartDateError("Start date can't be in the past")
     }
+
+    if (endDate.isBefore(startDate)) {
+      setEndDateError('End date must be after start date')
+    }
+
+    if (endDate.isBefore(dayjs())) {
+      setEndDateError("End date can't be in the past")
+    }
+
     if (endDate && endDate.isBefore(startDate.add(1, 'day'), 'day')) {
-      setEndDateError('End date should be at least 1 day bigger than Start Date');
+      setEndDateError('End date should be at least 1 day bigger than Start Date')
     }
-  }, [formDataTokenomics]);
-  
-  
+  }, [formDataTokenomics])
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     const newStartValue = Math.min(Math.max(newValue as number, 1), 99)
