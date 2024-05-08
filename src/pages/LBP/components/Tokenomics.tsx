@@ -30,7 +30,7 @@ import timezone from 'dayjs/plugin/timezone'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
-dayjs.tz.setDefault('Asia/Singapore')
+// dayjs.tz.setDefault('Asia/Singapore')
 
 const Container = styled.div`
   width: 100%;
@@ -236,8 +236,8 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   const [isOpen, setIsOpen] = useState(false)
   const [startDateError, setStartDateError] = useState<string>('')
   const [endDateError, setEndDateError] = useState<string>('')
-  const [startDate, setStartDate] = useState(dayjs());
-  const [endDate, setEndDate] = useState(dayjs());
+  const [startDate, setStartDate] = useState(dayjs())
+  const [endDate, setEndDate] = useState(dayjs())
   const { chainId, account } = useWeb3React()
   const [selectedToken, setSelectedToken] = useState<any>({
     tokenSymbol: 'USDC',
@@ -358,35 +358,35 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   }
   const handleStartDateChange = (date: Dayjs | null) => {
     if (date) {
-      const now = dayjs();
-      const selectedDateTime = date.set('second', 0);
-      if (selectedDateTime.isBefore(now)) {
-        setStartDateError("Start date can't be in the past");
-        return;
+      const now = dayjs()
+      if (date.isBefore(now)) {
+        setStartDateError("Start date can't be in the past")
       } else {
-        setStartDateError('');
-        setStartDate(selectedDateTime);
+        setStartDateError('')
+        setStartDate(date)
       }
-      const newStartDate = selectedDateTime.format('YYYY-MM-DD HH:mm:ss');
+      const newStartDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
         startDate: newStartDate,
-      };
-      setFormData(updatedFormData);
-      onChange(updatedFormData);
+      }
+      setFormData(updatedFormData)
+      onChange(updatedFormData)
     }
-  };
-  
+  }
+
   const handleEndDateChange = (date: Dayjs | null) => {
     if (date) {
+      const now = dayjs()
       const startDate = dayjs(formDataTokenomics.startDate)
-      const minimumEndDate = startDate.add(1, 'day')
-      if (date.isBefore(minimumEndDate, 'day')) {
+      const minEndDate = startDate.add(1, 'day')
+      if (date.isBefore(now)) {
+        setEndDateError("End date can't be in the past")
+      } else if (date.isBefore(minEndDate)) {
         setEndDateError('End date should be at least 1 day bigger than Start Date')
-        return
       } else {
         setEndDateError('')
-        setEndDate(date);
+        setEndDate(date)
       }
       const newEndDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
