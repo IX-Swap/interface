@@ -130,11 +130,10 @@ export default function LBPForm() {
     }
 
     const isEndDateValid = (startDate: Dayjs, endDate: Dayjs) => {
-      const startOfDay = startDate.startOf('day')
-      const endOfDay = endDate.startOf('day')
-      const minEndDate = startOfDay.add(1, 'day')
-      return endOfDay.isAfter(minEndDate)
-    }
+      const minEndDate = startDate.add(1, 'day').startOf('day');
+      return endDate.startOf('day').isSameOrAfter(minEndDate);
+    };
+    
 
     // const isComplete = (data: any) => Object.values(data).every((val) => !!val)
     const brandingComplete = isComplete(formData.branding)
@@ -146,6 +145,8 @@ export default function LBPForm() {
     const endDate = dayjs(formData.tokenomics.endDate)
     const isStartValid = isStartDateValid(startDate)
     const isEndValid = isEndDateValid(startDate, endDate)
+
+    console.log(brandingComplete,projectInfoComplete,tokenomicsComplete, hasSocialLinks, hasWhitepapers, isStartValid, isEndValid)
 
     setCanSubmit(
       brandingComplete &&

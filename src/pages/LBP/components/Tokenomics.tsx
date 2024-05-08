@@ -236,6 +236,8 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   const [isOpen, setIsOpen] = useState(false)
   const [startDateError, setStartDateError] = useState<string>('')
   const [endDateError, setEndDateError] = useState<string>('')
+  const [startDate, setStartDate] = useState(dayjs());
+  const [endDate, setEndDate] = useState(dayjs());
   const { chainId, account } = useWeb3React()
   const [selectedToken, setSelectedToken] = useState<any>({
     tokenSymbol: 'USDC',
@@ -285,7 +287,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   const shareTokenContract = useTokenContract(formDataTokenomics.shareAddress ?? '')
 
   useEffect(() => {
-    console.log(assetTokenContract, shareTokenContract)
+    // console.log(assetTokenContract, shareTokenContract)
     if (!account) return
     const loadBalances = async () => {
       if (assetTokenContract) {
@@ -327,6 +329,18 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     }
   }, [formDataTokenomics.assetTokenSymbol, chainId])
 
+  useEffect(() => {
+    // Check if the current start date is in the past when formDataTokenomics changes
+    if (startDate.isBefore(dayjs())) {
+      setStartDateError("Start date can't be in the past");
+    }
+    if (endDate && endDate.isBefore(startDate.add(1, 'day'), 'day')) {
+      setEndDateError('End date should be at least 1 day bigger than Start Date');
+    }
+  }, [formDataTokenomics]);
+  
+  
+
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     const newStartValue = Math.min(Math.max(newValue as number, 1), 99)
     const newEndValue = Math.min(valueEnd, newStartValue - 1)
@@ -354,25 +368,27 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     setFormData(updatedFormData)
     onChange(updatedFormData)
   }
-
   const handleStartDateChange = (date: Dayjs | null) => {
     if (date) {
-      const now = dayjs()
-      if (date.isBefore(now, 'day')) {
-        setStartDateError("Start date can't be in the past")
-        return
+      const now = dayjs();
+      const selectedDateTime = date.set('second', 0);
+      if (selectedDateTime.isBefore(now)) {
+        setStartDateError("Start date can't be in the past");
+        return;
       } else {
-        setStartDateError('')
+        setStartDateError('');
+        setStartDate(selectedDateTime);
       }
-      const newStartDate = date.local().format('YYYY-MM-DD HH:mm:ss')
+      const newStartDate = selectedDateTime.format('YYYY-MM-DD HH:mm:ss');
       const updatedFormData = {
         ...formDataTokenomics,
         startDate: newStartDate,
-      }
-      setFormData(updatedFormData)
-      onChange(updatedFormData)
+      };
+      setFormData(updatedFormData);
+      onChange(updatedFormData);
     }
-  }
+  };
+  
   const handleEndDateChange = (date: Dayjs | null) => {
     if (date) {
       const startDate = dayjs(formDataTokenomics.startDate)
@@ -382,6 +398,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
         return
       } else {
         setEndDateError('')
+        setEndDate(date);
       }
       const newEndDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
