@@ -22,7 +22,8 @@ import { KycReviewModal } from 'components/KycReviewModal'
 import LBPForm from './LBP/LbpForm'
 import LbpDashboardPage from './LBP/Dashboard'
 import PublicDetails from './LBP/PublicDetails'
-import { AdminLbpDetail } from './LBP/AdminLbpDetail'
+import AdminLbpDetail from './LBP/AdminLbpDetail'
+// import { AdminLbpDetail } from './LBP/AdminLbpDetail'
 
 const Admin = lazy(() => import('pages/Admin'))
 const Swap = lazy(() => import('pages/Swap'))
@@ -95,10 +96,9 @@ export const routeConfigs: RouteMapEntry[] = [
 
   /* LBP routes */
   { path: routes.lbpEdit, component: LBPForm },
-  { path: routes.lbpDashboard, component: LbpDashboardPage },
-  { path: routes.publicDetails, component: PublicDetails },
-  { path: routes.adminDetails, component: AdminLbpDetail },
-  
+  { path: routes.lbpDashboard, component: LbpDashboardPage, conditions: { isKycApproved: true } },
+  { path: routes.publicDetails, component: PublicDetails, conditions: { isKycApproved: true } },
+  { path: routes.adminDetails, component: AdminLbpDetail, conditions: { isKycApproved: true } },
 
   { path: routes.nftList, component: ListNFT, conditions: { isWhitelisted: true } },
   {

@@ -1,16 +1,17 @@
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import styled from 'styled-components'
 import AdminHeader from 'components/LBP/Admin/AdminHeader'
 import DetailsChart from 'components/LBP/PublicDetails/PublicChart'
-import { LbpFormValues, MarketData } from 'components/LBP/types'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useGetLbp, useGetLbpStats } from 'state/lbp/hooks'
-import styled from 'styled-components'
-import { LoaderThin } from 'components/Loader/LoaderThin'
-import { Loader } from 'components/AdminTransactionsTable'
 import StatisticData from 'components/LBP/PublicDetails/StatisticData'
 import InvestorInformation from 'components/LBP/Dashboard/InvestorInformation'
+import Header from 'components/Header'
+import { useGetLbp, useGetLbpStats } from 'state/lbp/hooks'
+import { LbpFormValues, MarketData } from 'components/LBP/types'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { Loader } from 'components/AdminTransactionsTable'
 
-export const AdminLbpDetail = () => {
+const AdminLbpDetail = () => {
   const { id } = useParams<{ id: string }>()
   const lbpId = parseInt(id)
   const fetchLbpData = useGetLbp()
@@ -42,43 +43,48 @@ export const AdminLbpDetail = () => {
   }
 
   return (
-    <Wrapper>
-      {loader ? (
-        <Loader>
-          <LoaderThin size={96} />
-        </Loader>
-      ) : (
-        <>
-          <AdminHeader
-            lbpId={id}
-            status={status || lbpData?.status || ''}
-            lbpShareName={lbpData?.title}
-            lbpShareLogo={lbpData?.logo}
-            updateStatus={updateStatus}
-          />
-          <DetailsChart
-            contractAddress={lbpData?.contractAddress}
-            currentAssetReserve={statsData?.currentAssetReserve}
-            currentShareReserve={statsData?.currentShareReserve}
-            startDate={lbpData?.startDate}
-            endDate={lbpData?.endDate}
-            startWeight={lbpData?.startWeight}
-            endWeight={lbpData?.endWeight}
-            shareAmount={lbpData?.shareAmount}
-            assetAmount={lbpData?.assetTokenAmount}
-            chartWidth={1200}
-          />
-          <StatisticData isAdmin={true} statsData={statsData} lbpData={lbpData} />
-          <InvestorInformation lbpId={lbpId} />
-        </>
-      )}
-    </Wrapper>
+    <>
+      <Header />
+      <Wrapper>
+        {loader ? (
+          <Loader>
+            <LoaderThin size={96} />
+          </Loader>
+        ) : (
+          <>
+            <AdminHeader
+              lbpId={id}
+              status={status || lbpData?.status || ''}
+              lbpShareName={lbpData?.title}
+              lbpShareLogo={lbpData?.logo}
+              updateStatus={updateStatus}
+            />
+            <DetailsChart
+              contractAddress={lbpData?.contractAddress}
+              currentAssetReserve={statsData?.currentAssetReserve}
+              currentShareReserve={statsData?.currentShareReserve}
+              startDate={lbpData?.startDate}
+              endDate={lbpData?.endDate}
+              startWeight={lbpData?.startWeight}
+              endWeight={lbpData?.endWeight}
+              shareAmount={lbpData?.shareAmount}
+              assetAmount={lbpData?.assetTokenAmount}
+              chartWidth={1200}
+            />
+            <StatisticData isAdmin={true} statsData={statsData} lbpData={lbpData} />
+            <InvestorInformation lbpId={lbpId} />
+          </>
+        )}
+      </Wrapper>
+    </>
   )
 }
 
 const Wrapper = styled.article`
   background: #ffffff;
   padding: 0px 100px;
-  margin: 0px 200px;
+  margin: 90px 200px 0px 200px;
   // width: 100%;
 `
+
+export default AdminLbpDetail

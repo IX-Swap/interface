@@ -72,8 +72,8 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
       case LbpStatus.ended:
         return (
           <EndedSideBar
-            // shareLogo={lbpData?.logo}
-            // shareName={lbpData?.name}
+            shareLogo={lbpData?.logo}
+            shareName={lbpData?.title}
             contractAddress={lbpData?.contractAddress || ''}
           />
         )
@@ -83,7 +83,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
         return (
           <RedeemedSideBar
             shareLogo={lbpData?.logo}
-            shareName={lbpData?.name}
+            shareName={lbpData?.title}
             contractAddress={lbpData?.contractAddress || ''}
           />
         )
