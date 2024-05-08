@@ -88,7 +88,7 @@ export const PresaleBlock = ({ offer }: Props) => {
   }
 
   return (
-    <GridContainer>
+    <GridContainer style={{display: 'block'}}>
       <StyledGridItem xs={12}>
         <OfferWhitelistInfo data={statistics} />
       </StyledGridItem>
