@@ -124,16 +124,22 @@ export default function LBPForm() {
       return keysToCheck.every((key) => !!data[key])
     }
 
-    const isStartDateValid = (startDate: Dayjs) => {
+    const areDatesValid = (startDate: Dayjs, endDate: Dayjs): boolean => {
       const currentDate = dayjs()
-      return !startDate.isBefore(currentDate, 'day')
-    }
+      const minEndDate = startDate.add(1, 'day')
 
-    const isEndDateValid = (startDate: Dayjs, endDate: Dayjs) => {
-      const minEndDate = startDate.add(1, 'day').startOf('day');
-      return endDate.startOf('day').isSameOrAfter(minEndDate);
-    };
-    
+      const startDateAfterNow = startDate.isAfter(currentDate)
+      const endDateAfterNow = endDate.isAfter(currentDate)
+      const endDateGreaterThanStartDate = endDate.isAfter(startDate)
+      const endDateEqualGreaterThanMinEndDate = endDate.isSameOrAfter(minEndDate)
+
+      console.log('startDateAfterNow', startDateAfterNow)
+      console.log('endDateBeforeNow', endDateAfterNow)
+      console.log('endDateGreaterThanStartDate', endDateGreaterThanStartDate)
+      console.log('endDateEqualGreaterThanMinEndDate', endDateEqualGreaterThanMinEndDate)
+
+      return startDateAfterNow && endDateAfterNow && endDateGreaterThanStartDate && endDateEqualGreaterThanMinEndDate
+    }
 
     // const isComplete = (data: any) => Object.values(data).every((val) => !!val)
     const brandingComplete = isComplete(formData.branding)
@@ -143,19 +149,12 @@ export default function LBPForm() {
     const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
     const startDate = dayjs(formData.tokenomics.startDate)
     const endDate = dayjs(formData.tokenomics.endDate)
-    const isStartValid = isStartDateValid(startDate)
-    const isEndValid = isEndDateValid(startDate, endDate)
+    const datesValid = areDatesValid(startDate, endDate)
 
-    console.log(brandingComplete,projectInfoComplete,tokenomicsComplete, hasSocialLinks, hasWhitepapers, isStartValid, isEndValid)
+    console.log(brandingComplete, projectInfoComplete, tokenomicsComplete, hasSocialLinks, hasWhitepapers, datesValid)
 
     setCanSubmit(
-      brandingComplete &&
-        hasSocialLinks &&
-        hasWhitepapers &&
-        projectInfoComplete &&
-        tokenomicsComplete &&
-        isStartValid &&
-        isEndValid
+      brandingComplete && hasSocialLinks && hasWhitepapers && projectInfoComplete && tokenomicsComplete && datesValid
     )
   }
 
