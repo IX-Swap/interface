@@ -329,18 +329,6 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     }
   }, [formDataTokenomics.assetTokenSymbol, chainId])
 
-  useEffect(() => {
-    // Check if the current start date is in the past when formDataTokenomics changes
-    if (startDate.isBefore(dayjs())) {
-      setStartDateError("Start date can't be in the past");
-    }
-    if (endDate && endDate.isBefore(startDate.add(1, 'day'), 'day')) {
-      setEndDateError('End date should be at least 1 day bigger than Start Date');
-    }
-  }, [formDataTokenomics]);
-  
-  
-
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     const newStartValue = Math.min(Math.max(newValue as number, 1), 99)
     const newEndValue = Math.min(valueEnd, newStartValue - 1)
