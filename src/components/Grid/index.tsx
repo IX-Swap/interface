@@ -7,7 +7,7 @@ interface GridContainerProps {
 }
 
 export const GridContainer = styled.div<GridContainerProps>`
-  display: block;
+  display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   gap: 30px;
