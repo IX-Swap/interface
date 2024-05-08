@@ -5,8 +5,19 @@ import { ReactComponent as ComingSoonIcon } from '../../../assets/images/ended.s
 import { TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
+import { useLBPPurchasedShares } from 'state/lbp/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
 
-export default function EndedSideBar() {
+interface EndedSideBarProps {
+  contractAddress: string | null
+  // shareLogo: any
+  // shareName: string
+}
+
+const EndedSideBar: React.FC<EndedSideBarProps> = ({ contractAddress }) => {
+  const { account } = useActiveWeb3React()
+  const getLBPPurchasedShares = useLBPPurchasedShares(contractAddress || '', account)
+
   return (
     <SideBarContainer>
       <MiddleSection>
@@ -42,22 +53,26 @@ export default function EndedSideBar() {
             the link below.
           </TYPE.description3>
         </DesContainer>
-        <Line style={{margin: '20px 8px'}}/>
+        <Line style={{ margin: '20px 8px' }} />
         <ShareWrapper>
-            <TYPE.description2 color={'#8F8FB2'}>Purchased Shares:</TYPE.description2>
-            <TYPE.subHeader1>3,800.00</TYPE.subHeader1>
+          <TYPE.description2 color={'#8F8FB2'}>Purchased Shares:</TYPE.description2>
+          <TYPE.subHeader1>{getLBPPurchasedShares ? getLBPPurchasedShares.shareBalance : '0.0'}</TYPE.subHeader1>
         </ShareWrapper>
-        <Line style={{margin: '20px 8px'}}/>
-        <PinnedContentButton margin={'0px 15px'} disabled>Claim</PinnedContentButton>
+        <Line style={{ margin: '20px 8px' }} />
+        <PinnedContentButton margin={'0px 15px'} disabled>
+          Claim
+        </PinnedContentButton>
       </MiddleSection>
     </SideBarContainer>
   )
 }
 
+export default EndedSideBar
+
 const ShareWrapper = styled.div`
-display: flex;
-justify-content: space-between;
-margin: 0px 15px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 15px;
 `
 
 const DesContainer = styled.div`

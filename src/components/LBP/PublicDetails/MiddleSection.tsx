@@ -61,16 +61,24 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
 
   const isTextLong = useMemo(() => sampleText.length > 300, [sampleText])
 
+  console.log(lbpData?.status)
+
   const SideBarByStatus = useMemo(() => {
     switch (lbpData?.status) {
       case LbpStatus.pending:
-        return <ComingSoon lbpData={lbpData}  />
+        return <ComingSoon lbpData={lbpData} />
       case LbpStatus.live:
         return <SideBar lbpData={lbpData} />
       case LbpStatus.ended:
-        return <EndedSideBar />
-      // case LbpStatus.closed:
-      //   return <CloseSideBar />
+        return (
+          <EndedSideBar
+            // shareLogo={lbpData?.logo}
+            // shareName={lbpData?.name}
+            contractAddress={lbpData?.contractAddress || ''}
+          />
+        )
+      case LbpStatus.paused:
+        return <SideBar isPausedSideBar={true} lbpData={lbpData} />
       case LbpStatus.closed:
         return (
           <RedeemedSideBar
