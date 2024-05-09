@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { Card } from 'rebass'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area } from 'recharts'
@@ -6,10 +6,14 @@ import { NewLine } from 'components/Line'
 import { ReactComponent as DurationIcon } from '../../../assets/images/group3.svg'
 import { ReactComponent as MarketCapIcon } from '../../../assets/images/group1.svg'
 import { ReactComponent as PriceIcon } from '../../../assets/images/group2.svg'
+import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import dayjs from 'dayjs'
 
 interface GraphProps {
   graphData: any
   step: number
+  setEndPrice: (value: number) => void
+  setStartPrice: (value: number) => void
 }
 
 const StyledCard = styled(Card)`
@@ -55,7 +59,7 @@ const DaysText = styled.p`
   font-weight: 500;
 `
 
-export default function Graph({ graphData, step }: GraphProps) {
+export default function Graph({ graphData, step, setEndPrice, setStartPrice }: GraphProps) {
   const getPrice = (
     shareReserve: number,
     currentShareWeight: number,
@@ -67,56 +71,70 @@ export default function Graph({ graphData, step }: GraphProps) {
   const getDecayAtStep = (shareStartWeight: number, shareEndWeight: number, step: number, totalStep: number) => {
     return ((shareEndWeight - shareStartWeight) * step) / totalStep
   }
-  const generateChartData = (step: number) => {
-    const issuanceDate = new Date(graphData.startDate).getTime()
-    const expirationDate = new Date(graphData.endDate).getTime()
-    const totalDays = Math.ceil((expirationDate - issuanceDate) / (1000 * 60 * 60 * 24))
+  const generateChartData = useCallback(
+    (step: number) => {
+      const issuanceDate = new Date(graphData.startDate).getTime()
+      const expirationDate = new Date(graphData.endDate).getTime()
+      const totalDays = Math.ceil((expirationDate - issuanceDate) / (1000 * 60 * 60 * 24))
 
-    const chartData = []
+      const chartData = []
 
-    const shareStartWeight = graphData.startWeight / 100
-    const shareEndWeight = graphData.endWeight / 100
+      const shareStartWeight = graphData.startWeight / 100
+      const shareEndWeight = graphData.endWeight / 100
 
-    const shareReserve = graphData?.shareInput
-    const assetReserve = graphData?.assetInput
+      const shareReserve = graphData?.shareInput
+      const assetReserve = graphData?.assetInput
 
-    const oneDay = 24 * 60 * 60 * 1000
+      const oneDay = 24 * 60 * 60 * 1000
 
-    for (let i = 0; i <= totalDays; i += step) {
-      const date = new Date(issuanceDate + i * oneDay)
-      const decay = getDecayAtStep(shareStartWeight, shareEndWeight, i, totalDays)
-      const currentShareWeight = shareStartWeight + decay
-      const currentAssetWeight = 1 - currentShareWeight
-      const price = getPrice(shareReserve, currentShareWeight, assetReserve, currentAssetWeight)
-      
-      const formattedDate = date.getDate() + ' ' + date.toLocaleString('en', { month: 'short' }) + '.'
-      
-      chartData.push({ date: formattedDate, price })
-    }
+      for (let i = 0; i <= totalDays; i += step) {
+        const date = new Date(issuanceDate + i * oneDay)
+        const decay = getDecayAtStep(shareStartWeight, shareEndWeight, i, totalDays)
+        const currentShareWeight = shareStartWeight + decay
+        const currentAssetWeight = 1 - currentShareWeight
+        const price = getPrice(shareReserve, currentShareWeight, assetReserve, currentAssetWeight)
 
-    return chartData
-  }
+        const formattedDate = date.getDate() + ' ' + date.toLocaleString('en', { month: 'short' }) + '.'
+
+        chartData.push({ date: formattedDate, price })
+      }
+
+      if (chartData.length >= 2) {
+        setStartPrice(chartData[0].price)
+        setEndPrice(chartData[chartData.length - 1].price)
+      }
+
+      return chartData
+    },
+    [setEndPrice, setStartPrice, graphData]
+  )
   const data = generateChartData(step)
 
-  const contentData = [
-    {
-      icon: DurationIcon,
-      title: 'Duration',
-      description: '2 Days',
-    },
-    {
-      icon: MarketCapIcon,
-      title: 'Implied Market Cap',
-      description: '$100,000.00 — $150,000.00',
-    },
-    {
-      icon: PriceIcon,
-      title: 'Price Range',
-      description: '$10,000.00 — $15,000.00',
-    },
-  ]
+  const contentData = useMemo(() => {
+    const duration = dayjs(graphData.endDate).diff(dayjs(graphData.startDate), 'day')
+    const [maxPrice, minPrice] = data.length >= 2 ? [data[0].price, data[data.length - 1].price] : [0, 0]
+    const priceRange = `$${minPrice.toFixed(3)} - $${maxPrice.toFixed(3)}`
+    const maxMarketCap = formatNumberWithDecimals(maxPrice * (graphData?.maxSupply || 0), 2)
+    const minMarketCap = formatNumberWithDecimals(minPrice * (graphData?.maxSupply || 0), 2)
 
-  // console.log(graphData)
+    return [
+      {
+        icon: DurationIcon,
+        title: 'Duration',
+        description: `${duration} Days`,
+      },
+      {
+        icon: MarketCapIcon,
+        title: 'Implied Market Cap',
+        description: `$${minMarketCap} — $${maxMarketCap}`,
+      },
+      {
+        icon: PriceIcon,
+        title: 'Price Range',
+        description: priceRange,
+      },
+    ]
+  }, [data, graphData])
 
   return (
     <StyledCard>
@@ -132,7 +150,7 @@ export default function Graph({ graphData, step }: GraphProps) {
           axisLine={false}
           tickLine={false}
         />
-        <YAxis dataKey="price" axisLine={false} tickLine={false}  />
+        <YAxis dataKey="price" axisLine={false} tickLine={false} />
         <Tooltip />
         <Line strokeWidth={2.5} dataKey="price" stroke="#8884d8" dot={false} type="monotone" />
       </LineChart>

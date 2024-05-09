@@ -126,7 +126,6 @@ export const useChangeLbpStatus = () => {
   )
 }
 
-
 export const useDeployLbp = () => {
   return React.useCallback(
     (id: string, contractAddress: string) =>
@@ -208,6 +207,10 @@ export const useGetInvestorInfo = () => {
 }
 
 export function useFormatNumberWithDecimal(initialNumber: number | string, decimalPlaces: number): string {
+  return formatNumberWithDecimals(initialNumber, decimalPlaces)
+}
+
+export function formatNumberWithDecimals(initialNumber: number | string, decimalPlaces: number): string {
   const parsedNumber = typeof initialNumber === 'string' ? parseFloat(initialNumber) : initialNumber
   if (isNaN(parsedNumber)) {
     return ''
