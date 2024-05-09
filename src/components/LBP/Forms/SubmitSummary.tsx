@@ -12,6 +12,7 @@ import { ethers } from 'ethers'
 import { toUnixTimeSeconds } from 'utils/time'
 import { useTokenContract } from 'hooks/useContract'
 import { useDeployLbp } from 'state/lbp/hooks'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 export const MAX_UINT88 = ethers.BigNumber.from('309485009821345068724781055')
 
@@ -22,7 +23,7 @@ interface Props {
 
 export const SubmitSummary = ({ formData, onCancel }: Props) => {
   const { chainId } = useWeb3React()
-  const [predictedLBPAddress, setPredictedLBPAddress] = useState<string>('')
+  const [predictedLBPAddress, setPredictedLBPAddress] = useState<any>(formData?.tokenomics?.contractAddress)
   const [amounts, setAmounts] = useState<{ [key: string]: any }>({})
 
   const assetTokenContract = useTokenContract(formData.tokenomics.assetTokenAddress ?? '')
@@ -31,6 +32,9 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
   const deployLbp = useDeployLbp()
   const [swapFee, setSwapFee] = useState<number>(0)
   const [platformFee, setPlatformFee] = useState<number>(0)
+  const addTransaction = useTransactionAdder()
+  const [deployed, setDeployed] = useState(false)
+  const [isDeploying, setIsDeploying] = useState(false)
 
   const tokenOptions = useMemo(() => {
     // exclude tokens that has tokenAddress of undefined
@@ -90,6 +94,11 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
 
 
   useEffect(() => {
+    // skip if predictedAddress is already set
+    if (predictedLBPAddress && predictedLBPAddress !== ethers.constants.AddressZero) {
+      return
+    }
+
     const predictLBPAddress = async () => {
       if (!lbpFactory || !formData || !chainId || !assetTokenContract || !shareTokenContract || !lbpArgs) return ''
 
@@ -114,7 +123,7 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
     
 
     predictLBPAddress()
-  }, [lbpFactory, formData, chainId, assetTokenContract, shareTokenContract, lbpArgs])
+  }, [lbpFactory, formData, chainId, assetTokenContract, shareTokenContract, lbpArgs, predictedLBPAddress])
 
   const handleDeploy = useCallback(async () => {
     if (!lbpFactory || !lbpArgs || !assetTokenContract || !shareTokenContract) return
@@ -130,16 +139,22 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
     const salt = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(formData?.id.toString()))
 
     const args = { ...lbpArgs, assets: amounts.assetAmount, shares: amounts.shareAmount }
+    setIsDeploying(true)
     const tx = await lbpFactory.createLiquidityBootstrapPool(args, salt, {
       gasLimit: 500_000,
     })
     const receipt = await tx.wait()
     if (receipt.status === 1) {
       console.log('Transaction successful!')
+      addTransaction(tx, {
+        summary: 'Deployment is successful!',
+      })
       await deployLbp(formData?.id?.toString(), predictedLBPAddress)
+      setDeployed(true)
     } else {
-      console.error('Deployment failed!')
+      alert('Deployment failed!')
     }
+    setIsDeploying(false)
   }, [lbpFactory, lbpArgs, formData, predictedLBPAddress, amounts])
 
   return (
@@ -245,8 +260,9 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
           style={{ width: '100%' }}
           marginY="24px"
           onClick={handleDeploy}
+          disabled={isDeploying || deployed || formData?.tokenomics?.contractAddress !== ethers.constants.AddressZero}
         >
-          Deploy
+          {isDeploying ? 'Deploying...' : 'Deploy'}
         </PinnedContentButton>
       </ButtonBar>
     </SummaryContainer>
