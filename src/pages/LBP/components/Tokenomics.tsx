@@ -27,10 +27,11 @@ import { useWeb3React } from '@web3-react/core'
 import { useTokenContract } from 'hooks/useContract'
 import { formatUnits } from 'ethers/lib/utils'
 import timezone from 'dayjs/plugin/timezone'
+import { ethers } from 'ethers'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
-dayjs.tz.setDefault('Asia/Singapore')
+// dayjs.tz.setDefault('Asia/Singapore')
 
 const Container = styled.div`
   width: 100%;
@@ -200,6 +201,7 @@ export const getTokenOption = (tokenAddress: string, chainId: number = 0) => {
 }
 
 interface TokenomicsData {
+  contractAddress?: string
   shareAddress: string
   assetTokenAddress: string
   assetTokenSymbol: string
@@ -236,6 +238,8 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   const [isOpen, setIsOpen] = useState(false)
   const [startDateError, setStartDateError] = useState<string>('')
   const [endDateError, setEndDateError] = useState<string>('')
+  const [startDate, setStartDate] = useState(dayjs())
+  const [endDate, setEndDate] = useState(dayjs())
   const { chainId, account } = useWeb3React()
   const [selectedToken, setSelectedToken] = useState<any>({
     tokenSymbol: 'USDC',
@@ -260,6 +264,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     endWeight: formDataTokenomics.endWeight,
     startDate: formDataTokenomics.startDate,
     endDate: formDataTokenomics.endDate,
+    contractAddress: formDataTokenomics.contractAddress,
   })
 
   const formik = useFormik({
@@ -285,7 +290,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
   const shareTokenContract = useTokenContract(formDataTokenomics.shareAddress ?? '')
 
   useEffect(() => {
-    console.log(assetTokenContract, shareTokenContract)
+    // console.log(assetTokenContract, shareTokenContract)
     if (!account) return
     const loadBalances = async () => {
       if (assetTokenContract) {
@@ -327,6 +332,31 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     }
   }, [formDataTokenomics.assetTokenSymbol, chainId])
 
+  useEffect(() => {
+    // skip if already deployed
+    const isDeployed = formData?.contractAddress && formData.contractAddress !== ethers.constants.AddressZero
+    if (isDeployed || !formData.endDate || !formData.startDate) {
+      return
+    }
+
+    // Check if the current start date is in the past when formDataTokenomics changes
+    if (startDate.isBefore(dayjs())) {
+      setStartDateError("Start date can't be in the past")
+    }
+
+    if (endDate.isBefore(startDate)) {
+      setEndDateError('End date must be after start date')
+    }
+
+    if (endDate.isBefore(dayjs())) {
+      setEndDateError("End date can't be in the past")
+    }
+
+    if (endDate && endDate.isBefore(startDate.add(1, 'day'), 'day')) {
+      setEndDateError('End date should be at least 1 day bigger than Start Date')
+    }
+  }, [formDataTokenomics])
+
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     const newStartValue = Math.min(Math.max(newValue as number, 1), 99)
     const newEndValue = Math.min(valueEnd, newStartValue - 1)
@@ -354,15 +384,14 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
     setFormData(updatedFormData)
     onChange(updatedFormData)
   }
-
   const handleStartDateChange = (date: Dayjs | null) => {
     if (date) {
       const now = dayjs()
-      if (date.isBefore(now, 'day')) {
+      if (date.isBefore(now)) {
         setStartDateError("Start date can't be in the past")
-        return
       } else {
         setStartDateError('')
+        setStartDate(date)
       }
       const newStartDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
@@ -373,15 +402,19 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
       onChange(updatedFormData)
     }
   }
+
   const handleEndDateChange = (date: Dayjs | null) => {
     if (date) {
+      const now = dayjs()
       const startDate = dayjs(formDataTokenomics.startDate)
-      const minimumEndDate = startDate.add(1, 'day')
-      if (date.isBefore(minimumEndDate, 'day')) {
+      const minEndDate = startDate.add(1, 'day')
+      if (date.isBefore(now)) {
+        setEndDateError("End date can't be in the past")
+      } else if (date.isBefore(minEndDate)) {
         setEndDateError('End date should be at least 1 day bigger than Start Date')
-        return
       } else {
         setEndDateError('')
+        setEndDate(date)
       }
       const newEndDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {

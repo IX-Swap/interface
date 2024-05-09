@@ -124,16 +124,21 @@ export default function LBPForm() {
       return keysToCheck.every((key) => !!data[key])
     }
 
-    const isStartDateValid = (startDate: Dayjs) => {
+    const areDatesValid = (startDate: Dayjs, endDate: Dayjs): boolean => {
       const currentDate = dayjs()
-      return !startDate.isBefore(currentDate, 'day')
-    }
+      const minEndDate = startDate.add(1, 'day')
 
-    const isEndDateValid = (startDate: Dayjs, endDate: Dayjs) => {
-      const startOfDay = startDate.startOf('day')
-      const endOfDay = endDate.startOf('day')
-      const minEndDate = startOfDay.add(1, 'day')
-      return endOfDay.isAfter(minEndDate)
+      const startDateAfterNow = startDate.isAfter(currentDate)
+      const endDateAfterNow = endDate.isAfter(currentDate)
+      const endDateGreaterThanStartDate = endDate.isAfter(startDate)
+      const endDateEqualGreaterThanMinEndDate = endDate.isSameOrAfter(minEndDate)
+
+      console.log('startDateAfterNow', startDateAfterNow)
+      console.log('endDateBeforeNow', endDateAfterNow)
+      console.log('endDateGreaterThanStartDate', endDateGreaterThanStartDate)
+      console.log('endDateEqualGreaterThanMinEndDate', endDateEqualGreaterThanMinEndDate)
+
+      return startDateAfterNow && endDateAfterNow && endDateGreaterThanStartDate && endDateEqualGreaterThanMinEndDate
     }
 
     // const isComplete = (data: any) => Object.values(data).every((val) => !!val)
@@ -144,17 +149,12 @@ export default function LBPForm() {
     const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
     const startDate = dayjs(formData.tokenomics.startDate)
     const endDate = dayjs(formData.tokenomics.endDate)
-    const isStartValid = isStartDateValid(startDate)
-    const isEndValid = isEndDateValid(startDate, endDate)
+    const datesValid = areDatesValid(startDate, endDate)
+
+    console.log(brandingComplete, projectInfoComplete, tokenomicsComplete, hasSocialLinks, hasWhitepapers, datesValid)
 
     setCanSubmit(
-      brandingComplete &&
-        hasSocialLinks &&
-        hasWhitepapers &&
-        projectInfoComplete &&
-        tokenomicsComplete &&
-        isStartValid &&
-        isEndValid
+      brandingComplete && hasSocialLinks && hasWhitepapers && projectInfoComplete && tokenomicsComplete && datesValid
     )
   }
 
@@ -167,8 +167,6 @@ export default function LBPForm() {
       addPopup({ info: { success: true, summary } })
       if (actionType === LBP_ACTION_TYPES.submit) {
         setShowSummary(true)
-      } else {
-        history.push('/lbp')
       }
     } catch (err: any) {
       addPopup({ info: { success: false, summary: err?.toString() } })
@@ -232,7 +230,7 @@ export default function LBPForm() {
       },
       tokenomics: {
         shareAddress: data.shareAddress,
-        contractAddress: data.contractAddshress || constants.AddressZero,
+        contractAddress: data.contractAddress || constants.AddressZero,
         assetTokenAddress: data.assetTokenAddress,
         assetTokenSymbol: data.assetTokenSymbol,
         shareInput: data.shareAmount,
