@@ -30,6 +30,8 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
   const shareTokenContract = useTokenContract(formData.tokenomics.shareAddress ?? '')
   const lbpFactory = useLBPFactory(LBP_FACTORY_ADDRESS[chainId || 0] || '')
   const deployLbp = useDeployLbp()
+  const [swapFee, setSwapFee] = useState<number>(0)
+  const [platformFee, setPlatformFee] = useState<number>(0)
   const addTransaction = useTransactionAdder()
   const [deployed, setDeployed] = useState(false)
   const [isDeploying, setIsDeploying] = useState(false)
@@ -74,6 +76,24 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
   }, [formData, chainId])
 
   useEffect(() => {
+    const fetchFees = async () => {
+      if (!lbpFactory) return;
+      try {
+        const factorySettings = await lbpFactory.factorySettings();
+        const swapFee = factorySettings.swapFee / 100;
+        const platformFee = factorySettings?.platformFee / 100 || 0;
+        setSwapFee(swapFee);
+        setPlatformFee(platformFee);
+      } catch (error) {
+        console.error('Error fetching fees:', error);
+      }
+    };
+    fetchFees();
+  }, [lbpFactory]);
+
+
+
+  useEffect(() => {
     // skip if predictedAddress is already set
     if (predictedLBPAddress && predictedLBPAddress !== ethers.constants.AddressZero) {
       return
@@ -99,6 +119,8 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
       console.info('predictedAddress', predictedAddress, 'args', args)
       setPredictedLBPAddress(predictedAddress)
     }
+
+    
 
     predictLBPAddress()
   }, [lbpFactory, formData, chainId, assetTokenContract, shareTokenContract, lbpArgs, predictedLBPAddress])
@@ -146,11 +168,11 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
         <Row>
           <TextBlock>
             <FieldLabel>Swap Fee</FieldLabel>
-            <FieldValue>1.00%</FieldValue>
+            <FieldValue>{swapFee}.00%</FieldValue>
           </TextBlock>
           <TextBlock>
             <FieldLabel>Platform Fee</FieldLabel>
-            <FieldValue>5.00%</FieldValue>
+            <FieldValue>{platformFee}%</FieldValue>
           </TextBlock>
         </Row>
       </Section>
@@ -173,8 +195,8 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
             <FieldLabel>Project Token</FieldLabel>
             <TokenBlock>
               <TokenRow>
-                <img src={ixsDropDown} alt="Serenity" />
-                <span>Serenity</span>
+                <img style={{ borderRadius: '100%', width: '20px', height: '20px'}} src={formData?.branding?.LBPLogo?.public} alt="Serenity" />
+                <span>{formData?.projectInfo?.title}</span>
               </TokenRow>
               <TokenPrice>{formData.tokenomics.shareInput}</TokenPrice>
             </TokenBlock>
@@ -183,7 +205,7 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
             <FieldLabel>Base Token</FieldLabel>
             <TokenBlock>
               <TokenRow>
-                <img src={assetToken?.logo} alt={assetToken?.tokenSymbol} />
+                <img  src={assetToken?.logo} alt={assetToken?.tokenSymbol} />
                 <span>{assetToken?.tokenSymbol}</span>
               </TokenRow>
               <TokenPrice>{formData.tokenomics.assetInput}</TokenPrice>
@@ -198,8 +220,8 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
             <FieldLabel>Start Weights</FieldLabel>
             <TokenBlock>
               <TokenRow>
-                <img src={ixsDropDown} alt="Serenity" />
-                <span>Serenity</span>
+              <img style={{ borderRadius: '100%', width: '20px', height: '20px'}} src={formData?.branding?.LBPLogo?.public} alt="Serenity" />
+                <span>{formData?.projectInfo?.title}</span>
               </TokenRow>
               <TokenPrice>{formData.tokenomics.startWeight}%</TokenPrice>
             </TokenBlock>
@@ -208,7 +230,7 @@ export const SubmitSummary = ({ formData, onCancel }: Props) => {
             <FieldLabel></FieldLabel>
             <TokenBlock>
               <TokenRow>
-                <img src={assetToken?.logo} alt={assetToken?.tokenSymbol} />
+                <img  src={assetToken?.logo} alt={assetToken?.tokenSymbol} />
                 <span>{assetToken?.tokenSymbol}</span>
               </TokenRow>
               <TokenPrice>{formData.tokenomics.endWeight}%</TokenPrice>

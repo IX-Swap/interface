@@ -6,6 +6,8 @@ import { LbpStatus } from '../types'
 import { LBP_STAGE_LABELS } from 'state/lbp/constants'
 import { LbpStatusBadge } from './LbpStatusBadge'
 import { LbpSaleStatusInfo } from './LbpSaleStatusInfo'
+import { useKYCState } from 'state/kyc/hooks'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 interface Props {
   lbp: any
@@ -23,6 +25,8 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   const [color, setColor] = React.useState('')
 
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
+  const { kyc } = useKYCState()
+  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const isClosed = React.useMemo(
     () => !!lbp.status && [LbpStatus.closed, LbpStatus.ended].includes(lbp.status),
@@ -50,7 +54,6 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
         break
     }
   }, [lbp])
-  
 
   return (
     <>
@@ -103,13 +106,13 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
 
           <LbpCardFooter>
             {!isClosed && (
-              <InvestButton type="button" onClick={onClick}>
+              <InvestButton disabled={!isKycApproved} type="button" onClick={onClick}>
                 Invest
               </InvestButton>
             )}
 
             {isClosed && (
-              <InvestButton type="button" onClick={onClick}>
+              <InvestButton disabled={!isKycApproved} type="button" onClick={onClick}>
                 Learn More
               </InvestButton>
             )}

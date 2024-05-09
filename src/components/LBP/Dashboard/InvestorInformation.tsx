@@ -106,7 +106,7 @@ function InvestorInformation({ lbpId }: TableProps) {
                   direction={orderBy === 'assetsSpent' ? order : 'asc'}
                   onClick={() => handleRequestSort('assetsSpent')}
                 >
-                  Assets Spent
+                  No. of Tokens
                 </TableSortLabel>
               </TableCell>
             </TableRow>

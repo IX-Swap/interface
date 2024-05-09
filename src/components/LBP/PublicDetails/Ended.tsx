@@ -10,14 +10,14 @@ import { useActiveWeb3React } from 'hooks/web3'
 
 interface EndedSideBarProps {
   contractAddress: string | null
-  // shareLogo: any
-  // shareName: string
+  shareLogo: any
+  shareName: string
 }
 
-const EndedSideBar: React.FC<EndedSideBarProps> = ({ contractAddress }) => {
+const EndedSideBar: React.FC<EndedSideBarProps> = ({ contractAddress, shareLogo, shareName }) => {
   const { account } = useActiveWeb3React()
   const getLBPPurchasedShares = useLBPPurchasedShares(contractAddress || '', account)
-
+  console.log(shareName)
   return (
     <SideBarContainer>
       <MiddleSection>
@@ -25,27 +25,6 @@ const EndedSideBar: React.FC<EndedSideBarProps> = ({ contractAddress }) => {
         <TYPE.body5 margin={'12px 0px'} color={'#292933'}>
           Ended
         </TYPE.body5>
-        <TimeContainer>
-          <TimeItem>
-            <TYPE.description7 color={'#FFA800'}>00</TYPE.description7>
-            <TYPE.description3 color={'#8F8FB2'}>Days</TYPE.description3>
-          </TimeItem>
-          <VerticalLine />
-          <TimeItem>
-            <TYPE.description7 color={'#FFA800'}>00</TYPE.description7>
-            <TYPE.description3 color={'#8F8FB2'}>Hours</TYPE.description3>
-          </TimeItem>
-          <VerticalLine />
-          <TimeItem>
-            <TYPE.description7 color={'#FFA800'}>00</TYPE.description7>
-            <TYPE.description3 color={'#8F8FB2'}>Mins</TYPE.description3>
-          </TimeItem>
-          <VerticalLine />
-          <TimeItem>
-            <TYPE.description7 color={'#FFA800'}>00</TYPE.description7>
-            <TYPE.description3 color={'#8F8FB2'}>Secs</TYPE.description3>
-          </TimeItem>
-        </TimeContainer>
         <DesContainer>
           <TYPE.description3>
             Tokens purchased with and without vesting in a LBP, must be redeem by clicking the “Redeem” button below at
@@ -55,8 +34,16 @@ const EndedSideBar: React.FC<EndedSideBarProps> = ({ contractAddress }) => {
         </DesContainer>
         <Line style={{ margin: '20px 8px' }} />
         <ShareWrapper>
-          <TYPE.description2 color={'#8F8FB2'}>Purchased Shares:</TYPE.description2>
-          <TYPE.subHeader1>{getLBPPurchasedShares ? getLBPPurchasedShares.shareBalance : '0.0'}</TYPE.subHeader1>
+          <TYPE.description2 color={'#8F8FB2'}>Purchased Project Tokens:</TYPE.description2>
+          <ShareTokenWrapper>
+            <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={shareLogo?.public} />
+            <TYPE.label style={{ inlineSize: 'max-content', alignSelf: 'center' }} fontSize={'14px'}>
+              {shareName}
+            </TYPE.label>
+          </ShareTokenWrapper>
+        </ShareWrapper>
+        <ShareWrapper>
+          <TYPE.description7 style={{margin: '0px', lineHeight: '1px'}} color={'#292933'}>{getLBPPurchasedShares ? getLBPPurchasedShares.shareBalance : '0.0'}</TYPE.description7>
         </ShareWrapper>
         <Line style={{ margin: '20px 8px' }} />
         <PinnedContentButton margin={'0px 15px'} disabled>
@@ -81,19 +68,6 @@ const DesContainer = styled.div`
   padding: 0px 30px;
 `
 
-const VerticalLine = styled.div`
-  width: 1px;
-  height: 76px;
-  background-color: #e5e5ff;
-  margin: 7px 10px;
-`
-
-const TimeItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-`
 
 const SideBarContainer = styled.div`
   border: 1px solid #e6e6ff;
@@ -107,11 +81,6 @@ const SideBarContainer = styled.div`
   }
 `
 
-const TimeContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-`
 
 const MiddleSection = styled.div`
   margin: 20px 0;
@@ -119,13 +88,10 @@ const MiddleSection = styled.div`
   text-align: center;
 `
 
-const ContentColumn = styled(ColumnCenter)`
-  width: 100%;
-  margin-bottom: 20px;
-  position: relative;
-  @media (min-width: 768px) {
-    & + & {
-      margin-left: 20px;
-    }
-  }
+const ShareTokenWrapper = styled.div`
+  border: 1px solid #e6e6ff;
+  padding: 10px 18px;
+  display: flex;
+  gap: 5px;
+  border-radius: 6px;
 `

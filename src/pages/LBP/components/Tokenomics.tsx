@@ -510,7 +510,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
                 alignItems: 'center',
               }}
             >
-              <Disabled />
+              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Disabled />}
               <TYPE.label fontSize={'14px'}>{shareTitle}</TYPE.label>
             </div>
             <SpanBal>
@@ -660,21 +660,14 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
                   borderRadius: '6px',
                   display: 'flex',
                   alignItems: 'center',
+                  gap: '8px',
                 }}
               >
                 <div style={{ padding: '10px 20px' }}>{Math.abs(formDataTokenomics.startWeight - 100)}%</div>{' '}
-                <div
-                  style={{
-                    borderRight: '1px solid #E6E6FF',
-                    paddingRight: '10px',
-                    marginRight: '10px',
-                    paddingBottom: '2px',
-                    marginLeft: '5px',
-                  }}
-                >
-                  USDC
-                </div>
-                <USDC />
+                {renderTokenImage(formDataTokenomics.assetTokenSymbol)}
+                {formDataTokenomics?.assetTokenSymbol
+                  ? formDataTokenomics?.assetTokenSymbol
+                  : selectedToken.tokenSymbol}
               </div>
             </TokenomicsItem>
           </TokenomicsItem>
@@ -727,21 +720,14 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
                   borderRadius: '6px',
                   display: 'flex',
                   alignItems: 'center',
+                  gap: '8px',
                 }}
               >
                 <div style={{ padding: '10px 20px' }}>{Math.abs(formDataTokenomics.endWeight - 100)}%</div>{' '}
-                <div
-                  style={{
-                    borderRight: '1px solid #E6E6FF',
-                    paddingRight: '10px',
-                    marginRight: '10px',
-                    paddingBottom: '2px',
-                    marginLeft: '5px',
-                  }}
-                >
-                  USDC
-                </div>
-                <USDC />
+                {renderTokenImage(formDataTokenomics.assetTokenSymbol)}
+                {formDataTokenomics?.assetTokenSymbol
+                  ? formDataTokenomics?.assetTokenSymbol
+                  : selectedToken.tokenSymbol}
               </div>
             </TokenomicsItem>
           </TokenomicsItem>
