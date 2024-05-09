@@ -12,6 +12,8 @@ import dayjs from 'dayjs'
 interface GraphProps {
   graphData: any
   step: number
+  setEndPrice: (value: number) => void
+  setStartPrice: (value: number) => void
 }
 
 const StyledCard = styled(Card)`
@@ -57,7 +59,7 @@ const DaysText = styled.p`
   font-weight: 500;
 `
 
-export default function Graph({ graphData, step }: GraphProps) {
+export default function Graph({ graphData, step, setEndPrice, setStartPrice }: GraphProps) {
   const getPrice = (
     shareReserve: number,
     currentShareWeight: number,
@@ -69,35 +71,43 @@ export default function Graph({ graphData, step }: GraphProps) {
   const getDecayAtStep = (shareStartWeight: number, shareEndWeight: number, step: number, totalStep: number) => {
     return ((shareEndWeight - shareStartWeight) * step) / totalStep
   }
-  const generateChartData = (step: number) => {
-    const issuanceDate = new Date(graphData.startDate).getTime()
-    const expirationDate = new Date(graphData.endDate).getTime()
-    const totalDays = Math.ceil((expirationDate - issuanceDate) / (1000 * 60 * 60 * 24))
+  const generateChartData = useCallback(
+    (step: number) => {
+      const issuanceDate = new Date(graphData.startDate).getTime()
+      const expirationDate = new Date(graphData.endDate).getTime()
+      const totalDays = Math.ceil((expirationDate - issuanceDate) / (1000 * 60 * 60 * 24))
 
-    const chartData = []
+      const chartData = []
 
-    const shareStartWeight = graphData.startWeight / 100
-    const shareEndWeight = graphData.endWeight / 100
+      const shareStartWeight = graphData.startWeight / 100
+      const shareEndWeight = graphData.endWeight / 100
 
-    const shareReserve = graphData?.shareInput
-    const assetReserve = graphData?.assetInput
+      const shareReserve = graphData?.shareInput
+      const assetReserve = graphData?.assetInput
 
-    const oneDay = 24 * 60 * 60 * 1000
+      const oneDay = 24 * 60 * 60 * 1000
 
-    for (let i = 0; i <= totalDays; i += step) {
-      const date = new Date(issuanceDate + i * oneDay)
-      const decay = getDecayAtStep(shareStartWeight, shareEndWeight, i, totalDays)
-      const currentShareWeight = shareStartWeight + decay
-      const currentAssetWeight = 1 - currentShareWeight
-      const price = getPrice(shareReserve, currentShareWeight, assetReserve, currentAssetWeight)
+      for (let i = 0; i <= totalDays; i += step) {
+        const date = new Date(issuanceDate + i * oneDay)
+        const decay = getDecayAtStep(shareStartWeight, shareEndWeight, i, totalDays)
+        const currentShareWeight = shareStartWeight + decay
+        const currentAssetWeight = 1 - currentShareWeight
+        const price = getPrice(shareReserve, currentShareWeight, assetReserve, currentAssetWeight)
 
-      const formattedDate = date.getDate() + ' ' + date.toLocaleString('en', { month: 'short' }) + '.'
+        const formattedDate = date.getDate() + ' ' + date.toLocaleString('en', { month: 'short' }) + '.'
 
-      chartData.push({ date: formattedDate, price })
-    }
+        chartData.push({ date: formattedDate, price })
+      }
 
-    return chartData
-  }
+      if (chartData.length >= 2) {
+        setStartPrice(chartData[0].price)
+        setEndPrice(chartData[chartData.length - 1].price)
+      }
+
+      return chartData
+    },
+    [setEndPrice, setStartPrice, graphData]
+  )
   const data = generateChartData(step)
 
   const contentData = useMemo(() => {

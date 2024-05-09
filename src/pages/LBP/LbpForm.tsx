@@ -72,7 +72,8 @@ export default function LBPForm() {
   const [canSubmit, setCanSubmit] = useState(false)
   const [showSummary, setShowSummary] = useState(false)
   const toggleModal = React.useCallback(() => setShowSummary((state) => !state), [])
-  const [isValidDates, setIsValidDates] = useState(false)
+  const [endPrice, setEndPrice] = useState(0)
+  const [startPrice, setStartPrice] = useState(0)
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
@@ -286,6 +287,7 @@ export default function LBPForm() {
                 onChange={handleTokenomicsChange}
                 shareTitle={formData.projectInfo.title}
                 shareLogo={formData?.branding?.LBPLogo}
+                endPrice={endPrice}
               />
             </Column>
           </FormCard>
@@ -337,11 +339,11 @@ export default function LBPForm() {
           />
         </StyledStickyBox>
 
-        <Graph step={1} graphData={formData.tokenomics} />
+        <Graph step={1} graphData={formData.tokenomics} setEndPrice={setEndPrice} setStartPrice={setStartPrice} />
       </div>
 
       <IssuanceDialog show={showSummary} onClose={toggleModal} width="550px">
-        <SubmitSummary formData={formData} onCancel={toggleModal} />
+        <SubmitSummary formData={formData} onCancel={toggleModal} startPrice={startPrice} />
       </IssuanceDialog>
     </FormRow>
   )

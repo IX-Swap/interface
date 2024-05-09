@@ -28,6 +28,7 @@ import { useTokenContract } from 'hooks/useContract'
 import { formatUnits } from 'ethers/lib/utils'
 import timezone from 'dayjs/plugin/timezone'
 import { ethers } from 'ethers'
+import { formatNumberWithDecimals } from 'state/lbp/hooks'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -229,10 +230,11 @@ interface ProjectInfoProps {
   formDataTokenomics: TokenomicsData
   shareTitle: string
   shareLogo: any
+  endPrice: number
 }
 
 // Refactored Tokenomics component
-const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: ProjectInfoProps) => {
+const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPrice }: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
   const [isOpen, setIsOpen] = useState(false)
@@ -779,9 +781,10 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
             id="minPrice"
             label="Min. price"
             name="minPrice"
+            disabled={true}
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
-            value={formDataTokenomics.minPrice}
+            value={formatNumberWithDecimals(endPrice, 3)}
           />
           {formik.touched.minPrice && !formDataTokenomics.minPrice ? (
             <ErrorText>{formik.errors.minPrice}</ErrorText>
