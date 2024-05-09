@@ -27,6 +27,7 @@ import { useWeb3React } from '@web3-react/core'
 import { useTokenContract } from 'hooks/useContract'
 import { formatUnits } from 'ethers/lib/utils'
 import timezone from 'dayjs/plugin/timezone'
+import { ethers } from 'ethers'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -333,7 +334,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo }: Pro
 
   useEffect(() => {
     // skip if already deployed
-    const isDeployed = Boolean(formData?.contractAddress)
+    const isDeployed = formData?.contractAddress && formData.contractAddress !== ethers.constants.AddressZero
     if (isDeployed || !formData.endDate || !formData.startDate) {
       return
     }
