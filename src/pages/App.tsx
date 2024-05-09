@@ -17,7 +17,7 @@ import Popups from 'components/Popups'
 import ErrorBoundary from 'components/ErrorBoundary'
 import GoogleAnalyticsReporter from 'components/analytics/GoogleAnalyticsReporter'
 
-// import { Footer } from 'components/Footer'
+import { Footer } from 'components/Footer'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
@@ -44,7 +44,7 @@ import { metaMask } from 'connectors/metaMask'
 import { walletConnectV2 } from 'connectors/walletConnectV2'
 import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
-import { Footer } from './Launchpad/Footer'
+// import { Footer } from './Launchpad/Footer'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 
 const AppWrapper = styled.div`
