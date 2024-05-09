@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { Card } from 'rebass'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area } from 'recharts'
@@ -6,6 +6,8 @@ import { NewLine } from 'components/Line'
 import { ReactComponent as DurationIcon } from '../../../assets/images/group3.svg'
 import { ReactComponent as MarketCapIcon } from '../../../assets/images/group1.svg'
 import { ReactComponent as PriceIcon } from '../../../assets/images/group2.svg'
+import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import dayjs from 'dayjs'
 
 interface GraphProps {
   graphData: any
@@ -88,9 +90,9 @@ export default function Graph({ graphData, step }: GraphProps) {
       const currentShareWeight = shareStartWeight + decay
       const currentAssetWeight = 1 - currentShareWeight
       const price = getPrice(shareReserve, currentShareWeight, assetReserve, currentAssetWeight)
-      
+
       const formattedDate = date.getDate() + ' ' + date.toLocaleString('en', { month: 'short' }) + '.'
-      
+
       chartData.push({ date: formattedDate, price })
     }
 
@@ -98,25 +100,31 @@ export default function Graph({ graphData, step }: GraphProps) {
   }
   const data = generateChartData(step)
 
-  const contentData = [
-    {
-      icon: DurationIcon,
-      title: 'Duration',
-      description: '2 Days',
-    },
-    {
-      icon: MarketCapIcon,
-      title: 'Implied Market Cap',
-      description: '$100,000.00 — $150,000.00',
-    },
-    {
-      icon: PriceIcon,
-      title: 'Price Range',
-      description: '$10,000.00 — $15,000.00',
-    },
-  ]
+  const contentData = useMemo(() => {
+    const duration = dayjs(graphData.endDate).diff(dayjs(graphData.startDate), 'day')
+    const [maxPrice, minPrice] = data.length >= 2 ? [data[0].price, data[data.length - 1].price] : [0, 0]
+    const priceRange = `$${minPrice.toFixed(3)} - $${maxPrice.toFixed(3)}`
+    const maxMarketCap = formatNumberWithDecimals(maxPrice * (graphData?.maxSupply || 0), 2)
+    const minMarketCap = formatNumberWithDecimals(minPrice * (graphData?.maxSupply || 0), 2)
 
-  // console.log(graphData)
+    return [
+      {
+        icon: DurationIcon,
+        title: 'Duration',
+        description: `${duration} Days`,
+      },
+      {
+        icon: MarketCapIcon,
+        title: 'Implied Market Cap',
+        description: `$${minMarketCap} — $${maxMarketCap}`,
+      },
+      {
+        icon: PriceIcon,
+        title: 'Price Range',
+        description: priceRange,
+      },
+    ]
+  }, [data, graphData])
 
   return (
     <StyledCard>
@@ -132,7 +140,7 @@ export default function Graph({ graphData, step }: GraphProps) {
           axisLine={false}
           tickLine={false}
         />
-        <YAxis dataKey="price" axisLine={false} tickLine={false}  />
+        <YAxis dataKey="price" axisLine={false} tickLine={false} />
         <Tooltip />
         <Line strokeWidth={2.5} dataKey="price" stroke="#8884d8" dot={false} type="monotone" />
       </LineChart>
