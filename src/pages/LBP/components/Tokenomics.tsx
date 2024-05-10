@@ -209,7 +209,6 @@ interface TokenomicsData {
   shareInput: number
   assetInput: number
   maxSupply: number
-  minPrice: number
   maxPrice: number
   startWeight: number
   endWeight: number
@@ -222,7 +221,6 @@ const validationSchema = Yup.object().shape({
   shareInput: Yup.string().required('Project Token Amount is required'),
   assetInput: Yup.string().required('Base Token Amount is required'),
   // maxSupply: Yup.string().required('Max. Supply is required'),
-  minPrice: Yup.string().required('Min. price is required'),
 })
 
 interface ProjectInfoProps {
@@ -260,7 +258,6 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
     shareInput: formDataTokenomics.shareInput,
     assetInput: formDataTokenomics.assetInput,
     maxSupply: formDataTokenomics.maxSupply,
-    minPrice: formDataTokenomics.minPrice,
     maxPrice: formDataTokenomics.maxPrice,
     startWeight: formDataTokenomics.startWeight,
     endWeight: formDataTokenomics.endWeight,
@@ -275,8 +272,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
       shareInput: '',
       assetInput: '',
       maxSupply: '',
-      minPrice: '',
-      maxPrice: '',
+      maxPrice: 0,
       startWeight: 0.3,
       endWeight: 0.0,
       startDate: null,
@@ -786,9 +782,6 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
             onBlur={formik.handleBlur}
             value={formatNumberWithDecimals(endPrice, 3)}
           />
-          {formik.touched.minPrice && !formDataTokenomics.minPrice ? (
-            <ErrorText>{formik.errors.minPrice}</ErrorText>
-          ) : null}
         </div>
 
         <div style={{ display: 'block' }}>
@@ -802,6 +795,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
             onBlur={formik.handleBlur}
             value={formDataTokenomics.maxPrice}
           />
+
           {/* {formik.touched.maxPrice && !formDataTokenomics.maxPrice ? (
             <ErrorText>{formik.errors.maxPrice}</ErrorText>
           ) : null} */}
