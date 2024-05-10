@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
@@ -23,7 +23,6 @@ import { text17, text18, text19, text30, text53 } from 'components/LaunchpadMisc
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { ITEM_ROWS } from 'components/LaunchpadIssuance/utils/constants'
 import { useGetLbpsFull } from 'state/lbp/hooks'
-import { FilterOption } from 'components/Launchpad/InvestmentList/FilterDropdown'
 import { FilterConfig } from '../InvestmentList/Filter'
 import { ReactComponent as Disabled } from '../../../assets/images/newCurrencyLogo.svg'
 
@@ -98,10 +97,20 @@ export const LbpsFull: React.FC<Props> = (props) => {
     }
   }, [])
 
+  const composeStage = (tabType: string): string => {
+    if (tabType === 'live') {
+      // also include paused lbps
+      return 'live,paused'
+    } else if (tabType === 'ended') {
+      return 'ended,closed'
+    }
+
+    return tabType
+  }
+
   React.useEffect(() => {
     setLoading(true)
-
-    getLbps(page, filter, order, pageSize, false, props.type)
+    getLbps(page, filter, order, pageSize, false, composeStage(props.type))
       .then((page: any) => {
         setLbps(page.items)
         setTotalItems(page.totalItems)
