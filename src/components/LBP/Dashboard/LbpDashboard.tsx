@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { LbpStatus } from '../types'
@@ -39,14 +40,28 @@ const LblTabs: React.FC<TabsProps> = (props) => {
 }
 
 export const LbpDashboard = () => {
+  const location = useLocation()
+  const history = useHistory()
+  const searchParams = new URLSearchParams(location.search)
+
   const [activeTab, setActiveTab] = React.useState<LbpStatus>(() => {
-    const lbpTab = localStorage.getItem('lbpTab')
-    return (lbpTab as LbpStatus) ?? LbpStatus.pending
+    const tabQuery = searchParams.get('tab')
+    if (tabQuery) {
+      return tabQuery as LbpStatus
+    }
+
+    return LbpStatus.draft
   })
 
   const handleTabChange = (tab: LbpStatus) => {
     setActiveTab(tab)
-    localStorage.setItem('lbpTab', tab)
+    searchParams.set('tab', tab)
+
+    // Push the updated location to the history stack
+    history.push({
+      pathname: location.pathname, // Keep the current path
+      search: `?${searchParams.toString()}`, // Update the search query
+    })
   }
 
   return (
