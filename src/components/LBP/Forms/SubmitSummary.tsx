@@ -27,7 +27,9 @@ interface Props {
 export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
   const { chainId } = useWeb3React()
   const history = useHistory()
-  const [predictedLBPAddress, setPredictedLBPAddress] = useState<any>(formData?.tokenomics?.contractAddress)
+  const [predictedLBPAddress, setPredictedLBPAddress] = useState<any>(
+    formData?.tokenomics?.contractAddress == ethers.constants.AddressZero ? '' : formData?.tokenomics?.contractAddress
+  )
   const [amounts, setAmounts] = useState<{ [key: string]: any }>({})
 
   const assetTokenContract = useTokenContract(formData.tokenomics.assetTokenAddress ?? '')

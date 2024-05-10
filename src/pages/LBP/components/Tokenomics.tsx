@@ -332,11 +332,17 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
 
   useEffect(() => {
     // skip if already deployed
-    const isDeployed = formData?.contractAddress && formData.contractAddress !== ethers.constants.AddressZero
-    if (isDeployed || !formData.endDate || !formData.startDate) {
+    const isDeployed = Boolean(
+      formDataTokenomics?.contractAddress && formDataTokenomics.contractAddress !== ethers.constants.AddressZero
+    )
+    if (isDeployed || !formDataTokenomics.endDate || !formDataTokenomics.startDate) {
       return
     }
 
+    const { startDate: startDateRaw, endDate: endDateRaw } = formDataTokenomics
+
+    const startDate = dayjs(startDateRaw)
+    const endDate = dayjs(endDateRaw)
     // Check if the current start date is in the past when formDataTokenomics changes
     if (startDate.isBefore(dayjs())) {
       setStartDateError("Start date can't be in the past")

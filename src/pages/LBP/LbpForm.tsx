@@ -223,7 +223,7 @@ export default function LBPForm() {
         website: data.officialWebsite,
         socialLinks: data.socialMedia,
         whitepapers: data.whitePaper,
-        uploadDocs: data.uploadDocs,
+        uploadDocs: data.uploadDocs || [],
       },
       branding: {
         LBPLogo: data.logo,
