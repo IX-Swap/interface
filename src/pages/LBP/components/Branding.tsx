@@ -10,9 +10,10 @@ import { Loader } from 'components/LaunchpadOffer/util/Loader'
 interface BrandingDataProps {
   onChange: (data: any) => void
   brandingData: BrandingProps
+  isValidUser: boolean
 }
 
-export default function Branding({ onChange, brandingData }: BrandingDataProps) {
+export default function Branding({ onChange, brandingData, isValidUser }: BrandingDataProps) {
   const [values, setValues] = useState<any>({
     LBPLogo: null,
     LBPBanner: null,
@@ -79,6 +80,8 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
     onChange(updatedValues)
   }
 
+  console.log(isValidUser, 'isValidUser')
+
   return (
     <>
       <FormGrid columns={2}>
@@ -90,7 +93,7 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
               title="Project Token Logo"
               files={values.LBPLogo ? [values.LBPLogo] : []}
               onDrop={(file) => handleDropImage(file, 'LBPLogo')}
-              handleDeleteClick={() => handleImageDelete('LBPLogo')}
+              handleDeleteClick={isValidUser ? () => {} : () => handleImageDelete('LBPLogo')}
             />
             {values.LBPLogo === null && <ErrorText>Please upload a logo</ErrorText>}
           </div>
@@ -107,7 +110,7 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
               title="LBP Banner"
               files={values.LBPBanner ? [values.LBPBanner] : []}
               onDrop={(file) => handleDropImage(file, 'LBPBanner')}
-              handleDeleteClick={() => handleImageDelete('LBPBanner')}
+              handleDeleteClick={isValidUser ? () => {} : () => handleImageDelete('LBPBanner')}
             />
             {values.LBPBanner === null && <ErrorText>Please upload a banner</ErrorText>}
           </div>

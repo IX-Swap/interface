@@ -231,10 +231,18 @@ interface ProjectInfoProps {
   shareTitle: string
   shareLogo: any
   endPrice: number
+  isValidUser: boolean
 }
 
 // Refactored Tokenomics component
-const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPrice }: ProjectInfoProps) => {
+const Tokenomics = ({
+  onChange,
+  formDataTokenomics,
+  shareTitle,
+  shareLogo,
+  endPrice,
+  isValidUser,
+}: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
   const [isOpen, setIsOpen] = useState(false)
@@ -528,6 +536,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
               value={formDataTokenomics.shareInput}
               // value={formik.values.shareInput}
               onChange={handleInputChange}
+              onWheel={(event) => event.currentTarget.blur()}
             />
 
             <MaxWrapper onClick={() => handleMaxClick(balances?.shareBalance, 'shareInput')}>
@@ -592,6 +601,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
               onBlur={formik.handleBlur}
               // value={formik.values.assetInput}
               value={formDataTokenomics.assetInput}
+              onWheel={(event) => event.currentTarget.blur()}
             />
             <MaxWrapper onClick={() => handleMaxClick(balances?.assetBalance, 'assetInput')}>
               <Span style={{ padding: '10px 20px', cursor: 'pointer' }}>Max</Span>
@@ -610,6 +620,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
         label="Project Token Max. Supply"
         name="maxSupply"
         onChange={handleInputChange}
+        disabled={isValidUser}
         // onBlur={formik.handleBlur}
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}

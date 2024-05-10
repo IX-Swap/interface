@@ -67,6 +67,7 @@ export default function BuySellFields({
   id,
   logo,
   slippage,
+  
 }: BuySellFieldsProps) {
   // UI States
   const [buttonDisabled, setButtonDisabled] = useState(true)
@@ -509,6 +510,7 @@ export default function BuySellFields({
                 name="ShareInput"
                 value={shareValue}
                 onChange={(event) => handleInputChange(event, InputType.Share)}
+                onWheel={ event => event.currentTarget.blur() }
               />
             </BuySellFieldsItem>
             <BuySellFieldsItem>
@@ -539,6 +541,7 @@ export default function BuySellFields({
                 value={assetValue}
                 onChange={(event) => handleInputChange(event, InputType.Asset)}
                 assetExceedsBalance={assetExceedsBalance}
+                onWheel={ event => event.currentTarget.blur() }
               />
               {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
             </BuySellFieldsItem>

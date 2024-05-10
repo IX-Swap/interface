@@ -1,13 +1,20 @@
 import React, { useEffect } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import { text1, text2, text4, text5, text58 } from 'components/LaunchpadMisc/typography'
+import { text1, text2, text4, text5, text58, text9 } from 'components/LaunchpadMisc/typography'
 import { LbpStatus } from '../types'
 import { LBP_STAGE_LABELS } from 'state/lbp/constants'
 import { LbpStatusBadge } from './LbpStatusBadge'
 import { LbpSaleStatusInfo } from './LbpSaleStatusInfo'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
+import { useKyc, useRole } from 'state/user/hooks'
+import Modal from '@mui/material/Modal'
+import { PinnedContentButton } from 'components/Button'
+import { TYPE } from 'theme'
+import { Line } from 'components/Line'
+import { ReactComponent as DraftIcon } from 'assets/images/draftStatusIcon.svg'
+import { ReactComponent as RequestChange } from 'assets/images/requestChangeIcon.svg'
 
 interface Props {
   lbp: any
@@ -20,13 +27,14 @@ const getStageLabel = (stage: LbpStatus) => {
 export const LbpCard: React.FC<Props> = ({ lbp }) => {
   const history = useHistory()
   const theme = useTheme()
-
+  const { isChangeRequested, isPending, isDraft, isRejected } = useKyc()
   const [showDetails, setShowDetails] = React.useState(false)
   const [color, setColor] = React.useState('')
+  const [showModal, setShowModal] = React.useState(false)
+  const [contactFormOpen, setContactForm] = React.useState(false)
 
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
   const { kyc } = useKYCState()
-  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const isClosed = React.useMemo(
     () => !!lbp.status && [LbpStatus.closed, LbpStatus.ended].includes(lbp.status),
@@ -34,8 +42,29 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   )
 
   const onClick = React.useCallback(() => {
-    history.push(`/lbp/${lbp.id}`)
-  }, [])
+    if (isChangeRequested || isPending || isDraft || isRejected) {
+      setShowModal(true)
+    } else {
+      history.push(`/lbp/${lbp.id}`)
+    }
+  }, [isChangeRequested, isPending, isDraft, isRejected, history, lbp.id])
+
+  const getTitle = () => {
+    if (isDraft) return 'We are still verifying your account'
+    if (isPending) return 'We are still verifying your account'
+    if (isRejected)
+      return 'Account verification was unsuccessful. Therefore, you are not able to use the IXS Launchpad. Please try again or contact us for more information.'
+    if (isChangeRequested) return 'We have requested an update to your account verification process.'
+    return 'Modal Title'
+  }
+  const getSubtitle = () => {
+    if (isDraft || isPending)
+      return 'To comply with regulatory requirements, we have to verify your identity before you can proceed.'
+    if (isRejected) return 'Account verification is a one-time process.'
+    if (isChangeRequested)
+      return 'To comply with regulatory requirements, we have to verify your identity before you can proceed.'
+    return ''
+  }
 
   useEffect(() => {
     switch (lbp.status) {
@@ -55,8 +84,51 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
     }
   }, [lbp])
 
+  const checkStatus = () => {
+    history.push('/kyc')
+  }
+
+  const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
+
   return (
     <>
+      {showModal && (
+        <Modal
+          open={showModal}
+          onClose={() => setShowModal(false)}
+          aria-labelledby="modal-title"
+          aria-describedby="modal-description"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ModalContainer>
+            <ImageContainer>{isRejected ? <RequestChange /> : <DraftIcon />}</ImageContainer>
+
+            <ModalContent>
+              <h2 id="modal-title">{getTitle()}</h2>
+            </ModalContent>
+            <PinnedContentButton onClick={checkStatus}>{isRejected ? 'Try Again' : 'Check Status'}</PinnedContentButton>
+            <ModalContent>
+              <TYPE.description2 id="modal-subtitle">{getSubtitle()}</TYPE.description2>
+            </ModalContent>
+            <Line style={{ margin: '30px' }} />
+            <ModalContent>
+              {isRejected ? (
+                <ContactUsTextButton type="button" onClick={toggleContactForm}>
+                  Contact us
+                </ContactUsTextButton>
+              ) : (
+                <TYPE.description2 fontSize={'11px'} id="modal-subtitle">
+                  {'Account verification can take 1-3 days to be process.'}
+                </TYPE.description2>
+              )}
+            </ModalContent>
+          </ModalContainer>
+        </Modal>
+      )}
       <LbpCardContainer>
         <LbpCardImage src={lbp.banner?.public} />
 
@@ -106,13 +178,13 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
 
           <LbpCardFooter>
             {!isClosed && (
-              <InvestButton disabled={!isKycApproved} type="button" onClick={onClick}>
+              <InvestButton type="button" onClick={onClick}>
                 Invest
               </InvestButton>
             )}
 
             {isClosed && (
-              <InvestButton disabled={!isKycApproved} type="button" onClick={onClick}>
+              <InvestButton type="button" onClick={onClick}>
                 Learn More
               </InvestButton>
             )}
@@ -273,4 +345,41 @@ const InvestButton = styled.button`
   text-align: center;
   font-family: ${(props) => props.theme.launchpad.font};
   ${text1}
+`
+const ModalContainer = styled.div`
+  background-color: white;
+  border: 1px solid #999;
+  border-radius: 6px;
+  width: 400px;
+  padding: 20px;
+`
+
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+`
+
+const ImageContainer = styled.div`
+  text-align: center;
+  margin-top: 20px;
+`
+const ContactUsTextButton = styled.button`
+  display: grid;
+  place-content: center;
+  height: 60px;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+
+  ${text9}
+
+  cursor: pointer;
+  color: ${(props) => props.theme.launchpad.colors.primary};
+  background: ${(props) => props.theme.launchpad.colors.text.light};
+  border-radius: 6px;
+  border: none;
+  outline: 0;
 `
