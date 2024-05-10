@@ -66,7 +66,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const [clickedButton, setClickedButton] = useState<any>(null)
-  const [slippage, setSlippage] = useState<any>('0.25')
+  const [slippage, setSlippage] = useState<any>('0.5')
   const [isPaused, setIsPaused] = useState(isPausedSideBar)
   const [isBlurred, setIsBlurred] = useState(isPausedSideBar)
   const [tokenBalance, setTokenBalance] = useState('')

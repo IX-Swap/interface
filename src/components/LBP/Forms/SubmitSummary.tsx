@@ -14,6 +14,7 @@ import { useTokenContract } from 'hooks/useContract'
 import { useDeployLbp } from 'state/lbp/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import { useHistory } from 'react-router-dom'
 
 export const MAX_UINT88 = ethers.BigNumber.from('309485009821345068724781055')
 
@@ -25,6 +26,7 @@ interface Props {
 
 export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
   const { chainId } = useWeb3React()
+  const history = useHistory()
   const [predictedLBPAddress, setPredictedLBPAddress] = useState<any>(formData?.tokenomics?.contractAddress)
   const [amounts, setAmounts] = useState<{ [key: string]: any }>({})
 
@@ -149,6 +151,8 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
       })
       await deployLbp(formData?.id?.toString(), predictedLBPAddress)
       setDeployed(true)
+      // redirect to lbp dashboard at pending tab
+      history.push('/lbp?tab=pending')
     } else {
       alert('Deployment failed!')
     }
