@@ -349,7 +349,7 @@ export default function ProjectInfo({ onChange, formData, isValidUser }: Project
       {formik.touched.socialLinks && !formData.socialLinks ? <ErrorText>{formik.errors.socialLinks}</ErrorText> : null}
 
       <FormArray
-        label="Whitepapers"
+        label="Additional links"
         name="whitepapers"
         id="whitepapers"
         items={projectInfoData?.whitepapers?.map((whitepaper: any) => whitepaper)}

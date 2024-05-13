@@ -19,6 +19,10 @@ export default function Branding({ onChange, brandingData, isValidUser }: Brandi
     LBPBanner: null,
   })
   const [loading, setLoading] = useState<boolean>(true)
+  const [touched, setTouched] = useState<{ [key: string]: boolean }>({
+    LBPLogo: false,
+    LBPBanner: false,
+  })
 
   const showError = useShowError()
 
@@ -81,6 +85,9 @@ export default function Branding({ onChange, brandingData, isValidUser }: Brandi
   }
 
   console.log(isValidUser, 'isValidUser')
+  const handleTouch = (key: string) => {
+    setTouched((prevTouched) => ({ ...prevTouched, [key]: true }))
+  }
 
   return (
     <>
@@ -92,10 +99,13 @@ export default function Branding({ onChange, brandingData, isValidUser }: Brandi
               onChange={(e) => handleInputChange(e, 'LBPLogo')}
               title="Project Token Logo"
               files={values.LBPLogo ? [values.LBPLogo] : []}
-              onDrop={(file) => handleDropImage(file, 'LBPLogo')}
               handleDeleteClick={isValidUser ? () => {} : () => handleImageDelete('LBPLogo')}
+              onDrop={(file) => {
+                handleDropImage(file, 'LBPLogo')
+                handleTouch('LBPLogo')
+              }}
             />
-            {values.LBPLogo === null && <ErrorText>Please upload a logo</ErrorText>}
+            {touched.LBPLogo && values.LBPLogo === null && <ErrorText>Please upload a logo</ErrorText>}
           </div>
         ) : (
           <LoadingIndicator>
@@ -109,10 +119,13 @@ export default function Branding({ onChange, brandingData, isValidUser }: Brandi
               onChange={(e) => handleInputChange(e, 'LBPBanner')}
               title="LBP Banner"
               files={values.LBPBanner ? [values.LBPBanner] : []}
-              onDrop={(file) => handleDropImage(file, 'LBPBanner')}
               handleDeleteClick={isValidUser ? () => {} : () => handleImageDelete('LBPBanner')}
+              onDrop={(file) => {
+                handleDropImage(file, 'LBPBanner')
+                handleTouch('LBPBanner')
+              }}
             />
-            {values.LBPBanner === null && <ErrorText>Please upload a banner</ErrorText>}
+            {touched.LBPBanner && values.LBPBanner === null && <ErrorText>Please upload a banner</ErrorText>}
           </div>
         ) : (
           <LoadingIndicator>
