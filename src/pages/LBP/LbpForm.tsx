@@ -146,15 +146,15 @@ export default function LBPForm() {
     const projectInfoComplete = isComplete(formData.projectInfo)
     const tokenomicsComplete = isComplete(formData.tokenomics)
     const hasSocialLinks = formData.projectInfo.socialLinks?.length > 0
-    const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
+    // const hasWhitepapers = formData.projectInfo.whitepapers?.length > 0
     const startDate = dayjs(formData.tokenomics.startDate)
     const endDate = dayjs(formData.tokenomics.endDate)
     const datesValid = areDatesValid(startDate, endDate)
 
-    console.log(brandingComplete, projectInfoComplete, tokenomicsComplete, hasSocialLinks, hasWhitepapers, datesValid)
+    console.log(brandingComplete, projectInfoComplete, tokenomicsComplete, hasSocialLinks, datesValid)
 
     setCanSubmit(
-      brandingComplete && hasSocialLinks && hasWhitepapers && projectInfoComplete && tokenomicsComplete && datesValid
+      brandingComplete && hasSocialLinks  && projectInfoComplete && tokenomicsComplete && datesValid
     )
   }
 
