@@ -111,11 +111,11 @@ export default function Graph({ graphData, step, setEndPrice, setStartPrice }: G
   const data = generateChartData(step)
 
   const contentData = useMemo(() => {
-    const duration = dayjs(graphData.endDate).diff(dayjs(graphData.startDate), 'day')
+    const duration = dayjs(graphData.endDate).diff(dayjs(graphData.startDate), 'day') || 0
     const [maxPrice, minPrice] = data.length >= 2 ? [data[0].price, data[data.length - 1].price] : [0, 0]
     const priceRange = `$${minPrice.toFixed(3)} - $${maxPrice.toFixed(3)}`
-    const maxMarketCap = formatNumberWithDecimals(maxPrice * (graphData?.maxSupply || 0), 2)
-    const minMarketCap = formatNumberWithDecimals(minPrice * (graphData?.maxSupply || 0), 2)
+    const maxMarketCap = formatNumberWithDecimals(maxPrice * (graphData?.shareInput || 0), 2)
+    const minMarketCap = formatNumberWithDecimals(minPrice * (graphData?.shareInput || 0), 2)
 
     return [
       {

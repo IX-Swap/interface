@@ -258,7 +258,7 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
           </TextBlock>
           <TextBlock>
             <FieldLabel>Start Market Cap</FieldLabel>
-            <FieldValue>{formatNumberWithDecimals(startPrice * formData.tokenomics.maxSupply, 2)}$</FieldValue>
+            <FieldValue>{formatNumberWithDecimals(startPrice * formData.tokenomics.shareInput, 2)}$</FieldValue>
           </TextBlock>
         </Row>
       </Section>
