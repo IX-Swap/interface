@@ -171,7 +171,7 @@ export const useSaveOrSubmitLbp = () => {
   return useCallback(
     async (actionType: string, payload: LbpFormValues) => {
       const uploadedFiles = await uploadFiles(payload)
-      if (uploadedFiles) {
+      if (uploadedFiles?.length) {
         payload.logoId = uploadedFiles.find((x) => x.name === 'LBPLogo')?.id
         payload.bannerId = uploadedFiles.find((x) => x.name === 'LBPBanner')?.id
         for (let i = 0; i < payload.uploadDocs?.length; i++) {
@@ -181,6 +181,9 @@ export const useSaveOrSubmitLbp = () => {
             payload.additionalDocumentIds[i] = uploadedFiles.find((x) => x.name === `uploadDocs.${i}`)?.id || 0
           }
         }
+      } else {
+        payload.logoId = payload?.LBPLogo?.id
+        payload.bannerId = payload?.LBPBanner?.id
       }
 
       let response

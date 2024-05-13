@@ -64,7 +64,6 @@ export default function LBPForm() {
       assetInput: 0,
       startWeight: 0,
       endDate: '',
-      minPrice: 0,
       maxPrice: 0,
       startDate: '',
       endWeight: 0,
@@ -216,8 +215,7 @@ export default function LBPForm() {
       endWeight: formData.tokenomics?.endWeight,
       startDate: dayjs(formData.tokenomics?.startDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
       endDate: dayjs(formData.tokenomics?.endDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
-      minPrice: formData.tokenomics?.minPrice,
-      maxPrice: formData.tokenomics?.maxPrice,
+      maxPrice: Number(formData.tokenomics?.maxPrice || 0),
       additionalDocumentIds: [],
     }
 
@@ -234,7 +232,7 @@ export default function LBPForm() {
         website: data.officialWebsite,
         socialLinks: data.socialMedia,
         whitepapers: data.whitePaper,
-        uploadDocs: data.uploadDocs,
+        uploadDocs: data.uploadDocs || [],
       },
       branding: {
         LBPLogo: data.logo,
@@ -251,7 +249,6 @@ export default function LBPForm() {
         startWeight: data.startWeight,
         startDate: dayjs(data.startDate)?.local()?.format('YYYY-MM-DD HH:mm:ss'),
         endDate: dayjs(data.endDate)?.local()?.format('YYYY-MM-DD HH:mm:ss'),
-        minPrice: data.minPrice,
         maxPrice: data.maxPrice || 0,
         endWeight: data.endWeight,
       },

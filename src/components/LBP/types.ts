@@ -74,7 +74,6 @@ export interface LbpFormValues {
   endWeight: number
   startDate: string
   endDate: string
-  minPrice: number
   maxPrice: number
   creatorId?: number
   status?: LbpStatus
@@ -96,7 +95,6 @@ export interface TokenomicsProps {
   assetInput: number
   startWeight: number
   endDate: string
-  minPrice: number
   maxPrice: number
   startDate: string
   endWeight: number
