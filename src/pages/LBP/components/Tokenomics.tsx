@@ -758,6 +758,11 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <div style={{ display: 'grid' }}>
             <DateTimePicker
+              slotProps={{
+                textField: {
+                  error: false,
+                },
+              }}
               onChange={handleStartDateChange}
               label="Start Date"
               value={dayjs(formDataTokenomics.startDate)}
@@ -768,7 +773,16 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <div style={{ display: 'grid' }}>
-            <DateTimePicker onChange={handleEndDateChange} label="End Date" value={dayjs(formDataTokenomics.endDate)} />
+            <DateTimePicker
+              slotProps={{
+                textField: {
+                  error: false,
+                },
+              }}
+              onChange={handleEndDateChange}
+              label="End Date"
+              value={dayjs(formDataTokenomics.endDate)}
+            />
             {endDateError && <span style={{ color: 'red', marginTop: '6px' }}>{endDateError}</span>}
           </div>
         </LocalizationProvider>
