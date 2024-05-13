@@ -356,7 +356,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
       setEndDateError("End date can't be in the past")
     }
 
-    if (endDate && endDate.isBefore(startDate.add(1, 'day'), 'day')) {
+    if (endDate && endDate.isBefore(startDate.add(1, 'day'))) {
       setEndDateError('End date should be at least 1 day bigger than Start Date')
     }
   }, [formDataTokenomics])
