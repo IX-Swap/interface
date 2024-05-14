@@ -97,11 +97,11 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
               onChange={(e) => handleInputChange(e, 'LBPLogo')}
               title="Project Token Logo"
               files={values.LBPLogo ? [values.LBPLogo] : []}
+              handleDeleteClick={() => handleImageDelete('LBPLogo')}
               onDrop={(file) => {
                 handleDropImage(file, 'LBPLogo')
                 handleTouch('LBPLogo')
               }}
-              handleDeleteClick={() => handleImageDelete('LBPLogo')}
             />
             {touched.LBPLogo && values.LBPLogo === null && <ErrorText>Please upload a logo</ErrorText>}
           </div>
@@ -117,11 +117,11 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
               onChange={(e) => handleInputChange(e, 'LBPBanner')}
               title="LBP Banner"
               files={values.LBPBanner ? [values.LBPBanner] : []}
+              handleDeleteClick={() => handleImageDelete('LBPBanner')}
               onDrop={(file) => {
                 handleDropImage(file, 'LBPBanner')
                 handleTouch('LBPBanner')
               }}
-              handleDeleteClick={() => handleImageDelete('LBPBanner')}
             />
             {touched.LBPBanner && values.LBPBanner === null && <ErrorText>Please upload a banner</ErrorText>}
           </div>

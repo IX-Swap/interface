@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import dayjs, { Dayjs } from 'dayjs'
 import Column from 'components/Column'
@@ -6,7 +6,7 @@ import { RowStart } from 'components/Row'
 import { FormContainer, FormRow } from 'pages/KYC/IndividualKycForm'
 import { FormCard, StyledStickyBox } from 'pages/KYC/styleds'
 import { isMobile } from 'react-device-detect'
-import { BrandingProps, ProjectInfoProps, TokenomicsProps } from '../../../src/components/LBP/types'
+import { BrandingProps, LbpStatus, ProjectInfoProps, TokenomicsProps } from '../../../src/components/LBP/types'
 import Branding from './components/Branding'
 import ProjectInfo from './components/ProjectInfo'
 import Tokenomics from './components/Tokenomics'
@@ -24,6 +24,7 @@ import { TYPE } from 'theme'
 import { SubmitSummary } from 'components/LBP/Forms/SubmitSummary'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { constants } from 'ethers'
+import { useRole } from 'state/user/hooks'
 
 export interface FormData {
   id: number
@@ -73,12 +74,14 @@ export default function LBPForm() {
   const toggleModal = React.useCallback(() => setShowSummary((state) => !state), [])
   const [endPrice, setEndPrice] = useState(0)
   const [startPrice, setStartPrice] = useState(0)
+  const [status, setStatus] = useState<LbpStatus | undefined>(undefined)
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
   const history = useHistory()
   const getLbp = useGetLbp()
   const saveOrSubmitLbp = useSaveOrSubmitLbp()
+  const { isAdmin } = useRole()
 
   const {
     objectParams: { id: lbpId },
@@ -88,7 +91,9 @@ export default function LBPForm() {
     const getLbpAsync = async () => {
       if (lbpId) {
         const lbp = await getLbp(lbpId)
+        setStatus(lbp?.status)
         const loadedFormData = transformDataForLoading(lbp)
+
         setFormData(loadedFormData)
       }
     }
@@ -153,9 +158,7 @@ export default function LBPForm() {
 
     console.log(brandingComplete, projectInfoComplete, tokenomicsComplete, hasSocialLinks, datesValid)
 
-    setCanSubmit(
-      brandingComplete && hasSocialLinks  && projectInfoComplete && tokenomicsComplete && datesValid
-    )
+    setCanSubmit(brandingComplete && hasSocialLinks && projectInfoComplete && tokenomicsComplete && datesValid)
   }
 
   const saveLbp = async (actionType: string) => {
@@ -246,6 +249,14 @@ export default function LBPForm() {
     }
   }
 
+  const isEditable = useMemo(() => {
+    if (status == undefined) {
+      return true
+    }
+
+    return status == LbpStatus.draft && isAdmin
+  }, [status, isAdmin])
+
   return (
     <FormRow>
       <FormContainer style={{ gap: '35px', margin: '20px 0px 0px 150px' }}>
@@ -287,6 +298,7 @@ export default function LBPForm() {
                 shareTitle={formData.projectInfo.title}
                 shareLogo={formData?.branding?.LBPLogo}
                 endPrice={endPrice}
+                isEditable={isEditable}
               />
             </Column>
           </FormCard>
@@ -312,7 +324,7 @@ export default function LBPForm() {
       <div style={{ display: 'block' }}>
         <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px', marginBottom: '1700px' }}>
           <KYCProgressBar
-            disabled={!canSubmit}
+            disabled={!canSubmit || !isEditable}
             handleSubmit={handleSubmit}
             handleSaveProgress={handleSaveDraft}
             topics={[
