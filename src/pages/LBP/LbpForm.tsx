@@ -316,6 +316,7 @@ export default function LBPForm() {
                 contractAddress={formData?.tokenomics?.contractAddress || ''}
                 shareName={formData?.projectInfo?.title}
                 shareLogo={formData?.branding?.LBPLogo}
+                isEditable={isEditable}
               />
             </Column>
           </FormCard>
