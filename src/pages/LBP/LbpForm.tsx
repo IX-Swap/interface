@@ -250,7 +250,11 @@ export default function LBPForm() {
   }
 
   const isEditable = useMemo(() => {
-    return status !== LbpStatus.draft && status !== undefined && isAdmin
+    if (status == undefined) {
+      return true
+    }
+
+    return status == LbpStatus.draft && isAdmin
   }, [status, isAdmin])
 
   return (
