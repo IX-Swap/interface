@@ -38,7 +38,7 @@ interface TokenOption {
 }
 
 interface BuySellFieldsInputProps {
-  assetExceedsBalance?: boolean
+  exceedsBalance?: boolean
 }
 
 enum InputType {
@@ -127,6 +127,14 @@ export default function BuySellFields({
 
     return parseFloat(assetValueWithSlippage) > parseFloat(tokenBalance)
   }, [assetValueWithSlippage, tokenBalance])
+
+  const shareExceedBalance = useMemo(() => {
+    if (!shareValue || activeTab === TradeAction.Buy) {
+      return false
+    }
+
+    return parseFloat(shareValue) > parseFloat(shareBalance)
+  }, [shareValue, shareBalance, activeTab])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -495,7 +503,7 @@ export default function BuySellFields({
             assetValue={assetValue}
           />
           {/* Share section */}
-          <BuySellFieldsContainer>
+          <BuySellFieldsContainer exceedsBalance={shareExceedBalance}>
             <BuySellFieldsItem>
               <BuySellFieldsWrapper>
                 <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
@@ -512,7 +520,9 @@ export default function BuySellFields({
                 value={shareValue}
                 onChange={(event) => handleInputChange(event, InputType.Share)}
                 onWheel={ event => event.currentTarget.blur() }
+                exceedsBalance={shareExceedBalance}
               />
+              {shareExceedBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
             </BuySellFieldsItem>
             <BuySellFieldsItem>
               <BuySellFieldsSelect>
@@ -525,7 +535,7 @@ export default function BuySellFields({
             </BuySellFieldsItem>
           </BuySellFieldsContainer>
           {/* Asset section */}
-          <BuySellFieldsContainer assetExceedsBalance={assetExceedsBalance}>
+          <BuySellFieldsContainer exceedsBalance={assetExceedsBalance}>
             <BuySellFieldsItem>
               <BuySellFieldsWrapper>
                 <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Base Token</BuySellFieldsSpan>
@@ -541,8 +551,8 @@ export default function BuySellFields({
                 name="assetInput"
                 value={assetValue}
                 onChange={(event) => handleInputChange(event, InputType.Asset)}
-                assetExceedsBalance={assetExceedsBalance}
                 onWheel={ event => event.currentTarget.blur() }
+                exceedsBalance={assetExceedsBalance}
               />
               {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
             </BuySellFieldsItem>
@@ -621,7 +631,7 @@ const BuySellFieldsContainer = styled.div<BuySellFieldsInputProps>`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border: 1px solid ${({ assetExceedsBalance }) => (assetExceedsBalance ? '#FF6161' : '#e6e6ff')};
+  border: 1px solid ${({ exceedsBalance }) => (exceedsBalance ? '#FF6161' : '#e6e6ff')};
   background: #f7f7fa;
   padding: 12px 18px 0px 18px;
   margin-bottom: 20px;
@@ -668,7 +678,7 @@ const BuySellFieldsInput = styled.input<BuySellFieldsInputProps>`
   background: none;
   font-size: 32px;
   font-weight: 700;
-  color: ${({ assetExceedsBalance }) => (assetExceedsBalance ? '#FF6161' : '#292933')};
+  color: ${({ exceedsBalance }) => (exceedsBalance ? '#FF6161' : '#292933')};
   max-width: 210px;
   width: auto;
   margin-bottom: 10px;
