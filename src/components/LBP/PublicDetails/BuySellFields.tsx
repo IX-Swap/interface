@@ -69,7 +69,6 @@ export default function BuySellFields({
   id,
   logo,
   slippage,
-  
 }: BuySellFieldsProps) {
   // UI States
   const [buttonDisabled, setButtonDisabled] = useState(true)
@@ -487,7 +486,7 @@ export default function BuySellFields({
     setAssetValue('')
   }, [assetValue, shareValue])
 
-  const isDisableBuyButtoonn =
+  const isDisableBuyButton =
     assetExceedsBalance ||
     isExecuting ||
     approval == ApprovalState.PENDING ||
@@ -533,7 +532,7 @@ export default function BuySellFields({
                 name="ShareInput"
                 value={shareValue}
                 onChange={(event) => handleInputChange(event, InputType.Share)}
-                onWheel={ event => event.currentTarget.blur() }
+                onWheel={(event) => event.currentTarget.blur()}
                 exceedsBalance={shareExceedBalance}
               />
               {shareExceedBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
@@ -565,7 +564,7 @@ export default function BuySellFields({
                 name="assetInput"
                 value={assetValue}
                 onChange={(event) => handleInputChange(event, InputType.Asset)}
-                onWheel={ event => event.currentTarget.blur() }
+                onWheel={(event) => event.currentTarget.blur()}
                 exceedsBalance={assetExceedsBalance}
               />
               {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
@@ -602,7 +601,7 @@ export default function BuySellFields({
           </TabRow>
           <TabRow style={{ marginTop: '20px' }}>
             {activeTab === 'buy' ? (
-              <PinnedContentButton onClick={handleButtonClick} disabled={isDisableBuyButtoonn}>
+              <PinnedContentButton onClick={handleButtonClick} disabled={isDisableBuyButton}>
                 {buttonText}
               </PinnedContentButton>
             ) : (
