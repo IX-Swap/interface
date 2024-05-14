@@ -32,6 +32,11 @@ type GetPriceArgs = {
 }
 
 export const getPriceFromRawReservesAndWeights = (args: GetPriceArgs) => {
+  const zero = BigNumber.from(0)
+  if (args.currentAssetReserve.lte(zero) || args.currentShareReserve.lte(zero)) {
+    return '0'
+  }
+
   const numerator = expandTo18Decimals(args.currentAssetReserve, args.assetDecimals)
     .mul(utils.parseEther('1'))
     .div(args.currentAssetWeight)

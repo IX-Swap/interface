@@ -6,7 +6,7 @@ import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
 import { ethers, constants } from 'ethers'
 import { useLBPContract, useTokenContract, useLBPFactory } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useFormatNumberWithDecimal, useGetLBPAuthorization } from 'state/lbp/hooks'
+import { formatNumberWithDecimals, useGetLBPAuthorization } from 'state/lbp/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import BuySellModal from './Modals/BuySellModal'
@@ -56,6 +56,8 @@ const parseUnit = (amount: number, decimals: number): ethers.BigNumber => {
   return ethers.utils.parseUnits(amount.toString(), decimals)
 }
 
+const AMOUNT_PRECISION = 4
+
 export default function BuySellFields({
   activeTab,
   tokenBalance,
@@ -104,7 +106,7 @@ export default function BuySellFields({
     }
     if (activeTab === TradeAction.Buy && inputType === InputType.Share) {
       const maxAssetIn = parseFloat(assetValue) * (1 + parseFloat(slippage) / 100)
-      return maxAssetIn.toFixed(4)
+      return maxAssetIn.toFixed(AMOUNT_PRECISION)
     }
 
     return assetValue
@@ -200,7 +202,7 @@ export default function BuySellFields({
           }
         })
 
-        setOpposite(converted ? parseFloat(converted).toFixed(4) : '')
+        setOpposite(converted ? parseFloat(converted).toFixed(AMOUNT_PRECISION) : '')
       } else {
         // Clear the opposite value if the input is cleared
         setOpposite('')
@@ -329,7 +331,7 @@ export default function BuySellFields({
       if (!lbpContractInstance || !tokenOption || !assetDecimals || !shareDecimals || !shareValue || !slippage) return
 
       const minSharesOutValue = parseFloat(shareValue) * (1 - parseFloat(slippage) / 100)
-      const minSharesOut = ethers.utils.parseUnits(minSharesOutValue.toFixed(4), shareDecimals)
+      const minSharesOut = ethers.utils.parseUnits(minSharesOutValue.toFixed(AMOUNT_PRECISION), shareDecimals)
       const recipient = account
 
       console.info('minSharesOut', minSharesOut.toString())
@@ -389,7 +391,7 @@ export default function BuySellFields({
       if (!lbpContractInstance || !assetValue || !assetDecimals || !shareDecimals || !slippage) return
 
       const minAssetOutValue = parseFloat(assetValue) * (1 - parseFloat(slippage) / 100)
-      const minAssetsOut = ethers.utils.parseUnits(minAssetOutValue.toFixed(4), assetDecimals)
+      const minAssetsOut = ethers.utils.parseUnits(minAssetOutValue.toFixed(AMOUNT_PRECISION), assetDecimals)
 
       console.info('minAssetsOut', minAssetsOut.toString())
 
@@ -407,7 +409,7 @@ export default function BuySellFields({
 
       return tx
     },
-    [lbpContractInstance, assetValue, assetDecimals, shareDecimals]
+    [lbpContractInstance, assetValue, assetDecimals, shareDecimals, slippage]
   )
 
   const sellExactAssets = useCallback(
@@ -415,7 +417,7 @@ export default function BuySellFields({
       if (!lbpContractInstance || !shareValue || !assetDecimals || !shareDecimals || !slippage) return
 
       const maxSharesInValue = parseFloat(shareValue) * (1 + parseFloat(slippage) / 100)
-      const maxSharesIn = ethers.utils.parseUnits(maxSharesInValue.toFixed(4), shareDecimals)
+      const maxSharesIn = ethers.utils.parseUnits(maxSharesInValue.toFixed(AMOUNT_PRECISION), shareDecimals)
 
       console.info('maxSharesIn', maxSharesIn.toString())
 
@@ -432,7 +434,7 @@ export default function BuySellFields({
 
       return tx
     },
-    [lbpContractInstance, shareValue, assetDecimals, shareDecimals]
+    [lbpContractInstance, shareValue, assetDecimals, shareDecimals, slippage]
   )
 
   const handleButtonClick = useCallback(async () => {
@@ -457,7 +459,6 @@ export default function BuySellFields({
   }, [approval, assetValue, shareValue, approveCallback])
 
   const buttonText = useMemo(() => {
-    console.info('approval', approval)
     if (isExecuting) {
       return 'Executing...'
     }
@@ -527,7 +528,7 @@ export default function BuySellFields({
                 <TYPE.body4 fontSize={'14px'}> {shareSymbol}</TYPE.body4>
               </BuySellFieldsSelect>
               <BuySellFieldsSpanBal>
-                Balance: <b style={{ color: '#292933' }}> {useFormatNumberWithDecimal(shareBalance, 2)}</b>
+                Balance: <b style={{ color: '#292933' }}> {formatNumberWithDecimals(shareBalance, 3, true)}</b>
               </BuySellFieldsSpanBal>
             </BuySellFieldsItem>
           </BuySellFieldsContainer>
@@ -559,7 +560,7 @@ export default function BuySellFields({
                 <TYPE.body4 fontSize={'14px'}> {tokenOption?.tokenSymbol}</TYPE.body4>
               </BuySellFieldsSelect>
               <BuySellFieldsSpanBal>
-                Balance: <b style={{ color: '#292933' }}>{useFormatNumberWithDecimal(tokenBalance, 2)} </b>
+                Balance: <b style={{ color: '#292933' }}>{formatNumberWithDecimals(tokenBalance, 3, true)} </b>
               </BuySellFieldsSpanBal>
             </BuySellFieldsItem>
           </BuySellFieldsContainer>
