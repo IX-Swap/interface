@@ -213,13 +213,21 @@ export function useFormatNumberWithDecimal(initialNumber: number | string, decim
   return formatNumberWithDecimals(initialNumber, decimalPlaces)
 }
 
-export function formatNumberWithDecimals(initialNumber: number | string, decimalPlaces: number): string {
+function toFixedDown(number: number, precision: number) {
+  const factor = Math.pow(10, precision)
+  return (Math.floor(number * factor) / factor).toFixed(precision)
+}
+
+export function formatNumberWithDecimals(
+  initialNumber: number | string,
+  decimalPlaces: number,
+  roundDown = false
+): string {
   const parsedNumber = typeof initialNumber === 'string' ? parseFloat(initialNumber) : initialNumber
   if (isNaN(parsedNumber)) {
     return ''
   }
-  let formattedNumber = parsedNumber.toFixed(decimalPlaces)
-
+  let formattedNumber = roundDown ? toFixedDown(parsedNumber, decimalPlaces) : parsedNumber.toFixed(decimalPlaces)
   if (decimalPlaces > 0) {
     formattedNumber = formattedNumber.replace(/\.?0*$/, '')
   }
