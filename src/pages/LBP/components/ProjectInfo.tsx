@@ -22,7 +22,6 @@ import { socialMediaPlatform } from 'pages/KYC/mock'
 interface ProjectInfoProps {
   onChange: (data: any) => void
   formData: ProjectInfoData
-  isValidUser: boolean
 }
 
 interface LinkData {
@@ -62,7 +61,7 @@ const validationSchema = Yup.object().shape({
   uploadDocs: Yup.array().of(Yup.string()).required('Upload Documents are required'),
 })
 
-const FormArray = ({ label, items, removeItem, handleChange, openModal, isValidUser }: any) => {
+const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) => {
   const handleInternalChange = (value: string, index: number) => {
     handleChange(value, index, label)
   }
@@ -89,7 +88,7 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal, isValidU
             />
           </Box>
           <IconButton onClick={() => removeItem(index)} style={{ padding: '0 1rem' }}>
-            {!isValidUser && <TrashIcon style={{ marginTop: '28px' }} />}
+            <TrashIcon style={{ marginTop: '28px' }} />
           </IconButton>
         </Flex>
       ))}
@@ -106,7 +105,7 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal, isValidU
   )
 }
 
-export default function ProjectInfo({ onChange, formData, isValidUser }: ProjectInfoProps) {
+export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
   const [projectInfoData, setProjectInfoData] = useState<ProjectInfoData>({
     title: '',
     description: '',
@@ -157,7 +156,7 @@ export default function ProjectInfo({ onChange, formData, isValidUser }: Project
         ...projectInfoData,
         socialLinks: [...socialLinks, newLink],
       }
-    } else if (linkType === 'Whitepapers') {
+    } else if (linkType === 'Additional links') {
       const whitepapers = Array.isArray(projectInfoData.whitepapers) ? projectInfoData.whitepapers : []
       updatedData = {
         ...projectInfoData,
@@ -186,7 +185,7 @@ export default function ProjectInfo({ onChange, formData, isValidUser }: Project
 
   const openModal = (type: string) => {
     setLinkType(type)
-    setIsModalOpen(!isValidUser)
+    setIsModalOpen(true)
   }
 
   const handleRemoveItem = (index: number, label: string) => {
@@ -232,7 +231,7 @@ export default function ProjectInfo({ onChange, formData, isValidUser }: Project
 
   const onSelectChange = (field: string, value: any) => {
     setValues({ ...values, [field]: value })
-    setNewLinkName(value.label)
+    setNewLinkName(value?.label)
   }
 
   return (
@@ -293,7 +292,6 @@ export default function ProjectInfo({ onChange, formData, isValidUser }: Project
         id="title"
         name="title"
         label="Title"
-        disabled={isValidUser}
         value={formData.title}
         onChange={handleInputChange}
         onBlur={formik.handleBlur}
@@ -317,7 +315,6 @@ export default function ProjectInfo({ onChange, formData, isValidUser }: Project
           name="description"
           onBlur={formik.handleBlur}
           style={{ height: '126px' }}
-          disabled={isValidUser}
         />
         {formik.touched.description && !formData.description ? (
           <ErrorText>{formik.errors.description}</ErrorText>
@@ -331,7 +328,6 @@ export default function ProjectInfo({ onChange, formData, isValidUser }: Project
         id="website"
         label="Official Website"
         onBlur={formik.handleBlur}
-        disabled={isValidUser}
       />
       {formik.touched.website && !formData.website ? <ErrorText>{formik.errors.website}</ErrorText> : null}
 
@@ -344,7 +340,6 @@ export default function ProjectInfo({ onChange, formData, isValidUser }: Project
         handleChange={handleFormArrayChange}
         openModal={openModal}
         onBlur={formik.handleBlur}
-        isValidUser={isValidUser}
       />
       {formik.touched.socialLinks && !formData.socialLinks ? <ErrorText>{formik.errors.socialLinks}</ErrorText> : null}
 
@@ -357,7 +352,6 @@ export default function ProjectInfo({ onChange, formData, isValidUser }: Project
         handleChange={handleFormArrayChange}
         openModal={openModal}
         onBlur={formik.handleBlur}
-        isValidUser={isValidUser}
       />
 
       <Label htmlFor="description" flexDirection="column" mb={2}>
@@ -376,7 +370,6 @@ export default function ProjectInfo({ onChange, formData, isValidUser }: Project
         </Box>
       </Label>
       <UploaderDocs
-        isDisabled={isValidUser}
         title=""
         files={values.uploadDocs}
         onDrop={(acceptedFiles: any[]) => {

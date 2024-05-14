@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import dayjs, { Dayjs } from 'dayjs'
 import Column from 'components/Column'
@@ -74,8 +74,7 @@ export default function LBPForm() {
   const toggleModal = React.useCallback(() => setShowSummary((state) => !state), [])
   const [endPrice, setEndPrice] = useState(0)
   const [startPrice, setStartPrice] = useState(0)
-  const [status, setStatus] = useState<LbpStatus | undefined>(undefined);
-  const [isValidUser, setIsvalidUser] = useState(false);
+  const [status, setStatus] = useState<LbpStatus | undefined>(undefined)
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
@@ -94,9 +93,8 @@ export default function LBPForm() {
         const lbp = await getLbp(lbpId)
         setStatus(lbp?.status)
         const loadedFormData = transformDataForLoading(lbp)
-        
-        setFormData(loadedFormData)
 
+        setFormData(loadedFormData)
       }
     }
 
@@ -105,9 +103,7 @@ export default function LBPForm() {
 
   useEffect(() => {
     updateSubmitButtonState(formData)
-    const isValid = isValidStatusAndAdmin(status, isAdmin);
-    setIsvalidUser(isValid)
-  }, [formData, status, isAdmin])
+  }, [formData])
 
   const handleBrandingChange = (brandingData: BrandingProps) => {
     setFormData((prevData) => ({ ...prevData, branding: brandingData }))
@@ -162,9 +158,7 @@ export default function LBPForm() {
 
     console.log(brandingComplete, projectInfoComplete, tokenomicsComplete, hasSocialLinks, datesValid)
 
-    setCanSubmit(
-      brandingComplete && hasSocialLinks  && projectInfoComplete && tokenomicsComplete && datesValid
-    )
+    setCanSubmit(brandingComplete && hasSocialLinks && projectInfoComplete && tokenomicsComplete && datesValid)
   }
 
   const saveLbp = async (actionType: string) => {
@@ -255,12 +249,9 @@ export default function LBPForm() {
     }
   }
 
-  function isValidStatusAndAdmin(status: any, isAdmin: boolean): boolean {
-    const validStatusValues: string[] = ['pending', 'live', 'closed', 'paused', 'ended'];
-    return validStatusValues.includes(status) && isAdmin;
-}
-
-
+  const isEditable = useMemo(() => {
+    return status !== LbpStatus.draft && status !== undefined && isAdmin
+  }, [status, isAdmin])
 
   return (
     <FormRow>
@@ -279,7 +270,7 @@ export default function LBPForm() {
               <TYPE.label>Branding</TYPE.label>
             </RowStart>
             <Column style={{ gap: '20px' }}>
-              <Branding isValidUser={isValidUser} brandingData={formData.branding} onChange={handleBrandingChange} />
+              <Branding brandingData={formData.branding} onChange={handleBrandingChange} />
             </Column>
           </FormCard>
 
@@ -288,7 +279,7 @@ export default function LBPForm() {
               <TYPE.label>Project information</TYPE.label>
             </RowStart>
             <Column style={{ gap: '20px' }}>
-              <ProjectInfo isValidUser={isValidUser} formData={formData.projectInfo} onChange={handleProjectInfoChange} />
+              <ProjectInfo formData={formData.projectInfo} onChange={handleProjectInfoChange} />
             </Column>
           </FormCard>
 
@@ -303,7 +294,7 @@ export default function LBPForm() {
                 shareTitle={formData.projectInfo.title}
                 shareLogo={formData?.branding?.LBPLogo}
                 endPrice={endPrice}
-                isValidUser={isValidUser}
+                isEditable={isEditable}
               />
             </Column>
           </FormCard>
@@ -329,7 +320,7 @@ export default function LBPForm() {
       <div style={{ display: 'block' }}>
         <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px', marginBottom: '1700px' }}>
           <KYCProgressBar
-            disabled={!canSubmit || !isValidUser}
+            disabled={!canSubmit || !isEditable}
             handleSubmit={handleSubmit}
             handleSaveProgress={handleSaveDraft}
             topics={[

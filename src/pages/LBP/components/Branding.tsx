@@ -10,10 +10,9 @@ import { Loader } from 'components/LaunchpadOffer/util/Loader'
 interface BrandingDataProps {
   onChange: (data: any) => void
   brandingData: BrandingProps
-  isValidUser: boolean
 }
 
-export default function Branding({ onChange, brandingData, isValidUser }: BrandingDataProps) {
+export default function Branding({ onChange, brandingData }: BrandingDataProps) {
   const [values, setValues] = useState<any>({
     LBPLogo: null,
     LBPBanner: null,
@@ -84,7 +83,6 @@ export default function Branding({ onChange, brandingData, isValidUser }: Brandi
     onChange(updatedValues)
   }
 
-  console.log(isValidUser, 'isValidUser')
   const handleTouch = (key: string) => {
     setTouched((prevTouched) => ({ ...prevTouched, [key]: true }))
   }
@@ -99,7 +97,7 @@ export default function Branding({ onChange, brandingData, isValidUser }: Brandi
               onChange={(e) => handleInputChange(e, 'LBPLogo')}
               title="Project Token Logo"
               files={values.LBPLogo ? [values.LBPLogo] : []}
-              handleDeleteClick={isValidUser ? () => {} : () => handleImageDelete('LBPLogo')}
+              handleDeleteClick={() => handleImageDelete('LBPLogo')}
               onDrop={(file) => {
                 handleDropImage(file, 'LBPLogo')
                 handleTouch('LBPLogo')
@@ -119,7 +117,7 @@ export default function Branding({ onChange, brandingData, isValidUser }: Brandi
               onChange={(e) => handleInputChange(e, 'LBPBanner')}
               title="LBP Banner"
               files={values.LBPBanner ? [values.LBPBanner] : []}
-              handleDeleteClick={isValidUser ? () => {} : () => handleImageDelete('LBPBanner')}
+              handleDeleteClick={() => handleImageDelete('LBPBanner')}
               onDrop={(file) => {
                 handleDropImage(file, 'LBPBanner')
                 handleTouch('LBPBanner')
