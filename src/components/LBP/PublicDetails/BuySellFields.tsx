@@ -127,7 +127,7 @@ export default function BuySellFields({
     return parseFloat(assetValueWithSlippage) > parseFloat(tokenBalance)
   }, [assetValueWithSlippage, tokenBalance])
 
-  const assetExceedsBalanceBuyForm = useMemo(() => {
+  const shareExceedBalance = useMemo(() => {
     if (!shareValue || activeTab === TradeAction.Buy) {
       return false
     }
@@ -502,7 +502,7 @@ export default function BuySellFields({
             assetValue={assetValue}
           />
           {/* Share section */}
-          <BuySellFieldsContainer assetExceedsBalance={assetExceedsBalanceBuyForm}>
+          <BuySellFieldsContainer assetExceedsBalance={shareExceedBalance}>
             <BuySellFieldsItem>
               <BuySellFieldsWrapper>
                 <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
@@ -518,9 +518,9 @@ export default function BuySellFields({
                 name="ShareInput"
                 value={shareValue}
                 onChange={(event) => handleInputChange(event, InputType.Share)}
-                assetExceedsBalance={assetExceedsBalanceBuyForm}
+                assetExceedsBalance={shareExceedBalance}
               />
-              {assetExceedsBalanceBuyForm && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
+              {shareExceedBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
             </BuySellFieldsItem>
             <BuySellFieldsItem>
               <BuySellFieldsSelect>
