@@ -187,7 +187,7 @@ export default function BuySellFields({
       const setValue = inputType === InputType.Share ? setShareValue : setAssetValue // Remove here
       const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
       const setOppositeDisplay = inputType === InputType.Share ? setAssetValueDisplay : setShareValueDisplay
-      debugger
+
       setInputType(inputType)
       setValue(inputAmount)
 
