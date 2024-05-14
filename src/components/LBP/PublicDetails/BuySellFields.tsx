@@ -460,6 +460,10 @@ export default function BuySellFields({
       await trade(inputType, inputType == InputType.Asset ? assetValue : shareValue)
       setShareValue('')
       setAssetValue('')
+      setShareValueDisplay('')
+      setAssetValueDisplay('')
+      setAssetValueInput('')
+      setShareValueInput('')
     } else {
       setButtonDisabled(true)
       try {
@@ -499,6 +503,10 @@ export default function BuySellFields({
     await trade(inputType, inputType == InputType.Asset ? assetValue : shareValue)
     setShareValue('')
     setAssetValue('')
+    setShareValueDisplay('')
+    setAssetValueDisplay('')
+    setAssetValueInput('')
+    setShareValueInput('')
   }, [assetValue, shareValue])
 
   const isDisableBuyButton =
