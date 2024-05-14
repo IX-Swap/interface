@@ -486,6 +486,20 @@ export default function BuySellFields({
     setAssetValue('')
   }, [assetValue, shareValue])
 
+  const isDisableBuyButtoonn =
+    assetExceedsBalance ||
+    isExecuting ||
+    approval == ApprovalState.PENDING ||
+    buttonDisabled ||
+    (shareValue === '' && assetValue === '') ||
+    errorMessage !== ''
+  const isDisableSellButton =
+    isExecuting ||
+    (shareValue === '' && assetValue === '') ||
+    errorMessage !== '' ||
+    shareExceedBalance ||
+    assetExceedsBalance
+
   return (
     <>
       {isLoading ? (
@@ -585,25 +599,15 @@ export default function BuySellFields({
           </TabRow>
           <TabRow style={{ marginTop: '20px' }}>
             {activeTab === 'buy' ? (
-              <PinnedContentButton
-                onClick={handleButtonClick}
-                disabled={
-                  assetExceedsBalance ||
-                  isExecuting ||
-                  approval == ApprovalState.PENDING ||
-                  buttonDisabled ||
-                  (shareValue === '' && assetValue === '') ||
-                  errorMessage !== ''
-                }
-              >
+              <PinnedContentButton onClick={handleButtonClick} disabled={isDisableBuyButtoonn}>
                 {buttonText}
               </PinnedContentButton>
             ) : (
               <PinnedContentButton
                 onClick={handleSellButtonClick}
-                disabled={isExecuting || (shareValue === '' && assetValue === '') || errorMessage !== ''}
+                disabled={isDisableSellButton}
                 style={{
-                  backgroundColor: isExecuting ? '' : shareValue === '' && assetValue === '' ? '' : '#FF6161',
+                  backgroundColor: isDisableSellButton ? '' : '#FF6161',
                 }}
               >
                 {isExecuting ? 'Executing...' : 'Sell'}
