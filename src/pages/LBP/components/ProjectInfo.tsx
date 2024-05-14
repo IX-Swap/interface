@@ -156,7 +156,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         ...projectInfoData,
         socialLinks: [...socialLinks, newLink],
       }
-    } else if (linkType === 'Whitepapers') {
+    } else if (linkType === 'Additional links') {
       const whitepapers = Array.isArray(projectInfoData.whitepapers) ? projectInfoData.whitepapers : []
       updatedData = {
         ...projectInfoData,
@@ -231,7 +231,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
 
   const onSelectChange = (field: string, value: any) => {
     setValues({ ...values, [field]: value })
-    setNewLinkName(value.label)
+    setNewLinkName(value?.label)
   }
 
   return (

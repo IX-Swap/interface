@@ -229,10 +229,18 @@ interface ProjectInfoProps {
   shareTitle: string
   shareLogo: any
   endPrice: number
+  isEditable: boolean
 }
 
 // Refactored Tokenomics component
-const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPrice }: ProjectInfoProps) => {
+const Tokenomics = ({
+  onChange,
+  formDataTokenomics,
+  shareTitle,
+  shareLogo,
+  endPrice,
+  isEditable,
+}: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
   const [isOpen, setIsOpen] = useState(false)
@@ -488,6 +496,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
         onChange={handleInputChange}
         onBlur={formik.handleBlur}
         value={formDataTokenomics.shareAddress}
+        disabled={!isEditable}
       />
       {formik.touched.shareAddress && !formDataTokenomics.shareAddress ? (
         <ErrorText>{formik.errors.shareAddress}</ErrorText>
@@ -523,6 +532,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
           </TokenomicsItem>
           <TokenomicsItem>
             <Input
+              disabled={!isEditable}
               type="number"
               placeholder="0.00"
               name="shareInput"
@@ -530,9 +540,10 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
               value={formDataTokenomics.shareInput}
               // value={formik.values.shareInput}
               onChange={handleInputChange}
+              onWheel={(event) => event.currentTarget.blur()}
             />
 
-            <MaxWrapper onClick={() => handleMaxClick(balances?.shareBalance, 'shareInput')}>
+            <MaxWrapper onClick={isEditable ? () => handleMaxClick(balances?.shareBalance, 'shareInput') : undefined}>
               <Span style={{ padding: '10px 20px', cursor: 'pointer' }}>Max</Span>
             </MaxWrapper>
           </TokenomicsItem>
@@ -549,7 +560,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
         <TokenomicsContainer>
           <TokenomicsItem>
             <TokenSelectContainer>
-              <Options onClick={() => setIsOpen(!isOpen)}>
+              <Options onClick={() => setIsOpen(!isOpen && !isEditable)}>
                 {renderTokenImage(formDataTokenomics.assetTokenSymbol)}
                 {formDataTokenomics?.assetTokenSymbol
                   ? formDataTokenomics?.assetTokenSymbol
@@ -587,6 +598,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
           </TokenomicsItem>
           <TokenomicsItem>
             <Input
+              disabled={!isEditable}
               type="number"
               placeholder="0.00"
               name="assetInput"
@@ -594,8 +606,9 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
               onBlur={formik.handleBlur}
               // value={formik.values.assetInput}
               value={formDataTokenomics.assetInput}
+              onWheel={(event) => event.currentTarget.blur()}
             />
-            <MaxWrapper onClick={() => handleMaxClick(balances?.assetBalance, 'assetInput')}>
+            <MaxWrapper onClick={isEditable ? () => handleMaxClick(balances?.assetBalance, 'assetInput') : undefined}>
               <Span style={{ padding: '10px 20px', cursor: 'pointer' }}>Max</Span>
             </MaxWrapper>
           </TokenomicsItem>
@@ -683,6 +696,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
               style={{ color: '#6666FF' }}
               value={formDataTokenomics.startWeight}
               onChange={handleChangeStart}
+              disabled={!isEditable}
             />
           </Stack>
         </div>
@@ -744,6 +758,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
             style={{ color: '#6666FF' }}
             value={formDataTokenomics.endWeight ? formDataTokenomics.endWeight : valueEnd}
             onChange={handleChangeEnd}
+            disabled={!isEditable}
           />
         </Stack>
       </div>
@@ -758,6 +773,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <div style={{ display: 'grid' }}>
             <DateTimePicker
+              disabled={!isEditable}
               slotProps={{
                 textField: {
                   error: false,
@@ -774,6 +790,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <div style={{ display: 'grid' }}>
             <DateTimePicker
+              disabled={!isEditable}
               slotProps={{
                 textField: {
                   error: false,
@@ -814,6 +831,7 @@ const Tokenomics = ({ onChange, formDataTokenomics, shareTitle, shareLogo, endPr
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
             value={formDataTokenomics.maxPrice}
+            disabled={!isEditable}
           />
 
           {/* {formik.touched.maxPrice && !formDataTokenomics.maxPrice ? (

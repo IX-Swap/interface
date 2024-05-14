@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import { text1, text2, text4, text5, text58 } from 'components/LaunchpadMisc/typography'
+import { text1, text2, text4, text5, text58, text9 } from 'components/LaunchpadMisc/typography'
 import { LbpStatus } from '../types'
 import { LBP_STAGE_LABELS } from 'state/lbp/constants'
 import { LbpStatusBadge } from './LbpStatusBadge'
 import { LbpSaleStatusInfo } from './LbpSaleStatusInfo'
-import { useKYCState } from 'state/kyc/hooks'
-import { KYCStatuses } from 'pages/KYC/enum'
+
+import { useKyc } from 'state/user/hooks'
+
+import Portal from '@reach/portal'
+import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 
 interface Props {
   lbp: any
@@ -20,13 +23,13 @@ const getStageLabel = (stage: LbpStatus) => {
 export const LbpCard: React.FC<Props> = ({ lbp }) => {
   const history = useHistory()
   const theme = useTheme()
-
+  const { isChangeRequested, isPending, isDraft, isRejected } = useKyc()
   const [showDetails, setShowDetails] = React.useState(false)
   const [color, setColor] = React.useState('')
-
+  const [showKYCModal, setShowKYCModal] = React.useState(false)
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
-  const { kyc } = useKYCState()
-  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
+
+  const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
   const isClosed = React.useMemo(
     () => !!lbp.status && [LbpStatus.closed, LbpStatus.ended].includes(lbp.status),
@@ -34,8 +37,12 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   )
 
   const onClick = React.useCallback(() => {
-    history.push(`/lbp/${lbp.id}`)
-  }, [])
+    if (isChangeRequested || isPending || isDraft || isRejected) {
+      toggleKYCModal()
+    } else {
+      history.push(`/lbp/${lbp.id}`)
+    }
+  }, [isChangeRequested, isPending, isDraft, isRejected, history, lbp.id])
 
   useEffect(() => {
     switch (lbp.status) {
@@ -106,17 +113,22 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
 
           <LbpCardFooter>
             {!isClosed && (
-              <InvestButton disabled={!isKycApproved} type="button" onClick={onClick}>
+              <InvestButton type="button" onClick={onClick}>
                 Invest
               </InvestButton>
             )}
 
             {isClosed && (
-              <InvestButton disabled={!isKycApproved} type="button" onClick={onClick}>
+              <InvestButton type="button" onClick={onClick}>
                 Learn More
               </InvestButton>
             )}
           </LbpCardFooter>
+          {showKYCModal && (
+            <Portal>
+              <KYCPrompt />
+            </Portal>
+          )}
         </LbpCardInfoContainer>
       </LbpCardContainer>
     </>
