@@ -560,7 +560,7 @@ const Tokenomics = ({
         <TokenomicsContainer>
           <TokenomicsItem>
             <TokenSelectContainer>
-              <Options onClick={() => setIsOpen(!isOpen && !isEditable)}>
+              <Options onClick={() => setIsOpen(!isOpen && isEditable)}>
                 {renderTokenImage(formDataTokenomics.assetTokenSymbol)}
                 {formDataTokenomics?.assetTokenSymbol
                   ? formDataTokenomics?.assetTokenSymbol
@@ -625,6 +625,7 @@ const Tokenomics = ({
         label="Project Token Max. Supply"
         name="maxSupply"
         onChange={handleInputChange}
+        onWheel={ event => event.currentTarget.blur() }
         // onBlur={formik.handleBlur}
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}
@@ -827,6 +828,7 @@ const Tokenomics = ({
             placeholder="$0.00"
             id="maxPrice"
             label="Max. price"
+            onWheel={ event => event.currentTarget.blur() }
             name="maxPrice"
             onChange={handleInputChange}
             onBlur={formik.handleBlur}

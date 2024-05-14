@@ -11,6 +11,8 @@ import { ReactComponent as CloseCheckIcon } from '../../../assets/images/closeGr
 import { ReactComponent as ComingSoon } from '../../../assets/images/ComingSoonNew.svg'
 import ConfirmStatus from './Modals/ConfirmStatusModal'
 import { useHistory } from 'react-router-dom'
+import { useActiveWeb3React } from 'hooks/web3'
+import { CHAIN_INFO } from 'constants/chains'
 
 interface MiddleSectionProps {
   lbpShareLogo: any
@@ -18,6 +20,7 @@ interface MiddleSectionProps {
   status: string
   lbpId: string
   updateStatus?: any
+  contractAddress?: string
 }
 
 const Wrapper = styled.div`
@@ -126,10 +129,19 @@ const PoolButton = styled(ColumnCenter)`
   align-self: center;
 `
 
-const AdminHeader: React.FC<MiddleSectionProps> = ({ lbpShareLogo, lbpShareName, status, lbpId, updateStatus }) => {
+const AdminHeader: React.FC<MiddleSectionProps> = ({
+  lbpShareLogo,
+  lbpShareName,
+  status,
+  lbpId,
+  updateStatus,
+  contractAddress,
+}) => {
   const history = useHistory()
   const createLbp = useCallback((id: number) => history.push(`/lbp/edit?id=${id}`), [history])
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { chainId } = useActiveWeb3React()
+  const chainInfo = chainId ? CHAIN_INFO[chainId] : undefined
 
   const handleOpenModal = () => {
     if (status === 'paused' || status === 'live' || status === 'ended') {
@@ -139,6 +151,12 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({ lbpShareLogo, lbpShareName,
 
   const handleModalClose = () => {
     setIsModalOpen(false)
+  }
+
+  const handlePoolButtonClick = () => {
+    if (contractAddress) {
+      window.open(`${chainInfo?.blockExplorerUrls[0]}/address/${contractAddress}`, '_blank')
+    }
   }
 
   let statusText: string
@@ -191,7 +209,7 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({ lbpShareLogo, lbpShareName,
           {statusIcon}
           <TYPE.subHeader1>{statusText}</TYPE.subHeader1>
         </StatusButton>
-        <PoolButton>
+        <PoolButton onClick={handlePoolButtonClick}>
           <MarketCapIcon style={{ position: 'absolute', left: '11%', top: '28%' }} />
           <TYPE.subHeader1 style={{ color: '#6666FF' }}>Pool Address</TYPE.subHeader1>
         </PoolButton>

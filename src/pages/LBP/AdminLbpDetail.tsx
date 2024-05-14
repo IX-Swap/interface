@@ -58,6 +58,7 @@ const AdminLbpDetail = () => {
               lbpShareName={lbpData?.title}
               lbpShareLogo={lbpData?.logo}
               updateStatus={updateStatus}
+              contractAddress={lbpData?.contractAddress}
             />
             <DetailsChart
               contractAddress={lbpData?.contractAddress}
