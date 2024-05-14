@@ -16,6 +16,7 @@ import { getPriceFromRawReservesAndWeights } from '../utils/calculation'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { useCurrency } from 'hooks/Tokens'
+import useDebounce from 'hooks/useDebounce'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -78,6 +79,10 @@ export default function BuySellFields({
   const [isLoading, setIsLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [shareSymbol, setShareSymbol] = useState<any>('')
+  const [shareValueInput, setShareValueInput] = useState('')
+  const [assetValueInput, setAssetValueInput] = useState('')
+  const [shareValueDisplay, setShareValueDisplay] = useState('')
+  const [assetValueDisplay, setAssetValueDisplay] = useState('')
   const [shareValue, setShareValue] = useState('')
   const [assetValue, setAssetValue] = useState('')
   const [swapFee, setSwapFee] = useState(0)
@@ -88,6 +93,9 @@ export default function BuySellFields({
   })
   const [isExecuting, setIsExecuting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+
+  const debouncedShareInput = useDebounce(shareValueInput, 500)
+  const debouncedAssetInput = useDebounce(assetValueInput, 500)
 
   const assetDecimals = useMemo(() => tokenOption?.tokenDecimals || 0, [tokenOption])
   const shareDecimals = useMemo(() => 18, []) // for now hardcode share decimals to 18 but can change it later
@@ -178,11 +186,11 @@ export default function BuySellFields({
   }
 
   const handleInputChange = useCallback(
-    async (event: any, inputType: InputType) => {
+    async (inputAmount: any, inputType: InputType) => {
       if (errorMessage !== '') setErrorMessage('')
-      const inputAmount = event.target.value
-      const setValue = inputType === InputType.Share ? setShareValue : setAssetValue
+      const setValue = inputType === InputType.Share ? setShareValue : setAssetValue // Remove here
       const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
+      const setOppositeDisplay = inputType === InputType.Share ? setAssetValueDisplay : setShareValueDisplay
 
       setInputType(inputType)
       setValue(inputAmount)
@@ -193,6 +201,7 @@ export default function BuySellFields({
           converting: true,
         })
         setOpposite('')
+        setOppositeDisplay('')
         const converted = await handleConversion(
           inputType,
           inputAmount,
@@ -207,9 +216,11 @@ export default function BuySellFields({
         })
 
         setOpposite(converted ? parseFloat(converted).toFixed(AMOUNT_PRECISION) : '')
+        setOppositeDisplay(converted ? parseFloat(converted).toFixed(AMOUNT_PRECISION) : '')
       } else {
         // Clear the opposite value if the input is cleared
         setOpposite('')
+        setOppositeDisplay('')
       }
     },
     [errorMessage, shareDecimals, assetDecimals]
@@ -504,6 +515,18 @@ export default function BuySellFields({
     shareExceedBalance ||
     assetExceedsBalance
 
+  useEffect(() => {
+    if (debouncedShareInput) {
+      handleInputChange(debouncedShareInput, InputType.Share)
+    }
+  }, [debouncedShareInput])
+
+  useEffect(() => {
+    if (debouncedAssetInput) {
+      handleInputChange(debouncedAssetInput, InputType.Asset)
+    }
+  }, [debouncedAssetInput])
+
   return (
     <>
       {isLoading ? (
@@ -534,8 +557,11 @@ export default function BuySellFields({
                 type="number"
                 placeholder="0.00"
                 name="ShareInput"
-                value={shareValue}
-                onChange={(event) => handleInputChange(event, InputType.Share)}
+                value={shareValueDisplay}
+                onChange={(event) => {
+                  setShareValueInput(event.target.value)
+                  setShareValueDisplay(event.target.value)
+                }}
                 onWheel={(event) => event.currentTarget.blur()}
                 exceedsBalance={shareExceedBalance}
               />
@@ -566,8 +592,11 @@ export default function BuySellFields({
                 type="number"
                 placeholder="0.00"
                 name="assetInput"
-                value={assetValue}
-                onChange={(event) => handleInputChange(event, InputType.Asset)}
+                value={assetValueDisplay}
+                onChange={(event) => {
+                  setAssetValueInput(event.target.value)
+                  setAssetValueDisplay(event.target.value)
+                }}
                 onWheel={(event) => event.currentTarget.blur()}
                 exceedsBalance={assetExceedsBalance}
               />

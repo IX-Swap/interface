@@ -61,6 +61,7 @@ interface Props {
   contractAddress?: string
   shareName?: string
   shareLogo?: any
+  isEditable?: boolean
 }
 
 enum ApprovalType {
@@ -68,7 +69,7 @@ enum ApprovalType {
   SHARE = 'share',
 }
 
-export default function Approvals({ addressA, addressB, assetValue, shareValue, shareName, shareLogo }: Props) {
+export default function Approvals({ addressA, addressB, assetValue, shareValue, shareName, shareLogo, isEditable }: Props) {
   const { chainId } = useWeb3React()
   const tokenBOption = getTokenOption(addressB, chainId)
 
@@ -148,7 +149,7 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
 
         <Button
           approved={approvalA === 'APPROVED'}
-          disabled={approvalA === 'APPROVED'}
+          disabled={approvalA === 'APPROVED' || !isEditable}
           onClick={handleButtonAssetClick}
         >
           {approvalA === 'APPROVED' && <Checked style={{ position: 'absolute', left: '24%' }} />}
@@ -163,7 +164,7 @@ export default function Approvals({ addressA, addressB, assetValue, shareValue, 
         </p>
         <Button
           approved={approvalB === 'APPROVED'}
-          disabled={approvalB === 'APPROVED'}
+          disabled={approvalB === 'APPROVED' || !isEditable}
           onClick={handleButtonShareClick}
         >
           {approvalB === 'APPROVED' && <Checked style={{ position: 'absolute', left: '24%' }} />}
