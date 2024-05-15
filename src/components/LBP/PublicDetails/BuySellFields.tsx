@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
 import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
-import { ethers, constants } from 'ethers'
+import { ethers, constants, BigNumber } from 'ethers'
 import { useLBPContract, useTokenContract, useLBPFactory } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { formatNumberWithDecimals, useGetLBPAuthorization } from 'state/lbp/hooks'
@@ -231,7 +231,8 @@ export default function BuySellFields({
       inputType: InputType,
       inputAmount: number,
       inputDecimals: number,
-      outputDecimals: number
+      outputDecimals: number,
+      raw = false // whether to format the output amount
     ): Promise<string> => {
       if (!lbpContractInstance) return ''
 
@@ -252,6 +253,11 @@ export default function BuySellFields({
 
         if (method) {
           const result = await lbpContractInstance[method](amount)
+          console.info('method', method, 'amount', amount.toString(), 'result', result.toString())
+          if (raw) {
+            return result.toString()
+          }
+
           const parsedAmount = ethers.utils.formatUnits(result.toString(), outputDecimals)
           return parsedAmount
         }
@@ -266,8 +272,16 @@ export default function BuySellFields({
     [lbpContractInstance]
   )
 
+  const applySlippage = (amount: BigNumber, slippage: string, isPositive: boolean) => {
+    const slippageMultiplier = parseFloat(slippage) * 100 // need to multiply by 100 as some of the slippage is below 1 like 0.25 so that we have the multiplier as an integer
+    const slippageAmount = ethers.BigNumber.from(amount)
+      .mul(ethers.BigNumber.from(Math.floor(slippageMultiplier)))
+      .div(10000)
+
+    return isPositive ? amount.add(slippageAmount) : amount.sub(slippageAmount)
+  }
+
   const trade = async (inputType: string, amount: number | string) => {
-    debugger;
     try {
       setIsExecuting(true)
       const authorization = await getLBPAuthorization(id)
@@ -317,7 +331,6 @@ export default function BuySellFields({
 
   const buyExactShares = useCallback(
     async (shareAmount: number, authorization: any): Promise<any> => {
-      debugger;
       if (!lbpContractInstance || !assetValueWithSlippage || !assetValue || !shareDecimals) return
 
       const maxAssetsIn = ethers.utils.parseUnits(assetValueWithSlippage, assetDecimals)
@@ -347,18 +360,15 @@ export default function BuySellFields({
     async (assetAmount: number, authorization: any): Promise<any> => {
       if (!lbpContractInstance || !tokenOption || !assetDecimals || !shareDecimals || !shareValue || !slippage) return
 
-      const minSharesOutValue = parseFloat(shareValue) * (1 - parseFloat(slippage) / 100)
-      const minSharesOut = ethers.utils.parseUnits(minSharesOutValue.toFixed(AMOUNT_PRECISION), shareDecimals)
-      const recipient = account
-
-      console.info('minSharesOut', minSharesOut.toString())
+      const previewedShareOut = await handleConversion(InputType.Asset, assetAmount, assetDecimals, shareDecimals, true)
+      const minSharesOut = applySlippage(ethers.BigNumber.from(previewedShareOut), slippage, false)
 
       const referrer = constants.AddressZero
 
       const tx = await lbpContractInstance.swapExactAssetsForShares(
         parseUnit(assetAmount, assetDecimals), // Convert asset amount to smallest denomination
         minSharesOut,
-        recipient,
+        account,
         referrer,
         authorization,
         {
@@ -407,16 +417,13 @@ export default function BuySellFields({
     async (shareAmount: number, authorization: any): Promise<any> => {
       if (!lbpContractInstance || !assetValue || !assetDecimals || !shareDecimals || !slippage) return
 
-      const minAssetOutValue = parseFloat(assetValue) * (1 - parseFloat(slippage) / 100)
-      const minAssetsOut = ethers.utils.parseUnits(minAssetOutValue.toFixed(AMOUNT_PRECISION), assetDecimals)
-
-      console.info('minAssetsOut', minAssetsOut.toString())
+      const previewedAssetOut = await handleConversion(InputType.Share, shareAmount, shareDecimals, assetDecimals, true)
+      const minAssetOut = applySlippage(ethers.BigNumber.from(previewedAssetOut), slippage, false)
 
       const recipient = account
-
       const tx = await lbpContractInstance.swapExactSharesForAssets(
         parseUnit(shareAmount, shareDecimals),
-        minAssetsOut,
+        minAssetOut,
         recipient,
         authorization,
         {
@@ -431,23 +438,10 @@ export default function BuySellFields({
 
   const sellExactAssets = useCallback(
     async (assetAmount: number, authorization: any): Promise<any> => {
-      debugger;
       if (!lbpContractInstance || !shareValue || !assetDecimals || !shareDecimals || !slippage) return
 
-      const converted = await handleConversion(
-        InputType.Asset,
-        assetAmount,
-        assetDecimals,
-        shareDecimals
-      )
-
-      // will replace shareValue = converted
-
-      console.log('converted', converted)
-      const maxSharesInValue = parseFloat(shareValue) * (1 + parseFloat(slippage) / 100)
-      const maxSharesIn = ethers.utils.parseUnits(maxSharesInValue.toFixed(AMOUNT_PRECISION), shareDecimals)
-
-      console.info('maxSharesIn', maxSharesIn.toString())
+      const previewedSharesIn = await handleConversion(InputType.Asset, assetAmount, assetDecimals, shareDecimals, true)
+      const maxSharesIn = applySlippage(ethers.BigNumber.from(previewedSharesIn), slippage, true)
 
       const recipient = account
       const tx = await lbpContractInstance.swapSharesForExactAssets(
