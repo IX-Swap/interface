@@ -641,7 +641,7 @@ export const useKyc = () => {
     isRejected: status === KYCStatuses.REJECTED,
     isChangeRequested: status === KYCStatuses.CHANGES_REQUESTED,
     isPending: status === KYCStatuses.PENDING,
-    isNotSubmitted: status === KYCStatuses.NOT_SUBMITTED,
+    isNotSubmitted: status === KYCStatuses.NOT_SUBMITTED || status === undefined,
     isDraft: status === KYCStatuses.DRAFT,
     isInProgress: status === KYCStatuses.IN_PROGRESS,
   }

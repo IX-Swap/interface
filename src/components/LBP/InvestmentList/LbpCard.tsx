@@ -24,7 +24,7 @@ const getStageLabel = (stage: LbpStatus) => {
 export const LbpCard: React.FC<Props> = ({ lbp }) => {
   const history = useHistory()
   const theme = useTheme()
-  const { isChangeRequested, isPending, isDraft, isRejected } = useKyc()
+  const { isChangeRequested, isPending, isDraft, isRejected, isNotSubmitted } = useKyc()
   const { account } = useWeb3React()
   const [showDetails, setShowDetails] = React.useState(false)
   const [color, setColor] = React.useState('')
@@ -37,9 +37,10 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
     () => !!lbp.status && [LbpStatus.closed, LbpStatus.ended].includes(lbp.status),
     [lbp?.status]
   )
+  
 
   const onClick = React.useCallback(() => {
-    if (!account || isChangeRequested || isPending || isDraft || isRejected) {
+    if (!account || isChangeRequested || isPending || isDraft || isRejected || isNotSubmitted) {
       toggleKYCModal()
     } else {
       history.push(`/lbp/${lbp.id}`)
