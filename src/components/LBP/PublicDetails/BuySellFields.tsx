@@ -288,12 +288,12 @@ export default function BuySellFields({
 
       const tradeFunctions = {
         buy: {
-          share: buyExactShares,
-          asset: buyExactAssetsForShares,
+          share: swapAssetsForExactShares,
+          asset: swapExactAssetsForShares,
         },
         sell: {
-          share: sellExactSharesForAssets,
-          asset: sellExactAssets,
+          share: swapExactSharesForAssets,
+          asset: swapSharesForExactAssets,
         },
       }
 
@@ -329,7 +329,7 @@ export default function BuySellFields({
     }
   }
 
-  const buyExactShares = useCallback(
+  const swapAssetsForExactShares = useCallback(
     async (shareAmount: number, authorization: any): Promise<any> => {
       if (!lbpContractInstance || !assetValueWithSlippage || !assetValue || !shareDecimals) return
 
@@ -356,12 +356,14 @@ export default function BuySellFields({
     [lbpContractInstance, assetValueWithSlippage, assetDecimals, shareDecimals]
   )
 
-  const buyExactAssetsForShares = useCallback(
+  const swapExactAssetsForShares = useCallback(
     async (assetAmount: number, authorization: any): Promise<any> => {
       if (!lbpContractInstance || !tokenOption || !assetDecimals || !shareDecimals || !shareValue || !slippage) return
 
       const previewedShareOut = await handleConversion(InputType.Asset, assetAmount, assetDecimals, shareDecimals, true)
       const minSharesOut = applySlippage(ethers.BigNumber.from(previewedShareOut), slippage, false)
+
+      console.info('swapExactAssetsForShares', 'minSharesOut', minSharesOut.toString())
 
       const referrer = constants.AddressZero
 
@@ -413,7 +415,7 @@ export default function BuySellFields({
     return priceImpactPercentage.toFixed(3)
   }, [activeTab, reservesAndWeights, assetValue, shareValue, assetDecimals, shareDecimals])
 
-  const sellExactSharesForAssets = useCallback(
+  const swapExactSharesForAssets = useCallback(
     async (shareAmount: number, authorization: any): Promise<any> => {
       if (!lbpContractInstance || !assetValue || !assetDecimals || !shareDecimals || !slippage) return
 
@@ -436,7 +438,7 @@ export default function BuySellFields({
     [lbpContractInstance, assetValue, assetDecimals, shareDecimals, slippage]
   )
 
-  const sellExactAssets = useCallback(
+  const swapSharesForExactAssets = useCallback(
     async (assetAmount: number, authorization: any): Promise<any> => {
       if (!lbpContractInstance || !shareValue || !assetDecimals || !shareDecimals || !slippage) return
 
