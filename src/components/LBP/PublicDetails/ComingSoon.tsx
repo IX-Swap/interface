@@ -9,20 +9,28 @@ interface ComingBarProps {
 }
 
 export default function ComingSoon({ lbpData }: ComingBarProps) {
-  const calculateRemainingTime = useCallback(() => {
-    if (lbpData && lbpData.startDate && lbpData.endDate) {
-      const endDate = new Date(lbpData.endDate).getTime()
-      const today = new Date().getTime()
-      const remainingTimeInSeconds = Math.max(0, endDate - today) / 1000
+  const [remainingTime, setRemainingTime] = useState(calculateRemainingTime())
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const newRemainingTime = calculateRemainingTime()
+      setRemainingTime(newRemainingTime)
+    }, 1000)
+
+    return () => clearInterval(intervalId)
+  }, [calculateRemainingTime])
+
+  function calculateRemainingTime() {
+    if (lbpData && lbpData.startDate) {
+      const startDate = new Date(lbpData.startDate).getTime()
+      const now = new Date().getTime()
+      const remainingTimeInSeconds = Math.max(0, startDate - now) / 1000
       return remainingTimeInSeconds
     }
     return 0
-  }, [lbpData])
+  }
 
-  const remainingTime = useMemo(calculateRemainingTime, [calculateRemainingTime])
-
-
-  const remainingDays = Math.ceil(remainingTime / (24 * 60 * 60))
+  const remainingDays = Math.floor(remainingTime / (24 * 60 * 60))
   const remainingHours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))
   const remainingMinutes = Math.floor((remainingTime % (60 * 60)) / 60)
   const remainingSeconds = Math.floor(remainingTime % 60)
@@ -37,35 +45,33 @@ export default function ComingSoon({ lbpData }: ComingBarProps) {
         <TYPE.subHeader1 margin={'15px 0px'} color={'#292933'}>
           Starts in
         </TYPE.subHeader1>
-        {remainingDays > 0 ? (
-          <TimeContainer>
-            <DayItem>
+        <TimeContainer>
+          {remainingDays > 0 ? (
+            <TimeItem>
               <TYPE.description7 fontSize={'64px'} color={'#6666FF'}>
                 {remainingDays}
               </TYPE.description7>
-              <TYPE.description7 fontSize={'64px'} color={'#6666FF'}>
-                Days
-              </TYPE.description7>
-            </DayItem>
-          </TimeContainer>
-        ) : (
-          <TimeContainer>
-            <TimeItem>
-              <TYPE.description7 color={'#6666FF'}>{remainingHours}</TYPE.description7>
-              <TYPE.description3 color={'#8F8FB2'}>Hours</TYPE.description3>
+              <TYPE.description3 color={'#6666FF'}>Days</TYPE.description3>
             </TimeItem>
-            <VerticalLine />
-            <TimeItem>
-              <TYPE.description7 color={'#6666FF'}>{remainingMinutes}</TYPE.description7>
-              <TYPE.description3 color={'#8F8FB2'}>Mins</TYPE.description3>
-            </TimeItem>
-            <VerticalLine />
-            <TimeItem>
-              <TYPE.description7 color={'#6666FF'}>{remainingSeconds}</TYPE.description7>
-              <TYPE.description3 color={'#8F8FB2'}>Secs</TYPE.description3>
-            </TimeItem>
-          </TimeContainer>
-        )}
+          ) : (
+            <>
+              <TimeItem>
+                <TYPE.description7 color={'#6666FF'}>{remainingHours}</TYPE.description7>
+                <TYPE.description3 color={'#8F8FB2'}>Hours</TYPE.description3>
+              </TimeItem>
+              <VerticalLine />
+              <TimeItem>
+                <TYPE.description7 color={'#6666FF'}>{remainingMinutes}</TYPE.description7>
+                <TYPE.description3 color={'#8F8FB2'}>Mins</TYPE.description3>
+              </TimeItem>
+              <VerticalLine />
+              <TimeItem>
+                <TYPE.description7 color={'#6666FF'}>{remainingSeconds}</TYPE.description7>
+                <TYPE.description3 color={'#8F8FB2'}>Secs</TYPE.description3>
+              </TimeItem>
+            </>
+          )}
+        </TimeContainer>
         <DesContainer>
           <TYPE.description3>This LBP is coming soon. Check back soon and stay up to date.</TYPE.description3>
         </DesContainer>
@@ -127,11 +133,4 @@ const MiddleSection = styled.div`
   margin: 20px 0;
   background: #ffffff;
   text-align: center;
-`
-
-const DayItem = styled.div`
-  display: contents;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
 `
