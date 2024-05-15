@@ -63,6 +63,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
       toggleModal(false)
     }
   }, [account, !!kyc, isChangeRequested, isPending, isInProgress, isRejected, isAccredited, isDraft])
+  
 
   return (
     <Modal isOpen={isOpen} onDismiss={() => toggleModal(false)}>

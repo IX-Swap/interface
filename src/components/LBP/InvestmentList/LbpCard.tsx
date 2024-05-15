@@ -11,6 +11,7 @@ import { useKyc } from 'state/user/hooks'
 
 import Portal from '@reach/portal'
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
+import { useWeb3React } from '@web3-react/core'
 
 interface Props {
   lbp: any
@@ -24,6 +25,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   const history = useHistory()
   const theme = useTheme()
   const { isChangeRequested, isPending, isDraft, isRejected } = useKyc()
+  const { account } = useWeb3React()
   const [showDetails, setShowDetails] = React.useState(false)
   const [color, setColor] = React.useState('')
   const [showKYCModal, setShowKYCModal] = React.useState(false)
@@ -37,12 +39,12 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   )
 
   const onClick = React.useCallback(() => {
-    if (isChangeRequested || isPending || isDraft || isRejected) {
+    if (!account || isChangeRequested || isPending || isDraft || isRejected) {
       toggleKYCModal()
     } else {
       history.push(`/lbp/${lbp.id}`)
     }
-  }, [isChangeRequested, isPending, isDraft, isRejected, history, lbp.id])
+  }, [!account, isChangeRequested, isPending, isDraft, isRejected, history, lbp.id])
 
   useEffect(() => {
     switch (lbp.status) {
@@ -64,6 +66,11 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
 
   return (
     <>
+      {showKYCModal && (
+        <Portal>
+          <KYCPrompt />
+        </Portal>
+      )}
       <LbpCardContainer>
         <LbpCardImage src={lbp.banner?.public} />
 
@@ -124,11 +131,6 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
               </InvestButton>
             )}
           </LbpCardFooter>
-          {showKYCModal && (
-            <Portal>
-              <KYCPrompt />
-            </Portal>
-          )}
         </LbpCardInfoContainer>
       </LbpCardContainer>
     </>
