@@ -229,7 +229,7 @@ export default function App() {
         !isAllowed(route),
         route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
         route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
-        route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
+        route.conditions?.chainIsSupported !== undefined && chainId && chains.includes(chainId),
         route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
         route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
         roleGuard,
