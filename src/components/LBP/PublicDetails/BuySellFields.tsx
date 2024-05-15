@@ -30,6 +30,7 @@ interface BuySellFieldsProps {
   shareTokenAddress?: string
   id: any
   logo?: any
+  allowSlippage: boolean
 }
 
 interface TokenOption {
@@ -72,6 +73,7 @@ export default function BuySellFields({
   id,
   logo,
   slippage,
+  allowSlippage,
 }: BuySellFieldsProps) {
   // UI States
   const [buttonDisabled, setButtonDisabled] = useState(true)
@@ -116,13 +118,13 @@ export default function BuySellFields({
     if (!assetValue || !slippage) {
       return ''
     }
-    if (activeTab === TradeAction.Buy && inputType === InputType.Share) {
+    if (allowSlippage && activeTab === TradeAction.Buy && inputType === InputType.Share) {
       const maxAssetIn = parseFloat(assetValue) * (1 + parseFloat(slippage) / 100)
       return maxAssetIn.toFixed(AMOUNT_PRECISION)
     }
 
     return assetValue
-  }, [slippage, assetValue, inputType, activeTab])
+  }, [slippage, assetValue, inputType, activeTab, allowSlippage])
 
   const [approval, approveCallback, refreshAllowance] = useAllowance(
     assetTokenAddress,
@@ -272,14 +274,21 @@ export default function BuySellFields({
     [lbpContractInstance]
   )
 
-  const applySlippage = (amount: BigNumber, slippage: string, isPositive: boolean) => {
-    const slippageMultiplier = parseFloat(slippage) * 100 // need to multiply by 100 as some of the slippage is below 1 like 0.25 so that we have the multiplier as an integer
-    const slippageAmount = ethers.BigNumber.from(amount)
-      .mul(ethers.BigNumber.from(Math.floor(slippageMultiplier)))
-      .div(10000)
+  const applySlippage = useCallback(
+    (amount: BigNumber, slippage: string, isMax: boolean) => {
+      if (!allowSlippage) {
+        return isMax ? ethers.constants.MaxUint256 : ethers.constants.Zero
+      }
 
-    return isPositive ? amount.add(slippageAmount) : amount.sub(slippageAmount)
-  }
+      const slippageMultiplier = parseFloat(slippage) * 100 // need to multiply by 100 as some of the slippage is below 1 like 0.25 so that we have the multiplier as an integer
+      const slippageAmount = ethers.BigNumber.from(amount)
+        .mul(ethers.BigNumber.from(Math.floor(slippageMultiplier)))
+        .div(10000)
+
+      return isMax ? amount.add(slippageAmount) : amount.sub(slippageAmount)
+    },
+    [allowSlippage]
+  )
 
   const trade = async (inputType: string, amount: number | string) => {
     try {
@@ -334,7 +343,10 @@ export default function BuySellFields({
     async (shareAmount: number, authorization: any): Promise<any> => {
       if (!lbpContractInstance || !assetValueWithSlippage || !assetValue || !shareDecimals) return
 
-      const maxAssetsIn = ethers.utils.parseUnits(assetValueWithSlippage, assetDecimals)
+      const maxAssetsIn = allowSlippage
+        ? ethers.utils.parseUnits(assetValueWithSlippage, assetDecimals)
+        : ethers.constants.MaxUint256
+
       console.info('swapAssetsForExactShares', 'shareAmount', shareAmount, 'maxAssetsIn', maxAssetsIn.toString())
 
       const recipient = account
