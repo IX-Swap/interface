@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import Background from 'components/LBP/PublicDetails/Background'
 import MiddleSection from 'components/LBP/PublicDetails/MiddleSection'
 import { useGetLbp, useGetLbpStats } from 'state/lbp/hooks'
 import { LbpFormValues, MarketData } from 'components/LBP/types'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Loader } from 'components/AdminTransactionsTable'
-
-
+import { useWeb3React } from '@web3-react/core'
 
 interface RouteParams {
   id: string
@@ -20,12 +19,20 @@ const PublicDetails: React.FC = () => {
   const [lbpData, setLbpData] = useState<LbpFormValues | null>(null)
   const [statsData, setStatsData] = useState<MarketData>()
   const [loader, setLoader] = useState(true)
+  const { account } = useWeb3React()
+  const history = useHistory()
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadData = async () => {
       try {
+        if (!account) {
+          history.push(`/kyc/`)
+          return
+        }
+
         const lbpDataResponse = await fetchLbpData(parseInt(id))
         const statsDataResponse = await fetchLbpStatsData(parseInt(id))
+
         setLbpData(lbpDataResponse)
         setStatsData(statsDataResponse)
         setLoader(false)
@@ -35,9 +42,8 @@ const PublicDetails: React.FC = () => {
       }
     }
 
-    fetchData()
-
-  }, [fetchLbpData, fetchLbpStatsData, id])
+    loadData()
+  }, [fetchLbpData, fetchLbpStatsData, id, account, history])
 
   return (
     <>
