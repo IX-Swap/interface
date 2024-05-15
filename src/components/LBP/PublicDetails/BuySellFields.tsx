@@ -14,6 +14,8 @@ import { useWeb3React } from '@web3-react/core'
 import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
 import { getPriceFromRawReservesAndWeights } from '../utils/calculation'
 import { useTransactionAdder } from 'state/transactions/hooks'
+import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
+import { useCurrency } from 'hooks/Tokens'
 import useDebounce from 'hooks/useDebounce'
 
 interface BuySellFieldsProps {
@@ -106,6 +108,8 @@ export default function BuySellFields({
   const getLBPAuthorization = useGetLBPAuthorization()
   const shareTokenContract = useTokenContract(shareTokenAddress ?? '')
   const [reservesAndWeights, setReservesAndWeights] = useState<any>(null)
+  const shareCurrency = useCurrency((shareTokenAddress as any) ?? null)
+  const addShareTokenToMetamask = useAddTokenToMetamask(shareCurrency as any)
 
   const assetValueWithSlippage = useMemo(() => {
     // only applicable if active tab is buy, and input type is share
@@ -456,6 +460,10 @@ export default function BuySellFields({
       await trade(inputType, inputType == InputType.Asset ? assetValue : shareValue)
       setShareValue('')
       setAssetValue('')
+      setShareValueDisplay('')
+      setAssetValueDisplay('')
+      setAssetValueInput('')
+      setShareValueInput('')
     } else {
       setButtonDisabled(true)
       try {
@@ -495,6 +503,10 @@ export default function BuySellFields({
     await trade(inputType, inputType == InputType.Asset ? assetValue : shareValue)
     setShareValue('')
     setAssetValue('')
+    setShareValueDisplay('')
+    setAssetValueDisplay('')
+    setAssetValueInput('')
+    setShareValueInput('')
   }, [assetValue, shareValue])
 
   const isDisableBuyButton =
@@ -647,7 +659,9 @@ export default function BuySellFields({
           </TabRow>
           {/* hide for now
       <TabRow style={{padding: '10px 40px', textAlign: 'center'}}><TYPE.title10 color={'#FF6161'}>Price change exceeds slippage tolerance. Adjust and retry.</TYPE.title10> </TabRow> */}
-          <AddWalletText>Add Base Token to Wallet</AddWalletText>
+          <AddWalletText onClick={() => !addShareTokenToMetamask.success && addShareTokenToMetamask.addToken()}>
+            Add Project Token to Wallet
+          </AddWalletText>
         </>
       )}
     </>
@@ -756,4 +770,5 @@ const AddWalletText = styled.div`
   font-weight: 500;
   color: #6666ff;
   margin-top: 16px;
+  cursor: pointer;
 `
