@@ -383,38 +383,6 @@ export default function BuySellFields({
     [lbpContractInstance, shareValue, tokenOption, assetDecimals, shareDecimals, slippage]
   )
 
-  const priceImpact = useMemo(() => {
-    if (!reservesAndWeights || !assetDecimals || !shareDecimals || !shareValue || !assetValue) return 0
-    const { assetReserve, shareReserve, assetWeight, shareWeight } = reservesAndWeights
-    const isBuy = activeTab === TradeAction.Buy
-
-    const deltaAssetReserve = ethers.utils.parseUnits(assetValue, assetDecimals)
-    const deltaShareReserve = ethers.utils.parseUnits(shareValue, shareDecimals)
-
-    const marketPrice = getPriceFromRawReservesAndWeights({
-      currentAssetReserve: assetReserve,
-      currentShareReserve: shareReserve,
-      currentAssetWeight: assetWeight,
-      currentShareWeight: shareWeight,
-      assetDecimals: assetDecimals,
-      shareDecimals: shareDecimals,
-    })
-
-    const newPrice = getPriceFromRawReservesAndWeights({
-      currentAssetReserve: isBuy ? assetReserve.add(deltaAssetReserve) : assetReserve.sub(deltaAssetReserve),
-      currentShareReserve: isBuy ? shareReserve.sub(deltaShareReserve) : shareReserve.add(deltaShareReserve),
-      currentAssetWeight: assetWeight,
-      currentShareWeight: shareWeight,
-      assetDecimals: assetDecimals,
-      shareDecimals: shareDecimals,
-    })
-
-    const marketPriceFloat = parseFloat(marketPrice)
-    const priceDifference = parseFloat(newPrice) - marketPriceFloat
-    const priceImpactPercentage = Math.abs((priceDifference / marketPriceFloat) * 100)
-    return priceImpactPercentage.toFixed(3)
-  }, [activeTab, reservesAndWeights, assetValue, shareValue, assetDecimals, shareDecimals])
-
   const swapExactSharesForAssets = useCallback(
     async (shareAmount: number, authorization: any): Promise<any> => {
       if (!lbpContractInstance || !assetValue || !assetDecimals || !shareDecimals || !slippage) return
@@ -460,6 +428,38 @@ export default function BuySellFields({
     },
     [lbpContractInstance, shareValue, assetDecimals, shareDecimals, slippage]
   )
+
+  const priceImpact = useMemo(() => {
+    if (!reservesAndWeights || !assetDecimals || !shareDecimals || !shareValue || !assetValue) return 0
+    const { assetReserve, shareReserve, assetWeight, shareWeight } = reservesAndWeights
+    const isBuy = activeTab === TradeAction.Buy
+
+    const deltaAssetReserve = ethers.utils.parseUnits(assetValue, assetDecimals)
+    const deltaShareReserve = ethers.utils.parseUnits(shareValue, shareDecimals)
+
+    const marketPrice = getPriceFromRawReservesAndWeights({
+      currentAssetReserve: assetReserve,
+      currentShareReserve: shareReserve,
+      currentAssetWeight: assetWeight,
+      currentShareWeight: shareWeight,
+      assetDecimals: assetDecimals,
+      shareDecimals: shareDecimals,
+    })
+
+    const newPrice = getPriceFromRawReservesAndWeights({
+      currentAssetReserve: isBuy ? assetReserve.add(deltaAssetReserve) : assetReserve.sub(deltaAssetReserve),
+      currentShareReserve: isBuy ? shareReserve.sub(deltaShareReserve) : shareReserve.add(deltaShareReserve),
+      currentAssetWeight: assetWeight,
+      currentShareWeight: shareWeight,
+      assetDecimals: assetDecimals,
+      shareDecimals: shareDecimals,
+    })
+
+    const marketPriceFloat = parseFloat(marketPrice)
+    const priceDifference = parseFloat(newPrice) - marketPriceFloat
+    const priceImpactPercentage = Math.abs((priceDifference / marketPriceFloat) * 100)
+    return priceImpactPercentage.toFixed(3)
+  }, [activeTab, reservesAndWeights, assetValue, shareValue, assetDecimals, shareDecimals])
 
   const handleButtonClick = useCallback(async () => {
     console.info('approval', approval)
