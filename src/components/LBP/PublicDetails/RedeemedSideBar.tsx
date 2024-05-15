@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import _get from 'lodash/get'
+import { ethers } from 'ethers'
+
 import { ReactComponent as ComingSoonIcon } from '../../../assets/images/colsedIcon.svg'
 import { TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useLBPPurchasedShares } from 'state/lbp/hooks'
+import { formatNumberWithDecimals, useLBPPurchasedShares } from 'state/lbp/hooks'
 import { useLBPContract } from 'hooks/useContract'
+import { useAddPopup } from 'state/application/hooks'
+import { useSubgraphQueryWithCallback } from 'hooks/useSubgraphQuery'
+
+import { ReactComponent as Checked } from 'assets/images/checked-green.svg'
 
 interface RedeemedProps {
   contractAddress: string | null
@@ -14,23 +21,64 @@ interface RedeemedProps {
   shareName: string
 }
 
+const userClaimedQuery = (account: string, poolAddress: string) => {
+  return `
+  {
+    claims(where: {account_: {id: "${account}"}, pool_: {id: "${poolAddress}"}}) {
+      account {
+        id
+      }
+      shareAmount
+    }
+  },
+  `
+}
+
+const decimals = 18;
+
 const RedeemedSideBar: React.FC<RedeemedProps> = ({ contractAddress, shareLogo, shareName }) => {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const getLBPPurchasedShares = useLBPPurchasedShares(contractAddress || '', account)
   const lbpContractInstance = useLBPContract(contractAddress ?? '')
+  const addPopup = useAddPopup()
+  const subgraph = useSubgraphQueryWithCallback({
+    feature: 'LBP',
+    chainId,
+    query: contractAddress ? userClaimedQuery(account.toLowerCase(), contractAddress.toLowerCase()) : '',
+    autoPolling: false,
+  })
+
+  const [isExecuting, setIsExecuting] = useState<boolean>(false)
+
+  const shareAmountRedeemed = _get(subgraph, 'data.claims[0].shareAmount', '')
+  const shareBalance = getLBPPurchasedShares?.shareBalance ?? '0'
+  const shareAmountRedeemedBalance = ethers.utils.formatUnits(shareAmountRedeemed || '0', decimals)
 
   const handleRedeem = async () => {
     if (!lbpContractInstance) return
 
     try {
-      const receipt = await lbpContractInstance.redeem(account, false)
-      console.log('Redeem transaction receipt:', receipt)
+      setIsExecuting(true)
+      const tx = await lbpContractInstance.redeem(account, false)
+      if (tx) {
+        const receipt = await tx.wait()
+
+        if (receipt.status === 0) {
+          addPopup({ info: { success: false, summary: 'Execution error!' } })
+        } else {
+          await getLBPPurchasedShares.fetchShareBalance()
+          await subgraph?.fetchData()
+          addPopup({ info: { success: true, summary: 'Claim successfully!' } })
+        }
+      }
     } catch (error) {
+      addPopup({ info: { success: false, summary: 'Execution error!' } })
       console.error('Error redeeming tokens:', error)
+    } finally {
+      setIsExecuting(false)
     }
   }
 
-  console.log(getLBPPurchasedShares.shareBalance, 'getLBPPurchasedShares')
   return (
     <SideBarContainer>
       <MiddleSection>
@@ -51,7 +99,11 @@ const RedeemedSideBar: React.FC<RedeemedProps> = ({ contractAddress, shareLogo, 
             <TYPE.description2 fontWeight={'400'} color={'#8F8FB2'}>
               Redeemed Project Tokens
             </TYPE.description2>
-            <TYPE.description7 color={'#292933'}>{getLBPPurchasedShares?.shareBalance}</TYPE.description7>
+            <TYPE.description7 color={'#292933'}>
+              {shareAmountRedeemed
+                ? formatNumberWithDecimals(shareAmountRedeemedBalance, 3)
+                : formatNumberWithDecimals(shareBalance, 3)}
+            </TYPE.description7>
           </RedeemedText>
           <RedeemedText>
             <ShareTokenWrapper>
@@ -63,20 +115,23 @@ const RedeemedSideBar: React.FC<RedeemedProps> = ({ contractAddress, shareLogo, 
           </RedeemedText>
         </ShareWrapper>
         <Line style={{ margin: '20px 8px' }} />
-        <PinnedContentButton
-          onClick={handleRedeem}
-          disabled={parseFloat(getLBPPurchasedShares.shareBalance || '') === 0}
-          margin={'0px 15px'}
-        >
-          Redeem
-        </PinnedContentButton>
-
-        {/* <PinnedContentButton
-          style={{ border: '1px solid #1FBA6680', background: '#E9F8F0', color: '#1FBA66' }}
-          margin={'0px 15px'}
-        >
-          <Checked style={{ marginRight: '5px' }} /> Redeemed
-        </PinnedContentButton> */}
+        {shareAmountRedeemed ? (
+          <PinnedContentButton
+            disabled
+            margin={'0px 15px'}
+            style={{ border: '1px solid #1FBA6680', background: '#E9F8F0', color: '#1FBA66' }}
+          >
+            <Checked style={{ marginRight: '5px' }} /> Redeemed
+          </PinnedContentButton>
+        ) : (
+          <PinnedContentButton
+            onClick={handleRedeem}
+            disabled={parseFloat(shareBalance) === 0 || isExecuting}
+            margin={'0px 15px'}
+          >
+            {isExecuting ? 'Executing...' : 'Redeem'}
+          </PinnedContentButton>
+        )}
       </MiddleSection>
     </SideBarContainer>
   )
