@@ -554,7 +554,7 @@ export default function BuySellFields({
           <BuySellFieldsContainer exceedsBalance={shareExceedBalance}>
             <BuySellFieldsItem>
               <BuySellFieldsWrapper>
-                <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Share</BuySellFieldsSpan>
+                <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Project Token</BuySellFieldsSpan>
               </BuySellFieldsWrapper>
               {convertingState.inputType === InputType.Share && convertingState.converting ? (
                 <Loader size="25px" />
@@ -628,7 +628,7 @@ export default function BuySellFields({
           ) : null}
           <TabRow>
             <SlippageWrapper>
-              <TYPE.body3>Fees: </TYPE.body3>
+              <TYPE.body3>Fee: </TYPE.body3>
               <TYPE.body3 color={'#292933'} fontWeight={'700'}>
                 {swapFee}%
               </TYPE.body3>

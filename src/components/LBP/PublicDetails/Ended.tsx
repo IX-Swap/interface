@@ -47,7 +47,7 @@ const EndedSideBar: React.FC<EndedSideBarProps> = ({ contractAddress, shareLogo,
         </ShareWrapper>
         <Line style={{ margin: '20px 8px' }} />
         <PinnedContentButton margin={'0px 15px'} disabled>
-          Claim
+          Redeem
         </PinnedContentButton>
       </MiddleSection>
     </SideBarContainer>
