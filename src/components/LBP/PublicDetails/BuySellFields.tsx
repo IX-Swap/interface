@@ -267,6 +267,7 @@ export default function BuySellFields({
   )
 
   const trade = async (inputType: string, amount: number | string) => {
+    debugger;
     try {
       setIsExecuting(true)
       const authorization = await getLBPAuthorization(id)
@@ -316,6 +317,7 @@ export default function BuySellFields({
 
   const buyExactShares = useCallback(
     async (shareAmount: number, authorization: any): Promise<any> => {
+      debugger;
       if (!lbpContractInstance || !assetValueWithSlippage || !assetValue || !shareDecimals) return
 
       const maxAssetsIn = ethers.utils.parseUnits(assetValueWithSlippage, assetDecimals)
@@ -429,8 +431,19 @@ export default function BuySellFields({
 
   const sellExactAssets = useCallback(
     async (assetAmount: number, authorization: any): Promise<any> => {
+      debugger;
       if (!lbpContractInstance || !shareValue || !assetDecimals || !shareDecimals || !slippage) return
 
+      const converted = await handleConversion(
+        InputType.Asset,
+        assetAmount,
+        assetDecimals,
+        shareDecimals
+      )
+
+      // will replace shareValue = converted
+
+      console.log('converted', converted)
       const maxSharesInValue = parseFloat(shareValue) * (1 + parseFloat(slippage) / 100)
       const maxSharesIn = ethers.utils.parseUnits(maxSharesInValue.toFixed(AMOUNT_PRECISION), shareDecimals)
 
