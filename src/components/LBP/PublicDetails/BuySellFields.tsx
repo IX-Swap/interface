@@ -301,6 +301,7 @@ export default function BuySellFields({
       const method = inputType === 'share' ? 'share' : 'asset'
 
       const tradeFunction = tradeFunctions[action][method]
+      console.info('Action:', action, 'InputType:', inputType)
 
       if (!tradeFunction) {
         console.error('Trade function not found')
@@ -334,8 +335,7 @@ export default function BuySellFields({
       if (!lbpContractInstance || !assetValueWithSlippage || !assetValue || !shareDecimals) return
 
       const maxAssetsIn = ethers.utils.parseUnits(assetValueWithSlippage, assetDecimals)
-
-      console.info('maxAssetsIn', maxAssetsIn.toString())
+      console.info('swapAssetsForExactShares', 'shareAmount', shareAmount, 'maxAssetsIn', maxAssetsIn.toString())
 
       const recipient = account
       const referrer = constants.AddressZero
@@ -363,7 +363,18 @@ export default function BuySellFields({
       const previewedShareOut = await handleConversion(InputType.Asset, assetAmount, assetDecimals, shareDecimals, true)
       const minSharesOut = applySlippage(ethers.BigNumber.from(previewedShareOut), slippage, false)
 
-      console.info('swapExactAssetsForShares', 'minSharesOut', minSharesOut.toString())
+      // log for production debugging
+      console.info(
+        'swapExactAssetsForShares',
+        'assetAmount',
+        ethers.utils.parseUnits(assetAmount.toString(), assetDecimals).toString(),
+        'displayedSharesOut',
+        ethers.utils.parseUnits(shareValue, shareDecimals).toString(),
+        'previewedSharesOut',
+        previewedShareOut,
+        'minSharesOut',
+        minSharesOut.toString()
+      )
 
       const referrer = constants.AddressZero
 
@@ -390,6 +401,19 @@ export default function BuySellFields({
       const previewedAssetOut = await handleConversion(InputType.Share, shareAmount, shareDecimals, assetDecimals, true)
       const minAssetOut = applySlippage(ethers.BigNumber.from(previewedAssetOut), slippage, false)
 
+      // log for production debugging
+      console.info(
+        'swapExactSharesForAssets',
+        'shareAmount',
+        ethers.utils.parseUnits(shareAmount.toString(), shareDecimals).toString(),
+        'displayedAssetOut',
+        ethers.utils.parseUnits(assetValue, assetDecimals).toString(),
+        'previewAssetsOut',
+        previewedAssetOut,
+        'minAssetOut',
+        minAssetOut.toString()
+      )
+
       const recipient = account
       const tx = await lbpContractInstance.swapExactSharesForAssets(
         parseUnit(shareAmount, shareDecimals),
@@ -412,6 +436,19 @@ export default function BuySellFields({
 
       const previewedSharesIn = await handleConversion(InputType.Asset, assetAmount, assetDecimals, shareDecimals, true)
       const maxSharesIn = applySlippage(ethers.BigNumber.from(previewedSharesIn), slippage, true)
+
+      // log for production debugging
+      console.info(
+        'swapSharesForExactAssets',
+        'shareAmount',
+        ethers.utils.parseUnits(assetAmount.toString(), assetDecimals).toString(),
+        'displayedSharesIn',
+        ethers.utils.parseUnits(shareValue, shareDecimals).toString(),
+        'previewedSharesIn',
+        previewedSharesIn,
+        'maxSharesIn',
+        maxSharesIn.toString()
+      )
 
       const recipient = account
       const tx = await lbpContractInstance.swapSharesForExactAssets(
