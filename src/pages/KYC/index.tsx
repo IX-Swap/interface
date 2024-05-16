@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
 import { useActiveWeb3React } from 'hooks/web3'
-import Portal from '@reach/portal'
-
 import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Column from 'components/Column'
@@ -30,8 +28,6 @@ import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
-import { CenteredFixed } from 'components/LaunchpadMisc/styled'
-import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 
 interface DescriptionProps {
   description: string | null
@@ -88,7 +84,7 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 const KYC = () => {
-  const { chainId, account } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const [loading, setLoading] = useState(false)
   const pendingSign = usePendingSignState()
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -339,7 +335,7 @@ const KYC = () => {
   }, [status, description, kyc])
 
   if (!account) return <NotAvailablePage />
-
+  
   let blurred = false
   const apiUrl = process.env.REACT_APP_API_URL
   if (apiUrl?.includes('dev') || apiUrl?.includes('staging')) {
@@ -357,7 +353,7 @@ const KYC = () => {
       </Portal>
     )
   }
-
+  
   return (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
       <EmailVerification {...modalProps} closeModal={closeModal} />
