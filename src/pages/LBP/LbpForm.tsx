@@ -56,7 +56,7 @@ export default function LBPForm() {
     },
     tokenomics: {
       shareAddress: '',
-      contractAddress: '',
+      contractAddress: constants.AddressZero,
       assetTokenAddress: '',
       assetTokenSymbol: '',
       shareInput: 0,
@@ -82,6 +82,7 @@ export default function LBPForm() {
   const getLbp = useGetLbp()
   const saveOrSubmitLbp = useSaveOrSubmitLbp()
   const { isAdmin } = useRole()
+  const [isCreatePage, setIsCreatePage] = useState<boolean>(false)
 
   const {
     objectParams: { id: lbpId },
@@ -97,6 +98,9 @@ export default function LBPForm() {
         setFormData(loadedFormData)
       }
     }
+    setIsCreatePage(window.location.hash.includes('create'))
+    const isCreatePage = window.location.hash.includes('create')
+    console.log('Is create page:', isCreatePage)
 
     getLbpAsync()
   }, [])
@@ -190,7 +194,7 @@ export default function LBPForm() {
 
   const transformDataForSaving = (formData: FormData) => {
     const result: LbpFormValues = {
-      id: formData.id,
+      ...(isCreatePage ? {} : { id: formData.id }),
       title: formData.projectInfo?.title,
       description: formData.projectInfo?.description,
       officialWebsite: formData.projectInfo?.website,
@@ -200,9 +204,9 @@ export default function LBPForm() {
       LBPBanner: formData.branding?.LBPBanner,
       uploadDocs: formData.projectInfo?.uploadDocs,
       shareAddress: formData.tokenomics?.shareAddress,
-      shareAmount: formData.tokenomics?.shareInput,
+      shareAmount: Number(formData.tokenomics?.shareInput || 0),
       shareMaxSupply: formData.tokenomics?.maxSupply,
-      assetTokenAmount: formData.tokenomics?.assetInput,
+      assetTokenAmount: Number(formData.tokenomics?.assetInput || 0),
       assetTokenAddress: formData.tokenomics?.assetTokenAddress,
       assetTokenSymbol: formData.tokenomics?.assetTokenSymbol,
       startWeight: formData.tokenomics?.startWeight,
@@ -256,6 +260,8 @@ export default function LBPForm() {
 
     return status == LbpStatus.draft && isAdmin
   }, [status, isAdmin])
+
+  console.log(formData, 'formData')
 
   return (
     <FormRow>
