@@ -335,7 +335,25 @@ const KYC = () => {
   }, [status, description, kyc])
 
   if (!account) return <NotAvailablePage />
+  
+  let blurred = false
+  const apiUrl = process.env.REACT_APP_API_URL
+  if (apiUrl?.includes('dev') || apiUrl?.includes('staging')) {
+    blurred = chainId && ![...TGE_CHAINS_WITH_STAKING].includes(chainId || 0)
+  } else {
+    blurred = chainId && ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0)
+  }
 
+  if (blurred) {
+    return (
+      <Portal>
+        <CenteredFixed width="100vw" height="100vh" style={{ background: 'rgba(0, 0, 0, .5)' }}>
+          <NotAvailablePage />
+        </CenteredFixed>
+      </Portal>
+    )
+  }
+  
   return (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
       <EmailVerification {...modalProps} closeModal={closeModal} />
