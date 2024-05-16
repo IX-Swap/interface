@@ -21,7 +21,7 @@ import { AdminKycTable } from 'components/AdminKyc'
 import { KycReviewModal } from 'components/KycReviewModal'
 import LBPForm from './LBP/LbpForm'
 import LbpDashboardPage from './LBP/Dashboard'
-import PublicDetails from './LBP/PublicDetails'
+// import PublicDetails from './LBP/PublicDetails'
 import AdminLbpDetail from './LBP/AdminLbpDetail'
 // import { AdminLbpDetail } from './LBP/AdminLbpDetail'
 
@@ -63,6 +63,7 @@ const LaunchpadIssuanceInformationEditForm = lazy(() => import('pages/LaunchpadI
 const LaunchpadIssuanceInformationReview = lazy(() => import('pages/LaunchpadIssuance/InformationReview'))
 const ManageOffer = lazy(() => import('pages/LaunchpadIssuance/ManageOffer'))
 const LaunchpadIssuanceReport = lazy(() => import('pages/LaunchpadIssuance/Report'))
+const LBPPublicDetailsPage = lazy(() => import('./LBP/PublicDetails'))
 
 export interface RouteMapEntry {
   path: string
@@ -97,7 +98,7 @@ export const routeConfigs: RouteMapEntry[] = [
   /* LBP routes */
   { path: routes.lbpEdit, component: LBPForm },
   { path: routes.lbpDashboard, component: LbpDashboardPage, conditions: { isKycApproved: true } },
-  { path: routes.publicDetails, component: PublicDetails},
+  { path: routes.publicDetails, component: LBPPublicDetailsPage},
   { path: routes.adminDetails, component: AdminLbpDetail, conditions: { isKycApproved: true } },
 
   { path: routes.nftList, component: ListNFT, conditions: { isWhitelisted: true } },
