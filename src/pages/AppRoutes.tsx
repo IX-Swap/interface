@@ -12,7 +12,6 @@ import { VestingTab } from 'pages/Farming/VestingTab'
 import { RedirectPathToSwapOnly, RedirectToSwap } from 'pages/Swap/redirects'
 import { RedirectDuplicateTokenIdsV2 } from 'pages/AddLiquidityV2/redirects'
 import { ROLES } from 'constants/roles'
-// import AdminKycTable from 'components/AdminKyc'
 import AdminAccreditationTable from 'components/AdminAccreditationTable'
 import { UsersList } from 'components/UsersList'
 import AdminSecurityCatalog from 'components/AdminSecurityCatalog'
@@ -21,9 +20,7 @@ import { AdminKycTable } from 'components/AdminKyc'
 import { KycReviewModal } from 'components/KycReviewModal'
 import LBPForm from './LBP/LbpForm'
 import LbpDashboardPage from './LBP/Dashboard'
-// import PublicDetails from './LBP/PublicDetails'
 import AdminLbpDetail from './LBP/AdminLbpDetail'
-// import { AdminLbpDetail } from './LBP/AdminLbpDetail'
 
 const Admin = lazy(() => import('pages/Admin'))
 const Swap = lazy(() => import('pages/Swap'))
