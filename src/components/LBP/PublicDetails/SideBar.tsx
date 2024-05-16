@@ -58,6 +58,7 @@ const TradeTabs: React.FC<SideTabsBarProps> = ({ currentTab, onTabSelect }) => {
 
 const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
   const [remainingTime, setRemainingTime] = useState(28 * 24 * 60 * 60)
+
   const [activeTab, setActiveTab] = React.useState<PublicDetails>(() => {
     const savedTab = localStorage.getItem('ActiveTab')
     return (savedTab as PublicDetails) ?? PublicDetails.buy
@@ -209,6 +210,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
         <Body>
           {/* <NoTokenSidebar/> Hiding for now will render conditionals. */}
           <BuySellFields
+            allowSlippage={lbpData?.allowSlippage || false}
             tokenDecimals={tokenDecimals}
             contractAddress={lbpData?.contractAddress}
             assetTokenAddress={lbpData?.assetTokenAddress}

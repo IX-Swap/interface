@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
 import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
-import { ethers, constants } from 'ethers'
+import { ethers, constants, BigNumber } from 'ethers'
 import { useLBPContract, useTokenContract, useLBPFactory } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { formatNumberWithDecimals, useGetLBPAuthorization } from 'state/lbp/hooks'
@@ -30,6 +30,7 @@ interface BuySellFieldsProps {
   shareTokenAddress?: string
   id: any
   logo?: any
+  allowSlippage: boolean
 }
 
 interface TokenOption {
@@ -72,6 +73,7 @@ export default function BuySellFields({
   id,
   logo,
   slippage,
+  allowSlippage,
 }: BuySellFieldsProps) {
   // UI States
   const [buttonDisabled, setButtonDisabled] = useState(true)
@@ -116,13 +118,13 @@ export default function BuySellFields({
     if (!assetValue || !slippage) {
       return ''
     }
-    if (activeTab === TradeAction.Buy && inputType === InputType.Share) {
+    if (allowSlippage && activeTab === TradeAction.Buy && inputType === InputType.Share) {
       const maxAssetIn = parseFloat(assetValue) * (1 + parseFloat(slippage) / 100)
       return maxAssetIn.toFixed(AMOUNT_PRECISION)
     }
 
     return assetValue
-  }, [slippage, assetValue, inputType, activeTab])
+  }, [slippage, assetValue, inputType, activeTab, allowSlippage])
 
   const [approval, approveCallback, refreshAllowance] = useAllowance(
     assetTokenAddress,
@@ -231,7 +233,8 @@ export default function BuySellFields({
       inputType: InputType,
       inputAmount: number,
       inputDecimals: number,
-      outputDecimals: number
+      outputDecimals: number,
+      raw = false // whether to format the output amount
     ): Promise<string> => {
       if (!lbpContractInstance) return ''
 
@@ -252,6 +255,11 @@ export default function BuySellFields({
 
         if (method) {
           const result = await lbpContractInstance[method](amount)
+          console.info('method', method, 'amount', amount.toString(), 'result', result.toString())
+          if (raw) {
+            return result.toString()
+          }
+
           const parsedAmount = ethers.utils.formatUnits(result.toString(), outputDecimals)
           return parsedAmount
         }
@@ -266,6 +274,22 @@ export default function BuySellFields({
     [lbpContractInstance]
   )
 
+  const applySlippage = useCallback(
+    (amount: BigNumber, slippage: string, isMax: boolean) => {
+      if (!allowSlippage) {
+        return isMax ? ethers.constants.MaxUint256 : ethers.constants.Zero
+      }
+
+      const slippageMultiplier = parseFloat(slippage) * 100 // need to multiply by 100 as some of the slippage is below 1 like 0.25 so that we have the multiplier as an integer
+      const slippageAmount = ethers.BigNumber.from(amount)
+        .mul(ethers.BigNumber.from(Math.floor(slippageMultiplier)))
+        .div(10000)
+
+      return isMax ? amount.add(slippageAmount) : amount.sub(slippageAmount)
+    },
+    [allowSlippage]
+  )
+
   const trade = async (inputType: string, amount: number | string) => {
     try {
       setIsExecuting(true)
@@ -273,12 +297,12 @@ export default function BuySellFields({
 
       const tradeFunctions = {
         buy: {
-          share: buyExactShares,
-          asset: buyExactAssetsForShares,
+          share: swapAssetsForExactShares,
+          asset: swapExactAssetsForShares,
         },
         sell: {
-          share: sellExactSharesForAssets,
-          asset: sellExactAssets,
+          share: swapExactSharesForAssets,
+          asset: swapSharesForExactAssets,
         },
       }
 
@@ -286,6 +310,7 @@ export default function BuySellFields({
       const method = inputType === 'share' ? 'share' : 'asset'
 
       const tradeFunction = tradeFunctions[action][method]
+      console.info('Action:', action, 'InputType:', inputType)
 
       if (!tradeFunction) {
         console.error('Trade function not found')
@@ -314,13 +339,15 @@ export default function BuySellFields({
     }
   }
 
-  const buyExactShares = useCallback(
+  const swapAssetsForExactShares = useCallback(
     async (shareAmount: number, authorization: any): Promise<any> => {
       if (!lbpContractInstance || !assetValueWithSlippage || !assetValue || !shareDecimals) return
 
-      const maxAssetsIn = ethers.utils.parseUnits(assetValueWithSlippage, assetDecimals)
+      const maxAssetsIn = allowSlippage
+        ? ethers.utils.parseUnits(assetValueWithSlippage, assetDecimals)
+        : ethers.constants.MaxUint256
 
-      console.info('maxAssetsIn', maxAssetsIn.toString())
+      console.info('swapAssetsForExactShares', 'shareAmount', shareAmount, 'maxAssetsIn', maxAssetsIn.toString())
 
       const recipient = account
       const referrer = constants.AddressZero
@@ -341,22 +368,32 @@ export default function BuySellFields({
     [lbpContractInstance, assetValueWithSlippage, assetDecimals, shareDecimals]
   )
 
-  const buyExactAssetsForShares = useCallback(
+  const swapExactAssetsForShares = useCallback(
     async (assetAmount: number, authorization: any): Promise<any> => {
       if (!lbpContractInstance || !tokenOption || !assetDecimals || !shareDecimals || !shareValue || !slippage) return
 
-      const minSharesOutValue = parseFloat(shareValue) * (1 - parseFloat(slippage) / 100)
-      const minSharesOut = ethers.utils.parseUnits(minSharesOutValue.toFixed(AMOUNT_PRECISION), shareDecimals)
-      const recipient = account
+      const previewedShareOut = await handleConversion(InputType.Asset, assetAmount, assetDecimals, shareDecimals, true)
+      const minSharesOut = applySlippage(ethers.BigNumber.from(previewedShareOut), slippage, false)
 
-      console.info('minSharesOut', minSharesOut.toString())
+      // log for production debugging
+      console.info(
+        'swapExactAssetsForShares',
+        'assetAmount',
+        ethers.utils.parseUnits(assetAmount.toString(), assetDecimals).toString(),
+        'displayedSharesOut',
+        ethers.utils.parseUnits(shareValue, shareDecimals).toString(),
+        'previewedSharesOut',
+        previewedShareOut,
+        'minSharesOut',
+        minSharesOut.toString()
+      )
 
       const referrer = constants.AddressZero
 
       const tx = await lbpContractInstance.swapExactAssetsForShares(
         parseUnit(assetAmount, assetDecimals), // Convert asset amount to smallest denomination
         minSharesOut,
-        recipient,
+        account,
         referrer,
         authorization,
         {
@@ -367,6 +404,78 @@ export default function BuySellFields({
       return tx
     },
     [lbpContractInstance, shareValue, tokenOption, assetDecimals, shareDecimals, slippage]
+  )
+
+  const swapExactSharesForAssets = useCallback(
+    async (shareAmount: number, authorization: any): Promise<any> => {
+      if (!lbpContractInstance || !assetValue || !assetDecimals || !shareDecimals || !slippage) return
+
+      const previewedAssetOut = await handleConversion(InputType.Share, shareAmount, shareDecimals, assetDecimals, true)
+      const minAssetOut = applySlippage(ethers.BigNumber.from(previewedAssetOut), slippage, false)
+
+      // log for production debugging
+      console.info(
+        'swapExactSharesForAssets',
+        'shareAmount',
+        ethers.utils.parseUnits(shareAmount.toString(), shareDecimals).toString(),
+        'displayedAssetOut',
+        ethers.utils.parseUnits(assetValue, assetDecimals).toString(),
+        'previewAssetsOut',
+        previewedAssetOut,
+        'minAssetOut',
+        minAssetOut.toString()
+      )
+
+      const recipient = account
+      const tx = await lbpContractInstance.swapExactSharesForAssets(
+        parseUnit(shareAmount, shareDecimals),
+        minAssetOut,
+        recipient,
+        authorization,
+        {
+          gasLimit: 300000, // temporary hardcode as it sometimes fails due to gas limit is low on amoy testnet
+        }
+      )
+
+      return tx
+    },
+    [lbpContractInstance, assetValue, assetDecimals, shareDecimals, slippage]
+  )
+
+  const swapSharesForExactAssets = useCallback(
+    async (assetAmount: number, authorization: any): Promise<any> => {
+      if (!lbpContractInstance || !shareValue || !assetDecimals || !shareDecimals || !slippage) return
+
+      const previewedSharesIn = await handleConversion(InputType.Asset, assetAmount, assetDecimals, shareDecimals, true)
+      const maxSharesIn = applySlippage(ethers.BigNumber.from(previewedSharesIn), slippage, true)
+
+      // log for production debugging
+      console.info(
+        'swapSharesForExactAssets',
+        'shareAmount',
+        ethers.utils.parseUnits(assetAmount.toString(), assetDecimals).toString(),
+        'displayedSharesIn',
+        ethers.utils.parseUnits(shareValue, shareDecimals).toString(),
+        'previewedSharesIn',
+        previewedSharesIn,
+        'maxSharesIn',
+        maxSharesIn.toString()
+      )
+
+      const recipient = account
+      const tx = await lbpContractInstance.swapSharesForExactAssets(
+        parseUnit(assetAmount, assetDecimals),
+        maxSharesIn,
+        recipient,
+        authorization,
+        {
+          gasLimit: 300000, // temporary hardcode as it sometimes fails due to gas limit is low on amoy testnet
+        }
+      )
+
+      return tx
+    },
+    [lbpContractInstance, shareValue, assetDecimals, shareDecimals, slippage]
   )
 
   const priceImpact = useMemo(() => {
@@ -400,57 +509,6 @@ export default function BuySellFields({
     const priceImpactPercentage = Math.abs((priceDifference / marketPriceFloat) * 100)
     return priceImpactPercentage.toFixed(3)
   }, [activeTab, reservesAndWeights, assetValue, shareValue, assetDecimals, shareDecimals])
-
-  const sellExactSharesForAssets = useCallback(
-    async (shareAmount: number, authorization: any): Promise<any> => {
-      if (!lbpContractInstance || !assetValue || !assetDecimals || !shareDecimals || !slippage) return
-
-      const minAssetOutValue = parseFloat(assetValue) * (1 - parseFloat(slippage) / 100)
-      const minAssetsOut = ethers.utils.parseUnits(minAssetOutValue.toFixed(AMOUNT_PRECISION), assetDecimals)
-
-      console.info('minAssetsOut', minAssetsOut.toString())
-
-      const recipient = account
-
-      const tx = await lbpContractInstance.swapExactSharesForAssets(
-        parseUnit(shareAmount, shareDecimals),
-        minAssetsOut,
-        recipient,
-        authorization,
-        {
-          gasLimit: 300000, // temporary hardcode as it sometimes fails due to gas limit is low on amoy testnet
-        }
-      )
-
-      return tx
-    },
-    [lbpContractInstance, assetValue, assetDecimals, shareDecimals, slippage]
-  )
-
-  const sellExactAssets = useCallback(
-    async (assetAmount: number, authorization: any): Promise<any> => {
-      if (!lbpContractInstance || !shareValue || !assetDecimals || !shareDecimals || !slippage) return
-
-      const maxSharesInValue = parseFloat(shareValue) * (1 + parseFloat(slippage) / 100)
-      const maxSharesIn = ethers.utils.parseUnits(maxSharesInValue.toFixed(AMOUNT_PRECISION), shareDecimals)
-
-      console.info('maxSharesIn', maxSharesIn.toString())
-
-      const recipient = account
-      const tx = await lbpContractInstance.swapSharesForExactAssets(
-        parseUnit(assetAmount, assetDecimals),
-        maxSharesIn,
-        recipient,
-        authorization,
-        {
-          gasLimit: 300000, // temporary hardcode as it sometimes fails due to gas limit is low on amoy testnet
-        }
-      )
-
-      return tx
-    },
-    [lbpContractInstance, shareValue, assetDecimals, shareDecimals, slippage]
-  )
 
   const handleButtonClick = useCallback(async () => {
     console.info('approval', approval)

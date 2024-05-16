@@ -83,6 +83,7 @@ export interface LbpFormValues {
   banner?: any
   logo?: any
   assetTokenSymbol?: any
+  allowSlippage?: boolean
 }
 
 export interface TokenomicsProps {
