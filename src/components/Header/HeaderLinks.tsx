@@ -132,40 +132,40 @@ export const HeaderLinks = () => {
   return (
     <HeaderLinksWrap links={7}>
       {/* {isAllowed('/charts') && account && isWhitelisted && ( */}
-        <MenuExternalLink
-          // disabled={!isApproved}
-          target="_self"
-          href={config?.chartsUrl || 'https://info.ixswap.io/home'}
-        >
-          <Trans>Charts</Trans>
-        </MenuExternalLink>
+      <MenuExternalLink
+        // disabled={!isApproved}
+        target="_self"
+        href={config?.chartsUrl || 'https://info.ixswap.io/home'}
+      >
+        <Trans>Charts</Trans>
+      </MenuExternalLink>
       {/* )} */}
       <StyledNavLink id={`issuance-nav-link`} to={'/launchpad'}>
         <Trans>Launchpad</Trans>
       </StyledNavLink>
       {/* {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && ( */}
-        <StyledNavLink
-          // disabled={!isApproved}
-          data-testid="securityTokensButton"
-          id={`stake-nav-link`}
-          to={routes.securityTokens('tokens')}
-          isActive={(match, { pathname }) => {
-            return pathname.includes('security-token')
-          }}
-        >
-          <Trans>Security Tokens</Trans>
-        </StyledNavLink>
+      <StyledNavLink
+        // disabled={!isApproved}
+        data-testid="securityTokensButton"
+        id={`stake-nav-link`}
+        to={routes.securityTokens('tokens')}
+        isActive={(match, { pathname }) => {
+          return pathname.includes('security-token')
+        }}
+      >
+        <Trans>Security Tokens</Trans>
+      </StyledNavLink>
       {/* )} */}
 
       {/* {isAllowed('/pool') && account && chainId && chains.includes(chainId) && isWhitelisted && ( */}
-        <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
-          <Trans>Liquidity Pools</Trans>
-        </StyledNavLink>
+      <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
+        <Trans>Liquidity Pools</Trans>
+      </StyledNavLink>
       {/* )} */}
       {/* {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && ( */}
-        <StyledNavLink id={`swap-nav-link`} to={'/swap'} data-testid={`swap-nav-link`}>
-          <Trans>Swap/Trade</Trans>
-        </StyledNavLink>
+      <StyledNavLink id={`swap-nav-link`} to={'/swap'} data-testid={`swap-nav-link`}>
+        <Trans>Swap/Trade</Trans>
+      </StyledNavLink>
       {/* )} */}
 
       {/* {account && chainId && chains.includes(chainId) && isWhitelisted && (
@@ -195,19 +195,19 @@ export const HeaderLinks = () => {
       )} */}
 
       {/* {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && ( */}
-        <StyledNavLink
-          ref={farmNode as any}
-          id={`farming-nav-link`}
-          to={'#'}
-          isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
-        >
-          <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom-start'}>
-            <RowFixed onClick={toggle}>
-              <Trans>Farming</Trans>
-              <ChevronElement showMore={open} />
-            </RowFixed>
-          </Popover>
-        </StyledNavLink>
+      <StyledNavLink
+        ref={farmNode as any}
+        id={`farming-nav-link`}
+        to={'#'}
+        isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
+      >
+        <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom-start'}>
+          <RowFixed onClick={toggle}>
+            <Trans>Farming</Trans>
+            <ChevronElement showMore={open} />
+          </RowFixed>
+        </Popover>
+      </StyledNavLink>
       {/* )} */}
 
       {isAllowed(routes.faucet) && account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
@@ -216,9 +216,15 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {showIssuance && <StyledNavLink to="/issuance">Issuance Dashboard</StyledNavLink>}
+      {showIssuance && <StyledNavLink to="/issuance">Issuance</StyledNavLink>}
       {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink to="/admin">Admin</StyledNavLink>
+      )}
+
+      {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink to={'/lbp'} data-testid={`lbp-nav-link`}>
+          <Trans>LBP</Trans>
+        </StyledNavLink>
       )}
     </HeaderLinksWrap>
   )

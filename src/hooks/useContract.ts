@@ -33,6 +33,8 @@ import NFT_ABI from 'abis/nft-contract.json'
 import WETH_ABI from 'abis/weth.json'
 import NFT_CREATE_ABI from 'abis/nft-contract-create.json'
 import LAUNCHPAD_INVESTMENT_ABI from 'abis/launchpad-investment.json'
+import LBP_ABI from 'abis/LiquiidtyBoostrapPool.json'
+import LBP_FACTORY_ABI from 'abis/LiquidityBoostrapPoolFactory.json'
 import {
   ARGENT_WALLET_DETECTOR_ADDRESS,
   ENS_REGISTRAR_ADDRESSES,
@@ -191,4 +193,12 @@ export function usePayoutContract(): Contract | null {
 
 export function useLaunchpadInvestmentContract(contractAddress: string) {
   return useContract(contractAddress || IXSALE_ADDRESS, LAUNCHPAD_INVESTMENT_ABI, true)
+}
+
+export function useLBPContract(contractAddress: string) {
+  return useContract(contractAddress, LBP_ABI, true)
+}
+
+export function useLBPFactory(contractAddress: string) {
+  return useContract(contractAddress, LBP_FACTORY_ABI, true)
 }

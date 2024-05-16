@@ -140,3 +140,7 @@ export const isAfterWithSameTime = (from: Moment, to: Moment | null) => {
   })
   return newFrom.isAfter(to)
 }
+
+export const toUnixTimeSeconds = (date: Date): number => {
+  return Math.floor(date.getTime() / 1000)
+}

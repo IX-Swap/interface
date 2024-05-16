@@ -106,7 +106,7 @@ export const NotAvailablePage = () => {
     )
   }
 
-  const network = window.location.href.includes(PRODUCTION_APP_URL) ? 'Polygon' : 'Mumbai'
+  const network = window.location.href.includes(PRODUCTION_APP_URL) ? 'Polygon' : 'Amoy'
   if (!provider?.provider?.isMetaMask) {
     return (
       <Container>
@@ -116,8 +116,7 @@ export const NotAvailablePage = () => {
         </Title>
         <Info>
           <Trans>
-            You have connected to Metamask through WalletConnect. Please switch the network to {network} in your
-            wallet.
+            You have connected to Metamask through WalletConnect. Please switch the network to {network} in your wallet.
           </Trans>
         </Info>
       </Container>
@@ -166,6 +165,12 @@ export const NotAvailablePage = () => {
             Mumbai Testnet
           </NetworkCard>
         )}
+        {chains.includes(SupportedChainId.AMOY) && (
+          <NetworkCard onClick={() => changeNetwork(SupportedChainId.AMOY)}>
+            <img src={polygonIcon} alt="polygonIcon" />
+            Polygon amoy Testnet
+          </NetworkCard>
+        )}
       </NetworksRow>
       <InfoRows>
         {(chains.includes(SupportedChainId.MAINNET) || farming) && (
@@ -200,6 +205,15 @@ export const NotAvailablePage = () => {
             <li>
               <Trans>
                 Switch to<b> Mumbai Testnet</b> to get full functionality
+              </Trans>
+            </li>
+          </Info>
+        )}
+        {chains.includes(SupportedChainId.AMOY) && (
+          <Info>
+            <li>
+              <Trans>
+                Switch to<b> Amoy Testnet</b> to get full functionality
               </Trans>
             </li>
           </Info>
