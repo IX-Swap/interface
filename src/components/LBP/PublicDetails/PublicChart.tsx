@@ -297,6 +297,7 @@ const Circle = styled.div`
   width: 10px;
   height: 10px;
   border-radius: 100%;
+  margin-right: 5px;
 `
 
 const WrapItem = styled.div`
