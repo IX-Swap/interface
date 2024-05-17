@@ -66,7 +66,7 @@ const ConfirmStatus = ({ isOpen, onClose, statusText, lbpId, updateStatus }: Buy
           <ButtonWrapper>
             <CancelButton onClick={onClose}>No</CancelButton>
             <PinnedContentButton disabled={loading} onClick={handleConfirm}>
-              {loading ? 'confirming..' : 'Yes'}
+              {loading ? 'Confirming..' : 'Yes'}
             </PinnedContentButton>
           </ButtonWrapper>
         </ModalContent>
