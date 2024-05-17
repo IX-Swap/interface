@@ -136,14 +136,5 @@ export function removeProtocolFromUrl(url: string): string {
 }
 
 export const detectWrongNetwork = (chainId: number): boolean => {
-  let isWrong = false
-  const apiUrl = process.env.REACT_APP_API_URL
-
-  if (apiUrl?.includes('dev') || apiUrl?.includes('staging')) {
-    isWrong = chainId ? ![...TGE_CHAINS_WITH_STAKING].includes(chainId || 0) : false
-  } else {
-    isWrong = chainId ? ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0) : false
-  }
-
-  return isWrong;
+  return  chainId ? !TGE_CHAINS_WITH_STAKING.includes(chainId) : false;
 }
