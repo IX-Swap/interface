@@ -29,6 +29,8 @@ import { formatUnits } from 'ethers/lib/utils'
 import timezone from 'dayjs/plugin/timezone'
 import { ethers } from 'ethers'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import { isEthChainAddress } from 'utils'
+import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -217,7 +219,20 @@ interface TokenomicsData {
 }
 
 const validationSchema = Yup.object().shape({
-  shareAddress: Yup.string().required('Project Token Address is required'),
+  shareAddress: Yup.string()
+  .when('testIsAddress', {
+    is: function (str?: any) {
+      return str !== SMART_CONTRACT_STRATEGIES.original
+    },
+    then: Yup
+      .string()
+      .nullable()
+      .required('Project Token Address is required')
+      .test('test', 'Please enter a valid address', function () {
+        return Boolean(isEthChainAddress(this.parent.shareAddress))
+      }),
+  })
+  .nullable(),
   shareInput: Yup.string().required('Project Token Amount is required'),
   assetInput: Yup.string().required('Base Token Amount is required'),
   // maxSupply: Yup.string().required('Max. Supply is required'),
@@ -498,7 +513,7 @@ const Tokenomics = ({
         value={formDataTokenomics.shareAddress}
         disabled={!isEditable}
       />
-      {formik.touched.shareAddress && !formDataTokenomics.shareAddress ? (
+      {formik.touched.shareAddress && (formik.errors.shareAddress ||  !formDataTokenomics.shareAddress) ? (
         <ErrorText>{formik.errors.shareAddress}</ErrorText>
       ) : null}
 
