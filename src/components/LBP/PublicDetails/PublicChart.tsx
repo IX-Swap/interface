@@ -255,9 +255,27 @@ export default function DetailsChart({
         {/*   } */}
         {/* /> */}
       </LineChart>
+
+      <RightLegend>
+        <WrapItem>
+          <Circle style={{ background: '#BDBDDB' }}></Circle>
+          <TextLegend>Historical Price</TextLegend>
+        </WrapItem>
+
+        <WrapItem style={{ marginLeft: 16 }}>
+          <Circle style={{ background: '#6666FF' }}></Circle>
+          <TextLegend>Future Price</TextLegend>
+        </WrapItem>
+      </RightLegend>
     </ChartContainer>
   )
 }
+
+const TextLegend = styled.div`
+  color: #292933;
+  font-size: 14px;
+  font-weight: 500;
+`
 
 const ChartContainer = styled.div`
   margin-top: 20px;
@@ -265,4 +283,23 @@ const ChartContainer = styled.div`
   border: 1px solid #e6e6ff;
   padding: 24px;
   margin-bottom: 30px;
+  position: relative;
+`
+
+const RightLegend = styled.div`
+  display: flex;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+`
+
+const Circle = styled.div`
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+`
+
+const WrapItem = styled.div`
+  display: flex;
+  align-items: center;
 `
