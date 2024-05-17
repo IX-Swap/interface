@@ -94,8 +94,9 @@ export const routeConfigs: RouteMapEntry[] = [
 
   /* LBP routes */
   { path: routes.lbpEdit, component: LBPForm },
+  { path: routes.lbpCreate, component: LBPForm },
   { path: routes.lbpDashboard, component: LbpDashboardPage, conditions: { isKycApproved: true } },
-  { path: routes.publicDetails, component: LBPPublicDetailsPage},
+  { path: routes.publicDetails, component: LBPPublicDetailsPage },
   { path: routes.adminDetails, component: AdminLbpDetail, conditions: { isKycApproved: true } },
 
   { path: routes.nftList, component: ListNFT, conditions: { isWhitelisted: true } },

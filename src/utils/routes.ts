@@ -49,6 +49,7 @@ export const routes = {
   newAdmin: '/admin/accreditation',
   lbpDashboard: '/lbp',
   lbpEdit: '/lbp/edit',
+  lbpCreate: '/lbp/create',
   publicDetails: '/lbp/:id',
   adminDetails: '/lbp/admin-detail/:id',
 
