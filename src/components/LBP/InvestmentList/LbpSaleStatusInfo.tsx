@@ -28,7 +28,7 @@ function calculateRemainingTime(startDate: string) {
 export const LbpSaleStatusInfo: React.FC<Props> = (props) => {
   const [remainingTime, setRemainingTime] = useState(0)
 
-  const startDate = _get(props, 'startDate', '');
+  const startDate = _get(props, 'startDate', '')
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -79,6 +79,14 @@ export const LbpSaleStatusInfo: React.FC<Props> = (props) => {
         </ActiveContainer>
       )
     } else {
+      if (remainingTime == 0) {
+        return (
+          <ActiveContainer status={props.status}>
+            <span className="bold">Coming Soon</span>
+          </ActiveContainer>
+        )
+      }
+
       return (
         <WrapTime>
           <TimeItem>
@@ -205,6 +213,6 @@ const WrapTime = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 `
