@@ -1,8 +1,9 @@
-import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
-import { text2, text5 } from 'components/LaunchpadMisc/typography'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import _get from 'lodash/get'
+
 import { LbpStatus } from '../types'
+import { text5 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   isClosed: boolean
@@ -10,11 +11,34 @@ interface Props {
   hoursTillEnded?: number
   allowOnlyAccredited: boolean
   status: string
-
+  startDate: string
   margin?: string
 }
 
+function calculateRemainingTime(startDate: string) {
+  if (startDate) {
+    const startTime = new Date(startDate).getTime()
+    const now = new Date().getTime()
+    const remainingTimeInSeconds = Math.max(0, startTime - now) / 1000
+    return remainingTimeInSeconds
+  }
+  return 0
+}
+
 export const LbpSaleStatusInfo: React.FC<Props> = (props) => {
+  const [remainingTime, setRemainingTime] = useState(0)
+
+  const startDate = _get(props, 'startDate', '');
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const newRemainingTime = calculateRemainingTime(startDate)
+      setRemainingTime(newRemainingTime)
+    }, 1000)
+
+    return () => clearInterval(intervalId)
+  }, [calculateRemainingTime])
+
   const info = props.hoursTillEnded
     ? `${props.hoursTillEnded > 1 ? `${props.hoursTillEnded} Hours` : 'Less than 1 Hour'}`
     : props.daysTillEnded
@@ -36,6 +60,44 @@ export const LbpSaleStatusInfo: React.FC<Props> = (props) => {
         <span className="bold">{label}</span>
       </ActiveContainer>
     )
+  }
+
+  if ([LbpStatus.pending].includes(props.status as LbpStatus)) {
+    const remainingDays = Math.floor(remainingTime / (24 * 60 * 60))
+    const remainingHours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))
+    const remainingMinutes = Math.floor((remainingTime % (60 * 60)) / 60)
+    const remainingSeconds = Math.floor(remainingTime % 60)
+
+    let displayTime = ''
+
+    if (remainingDays > 0) {
+      displayTime = remainingDays === 1 ? `${remainingDays} day` : `${remainingDays} days`
+
+      return (
+        <ActiveContainer status={props.status}>
+          <span className="bold">{displayTime}</span> until LBP starts
+        </ActiveContainer>
+      )
+    } else {
+      return (
+        <WrapTime>
+          <TimeItem>
+            <TimeText>{remainingHours}</TimeText>
+            <TimeDescText>Hours</TimeDescText>
+          </TimeItem>
+          <VerticalLine />
+          <TimeItem>
+            <TimeText>{remainingMinutes}</TimeText>
+            <TimeDescText>Mins</TimeDescText>
+          </TimeItem>
+          <VerticalLine />
+          <TimeItem>
+            <TimeText>{remainingSeconds}</TimeText>
+            <TimeDescText>Secs</TimeDescText>
+          </TimeItem>
+        </WrapTime>
+      )
+    }
   }
 
   if (info) {
@@ -113,27 +175,36 @@ const ActiveContainer = styled(BaseContainer)`
   }
 `
 
-const ClosedContainer = styled(BaseContainer)`
-  background: rgba(184, 184, 204, 0.05);
-  border: 1px solid rgba(184, 184, 204, 0.2);
-
-  justify-content: space-between;
+const TimeItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
 `
 
-const ClosedLabel = styled.div`
-  ${text2}
-  color: ${(props) => props.theme.launchpad.colors.text.caption};
+const VerticalLine = styled.div`
+  width: 1px;
+  height: 40px;
+  background-color: #e5e5ff;
+  margin: 7px 10px;
 `
 
-const ClosedStatusLabel = styled.div`
-  font-family: ${(props) => props.theme.launchpad.font};
-  ${text2}
+const TimeText = styled.div`
+  font-size: 16px;
+  color: #6666ff;
+  font-weight: 700;
 `
 
-const ClosedSuccessullyLabel = styled(ClosedStatusLabel)`
-  color: #1fba66;
+const TimeDescText = styled.div`
+  font-size: 10px;
+  color: #8f8fb2;
+  margin-top: 4px;
 `
 
-const ClosedUnsuccessfullyLabel = styled(ClosedStatusLabel)`
-  color: ${(props) => props.theme.launchpad.colors.text.error};
+const WrapTime = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 16px;
 `

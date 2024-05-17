@@ -37,7 +37,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
     () => !!lbp.status && [LbpStatus.closed, LbpStatus.ended].includes(lbp.status),
     [lbp?.status]
   )
-  
+
 
   const onClick = React.useCallback(() => {
     if (!account || isChangeRequested || isPending || isDraft || isRejected || isNotSubmitted) {
@@ -117,6 +117,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
             hoursTillEnded={lbp.hoursTillEnded}
             allowOnlyAccredited={lbp.allowOnlyAccredited}
             status={lbp.status}
+            startDate={lbp.startDate}
           />
 
           <LbpCardFooter>
