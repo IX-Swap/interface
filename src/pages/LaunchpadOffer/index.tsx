@@ -21,7 +21,6 @@ import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
-import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 import { BackToTopButton } from 'components/LaunchpadMisc/BackToTopButton'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
@@ -30,6 +29,7 @@ import { ArrowLeft } from 'react-feather'
 import { routes } from 'utils/routes'
 import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { detectWrongNetwork } from 'utils'
 
 interface OfferPageParams {
   offerId: string
@@ -73,10 +73,7 @@ export default function LaunchpadOffer() {
     }
   }, [])
 
-  const blurred = React.useMemo(
-    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0),
-    [account, chainId]
-  )
+
 
   if (offer.loading) {
     return (
@@ -93,6 +90,8 @@ export default function LaunchpadOffer() {
       </Centered>
     )
   }
+
+  const blurred = detectWrongNetwork(chainId)
 
   if (blurred) {
     return (

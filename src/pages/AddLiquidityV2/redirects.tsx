@@ -4,7 +4,6 @@ import AddLiquidityV2 from './index'
 import styled from 'styled-components'
 // import { Header } from 'pages/Launchpad/Header'
 import { useSetHideHeader } from 'state/application/hooks'
-import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
@@ -12,6 +11,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useTokens } from 'pages/Pool/useTokens'
 import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { detectWrongNetwork } from 'utils'
 
 export const AddWhiteBGContainer = styled.div<{ background?: string }>`
   display: flex;
@@ -63,11 +63,6 @@ export const RedirectDuplicateTokenIdsV2: React.FC<
     }
   }, [])
 
-  const blurred = useMemo(
-    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0),
-    [account, chainId]
-  )
-
   const {
     match: {
       params: { currencyIdA, currencyIdB },
@@ -77,6 +72,8 @@ export const RedirectDuplicateTokenIdsV2: React.FC<
   if (currencyIdA && currencyIdB && currencyIdA.toLowerCase() === currencyIdB.toLowerCase()) {
     return <Redirect to={`/add/${currencyIdA}`} />
   }
+
+  const blurred = detectWrongNetwork(chainId)
 
   if (blurred) {
     return (
