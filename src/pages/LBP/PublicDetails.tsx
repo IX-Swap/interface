@@ -7,6 +7,8 @@ import { LbpFormValues, MarketData } from 'components/LBP/types'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Loader } from 'components/AdminTransactionsTable'
 import { useWeb3React } from '@web3-react/core'
+import { useKYCState } from 'state/kyc/hooks'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 interface RouteParams {
   id: string
@@ -14,6 +16,7 @@ interface RouteParams {
 
 const PublicDetails: React.FC = () => {
   const { account } = useWeb3React()
+  const { kyc } = useKYCState()
   const { id } = useParams<RouteParams>()
   const fetchLbpData = useGetLbp()
   const fetchLbpStatsData = useGetLbpStats()
@@ -22,6 +25,7 @@ const PublicDetails: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const history = useHistory()
+  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   useEffect(() => {
     const loadData = async () => {
@@ -42,10 +46,11 @@ const PublicDetails: React.FC = () => {
   }, [fetchLbpData, fetchLbpStatsData, id])
 
   useEffect(() => {
-    if (!isLoading && !account) {
-      history.push(`/kyc/`)
+    if (!isLoading && (!account || !isKycApproved)) {
+      history.push(`/kyc/`);
     }
-  }, [isLoading, account, history])
+  }, [isLoading, account, isKycApproved, history]);
+  
 
   return (
     <>
