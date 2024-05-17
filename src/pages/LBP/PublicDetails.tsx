@@ -23,10 +23,10 @@ const PublicDetails: React.FC = () => {
   const [lbpData, setLbpData] = useState<LbpFormValues | null>(null)
   const [statsData, setStatsData] = useState<MarketData>()
   const [isLoading, setIsLoading] = useState(true)
-
   const history = useHistory()
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
+  
   useEffect(() => {
     const loadData = async () => {
       try {
