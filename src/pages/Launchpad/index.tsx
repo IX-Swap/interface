@@ -9,12 +9,12 @@ import { useSetHideHeader } from 'state/application/hooks'
 
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
-import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Banner } from './Banner'
 import { Footer } from './Footer'
 import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { detectWrongNetwork } from 'utils'
 // import { Header } from './Header'
 
 export default function Launchpad() {
@@ -30,14 +30,7 @@ export default function Launchpad() {
     }
   }, [])
 
-  const blurred = React.useMemo(() => {
-    const apiUrl = process.env.REACT_APP_API_URL
-    if (apiUrl?.includes('dev') || apiUrl?.includes('staging')) {
-      return chainId && ![...TGE_CHAINS_WITH_STAKING].includes(chainId || 0)
-    } else {
-      return chainId && ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0)
-    }
-  }, [account, chainId])
+  const blurred = detectWrongNetwork(chainId)
 
   if (blurred) {
     return (

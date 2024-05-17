@@ -31,6 +31,7 @@ import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { detectWrongNetwork } from 'utils'
 
 interface DescriptionProps {
   description: string | null
@@ -339,13 +340,7 @@ const KYC = () => {
 
   if (!account) return <NotAvailablePage />
 
-  let blurred = false
-  const apiUrl = process.env.REACT_APP_API_URL
-  if (apiUrl?.includes('dev') || apiUrl?.includes('staging')) {
-    blurred = chainId && ![...TGE_CHAINS_WITH_STAKING].includes(chainId || 0)
-  } else {
-    blurred = chainId && ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0)
-  }
+  const blurred = detectWrongNetwork(chainId);
 
   if (blurred) {
     return (
