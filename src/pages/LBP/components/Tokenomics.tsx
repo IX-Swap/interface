@@ -220,19 +220,9 @@ interface TokenomicsData {
 
 const validationSchema = Yup.object().shape({
   shareAddress: Yup.string()
-  .when('testIsAddress', {
-    is: function (str?: any) {
-      return str !== SMART_CONTRACT_STRATEGIES.original
-    },
-    then: Yup
-      .string()
-      .nullable()
-      .required('Project Token Address is required')
-      .test('test', 'Please enter a valid address', function () {
-        return Boolean(isEthChainAddress(this.parent.shareAddress))
-      }),
-  })
-  .nullable(),
+    .nullable()
+    .required('Project Token Address is required')
+    .test('is-valid-address', 'Please enter a valid address', (value) => Boolean(isEthChainAddress(value))),
   shareInput: Yup.string().required('Project Token Amount is required'),
   assetInput: Yup.string().required('Base Token Amount is required'),
   // maxSupply: Yup.string().required('Max. Supply is required'),
@@ -513,7 +503,7 @@ const Tokenomics = ({
         value={formDataTokenomics.shareAddress}
         disabled={!isEditable}
       />
-      {formik.touched.shareAddress && (formik.errors.shareAddress ||  !formDataTokenomics.shareAddress) ? (
+      {formik.touched.shareAddress && (formik.errors.shareAddress || !formDataTokenomics.shareAddress) ? (
         <ErrorText>{formik.errors.shareAddress}</ErrorText>
       ) : null}
 
@@ -640,7 +630,7 @@ const Tokenomics = ({
         label="Project Token Max. Supply"
         name="maxSupply"
         onChange={handleInputChange}
-        onWheel={ event => event.currentTarget.blur() }
+        onWheel={(event) => event.currentTarget.blur()}
         // onBlur={formik.handleBlur}
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}
@@ -843,7 +833,7 @@ const Tokenomics = ({
             placeholder="$0.00"
             id="maxPrice"
             label="Max. price"
-            onWheel={ event => event.currentTarget.blur() }
+            onWheel={(event) => event.currentTarget.blur()}
             name="maxPrice"
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
