@@ -10,10 +10,8 @@ import { Line } from 'components/Line'
 import Stack from '@mui/material/Stack'
 import Slider from '@mui/material/Slider'
 import { FormGrid } from 'pages/KYC/styleds'
-import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
 import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
 import { ReactComponent as Disabled } from '../../../assets/images/newCurrencyLogo.svg'
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
@@ -30,7 +28,6 @@ import timezone from 'dayjs/plugin/timezone'
 import { ethers } from 'ethers'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { isEthChainAddress } from 'utils'
-import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
