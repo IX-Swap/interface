@@ -10,10 +10,8 @@ import { Line } from 'components/Line'
 import Stack from '@mui/material/Stack'
 import Slider from '@mui/material/Slider'
 import { FormGrid } from 'pages/KYC/styleds'
-import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
 import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
 import { ReactComponent as Disabled } from '../../../assets/images/newCurrencyLogo.svg'
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
@@ -29,6 +27,7 @@ import { formatUnits } from 'ethers/lib/utils'
 import timezone from 'dayjs/plugin/timezone'
 import { ethers } from 'ethers'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import { isEthChainAddress } from 'utils'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -217,7 +216,10 @@ interface TokenomicsData {
 }
 
 const validationSchema = Yup.object().shape({
-  shareAddress: Yup.string().required('Project Token Address is required'),
+  shareAddress: Yup.string()
+    .nullable()
+    .required('Project Token Address is required')
+    .test('is-valid-address', 'Please enter a valid address', (value) => Boolean(isEthChainAddress(value))),
   shareInput: Yup.string().required('Project Token Amount is required'),
   assetInput: Yup.string().required('Base Token Amount is required'),
   // maxSupply: Yup.string().required('Max. Supply is required'),
@@ -498,7 +500,7 @@ const Tokenomics = ({
         value={formDataTokenomics.shareAddress}
         disabled={!isEditable}
       />
-      {formik.touched.shareAddress && !formDataTokenomics.shareAddress ? (
+      {formik.touched.shareAddress && (formik.errors.shareAddress || !formDataTokenomics.shareAddress) ? (
         <ErrorText>{formik.errors.shareAddress}</ErrorText>
       ) : null}
 
@@ -625,7 +627,7 @@ const Tokenomics = ({
         label="Project Token Max. Supply"
         name="maxSupply"
         onChange={handleInputChange}
-        onWheel={ event => event.currentTarget.blur() }
+        onWheel={(event) => event.currentTarget.blur()}
         // onBlur={formik.handleBlur}
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}
@@ -828,7 +830,7 @@ const Tokenomics = ({
             placeholder="$0.00"
             id="maxPrice"
             label="Max. price"
-            onWheel={ event => event.currentTarget.blur() }
+            onWheel={(event) => event.currentTarget.blur()}
             name="maxPrice"
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
