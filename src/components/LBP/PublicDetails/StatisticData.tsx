@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Column, { AutoColumn } from 'components/Column'
 import { RowBetween } from 'components/Row'
 import { TYPE } from 'theme'
-import { LbpFormValues, MarketData } from '../types'
+import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 
 interface MiddleSectionProps {
@@ -68,7 +68,7 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
     <Column style={{ display: isAdmin ? '-webkit-box' : '' }}>
       <AutoColumn style={{ marginBottom: '20px' }} justify="center" gap="md">
         <RowBetween>
-          {status !== 'ended' ? (
+          {status && ![LbpStatus.closed, LbpStatus.ended].includes(status as any) ? (
             <>
               <QuantitiesBox isAdmin={isAdmin}>
                 <TYPE.subHeader1 color={'#555566'}>Volume</TYPE.subHeader1>

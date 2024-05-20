@@ -49,7 +49,7 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
             </TokenWrapper>
           </QuantitiesBox>
 
-          {status !== LbpStatus.ended ? (
+          {status && ![LbpStatus.ended, LbpStatus.closed].includes(status as any) ? (
             <QuantitiesBox>
               <TYPE.subHeader1 color={'#555566'}>Current Quantities</TYPE.subHeader1>
               <TokenWrapper>
@@ -95,7 +95,7 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
             </TokenWrapper>
           </WeightBox>
 
-          {status !== LbpStatus.ended ? (
+          {status && ![LbpStatus.ended, LbpStatus.closed].includes(status as any) ? (
             <WeightBox>
               <TYPE.subHeader1 color={'#555566'}>Current Weight</TYPE.subHeader1>
               <TokenWrapper>
