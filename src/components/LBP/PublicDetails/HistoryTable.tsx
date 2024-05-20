@@ -76,6 +76,12 @@ const StyledImage = styled('img')({
   borderRadius: '100%',
 })
 
+const StyledMUIDataTableHeadCell = styled(TableHead)({
+  '& .MuiTableSortLabel-icon': {
+    opacity: 1,
+  },
+})
+
 const composeLatestTradeQuery = (lbpAddress: string) => {
   return `
     {
@@ -181,7 +187,7 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
       <Paper style={{ boxShadow: 'none' }}>
         <TableContainer style={{ margin: '10px 0px', boxShadow: 'none' }}>
           <Table>
-            <TableHead>
+            <StyledMUIDataTableHeadCell>
               <TableRow>
                 <StyledTableCell>
                   <TableSortLabel
@@ -212,9 +218,9 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
                 </StyledTableCell>
                 <StyledTableCell>
                   <TableSortLabel
-                    active={orderBy === 'amount'}
-                    direction={orderBy === 'amount' ? order : 'asc'}
-                    onClick={() => handleSort('amount')}
+                    active={orderBy === 'amountIn'}
+                    direction={orderBy === 'amountIn' ? order : 'asc'}
+                    onClick={() => handleSort('amountIn')}
                   >
                     Amount
                   </TableSortLabel>
@@ -229,7 +235,7 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
                   </TableSortLabel>
                 </StyledTableCell>
               </TableRow>
-            </TableHead>
+            </StyledMUIDataTableHeadCell>
             <TableBody>
               {sortedTrades.length === 0 ? (
                 <TableRow>

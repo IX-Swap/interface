@@ -26,7 +26,7 @@ const ExtractButton = styled.button`
 `
 
 function InvestorInformation({ lbpId }: TableProps) {
-  const [investorInfo, setInvestorInfo] = useState<any>()
+  const [investorInfo, setInvestorInfo] = useState<any[]>([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [orderBy, setOrderBy] = useState<string>('investorName')
@@ -34,8 +34,8 @@ function InvestorInformation({ lbpId }: TableProps) {
   const getInvestorInfo = useGetInvestorInfo()
 
   useEffect(() => {
-    getInvestorInfo(lbpId).then((data) => {
-      return setInvestorInfo(data)
+    getInvestorInfo(lbpId).then((data: any) => {
+      setInvestorInfo(data)
     })
   }, [lbpId, getInvestorInfo])
 
@@ -62,9 +62,10 @@ function InvestorInformation({ lbpId }: TableProps) {
     document.body.appendChild(link)
     link.click()
   }
+
   const convertToCsv = (data: any[]) => {
-    const header = Object.keys(data[0]).join(',')
-    const rows = data.map((obj) => Object.values(obj).join(','))
+    const header = 'Investor Name,Investor Address,Balance'
+    const rows = data.map((obj) => [obj.investorName, obj.walletAddress || '', obj.usdValue].join(','))
     return [header, ...rows].join('\n')
   }
 
