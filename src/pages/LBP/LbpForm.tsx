@@ -82,7 +82,6 @@ export default function LBPForm() {
   const getLbp = useGetLbp()
   const saveOrSubmitLbp = useSaveOrSubmitLbp()
   const { isAdmin } = useRole()
-  const [isCreatePage, setIsCreatePage] = useState<boolean>(false)
 
   const {
     objectParams: { id: lbpId },
@@ -98,9 +97,6 @@ export default function LBPForm() {
         setFormData(loadedFormData)
       }
     }
-    setIsCreatePage(window.location.hash.includes('create'))
-    const isCreatePage = window.location.hash.includes('create')
-    console.log('Is create page:', isCreatePage)
 
     getLbpAsync()
   }, [])
@@ -142,11 +138,6 @@ export default function LBPForm() {
       const endDateGreaterThanStartDate = endDate.isAfter(startDate)
       const endDateEqualGreaterThanMinEndDate = endDate.isSameOrAfter(minEndDate)
 
-      console.log('startDateAfterNow', startDateAfterNow)
-      console.log('endDateBeforeNow', endDateAfterNow)
-      console.log('endDateGreaterThanStartDate', endDateGreaterThanStartDate)
-      console.log('endDateEqualGreaterThanMinEndDate', endDateEqualGreaterThanMinEndDate)
-
       return startDateAfterNow && endDateAfterNow && endDateGreaterThanStartDate && endDateEqualGreaterThanMinEndDate
     }
 
@@ -160,16 +151,21 @@ export default function LBPForm() {
     const endDate = dayjs(formData.tokenomics.endDate)
     const datesValid = areDatesValid(startDate, endDate)
 
-    console.log(brandingComplete, projectInfoComplete, tokenomicsComplete, hasSocialLinks, datesValid)
-
     setCanSubmit(brandingComplete && hasSocialLinks && projectInfoComplete && tokenomicsComplete && datesValid)
   }
 
   const saveLbp = async (actionType: string) => {
     loader.start()
     try {
-      const data = transformDataForSaving(formData)
-      await saveOrSubmitLbp(actionType, data)
+      let data = transformDataForSaving(formData)
+      const res = await saveOrSubmitLbp(actionType, data)
+      const newId = res?.data?.id
+      if (newId || formData.id) {
+        const id = newId || formData.id
+        setFormData((prevData) => ({ ...prevData, id }))
+        data = { ...data, id }
+      }
+
       const summary = actionType === LBP_ACTION_TYPES.save ? 'LBP saved successfully' : 'LBP submitted successfully'
       addPopup({ info: { success: true, summary } })
       if (actionType === LBP_ACTION_TYPES.submit) {
@@ -194,7 +190,7 @@ export default function LBPForm() {
 
   const transformDataForSaving = (formData: FormData) => {
     const result: LbpFormValues = {
-      ...(isCreatePage ? {} : { id: formData.id }),
+      ...(formData.id ? { id: formData.id } : {}),
       title: formData.projectInfo?.title,
       description: formData.projectInfo?.description,
       officialWebsite: formData.projectInfo?.website,
@@ -260,8 +256,6 @@ export default function LBPForm() {
 
     return status == LbpStatus.draft && isAdmin
   }, [status, isAdmin])
-
-  console.log(formData, 'formData')
 
   return (
     <FormRow>
