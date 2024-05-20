@@ -7,6 +7,22 @@ import { RowBetween } from 'components/Row'
 import { TYPE } from 'theme'
 import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
+import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
+import { useActiveWeb3React } from 'hooks/web3'
+
+const composeLbpVolumeQuery = (lbpAddress: string) => {
+  return `
+    {
+      lbp(id: "${lbpAddress}") {
+        volume
+        assetVolume
+        assetAddress
+        id
+        shareAddress
+      }
+    }
+  `
+}
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
@@ -16,6 +32,17 @@ interface MiddleSectionProps {
 
 const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdmin }) => {
   const status = _get(lbpData, 'status', '')
+  const lbpAddress = _get(lbpData, 'contractAddress', '')
+  const { chainId } = useActiveWeb3React()
+  const subgraphData = useSubgraphQuery({
+    feature: 'LBP',
+    chainId,
+    query: composeLbpVolumeQuery(lbpAddress?.toLowerCase()),
+    pollingInterval: 20000,
+    autoPolling: true,
+  })
+
+  console.log('subgraphData', subgraphData)
 
   const calculateFundsRaised = () => {
     if (!statsData || !lbpData) return 0
@@ -27,6 +54,7 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
     return (reserve - tokenAmount) * priceUSD
   }
 
+  console.log('lbpData', lbpData)
   function calculatePercentage(currentShareReserve: string | undefined, shareAmount: number | undefined) {
     const currentShareReserveValue = parseFloat(currentShareReserve || '0')
     const shareAmountValue = parseFloat(shareAmount?.toString() || '0')
