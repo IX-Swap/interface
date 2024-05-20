@@ -202,13 +202,18 @@ export default function DetailsChart({
   ])
 
   const progressPercentage = useMemo(() => {
-    if (!getBucketIndex || !dataPoints || !dataPoints.length) return 0
+    if (!getBucketIndex || !dataPoints || !dataPoints.length || !endDate) return 0
     const currentTime: any = new Date()
+    const end: any = new Date(endDate)
+    if (currentTime > end) {
+      return 100
+    }
+
     const bucketIndex = getBucketIndex(currentTime.getTime())
     const currentPointIndex = dataPoints.findIndex((point: any) => point.bucketIndex === bucketIndex)
     const progressPercentage = ((currentPointIndex + 1) / dataPoints.length) * 100
     return progressPercentage
-  }, [getBucketIndex, dataPoints])
+  }, [getBucketIndex, dataPoints, endDate])
 
   return (
     <ChartContainer>
