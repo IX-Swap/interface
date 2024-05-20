@@ -2,9 +2,10 @@ import React from 'react'
 import Column, { AutoColumn } from 'components/Column'
 import { RowBetween } from 'components/Row'
 import styled from 'styled-components'
+import _get from 'lodash/get'
+
 import { TYPE } from 'theme'
-import { ReactComponent as USDC } from '../../../assets/images/usdcNew.svg'
-import { LbpFormValues, MarketData } from '../types'
+import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
@@ -14,11 +15,10 @@ interface MiddleSectionProps {
   statsData?: MarketData
 }
 
-
-
 const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => {
   const tokenCurrency = useCurrency(lbpData?.assetTokenAddress || '')
   const tokenOption = getTokenOption(lbpData?.assetTokenAddress || '', tokenCurrency?.chainId || 1)
+  const status = _get(lbpData, 'status', '')
 
   const calculateSharedWeight = (assetWeight: number): number => {
     return 100 - assetWeight
@@ -40,7 +40,7 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
               </>
               <VerticalLine />
               <>
-              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+                <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
                 <TYPE.label fontSize={'14px'}>{lbpData?.assetTokenAmount}</TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
                   {lbpData?.assetTokenSymbol}
@@ -49,26 +49,32 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
             </TokenWrapper>
           </QuantitiesBox>
 
-          <QuantitiesBox>
-            <TYPE.subHeader1 color={'#555566'}>Current Quantities</TYPE.subHeader1>
-            <TokenWrapper>
-              <>
-                <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>{useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)} </TYPE.label>
-                <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                  {lbpData?.title}
-                </TYPE.body3>
-              </>
-              <VerticalLine />
-              <>
-              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>{useFormatNumberWithDecimal(statsData?.currentAssetReserve || '', 2)} </TYPE.label>
-                <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                  {lbpData?.assetTokenSymbol}
-                </TYPE.body3>
-              </>
-            </TokenWrapper>
-          </QuantitiesBox>
+          {status && ![LbpStatus.ended, LbpStatus.closed].includes(status as any) ? (
+            <QuantitiesBox>
+              <TYPE.subHeader1 color={'#555566'}>Current Quantities</TYPE.subHeader1>
+              <TokenWrapper>
+                <>
+                  <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+                  <TYPE.label fontSize={'14px'}>
+                    {useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)}{' '}
+                  </TYPE.label>
+                  <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
+                    {lbpData?.title}
+                  </TYPE.body3>
+                </>
+                <VerticalLine />
+                <>
+                  <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+                  <TYPE.label fontSize={'14px'}>
+                    {useFormatNumberWithDecimal(statsData?.currentAssetReserve || '', 2)}{' '}
+                  </TYPE.label>
+                  <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
+                    {lbpData?.assetTokenSymbol}
+                  </TYPE.body3>
+                </>
+              </TokenWrapper>
+            </QuantitiesBox>
+          ) : null}
         </RowBetween>
       </AutoColumn>
 
@@ -80,45 +86,47 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
               <>
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>{lbpData?.startWeight}% </TYPE.label>
-  
               </>
               <VerticalLine />
               <>
-              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-              <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.startWeight || 0)}% </TYPE.label>
+                <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+                <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.startWeight || 0)}% </TYPE.label>
               </>
             </TokenWrapper>
           </WeightBox>
-          <WeightBox>
-            <TYPE.subHeader1 color={'#555566'}>Current Weight</TYPE.subHeader1>
-            <TokenWrapper>
-              <>
-                <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>
-                  {useFormatNumberWithDecimal(statsData?.currentShareWeight || '', 2)}%{' '}
-                </TYPE.label>
-              </>
-              <VerticalLine />
-              <>
-              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>
-                  {useFormatNumberWithDecimal(statsData?.currentAssetWeight || '', 2)}%{' '}
-                </TYPE.label>
-              </>
-            </TokenWrapper>
-          </WeightBox>
+
+          {status && ![LbpStatus.ended, LbpStatus.closed].includes(status as any) ? (
+            <WeightBox>
+              <TYPE.subHeader1 color={'#555566'}>Current Weight</TYPE.subHeader1>
+              <TokenWrapper>
+                <>
+                  <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+                  <TYPE.label fontSize={'14px'}>
+                    {useFormatNumberWithDecimal(statsData?.currentShareWeight || '', 2)}%{' '}
+                  </TYPE.label>
+                </>
+                <VerticalLine />
+                <>
+                  <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+                  <TYPE.label fontSize={'14px'}>
+                    {useFormatNumberWithDecimal(statsData?.currentAssetWeight || '', 2)}%{' '}
+                  </TYPE.label>
+                </>
+              </TokenWrapper>
+            </WeightBox>
+          ) : null}
+
           <WeightBox>
             <TYPE.subHeader1 color={'#555566'}>End Weight</TYPE.subHeader1>
             <TokenWrapper>
               <>
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>{lbpData?.endWeight}% </TYPE.label>
-   
               </>
               <VerticalLine />
               <>
-              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-              <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.endWeight || 0)}% </TYPE.label>
+                <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+                <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.endWeight || 0)}% </TYPE.label>
               </>
             </TokenWrapper>
           </WeightBox>

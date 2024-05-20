@@ -140,7 +140,13 @@ export const HeaderLinks = () => {
         <Trans>Charts</Trans>
       </MenuExternalLink>
       {/* )} */}
-      <StyledNavLink id={`issuance-nav-link`} to={'/launchpad'}>
+      <StyledNavLink
+        id={`issuance-nav-link`}
+        to={'/launchpad'}
+        isActive={(match, { pathname }) => {
+          return pathname.includes('lbp/')
+        }}
+      >
         <Trans>Launchpad</Trans>
       </StyledNavLink>
       {/* {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && ( */}
@@ -222,7 +228,10 @@ export const HeaderLinks = () => {
       )}
 
       {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink to={'/lbp'} data-testid={`lbp-nav-link`}>
+        <StyledNavLink
+          to={'/lbp'}
+          data-testid={`lbp-nav-link`}
+        >
           <Trans>LBP</Trans>
         </StyledNavLink>
       )}
