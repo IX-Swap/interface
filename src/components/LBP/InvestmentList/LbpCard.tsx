@@ -86,30 +86,10 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
         <LbpCardInfoContainer expanded={showDetails}>
           <LbpCardIcon src={lbp.logo?.public} />
 
-          <LbpCardDescriptionContainer onClick={toggleShowDetails}>
+          <div>
             <LbpCardTitle>{lbp.title}</LbpCardTitle>
             <LbpCardDescription>{lbp.description}</LbpCardDescription>
-          </LbpCardDescriptionContainer>
-
-          <LbpCardDetailsContainer show={showDetails}>
-            {showDetails && (
-              <>
-                <LbpCardDetailsEntry>
-                  <LbpCardDetailsEntryLabel>Max Supply</LbpCardDetailsEntryLabel>
-                  <LbpCardDetailsEntryValue>{lbp.shareMaxSupply}</LbpCardDetailsEntryValue>
-                </LbpCardDetailsEntry>
-
-                <LbpCardDetailsSeparator />
-
-                <LbpCardDetailsEntry>
-                  <LbpCardDetailsEntryLabel>Min Price</LbpCardDetailsEntryLabel>
-                  <LbpCardDetailsEntryValue>{lbp.minPrice}</LbpCardDetailsEntryValue>
-                </LbpCardDetailsEntry>
-
-                <LbpCardDetailsSeparator />
-              </>
-            )}
-          </LbpCardDetailsContainer>
+          </div>
 
           <LbpSaleStatusInfo
             isClosed={isClosed}
@@ -208,10 +188,6 @@ const LbpCardIcon = styled.img`
   border-radius: 6px;
 `
 
-const LbpCardDescriptionContainer = styled.div`
-  cursor: pointer;
-`
-
 const LbpCardTitle = styled.div`
   ${text58}
   font-family: ${(props) => props.theme.launchpad.font};
@@ -235,21 +211,6 @@ const LbpCardDescription = styled.div`
   -webkit-box-orient: vertical;
 `
 
-const LbpCardDetailsContainer = styled.div<{ show: boolean }>`
-  opacity: ${(props) => (props.show ? '1' : '0')};
-  height: ${(props) => (props.show ? '170px' : '0')};
-
-  transition: height 0.3s ease-in-out, opacity 0.2s ease-out 0.1s;
-
-  z-index: 10;
-
-  ${(props) => props.show && `margin: 0.5rem -1.5rem;`}
-
-  border-top: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
-  border-bottom: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
-
-  width: 380px;
-`
 const LbpCardDetailsEntry = styled.div`
   display: flex;
   flex-flow: row nowrap;
