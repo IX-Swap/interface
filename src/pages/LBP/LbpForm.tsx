@@ -159,9 +159,8 @@ export default function LBPForm() {
     try {
       let data = transformDataForSaving(formData)
       const res = await saveOrSubmitLbp(actionType, data)
-      const newId = res?.data?.id
-      if (newId || formData.id) {
-        const id = newId || formData.id
+      const id = res?.data?.id || formData.id
+      if (id) {
         setFormData((prevData) => ({ ...prevData, id }))
         data = { ...data, id }
       }
