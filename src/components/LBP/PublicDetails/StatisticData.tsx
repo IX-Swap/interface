@@ -7,6 +7,22 @@ import { RowBetween } from 'components/Row'
 import { TYPE } from 'theme'
 import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
+import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
+import { useActiveWeb3React } from 'hooks/web3'
+
+const composeLbpVolumeQuery = (lbpAddress: string) => {
+  return `
+    {
+      lbp(id: "${lbpAddress}") {
+        volume
+        assetVolume
+        assetAddress
+        id
+        shareAddress
+      }
+    }
+  `
+}
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
@@ -15,6 +31,16 @@ interface MiddleSectionProps {
 }
 
 const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdmin }) => {
+  const lbpAddress = _get(lbpData, 'contractAddress', '')
+  const { chainId } = useActiveWeb3React()
+  const subgraphData = useSubgraphQuery({
+    feature: 'LBP',
+    chainId,
+    query: composeLbpVolumeQuery(lbpAddress?.toLowerCase()),
+    pollingInterval: 20000,
+    autoPolling: true,
+  })
+  const volume = _get(subgraphData, 'lbp.volume', 0)
   const status = _get(lbpData, 'status', '')
 
   const calculateFundsRaised = () => {
@@ -73,7 +99,7 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
               <QuantitiesBox isAdmin={isAdmin}>
                 <TYPE.subHeader1 color={'#555566'}>Volume</TYPE.subHeader1>
                 <TokenWrapper>
-                  <TYPE.label fontSize={'14px'}>$248,050.00</TYPE.label>
+                  <TYPE.label fontSize={'14px'}>${useFormatNumberWithDecimal(volume, 2)}</TYPE.label>
                 </TokenWrapper>
               </QuantitiesBox>
 
