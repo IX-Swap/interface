@@ -47,11 +47,13 @@ export default function ComingSoon({ lbpData }: ComingBarProps) {
         </TYPE.subHeader1>
         <TimeContainer>
           {remainingDays > 0 ? (
-            <TimeItem>
+            <TimeItem style={{ flexDirection: 'row', gap: '10px', marginBottom: '16px' }}>
               <TYPE.description7 fontSize={'64px'} color={'#6666FF'}>
                 {remainingDays}
               </TYPE.description7>
-              <TYPE.description3 color={'#6666FF'}>Days</TYPE.description3>
+              <TYPE.description7 fontSize={'64px'} color={'#6666FF'}>
+                Days
+              </TYPE.description7>
             </TimeItem>
           ) : (
             <>
