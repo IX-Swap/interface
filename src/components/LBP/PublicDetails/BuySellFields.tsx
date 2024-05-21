@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, memo } from 'react'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
@@ -17,6 +17,7 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { useCurrency } from 'hooks/Tokens'
 import useDebounce from 'hooks/useDebounce'
+import useDecimals from 'hooks/useDecimals'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -31,6 +32,7 @@ interface BuySellFieldsProps {
   id: any
   logo?: any
   allowSlippage: boolean
+  fetchBalance?: any
 }
 
 interface TokenOption {
@@ -62,7 +64,7 @@ const parseUnit = (amount: number, decimals: number): ethers.BigNumber => {
 
 const AMOUNT_PRECISION = 4
 
-export default function BuySellFields({
+const BuySellFields: React.FC<BuySellFieldsProps> = ({
   activeTab,
   tokenBalance,
   assetTokenAddress,
@@ -74,7 +76,15 @@ export default function BuySellFields({
   logo,
   slippage,
   allowSlippage,
-}: BuySellFieldsProps) {
+  fetchBalance,
+}) => {
+  const assetDecimals = useDecimals(assetTokenAddress) ?? 18
+  const shareDecimals= useDecimals(shareTokenAddress) ?? 18
+
+  console.log('assetDecimals', assetDecimals)
+  console.log('shareDecimals', shareDecimals)
+
+
   // UI States
   const [buttonDisabled, setButtonDisabled] = useState(true)
   // const [buttonText, setButtonText] = useState('Approve')
@@ -98,9 +108,6 @@ export default function BuySellFields({
 
   const debouncedShareInput = useDebounce(shareValueInput, 500)
   const debouncedAssetInput = useDebounce(assetValueInput, 500)
-
-  const assetDecimals = useMemo(() => tokenOption?.tokenDecimals || 0, [tokenOption])
-  const shareDecimals = useMemo(() => 18, []) // for now hardcode share decimals to 18 but can change it later
 
   // Web3 States
   const { chainId } = useWeb3React()
@@ -328,7 +335,7 @@ export default function BuySellFields({
             summary: 'Transaction is successful!',
           })
         }
-
+        await fetchBalance()
         setIsExecuting(false)
       }
     } catch (error: any) {
@@ -735,6 +742,8 @@ export default function BuySellFields({
     </>
   )
 }
+
+export default memo(BuySellFields);
 
 const BuySellFieldsWrapper = styled.div`
   text-align: left;
