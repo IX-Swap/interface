@@ -31,8 +31,11 @@ interface MiddleSectionProps {
 }
 
 const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdmin }) => {
+  const { chainId, account } = useActiveWeb3React()
+
+  if (!chainId || !account) return null
+
   const lbpAddress = _get(lbpData, 'contractAddress', '')
-  const { chainId } = useActiveWeb3React()
   const subgraphData = useSubgraphQuery({
     feature: 'LBP',
     chainId,
