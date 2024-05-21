@@ -38,6 +38,9 @@ const decimals = 18;
 
 const RedeemedSideBar: React.FC<RedeemedProps> = ({ contractAddress, shareLogo, shareName }) => {
   const { account, chainId } = useActiveWeb3React()
+
+  if (!chainId || !account) return null
+
   const getLBPPurchasedShares = useLBPPurchasedShares(contractAddress || '', account)
   const lbpContractInstance = useLBPContract(contractAddress ?? '')
   const addPopup = useAddPopup()
