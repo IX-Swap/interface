@@ -205,7 +205,7 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({
         </Description>
       </ImageSection>
       <TextSection>
-        <StatusButton onClick={handleOpenModal} status={status}>
+        <StatusButton style={{ minInlineSize: 'max-content'}} onClick={handleOpenModal} status={status}>
           {statusIcon}
           <TYPE.subHeader1>{statusText}</TYPE.subHeader1>
         </StatusButton>

@@ -1,10 +1,28 @@
 import React, { useMemo } from 'react'
+import _get from 'lodash/get'
+import styled from 'styled-components'
+
 import Column, { AutoColumn } from 'components/Column'
 import { RowBetween } from 'components/Row'
-import styled from 'styled-components'
 import { TYPE } from 'theme'
-import { LbpFormValues, MarketData } from '../types'
+import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
+import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
+import { useActiveWeb3React } from 'hooks/web3'
+
+const composeLbpVolumeQuery = (lbpAddress: string) => {
+  return `
+    {
+      lbp(id: "${lbpAddress}") {
+        volume
+        assetVolume
+        assetAddress
+        id
+        shareAddress
+      }
+    }
+  `
+}
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
@@ -13,6 +31,18 @@ interface MiddleSectionProps {
 }
 
 const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdmin }) => {
+  const lbpAddress = _get(lbpData, 'contractAddress', '')
+  const { chainId } = useActiveWeb3React()
+  const subgraphData = useSubgraphQuery({
+    feature: 'LBP',
+    chainId,
+    query: composeLbpVolumeQuery(lbpAddress?.toLowerCase()),
+    pollingInterval: 20000,
+    autoPolling: true,
+  })
+  const volume = _get(subgraphData, 'lbp.volume', 0)
+  const status = _get(lbpData, 'status', '')
+
   const calculateFundsRaised = () => {
     if (!statsData || !lbpData) return 0
     const { currentAssetReserve, currentAssetPriceUSD } = statsData
@@ -64,19 +94,26 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
     <Column style={{ display: isAdmin ? '-webkit-box' : '' }}>
       <AutoColumn style={{ marginBottom: '20px' }} justify="center" gap="md">
         <RowBetween>
-          <QuantitiesBox isAdmin={isAdmin}>
-            <TYPE.subHeader1 color={'#555566'}>Volume</TYPE.subHeader1>
-            <TokenWrapper>
-              <TYPE.label fontSize={'14px'}>$248,050.00</TYPE.label>
-            </TokenWrapper>
-          </QuantitiesBox>
+          {status && ![LbpStatus.closed, LbpStatus.ended, LbpStatus.pending].includes(status as any) ? (
+            <>
+              <QuantitiesBox isAdmin={isAdmin}>
+                <TYPE.subHeader1 color={'#555566'}>Volume</TYPE.subHeader1>
+                <TokenWrapper>
+                  <TYPE.label fontSize={'14px'}>${useFormatNumberWithDecimal(volume, 2)}</TYPE.label>
+                </TokenWrapper>
+              </QuantitiesBox>
 
-          <QuantitiesBox isAdmin={isAdmin}>
-            <TYPE.subHeader1 color={'#555566'}>Liquidity</TYPE.subHeader1>
-            <TokenWrapper>
-              <TYPE.label fontSize={'14px'}>${useFormatNumberWithDecimal(statsData?.liquidityUSD || '', 2)}</TYPE.label>
-            </TokenWrapper>
-          </QuantitiesBox>
+              <QuantitiesBox isAdmin={isAdmin}>
+                <TYPE.subHeader1 color={'#555566'}>Liquidity</TYPE.subHeader1>
+                <TokenWrapper>
+                  <TYPE.label fontSize={'14px'}>
+                    ${useFormatNumberWithDecimal(statsData?.liquidityUSD || '', 2)}
+                  </TYPE.label>
+                </TokenWrapper>
+              </QuantitiesBox>
+            </>
+          ) : null}
+
           <QuantitiesBox isAdmin={isAdmin}>
             <TYPE.subHeader1 color={'#555566'}>Funds Raised</TYPE.subHeader1>
             <TokenWrapper>

@@ -48,6 +48,7 @@ import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { detectWrongNetwork } from 'utils'
 
 const DEFAULT_REMOVE_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(5, 100)
 
@@ -326,10 +327,7 @@ export default function RemoveLiquidity({
     }
   }, [])
 
-  const blurred = React.useMemo(
-    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0),
-    [account, chainId]
-  )
+  const blurred = detectWrongNetwork(chainId ?? 0)
 
   if (blurred) {
     return (

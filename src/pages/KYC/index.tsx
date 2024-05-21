@@ -5,6 +5,8 @@ import { Flex, Text } from 'rebass'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
+import Portal from '@reach/portal'
+
 import { useActiveWeb3React } from 'hooks/web3'
 import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
@@ -15,7 +17,7 @@ import { useKYCState } from 'state/kyc/hooks'
 import { ReactComponent as IndividualKYC } from 'assets/images/newIndividual.svg'
 import { ReactComponent as CorporateKYC } from 'assets/images/newCorporate.svg'
 import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
-
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
 import { Content, getStatusDescription, StatusCard, DateInfoContainer } from './styleds'
@@ -28,6 +30,8 @@ import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
+import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { detectWrongNetwork } from 'utils'
 
 interface DescriptionProps {
   description: string | null
@@ -84,7 +88,7 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 const KYC = () => {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const [loading, setLoading] = useState(false)
   const pendingSign = usePendingSignState()
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -335,6 +339,18 @@ const KYC = () => {
   }, [status, description, kyc])
 
   if (!account) return <NotAvailablePage />
+
+  const blurred = detectWrongNetwork(chainId);
+
+  if (blurred) {
+    return (
+      <Portal>
+        <CenteredFixed width="100vw" height="100vh" style={{ background: 'rgba(0, 0, 0, .5)' }}>
+          <NotAvailablePage />
+        </CenteredFixed>
+      </Portal>
+    )
+  }
 
   return (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>

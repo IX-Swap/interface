@@ -6,6 +6,11 @@ import { ReactComponent as DiscordLogo } from 'assets/images/discordNew.svg'
 import { ReactComponent as YoutubeLogo } from 'assets/images/youtubeIcon.svg'
 import { ReactComponent as CoingeckoLogo } from 'assets/images/coinMarketNew.svg'
 import { ReactComponent as WebSiteIcon } from 'assets/images/websiteIcon.svg'
+import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/linkedin.svg'
+import { ReactComponent as MLogo } from 'assets/launchpad/svg/social/m.svg'
+import { ReactComponent as RedditLogo } from 'assets/launchpad/svg/social/reddit.svg'
+import { ReactComponent as InstagramLogo } from 'assets/launchpad/svg/social/instagram.svg'
+import { ReactComponent as FacebookLogo } from 'assets/launchpad/svg/social/facebook.svg'
 import { MEDIA_WIDTHS } from 'theme'
 import { LbpFormValues } from '../types'
 
@@ -19,6 +24,11 @@ const socialMediaIcons = {
   youtube: <YoutubeLogo />,
   coingecko: <CoingeckoLogo />,
   discord: <DiscordLogo />,
+  linkedin: <LinkedInLogo />,
+  coinmarketcap: <MLogo />,
+  reddit: <RedditLogo />,
+  instagram: <InstagramLogo />,
+  facebook: <FacebookLogo />,
 }
 
 const Links: React.FC<LinksProps> = ({ lbpData }) => {

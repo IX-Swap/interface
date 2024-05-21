@@ -15,6 +15,7 @@ import { useDeployLbp } from 'state/lbp/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { useHistory } from 'react-router-dom'
+import { ReactComponent as SerenityIcon } from '../../../assets/images/serenity.svg'
 
 export const MAX_UINT88 = ethers.BigNumber.from('309485009821345068724781055')
 
@@ -161,6 +162,27 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
     setIsDeploying(false)
   }, [lbpFactory, lbpArgs, formData, predictedLBPAddress, amounts])
 
+  const generateLBPLogo = (formData: any) => {
+    const getLBPLogoSrc = () => {
+      const logo = formData?.branding?.LBPLogo
+      if (logo?.public) {
+        return logo.public
+      } else if (logo instanceof File) {
+        return URL.createObjectURL(logo)
+      } else {
+        return null
+      }
+    }
+
+    const logoSrc = getLBPLogoSrc()
+
+    return logoSrc ? (
+      <img style={{ borderRadius: '100%', width: '20px', height: '20px' }} src={logoSrc} alt="Serenity" />
+    ) : (
+      <SerenityIcon style={{ borderRadius: '100%', width: '20px', height: '20px' }} />
+    )
+  }
+
   return (
     <SummaryContainer>
       <SummaryTitle>Quick Summary</SummaryTitle>
@@ -199,11 +221,7 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
             <FieldLabel>Project Token</FieldLabel>
             <TokenBlock>
               <TokenRow>
-                <img
-                  style={{ borderRadius: '100%', width: '20px', height: '20px' }}
-                  src={formData?.branding?.LBPLogo?.public}
-                  alt="Serenity"
-                />
+                {generateLBPLogo(formData)}
                 <span>{formData?.projectInfo?.title}</span>
               </TokenRow>
               <TokenPrice>{formData.tokenomics.shareInput}</TokenPrice>
@@ -228,11 +246,7 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
             <FieldLabel>Start Weights</FieldLabel>
             <TokenBlock>
               <TokenRow>
-                <img
-                  style={{ borderRadius: '100%', width: '20px', height: '20px' }}
-                  src={formData?.branding?.LBPLogo?.public}
-                  alt="Serenity"
-                />
+                {generateLBPLogo(formData)}
                 <span>{formData?.projectInfo?.title}</span>
               </TokenRow>
               <TokenPrice>{formData.tokenomics.startWeight}%</TokenPrice>
@@ -258,7 +272,7 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
           </TextBlock>
           <TextBlock>
             <FieldLabel>Start Market Cap</FieldLabel>
-            <FieldValue>{formatNumberWithDecimals(startPrice * formData.tokenomics.shareInput, 2)}$</FieldValue>
+            <FieldValue>${formatNumberWithDecimals(startPrice * formData.tokenomics.shareInput, 2)}</FieldValue>
           </TextBlock>
         </Row>
       </Section>

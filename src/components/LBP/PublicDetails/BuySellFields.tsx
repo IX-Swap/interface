@@ -584,12 +584,22 @@ export default function BuySellFields({
   useEffect(() => {
     if (debouncedShareInput) {
       handleInputChange(debouncedShareInput, InputType.Share)
+    } else {
+      setAssetValue('')
+      setAssetValueDisplay('')
+      setShareValue('')
+      setShareValueDisplay('')
     }
   }, [debouncedShareInput])
 
   useEffect(() => {
     if (debouncedAssetInput) {
       handleInputChange(debouncedAssetInput, InputType.Asset)
+    } else {
+      setAssetValue('')
+      setAssetValueDisplay('')
+      setShareValue('')
+      setShareValueDisplay('')
     }
   }, [debouncedAssetInput])
 

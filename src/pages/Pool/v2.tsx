@@ -29,13 +29,13 @@ import { useTokens } from './useTokens'
 // import { AddLiduidityContainer } from 'pages/AddLiquidityV2/redirects'
 // import { Header } from 'pages/Launchpad/Header'
 import { useSetHideHeader } from 'state/application/hooks'
-import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import Header from 'components/Header'
 import { isMobile } from 'react-device-detect'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { detectWrongNetwork } from 'utils'
 
 const LinkTitle = styled(TYPE.body1)`
   color: ${({ theme }) => theme.text1};
@@ -101,10 +101,7 @@ export default function Pool() {
     }
   }, [])
 
-  const blurred = React.useMemo(
-    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0),
-    [account, chainId]
-  )
+  const blurred = detectWrongNetwork(chainId)
 
   if (blurred) {
     return (

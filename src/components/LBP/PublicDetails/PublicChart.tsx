@@ -202,13 +202,18 @@ export default function DetailsChart({
   ])
 
   const progressPercentage = useMemo(() => {
-    if (!getBucketIndex || !dataPoints || !dataPoints.length) return 0
+    if (!getBucketIndex || !dataPoints || !dataPoints.length || !endDate) return 0
     const currentTime: any = new Date()
+    const end: any = new Date(endDate)
+    if (currentTime > end) {
+      return 100
+    }
+
     const bucketIndex = getBucketIndex(currentTime.getTime())
     const currentPointIndex = dataPoints.findIndex((point: any) => point.bucketIndex === bucketIndex)
     const progressPercentage = ((currentPointIndex + 1) / dataPoints.length) * 100
     return progressPercentage
-  }, [getBucketIndex, dataPoints])
+  }, [getBucketIndex, dataPoints, endDate])
 
   return (
     <ChartContainer>
@@ -255,9 +260,27 @@ export default function DetailsChart({
         {/*   } */}
         {/* /> */}
       </LineChart>
+
+      <RightLegend>
+        <WrapItem>
+          <Circle style={{ background: '#BDBDDB' }}></Circle>
+          <TextLegend>Historical Price</TextLegend>
+        </WrapItem>
+
+        <WrapItem style={{ marginLeft: 16 }}>
+          <Circle style={{ background: '#6666FF' }}></Circle>
+          <TextLegend>Future Price</TextLegend>
+        </WrapItem>
+      </RightLegend>
     </ChartContainer>
   )
 }
+
+const TextLegend = styled.div`
+  color: #292933;
+  font-size: 14px;
+  font-weight: 500;
+`
 
 const ChartContainer = styled.div`
   margin-top: 20px;
@@ -265,4 +288,24 @@ const ChartContainer = styled.div`
   border: 1px solid #e6e6ff;
   padding: 24px;
   margin-bottom: 30px;
+  position: relative;
+`
+
+const RightLegend = styled.div`
+  display: flex;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+`
+
+const Circle = styled.div`
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  margin-right: 5px;
+`
+
+const WrapItem = styled.div`
+  display: flex;
+  align-items: center;
 `

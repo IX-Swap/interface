@@ -56,7 +56,7 @@ export default function LBPForm() {
     },
     tokenomics: {
       shareAddress: '',
-      contractAddress: '',
+      contractAddress: constants.AddressZero,
       assetTokenAddress: '',
       assetTokenSymbol: '',
       shareInput: 0,
@@ -138,11 +138,6 @@ export default function LBPForm() {
       const endDateGreaterThanStartDate = endDate.isAfter(startDate)
       const endDateEqualGreaterThanMinEndDate = endDate.isSameOrAfter(minEndDate)
 
-      console.log('startDateAfterNow', startDateAfterNow)
-      console.log('endDateBeforeNow', endDateAfterNow)
-      console.log('endDateGreaterThanStartDate', endDateGreaterThanStartDate)
-      console.log('endDateEqualGreaterThanMinEndDate', endDateEqualGreaterThanMinEndDate)
-
       return startDateAfterNow && endDateAfterNow && endDateGreaterThanStartDate && endDateEqualGreaterThanMinEndDate
     }
 
@@ -156,16 +151,20 @@ export default function LBPForm() {
     const endDate = dayjs(formData.tokenomics.endDate)
     const datesValid = areDatesValid(startDate, endDate)
 
-    console.log(brandingComplete, projectInfoComplete, tokenomicsComplete, hasSocialLinks, datesValid)
-
     setCanSubmit(brandingComplete && hasSocialLinks && projectInfoComplete && tokenomicsComplete && datesValid)
   }
 
   const saveLbp = async (actionType: string) => {
     loader.start()
     try {
-      const data = transformDataForSaving(formData)
-      await saveOrSubmitLbp(actionType, data)
+      let data = transformDataForSaving(formData)
+      const res = await saveOrSubmitLbp(actionType, data)
+      const id = res?.data?.id || formData.id
+      if (id) {
+        setFormData((prevData) => ({ ...prevData, id }))
+        data = { ...data, id }
+      }
+
       const summary = actionType === LBP_ACTION_TYPES.save ? 'LBP saved successfully' : 'LBP submitted successfully'
       addPopup({ info: { success: true, summary } })
       if (actionType === LBP_ACTION_TYPES.submit) {
@@ -190,7 +189,7 @@ export default function LBPForm() {
 
   const transformDataForSaving = (formData: FormData) => {
     const result: LbpFormValues = {
-      id: formData.id,
+      ...(formData.id ? { id: formData.id } : {}),
       title: formData.projectInfo?.title,
       description: formData.projectInfo?.description,
       officialWebsite: formData.projectInfo?.website,
@@ -200,9 +199,9 @@ export default function LBPForm() {
       LBPBanner: formData.branding?.LBPBanner,
       uploadDocs: formData.projectInfo?.uploadDocs,
       shareAddress: formData.tokenomics?.shareAddress,
-      shareAmount: formData.tokenomics?.shareInput,
+      shareAmount: Number(formData.tokenomics?.shareInput || 0),
       shareMaxSupply: formData.tokenomics?.maxSupply,
-      assetTokenAmount: formData.tokenomics?.assetInput,
+      assetTokenAmount: Number(formData.tokenomics?.assetInput || 0),
       assetTokenAddress: formData.tokenomics?.assetTokenAddress,
       assetTokenSymbol: formData.tokenomics?.assetTokenSymbol,
       startWeight: formData.tokenomics?.startWeight,

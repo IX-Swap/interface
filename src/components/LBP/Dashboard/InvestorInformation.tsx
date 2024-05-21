@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import TablePagination from '@mui/material/TablePagination'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import { useGetInvestorInfo } from 'state/lbp/hooks'
+import { formatNumberWithDecimals, useGetInvestorInfo } from 'state/lbp/hooks'
 import { TYPE } from 'theme'
 import styled from 'styled-components'
 
@@ -26,7 +26,7 @@ const ExtractButton = styled.button`
 `
 
 function InvestorInformation({ lbpId }: TableProps) {
-  const [investorInfo, setInvestorInfo] = useState<any>()
+  const [investorInfo, setInvestorInfo] = useState<any[]>([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [orderBy, setOrderBy] = useState<string>('investorName')
@@ -34,8 +34,8 @@ function InvestorInformation({ lbpId }: TableProps) {
   const getInvestorInfo = useGetInvestorInfo()
 
   useEffect(() => {
-    getInvestorInfo(lbpId).then((data) => {
-      return setInvestorInfo(data)
+    getInvestorInfo(lbpId).then((data: any) => {
+      setInvestorInfo(data)
     })
   }, [lbpId, getInvestorInfo])
 
@@ -62,9 +62,10 @@ function InvestorInformation({ lbpId }: TableProps) {
     document.body.appendChild(link)
     link.click()
   }
+
   const convertToCsv = (data: any[]) => {
-    const header = Object.keys(data[0]).join(',')
-    const rows = data.map((obj) => Object.values(obj).join(','))
+    const header = 'Investor Name,Investor Address,Balance'
+    const rows = data.map((obj) => [obj.investorName, obj.walletAddress || '', obj.boughtShares].join(','))
     return [header, ...rows].join('\n')
   }
 
@@ -102,9 +103,9 @@ function InvestorInformation({ lbpId }: TableProps) {
               </TableCell>
               <TableCell style={{ textAlign: 'right' }}>
                 <TableSortLabel
-                  active={orderBy === 'assetsSpent'}
-                  direction={orderBy === 'assetsSpent' ? order : 'asc'}
-                  onClick={() => handleRequestSort('assetsSpent')}
+                  active={orderBy === 'boughtShares'}
+                  direction={orderBy === 'boughtShares' ? order : 'asc'}
+                  onClick={() => handleRequestSort('boughtShares')}
                 >
                   No. of Tokens
                 </TableSortLabel>
@@ -117,7 +118,9 @@ function InvestorInformation({ lbpId }: TableProps) {
                 <TableCell component="th" scope="row" style={{ textAlign: 'left' }}>
                   {row.investorName}
                 </TableCell>
-                <TableCell style={{ textAlign: 'right' }}>{row.assetsSpent}</TableCell>
+                <TableCell style={{ textAlign: 'right' }}>
+                  {formatNumberWithDecimals(row.boughtShares, 3, true)}
+                </TableCell>
               </TableRow>
             ))}
             {emptyRows > 0 && (

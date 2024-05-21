@@ -7,6 +7,7 @@ import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
 import { useLBPPurchasedShares } from 'state/lbp/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
+import { formatNumberWithDecimals } from 'state/lbp/hooks'
 
 interface EndedSideBarProps {
   contractAddress: string | null
@@ -43,7 +44,11 @@ const EndedSideBar: React.FC<EndedSideBarProps> = ({ contractAddress, shareLogo,
           </ShareTokenWrapper>
         </ShareWrapper>
         <ShareWrapper>
-          <TYPE.description7 style={{margin: '0px', lineHeight: '1px'}} color={'#292933'}>{getLBPPurchasedShares ? getLBPPurchasedShares.shareBalance : '0.0'}</TYPE.description7>
+          <TYPE.description7 style={{ margin: '0px', lineHeight: '1px' }} color={'#292933'}>
+            {getLBPPurchasedShares?.shareBalance
+              ? formatNumberWithDecimals(getLBPPurchasedShares.shareBalance as string, 3)
+              : '0.0'}
+          </TYPE.description7>
         </ShareWrapper>
         <Line style={{ margin: '20px 8px' }} />
         <PinnedContentButton margin={'0px 15px'} disabled>
@@ -68,7 +73,6 @@ const DesContainer = styled.div`
   padding: 0px 30px;
 `
 
-
 const SideBarContainer = styled.div`
   border: 1px solid #e6e6ff;
   border-radius: 8px;
@@ -80,7 +84,6 @@ const SideBarContainer = styled.div`
     width: 100%;
   }
 `
-
 
 const MiddleSection = styled.div`
   margin: 20px 0;
