@@ -65,7 +65,7 @@ function InvestorInformation({ lbpId }: TableProps) {
 
   const convertToCsv = (data: any[]) => {
     const header = 'Investor Name,Investor Address,Balance'
-    const rows = data.map((obj) => [obj.investorName, obj.walletAddress || '', obj.usdValue].join(','))
+    const rows = data.map((obj) => [obj.investorName, obj.walletAddress || '', obj.boughtShares].join(','))
     return [header, ...rows].join('\n')
   }
 
