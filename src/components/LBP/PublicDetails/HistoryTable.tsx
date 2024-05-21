@@ -109,12 +109,15 @@ const composeLatestTradeQuery = (lbpAddress: string) => {
 }
 
 export default function TradeHistory({ contractAddress, assetTokenAddress, shareToken }: TableProps) {
+  const { chainId, account } = useWeb3React()
+
+  if (!chainId || !account) return null
+
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [orderBy, setOrderBy] = useState<string>('')
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
 
-  const { chainId } = useWeb3React()
   const tokenCurrency = useCurrency(assetTokenAddress)
   const tokenOption = useMemo(
     () => getTokenOption(assetTokenAddress || '', tokenCurrency?.chainId || 1),
