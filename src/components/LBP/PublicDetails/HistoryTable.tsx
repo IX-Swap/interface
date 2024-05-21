@@ -121,9 +121,10 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
     [assetTokenAddress]
   )
 
-  const handleSort = (property: string) => {
-    const isAsc = orderBy === property && order === 'asc'
-    setOrderBy(property)
+  const handleSort = (property: string | string[]) => {
+    const properties = Array.isArray(property) ? property : [property]
+    const isAsc = orderBy === properties[0] && order === 'asc'
+    setOrderBy(properties[0])
     setOrder(isAsc ? 'desc' : 'asc')
   }
 
@@ -160,12 +161,27 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
-
   const sortedTrades = useMemo(() => {
     if (orderBy && order) {
       return [...trades].sort((a, b) => {
-        const aValue = a[orderBy]
-        const bValue = b[orderBy]
+        let aValue, bValue
+        if (orderBy === 'amountIn' || orderBy === 'amountOut') {
+          aValue = parseFloat(
+            ethers.utils.formatUnits(
+              a[orderBy],
+              a.type === 'BUY' ? getAssetTokenDecimals(a.pool.assetAddress) : getShareDecimals(a.pool.shareAddress)
+            )
+          )
+          bValue = parseFloat(
+            ethers.utils.formatUnits(
+              b[orderBy],
+              b.type === 'BUY' ? getAssetTokenDecimals(b.pool.assetAddress) : getShareDecimals(b.pool.shareAddress)
+            )
+          )
+        } else {
+          aValue = a[orderBy]
+          bValue = b[orderBy]
+        }
 
         if (typeof aValue === 'undefined' || aValue === null) return 1
         if (typeof bValue === 'undefined' || bValue === null) return -1
@@ -181,6 +197,7 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
     }
     return trades
   }, [trades, orderBy, order])
+
   return (
     <>
       <TYPE.title5 style={{ marginTop: '30px' }}>Trade History</TYPE.title5>
@@ -218,9 +235,9 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
                 </StyledTableCell>
                 <StyledTableCell>
                   <TableSortLabel
-                    active={orderBy === 'amountIn'}
-                    direction={orderBy === 'amountIn' ? order : 'asc'}
-                    onClick={() => handleSort('amountIn')}
+                    active={orderBy === 'amountIn' || orderBy === 'amountOut'}
+                    direction={orderBy === 'amountIn' || orderBy === 'amountOut' ? order : 'asc'}
+                    onClick={() => handleSort(['amountIn', 'amountOut'])}
                   >
                     Amount
                   </TableSortLabel>

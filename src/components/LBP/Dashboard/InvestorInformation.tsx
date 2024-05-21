@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import TablePagination from '@mui/material/TablePagination'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import { useGetInvestorInfo } from 'state/lbp/hooks'
+import { formatNumberWithDecimals, useGetInvestorInfo } from 'state/lbp/hooks'
 import { TYPE } from 'theme'
 import styled from 'styled-components'
 
@@ -103,9 +103,9 @@ function InvestorInformation({ lbpId }: TableProps) {
               </TableCell>
               <TableCell style={{ textAlign: 'right' }}>
                 <TableSortLabel
-                  active={orderBy === 'assetsSpent'}
-                  direction={orderBy === 'assetsSpent' ? order : 'asc'}
-                  onClick={() => handleRequestSort('assetsSpent')}
+                  active={orderBy === 'boughtShares'}
+                  direction={orderBy === 'boughtShares' ? order : 'asc'}
+                  onClick={() => handleRequestSort('boughtShares')}
                 >
                   No. of Tokens
                 </TableSortLabel>
@@ -118,7 +118,9 @@ function InvestorInformation({ lbpId }: TableProps) {
                 <TableCell component="th" scope="row" style={{ textAlign: 'left' }}>
                   {row.investorName}
                 </TableCell>
-                <TableCell style={{ textAlign: 'right' }}>{row.assetsSpent}</TableCell>
+                <TableCell style={{ textAlign: 'right' }}>
+                  {formatNumberWithDecimals(row.boughtShares, 3, true)}
+                </TableCell>
               </TableRow>
             ))}
             {emptyRows > 0 && (
