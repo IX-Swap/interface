@@ -122,11 +122,11 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
   )
 
   const handleSort = (property: string | string[]) => {
-    const properties = Array.isArray(property) ? property : [property];
-    const isAsc = orderBy === properties[0] && order === 'asc';
-    setOrderBy(properties[0]);
-    setOrder(isAsc ? 'desc' : 'asc');
-  };
+    const properties = Array.isArray(property) ? property : [property]
+    const isAsc = orderBy === properties[0] && order === 'asc'
+    setOrderBy(properties[0])
+    setOrder(isAsc ? 'desc' : 'asc')
+  }
 
   const getShareDecimals = (tokenAddress: string) => 18 // hardcoded for now
 
@@ -164,39 +164,39 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
   const sortedTrades = useMemo(() => {
     if (orderBy && order) {
       return [...trades].sort((a, b) => {
-        let aValue, bValue;
+        let aValue, bValue
         if (orderBy === 'amountIn' || orderBy === 'amountOut') {
           aValue = parseFloat(
             ethers.utils.formatUnits(
               a[orderBy],
               a.type === 'BUY' ? getAssetTokenDecimals(a.pool.assetAddress) : getShareDecimals(a.pool.shareAddress)
             )
-          );
+          )
           bValue = parseFloat(
             ethers.utils.formatUnits(
               b[orderBy],
               b.type === 'BUY' ? getAssetTokenDecimals(b.pool.assetAddress) : getShareDecimals(b.pool.shareAddress)
             )
-          );
+          )
         } else {
-          aValue = a[orderBy];
-          bValue = b[orderBy];
+          aValue = a[orderBy]
+          bValue = b[orderBy]
         }
-  
-        if (typeof aValue === 'undefined' || aValue === null) return 1;
-        if (typeof bValue === 'undefined' || bValue === null) return -1;
-  
+
+        if (typeof aValue === 'undefined' || aValue === null) return 1
+        if (typeof bValue === 'undefined' || bValue === null) return -1
+
         if (typeof aValue === 'number' && typeof bValue === 'number') {
-          return order === 'asc' ? aValue - bValue : bValue - aValue;
+          return order === 'asc' ? aValue - bValue : bValue - aValue
         }
-  
+
         return order === 'asc'
           ? aValue.toString().localeCompare(bValue.toString())
-          : bValue.toString().localeCompare(aValue.toString());
-      });
+          : bValue.toString().localeCompare(aValue.toString())
+      })
     }
-    return trades;
-  }, [trades, orderBy, order]);
+    return trades
+  }, [trades, orderBy, order])
 
   return (
     <>
@@ -234,13 +234,13 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
                   </TableSortLabel>
                 </StyledTableCell>
                 <StyledTableCell>
-                <TableSortLabel
-  active={orderBy === 'amountIn' || orderBy === 'amountOut'}
-  direction={orderBy === 'amountIn' || orderBy === 'amountOut' ? order : 'asc'}
-  onClick={() => handleSort(['amountIn', 'amountOut'])}
-  >
-    Amount
-  </TableSortLabel>
+                  <TableSortLabel
+                    active={orderBy === 'amountIn' || orderBy === 'amountOut'}
+                    direction={orderBy === 'amountIn' || orderBy === 'amountOut' ? order : 'asc'}
+                    onClick={() => handleSort(['amountIn', 'amountOut'])}
+                  >
+                    Amount
+                  </TableSortLabel>
                 </StyledTableCell>
                 <StyledTableCell>
                   <TableSortLabel
