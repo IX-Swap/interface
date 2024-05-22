@@ -68,7 +68,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
       if (['pending', 'live', 'ended'].includes(props.type)) {
         history.push(`/lbp/admin-detail/${id}`)
       } else {
-        history.push(`/lbp/edit?id=${id}`)
+        history.push(`/lbp-admin/edit?id=${id}`)
       }
     },
     [history, props.type]

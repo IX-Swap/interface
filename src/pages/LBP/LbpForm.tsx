@@ -170,7 +170,7 @@ export default function LBPForm() {
       if (actionType === LBP_ACTION_TYPES.submit) {
         setShowSummary(true)
       } else {
-        history.push('/lbp')
+        history.push('/lbp-admin')
       }
     } catch (err: any) {
       addPopup({ info: { success: false, summary: err?.toString() } })
