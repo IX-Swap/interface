@@ -207,8 +207,8 @@ interface TokenomicsData {
   assetTokenSymbol: string
   shareInput: number
   assetInput: number
-  maxSupply: number
-  maxPrice: number
+  maxSupply: number | string
+  maxPrice: number | string
   startWeight: number
   endWeight: number
   startDate: any
@@ -493,7 +493,7 @@ const Tokenomics = ({
       <TextInput
         placeholder="Project Token Address"
         id="shareAddress"
-        label="Project Token Address"
+        label="Project Token Address *"
         name="shareAddress"
         onChange={handleInputChange}
         onBlur={formik.handleBlur}
@@ -511,7 +511,7 @@ const Tokenomics = ({
         </TYPE.label>
       </RowStart>
       <>
-        Project Token
+        Project Token *
         <TokenomicsContainer>
           <TokenomicsItem>
             <div
@@ -558,7 +558,7 @@ const Tokenomics = ({
       {/* Asset section */}
 
       <>
-        Base Token
+        Base Token *
         <TokenomicsContainer>
           <TokenomicsItem>
             <TokenSelectContainer>
@@ -783,7 +783,7 @@ const Tokenomics = ({
                 },
               }}
               onChange={handleStartDateChange}
-              label="Start Date"
+              label="Start Date *"
               value={dayjs(formDataTokenomics.startDate)}
             />
             {startDateError && <span style={{ color: 'red', marginTop: '6px' }}>{startDateError}</span>}
@@ -800,7 +800,7 @@ const Tokenomics = ({
                 },
               }}
               onChange={handleEndDateChange}
-              label="End Date"
+              label="End Date *"
               value={dayjs(formDataTokenomics.endDate)}
             />
             {endDateError && <span style={{ color: 'red', marginTop: '6px' }}>{endDateError}</span>}

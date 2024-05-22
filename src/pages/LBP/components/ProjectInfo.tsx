@@ -150,7 +150,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
       url: newLinkUrl,
     }
 
-    if (linkType === 'Social Links') {
+    if (linkType === 'Social Links *') {
       const socialLinks = Array.isArray(projectInfoData.socialLinks) ? projectInfoData.socialLinks : []
       updatedData = {
         ...projectInfoData,
@@ -248,7 +248,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
           />
           <div style={{ justifyContent: 'center' }}>
             <h2>{linkType}</h2>
-            {linkType === 'Social Links' ? (
+            {linkType === 'Social Links *' ? (
               <Select
                 withScroll
                 name="name"
@@ -291,7 +291,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         placeholder="Title"
         id="title"
         name="title"
-        label="Title"
+        label="Title *"
         value={formData.title}
         onChange={handleInputChange}
         onBlur={formik.handleBlur}
@@ -302,7 +302,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         <Label htmlFor="description" flexDirection="column" mb={2}>
           <Box>
             <TYPE.subHeader1>
-              <Trans>LBP Description</Trans>
+              <Trans>LBP Description *</Trans>
             </TYPE.subHeader1>
             <TYPE.description3 fontSize={'12px'} color={'#8F8FB2'}>
               <Trans>Provide LBP description. Min 100, Max 2000 characters.</Trans>
@@ -326,13 +326,13 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         onChange={handleInputChange}
         placeholder="Official Website"
         id="website"
-        label="Official Website"
+        label="Official Website *"
         onBlur={formik.handleBlur}
       />
       {formik.touched.website && !formData.website ? <ErrorText>{formik.errors.website}</ErrorText> : null}
 
       <FormArray
-        label="Social Links"
+        label="Social Links *"
         name="socialLinks"
         id="socialLinks"
         items={projectInfoData?.socialLinks?.map((link: any) => link)}
