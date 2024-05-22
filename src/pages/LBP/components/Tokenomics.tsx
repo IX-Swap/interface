@@ -207,8 +207,8 @@ interface TokenomicsData {
   assetTokenSymbol: string
   shareInput: number
   assetInput: number
-  maxSupply: number | string
-  maxPrice: number | string
+  maxSupply: number | string | undefined
+  maxPrice: number | string | undefined
   startWeight: number
   endWeight: number
   startDate: any

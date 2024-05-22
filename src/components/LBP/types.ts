@@ -67,14 +67,14 @@ export interface LbpFormValues {
   contractAddress?: string
   shareAddress: string
   shareAmount: number
-  shareMaxSupply?: any,
+  shareMaxSupply?: number | string | undefined,
   assetTokenAddress: string
   assetTokenAmount: number
   startWeight: number
   endWeight: number
   startDate: string
   endDate: string
-  maxPrice?: any
+  maxPrice?: number | string | undefined
   creatorId?: number
   status?: LbpStatus
   createdAt?: string
@@ -92,11 +92,11 @@ export interface TokenomicsProps {
   assetTokenAddress: string
   assetTokenSymbol: string
   shareInput: number
-  maxSupply: number | string
+  maxSupply: number | string | undefined
   assetInput: number
   startWeight: number
   endDate: string
-  maxPrice: number | string
+  maxPrice: number | string | undefined
   startDate: string
   endWeight: number
 }
