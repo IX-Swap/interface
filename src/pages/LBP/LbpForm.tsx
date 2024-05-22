@@ -60,11 +60,11 @@ export default function LBPForm() {
       assetTokenAddress: '',
       assetTokenSymbol: '',
       shareInput: 0,
-      maxSupply: 0,
+      maxSupply: '',
       assetInput: 0,
       startWeight: 0,
       endDate: '',
-      maxPrice: 0,
+      maxPrice: '',
       startDate: '',
       endWeight: 0,
     },
@@ -151,6 +151,12 @@ export default function LBPForm() {
     const endDate = dayjs(formData.tokenomics.endDate)
     const datesValid = areDatesValid(startDate, endDate)
 
+    console.log('brandingComplete', brandingComplete)
+    console.log('projectInfoComplete', projectInfoComplete)
+    console.log('tokenomicsComplete', tokenomicsComplete)
+    console.log('hasSocialLinks', hasSocialLinks)
+    console.log('datesValid', datesValid)
+
     setCanSubmit(brandingComplete && hasSocialLinks && projectInfoComplete && tokenomicsComplete && datesValid)
   }
 
@@ -200,7 +206,6 @@ export default function LBPForm() {
       uploadDocs: formData.projectInfo?.uploadDocs,
       shareAddress: formData.tokenomics?.shareAddress,
       shareAmount: Number(formData.tokenomics?.shareInput || 0),
-      shareMaxSupply: formData.tokenomics?.maxSupply,
       assetTokenAmount: Number(formData.tokenomics?.assetInput || 0),
       assetTokenAddress: formData.tokenomics?.assetTokenAddress,
       assetTokenSymbol: formData.tokenomics?.assetTokenSymbol,
@@ -208,8 +213,16 @@ export default function LBPForm() {
       endWeight: formData.tokenomics?.endWeight,
       startDate: dayjs(formData.tokenomics?.startDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
       endDate: dayjs(formData.tokenomics?.endDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
-      maxPrice: Number(formData.tokenomics?.maxPrice || 0),
       additionalDocumentIds: [],
+    }
+
+
+    if (formData?.tokenomics?.maxSupply) {
+      result.shareMaxSupply =  Number(formData?.tokenomics?.maxSupply ?? 0);
+    }
+
+    if (formData?.tokenomics?.maxPrice) {
+      result.maxPrice = Number(formData?.tokenomics?.maxPrice ?? 0);
     }
 
     return result
