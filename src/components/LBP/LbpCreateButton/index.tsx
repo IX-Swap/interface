@@ -37,7 +37,7 @@ export const LbpCreateButton: React.FC<Props> = (props) => {
   const history = useHistory()
 
   const openLbpForm = useCallback(async () => {
-    history.push(`/lbp/create`)
+    history.push(`/lbp-admin/create`)
   }, [history])
 
   return (

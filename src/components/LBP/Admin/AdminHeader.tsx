@@ -138,7 +138,7 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({
   contractAddress,
 }) => {
   const history = useHistory()
-  const createLbp = useCallback((id: number) => history.push(`/lbp/edit?id=${id}`), [history])
+  const createLbp = useCallback((id: number) => history.push(`/lbp-admin/edit?id=${id}`), [history])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { chainId } = useActiveWeb3React()
   const chainInfo = chainId ? CHAIN_INFO[chainId] : undefined

@@ -67,7 +67,10 @@ export default function DetailsChart({
   currentAssetReserve,
   chartWidth,
 }: DetailsChartProps) {
-  const { chainId } = useWeb3React()
+  const { chainId, account } = useWeb3React()
+
+  if (!chainId || !account) return null
+
   const subgraphData = useSubgraphQuery({
     feature: 'LBP',
     chainId,

@@ -25,6 +25,7 @@ import { SubmitSummary } from 'components/LBP/Forms/SubmitSummary'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { constants } from 'ethers'
 import { useRole } from 'state/user/hooks'
+import { LbpLayout } from './layout'
 
 export interface FormData {
   id: number
@@ -60,11 +61,11 @@ export default function LBPForm() {
       assetTokenAddress: '',
       assetTokenSymbol: '',
       shareInput: 0,
-      maxSupply: 0,
+      maxSupply: '',
       assetInput: 0,
       startWeight: 0,
       endDate: '',
-      maxPrice: 0,
+      maxPrice: '',
       startDate: '',
       endWeight: 0,
     },
@@ -151,6 +152,12 @@ export default function LBPForm() {
     const endDate = dayjs(formData.tokenomics.endDate)
     const datesValid = areDatesValid(startDate, endDate)
 
+    console.log('brandingComplete', brandingComplete)
+    console.log('projectInfoComplete', projectInfoComplete)
+    console.log('tokenomicsComplete', tokenomicsComplete)
+    console.log('hasSocialLinks', hasSocialLinks)
+    console.log('datesValid', datesValid)
+
     setCanSubmit(brandingComplete && hasSocialLinks && projectInfoComplete && tokenomicsComplete && datesValid)
   }
 
@@ -170,7 +177,7 @@ export default function LBPForm() {
       if (actionType === LBP_ACTION_TYPES.submit) {
         setShowSummary(true)
       } else {
-        history.push('/lbp')
+        history.push('/lbp-admin')
       }
     } catch (err: any) {
       addPopup({ info: { success: false, summary: err?.toString() } })
@@ -200,7 +207,6 @@ export default function LBPForm() {
       uploadDocs: formData.projectInfo?.uploadDocs,
       shareAddress: formData.tokenomics?.shareAddress,
       shareAmount: Number(formData.tokenomics?.shareInput || 0),
-      shareMaxSupply: formData.tokenomics?.maxSupply,
       assetTokenAmount: Number(formData.tokenomics?.assetInput || 0),
       assetTokenAddress: formData.tokenomics?.assetTokenAddress,
       assetTokenSymbol: formData.tokenomics?.assetTokenSymbol,
@@ -208,8 +214,15 @@ export default function LBPForm() {
       endWeight: formData.tokenomics?.endWeight,
       startDate: dayjs(formData.tokenomics?.startDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
       endDate: dayjs(formData.tokenomics?.endDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
-      maxPrice: Number(formData.tokenomics?.maxPrice || 0),
       additionalDocumentIds: [],
+    }
+
+    if (formData?.tokenomics?.maxSupply) {
+      result.shareMaxSupply =  Number(formData?.tokenomics?.maxSupply ?? 0)
+    }
+
+    if (formData?.tokenomics?.maxPrice) {
+      result.maxPrice = Number(formData?.tokenomics?.maxPrice ?? 0)
     }
 
     return result
@@ -257,105 +270,107 @@ export default function LBPForm() {
   }, [status, isAdmin])
 
   return (
-    <FormRow>
-      <FormContainer style={{ gap: '35px', margin: '20px 0px 0px 150px' }}>
-        <TYPE.title4
-          fontWeight={'800'}
-          fontSize={isMobile ? 24 : 24}
-          style={{ whiteSpace: 'nowrap' }}
-          marginLeft="10px"
-        >
-          <Trans>{formData?.projectInfo?.title}</Trans>
-        </TYPE.title4>
-        <Column style={{ gap: '35px' }}>
-          <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Branding">
-            <RowStart marginBottom="20px">
-              <TYPE.label>Branding</TYPE.label>
-            </RowStart>
-            <Column style={{ gap: '20px' }}>
-              <Branding brandingData={formData.branding} onChange={handleBrandingChange} />
-            </Column>
-          </FormCard>
+    <LbpLayout>
+      <FormRow>
+        <FormContainer style={{ gap: '35px', margin: '20px 0px 0px 150px' }}>
+          <TYPE.title4
+            fontWeight={'800'}
+            fontSize={isMobile ? 24 : 24}
+            style={{ whiteSpace: 'nowrap' }}
+            marginLeft="10px"
+          >
+            <Trans>{formData?.projectInfo?.title}</Trans>
+          </TYPE.title4>
+          <Column style={{ gap: '35px' }}>
+            <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Branding">
+              <RowStart marginBottom="20px">
+                <TYPE.label>Branding</TYPE.label>
+              </RowStart>
+              <Column style={{ gap: '20px' }}>
+                <Branding brandingData={formData.branding} onChange={handleBrandingChange} />
+              </Column>
+            </FormCard>
 
-          <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="ProjectInfo">
-            <RowStart marginBottom="32px">
-              <TYPE.label>Project information</TYPE.label>
-            </RowStart>
-            <Column style={{ gap: '20px' }}>
-              <ProjectInfo formData={formData.projectInfo} onChange={handleProjectInfoChange} />
-            </Column>
-          </FormCard>
+            <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="ProjectInfo">
+              <RowStart marginBottom="32px">
+                <TYPE.label>Project information</TYPE.label>
+              </RowStart>
+              <Column style={{ gap: '20px' }}>
+                <ProjectInfo formData={formData.projectInfo} onChange={handleProjectInfoChange} />
+              </Column>
+            </FormCard>
 
-          <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Tokenomics">
-            <RowStart marginBottom="32px">
-              <TYPE.label>Tokenomics</TYPE.label>
-            </RowStart>
-            <Column style={{ gap: '20px' }}>
-              <Tokenomics
-                formDataTokenomics={formData.tokenomics}
-                onChange={handleTokenomicsChange}
-                shareTitle={formData.projectInfo.title}
-                shareLogo={formData?.branding?.LBPLogo}
-                endPrice={endPrice}
-                isEditable={isEditable}
-              />
-            </Column>
-          </FormCard>
+            <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Tokenomics">
+              <RowStart marginBottom="32px">
+                <TYPE.label>Tokenomics</TYPE.label>
+              </RowStart>
+              <Column style={{ gap: '20px' }}>
+                <Tokenomics
+                  formDataTokenomics={formData.tokenomics}
+                  onChange={handleTokenomicsChange}
+                  shareTitle={formData.projectInfo.title}
+                  shareLogo={formData?.branding?.LBPLogo}
+                  endPrice={endPrice}
+                  isEditable={isEditable}
+                />
+              </Column>
+            </FormCard>
 
-          <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Approvals">
-            <RowStart marginBottom="32px">
-              <TYPE.label>Approvals</TYPE.label>
-            </RowStart>
-            <Column style={{ gap: '20px' }}>
-              <Approvals
-                shareValue={formData?.tokenomics?.shareInput}
-                assetValue={formData?.tokenomics?.assetInput}
-                addressA={formData.tokenomics.shareAddress}
-                addressB={formData.tokenomics.assetTokenAddress}
-                contractAddress={formData?.tokenomics?.contractAddress || ''}
-                shareName={formData?.projectInfo?.title}
-                shareLogo={formData?.branding?.LBPLogo}
-                isEditable={isEditable}
-              />
-            </Column>
-          </FormCard>
-        </Column>
-      </FormContainer>
-      <div style={{ display: 'block' }}>
-        <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px', marginBottom: '1700px' }}>
-          <KYCProgressBar
-            disabled={!canSubmit || !isEditable}
-            handleSubmit={handleSubmit}
-            handleSaveProgress={handleSaveDraft}
-            topics={[
-              {
-                title: 'Branding',
-                href: 'Branding',
-              },
-              {
-                title: 'Project information',
-                href: 'ProjectInfo',
-              },
-              {
-                title: 'Tokenomics',
-                href: 'Tokenomics',
-              },
-              {
-                title: 'Approvals',
-                href: 'Approvals',
-              },
-            ]}
-            reasons={[]}
-            description={null}
-          />
-        </StyledStickyBox>
+            <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Approvals">
+              <RowStart marginBottom="32px">
+                <TYPE.label>Approvals</TYPE.label>
+              </RowStart>
+              <Column style={{ gap: '20px' }}>
+                <Approvals
+                  shareValue={formData?.tokenomics?.shareInput}
+                  assetValue={formData?.tokenomics?.assetInput}
+                  addressA={formData.tokenomics.shareAddress}
+                  addressB={formData.tokenomics.assetTokenAddress}
+                  contractAddress={formData?.tokenomics?.contractAddress || ''}
+                  shareName={formData?.projectInfo?.title}
+                  shareLogo={formData?.branding?.LBPLogo}
+                  isEditable={isEditable}
+                />
+              </Column>
+            </FormCard>
+          </Column>
+        </FormContainer>
+        <div style={{ display: 'block' }}>
+          <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px', marginBottom: '1700px' }}>
+            <KYCProgressBar
+              disabled={!canSubmit || !isEditable}
+              handleSubmit={handleSubmit}
+              handleSaveProgress={handleSaveDraft}
+              topics={[
+                {
+                  title: 'Branding',
+                  href: 'Branding',
+                },
+                {
+                  title: 'Project information',
+                  href: 'ProjectInfo',
+                },
+                {
+                  title: 'Tokenomics',
+                  href: 'Tokenomics',
+                },
+                {
+                  title: 'Approvals',
+                  href: 'Approvals',
+                },
+              ]}
+              reasons={[]}
+              description={null}
+            />
+          </StyledStickyBox>
 
-        <Graph step={1} graphData={formData.tokenomics} setEndPrice={setEndPrice} setStartPrice={setStartPrice} />
-      </div>
+          <Graph step={1} graphData={formData.tokenomics} setEndPrice={setEndPrice} setStartPrice={setStartPrice} />
+        </div>
 
-      <IssuanceDialog show={showSummary} onClose={toggleModal} width="550px">
-        <SubmitSummary formData={formData} onCancel={toggleModal} startPrice={startPrice} />
-      </IssuanceDialog>
-    </FormRow>
+        <IssuanceDialog show={showSummary} onClose={toggleModal} width="550px">
+          <SubmitSummary formData={formData} onCancel={toggleModal} startPrice={startPrice} />
+        </IssuanceDialog>
+      </FormRow>
+    </LbpLayout>
   )
 }

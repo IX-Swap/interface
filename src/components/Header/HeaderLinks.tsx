@@ -144,7 +144,7 @@ export const HeaderLinks = () => {
         id={`issuance-nav-link`}
         to={'/launchpad'}
         isActive={(match, { pathname }) => {
-          return pathname.includes('lbp/')
+          return pathname.includes('lbp/') || pathname.includes('launchpad')
         }}
       >
         <Trans>Launchpad</Trans>
@@ -229,7 +229,7 @@ export const HeaderLinks = () => {
 
       {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
-          to={'/lbp'}
+          to={'/lbp-admin'}
           data-testid={`lbp-nav-link`}
         >
           <Trans>LBP</Trans>
