@@ -6,7 +6,6 @@ import { useWeb3React } from '@web3-react/core'
 import Header from 'components/Header'
 import { useSetHideHeader } from 'state/application/hooks'
 import { useRole } from 'state/user/hooks'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 
 interface Props {
   background?: string
@@ -18,11 +17,11 @@ export const LbpLayout: React.FC<React.PropsWithChildren<Props>> = (props) => {
   const { account } = useWeb3React()
   const history = useHistory()
 
-  if (!account) return <NotAvailablePage />
-
-  if (!isAdmin) {
-    history.replace('/kyc')
-  }
+  useEffect(() => {
+    if (!account || !isAdmin) {
+      history.replace('/kyc')
+    }
+  } , [account, isAdmin])
 
   useEffect(() => {
     hideHeader(true)
