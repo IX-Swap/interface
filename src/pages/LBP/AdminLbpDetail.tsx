@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { useWeb3React } from '@web3-react/core'
+import { useHistory } from 'react-router-dom'
 import AdminHeader from 'components/LBP/Admin/AdminHeader'
 import DetailsChart from 'components/LBP/PublicDetails/PublicChart'
 import StatisticData from 'components/LBP/PublicDetails/StatisticData'
@@ -10,8 +12,13 @@ import { useGetLbp, useGetLbpStats } from 'state/lbp/hooks'
 import { LbpFormValues, MarketData } from 'components/LBP/types'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Loader } from 'components/AdminTransactionsTable'
+import { useRole } from 'state/user/hooks'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 const AdminLbpDetail = () => {
+  const { isAdmin } = useRole()
+  const { account } = useWeb3React()
+  const history = useHistory()
   const { id } = useParams<{ id: string }>()
   const lbpId = parseInt(id)
   const fetchLbpData = useGetLbp()
@@ -20,6 +27,13 @@ const AdminLbpDetail = () => {
   const [statsData, setStatsData] = useState<MarketData>()
   const [loader, setLoader] = useState(true)
   const [status, setStatus] = useState('')
+
+
+  if (!account) return <NotAvailablePage />
+
+  if (!isAdmin) {
+    history.replace('/kyc')
+  }
 
   useEffect(() => {
     const fetchData = async () => {
