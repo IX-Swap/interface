@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import { useWeb3React } from '@web3-react/core'
 
 import Header from 'components/Header'
 import { useSetHideHeader } from 'state/application/hooks'
-import { useRole } from 'state/user/hooks'
 
 interface Props {
   background?: string
@@ -13,15 +10,6 @@ interface Props {
 
 export const LbpLayout: React.FC<React.PropsWithChildren<Props>> = (props) => {
   const hideHeader = useSetHideHeader()
-  const { isAdmin } = useRole()
-  const { account } = useWeb3React()
-  const history = useHistory()
-
-  useEffect(() => {
-    if (!account || !isAdmin) {
-      history.replace('/kyc')
-    }
-  } , [account, isAdmin])
 
   useEffect(() => {
     hideHeader(true)
