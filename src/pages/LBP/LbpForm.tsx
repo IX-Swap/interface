@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 import dayjs, { Dayjs } from 'dayjs'
 import Column from 'components/Column'
 import { RowStart } from 'components/Row'
-import { FormContainer, FormRow } from 'pages/KYC/IndividualKycForm'
+import { FormContainer } from 'pages/KYC/IndividualKycForm'
 import { FormCard, StyledStickyBox } from 'pages/KYC/styleds'
 import { isMobile } from 'react-device-detect'
 import { BrandingProps, LbpStatus, ProjectInfoProps, TokenomicsProps } from '../../../src/components/LBP/types'
@@ -26,6 +26,7 @@ import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { constants } from 'ethers'
 import { useRole } from 'state/user/hooks'
 import { LbpLayout } from './layout'
+import styled from 'styled-components'
 
 export interface FormData {
   id: number
@@ -270,9 +271,9 @@ export default function LBPForm() {
   }, [status, isAdmin])
 
   return (
-    <LbpLayout>
+    <LbpLayout background='#F7F7FF'>
       <FormRow>
-        <FormContainer style={{ gap: '35px', margin: '20px 0px 0px 150px' }}>
+        <FormContainer style={{ gap: '20px', margin: '20px 0px 0px 0px' }}>
           <TYPE.title4
             fontWeight={'800'}
             fontSize={isMobile ? 24 : 24}
@@ -335,8 +336,8 @@ export default function LBPForm() {
             </FormCard>
           </Column>
         </FormContainer>
-        <div style={{ display: 'block' }}>
-          <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px', marginBottom: '1700px' }}>
+        <div style={{ display: 'block', width: 332 }}>
+          <StyledStickyBox style={{ marginTop: '78px', marginBottom: '1700px' }}>
             <KYCProgressBar
               disabled={!canSubmit || !isEditable}
               handleSubmit={handleSubmit}
@@ -374,3 +375,12 @@ export default function LBPForm() {
     </LbpLayout>
   )
 }
+
+const FormRow = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1180px;
+  margin: 0 auto;
+  margin-bottom: 113px;
+`

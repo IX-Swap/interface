@@ -22,6 +22,8 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
     LBPLogo: false,
     LBPBanner: false,
   })
+  const [errorLogo, setErrorLogo] = useState<string>('')
+  const [errorBanner, setErrorBanner] = useState<string>('')
 
   const showError = useShowError()
 
@@ -61,12 +63,31 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
   const handleDropImage = (acceptedFile: any, key: string) => {
     if (acceptedFile?.size > MAX_FILE_UPLOAD_SIZE) {
       showError(MAX_FILE_UPLOAD_SIZE_ERROR)
+
+      if (key === 'LBPLogo') {
+        setErrorLogo(MAX_FILE_UPLOAD_SIZE_ERROR)
+      }
+      if (key === 'LBPBanner') {
+        setErrorBanner(MAX_FILE_UPLOAD_SIZE_ERROR)
+      }
     } else if (values[key]) {
       showError('You can only upload one image at a time.')
+      if (key === 'LBPLogo') {
+        setErrorLogo('You can only upload one image at a time.')
+      }
+      if (key === 'LBPBanner') {
+        setErrorBanner('You can only upload one image at a time.')
+      }
     } else {
       const updatedValues = { ...values, [key]: acceptedFile }
       setValues(updatedValues)
       onChange(updatedValues)
+      if (key === 'LBPLogo') {
+        setErrorLogo('')
+      }
+      if (key === 'LBPBanner') {
+        setErrorBanner('')
+      }
     }
   }
 
@@ -95,7 +116,7 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
             <UploaderLBP
               name="logo"
               onChange={(e) => handleInputChange(e, 'LBPLogo')}
-              title="Project Token Logo"
+              title="Project Token Logo *"
               files={values.LBPLogo ? [values.LBPLogo] : []}
               handleDeleteClick={() => handleImageDelete('LBPLogo')}
               onDrop={(file) => {
@@ -103,7 +124,11 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
                 handleTouch('LBPLogo')
               }}
             />
-            {touched.LBPLogo && values.LBPLogo === null && <ErrorText>Please upload a logo</ErrorText>}
+            {errorLogo ? (
+              <ErrorText>{errorLogo}</ErrorText>
+            ) : (
+              touched.LBPLogo && values.LBPLogo === null && <ErrorText>Please upload a logo</ErrorText>
+            )}
           </div>
         ) : (
           <LoadingIndicator>
@@ -115,7 +140,7 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
             <UploaderLBP
               name="banner"
               onChange={(e) => handleInputChange(e, 'LBPBanner')}
-              title="LBP Banner"
+              title="LBP Banner *"
               files={values.LBPBanner ? [values.LBPBanner] : []}
               handleDeleteClick={() => handleImageDelete('LBPBanner')}
               onDrop={(file) => {
@@ -123,7 +148,11 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
                 handleTouch('LBPBanner')
               }}
             />
-            {touched.LBPBanner && values.LBPBanner === null && <ErrorText>Please upload a banner</ErrorText>}
+            {errorBanner ? (
+              <ErrorText>{errorBanner}</ErrorText>
+            ) : (
+              touched.LBPBanner && values.LBPBanner === null && <ErrorText>Please upload a banner</ErrorText>
+            )}
           </div>
         ) : (
           <LoadingIndicator>
