@@ -233,6 +233,7 @@ interface ProjectInfoProps {
   endPrice: number
   isEditable: boolean
   setProjectTokenTitle: (projectToken: string) => void
+  setDirty: (dirty: boolean) => void
 }
 
 // Refactored Tokenomics component
@@ -244,6 +245,7 @@ const Tokenomics = ({
   endPrice,
   isEditable,
   setProjectTokenTitle,
+  setDirty,
 }: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
@@ -507,6 +509,11 @@ const Tokenomics = ({
       <Serenity />
     )
   }
+  useEffect(() => {
+    if (formik.dirty) {
+      setDirty(formik.dirty)
+    }
+  }, [formik.dirty])
 
   return (
     <Container>

@@ -25,6 +25,7 @@ import AdditionalLinksModal from './AdditionalLinksModal'
 interface ProjectInfoProps {
   onChange: (data: any) => void
   formData: ProjectInfoData
+  setDirty: (dirty: boolean) => void
 }
 
 interface LinkData {
@@ -114,7 +115,7 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) =
   )
 }
 
-export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
+export default function ProjectInfo({ onChange, formData, setDirty }: ProjectInfoProps) {
   const [projectInfoData, setProjectInfoData] = useState<ProjectInfoData>({
     title: '',
     description: '',
@@ -255,6 +256,12 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
     setValues({ ...values, [field]: value })
     setNewLinkName(value?.label)
   }
+
+  useEffect(() => {
+    if (formik.dirty) {
+      setDirty(formik.dirty)
+    }
+  }, [formik.dirty])
 
   return (
     <>
