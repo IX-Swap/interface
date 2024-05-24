@@ -145,6 +145,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
   const [values, setValues] = useState<any>({
     uploadDocs: [],
   })
+  const [isErrorUploadDocs, setIsErrorUploadDocs] = useState(false)
 
   useEffect(() => {
     setProjectInfoData({
@@ -154,7 +155,6 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
   }, [formData, formData.uploadDocs])
 
   const handleAddLink = () => {
-    debugger
     let updatedData: ProjectInfoData | undefined
 
     const newLink: LinkData = {
@@ -217,6 +217,11 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
 
   const handleDropImage = (acceptedFiles: any, key: string) => {
     const files = Array.isArray(acceptedFiles) ? acceptedFiles : [acceptedFiles]
+
+    if (files.some((file: any) => file.size > MAX_FILE_UPLOAD_SIZE)) {
+      setIsErrorUploadDocs(true)
+      return
+    }
 
     const filteredFiles = files.filter((file: any) => file.size <= MAX_FILE_UPLOAD_SIZE)
 
@@ -329,7 +334,9 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         openModal={openModalSocialLink}
         onBlur={formik.handleBlur}
       />
-      {isTouchSocialLinks && _isEmpty(formData.socialLinks) ? <ErrorText>At least one social link is required</ErrorText> : null}
+      {isTouchSocialLinks && _isEmpty(formData.socialLinks) ? (
+        <ErrorText>At least one social link is required</ErrorText>
+      ) : null}
 
       <FormArray
         label="Additional links"
@@ -364,9 +371,11 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
           handleDropImage(acceptedFiles, 'uploadDocs')
         }}
         handleDeleteClick={(index: number) => {
+          setIsErrorUploadDocs(false)
           handleImageDelete(index, 'uploadDocs')
         }}
       />
+      {isErrorUploadDocs && <ErrorText>Max size is 5 Mb</ErrorText>}
     </>
   )
 }

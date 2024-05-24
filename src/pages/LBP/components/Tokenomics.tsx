@@ -550,7 +550,10 @@ const Tokenomics = ({
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {formik.touched.shareInput && !formDataTokenomics.shareInput ? (
+        {parseFloat(formDataTokenomics.shareInput.toString() || '0') > parseFloat(balances?.shareBalance || '0') ? (
+          <ErrorText>Insufficient balance</ErrorText>
+        ) : null}
+        {formik.touched.shareInput && formik.errors.shareInput ? (
           <ErrorText>{formik.errors.shareInput}</ErrorText>
         ) : null}
       </>
@@ -615,7 +618,10 @@ const Tokenomics = ({
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {formik.touched.assetInput && !formDataTokenomics.assetInput ? (
+        {parseFloat(formDataTokenomics.assetInput.toString() || '0') > parseFloat(balances?.assetBalance || '0') ? (
+          <ErrorText>Insufficient balance</ErrorText>
+        ) : null}
+        {formik.touched.assetInput && formik.errors.assetInput ? (
           <ErrorText>{formik.errors.assetInput}</ErrorText>
         ) : null}
       </>
@@ -632,6 +638,11 @@ const Tokenomics = ({
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}
       />
+      {formDataTokenomics.maxSupply &&
+      parseFloat(formDataTokenomics.maxSupply.toString() || '') <
+        parseFloat(formDataTokenomics.shareInput.toString() || '0') ? (
+        <ErrorText>Must be bigger than Project Token quantity</ErrorText>
+      ) : null}
       {/* {formik.touched.maxSupply && !formDataTokenomics.maxSupply ? (
         <ErrorText>{formik.errors.maxSupply}</ErrorText>
       ) : null} */}
