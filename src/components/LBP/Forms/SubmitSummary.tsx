@@ -155,7 +155,7 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
       await deployLbp(formData?.id?.toString(), predictedLBPAddress)
       setDeployed(true)
       // redirect to lbp dashboard at pending tab
-      history.push('/lbp?tab=pending')
+      history.push('/lbp-admin?tab=pending')
     } else {
       alert('Deployment failed!')
     }
