@@ -824,7 +824,7 @@ const Tokenomics = ({
           />
         </div>
 
-        <div style={{ display: 'block' }}>
+        <div style={{ display: 'block', visibility: 'hidden' }}>
           <TextInput
             type="number"
             placeholder="$0.00"
