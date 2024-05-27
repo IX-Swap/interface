@@ -232,6 +232,7 @@ interface ProjectInfoProps {
   shareLogo: any
   endPrice: number
   isEditable: boolean
+  setProjectTokenTitle: (projectToken: string) => void
 }
 
 // Refactored Tokenomics component
@@ -242,6 +243,7 @@ const Tokenomics = ({
   shareLogo,
   endPrice,
   isEditable,
+  setProjectTokenTitle,
 }: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
@@ -313,10 +315,14 @@ const Tokenomics = ({
       if (shareTokenContract) {
         const shareBalance = await shareTokenContract.balanceOf(account)
         const shareDecimals = await shareTokenContract.decimals()
+        const shareSymbol = await shareTokenContract.symbol()
+        setProjectTokenTitle(shareSymbol)
         setBalances((prevBalances: any) => ({
           ...prevBalances,
           shareBalance: formatUnits(shareBalance, shareDecimals),
         }))
+      } else {
+        setProjectTokenTitle('')
       }
     }
 
@@ -488,6 +494,20 @@ const Tokenomics = ({
     onChange({ ...formDataTokenomics, [field]: balance })
   }
 
+  const renderLogo = (shareLogo: any) => {
+    return shareLogo && typeof shareLogo === 'object' && shareLogo.public ? (
+      <LogoIcon as="img" src={shareLogo.public} alt="Serenity Logo" />
+    ) : shareLogo && (typeof shareLogo === 'string' || shareLogo instanceof File) ? (
+      <LogoIcon
+        as="img"
+        src={shareLogo instanceof File ? URL.createObjectURL(shareLogo) : shareLogo}
+        alt="Serenity Logo"
+      />
+    ) : (
+      <Serenity />
+    )
+  }
+
   return (
     <Container>
       <TextInput
@@ -525,7 +545,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Disabled />}
+              {renderLogo(shareLogo)}
               <TYPE.label fontSize={'14px'}>{shareTitle}</TYPE.label>
             </div>
             <SpanBal>
@@ -550,7 +570,10 @@ const Tokenomics = ({
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {formik.touched.shareInput && !formDataTokenomics.shareInput ? (
+        {parseFloat(formDataTokenomics.shareInput.toString() || '0') > parseFloat(balances?.shareBalance || '0') ? (
+          <ErrorText>Insufficient balance</ErrorText>
+        ) : null}
+        {formik.touched.shareInput && formik.errors.shareInput ? (
           <ErrorText>{formik.errors.shareInput}</ErrorText>
         ) : null}
       </>
@@ -615,7 +638,10 @@ const Tokenomics = ({
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {formik.touched.assetInput && !formDataTokenomics.assetInput ? (
+        {parseFloat(formDataTokenomics.assetInput.toString() || '0') > parseFloat(balances?.assetBalance || '0') ? (
+          <ErrorText>Insufficient balance</ErrorText>
+        ) : null}
+        {formik.touched.assetInput && formik.errors.assetInput ? (
           <ErrorText>{formik.errors.assetInput}</ErrorText>
         ) : null}
       </>
@@ -632,6 +658,11 @@ const Tokenomics = ({
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}
       />
+      {formDataTokenomics.maxSupply &&
+      parseFloat(formDataTokenomics.maxSupply.toString() || '') <
+        parseFloat(formDataTokenomics.shareInput.toString() || '0') ? (
+        <ErrorText>Must be bigger than Project Token quantity</ErrorText>
+      ) : null}
       {/* {formik.touched.maxSupply && !formDataTokenomics.maxSupply ? (
         <ErrorText>{formik.errors.maxSupply}</ErrorText>
       ) : null} */}
@@ -655,7 +686,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Serenity />}
+              {renderLogo(shareLogo)}
 
               <div
                 style={{
@@ -717,7 +748,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Serenity />}
+              {renderLogo(shareLogo)}
               <div
                 style={{
                   borderRight: '1px solid #E6E6FF',

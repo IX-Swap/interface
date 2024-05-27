@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 import dayjs, { Dayjs } from 'dayjs'
 import Column from 'components/Column'
 import { RowStart } from 'components/Row'
-import { FormContainer, FormRow } from 'pages/KYC/IndividualKycForm'
+import { FormContainer } from 'pages/KYC/IndividualKycForm'
 import { FormCard, StyledStickyBox } from 'pages/KYC/styleds'
 import { isMobile } from 'react-device-detect'
 import { BrandingProps, LbpStatus, ProjectInfoProps, TokenomicsProps } from '../../../src/components/LBP/types'
@@ -26,6 +26,7 @@ import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { constants } from 'ethers'
 import { useRole } from 'state/user/hooks'
 import { LbpLayout } from './layout'
+import styled from 'styled-components'
 
 export interface FormData {
   id: number
@@ -63,11 +64,11 @@ export default function LBPForm() {
       shareInput: 0,
       maxSupply: '',
       assetInput: 0,
-      startWeight: 0,
+      startWeight: 99,
       endDate: '',
       maxPrice: '',
       startDate: '',
-      endWeight: 0,
+      endWeight: 1,
     },
   })
   const [canSubmit, setCanSubmit] = useState(false)
@@ -76,6 +77,7 @@ export default function LBPForm() {
   const [endPrice, setEndPrice] = useState(0)
   const [startPrice, setStartPrice] = useState(0)
   const [status, setStatus] = useState<LbpStatus | undefined>(undefined)
+  const [projectTokenTitle, setProjectTokenTitle] = useState<string>('')
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
@@ -269,10 +271,11 @@ export default function LBPForm() {
     return status == LbpStatus.draft && isAdmin
   }, [status, isAdmin])
 
+console.log('formData.projectInfo', formData.projectInfo)
   return (
-    <LbpLayout>
+    <LbpLayout background='#F7F7FF'>
       <FormRow>
-        <FormContainer style={{ gap: '35px', margin: '20px 0px 0px 150px' }}>
+        <FormContainer style={{ gap: '20px', margin: '20px 0px 0px 0px' }}>
           <TYPE.title4
             fontWeight={'800'}
             fontSize={isMobile ? 24 : 24}
@@ -308,10 +311,11 @@ export default function LBPForm() {
                 <Tokenomics
                   formDataTokenomics={formData.tokenomics}
                   onChange={handleTokenomicsChange}
-                  shareTitle={formData.projectInfo.title}
+                  shareTitle={projectTokenTitle}
                   shareLogo={formData?.branding?.LBPLogo}
                   endPrice={endPrice}
                   isEditable={isEditable}
+                  setProjectTokenTitle={setProjectTokenTitle}
                 />
               </Column>
             </FormCard>
@@ -327,7 +331,7 @@ export default function LBPForm() {
                   addressA={formData.tokenomics.shareAddress}
                   addressB={formData.tokenomics.assetTokenAddress}
                   contractAddress={formData?.tokenomics?.contractAddress || ''}
-                  shareName={formData?.projectInfo?.title}
+                  shareName={projectTokenTitle}
                   shareLogo={formData?.branding?.LBPLogo}
                   isEditable={isEditable}
                 />
@@ -335,8 +339,8 @@ export default function LBPForm() {
             </FormCard>
           </Column>
         </FormContainer>
-        <div style={{ display: 'block' }}>
-          <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px', marginBottom: '1700px' }}>
+        <div style={{ display: 'block', width: 332 }}>
+          <StyledStickyBox style={{ marginTop: '78px', marginBottom: '1700px' }}>
             <KYCProgressBar
               disabled={!canSubmit || !isEditable}
               handleSubmit={handleSubmit}
@@ -374,3 +378,12 @@ export default function LBPForm() {
     </LbpLayout>
   )
 }
+
+const FormRow = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1180px;
+  margin: 0 auto;
+  margin-bottom: 113px;
+`
