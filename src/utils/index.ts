@@ -147,3 +147,7 @@ export function isValidUrl(url: string) {
     return false
   }
 }
+
+export function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
