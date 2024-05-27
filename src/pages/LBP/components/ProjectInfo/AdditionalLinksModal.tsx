@@ -40,7 +40,6 @@ const AdditionalLinksModal: React.FC<AdditionalLinksModalProps> = ({
   const handleUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
       setErrorUrl('')
-
       if (!isValidUrl(e.target.value)) {
         setErrorUrl('Please enter valid URL')
       }
