@@ -232,6 +232,8 @@ interface ProjectInfoProps {
   shareLogo: any
   endPrice: number
   isEditable: boolean
+  projectToken: string
+  setProjectToken: (projectToken: string) => void
 }
 
 // Refactored Tokenomics component
@@ -242,6 +244,8 @@ const Tokenomics = ({
   shareLogo,
   endPrice,
   isEditable,
+  projectToken,
+  setProjectToken,
 }: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
@@ -313,10 +317,14 @@ const Tokenomics = ({
       if (shareTokenContract) {
         const shareBalance = await shareTokenContract.balanceOf(account)
         const shareDecimals = await shareTokenContract.decimals()
+        const shareSymbol = await shareTokenContract.symbol()
+        setProjectToken(shareSymbol)
         setBalances((prevBalances: any) => ({
           ...prevBalances,
           shareBalance: formatUnits(shareBalance, shareDecimals),
         }))
+      } else {
+        setProjectToken('')
       }
     }
 
@@ -488,6 +496,20 @@ const Tokenomics = ({
     onChange({ ...formDataTokenomics, [field]: balance })
   }
 
+  const renderLogo = (shareLogo: any) => {
+    return shareLogo && typeof shareLogo === 'object' && shareLogo.public ? (
+      <LogoIcon as="img" src={shareLogo.public} alt="Serenity Logo" />
+    ) : shareLogo && (typeof shareLogo === 'string' || shareLogo instanceof File) ? (
+      <LogoIcon
+        as="img"
+        src={shareLogo instanceof File ? URL.createObjectURL(shareLogo) : shareLogo}
+        alt="Serenity Logo"
+      />
+    ) : (
+      <Serenity />
+    )
+  }
+
   return (
     <Container>
       <TextInput
@@ -525,8 +547,8 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Disabled />}
-              <TYPE.label fontSize={'14px'}>{shareTitle}</TYPE.label>
+              {renderLogo(shareLogo)}
+              <TYPE.label fontSize={'14px'}>{projectToken}</TYPE.label>
             </div>
             <SpanBal>
               Balance: <b>{balances?.shareBalance}</b>
@@ -666,7 +688,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Serenity />}
+              {renderLogo(shareLogo)}
 
               <div
                 style={{
@@ -728,7 +750,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Serenity />}
+              {renderLogo(shareLogo)}
               <div
                 style={{
                   borderRight: '1px solid #E6E6FF',

@@ -64,11 +64,11 @@ export default function LBPForm() {
       shareInput: 0,
       maxSupply: '',
       assetInput: 0,
-      startWeight: 0,
+      startWeight: 99,
       endDate: '',
       maxPrice: '',
       startDate: '',
-      endWeight: 0,
+      endWeight: 1,
     },
   })
   const [canSubmit, setCanSubmit] = useState(false)
@@ -77,6 +77,7 @@ export default function LBPForm() {
   const [endPrice, setEndPrice] = useState(0)
   const [startPrice, setStartPrice] = useState(0)
   const [status, setStatus] = useState<LbpStatus | undefined>(undefined)
+  const [projectToken, setProjectToken] = useState<string>('')
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
@@ -270,6 +271,7 @@ export default function LBPForm() {
     return status == LbpStatus.draft && isAdmin
   }, [status, isAdmin])
 
+console.log('formData.projectInfo', formData.projectInfo)
   return (
     <LbpLayout background='#F7F7FF'>
       <FormRow>
@@ -309,10 +311,12 @@ export default function LBPForm() {
                 <Tokenomics
                   formDataTokenomics={formData.tokenomics}
                   onChange={handleTokenomicsChange}
-                  shareTitle={formData.projectInfo.title}
+                  shareTitle={projectToken}
                   shareLogo={formData?.branding?.LBPLogo}
                   endPrice={endPrice}
                   isEditable={isEditable}
+                  setProjectToken={setProjectToken}
+                  projectToken={projectToken}
                 />
               </Column>
             </FormCard>
@@ -328,7 +332,7 @@ export default function LBPForm() {
                   addressA={formData.tokenomics.shareAddress}
                   addressB={formData.tokenomics.assetTokenAddress}
                   contractAddress={formData?.tokenomics?.contractAddress || ''}
-                  shareName={formData?.projectInfo?.title}
+                  shareName={projectToken}
                   shareLogo={formData?.branding?.LBPLogo}
                   isEditable={isEditable}
                 />
