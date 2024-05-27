@@ -30,6 +30,7 @@ const SecTokenDetails = lazy(() => import('pages/SecTokenDetails'))
 
 const KYC = lazy(() => import('pages/KYC'))
 const IndividualKYC = lazy(() => import('pages/KYC/IndividualKycForm'))
+const IndividualKYCNew = lazy(() => import('pages/KYC/NewIndividualKycForm'))
 const CorporateKYC = lazy(() => import('pages/KYC/CorporateKycForm'))
 
 const SecurityTokens = lazy(() => import('pages/SecurityTokens'))
@@ -96,7 +97,7 @@ export const routeConfigs: RouteMapEntry[] = [
   { path: routes.lbpEdit, component: LBPForm },
   { path: routes.lbpCreate, component: LBPForm },
   { path: routes.lbpDashboard, component: LbpDashboardPage, conditions: { isKycApproved: true } },
-  { path: routes.publicDetails, component: LBPPublicDetailsPage},
+  { path: routes.publicDetails, component: LBPPublicDetailsPage },
   { path: routes.adminDetails, component: AdminLbpDetail, conditions: { isKycApproved: true } },
 
   { path: routes.nftList, component: ListNFT, conditions: { isWhitelisted: true } },
@@ -137,6 +138,13 @@ export const routeConfigs: RouteMapEntry[] = [
     component: IndividualKYC,
     conditions: { isWhitelisted: true, kycFormAccess: 'individual' },
   },
+
+  {
+    path: routes.kycIndividualNew,
+    component: IndividualKYCNew,
+    conditions: { isWhitelisted: true, kycFormAccess: 'individual' },
+  },
+
   {
     path: routes.kycCorporate,
     component: CorporateKYC,
