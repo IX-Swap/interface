@@ -37,7 +37,7 @@ export const LbpList = () => {
   const fetchMore = React.useCallback(async () => {
     setLoading(true)
 
-    const result = await getLbps(page, filter)
+    const result = await getLbps(page, filter, undefined, 10, true)
 
     setLbps((state) => state.concat(result.items))
     setPage((state) => state + 1)

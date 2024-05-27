@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
 
 import Header from 'components/Header'
-import styled from 'styled-components'
 import { useSetHideHeader } from 'state/application/hooks'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 export const LbpLayout: React.FC<React.PropsWithChildren<Props>> = (props) => {
   const hideHeader = useSetHideHeader()
 
-  React.useEffect(() => {
+  useEffect(() => {
     hideHeader(true)
 
     return () => {
