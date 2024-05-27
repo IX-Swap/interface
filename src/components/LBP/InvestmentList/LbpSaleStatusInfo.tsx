@@ -6,10 +6,8 @@ import { LbpStatus } from '../types'
 import { text5 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
-  isClosed: boolean
   daysTillEnded?: number
   hoursTillEnded?: number
-  allowOnlyAccredited: boolean
   status: string
   startDate: string
   margin?: string

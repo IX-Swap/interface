@@ -10,6 +10,7 @@ import { useGetLbp, useGetLbpStats } from 'state/lbp/hooks'
 import { LbpFormValues, MarketData } from 'components/LBP/types'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Loader } from 'components/AdminTransactionsTable'
+import SummaryFields from './components/SummaryFields'
 
 const AdminLbpDetail = () => {
   const { id } = useParams<{ id: string }>()
@@ -20,6 +21,7 @@ const AdminLbpDetail = () => {
   const [statsData, setStatsData] = useState<MarketData>()
   const [loader, setLoader] = useState(true)
   const [status, setStatus] = useState('')
+  const [noOfParticipants, setNoOfParticipants] = useState<number>(0)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,6 +62,7 @@ const AdminLbpDetail = () => {
               updateStatus={updateStatus}
               contractAddress={lbpData?.contractAddress}
             />
+            <SummaryFields statsData={statsData} lbpData={lbpData} noOfParticipants={noOfParticipants} />
             <DetailsChart
               contractAddress={lbpData?.contractAddress}
               currentAssetReserve={statsData?.currentAssetReserve}
@@ -73,7 +76,7 @@ const AdminLbpDetail = () => {
               chartWidth={1200}
             />
             <StatisticData isAdmin={true} statsData={statsData} lbpData={lbpData} />
-            <InvestorInformation lbpId={lbpId} />
+            <InvestorInformation lbpId={lbpId} setNoOfParticipants={setNoOfParticipants} />
           </>
         )}
       </Wrapper>

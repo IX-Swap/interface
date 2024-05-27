@@ -92,10 +92,8 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
           </div>
 
           <LbpSaleStatusInfo
-            isClosed={isClosed}
             daysTillEnded={lbp.daysTillEnded}
             hoursTillEnded={lbp.hoursTillEnded}
-            allowOnlyAccredited={lbp.allowOnlyAccredited}
             status={lbp.status}
             startDate={lbp.startDate}
           />
