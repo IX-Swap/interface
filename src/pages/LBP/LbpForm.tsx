@@ -77,7 +77,7 @@ export default function LBPForm() {
   const [endPrice, setEndPrice] = useState(0)
   const [startPrice, setStartPrice] = useState(0)
   const [status, setStatus] = useState<LbpStatus | undefined>(undefined)
-  const [projectToken, setProjectToken] = useState<string>('')
+  const [projectTokenTitle, setProjectTokenTitle] = useState<string>('')
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
@@ -311,12 +311,11 @@ console.log('formData.projectInfo', formData.projectInfo)
                 <Tokenomics
                   formDataTokenomics={formData.tokenomics}
                   onChange={handleTokenomicsChange}
-                  shareTitle={projectToken}
+                  shareTitle={projectTokenTitle}
                   shareLogo={formData?.branding?.LBPLogo}
                   endPrice={endPrice}
                   isEditable={isEditable}
-                  setProjectToken={setProjectToken}
-                  projectToken={projectToken}
+                  setProjectTokenTitle={setProjectTokenTitle}
                 />
               </Column>
             </FormCard>
@@ -332,7 +331,7 @@ console.log('formData.projectInfo', formData.projectInfo)
                   addressA={formData.tokenomics.shareAddress}
                   addressB={formData.tokenomics.assetTokenAddress}
                   contractAddress={formData?.tokenomics?.contractAddress || ''}
-                  shareName={projectToken}
+                  shareName={projectTokenTitle}
                   shareLogo={formData?.branding?.LBPLogo}
                   isEditable={isEditable}
                 />

@@ -5,15 +5,7 @@ import { TextInput } from 'pages/KYC/common'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import closeIcon from '../../../../assets/images/newCross.svg'
-
-function isValidUrl(url: string) {
-  try {
-    new URL(url)
-    return true
-  } catch (error) {
-    return false
-  }
-}
+import { isValidUrl } from 'utils'
 
 interface AdditionalLinksModalProps {
   isOpen: boolean
@@ -37,9 +29,9 @@ const AdditionalLinksModal: React.FC<AdditionalLinksModalProps> = ({
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
-      setErrorUrl('')
+      setErrorName('')
     } else {
-      setErrorUrl('Please enter link name')
+      setErrorName('Please enter link name')
     }
     setName(e.target.value)
     setNewLinkName(e.target.value)

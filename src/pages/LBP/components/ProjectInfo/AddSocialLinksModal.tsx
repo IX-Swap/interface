@@ -6,15 +6,7 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import { socialMediaPlatform } from 'pages/KYC/mock'
 import closeIcon from '../../../../assets/images/newCross.svg'
-
-function isValidUrl(url: string) {
-  try {
-    new URL(url)
-    return true
-  } catch (error) {
-    return false
-  }
-}
+import { isValidUrl } from 'utils'
 
 interface AddSocialLinksModalProps {
   isOpen: boolean

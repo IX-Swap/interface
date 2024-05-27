@@ -61,33 +61,19 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
   }, [brandingData, showError])
 
   const handleDropImage = (acceptedFile: any, key: string) => {
+    const setError = key === 'LBPLogo' ? setErrorLogo : setErrorBanner
+
     if (acceptedFile?.size > MAX_FILE_UPLOAD_SIZE) {
       showError(MAX_FILE_UPLOAD_SIZE_ERROR)
-
-      if (key === 'LBPLogo') {
-        setErrorLogo(MAX_FILE_UPLOAD_SIZE_ERROR)
-      }
-      if (key === 'LBPBanner') {
-        setErrorBanner(MAX_FILE_UPLOAD_SIZE_ERROR)
-      }
+      setError(MAX_FILE_UPLOAD_SIZE_ERROR)
     } else if (values[key]) {
       showError('You can only upload one image at a time.')
-      if (key === 'LBPLogo') {
-        setErrorLogo('You can only upload one image at a time.')
-      }
-      if (key === 'LBPBanner') {
-        setErrorBanner('You can only upload one image at a time.')
-      }
+      setError('You can only upload one image at a time.')
     } else {
       const updatedValues = { ...values, [key]: acceptedFile }
       setValues(updatedValues)
       onChange(updatedValues)
-      if (key === 'LBPLogo') {
-        setErrorLogo('')
-      }
-      if (key === 'LBPBanner') {
-        setErrorBanner('')
-      }
+      setError('')
     }
   }
 

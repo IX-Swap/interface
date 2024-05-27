@@ -256,8 +256,6 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
     setNewLinkName(value?.label)
   }
 
-  console.log('formData.socialLinks', formData.socialLinks, _isEmpty(formData.socialLinks))
-
   return (
     <>
       {isOpenSocialLinkModal ? (

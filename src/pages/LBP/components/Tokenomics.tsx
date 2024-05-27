@@ -232,8 +232,7 @@ interface ProjectInfoProps {
   shareLogo: any
   endPrice: number
   isEditable: boolean
-  projectToken: string
-  setProjectToken: (projectToken: string) => void
+  setProjectTokenTitle: (projectToken: string) => void
 }
 
 // Refactored Tokenomics component
@@ -244,8 +243,7 @@ const Tokenomics = ({
   shareLogo,
   endPrice,
   isEditable,
-  projectToken,
-  setProjectToken,
+  setProjectTokenTitle,
 }: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
@@ -318,13 +316,13 @@ const Tokenomics = ({
         const shareBalance = await shareTokenContract.balanceOf(account)
         const shareDecimals = await shareTokenContract.decimals()
         const shareSymbol = await shareTokenContract.symbol()
-        setProjectToken(shareSymbol)
+        setProjectTokenTitle(shareSymbol)
         setBalances((prevBalances: any) => ({
           ...prevBalances,
           shareBalance: formatUnits(shareBalance, shareDecimals),
         }))
       } else {
-        setProjectToken('')
+        setProjectTokenTitle('')
       }
     }
 
@@ -548,7 +546,7 @@ const Tokenomics = ({
               }}
             >
               {renderLogo(shareLogo)}
-              <TYPE.label fontSize={'14px'}>{projectToken}</TYPE.label>
+              <TYPE.label fontSize={'14px'}>{shareTitle}</TYPE.label>
             </div>
             <SpanBal>
               Balance: <b>{balances?.shareBalance}</b>
