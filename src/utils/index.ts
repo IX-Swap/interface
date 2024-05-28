@@ -10,7 +10,6 @@ import JSBI from 'jsbi'
 import walletValidator from 'multicoin-address-validator'
 import { NETWORK_ADDRESS_PATTERNS } from 'state/wallet/constants'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
-import { LBP_STAGE_LABELS } from 'state/lbp/constants'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
@@ -155,8 +154,4 @@ export function delay(ms: number) {
 
 export function isEmptyObject(obj: object) {
   return Object.keys(obj).length === 0;
-}
-
-export const getStageLabel = (stage: any) => {
-  return LBP_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
 }
