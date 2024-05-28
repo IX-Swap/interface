@@ -152,6 +152,6 @@ export function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export function isEmpty(obj: object) {
+export function isEmptyObject(obj: object) {
   return Object.keys(obj).length === 0;
 }
