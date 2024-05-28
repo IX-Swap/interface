@@ -79,7 +79,7 @@ export default function LBPForm() {
   const [endPrice, setEndPrice] = useState(0)
   const [startPrice, setStartPrice] = useState(0)
   const [status, setStatus] = useState<LbpStatus | undefined>(undefined)
-  const [projectTokenTitle, setProjectTokenTitle] = useState<string>('')
+  const [projectTokenSymbol, setProjectTokenSymbol] = useState<string>('')
   const [showCloseDialog, setShowCloseDialog] = useState(false)
   const [isDirty, setDirty] = useState(false)
   const [nextPathname, setNextPathname] = useState<string>('')
@@ -353,11 +353,11 @@ export default function LBPForm() {
                 <Tokenomics
                   formDataTokenomics={formData.tokenomics}
                   onChange={handleTokenomicsChange}
-                  shareTitle={projectTokenTitle}
+                  shareTitle={projectTokenSymbol}
                   shareLogo={formData?.branding?.LBPLogo}
                   endPrice={endPrice}
                   isEditable={isEditable}
-                  setProjectTokenTitle={setProjectTokenTitle}
+                  setProjectTokenSymbol={setProjectTokenSymbol}
                   setDirty={setDirty}
                 />
               </Column>
@@ -374,7 +374,7 @@ export default function LBPForm() {
                   addressA={formData.tokenomics.shareAddress}
                   addressB={formData.tokenomics.assetTokenAddress}
                   contractAddress={formData?.tokenomics?.contractAddress || ''}
-                  shareName={projectTokenTitle}
+                  shareName={projectTokenSymbol}
                   shareLogo={formData?.branding?.LBPLogo}
                   isEditable={isEditable}
                 />
@@ -419,7 +419,7 @@ export default function LBPForm() {
             formData={formData}
             onCancel={toggleModal}
             startPrice={startPrice}
-            projectTokenTitle={projectTokenTitle}
+            projectTokenSymbol={projectTokenSymbol}
           />
         </IssuanceDialog>
       </FormRow>

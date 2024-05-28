@@ -22,11 +22,11 @@ export const MAX_UINT88 = ethers.BigNumber.from('309485009821345068724781055')
 interface Props {
   formData: FormData
   startPrice: number
-  projectTokenTitle: string
+  projectTokenSymbol: string
   onCancel: () => void
 }
 
-export const SubmitSummary = ({ projectTokenTitle, formData, onCancel, startPrice }: Props) => {
+export const SubmitSummary = ({ projectTokenSymbol, formData, onCancel, startPrice }: Props) => {
   const { chainId } = useWeb3React()
   const history = useHistory()
   const [predictedLBPAddress, setPredictedLBPAddress] = useState<any>(
@@ -223,7 +223,7 @@ export const SubmitSummary = ({ projectTokenTitle, formData, onCancel, startPric
             <TokenBlock>
               <TokenRow>
                 {generateLBPLogo(formData)}
-                <span>{projectTokenTitle}</span>
+                <span>{projectTokenSymbol}</span>
               </TokenRow>
               <TokenPrice>{formData.tokenomics.shareInput}</TokenPrice>
             </TokenBlock>
@@ -248,7 +248,7 @@ export const SubmitSummary = ({ projectTokenTitle, formData, onCancel, startPric
             <TokenBlock>
               <TokenRow>
                 {generateLBPLogo(formData)}
-                <span>{projectTokenTitle}</span>
+                <span>{projectTokenSymbol}</span>
               </TokenRow>
               <TokenPrice>{formData.tokenomics.startWeight}%</TokenPrice>
             </TokenBlock>

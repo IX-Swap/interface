@@ -232,7 +232,7 @@ interface ProjectInfoProps {
   shareLogo: any
   endPrice: number
   isEditable: boolean
-  setProjectTokenTitle: (projectToken: string) => void
+  setProjectTokenSymbol: (projectToken: string) => void
   setDirty: (dirty: boolean) => void
 }
 
@@ -244,7 +244,7 @@ const Tokenomics = ({
   shareLogo,
   endPrice,
   isEditable,
-  setProjectTokenTitle,
+  setProjectTokenSymbol,
   setDirty,
 }: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
@@ -318,13 +318,13 @@ const Tokenomics = ({
         const shareBalance = await shareTokenContract.balanceOf(account)
         const shareDecimals = await shareTokenContract.decimals()
         const shareSymbol = await shareTokenContract.symbol()
-        setProjectTokenTitle(shareSymbol)
+        setProjectTokenSymbol(shareSymbol)
         setBalances((prevBalances: any) => ({
           ...prevBalances,
           shareBalance: formatUnits(shareBalance, shareDecimals),
         }))
       } else {
-        setProjectTokenTitle('')
+        setProjectTokenSymbol('')
       }
     }
 
