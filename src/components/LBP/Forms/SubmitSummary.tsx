@@ -259,7 +259,7 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
                 <img src={assetToken?.logo} alt={assetToken?.tokenSymbol} />
                 <span>{assetToken?.tokenSymbol}</span>
               </TokenRow>
-              <TokenPrice>{formData.tokenomics.endWeight}%</TokenPrice>
+              <TokenPrice>{100 - formData.tokenomics.startWeight}%</TokenPrice>
             </TokenBlock>
           </FieldBlock>
         </Row>
