@@ -10,7 +10,7 @@ import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import Copy from 'components/AccountDetails/Copy'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
-import { getStageLabel } from 'utils'
+import { useTokenContract } from 'hooks/useContract'
 
 interface SummaryFieldsProps {
   noOfParticipants: number
@@ -19,8 +19,12 @@ interface SummaryFieldsProps {
 }
 
 const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants, statsData }) => {
+  const shareTokenContract = useTokenContract(lbpData?.shareAddress ?? '')
   const [remainingTime, setRemainingTime] = useState(28 * 24 * 60 * 60)
   const tokenCurrency = useCurrency(lbpData?.assetTokenAddress || '')
+
+  const [shareSymbol, setShareSymbol] = useState<string>('')
+
   const tokenOption = getTokenOption(lbpData?.assetTokenAddress || '', tokenCurrency?.chainId || 1)
   const status = _get(lbpData, 'status', '')
   const currentSharePriceUSD = statsData?.currentSharePriceUSD
@@ -62,9 +66,16 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
     return () => clearInterval(interval)
   }, [lbpData])
 
+  useEffect(() => {
+    async function fetchShareSymbol() {
+      if (shareTokenContract) {
+        const symbol = await shareTokenContract.symbol()
+        setShareSymbol(symbol)
+      }
+    }
+    fetchShareSymbol()
+  }, [shareTokenContract])
 
-  console.log('lbpData', lbpData)
-  console.log('statsData', statsData)
   return (
     <Column>
       <AutoColumn style={{ marginBottom: '20px' }} justify="center" gap="md">
@@ -90,8 +101,7 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
             <TYPE.subHeader1 color={'#555566'}>LBP closes in</TYPE.subHeader1>
             <TokenWrapper>
               <TYPE.label fontSize={'14px'} marginTop={9}>
-                {!isClosed ? remainingDays > 0 ? `${remainingDays} Days` : `${remainingHours} Hours` : null}
-                {isClosed ? getStageLabel(lbpData?.status) : null}
+                {remainingDays > 0 ? `${remainingDays} Days` : `${remainingHours} Hours`}
               </TYPE.label>
             </TokenWrapper>
           </TopBox>
@@ -124,7 +134,7 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>{lbpData?.shareAmount}</TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                  {lbpData?.title}
+                  {shareSymbol || lbpData?.title}
                 </TYPE.body3>
               </>
               <VerticalLine />
@@ -148,7 +158,7 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
                     {useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)}{' '}
                   </TYPE.label>
                   <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                    {lbpData?.title}
+                    {shareSymbol || lbpData?.title}
                   </TYPE.body3>
                 </>
                 <VerticalLine />
