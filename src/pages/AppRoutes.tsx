@@ -30,7 +30,7 @@ const SecTokenDetails = lazy(() => import('pages/SecTokenDetails'))
 
 const KYC = lazy(() => import('pages/KYC'))
 const IndividualKYC = lazy(() => import('pages/KYC/IndividualKycForm'))
-const IndividualKYCNew = lazy(() => import('pages/KYC/NewIndividualKycForm'))
+const IndividualKYCV2 = lazy(() => import('pages/KYC/NewIndividualKycForm'))
 const CorporateKYC = lazy(() => import('pages/KYC/CorporateKycForm'))
 
 const SecurityTokens = lazy(() => import('pages/SecurityTokens'))
@@ -141,7 +141,7 @@ export const routeConfigs: RouteMapEntry[] = [
 
   {
     path: routes.kycIndividualNew,
-    component: IndividualKYCNew,
+    component: IndividualKYCV2,
     conditions: { isWhitelisted: true, kycFormAccess: 'individual' },
   },
 

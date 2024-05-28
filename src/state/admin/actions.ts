@@ -512,6 +512,7 @@ export interface KycItem {
   corporate?: IndividualKyc
   individualKycId: number
   status: string
+  kycProviderStatus: string
   updatedAt: string
   user: {
     active: true
