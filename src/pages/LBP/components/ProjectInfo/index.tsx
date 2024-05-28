@@ -153,6 +153,14 @@ export default function ProjectInfo({ onChange, formData, setDirty }: ProjectInf
       ...formData,
     })
     setValues({ ...values, uploadDocs: formData.uploadDocs })
+    formik.setValues({
+      title: formData.title,
+      description: formData.description,
+      website: formData.website,
+      socialLinks: formData.socialLinks,
+      whitepapers: formData.whitepapers,
+      uploadDocs: formData.uploadDocs,
+    })
   }, [formData, formData.uploadDocs])
 
   const handleAddLink = () => {
