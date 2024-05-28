@@ -21,6 +21,7 @@ import { useFormik } from 'formik'
 import { socialMediaPlatform } from 'pages/KYC/mock'
 import AddSocialLinksModal from './AddSocialLinksModal'
 import AdditionalLinksModal from './AdditionalLinksModal'
+import { isEmptyObject } from 'utils'
 
 interface ProjectInfoProps {
   onChange: (data: any) => void
@@ -266,10 +267,10 @@ export default function ProjectInfo({ onChange, formData, setDirty }: ProjectInf
   }
 
   useEffect(() => {
-    if (formik.dirty) {
-      setDirty(formik.dirty)
+    if (!isEmptyObject(formik.touched)) {
+      setDirty(true)
     }
-  }, [formik.dirty])
+  }, [JSON.stringify(formik.touched)])
 
   return (
     <>

@@ -27,7 +27,7 @@ import { formatUnits } from 'ethers/lib/utils'
 import timezone from 'dayjs/plugin/timezone'
 import { ethers } from 'ethers'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
-import { isEthChainAddress } from 'utils'
+import { isEmptyObject, isEthChainAddress } from 'utils'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -517,10 +517,10 @@ const Tokenomics = ({
   }, [formDataTokenomics])
 
   useEffect(() => {
-    if (formik.dirty) {
-      setDirty(formik.dirty)
+    if (!isEmptyObject(formik.touched)) {
+      setDirty(true)
     }
-  }, [formik.dirty])
+  }, [JSON.stringify(formik.touched)])
 
   return (
     <Container>
