@@ -30,8 +30,6 @@ import styled from 'styled-components'
 import { CloseConfirmation } from 'components/LaunchpadIssuance/IssuanceForm/shared/CloseConfirmation'
 import { delay } from 'utils'
 
-
-
 export interface FormData {
   id: number
   branding: BrandingProps
@@ -81,7 +79,7 @@ export default function LBPForm() {
   const [endPrice, setEndPrice] = useState(0)
   const [startPrice, setStartPrice] = useState(0)
   const [status, setStatus] = useState<LbpStatus | undefined>(undefined)
-  const [projectTokenTitle, setProjectTokenTitle] = useState<string>('')
+  const [projectTokenSymbol, setProjectTokenSymbol] = useState<string>('')
   const [showCloseDialog, setShowCloseDialog] = useState(false)
   const [isDirty, setDirty] = useState(false)
   const [nextPathname, setNextPathname] = useState<string>('')
@@ -180,7 +178,7 @@ export default function LBPForm() {
         setFormData((prevData) => ({ ...prevData, id }))
         data = { ...data, id }
       }
-      setDirty(false);
+      setDirty(false)
       const summary = actionType === LBP_ACTION_TYPES.save ? 'LBP saved successfully' : 'LBP submitted successfully'
       addPopup({ info: { success: true, summary } })
       if (actionType === LBP_ACTION_TYPES.submit) {
@@ -308,9 +306,8 @@ export default function LBPForm() {
     }
   }, [history, isDirty])
 
-
   return (
-    <LbpLayout background='#F7F7FF'>
+    <LbpLayout background="#F7F7FF">
       {showCloseDialog ? (
         <CloseConfirmation
           isOpen={showCloseDialog}
@@ -356,11 +353,11 @@ export default function LBPForm() {
                 <Tokenomics
                   formDataTokenomics={formData.tokenomics}
                   onChange={handleTokenomicsChange}
-                  shareTitle={projectTokenTitle}
+                  shareTitle={projectTokenSymbol}
                   shareLogo={formData?.branding?.LBPLogo}
                   endPrice={endPrice}
                   isEditable={isEditable}
-                  setProjectTokenTitle={setProjectTokenTitle}
+                  setProjectTokenSymbol={setProjectTokenSymbol}
                   setDirty={setDirty}
                 />
               </Column>
@@ -377,7 +374,7 @@ export default function LBPForm() {
                   addressA={formData.tokenomics.shareAddress}
                   addressB={formData.tokenomics.assetTokenAddress}
                   contractAddress={formData?.tokenomics?.contractAddress || ''}
-                  shareName={projectTokenTitle}
+                  shareName={projectTokenSymbol}
                   shareLogo={formData?.branding?.LBPLogo}
                   isEditable={isEditable}
                 />
@@ -418,7 +415,12 @@ export default function LBPForm() {
         </div>
 
         <IssuanceDialog show={showSummary} onClose={toggleModal} width="550px">
-          <SubmitSummary formData={formData} onCancel={toggleModal} startPrice={startPrice} />
+          <SubmitSummary
+            formData={formData}
+            onCancel={toggleModal}
+            startPrice={startPrice}
+            projectTokenSymbol={projectTokenSymbol}
+          />
         </IssuanceDialog>
       </FormRow>
     </LbpLayout>
