@@ -509,6 +509,13 @@ const Tokenomics = ({
       <Serenity />
     )
   }
+
+  useEffect(() => {
+    formik.setFieldValue('shareAddress', formDataTokenomics.shareAddress)
+    formik.setFieldValue('shareInput', formDataTokenomics.shareInput)
+    formik.setFieldValue('assetInput', formDataTokenomics.assetInput)
+  }, [formDataTokenomics])
+
   useEffect(() => {
     if (formik.dirty) {
       setDirty(formik.dirty)
