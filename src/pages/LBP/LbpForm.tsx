@@ -180,7 +180,7 @@ export default function LBPForm() {
         setFormData((prevData) => ({ ...prevData, id }))
         data = { ...data, id }
       }
-
+      setDirty(false);
       const summary = actionType === LBP_ACTION_TYPES.save ? 'LBP saved successfully' : 'LBP submitted successfully'
       addPopup({ info: { success: true, summary } })
       if (actionType === LBP_ACTION_TYPES.submit) {
