@@ -570,7 +570,7 @@ const Tokenomics = ({
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {parseFloat(formDataTokenomics.shareInput.toString() || '0') > parseFloat(balances?.shareBalance || '0') ? (
+        {balances?.shareBalance && parseFloat(formDataTokenomics.shareInput.toString() || '0') > parseFloat(balances?.shareBalance || '0') ? (
           <ErrorText>Insufficient balance</ErrorText>
         ) : null}
         {formik.touched.shareInput && formik.errors.shareInput ? (
@@ -638,7 +638,7 @@ const Tokenomics = ({
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {parseFloat(formDataTokenomics.assetInput.toString() || '0') > parseFloat(balances?.assetBalance || '0') ? (
+        {balances?.assetBalance && parseFloat(formDataTokenomics.assetInput.toString() || '0') > parseFloat(balances?.assetBalance || '0') ? (
           <ErrorText>Insufficient balance</ErrorText>
         ) : null}
         {formik.touched.assetInput && formik.errors.assetInput ? (

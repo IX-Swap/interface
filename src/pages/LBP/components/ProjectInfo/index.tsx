@@ -373,7 +373,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
           handleImageDelete(index, 'uploadDocs')
         }}
       />
-      {isErrorUploadDocs && <ErrorText>Max size is 5 Mb</ErrorText>}
+      {isErrorUploadDocs && <ErrorText>Max size is 10 Mb</ErrorText>}
     </>
   )
 }
