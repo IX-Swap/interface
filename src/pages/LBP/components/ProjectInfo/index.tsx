@@ -271,10 +271,6 @@ export default function ProjectInfo({ onChange, formData, setDirty }: ProjectInf
     }
   }, [formik.dirty])
 
-  console.log('formik.errors', formik.errors)
-  console.log('formData', formData)
-  console.log('formik', formik)
-
   return (
     <>
       {isOpenSocialLinkModal ? (
