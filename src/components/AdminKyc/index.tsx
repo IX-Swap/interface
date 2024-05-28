@@ -196,7 +196,6 @@ export const AdminKycTable = () => {
     getKyc()
   }, [id, getKyc])
 
-  console.log(kyc, 'jjjjkjk')
 
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
 

@@ -29,9 +29,9 @@ interface Props {
 }
 
 export const KycReviewModal = ({ isOpen, onClose, data, version }: Props) => {
-  if (version === 'v2') {
-    return <KycReviewModalV2 isOpen={isOpen} onClose={onClose} data={data} />;
-  }
+  // if (version === 'v2') {
+  //   return <KycReviewModalV2 isOpen={isOpen} onClose={onClose} data={data} />;
+  // }
   const [openReasonModal, handleOpenReasonModal] = useState('')
   const [riskJSON, setRiskJSON] = useState<any>(null)
   const [loadingCynopsis, handleLoadingCynopsis] = useState(false)
@@ -41,7 +41,7 @@ export const KycReviewModal = ({ isOpen, onClose, data, version }: Props) => {
   const resetKyc = useResetKyc()
   const resubmitKyc = useResubmitKyc()
 
-  console.log(data, 'hhhhhh')
+
 
   useEffect(() => {
     const fetchCynopsisRisks = async () => {
@@ -147,7 +147,7 @@ export const KycReviewModal = ({ isOpen, onClose, data, version }: Props) => {
 
   return (
     <>
-      <ReasonModal
+    {version === 'v2' ? <KycReviewModalV2 isOpen={isOpen} onClose={onClose} data={data} /> : <>      <ReasonModal
         isOpen={Boolean(openReasonModal)}
         onAction={onReasonAction}
         onClose={closeModal}
@@ -218,7 +218,8 @@ export const KycReviewModal = ({ isOpen, onClose, data, version }: Props) => {
             </ActionsContainer>
           </ModalContent>
         </ModalBlurWrapper>
-      </RedesignedWideModal>
+      </RedesignedWideModal></>}
+
     </>
   )
 }

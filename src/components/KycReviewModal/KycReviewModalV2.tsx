@@ -28,7 +28,6 @@ export const KycReviewModalV2 = ({ isOpen, onClose, data }: Props) => {
   const resetKyc = useResetKyc()
   //   const resubmitKyc = useResubmitKyc()
 
-  console.log(data, 'hhhhhh')
 
   const kyc = (data?.individualKycId ? data?.individual : data?.corporate) || ({} as IndividualKyc | CorporateKyc)
 
