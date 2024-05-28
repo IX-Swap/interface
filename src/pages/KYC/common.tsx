@@ -557,7 +557,7 @@ export const UploaderLBP: FC<UploaderProps> = ({
       ) : (
         <Upload
           isDisabled={isDisabled}
-          accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
+          accept={`image/svg+xml,image/jpeg,image/png` as AcceptFiles}
           data-testid={id}
           file={null}
           onDrop={onDrop}
