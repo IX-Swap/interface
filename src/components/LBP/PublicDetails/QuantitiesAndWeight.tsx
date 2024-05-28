@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Column, { AutoColumn } from 'components/Column'
 import { RowBetween } from 'components/Row'
 import styled from 'styled-components'
@@ -9,6 +9,7 @@ import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
+import { useTokenContract } from 'hooks/useContract'
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
@@ -16,13 +17,27 @@ interface MiddleSectionProps {
 }
 
 const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => {
+  const shareTokenContract = useTokenContract(lbpData?.shareAddress ?? '')
   const tokenCurrency = useCurrency(lbpData?.assetTokenAddress || '')
+
+  const [shareSymbol, setShareSymbol] = useState<string>('')
+
   const tokenOption = getTokenOption(lbpData?.assetTokenAddress || '', tokenCurrency?.chainId || 1)
   const status = _get(lbpData, 'status', '')
 
   const calculateSharedWeight = (assetWeight: number): number => {
     return 100 - assetWeight
   }
+
+  useEffect(() => {
+    async function fetchShareSymbol() {
+      if (shareTokenContract) {
+        const symbol = await shareTokenContract.symbol()
+        setShareSymbol(symbol)
+      }
+    }
+    fetchShareSymbol()
+  }, [shareTokenContract])
 
   return (
     <Column>
@@ -35,7 +50,7 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>{lbpData?.shareAmount}</TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                  {lbpData?.title}
+                  {shareSymbol || lbpData?.title}
                 </TYPE.body3>
               </>
               <VerticalLine />
@@ -59,7 +74,7 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
                     {useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)}{' '}
                   </TYPE.label>
                   <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                    {lbpData?.title}
+                    {shareSymbol || lbpData?.title}
                   </TYPE.body3>
                 </>
                 <VerticalLine />

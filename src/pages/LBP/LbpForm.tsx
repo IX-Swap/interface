@@ -30,8 +30,6 @@ import styled from 'styled-components'
 import { CloseConfirmation } from 'components/LaunchpadIssuance/IssuanceForm/shared/CloseConfirmation'
 import { delay } from 'utils'
 
-
-
 export interface FormData {
   id: number
   branding: BrandingProps
@@ -180,7 +178,7 @@ export default function LBPForm() {
         setFormData((prevData) => ({ ...prevData, id }))
         data = { ...data, id }
       }
-      setDirty(false);
+      setDirty(false)
       const summary = actionType === LBP_ACTION_TYPES.save ? 'LBP saved successfully' : 'LBP submitted successfully'
       addPopup({ info: { success: true, summary } })
       if (actionType === LBP_ACTION_TYPES.submit) {
@@ -308,9 +306,8 @@ export default function LBPForm() {
     }
   }, [history, isDirty])
 
-
   return (
-    <LbpLayout background='#F7F7FF'>
+    <LbpLayout background="#F7F7FF">
       {showCloseDialog ? (
         <CloseConfirmation
           isOpen={showCloseDialog}
@@ -418,7 +415,12 @@ export default function LBPForm() {
         </div>
 
         <IssuanceDialog show={showSummary} onClose={toggleModal} width="550px">
-          <SubmitSummary formData={formData} onCancel={toggleModal} startPrice={startPrice} />
+          <SubmitSummary
+            formData={formData}
+            onCancel={toggleModal}
+            startPrice={startPrice}
+            projectTokenTitle={projectTokenTitle}
+          />
         </IssuanceDialog>
       </FormRow>
     </LbpLayout>

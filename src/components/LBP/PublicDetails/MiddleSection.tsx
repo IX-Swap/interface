@@ -90,8 +90,6 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
     }
   }, [lbpData])
 
-  console.log(lbpData, 'lbpData')
-
   return (
     <MiddleSectionWrapper>
       <MiddleSectionContainer>
