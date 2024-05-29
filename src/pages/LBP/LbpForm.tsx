@@ -134,7 +134,7 @@ export default function LBPForm() {
 
   const updateSubmitButtonState = (formData: FormData) => {
     const isComplete = (data: any) => {
-      const keysToCheck = Object.keys(data).filter((key) => key !== 'maxPrice' && key !== 'maxSupply')
+      const keysToCheck = Object.keys(data).filter((key) => key !== 'maxPrice' && key !== 'maxSupply' && key !== 'xTokenLiteProxyAddress')
       return keysToCheck.every((key) => !!data[key])
     }
 
