@@ -60,6 +60,7 @@ export default function LBPForm() {
     },
     tokenomics: {
       shareAddress: '',
+      xTokenLiteProxyAddress: '',
       contractAddress: constants.AddressZero,
       assetTokenAddress: '',
       assetTokenSymbol: '',
@@ -213,6 +214,7 @@ export default function LBPForm() {
       LBPBanner: formData.branding?.LBPBanner,
       uploadDocs: formData.projectInfo?.uploadDocs,
       shareAddress: formData.tokenomics?.shareAddress,
+      xTokenLiteProxyAddress: formData.tokenomics?.xTokenLiteProxyAddress,
       shareAmount: Number(formData.tokenomics?.shareInput || 0),
       assetTokenAmount: Number(formData.tokenomics?.assetInput || 0),
       assetTokenAddress: formData.tokenomics?.assetTokenAddress,
@@ -253,6 +255,7 @@ export default function LBPForm() {
       },
       tokenomics: {
         shareAddress: data.shareAddress,
+        xTokenLiteProxyAddress: data.xTokenLiteProxyAddress,
         contractAddress: data.contractAddress || constants.AddressZero,
         assetTokenAddress: data.assetTokenAddress,
         assetTokenSymbol: data.assetTokenSymbol,
