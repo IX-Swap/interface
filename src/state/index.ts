@@ -1,5 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { load, save } from 'redux-localstorage-simple'
+import storage from 'redux-persist/lib/storage'
+import { persistReducer, persistStore } from 'redux-persist';
+
 import admin from './admin/reducer'
 import application from './application/reducer'
 import auth from './auth/reducer'
@@ -35,6 +38,13 @@ import tokenManager from './token-manager/reducer'
 import issuance from './issuance/reducer'
 
 const PERSISTED_KEYS: string[] = ['auth', 'lists', 'swap', 'swapHelper', 'transactions', 'user']
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: PERSISTED_KEYS,
+};
+
 
 const combinedReducer = combineReducers({
   admin,
@@ -78,15 +88,14 @@ const rootReducer = (state: any, action: any) => {
   return combinedReducer(state, action)
 }
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({
       thunk: true,
-      serializableCheck: {
-        ignoredActions: ['swapHelper/setSwapState'],
-        ignoredPaths: ['swapHelper.localSwap.tradeToConfirm'],
-      },
+      serializableCheck: false,
     }),
     save({ states: PERSISTED_KEYS, debounce: 1000 }),
   ],
@@ -94,6 +103,8 @@ const store = configureStore({
 })
 
 store.dispatch(updateVersion())
+
+export const persistor = persistStore(store);
 
 export default store
 

@@ -26,7 +26,7 @@ import DarkModeQueryParamReader from 'theme/DarkModeQueryParamReader'
 
 import { useAuthState } from 'state/auth/hooks'
 import { useHideHeader, useModalOpen } from 'state/application/hooks'
-import { useAccount, useGetMe, useRawRole } from 'state/user/hooks'
+import { useAccount, useGetMe, useRawRole, useRole } from 'state/user/hooks'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
 
@@ -82,6 +82,7 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: b
 `
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
 
 const initSafary = () => {
   const script = document.createElement('script')
@@ -96,6 +97,7 @@ const initSafary = () => {
 
 export default function App() {
   const getMe = useGetMe()
+  const { isAdmin } = useRole()
 
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
@@ -109,6 +111,9 @@ export default function App() {
   const { kyc } = useKYCState()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [countryCode, setCountryCode] = useState()
+
+  const routeFinalConfig = isAdmin ? routeConfigs : routeConfigs.filter((route) => !lbpAdminRoutes.includes(route.path))
+
   useEffect(() => {
     const getCountryCode = async () => {
       const response = await axios.get(ip.getIPAddress)
@@ -238,7 +243,11 @@ export default function App() {
       if (guards.some((guard) => guard === true)) {
         if (roleGuard) {
           return (
-            <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
+            <Route
+              component={(props: RouteComponentProps) => (
+                <Redirect to={{ ...props, pathname: !isAdmin ? routes.kyc : defaultPage }} />
+              )}
+            />
           )
         }
         return null
@@ -281,7 +290,7 @@ export default function App() {
               }
             >
               <Switch>
-                {routeConfigs.map(routeGenerator).filter((route) => !!route)}
+                {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
                 {useRedirect && (
                   <Route
