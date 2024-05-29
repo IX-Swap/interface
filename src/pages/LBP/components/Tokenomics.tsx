@@ -415,7 +415,7 @@ const Tokenomics = ({
 
       <div style={{ marginTop: 16 }}>
         <TextInput
-          placeholder="XTokenLite Proxy Address"
+          placeholder="Not required for project token of type ERC20"
           id="xTokenLiteProxyAddress"
           label="XTokenLite Proxy Address"
           name="xTokenLiteProxyAddress"
