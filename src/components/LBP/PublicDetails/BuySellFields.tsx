@@ -79,11 +79,7 @@ const BuySellFields: React.FC<BuySellFieldsProps> = ({
   fetchBalance,
 }) => {
   const assetDecimals = useDecimals(assetTokenAddress) ?? 18
-  const shareDecimals= useDecimals(shareTokenAddress) ?? 18
-
-  console.log('assetDecimals', assetDecimals)
-  console.log('shareDecimals', shareDecimals)
-
+  const shareDecimals = useDecimals(shareTokenAddress) ?? 18
 
   // UI States
   const [buttonDisabled, setButtonDisabled] = useState(true)
@@ -743,7 +739,7 @@ const BuySellFields: React.FC<BuySellFieldsProps> = ({
   )
 }
 
-export default memo(BuySellFields);
+export default memo(BuySellFields)
 
 const BuySellFieldsWrapper = styled.div`
   text-align: left;
