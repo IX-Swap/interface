@@ -226,8 +226,6 @@ export default function LBPForm() {
       additionalDocumentIds: [],
     }
 
-    console.log('result', result)
-
     if (formData?.tokenomics?.maxSupply) {
       result.shareMaxSupply = Number(formData?.tokenomics?.maxSupply ?? 0)
     }
