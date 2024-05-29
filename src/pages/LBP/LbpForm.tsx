@@ -214,7 +214,7 @@ export default function LBPForm() {
       LBPBanner: formData.branding?.LBPBanner,
       uploadDocs: formData.projectInfo?.uploadDocs,
       shareAddress: formData.tokenomics?.shareAddress,
-      xTokenLiteProxyAddress: formData.tokenomics?.xTokenLiteProxyAddress,
+      xTokenLiteProxyAddress: formData.tokenomics?.xTokenLiteProxyAddress || null,
       shareAmount: Number(formData.tokenomics?.shareInput || 0),
       assetTokenAmount: Number(formData.tokenomics?.assetInput || 0),
       assetTokenAddress: formData.tokenomics?.assetTokenAddress,
@@ -225,6 +225,8 @@ export default function LBPForm() {
       endDate: dayjs(formData.tokenomics?.endDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
       additionalDocumentIds: [],
     }
+
+    console.log('result', result)
 
     if (formData?.tokenomics?.maxSupply) {
       result.shareMaxSupply = Number(formData?.tokenomics?.maxSupply ?? 0)
