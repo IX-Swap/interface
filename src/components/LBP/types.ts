@@ -88,6 +88,7 @@ export interface LbpFormValues {
 
 export interface TokenomicsProps {
   shareAddress: string
+  xTokenLiteProxyAddress: string
   contractAddress?: string
   assetTokenAddress: string
   assetTokenSymbol: string
