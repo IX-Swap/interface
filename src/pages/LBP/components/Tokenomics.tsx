@@ -50,7 +50,7 @@ export const TokenOptions = (chainId: number) => [
   {
     value: 'USDT',
     tokenAddress: TOKEN_ADDRESSES.USDT[chainId],
-    tokenDecimals: 18,
+    tokenDecimals: 6,
     tokenSymbol: 'USDT',
     logo: usdtropDown,
   },

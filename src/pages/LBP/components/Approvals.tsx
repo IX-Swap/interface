@@ -1,14 +1,13 @@
 import styled from 'styled-components'
 import { ReactComponent as SerenityIcon } from '../../../assets/images/serenity.svg'
 import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
-import { useCurrency } from 'hooks/Tokens'
-import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers } from 'ethers'
 import { useCallback, useMemo } from 'react'
 import { getTokenOption } from './Tokenomics'
 import { ReactComponent as Checked } from '../../../assets/images/check-2.svg'
 import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
 import { useWeb3React } from '@web3-react/core'
+import useDecimals from 'hooks/useDecimals'
 
 const CardContainer = styled.div`
   display: flex;
@@ -69,21 +68,32 @@ enum ApprovalType {
   SHARE = 'share',
 }
 
-export default function Approvals({ addressA, addressB, assetValue, shareValue, shareName, shareLogo, isEditable }: Props) {
+export default function Approvals({
+  addressA,
+  addressB,
+  assetValue,
+  shareValue,
+  shareName,
+  shareLogo,
+  isEditable,
+}: Props) {
   const { chainId } = useWeb3React()
   const tokenBOption = getTokenOption(addressB, chainId)
+
+  const tokenADecimals = useDecimals(addressA) ?? 18
+  const tokenBDecimals = useDecimals(addressB) ?? tokenBOption?.tokenDecimals
 
   // share
   const [approvalA, approveACallback] = useAllowance(
     addressA,
-    ethers.utils.parseUnits(shareValue?.toString() || '0', 18),
+    ethers.utils.parseUnits(shareValue?.toString() || '0', tokenADecimals),
     LBP_FACTORY_ADDRESS[chainId || 0] || ''
   )
 
   // asset
   const [approvalB, approveBCallback] = useAllowance(
     addressB,
-    ethers.utils.parseUnits(assetValue?.toString() || '0', tokenBOption?.tokenDecimals) as any,
+    ethers.utils.parseUnits(assetValue?.toString() || '0', tokenBDecimals) as any,
     LBP_FACTORY_ADDRESS[chainId || 0] || ''
   )
 
