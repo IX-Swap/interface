@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
-
 import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { ButtonIXSWide, ButtonPinkBorder, ButtonGradientBorder, PinnedContentButton } from 'components/Button'
+import {  ButtonPinkBorder, ButtonGradientBorder, PinnedContentButton } from 'components/Button'
 import { ReasonModal } from 'components/ReasonModal'
 import { CorporateKyc, IndividualKyc, KycItem } from 'state/admin/actions'
 import { shortenAddress } from 'utils'
@@ -12,7 +11,6 @@ import { useApproveKyc, useRejectKyc, useResetKyc, useResubmitKyc } from 'state/
 import { getCynopsisRisks } from 'state/kyc/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { KYCStatuses } from 'pages/KYC/enum'
-
 import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
 

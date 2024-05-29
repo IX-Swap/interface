@@ -12,6 +12,13 @@ interface TaxDeclaration {
 
 export const FinancialRequiredCoutries = ['Russian Federation', 'Nigeria', 'Turkey']
 
+export const individualErrorsSchemaV2 = yup.object().shape({
+  firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
+  middleName: yup.string().max(50, 'Too Long!'),
+  lastName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
+  email: yup.string().email('Invalid email').required('Required'),
+})
+
 export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   middleName: yup.string().max(50, 'Too Long!'),

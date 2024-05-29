@@ -9,11 +9,12 @@ import { isMobile } from 'react-device-detect'
 
 
 interface Props {
-  kycType?: string
-  referralCode: string
+  verificationSecation?: string
+  email: string
+  error?: boolean
 }
 
-export const EmailVerificationSection = ({ kycType, referralCode }: Props) => {
+export const EmailVerificationSection = ({ verificationSecation, email , error}: Props) => {
   const [step, setStep] = useState(1)
   const emailVerify = useEmailVerify()
   const codeVerify = useEmailVerifyCode()
@@ -45,7 +46,7 @@ export const EmailVerificationSection = ({ kycType, referralCode }: Props) => {
 
       if (result.success) {
         localStorage.setItem('newKyc', 'newKyc')
-        history.push(referralCode)
+        history.push(email)
         window.location.reload()
 
         setTimer(60)
@@ -103,7 +104,7 @@ export const EmailVerificationSection = ({ kycType, referralCode }: Props) => {
     }
   }
 
-  console.log(referralCode, 'referralCode')
+  console.log(email, error, verificationSecation, 'referralCode')
 
   return (
     <EmailVerificationContainer>

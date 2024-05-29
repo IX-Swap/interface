@@ -51,7 +51,7 @@ export const IndividualFormV2 = () => {
       <Line style={{ marginTop: '50px' }} />
 
       <StatusHeader>
-        <TYPE.body4>ComplyCube Status</TYPE.body4>
+        <TYPE.body4>Personal Information</TYPE.body4>
       </StatusHeader>
       <StatusBoxContainer>
         <InfoBox>
@@ -97,7 +97,7 @@ export const IndividualFormV2 = () => {
       <ActionContainer>
     
       <ActionContainer>
-        <RejectButton>Approve</RejectButton>
+        <RejectButton>Reject</RejectButton>
         <ApproveButton>Approve</ApproveButton>
       </ActionContainer>
       </ActionContainer>

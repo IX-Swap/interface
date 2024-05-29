@@ -3,10 +3,8 @@ import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { Formik } from 'formik'
 import { Prompt, useHistory } from 'react-router-dom'
-
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
-
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
 import { PinnedContentButton } from 'components/Button'
@@ -17,18 +15,16 @@ import { ReactComponent as AddressIcon } from 'assets/images/addressIcon.svg'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Row, { RowCenter, RowStart } from 'components/Row'
 import { useCreateIndividualKYC, useKYCState, useUpdateIndividualKYC } from 'state/kyc/hooks'
-
 import { useActiveWeb3React } from 'hooks/web3'
 import { useAuthState } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
-import { useAddPopup, useShowError } from 'state/application/hooks'
-
+import { useAddPopup } from 'state/application/hooks'
 import { KycSelect as Select, KycTextInput as TextInput } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { individualFormInitialValues, promptValue } from './mock'
 import { FormCard, FormGrid, FormWrapper, StyledStickyBox } from './styleds'
-import { individualErrorsSchema } from './schema'
+import { individualErrorsSchemaV2 } from './schema'
 import { individualTransformKycDto } from './utils'
 
 import { KYCValidationErrors } from './KYCValidationErrors'
@@ -64,19 +60,14 @@ export default function NewIndividualKycForm() {
   const addPopup = useAddPopup()
   const history = useHistory()
   const createIndividualKYC = useCreateIndividualKYC()
-  const showError = useShowError()
   const updateIndividualKYC = useUpdateIndividualKYC()
   const { kyc, loadingRequest } = useKYCState()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
   const [selectedCheckbox, setSelectedCheckbox] = useState(null)
-
   const [referralCode, setReferralCode] = useState<string | null>(null)
-
   const form = useRef<any>(null)
-
   const isLoggedIn = !!token && !!account
-
   const prevAccount = usePrevious(account)
 
   useEffect(() => {
@@ -101,26 +92,9 @@ export default function NewIndividualKycForm() {
 
     try {
       let root = { [key]: value }
-
-      if (key.startsWith('taxDeclarations[')) {
-        const match = /taxDeclarations\[([0-9]+)\]\.(\w+)/.exec(key)
-        if (!match) return
-        const index = match[1]
-        const field = match[2]
-
-        const declaration = { ...form.current.values.taxDeclarations[index], [field]: value }
-
-        root = form.current.values
-
-        root.taxDeclarations[index] = declaration
-      }
-
-      await individualErrorsSchema.validateAt(key, root)
-
+      await individualErrorsSchemaV2.validateAt(key, root)
       const errorCopy = { ...errors }
-
       delete errorCopy[key]
-
       setErrors(errorCopy)
       form.current.setErrors(errorCopy)
     } catch (err: any) {
@@ -137,7 +111,6 @@ export default function NewIndividualKycForm() {
       delete newErrors[key]
       setErrors(newErrors)
     }
-
     setCanSubmit(true)
   }
 
@@ -145,71 +118,36 @@ export default function NewIndividualKycForm() {
     if (values[key] !== value) {
       setFieldValue(key, value, false)
     }
-
     validateValue(key, value)
     validationSeen(key)
   }
 
-  const formSubmitHandler = useCallback(
-    async (values: any, { createFn, updateFn, validate = true }: FormSubmitHanderArgs) => {
-      localStorage.removeItem('newKyc')
-      try {
-        if (validate) {
-          await individualErrorsSchema.validate(values, { abortEarly: false })
-        }
-
-        canLeavePage.current = true
-        setCanSubmit(false)
-        const body = individualTransformKycDto(values, referralCode)
-        let data: any = null
-
-        if (updateKycId) {
-          data = await updateFn(updateKycId, body)
-        } else {
-          data = await createFn(body)
-        }
-
-        if (data?.id) {
-          history.push('/kyc')
-          addPopup({ info: { success: true, summary: 'KYC was successfully saved' } })
-        } else {
-          setCanSubmit(true)
-          addPopup({ info: { success: false, summary: 'Something went wrong' } })
-        }
-      } catch (error: any) {
-        const newErrors: any = {}
-
-        error.inner.forEach((e: any) => {
-          newErrors[e.path] = e.message
-        })
-
-        addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
-
-        // setIsSubmittedOnce(true)
-        setErrors(newErrors)
-        setCanSubmit(false)
-
-        canLeavePage.current = false
+  const formSubmitHandler = useCallback(async (values: any, { validate = true }: FormSubmitHanderArgs) => {
+    localStorage.removeItem('newKyc')
+    try {
+      if (validate) {
+        await individualErrorsSchemaV2.validate(values, { abortEarly: false })
       }
-    },
-    []
-  )
-
-  const saveProgress = useCallback(
-    async (values: any) => {
-      localStorage.removeItem('newKyc')
-      await formSubmitHandler(values, {
-        createFn: (body) => createIndividualKYC(body, true),
-        updateFn: (id, body) => updateIndividualKYC(id, body, true),
-        validate: false,
+      canLeavePage.current = true
+      setCanSubmit(false)
+    } catch (error: any) {
+      const newErrors: any = {}
+      error.inner.forEach((e: any) => {
+        newErrors[e.path] = e.message
       })
-    },
-    [formSubmitHandler]
-  )
+      addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
+      setErrors(newErrors)
+      setCanSubmit(false)
+      canLeavePage.current = false
+    }
+  }, [])
 
   const handleCheckboxChange = (event: { target: { value: any } }) => {
     const { value } = event.target
     setSelectedCheckbox(value)
+  }
+  const checkForErrorsAndEmptyFields = (values: any, errors: any) => {
+    return !values.firstName || !values.lastName || !values.email || errors.firstName || errors.lastName || errors.email
   }
 
   return (
@@ -230,11 +168,9 @@ export default function NewIndividualKycForm() {
             onSubmit={async (values) => {
               try {
                 localStorage.removeItem('newKyc')
-                await individualErrorsSchema.validate(values, { abortEarly: false })
+                await individualErrorsSchemaV2.validate(values, { abortEarly: false })
                 canLeavePage.current = true
-
                 setCanSubmit(false)
-
                 const body = individualTransformKycDto(values, referralCode)
                 const data = updateKycId
                   ? await updateIndividualKYC(updateKycId, body)
@@ -254,22 +190,14 @@ export default function NewIndividualKycForm() {
                 error.inner.forEach((e: any) => {
                   newErrors[e.path] = e.message
                 })
-
                 addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
-
-                // setIsSubmittedOnce(true)
                 setErrors(newErrors)
                 setCanSubmit(true)
-
                 canLeavePage.current = false
               }
             }}
           >
-            {({ values, handleSubmit, setFieldValue, dirty, initialValues }) => {
-              if (values.accredited === -1) {
-                // onAccreditedChange(0, setFieldValue)
-              }
-
+            {({ values, handleSubmit, setFieldValue }) => {
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
@@ -334,7 +262,11 @@ export default function NewIndividualKycForm() {
                             onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
                           />
                         </Column>
-                        <EmailVerificationSection referralCode={values.email} />
+                        <EmailVerificationSection
+                          error={checkForErrorsAndEmptyFields(values, errors)}
+                          verificationSecation="Personal Information"
+                          email={values.email}
+                        />
                       </FormCard>
 
                       <FormCard id="secondary-contact">
@@ -402,7 +334,7 @@ export default function NewIndividualKycForm() {
                                   }
                                 />
                               </Column>
-                              <EmailVerificationSection referralCode={values.email} />
+                              <EmailVerificationSection verificationSecation="Business Email" email={values.email} />
                             </>
                           )}
                           {selectedCheckbox === 'Telegram' && (
@@ -419,10 +351,9 @@ export default function NewIndividualKycForm() {
                                   }
                                 />
                               </Column>
-                              <EmailVerificationSection referralCode={values.telegram} />
+                              <EmailVerificationSection verificationSecation="Telegram" email={values.telegram} />
                             </>
                           )}
-                          {/* {selectedCheckbox === "ProofOfAddress" && <ProofOfAddressComponent />} */}
                         </div>
                       </FormCard>
 
@@ -446,8 +377,9 @@ export default function NewIndividualKycForm() {
                   <StyledStickyBox>
                     <KYCValidationErrors fields={Object.keys(errors)} />
                     <KYCProgressBar
+                      isNewKycV2={true}
                       handleSubmit={handleSubmit}
-                      handleSaveProgress={() => saveProgress(form?.current?.values)}
+                      // handleSaveProgress={() => saveProgress(form?.current?.values)}
                       disabled={!canSubmit || Object.keys(errors).length !== 0}
                       topics={[
                         {

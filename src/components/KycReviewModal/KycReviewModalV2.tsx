@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Trans, t } from '@lingui/macro'
-import styled from 'styled-components'
+import React from 'react'
 
+import styled from 'styled-components'
 import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { CorporateKyc, IndividualKyc, KycItem } from 'state/admin/actions'
-import { shortenAddress } from 'utils'
-import { useApproveKyc, useRejectKyc, useResetKyc, useResubmitKyc } from 'state/admin/hooks'
+import { KycItem } from 'state/admin/actions'
 import { ReactComponent as ArrowLeft } from '../../assets/images/newCross.svg'
-import { isMobile } from 'react-device-detect'
-import Copy from 'components/AccountDetails/Copy'
 import { IndividualFormV2 } from './IndividualFormV2'
 
 interface Props {
@@ -18,147 +13,19 @@ interface Props {
   data: KycItem
 }
 
-export const KycReviewModalV2 = ({ isOpen, onClose, data }: Props) => {
-  const [openReasonModal, handleOpenReasonModal] = useState('')
-  const [riskJSON, setRiskJSON] = useState<any>(null)
-  //   const [loadingCynopsis, handleLoadingCynopsis] = useState(false)
-  //   const [riskReportId, handleRiskReportId] = useState(0)
-  //   const approveKyc = useApproveKyc()
-  const rejectKyc = useRejectKyc()
-  const resetKyc = useResetKyc()
-  //   const resubmitKyc = useResubmitKyc()
-
-
-  const kyc = (data?.individualKycId ? data?.individual : data?.corporate) || ({} as IndividualKyc | CorporateKyc)
-
-  //   const approve = async () => {
-  //     onClose()
-  //     await approveKyc(data.id, riskReportId)
-  //   }
-
-  //   const resubmit = async () => {
-  //     onClose()
-  //     await resubmitKyc(data.id)
-  //   }
-
-  const closeModal = () => handleOpenReasonModal('')
-
-  //   const reject = () => {
-  //     handleOpenReasonModal('reject')
-  //   }
-
-  //   const changeRequest = () => {
-  //     handleOpenReasonModal('changeRequest')
-  //   }
-
-  //   const onReasonAction = (reason?: string) => {
-  //     if (openReasonModal === 'reject') {
-  //       rejectKyc({ id: data.id, message: reason, riskReportId })
-  //     } else {
-  //       resetKyc({ id: data.id, message: reason })
-  //     }
-  //     closeModal()
-  //     onClose()
-  //   }
-  const constructName = (data: KycItem) => {
-    if (data?.individualKycId) {
-      return `${data?.individual?.firstName} ${data?.individual?.middleName || ''} ${data?.individual?.lastName || ''}`
-    } else {
-      return data?.corporate?.corporateName || ''
-    }
-  }
-
-  //   if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
-
-  //   const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data?.status as any)
-
-  const renderReferralInfo = () => {
-    const referredBy = data?.individual?.referredBy || '-'
-    const referredByName = data?.individual?.referredByName || '-'
-    const referralCode = data?.individual?.referralCode || '-'
-
-    return (
-      <span
-        style={{
-          border: '1px solid #E6E6FF',
-          background: '#F7F7F8',
-          padding: isMobile ? '8px' : '12px 16px',
-          borderRadius: '6px',
-          fontSize: '14px',
-          marginLeft: '20px',
-          fontWeight: '600',
-        }}
-      >
-        <span style={{ color: '#B8B8CC' }}>Referred by</span>{' '}
-        <span style={{ color: '#292933' }}>{referredByName} </span>
-        <span style={{ color: '#6666FF' }}>{referralCode}</span>
-        <div
-          style={{
-            padding: isMobile ? '5px' : '10px',
-            border: '1px solid #E6E6FF',
-            background: '#FFFFFF',
-            marginTop: '10px',
-            textAlign: 'center',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Copy isAdmin={true} toCopy={`${data.individual?.referralAddress}`}>
-            {t`${shortenAddress(data.individual?.referralAddress)}`}
-          </Copy>
-        </div>
-      </span>
-    )
-  }
-
+export const KycReviewModalV2 = ({ isOpen, onClose }: Props) => {
   return (
     <>
-      {/* <ReasonModal
-        isOpen={Boolean(openReasonModal)}
-        onAction={onReasonAction}
-        onClose={closeModal}
-        actionBtnText="Submit"
-        inputLabel="Accompanying text"
-        title={openReasonModal === 'reject' ? 'Reject annotation' : 'Change request'}
-        isRejectingApprovedKYC={openReasonModal === 'reject' && data.status === KYCStatuses.APPROVED}
-      /> */}
-      <RedesignedWideModal
-        isOpen={isOpen}
-        onDismiss={onClose}
-
-        // minHeight={false}
-        // maxHeight={'fit-content'}
-        scrollable
-        // isLarge
-      >
+      <RedesignedWideModal isOpen={isOpen} onDismiss={onClose} scrollable>
         <ModalBlurWrapper touchable data-testid="kyc-review">
-          <ModalContent style={{minWidth: '45vh', padding: '0px'}}>
+          <ModalContent style={{ minWidth: '45vh', padding: '0px' }}>
             <TitleContainer>
               <TYPE.label fontSize={'24px'}>Individual KYC</TYPE.label>
               <ArrowLeft style={{ cursor: 'pointer' }} data-testid="cross" onClick={onClose} />
-
-              {/* {data?.individual?.referredBy || data?.individual?.referralCode ? renderReferralInfo() : ''} */}
             </TitleContainer>
             <Body>
-              <IndividualFormV2/>
+              <IndividualFormV2 />
             </Body>
-            {/* <ActionsContainer buttons={needResubmit ? 4 : 3}>
-              <PinnedContentButton onClick={approve} data-testid="approveButton" disabled={needResubmit}>
-                <Trans>Approve</Trans>
-              </PinnedContentButton>
-              <ButtonPinkBorder onClick={reject} data-testid="rejectButton" disabled={needResubmit}>
-                <Trans>Reject</Trans>
-              </ButtonPinkBorder>
-              <ButtonGradientBorder onClick={changeRequest} data-testid="changeRequestButton" disabled={needResubmit}>
-                <Trans>Request a change</Trans>
-              </ButtonGradientBorder>
-              {needResubmit && (
-                <PinnedContentButton onClick={resubmit}>
-                  <Trans>Resubmit</Trans>
-                </PinnedContentButton>
-              )}
-            </ActionsContainer> */}
           </ModalContent>
         </ModalBlurWrapper>
       </RedesignedWideModal>
@@ -169,28 +36,6 @@ export const KycReviewModalV2 = ({ isOpen, onClose, data }: Props) => {
 const Body = styled.div`
   display: grid;
   row-gap: 35px;
-`
-
-const ActionsContainer = styled.div<{ buttons: number }>`
-  display: grid;
-  grid-template-columns: ${({ buttons }) => `repeat(${buttons}, 1fr)`};
-  column-gap: 35px;
-  row-gap: 35px;
-  margin-top: 35px;
-  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    grid-template-columns: 1fr;
-  }
-  > button {
-    width: 100%;
-  }
-  > button:nth-child(2) {
-    color: ${({ theme: { error } }) => error};
-    background-color: transparent;
-    border: 1px solid #ff6161;
-  }
-  > button:nth-child(3) {
-    background-color: transparent;
-  }
 `
 
 const TitleContainer = styled.div`
@@ -211,15 +56,5 @@ const ModalContent = styled(ModalContentWrapper)`
     border-radius: 6px;
     min-width: 90vw;
     max-width: 90vw;
-  }
-`
-
-const Title = styled.div`
-  font-size: 22px;
-  display: flex;
-  align-items: center;
-  color: ${({ theme: { text2 } }) => text2};
-  > :first-child {
-    font-weight: 600;
   }
 `

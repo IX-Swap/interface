@@ -22,8 +22,6 @@ import { AdminParams } from 'pages/Admin'
 import { NoData } from 'components/UsersList/styleds'
 import { getStatusStats } from 'state/kyc/hooks'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
-import { Line } from 'components/Line'
-import { Link } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { useOnChangeOrder } from 'state/launchpad/hooks'
@@ -74,12 +72,6 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <StatusCell status={kycProviderStatus} />
       </div>
       <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
-      {/* <div>risk level</div> */}
-      {/* <Link to={`/admin/kyc/${item.id}`}>
-        <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF">
-          Review
-        </TYPE.main2>
-      </Link> */}
       <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
         Review
       </TYPE.main2>
@@ -179,7 +171,6 @@ export const AdminKycTable = () => {
     handleKyc({} as KycItem)
   }
 
-  //  <Link to={`/admin/kyc/${kyc.id}`}></Link>
   const getKyc = useCallback(async () => {
     if (!id) return
     try {
@@ -242,7 +233,6 @@ export const AdminKycTable = () => {
                     </HeaderCell>
                   ))}
                 </StyledHeaderRow>
-                {/* <Line style={{ marginBottom: '20px' }} /> */}
               </>
             }
           />
