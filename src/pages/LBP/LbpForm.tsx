@@ -134,6 +134,9 @@ export default function LBPForm() {
 
   const updateSubmitButtonState = (formData: FormData) => {
     const isComplete = (data: any) => {
+      if (data.title && data.title.length > 20) {
+        return false;
+      }
       const keysToCheck = Object.keys(data).filter((key) => key !== 'maxPrice' && key !== 'maxSupply' && key !== 'xTokenLiteProxyAddress')
       return keysToCheck.every((key) => !!data[key])
     }
@@ -324,7 +327,7 @@ export default function LBPForm() {
           <TYPE.title4
             fontWeight={'800'}
             fontSize={isMobile ? 24 : 24}
-            style={{ whiteSpace: 'nowrap' }}
+            style={{lineHeight: '32px', marginBottom: '20px', marginTop: 16}}
             marginLeft="10px"
           >
             <Trans>{formData?.projectInfo?.title}</Trans>
