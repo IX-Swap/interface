@@ -27,7 +27,7 @@ import { formatUnits } from 'ethers/lib/utils'
 import timezone from 'dayjs/plugin/timezone'
 import { ethers } from 'ethers'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
-import { isEthChainAddress } from 'utils'
+import { isEmptyObject, isEthChainAddress } from 'utils'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -232,6 +232,8 @@ interface ProjectInfoProps {
   shareLogo: any
   endPrice: number
   isEditable: boolean
+  setProjectTokenSymbol: (projectToken: string) => void
+  setDirty: (dirty: boolean) => void
 }
 
 // Refactored Tokenomics component
@@ -242,6 +244,8 @@ const Tokenomics = ({
   shareLogo,
   endPrice,
   isEditable,
+  setProjectTokenSymbol,
+  setDirty,
 }: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
@@ -313,10 +317,14 @@ const Tokenomics = ({
       if (shareTokenContract) {
         const shareBalance = await shareTokenContract.balanceOf(account)
         const shareDecimals = await shareTokenContract.decimals()
+        const shareSymbol = await shareTokenContract.symbol()
+        setProjectTokenSymbol(shareSymbol)
         setBalances((prevBalances: any) => ({
           ...prevBalances,
           shareBalance: formatUnits(shareBalance, shareDecimals),
         }))
+      } else {
+        setProjectTokenSymbol('')
       }
     }
 
@@ -488,6 +496,32 @@ const Tokenomics = ({
     onChange({ ...formDataTokenomics, [field]: balance })
   }
 
+  const renderLogo = (shareLogo: any) => {
+    return shareLogo && typeof shareLogo === 'object' && shareLogo.public ? (
+      <LogoIcon as="img" src={shareLogo.public} alt="Serenity Logo" />
+    ) : shareLogo && (typeof shareLogo === 'string' || shareLogo instanceof File) ? (
+      <LogoIcon
+        as="img"
+        src={shareLogo instanceof File ? URL.createObjectURL(shareLogo) : shareLogo}
+        alt="Serenity Logo"
+      />
+    ) : (
+      <Serenity />
+    )
+  }
+
+  useEffect(() => {
+    formik.setFieldValue('shareAddress', formDataTokenomics.shareAddress)
+    formik.setFieldValue('shareInput', formDataTokenomics.shareInput)
+    formik.setFieldValue('assetInput', formDataTokenomics.assetInput)
+  }, [formDataTokenomics])
+
+  useEffect(() => {
+    if (!isEmptyObject(formik.touched)) {
+      setDirty(true)
+    }
+  }, [JSON.stringify(formik.touched)])
+
   return (
     <Container>
       <TextInput
@@ -525,7 +559,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Disabled />}
+              {renderLogo(shareLogo)}
               <TYPE.label fontSize={'14px'}>{shareTitle}</TYPE.label>
             </div>
             <SpanBal>
@@ -550,7 +584,10 @@ const Tokenomics = ({
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {formik.touched.shareInput && !formDataTokenomics.shareInput ? (
+        {balances?.shareBalance && parseFloat(formDataTokenomics.shareInput.toString() || '0') > parseFloat(balances?.shareBalance || '0') ? (
+          <ErrorText>Insufficient balance</ErrorText>
+        ) : null}
+        {formik.touched.shareInput && formik.errors.shareInput ? (
           <ErrorText>{formik.errors.shareInput}</ErrorText>
         ) : null}
       </>
@@ -615,7 +652,10 @@ const Tokenomics = ({
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {formik.touched.assetInput && !formDataTokenomics.assetInput ? (
+        {balances?.assetBalance && parseFloat(formDataTokenomics.assetInput.toString() || '0') > parseFloat(balances?.assetBalance || '0') ? (
+          <ErrorText>Insufficient balance</ErrorText>
+        ) : null}
+        {formik.touched.assetInput && formik.errors.assetInput ? (
           <ErrorText>{formik.errors.assetInput}</ErrorText>
         ) : null}
       </>
@@ -632,6 +672,11 @@ const Tokenomics = ({
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}
       />
+      {formDataTokenomics.maxSupply &&
+      parseFloat(formDataTokenomics.maxSupply.toString() || '') <
+        parseFloat(formDataTokenomics.shareInput.toString() || '0') ? (
+        <ErrorText>Must be bigger than Project Token quantity</ErrorText>
+      ) : null}
       {/* {formik.touched.maxSupply && !formDataTokenomics.maxSupply ? (
         <ErrorText>{formik.errors.maxSupply}</ErrorText>
       ) : null} */}
@@ -655,7 +700,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Serenity />}
+              {renderLogo(shareLogo)}
 
               <div
                 style={{
@@ -717,7 +762,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Serenity />}
+              {renderLogo(shareLogo)}
               <div
                 style={{
                   borderRight: '1px solid #E6E6FF',

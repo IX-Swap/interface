@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent, useEffect } from 'react'
 import { Box, Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
+import _isEmpty from 'lodash/isEmpty'
 import { StyledTextarea } from 'components/CollectionForm/styled'
 import { Select, TextInput, UploaderDocs } from 'pages/KYC/common'
 import { LinkStyledButton, TYPE } from 'theme'
@@ -14,14 +15,18 @@ import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg'
 import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import closeIcon from '../../../assets/images/newCross.svg'
+import closeIcon from '../../../../assets/images/newCross.svg'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { socialMediaPlatform } from 'pages/KYC/mock'
+import AddSocialLinksModal from './AddSocialLinksModal'
+import AdditionalLinksModal from './AdditionalLinksModal'
+import { isEmptyObject } from 'utils'
 
 interface ProjectInfoProps {
   onChange: (data: any) => void
   formData: ProjectInfoData
+  setDirty: (dirty: boolean) => void
 }
 
 interface LinkData {
@@ -40,9 +45,15 @@ interface ProjectInfoData {
 }
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().required('Title is required'),
-  description: Yup.string().required('Description is required'),
-  website: Yup.string().required('Website URL required'),
+  title: Yup.string()
+    .required('Title is required')
+    .min(3, 'Title should have at least 3 characters')
+    .max(20, 'Title should not have more than 20 characters'),
+  description: Yup.string()
+    .required('Description is required')
+    .min(100, 'Description should have at least 100 characters')
+    .max(2000, 'Description should not have more than 2000 characters'),
+  website: Yup.string().required('Website URL required').url('Enter a valid URL'),
   socialLinks: Yup.array()
     .of(
       Yup.object().shape({
@@ -105,7 +116,7 @@ const FormArray = ({ label, items, removeItem, handleChange, openModal }: any) =
   )
 }
 
-export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
+export default function ProjectInfo({ onChange, formData, setDirty }: ProjectInfoProps) {
   const [projectInfoData, setProjectInfoData] = useState<ProjectInfoData>({
     title: '',
     description: '',
@@ -127,19 +138,30 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
     onSubmit: () => {},
   })
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isTouchSocialLinks, setTouchSocialLinks] = useState(false)
+  const [isOpenSocialLinkModal, setOpenSocialLinkModal] = useState(false)
+  const [isOpenAdditionalLinkModal, setOpenAdditionalLinkModal] = useState(false)
   const [newLinkName, setNewLinkName] = useState('')
   const [newLinkUrl, setNewLinkUrl] = useState('')
   const [linkType, setLinkType] = useState<string>('')
   const [values, setValues] = useState<any>({
     uploadDocs: [],
   })
+  const [isErrorUploadDocs, setIsErrorUploadDocs] = useState(false)
 
   useEffect(() => {
     setProjectInfoData({
       ...formData,
     })
     setValues({ ...values, uploadDocs: formData.uploadDocs })
+    formik.setValues({
+      title: formData.title,
+      description: formData.description,
+      website: formData.website,
+      socialLinks: formData.socialLinks,
+      whitepapers: formData.whitepapers,
+      uploadDocs: formData.uploadDocs,
+    })
   }, [formData, formData.uploadDocs])
 
   const handleAddLink = () => {
@@ -166,7 +188,6 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
 
     if (updatedData) {
       setProjectInfoData(updatedData)
-      setIsModalOpen(false)
       setNewLinkName('')
       setNewLinkUrl('')
       onChange(updatedData)
@@ -183,9 +204,15 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
     onChange({ ...projectInfoData, [name]: value })
   }
 
-  const openModal = (type: string) => {
-    setLinkType(type)
-    setIsModalOpen(true)
+  const openModalSocialLink = () => {
+    setLinkType('Social Links *')
+    setOpenSocialLinkModal(true)
+    setTouchSocialLinks(true)
+  }
+
+  const openModalAdditionalLink = () => {
+    setLinkType('Additional links')
+    setOpenAdditionalLinkModal(true)
   }
 
   const handleRemoveItem = (index: number, label: string) => {
@@ -200,6 +227,11 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
 
   const handleDropImage = (acceptedFiles: any, key: string) => {
     const files = Array.isArray(acceptedFiles) ? acceptedFiles : [acceptedFiles]
+
+    if (files.some((file: any) => file.size > MAX_FILE_UPLOAD_SIZE)) {
+      setIsErrorUploadDocs(true)
+      return
+    }
 
     const filteredFiles = files.filter((file: any) => file.size <= MAX_FILE_UPLOAD_SIZE)
 
@@ -234,59 +266,34 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
     setNewLinkName(value?.label)
   }
 
+  useEffect(() => {
+    if (!isEmptyObject(formik.touched)) {
+      setDirty(true)
+    }
+  }, [JSON.stringify(formik.touched)])
+
   return (
     <>
-      <RedesignedWideModal isOpen={isModalOpen} onDismiss={() => setIsModalOpen(false)}>
-        <ModalContainer>
-          <img
-            style={{ position: 'absolute', right: '30px', cursor: 'pointer' }}
-            src={closeIcon}
-            alt={closeIcon}
-            width="18px"
-            height="18px"
-            onClick={() => setIsModalOpen(false)}
-          />
-          <div style={{ justifyContent: 'center' }}>
-            <h2>{linkType}</h2>
-            {linkType === 'Social Links *' ? (
-              <Select
-                withScroll
-                name="name"
-                id="name"
-                label="Social Media Platform"
-                placeholder="Social Media Platform"
-                selectedItem={values.socialPlatform}
-                items={socialMediaPlatform}
-                onSelect={(selectedItem) => onSelectChange('socialPlatform', selectedItem)}
-              />
-            ) : (
-              <TextInput
-                name="name"
-                id="name"
-                label="Link Name"
-                style={{ marginBottom: '10px' }}
-                placeholder="Link Name"
-                value={newLinkName}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setNewLinkName(e.target.value)}
-              />
-            )}
+      {isOpenSocialLinkModal ? (
+        <AddSocialLinksModal
+          isOpen={isOpenSocialLinkModal}
+          onClose={() => setOpenSocialLinkModal(false)}
+          onSelectChange={onSelectChange}
+          setNewLinkUrl={setNewLinkUrl}
+          handleAddLink={handleAddLink}
+        />
+      ) : null}
 
-            <TextInput
-              name="url"
-              label="URL"
-              placeholder="URL"
-              value={newLinkUrl}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setNewLinkUrl(e.target.value)}
-              onBlur={formik.handleBlur}
-            />
+      {isOpenAdditionalLinkModal ? (
+        <AdditionalLinksModal
+          isOpen={isOpenAdditionalLinkModal}
+          onClose={() => setOpenAdditionalLinkModal(false)}
+          setNewLinkName={setNewLinkName}
+          setNewLinkUrl={setNewLinkUrl}
+          handleAddLink={handleAddLink}
+        />
+      ) : null}
 
-            <div style={{ display: 'flex', margin: '20px 0px', gap: '10px' }}>
-              <PinnedContentButton onClick={handleAddLink}>Add</PinnedContentButton>
-              <ButtonOutlined onClick={() => setIsModalOpen(false)}>Cancel</ButtonOutlined>
-            </div>
-          </div>
-        </ModalContainer>
-      </RedesignedWideModal>
       <TextInput
         placeholder="Title"
         id="title"
@@ -297,7 +304,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         onBlur={formik.handleBlur}
         // value={formik.values.title}
       />
-      {formik.touched.title && !formData.title ? <ErrorText>{formik.errors.title}</ErrorText> : null}
+      {formik.touched.title && formik.errors.title ? <ErrorText>{formik.errors.title}</ErrorText> : null}
       <Box width={1} mb={3}>
         <Label htmlFor="description" flexDirection="column" mb={2}>
           <Box>
@@ -316,7 +323,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
           onBlur={formik.handleBlur}
           style={{ height: '126px' }}
         />
-        {formik.touched.description && !formData.description ? (
+        {formik.touched.description && formik.errors.description ? (
           <ErrorText>{formik.errors.description}</ErrorText>
         ) : null}
       </Box>
@@ -329,7 +336,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         label="Official Website *"
         onBlur={formik.handleBlur}
       />
-      {formik.touched.website && !formData.website ? <ErrorText>{formik.errors.website}</ErrorText> : null}
+      {formik.touched.website && formik.errors.website ? <ErrorText>{formik.errors.website}</ErrorText> : null}
 
       <FormArray
         label="Social Links *"
@@ -338,10 +345,12 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         items={projectInfoData?.socialLinks?.map((link: any) => link)}
         removeItem={(index: number) => handleRemoveItem(index, 'socialLinks')}
         handleChange={handleFormArrayChange}
-        openModal={openModal}
+        openModal={openModalSocialLink}
         onBlur={formik.handleBlur}
       />
-      {formik.touched.socialLinks && !formData.socialLinks ? <ErrorText>{formik.errors.socialLinks}</ErrorText> : null}
+      {isTouchSocialLinks && _isEmpty(formData.socialLinks) ? (
+        <ErrorText>At least one social link is required</ErrorText>
+      ) : null}
 
       <FormArray
         label="Additional links"
@@ -350,7 +359,7 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
         items={projectInfoData?.whitepapers?.map((whitepaper: any) => whitepaper)}
         removeItem={(index: number) => handleRemoveItem(index, 'whitepapers')}
         handleChange={handleFormArrayChange}
-        openModal={openModal}
+        openModal={openModalAdditionalLink}
         onBlur={formik.handleBlur}
       />
 
@@ -376,9 +385,11 @@ export default function ProjectInfo({ onChange, formData }: ProjectInfoProps) {
           handleDropImage(acceptedFiles, 'uploadDocs')
         }}
         handleDeleteClick={(index: number) => {
+          setIsErrorUploadDocs(false)
           handleImageDelete(index, 'uploadDocs')
         }}
       />
+      {isErrorUploadDocs && <ErrorText>Max size is 10 Mb</ErrorText>}
     </>
   )
 }

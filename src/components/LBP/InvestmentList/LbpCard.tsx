@@ -34,7 +34,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
   const isClosed = React.useMemo(
-    () => !!lbp.status && [LbpStatus.closed, LbpStatus.ended].includes(lbp.status),
+    () => !!lbp.status && [LbpStatus.closed, LbpStatus.ended, LbpStatus.pending].includes(lbp.status),
     [lbp?.status]
   )
 
@@ -92,10 +92,8 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
           </div>
 
           <LbpSaleStatusInfo
-            isClosed={isClosed}
             daysTillEnded={lbp.daysTillEnded}
             hoursTillEnded={lbp.hoursTillEnded}
-            allowOnlyAccredited={lbp.allowOnlyAccredited}
             status={lbp.status}
             startDate={lbp.startDate}
           />

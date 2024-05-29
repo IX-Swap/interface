@@ -1,7 +1,7 @@
 import React, { CSSProperties, FC } from 'react';
 import { FileWithPath } from 'react-dropzone';
 import { ButtonText } from 'components/Button';
-import { ReactComponent as TrashNoBorder } from 'assets/images/TrashNoBorder.svg';
+import { ReactComponent as TrashNoBorder } from 'assets/images/trash-red.svg';
 import { Wrapper } from './styleds';
 
 interface Props {
@@ -28,7 +28,7 @@ export const ImagePreview: FC<Props> = ({
             <TrashNoBorder
               onClick={(event) => {
                 event.preventDefault();
-                handleDeleteClick(); 
+                handleDeleteClick();
               }}
             />
           </ButtonText>
@@ -37,4 +37,4 @@ export const ImagePreview: FC<Props> = ({
     );
 };
 
-  
+

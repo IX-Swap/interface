@@ -14,6 +14,7 @@ import styled from 'styled-components'
 
 interface TableProps {
   lbpId: number
+  setNoOfParticipants: (noOfParticipants: number) => void
 }
 
 const ExtractButton = styled.button`
@@ -25,7 +26,7 @@ const ExtractButton = styled.button`
   border-radius: 6px;
 `
 
-function InvestorInformation({ lbpId }: TableProps) {
+function InvestorInformation({ lbpId, setNoOfParticipants }: TableProps) {
   const [investorInfo, setInvestorInfo] = useState<any[]>([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
@@ -81,6 +82,12 @@ function InvestorInformation({ lbpId }: TableProps) {
   })
 
   const emptyRows = Math.max(0, (1 + page) * rowsPerPage - investorInfo?.length)
+
+  useEffect(() => {
+    if (setNoOfParticipants) {
+      setNoOfParticipants(investorInfo.length)
+    }
+  }, [investorInfo])
 
   return (
     <>
