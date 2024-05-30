@@ -231,6 +231,8 @@ export default function ProjectInfo({ onChange, formData, setDirty }: ProjectInf
     if (files.some((file: any) => file.size > MAX_FILE_UPLOAD_SIZE)) {
       setIsErrorUploadDocs(true)
       return
+    } else {
+      setIsErrorUploadDocs(false)
     }
 
     const filteredFiles = files.filter((file: any) => file.size <= MAX_FILE_UPLOAD_SIZE)
