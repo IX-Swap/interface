@@ -25,6 +25,9 @@ import { ITEM_ROWS } from 'components/LaunchpadIssuance/utils/constants'
 import { useGetLbpsFull } from 'state/lbp/hooks'
 import { FilterConfig } from '../InvestmentList/Filter'
 import { ReactComponent as Disabled } from '../../../assets/images/newCurrencyLogo.svg'
+import { getStageLabel } from 'utils/stage'
+import { ReactComponent as Ended } from '../../../assets/images/status/ended.svg'
+import { ReactComponent as Closed } from '../../../assets/images/status/closed.svg'
 
 interface Props {
   type: string
@@ -35,6 +38,32 @@ const HEADERS = [
   { key: 'startDate', label: 'Start Date and Time' },
   { key: 'endDate', label: 'End Date and Time' },
 ]
+
+const HEADERS_ENDED = [
+  { key: 'name', label: 'Name' },
+  { key: 'startDate', label: 'Start Date' },
+  { key: 'endDate', label: 'End Date' },
+  { key: 'status', label: 'Status' },
+]
+
+const headers = {
+  [LbpStatus.draft]: HEADERS,
+  [LbpStatus.pending]: HEADERS,
+  [LbpStatus.live]: HEADERS,
+  [LbpStatus.ended]: HEADERS_ENDED,
+} as any
+
+const amountColumns = {
+  [LbpStatus.draft]: 3,
+  [LbpStatus.pending]: 4,
+  [LbpStatus.live]: 4,
+  [LbpStatus.ended]: 5,
+} as any
+
+const statusIcons = {
+  [LbpStatus.closed]: <Closed />,
+  [LbpStatus.ended]: <Ended />,
+} as any
 
 export const LbpsFull: React.FC<Props> = (props) => {
   const theme = useTheme()
@@ -160,9 +189,9 @@ export const LbpsFull: React.FC<Props> = (props) => {
 
       {lbps?.length > 0 && (
         <LbpTable>
-          <TableHeader type={props.type} tab={LbpStatus.live}>
+          <TableHeader type={props.type} tab={LbpStatus.live} amount={amountColumns[props.type]}>
             <>
-              {HEADERS.map((header) =>
+              {headers[props.type].map((header: any) =>
                 header.key !== 'endDate' || props.type !== 'draft' ? (
                   <Title key={header.key} onClick={() => onChangeOrder(header.key)}>
                     <SortIcon type={order[header.key as keyof OrderConfig]} /> {header.label}
@@ -181,7 +210,7 @@ export const LbpsFull: React.FC<Props> = (props) => {
 
           {!loading &&
             lbps.map((lbp, idx) => (
-              <LbpRow type={props.type} key={idx} tab={LbpStatus.live}>
+              <LbpRow type={props.type} key={idx} tab={LbpStatus.live} amount={amountColumns[props.type]}>
                 <Raw>
                   {lbp?.logo?.public ? (
                     <img
@@ -199,6 +228,12 @@ export const LbpsFull: React.FC<Props> = (props) => {
                 <CountRow>{lbp?.startDate ? moment(lbp?.startDate).format('DD/MM/YYYY hh:mmA') : ''}</CountRow>
                 {props.type !== 'draft' && (
                   <CountRow>{lbp?.endDate ? moment(lbp?.endDate).format('DD/MM/YYYY hh:mmA') : ''}</CountRow>
+                )}
+                {props.type === 'ended' && (
+                  <CountRow style={{ display: 'flex', alignItems: 'center' }}>
+                    {statusIcons[lbp?.status]}
+                    <div style={{ marginLeft: 6, color: '#292933E5' }}>{getStageLabel(lbp?.status)}</div>
+                  </CountRow>
                 )}
                 <ActionButtons>
                   <NoFrameButton color={'#8F8FB2'} borderType="tiny" height="34px" onClick={() => createLbp(lbp.id)}>
