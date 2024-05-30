@@ -28,9 +28,9 @@ const EndedSideBar: React.FC<EndedSideBarProps> = ({ contractAddress, shareLogo,
         </TYPE.body5>
         <DesContainer>
           <TYPE.description3>
-            Tokens purchased with and without vesting in a LBP, must be redeem by clicking the “Redeem” button below at
-            the end of the LBP. If the LBP you participated in has vested tokens, you can view the token stream using
-            the link below.
+            The LBP has officially ended. We are currently in the process of finalizing the closure. Once this is
+            completed, you will be able to redeem your tokens. Please revisit this page shortly for further information.
+            Thank you for your patience and understanding.
           </TYPE.description3>
         </DesContainer>
         <Line style={{ margin: '20px 8px' }} />

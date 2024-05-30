@@ -9,18 +9,15 @@ import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
-import { useTokenContract } from 'hooks/useContract'
 
-interface MiddleSectionProps {
+interface QuantitiesAndWeightProps {
   lbpData: LbpFormValues | null
   statsData?: MarketData
+  shareSymbol: string
 }
 
-const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => {
-  const shareTokenContract = useTokenContract(lbpData?.shareAddress ?? '')
+const QuantitiesAndWeight: React.FC<QuantitiesAndWeightProps> = ({ lbpData, statsData, shareSymbol }) => {
   const tokenCurrency = useCurrency(lbpData?.assetTokenAddress || '')
-
-  const [shareSymbol, setShareSymbol] = useState<string>('')
 
   const tokenOption = getTokenOption(lbpData?.assetTokenAddress || '', tokenCurrency?.chainId || 1)
   const status = _get(lbpData, 'status', '')
@@ -28,16 +25,6 @@ const QuantitiesAndWeight: React.FC<MiddleSectionProps> = ({ lbpData, statsData 
   const calculateSharedWeight = (assetWeight: number): number => {
     return 100 - assetWeight
   }
-
-  useEffect(() => {
-    async function fetchShareSymbol() {
-      if (shareTokenContract) {
-        const symbol = await shareTokenContract.symbol()
-        setShareSymbol(symbol)
-      }
-    }
-    fetchShareSymbol()
-  }, [shareTokenContract])
 
   return (
     <Column>
