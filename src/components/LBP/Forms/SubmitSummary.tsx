@@ -7,7 +7,7 @@ import { useWeb3React } from '@web3-react/core'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
 import { useMemo, useEffect, useState, useCallback } from 'react'
 import { useLBPFactory } from 'hooks/useContract'
-import { LBP_FACTORY_ADDRESS, LBP_XTOKEN_PROXY } from 'constants/addresses'
+import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
 import { ethers } from 'ethers'
 import { toUnixTimeSeconds } from 'utils/time'
 import { useTokenContract } from 'hooks/useContract'
@@ -16,16 +16,18 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { useHistory } from 'react-router-dom'
 import { ReactComponent as SerenityIcon } from '../../../assets/images/serenity.svg'
+import { AddressZero } from '@ethersproject/constants';
 
 export const MAX_UINT88 = ethers.BigNumber.from('309485009821345068724781055')
 
 interface Props {
   formData: FormData
   startPrice: number
+  projectTokenSymbol: string
   onCancel: () => void
 }
 
-export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
+export const SubmitSummary = ({ projectTokenSymbol, formData, onCancel, startPrice }: Props) => {
   const { chainId } = useWeb3React()
   const history = useHistory()
   const [predictedLBPAddress, setPredictedLBPAddress] = useState<any>(
@@ -65,7 +67,7 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
     const args = {
       asset: formData.tokenomics.assetTokenAddress,
       share: formData.tokenomics.shareAddress,
-      shareWhitelistProxy: LBP_XTOKEN_PROXY[chainId || 0],
+      shareWhitelistProxy: formData?.tokenomics?.xTokenLiteProxyAddress || AddressZero,
       virtualAssets: 0,
       virtualShares: 0,
       maxAssetsIn: MAX_UINT88,
@@ -222,7 +224,7 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
             <TokenBlock>
               <TokenRow>
                 {generateLBPLogo(formData)}
-                <span>{formData?.projectInfo?.title}</span>
+                <span>{projectTokenSymbol}</span>
               </TokenRow>
               <TokenPrice>{formData.tokenomics.shareInput}</TokenPrice>
             </TokenBlock>
@@ -247,7 +249,7 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
             <TokenBlock>
               <TokenRow>
                 {generateLBPLogo(formData)}
-                <span>{formData?.projectInfo?.title}</span>
+                <span>{projectTokenSymbol}</span>
               </TokenRow>
               <TokenPrice>{formData.tokenomics.startWeight}%</TokenPrice>
             </TokenBlock>
@@ -259,7 +261,7 @@ export const SubmitSummary = ({ formData, onCancel, startPrice }: Props) => {
                 <img src={assetToken?.logo} alt={assetToken?.tokenSymbol} />
                 <span>{assetToken?.tokenSymbol}</span>
               </TokenRow>
-              <TokenPrice>{formData.tokenomics.endWeight}%</TokenPrice>
+              <TokenPrice>{100 - formData.tokenomics.startWeight}%</TokenPrice>
             </TokenBlock>
           </FieldBlock>
         </Row>

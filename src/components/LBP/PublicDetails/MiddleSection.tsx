@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import Column, { AutoColumn, ColumnCenter } from 'components/Column'
 import { TYPE } from 'theme'
@@ -17,6 +17,8 @@ import CloseSideBar from './ClosedSideBar'
 import { LbpFormValues, MarketData, LbpStatus } from '../types'
 import Links from './Links'
 import RedeemedSideBar from './RedeemedSideBar'
+import { useTokenContract } from 'hooks/useContract'
+import SideBarPaused from './SideBarPaused'
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
@@ -55,13 +57,14 @@ const MoreText = styled.span`
 `
 
 const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => {
+  const shareTokenContract = useTokenContract(lbpData?.shareAddress ?? '')
+
   const [showMore, setShowMore] = useState(false)
+  const [shareSymbol, setShareSymbol] = useState<string>('')
 
   const sampleText = useMemo(() => `${lbpData?.description}`, [lbpData])
 
   const isTextLong = useMemo(() => sampleText.length > 300, [sampleText])
-
-  console.log(lbpData?.status)
 
   const SideBarByStatus = useMemo(() => {
     switch (lbpData?.status) {
@@ -73,24 +76,33 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
         return (
           <EndedSideBar
             shareLogo={lbpData?.logo}
-            shareName={lbpData?.title}
+            shareName={shareSymbol}
             contractAddress={lbpData?.contractAddress || ''}
           />
         )
       case LbpStatus.paused:
-        return <SideBar isPausedSideBar={true} lbpData={lbpData} />
+        return <SideBarPaused lbpData={lbpData} shareLogo={lbpData?.logo} shareName={shareSymbol} />
       case LbpStatus.closed:
         return (
           <RedeemedSideBar
             shareLogo={lbpData?.logo}
-            shareName={lbpData?.title}
+            shareName={shareSymbol}
             contractAddress={lbpData?.contractAddress || ''}
           />
         )
     }
-  }, [lbpData])
+  }, [lbpData, shareSymbol])
 
-  console.log(lbpData, 'lbpData')
+  useEffect(() => {
+    async function fetchShareSymbol() {
+      if (shareTokenContract) {
+        const symbol = await shareTokenContract.symbol()
+        setShareSymbol(symbol)
+      }
+    }
+
+    fetchShareSymbol()
+  }, [lbpData?.shareAddress])
 
   return (
     <MiddleSectionWrapper>
@@ -103,7 +115,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
           </TYPE.body1>
           <Links lbpData={lbpData} />
           <Line style={{ margin: '40px 0px' }} />
-          <QuantitiesAndWeight statsData={statsData} lbpData={lbpData} />
+          <QuantitiesAndWeight statsData={statsData} lbpData={lbpData} shareSymbol={shareSymbol} />
           <DetailsChart
             contractAddress={lbpData?.contractAddress}
             startDate={lbpData?.startDate}

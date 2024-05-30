@@ -27,143 +27,10 @@ import { formatUnits } from 'ethers/lib/utils'
 import timezone from 'dayjs/plugin/timezone'
 import { ethers } from 'ethers'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
-import { isEthChainAddress } from 'utils'
+import { isEmptyObject, isEthChainAddress } from 'utils'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
-// dayjs.tz.setDefault('Asia/Singapore')
-
-const Container = styled.div`
-  width: 100%;
-`
-
-const TokenomicsContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid #e6e6ff;
-  background: #f7f7fa;
-  padding: 12px 18px;
-  margin-bottom: 20px;
-  margin-top: 15px;
-`
-
-const TokenomicsItem = styled.div`
-  margin-bottom: 8px;
-`
-const Span = styled.span`
-  color: #8f8fb2;
-  font-size: 12px;
-  padding: 8px;
-  text-align: center;
-  border: 1px solid #e6e6ff;
-  background: #ffffff;
-  border-radius: 6px;
-  width: fit-content;
-  margin: 0 auto;
-`
-
-const Input = styled.input`
-  border: none;
-  padding: 8px;
-  text-align: right;
-  background: none;
-  font-size: 32px;
-  font-weight: 700;
-  color: #292933;
-  max-width: 350px;
-  width: calc(100% - 48px);
-  margin-bottom: 10px;
-  outline: none;
-
-  &::placeholder {
-    font-size: 32px;
-    color: #bdbddb;
-    font-weight: 700;
-  }
-
-  &:focus {
-    border: none;
-    outline: none;
-  }
-
-  &[type=number]::-webkit-inner-spin-button,
-  &[type=number]::-webkit-outer-spin-button,
-  /* Firefox */
-  &[type=number]::-webkit-outer-spin-button,
-  &[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-`
-
-const MaxWrapper = styled.div`
-  text-align: right;
-  margin-right: 60px;
-`
-
-const WeightsContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 18px;
-  margin-bottom: 10px;
-`
-
-const SpanBal = styled.span`
-  display: block;
-  color: #8f8fb2;
-  font-size: 12px;
-  padding: 8px;
-  margin-top: 8px;
-`
-
-const TokenSelectContainer = styled.div`
-  margin-top: 20px;
-`
-
-const Options = styled.span`
-  cursor: pointer;
-  border: 1px solid #e6e6ff;
-  padding: 10px 20px;
-  background: #ffffff;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 14px;
-  gap: 10px;
-  display: flex;
-  align-items: center;
-`
-
-const TokenOptionsWrapper = styled.div`
-  display: none;
-  width: 100%;
-  padding: 10px 24px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 5px;
-  margin-top: 20px;
-  background: #ffffff;
-  &.open {
-    display: block;
-  }
-`
-
-const ErrorText = styled.span`
-  border: none;
-  color: red;
-  font-size: 12px;
-  display: block;
-  margin-bottom: 15px;
-  margin-top: 10px;
-`
-
-const LogoIcon = styled.img`
-  height: 22px;
-  width: 22px;
-  border-radius: 50%;
-  margib-right: 20px;
-`
 
 export const TokenOptions = (chainId: number) => [
   {
@@ -183,7 +50,7 @@ export const TokenOptions = (chainId: number) => [
   {
     value: 'USDT',
     tokenAddress: TOKEN_ADDRESSES.USDT[chainId],
-    tokenDecimals: 18,
+    tokenDecimals: 6,
     tokenSymbol: 'USDT',
     logo: usdtropDown,
   },
@@ -203,6 +70,7 @@ export const getTokenOption = (tokenAddress: string, chainId: number = 0) => {
 interface TokenomicsData {
   contractAddress?: string
   shareAddress: string
+  xTokenLiteProxyAddress: string
   assetTokenAddress: string
   assetTokenSymbol: string
   shareInput: number
@@ -220,6 +88,9 @@ const validationSchema = Yup.object().shape({
     .nullable()
     .required('Project Token Address is required')
     .test('is-valid-address', 'Please enter a valid address', (value) => Boolean(isEthChainAddress(value))),
+  xTokenLiteProxyAddress: Yup.string()
+    .nullable()
+    .test('is-valid-address', 'Please enter a valid address', (value) => Boolean(isEthChainAddress(value))),
   shareInput: Yup.string().required('Project Token Amount is required'),
   assetInput: Yup.string().required('Base Token Amount is required'),
   // maxSupply: Yup.string().required('Max. Supply is required'),
@@ -232,6 +103,8 @@ interface ProjectInfoProps {
   shareLogo: any
   endPrice: number
   isEditable: boolean
+  setProjectTokenSymbol: (projectToken: string) => void
+  setDirty: (dirty: boolean) => void
 }
 
 // Refactored Tokenomics component
@@ -242,6 +115,8 @@ const Tokenomics = ({
   shareLogo,
   endPrice,
   isEditable,
+  setProjectTokenSymbol,
+  setDirty,
 }: ProjectInfoProps) => {
   const [valueStart, setStartValue] = useState<number>(30)
   const [valueEnd, setEndValue] = useState<number>(30)
@@ -263,6 +138,7 @@ const Tokenomics = ({
 
   const [formData, setFormData] = useState<TokenomicsData>({
     shareAddress: formDataTokenomics.shareAddress,
+    xTokenLiteProxyAddress: formDataTokenomics.xTokenLiteProxyAddress,
     assetTokenAddress: formDataTokenomics.assetTokenAddress,
     assetTokenSymbol: formDataTokenomics.assetTokenSymbol,
     shareInput: formDataTokenomics.shareInput,
@@ -279,6 +155,7 @@ const Tokenomics = ({
   const formik = useFormik({
     initialValues: {
       shareAddress: '',
+      xTokenLiteProxyAddress: '',
       shareInput: '',
       assetInput: '',
       maxSupply: '',
@@ -313,10 +190,14 @@ const Tokenomics = ({
       if (shareTokenContract) {
         const shareBalance = await shareTokenContract.balanceOf(account)
         const shareDecimals = await shareTokenContract.decimals()
+        const shareSymbol = await shareTokenContract.symbol()
+        setProjectTokenSymbol(shareSymbol)
         setBalances((prevBalances: any) => ({
           ...prevBalances,
           shareBalance: formatUnits(shareBalance, shareDecimals),
         }))
+      } else {
+        setProjectTokenSymbol('')
       }
     }
 
@@ -488,21 +369,67 @@ const Tokenomics = ({
     onChange({ ...formDataTokenomics, [field]: balance })
   }
 
+  const renderLogo = (shareLogo: any) => {
+    return shareLogo && typeof shareLogo === 'object' && shareLogo.public ? (
+      <LogoIcon as="img" src={shareLogo.public} alt="Serenity Logo" />
+    ) : shareLogo && (typeof shareLogo === 'string' || shareLogo instanceof File) ? (
+      <LogoIcon
+        as="img"
+        src={shareLogo instanceof File ? URL.createObjectURL(shareLogo) : shareLogo}
+        alt="Serenity Logo"
+      />
+    ) : (
+      <Serenity />
+    )
+  }
+
+  useEffect(() => {
+    formik.setFieldValue('shareAddress', formDataTokenomics.shareAddress)
+    formik.setFieldValue('shareInput', formDataTokenomics.shareInput)
+    formik.setFieldValue('assetInput', formDataTokenomics.assetInput)
+  }, [formDataTokenomics])
+
+  useEffect(() => {
+    if (!isEmptyObject(formik.touched)) {
+      setDirty(true)
+    }
+  }, [JSON.stringify(formik.touched)])
+
   return (
     <Container>
-      <TextInput
-        placeholder="Project Token Address"
-        id="shareAddress"
-        label="Project Token Address *"
-        name="shareAddress"
-        onChange={handleInputChange}
-        onBlur={formik.handleBlur}
-        value={formDataTokenomics.shareAddress}
-        disabled={!isEditable}
-      />
-      {formik.touched.shareAddress && (formik.errors.shareAddress || !formDataTokenomics.shareAddress) ? (
-        <ErrorText>{formik.errors.shareAddress}</ErrorText>
-      ) : null}
+      <div>
+        <TextInput
+          placeholder="Project Token Address"
+          id="shareAddress"
+          label="Project Token Address *"
+          name="shareAddress"
+          onChange={handleInputChange}
+          onBlur={formik.handleBlur}
+          value={formDataTokenomics.shareAddress}
+          disabled={!isEditable}
+        />
+        {formik.touched.shareAddress && (formik.errors.shareAddress || !formDataTokenomics.shareAddress) ? (
+          <ErrorText>{formik.errors.shareAddress}</ErrorText>
+        ) : null}
+      </div>
+
+      <div style={{ marginTop: 16 }}>
+        <TextInput
+          placeholder="Not required for project token of type ERC20"
+          id="xTokenLiteProxyAddress"
+          label="XTokenLite Proxy Address"
+          name="xTokenLiteProxyAddress"
+          onChange={handleInputChange}
+          onBlur={formik.handleBlur}
+          value={formDataTokenomics.xTokenLiteProxyAddress}
+          disabled={!isEditable}
+        />
+        {formik.touched.xTokenLiteProxyAddress &&
+        formDataTokenomics.xTokenLiteProxyAddress &&
+        formik.errors.xTokenLiteProxyAddress ? (
+          <ErrorText>{formik.errors.xTokenLiteProxyAddress}</ErrorText>
+        ) : null}
+      </div>
 
       <Line style={{ margin: '40px 0px 30px 0px' }} />
       <RowStart marginBottom="32px">
@@ -525,7 +452,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Disabled />}
+              {renderLogo(shareLogo)}
               <TYPE.label fontSize={'14px'}>{shareTitle}</TYPE.label>
             </div>
             <SpanBal>
@@ -550,7 +477,11 @@ const Tokenomics = ({
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {formik.touched.shareInput && !formDataTokenomics.shareInput ? (
+        {balances?.shareBalance &&
+        parseFloat(formDataTokenomics.shareInput.toString() || '0') > parseFloat(balances?.shareBalance || '0') ? (
+          <ErrorText>Insufficient balance</ErrorText>
+        ) : null}
+        {formik.touched.shareInput && formik.errors.shareInput ? (
           <ErrorText>{formik.errors.shareInput}</ErrorText>
         ) : null}
       </>
@@ -615,7 +546,11 @@ const Tokenomics = ({
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
-        {formik.touched.assetInput && !formDataTokenomics.assetInput ? (
+        {balances?.assetBalance &&
+        parseFloat(formDataTokenomics.assetInput.toString() || '0') > parseFloat(balances?.assetBalance || '0') ? (
+          <ErrorText>Insufficient balance</ErrorText>
+        ) : null}
+        {formik.touched.assetInput && formik.errors.assetInput ? (
           <ErrorText>{formik.errors.assetInput}</ErrorText>
         ) : null}
       </>
@@ -632,6 +567,11 @@ const Tokenomics = ({
         value={formDataTokenomics.maxSupply}
         // value={formik.values.maxSupply}
       />
+      {formDataTokenomics.maxSupply &&
+      parseFloat(formDataTokenomics.maxSupply.toString() || '') <
+        parseFloat(formDataTokenomics.shareInput.toString() || '0') ? (
+        <ErrorText>Must be bigger than Project Token quantity</ErrorText>
+      ) : null}
       {/* {formik.touched.maxSupply && !formDataTokenomics.maxSupply ? (
         <ErrorText>{formik.errors.maxSupply}</ErrorText>
       ) : null} */}
@@ -655,7 +595,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Serenity />}
+              {renderLogo(shareLogo)}
 
               <div
                 style={{
@@ -717,7 +657,7 @@ const Tokenomics = ({
                 alignItems: 'center',
               }}
             >
-              {shareLogo?.public ? <LogoIcon src={shareLogo?.public} alt="Serenity Logo" /> : <Serenity />}
+              {renderLogo(shareLogo)}
               <div
                 style={{
                   borderRight: '1px solid #E6E6FF',
@@ -848,3 +788,135 @@ const Tokenomics = ({
 }
 
 export default Tokenomics
+
+const Container = styled.div`
+  width: 100%;
+`
+
+const TokenomicsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #e6e6ff;
+  background: #f7f7fa;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+  margin-top: 15px;
+`
+
+const TokenomicsItem = styled.div`
+  margin-bottom: 8px;
+`
+const Span = styled.span`
+  color: #8f8fb2;
+  font-size: 12px;
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #e6e6ff;
+  background: #ffffff;
+  border-radius: 6px;
+  width: fit-content;
+  margin: 0 auto;
+`
+
+const Input = styled.input`
+  border: none;
+  padding: 8px;
+  text-align: right;
+  background: none;
+  font-size: 32px;
+  font-weight: 700;
+  color: #292933;
+  max-width: 350px;
+  width: calc(100% - 48px);
+  margin-bottom: 10px;
+  outline: none;
+
+  &::placeholder {
+    font-size: 32px;
+    color: #bdbddb;
+    font-weight: 700;
+  }
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
+  &[type=number]::-webkit-inner-spin-button,
+  &[type=number]::-webkit-outer-spin-button,
+  /* Firefox */
+  &[type=number]::-webkit-outer-spin-button,
+  &[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`
+
+const MaxWrapper = styled.div`
+  text-align: right;
+  margin-right: 60px;
+`
+
+const WeightsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 18px;
+  margin-bottom: 10px;
+`
+
+const SpanBal = styled.span`
+  display: block;
+  color: #8f8fb2;
+  font-size: 12px;
+  padding: 8px;
+  margin-top: 8px;
+`
+
+const TokenSelectContainer = styled.div`
+  margin-top: 20px;
+`
+
+const Options = styled.span`
+  cursor: pointer;
+  border: 1px solid #e6e6ff;
+  padding: 10px 20px;
+  background: #ffffff;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+`
+
+const TokenOptionsWrapper = styled.div`
+  display: none;
+  width: 100%;
+  padding: 10px 24px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  margin-top: 20px;
+  background: #ffffff;
+  &.open {
+    display: block;
+  }
+`
+
+const ErrorText = styled.span`
+  border: none;
+  color: red;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 15px;
+  margin-top: 10px;
+`
+
+const LogoIcon = styled.img`
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  margib-right: 20px;
+`

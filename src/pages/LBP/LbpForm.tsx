@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 import dayjs, { Dayjs } from 'dayjs'
 import Column from 'components/Column'
 import { RowStart } from 'components/Row'
-import { FormContainer, FormRow } from 'pages/KYC/IndividualKycForm'
+import { FormContainer } from 'pages/KYC/IndividualKycForm'
 import { FormCard, StyledStickyBox } from 'pages/KYC/styleds'
 import { isMobile } from 'react-device-detect'
 import { BrandingProps, LbpStatus, ProjectInfoProps, TokenomicsProps } from '../../../src/components/LBP/types'
@@ -26,6 +26,9 @@ import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { constants } from 'ethers'
 import { useRole } from 'state/user/hooks'
 import { LbpLayout } from './layout'
+import styled from 'styled-components'
+import { CloseConfirmation } from 'components/LaunchpadIssuance/IssuanceForm/shared/CloseConfirmation'
+import { delay } from 'utils'
 
 export interface FormData {
   id: number
@@ -57,17 +60,18 @@ export default function LBPForm() {
     },
     tokenomics: {
       shareAddress: '',
+      xTokenLiteProxyAddress: '',
       contractAddress: constants.AddressZero,
       assetTokenAddress: '',
       assetTokenSymbol: '',
       shareInput: 0,
       maxSupply: '',
       assetInput: 0,
-      startWeight: 0,
+      startWeight: 99,
       endDate: '',
       maxPrice: '',
       startDate: '',
-      endWeight: 0,
+      endWeight: 1,
     },
   })
   const [canSubmit, setCanSubmit] = useState(false)
@@ -76,6 +80,10 @@ export default function LBPForm() {
   const [endPrice, setEndPrice] = useState(0)
   const [startPrice, setStartPrice] = useState(0)
   const [status, setStatus] = useState<LbpStatus | undefined>(undefined)
+  const [projectTokenSymbol, setProjectTokenSymbol] = useState<string>('')
+  const [showCloseDialog, setShowCloseDialog] = useState(false)
+  const [isDirty, setDirty] = useState(false)
+  const [nextPathname, setNextPathname] = useState<string>('')
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
@@ -126,7 +134,10 @@ export default function LBPForm() {
 
   const updateSubmitButtonState = (formData: FormData) => {
     const isComplete = (data: any) => {
-      const keysToCheck = Object.keys(data).filter((key) => key !== 'maxPrice' && key !== 'maxSupply')
+      if (data.title && data.title.length > 20) {
+        return false;
+      }
+      const keysToCheck = Object.keys(data).filter((key) => key !== 'maxPrice' && key !== 'maxSupply' && key !== 'xTokenLiteProxyAddress')
       return keysToCheck.every((key) => !!data[key])
     }
 
@@ -171,7 +182,7 @@ export default function LBPForm() {
         setFormData((prevData) => ({ ...prevData, id }))
         data = { ...data, id }
       }
-
+      setDirty(false)
       const summary = actionType === LBP_ACTION_TYPES.save ? 'LBP saved successfully' : 'LBP submitted successfully'
       addPopup({ info: { success: true, summary } })
       if (actionType === LBP_ACTION_TYPES.submit) {
@@ -206,6 +217,7 @@ export default function LBPForm() {
       LBPBanner: formData.branding?.LBPBanner,
       uploadDocs: formData.projectInfo?.uploadDocs,
       shareAddress: formData.tokenomics?.shareAddress,
+      xTokenLiteProxyAddress: formData.tokenomics?.xTokenLiteProxyAddress || null,
       shareAmount: Number(formData.tokenomics?.shareInput || 0),
       assetTokenAmount: Number(formData.tokenomics?.assetInput || 0),
       assetTokenAddress: formData.tokenomics?.assetTokenAddress,
@@ -218,7 +230,7 @@ export default function LBPForm() {
     }
 
     if (formData?.tokenomics?.maxSupply) {
-      result.shareMaxSupply =  Number(formData?.tokenomics?.maxSupply ?? 0)
+      result.shareMaxSupply = Number(formData?.tokenomics?.maxSupply ?? 0)
     }
 
     if (formData?.tokenomics?.maxPrice) {
@@ -246,6 +258,7 @@ export default function LBPForm() {
       },
       tokenomics: {
         shareAddress: data.shareAddress,
+        xTokenLiteProxyAddress: data.xTokenLiteProxyAddress,
         contractAddress: data.contractAddress || constants.AddressZero,
         assetTokenAddress: data.assetTokenAddress,
         assetTokenSymbol: data.assetTokenSymbol,
@@ -255,7 +268,7 @@ export default function LBPForm() {
         startWeight: data.startWeight,
         startDate: dayjs(data.startDate)?.local()?.format('YYYY-MM-DD HH:mm:ss'),
         endDate: dayjs(data.endDate)?.local()?.format('YYYY-MM-DD HH:mm:ss'),
-        maxPrice: data.maxPrice || 0,
+        maxPrice: data.maxPrice,
         endWeight: data.endWeight,
       },
     }
@@ -269,14 +282,52 @@ export default function LBPForm() {
     return status == LbpStatus.draft && isAdmin
   }, [status, isAdmin])
 
+  const handleSaveThenRedirect = async () => {
+    setDirty(false)
+    setShowCloseDialog(false)
+    await handleSaveDraft()
+    history.push(nextPathname)
+  }
+
+  const handleDiscard = async () => {
+    setDirty(false)
+    setShowCloseDialog(false)
+    await delay(100)
+    history.push(nextPathname)
+  }
+
+  useEffect(() => {
+    // @ts-ignore
+    const unblock = history.block((location, action) => {
+      if (action !== 'POP' && isDirty) {
+        setNextPathname(location.pathname)
+        setShowCloseDialog(true)
+        return false
+      }
+      return true
+    })
+
+    return () => {
+      unblock()
+    }
+  }, [history, isDirty])
+
   return (
-    <LbpLayout>
+    <LbpLayout background="#F7F7FF">
+      {showCloseDialog ? (
+        <CloseConfirmation
+          isOpen={showCloseDialog}
+          onDiscard={handleDiscard}
+          onClose={() => setShowCloseDialog(false)}
+          onSave={handleSaveThenRedirect}
+        />
+      ) : null}
       <FormRow>
-        <FormContainer style={{ gap: '35px', margin: '20px 0px 0px 150px' }}>
+        <FormContainer style={{ gap: '20px', margin: '20px 0px 0px 0px' }}>
           <TYPE.title4
             fontWeight={'800'}
             fontSize={isMobile ? 24 : 24}
-            style={{ whiteSpace: 'nowrap' }}
+            style={{lineHeight: '32px', marginBottom: '20px', marginTop: 16}}
             marginLeft="10px"
           >
             <Trans>{formData?.projectInfo?.title}</Trans>
@@ -296,7 +347,7 @@ export default function LBPForm() {
                 <TYPE.label>Project information</TYPE.label>
               </RowStart>
               <Column style={{ gap: '20px' }}>
-                <ProjectInfo formData={formData.projectInfo} onChange={handleProjectInfoChange} />
+                <ProjectInfo formData={formData.projectInfo} onChange={handleProjectInfoChange} setDirty={setDirty} />
               </Column>
             </FormCard>
 
@@ -308,10 +359,12 @@ export default function LBPForm() {
                 <Tokenomics
                   formDataTokenomics={formData.tokenomics}
                   onChange={handleTokenomicsChange}
-                  shareTitle={formData.projectInfo.title}
+                  shareTitle={projectTokenSymbol}
                   shareLogo={formData?.branding?.LBPLogo}
                   endPrice={endPrice}
                   isEditable={isEditable}
+                  setProjectTokenSymbol={setProjectTokenSymbol}
+                  setDirty={setDirty}
                 />
               </Column>
             </FormCard>
@@ -327,7 +380,7 @@ export default function LBPForm() {
                   addressA={formData.tokenomics.shareAddress}
                   addressB={formData.tokenomics.assetTokenAddress}
                   contractAddress={formData?.tokenomics?.contractAddress || ''}
-                  shareName={formData?.projectInfo?.title}
+                  shareName={projectTokenSymbol}
                   shareLogo={formData?.branding?.LBPLogo}
                   isEditable={isEditable}
                 />
@@ -335,8 +388,8 @@ export default function LBPForm() {
             </FormCard>
           </Column>
         </FormContainer>
-        <div style={{ display: 'block' }}>
-          <StyledStickyBox style={{ marginTop: '78px', marginRight: '200px', marginBottom: '1700px' }}>
+        <div style={{ display: 'block', width: 332 }}>
+          <StyledStickyBox style={{ marginTop: '78px', marginBottom: '1700px' }}>
             <KYCProgressBar
               disabled={!canSubmit || !isEditable}
               handleSubmit={handleSubmit}
@@ -368,9 +421,23 @@ export default function LBPForm() {
         </div>
 
         <IssuanceDialog show={showSummary} onClose={toggleModal} width="550px">
-          <SubmitSummary formData={formData} onCancel={toggleModal} startPrice={startPrice} />
+          <SubmitSummary
+            formData={formData}
+            onCancel={toggleModal}
+            startPrice={startPrice}
+            projectTokenSymbol={projectTokenSymbol}
+          />
         </IssuanceDialog>
       </FormRow>
     </LbpLayout>
   )
 }
+
+const FormRow = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1180px;
+  margin: 0 auto;
+  margin-bottom: 113px;
+`

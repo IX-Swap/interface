@@ -18,7 +18,9 @@ import { LbpFormValues } from '../types'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
 import { ethers } from 'ethers'
 import { useLBPContract, useTokenContract } from 'hooks/useContract'
-import NoTokenSidebar from './NoTokensSideBar'
+// import NoTokenSidebar from './NoTokensSideBar'
+import Remaining from './Remaining'
+
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
   { title: 'SELL', value: PublicDetails.sell },
@@ -57,8 +59,6 @@ const TradeTabs: React.FC<SideTabsBarProps> = ({ currentTab, onTabSelect }) => {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
-  const [remainingTime, setRemainingTime] = useState(28 * 24 * 60 * 60)
-
   const [activeTab, setActiveTab] = React.useState<PublicDetails>(() => {
     const savedTab = localStorage.getItem('ActiveTab')
     return (savedTab as PublicDetails) ?? PublicDetails.buy
@@ -93,40 +93,34 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
     }
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!assetTokenContract || !account) return
-        const balance = await assetTokenContract.balanceOf(account)
+  const fetchData = async () => {
+    try {
+      if (!assetTokenContract || !account) return
+      const balance = await assetTokenContract.balanceOf(account)
 
-        await fetchShareBalance()
+      await fetchShareBalance()
 
-        if (balance !== undefined) {
-          const tokenOption = TokenOptions(chainId as number).find(
-            (option) => option.tokenAddress === lbpData?.assetTokenAddress
-          )
+      if (balance !== undefined) {
+        const tokenOption = TokenOptions(chainId as number).find(
+          (option) => option.tokenAddress === lbpData?.assetTokenAddress
+        )
 
-          const exactBalance = ethers.utils.formatUnits(balance, tokenOption?.tokenDecimals ?? 18)
-          setTokenBalance(exactBalance)
+        const exactBalance = ethers.utils.formatUnits(balance, tokenOption?.tokenDecimals ?? 18)
+        setTokenBalance(exactBalance)
 
-          setTokenDecimals(tokenOption?.tokenDecimals || 0)
-          setTokenOption(tokenOption)
-        }
-      } catch (error) {
-        console.error('Error fetching share balance:', error)
+        setTokenDecimals(tokenOption?.tokenDecimals || 0)
+        setTokenOption(tokenOption)
       }
+    } catch (error) {
+      console.error('Error fetching share balance:', error)
     }
-
-    fetchData()
-  }, [assetTokenContract, account, fetchShareBalance, lbpData, chainId])
+  }
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setRemainingTime((prevTime) => prevTime - 1)
-    }, 1000)
+    fetchData()
+  }, [assetTokenContract, account, lbpData, chainId])
 
-    return () => clearInterval(interval)
-  }, [])
+
 
   const handleTabChange = (tab: PublicDetails) => {
     setActiveTab(tab)
@@ -148,36 +142,11 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
     // setIsBlurred((prev) => !prev)
   }
 
-  useEffect(() => {
-    const calculateRemainingTime = () => {
-      if (lbpData && lbpData.startDate && lbpData.endDate) {
-        const endDate = new Date(lbpData.endDate).getTime()
-        const currentTime = new Date().getTime()
-        const remainingTimeInSeconds = Math.max(0, endDate - currentTime) / 1000
-        setRemainingTime(remainingTimeInSeconds)
-      }
-    }
-    calculateRemainingTime()
-    const interval = setInterval(() => {
-      calculateRemainingTime()
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [lbpData])
-
-  const remainingDays = Math.ceil(remainingTime / (24 * 60 * 60))
-  const remainingHours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))
-
   return (
     <SideBarContainer>
       <MiddleSection>
         <AutoColumn justify="center">
-          <ContentColumn style={{ gridColumn: '1 / span 1' }}>
-            <TYPE.subHeader1 style={{ marginRight: 'auto', color: '#555566' }}> LBP closes in</TYPE.subHeader1>
-            <TYPE.label style={{ fontSize: '16px', marginRight: 'auto' }}>
-              {remainingDays > 0 ? `${remainingDays} Days` : `${remainingHours} Hours`}
-            </TYPE.label>
-          </ContentColumn>
+         <Remaining lbpData={lbpData} />
 
           <ContentColumn style={{ gridColumn: '9 / span 4' }}>
             {!isPaused ? (
@@ -222,6 +191,7 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
             tokenOption={tokenOption}
             id={lbpData?.id}
             logo={lbpData?.logo}
+            fetchBalance={fetchData}
           />
         </Body>
       </Container>

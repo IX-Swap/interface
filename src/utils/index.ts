@@ -138,3 +138,20 @@ export function removeProtocolFromUrl(url: string): string {
 export const detectWrongNetwork = (chainId: number): boolean => {
   return  chainId ? !TGE_CHAINS_WITH_STAKING.includes(chainId) : false;
 }
+
+export function isValidUrl(url: string) {
+  try {
+    new URL(url)
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
+export function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export function isEmptyObject(obj: object) {
+  return Object.keys(obj).length === 0;
+}

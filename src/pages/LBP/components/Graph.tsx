@@ -17,7 +17,7 @@ interface GraphProps {
 }
 
 const StyledCard = styled(Card)`
-  width: 350px;
+  width: 332px;
   height: auto;
   background: #ffffff;
   margin-top: 200px;
@@ -142,7 +142,7 @@ export default function Graph({ graphData, step, setEndPrice, setStartPrice }: G
         Price Discovery Preview
       </p>
 
-      <LineChart width={350} height={350} data={data} margin={{ top: 20, right: 30, bottom: 10 }}>
+      <LineChart width={332} height={332} data={data} margin={{ top: 20, right: 30, bottom: 10 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#8884d8" horizontal={false} vertical={false} />
         <XAxis
           dataKey="date"
