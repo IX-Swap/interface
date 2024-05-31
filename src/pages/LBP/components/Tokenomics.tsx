@@ -440,8 +440,13 @@ const Tokenomics = ({
               onWheel={(event) => event.currentTarget.blur()}
             />
 
-            <MaxWrapper onClick={isEditable ? () => handleMaxClick(balances?.shareBalance, 'shareInput') : undefined}>
-              <Span style={{ padding: '10px 20px', cursor: 'pointer' }}>Max</Span>
+            <MaxWrapper>
+              <Span
+                style={{ padding: '10px 20px', cursor: 'pointer' }}
+                onClick={isEditable ? () => handleMaxClick(balances?.shareBalance, 'shareInput') : undefined}
+              >
+                Max
+              </Span>
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
@@ -509,8 +514,13 @@ const Tokenomics = ({
               value={formDataTokenomics.assetInput}
               onWheel={(event) => event.currentTarget.blur()}
             />
-            <MaxWrapper onClick={isEditable ? () => handleMaxClick(balances?.assetBalance, 'assetInput') : undefined}>
-              <Span style={{ padding: '10px 20px', cursor: 'pointer' }}>Max</Span>
+            <MaxWrapper>
+              <Span
+                style={{ padding: '10px 20px', cursor: 'pointer' }}
+                onClick={isEditable ? () => handleMaxClick(balances?.assetBalance, 'assetInput') : undefined}
+              >
+                Max
+              </Span>
             </MaxWrapper>
           </TokenomicsItem>
         </TokenomicsContainer>
