@@ -76,7 +76,7 @@ const AdminLbpDetail = () => {
               chartWidth={1200}
             />
             <StatisticData isAdmin={true} statsData={statsData} lbpData={lbpData} />
-            <InvestorInformation lbpId={lbpId} setNoOfParticipants={setNoOfParticipants} />
+            <InvestorInformation lbpId={lbpId} title={lbpData?.title} setNoOfParticipants={setNoOfParticipants} />
           </>
         )}
       </Wrapper>

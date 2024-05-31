@@ -4,24 +4,13 @@ import styled from 'styled-components'
 import { ColumnCenter } from 'components/Column'
 import { TYPE } from 'theme'
 import { LbpFormValues } from '../types'
+import { displayRemainingTime } from 'utils/time'
 
 interface RemainingProps {
   lbpData: LbpFormValues | null
 }
 
-const displayRemainingTime = (remainingDays: number, remainingHours: number) => {
-  if (remainingDays > 1) {
-    return `${remainingDays} Days`
-  } else {
-    if (remainingDays === 1) {
-      return '1 Day'
-    }
-    if (remainingHours < 1) {
-      return 'Less than 1 Hour'
-    }
-    return `${remainingHours} Hours`
-  }
-}
+
 
 const Remaining: React.FC<RemainingProps> = ({ lbpData }) => {
   const [remainingTime, setRemainingTime] = useState(28 * 24 * 60 * 60)

@@ -11,6 +11,7 @@ import { useCurrency } from 'hooks/Tokens'
 import Copy from 'components/AccountDetails/Copy'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
 import { useTokenContract } from 'hooks/useContract'
+import { displayRemainingTime } from 'utils/time'
 
 interface SummaryFieldsProps {
   noOfParticipants: number
@@ -101,7 +102,7 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
             <TYPE.subHeader1 color={'#555566'}>LBP closes in</TYPE.subHeader1>
             <TokenWrapper>
               <TYPE.label fontSize={'14px'} marginTop={9}>
-                {remainingDays > 0 ? `${remainingDays} Days` : `${remainingHours} Hours`}
+                {displayRemainingTime(remainingDays, remainingHours)}
               </TYPE.label>
             </TokenWrapper>
           </TopBox>
