@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import { LineChart, Line, XAxis, YAxis, Tooltip, DefaultTooltipContent } from 'recharts'
+import { LineChart, AreaChart, Line, XAxis, YAxis, Tooltip, DefaultTooltipContent, Area } from 'recharts'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
@@ -220,12 +220,18 @@ export default function DetailsChart({
 
   return (
     <ChartContainer>
-      <LineChart
+      <AreaChart
         width={chartWidth ? chartWidth : 800}
         height={400}
         data={dataPoints}
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
       >
+        <defs>
+          <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#6666FF" stopOpacity={0.3} />
+            <stop offset="100%" stopColor="#6666FF" stopOpacity={0} />
+          </linearGradient>
+        </defs>
         <defs>
           <linearGradient id="gradient" x1="0" y1="0" x2="100%" y2="0">
             <stop offset="0%" stopColor="#AFAFCD" />
@@ -235,34 +241,19 @@ export default function DetailsChart({
           </linearGradient>
         </defs>
         <Tooltip content={<CustomTooltip />} labelFormatter={() => ''} /> {/* Disable default label */}
-        <Line type="monotone" dataKey="price" strokeWidth={2} stroke="url(#gradient)" dot={false} />
+        {/* <Line type="monotone" dataKey="price" strokeWidth={2} stroke="url(#gradient)" dot={false} /> */}
         <XAxis dataKey="date" axisLine={false} tick={false} />
         <XAxis xAxisId="1" dataKey="date" allowDuplicatedCategory={false} axisLine={false} />
         <YAxis tick={{ fontSize: 14 }} tickFormatter={(value) => `$${value}`} axisLine={false} />
-        {/* <ReferenceLine */}
-        {/*   x={launchDate} */}
-        {/*   label={ */}
-        {/*     <g transform="translate(570, 30)"> */}
-        {/*       <circle cx={0} cy={0} r={5} fill="#BDBDDB" /> */}
-        {/*       <Text fontSize={'14px'} x={10} y={5}> */}
-        {/*         Historical Price */}
-        {/*       </Text> */}
-        {/*     </g> */}
-        {/*   } */}
-        {/* /> */}
-        {/* <ReferenceLine */}
-        {/*   x={launchDate} */}
-        {/*   y={rand} */}
-        {/*   label={ */}
-        {/*     <g transform="translate(700, 30)"> */}
-        {/*       <circle cx={0} cy={0} r={5} fill="#6666FF" /> */}
-        {/*       <Text fontSize={'14px'} x={10} y={5}> */}
-        {/*         Future Price */}
-        {/*       </Text> */}
-        {/*     </g> */}
-        {/*   } */}
-        {/* /> */}
-      </LineChart>
+        <Area
+          type="monotone"
+          dataKey="price"
+          stroke="url(#gradient)"
+          strokeWidth={2}
+          // fillOpacity={1}
+          fill="url(#colorValue)"
+        />
+      </AreaChart>
 
       <RightLegend>
         <WrapItem>

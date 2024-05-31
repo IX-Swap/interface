@@ -62,9 +62,16 @@ const AddSocialLinksModal: React.FC<AddSocialLinksModalProps> = ({
     if (!selected || !url) {
       return
     }
+
+    if (!isValidUrl(url)) {
+      setErrorUrl('Please enter valid URL')
+      return
+    }
     handleAddLink()
     onClose()
   }
+
+
   return (
     <RedesignedWideModal isOpen={isOpen} onDismiss={onClose}>
       <ModalContainer>
@@ -98,7 +105,9 @@ const AddSocialLinksModal: React.FC<AddSocialLinksModalProps> = ({
           </div>
 
           <div style={{ display: 'flex', margin: '20px 0px', gap: '10px' }}>
-            <PinnedContentButton onClick={handleSubmit}>Add</PinnedContentButton>
+            <PinnedContentButton onClick={handleSubmit}>
+              Add
+            </PinnedContentButton>
             <ButtonOutlined onClick={onClose}>Cancel</ButtonOutlined>
           </div>
         </div>

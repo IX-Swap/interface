@@ -38,7 +38,6 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
     [lbp?.status]
   )
 
-
   const onClick = React.useCallback(() => {
     if (!account || isChangeRequested || isPending || isDraft || isRejected || isNotSubmitted) {
       toggleKYCModal()
@@ -107,7 +106,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
 
             {isClosed && (
               <InvestButton type="button" onClick={onClick}>
-                Learn More
+                {LbpStatus.closed === lbp.status ? 'Claim Now' : 'Learn More'}
               </InvestButton>
             )}
           </LbpCardFooter>
