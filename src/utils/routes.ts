@@ -11,7 +11,7 @@ export const routes = {
   faucet: '/faucet',
   kyc: '/kyc',
   kycIndividual: '/kyc/individual',
-  kycIndividualNew: '/kyc/individual/new',
+  kycIndividualV2: '/kyc/individual/v2',
   kycCorporate: '/kyc/corporate',
   createPayoutEvent: '/payout/create',
   editPayoutEvent: (id?: number) => `/payout/edit/${`${id || ':id?'}`}`,

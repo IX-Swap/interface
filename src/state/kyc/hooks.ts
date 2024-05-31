@@ -73,56 +73,85 @@ export const getCorporateProgress = async () => {
 }
 
 export const useEmailVerify = () => {
-  return React.useCallback(
-    async (email: string, identity: string) => {
-      try {
-        const response = await apiService.post(`/kyc/registerEmail`, { email, identity });
-        console.log(response);
-        return { success: true, response }; // Return success and response
-      } catch (error: any) {
-        // Handle errors here
-        console.error(error);
-        return { success: false, error };
-      }
-    },
-    []
-  );
-};
+  return React.useCallback(async (email: string, identity: string) => {
+    try {
+      const response = await apiService.post(`/kyc/registerEmail`, { email, identity })
+      console.log(response)
+      return { success: true, response } // Return success and response
+    } catch (error: any) {
+      // Handle errors here
+      console.error(error)
+      return { success: false, error }
+    }
+  }, [])
+}
 
 export const useEmailEdit = () => {
+  return React.useCallback(async (email: string, identity: string) => {
+    try {
+      const response = await apiService.post(`/kyc/editEmail `, { email, identity })
+      console.log(response)
+      return { success: true, response } // Return success and response
+    } catch (error: any) {
+      // Handle errors here
+      console.error(error)
+      return { success: false, error }
+    }
+  }, [])
+}
+
+export const useGenerateEmailVerifyCode = () => {
   return React.useCallback(
-    async (email: string, identity: string) => {
+    async (personalInfo: { firstName: string; middleName: string; lastName: string; email: string }) => {
       try {
-        const response = await apiService.post(`/kyc/editEmail `, { email, identity });
-        console.log(response);
-        return { success: true, response }; // Return success and response
+        const response = await apiService.post(`/kyc/individual/registration`, personalInfo)
+        return { success: true, response }
       } catch (error: any) {
-        // Handle errors here
-        console.error(error);
-        return { success: false, error };
+        console.error(error)
+        return { success: false, error }
       }
     },
     []
-  );
-};
+  )
+}
 
+export const useVerifyIndividualCode = () => {
+  return React.useCallback(async (otp: string) => {
+    try {
+      const response = await apiService.put(`/kyc/individual/verifyEmail`, { otp })
+      console.log(response)
+      return { success: true, response }
+    } catch (error: any) {
+      console.error(error)
+      return { success: false, error }
+    }
+  }, [])
+}
 
 export const useEmailVerifyCode = () => {
-  return React.useCallback(
-    async (code: string) => {
-      try {
-        const response = await apiService.put(`/kyc/verifyEmail`, { code });
-        console.log(response);
-        return { success: true, response }; // Return success and response
-      } catch (error: any) {
-        console.error(error);
-        return { success: false, error }; // Return failure and error
-      }
-    },
-    []
-  );
-};
+  return React.useCallback(async (code: string) => {
+    try {
+      const response = await apiService.put(`/kyc/verifyEmail`, { code })
+      console.log(response)
+      return { success: true, response } // Return success and response
+    } catch (error: any) {
+      console.error(error)
+      return { success: false, error } // Return failure and error
+    }
+  }, [])
+}
 
+export const useResendEmail = () => {
+  return React.useCallback(async (emailType: string) => {
+    try {
+      const response = await apiService.post('/kyc/resendEmailCode', { emailType })
+      return { success: true, response }
+    } catch (error: any) {
+      console.error(error)
+      return { success: false, error }
+    }
+  }, [])
+}
 
 export const createIndividualKYC = async (newKYC: any, draft = false) => {
   const formData = new FormData()

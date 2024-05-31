@@ -149,11 +149,10 @@ const KYC = () => {
   }
 
   const getKYCLink = () => {
-    const kycVersion = 'v2' // Hardcoded value for now, should be fetched from API response later
     const referralCodeParam = new URL(window.location.href).href?.split('=')[1]
     const baseLink = '/kyc/individual'
-    if (kycVersion === 'v2') {
-      return referralCodeParam ? `${baseLink}/new?referralCode=${referralCodeParam}` : `${baseLink}/new`
+    if (kyc?.individual?.version === 'v2' || !kyc?.individual?.version) {
+      return referralCodeParam ? `${baseLink}/v2?referralCode=${referralCodeParam}` : `${baseLink}/v2`
     } else {
       return referralCodeParam ? `${baseLink}?referralCode=${referralCodeParam}` : `${baseLink}`
     }
@@ -244,10 +243,7 @@ const KYC = () => {
               {kyc?.individual && (
                 <Flex sx={{ marginBottom: isMobile ? '32px' : '0px' }} flexDirection="column" alignItems="center">
                   <IndividualKYC />
-                  <Link
-                    style={{ textDecoration: 'none' }}
-                    to={getKYCLink()}
-                  >
+                  <Link style={{ textDecoration: 'none' }} to={getKYCLink()}>
                     <PinnedContentButton sx={{ padding: '16px 24px', marginTop: '32px' }}>
                       <Trans>Continue Pass KYC as Individual</Trans>
                     </PinnedContentButton>

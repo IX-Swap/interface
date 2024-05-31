@@ -114,8 +114,6 @@ export const AdminKycTable = () => {
 
   const { id } = useParams<AdminParams>()
 
-  console.log(kyc, 'hhhjjjjjhh')
-
   const getKycFilters = (page: number, withStatus = true) => {
     let kycFilter: any = {
       page,

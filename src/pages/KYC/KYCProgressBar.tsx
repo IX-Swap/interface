@@ -22,7 +22,7 @@ interface Props {
   disabled?: boolean
   handleSubmit?: (e: any) => void
   handleSaveProgress?: (e: any) => void
-  isNewKycV2?: boolean
+  isKycV2?: boolean
 }
 
 export const KYCProgressBar: FC<Props> = ({
@@ -31,7 +31,7 @@ export const KYCProgressBar: FC<Props> = ({
   disabled,
   handleSubmit,
   handleSaveProgress,
-  isNewKycV2,
+  isKycV2,
 }: Props) => {
   const [activeTopic, setActiveTopic] = useState<number>(0)
 
@@ -92,7 +92,7 @@ export const KYCProgressBar: FC<Props> = ({
               )
           )}
         </Column>
-        {!isNewKycV2 && (
+        {!isKycV2 && (
           <Box style={{ padding: '0px 20px' }}>
             <PinnedContentButton
               onClick={handleSubmit}
