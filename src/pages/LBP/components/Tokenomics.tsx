@@ -608,6 +608,8 @@ const Tokenomics = ({
               value={formDataTokenomics.startWeight}
               onChange={handleChangeStart}
               disabled={!isEditable}
+              min={1}
+              max={99}
             />
           </Stack>
         </div>
@@ -670,6 +672,8 @@ const Tokenomics = ({
             value={formDataTokenomics.endWeight ? formDataTokenomics.endWeight : valueEnd}
             onChange={handleChangeEnd}
             disabled={!isEditable}
+            min={1}
+            max={99}
           />
         </Stack>
       </div>
