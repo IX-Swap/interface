@@ -34,10 +34,10 @@ export const LbpTable = styled.div<{ maxWidth?: string; hideBorder?: boolean }>`
   }
 `
 
-export const TableHeader = styled.div<{ tab: LbpStatus; type: string }>`
+export const TableHeader = styled.div<{ tab: LbpStatus; type: string; amount: number }>`
   display: grid;
   grid-template-rows: 60px;
-  grid-template-columns: ${(props) => (props.type === 'draft' ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)')};
+  grid-template-columns: ${(props) => `repeat(${props.amount}, 1fr)`};
   gap: ${(props) => (props.type === 'draft' ? '25rem' : '10rem')};
   place-content: center start;
   align-items: center;

@@ -61,6 +61,12 @@ const AdditionalLinksModal: React.FC<AdditionalLinksModalProps> = ({
     if (!name || !url) {
       return
     }
+
+    if (!isValidUrl(url)) {
+      setErrorUrl('Please enter valid URL')
+      return
+    }
+
     handleAddLink()
     onClose()
   }

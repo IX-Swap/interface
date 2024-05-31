@@ -34,7 +34,7 @@ const userClaimedQuery = (account: string, poolAddress: string) => {
   `
 }
 
-const decimals = 18;
+const decimals = 18
 
 const RedeemedSideBar: React.FC<RedeemedProps> = ({ contractAddress, shareLogo, shareName }) => {
   const { account, chainId } = useActiveWeb3React()
@@ -91,9 +91,8 @@ const RedeemedSideBar: React.FC<RedeemedProps> = ({ contractAddress, shareLogo, 
         </TYPE.body5>
         <DesContainer>
           <TYPE.description3>
-            Tokens purchased with and without vesting in a LBP, must be redeem by clicking the “Redeem” button below at
-            the end of the LBP. If the LBP you participated in has vested tokens, you can view the token stream using
-            the link below.
+            The LBP has concluded. If you have purchased tokens, you can now redeem them. If you encounter any issues or
+            have questions, please contact our support team. Thank you for participating!
           </TYPE.description3>
         </DesContainer>
         <Line style={{ margin: '20px 8px' }} />

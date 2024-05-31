@@ -166,10 +166,5 @@ export const TOKEN_ADDRESSES: { [key: string]: { [key: number]: string } } = {
 
 export const LBP_FACTORY_ADDRESS = {
   [80002]: '0x812A5D130D8bc37c9201318cE851EcC2492aB311',
-  [137]: '',
-} as Record<number, string>
-
-export const LBP_XTOKEN_PROXY = {
-  [80002]: '0x3A4F80a64D0CED203d744A3936137a4df8D73Ded',
-  [137]: '',
+  [137]: '0xA9F30b54C732BD12E2a2373a50642a4E0d4A89B5',
 } as Record<number, string>

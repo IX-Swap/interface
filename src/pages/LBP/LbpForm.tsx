@@ -60,6 +60,7 @@ export default function LBPForm() {
     },
     tokenomics: {
       shareAddress: '',
+      xTokenLiteProxyAddress: '',
       contractAddress: constants.AddressZero,
       assetTokenAddress: '',
       assetTokenSymbol: '',
@@ -133,7 +134,10 @@ export default function LBPForm() {
 
   const updateSubmitButtonState = (formData: FormData) => {
     const isComplete = (data: any) => {
-      const keysToCheck = Object.keys(data).filter((key) => key !== 'maxPrice' && key !== 'maxSupply')
+      if (data.title && data.title.length > 20) {
+        return false;
+      }
+      const keysToCheck = Object.keys(data).filter((key) => key !== 'maxPrice' && key !== 'maxSupply' && key !== 'xTokenLiteProxyAddress')
       return keysToCheck.every((key) => !!data[key])
     }
 
@@ -213,6 +217,7 @@ export default function LBPForm() {
       LBPBanner: formData.branding?.LBPBanner,
       uploadDocs: formData.projectInfo?.uploadDocs,
       shareAddress: formData.tokenomics?.shareAddress,
+      xTokenLiteProxyAddress: formData.tokenomics?.xTokenLiteProxyAddress || null,
       shareAmount: Number(formData.tokenomics?.shareInput || 0),
       assetTokenAmount: Number(formData.tokenomics?.assetInput || 0),
       assetTokenAddress: formData.tokenomics?.assetTokenAddress,
@@ -253,6 +258,7 @@ export default function LBPForm() {
       },
       tokenomics: {
         shareAddress: data.shareAddress,
+        xTokenLiteProxyAddress: data.xTokenLiteProxyAddress,
         contractAddress: data.contractAddress || constants.AddressZero,
         assetTokenAddress: data.assetTokenAddress,
         assetTokenSymbol: data.assetTokenSymbol,
@@ -321,7 +327,7 @@ export default function LBPForm() {
           <TYPE.title4
             fontWeight={'800'}
             fontSize={isMobile ? 24 : 24}
-            style={{ whiteSpace: 'nowrap' }}
+            style={{lineHeight: '32px', marginBottom: '20px', marginTop: 16}}
             marginLeft="10px"
           >
             <Trans>{formData?.projectInfo?.title}</Trans>
