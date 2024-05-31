@@ -123,8 +123,6 @@ const Tokenomics = ({
   const [isOpen, setIsOpen] = useState(false)
   const [startDateError, setStartDateError] = useState<string>('')
   const [endDateError, setEndDateError] = useState<string>('')
-  const [startDate, setStartDate] = useState(dayjs())
-  const [endDate, setEndDate] = useState(dayjs())
   const { chainId, account } = useWeb3React()
   const [selectedToken, setSelectedToken] = useState<any>({
     tokenSymbol: 'USDC',
@@ -134,22 +132,6 @@ const Tokenomics = ({
   const [balances, setBalances] = useState<any>({
     assetBalance: '',
     shareBalance: '',
-  })
-
-  const [formData, setFormData] = useState<TokenomicsData>({
-    shareAddress: formDataTokenomics.shareAddress,
-    xTokenLiteProxyAddress: formDataTokenomics.xTokenLiteProxyAddress,
-    assetTokenAddress: formDataTokenomics.assetTokenAddress,
-    assetTokenSymbol: formDataTokenomics.assetTokenSymbol,
-    shareInput: formDataTokenomics.shareInput,
-    assetInput: formDataTokenomics.assetInput,
-    maxSupply: formDataTokenomics.maxSupply,
-    maxPrice: formDataTokenomics.maxPrice,
-    startWeight: formDataTokenomics.startWeight,
-    endWeight: formDataTokenomics.endWeight,
-    startDate: formDataTokenomics.startDate,
-    endDate: formDataTokenomics.endDate,
-    contractAddress: formDataTokenomics.contractAddress,
   })
 
   const formik = useFormik({
@@ -215,7 +197,6 @@ const Tokenomics = ({
           assetTokenAddress: defaultTokenOption.tokenAddress,
           assetTokenSymbol: defaultTokenOption.tokenSymbol,
         }
-        setFormData(updatedFormData)
         onChange(updatedFormData)
       }
     }
@@ -262,7 +243,6 @@ const Tokenomics = ({
       startWeight: newStartValue,
       endWeight: newEndValue,
     }
-    setFormData(updatedFormData)
     onChange(updatedFormData)
   }
 
@@ -276,7 +256,6 @@ const Tokenomics = ({
       startWeight: newStartValue,
       endWeight: newEndValue,
     }
-    setFormData(updatedFormData)
     onChange(updatedFormData)
   }
   const handleStartDateChange = (date: Dayjs | null) => {
@@ -286,14 +265,12 @@ const Tokenomics = ({
         setStartDateError("Start date can't be in the past")
       } else {
         setStartDateError('')
-        setStartDate(date)
       }
       const newStartDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
         startDate: newStartDate,
       }
-      setFormData(updatedFormData)
       onChange(updatedFormData)
     }
   }
@@ -309,14 +286,12 @@ const Tokenomics = ({
         setEndDateError('End date should be at least 1 day bigger than Start Date')
       } else {
         setEndDateError('')
-        setEndDate(date)
       }
       const newEndDate = date.local().format('YYYY-MM-DD HH:mm:ss')
       const updatedFormData = {
         ...formDataTokenomics,
         endDate: newEndDate,
       }
-      setFormData(updatedFormData)
       onChange(updatedFormData)
     }
   }
@@ -324,10 +299,6 @@ const Tokenomics = ({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     formik.handleChange(event)
     const { name, value } = event.target
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }))
     onChange({ ...formDataTokenomics, [name]: value })
   }
 
@@ -343,7 +314,6 @@ const Tokenomics = ({
       // logo: selectedOption.logo,
     }
 
-    setFormData(updatedFormData)
     onChange(updatedFormData)
   }
 
@@ -362,10 +332,6 @@ const Tokenomics = ({
     }
   }
   const handleMaxClick = (balance: string, field: string) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [field]: balance,
-    }))
     onChange({ ...formDataTokenomics, [field]: balance })
   }
 
@@ -387,6 +353,8 @@ const Tokenomics = ({
     formik.setFieldValue('shareAddress', formDataTokenomics.shareAddress)
     formik.setFieldValue('shareInput', formDataTokenomics.shareInput)
     formik.setFieldValue('assetInput', formDataTokenomics.assetInput)
+    setStartValue(formDataTokenomics.startWeight)
+    setEndValue(formDataTokenomics.endWeight)
   }, [formDataTokenomics])
 
   useEffect(() => {
@@ -456,7 +424,7 @@ const Tokenomics = ({
               <TYPE.label fontSize={'14px'}>{shareTitle}</TYPE.label>
             </div>
             <SpanBal>
-              Balance: <b>{balances?.shareBalance}</b>
+              Balance: <b>{formDataTokenomics.shareAddress ? balances?.shareBalance : 0}</b>
             </SpanBal>
           </TokenomicsItem>
           <TokenomicsItem>
