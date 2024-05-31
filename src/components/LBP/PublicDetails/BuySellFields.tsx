@@ -622,76 +622,92 @@ const BuySellFields: React.FC<BuySellFieldsProps> = ({
             assetValue={assetValue}
           />
           {/* Share section */}
-          <BuySellFieldsContainer exceedsBalance={shareExceedBalance}>
-            <BuySellFieldsItem>
-              <BuySellFieldsWrapper>
-                <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Project Token</BuySellFieldsSpan>
-              </BuySellFieldsWrapper>
-              {convertingState.inputType === InputType.Share && convertingState.converting ? (
-                <Loader size="25px" />
-              ) : (
-                ''
-              )}
-              <BuySellFieldsInput
-                type="number"
-                placeholder="0.00"
-                name="ShareInput"
-                value={shareValueDisplay}
-                onChange={(event) => {
-                  setShareValueInput(event.target.value)
-                  setShareValueDisplay(event.target.value)
-                }}
-                onWheel={(event) => event.currentTarget.blur()}
-                exceedsBalance={shareExceedBalance}
-              />
-              {shareExceedBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
-            </BuySellFieldsItem>
-            <BuySellFieldsItem>
-              <BuySellFieldsSelect>
-                <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={logo?.public} />
-                <TYPE.body4 fontSize={'14px'}> {shareSymbol}</TYPE.body4>
-              </BuySellFieldsSelect>
-              <BuySellFieldsSpanBal>
+          <Wrapper exceedsBalance={shareExceedBalance}>
+            <FlexBetween>
+              <div>
+                <BuySellFieldsWrapper>
+                  <BuySellFieldsSpan>
+                    Project Token
+                  </BuySellFieldsSpan>
+                </BuySellFieldsWrapper>
+                {convertingState.inputType === InputType.Share && convertingState.converting ? (
+                  <Loader size="25px" />
+                ) : (
+                  ''
+                )}
+                <BuySellFieldsInput
+                  type="number"
+                  placeholder="0.00"
+                  name="ShareInput"
+                  value={shareValueDisplay}
+                  onChange={(event) => {
+                    setShareValueInput(event.target.value)
+                    setShareValueDisplay(event.target.value)
+                  }}
+                  onWheel={(event) => event.currentTarget.blur()}
+                  exceedsBalance={shareExceedBalance}
+                />
+              </div>
+              <div>
+                <BuySellFieldsSelect>
+                  <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={logo?.public} />
+                  <TYPE.body4 fontSize={'14px'} lineHeight={'normal'}>
+                    {' '}
+                    {shareSymbol}
+                  </TYPE.body4>
+                </BuySellFieldsSelect>
+              </div>
+            </FlexBetween>
+            <div style={{ display: 'flex', justifyContent: 'end' }}>
+              <BalanceText>
                 Balance: <b style={{ color: '#292933' }}> {formatNumberWithDecimals(shareBalance, 3, true)}</b>
-              </BuySellFieldsSpanBal>
-            </BuySellFieldsItem>
-          </BuySellFieldsContainer>
+              </BalanceText>
+            </div>
+            {shareExceedBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
+          </Wrapper>
           {/* Asset section */}
-          <BuySellFieldsContainer exceedsBalance={assetExceedsBalance}>
-            <BuySellFieldsItem>
-              <BuySellFieldsWrapper>
-                <BuySellFieldsSpan style={{ padding: '10px 10px', cursor: 'pointer' }}>Base Token</BuySellFieldsSpan>
-              </BuySellFieldsWrapper>
-              {convertingState.inputType === InputType.Asset && convertingState.converting ? (
-                <Loader size="25px" />
-              ) : (
-                ''
-              )}
-              <BuySellFieldsInput
-                type="number"
-                placeholder="0.00"
-                name="assetInput"
-                value={assetValueDisplay}
-                onChange={(event) => {
-                  setAssetValueInput(event.target.value)
-                  setAssetValueDisplay(event.target.value)
-                }}
-                onWheel={(event) => event.currentTarget.blur()}
-                exceedsBalance={assetExceedsBalance}
-              />
-              {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
-            </BuySellFieldsItem>
-            <BuySellFieldsItem>
-              <BuySellFieldsSelect>
-                <img src={tokenOption?.logo} />
-                {/* <USDC /> */}
-                <TYPE.body4 fontSize={'14px'}> {tokenOption?.tokenSymbol}</TYPE.body4>
-              </BuySellFieldsSelect>
-              <BuySellFieldsSpanBal>
+          <Wrapper exceedsBalance={assetExceedsBalance}>
+            <FlexBetween>
+              <div>
+                <BuySellFieldsWrapper>
+                  <BuySellFieldsSpan>Base Token</BuySellFieldsSpan>
+                </BuySellFieldsWrapper>
+                {convertingState.inputType === InputType.Asset && convertingState.converting ? (
+                  <Loader size="25px" />
+                ) : (
+                  ''
+                )}
+                <BuySellFieldsInput
+                  type="number"
+                  placeholder="0.00"
+                  name="assetInput"
+                  value={assetValueDisplay}
+                  onChange={(event) => {
+                    setAssetValueInput(event.target.value)
+                    setAssetValueDisplay(event.target.value)
+                  }}
+                  onWheel={(event) => event.currentTarget.blur()}
+                  exceedsBalance={assetExceedsBalance}
+                />
+              </div>
+              <div>
+                <BuySellFieldsSelect>
+                  <img src={tokenOption?.logo} />
+                  <TYPE.body4 fontSize={'14px'} lineHeight={'normal'}>
+                    {' '}
+                    {tokenOption?.tokenSymbol}
+                  </TYPE.body4>
+                </BuySellFieldsSelect>
+              </div>
+            </FlexBetween>
+            <div style={{ display: 'flex', justifyContent: 'end' }}>
+              <BalanceText>
                 Balance: <b style={{ color: '#292933' }}>{formatNumberWithDecimals(tokenBalance, 3, true)} </b>
-              </BuySellFieldsSpanBal>
-            </BuySellFieldsItem>
-          </BuySellFieldsContainer>
+              </BalanceText>
+            </div>
+            {assetExceedsBalance && <TYPE.description3 color={'#FF6161'}>Insufficient balance</TYPE.description3>}
+          </Wrapper>
+
           {errorMessage ? (
             <TYPE.error error style={{ marginBottom: '10px' }}>
               {errorMessage}
@@ -743,56 +759,54 @@ export default memo(BuySellFields)
 
 const BuySellFieldsWrapper = styled.div`
   text-align: left;
-  margin-right: 60px;
+`
+const Wrapper = styled.div<BuySellFieldsInputProps>`
+  width: 100%;
+  border: 1px solid ${({ exceedsBalance }) => (exceedsBalance ? '#FF6161' : '#e6e6ff')};
+  background: #f7f7fa;
+  padding: 16px;
+  border-radius: 6px;
+  background: #f7f7fa;
+  margin-bottom: 16px;
 `
 
-const BuySellFieldsContainer = styled.div<BuySellFieldsInputProps>`
+const FlexBetween = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border: 1px solid ${({ exceedsBalance }) => (exceedsBalance ? '#FF6161' : '#e6e6ff')};
-  background: #f7f7fa;
-  padding: 12px 18px 0px 18px;
-  margin-bottom: 20px;
 `
 
-const BuySellFieldsItem = styled.div`
-  margin-bottom: 8px;
+const BalanceText = styled.div`
+  color: #8f8fb2;
+  font-size: 12px;
+  display: flex;
+  gap: 3px;
 `
+
 
 const BuySellFieldsSelect = styled.div`
   flex: 1;
   display: flex;
   border: none;
   padding: 8px;
-  margin-right: 8px;
   background: #ffffffff;
   align-items: center;
   gap: 4px;
+  border-radius: 6px;
 `
 
 const BuySellFieldsSpan = styled.span`
   color: #8f8fb2;
   font-size: 12px;
-
   text-align: left;
-
   width: fit-content;
   margin: 0 auto;
-`
-
-const BuySellFieldsSpanBal = styled.span`
-  display: flex;
-  color: #8f8fb2;
-  font-size: 12px;
-  padding: 8px;
-  margin-top: 8px;
-  gap: 3px;
 `
 
 const BuySellFieldsInput = styled.input<BuySellFieldsInputProps>`
   border: none;
   padding: 8px;
+  padding-left: 0;
   text-align: left;
   background: none;
   font-size: 32px;
@@ -800,7 +814,6 @@ const BuySellFieldsInput = styled.input<BuySellFieldsInputProps>`
   color: ${({ exceedsBalance }) => (exceedsBalance ? '#FF6161' : '#292933')};
   max-width: 210px;
   width: auto;
-  margin-bottom: 10px;
   outline: none;
 
   &::placeholder {
