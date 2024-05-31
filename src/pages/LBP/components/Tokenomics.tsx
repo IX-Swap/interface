@@ -445,7 +445,7 @@ const Tokenomics = ({
                 style={{ padding: '10px 20px', cursor: 'pointer' }}
                 onClick={isEditable ? () => handleMaxClick(balances?.shareBalance, 'shareInput') : undefined}
               >
-                Max
+                Max.
               </Span>
             </MaxWrapper>
           </TokenomicsItem>
@@ -519,7 +519,7 @@ const Tokenomics = ({
                 style={{ padding: '10px 20px', cursor: 'pointer' }}
                 onClick={isEditable ? () => handleMaxClick(balances?.assetBalance, 'assetInput') : undefined}
               >
-                Max
+                Max.
               </Span>
             </MaxWrapper>
           </TokenomicsItem>

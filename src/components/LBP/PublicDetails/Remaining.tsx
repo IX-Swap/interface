@@ -9,6 +9,20 @@ interface RemainingProps {
   lbpData: LbpFormValues | null
 }
 
+const displayRemainingTime = (remainingDays: number, remainingHours: number) => {
+  if (remainingDays > 1) {
+    return `${remainingDays} Days`
+  } else {
+    if (remainingDays === 1) {
+      return '1 Day'
+    }
+    if (remainingHours < 1) {
+      return 'Less than 1 Hour'
+    }
+    return `${remainingHours} Hours`
+  }
+}
+
 const Remaining: React.FC<RemainingProps> = ({ lbpData }) => {
   const [remainingTime, setRemainingTime] = useState(28 * 24 * 60 * 60)
 
@@ -44,7 +58,7 @@ const Remaining: React.FC<RemainingProps> = ({ lbpData }) => {
     <ContentColumn style={{ gridColumn: '1 / span 1' }}>
       <TYPE.subHeader1 style={{ marginRight: 'auto', color: '#555566' }}> LBP closes in</TYPE.subHeader1>
       <TYPE.label style={{ fontSize: '16px', marginRight: 'auto' }}>
-        {remainingDays > 0 ? `${remainingDays} Days` : `${remainingHours} Hours`}
+        {displayRemainingTime(remainingDays, remainingHours)}
       </TYPE.label>
     </ContentColumn>
   )
