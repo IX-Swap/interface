@@ -235,7 +235,7 @@ const Tokenomics = ({
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     const newStartValue = Math.min(Math.max(newValue as number, 1), 99)
-    const newEndValue = Math.min(valueEnd, newStartValue - 1)
+    const newEndValue = Math.min(valueEnd, newStartValue == 1 ? 1: newStartValue - 1 )
     setStartValue(newStartValue)
     setEndValue(newEndValue)
     const updatedFormData = {
@@ -248,7 +248,7 @@ const Tokenomics = ({
 
   const handleChangeEnd = (event: Event, newValue: number | number[]) => {
     const newEndValue = Math.min(Math.max(newValue as number, 1), 99)
-    const newStartValue = Math.max(valueStart, newEndValue + 1)
+    const newStartValue = Math.max(valueStart, newEndValue === 99 ? 99 : newEndValue + 1)
     setStartValue(newStartValue)
     setEndValue(newEndValue)
     const updatedFormData = {
@@ -445,7 +445,7 @@ const Tokenomics = ({
                 style={{ padding: '10px 20px', cursor: 'pointer' }}
                 onClick={isEditable ? () => handleMaxClick(balances?.shareBalance, 'shareInput') : undefined}
               >
-                Max
+                Max.
               </Span>
             </MaxWrapper>
           </TokenomicsItem>
@@ -519,7 +519,7 @@ const Tokenomics = ({
                 style={{ padding: '10px 20px', cursor: 'pointer' }}
                 onClick={isEditable ? () => handleMaxClick(balances?.assetBalance, 'assetInput') : undefined}
               >
-                Max
+                Max.
               </Span>
             </MaxWrapper>
           </TokenomicsItem>

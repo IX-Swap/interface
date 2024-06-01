@@ -4,6 +4,7 @@ import _get from 'lodash/get'
 
 import { LbpStatus } from '../types'
 import { text5 } from 'components/LaunchpadMisc/typography'
+import { displayRemainingTime } from 'utils/time'
 
 interface Props {
   daysTillEnded?: number
@@ -37,11 +38,7 @@ export const LbpSaleStatusInfo: React.FC<Props> = (props) => {
     return () => clearInterval(intervalId)
   }, [calculateRemainingTime])
 
-  const info = props.hoursTillEnded
-    ? `${props.hoursTillEnded > 1 ? `${props.hoursTillEnded} Hours` : 'Less than 1 Hour'}`
-    : props.daysTillEnded
-    ? `${props.daysTillEnded} ${props.daysTillEnded > 1 ? 'Days' : 'Day'}`
-    : null
+  const info = displayRemainingTime(props?.daysTillEnded ?? 0, props?.hoursTillEnded ?? 0)
 
   if ([LbpStatus.ended, LbpStatus.closed].includes(props.status as LbpStatus)) {
     let label: string = ''
@@ -61,12 +58,11 @@ export const LbpSaleStatusInfo: React.FC<Props> = (props) => {
   }
 
   if ([LbpStatus.pending].includes(props.status as LbpStatus)) {
+    let displayTime = ''
     const remainingDays = Math.floor(remainingTime / (24 * 60 * 60))
     const remainingHours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))
     const remainingMinutes = Math.floor((remainingTime % (60 * 60)) / 60)
     const remainingSeconds = Math.floor(remainingTime % 60)
-
-    let displayTime = ''
 
     if (remainingDays > 0) {
       displayTime = remainingDays === 1 ? `${remainingDays} day` : `${remainingDays} days`

@@ -13,6 +13,7 @@ import { TYPE } from 'theme'
 import styled from 'styled-components'
 
 interface TableProps {
+  title: string | undefined | null
   lbpId: number
   setNoOfParticipants: (noOfParticipants: number) => void
 }
@@ -26,7 +27,7 @@ const ExtractButton = styled.button`
   border-radius: 6px;
 `
 
-function InvestorInformation({ lbpId, setNoOfParticipants }: TableProps) {
+function InvestorInformation({ lbpId, title, setNoOfParticipants }: TableProps) {
   const [investorInfo, setInvestorInfo] = useState<any[]>([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
@@ -56,10 +57,11 @@ function InvestorInformation({ lbpId, setNoOfParticipants }: TableProps) {
   }
 
   const downloadCsv = () => {
+    const fileName = title ? `${title.replace(/\s/g, '_')}_investor_information.csv`  : 'investor_information.csv'
     const csvContent = 'data:text/csv;charset=utf-8,' + encodeURIComponent(convertToCsv(investorInfo))
     const link = document.createElement('a')
     link.setAttribute('href', csvContent)
-    link.setAttribute('download', 'investor_information.csv')
+    link.setAttribute('download', fileName)
     document.body.appendChild(link)
     link.click()
   }

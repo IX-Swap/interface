@@ -144,3 +144,21 @@ export const isAfterWithSameTime = (from: Moment, to: Moment | null) => {
 export const toUnixTimeSeconds = (date: Date): number => {
   return Math.floor(date.getTime() / 1000)
 }
+
+export const displayRemainingTime = (remainingDays: number, remainingHours: number): string => {
+  // Handle days first
+  if (remainingDays > 1) {
+    return `${remainingDays} Days`
+  } else if (remainingDays === 1) {
+    return '1 Day'
+  }
+
+  // If days are less than 1, handle hours
+  if (remainingHours < 1) {
+    return remainingHours === 0 ? '0 Hour' : 'Less than 1 Hour'
+  } else if (remainingHours === 1) {
+    return '1 Hour'
+  } else {
+    return `${remainingHours} Hours`
+  }
+}
