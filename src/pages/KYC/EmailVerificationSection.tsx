@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { useAddPopup } from 'state/application/hooks'
-import { useGenerateEmailVerifyCode, useVerifyIndividualCode, useResendEmail } from 'state/kyc/hooks'
-import { resendEmail } from 'state/admin/hooks'
+import {
+  useGenerateEmailVerifyCode,
+  useVerifyIndividualCode,
+  useResendEmail,
+  useGenerateSecondaryEmailVerifyCode,
+  useVerifySecondaryEmailCode,
+} from 'state/kyc/hooks'
 import { PinnedContentButton } from 'components/Button'
 import { isMobile } from 'react-device-detect'
 
@@ -10,26 +15,38 @@ interface Props {
   verificationSecation?: string
   email: string
   error?: boolean
-  onSuccess?: () => void
+  onSuccess?: (section: string) => void
   emailType: string
+  isVerifiedPersonalInfo?: boolean
+  isVerifiedBusinessEmail?: boolean
   personalInfo?: {
     firstName: string
     middleName: string
     lastName: string
     email: string
   }
+  businessEmail?: any
 }
 
-const EmailVerificationSection: React.FC<Props> = ({ error, personalInfo, onSuccess, emailType }) => {
+const EmailVerificationSection: React.FC<Props> = ({
+  error,
+  personalInfo,
+  onSuccess,
+  emailType,
+  isVerifiedPersonalInfo,
+  isVerifiedBusinessEmail,
+  businessEmail,
+}) => {
   const generateEmailVerifyCode = useGenerateEmailVerifyCode()
   const resendEmail = useResendEmail()
+  const generateSecondaryEmailVerifyCode = useGenerateSecondaryEmailVerifyCode()
   const addPopup = useAddPopup()
   const [timer, setTimer] = useState(0)
   const [hasCodeError, setHasCodeError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [resetCodeInput, setResetCodeInput] = useState(false)
   const [buttonText, setButtonText] = useState('Send Code')
-
+  console.log(isVerifiedPersonalInfo, isVerifiedBusinessEmail, 'isVerifiedPersonalInfo', 'isVerifiedBusinessEmail')
   useEffect(() => {
     let interval: NodeJS.Timeout
     if (timer > 0) {
@@ -41,23 +58,33 @@ const EmailVerificationSection: React.FC<Props> = ({ error, personalInfo, onSucc
   }, [timer])
 
   const handleSendCode = async () => {
-    if (!personalInfo) {
-      addPopup({ info: { success: false, summary: 'Personal information is missing' } })
-      return
-    }
     try {
-      const result = await generateEmailVerifyCode(personalInfo)
-      if (result.success) {
-        addPopup({ info: { success: true, summary: 'The verification code has been successfully sent to your email' } })
-        localStorage.setItem('newKyc', 'newKyc')
-        setResetCodeInput(false)
-        setButtonText('Verify Code')
-      } else {
-        handleError(result.error.message)
-      }
+      const result =
+        !isVerifiedPersonalInfo && !isVerifiedBusinessEmail
+          ? await sendPrimaryEmailVerification()
+          : await sendSecondaryEmailVerification()
+
+      result.success ? handleSuccess() : handleError(result.error.message)
     } catch (error) {
       handleError('An unexpected error occurred')
     }
+  }
+
+  const sendPrimaryEmailVerification = async () => {
+    if (!personalInfo) throw new Error('Personal information is missing')
+    return await generateEmailVerifyCode(personalInfo)
+  }
+
+  const sendSecondaryEmailVerification = async () => {
+    if (!emailType || !businessEmail) throw new Error('Email type or business email is missing')
+    return await generateSecondaryEmailVerifyCode(emailType, businessEmail)
+  }
+
+  const handleSuccess = () => {
+    addPopup({ info: { success: true, summary: 'The verification code has been successfully sent to your email' } })
+    localStorage.setItem('newKyc', 'newKyc')
+    setResetCodeInput(false)
+    setButtonText('Verify Code')
   }
 
   const handleError = (message: string) => {
@@ -88,7 +115,6 @@ const EmailVerificationSection: React.FC<Props> = ({ error, personalInfo, onSucc
       handleError('An unexpected error occurred')
     }
   }
-
   return (
     <EmailVerificationContainer>
       <ContentContainer>
@@ -107,6 +133,9 @@ const EmailVerificationSection: React.FC<Props> = ({ error, personalInfo, onSucc
             onSuccess={onSuccess}
             handleError={handleError}
             setTimer={setTimer}
+            isVerifiedPersonalInfo={isVerifiedPersonalInfo}
+            isVerifiedBusinessEmail={isVerifiedBusinessEmail}
+            emailType={emailType}
           />
           <TimerContainer>
             {timer > 0 ? (
@@ -133,10 +162,14 @@ const CodeInput: React.FC<any> = ({
   onSuccess,
   handleError,
   setTimer,
+  isVerifiedPersonalInfo,
+  isVerifiedBusinessEmail,
+  emailType,
 }) => {
   const inputRefs = useRef<HTMLInputElement[]>([])
   const [code, setCode] = useState(Array(numberOfBoxes).fill(''))
   const verifyIndividualCode = useVerifyIndividualCode()
+  const verifySecondaryEmailCode = useVerifySecondaryEmailCode()
   const addPopup = useAddPopup()
   const [verifyError, setVerifyError] = useState(false)
 
@@ -159,20 +192,32 @@ const CodeInput: React.FC<any> = ({
   const handleVerifyCode = async () => {
     const verificationCode = code.join('')
     try {
-      const result = await verifyIndividualCode(verificationCode)
+      const result =
+        !isVerifiedPersonalInfo && !isVerifiedBusinessEmail
+          ? await verifyIndividualCode(verificationCode)
+          : await verifySecondaryEmailCode(verificationCode)
+
       if (result.success) {
-        if (onSuccess) onSuccess()
-        addPopup({ info: { success: true, summary: 'Verification successful!' } })
+        handleVerificationSuccess()
       } else {
-        handleError(result.error.message)
+        handleVerificationError(result.error.message)
         setVerifyError(true)
         setTimer(60)
       }
     } catch (error) {
-      handleError('An unexpected error occurred')
+      handleVerificationError('An unexpected error occurred')
       setVerifyError(true)
       setTimer(60)
     }
+  }
+
+  const handleVerificationSuccess = () => {
+    if (onSuccess) onSuccess(emailType === 'primary-email' ? 'personal' : 'businessEmail')
+    addPopup({ info: { success: true, summary: 'Verification successful!' } })
+  }
+
+  const handleVerificationError = (errorMessage: string) => {
+    handleError(errorMessage)
   }
 
   const handleButtonClick = () => {
@@ -182,7 +227,6 @@ const CodeInput: React.FC<any> = ({
       handleVerifyCode()
     }
   }
-
   return (
     <CodeInputContainer key={reset}>
       <CodeRow>
@@ -204,9 +248,13 @@ const CodeInput: React.FC<any> = ({
           />
         ))}
       </CodeRow>
-      <PinnedContentButton disabled={error} onClick={handleButtonClick}>
-        {buttonText}
-      </PinnedContentButton>
+      {!isVerifiedPersonalInfo && !isVerifiedBusinessEmail ? (
+        <PinnedContentButton disabled={error} onClick={handleButtonClick}>
+          {buttonText}
+        </PinnedContentButton>
+      ) : (
+        <PinnedContentButton onClick={handleButtonClick}>{buttonText}</PinnedContentButton>
+      )}
     </CodeInputContainer>
   )
 }

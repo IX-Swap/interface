@@ -14,7 +14,7 @@ import { ReactComponent as TelegramIcon } from 'assets/images/telegramNewIcon.sv
 import { ReactComponent as AddressIcon } from 'assets/images/addressIcon.svg'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Row, { RowCenter, RowStart } from 'components/Row'
-import { useKYCState } from 'state/kyc/hooks'
+import { useKYCState, useVerifyIdentity } from 'state/kyc/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useAuthState } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
@@ -22,14 +22,13 @@ import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useAddPopup } from 'state/application/hooks'
 import { KycSelect as Select, KycTextInput as TextInput } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
-import { individualFormInitialValues, individualFormV2InitialValues, promptValue } from './mock'
+import { individualFormV2InitialValues, promptValue } from './mock'
 import { FormCard, FormGrid, FormWrapper, StyledStickyBox } from './styleds'
 import { individualErrorsSchemaV2 } from './schema'
-import { KYCValidationErrors } from './KYCValidationErrors'
 import { Line } from 'components/Line'
-// import { EmailVerificationSection } from './EmailVerificationSection'
 import { ReactComponent as CheckIcon } from 'assets/images/newRoundCheck.svg'
 import EmailVerificationSection from './EmailVerificationSection'
+import VerificationConfirmation from './VerificationConfirmation'
 
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -114,30 +113,6 @@ const CheckboxInput = styled.input`
     border: 5px solid #6666FF};
   }
 `
-const Container = styled.div`
-  border: 1px solid #24e49f;
-  margin-top: 28px;
-  height: 252px;
-  padding: 64px;
-  background: #e9fcf5;
-`
-
-const CenteredDiv = styled.div`
-  text-align: center;
-`
-
-const StyledButton = styled(PinnedContentButton)`
-  background: none;
-  border: 1px solid #24e49f;
-  margin-top: 20px;
-  pointer-events: none;
-`
-
-const FlexDiv = styled.div`
-  display: flex;
-  gap: 5px;
-  place-items: center;
-`
 
 export default function IndividualKycFormV2() {
   const canLeavePage = useRef(false)
@@ -148,12 +123,15 @@ export default function IndividualKycFormV2() {
   const { kyc, loadingRequest } = useKYCState()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
+  const verifyIdentity = useVerifyIdentity()
   const [selectedCheckbox, setSelectedCheckbox] = useState(null)
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const form = useRef<any>(null)
   const isLoggedIn = !!token && !!account
   const prevAccount = usePrevious(account)
-  const [isVerified, setIsVerified] = useState(false)
+  const [isPersonalVerified, setIsPersonalVerified] = useState(false)
+  const [isBusinessEmailVerified, setIsBusinessEmailVerified] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const code = new URL(window.location.href).href?.split('=')[1]
@@ -201,11 +179,26 @@ export default function IndividualKycFormV2() {
     setSelectedCheckbox(value)
   }
 
-  const handleSuccess = () => {
-    setIsVerified(true)
+  const handleSuccess = (section: string) => {
+    if (section === 'personal') {
+      setIsPersonalVerified(true)
+    } else if (section === 'businessEmail') {
+      setIsBusinessEmailVerified(true)
+    }
   }
-
-  console.log(isVerified, 'kyckyckyckyc11')
+  const handleVerifyDocuments = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault()
+    setLoading(true)
+    const result = await verifyIdentity()
+    if (result.success) {
+      const redirectUrl = result?.response?.data?.redirectUrl
+      setLoading(false)
+      window.open(redirectUrl, '_blank')
+    } else {
+      console.error('Verification failed', result.error)
+      setLoading(false)
+    }
+  }
 
   return (
     <Loadable loading={!isLoggedIn}>
@@ -239,7 +232,7 @@ export default function IndividualKycFormV2() {
             }}
           >
             {({ values, handleSubmit, setFieldValue, errors, touched, isValid }) => {
-              console.log(isVerified, 'kyckyckyckyc12')
+              console.log(isPersonalVerified, 'kyckyckyckyc12')
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
@@ -308,39 +301,34 @@ export default function IndividualKycFormV2() {
                             onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
                           />
                         </Column>
-                        {!kyc?.individual?.email && !isVerified && (
+                        {!kyc?.individual?.email && !isPersonalVerified && (
                           <EmailVerificationSection
                             error={!isValid}
                             verificationSecation="Personal Information"
                             email={values.email}
                             emailType={'primary-email'}
+                            isVerifiedPersonalInfo={false}
+                            isVerifiedBusinessEmail={false}
                             personalInfo={{
                               firstName: values.firstName,
                               middleName: values.middleName,
                               lastName: values.lastName,
                               email: values.email,
                             }}
-                            onSuccess={handleSuccess}
+                            onSuccess={() => handleSuccess('personal')}
                           />
                         )}
 
-                        {isVerified || kyc?.individual?.email ? (
-                          <Container>
-                            <CenteredDiv>
-                              <TYPE.title9 lineHeight={'30px'} fontSize={'20px'}>
-                                Verification code has been <br /> confirmed successfully.
-                              </TYPE.title9>
-                              <StyledButton>
-                                <FlexDiv>
-                                  <CheckIcon /> <TYPE.black fontSize={'14px'}>Confirmed</TYPE.black>
-                                </FlexDiv>
-                              </StyledButton>
-                            </CenteredDiv>
-                          </Container>
-                        ) : null}
+                        {isPersonalVerified || kyc?.individual?.email ? <VerificationConfirmation /> : null}
                       </FormCard>
-
-                      <FormCard id="secondary-contact">
+                      <FormCard
+                        id="secondary-contact"
+                        style={
+                          !kyc?.individual?.email && !isPersonalVerified
+                            ? { filter: 'blur(5px)', pointerEvents: 'none' }
+                            : {}
+                        }
+                      >
                         <div>
                           <RowStart>
                             <TYPE.title7>
@@ -393,40 +381,41 @@ export default function IndividualKycFormV2() {
 
                           {selectedCheckbox === 'BusinessEmail' && (
                             <>
-                              <Column>
-                                <TextInput
-                                  placeholder="Email address"
-                                  id="emailAddressField"
-                                  label="Email address"
-                                  value={values.email}
-                                  error={errors.email}
-                                  onChange={(e: any) =>
-                                    onChangeInput('email', e.currentTarget.value, values, setFieldValue)
-                                  }
+                              {!kyc?.individual?.isSecondaryContactVerified && !isBusinessEmailVerified && (
+                                <Column>
+                                  <TextInput
+                                    placeholder="Business Email"
+                                    id="emailAddressField"
+                                    label="Email address"
+                                    value={values.businessEmail}
+                                    error={errors.businessEmail}
+                                    onChange={(e: any) =>
+                                      onChangeInput('businessEmail', e.currentTarget.value, values, setFieldValue)
+                                    }
+                                  />
+                                </Column>
+                              )}
+
+                              {!kyc?.individual?.isSecondaryContactVerified && !isBusinessEmailVerified && (
+                                <EmailVerificationSection
+                                  emailType={'secondary_email'}
+                                  error={!isValid}
+                                  verificationSecation="Business Email"
+                                  email={values.businessEmail}
+                                  isVerifiedBusinessEmail={false}
+                                  isVerifiedPersonalInfo={true}
+                                  businessEmail={values.businessEmail}
+                                  onSuccess={() => handleSuccess('businessEmail')}
                                 />
-                              </Column>
-                              <EmailVerificationSection
-                                emailType={'secondary-email'}
-                                error={!isValid}
-                                verificationSecation="Business Email"
-                                email={values.email}
-                              />
+                              )}
+
+                              {(isBusinessEmailVerified || kyc?.individual?.isSecondaryContactVerified) && (
+                                <VerificationConfirmation />
+                              )}
                             </>
                           )}
                           {selectedCheckbox === 'Telegram' && (
                             <>
-                              <Column>
-                                <TextInput
-                                  placeholder="Telegram"
-                                  id="telegram"
-                                  label="Telegram"
-                                  value={values.telegram}
-                                  error={errors.telegram}
-                                  onChange={(e: any) =>
-                                    onChangeInput('telegram', e.currentTarget.value, values, setFieldValue)
-                                  }
-                                />
-                              </Column>
                               <EmailVerificationSection
                                 emailType={'secondary-email'}
                                 error={!isValid}
@@ -438,7 +427,17 @@ export default function IndividualKycFormV2() {
                         </div>
                       </FormCard>
 
-                      <FormCard id="verify-documents">
+                      <FormCard
+                        id="verify-documents"
+                        style={
+                          !kyc?.individual?.email &&
+                          !isPersonalVerified &&
+                          !isBusinessEmailVerified &&
+                          !kyc?.individual?.isSecondaryContactVerified
+                            ? { filter: 'blur(5px)', pointerEvents: 'none' }
+                            : {}
+                        }
+                      >
                         <RowCenter marginBottom="10px" marginTop="20px">
                           <TYPE.title7>
                             <Trans>Verify Documents</Trans>
@@ -450,7 +449,9 @@ export default function IndividualKycFormV2() {
                             process may take some time, and you will be notified within 10-15 minutes.
                           </TYPE.description3>
                         </RowCenter>
-                        <PinnedContentButton>Verify Documents</PinnedContentButton>
+                        <PinnedContentButton onClick={handleVerifyDocuments} disabled={loading}>
+                          {loading ? 'Verifying...' : 'Verify Documents'}
+                        </PinnedContentButton>
                       </FormCard>
                     </Column>
                   </FormContainer>

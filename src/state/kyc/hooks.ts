@@ -115,10 +115,54 @@ export const useGenerateEmailVerifyCode = () => {
   )
 }
 
+export const useGenerateSecondaryEmailVerifyCode = () => {
+  return React.useCallback(async (type: string, email: string) => {
+    const payload = {
+      type: type,
+      data: {
+        email: email,
+      },
+    }
+    try {
+      const response = await apiService.put(`/kyc/individual/secondaryContact`, payload)
+      return { success: true, response }
+    } catch (error: any) {
+      console.error(error)
+      return { success: false, error }
+    }
+  }, [])
+}
+
 export const useVerifyIndividualCode = () => {
   return React.useCallback(async (otp: string) => {
     try {
       const response = await apiService.put(`/kyc/individual/verifyEmail`, { otp })
+      console.log(response)
+      return { success: true, response }
+    } catch (error: any) {
+      console.error(error)
+      return { success: false, error }
+    }
+  }, [])
+}
+
+export const useVerifySecondaryEmailCode = () => {
+  return React.useCallback(async (otp: string) => {
+    try {
+      const response = await apiService.put(`/kyc/individual/verifySecondaryEmail`, { otp })
+      console.log(response)
+      return { success: true, response }
+    } catch (error: any) {
+      console.error(error)
+      return { success: false, error }
+    }
+  }, [])
+}
+
+export const useVerifyIdentity = () => {
+  return React.useCallback(async () => {
+    try {
+      const response = await apiService.put(`/kyc/individual/verifyIdentity`, {})
       console.log(response)
       return { success: true, response }
     } catch (error: any) {
