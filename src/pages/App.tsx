@@ -2,6 +2,7 @@ import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'reac
 import { Redirect, RouteComponentProps, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { useDispatch } from 'react-redux'
+import _get from 'lodash/get'
 
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
@@ -17,7 +18,7 @@ import Popups from 'components/Popups'
 import ErrorBoundary from 'components/ErrorBoundary'
 import GoogleAnalyticsReporter from 'components/analytics/GoogleAnalyticsReporter'
 
-// import { Footer } from 'components/Footer'
+import WhiteLabelFooter from 'components/WhiteLabelFooter'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
@@ -28,7 +29,7 @@ import { useAuthState } from 'state/auth/hooks'
 import { useHideHeader, useModalOpen } from 'state/application/hooks'
 import { useAccount, useGetMe, useRawRole, useRole } from 'state/user/hooks'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
-import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
+import { useGetWhitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { ApplicationModal, clearStore } from 'state/application/actions'
 
@@ -44,42 +45,8 @@ import { metaMask } from 'connectors/metaMask'
 import { walletConnectV2 } from 'connectors/walletConnectV2'
 import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
-import { Footer } from './Launchpad/Footer'
+import { Footer as DefaultFooter } from './Launchpad/Footer'
 import { NotAvailablePage } from 'components/NotAvailablePage'
-
-const AppWrapper = styled.div`
-  display: flex;
-  flex-flow: column;
-  align-items: flex-start;
-  position: relative;
-`
-
-const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  ${(props) => !props.hideHeader && 'margin-top: 120px;'}
-  align-items: center;
-  flex: 1;
-  z-index: 1;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 12px;
-    margin-top: 64px;
-  `};
-`
-
-const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: boolean }>`
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  min-height: calc(100vh - 120px);
-
-  ${(props) => !props.hideHeader && 'padding-bottom: 48px;'}
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    min-height: calc(100vh - 64px);
-    // width: 100%;
-    // padding: 0px 20px;
-  `}
-`
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -98,6 +65,8 @@ const initSafary = () => {
 export default function App() {
   const getMe = useGetMe()
   const { isAdmin } = useRole()
+  const whitelabelConfig = useWhitelabelState()
+  const isIxSwap = _get(whitelabelConfig, 'config.isIxSwap', false)
 
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
@@ -105,7 +74,7 @@ export default function App() {
   const getMyKyc = useGetMyKyc()
   const { token } = useAuthState()
   const dispatch = useDispatch()
-  const getWitelabelConfig = useGetWihitelabelConfig()
+  const getWitelabelConfig = useGetWhitelabelConfig()
   const { config } = useWhitelabelState()
   const hideHeader = useHideHeader()
   const { kyc } = useKYCState()
@@ -301,9 +270,43 @@ export default function App() {
             </Suspense>
             {/* </Web3ReactManager> */}
           </ToggleableBody>
-          {!hideHeader && <Footer />}
+          {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
         </AppWrapper>
       </ErrorBoundary>
     </>
   )
 }
+
+const AppWrapper = styled.div`
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  position: relative;
+`
+
+const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  ${(props) => !props.hideHeader && 'margin-top: 120px;'}
+  align-items: center;
+  flex: 1;
+  z-index: 1;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 12px;
+    margin-top: 64px;
+  `};
+`
+
+const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: boolean }>`
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  min-height: calc(100vh - 120px);
+
+  ${(props) => !props.hideHeader && 'padding-bottom: 48px;'}
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    min-height: calc(100vh - 64px);
+    // width: 100%;
+    // padding: 0px 20px;
+  `}
+`

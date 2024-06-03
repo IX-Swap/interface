@@ -1,5 +1,6 @@
 import React from 'react'
 import { Trans } from '@lingui/macro'
+import styled from 'styled-components'
 
 import { ReactComponent as telegramImg } from 'assets/images/social/Telegram.svg'
 import { ReactComponent as twitterImg } from 'assets/images/social/Twitter.svg'
@@ -30,9 +31,9 @@ export const SocialBlock = () => {
 
   return (
     <SocialBlockContainer>
-      <div>
+      <Title>
         <Trans>Keep in Touch</Trans>
-      </div>
+      </Title>
       <div>
         {data.map(({ href, Icon, name }) => {
           const link = config?.footerConfig?.socialLinks?.[name]
@@ -50,3 +51,13 @@ export const SocialBlock = () => {
     </SocialBlockContainer>
   )
 }
+
+
+const Title = styled.div`
+  font-style: normal;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 32px;
+  color: rgb(184, 184, 204);
+`
