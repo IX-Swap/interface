@@ -7,13 +7,15 @@ import {
   useResendEmail,
   useGenerateSecondaryEmailVerifyCode,
   useVerifySecondaryEmailCode,
+  useVerifySocialAccountCode,
 } from 'state/kyc/hooks'
 import { PinnedContentButton } from 'components/Button'
 import { isMobile } from 'react-device-detect'
+import { EmailType, SuccessType } from './enum'
 
 interface Props {
   verificationSecation?: string
-  email: string
+  email?: string
   error?: boolean
   onSuccess?: (section: string) => void
   emailType: string
@@ -36,6 +38,7 @@ const EmailVerificationSection: React.FC<Props> = ({
   isVerifiedPersonalInfo,
   isVerifiedBusinessEmail,
   businessEmail,
+  verificationSecation,
 }) => {
   const generateEmailVerifyCode = useGenerateEmailVerifyCode()
   const resendEmail = useResendEmail()
@@ -63,7 +66,6 @@ const EmailVerificationSection: React.FC<Props> = ({
         !isVerifiedPersonalInfo && !isVerifiedBusinessEmail
           ? await sendPrimaryEmailVerification()
           : await sendSecondaryEmailVerification()
-
       result.success ? handleSuccess() : handleError(result.error.message)
     } catch (error) {
       handleError('An unexpected error occurred')
@@ -76,7 +78,8 @@ const EmailVerificationSection: React.FC<Props> = ({
   }
 
   const sendSecondaryEmailVerification = async () => {
-    if (!emailType || !businessEmail) throw new Error('Email type or business email is missing')
+    console.log(emailType, businessEmail, 'test')
+    if (!emailType) throw new Error('Email type or business email is missing')
     return await generateSecondaryEmailVerifyCode(emailType, businessEmail)
   }
 
@@ -136,6 +139,7 @@ const EmailVerificationSection: React.FC<Props> = ({
             isVerifiedPersonalInfo={isVerifiedPersonalInfo}
             isVerifiedBusinessEmail={isVerifiedBusinessEmail}
             emailType={emailType}
+            verificationSecation={verificationSecation}
           />
           <TimerContainer>
             {timer > 0 ? (
@@ -165,11 +169,13 @@ const CodeInput: React.FC<any> = ({
   isVerifiedPersonalInfo,
   isVerifiedBusinessEmail,
   emailType,
+  verificationSecation,
 }) => {
   const inputRefs = useRef<HTMLInputElement[]>([])
   const [code, setCode] = useState(Array(numberOfBoxes).fill(''))
   const verifyIndividualCode = useVerifyIndividualCode()
   const verifySecondaryEmailCode = useVerifySecondaryEmailCode()
+  const verifySocialAccountCode = useVerifySocialAccountCode()
   const addPopup = useAddPopup()
   const [verifyError, setVerifyError] = useState(false)
 
@@ -192,10 +198,15 @@ const CodeInput: React.FC<any> = ({
   const handleVerifyCode = async () => {
     const verificationCode = code.join('')
     try {
-      const result =
-        !isVerifiedPersonalInfo && !isVerifiedBusinessEmail
-          ? await verifyIndividualCode(verificationCode)
-          : await verifySecondaryEmailCode(verificationCode)
+      let result
+      if (isVerifiedPersonalInfo && !isVerifiedBusinessEmail && verificationSecation === 'Telegram') {
+        result = await verifySocialAccountCode(verificationCode)
+      } else {
+        result =
+          !isVerifiedPersonalInfo && !isVerifiedBusinessEmail
+            ? await verifyIndividualCode(verificationCode)
+            : await verifySecondaryEmailCode(verificationCode)
+      }
 
       if (result.success) {
         handleVerificationSuccess()
@@ -212,7 +223,10 @@ const CodeInput: React.FC<any> = ({
   }
 
   const handleVerificationSuccess = () => {
-    if (onSuccess) onSuccess(emailType === 'primary-email' ? 'personal' : 'businessEmail')
+    if (onSuccess) {
+      const successType = emailType === EmailType.PRIMARY ? SuccessType.PERSONAL : SuccessType.BUSINESS
+      onSuccess(successType)
+    }
     addPopup({ info: { success: true, summary: 'Verification successful!' } })
   }
 
@@ -248,13 +262,9 @@ const CodeInput: React.FC<any> = ({
           />
         ))}
       </CodeRow>
-      {!isVerifiedPersonalInfo && !isVerifiedBusinessEmail ? (
-        <PinnedContentButton disabled={error} onClick={handleButtonClick}>
-          {buttonText}
-        </PinnedContentButton>
-      ) : (
-        <PinnedContentButton onClick={handleButtonClick}>{buttonText}</PinnedContentButton>
-      )}
+      <PinnedContentButton disabled={error} onClick={handleButtonClick}>
+        {buttonText}
+      </PinnedContentButton>
     </CodeInputContainer>
   )
 }

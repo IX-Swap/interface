@@ -19,17 +19,15 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useAuthState } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
-import { useAddPopup } from 'state/application/hooks'
 import { KycSelect as Select, KycTextInput as TextInput } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { individualFormV2InitialValues, promptValue } from './mock'
 import { FormCard, FormGrid, FormWrapper, StyledStickyBox } from './styleds'
-import { individualErrorsSchemaV2 } from './schema'
+import { businessEmailSchema, individualErrorsSchemaV2 } from './schema'
 import { Line } from 'components/Line'
-import { ReactComponent as CheckIcon } from 'assets/images/newRoundCheck.svg'
 import EmailVerificationSection from './EmailVerificationSection'
 import VerificationConfirmation from './VerificationConfirmation'
-
+import { SecondaryContactTypeV2 } from './enum'
 export const FormRow = styled(Row)`
   align-items: flex-start;
   gap: 35px;
@@ -118,7 +116,6 @@ export default function IndividualKycFormV2() {
   const canLeavePage = useRef(false)
   const [cookies] = useCookies(['annoucementsSeen'])
   const [errors, setErrors] = useState<any>({})
-  const addPopup = useAddPopup()
   const history = useHistory()
   const { kyc, loadingRequest } = useKYCState()
   const { account } = useActiveWeb3React()
@@ -209,7 +206,13 @@ export default function IndividualKycFormV2() {
           <Formik
             innerRef={form}
             initialValues={individualFormV2InitialValues}
-            validationSchema={individualErrorsSchemaV2}
+            validationSchema={
+              selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL
+                ? businessEmailSchema
+                : selectedCheckbox !== SecondaryContactTypeV2.TELEGRAM
+                ? individualErrorsSchemaV2
+                : undefined
+            }
             initialErrors={errors}
             validateOnBlur={true}
             validateOnChange={true}
@@ -225,14 +228,13 @@ export default function IndividualKycFormV2() {
                 error.inner.forEach((e: any) => {
                   newErrors[e.path] = e.message
                 })
-                addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
+                // addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
                 setErrors(newErrors)
                 canLeavePage.current = false
               }
             }}
           >
             {({ values, handleSubmit, setFieldValue, errors, touched, isValid }) => {
-              console.log(isPersonalVerified, 'kyckyckyckyc12')
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
@@ -306,7 +308,7 @@ export default function IndividualKycFormV2() {
                             error={!isValid}
                             verificationSecation="Personal Information"
                             email={values.email}
-                            emailType={'primary-email'}
+                            emailType={'primary_email'}
                             isVerifiedPersonalInfo={false}
                             isVerifiedBusinessEmail={false}
                             personalInfo={{
@@ -337,7 +339,7 @@ export default function IndividualKycFormV2() {
                           </RowStart>
                           <RowStart>
                             <CheckboxContainer>
-                              <CheckboxLabel selected={selectedCheckbox === 'BusinessEmail'}>
+                              <CheckboxLabel selected={selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL}>
                                 <BoxWrapper>
                                   <KYCEmailIcon />
                                   <TYPE.subHeader1>Business Email</TYPE.subHeader1>
@@ -346,20 +348,20 @@ export default function IndividualKycFormV2() {
                                 <CheckboxInput
                                   type="checkbox"
                                   value="BusinessEmail"
-                                  checked={selectedCheckbox === 'BusinessEmail'}
+                                  checked={selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL}
                                   onChange={handleCheckboxChange}
                                 />
                               </CheckboxLabel>
-                              <CheckboxLabel selected={selectedCheckbox === 'Telegram'}>
+                              <CheckboxLabel selected={selectedCheckbox === SecondaryContactTypeV2.TELEGRAM}>
                                 <BoxWrapper>
                                   <TelegramIcon style={{ marginTop: '3px' }} />
-                                  <TYPE.subHeader1> Telegram</TYPE.subHeader1>
+                                  <TYPE.subHeader1> {SecondaryContactTypeV2.TELEGRAM}</TYPE.subHeader1>
                                 </BoxWrapper>
 
                                 <CheckboxInput
                                   type="checkbox"
                                   value="Telegram"
-                                  checked={selectedCheckbox === 'Telegram'}
+                                  checked={selectedCheckbox === SecondaryContactTypeV2.TELEGRAM}
                                   onChange={handleCheckboxChange}
                                 />
                               </CheckboxLabel>
@@ -379,7 +381,7 @@ export default function IndividualKycFormV2() {
                             </CheckboxContainer>
                           </RowStart>
 
-                          {selectedCheckbox === 'BusinessEmail' && (
+                          {selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL && (
                             <>
                               {!kyc?.individual?.isSecondaryContactVerified && !isBusinessEmailVerified && (
                                 <Column>
@@ -388,7 +390,8 @@ export default function IndividualKycFormV2() {
                                     id="emailAddressField"
                                     label="Email address"
                                     value={values.businessEmail}
-                                    error={errors.businessEmail}
+                                    error={touched.businessEmail && errors.businessEmail}
+                                    // error={errors.businessEmail}
                                     onChange={(e: any) =>
                                       onChangeInput('businessEmail', e.currentTarget.value, values, setFieldValue)
                                     }
@@ -414,14 +417,21 @@ export default function IndividualKycFormV2() {
                               )}
                             </>
                           )}
-                          {selectedCheckbox === 'Telegram' && (
+                          {selectedCheckbox === SecondaryContactTypeV2.TELEGRAM && (
                             <>
-                              <EmailVerificationSection
-                                emailType={'secondary-email'}
-                                error={!isValid}
-                                verificationSecation="Telegram"
-                                email={values.telegram}
-                              />
+                              {!kyc?.individual?.isSecondaryContactVerified && !isBusinessEmailVerified && (
+                                <EmailVerificationSection
+                                  emailType={'social_account'}
+                                  error={false}
+                                  verificationSecation={SecondaryContactTypeV2.TELEGRAM}
+                                  isVerifiedBusinessEmail={false}
+                                  isVerifiedPersonalInfo={true}
+                                  onSuccess={() => handleSuccess('businessEmail')}
+                                />
+                              )}
+                              {(isBusinessEmailVerified || kyc?.individual?.isSecondaryContactVerified) && (
+                                <VerificationConfirmation />
+                              )}
                             </>
                           )}
                         </div>
@@ -430,10 +440,7 @@ export default function IndividualKycFormV2() {
                       <FormCard
                         id="verify-documents"
                         style={
-                          !kyc?.individual?.email &&
-                          !isPersonalVerified &&
-                          !isBusinessEmailVerified &&
-                          !kyc?.individual?.isSecondaryContactVerified
+                          !isBusinessEmailVerified && !kyc?.individual?.isSecondaryContactVerified
                             ? { filter: 'blur(5px)', pointerEvents: 'none' }
                             : {}
                         }

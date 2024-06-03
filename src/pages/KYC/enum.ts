@@ -22,3 +22,17 @@ export enum SecondaryContactType {
   SOCIAL_MEDIA_HANDLE = 'Social Media Handle',
 }
 
+export enum EmailType {
+  PRIMARY = 'primary_email',
+  SECONDARY = 'secondary_email',
+}
+
+export enum SuccessType {
+  PERSONAL = 'personal',
+  BUSINESS = 'businessEmail',
+}
+
+export enum SecondaryContactTypeV2 {
+  BUSINESS_EMAIL = 'BusinessEmail',
+  TELEGRAM = 'Telegram',
+}
