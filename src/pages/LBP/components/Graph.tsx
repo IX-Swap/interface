@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { Card } from 'rebass'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area, AreaChart } from 'recharts'
 import { NewLine } from 'components/Line'
 import { ReactComponent as DurationIcon } from '../../../assets/images/group3.svg'
 import { ReactComponent as MarketCapIcon } from '../../../assets/images/group1.svg'
@@ -142,18 +142,20 @@ export default function Graph({ graphData, step, setEndPrice, setStartPrice }: G
         Price Discovery Preview
       </p>
 
-      <LineChart width={332} height={332} data={data} margin={{ top: 20, right: 30, bottom: 10 }}>
+      <AreaChart width={332} height={332} data={data} margin={{ top: 20, right: 30, bottom: 10 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#8884d8" horizontal={false} vertical={false} />
-        <XAxis
-          dataKey="date"
-          label={{ value: '', position: 'insideBottom', offset: -10 }}
-          axisLine={false}
-          tickLine={false}
-        />
+        <defs>
+          <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#6666FF" stopOpacity={0.3} />
+            <stop offset="100%" stopColor="#6666FF" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <XAxis dataKey="date" axisLine={false} tick={false} />
+        <XAxis xAxisId="1" dataKey="date" allowDuplicatedCategory={false} axisLine={false} />
         <YAxis dataKey="price" axisLine={false} tickLine={false} />
         <Tooltip />
-        <Line strokeWidth={2.5} dataKey="price" stroke="#8884d8" dot={false} type="monotone" />
-      </LineChart>
+        <Area type="monotone" dataKey="price" stroke="#8884d8" fillOpacity={1} fill="url(#colorValue)" />
+      </AreaChart>
 
       {contentData.map(({ icon: Icon, title, description }, index) => (
         <React.Fragment key={index}>
