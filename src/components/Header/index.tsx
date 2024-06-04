@@ -248,7 +248,6 @@ export default function Header() {
     console.log('Connected')
   }, [])
 
-  console.log('config?.customStyles?.logo', config)
   return (
     <>
       {isMobile && (
