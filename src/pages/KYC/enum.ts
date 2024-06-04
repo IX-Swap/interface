@@ -25,11 +25,13 @@ export enum SecondaryContactType {
 export enum EmailType {
   PRIMARY = 'primary_email',
   SECONDARY = 'secondary_email',
+  SOCIAL_ACCOUNT = 'social_account'
 }
 
 export enum SuccessType {
   PERSONAL = 'personal',
   BUSINESS = 'businessEmail',
+
 }
 
 export enum SecondaryContactTypeV2 {

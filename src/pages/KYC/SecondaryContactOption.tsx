@@ -7,11 +7,13 @@ import {
   useResendEmail,
   useGenerateSecondaryEmailVerifyCode,
   useVerifySecondaryEmailCode,
-  useVerifySocialAccountCode,
+  useSocialAccountVerificationStatus,
 } from 'state/kyc/hooks'
 import { PinnedContentButton } from 'components/Button'
 import { isMobile } from 'react-device-detect'
 import { EmailType, SuccessType } from './enum'
+import { TYPE } from 'theme'
+import { ReactComponent as CopyIcon } from 'assets/images/copy.svg'
 
 interface Props {
   verificationSecation?: string
@@ -50,6 +52,7 @@ const SecondaryContactOption: React.FC<Props> = ({
   const [resetCodeInput, setResetCodeInput] = useState(false)
   const [buttonText, setButtonText] = useState('Send Code')
   const [initialEmail, setInitialEmail] = useState(personalInfo?.email || '')
+  const [socialAccountOTP, SetsocialAccountOTP] = useState()
   console.log(isVerifiedPersonalInfo, isVerifiedBusinessEmail, 'isVerifiedPersonalInfo', 'isVerifiedBusinessEmail')
 
   useEffect(() => {
@@ -87,9 +90,12 @@ const SecondaryContactOption: React.FC<Props> = ({
   }
 
   const sendSecondaryEmailVerification = async () => {
-    console.log(emailType, businessEmail, 'test')
     if (!emailType) throw new Error('Email type or business email is missing')
-    return await generateSecondaryEmailVerifyCode(emailType, businessEmail)
+    const response = await generateSecondaryEmailVerifyCode(emailType, businessEmail)
+    if (emailType ===  EmailType.SOCIAL_ACCOUNT) {
+      SetsocialAccountOTP(response?.response?.data?.otp)
+    }
+    return response
   }
 
   const handleSuccess = () => {
@@ -131,10 +137,22 @@ const SecondaryContactOption: React.FC<Props> = ({
     <EmailVerificationContainer>
       <ContentContainer>
         <ModalContent>
-          <Title>Enter the code</Title>
-          <SubTitle>
-            A 6-digit verification code has been sent to your email. Enter the code below to verify your email.
-          </SubTitle>
+          {emailType ===  EmailType.SOCIAL_ACCOUNT ? (
+            <>
+              <SocialAccountTitle>Instruction</SocialAccountTitle>
+              <SocialAccountSubTitle>1. Open the Telegram App</SocialAccountSubTitle>
+              <SocialAccountSubTitle>2. Start a chat with @IXSbot</SocialAccountSubTitle>
+              <SocialAccountSubTitle>3. Get Verification Code</SocialAccountSubTitle>
+            </>
+          ) : (
+            <>
+              <Title>Enter the code</Title>
+              <SubTitle>
+                A 6-digit verification code has been sent to your email. Enter the code below to verify your email.
+              </SubTitle>
+            </>
+          )}
+
           <CodeInput
             error={error}
             key={resetCodeInput}
@@ -149,6 +167,7 @@ const SecondaryContactOption: React.FC<Props> = ({
             isVerifiedBusinessEmail={isVerifiedBusinessEmail}
             emailType={emailType}
             verificationSecation={verificationSecation}
+            socialAccountOTP={socialAccountOTP}
           />
           <TimerContainer>
             {timer > 0 ? (
@@ -179,12 +198,13 @@ const CodeInput: React.FC<any> = ({
   isVerifiedBusinessEmail,
   emailType,
   verificationSecation,
+  socialAccountOTP,
 }) => {
   const inputRefs = useRef<HTMLInputElement[]>([])
   const [code, setCode] = useState(Array(numberOfBoxes).fill(''))
   const verifyIndividualCode = useVerifyIndividualCode()
   const verifySecondaryEmailCode = useVerifySecondaryEmailCode()
-  const verifySocialAccountCode = useVerifySocialAccountCode()
+  const verifySocialAccountCode = useSocialAccountVerificationStatus()
   const addPopup = useAddPopup()
   const [verifyError, setVerifyError] = useState(false)
 
@@ -206,16 +226,12 @@ const CodeInput: React.FC<any> = ({
 
   const handleVerifyCode = async () => {
     const verificationCode = code.join('')
+
     try {
-      let result
-      if (isVerifiedPersonalInfo && !isVerifiedBusinessEmail && verificationSecation === 'Telegram') {
-        result = await verifySocialAccountCode(verificationCode)
-      } else {
-        result =
-          !isVerifiedPersonalInfo && !isVerifiedBusinessEmail
-            ? await verifyIndividualCode(verificationCode)
-            : await verifySecondaryEmailCode(verificationCode)
-      }
+      const verifyCode =
+        !isVerifiedPersonalInfo && !isVerifiedBusinessEmail ? verifyIndividualCode : verifySecondaryEmailCode
+
+      const result = await verifyCode(verificationCode)
 
       if (result.success) {
         handleVerificationSuccess()
@@ -250,33 +266,73 @@ const CodeInput: React.FC<any> = ({
       handleVerifyCode()
     }
   }
+
+  const handleCopyClick = async () => {
+    navigator.clipboard.writeText(socialAccountOTP)
+    addPopup({ info: { success: true, summary: 'Code copied to clipboard!' } })
+    const interval = setInterval(async () => {
+      const result = await verifySocialAccountCode()
+      if (result.status === 1) {
+        clearInterval(interval)
+        handleVerificationSuccess()
+      }
+    }, 5000)
+  }
+
   return (
-    <CodeInputContainer key={reset}>
-      <CodeRow>
-        {code.map((_, index) => (
-          <CodeBox
-            key={index}
-            placeholder="0"
-            value={code[index]}
-            onChange={(e) => handleCodeChange(index, e.target.value)}
-            borderColor={verifyError ? '#FF6D6D80' : '#E6E6FF'}
-            backgroundColor={verifyError ? '#F8E9EC' : '#F7F7FA'}
-            color={verifyError ? '#FF6D6D' : '#292933'}
-            placeholderColor={verifyError ? '#FF6D6D' : '#B8B8CC'}
-            ref={(el) => {
-              if (el) {
-                inputRefs.current[index] = el as HTMLInputElement
-              }
-            }}
-          />
-        ))}
-      </CodeRow>
-      <PinnedContentButton disabled={error} onClick={handleButtonClick}>
-        {buttonText}
-      </PinnedContentButton>
-    </CodeInputContainer>
+    <>
+      <CodeInputContainer key={reset}>
+        {emailType === EmailType.SOCIAL_ACCOUNT ? (
+          ''
+        ) : (
+          <CodeRow>
+            {code.map((_, index) => (
+              <CodeBox
+                key={index}
+                placeholder="0"
+                value={code[index]}
+                onChange={(e) => handleCodeChange(index, e.target.value)}
+                borderColor={verifyError ? '#FF6D6D80' : '#E6E6FF'}
+                backgroundColor={verifyError ? '#F8E9EC' : '#F7F7FA'}
+                color={verifyError ? '#FF6D6D' : '#292933'}
+                placeholderColor={verifyError ? '#FF6D6D' : '#B8B8CC'}
+                ref={(el) => {
+                  if (el) {
+                    inputRefs.current[index] = el as HTMLInputElement
+                  }
+                }}
+              />
+            ))}
+          </CodeRow>
+        )}
+
+        {socialAccountOTP ? (
+          <Container>
+            <TYPE.title7>{socialAccountOTP}</TYPE.title7>
+            <CopyIcon style={{ width: '30px', height: '18px', cursor: 'pointer' }} onClick={handleCopyClick} />
+          </Container>
+        ) : (
+          <PinnedContentButton disabled={error} onClick={handleButtonClick}>
+            {buttonText}
+          </PinnedContentButton>
+        )}
+      </CodeInputContainer>
+      {emailType ===  EmailType.SOCIAL_ACCOUNT && (
+        <SocialAccountSubTitle style={{ marginTop: '20px' }}>4. Send the code to the Bot</SocialAccountSubTitle>
+      )}
+    </>
   )
 }
+const Container = styled.div`
+  background: #ffffff;
+  border: 1px solid #e6e6ff;
+  padding: 24px 16px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  place-items: center;
+  border-radius: 8px;
+`
 
 const EmailVerificationContainer = styled.div`
   background: #f7f7fa;
@@ -313,12 +369,37 @@ const Title = styled.div`
   }
 `
 
+const SocialAccountTitle = styled.div`
+  font-weight: 600;
+  font-size: 20px;
+  text-align: left;
+  color: #292933;
+  margin-top: 20px;
+  @media (max-width: 768px) {
+    font-size: 13px;
+    margin-top: 20px;
+  }
+`
+
 const SubTitle = styled.div`
   font-weight: 400;
   font-size: 14px;
   text-align: center;
   color: #666680;
   margin: 10px 220px;
+  line-height: 20px;
+  @media (max-width: 768px) {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+`
+
+const SocialAccountSubTitle = styled.div`
+  font-weight: 400;
+  font-size: 14px;
+  text-align: left;
+  color: #666680;
+  margin: 10px 0px;
   line-height: 20px;
   @media (max-width: 768px) {
     font-size: 13px;

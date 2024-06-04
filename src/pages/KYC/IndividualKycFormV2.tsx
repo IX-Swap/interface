@@ -26,7 +26,7 @@ import { FormCard, FormGrid, FormWrapper, StyledStickyBox } from './styleds'
 import { businessEmailSchema, individualErrorsSchemaV2 } from './schema'
 import { Line } from 'components/Line'
 import VerificationConfirmation from './VerificationConfirmation'
-import { SecondaryContactTypeV2 } from './enum'
+import { SecondaryContactTypeV2, SuccessType } from './enum'
 import SecondaryContactOption from './SecondaryContactOption'
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -177,9 +177,9 @@ export default function IndividualKycFormV2() {
   }
 
   const handleSuccess = (section: string) => {
-    if (section === 'personal') {
+    if (section === SuccessType.PERSONAL) {
       setIsPersonalVerified(true)
-    } else if (section === 'businessEmail') {
+    } else if (section === SuccessType.BUSINESS) {
       setIsBusinessEmailVerified(true)
     }
   }

@@ -159,19 +159,19 @@ export const useVerifySecondaryEmailCode = () => {
   }, [])
 }
 
-export const useVerifySocialAccountCode = () => {
-  return React.useCallback(async (otp: string) => {
+export const useSocialAccountVerificationStatus = () => {
+  return React.useCallback(async () => {
     try {
-      const response = await apiService.put(`/kyc/individual/verifySocialAccount`, { otp })
+      const response = await apiService.get(`/kyc/individual/socialAccountVerificationStatus`)
       console.log(response)
-      return { success: true, response }
-    } catch (error: any) {
+      const { status } = response.data
+      return { success: true, status }
+    } catch (error) {
       console.error(error)
       return { success: false, error }
     }
   }, [])
 }
-
 export const useVerifyIdentity = () => {
   return React.useCallback(async () => {
     try {
