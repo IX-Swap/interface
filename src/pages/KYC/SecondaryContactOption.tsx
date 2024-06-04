@@ -30,7 +30,7 @@ interface Props {
   businessEmail?: any
 }
 
-const EmailVerificationSection: React.FC<Props> = ({
+const SecondaryContactOption: React.FC<Props> = ({
   error,
   personalInfo,
   onSuccess,
@@ -49,7 +49,9 @@ const EmailVerificationSection: React.FC<Props> = ({
   const [errorMessage, setErrorMessage] = useState('')
   const [resetCodeInput, setResetCodeInput] = useState(false)
   const [buttonText, setButtonText] = useState('Send Code')
+  const [initialEmail, setInitialEmail] = useState(personalInfo?.email || '')
   console.log(isVerifiedPersonalInfo, isVerifiedBusinessEmail, 'isVerifiedPersonalInfo', 'isVerifiedBusinessEmail')
+
   useEffect(() => {
     let interval: NodeJS.Timeout
     if (timer > 0) {
@@ -60,6 +62,13 @@ const EmailVerificationSection: React.FC<Props> = ({
     return () => clearInterval(interval)
   }, [timer])
 
+  useEffect(() => {
+    if (personalInfo?.email !== initialEmail) {
+      setInitialEmail(personalInfo?.email || '')
+      setHasCodeError(false)
+      setErrorMessage('')
+    }
+  }, [personalInfo?.email, initialEmail])
   const handleSendCode = async () => {
     try {
       const result =
@@ -372,4 +381,4 @@ const CodeRow = styled.div`
   flex-direction: row;
 `
 
-export default EmailVerificationSection
+export default SecondaryContactOption

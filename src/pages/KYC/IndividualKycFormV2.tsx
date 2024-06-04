@@ -25,9 +25,9 @@ import { individualFormV2InitialValues, promptValue } from './mock'
 import { FormCard, FormGrid, FormWrapper, StyledStickyBox } from './styleds'
 import { businessEmailSchema, individualErrorsSchemaV2 } from './schema'
 import { Line } from 'components/Line'
-import EmailVerificationSection from './EmailVerificationSection'
 import VerificationConfirmation from './VerificationConfirmation'
 import { SecondaryContactTypeV2 } from './enum'
+import SecondaryContactOption from './SecondaryContactOption'
 export const FormRow = styled(Row)`
   align-items: flex-start;
   gap: 35px;
@@ -197,6 +197,16 @@ export default function IndividualKycFormV2() {
     }
   }
 
+  const getValidationSchema = (selectedCheckbox: any) => {
+    if (selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL) {
+      return businessEmailSchema
+    }
+    if (selectedCheckbox !== SecondaryContactTypeV2.TELEGRAM) {
+      return individualErrorsSchemaV2
+    }
+    return
+  }
+
   return (
     <Loadable loading={!isLoggedIn}>
       <Prompt when={!canLeavePage.current} message={promptValue} />
@@ -206,13 +216,7 @@ export default function IndividualKycFormV2() {
           <Formik
             innerRef={form}
             initialValues={individualFormV2InitialValues}
-            validationSchema={
-              selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL
-                ? businessEmailSchema
-                : selectedCheckbox !== SecondaryContactTypeV2.TELEGRAM
-                ? individualErrorsSchemaV2
-                : undefined
-            }
+            validationSchema={getValidationSchema(selectedCheckbox)}
             initialErrors={errors}
             validateOnBlur={true}
             validateOnChange={true}
@@ -303,8 +307,8 @@ export default function IndividualKycFormV2() {
                             onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
                           />
                         </Column>
-                        {!kyc?.individual?.email && !isPersonalVerified && (
-                          <EmailVerificationSection
+                        {!kyc?.individual?.isEmailVerified && !isPersonalVerified && (
+                          <SecondaryContactOption
                             error={!isValid}
                             verificationSecation="Personal Information"
                             email={values.email}
@@ -321,12 +325,12 @@ export default function IndividualKycFormV2() {
                           />
                         )}
 
-                        {isPersonalVerified || kyc?.individual?.email ? <VerificationConfirmation /> : null}
+                        {isPersonalVerified || kyc?.individual?.isEmailVerified ? <VerificationConfirmation /> : null}
                       </FormCard>
                       <FormCard
                         id="secondary-contact"
                         style={
-                          !kyc?.individual?.email && !isPersonalVerified
+                          !kyc?.individual?.isEmailVerified && !isPersonalVerified
                             ? { filter: 'blur(5px)', pointerEvents: 'none' }
                             : {}
                         }
@@ -365,7 +369,7 @@ export default function IndividualKycFormV2() {
                                   onChange={handleCheckboxChange}
                                 />
                               </CheckboxLabel>
-                              <CheckboxLabel selected={selectedCheckbox === 'ProofOfAddress'}>
+                              <CheckboxLabel selected={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}>
                                 <BoxWrapper>
                                   <AddressIcon />
                                   <TYPE.subHeader1> Proof of Address</TYPE.subHeader1>
@@ -374,7 +378,7 @@ export default function IndividualKycFormV2() {
                                 <CheckboxInput
                                   type="checkbox"
                                   value="ProofOfAddress"
-                                  checked={selectedCheckbox === 'ProofOfAddress'}
+                                  checked={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}
                                   onChange={handleCheckboxChange}
                                 />
                               </CheckboxLabel>
@@ -400,7 +404,7 @@ export default function IndividualKycFormV2() {
                               )}
 
                               {!kyc?.individual?.isSecondaryContactVerified && !isBusinessEmailVerified && (
-                                <EmailVerificationSection
+                                <SecondaryContactOption
                                   emailType={'secondary_email'}
                                   error={!isValid}
                                   verificationSecation="Business Email"
@@ -420,7 +424,7 @@ export default function IndividualKycFormV2() {
                           {selectedCheckbox === SecondaryContactTypeV2.TELEGRAM && (
                             <>
                               {!kyc?.individual?.isSecondaryContactVerified && !isBusinessEmailVerified && (
-                                <EmailVerificationSection
+                                <SecondaryContactOption
                                   emailType={'social_account'}
                                   error={false}
                                   verificationSecation={SecondaryContactTypeV2.TELEGRAM}
@@ -440,7 +444,9 @@ export default function IndividualKycFormV2() {
                       <FormCard
                         id="verify-documents"
                         style={
-                          !isBusinessEmailVerified && !kyc?.individual?.isSecondaryContactVerified
+                          !isBusinessEmailVerified &&
+                          !kyc?.individual?.isSecondaryContactVerified &&
+                          selectedCheckbox !== SecondaryContactTypeV2.PROOF_OF_ADDRESS
                             ? { filter: 'blur(5px)', pointerEvents: 'none' }
                             : {}
                         }

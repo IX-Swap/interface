@@ -35,4 +35,5 @@ export enum SuccessType {
 export enum SecondaryContactTypeV2 {
   BUSINESS_EMAIL = 'BusinessEmail',
   TELEGRAM = 'Telegram',
+  PROOF_OF_ADDRESS = 'ProofOfAddress'
 }
