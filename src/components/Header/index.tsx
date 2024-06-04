@@ -5,6 +5,8 @@ import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 import useScrollPosition from '@react-hook/window-scroll'
+import _get from 'lodash/get'
+
 import useLightBackground from 'components/AppBackground/useLightBackground'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { useKYCState } from 'state/kyc/hooks'
@@ -222,6 +224,8 @@ export default function Header() {
   const [showConnectModal, setShowConnectModal] = React.useState(false)
   const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
+  const logoUrl = _get(config, 'logoUrl', null)
+
   const isAllowed = useCallback(
     (path: string) => {
       if (!config || !config.pages || config.pages.length === 0) {
@@ -252,9 +256,13 @@ export default function Header() {
           <HeaderFrame>
             <HeaderRow>
               <Title href={config?.defaultUrl || '.'}>
-                <IXSIcon>
-                  <NewLogo width="auto" height="47px" {...config?.customStyles?.logo} />
-                </IXSIcon>
+                {logoUrl ? (
+                  <img src={logoUrl} alt="logo" width="auto" height="47px" />
+                ) : (
+                  <IXSIcon>
+                    <NewLogo width="auto" height="47px" {...config?.customStyles?.logo} />
+                  </IXSIcon>
+                )}
               </Title>
             </HeaderRow>
             <HeaderControls>
@@ -291,9 +299,15 @@ export default function Header() {
           <HeaderFrame>
             <HeaderRow marginLeft={50}>
               <Title href={config?.defaultUrl || '.'}>
-                <IXSIcon>
-                  <NewLogo width="130px" height="80px" {...config?.customStyles?.logo} />
-                </IXSIcon>
+                {logoUrl ? (
+                  <div style={{ width: 130 }}>
+                    <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
+                  </div>
+                ) : (
+                  <IXSIcon>
+                    <NewLogo width="130px" height="80px" {...config?.customStyles?.logo} />
+                  </IXSIcon>
+                )}
               </Title>
             </HeaderRow>
             <HeaderLinks />
