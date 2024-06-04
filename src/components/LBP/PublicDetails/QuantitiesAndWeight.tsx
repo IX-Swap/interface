@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import Column, { AutoColumn } from 'components/Column'
-import { RowBetween } from 'components/Row'
+import React from 'react'
+import Column from 'components/Column'
 import styled from 'styled-components'
 import _get from 'lodash/get'
 
@@ -28,14 +27,37 @@ const QuantitiesAndWeight: React.FC<QuantitiesAndWeightProps> = ({ lbpData, stat
 
   return (
     <Column>
-      <AutoColumn style={{ marginBottom: '20px' }} justify="center" gap="md">
-        <RowBetween>
-          <QuantitiesBox>
-            <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
+      <GridContainer2Columns style={{ marginBottom: '20px' }}>
+        <GridItem2Columns>
+          <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
+          <TokenWrapper>
+            <>
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <TYPE.label fontSize={'14px'}>{lbpData?.shareAmount}</TYPE.label>
+              <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
+                {shareSymbol || lbpData?.title}
+              </TYPE.body3>
+            </>
+            <VerticalLine />
+            <>
+              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+              <TYPE.label fontSize={'14px'}>{lbpData?.assetTokenAmount}</TYPE.label>
+              <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
+                {lbpData?.assetTokenSymbol}
+              </TYPE.body3>
+            </>
+          </TokenWrapper>
+        </GridItem2Columns>
+
+        {status && ![LbpStatus.ended, LbpStatus.closed, LbpStatus.pending].includes(status as any) ? (
+          <GridItem2Columns>
+            <TYPE.subHeader1 color={'#555566'}>Current Quantities</TYPE.subHeader1>
             <TokenWrapper>
               <>
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>{lbpData?.shareAmount}</TYPE.label>
+                <TYPE.label fontSize={'14px'}>
+                  {useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)}{' '}
+                </TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
                   {shareSymbol || lbpData?.title}
                 </TYPE.body3>
@@ -43,97 +65,70 @@ const QuantitiesAndWeight: React.FC<QuantitiesAndWeightProps> = ({ lbpData, stat
               <VerticalLine />
               <>
                 <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>{lbpData?.assetTokenAmount}</TYPE.label>
+                <TYPE.label fontSize={'14px'}>
+                  {useFormatNumberWithDecimal(statsData?.currentAssetReserve || '', 2)}{' '}
+                </TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
                   {lbpData?.assetTokenSymbol}
                 </TYPE.body3>
               </>
             </TokenWrapper>
-          </QuantitiesBox>
+          </GridItem2Columns>
+        ) : null}
+      </GridContainer2Columns>
 
-          {status && ![LbpStatus.ended, LbpStatus.closed, LbpStatus.pending].includes(status as any) ? (
-            <QuantitiesBox>
-              <TYPE.subHeader1 color={'#555566'}>Current Quantities</TYPE.subHeader1>
-              <TokenWrapper>
-                <>
-                  <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                  <TYPE.label fontSize={'14px'}>
-                    {useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)}{' '}
-                  </TYPE.label>
-                  <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                    {shareSymbol || lbpData?.title}
-                  </TYPE.body3>
-                </>
-                <VerticalLine />
-                <>
-                  <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                  <TYPE.label fontSize={'14px'}>
-                    {useFormatNumberWithDecimal(statsData?.currentAssetReserve || '', 2)}{' '}
-                  </TYPE.label>
-                  <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                    {lbpData?.assetTokenSymbol}
-                  </TYPE.body3>
-                </>
-              </TokenWrapper>
-            </QuantitiesBox>
-          ) : null}
-        </RowBetween>
-      </AutoColumn>
+      <GridContainer3Columns>
+        <GridItem3Columns>
+          <TYPE.subHeader1 color={'#555566'}>Start Weight</TYPE.subHeader1>
+          <TokenWrapper>
+            <>
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <TYPE.label fontSize={'14px'}>{lbpData?.startWeight}% </TYPE.label>
+            </>
+            <VerticalLine />
+            <>
+              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+              <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.startWeight || 0)}% </TYPE.label>
+            </>
+          </TokenWrapper>
+        </GridItem3Columns>
 
-      <AutoColumn justify="center" gap="md">
-        <RowBetween style={{ gap: '25px' }}>
-          <WeightBox>
-            <TYPE.subHeader1 color={'#555566'}>Start Weight</TYPE.subHeader1>
+        {status && ![LbpStatus.ended, LbpStatus.closed, LbpStatus.pending].includes(status as any) ? (
+          <GridItem3Columns>
+            <TYPE.subHeader1 color={'#555566'}>Current Weight</TYPE.subHeader1>
             <TokenWrapper>
               <>
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>{lbpData?.startWeight}% </TYPE.label>
+                <TYPE.label fontSize={'14px'}>
+                  {useFormatNumberWithDecimal(statsData?.currentShareWeight || '', 2)}%{' '}
+                </TYPE.label>
               </>
               <VerticalLine />
               <>
                 <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.startWeight || 0)}% </TYPE.label>
+                <TYPE.label fontSize={'14px'}>
+                  {useFormatNumberWithDecimal(statsData?.currentAssetWeight || '', 2)}%{' '}
+                </TYPE.label>
               </>
             </TokenWrapper>
-          </WeightBox>
+          </GridItem3Columns>
+        ) : null}
 
-          {status && ![LbpStatus.ended, LbpStatus.closed, LbpStatus.pending].includes(status as any) ? (
-            <WeightBox>
-              <TYPE.subHeader1 color={'#555566'}>Current Weight</TYPE.subHeader1>
-              <TokenWrapper>
-                <>
-                  <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                  <TYPE.label fontSize={'14px'}>
-                    {useFormatNumberWithDecimal(statsData?.currentShareWeight || '', 2)}%{' '}
-                  </TYPE.label>
-                </>
-                <VerticalLine />
-                <>
-                  <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                  <TYPE.label fontSize={'14px'}>
-                    {useFormatNumberWithDecimal(statsData?.currentAssetWeight || '', 2)}%{' '}
-                  </TYPE.label>
-                </>
-              </TokenWrapper>
-            </WeightBox>
-          ) : null}
-
-          <WeightBox>
-            <TYPE.subHeader1 color={'#555566'}>End Weight</TYPE.subHeader1>
-            <TokenWrapper>
-              <>
-                <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>{lbpData?.endWeight}% </TYPE.label>
-              </>
-              <VerticalLine />
-              <>
-                <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.endWeight || 0)}% </TYPE.label>
-              </>
-            </TokenWrapper>
-          </WeightBox>
-        </RowBetween>
-      </AutoColumn>
+        <GridItem3Columns>
+          <TYPE.subHeader1 color={'#555566'}>End Weight</TYPE.subHeader1>
+          <TokenWrapper>
+            <>
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <TYPE.label fontSize={'14px'}>{lbpData?.endWeight}% </TYPE.label>
+            </>
+            <VerticalLine />
+            <>
+              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+              <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.endWeight || 0)}% </TYPE.label>
+            </>
+          </TokenWrapper>
+        </GridItem3Columns>
+      </GridContainer3Columns>
     </Column>
   )
 }
@@ -149,25 +144,6 @@ const LogoIcon = styled.img`
 
 export default QuantitiesAndWeight
 
-const WeightBox = styled.div`
-  border: 1px solid #e6e6ff;
-  border-radius: 8px;
-  width: auto;
-  height: 80px;
-  gap: 20px;
-  padding: 16px;
-  min-width: 250px;
-`
-
-const QuantitiesBox = styled.div`
-  border: 1px solid #e6e6ff;
-  border-radius: 8px;
-  width: auto;
-  height: 80px;
-  gap: 20px;
-  padding: 16px;
-  min-width: 410px;
-`
 
 const TokenWrapper = styled.div`
   display: flex;
@@ -180,4 +156,44 @@ const VerticalLine = styled.div`
   height: 20px;
   background-color: #e5e5ff;
   margin: 7px 10px;
+`
+
+const GridContainer2Columns = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+`
+
+const GridItem2Columns = styled.div`
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
+  width: auto;
+  height: 80px;
+  gap: 20px;
+  padding: 16px;
+  min-width: 410px;
+
+  &:only-child {
+    grid-column: 1 / -1; /* Makes the only child span all columns */
+  }
+`
+
+const GridContainer3Columns = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+`
+
+const GridItem3Columns = styled.div`
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
+  width: auto;
+  height: 80px;
+  gap: 20px;
+  padding: 16px;
+  min-width: 250px;
+
+  &:only-child {
+    grid-column: 1 / -1; /* Makes the only child span all columns */
+  }
 `
