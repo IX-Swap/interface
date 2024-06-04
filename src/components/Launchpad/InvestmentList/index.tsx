@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import _get from 'lodash/get'
 
 import { InvestmentCard } from '../InvestmentCard'
 import { FilterConfig, InvestmentListFilter } from './Filter'
@@ -7,9 +8,8 @@ import { PaginationTrigger } from './PaginationTrigger'
 
 import { Offer } from 'state/launchpad/types'
 import { text53, text8 } from 'components/LaunchpadMisc/typography'
-import LbpListFilter from 'components/LBP/InvestmentList/Filter'
-import { LbpCard } from 'components/LBP/InvestmentList/LbpCard'
 import { LbpList } from 'components/LBP/InvestmentList/LbpList'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 enum InvesmentTabs {
   issuance = 'issuance',
@@ -56,6 +56,8 @@ interface Props {
 }
 
 export const InvestmentList: React.FC<Props> = (props) => {
+  const whitelabelConfig = useWhitelabelState()
+  const isIxSwap = _get(whitelabelConfig, 'config.isIxSwap', false)
   const [activeTab, setActiveTab] = React.useState<InvesmentTabs>(() => {
     const investmentTab = localStorage.getItem('investmentTab')
     return (investmentTab as InvesmentTabs) ?? InvesmentTabs.issuance
@@ -69,7 +71,7 @@ export const InvestmentList: React.FC<Props> = (props) => {
   return (
     <InvestmentListContainer>
       <InvestmentTitle>Investments</InvestmentTitle>
-      <LblTabs current={activeTab} options={tabs} onSelect={handleTabChange} />
+      {isIxSwap ? <LblTabs current={activeTab} options={tabs} onSelect={handleTabChange} /> : null}
       {activeTab === InvesmentTabs.issuance && (
         <div>
           <InvestmentListFilter filter={props.filter} onFilter={props.onFilter} />

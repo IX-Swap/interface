@@ -82,7 +82,6 @@ export default function App() {
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [countryCode, setCountryCode] = useState()
 
-  console.log('config', config)
   const routeFinalConfig = isAdmin ? routeConfigs : routeConfigs.filter((route) => !lbpAdminRoutes.includes(route.path))
 
   useEffect(() => {

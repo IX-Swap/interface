@@ -20,6 +20,7 @@ export const CustomHeaders = () => {
     <Helmet>
       <title>{config.title || 'IX Swap'}</title>
       <link rel="icon" href={config.faviconUrl || defaultFavicon} sizes="32x32" />
+      <meta name="description" content={config?.description || config.title} />
     </Helmet>
   )
 }
