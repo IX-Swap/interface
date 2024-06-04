@@ -1,34 +1,16 @@
-import React from 'react'
 import styled from 'styled-components'
-
 import Portal from '@reach/portal'
+import _get from 'lodash/get'
 
 import { Offers } from 'components/Launchpad/Offers'
-
-import { useSetHideHeader } from 'state/application/hooks'
-
-import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Banner } from './Banner'
-import { Footer } from './Footer'
-import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
-// import { Header } from './Header'
 
 export default function Launchpad() {
-  const { chainId, account } = useActiveWeb3React()
-
-  const hideHeader = useSetHideHeader()
-
-  React.useEffect(() => {
-    hideHeader(true)
-
-    return () => {
-      hideHeader(false)
-    }
-  }, [])
+  const { chainId } = useActiveWeb3React()
 
   const blurred = detectWrongNetwork(chainId)
 
@@ -44,10 +26,8 @@ export default function Launchpad() {
 
   return (
     <>
-      <Header />
       <Banner />
       <Offers />
-      <Footer />
     </>
   )
 }

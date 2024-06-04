@@ -131,15 +131,15 @@ export const HeaderLinks = () => {
 
   return (
     <HeaderLinksWrap links={7}>
-      {/* {isAllowed('/charts') && account && isWhitelisted && ( */}
-      <MenuExternalLink
-        // disabled={!isApproved}
-        target="_self"
-        href={config?.chartsUrl || 'https://info.ixswap.io/home'}
-      >
-        <Trans>Charts</Trans>
-      </MenuExternalLink>
-      {/* )} */}
+      {isAllowed('/charts') && account && isWhitelisted && (
+        <MenuExternalLink
+          // disabled={!isApproved}
+          target="_self"
+          href={config?.chartsUrl || 'https://info.ixswap.io/home'}
+        >
+          <Trans>Charts</Trans>
+        </MenuExternalLink>
+      )}
       <StyledNavLink
         id={`issuance-nav-link`}
         to={'/launchpad'}
@@ -149,30 +149,32 @@ export const HeaderLinks = () => {
       >
         <Trans>Launchpad</Trans>
       </StyledNavLink>
-      {/* {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && ( */}
-      <StyledNavLink
-        // disabled={!isApproved}
-        data-testid="securityTokensButton"
-        id={`stake-nav-link`}
-        to={routes.securityTokens('tokens')}
-        isActive={(match, { pathname }) => {
-          return pathname.includes('security-token')
-        }}
-      >
-        <Trans>Security Tokens</Trans>
-      </StyledNavLink>
-      {/* )} */}
 
-      {/* {isAllowed('/pool') && account && chainId && chains.includes(chainId) && isWhitelisted && ( */}
-      <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
-        <Trans>Liquidity Pools</Trans>
-      </StyledNavLink>
-      {/* )} */}
-      {/* {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && ( */}
-      <StyledNavLink id={`swap-nav-link`} to={'/swap'} data-testid={`swap-nav-link`}>
-        <Trans>Swap/Trade</Trans>
-      </StyledNavLink>
-      {/* )} */}
+      {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink
+          // disabled={!isApproved}
+          data-testid="securityTokensButton"
+          id={`stake-nav-link`}
+          to={routes.securityTokens('tokens')}
+          isActive={(match, { pathname }) => {
+            return pathname.includes('security-token')
+          }}
+        >
+          <Trans>Security Tokens</Trans>
+        </StyledNavLink>
+      )}
+
+      {isAllowed('/pool') && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
+          <Trans>Liquidity Pools</Trans>
+        </StyledNavLink>
+      )}
+
+      {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink id={`swap-nav-link`} to={'/swap'} data-testid={`swap-nav-link`}>
+          <Trans>Swap/Trade</Trans>
+        </StyledNavLink>
+      )}
 
       {/* {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <MenuExternalLink
@@ -200,21 +202,21 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )} */}
 
-      {/* {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && ( */}
-      <StyledNavLink
-        ref={farmNode as any}
-        id={`farming-nav-link`}
-        to={'#'}
-        isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
-      >
-        <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom-start'}>
-          <RowFixed onClick={toggle}>
-            <Trans>Farming</Trans>
-            <ChevronElement showMore={open} />
-          </RowFixed>
-        </Popover>
-      </StyledNavLink>
-      {/* )} */}
+      {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && (
+        <StyledNavLink
+          ref={farmNode as any}
+          id={`farming-nav-link`}
+          to={'#'}
+          isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
+        >
+          <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom-start'}>
+            <RowFixed onClick={toggle}>
+              <Trans>Farming</Trans>
+              <ChevronElement showMore={open} />
+            </RowFixed>
+          </Popover>
+        </StyledNavLink>
+      )}
 
       {isAllowed(routes.faucet) && account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
         <StyledNavLink disabled={!isApproved} id={`faucet-nav-link`} to={routes.faucet}>
@@ -222,16 +224,13 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {showIssuance && <StyledNavLink to="/issuance">Issuance</StyledNavLink>}
-      {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {isAllowed(routes.issuance) && showIssuance && <StyledNavLink to="/issuance">Issuance</StyledNavLink>}
+      {isAllowed('/admin') && isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink to="/admin">Admin</StyledNavLink>
       )}
 
-      {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink
-          to={'/lbp-admin'}
-          data-testid={`lbp-nav-link`}
-        >
+      {isAllowed(routes.lbpDashboard) && isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink to={'/lbp-admin'} data-testid={`lbp-nav-link`}>
           <Trans>LBP</Trans>
         </StyledNavLink>
       )}
