@@ -43,6 +43,7 @@ export interface Whitelabel {
     block2?: string
     block3?: string
   }
+  description?: string
 }
 
 export interface WlColors {

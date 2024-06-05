@@ -47,6 +47,7 @@ import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
 import { Footer as DefaultFooter } from './Launchpad/Footer'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { CustomHeaders } from 'components/CustomHeaders'
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -234,6 +235,7 @@ export default function App() {
 
   return (
     <>
+      <CustomHeaders />
       {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
       {/* {countryCode === 'SG' && <RestrictedModal />} */}
       <ErrorBoundary>

@@ -156,18 +156,18 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             </>
           )}
 
-          {isAllowed('/pool') && chainId && chains.includes(chainId) && isWhitelisted && (
+          {isAllowed(routes.pool) && chainId && chains.includes(chainId) && isWhitelisted && (
             <>
-              <MenuListItem id={`pool-nav-link`} to={`/pool`} onClick={close}>
+              <MenuListItem id={`pool-nav-link`} to={routes.pool} onClick={close}>
                 <Trans>Liquidity Pools</Trans>
               </MenuListItem>
               <Line />
             </>
           )}
 
-          {isAllowed('/swap') && chainId && chains.includes(chainId) && isWhitelisted && (
+          {isAllowed(routes.swap) && chainId && chains.includes(chainId) && isWhitelisted && (
             <>
-              <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} data-testid={`swap-nav-link`}>
+              <MenuListItem id={`swap-nav-link`} to={routes.swap} onClick={close} data-testid={`swap-nav-link`}>
                 <Trans>Swap/Trade</Trans>
               </MenuListItem>{' '}
               <Line />
@@ -184,15 +184,15 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             </ExternalListItem>
           )} */}
 
-          {isAllowed('/faucet') && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-            <MenuListItem disabled={!isApproved} id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
+          {isAllowed(routes.faucet) && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+            <MenuListItem disabled={!isApproved} id={`faucet-nav-link`} to={routes.faucet} onClick={close}>
               <Trans>Faucet</Trans>
             </MenuListItem>
           )}
 
-          {isAllowed('/kyc') && (
+          {isAllowed(routes.kyc) && (
             <>
-              <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
+              <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={routes.kyc} onClick={close}>
                 <Trans>KYC</Trans>
               </MenuListItem>
               <Line />
