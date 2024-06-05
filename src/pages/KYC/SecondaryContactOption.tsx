@@ -53,7 +53,6 @@ const SecondaryContactOption: React.FC<Props> = ({
   const [buttonText, setButtonText] = useState('Send Code')
   const [initialEmail, setInitialEmail] = useState(personalInfo?.email || '')
   const [socialAccountOTP, SetsocialAccountOTP] = useState()
-  console.log(isVerifiedPersonalInfo, isVerifiedBusinessEmail, 'isVerifiedPersonalInfo', 'isVerifiedBusinessEmail')
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -92,7 +91,7 @@ const SecondaryContactOption: React.FC<Props> = ({
   const sendSecondaryEmailVerification = async () => {
     if (!emailType) throw new Error('Email type or business email is missing')
     const response = await generateSecondaryEmailVerifyCode(emailType, businessEmail)
-    if (emailType ===  EmailType.SOCIAL_ACCOUNT) {
+    if (emailType === EmailType.SOCIAL_ACCOUNT) {
       SetsocialAccountOTP(response?.response?.data?.otp)
     }
     return response
@@ -137,7 +136,7 @@ const SecondaryContactOption: React.FC<Props> = ({
     <EmailVerificationContainer>
       <ContentContainer>
         <ModalContent>
-          {emailType ===  EmailType.SOCIAL_ACCOUNT ? (
+          {emailType === EmailType.SOCIAL_ACCOUNT ? (
             <>
               <SocialAccountTitle>Instruction</SocialAccountTitle>
               <SocialAccountSubTitle>1. Open the Telegram App</SocialAccountSubTitle>
@@ -317,7 +316,7 @@ const CodeInput: React.FC<any> = ({
           </PinnedContentButton>
         )}
       </CodeInputContainer>
-      {emailType ===  EmailType.SOCIAL_ACCOUNT && (
+      {emailType === EmailType.SOCIAL_ACCOUNT && (
         <SocialAccountSubTitle style={{ marginTop: '20px' }}>4. Send the code to the Bot</SocialAccountSubTitle>
       )}
     </>

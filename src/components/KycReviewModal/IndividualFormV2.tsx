@@ -2,11 +2,58 @@ import React from 'react'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { ReactComponent as EyeIcon } from '../../assets/images/eyeIconNew.svg'
-import { ReactComponent as Approved } from '../../assets/images/newRightCheck.svg'
 import { Line } from 'components/Line'
-import { PinnedContentButton } from 'components/Button'
+import { KycItem } from 'state/admin/actions'
+import StatusIndicator from './Blocks/KycV2StatusIndicator'
+import { EmailType } from 'pages/KYC/enum'
 
-export const IndividualFormV2 = () => {
+interface Props {
+  data: KycItem
+}
+
+const IndividualFormV2 = ({ data }: Props) => {
+  const renderStatusBox = (title: string, status: string) => (
+    <StatusBox>
+      <TYPE.subHeader1 color={colors.subHeader}>{title}</TYPE.subHeader1>
+      <StatusCheckBox>
+        <StatusIndicator status={status} />
+      </StatusCheckBox>
+    </StatusBox>
+  )
+
+  const renderInfoBox = (label: string, value: string) => {
+    if (!value) return null
+    return (
+      <InfoBox>
+        <TYPE.subHeader1 color={colors.infoLabel}>{label}</TYPE.subHeader1>
+        <StatusCheckBox>
+          <TYPE.subHeader1>{value}</TYPE.subHeader1>
+        </StatusCheckBox>
+      </InfoBox>
+    )
+  }
+
+  const getSecondaryContactLabel = () => {
+    switch (data?.individual?.secondaryContact) {
+      case EmailType.SOCIAL_ACCOUNT:
+        return 'Telegram'
+      case EmailType.SECONDARY:
+        return 'Business Email'
+      default:
+        return `${data?.individual?.secondaryContactDetails}`
+    }
+  }
+
+  const getSecondaryContactValue = () => {
+    switch (data?.individual?.secondaryContact) {
+      case EmailType.SOCIAL_ACCOUNT:
+        return `https://t.me/${data?.individual?.secondaryContactDetails}`
+      case EmailType.SECONDARY:
+      default:
+        return `${data?.individual?.secondaryContactDetails}`
+    }
+  }
+
   return (
     <FormContainer>
       <Line />
@@ -14,95 +61,45 @@ export const IndividualFormV2 = () => {
         <TYPE.body4>ComplyCube Status</TYPE.body4>
         <ViewStatus>
           <EyeIcon />
-          <TYPE.subHeader1 color={'#6666FF'}>View Status</TYPE.subHeader1>
+          <TYPE.subHeader1 color={colors.viewStatus}>View Status</TYPE.subHeader1>
         </ViewStatus>
       </StatusHeader>
 
       <StatusBoxContainer>
-        <StatusBox>
-          <TYPE.subHeader1 color={'#555566'}>AML Screening</TYPE.subHeader1>
-          <StatusCheckBox>
-            <Approved style={{ width: '20px' }} />
-            <TYPE.subHeader1>Approved</TYPE.subHeader1>
-          </StatusCheckBox>
-        </StatusBox>
-        <StatusBox>
-          <TYPE.subHeader1 color={'#555566'}>Document</TYPE.subHeader1>
-          <StatusCheckBox>
-            <Approved style={{ width: '20px' }} />
-            <TYPE.subHeader1>Approved</TYPE.subHeader1>
-          </StatusCheckBox>
-        </StatusBox>
-        <StatusBox>
-          <TYPE.subHeader1 color={'#555566'}>Identity</TYPE.subHeader1>
-          <StatusCheckBox>
-            <Approved style={{ width: '20px' }} />
-            <TYPE.subHeader1>Approved</TYPE.subHeader1>
-          </StatusCheckBox>
-        </StatusBox>
-        <StatusBox>
-          <TYPE.subHeader1 color={'#555566'}>Proof of Address</TYPE.subHeader1>
-          <StatusCheckBox>
-            <Approved style={{ width: '20px' }} />
-            <TYPE.subHeader1>Approved</TYPE.subHeader1>
-          </StatusCheckBox>
-        </StatusBox>
+        {renderStatusBox('AML Screening', data?.individual?.amlVerificationStatus)}
+        {renderStatusBox('Document', data?.individual?.documentVerificationStatus)}
+        {renderStatusBox('Identity', data?.individual?.identityVerificationStatus)}
+        {renderStatusBox('Proof of Address', data?.individual?.poaVerificationStatus)}
       </StatusBoxContainer>
+
       <Line style={{ marginTop: '50px' }} />
 
       <StatusHeader>
         <TYPE.body4>Personal Information</TYPE.body4>
       </StatusHeader>
       <StatusBoxContainer>
-        <InfoBox>
-          <TYPE.subHeader1 color={'#8F8FB2'}>First Name</TYPE.subHeader1>
-          <StatusCheckBox>
-            <TYPE.subHeader1>Kapil</TYPE.subHeader1>
-          </StatusCheckBox>
-        </InfoBox>
-        <InfoBox>
-          <TYPE.subHeader1 color={'#8F8FB2'}>Middle Name</TYPE.subHeader1>
-          <StatusCheckBox>
-            <TYPE.subHeader1>Kumar</TYPE.subHeader1>
-          </StatusCheckBox>
-        </InfoBox>
-        <InfoBox>
-          <TYPE.subHeader1 color={'#8F8FB2'}>Last Name</TYPE.subHeader1>
-          <StatusCheckBox>
-            <TYPE.subHeader1>Dave</TYPE.subHeader1>
-          </StatusCheckBox>
-        </InfoBox>
-        <InfoBox>
-          <TYPE.subHeader1 color={'#8F8FB2'}>Email Address</TYPE.subHeader1>
-          <StatusCheckBox>
-            <TYPE.subHeader1>kapil@investax.io</TYPE.subHeader1>
-          </StatusCheckBox>
-        </InfoBox>
+        {renderInfoBox('First Name', data?.individual?.firstName || '-')}
+        {renderInfoBox('Middle Name', data?.individual?.middleName || '-')}
+        {renderInfoBox('Last Name', data?.individual?.lastName || '-')}
+        {renderInfoBox('Email Address', data?.individual?.email || '-')}
       </StatusBoxContainer>
+
       <Line style={{ marginTop: '50px' }} />
 
       <StatusHeader>
         <TYPE.body4>Secondary Contact Details</TYPE.body4>
       </StatusHeader>
-      <StatusBoxContainer>
-        <InfoBox>
-          <TYPE.subHeader1 color={'#8F8FB2'}>Business Email</TYPE.subHeader1>
-          <StatusCheckBox>
-          <TYPE.subHeader1>kapil@investax.io</TYPE.subHeader1>
-          </StatusCheckBox>
-        </InfoBox>
-      </StatusBoxContainer>
-      <Line style={{ marginTop: '20px' }} />
+      <StatusBoxContainer>{renderInfoBox(getSecondaryContactLabel(), getSecondaryContactValue())}</StatusBoxContainer>
 
-      <ActionContainer>
-    
-      <ActionContainer>
-        <RejectButton>Reject</RejectButton>
-        <ApproveButton>Approve</ApproveButton>
-      </ActionContainer>
-      </ActionContainer>
+      <Line style={{ marginTop: '20px' }} />
     </FormContainer>
   )
+}
+
+const colors = {
+  subHeader: '#555566',
+  viewStatus: '#6666FF',
+  infoLabel: '#8F8FB2',
 }
 
 const FormContainer = styled.div`
@@ -135,6 +132,7 @@ const StatusBox = styled.div`
   width: 167px;
   height: auto;
 `
+
 const InfoBox = styled.div`
   padding: 16px;
   width: 167px;
@@ -148,20 +146,4 @@ const StatusCheckBox = styled.div`
   margin-top: 10px;
 `
 
-const ActionContainer = styled.div`
-  display: flex;
-  gap: 16px;
-  margin-top: 20px;
-  width: -webkit-fill-available;
-
-`
-
-const RejectButton = styled(PinnedContentButton)`
-  background: none;
-  color: #ff8282;
-  border: 1px solid #e6e6ff;
-`
-
-const ApproveButton = styled(PinnedContentButton)`
-  background: #1fba66;
-`
+export default IndividualFormV2

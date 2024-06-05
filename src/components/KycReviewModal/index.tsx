@@ -23,10 +23,9 @@ interface Props {
   isOpen: boolean
   onClose: () => void
   data: KycItem
-  version?: string
 }
 
-export const KycReviewModal = ({ isOpen, onClose, data, version }: Props) => {
+export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   const [openReasonModal, handleOpenReasonModal] = useState('')
   const [riskJSON, setRiskJSON] = useState<any>(null)
   const [loadingCynopsis, handleLoadingCynopsis] = useState(false)
@@ -137,10 +136,9 @@ export const KycReviewModal = ({ isOpen, onClose, data, version }: Props) => {
       </span>
     )
   }
-
   return (
     <>
-      {version === 'v2' ? (
+      {data?.individual?.version === 'v2' ? (
         <KycReviewModalV2 isOpen={isOpen} onClose={onClose} data={data} />
       ) : (
         <>

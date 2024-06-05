@@ -33,7 +33,7 @@ const headerCells = [
   { key: 'identity', label: 'Identity', show: false },
   { key: 'createdAt', label: 'Date of request', show: true },
   { key: 'status', label: 'KYC Status', show: false },
-  { key: 'kycProviderStatus', label: 'Review Status', show: false },
+  { key: 'completedKycOfProvider', label: 'Review Status', show: false },
   { key: 'updatedAt', label: 'Updated At', show: true },
 ]
 interface RowProps {
@@ -48,15 +48,14 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
     status,
     createdAt,
     updatedAt,
-    kycProviderStatus,
     individualKycId,
   } = item
 
   const kyc = individualKycId ? item.individual : item.corporate
+  const completedKycOfProvider = item?.individual?.completedKycOfProvider
   const fullName = individualKycId
     ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
     : kyc?.corporateName
-
   return (
     <StyledBodyRow key={id}>
       <Wallet style={{ fontSize: '12px' }}>
@@ -69,7 +68,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <StatusCell status={status} />
       </div>
       <div style={{ fontSize: '12px' }}>
-        <StatusCell status={kycProviderStatus} />
+        <StatusCell status={completedKycOfProvider} />
       </div>
       <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
       <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
@@ -185,13 +184,12 @@ export const AdminKycTable = () => {
     getKyc()
   }, [id, getKyc])
 
-
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
 
   return (
     <div style={{ margin: isMobile ? '30px 20px 0px 20px' : '30px 90px 0px 90px' }} id="kyc-container">
       {/* version v2 is hardcoded for testing purpose only */}
-      {Boolean(kyc.id) && <KycReviewModal version='v2' isOpen onClose={closeModal} data={kyc} />} 
+      {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} marginBottom="30px" data-testid="securityTokensTitle">
         <Trans>KYC</Trans>
       </TYPE.title4>

@@ -266,7 +266,7 @@ export default function IndividualKycFormV2() {
                             <TextInput
                               kycVersion={'v2'}
                               id="firstNameInput"
-                              label="First Name"
+                              label="First Name *"
                               placeholder="First Name"
                               value={kyc?.individual?.firstName || values.firstName}
                               error={touched.firstName && errors.firstName}
@@ -288,7 +288,7 @@ export default function IndividualKycFormV2() {
                             <TextInput
                               id="lastNameInput"
                               kycVersion={'v2'}
-                              label="Last Name"
+                              label="Last Name *"
                               placeholder="Last Name"
                               value={kyc?.individual?.lastName || values.lastName}
                               error={touched.lastName && errors.lastName}
@@ -301,7 +301,7 @@ export default function IndividualKycFormV2() {
                             placeholder="Email address"
                             kycVersion={'v2'}
                             id="emailAddressField"
-                            label="Email address"
+                            label="Email address *"
                             value={kyc?.individual?.email || values.email}
                             error={touched.email && errors.email}
                             onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}

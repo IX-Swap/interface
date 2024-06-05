@@ -450,6 +450,7 @@ export interface IndividualKyc {
   investorDeclarationStatus: InvestorDeclaration
   taxDeclarations: TaxDeclaration[]
   [key: string]: any
+  version: string
 }
 
 export interface TaxDeclaration {
@@ -505,6 +506,10 @@ interface InvestorDeclaration {
 }
 
 export interface KycItem {
+  documentVerificationStatus?: string | undefined
+  amlVerificationStatus?:  string | undefined
+  poaVerificationStatus?: string | undefined
+  identityVerificationStatus?: string | undefined
   createdAt: string
   deletedAt: string | null
   id: number
@@ -512,7 +517,7 @@ export interface KycItem {
   corporate?: IndividualKyc
   individualKycId: number
   status: string
-  kycProviderStatus: string
+  completedKycOfProvider: string
   updatedAt: string
   user: {
     active: true
