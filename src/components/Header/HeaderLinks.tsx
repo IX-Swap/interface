@@ -164,14 +164,14 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {isAllowed('/pool') && account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
+      {isAllowed(routes.pool) && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink id={`pool-nav-link`} to={routes.pool}>
           <Trans>Liquidity Pools</Trans>
         </StyledNavLink>
       )}
 
-      {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink id={`swap-nav-link`} to={'/swap'} data-testid={`swap-nav-link`}>
+      {isAllowed(routes.swap) && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink id={`swap-nav-link`} to={routes.swap} data-testid={`swap-nav-link`}>
           <Trans>Swap/Trade</Trans>
         </StyledNavLink>
       )}
@@ -230,7 +230,7 @@ export const HeaderLinks = () => {
       )}
 
       {isAllowed(routes.lbpDashboard) && isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink to={'/lbp-admin'} data-testid={`lbp-nav-link`}>
+        <StyledNavLink to={routes.lbpDashboard} data-testid={`lbp-nav-link`}>
           <Trans>LBP</Trans>
         </StyledNavLink>
       )}
