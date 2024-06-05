@@ -16,6 +16,7 @@ export default function Launchpad() {
   const isIxSwap = _get(whitelabelConfig, 'config.isIxSwap', false)
   const enableLaunchpadBanner = _get(whitelabelConfig, 'config.enableLaunchpadBanner', false)
 
+  console.log('whitelabelConfig', whitelabelConfig)
   const blurred = detectWrongNetwork(chainId)
 
   if (blurred) {
@@ -30,7 +31,7 @@ export default function Launchpad() {
 
   return (
     <>
-      <Banner />
+      {isIxSwap || enableLaunchpadBanner ? <Banner /> : null}
       <Offers />
     </>
   )

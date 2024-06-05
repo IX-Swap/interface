@@ -8,8 +8,11 @@ import metamaskmobile from 'assets/images/metamaskmobile.png'
 import trust from 'assets/images/trust.png'
 import coinbase from 'assets/images/coinbase.png'
 import { FormCard } from './styleds'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export const ConnectWalletModal: FC = () => {
+  const { config } = useWhitelabelState()
+
   const [showTaxModal, setShowTaxModal] = useState(true)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return (
@@ -19,7 +22,7 @@ export const ConnectWalletModal: FC = () => {
           <TYPE.mediumHeader>Connect A Wallet</TYPE.mediumHeader>
           <br />
           <TYPE.description2>
-            You are accessing IX Swap through a mobile phone. To connect a wallet, we recommend using browsers from
+            You are accessing {config?.name || 'IX Swap'} through a mobile phone. To connect a wallet, we recommend using browsers from
             Metamask, Trust Wallet, Coinbase Wallet. See links below for more information:
             <br />
           </TYPE.description2>
