@@ -93,7 +93,6 @@ export const KycInputLabel: FC<KycInputLabelProps> = ({ label, error, name, tool
   if (!label) {
     return null
   }
-
   return (
     <Row style={{ marginTop: kycVersion && '10px' }} alignItems="center">
       {error && (
@@ -105,6 +104,29 @@ export const KycInputLabel: FC<KycInputLabelProps> = ({ label, error, name, tool
         <Label label={label} htmlFor={name || ''} tooltipText={tooltipText} color={error && '#FF007F'} />
       </div>
     </Row>
+  )
+}
+
+export const KycErrorDisplay: FC<KycInputLabelProps> = ({ label }) => {
+  if (!label) return null
+
+  const errorMessages: Record<string, string> = {
+    'First Name *': 'First name must be alphabetic and at least 2 characters.',
+    'Last Name *': 'Last name must be alphabetic and at least 2 characters.',
+    'Email address *': 'Please provide a valid email address.',
+    'Business Email *': 'Please provide a valid email address.',
+  }
+
+  const errorMessage = errorMessages[label]
+  if (!errorMessage) return null
+
+  return (
+    <div style={{ marginTop: '10px', display: 'flex' }}>
+      <InvalidFormInputIcon style={{ margin: '0 0.5rem' }} />
+      <TYPE.main1 color={'#FD4040'} lineHeight={'20px'}>
+        {errorMessage}
+      </TYPE.main1>
+    </div>
   )
 }
 
@@ -290,7 +312,7 @@ export const KycTextInput: FC<TextInputProps> = ({
           error={error}
         />
       )}
-      {kycVersion === 'v2' && <KycInputLabel kycVersion={'v2'} label={error ? label : ''} error={error} />}
+      {kycVersion === 'v2' && <KycErrorDisplay label={error ? label : ''} error={error} />}
     </Box>
   )
 }

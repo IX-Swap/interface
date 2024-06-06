@@ -6,18 +6,18 @@ import { TYPE } from 'theme'
 import styled from 'styled-components'
 
 interface StatusProps {
-  status: string | undefined
+  status: string
 }
 
 const statusMap: { [key: string]: { Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>; text: string } } = {
-  clear: { Icon: Approved, text: 'Approved' },
-  attention: { Icon: CloseIcon, text: 'Rejected' },
-  not_processed: { Icon: PendingIcon, text: 'Pending' },
+  clear: { Icon: Approved, text: 'Clear' },
+  attention: { Icon: CloseIcon, text: 'Attention' },
+  not_processed: { Icon: PendingIcon, text: 'Not Processed' },
   default: { Icon: null as any, text: '-' },
 }
 
 const StatusIndicator: React.FC<StatusProps> = ({ status }) => {
-  const { Icon, text } = statusMap[status || 'default']
+  const { Icon, text } = statusMap[status] || statusMap['default']
 
   return (
     <StatusCheckBox>

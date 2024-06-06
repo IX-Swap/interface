@@ -71,7 +71,8 @@ const ReferralCodeText = styled.span`
 
 const CheckboxContainer = styled.div`
   display: flex;
-  gap: 16px;
+  gap: 30px;
+  margin-top: 10px;
   margin-bottom: 20px;
 `
 
@@ -121,7 +122,7 @@ export default function IndividualKycFormV2() {
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
   const verifyIdentity = useVerifyIdentity()
-  const [selectedCheckbox, setSelectedCheckbox] = useState(null)
+  const [selectedCheckbox, setSelectedCheckbox] = useState<SecondaryContactTypeV2 | null>(null)
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const form = useRef<any>(null)
   const isLoggedIn = !!token && !!account
@@ -143,6 +144,22 @@ export default function IndividualKycFormV2() {
       history.push('/kyc')
     }
   }, [account, prevAccount, history])
+
+  useEffect(() => {
+    if (
+      (kyc?.individual?.isEmailVerified || isPersonalVerified) &&
+      !(isBusinessEmailVerified || kyc?.individual?.isSecondaryContactVerified)
+    ) {
+      setSelectedCheckbox(SecondaryContactTypeV2.PROOF_OF_ADDRESS)
+    } else if (isBusinessEmailVerified || kyc?.individual?.isSecondaryContactVerified) {
+      setSelectedCheckbox(SecondaryContactTypeV2.BUSINESS_EMAIL)
+    }
+  }, [
+    isBusinessEmailVerified,
+    kyc?.individual?.isSecondaryContactVerified,
+    kyc?.individual?.isEmailVerified,
+    isPersonalVerified,
+  ])
 
   const validateValue = async (key: string, value: any) => {
     if (form.current.values[key] === value) {
@@ -343,6 +360,19 @@ export default function IndividualKycFormV2() {
                           </RowStart>
                           <RowStart>
                             <CheckboxContainer>
+                              <CheckboxLabel selected={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}>
+                                <BoxWrapper>
+                                  <AddressIcon />
+                                  <TYPE.subHeader1> Proof of Address</TYPE.subHeader1>
+                                </BoxWrapper>
+
+                                <CheckboxInput
+                                  type="checkbox"
+                                  value="ProofOfAddress"
+                                  checked={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}
+                                  onChange={handleCheckboxChange}
+                                />
+                              </CheckboxLabel>
                               <CheckboxLabel selected={selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL}>
                                 <BoxWrapper>
                                   <KYCEmailIcon />
@@ -369,19 +399,6 @@ export default function IndividualKycFormV2() {
                                   onChange={handleCheckboxChange}
                                 />
                               </CheckboxLabel>
-                              <CheckboxLabel selected={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}>
-                                <BoxWrapper>
-                                  <AddressIcon />
-                                  <TYPE.subHeader1> Proof of Address</TYPE.subHeader1>
-                                </BoxWrapper>
-
-                                <CheckboxInput
-                                  type="checkbox"
-                                  value="ProofOfAddress"
-                                  checked={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}
-                                  onChange={handleCheckboxChange}
-                                />
-                              </CheckboxLabel>
                             </CheckboxContainer>
                           </RowStart>
 
@@ -390,9 +407,10 @@ export default function IndividualKycFormV2() {
                               {!kyc?.individual?.isSecondaryContactVerified && !isBusinessEmailVerified && (
                                 <Column>
                                   <TextInput
+                                    kycVersion={'v2'}
                                     placeholder="Business Email"
                                     id="emailAddressField"
-                                    label="Email address"
+                                    label="Business Email *"
                                     value={values.businessEmail}
                                     error={touched.businessEmail && errors.businessEmail}
                                     // error={errors.businessEmail}

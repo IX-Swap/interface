@@ -13,12 +13,14 @@ interface Props {
 
 const IndividualFormV2 = ({ data }: Props) => {
   const renderStatusBox = (title: string, status: string) => (
-    <StatusBox>
-      <TYPE.subHeader1 color={colors.subHeader}>{title}</TYPE.subHeader1>
-      <StatusCheckBox>
-        <StatusIndicator status={status} />
-      </StatusCheckBox>
-    </StatusBox>
+    status ? (
+      <StatusBox>
+        <TYPE.subHeader1 color={colors.subHeader}>{title}</TYPE.subHeader1>
+        <StatusCheckBox>
+          <StatusIndicator status={status} />
+        </StatusCheckBox>
+      </StatusBox>
+    ) : null
   )
 
   const renderInfoBox = (label: string, value: string) => {

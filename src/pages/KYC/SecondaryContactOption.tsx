@@ -215,11 +215,27 @@ const CodeInput: React.FC<any> = ({
 
   const handleCodeChange = (index: number, value: string) => {
     if (!/^[a-zA-Z0-9]*$/.test(value)) return
+
     const newCode = [...code]
-    newCode[index] = value
+    newCode[index] = value.slice(-1)
     setCode(newCode)
-    if (value && index < numberOfBoxes - 1) {
+
+    if (index < numberOfBoxes - 1 && value) {
       inputRefs.current[index + 1]?.focus()
+    }
+  }
+
+  const handleKeyDown = (index: number, event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Backspace') {
+      if (code[index]) {
+        const newCode = [...code]
+        newCode[index] = ''
+        setCode(newCode)
+      } else if (index > 0) {
+        inputRefs.current[index - 1]?.focus()
+      }
+    } else {
+      inputRefs.current[index].select()
     }
   }
 
@@ -291,6 +307,7 @@ const CodeInput: React.FC<any> = ({
                 placeholder="0"
                 value={code[index]}
                 onChange={(e) => handleCodeChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
                 borderColor={verifyError ? '#FF6D6D80' : '#E6E6FF'}
                 backgroundColor={verifyError ? '#F8E9EC' : '#F7F7FA'}
                 color={verifyError ? '#FF6D6D' : '#292933'}
