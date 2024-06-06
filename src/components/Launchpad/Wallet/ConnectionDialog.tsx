@@ -142,9 +142,9 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
             <AutoRow>
               <TextContent>
                 <Trans>
-                  Connecting your wallet allows IX Swap to see your wallet address and, consequently, the funds you hold
-                  on the blockchain. This does not grant IX Swap the ability to manage or transfer your tokens; for
-                  that, you will be asked to sign a token approval.
+                  Connecting your wallet allows {config?.name || 'IX Swap'} to see your wallet address and,
+                  consequently, the funds you hold on the blockchain. This does not grant {config?.name || 'IX Swap'}{' '}
+                  the ability to manage or transfer your tokens; for that, you will be asked to sign a token approval.
                 </Trans>
                 <br />
                 <br />
