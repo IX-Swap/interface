@@ -12,7 +12,7 @@ interface Props {
 }
 
 const IndividualFormV2 = ({ data }: Props) => {
-  const renderStatusBox = (title: string, status: string) => (
+  const renderStatusBox = (title: string, status: string) =>
     status ? (
       <StatusBox>
         <TYPE.subHeader1 color={colors.subHeader}>{title}</TYPE.subHeader1>
@@ -21,7 +21,6 @@ const IndividualFormV2 = ({ data }: Props) => {
         </StatusCheckBox>
       </StatusBox>
     ) : null
-  )
 
   const renderInfoBox = (label: string, value: string) => {
     if (!value) return null
