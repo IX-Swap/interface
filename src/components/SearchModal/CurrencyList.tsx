@@ -1,7 +1,5 @@
 import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
-import Attention from 'assets/images/attention-clear.svg'
-import { ButtonGradient } from 'components/Button'
 import { VioletCard } from 'components/Card'
 import QuestionHelper from 'components/QuestionHelper'
 import { AccreditationStatusEnum } from 'components/Vault/enum'
@@ -10,6 +8,8 @@ import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 're
 import { Link } from 'react-router-dom'
 import { VariableSizeList as List } from 'react-window'
 import { Box, Text } from 'rebass'
+import _get from 'lodash/get'
+
 import { useSecTokens } from 'state/secTokens/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
 import styled, { css } from 'styled-components/macro'
@@ -20,7 +20,7 @@ import { useActiveWeb3React } from '../../hooks/web3'
 import { useCombinedActiveList } from '../../state/lists/hooks'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
-import { SvgIconWrapper, TYPE } from '../../theme'
+import { TYPE } from '../../theme'
 import { isTokenOnList } from '../../utils'
 import Column from '../Column'
 import CurrencyLogo from '../CurrencyLogo'
@@ -300,6 +300,7 @@ export default function CurrencyList({
   setImportToken: (token: Token) => void
 }) {
   const { config } = useWhitelabelState()
+  const isIxswap = _get(config, 'isIxswap', false)
 
   const sortedBySecList = useMemo(() => {
     const { sec, rest, wixs, usdc } = currencies.reduce(
@@ -314,13 +315,14 @@ export default function CurrencyList({
       ) => {
         const token = next?.wrapped ?? next?.tokenInfo
         const configTokens = config?.tokens || []
-
-        if (config && configTokens.length > 0 && !configTokens.includes(token.address)) {
-          return acc
-        }
+        const id = _get(token, 'tokenInfo.id', '')
 
         if (next.isSecToken) {
-          acc.sec.push(next)
+          if (isIxswap) {
+            acc.sec.push(next)
+          } else if (config && configTokens.length > 0 && !configTokens.includes(id)) {
+            acc.sec.push(next)
+          }
         } else if (next?.tokenInfo?.symbol === 'USDC') {
           acc.usdc = next
         } else if (['WIXS', 'IXS'].includes(next?.tokenInfo?.symbol || '')) {
@@ -346,6 +348,7 @@ export default function CurrencyList({
     if (otherListTokens && otherListTokens?.length > 0) {
       return [...sortedBySecList, BREAK_LINE, ...otherListTokens]
     }
+
     return sortedBySecList
   }, [sortedBySecList, otherListTokens])
 
@@ -440,6 +443,7 @@ export default function CurrencyList({
         : false
     return isUnapprovedToken ? UNAPPROVED_ROW : NORMAL_ROW
   }
+
   return (
     <List
       height={height}

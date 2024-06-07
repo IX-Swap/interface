@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Box } from 'rebass'
 import { Trans } from '@lingui/macro'
+import _get from 'lodash/get'
 
 import { TYPE } from 'theme'
 import { useAuthState } from 'state/auth/hooks'
@@ -11,21 +12,25 @@ import { useUserState } from 'state/user/hooks'
 import { FeaturedToken } from './FeaturedToken'
 import { SecTokensTable } from './SecTokensTable'
 import { MySecToken } from './MySecToken'
-import { Info } from './Info'
-import { FeaturedTokensGrid, MySecTokensTab, GradientText, MySecTokensGrid, Divider } from './styleds'
+import { FeaturedTokensGrid, MySecTokensTab, MySecTokensGrid, Divider } from './styleds'
 import { isMobile } from 'react-device-detect'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export default function CustodianV2() {
-  const offset = 10
   const { token } = useAuthState()
-  const [mySecTokens, setMySecTokens] = useState([])
   const fetchTokens = useFetchTokens()
-  const [noFilteredTokens, setNoFilteredTokens] = useState([])
   const { tokens } = useSecCatalogState()
   const { account } = useActiveWeb3React()
   const { account: userAccount } = useUserState()
+  const { config } = useWhitelabelState()
+  const isIxswap = _get(config, 'isIxswap', false)
+  const enableFeaturedSecurityVaults = _get(config, 'enableFeaturedSecurityVaults', false)
+
+  const [mySecTokens, setMySecTokens] = useState([])
+  const [noFilteredTokens, setNoFilteredTokens] = useState([])
 
   const isLoggedIn = !!token && !!account
+  const offset = 10
 
   useEffect(() => {
     const fetchMyTokens = async () => {
@@ -115,7 +120,7 @@ export default function CustodianV2() {
               )}
             </MySecTokensTab>
           )}
-          {featuredTokens?.length > 0 && (
+          {(isIxswap || enableFeaturedSecurityVaults) && featuredTokens?.length > 0 ? (
             <Box marginBottom="72px">
               <TYPE.title5 marginBottom="32px">
                 <Trans>Featured</Trans>
@@ -126,7 +131,7 @@ export default function CustodianV2() {
                 ))}
               </FeaturedTokensGrid>
             </Box>
-          )}
+          ) : null}
           <SecTokensTable
             page={tokens.page}
             totalPages={tokens.totalPages}
