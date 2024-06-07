@@ -25,7 +25,8 @@ export enum SecondaryContactType {
 export enum EmailType {
   PRIMARY = 'primary_email',
   SECONDARY = 'secondary_email',
-  SOCIAL_ACCOUNT = 'social_account'
+  SOCIAL_ACCOUNT = 'social_account',
+  PROOF_OF_ADDRESS = 'proof_of_address'
 }
 
 export enum SuccessType {

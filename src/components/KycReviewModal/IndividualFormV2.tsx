@@ -40,6 +40,8 @@ const IndividualFormV2 = ({ data }: Props) => {
         return 'Telegram'
       case EmailType.SECONDARY:
         return 'Business Email'
+      case EmailType.PROOF_OF_ADDRESS:
+        return 'Proof of Address'
       default:
         return `${data?.individual?.secondaryContactDetails}`
     }
@@ -50,8 +52,9 @@ const IndividualFormV2 = ({ data }: Props) => {
       case EmailType.SOCIAL_ACCOUNT:
         return `https://t.me/${data?.individual?.secondaryContactDetails}`
       case EmailType.SECONDARY:
-      default:
         return `${data?.individual?.secondaryContactDetails}`
+      default:
+        return `-`
     }
   }
 
