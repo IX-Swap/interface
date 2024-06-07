@@ -26,7 +26,7 @@ import { FormCard, FormGrid, FormWrapper, StyledStickyBox } from './styleds'
 import { businessEmailSchema, individualErrorsSchemaV2 } from './schema'
 import { Line } from 'components/Line'
 import VerificationConfirmation from './VerificationConfirmation'
-import { SecondaryContactTypeV2, SuccessType } from './enum'
+import { EmailType, SecondaryContactTypeV2, SuccessType } from './enum'
 import SecondaryContactOption from './SecondaryContactOption'
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -76,7 +76,7 @@ const CheckboxContainer = styled.div`
   margin-bottom: 20px;
 `
 
-const CheckboxLabel = styled.label<{ selected: boolean }>`
+const CheckboxLabel = styled.label<{ selected: boolean; disabled: boolean }>`
   display: flex;
   align-items: center;
   font-size: 16px;
@@ -85,7 +85,8 @@ const CheckboxLabel = styled.label<{ selected: boolean }>`
   border-radius: 6px;
   width: 250px;
   justify-content: space-between;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
   svg {
     // fill: ${(props) => (props.selected ? '#6666FF' : '')};
   }
@@ -97,13 +98,13 @@ const BoxWrapper = styled.div`
   gap: 8px;
 `
 
-const CheckboxInput = styled.input`
-  margin-right: 8px;
+const CheckboxInput = styled.input<{ disabled: boolean }>`
+  margin-right: 8px;  
   width: 16px;
   height: 16px;
   border-radius: 50%;
   border: 2px solid #e6e6ff;
-
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   appearance: none;
   cursor: pointer;
 
@@ -146,13 +147,30 @@ export default function IndividualKycFormV2() {
   }, [account, prevAccount, history])
 
   useEffect(() => {
-    if (
-      (kyc?.individual?.isEmailVerified || isPersonalVerified) &&
-      !(isBusinessEmailVerified || kyc?.individual?.isSecondaryContactVerified)
-    ) {
-      setSelectedCheckbox(SecondaryContactTypeV2.PROOF_OF_ADDRESS)
-    } else if (isBusinessEmailVerified || kyc?.individual?.isSecondaryContactVerified) {
-      setSelectedCheckbox(SecondaryContactTypeV2.BUSINESS_EMAIL)
+    const { individual } = kyc || {}
+    const isEmailVerified = individual?.isEmailVerified
+    const isSecondaryContactVerified = individual?.isSecondaryContactVerified
+    const secondaryContact = individual?.secondaryContact
+
+    const checkboxTypeMap = [
+      {
+        condition: (isEmailVerified || isPersonalVerified) && !(isBusinessEmailVerified || isSecondaryContactVerified),
+        type: SecondaryContactTypeV2.PROOF_OF_ADDRESS,
+      },
+      {
+        condition: secondaryContact === EmailType.SECONDARY,
+        type: SecondaryContactTypeV2.BUSINESS_EMAIL,
+      },
+      {
+        condition: secondaryContact === EmailType.SOCIAL_ACCOUNT,
+        type: SecondaryContactTypeV2.TELEGRAM,
+      },
+    ]
+
+    const selectedCheckboxType = checkboxTypeMap.find((entry) => entry.condition)?.type
+
+    if (selectedCheckboxType) {
+      setSelectedCheckbox(selectedCheckboxType)
     }
   }, [
     isBusinessEmailVerified,
@@ -360,7 +378,14 @@ export default function IndividualKycFormV2() {
                           </RowStart>
                           <RowStart>
                             <CheckboxContainer>
-                              <CheckboxLabel selected={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}>
+                              <CheckboxLabel
+                                selected={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}
+                                disabled={
+                                  selectedCheckbox !== null &&
+                                  selectedCheckbox !== SecondaryContactTypeV2.PROOF_OF_ADDRESS &&
+                                  (kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified)
+                                }
+                              >
                                 <BoxWrapper>
                                   <AddressIcon />
                                   <TYPE.subHeader1> Proof of Address</TYPE.subHeader1>
@@ -370,10 +395,22 @@ export default function IndividualKycFormV2() {
                                   type="checkbox"
                                   value="ProofOfAddress"
                                   checked={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}
+                                  disabled={
+                                    selectedCheckbox !== null &&
+                                    selectedCheckbox !== SecondaryContactTypeV2.PROOF_OF_ADDRESS &&
+                                    (kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified)
+                                  }
                                   onChange={handleCheckboxChange}
                                 />
                               </CheckboxLabel>
-                              <CheckboxLabel selected={selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL}>
+                              <CheckboxLabel
+                                selected={selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL}
+                                disabled={
+                                  selectedCheckbox !== null &&
+                                  selectedCheckbox !== SecondaryContactTypeV2.BUSINESS_EMAIL &&
+                                  (kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified)
+                                }
+                              >
                                 <BoxWrapper>
                                   <KYCEmailIcon />
                                   <TYPE.subHeader1>Business Email</TYPE.subHeader1>
@@ -383,10 +420,22 @@ export default function IndividualKycFormV2() {
                                   type="checkbox"
                                   value="BusinessEmail"
                                   checked={selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL}
+                                  disabled={
+                                    selectedCheckbox !== null &&
+                                    selectedCheckbox !== SecondaryContactTypeV2.BUSINESS_EMAIL &&
+                                    (kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified)
+                                  }
                                   onChange={handleCheckboxChange}
                                 />
                               </CheckboxLabel>
-                              <CheckboxLabel selected={selectedCheckbox === SecondaryContactTypeV2.TELEGRAM}>
+                              <CheckboxLabel
+                                selected={selectedCheckbox === SecondaryContactTypeV2.TELEGRAM}
+                                disabled={
+                                  selectedCheckbox !== null &&
+                                  selectedCheckbox !== SecondaryContactTypeV2.TELEGRAM &&
+                                  (kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified)
+                                }
+                              >
                                 <BoxWrapper>
                                   <TelegramIcon style={{ marginTop: '3px' }} />
                                   <TYPE.subHeader1> {SecondaryContactTypeV2.TELEGRAM}</TYPE.subHeader1>
@@ -397,6 +446,11 @@ export default function IndividualKycFormV2() {
                                   value="Telegram"
                                   checked={selectedCheckbox === SecondaryContactTypeV2.TELEGRAM}
                                   onChange={handleCheckboxChange}
+                                  disabled={
+                                    selectedCheckbox !== null &&
+                                    selectedCheckbox !== SecondaryContactTypeV2.TELEGRAM &&
+                                    (kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified)
+                                  }
                                 />
                               </CheckboxLabel>
                             </CheckboxContainer>
