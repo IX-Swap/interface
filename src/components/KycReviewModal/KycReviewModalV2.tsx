@@ -75,8 +75,12 @@ export const KycReviewModalV2 = ({ isOpen, onClose, data }: Props) => {
           <Body>
             <IndividualFormV2 data={data} />
             <ActionContainer>
-              <RejectButton onClick={reject}>Reject</RejectButton>
-              <ApproveButton onClick={approve}>Approve</ApproveButton>
+              <RejectButton  disabled={data.status !== 'pending'}  onClick={reject}>
+                Reject
+              </RejectButton>
+              <ApproveButton disabled={data.status !== 'pending'} onClick={approve}>
+                Approve
+              </ApproveButton>
             </ActionContainer>
           </Body>
         </ModalBlurWrapper>
@@ -106,9 +110,10 @@ const ActionContainer = styled.div`
 
 const RejectButton = styled(PinnedContentButton)`
   background: none;
-  color: #ff8282;
+  color: ${({ disabled }) => (disabled ? '#FFFFFF' : '#ff8282')};
   border: 1px solid #e6e6ff;
 `
+
 
 const ApproveButton = styled(PinnedContentButton)`
   background: #1fba66;

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
-import { ReactComponent as EyeIcon } from '../../assets/images/eyeIconNew.svg'
+import { ReactComponent as EyeIcon } from '../../assets/images/blue_eye_icon.svg'
 import { Line } from 'components/Line'
 import { KycItem } from 'state/admin/actions'
 import StatusIndicator from './Blocks/KycV2StatusIndicator'
@@ -55,12 +55,16 @@ const IndividualFormV2 = ({ data }: Props) => {
     }
   }
 
+  const handleViewStatusClick = () => {
+    window.open(`https://portal.complycube.com/clients/${data?.customerId}`, '_blank')
+  }
+
   return (
     <FormContainer>
       <Line />
       <StatusHeader>
         <TYPE.body4>ComplyCube Status</TYPE.body4>
-        <ViewStatus>
+        <ViewStatus onClick={handleViewStatusClick}>
           <EyeIcon />
           <TYPE.subHeader1 color={colors.viewStatus}>View Status</TYPE.subHeader1>
         </ViewStatus>
@@ -91,7 +95,6 @@ const IndividualFormV2 = ({ data }: Props) => {
         <TYPE.body4>Secondary Contact Details</TYPE.body4>
       </StatusHeader>
       <StatusBoxContainer>{renderInfoBox(getSecondaryContactLabel(), getSecondaryContactValue())}</StatusBoxContainer>
-
       <Line style={{ marginTop: '20px' }} />
     </FormContainer>
   )
@@ -117,6 +120,7 @@ const ViewStatus = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
 `
 
 const StatusBoxContainer = styled.div`

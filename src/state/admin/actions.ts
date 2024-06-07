@@ -506,6 +506,7 @@ interface InvestorDeclaration {
 }
 
 export interface KycItem {
+  customerId?: number
   documentVerificationStatus?: string | undefined
   amlVerificationStatus?:  string | undefined
   poaVerificationStatus?: string | undefined
