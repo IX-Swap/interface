@@ -309,7 +309,6 @@ const CodeInput: React.FC<any> = ({
   const handleCopyClick = async () => {
     navigator.clipboard.writeText(socialAccountOTP)
     addPopup({ info: { success: true, summary: 'Code copied to clipboard!' } })
-    startVerificationInterval(verifySocialAccountCode, handleVerificationSuccess)
   }
 
   useEffect(() => {
