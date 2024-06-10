@@ -50,12 +50,15 @@ const SecondaryContactOption: React.FC<Props> = ({
   const [hasCodeError, setHasCodeError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [resetCodeInput, setResetCodeInput] = useState(false)
-  const [buttonText, setButtonText] = useState('Send Code')
   const [initialEmail, setInitialEmail] = useState(personalInfo?.email || '')
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
   const [socialAccountOTP, SetsocialAccountOTP] = useState()
   const telegramBotUsername = process.env.REACT_APP_TELEGRAM_VERIFICATION_BOT
   const telegramUrl = `https://t.me/${telegramBotUsername}`
+  const getButtonText = (section: string | undefined) => {
+    return section === 'Telegram' ? 'Get Code' : 'Send Code'
+  }
+  const [buttonText, setButtonText] = useState(getButtonText(verificationSecation))
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -67,6 +70,7 @@ const SecondaryContactOption: React.FC<Props> = ({
     return () => clearInterval(interval)
   }, [timer])
 
+  console.log(verificationSecation, 'verificationSecation')
   useEffect(() => {
     if (personalInfo?.email !== initialEmail) {
       setInitialEmail(personalInfo?.email || '')
@@ -152,7 +156,7 @@ const SecondaryContactOption: React.FC<Props> = ({
               <SocialAccountSubTitle>
                 2. Start a chat with{' '}
                 <span onClick={handleTelegramRedirect} style={{ color: '#6666FF', cursor: 'pointer' }}>
-                  @IXSbot
+                  @{telegramBotUsername}
                 </span>
               </SocialAccountSubTitle>
               <SocialAccountSubTitle>3. Get Verification Code</SocialAccountSubTitle>
@@ -295,7 +299,7 @@ const CodeInput: React.FC<any> = ({
   }
 
   const handleButtonClick = () => {
-    if (buttonText === 'Send Code') {
+    if (buttonText === 'Send Code' || buttonText === 'Get Code') {
       handleSendCode()
     } else {
       handleVerifyCode()
@@ -305,6 +309,16 @@ const CodeInput: React.FC<any> = ({
   const handleCopyClick = async () => {
     navigator.clipboard.writeText(socialAccountOTP)
     addPopup({ info: { success: true, summary: 'Code copied to clipboard!' } })
+  }
+
+  useEffect(() => {
+    if (socialAccountOTP) {
+      const cleanup = startVerificationInterval(verifySocialAccountCode, handleVerificationSuccess)
+      return cleanup
+    }
+  }, [socialAccountOTP])
+
+  const startVerificationInterval = (verifySocialAccountCode: any, handleVerificationSuccess: any) => {
     const interval = setInterval(async () => {
       const result = await verifySocialAccountCode()
       if (result.status === 1) {
@@ -312,6 +326,8 @@ const CodeInput: React.FC<any> = ({
         handleVerificationSuccess()
       }
     }, 5000)
+
+    return () => clearInterval(interval)
   }
 
   return (
