@@ -423,7 +423,7 @@ const StyledDiv = styled.div`
   width: 280px;
   display: flex;
   justify-content: space-between;
-  border-radius: ;
+  border-radius:8px;
 `
 
 const CenteredDiv = styled.div`
