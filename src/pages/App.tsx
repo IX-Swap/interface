@@ -48,6 +48,7 @@ import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 import { Footer as DefaultFooter } from './Launchpad/Footer'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { CustomHeaders } from 'components/CustomHeaders'
+import { useWalletState } from 'state/wallet/hooks'
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -67,8 +68,6 @@ export default function App() {
   const getMe = useGetMe()
   const { isAdmin } = useRole()
   const whitelabelConfig = useWhitelabelState()
-  const isIxSwap = _get(whitelabelConfig, 'config.isIxSwap', false)
-
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
   const { chainId, account } = useActiveWeb3React()
@@ -79,9 +78,12 @@ export default function App() {
   const { config } = useWhitelabelState()
   const hideHeader = useHideHeader()
   const { kyc } = useKYCState()
+  const { isConnected, walletName } = useWalletState()
+
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [countryCode, setCountryCode] = useState()
 
+  const isIxSwap = _get(whitelabelConfig, 'config.isIxSwap', false)
   const routeFinalConfig = isAdmin ? routeConfigs : routeConfigs.filter((route) => !lbpAdminRoutes.includes(route.path))
 
   useEffect(() => {
@@ -168,15 +170,19 @@ export default function App() {
   useEffect(() => {
     clearLocaleStorage()
 
-    // connect eagerly for metamask
-    void metaMask.connectEagerly().catch(() => {
-      console.debug('Failed to connect eagerly to metamask')
-    })
+    if (isConnected && walletName === 'MetaMask') {
+      // connect eagerly for metamask
+      void metaMask.connectEagerly().catch(() => {
+        console.debug('Failed to connect eagerly to metamask')
+      })
+    }
 
-    // connect eagerly for walletConnectV2
-    walletConnectV2.connectEagerly().catch((error) => {
-      console.debug('Failed to connect eagerly to walletconnect', error)
-    })
+    if (isConnected && walletName === 'WalletConnect') {
+      // connect eagerly for walletConnectV2
+      walletConnectV2.connectEagerly().catch((error) => {
+        console.debug('Failed to connect eagerly to walletconnect', error)
+      })
+    }
   }, [])
 
   useEffect(() => {

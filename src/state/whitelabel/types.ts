@@ -44,6 +44,7 @@ export interface Whitelabel {
     block3?: string
   }
   description?: string
+  bannerImageUrl?: string
 }
 
 export interface WlColors {
