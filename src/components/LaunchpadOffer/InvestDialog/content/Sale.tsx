@@ -38,9 +38,10 @@ interface Props {
   offer: Offer
   investedData: InvestedDataRes
   openSuccess: () => void
+  openFailed: () => void
 }
 
-export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess }) => {
+export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, openFailed }) => {
   const {
     minInvestment,
     maxInvestment,
@@ -206,21 +207,25 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
         if (transaction) {
           const receipt = await transaction.wait()
 
-          await invest(status, {
-            amount,
-            txHash: receipt.transactionHash,
-          })
-
-          new WalletEvent(INVEST_FLOW_EVENTS.INVEST(status))
-            .walletAddress(account || '')
-            .data({
+          if (receipt.status === 0) {
+            openFailed()
+          } else {
+            await invest(status, {
               amount,
               txHash: receipt.transactionHash,
             })
-            .info(`Invest ${amount} ${investingTokenSymbol} INTO ${tokenSymbol}`)
 
-          submitState.setSuccess()
-          openSuccess()
+            new WalletEvent(INVEST_FLOW_EVENTS.INVEST(status))
+              .walletAddress(account || '')
+              .data({
+                amount,
+                txHash: receipt.transactionHash,
+              })
+              .info(`Invest ${amount} ${investingTokenSymbol} INTO ${tokenSymbol}`)
+
+            submitState.setSuccess()
+            openSuccess()
+          }
         }
       }
     } catch (e) {
