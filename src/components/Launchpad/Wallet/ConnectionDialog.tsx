@@ -26,6 +26,8 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import back from 'assets/images/newBack.svg'
 import { MetaMask } from '@web3-react/metamask'
 import WalletConnectIcon from '../../../assets/images/walletConnectIcon.svg'
+import { useAppDispatch } from 'state/hooks'
+import { setWalletState } from 'state/wallet'
 
 export enum PromptView {
   options,
@@ -40,6 +42,8 @@ interface Props {
 }
 
 export const ConnectionDialog: React.FC<Props> = (props) => {
+  const dispatch = useAppDispatch()
+
   const [walletView, setWalletView] = React.useState(PromptView.options)
   const { config } = useWhitelabelState()
   const [showPendingScreen, setShowPendingScreen] = React.useState(false)
@@ -65,6 +69,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
       setWalletView(PromptView.account)
       props.onConnect()
       props.onClose()
+      dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
     } catch (error) {
       connector.activate()
     }
@@ -72,6 +77,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
 
   const onSelect = React.useCallback(
     (option: WalletInfo) => {
+      dispatch
       tryActivation(option.connector)
       if (option.connector instanceof MetaMask) {
         setIsMetaMaskClicked(true)
