@@ -52,7 +52,10 @@ const SecondaryContactOption: React.FC<Props> = ({
   const [resetCodeInput, setResetCodeInput] = useState(false)
   const [buttonText, setButtonText] = useState('Send Code')
   const [initialEmail, setInitialEmail] = useState(personalInfo?.email || '')
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false)
   const [socialAccountOTP, SetsocialAccountOTP] = useState()
+  const telegramBotUsername = process.env.REACT_APP_TELEGRAM_VERIFICATION_BOT
+  const telegramUrl = `https://t.me/${telegramBotUsername}`
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -72,6 +75,7 @@ const SecondaryContactOption: React.FC<Props> = ({
     }
   }, [personalInfo?.email, initialEmail])
   const handleSendCode = async () => {
+    setIsButtonDisabled(true)
     try {
       const result =
         !isVerifiedPersonalInfo && !isVerifiedBusinessEmail
@@ -80,6 +84,8 @@ const SecondaryContactOption: React.FC<Props> = ({
       result.success ? handleSuccess() : handleError(result.error.message)
     } catch (error) {
       handleError('An unexpected error occurred')
+    } finally {
+      setIsButtonDisabled(false)
     }
   }
 
@@ -132,6 +138,9 @@ const SecondaryContactOption: React.FC<Props> = ({
       handleError('An unexpected error occurred')
     }
   }
+  const handleTelegramRedirect = () => {
+    window.open(telegramUrl, '_blank')
+  }
   return (
     <EmailVerificationContainer>
       <ContentContainer>
@@ -140,7 +149,12 @@ const SecondaryContactOption: React.FC<Props> = ({
             <>
               <SocialAccountTitle>Instruction</SocialAccountTitle>
               <SocialAccountSubTitle>1. Open the Telegram App</SocialAccountSubTitle>
-              <SocialAccountSubTitle>2. Start a chat with @IXSbot</SocialAccountSubTitle>
+              <SocialAccountSubTitle>
+                2. Start a chat with{' '}
+                <span onClick={handleTelegramRedirect} style={{ color: '#6666FF', cursor: 'pointer' }}>
+                  @IXSbot
+                </span>
+              </SocialAccountSubTitle>
               <SocialAccountSubTitle>3. Get Verification Code</SocialAccountSubTitle>
             </>
           ) : (
@@ -167,6 +181,8 @@ const SecondaryContactOption: React.FC<Props> = ({
             emailType={emailType}
             verificationSecation={verificationSecation}
             socialAccountOTP={socialAccountOTP}
+            isButtonDisabled={isButtonDisabled}
+            setIsButtonDisabled={setIsButtonDisabled}
           />
           <TimerContainer>
             {timer > 0 ? (
@@ -198,6 +214,8 @@ const CodeInput: React.FC<any> = ({
   emailType,
   verificationSecation,
   socialAccountOTP,
+  isButtonDisabled,
+  setIsButtonDisabled,
 }) => {
   const inputRefs = useRef<HTMLInputElement[]>([])
   const [code, setCode] = useState(Array(numberOfBoxes).fill(''))
@@ -241,7 +259,7 @@ const CodeInput: React.FC<any> = ({
 
   const handleVerifyCode = async () => {
     const verificationCode = code.join('')
-
+    setIsButtonDisabled(true)
     try {
       const verifyCode =
         !isVerifiedPersonalInfo && !isVerifiedBusinessEmail ? verifyIndividualCode : verifySecondaryEmailCode
@@ -259,6 +277,8 @@ const CodeInput: React.FC<any> = ({
       handleVerificationError('An unexpected error occurred')
       setVerifyError(true)
       setTimer(60)
+    } finally {
+      setIsButtonDisabled(false)
     }
   }
 
@@ -328,7 +348,7 @@ const CodeInput: React.FC<any> = ({
             <CopyIcon style={{ width: '30px', height: '18px', cursor: 'pointer' }} onClick={handleCopyClick} />
           </Container>
         ) : (
-          <PinnedContentButton disabled={error} onClick={handleButtonClick}>
+          <PinnedContentButton disabled={isButtonDisabled || error} onClick={handleButtonClick}>
             {buttonText}
           </PinnedContentButton>
         )}

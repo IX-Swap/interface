@@ -11,8 +11,8 @@ interface StatusProps {
 
 const statusMap: { [key: string]: { Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>; text: string } } = {
   clear: { Icon: Approved, text: 'Clear' },
-  attention: { Icon: CloseIcon, text: 'Attention' },
-  not_processed: { Icon: PendingIcon, text: 'Not Processed' },
+  attention: { Icon: PendingIcon, text: 'Attention' },
+  not_processed: { Icon: CloseIcon, text: 'Not Processed' },
   default: { Icon: null as any, text: '-' },
 }
 
