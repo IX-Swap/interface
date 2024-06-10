@@ -231,6 +231,13 @@ export const individualFormInitialValues: IFormInitial = {
   taxIdentification: '',
 }
 
+export const individualFormV2InitialValues: IFormInitial = {
+  firstName: '',
+  middleName: '',
+  lastName: '',
+  email: '',
+}
+
 export const corporateFormInitialValues: IFormInitial = {
   corporateName: '',
   typeOfLegalEntity: null,

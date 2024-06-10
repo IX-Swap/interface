@@ -9,10 +9,10 @@ import changeRequestIcon from '../../assets/images/NewInfoIcon.svg'
 import approvedIcon from '../../assets/images/newRightCheck.svg'
 import pendingIcon from '../../assets/images/newPending.svg'
 import warningIcon from '../../assets/images/warning.svg'
-import newDraftsIcon from "../../assets/images/newDrafts.svg"
+import newDraftsIcon from '../../assets/images/newDrafts.svg'
 
 interface Props {
-  status: string
+  status: string | boolean | undefined
 }
 
 export const StatusCell = ({ status }: Props) => {
@@ -25,6 +25,8 @@ export const StatusCell = ({ status }: Props) => {
     [KYCStatuses.APPROVED]: theme.text2,
     [KYCStatuses.FAILED]: theme.text2,
     [KYCStatuses.IN_PROGRESS]: theme.text2,
+    true: theme.text2,
+    false: theme.text2,
   } as Record<string, string>
 
   const getText = () => {
@@ -43,6 +45,12 @@ export const StatusCell = ({ status }: Props) => {
         return `Failed`
       case KYCStatuses.IN_PROGRESS:
         return `In progress`
+      case true:
+        return `Completed`
+      case false:
+        return `Pending`
+      case undefined:
+        return `-`
       default:
         return `Status`
     }
@@ -64,15 +72,21 @@ export const StatusCell = ({ status }: Props) => {
         return rejectedIcon
       case KYCStatuses.IN_PROGRESS:
         return warningIcon
+      case true:
+        return approvedIcon
+      case false:
+        return pendingIcon
+      case undefined:
+        return undefined
       default:
         return pendingIcon
     }
   }
-
+  const icon = getIcon()
   return (
     <Container>
-      <img src={getIcon()} alt="icon" width="20px" height="20px" />
-      <StatusText color={statusColors[status] || theme.text2} data-testid={getText()}>
+      {icon && <img src={icon} alt="icon" width="20px" height="20px" />}
+      <StatusText color={statusColors[String(status)] || theme.text2} data-testid={getText()}>
         <Trans>{getText()}</Trans>
       </StatusText>
     </Container>

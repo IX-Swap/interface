@@ -147,6 +147,17 @@ const KYC = () => {
     console.log('Closing modal')
     setModalProps({ isModalOpen: false, referralCode: '', kycType: undefined })
   }
+
+  const getKYCLink = () => {
+    const referralCodeParam = new URL(window.location.href).href?.split('=')[1]
+    const baseLink = '/kyc/individual'
+    if (kyc?.individual?.version === 'v2' || !kyc?.individual?.version) {
+      return referralCodeParam ? `${baseLink}/v2?referralCode=${referralCodeParam}` : `${baseLink}/v2`
+    } else {
+      return referralCodeParam ? `${baseLink}?referralCode=${referralCodeParam}` : `${baseLink}`
+    }
+  }
+
   const getKYCDescription = useCallback(() => {
     switch (status) {
       case KYCStatuses.NOT_SUBMITTED:
@@ -160,7 +171,7 @@ const KYC = () => {
               sx={{ gap: '1rem', marginTop: '40px' }}
             >
               <Flex
-                onClick={() => openModal('individual')}
+                // onClick={() => openModal('individual')}
                 sx={{
                   border: '1px solid #E6E6FF',
                   marginBottom: isMobile ? '32px' : '0px',
@@ -183,18 +194,11 @@ const KYC = () => {
                   >
                     <Trans>Pass KYC as Individual</Trans>
                   </Text>
-                  {/* <Link
-                    style={{ textDecoration: 'none' }}
-                    to={
-                      new URL(window.location.href).href?.split('=')[1]
-                        ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
-                        : '/kyc/individual'
-                    }
-                  > */}
-                  <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
-                    <Trans>Start Now</Trans>
-                  </Text>
-                  {/* </Link> */}
+                  <Link style={{ textDecoration: 'none' }} to={getKYCLink()}>
+                    <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
+                      <Trans>Start Now</Trans>
+                    </Text>
+                  </Link>
                 </>
               </Flex>
 
@@ -239,14 +243,7 @@ const KYC = () => {
               {kyc?.individual && (
                 <Flex sx={{ marginBottom: isMobile ? '32px' : '0px' }} flexDirection="column" alignItems="center">
                   <IndividualKYC />
-                  <Link
-                    style={{ textDecoration: 'none' }}
-                    to={
-                      new URL(window.location.href).href?.split('=')[1]
-                        ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
-                        : '/kyc/individual'
-                    }
-                  >
+                  <Link style={{ textDecoration: 'none' }} to={getKYCLink()}>
                     <PinnedContentButton sx={{ padding: '16px 24px', marginTop: '32px' }}>
                       <Trans>Continue Pass KYC as Individual</Trans>
                     </PinnedContentButton>
@@ -340,7 +337,7 @@ const KYC = () => {
 
   if (!account) return <NotAvailablePage />
 
-  const blurred = detectWrongNetwork(chainId);
+  const blurred = detectWrongNetwork(chainId)
 
   if (blurred) {
     return (

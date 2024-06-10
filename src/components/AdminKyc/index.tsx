@@ -22,8 +22,6 @@ import { AdminParams } from 'pages/Admin'
 import { NoData } from 'components/UsersList/styleds'
 import { getStatusStats } from 'state/kyc/hooks'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
-import { Line } from 'components/Line'
-import { Link } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { useOnChangeOrder } from 'state/launchpad/hooks'
@@ -35,6 +33,7 @@ const headerCells = [
   { key: 'identity', label: 'Identity', show: false },
   { key: 'createdAt', label: 'Date of request', show: true },
   { key: 'status', label: 'KYC Status', show: false },
+  { key: 'completedKycOfProvider', label: 'Review Status', show: false },
   { key: 'updatedAt', label: 'Updated At', show: true },
 ]
 interface RowProps {
@@ -53,10 +52,10 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   } = item
 
   const kyc = individualKycId ? item.individual : item.corporate
+  const completedKycOfProvider = item?.individual?.completedKycOfProvider
   const fullName = individualKycId
     ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
     : kyc?.corporateName
-
   return (
     <StyledBodyRow key={id}>
       <Wallet style={{ fontSize: '12px' }}>
@@ -68,13 +67,10 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       <div style={{ fontSize: '12px' }}>
         <StatusCell status={status} />
       </div>
+      <div style={{ fontSize: '12px' }}>
+        <StatusCell status={completedKycOfProvider} />
+      </div>
       <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
-      {/* <div>risk level</div> */}
-      {/* <Link to={`/admin/kyc/${item.id}`}>
-        <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF">
-          Review
-        </TYPE.main2>
-      </Link> */}
       <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
         Review
       </TYPE.main2>
@@ -100,7 +96,7 @@ export const AdminKycTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
   const [isLoading, handleIsLoading] = useState(false)
   const [stats, setStats] = useState<TStats[]>([])
-  const [selectedStatuses, setSelectedStatuses] = useState(['approved', 'rejected', 'pending', 'changes-requested']);
+  const [selectedStatuses, setSelectedStatuses] = useState(['approved', 'rejected', 'pending', 'changes-requested'])
   const [endDate, setEndDate] = useState(null)
   const [searchValue, setSearchValue] = useState('')
   const [sortBy, setSortBy] = useState('')
@@ -171,8 +167,7 @@ export const AdminKycTable = () => {
     history.push(`/admin/kyc`)
     handleKyc({} as KycItem)
   }
-  const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
-  //  <Link to={`/admin/kyc/${kyc.id}`}></Link>
+
   const getKyc = useCallback(async () => {
     if (!id) return
     try {
@@ -189,8 +184,11 @@ export const AdminKycTable = () => {
     getKyc()
   }, [id, getKyc])
 
+  const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
+
   return (
     <div style={{ margin: isMobile ? '30px 20px 0px 20px' : '30px 90px 0px 90px' }} id="kyc-container">
+      {/* version v2 is hardcoded for testing purpose only */}
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} marginBottom="30px" data-testid="securityTokensTitle">
         <Trans>KYC</Trans>
@@ -231,7 +229,6 @@ export const AdminKycTable = () => {
                     </HeaderCell>
                   ))}
                 </StyledHeaderRow>
-                {/* <Line style={{ marginBottom: '20px' }} /> */}
               </>
             }
           />
@@ -284,18 +281,18 @@ export const StyledDoc = styled(File)`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: repeat(6, 1fr) 100px;
+  grid-template-columns: repeat(7, 2fr) 140px;
   padding-bottom: 15px;
   margin-bottom: 20px;
   border-bottom: 1px solid;
   border-color: rgba(102, 102, 128, 0.2);
-   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     min-width: 1370px;
   }
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: repeat(6, 1fr) 100px;
+  grid-template-columns: repeat(7, 2fr) 140px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     min-width: 1370px;
   }
