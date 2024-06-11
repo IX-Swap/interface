@@ -1,25 +1,16 @@
 import React, { useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Box, Text } from 'rebass'
+import { Text } from 'rebass'
 import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
-import useScrollPosition from '@react-hook/window-scroll'
-import useLightBackground from 'components/AppBackground/useLightBackground'
-import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { useKYCState } from 'state/kyc/hooks'
-import { AppLogo } from 'components/AppLogo'
 import { routes } from 'utils/routes'
-import { ReactComponent as KYC } from 'assets/images/kyc.svg'
-import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
 import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
-
 import { ReactComponent as NewDropdown } from 'assets/images/dropdownIcon.svg'
 import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
-import { formatAmount } from 'utils/formatCurrencyAmount'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { useActiveWeb3React } from '../../hooks/web3'
-import { useETHBalances } from '../../state/wallet/hooks'
 import { MobileMenu } from '../Mobile-Menu'
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
@@ -30,10 +21,7 @@ import { NetworkCard } from './NetworkCard'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { useRole } from 'state/user/hooks'
 import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
-import { hexDiff } from 'node-vibrant/lib/util'
 import { isMobile } from 'react-device-detect'
-import { useWeb3React } from '@web3-react/core'
-import { ReactComponent as NewAddIcon } from 'assets/images/newAddIcon.svg'
 import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
 import { useWalletModalToggle } from 'state/application/hooks'
 import { PinnedContentButton } from 'components/Button'
@@ -50,7 +38,7 @@ const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boo
   top: 0;
   position: relative;
   padding: 1rem;
-  z-index: 21;
+  z-index: 1;
   position: relative;
   background-color: white;
   background-image: ${({ theme }) => `linear-gradient(to bottom, transparent 50%, ${theme.bg0} 50%)`};
@@ -104,33 +92,6 @@ const HeaderRowNew = styled(RowFixed)`
   @media (max-width: 500px) {
     grid-gap: 12px;
   }
-`
-
-const AccountElement = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 12px;
-  white-space: nowrap;
-  width: fit-content;
-  cursor: pointer;
-  :focus {
-    border: 1px solid blue;
-  }
-`
-
-const BalanceText = styled(Text)`
-  // background: ${({ theme }) => theme.bgG2};
-  color: ${({ theme }) => theme.text2};
-  font-weight: 600;
-  font-size: 12px;
-  opacity: ${({ theme }) => (theme.config.background ? '1' : '0.5')};
-  border-radius: 0 0 40px 40px;
-  padding: 0 18px;
-
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    display: none;
-  `};
 `
 
 const Title = styled.a`
@@ -209,10 +170,6 @@ const IconWrapper = styled.div`
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
   const { account, chainId } = useActiveWeb3React()
-  const { hasLightBackground } = useLightBackground()
-  const userEthBalance = useETHBalances(account ? [account] : [])
-  const nativeCurrency = useNativeCurrency()
-  const scrollY = useScrollPosition()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
   const { isTokenManager } = useRole()
@@ -287,7 +244,7 @@ export default function Header() {
       )}
       {!isMobile && (
         <HeaderWrapper>
-          {!cookies.annoucementsSeen && <Announcement />}
+          {cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
             <HeaderRow marginLeft={50}>
               <Title href={config?.defaultUrl || '.'}>
@@ -376,19 +333,6 @@ export default function Header() {
                     </div>
                   </IconWrapper>
                 )}
-                {/* <div
-                  onClick={openModal}
-                  style={{
-                    border: '1.3px solid #E6E6FF',
-                    borderRadius: '8px',
-                    padding: '16px',
-                    display: 'flex',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <NewAddIcon />
-                  <span style={{ color: '#6666FF', fontSize: '13px', fontWeight: '600', marginLeft: '8px' }}>Buy</span>
-                </div> */}
                 {!account && (
                   <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleModal}>
                     <Text className="connect-wallet-button">

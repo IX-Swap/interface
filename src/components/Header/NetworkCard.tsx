@@ -105,6 +105,7 @@ const Selector = styled.div`
 const StyledBox = styled.div`
   font-size: 12px;
   border: 1px solid #e6e6ff;
+  margin-top: 10px;
   padding: 10px 12px 10px 10px;
   ${({ theme }) => theme.mediaWidth.upToMedium`
      padding: 10px 20px 10px 20px;
