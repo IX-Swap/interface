@@ -9,13 +9,11 @@ import { ChevronElement } from 'components/ChevronElement'
 import Column from 'components/Column'
 import { Line } from 'components/Line'
 import Popover from 'components/Popover'
-import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ExternalLink } from 'theme'
-import { isDevelopment } from 'utils/isEnvMode'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { routes } from 'utils/routes'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
@@ -111,7 +109,6 @@ export const HeaderLinks = () => {
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-  const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
   const isAllowed = useCallback(
     (path: string): boolean => {
@@ -131,7 +128,7 @@ export const HeaderLinks = () => {
 
   return (
     <HeaderLinksWrap links={7}>
-      {isAllowed('/charts') && account && isWhitelisted && (
+      {isAllowed('/charts') && isWhitelisted && (
         <MenuExternalLink
           // disabled={!isApproved}
           target="_self"
@@ -150,7 +147,7 @@ export const HeaderLinks = () => {
         <Trans>Launchpad</Trans>
       </StyledNavLink>
 
-      {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {isAllowed(routes.securityTokens()) && isWhitelisted && (
         <StyledNavLink
           // disabled={!isApproved}
           data-testid="securityTokensButton"
@@ -164,13 +161,13 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {isAllowed(routes.pool) && account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {isAllowed(routes.pool) && isWhitelisted && (
         <StyledNavLink id={`pool-nav-link`} to={routes.pool}>
           <Trans>Liquidity Pools</Trans>
         </StyledNavLink>
       )}
 
-      {isAllowed(routes.swap) && account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {isAllowed(routes.swap) && isWhitelisted && (
         <StyledNavLink id={`swap-nav-link`} to={routes.swap} data-testid={`swap-nav-link`}>
           <Trans>Swap/Trade</Trans>
         </StyledNavLink>
@@ -202,7 +199,7 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )} */}
 
-      {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && (
+      {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
         <StyledNavLink
           ref={farmNode as any}
           id={`farming-nav-link`}
@@ -218,18 +215,16 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {isAllowed(routes.faucet) && account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+      {isAllowed(routes.faucet) && chainId === SupportedChainId.KOVAN && isWhitelisted && (
         <StyledNavLink disabled={!isApproved} id={`faucet-nav-link`} to={routes.faucet}>
           <Trans>Faucet</Trans>
         </StyledNavLink>
       )}
 
       {isAllowed(routes.issuance) && showIssuance && <StyledNavLink to="/issuance">Issuance</StyledNavLink>}
-      {isAllowed('/admin') && isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink to="/admin">Admin</StyledNavLink>
-      )}
+      {isAllowed('/admin') && account && isAdmin && isWhitelisted && <StyledNavLink to="/admin">Admin</StyledNavLink>}
 
-      {isAllowed(routes.lbpDashboard) && isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {isAllowed(routes.lbpDashboard) && account && isAdmin && isWhitelisted && (
         <StyledNavLink to={routes.lbpDashboard} data-testid={`lbp-nav-link`}>
           <Trans>LBP</Trans>
         </StyledNavLink>

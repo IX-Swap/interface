@@ -51,6 +51,8 @@ import { EmailVerification } from 'pages/KYC/EmailVerifyModal'
 import { ResendEmailModal } from 'pages/KYC/ResendEmailModal'
 import { tryDeactivateConnector } from 'connectors'
 import { setWalletState } from 'state/wallet'
+import { clearUserData } from 'state/user/actions'
+import { clearEventLog } from 'state/eventLog/actions'
 
 function renderTransactions(transactions: string[]) {
   return (
@@ -189,6 +191,8 @@ export default function AccountDetails({
   const disconnectWallet = async () => {
     await tryDeactivateConnector(connector)
     dispatch(setWalletState({ isConnected: false, walletName: '' }))
+    dispatch(clearUserData())
+    dispatch(clearEventLog())
   }
 
   return (
