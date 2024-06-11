@@ -244,7 +244,7 @@ export default function Header() {
       )}
       {!isMobile && (
         <HeaderWrapper>
-          {cookies.annoucementsSeen && <Announcement />}
+          {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
             <HeaderRow marginLeft={50}>
               <Title href={config?.defaultUrl || '.'}>
