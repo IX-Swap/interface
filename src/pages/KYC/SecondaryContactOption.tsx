@@ -90,6 +90,7 @@ const SecondaryContactOption: React.FC<Props> = ({
       handleError('An unexpected error occurred')
     } finally {
       setIsButtonDisabled(false)
+      setTimer(60)
     }
   }
 
@@ -193,7 +194,7 @@ const SecondaryContactOption: React.FC<Props> = ({
               <TimerText>{`Get new code (${timer} seconds)`}</TimerText>
             ) : (
               <span style={{ cursor: 'pointer' }} onClick={handleGetNewCodeClick}>
-                {hasCodeError ? 'Get New Code' : ''}
+                {buttonText === 'Verify Code' ? 'Get New Code' : ''}
               </span>
             )}
           </TimerContainer>
