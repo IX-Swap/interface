@@ -142,9 +142,11 @@ const StatusBox = styled.div`
 `
 
 const InfoBox = styled.div`
-  padding: 16px;
+  padding: 16px 0px;
   width: 167px;
   height: auto;
+  word-wrap: break-word;
+  word-break: break-word;
 `
 
 const StatusCheckBox = styled.div`
