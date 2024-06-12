@@ -105,7 +105,6 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
       {walletView === PromptView.pending && showPendingScreen ? (
         <>
           <PromptTitle>
-            {' '}
             {isMetaMaskClicked ? 'Connecting to Metamask..' : 'Connecting to WalletConnect.. '}
           </PromptTitle>
           <ContentWrapper>
