@@ -6,7 +6,7 @@ import { darken } from 'polished'
 import { Activity } from 'react-feather'
 import styled, { css } from 'styled-components'
 
-import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
+// import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 // import PortisIcon from '../../assets/images/portisIcon.png'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
@@ -27,7 +27,6 @@ import { IXSBalance } from 'components/Header/IXSBalance'
 import { useETHBalances } from 'state/wallet/hooks'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { formatAmount } from 'utils/formatCurrencyAmount'
-import { coinbaseWallet } from 'connectors/coinbaseWallet'
 
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
@@ -180,13 +179,14 @@ function StatusIcon({ connector }: { connector: Connector }) {
         <img src={WalletConnectIcon} alt={'WalletConnect'} />
       </IconWrapper>
     )
-  } else if (connector === coinbaseWallet) {
-    return (
-      <IconWrapper size={16}>
-        <img src={CoinbaseWalletIcon} alt={'CoinbaseWallet'} />
-      </IconWrapper>
-    )
   }
+  // else if (connector === walletlink) {
+  //   return (
+  //     <IconWrapper size={16}>
+  //       <img src={CoinbaseWalletIcon} alt={'CoinbaseWallet'} />
+  //     </IconWrapper>
+  //   )
+  // }
   // else if (connector === fortmatic) {
   //   return (
   //     <IconWrapper size={16}>
