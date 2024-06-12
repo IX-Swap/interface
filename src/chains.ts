@@ -50,7 +50,7 @@ export function getAddChainParameters(chainId: number): AddEthereumChainParamete
 }
 
 const getInfuraUrlFor = (network: string) =>
-  process.env.REACT_APP_INFURA_KEY ? `https://${network}.infura.io/v3/${process.env.REACT_APP_INFURA_KEY}` : ''
+  process.env.infuraKey ? `https://${network}.infura.io/v3/${process.env.infuraKey}` : ''
 const getAlchemyUrlFor = (network: string) =>
   process.env.alchemyKey ? `https://${network}.alchemyapi.io/v2/${process.env.alchemyKey}` : ''
 
@@ -111,7 +111,7 @@ export const TESTNET_CHAINS: ChainConfig = {
     blockExplorerUrls: ['https://mumbai.polygonscan.com'],
   },
   80002: {
-    urls: ['https://rpc-amoy.polygon.technology/', getInfuraUrlFor('polygon-amoy')].filter(Boolean),
+    urls: [getInfuraUrlFor('polygon-amoy')].filter(Boolean),
     name: 'Polygon Amoy',
     nativeCurrency: MATIC,
     blockExplorerUrls: ['https://www.oklink.com/amoy'],
