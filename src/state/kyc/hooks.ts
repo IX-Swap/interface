@@ -102,7 +102,7 @@ export const useEmailEdit = () => {
 
 export const useGenerateEmailVerifyCode = () => {
   return React.useCallback(
-    async (personalInfo: { firstName: string; middleName: string; lastName: string; email: string }) => {
+    async (personalInfo: { firstName: string; middleName: string; lastName: string; email: string; referralCode?: any }) => {
       try {
         const response = await apiService.post(`/kyc/individual/registration`, personalInfo)
         return { success: true, response }

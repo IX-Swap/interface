@@ -28,6 +28,7 @@ interface Props {
     middleName: string
     lastName: string
     email: string
+    referralCode?: string | null
   }
   businessEmail?: any
 }
@@ -59,7 +60,6 @@ const SecondaryContactOption: React.FC<Props> = ({
     return section === 'Telegram' ? 'Get Code' : 'Send Code'
   }
   const [buttonText, setButtonText] = useState(getButtonText(verificationSecation))
-
   useEffect(() => {
     let interval: NodeJS.Timeout
     if (timer > 0) {
@@ -70,7 +70,6 @@ const SecondaryContactOption: React.FC<Props> = ({
     return () => clearInterval(interval)
   }, [timer])
 
-  console.log(verificationSecation, 'verificationSecation')
   useEffect(() => {
     if (personalInfo?.email !== initialEmail) {
       setInitialEmail(personalInfo?.email || '')
@@ -79,7 +78,11 @@ const SecondaryContactOption: React.FC<Props> = ({
     }
   }, [personalInfo?.email, initialEmail])
   const handleSendCode = async () => {
+    if (error) {
+      return null
+    }
     setIsButtonDisabled(true)
+
     try {
       const result =
         !isVerifiedPersonalInfo && !isVerifiedBusinessEmail
@@ -365,7 +368,7 @@ const CodeInput: React.FC<any> = ({
             <CopyIcon style={{ width: '30px', height: '18px', cursor: 'pointer' }} onClick={handleCopyClick} />
           </Container>
         ) : (
-          <PinnedContentButton disabled={isButtonDisabled || error} onClick={handleButtonClick}>
+          <PinnedContentButton disabled={isButtonDisabled} onClick={handleButtonClick}>
             {buttonText}
           </PinnedContentButton>
         )}
