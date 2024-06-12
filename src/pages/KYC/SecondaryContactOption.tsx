@@ -79,7 +79,7 @@ const SecondaryContactOption: React.FC<Props> = ({
   }, [personalInfo?.email, initialEmail])
   const handleSendCode = async () => {
     if (error) {
-      return null;
+      return null
     }
     setIsButtonDisabled(true)
 
@@ -302,14 +302,13 @@ const CodeInput: React.FC<any> = ({
     handleError(errorMessage)
   }
 
-  const handleButtonClick = () => {  
+  const handleButtonClick = () => {
     if (buttonText === 'Send Code' || buttonText === 'Get Code') {
-      handleSendCode();
+      handleSendCode()
     } else {
-      handleVerifyCode();
+      handleVerifyCode()
     }
   }
-  
 
   const handleCopyClick = async () => {
     navigator.clipboard.writeText(socialAccountOTP)

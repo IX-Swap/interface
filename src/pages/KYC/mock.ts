@@ -242,9 +242,6 @@ export const initialValuesBusinessEmail: IFormInitial = {
   businessEmail: '',
 }
 
-
-
-
 export const corporateFormInitialValues: IFormInitial = {
   corporateName: '',
   typeOfLegalEntity: null,

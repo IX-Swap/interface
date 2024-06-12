@@ -365,7 +365,7 @@ export default function IndividualKycFormV2() {
                               middleName: values.middleName,
                               lastName: values.lastName,
                               email: values.email,
-                              referralCode: referralCode
+                              referralCode: referralCode,
                             }}
                             onSuccess={() => handleSuccess('personal')}
                           />
