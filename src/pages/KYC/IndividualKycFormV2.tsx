@@ -283,7 +283,6 @@ export default function IndividualKycFormV2() {
             }}
           >
             {({ values, handleSubmit, setFieldValue, errors, touched, isValid }) => {
-              console.log(errors)
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
