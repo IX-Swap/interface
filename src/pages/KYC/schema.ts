@@ -29,7 +29,7 @@ export const individualErrorsSchemaV2 = yup.object().shape({
   email: yup.string().email('Invalid email').required('Required'),
 })
 export const businessEmailSchema = yup.object().shape({
-  businessEmail: yup.string().email('Invalid email').required('Required').trim(),
+  businessEmail: yup.string().email('Invalid email').required('Required')
 })
 
 export const individualErrorsSchema = yup.object().shape({

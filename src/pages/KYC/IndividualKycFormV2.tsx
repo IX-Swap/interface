@@ -21,7 +21,7 @@ import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { KycSelect as Select, KycTextInput as TextInput } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
-import { individualFormV2InitialValues, promptValue } from './mock'
+import { individualFormV2InitialValues, initialValuesBusinessEmail, promptValue } from './mock'
 import { FormCard, FormGrid, FormWrapper, StyledStickyBox } from './styleds'
 import { businessEmailSchema, individualErrorsSchemaV2 } from './schema'
 import { Line } from 'components/Line'
@@ -186,13 +186,16 @@ export default function IndividualKycFormV2() {
 
     try {
       let root = { [key]: value }
-      await individualErrorsSchemaV2.validateAt(key, root)
-      const errorCopy = { ...errors }
-      delete errorCopy[key]
-      setErrors(errorCopy)
-      form.current.setErrors(errorCopy)
+      const schema = key === 'businessEmail' ? businessEmailSchema : individualErrorsSchemaV2
+      await schema.validateAt(key, root)
+      setErrors((prevErrors: any) => {
+        const updatedErrors = { ...prevErrors }
+        delete updatedErrors[key]
+        return updatedErrors
+      })
+      form.current.setFieldError(key, '')
     } catch (err: any) {
-      setErrors(Object.assign(errors, { [key]: err.message }))
+      setErrors((prevErrors: any) => ({ ...prevErrors, [key]: err.message }))
       form.current.setFieldError(key, err.message)
     }
 
@@ -201,9 +204,11 @@ export default function IndividualKycFormV2() {
 
   const onChangeInput = (key: string, value: any, values: any, setFieldValue: any) => {
     if (values[key] !== value) {
-      setFieldValue(key, value, false)
+      setFieldValue(key, value, true)
     }
-    validateValue(key, value)
+    if (errors[key] || form.current.touched[key]) {
+      validateValue(key, value)
+    }
   }
 
   const handleCheckboxChange = (event: { target: { value: any } }) => {
@@ -250,7 +255,11 @@ export default function IndividualKycFormV2() {
         {
           <Formik
             innerRef={form}
-            initialValues={individualFormV2InitialValues}
+            initialValues={
+              isPersonalVerified || kyc?.individual?.isEmailVerified
+                ? initialValuesBusinessEmail
+                : individualFormV2InitialValues
+            }
             validationSchema={getValidationSchema(selectedCheckbox)}
             initialErrors={errors}
             validateOnBlur={true}
@@ -274,6 +283,7 @@ export default function IndividualKycFormV2() {
             }}
           >
             {({ values, handleSubmit, setFieldValue, errors, touched, isValid }) => {
+              console.log(errors)
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
@@ -355,6 +365,7 @@ export default function IndividualKycFormV2() {
                               middleName: values.middleName,
                               lastName: values.lastName,
                               email: values.email,
+                              referralCode: referralCode
                             }}
                             onSuccess={() => handleSuccess('personal')}
                           />
