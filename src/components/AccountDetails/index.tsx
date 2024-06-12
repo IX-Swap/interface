@@ -195,7 +195,6 @@ export default function AccountDetails({
     await tryDeactivateConnector(connector)
   }
 
-  console.log('kyc', kyc);
   return (
     <>
       <UpperSection>
