@@ -41,6 +41,12 @@ interface Props {
   onClose: () => void
 }
 
+const iconWalletMapping = {
+  MetaMask: metamaskmobile,
+  WalletConnect: WalletConnectIcon,
+  'Coinbase Wallet': coinbase,
+} as any
+
 export const ConnectionDialog: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch()
 
@@ -48,6 +54,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
   const { config } = useWhitelabelState()
   const [showPendingScreen, setShowPendingScreen] = React.useState(false)
   const [userSelected, setUserSelected] = React.useState(false) // Define userSelected state
+  const [selectedWalletName, setSelectedWalletName] = React.useState<string>('')
 
   const [isMetaMaskClicked, setIsMetaMaskClicked] = React.useState(false)
 
@@ -65,6 +72,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     }
 
     try {
+      setSelectedWalletName(wallet?.name ?? '')
       await connector.activate()
       setWalletView(PromptView.account)
       props.onConnect()
@@ -98,25 +106,17 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     setWalletView(PromptView.options) // Show wallet selection options
   }
 
-  const isMetamaskInstalled = typeof window.ethereum !== 'undefined'
-
+  console.log('selectWalletName', selectedWalletName)
   return (
     <ModalContainer style={{ overflow: 'auto', maxHeight: '90vh' }}>
       {walletView === PromptView.pending && showPendingScreen ? (
         <>
-          <PromptTitle>
-            {' '}
-            {isMetaMaskClicked ? 'Connecting to Metamask..' : 'Connecting to WalletConnect.. '}
-          </PromptTitle>
+          <PromptTitle>{`Connecting to ${selectedWalletName}..`}</PromptTitle>
           <ContentWrapper>
             <AutoRow>
               <TextContent>
                 <ConnectingContainer style={{ width: isMobile ? '264px' : '350px' }}>
-                  {isMetaMaskClicked ? (
-                    <ConnectingImage src={metamaskmobile} alt="Metamask" />
-                  ) : (
-                    <ConnectingImage src={WalletConnectIcon} alt="Metamask" />
-                  )}
+                  <ConnectingImage src={iconWalletMapping[selectedWalletName]} alt={selectedWalletName} />
 
                   <ConnectingText>Connecting...</ConnectingText>
                 </ConnectingContainer>
