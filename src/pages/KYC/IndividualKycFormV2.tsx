@@ -230,7 +230,7 @@ export default function IndividualKycFormV2() {
     if (result.success) {
       const redirectUrl = result?.response?.data?.redirectUrl
       setLoading(false)
-      window.open(redirectUrl, '_blank')
+      window.open(redirectUrl, '_self')
     } else {
       console.error('Verification failed', result.error)
       setLoading(false)
