@@ -106,7 +106,6 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     setWalletView(PromptView.options) // Show wallet selection options
   }
 
-  console.log('selectWalletName', selectedWalletName)
   return (
     <ModalContainer style={{ overflow: 'auto', maxHeight: '90vh' }}>
       {walletView === PromptView.pending && showPendingScreen ? (
