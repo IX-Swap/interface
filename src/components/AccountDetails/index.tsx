@@ -189,10 +189,10 @@ export default function AccountDetails({
   }
 
   const disconnectWallet = async () => {
-    await tryDeactivateConnector(connector)
     dispatch(setWalletState({ isConnected: false, walletName: '' }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
+    await tryDeactivateConnector(connector)
   }
 
   return (

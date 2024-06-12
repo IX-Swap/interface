@@ -49,6 +49,7 @@ import { Footer as DefaultFooter } from './Launchpad/Footer'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { CustomHeaders } from 'components/CustomHeaders'
 import { useWalletState } from 'state/wallet/hooks'
+import { coinbaseWallet } from 'connectors/coinbaseWallet'
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -181,6 +182,12 @@ export default function App() {
       // connect eagerly for walletConnectV2
       walletConnectV2.connectEagerly().catch((error) => {
         console.debug('Failed to connect eagerly to walletconnect', error)
+      })
+    }
+
+    if (isConnected && walletName === 'Coinbase Wallet') {
+      void coinbaseWallet.connectEagerly().catch(() => {
+        console.debug('Failed to connect eagerly to coinbase wallet')
       })
     }
   }, [])
