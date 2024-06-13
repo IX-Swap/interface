@@ -31,6 +31,7 @@ import { setWalletState } from 'state/wallet'
 import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
 import { getAddChainParameters } from 'chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { SupportedChainId } from 'constants/chains'
 
 export enum PromptView {
   options,
@@ -73,7 +74,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
 
     try {
       setSelectedWalletName(wallet?.name ?? '')
-      const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || 80002
+      const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
       if (connector instanceof CoinbaseWallet) {
         await connector.activate(getAddChainParameters(defaultChain))
       } else {
