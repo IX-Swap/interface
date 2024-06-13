@@ -73,12 +73,11 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
 
     try {
       setSelectedWalletName(wallet?.name ?? '')
+      const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || 80002
       if (connector instanceof CoinbaseWallet) {
-        const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || 80002
-        console.log('getAddChainParameters(defaultChain)', getAddChainParameters(defaultChain));
         await connector.activate(getAddChainParameters(defaultChain))
       } else {
-        await connector.activate()
+        await connector.activate(defaultChain)
       }
       setWalletView(PromptView.account)
       props.onConnect()
