@@ -28,6 +28,10 @@ import { MetaMask } from '@web3-react/metamask'
 import WalletConnectIcon from '../../../assets/images/walletConnectIcon.svg'
 import { useAppDispatch } from 'state/hooks'
 import { setWalletState } from 'state/wallet'
+import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
+import { getAddChainParameters } from 'chains'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { SupportedChainId } from 'constants/chains'
 
 export enum PromptView {
   options,
@@ -53,10 +57,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
   const [walletView, setWalletView] = React.useState(PromptView.options)
   const { config } = useWhitelabelState()
   const [showPendingScreen, setShowPendingScreen] = React.useState(false)
-  const [userSelected, setUserSelected] = React.useState(false) // Define userSelected state
   const [selectedWalletName, setSelectedWalletName] = React.useState<string>('')
-
-  const [isMetaMaskClicked, setIsMetaMaskClicked] = React.useState(false)
 
   const tryActivation = async (connector: Connector | undefined) => {
     const wallet = Object.values(SUPPORTED_WALLETS).find((wallet) => wallet.connector === connector)
@@ -73,7 +74,12 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
 
     try {
       setSelectedWalletName(wallet?.name ?? '')
-      await connector.activate()
+      const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
+      if (connector instanceof CoinbaseWallet) {
+        await connector.activate(getAddChainParameters(defaultChain))
+      } else {
+        await connector.activate(defaultChain)
+      }
       setWalletView(PromptView.account)
       props.onConnect()
       props.onClose()
@@ -87,12 +93,6 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     (option: WalletInfo) => {
       dispatch
       tryActivation(option.connector)
-      if (option.connector instanceof MetaMask) {
-        setIsMetaMaskClicked(true)
-      } else {
-        setIsMetaMaskClicked(false)
-      }
-      setUserSelected(true) // Set userSelected to true when user selects a wallet
     },
     [tryActivation]
   )
@@ -106,7 +106,6 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     setWalletView(PromptView.options) // Show wallet selection options
   }
 
-  console.log('selectWalletName', selectedWalletName)
   return (
     <ModalContainer style={{ overflow: 'auto', maxHeight: '90vh' }}>
       {walletView === PromptView.pending && showPendingScreen ? (

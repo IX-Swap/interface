@@ -169,7 +169,7 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@coinbase/wallet-sdk": "3.0.4",
+    "@coinbase/wallet-sdk": "3.2.0",
     "@cyntler/react-doc-viewer": "^1.14.1",
     "@date-io/dayjs": "1.x",
     "@material-ui/core": "^4.12.3",
