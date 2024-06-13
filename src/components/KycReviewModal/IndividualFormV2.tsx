@@ -22,6 +22,16 @@ const IndividualFormV2 = ({ data }: Props) => {
       </StatusBox>
     ) : null
 
+  const statusBoxes = [
+    { title: 'AML Screening', status: data?.individual?.amlVerificationStatus },
+    { title: 'Document', status: data?.individual?.documentVerificationStatus },
+    { title: 'Identity', status: data?.individual?.identityVerificationStatus },
+    { title: 'Proof of Address', status: data?.individual?.poaVerificationStatus },
+  ]
+
+  const renderedStatusBoxes = statusBoxes.filter((box) => box.status).length
+  const gridTemplateColumns = `repeat(${renderedStatusBoxes}, 1fr)`
+
   const renderInfoBox = (label: string, value: string) => {
     if (!value) return null
     return (
@@ -73,11 +83,8 @@ const IndividualFormV2 = ({ data }: Props) => {
         </ViewStatus>
       </StatusHeader>
 
-      <StatusBoxContainer>
-        {renderStatusBox('AML Screening', data?.individual?.amlVerificationStatus)}
-        {renderStatusBox('Document', data?.individual?.documentVerificationStatus)}
-        {renderStatusBox('Identity', data?.individual?.identityVerificationStatus)}
-        {renderStatusBox('Proof of Address', data?.individual?.poaVerificationStatus)}
+      <StatusBoxContainer style={{ gridTemplateColumns }}>
+        {statusBoxes.map((box, index) => renderStatusBox(box.title, box.status))}
       </StatusBoxContainer>
 
       <Line style={{ marginTop: '50px' }} />
@@ -85,12 +92,12 @@ const IndividualFormV2 = ({ data }: Props) => {
       <StatusHeader>
         <TYPE.body4>Personal Information</TYPE.body4>
       </StatusHeader>
-      <StatusBoxContainer>
+      <StatusBoxContainerInfo>
         {renderInfoBox('First Name', data?.individual?.firstName || '-')}
         {renderInfoBox('Middle Name', data?.individual?.middleName || '-')}
         {renderInfoBox('Last Name', data?.individual?.lastName || '-')}
         {renderInfoBox('Email Address', data?.individual?.email || '-')}
-      </StatusBoxContainer>
+      </StatusBoxContainerInfo>
 
       <Line style={{ marginTop: '50px' }} />
 
@@ -128,11 +135,15 @@ const ViewStatus = styled.div`
 
 const StatusBoxContainer = styled.div`
   display: grid;
+  gap: 16px;
+  margin-top: 16px;
+`
+const StatusBoxContainerInfo = styled.div`
+  display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-top: 16px;
 `
-
 const StatusBox = styled.div`
   border: 1px solid #e6e6ff;
   border-radius: 8px;
@@ -153,7 +164,7 @@ const StatusCheckBox = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 3px;
 `
 
 export default IndividualFormV2
