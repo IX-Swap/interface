@@ -100,7 +100,7 @@ export const AdminKycTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
   const [isLoading, handleIsLoading] = useState(false)
   const [stats, setStats] = useState<TStats[]>([])
-  const [selectedStatuses, setSelectedStatuses] = useState(['approved', 'rejected', 'pending', 'changes-requested']);
+  const [selectedStatuses, setSelectedStatuses] = useState(['approved', 'rejected', 'pending', 'changes-requested'])
   const [endDate, setEndDate] = useState(null)
   const [searchValue, setSearchValue] = useState('')
   const [sortBy, setSortBy] = useState('')
@@ -206,15 +206,15 @@ export const AdminKycTable = () => {
         setEndDate={setEndDate}
       />
 
-      {(adminLoading || isLoading) && (
-        <Loader>
-          <LoaderThin size={96} />
-        </Loader>
-      )}
-
       {items.length === 0 ? (
         <NoData>
-          <Trans>No results</Trans>
+          {adminLoading || isLoading ? (
+            <Loader>
+              <LoaderThin size={96} />
+            </Loader>
+          ) : (
+            <Trans>No results</Trans>
+          )}
         </NoData>
       ) : (
         <Container>
@@ -245,16 +245,9 @@ export const AdminKycTable = () => {
 export default AdminKycTable
 
 const Loader = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000000;
 `
 
 export const Wallet = styled.div`
@@ -289,7 +282,7 @@ const StyledHeaderRow = styled(HeaderRow)`
   margin-bottom: 20px;
   border-bottom: 1px solid;
   border-color: rgba(102, 102, 128, 0.2);
-   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     min-width: 1370px;
   }
 `

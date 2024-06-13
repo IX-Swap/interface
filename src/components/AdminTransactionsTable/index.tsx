@@ -62,17 +62,17 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
   const currency = useCurrency(tokenAddress)
   return (
     <StyledBodyRow key={`transaction-${id}`}>
-      <div style={{fontSize: '14px'}}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-      <div style={{fontSize: '14px'}}>{broker}</div>
-      <Wallet style={{fontSize: '14px'}}>
-        <CopyAddress  address={ethAddress} />
+      <div style={{ fontSize: '14px' }}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+      <div style={{ fontSize: '14px' }}>{broker}</div>
+      <Wallet style={{ fontSize: '14px' }}>
+        <CopyAddress address={ethAddress} />
       </Wallet>
-      <div style={{fontSize: '14px'}}>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
-      <div style={{fontSize: '14px'}}>
+      <div style={{ fontSize: '14px' }}>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
+      <div style={{ fontSize: '14px' }}>
         {currency ? `${CurrencyAmount.fromRawAmount(currency as Currency, amount).toFixed()} ${token?.symbol}` : ''}
       </div>
-      <div  style={{ textTransform: 'capitalize', fontSize: '14px' }}>{status}</div>
-      <div style={{fontSize: '14px'}}>
+      <div style={{ textTransform: 'capitalize', fontSize: '14px' }}>{status}</div>
+      <div style={{ fontSize: '14px' }}>
         {transactionHash && currency?.chainId && (
           <ExternalLink href={getExplorerLink(currency.chainId, transactionHash, ExplorerDataType.TRANSACTION)}>
             <span style={{ color: '#6666ff', textDecoration: 'none' }}>
@@ -124,12 +124,7 @@ export const AdminTransactionsTable = () => {
   }
 
   return (
-    <div style={{ margin: isMobile ? '30px 10px 0px 20px'  : '30px 80px 0px 40px' }}>
-      {adminLoading && (
-        <Loader>
-          <LoaderThin size={96} />
-        </Loader>
-      )}
+    <div style={{ margin: isMobile ? '30px 10px 0px 20px' : '30px 80px 0px 40px' }}>
       <TYPE.title4
         fontSize={isMobile ? '29px' : '40px'}
         lineHeight={isMobile ? '40px' : '56px'}
@@ -142,10 +137,16 @@ export const AdminTransactionsTable = () => {
       <Search setSearchValue={setSearchValue} placeholder={`Search for Wallet`} />
       {items?.length === 0 ? (
         <NoData>
-          <Trans>No results</Trans>
+          {adminLoading ? (
+            <Loader>
+              <LoaderThin size={96} />
+            </Loader>
+          ) : (
+            <Trans>No results</Trans>
+          )}
         </NoData>
       ) : (
-        <Container >
+        <Container>
           <Table body={<Body />} header={<Header />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
@@ -157,16 +158,9 @@ export const AdminTransactionsTable = () => {
 export default AdminTransactionsTable
 
 export const Loader = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000000;
 `
 
 const Wallet = styled.div`

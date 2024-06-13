@@ -58,7 +58,7 @@ const Admin = () => {
   const { account } = useWeb3React()
   const location = useLocation() // Step 1: Get the current route location
 
-  const [selectedTab, setSelectedTab] = useState<AdminTab>('kyc')
+  const [selectedTab, setSelectedTab] = useState<AdminTab | string>('')
 
   const history = useHistory()
   const params = useParams<AdminParams>()
@@ -113,6 +113,7 @@ const Admin = () => {
 
   const containerBackground = location.pathname.includes('security-catalog') ? 'none' : '#ffffff'
 
+  console.log('selectedTab', selectedTab);
   return (
     <Container background={containerBackground}>
       <Navbar />
