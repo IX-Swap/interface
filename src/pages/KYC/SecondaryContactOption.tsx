@@ -75,6 +75,7 @@ const SecondaryContactOption: React.FC<Props> = ({
       setInitialEmail(personalInfo?.email || '')
       setHasCodeError(false)
       setErrorMessage('')
+      setButtonText('Send Code')
     }
   }, [personalInfo?.email, initialEmail])
   const handleSendCode = async () => {
@@ -197,7 +198,7 @@ const SecondaryContactOption: React.FC<Props> = ({
               <TimerText>{`Get new code (${timer} seconds)`}</TimerText>
             ) : (
               <span style={{ cursor: 'pointer' }} onClick={handleGetNewCodeClick}>
-                {buttonText === 'Verify Code' ? 'Get New Code' : ''}
+                {buttonText === 'Verify Code' ? <NewCodeText>Get New Code</NewCodeText> : ''}
               </span>
             )}
           </TimerContainer>
@@ -216,11 +217,9 @@ const CodeInput: React.FC<any> = ({
   buttonText,
   onSuccess,
   handleError,
-  setTimer,
   isVerifiedPersonalInfo,
   isVerifiedBusinessEmail,
   emailType,
-  verificationSecation,
   socialAccountOTP,
   isButtonDisabled,
   setIsButtonDisabled,
@@ -279,12 +278,10 @@ const CodeInput: React.FC<any> = ({
       } else {
         handleVerificationError(result.error.message)
         setVerifyError(true)
-        setTimer(60)
       }
     } catch (error) {
       handleVerificationError('An unexpected error occurred')
       setVerifyError(true)
-      setTimer(60)
     } finally {
       setIsButtonDisabled(false)
     }
@@ -471,13 +468,19 @@ const ErrorText = styled.div`
 `
 
 const TimerContainer = styled.div`
-  margin-top: 40px;
+  margin-top: 35px;
   text-align: center;
 `
 
 const TimerText = styled.span`
   color: #666680;
   font-size: 14px;
+`
+
+const NewCodeText = styled.span`
+  color: #6666FF;
+  font-size: 13px;
+  font-weight 600;
 `
 
 const CodeBox = styled.input.attrs(

@@ -107,24 +107,18 @@ export const KycInputLabel: FC<KycInputLabelProps> = ({ label, error, name, tool
   )
 }
 
-export const KycErrorDisplay: FC<KycInputLabelProps> = ({ label }) => {
-  if (!label) return null
+export const KycErrorDisplay: FC<KycInputLabelProps> = ({ error }) => {
+  if (!error) return null
+  const errorMessages = Object.entries(error)
+    .map(([key, value]) => value)
+    .join('')
 
-  const errorMessages: Record<string, string> = {
-    'First Name *': 'First name must be alphabetic and at least 2 characters.',
-    'Last Name *': 'Last name must be alphabetic and at least 2 characters.',
-    'Email address *': 'Please provide a valid email address.',
-    'Business Email *': 'Please provide a valid email address.',
-  }
-
-  const errorMessage = errorMessages[label]
-  if (!errorMessage) return null
-
+  if (!errorMessages) return null
   return (
     <div style={{ marginTop: '10px', display: 'flex' }}>
       <InvalidFormInputIcon style={{ margin: '0 0.5rem' }} />
       <TYPE.main1 color={'#FD4040'} lineHeight={'20px'}>
-        {errorMessage}
+        {errorMessages}
       </TYPE.main1>
     </div>
   )
@@ -278,8 +272,7 @@ export const KycTextInput: FC<TextInputProps> = ({
   name,
   type,
   onBlur,
-  required,
-  error = false,
+  error,
   tooltipText,
   disabled = false,
   subText,
