@@ -113,7 +113,6 @@ const Admin = () => {
 
   const containerBackground = location.pathname.includes('security-catalog') ? 'none' : '#ffffff'
 
-  console.log('selectedTab', selectedTab);
   return (
     <Container background={containerBackground}>
       <Navbar />
