@@ -15,8 +15,11 @@ export const connectors: [MetaMask | WalletConnectV2 | CoinbaseWallet, Web3React
 ]
 
 export const tryDeactivateConnector = async (connector: Connector): Promise<null | undefined> => {
-  await connector.deactivate?.()
-  await connector.resetState()
-  window.location.reload()
+  if (connector?.deactivate) {
+    void connector.deactivate()
+  } else {
+    void connector.resetState()
+  }
+
   return null
 }
