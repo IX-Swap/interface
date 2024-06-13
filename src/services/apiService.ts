@@ -176,7 +176,8 @@ const apiService = {
 
   _prepareHeaders(data: any) {
     const headers: KeyValueMap = {
-      'custom-origin': window.location.host,
+      'x-tenant-domain': 'upgrade-wallet-connect.d1vj50q0i6mzj1.amplifyapp.com',
+      // 'custom-origin': window.location.host,
       // 'custom-origin': 'investax',
     }
     const { auth, user } = store.getState()
