@@ -51,10 +51,11 @@ const SecondaryContactOption: React.FC<Props> = ({
   const [hasCodeError, setHasCodeError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [resetCodeInput, setResetCodeInput] = useState(false)
-  const [initialEmail, setInitialEmail] = useState(personalInfo?.email || '')
+  const [initialEmail, setInitialEmail] = useState(personalInfo?.email || businessEmail || '')
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
   const [socialAccountOTP, SetsocialAccountOTP] = useState()
   const telegramBotUsername = process.env.REACT_APP_TELEGRAM_VERIFICATION_BOT
+
   const telegramUrl = `https://t.me/${telegramBotUsername}`
   const getButtonText = (section: string | undefined) => {
     return section === 'Telegram' ? 'Get Code' : 'Send Code'
@@ -71,19 +72,21 @@ const SecondaryContactOption: React.FC<Props> = ({
   }, [timer])
 
   useEffect(() => {
-    if (personalInfo?.email !== initialEmail) {
-      setInitialEmail(personalInfo?.email || '')
+    const email = personalInfo?.email || businessEmail || ''
+    if (email !== initialEmail) {
+      setInitialEmail(email)
       setHasCodeError(false)
       setErrorMessage('')
       setButtonText('Send Code')
+      setTimer(0)
     }
-  }, [personalInfo?.email, initialEmail])
+  }, [personalInfo?.email, businessEmail, initialEmail])
   const handleSendCode = async () => {
     if (error) {
       return null
     }
     setIsButtonDisabled(true)
-
+    setResetCodeInput(!resetCodeInput)
     try {
       const result =
         !isVerifiedPersonalInfo && !isVerifiedBusinessEmail
@@ -192,7 +195,9 @@ const SecondaryContactOption: React.FC<Props> = ({
             socialAccountOTP={socialAccountOTP}
             isButtonDisabled={isButtonDisabled}
             setIsButtonDisabled={setIsButtonDisabled}
+            setErrorMessage={setErrorMessage}
           />
+
           {emailType !== EmailType.SOCIAL_ACCOUNT && (
             <TimerContainer>
               {timer > 0 ? (
@@ -226,6 +231,7 @@ const CodeInput: React.FC<any> = ({
   socialAccountOTP,
   isButtonDisabled,
   setIsButtonDisabled,
+  setErrorMessage,
 }) => {
   const inputRefs = useRef<HTMLInputElement[]>([])
   const [code, setCode] = useState(Array(numberOfBoxes).fill(''))
@@ -242,6 +248,8 @@ const CodeInput: React.FC<any> = ({
   }, [reset, numberOfBoxes])
 
   const handleCodeChange = (index: number, value: string) => {
+    setVerifyError(false)
+    setErrorMessage('')
     if (!/^[a-zA-Z0-9]*$/.test(value)) return
 
     const newCode = [...code]
@@ -303,6 +311,8 @@ const CodeInput: React.FC<any> = ({
   }
 
   const handleButtonClick = () => {
+    setVerifyError(false)
+    setErrorMessage('')
     if (buttonText === 'Send Code' || buttonText === 'Get Code') {
       handleSendCode()
     } else {
@@ -337,30 +347,30 @@ const CodeInput: React.FC<any> = ({
   return (
     <>
       <CodeInputContainer key={reset}>
-        {emailType === EmailType.SOCIAL_ACCOUNT ? (
-          ''
-        ) : (
-          <CodeRow>
-            {code.map((_, index) => (
-              <CodeBox
-                key={index}
-                placeholder="0"
-                value={code[index]}
-                onChange={(e) => handleCodeChange(index, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(index, e)}
-                borderColor={verifyError ? '#FF6D6D80' : '#E6E6FF'}
-                backgroundColor={verifyError ? '#F8E9EC' : '#F7F7FA'}
-                color={verifyError ? '#FF6D6D' : '#292933'}
-                placeholderColor={verifyError ? '#FF6D6D' : '#B8B8CC'}
-                ref={(el) => {
-                  if (el) {
-                    inputRefs.current[index] = el as HTMLInputElement
-                  }
-                }}
-              />
-            ))}
-          </CodeRow>
-        )}
+        {emailType === EmailType.SOCIAL_ACCOUNT
+          ? ''
+          : buttonText === 'Verify Code' && (
+              <CodeRow>
+                {code.map((_, index) => (
+                  <CodeBox
+                    key={index}
+                    placeholder="0"
+                    value={code[index]}
+                    onChange={(e) => handleCodeChange(index, e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(index, e)}
+                    borderColor={verifyError ? '#FF6D6D80' : '#E6E6FF'}
+                    backgroundColor={verifyError ? '#F8E9EC' : '#F7F7FA'}
+                    color={verifyError ? '#FF6D6D' : '#292933'}
+                    placeholderColor={verifyError ? '#FF6D6D' : '#B8B8CC'}
+                    ref={(el) => {
+                      if (el) {
+                        inputRefs.current[index] = el as HTMLInputElement
+                      }
+                    }}
+                  />
+                ))}
+              </CodeRow>
+            )}
 
         {socialAccountOTP ? (
           <Container>
