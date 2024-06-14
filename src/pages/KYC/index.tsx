@@ -268,7 +268,7 @@ const KYC = () => {
       case KYCStatuses.REJECTED:
         return (
           <>
-            <Description description={description} />
+            {/* <Description description={description} /> */}
             <DateInfo info={infoText} submittedDate={kyc?.createdAt} rejectedDate={kyc?.updatedAt} />
           </>
         )
@@ -389,11 +389,35 @@ const KYC = () => {
                       </div>
                     )}
                   </>
-                  <div></div>
+                  {kyc?.status == KYCStatuses.REJECTED && (
+                    <div
+                      style={{
+                        background: '#F7F7FA',
+                        padding: '32px',
+                        marginTop: '20px',
+                        borderRadius: '8px',
+                        width: '360px',
+                      }}
+                    >
+                      {
+                        <>
+                          <TYPE.black textAlign={'center'}>Reason for KYC Verification Rejection</TYPE.black>
+                          <Description
+                            description={
+                              description
+                                ? description
+                                : `We regret to inform you that your KYC verification has been rejected`
+                            }
+                          />
+                        </>
+                      }
+                    </div>
+                  )}
 
                   <Column style={{ margin: '20px 0px' }}>
                     <TYPE.title11>Refer a Friend</TYPE.title11>
                   </Column>
+
                   <Column style={{ margin: '5px 0px' }}>
                     <StyledDiv>
                       <TitleSpan>{referralCode}</TitleSpan>
@@ -423,7 +447,7 @@ const StyledDiv = styled.div`
   width: 280px;
   display: flex;
   justify-content: space-between;
-  border-radius:8px;
+  border-radius: 8px;
 `
 
 const CenteredDiv = styled.div`

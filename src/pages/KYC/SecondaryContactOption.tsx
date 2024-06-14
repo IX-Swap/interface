@@ -193,15 +193,18 @@ const SecondaryContactOption: React.FC<Props> = ({
             isButtonDisabled={isButtonDisabled}
             setIsButtonDisabled={setIsButtonDisabled}
           />
-          <TimerContainer>
-            {timer > 0 ? (
-              <TimerText>{`Get new code (${timer} seconds)`}</TimerText>
-            ) : (
-              <span style={{ cursor: 'pointer' }} onClick={handleGetNewCodeClick}>
-                {buttonText === 'Verify Code' ? <NewCodeText>Get New Code</NewCodeText> : ''}
-              </span>
-            )}
-          </TimerContainer>
+          {emailType !== EmailType.SOCIAL_ACCOUNT && (
+            <TimerContainer>
+              {timer > 0 ? (
+                <TimerText>{`Get new code (${timer} seconds)`}</TimerText>
+              ) : (
+                <span style={{ cursor: 'pointer' }} onClick={handleGetNewCodeClick}>
+                  {buttonText === 'Verify Code' ? <NewCodeText>Get New Code</NewCodeText> : ''}
+                </span>
+              )}
+            </TimerContainer>
+          )}
+
           {hasCodeError && <ErrorText>{errorMessage}</ErrorText>}
         </ModalContent>
       </ContentContainer>

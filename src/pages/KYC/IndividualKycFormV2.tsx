@@ -131,6 +131,7 @@ export default function IndividualKycFormV2() {
   const [isPersonalVerified, setIsPersonalVerified] = useState(false)
   const [isBusinessEmailVerified, setIsBusinessEmailVerified] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [initialValues, setInitialValues] = useState(individualFormV2InitialValues)
 
   useEffect(() => {
     const code = new URL(window.location.href).href?.split('=')[1]
@@ -178,6 +179,14 @@ export default function IndividualKycFormV2() {
     kyc?.individual?.isEmailVerified,
     isPersonalVerified,
   ])
+
+  useEffect(() => {
+    if (isPersonalVerified || kyc?.individual?.isEmailVerified) {
+      setInitialValues(initialValuesBusinessEmail)
+    } else {
+      setInitialValues(individualFormV2InitialValues)
+    }
+  }, [isPersonalVerified, kyc?.individual?.isEmailVerified])
 
   const validateValue = async (key: string, value: any) => {
     if (form.current.values[key] === value) {
@@ -255,16 +264,13 @@ export default function IndividualKycFormV2() {
         {
           <Formik
             innerRef={form}
-            initialValues={
-              isPersonalVerified || kyc?.individual?.isEmailVerified
-                ? initialValuesBusinessEmail
-                : individualFormV2InitialValues
-            }
+            initialValues={initialValues}
             validationSchema={getValidationSchema(selectedCheckbox)}
             initialErrors={errors}
             validateOnBlur={true}
             validateOnChange={true}
             validateOnMount={true}
+            enableReinitialize={true}
             onSubmit={async (values) => {
               try {
                 localStorage.removeItem('newKyc')
