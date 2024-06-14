@@ -3,6 +3,7 @@ import Helmet from 'react-helmet'
 
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import loadingIcon from 'assets/images/loader_thin.svg'
+import defaultFavicon from 'assets/images/favicon.png'
 
 export const CustomHeaders = () => {
   const { config } = useWhitelabelState()
@@ -18,7 +19,7 @@ export const CustomHeaders = () => {
   return (
     <Helmet>
       <title>{config?.title}</title>
-      <link rel="icon" href={config?.faviconUrl} sizes="32x32" />
+      <link rel="icon" href={config?.faviconUrl || defaultFavicon} sizes="32x32" />
       <meta name="robots" content="index, follow" />
       <meta name="description" content={config?.description} />
       <meta property="og:title" content={config?.title} />
