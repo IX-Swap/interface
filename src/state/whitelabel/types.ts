@@ -45,6 +45,11 @@ export interface Whitelabel {
   }
   description?: string
   bannerImageUrl?: string
+  launchpadBannerTitle?: string | null
+  launchpadBannerInfoRedirectTitle?: string | null
+  launchpadBannerInfoRedirectUrl?: string | null
+  isIxSwap?: boolean
+  enableLaunchpadBanner?: boolean
 }
 
 export interface WlColors {
