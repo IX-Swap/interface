@@ -11,7 +11,7 @@ import {
 } from 'state/kyc/hooks'
 import { PinnedContentButton } from 'components/Button'
 import { isMobile } from 'react-device-detect'
-import { EmailType, SuccessType } from './enum'
+import { EmailType, SuccessType, KYCV2RequestButtonText } from './enum'
 import { TYPE } from 'theme'
 import { ReactComponent as CopyIcon } from 'assets/images/copy.svg'
 
@@ -58,7 +58,7 @@ const SecondaryContactOption: React.FC<Props> = ({
 
   const telegramUrl = `https://t.me/${telegramBotUsername}`
   const getButtonText = (section: string | undefined) => {
-    return section === 'Telegram' ? 'Get Code' : 'Send Code'
+    return section === 'Telegram' ? KYCV2RequestButtonText.GET_CODE : KYCV2RequestButtonText.SEND_CODE
   }
   const [buttonText, setButtonText] = useState(getButtonText(verificationSecation))
   useEffect(() => {
@@ -77,7 +77,7 @@ const SecondaryContactOption: React.FC<Props> = ({
       setInitialEmail(email)
       setHasCodeError(false)
       setErrorMessage('')
-      setButtonText('Send Code')
+      setButtonText(KYCV2RequestButtonText.SEND_CODE)
       setTimer(0)
     }
   }, [personalInfo?.email, businessEmail, initialEmail])
@@ -119,7 +119,7 @@ const SecondaryContactOption: React.FC<Props> = ({
     addPopup({ info: { success: true, summary: 'The verification code has been successfully sent to your email' } })
     localStorage.setItem('newKyc', 'newKyc')
     setResetCodeInput(false)
-    setButtonText('Verify Code')
+    setButtonText(KYCV2RequestButtonText.VERIFY_CODE)
   }
 
   const handleError = (message: string) => {
@@ -171,9 +171,12 @@ const SecondaryContactOption: React.FC<Props> = ({
             </>
           ) : (
             <>
-              <Title> {buttonText === 'Verify Code' ? 'Enter the code' : 'Verify your Email'}</Title>
+              <Title>
+                {' '}
+                {buttonText === KYCV2RequestButtonText.VERIFY_CODE ? 'Enter the code' : 'Verify your Email'}
+              </Title>
               <SubTitle>
-                {buttonText === 'Verify Code'
+                {buttonText === KYCV2RequestButtonText.VERIFY_CODE
                   ? `A 6-digit verification code has been sent to your email. Enter the code below to verify your email.`
                   : `Get a verification code sent to your email address so we ncan confirm that you are not a robot.`}
               </SubTitle>
@@ -206,7 +209,7 @@ const SecondaryContactOption: React.FC<Props> = ({
                 <TimerText>{`Get new code (${timer} seconds)`}</TimerText>
               ) : (
                 <span style={{ cursor: 'pointer' }} onClick={handleGetNewCodeClick}>
-                  {buttonText === 'Verify Code' ? <NewCodeText>Get New Code</NewCodeText> : ''}
+                  {buttonText === KYCV2RequestButtonText.VERIFY_CODE ? <NewCodeText>Get New Code</NewCodeText> : ''}
                 </span>
               )}
             </TimerContainer>
@@ -222,7 +225,6 @@ const SecondaryContactOption: React.FC<Props> = ({
 const CodeInput: React.FC<any> = ({
   numberOfBoxes,
   reset,
-  error,
   handleSendCode,
   buttonText,
   onSuccess,
@@ -315,7 +317,7 @@ const CodeInput: React.FC<any> = ({
   const handleButtonClick = () => {
     setVerifyError(false)
     setErrorMessage('')
-    if (buttonText === 'Send Code' || buttonText === 'Get Code') {
+    if (buttonText === KYCV2RequestButtonText.SEND_CODE || buttonText === KYCV2RequestButtonText.GET_CODE) {
       handleSendCode()
     } else {
       handleVerifyCode()
@@ -351,7 +353,7 @@ const CodeInput: React.FC<any> = ({
       <CodeInputContainer key={reset}>
         {emailType === EmailType.SOCIAL_ACCOUNT
           ? ''
-          : buttonText === 'Verify Code' && (
+          : buttonText === KYCV2RequestButtonText.VERIFY_CODE && (
               <CodeRow>
                 {code.map((_, index) => (
                   <CodeBox
