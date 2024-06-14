@@ -403,7 +403,11 @@ const KYC = () => {
                         <>
                           <TYPE.black textAlign={'center'}>Reason for KYC Verification Rejection</TYPE.black>
                           <Description
-                            description={`We regret to inform you that your KYC verification has been rejected due to incomplete documentation. Please ensure all required documents are provided and meet our specified criteria for successful verification. Thank you for your cooperation.`}
+                            description={
+                              description
+                                ? description
+                                : `We regret to inform you that your KYC verification has been rejected`
+                            }
                           />
                         </>
                       }
