@@ -102,8 +102,6 @@ ReactDOM.render(
                   <MuiThemeProvider>
                     <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
-                        <CustomHeaders />
-
                         <App />
                       </CookiesProvider>
                     </LocalizationProvider>

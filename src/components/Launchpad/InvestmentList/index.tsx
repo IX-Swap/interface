@@ -56,8 +56,8 @@ interface Props {
 }
 
 export const InvestmentList: React.FC<Props> = (props) => {
-  const whitelabelConfig = useWhitelabelState()
-  const isIxSwap = _get(whitelabelConfig, 'config.isIxSwap', false)
+  const { config } = useWhitelabelState()
+  const isIxSwap = config?.isIxSwap ?? false
   const [activeTab, setActiveTab] = React.useState<InvesmentTabs>(() => {
     const investmentTab = localStorage.getItem('investmentTab')
     return (investmentTab as InvesmentTabs) ?? InvesmentTabs.issuance

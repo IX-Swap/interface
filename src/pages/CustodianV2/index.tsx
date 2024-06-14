@@ -23,7 +23,7 @@ export default function CustodianV2() {
   const { account } = useActiveWeb3React()
   const { account: userAccount } = useUserState()
   const { config } = useWhitelabelState()
-  const isIxswap = _get(config, 'isIxswap', false)
+  const isIxswap = config?.isIxSwap ?? false
   const enableFeaturedSecurityVaults = _get(config, 'enableFeaturedSecurityVaults', false)
 
   const [mySecTokens, setMySecTokens] = useState([])

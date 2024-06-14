@@ -1,6 +1,6 @@
+import React from 'react'
 import styled from 'styled-components'
 import Portal from '@reach/portal'
-import _get from 'lodash/get'
 
 import { Offers } from 'components/Launchpad/Offers'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
@@ -12,11 +12,10 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export default function Launchpad() {
   const { chainId } = useActiveWeb3React()
-  const whitelabelConfig = useWhitelabelState()
-  const isIxSwap = _get(whitelabelConfig, 'config.isIxSwap', false)
-  const enableLaunchpadBanner = _get(whitelabelConfig, 'config.enableLaunchpadBanner', false)
+  const { config } = useWhitelabelState()
 
-  console.log('whitelabelConfig', whitelabelConfig)
+  const isIxSwap = config?.isIxSwap ?? false
+  const enableLaunchpadBanner = config?.enableLaunchpadBanner ?? false
   const blurred = detectWrongNetwork(chainId)
 
   if (blurred) {

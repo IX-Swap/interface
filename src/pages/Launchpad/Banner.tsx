@@ -9,22 +9,10 @@ import { isMobile } from 'react-device-detect'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export const Banner = () => {
-  const whitelabelConfig = useWhitelabelState()
-  const launchpadBannerTitle = _get(
-    whitelabelConfig,
-    'config.launchpadBannerTitle',
-    'Invest in Startups and Other Unicorn Like Opportunites'
-  )
-  const launchpadBannerInfoRedirectTitle = _get(
-    whitelabelConfig,
-    'config.launchpadBannerInfoRedirectTitle',
-    'How does IXS Launchpad work?'
-  )
-  const launchpadBannerInfoRedirectUrl = _get(
-    whitelabelConfig,
-    'config.launchpadBannerInfoRedirectUrl',
-    'https://www.ixswap.io/academy'
-  )
+  const { config } = useWhitelabelState()
+  const launchpadBannerTitle = config?.launchpadBannerTitle ?? 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunites'
+  const launchpadBannerInfoRedirectTitle = config?.launchpadBannerInfoRedirectTitle ?? 'How does IXS Launchpad work?'
+  const launchpadBannerInfoRedirectUrl = config?.launchpadBannerInfoRedirectUrl ?? 'https://www.ixswap.io/academy'
 
   return (
     <BannerContainer>

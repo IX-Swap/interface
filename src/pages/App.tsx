@@ -68,7 +68,7 @@ const initSafary = () => {
 export default function App() {
   const getMe = useGetMe()
   const { isAdmin } = useRole()
-  const whitelabelConfig = useWhitelabelState()
+  const { config: whiteLabelConfig } = useWhitelabelState()
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
   const { chainId, account } = useActiveWeb3React()
@@ -84,7 +84,7 @@ export default function App() {
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [countryCode, setCountryCode] = useState()
 
-  const isIxSwap = _get(whitelabelConfig, 'config.isIxSwap', false)
+  const isIxSwap = whiteLabelConfig?.isIxSwap ?? false
   const routeFinalConfig = isAdmin ? routeConfigs : routeConfigs.filter((route) => !lbpAdminRoutes.includes(route.path))
 
   useEffect(() => {
@@ -251,43 +251,43 @@ export default function App() {
       <CustomHeaders />
       {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
       {/* {countryCode === 'SG' && <RestrictedModal />} */}
-      <ErrorBoundary>
-        <Route component={GoogleAnalyticsReporter} />
-        <Route component={DarkModeQueryParamReader} />
-        <Route component={ApeModeQueryParamReader} />
-        <AppBackground />
-        <Popups />
-        <AppWrapper>
-          {!isAdminKyc && !hideHeader && <Header />}
-          <ToggleableBody
-            isVisible={visibleBody}
-            {...(isAdminKyc && { style: { marginTop: 26 } })}
-            hideHeader={hideHeader}
+      {/* <ErrorBoundary> */}
+      <Route component={GoogleAnalyticsReporter} />
+      <Route component={DarkModeQueryParamReader} />
+      <Route component={ApeModeQueryParamReader} />
+      <AppBackground />
+      <Popups />
+      <AppWrapper>
+        {!isAdminKyc && !hideHeader && <Header />}
+        <ToggleableBody
+          isVisible={visibleBody}
+          {...(isAdminKyc && { style: { marginTop: 26 } })}
+          hideHeader={hideHeader}
+        >
+          <IXSBalanceModal />
+          {/* <Web3ReactManager> */}
+          <Suspense
+            fallback={
+              <>
+                <LoadingIndicator isLoading />
+              </>
+            }
           >
-            <IXSBalanceModal />
-            {/* <Web3ReactManager> */}
-            <Suspense
-              fallback={
-                <>
-                  <LoadingIndicator isLoading />
-                </>
-              }
-            >
-              <Switch>
-                {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
+            <Switch>
+              {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
-                {useRedirect && (
-                  <Route
-                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                  />
-                )}
-              </Switch>
-            </Suspense>
-            {/* </Web3ReactManager> */}
-          </ToggleableBody>
-          {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
-        </AppWrapper>
-      </ErrorBoundary>
+              {useRedirect && (
+                <Route
+                  component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                />
+              )}
+            </Switch>
+          </Suspense>
+          {/* </Web3ReactManager> */}
+        </ToggleableBody>
+        {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
+      </AppWrapper>
+      {/* </ErrorBoundary> */}
     </>
   )
 }
