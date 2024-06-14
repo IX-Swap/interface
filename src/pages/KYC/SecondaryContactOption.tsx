@@ -171,9 +171,11 @@ const SecondaryContactOption: React.FC<Props> = ({
             </>
           ) : (
             <>
-              <Title>Enter the code</Title>
+              <Title> {buttonText === 'Verify Code' ? 'Enter the code' : 'Verify your Email'}</Title>
               <SubTitle>
-                A 6-digit verification code has been sent to your email. Enter the code below to verify your email.
+                {buttonText === 'Verify Code'
+                  ? `A 6-digit verification code has been sent to your email. Enter the code below to verify your email.`
+                  : `Get a verification code sent to your email address so we ncan confirm that you are not a robot.`}
               </SubTitle>
             </>
           )}
