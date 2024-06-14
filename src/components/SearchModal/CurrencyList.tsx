@@ -300,7 +300,7 @@ export default function CurrencyList({
   setImportToken: (token: Token) => void
 }) {
   const { config } = useWhitelabelState()
-  const isIxswap = _get(config, 'isIxswap', false)
+  const isIxswap = config?.isIxSwap ?? false;
 
   const sortedBySecList = useMemo(() => {
     const { sec, rest, wixs, usdc } = currencies.reduce(
