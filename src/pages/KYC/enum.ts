@@ -40,3 +40,9 @@ export enum SecondaryContactTypeV2 {
   TELEGRAM = 'Telegram',
   PROOF_OF_ADDRESS = 'ProofOfAddress'
 }
+
+export enum KYCV2RequestButtonText {
+  GET_CODE = 'Get Code',
+  VERIFY_CODE = 'Verify Code',
+  SEND_CODE = 'Send Code'
+}
