@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { Box, Text } from 'rebass'
 import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
@@ -135,7 +135,7 @@ const BalanceText = styled(Text)`
   `};
 `
 
-const Title = styled.a`
+const Title = styled(Link)`
   display: flex;
   align-items: center;
   pointer-events: auto;
@@ -255,7 +255,7 @@ export default function Header() {
           {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
             <HeaderRow>
-              <Title href={config?.defaultUrl || '.'}>
+              <Title to="/">
                 {logoUrl ? (
                   <img src={logoUrl} alt="logo" width="auto" height="47px" />
                 ) : (
@@ -298,7 +298,7 @@ export default function Header() {
           {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
             <HeaderRow marginLeft={50}>
-              <Title href={config?.defaultUrl || '.'}>
+              <Title to="/">
                 {logoUrl ? (
                   <div style={{ width: 130 }}>
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />

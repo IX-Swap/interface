@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { isMobile } from 'react-device-detect'
 import _get from 'lodash/get'
+import { Link } from 'react-router-dom'
 
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
@@ -20,7 +21,7 @@ export const Navbar = () => {
         <HeaderWrapper>
           <HeaderFrame>
             <HeaderRow>
-              <Title href={config?.defaultUrl || '.'}>
+              <Title to="/">
                 {logoUrl ? (
                   <div style={{ width: 150 }}>
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
@@ -40,7 +41,7 @@ export const Navbar = () => {
         <HeaderWrapper>
           <HeaderFrame>
             <HeaderRow marginLeft={100}>
-              <Title href={config?.defaultUrl || '.'}>
+              <Title to="/">
                 {logoUrl ? (
                   <div style={{ width: 150 }}>
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
@@ -102,7 +103,7 @@ const HeaderRow = styled(RowFixed)`
   width: 100%;
 `
 
-const Title = styled.a`
+const Title = styled(Link)`
   display: flex;
   align-items: center;
   pointer-events: auto;

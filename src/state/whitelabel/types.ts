@@ -50,6 +50,7 @@ export interface Whitelabel {
   launchpadBannerInfoRedirectUrl?: string | null
   isIxSwap?: boolean
   enableLaunchpadBanner?: boolean
+  appUrl?: string
 }
 
 export interface WlColors {
