@@ -1,5 +1,5 @@
 import React from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet-async';
 
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import loadingIcon from 'assets/images/loader_thin.svg'
