@@ -192,6 +192,7 @@
     "react-cookie": "^4.1.1",
     "react-csv": "^2.2.2",
     "react-helmet": "^6.1.0",
+    "react-helmet-async": "^2.0.5",
     "react-lazy-load-image-component": "^1.5.1",
     "react-phone-input-2": "^2.15.0",
     "react-select": "^5.2.2",

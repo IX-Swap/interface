@@ -11,6 +11,7 @@ import 'react-phone-input-2/lib/bootstrap.css'
 import { Web3ReactProvider } from '@web3-react/core'
 import { connectors } from 'connectors'
 import { PersistGate } from 'redux-persist/integration/react'
+import { HelmetProvider } from 'react-helmet-async';
 
 import { MuiThemeProvider } from './theme/muiTheme'
 import { CustomHeaders } from './components/CustomHeaders'
@@ -102,7 +103,9 @@ ReactDOM.render(
                   <MuiThemeProvider>
                     <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
-                        <App />
+                        <HelmetProvider>
+                          <App />
+                        </HelmetProvider>
                       </CookiesProvider>
                     </LocalizationProvider>
                   </MuiThemeProvider>
