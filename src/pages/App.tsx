@@ -190,7 +190,7 @@ export default function App() {
         console.debug('Failed to connect eagerly to coinbase wallet')
       })
     }
-  }, [])
+  }, [isConnected, walletName])
 
   useEffect(() => {
     getWitelabelConfig()
