@@ -119,4 +119,7 @@ export interface WlColors {
     additionalInfo2?: string
     additionalInfo3?: string
   }
+  button: {
+    primary: string
+  }
 }
