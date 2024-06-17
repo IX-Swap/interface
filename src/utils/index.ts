@@ -9,6 +9,7 @@ import { TokenAddressMap } from '../state/lists/hooks'
 import JSBI from 'jsbi'
 import walletValidator from 'multicoin-address-validator'
 import { NETWORK_ADDRESS_PATTERNS } from 'state/wallet/constants'
+import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
@@ -132,4 +133,25 @@ export function isAboveZero(amount: CurrencyAmount<Currency> | undefined) {
 }
 export function removeProtocolFromUrl(url: string): string {
   return url.replace('http://', '').replace('https://', '')
+}
+
+export const detectWrongNetwork = (chainId: number): boolean => {
+  return  chainId ? !TGE_CHAINS_WITH_STAKING.includes(chainId) : false;
+}
+
+export function isValidUrl(url: string) {
+  try {
+    new URL(url)
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
+export function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export function isEmptyObject(obj: object) {
+  return Object.keys(obj).length === 0;
 }

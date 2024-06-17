@@ -89,3 +89,16 @@ body {
   background-repeat: no-repeat;
   min-height: 50px;
 }
+
+.recharts-tooltip-item-name {
+  text-transform: capitalize;
+  color: #8F8FB2;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.recharts-tooltip-item-value {
+  color: #292933;
+  font-size: 14px;
+  font-weight: 500;
+}

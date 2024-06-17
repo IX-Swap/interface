@@ -6,3 +6,10 @@ export const Line = styled.div`
   width: 100%;
   opacity: 0.2;
 `
+export const NewLine = styled.div`
+  height: 1px;
+  background: ${({ theme }) => theme.text2};
+  width: 100%;
+  opacity: 0.2;
+`
+

@@ -50,9 +50,9 @@ export function getAddChainParameters(chainId: number): AddEthereumChainParamete
 }
 
 const getInfuraUrlFor = (network: string) =>
-  process.env.infuraKey ? `https://${network}.infura.io/v3/${process.env.infuraKey}` : ""
+  process.env.infuraKey ? `https://${network}.infura.io/v3/${process.env.infuraKey}` : ''
 const getAlchemyUrlFor = (network: string) =>
-  process.env.alchemyKey ? `https://${network}.alchemyapi.io/v2/${process.env.alchemyKey}` : ""
+  process.env.alchemyKey ? `https://${network}.alchemyapi.io/v2/${process.env.alchemyKey}` : ''
 
 type ChainConfig = { [chainId: number]: BasicChainInformation | ExtendedChainInformation }
 
@@ -109,6 +109,12 @@ export const TESTNET_CHAINS: ChainConfig = {
     name: 'Polygon Mumbai',
     nativeCurrency: MATIC,
     blockExplorerUrls: ['https://mumbai.polygonscan.com'],
+  },
+  80002: {
+    urls: [getInfuraUrlFor('polygon-amoy')].filter(Boolean),
+    name: 'Polygon Amoy',
+    nativeCurrency: MATIC,
+    blockExplorerUrls: ['https://www.oklink.com/amoy'],
   },
   44787: {
     urls: ['https://alfajores-forno.celo-testnet.org'],

@@ -115,7 +115,7 @@ export const Footer: React.FC<Props> = (props) => {
           </main>
         </About>
         <Copyright>
-          Copyright © IX Swap 2022
+          Copyright © IX Swap 2024
           <br />
           <div>
             <DiscreteExternalLink href="https://ixswap.io/terms-and-conditions/">

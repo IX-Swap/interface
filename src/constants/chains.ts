@@ -6,6 +6,7 @@ export enum SupportedChainId {
   KOVAN = 42,
   MATIC = 137,
   MUMBAI = 80001,
+  AMOY = 80002,
 }
 
 export const NETWORK_LABELS: { [chainId: number]: string } = {
@@ -15,6 +16,7 @@ export const NETWORK_LABELS: { [chainId: number]: string } = {
   [5]: 'Görli',
   [42]: 'Kovan',
   [80001]: 'Polygon Mumbai',
+  [80002]: 'Polygon Amoy',
   [137]: 'Polygon',
 }
 
@@ -94,5 +96,16 @@ export const CHAIN_INFO: ChainInfoMap = {
     logoUrl: polygonLogoUrl,
     rpcUrls: ['https://rpc-mumbai.matic.today'],
     blockExplorerUrls: ['https://mumbai.polygonscan.com/', 'https://explorer-mumbai.maticvigil.com/'],
+  },
+  [SupportedChainId.AMOY]: {
+    chainName: 'Amoy Testnet',
+    nativeCurrency: {
+      name: 'Matic Token',
+      symbol: 'MATIC',
+      decimals: 18,
+    },
+    logoUrl: polygonLogoUrl,
+    rpcUrls: ['https://rpc-amoy.polygon.technology/'],
+    blockExplorerUrls: ['https://www.oklink.com/amoy'],
   },
 }

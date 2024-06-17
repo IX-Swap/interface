@@ -10,6 +10,7 @@ export const Wrapper = styled(Flex)<{ withBackground: boolean }>`
   border: 1px solid #e6e6ff;
   // background-color: ${({ theme, withBackground }) => (withBackground ? theme.bg1 : 'none')};
   width: 100%;
+  position: relative;
 `
 
 export const StyledPdfImage = styled(PdfImage)`

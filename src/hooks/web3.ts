@@ -5,6 +5,7 @@ import { isMobile } from 'react-device-detect'
 import { metaMask } from '../connectors/metaMask'
 import { NetworkContextName } from '../constants/misc'
 
+// Deprecated, dont use anymore
 export function useActiveWeb3React(): any {
   const context = useWeb3React()
   // const contextNetwork = useWeb3ReactCore<Web3Provider>()
