@@ -306,6 +306,11 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
               <Line />
             </>
           )}
+          {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
+            <MenuListItem to={'/lbp-admin'} data-testid={`lbp-nav-link`}>
+              <Trans>LBP</Trans>
+            </MenuListItem>
+          )}
         </MenuList>
       </Container>
       <StyledFooter>

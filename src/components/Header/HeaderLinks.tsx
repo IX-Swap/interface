@@ -229,7 +229,7 @@ export const HeaderLinks = () => {
 
       {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
-          to={'/lbp-admin'}
+          to={routes.lbpDashboard}
           data-testid={`lbp-nav-link`}
         >
           <Trans>LBP</Trans>
