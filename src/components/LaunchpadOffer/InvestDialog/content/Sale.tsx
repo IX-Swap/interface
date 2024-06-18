@@ -177,7 +177,6 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
   )
   const submitState = useInvestSubmitState()
 
-  console.log('approval', approval)
   const submit = useCallback(async () => {
     if (!amount) {
       return
