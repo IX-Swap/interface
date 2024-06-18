@@ -31,7 +31,15 @@ import { TokenPopup } from './TokenPopup'
 import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
 import { Loader } from '../AdminTransactionsTable'
 import { BrokerDealerCard } from './BrokerDealerCard'
-import { EditButton, StyledButtonGradientBorder, FormGrid, Logo, TokenCard, NewEditButton } from './styleds'
+import {
+  EditButton,
+  StyledButtonGradientBorder,
+  FormGrid,
+  Logo,
+  TokenCard,
+  NewEditButton,
+  FormGridNew,
+} from './styleds'
 import { initialIssuerState } from './mock'
 import { ReactComponent as ArrowLeft } from '../../assets/images/newBack.svg'
 import { ReactComponent as LogoImage } from '../../assets/images/UploadLogo.svg'
@@ -196,8 +204,7 @@ export const AdminSecurityCatalog: FC = () => {
               </Flex>
               <Line style={{ marginBottom: '40px' }} />
 
-              <FormGrid style={{ marginLeft: isMobile ? '0px' : '50px' }}>
-
+              <FormGridNew style={{ marginLeft: isMobile ? '0px' : '50px' }}>
                 <Box style={{ marginTop: '8px' }}>
                   <Label marginBottom="50px">
                     <TYPE.title11 color="text2">
@@ -214,8 +221,8 @@ export const AdminSecurityCatalog: FC = () => {
                         {currentIssuer?.filePath || currentIssuer?.logo?.public ? (
                           <img
                             style={{ borderRadius: '6px' }}
-                            width= {isMobile ? '60px' : "146px"}
-                            height={isMobile ? '60px' : "146px"}
+                            width={isMobile ? '60px' : '146px'}
+                            height={isMobile ? '60px' : '146px'}
                             src={currentIssuer?.filePath || currentIssuer?.logo?.public}
                           />
                         ) : (
@@ -227,7 +234,7 @@ export const AdminSecurityCatalog: FC = () => {
                     </Upload>
                   </ButtonText>
                   {issuerErrors?.logo && (
-                    <TYPE.small textAlign="center" marginTop="4px" color={'red1'}>
+                    <TYPE.small display={'block'} marginTop="50px" color={'red1'}>
                       {issuerErrors.logo}
                     </TYPE.small>
                   )}
@@ -276,7 +283,7 @@ export const AdminSecurityCatalog: FC = () => {
                     </TYPE.small>
                   )}
                 </Box>
-              </FormGrid>
+              </FormGridNew>
             </Box>
 
             <Flex
@@ -286,7 +293,9 @@ export const AdminSecurityCatalog: FC = () => {
               marginBottom="10px"
             >
               <Box>
-                <TYPE.description7 style={{margin: isMobile ? '10px' : '0px'}} color="#292933">Tokens</TYPE.description7>
+                <TYPE.description7 style={{ margin: isMobile ? '10px' : '0px' }} color="#292933">
+                  Tokens
+                </TYPE.description7>
                 {/* {showMode === 'edit_issuer' && (
                   <EditButton marginBottom="20px" onClick={() => handleEditTokenClick(null)}>
                     <TYPE.body3 color="white" fontWeight={600}>
@@ -356,9 +365,9 @@ export const AdminSecurityCatalog: FC = () => {
               </Box>
             </Box>
 
-            <RowEnd >
+            <RowEnd>
               <PinnedContentButton
-                onClick={handleSaveClick}
+                onClick={handleResetState}
                 style={{ width: 226, color: '#B8B8CC', background: '#FFFFFF', border: '1px solid #E6E6FF' }}
               >
                 <Trans>Cancel</Trans>
