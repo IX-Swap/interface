@@ -320,7 +320,7 @@ export default function CurrencyList({
         if (next.isSecToken) {
           if (isIxswap) {
             acc.sec.push(next)
-          } else if (config && configTokens.length > 0 && !configTokens.includes(id)) {
+          } else if (config && configTokens.length > 0 && configTokens.includes(id)) {
             acc.sec.push(next)
           }
         } else if (next?.tokenInfo?.symbol === 'USDC') {
