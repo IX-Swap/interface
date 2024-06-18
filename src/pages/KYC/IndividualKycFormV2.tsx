@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { Formik } from 'formik'
-import { Prompt, useHistory, useLocation } from 'react-router-dom'
+import { Prompt, useHistory } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
 import usePrevious from 'hooks/usePrevious'
@@ -214,7 +214,7 @@ export default function IndividualKycFormV2() {
         setInitialValues(individualFormV2InitialValues)
       }
     }
-  }, [kyc, isPersonalVerified, kyc?.individual?.isEmailVerified, kyc?.individual?.email])
+  }, [isPersonalVerified, kyc?.individual?.isEmailVerified, kyc?.individual?.email])
 
   const validateValue = async (key: string, value: any) => {
     if (form.current.values[key] === value) {
