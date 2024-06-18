@@ -16,6 +16,11 @@ import { FeaturedTokensGrid, MySecTokensTab, MySecTokensGrid, Divider } from './
 import { isMobile } from 'react-device-detect'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
+const checkPendingAccreditationRequest = (accreditationRequest: any) =>
+  accreditationRequest?.brokerDealerStatus !== 'approved' || accreditationRequest?.custodianStatus !== 'approved'
+const checkApprovedAccreditationRequest = (accreditationRequest: any) =>
+  accreditationRequest?.brokerDealerStatus === 'approved' && accreditationRequest?.custodianStatus === 'approved'
+
 export default function CustodianV2() {
   const { token } = useAuthState()
   const fetchTokens = useFetchTokens()
@@ -25,6 +30,7 @@ export default function CustodianV2() {
   const { config } = useWhitelabelState()
   const isIxswap = config?.isIxSwap ?? false
   const enableFeaturedSecurityVaults = _get(config, 'enableFeaturedSecurityVaults', false)
+  const configTokens = config?.tokens || []
 
   const [mySecTokens, setMySecTokens] = useState([])
   const [noFilteredTokens, setNoFilteredTokens] = useState([])
@@ -57,20 +63,19 @@ export default function CustodianV2() {
 
   const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
-  const approvedSecTokens = mySecTokens
-    ? mySecTokens.filter(
-        ({ token: { accreditationRequest } }: any) =>
-          accreditationRequest?.brokerDealerStatus === 'approved' &&
-          accreditationRequest?.custodianStatus === 'approved'
-      )
-    : []
-  const pendingSecTokens = mySecTokens
-    ? mySecTokens.filter(
-        ({ token: { accreditationRequest } }: any) =>
-          accreditationRequest?.brokerDealerStatus !== 'approved' ||
-          accreditationRequest?.custodianStatus !== 'approved'
-      )
-    : []
+
+  const approvedSecFilterCondition = ({ token: { accreditationRequest, id } }: any) =>
+    isIxswap
+      ? checkApprovedAccreditationRequest(accreditationRequest)
+      : configTokens.includes(id) && checkApprovedAccreditationRequest(accreditationRequest)
+
+  const pendingSecFilterCondition = ({ token: { accreditationRequest, id } }: any) =>
+    isIxswap
+      ? checkPendingAccreditationRequest(accreditationRequest)
+      : configTokens.includes(id) && checkPendingAccreditationRequest(accreditationRequest)
+
+  const approvedSecTokens = mySecTokens ? mySecTokens.filter(approvedSecFilterCondition) : []
+  const pendingSecTokens = mySecTokens ? mySecTokens.filter(pendingSecFilterCondition) : []
 
   return (
     <>
