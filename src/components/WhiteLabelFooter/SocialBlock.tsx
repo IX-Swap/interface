@@ -2,14 +2,14 @@ import React from 'react'
 import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
 
-import { ReactComponent as telegramImg } from 'assets/images/social/Telegram.svg'
-import { ReactComponent as twitterImg } from 'assets/images/social/Twitter.svg'
-import { ReactComponent as linkedinImg } from 'assets/images/social/Linkedin.svg'
-import { ReactComponent as youtubeImg } from 'assets/images/social/Youtube.svg'
-import { ReactComponent as coingekoImg } from 'assets/images/social/Coingeko.svg'
-import { ReactComponent as discordImg } from 'assets/images/social/Discord.svg'
-import { ReactComponent as coinmarketcapImg } from 'assets/images/social/Coinmarketcap.svg'
-import { ReactComponent as redditImg } from 'assets/images/social/Reddit.svg'
+import { ReactComponent as telegramImg } from 'assets/launchpad/svg/social/telegram.svg'
+import { ReactComponent as twitterImg } from 'assets/launchpad/svg/social/twitter.svg'
+import { ReactComponent as linkedinImg } from 'assets/launchpad/svg/social/linkedin.svg'
+import { ReactComponent as youtubeImg } from 'assets/launchpad/svg/social/youtube.svg'
+import { ReactComponent as coingekoImg } from 'assets/launchpad/svg/social/coingecko.svg'
+import { ReactComponent as discordImg } from 'assets/launchpad/svg/social/discord.svg'
+import { ReactComponent as coinmarketcapImg } from 'assets/launchpad/svg/social/m.svg'
+import { ReactComponent as redditImg } from 'assets/launchpad/svg/social/reddit.svg'
 import { ExternalLink } from 'theme'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
@@ -51,7 +51,6 @@ export const SocialBlock = () => {
     </SocialBlockContainer>
   )
 }
-
 
 const Title = styled.div`
   font-style: normal;
