@@ -444,7 +444,6 @@ export default function CurrencyList({
     return isUnapprovedToken ? UNAPPROVED_ROW : NORMAL_ROW
   }
 
-  console.log('itemData', itemData)
   return (
     <List
       height={height}
