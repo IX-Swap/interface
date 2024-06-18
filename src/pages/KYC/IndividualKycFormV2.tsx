@@ -182,11 +182,13 @@ export default function IndividualKycFormV2() {
 
   useEffect(() => {
     if (isPersonalVerified || kyc?.individual?.isEmailVerified) {
-      setInitialValues(initialValuesBusinessEmail)
+      setInitialValues({ ...initialValuesBusinessEmail, email: kyc?.individual?.email })
+    } else if (kyc?.individual?.email) {
+      setInitialValues({ ...individualFormV2InitialValues, email: kyc?.individual?.email })
     } else {
       setInitialValues(individualFormV2InitialValues)
     }
-  }, [isPersonalVerified, kyc?.individual?.isEmailVerified])
+  }, [isPersonalVerified, kyc?.individual?.isEmailVerified, kyc?.individual?.email])
 
   const validateValue = async (key: string, value: any) => {
     if (form.current.values[key] === value) {
@@ -352,7 +354,7 @@ export default function IndividualKycFormV2() {
                             kycVersion={'v2'}
                             id="emailAddressField"
                             label="Email address *"
-                            value={kyc?.individual?.email || values.email}
+                            value={values.email}
                             error={touched.email && errors.email}
                             onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
                           />
