@@ -23,7 +23,7 @@ import { useGetWhitelistStatus, useInvest, useInvestPublicSaleStructData, usePre
 import { text10, text11, text59 } from 'components/LaunchpadMisc/typography'
 import { useLaunchpadInvestmentContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
-import { useApproveCallback } from 'hooks/useApproveCallback'
+import { useAllowance } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { IXSALE_ADDRESS } from 'constants/addresses'
@@ -170,13 +170,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
   const tokenCurrency = useCurrency(offer.investingTokenAddress)
   const { chainId = 137, account } = useActiveWeb3React()
 
-  const [approval, approveCallback] = useApproveCallback(
-    tokenCurrency
-      ? CurrencyAmount.fromRawAmount(
-          tokenCurrency,
-          ethers.utils.parseUnits(amount || '0', investingTokenDecimals) as any
-        )
-      : undefined,
+  const [approval, approveCallback] = useAllowance(
+    offer.investingTokenAddress,
+    ethers.utils.parseUnits(amount?.toString() || '0', investingTokenDecimals),
     contractAddress || IXSALE_ADDRESS[chainId]
   )
   const submitState = useInvestSubmitState()
