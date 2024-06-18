@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { Formik } from 'formik'
-import { Prompt, useHistory } from 'react-router-dom'
+import { Prompt, useHistory, useLocation } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
 import usePrevious from 'hooks/usePrevious'
@@ -14,7 +14,7 @@ import { ReactComponent as TelegramIcon } from 'assets/images/telegramNewIcon.sv
 import { ReactComponent as AddressIcon } from 'assets/images/addressIcon.svg'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Row, { RowCenter, RowStart } from 'components/Row'
-import { useKYCState, useVerifyIdentity } from 'state/kyc/hooks'
+import { useKYCState, useVerifyIdentity, useGetMyKyc } from 'state/kyc/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useAuthState } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
@@ -132,6 +132,7 @@ export default function IndividualKycFormV2() {
   const [isBusinessEmailVerified, setIsBusinessEmailVerified] = useState(false)
   const [loading, setLoading] = useState(false)
   const [initialValues, setInitialValues] = useState(individualFormV2InitialValues)
+  const getMyKyc = useGetMyKyc()
 
   useEffect(() => {
     const code = new URL(window.location.href).href?.split('=')[1]
@@ -180,15 +181,40 @@ export default function IndividualKycFormV2() {
     isPersonalVerified,
   ])
 
+  const fetchKYCData = async () => {
+    await getMyKyc()
+  }
+
   useEffect(() => {
-    if (isPersonalVerified || kyc?.individual?.isEmailVerified) {
-      setInitialValues({ ...initialValuesBusinessEmail, email: kyc?.individual?.email })
-    } else if (kyc?.individual?.email) {
-      setInitialValues({ ...individualFormV2InitialValues, email: kyc?.individual?.email })
-    } else {
-      setInitialValues(individualFormV2InitialValues)
+    fetchKYCData()
+  }, [account])
+
+  useEffect(() => {
+    if (kyc?.individual) {
+      const { email, firstName, middleName, lastName, isEmailVerified } = kyc.individual
+      const hasPersonalInfo = email || firstName || middleName || lastName
+      const initialValuesToSet = {
+        email,
+        firstName,
+        middleName,
+        lastName,
+      }
+
+      if (isPersonalVerified || isEmailVerified) {
+        setInitialValues({
+          ...initialValuesBusinessEmail,
+          ...initialValuesToSet,
+        })
+      } else if (hasPersonalInfo) {
+        setInitialValues({
+          ...individualFormV2InitialValues,
+          ...initialValuesToSet,
+        })
+      } else {
+        setInitialValues(individualFormV2InitialValues)
+      }
     }
-  }, [isPersonalVerified, kyc?.individual?.isEmailVerified, kyc?.individual?.email])
+  }, [kyc, isPersonalVerified, kyc?.individual?.isEmailVerified, kyc?.individual?.email])
 
   const validateValue = async (key: string, value: any) => {
     if (form.current.values[key] === value) {
@@ -316,33 +342,36 @@ export default function IndividualKycFormV2() {
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
                             <TextInput
+                              disabled={kyc?.individual?.isEmailVerified || isPersonalVerified}
                               kycVersion={'v2'}
                               id="firstNameInput"
                               label="First Name *"
                               placeholder="First Name"
-                              value={kyc?.individual?.firstName || values.firstName}
+                              value={values.firstName}
                               error={touched.firstName && errors.firstName}
                               onChange={(e: any) =>
                                 onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)
                               }
                             />
                             <TextInput
+                              disabled={kyc?.individual?.isEmailVerified || isPersonalVerified}
                               id="middleNameInput"
                               kycVersion={'v2'}
                               label="Middle Name"
                               placeholder="Middle Name"
-                              value={kyc?.individual?.middleName || values.middleName}
+                              value={values.middleName}
                               error={touched.middleName && errors.middleName}
                               onChange={(e: any) =>
                                 onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)
                               }
                             />
                             <TextInput
+                              disabled={kyc?.individual?.isEmailVerified || isPersonalVerified}
                               id="lastNameInput"
                               kycVersion={'v2'}
                               label="Last Name *"
                               placeholder="Last Name"
-                              value={kyc?.individual?.lastName || values.lastName}
+                              value={values.lastName}
                               error={touched.lastName && errors.lastName}
                               onChange={(e: any) =>
                                 onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)
@@ -350,6 +379,7 @@ export default function IndividualKycFormV2() {
                             />
                           </FormGrid>
                           <TextInput
+                            disabled={kyc?.individual?.isEmailVerified || isPersonalVerified}
                             placeholder="Email address"
                             kycVersion={'v2'}
                             id="emailAddressField"
