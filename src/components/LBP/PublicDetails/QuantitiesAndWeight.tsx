@@ -8,6 +8,7 @@ import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 interface QuantitiesAndWeightProps {
   lbpData: LbpFormValues | null
@@ -18,7 +19,10 @@ interface QuantitiesAndWeightProps {
 const QuantitiesAndWeight: React.FC<QuantitiesAndWeightProps> = ({ lbpData, statsData, shareSymbol }) => {
   const tokenCurrency = useCurrency(lbpData?.assetTokenAddress || '')
 
-  const tokenOption = getTokenOption(lbpData?.assetTokenAddress || '', tokenCurrency?.chainId || 1)
+  const tokenOption = getTokenOption(
+    lbpData?.assetTokenAddress || '',
+    tokenCurrency?.chainId || ENV_SUPPORTED_TGE_CHAINS?.[0] || 1
+  )
   const status = _get(lbpData, 'status', '')
 
   const calculateSharedWeight = (assetWeight: number): number => {
