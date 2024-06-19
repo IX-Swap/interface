@@ -266,7 +266,7 @@ export default function App() {
   return (
     <>
       {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
-      {/* {countryCode === 'SG' && <RestrictedModal />} */}
+      {countryCode === 'US' && <RestrictedModal />}
       <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
         <Route component={DarkModeQueryParamReader} />

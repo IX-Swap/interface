@@ -4,10 +4,13 @@ import styled from 'styled-components'
 import { ColumnCenter } from 'components/Column'
 import { TYPE } from 'theme'
 import { LbpFormValues } from '../types'
+import { displayRemainingTime } from 'utils/time'
 
 interface RemainingProps {
   lbpData: LbpFormValues | null
 }
+
+
 
 const Remaining: React.FC<RemainingProps> = ({ lbpData }) => {
   const [remainingTime, setRemainingTime] = useState(28 * 24 * 60 * 60)
@@ -44,7 +47,7 @@ const Remaining: React.FC<RemainingProps> = ({ lbpData }) => {
     <ContentColumn style={{ gridColumn: '1 / span 1' }}>
       <TYPE.subHeader1 style={{ marginRight: 'auto', color: '#555566' }}> LBP closes in</TYPE.subHeader1>
       <TYPE.label style={{ fontSize: '16px', marginRight: 'auto' }}>
-        {remainingDays > 0 ? `${remainingDays} Days` : `${remainingHours} Hours`}
+        {displayRemainingTime(remainingDays, remainingHours)}
       </TYPE.label>
     </ContentColumn>
   )

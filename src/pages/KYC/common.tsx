@@ -77,6 +77,7 @@ type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
   tooltipText?: string | JSX.Element
   isText?: boolean
   subText?: string
+  kycVersion?: string
 }
 
 interface KycInputLabelProps {
@@ -85,15 +86,15 @@ interface KycInputLabelProps {
   label?: string
   tooltipText?: string | JSX.Element
   style?: string
+  kycVersion?: string
 }
 
-export const KycInputLabel: FC<KycInputLabelProps> = ({ label, error, name, tooltipText }) => {
+export const KycInputLabel: FC<KycInputLabelProps> = ({ label, error, name, tooltipText, kycVersion }) => {
   if (!label) {
     return null
   }
-
   return (
-    <Row alignItems="center">
+    <Row style={{ marginTop: kycVersion && '10px' }} alignItems="center">
       {error && (
         <div>
           <InvalidFormInputIcon style={{ margin: '0 0.5rem' }} />
@@ -103,6 +104,23 @@ export const KycInputLabel: FC<KycInputLabelProps> = ({ label, error, name, tool
         <Label label={label} htmlFor={name || ''} tooltipText={tooltipText} color={error && '#FF007F'} />
       </div>
     </Row>
+  )
+}
+
+export const KycErrorDisplay: FC<KycInputLabelProps> = ({ error }) => {
+  if (!error) return null
+  const errorMessages = Object.entries(error)
+    .map(([key, value]) => value)
+    .join('')
+
+  if (!errorMessages) return null
+  return (
+    <div style={{ marginTop: '10px', display: 'flex' }}>
+      <InvalidFormInputIcon style={{ margin: '0 0.5rem' }} />
+      <TYPE.main1 color={'#FD4040'} lineHeight={'20px'}>
+        {errorMessages}
+      </TYPE.main1>
+    </div>
   )
 }
 
@@ -254,19 +272,22 @@ export const KycTextInput: FC<TextInputProps> = ({
   name,
   type,
   onBlur,
-  required,
-  error = false,
+  error,
   tooltipText,
   disabled = false,
   subText,
+  kycVersion,
 }: TextInputProps) => {
   return (
     <Box>
-      <KycInputLabel name={name} label={label} error={error} tooltipText={tooltipText} />
+      {kycVersion === 'v2' ? (
+        <KycInputLabel name={name} label={label} tooltipText={tooltipText} />
+      ) : (
+        <KycInputLabel name={name} label={label} error={error} tooltipText={tooltipText} />
+      )}
       <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
       {disabled && value ? (
         <div>
-          {' '}
           <StyledInput style={{ background: '#F7F7FA' }} value={value} />
         </div>
       ) : (
@@ -284,6 +305,7 @@ export const KycTextInput: FC<TextInputProps> = ({
           error={error}
         />
       )}
+      {kycVersion === 'v2' && <KycErrorDisplay label={error ? label : ''} error={error} />}
     </Box>
   )
 }
@@ -565,7 +587,12 @@ export const UploaderLBP: FC<UploaderProps> = ({
           <UploaderCard style={{ height: '350px' }}>
             <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
               <StyledUploadLogoLbp />
-              <TYPE.subHeader1 style={{inlineSize: 'max-content'}} lineHeight={'20px'} textAlign="center" color={'#555566'}>
+              <TYPE.subHeader1
+                style={{ inlineSize: 'max-content' }}
+                lineHeight={'20px'}
+                textAlign="center"
+                color={'#555566'}
+              >
                 {title}
               </TYPE.subHeader1>
               <TYPE.title10 width={'max-content'} textAlign="center" color={'#8F8FB2'}>

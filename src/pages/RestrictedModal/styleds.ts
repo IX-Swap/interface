@@ -1,8 +1,7 @@
 import styled, { css } from 'styled-components'
 
-
 export const FormCard = styled.div<{ filled?: boolean }>`
-  background: ${({ theme }) => theme.bg18};
+  background: #ffffff;
   border: ${({ filled, theme }) => `1px solid ${filled ? theme.success : 'transparent'}`};
   padding: 24px 24px 32px 24px;
   border-radius: 16px;
@@ -11,4 +10,3 @@ export const FormCard = styled.div<{ filled?: boolean }>`
     padding: 16px;
   `};
 `
-
