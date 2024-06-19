@@ -73,11 +73,34 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
     return Math.min(percentage, 100)
   }
 
-  const formatValueWithSuffix = (value: number): string => {
-    const suffixes = ['', 'K', 'M', 'B']
-    const magnitude = Math.floor(Math.log10(Math.abs(value)) / 3)
-    const scaledValue = value / Math.pow(10, magnitude * 3)
-    return `${scaledValue.toFixed(2)}${suffixes[magnitude]}`
+  const formatValueWithSuffix = (number: number): string => {
+    if (number >= 1e9) {
+      return (
+        (number / 1e9).toLocaleString('en-US', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        }) + 'B'
+      )
+    } else if (number >= 1e6) {
+      return (
+        (number / 1e6).toLocaleString('en-US', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        }) + 'M'
+      )
+    } else if (number >= 1e3) {
+      return (
+        (number / 1e3).toLocaleString('en-US', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        }) + 'K'
+      )
+    } else {
+      return number.toLocaleString('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      })
+    }
   }
 
   function calculateTokensReleased(lbpData: LbpFormValues | null, statsData: MarketData | undefined): string {
