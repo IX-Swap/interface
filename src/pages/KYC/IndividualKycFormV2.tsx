@@ -114,6 +114,14 @@ const CheckboxInput = styled.input<{ disabled: boolean }>`
   }
 `
 
+interface Individual {
+  email?: string
+  firstName?: string
+  middleName?: string
+  lastName?: string
+  isEmailVerified?: boolean
+}
+
 export default function IndividualKycFormV2() {
   const canLeavePage = useRef(false)
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -190,31 +198,27 @@ export default function IndividualKycFormV2() {
   }, [account])
 
   useEffect(() => {
-    if (kyc?.individual) {
-      const { email, firstName, middleName, lastName, isEmailVerified } = kyc.individual
-      const hasPersonalInfo = email || firstName || middleName || lastName
-      const initialValuesToSet = {
-        email,
-        firstName,
-        middleName,
-        lastName,
-      }
-
-      if (isPersonalVerified || isEmailVerified) {
-        setInitialValues({
-          ...initialValuesBusinessEmail,
-          ...initialValuesToSet,
-        })
-      } else if (hasPersonalInfo) {
-        setInitialValues({
-          ...individualFormV2InitialValues,
-          ...initialValuesToSet,
-        })
-      } else {
-        setInitialValues(individualFormV2InitialValues)
-      }
+    const individual: Individual = kyc?.individual || {}
+    const { email, firstName, middleName, lastName, isEmailVerified } = individual
+    if (isEmailVerified) {
+      setInitialValues((prevValues) => ({
+        ...prevValues,
+        ...initialValuesBusinessEmail,
+        email: email || '',
+        firstName: firstName || '',
+        middleName: middleName || '',
+        lastName: lastName || '',
+      }))
+    } else {
+      setInitialValues((prevValues) => ({
+        ...prevValues,
+        email: email || '',
+        firstName: firstName || '',
+        middleName: middleName || '',
+        lastName: lastName || '',
+      }))
     }
-  }, [isPersonalVerified, kyc?.individual?.isEmailVerified, kyc?.individual?.email])
+  }, [kyc?.individual])
 
   const validateValue = async (key: string, value: any) => {
     if (form.current.values[key] === value) {
