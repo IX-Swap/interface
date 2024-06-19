@@ -443,6 +443,7 @@ export interface IndividualKyc {
   alternateEmail: string
   socialPlatform: string
   handleName: string
+  isEmailVerified?: boolean
   phoneNumber: string
   sourceOfFunds: string
   updatedAt: string
