@@ -19,6 +19,7 @@ import { unixTimeToFormat } from 'utils/time'
 import { ethers } from 'ethers'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
 import { useCurrency } from 'hooks/Tokens'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 interface Trade {
   time: string
@@ -119,9 +120,9 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
 
   const tokenCurrency = useCurrency(assetTokenAddress)
-  const tokenOption = useMemo(
-    () => getTokenOption(assetTokenAddress || '', tokenCurrency?.chainId || 1),
-    [assetTokenAddress]
+  const tokenOption = getTokenOption(
+    assetTokenAddress || '',
+    tokenCurrency?.chainId || ENV_SUPPORTED_TGE_CHAINS?.[0] || 1
   )
 
   const handleSort = (property: string | string[]) => {
