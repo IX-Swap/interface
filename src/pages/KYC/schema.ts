@@ -15,18 +15,20 @@ export const FinancialRequiredCoutries = ['Russian Federation', 'Nigeria', 'Turk
 export const individualErrorsSchemaV2 = yup.object().shape({
   firstName: yup
     .string()
+    .nullable()
     .matches(/^[A-Za-z\s]+$/, 'First name must be alphabetic')
     .min(2, 'Minimum length: 2 characters')
     .max(50, 'Maximum length: Must be less than 50 characters')
     .required('Required'),
-  middleName: yup.string().max(50, 'Too Long!'),
+  middleName: yup.string().nullable().max(50, 'Too Long!'),
   lastName: yup
     .string()
+    .nullable()
     .matches(/^[A-Za-z\s]+$/, 'Last name must be alphabetic')
     .min(2, 'Minimum length: 2 characters')
     .max(50, 'Maximum length: Must be less than 50 characters')
     .required('Required'),
-  email: yup.string().email('Invalid email').required('Required'),
+  email: yup.string().nullable().email('Invalid email').required('Required'),
 })
 export const businessEmailSchema = yup.object().shape({
   businessEmail: yup.string().email('Invalid email').required('Required'),
