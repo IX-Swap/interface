@@ -510,22 +510,21 @@ export default function IndividualKycFormV2() {
 
                           {selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL && (
                             <>
-                              {!kyc?.individual?.isSecondaryContactVerified && !isBusinessEmailVerified && (
-                                <Column>
-                                  <TextInput
-                                    kycVersion={'v2'}
-                                    placeholder="Business Email"
-                                    id="emailAddressField"
-                                    label="Business Email *"
-                                    value={values.businessEmail}
-                                    error={touched.businessEmail && errors.businessEmail}
-                                    // error={errors.businessEmail}
-                                    onChange={(e: any) =>
-                                      onChangeInput('businessEmail', e.currentTarget.value, values, setFieldValue)
-                                    }
-                                  />
-                                </Column>
-                              )}
+                              <Column>
+                                <TextInput
+                                  kycVersion={'v2'}
+                                  placeholder="Business Email"
+                                  id="emailAddressField"
+                                  label="Business Email *"
+                                  disabled={kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified}
+                                  value={values.businessEmail || kyc?.individual?.secondaryContactDetails}
+                                  error={touched.businessEmail && errors.businessEmail}
+                                  // error={errors.businessEmail}
+                                  onChange={(e: any) =>
+                                    onChangeInput('businessEmail', e.currentTarget.value, values, setFieldValue)
+                                  }
+                                />
+                              </Column>
 
                               {!kyc?.individual?.isSecondaryContactVerified && !isBusinessEmailVerified && (
                                 <SecondaryContactOption
