@@ -204,15 +204,15 @@ export const AdminKycTable = () => {
         setEndDate={setEndDate}
       />
 
-      {(adminLoading || isLoading) && (
-        <Loader>
-          <LoaderThin size={96} />
-        </Loader>
-      )}
-
       {items.length === 0 ? (
         <NoData>
-          <Trans>No results</Trans>
+          {adminLoading || isLoading ? (
+            <Loader>
+              <LoaderThin size={96} />
+            </Loader>
+          ) : (
+            <Trans>No results</Trans>
+          )}
         </NoData>
       ) : (
         <Container>
@@ -242,16 +242,9 @@ export const AdminKycTable = () => {
 export default AdminKycTable
 
 const Loader = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000000;
 `
 
 export const Wallet = styled.div`

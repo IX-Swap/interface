@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { Trans } from '@lingui/macro'
 import { NavLink } from 'react-router-dom'
+import styled from 'styled-components'
 
 import { routes } from 'utils/routes'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
@@ -37,11 +38,11 @@ export const ProductsBlock = () => {
   return (
     <ProductsBlockContainer>
       {chainId && account && (
-        <div>
+        <Title>
           <Trans>Our Products</Trans>
-        </div>
+        </Title>
       )}
-      <div>
+      <ListProduct>
         {isAllowed(routes.swap) && account && chainId && chains.includes(chainId) && isWhitelisted && (
           <NavLink to={routes.swap}>
             <Trans>Swap</Trans>
@@ -77,7 +78,36 @@ export const ProductsBlock = () => {
             <Trans>List My Token</Trans>
           </ExternalLink>
         )}
-      </div>
+      </ListProduct>
     </ProductsBlockContainer>
   )
 }
+
+const Title = styled.div`
+  font-style: normal;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 32px;
+  color: rgb(184, 184, 204);
+`
+
+const ListProduct = styled.p`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 76px;
+  row-gap: 8px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  a {
+    display: block;
+    font-style: normal;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 32px;
+    color: rgb(41, 41, 51);
+    text-decoration: none;
+  }
+`

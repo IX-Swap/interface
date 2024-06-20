@@ -1,11 +1,12 @@
 import { Connector } from '@web3-react/types'
 // import INJECTED_ICON_URL from '../assets /images/arrow-right.svg'
-// import COINBASE_ICON_URL from '../assets/images/coinbaseWalletIcon.svg'
+import COINBASE_ICON_URL from '../assets/images/coinbaseWalletIcon.svg'
 // import FORTMATIC_ICON_URL from '../assets/images/fortmaticIcon.png'
 import METAMASK_ICON_URL from '../assets/images/metamask.png'
 import WALLETCONNECT_ICON_URL from '../assets/images/walletConnectIcon.svg'
 import { metaMask } from '../connectors/metaMask'
 import { walletConnectV2 } from '../connectors/walletConnectV2'
+import { coinbaseWallet } from 'connectors/coinbaseWallet'
 
 export interface WalletInfo {
   connector?: Connector
@@ -46,14 +47,14 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     color: '#4196FC',
     mobile: true,
   },
-  // WALLET_LINK: {
-  //   connector: walletlink,
-  //   name: 'Coinbase Wallet',
-  //   iconURL: COINBASE_ICON_URL,
-  //   description: 'Use Coinbase Wallet app on mobile device',
-  //   href: null,
-  //   color: '#315CF5',
-  // },
+  WALLET_LINK: {
+    connector: coinbaseWallet,
+    name: 'Coinbase Wallet',
+    iconURL: COINBASE_ICON_URL,
+    description: 'Use Coinbase Wallet app on mobile device',
+    href: null,
+    color: '#315CF5',
+  },
   // COINBASE_LINK: {
   //   name: 'Open in Coinbase Wallet',
   //   iconURL: COINBASE_ICON_URL,

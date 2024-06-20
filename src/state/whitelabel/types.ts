@@ -43,6 +43,14 @@ export interface Whitelabel {
     block2?: string
     block3?: string
   }
+  description?: string
+  bannerImageUrl?: string
+  launchpadBannerTitle?: string | null
+  launchpadBannerInfoRedirectTitle?: string | null
+  launchpadBannerInfoRedirectUrl?: string | null
+  isIxSwap?: boolean
+  enableLaunchpadBanner?: boolean
+  appUrl?: string
 }
 
 export interface WlColors {
@@ -110,5 +118,8 @@ export interface WlColors {
     additionalInfo1?: string
     additionalInfo2?: string
     additionalInfo3?: string
+  }
+  button: {
+    primary: string
   }
 }
