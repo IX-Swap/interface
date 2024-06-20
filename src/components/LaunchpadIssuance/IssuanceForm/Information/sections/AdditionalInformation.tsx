@@ -41,7 +41,7 @@ export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, 
 
   const socialOptions = React.useMemo(() => {
     const defaultLinks = [
-      { label: 'Twitter', value: SocialMediaType.twitter },
+      { label: 'X', value: SocialMediaType.x },
       { label: 'Telegram', value: SocialMediaType.telegram },
       { label: 'LinkedIn', value: SocialMediaType.linkedIn },
       { label: 'Discord', value: SocialMediaType.discord },
