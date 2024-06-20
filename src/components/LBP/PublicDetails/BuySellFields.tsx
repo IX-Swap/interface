@@ -607,8 +607,6 @@ const BuySellFields: React.FC<BuySellFieldsProps> = ({
     setAssetValueDisplay('')
     setAssetValueInput('')
     setShareValueInput('')
-    setSwapFee(0)
-    setShareSymbol('')
   }, [activeTab])
 
   return (
