@@ -49,6 +49,8 @@ export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, 
       { label: 'YouTube', value: SocialMediaType.youTube },
       { label: 'CoinMarketCap', value: SocialMediaType.coinMarketCap },
       { label: 'CoinGecko', value: SocialMediaType.coinGecko },
+      { label: 'Instagram', value: SocialMediaType.instagram },
+      { label: 'Others', value: SocialMediaType.others },
     ]
 
     const selectedLinks = new Set(values.social.map((x) => x.type))
