@@ -31,6 +31,7 @@ const headerCells = [
   { key: 'ethAddress', label: 'Wallet address', show: false },
   { key: 'fullName', label: 'Name', show: false },
   { key: 'identity', label: 'Identity', show: false },
+  { key: 'Tenant', label: 'Tenant', show: false },
   { key: 'createdAt', label: 'Date of request', show: true },
   { key: 'status', label: 'KYC Status', show: false },
   { key: 'completedKycOfProvider', label: 'Review Status', show: false },
@@ -44,7 +45,7 @@ interface RowProps {
 const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   const {
     id,
-    user: { ethAddress },
+    user: { ethAddress, whiteLabelConfig },
     status,
     createdAt,
     updatedAt,
@@ -63,6 +64,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       </Wallet>
       <div style={{ fontSize: '12px' }}>{fullName || '-'}</div>
       <div style={{ fontSize: '12px' }}>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>
+      <div style={{ fontSize: '12px' }}>{t`${whiteLabelConfig?.name}`}</div>
       <div style={{ fontSize: '12px' }}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
       <div style={{ fontSize: '12px' }}>
         <StatusCell status={status} />
@@ -112,7 +114,6 @@ export const AdminKycTable = () => {
   const history = useHistory()
 
   const { id } = useParams<AdminParams>()
-
   const getKycFilters = (page: number, withStatus = true) => {
     let kycFilter: any = {
       page,
@@ -274,7 +275,7 @@ export const StyledDoc = styled(File)`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: repeat(7, 2fr) 140px;
+  grid-template-columns: repeat(8, 1fr) 180px;
   padding-bottom: 15px;
   margin-bottom: 20px;
   border-bottom: 1px solid;
@@ -285,7 +286,7 @@ const StyledHeaderRow = styled(HeaderRow)`
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: repeat(7, 2fr) 140px;
+  grid-template-columns: repeat(8, 1fr) 180px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     min-width: 1370px;
   }

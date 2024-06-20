@@ -217,6 +217,7 @@ export interface User {
   tenant: string
   updatedAt: string
   managerOf: ManagerOfToken[]
+  whiteLabelConfig?: any
 }
 
 export interface TokenManagerEntry {
@@ -509,7 +510,7 @@ interface InvestorDeclaration {
 export interface KycItem {
   customerId?: number
   documentVerificationStatus?: string | undefined
-  amlVerificationStatus?:  string | undefined
+  amlVerificationStatus?: string | undefined
   poaVerificationStatus?: string | undefined
   identityVerificationStatus?: string | undefined
   createdAt: string
@@ -537,6 +538,7 @@ export interface KycItem {
     updatedAt: string
     referredBy?: string
     referralCode?: string
+    whiteLabelConfig?: any
   }
   userId: number
 }
