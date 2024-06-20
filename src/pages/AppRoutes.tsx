@@ -12,7 +12,6 @@ import { VestingTab } from 'pages/Farming/VestingTab'
 import { RedirectPathToSwapOnly, RedirectToSwap } from 'pages/Swap/redirects'
 import { RedirectDuplicateTokenIdsV2 } from 'pages/AddLiquidityV2/redirects'
 import { ROLES } from 'constants/roles'
-// import AdminKycTable from 'components/AdminKyc'
 import AdminAccreditationTable from 'components/AdminAccreditationTable'
 import { UsersList } from 'components/UsersList'
 import AdminSecurityCatalog from 'components/AdminSecurityCatalog'
@@ -25,14 +24,10 @@ const Swap = lazy(() => import('pages/Swap'))
 const PoolV2 = lazy(() => import('pages/Pool/v2'))
 const RemoveLiquidity = lazy(() => import('pages/RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('pages/SecTokenDetails'))
-
-// const KYC = lazy(() => import('pages/KYC'))
-const KYC = lazy(() => import('pages/Maintenance'))
+const KYC = lazy(() => import('pages/KYC'))
 const IndividualKYC = lazy(() => import('pages/KYC/IndividualKycForm'))
 const CorporateKYC = lazy(() => import('pages/KYC/CorporateKycForm'))
-
 const SecurityTokens = lazy(() => import('pages/SecurityTokens'))
-
 const ListNFT = lazy(() => import('pages/ListNFT'))
 const CreateNFT = lazy(() => import('pages/CreateNFT'))
 const NftImport = lazy(() => import('pages/NftImport'))
