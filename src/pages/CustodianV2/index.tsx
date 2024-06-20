@@ -84,6 +84,7 @@ export default function CustodianV2() {
         fontSize={isMobile ? '24px' : '40px'}
         marginLeft={isMobile ? '30px' : ''}
         marginBottom="30px"
+        paddingTop={isMobile ? '20px' : '24px'}
         data-testid="securityTokensTitle"
       >
         <Trans>Security tokens</Trans>
