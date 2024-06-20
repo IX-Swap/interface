@@ -38,7 +38,7 @@ import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styl
 import { UserMobileFilters } from './userMobileFilters'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 
-const headerCells = [`Wallet address`, `Role`, `Name`, t`Security Token`, `Waive Withdrawal Fees`, '']
+const headerCells = [`Wallet address`, `Role`, `Name`, t`Security Token`, `Tenant`, `Waive Withdrawal Fees`, '']
 
 interface BodyProps {
   changeUser: (item: User) => void
@@ -184,9 +184,8 @@ const TokenListPreview = (props: TokenListPreviewProps) => {
 
 const Row: FC<RowProps> = ({ item, changeUser }) => {
   const [expanded, handleExpanded] = useState(false)
-  const { ethAddress, role, username, isWhitelisted, managerOf } = item
+  const { ethAddress, role, username, isWhitelisted, managerOf, whiteLabelConfig } = item
   const needAccordion = role === ROLES.TOKEN_MANAGER && Boolean(managerOf?.length)
-
   const toggleAccordion = () => {
     if (needAccordion) {
       handleExpanded((state) => !state)
@@ -208,7 +207,9 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
 
             {role === ROLES.TOKEN_MANAGER && <TokenListPreview items={managerOf as TokenManagerEntry[]} />}
             {role !== ROLES.TOKEN_MANAGER && <div> - </div>}
-
+            <div>
+              <span style={{ marginLeft: '2px' }}>{whiteLabelConfig?.name}</span>
+            </div>
             <div>
               <img src={isWhitelisted ? checkIcon : notCheckIcon} alt="is-whitelisted" />
               <span style={{ marginLeft: '10px' }}>{isWhitelisted ? 'Yes' : 'No'}</span>
