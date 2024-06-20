@@ -261,9 +261,11 @@ export default function Header() {
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
                   </div>
                 ) : (
-                  <IXSIcon>
-                    <NewLogo width="130px" height="80px" {...config?.customStyles?.logo} />
-                  </IXSIcon>
+                  <div style={{ width: 130 }}>
+                    <IXSIcon>
+                      <NewLogo />
+                    </IXSIcon>
+                  </div>
                 )}
               </Title>
             </HeaderRow>
