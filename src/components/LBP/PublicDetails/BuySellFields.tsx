@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, memo } from 'react'
+import React, { useState, useEffect, useCallback, useMemo, memo } from 'react'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
@@ -182,54 +182,47 @@ const BuySellFields: React.FC<BuySellFieldsProps> = ({
     setButtonDisabled(isButtonDisabled)
   }, [shareValue, assetValue])
 
-  const handleOpenModal = (action: any) => {
-    setIsModalOpen(true)
-  }
-
   const handleModalClose = () => {
     setIsModalOpen(false)
   }
 
-  const handleInputChange = useCallback(
-    async (inputAmount: any, inputType: InputType) => {
-      if (errorMessage !== '') setErrorMessage('')
-      const setValue = inputType === InputType.Share ? setShareValue : setAssetValue // Remove here
-      const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
-      const setOppositeDisplay = inputType === InputType.Share ? setAssetValueDisplay : setShareValueDisplay
+  const handleInputChange = async (inputAmount: any, inputType: InputType) => {
+    if (errorMessage !== '') setErrorMessage('')
+    const setValue = inputType === InputType.Share ? setShareValue : setAssetValue // Remove here
+    const setOpposite = inputType === InputType.Share ? setAssetValue : setShareValue
+    const setOppositeDisplay = inputType === InputType.Share ? setAssetValueDisplay : setShareValueDisplay
 
-      setInputType(inputType)
-      setValue(inputAmount)
+    setInputType(inputType)
+    setValue(inputAmount)
 
-      if (inputAmount !== '') {
-        setIsConvertingState({
-          inputType: inputType === InputType.Share ? InputType.Asset : InputType.Share,
-          converting: true,
-        })
-        setOpposite('')
-        setOppositeDisplay('')
-        const converted = await handleConversion(
-          inputType,
-          inputAmount,
-          inputType == 'share' ? shareDecimals : assetDecimals,
-          inputType == 'share' ? assetDecimals : shareDecimals
-        )
-        setIsConvertingState((prevState) => {
-          return {
-            ...prevState,
-            converting: false,
-          }
-        })
+    if (inputAmount !== '') {
+      setIsConvertingState({
+        inputType: inputType === InputType.Share ? InputType.Asset : InputType.Share,
+        converting: true,
+      })
+      setOpposite('')
+      setOppositeDisplay('')
+      const converted = await handleConversion(
+        inputType,
+        inputAmount,
+        inputType == 'share' ? shareDecimals : assetDecimals,
+        inputType == 'share' ? assetDecimals : shareDecimals
+      )
+      setIsConvertingState((prevState) => {
+        return {
+          ...prevState,
+          converting: false,
+        }
+      })
 
-        setOpposite(converted ? parseFloat(converted).toFixed(AMOUNT_PRECISION) : '')
-        setOppositeDisplay(converted ? parseFloat(converted).toFixed(AMOUNT_PRECISION) : '')
-      } else {
-        // Clear the opposite value if the input is cleared
-        setOpposite('')
-        setOppositeDisplay('')
-      }
-    },
-    [errorMessage, shareDecimals, assetDecimals]
-  )
+      setOpposite(converted ? parseFloat(converted).toFixed(AMOUNT_PRECISION) : '')
+      setOppositeDisplay(converted ? parseFloat(converted).toFixed(AMOUNT_PRECISION) : '')
+    } else {
+      // Clear the opposite value if the input is cleared
+      setOpposite('')
+      setOppositeDisplay('')
+    }
+  }
 
   const handleConversion = useCallback(
     async (
@@ -274,7 +267,7 @@ const BuySellFields: React.FC<BuySellFieldsProps> = ({
 
       return '0'
     },
-    [lbpContractInstance]
+    [lbpContractInstance, activeTab]
   )
 
   const applySlippage = useCallback(
@@ -606,6 +599,18 @@ const BuySellFields: React.FC<BuySellFieldsProps> = ({
     }
   }, [debouncedAssetInput])
 
+  useEffect(() => {
+    setErrorMessage('')
+    setShareValue('')
+    setAssetValue('')
+    setShareValueDisplay('')
+    setAssetValueDisplay('')
+    setAssetValueInput('')
+    setShareValueInput('')
+    setSwapFee(0)
+    setShareSymbol('')
+  }, [activeTab])
+
   return (
     <>
       {isLoading ? (
@@ -626,9 +631,7 @@ const BuySellFields: React.FC<BuySellFieldsProps> = ({
             <FlexBetween>
               <div>
                 <BuySellFieldsWrapper>
-                  <BuySellFieldsSpan>
-                    Project Token
-                  </BuySellFieldsSpan>
+                  <BuySellFieldsSpan>Project Token</BuySellFieldsSpan>
                 </BuySellFieldsWrapper>
                 {convertingState.inputType === InputType.Share && convertingState.converting ? (
                   <Loader size="25px" />
@@ -782,7 +785,6 @@ const BalanceText = styled.div`
   display: flex;
   gap: 3px;
 `
-
 
 const BuySellFieldsSelect = styled.div`
   flex: 1;
