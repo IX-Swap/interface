@@ -9,6 +9,7 @@ export const USDC: { [chainId: number]: Token } = {
   [42]: new Token(42, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', 6, 'USDC', 'USD//C'),
   [137]: new Token(137, '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', 6, 'USDC', 'USD//C'),
   [80001]: new Token(80001, '0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747', 6, 'USDC', 'USD//C'),
+  [80002]: new Token(80002, '0xA9bc9D3F0fF05AB339D1E195982794B15beA0f88', 6, 'USDC', 'USD//C'),
 }
 
 // Mirror Protocol compat.
@@ -19,6 +20,7 @@ export const IXS: { [chainId: number]: Token } = {
   [5]: new Token(5, IXS_ADDRESS[5], 18, 'IXS', 'IXS'),
   [42]: new Token(42, IXS_ADDRESS[42], 18, 'IXS', 'IXS'),
   [80001]: new Token(80001, IXS_ADDRESS[80001], 18, 'IXS', 'IXS'),
+  [80002]: new Token(80002, IXS_ADDRESS[80002], 18, 'IXS', 'IXS'),
   [137]: new Token(137, IXS_ADDRESS[137], 18, 'IXS', 'IXS'),
 }
 
@@ -38,10 +40,17 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     'WMATIC',
     'Wrapped MATIC'
   ),
+  [SupportedChainId.AMOY]: new Token(
+    SupportedChainId.AMOY,
+    '0x0ae690AAD8663aaB12a671A6A0d74242332de85f',
+    18,
+    'WMATIC',
+    'Wrapped MATIC'
+  ),
 }
 
 function isMatic(chainId: number) {
-  return chainId === SupportedChainId.MUMBAI || chainId === SupportedChainId.MATIC
+  return chainId === SupportedChainId.MUMBAI || chainId === SupportedChainId.MATIC || chainId === SupportedChainId.AMOY
 }
 
 class MaticNativeCurrency extends NativeCurrency {
@@ -93,6 +102,7 @@ export const TOKEN_SHORTHANDS: { [shorthand: string]: Record<any, any> } = {
     [SupportedChainId.KOVAN]: USDC[42],
     [SupportedChainId.MATIC]: USDC[137],
     [SupportedChainId.MUMBAI]: USDC[80001],
+    [SupportedChainId.AMOY]: USDC[80002],
     // [SupportedChainId.MUMBAI]: '0xe11a86849d99f524cac3e7a0ec1241828e332c62',
   },
   IXS: {
@@ -100,5 +110,6 @@ export const TOKEN_SHORTHANDS: { [shorthand: string]: Record<any, any> } = {
     [SupportedChainId.KOVAN]: IXS[42],
     [SupportedChainId.MATIC]: IXS[137],
     [SupportedChainId.MUMBAI]: IXS[80001],
+    [SupportedChainId.AMOY]: IXS[80002],
   },
 }

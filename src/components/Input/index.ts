@@ -89,7 +89,7 @@ export const Textarea = styled.textarea`
   font-weight: 300;
   font-size: 16px;
   border-radius: 6px;
-  border: 1px solid #e6e6ff;
+  border: 1px solid #E6E6FF;
   width: 100%;
 
   &::-webkit-outer-spin-button,

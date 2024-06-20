@@ -166,6 +166,28 @@ export interface LaunchpadTheme {
   }
 }
 
+export interface LbpTheme {  
+  colors: {
+    status: {
+      background: {
+        live: string,
+        pending: string,
+        paused: string,
+      },
+      border: {
+        live: string,
+        pending: string,
+        paused: string,
+      },
+      color: {
+        live: string,
+        pending: string,
+        paused: string,
+      },
+    },
+  },
+}
+
 declare module 'styled-components' {
   export interface DefaultTheme extends Colors {
     grids: Grids
@@ -187,5 +209,6 @@ declare module 'styled-components' {
     flexRowNoWrap: FlattenSimpleInterpolation
 
     launchpad: LaunchpadTheme
+    lbp: LbpTheme
   }
 }

@@ -23,15 +23,16 @@ import { useKyc } from 'state/user/hooks'
 import { text9 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
-  offerId: string
-  allowOnlyAccredited: boolean
+  offerId?: string
+  allowOnlyAccredited?: boolean
   onClose?: () => void
 }
 
 export const KYCPrompt: React.FC<Props> = (props) => {
   const { account } = useWeb3React()
   const { kyc } = useKYCState()
-  const { isApproved, isRejected, isAccredited, isPending, isInProgress, isChangeRequested, isNotSubmitted } = useKyc()
+  const { isApproved, isRejected, isAccredited, isPending, isInProgress, isChangeRequested, isNotSubmitted, isDraft } =
+    useKyc()
   const [isOpen, setIsOpen] = React.useState(true)
   const toggleModal = React.useCallback((isOpen?: boolean) => {
     setIsOpen((state) => isOpen ?? !state)
@@ -46,7 +47,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
 
   const showFooter = React.useMemo(
-    () => !contactFormOpen && (!kyc || isNotSubmitted || isPending || isInProgress || isChangeRequested),
+    () => !contactFormOpen && (!kyc || isNotSubmitted || isPending || isInProgress || isChangeRequested || isDraft),
     [kyc]
   )
 
@@ -55,13 +56,15 @@ export const KYCPrompt: React.FC<Props> = (props) => {
       account &&
       !!kyc &&
       !isChangeRequested &&
-      !(isPending || isInProgress) &&
+      !(isPending || isInProgress || isDraft) &&
       !isRejected &&
       !(props.allowOnlyAccredited && !isAccredited)
     ) {
       toggleModal(false)
     }
-  }, [account, !!kyc, isChangeRequested, isPending, isInProgress, isRejected, isAccredited])
+  }, [account, !!kyc, isChangeRequested, isPending, isInProgress, isRejected, isAccredited, isDraft])
+  
+
   return (
     <Modal isOpen={isOpen} onDismiss={() => toggleModal(false)}>
       {!account && (
@@ -100,6 +103,18 @@ export const KYCPrompt: React.FC<Props> = (props) => {
                   <KYCPromptTitle>We have requested an update to your account verification process.</KYCPromptTitle>
 
                   <VerifyButton to="/kyc">Update</VerifyButton>
+                </>
+              )}
+
+              {isDraft && (
+                <>
+                  <KYCLoadingIconContainer>
+                    <Loading />
+                  </KYCLoadingIconContainer>
+
+                  <KYCPromptTitle>Verify your account to use the  IXS Launchpad</KYCPromptTitle>
+
+                  <VerifyButton to="/kyc">Verify Account</VerifyButton>
                 </>
               )}
 

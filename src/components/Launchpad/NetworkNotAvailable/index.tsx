@@ -85,6 +85,12 @@ export const NetworkNotAvailable = () => {
             Mumbai Testnet
           </NetworkCard>
         )}
+        {chains.includes(SupportedChainId.AMOY) && (
+          <NetworkCard onClick={() => changeNetwork(SupportedChainId.AMOY)}>
+            <img src={polygonIcon} alt="polygonIcon" />
+            Polygon Amoy Testnet
+          </NetworkCard>
+        )}
       </NetworksRow>
       <InfoRows>
         {(chains.includes(SupportedChainId.MAINNET) || farming) && (
@@ -119,6 +125,15 @@ export const NetworkNotAvailable = () => {
             <li>
               <Trans>
                 Switch to<b> Mumbai Testnet</b> to get full functionality
+              </Trans>
+            </li>
+          </Info>
+        )}
+        {chains.includes(SupportedChainId.AMOY) && (
+          <Info>
+            <li>
+              <Trans>
+                Switch to<b> Amoy Testnet</b> to get full functionality
               </Trans>
             </li>
           </Info>

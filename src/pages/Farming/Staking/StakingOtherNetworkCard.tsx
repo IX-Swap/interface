@@ -42,6 +42,12 @@ export const StakingOtherNetworkCard = () => {
         options: [],
         switchTitle: `other pools on ethereum`,
       },
+      [SupportedChainId.AMOY]: {
+        icon: EthereumRound,
+        name: `ethereum`,
+        options: [],
+        switchTitle: `other pools on ethereum`,
+      },
     }),
     []
   )

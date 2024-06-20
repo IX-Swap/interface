@@ -11,7 +11,7 @@ import { Box } from 'rebass'
 interface KYCProgressTopic {
   title: string
   href: string
-  passed: boolean
+  passed?: boolean
   failed?: boolean
 }
 

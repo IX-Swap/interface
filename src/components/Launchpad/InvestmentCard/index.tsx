@@ -44,8 +44,8 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
-const { kyc } = useKYCState()
-const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
+  const { kyc } = useKYCState()
+  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const isClosed = React.useMemo(
     () => !!offer.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status),
@@ -83,7 +83,7 @@ const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   return (
     <>
-     <PreviewModal offer={offer}  isModalOpen={isModalOpen} closeModal={closeModal} />
+      <PreviewModal offer={offer} isModalOpen={isModalOpen} closeModal={closeModal} />
       <InvestmentCardContainer>
         <InvestmentCardImage src={offer.cardPicture.public} />
 
@@ -176,11 +176,11 @@ const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
               </InvestButton>
             )}
 
-            {!isKycApproved &&          <InvestButton style={{marginTop: '10px'}} type="button" onClick={openModal}>
-              Preview
-            </InvestButton>}
-
-   
+            {!isKycApproved && (
+              <InvestButton style={{ marginTop: '10px' }} type="button" onClick={openModal}>
+                Preview
+              </InvestButton>
+            )}
           </InvestmentCardFooter>
         </InvestmentCardInfoContainer>
       </InvestmentCardContainer>
@@ -275,7 +275,7 @@ const InvestmentCardTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 1; 
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 `
 const InvestmentCardDescription = styled.div`
@@ -285,7 +285,7 @@ const InvestmentCardDescription = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 1; 
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 `
 
