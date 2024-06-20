@@ -11,6 +11,7 @@ import { useEmailEdit, useEmailVerify, useEmailVerifyCode, useKYCState } from 's
 import { ReactComponent as ArrowBack } from 'assets/images/newBack.svg'
 import { useHistory } from 'react-router-dom'
 import { resendEmail } from 'state/admin/hooks'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 interface Props {
   isModalOpen: boolean
@@ -20,6 +21,8 @@ interface Props {
 }
 
 export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCode }: Props) => {
+  const { config } = useWhitelabelState()
+
   const [active, setActive] = React.useState(false)
   const [step, setStep] = React.useState(1)
   const emailEdit = useEmailEdit()
@@ -177,7 +180,7 @@ export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCod
                 style={{ position: 'absolute', left: '55px', top: isMobile ? '94px' : '100px', cursor: 'pointer' }}
                 onClick={handleBackClick}
               />
-              <IXSTitle>Welcome to IX Swap</IXSTitle>
+              <IXSTitle>Welcome to {config?.name || 'IX Swap'}</IXSTitle>
             </FlexContainer>
           )}
 

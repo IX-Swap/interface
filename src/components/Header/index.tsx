@@ -1,9 +1,11 @@
 import React, { useCallback } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { Text } from 'rebass'
 import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
+import _get from 'lodash/get'
+
 import { useKYCState } from 'state/kyc/hooks'
 import { routes } from 'utils/routes'
 import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
@@ -94,7 +96,7 @@ const HeaderRowNew = styled(RowFixed)`
   }
 `
 
-const Title = styled.a`
+const Title = styled(Link)`
   display: flex;
   align-items: center;
   pointer-events: auto;
@@ -179,6 +181,8 @@ export default function Header() {
   const [showConnectModal, setShowConnectModal] = React.useState(false)
   const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
+  const logoUrl = _get(config, 'logoUrl', null)
+
   const isAllowed = useCallback(
     (path: string) => {
       if (!config || !config.pages || config.pages.length === 0) {
@@ -208,10 +212,14 @@ export default function Header() {
           {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
             <HeaderRow>
-              <Title href={config?.defaultUrl || '.'}>
-                <IXSIcon>
-                  <NewLogo width="auto" height="47px" {...config?.customStyles?.logo} />
-                </IXSIcon>
+              <Title to="/">
+                {logoUrl ? (
+                  <img src={logoUrl} alt="logo" width="auto" height="47px" />
+                ) : (
+                  <IXSIcon>
+                    <NewLogo width="auto" height="47px" {...config?.customStyles?.logo} />
+                  </IXSIcon>
+                )}
               </Title>
             </HeaderRow>
             <HeaderControls>
@@ -247,10 +255,16 @@ export default function Header() {
           {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
             <HeaderRow marginLeft={50}>
-              <Title href={config?.defaultUrl || '.'}>
-                <IXSIcon>
-                  <NewLogo width="130px" height="80px" {...config?.customStyles?.logo} />
-                </IXSIcon>
+              <Title to="/">
+                {logoUrl ? (
+                  <div style={{ width: 130 }}>
+                    <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
+                  </div>
+                ) : (
+                  <IXSIcon>
+                    <NewLogo width="130px" height="80px" {...config?.customStyles?.logo} />
+                  </IXSIcon>
+                )}
               </Title>
             </HeaderRow>
             <HeaderLinks />

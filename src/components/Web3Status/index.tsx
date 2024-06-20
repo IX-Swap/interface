@@ -6,7 +6,8 @@ import { darken } from 'polished'
 import { Activity } from 'react-feather'
 import styled, { css } from 'styled-components'
 
-// import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
+import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
+import MetaMaskIcon from '../../assets/images/metamask.png'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 // import PortisIcon from '../../assets/images/portisIcon.png'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
@@ -27,6 +28,7 @@ import { IXSBalance } from 'components/Header/IXSBalance'
 import { useETHBalances } from 'state/wallet/hooks'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { formatAmount } from 'utils/formatCurrencyAmount'
+import { coinbaseWallet } from 'connectors/coinbaseWallet'
 
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
@@ -92,7 +94,7 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
 `
 
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  background: ${({ theme }) => theme.config.text?.main || theme.bg25};
+  background: ${({ theme }) => theme.bg25};
   opacity: ${({ pending }) => (pending ? '0.7' : '1')};
   padding: 10px 5px 10px 10px;
   color: ${({ theme }) => theme.black};
@@ -172,21 +174,24 @@ function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
 // eslint-disable-next-line react/prop-types
 function StatusIcon({ connector }: { connector: Connector }) {
   if (connector === metaMask) {
-    return <Identicon />
+    return (
+      <IconWrapper size={16}>
+        <img src={MetaMaskIcon} alt="Metamask" />
+      </IconWrapper>
+    )
   } else if (connector === walletConnectV2) {
     return (
       <IconWrapper size={16}>
         <img src={WalletConnectIcon} alt={'WalletConnect'} />
       </IconWrapper>
     )
+  } else if (connector === coinbaseWallet) {
+    return (
+      <IconWrapper size={16}>
+        <img src={CoinbaseWalletIcon} alt={'CoinbaseWallet'} />
+      </IconWrapper>
+    )
   }
-  // else if (connector === walletlink) {
-  //   return (
-  //     <IconWrapper size={16}>
-  //       <img src={CoinbaseWalletIcon} alt={'CoinbaseWallet'} />
-  //     </IconWrapper>
-  //   )
-  // }
   // else if (connector === fortmatic) {
   //   return (
   //     <IconWrapper size={16}>

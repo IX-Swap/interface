@@ -23,7 +23,7 @@ import { useGetWhitelistStatus, useInvest, useInvestPublicSaleStructData, usePre
 import { text10, text11, text59 } from 'components/LaunchpadMisc/typography'
 import { useLaunchpadInvestmentContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
-import { useApproveCallback } from 'hooks/useApproveCallback'
+import { useAllowance } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { IXSALE_ADDRESS } from 'constants/addresses'
@@ -38,9 +38,10 @@ interface Props {
   offer: Offer
   investedData: InvestedDataRes
   openSuccess: () => void
+  openFailed: () => void
 }
 
-export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess }) => {
+export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, openFailed }) => {
   const {
     minInvestment,
     maxInvestment,
@@ -169,13 +170,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
   const tokenCurrency = useCurrency(offer.investingTokenAddress)
   const { chainId = 137, account } = useActiveWeb3React()
 
-  const [approval, approveCallback] = useApproveCallback(
-    tokenCurrency
-      ? CurrencyAmount.fromRawAmount(
-          tokenCurrency,
-          ethers.utils.parseUnits(amount || '0', investingTokenDecimals) as any
-        )
-      : undefined,
+  const [approval, approveCallback] = useAllowance(
+    offer.investingTokenAddress,
+    ethers.utils.parseUnits(amount?.toString() || '0', investingTokenDecimals),
     contractAddress || IXSALE_ADDRESS[chainId]
   )
   const submitState = useInvestSubmitState()
@@ -206,21 +203,25 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess })
         if (transaction) {
           const receipt = await transaction.wait()
 
-          await invest(status, {
-            amount,
-            txHash: receipt.transactionHash,
-          })
-
-          new WalletEvent(INVEST_FLOW_EVENTS.INVEST(status))
-            .walletAddress(account || '')
-            .data({
+          if (receipt.status === 0) {
+            openFailed()
+          } else {
+            await invest(status, {
               amount,
               txHash: receipt.transactionHash,
             })
-            .info(`Invest ${amount} ${investingTokenSymbol} INTO ${tokenSymbol}`)
 
-          submitState.setSuccess()
-          openSuccess()
+            new WalletEvent(INVEST_FLOW_EVENTS.INVEST(status))
+              .walletAddress(account || '')
+              .data({
+                amount,
+                txHash: receipt.transactionHash,
+              })
+              .info(`Invest ${amount} ${investingTokenSymbol} INTO ${tokenSymbol}`)
+
+            submitState.setSuccess()
+            openSuccess()
+          }
         }
       }
     } catch (e) {

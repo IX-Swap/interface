@@ -5,6 +5,7 @@ import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CloseColor, CloseIcon } from 'components/AccountDetails/styleds'
 import { Box } from 'rebass'
 import { ReactComponent as InfoIcon } from '../../../assets/images/newTooltip.svg'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 const TipWrapper = styled.span`
   max-width: 592px;
@@ -41,6 +42,8 @@ const DisclaimerText = styled.p`
 `
 
 const SwapBanner = () => {
+  const { config } = useWhitelabelState()
+
   const [isVisible, setIsVisible] = useState(true)
 
   const handleCloseClick = () => {
@@ -78,13 +81,13 @@ const SwapBanner = () => {
             <DisclaimerText>Dear users,</DisclaimerText>
             <p>
               Please be informed that the TAU Digital Token liquidity pool has been listed on the IXS DEX by Julian
-              Thomas Tu Hai Kwan who is a Director of AMM (Bahamas) Ltd, which operates the IX Swap platform. Therefore,
+              Thomas Tu Hai Kwan who is a Director of AMM (Bahamas) Ltd, which operates the {config?.name || 'IX Swap'} platform. Therefore,
               Julian Thomas Tu Hai Kwan may be deemed as having an interest in such listing of and/or any activity in
               connection with the TAU Digital Tokens on the IXS DEX.
               <br /> <br />
               Notwithstanding the foregoing, AMM (Bahamas) Ltd has established policies and procedures to manage,
               minimize and monitor any conflicts of interest, and will take reasonable steps to ensure that the
-              interests of IX Swap platform users are not adversely affected.
+              interests of {config?.name || 'IX Swap'} platform users are not adversely affected.
               <br /> <br />
               If you decide to participate in swapping/trading and/or liquidity provision of TAU Digital Tokens on the
               IXS DEX, you hereby acknowledge that:

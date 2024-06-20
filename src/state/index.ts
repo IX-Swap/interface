@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { load, save } from 'redux-localstorage-simple'
 import storage from 'redux-persist/lib/storage'
-import { persistReducer, persistStore } from 'redux-persist';
+import { persistReducer, persistStore } from 'redux-persist'
 
 import admin from './admin/reducer'
 import application from './application/reducer'
@@ -36,15 +36,15 @@ import payout from './payout/reducer'
 import launchpad from './launchpad/reducer'
 import tokenManager from './token-manager/reducer'
 import issuance from './issuance/reducer'
+import wallet from './wallet'
 
-const PERSISTED_KEYS: string[] = ['auth', 'lists', 'swap', 'swapHelper', 'transactions', 'user']
+const PERSISTED_KEYS: string[] = ['auth', 'lists', 'swap', 'swapHelper', 'transactions', 'user', 'wallet']
 
 const persistConfig = {
   key: 'root',
   storage,
   whitelist: PERSISTED_KEYS,
-};
-
+}
 
 const combinedReducer = combineReducers({
   admin,
@@ -79,6 +79,7 @@ const combinedReducer = combineReducers({
   withdraw,
   launchpad,
   issuance,
+  wallet,
 })
 
 const rootReducer = (state: any, action: any) => {
@@ -88,7 +89,7 @@ const rootReducer = (state: any, action: any) => {
   return combinedReducer(state, action)
 }
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
   reducer: persistedReducer,
@@ -104,7 +105,7 @@ const store = configureStore({
 
 store.dispatch(updateVersion())
 
-export const persistor = persistStore(store);
+export const persistor = persistStore(store)
 
 export default store
 

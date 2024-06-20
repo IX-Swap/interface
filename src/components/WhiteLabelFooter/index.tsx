@@ -7,7 +7,7 @@ import { SocialBlock } from './SocialBlock'
 import { InfoBlock } from './InfoBlock'
 import { CopyrightBlock } from './CopyrightBlock'
 
-export const Footer = () => {
+const WhiteLabelFooter = () => {
   return (
     <Container>
       <Content>
@@ -24,3 +24,5 @@ export const Footer = () => {
     </Container>
   )
 }
+
+export default WhiteLabelFooter

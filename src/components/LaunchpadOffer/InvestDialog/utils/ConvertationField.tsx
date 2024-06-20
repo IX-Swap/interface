@@ -1,26 +1,25 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-
 import { ArrowDown, ChevronDown } from 'react-feather'
+import JSBI from 'jsbi'
 
 import { Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestTextField } from './InvestTextField'
 
 import { useActiveWeb3React } from 'hooks/web3'
 import { Option, useTokensList } from 'hooks/useTokensList'
-import { useAllTokens, useCurrency } from 'hooks/Tokens'
+import { useCurrency } from 'hooks/Tokens'
 
 import { LoadingIndicator } from 'components/LoadingIndicator'
-import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
-import { useDerivedBalanceInfo, useFormatOfferValue } from 'state/launchpad/hooks'
+import { useDerivedBalanceInfo } from 'state/launchpad/hooks'
 import { text35 } from 'components/LaunchpadMisc/typography'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { Currency, Token } from '@ixswap1/sdk-core'
+import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import Loader from 'components/Loader'
 import { RowBetween } from 'components/Row'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { BuyModal } from '../BuyModal'
-import { Web3Helpers } from '../../../../helpers/web3/web3'
+import { useTokenContract } from 'hooks/useContract'
 
 interface Props {
   offer: Offer
@@ -94,29 +93,24 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
 
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
-
   const { tokenPrice, tokenAddress, tokenSymbol, investingTokenAddress, investingTokenSymbol, investingTokenDecimals } =
     props.offer
-
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
-
   const getWarning = useGetWarning(props.offer, true)
   const insufficientWarning = `Insufficient ${
     investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
   } balance`
-
-  const [inputValue, setInputValue] = React.useState('')
-  const [warning, setWarning] = React.useState('')
   const { account } = useActiveWeb3React()
   const inputCurrency = useCurrency(investingTokenAddress)
-  const { amount: balance, loading: isBalanceLoading } = useSimpleTokenBalanceWithLoading(
-    account,
-    inputCurrency,
-    investingTokenAddress
-  )
-  const [openPreviewModal, setPreviewModal] = React.useState(false)
+  const investingTokenContract = useTokenContract(investingTokenAddress)
   const isSufficientBalanceFn = useDerivedBalanceInfo(props.offer.id)
+
+  const [openPreviewModal, setPreviewModal] = useState(false)
+  const [inputValue, setInputValue] = useState('')
+  const [warning, setWarning] = useState('')
+  const [isBalanceLoading, setIsBalanceLoading] = useState(false)
+  const [balance, setBalance] = useState<CurrencyAmount<Currency> | undefined>(undefined)
 
   const changeValue = (value: string) => {
     setInputValue(value)
@@ -187,11 +181,33 @@ export const ConvertationField: React.FC<Props> = (props) => {
   }
 
   const formatTokenOption = (tokenOption: any) => {
-    if (!tokenOption) return undefined;
-    const formattedName = tokenOption.name + (tokenOption.name === 'USDC' ? '.e' : '');
-    return { ...tokenOption, name: formattedName };
-  };
-  
+    if (!tokenOption) return undefined
+    const formattedName = tokenOption.name + (tokenOption.name === 'USDC' ? '.e' : '')
+    return { ...tokenOption, name: formattedName }
+  }
+
+  const fetchTokenBalance = async () => {
+    try {
+      if (!account || !investingTokenContract) {
+        return
+      }
+      setIsBalanceLoading(true)
+      const value = await investingTokenContract.balanceOf(account)
+
+      const amount =
+        value && inputCurrency ? CurrencyAmount.fromRawAmount(inputCurrency, JSBI.BigInt(value.toString())) : undefined
+
+      setBalance(amount)
+    } catch (error) {
+      console.error('Error fetching token balance', error)
+    } finally {
+      setIsBalanceLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchTokenBalance()
+  }, [account, investingTokenContract])
 
   return (
     <>
@@ -202,18 +218,13 @@ export const ConvertationField: React.FC<Props> = (props) => {
           type="number"
           onChange={changeValue}
           disabled={isBalanceLoading}
-          trailing={
-            <CurrencyDropdown
-              disabled
-              value={formatTokenOption(offerInvestmentToken)}
-            />
-          }
+          trailing={<CurrencyDropdown disabled value={formatTokenOption(offerInvestmentToken)} />}
           caption={insufficientWarning === warning ? '' : warning === 'Loading' ? <Loader /> : warning}
           // height="85px"
           fontSize="20px"
           lineHeight="20px"
           decimalsLimit={investingTokenDecimals}
-          isNoDecimals ={true}
+          isNoDecimals={true}
         />
         <InvestTextField
           type="number"
