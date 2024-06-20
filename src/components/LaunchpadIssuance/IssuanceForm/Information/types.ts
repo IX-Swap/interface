@@ -27,6 +27,8 @@ export enum SocialMediaType {
   youTube = 'youtube',
   coinMarketCap = 'coinmarketcap',
   coinGecko = 'coingecko',
+  instagram = 'instagram',
+  others = 'others',
 }
 
 export interface VideoLink {
