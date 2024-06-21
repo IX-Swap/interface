@@ -188,7 +188,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
   const fetchTokenBalance = async () => {
     try {
-      if (!account || !investingTokenContract) {
+      if (!account || !investingTokenContract || !inputCurrency) {
         return
       }
       setIsBalanceLoading(true)
@@ -196,18 +196,19 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
       const amount =
         value && inputCurrency ? CurrencyAmount.fromRawAmount(inputCurrency, JSBI.BigInt(value.toString())) : undefined
-
       setBalance(amount)
+      if (amount !== undefined) {
+        setIsBalanceLoading(false)
+      }
     } catch (error) {
       console.error('Error fetching token balance', error)
-    } finally {
       setIsBalanceLoading(false)
     }
   }
 
   useEffect(() => {
     fetchTokenBalance()
-  }, [account, investingTokenContract])
+  }, [account, investingTokenContract?.address, inputCurrency?.chainId])
 
   return (
     <>
