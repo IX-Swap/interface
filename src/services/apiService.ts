@@ -176,7 +176,7 @@ const apiService = {
 
   _prepareHeaders(data: any) {
     const headers: KeyValueMap = {
-      'x-tenant-domain':  window.location.host,
+      'x-tenant-domain': 'dev-readi.ixswap.io',
       // 'custom-origin': window.location.host,
       // 'custom-origin': 'investax',
     }
