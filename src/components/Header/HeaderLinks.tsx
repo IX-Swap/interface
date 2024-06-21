@@ -300,7 +300,7 @@ const navLinkStyles = css`
     }
   }
   @media (max-width: 1500px) {
-    font-size: 10px;
+    font-size: 11px;
   }
   @media (max-width: 1300px) {
     font-size: 16px;
