@@ -216,11 +216,9 @@ export default function Header() {
                 {logoUrl ? (
                   <img src={logoUrl} alt="logo" width="auto" height="47px" />
                 ) : (
-                  <div style={{ width: 130 }}>
-                    <IXSIcon>
-                      <NewLogo />
-                    </IXSIcon>
-                  </div>
+                  <IXSIcon>
+                    <NewLogo width="130px" height="47px" />
+                  </IXSIcon>
                 )}
               </Title>
             </HeaderRow>
@@ -263,11 +261,9 @@ export default function Header() {
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
                   </div>
                 ) : (
-                  <div style={{ width: 130 }}>
-                    <IXSIcon>
-                      <NewLogo />
-                    </IXSIcon>
-                  </div>
+                  <IXSIcon>
+                    <NewLogo width="130px" height="47px" />
+                  </IXSIcon>
                 )}
               </Title>
             </HeaderRow>
