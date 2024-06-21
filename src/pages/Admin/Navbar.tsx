@@ -27,11 +27,9 @@ export const Navbar = () => {
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
                   </div>
                 ) : (
-                  <div style={{ width: 130 }}>
-                    <IXSIcon>
-                      <NewLogo />
-                    </IXSIcon>
-                  </div>
+                  <IXSIcon>
+                    <NewLogo width="130px" height="47px" />
+                  </IXSIcon>
                 )}
               </Title>
             </HeaderRow>
@@ -49,11 +47,9 @@ export const Navbar = () => {
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
                   </div>
                 ) : (
-                  <div style={{ width: 130 }}>
-                    <IXSIcon>
-                      <NewLogo />
-                    </IXSIcon>
-                  </div>
+                  <IXSIcon>
+                    <NewLogo width="130px" height="47px" />
+                  </IXSIcon>
                 )}
               </Title>
             </HeaderRow>

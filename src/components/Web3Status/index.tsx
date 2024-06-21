@@ -51,17 +51,6 @@ const Web3StatusGeneric = styled(ButtonSecondary)`
   cursor: pointer;
   user-select: none;
   outline: none;
-  :focus,
-  :hover,
-  :active,
-  :focus-within,
-  :target,
-  :visited,
-  :focus-visible {
-    border: 0;
-    outline: none;
-    box-shadow: none;
-  }
 `
 const Web3StatusError = styled(Web3StatusGeneric)`
   background-color: ${({ theme }) => theme.red1};
