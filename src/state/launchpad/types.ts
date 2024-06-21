@@ -58,7 +58,7 @@ export enum OfferType {
 }
 
 export interface OfferSocialMediaLinks {
-  twitter?: string
+  x?: string
   telegram?: string
   linkedin?: string
   youtube?: string
