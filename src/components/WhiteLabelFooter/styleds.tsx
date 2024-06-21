@@ -5,7 +5,7 @@ export const Container = styled.div`
   width: 100vw;
   display: flex;
   justify-content: center;
-  background-color: ${({ theme }) => theme.bg16};
+  background-color: ${({ theme }) => theme.white};
   z-index: 2;
 `
 
@@ -76,7 +76,8 @@ export const InfoBlockContainer = styled.div`
   justify-content: space-between;
   column-gap: 32px;
   > div {
-    font-size: 10px;
+    font-weight: 00;
+    font-size: 14px;
     display: flex;
     flex-direction: column;
     row-gap: 16px;

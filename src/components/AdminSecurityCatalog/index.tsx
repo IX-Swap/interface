@@ -180,11 +180,6 @@ export const AdminSecurityCatalog: FC = () => {
 
   return (
     <>
-      {loadingRequest && (
-        <Loader>
-          <LoaderThin size={96} />
-        </Loader>
-      )}
       <Container>
         {['add_issuer', 'edit_issuer'].includes(showMode) && (
           <>
@@ -203,7 +198,6 @@ export const AdminSecurityCatalog: FC = () => {
                 </ButtonText>
               </Flex>
               <Line style={{ marginBottom: '40px' }} />
-
               <FormGridNew style={{ marginLeft: isMobile ? '0px' : '50px' }}>
                 <Box style={{ marginTop: '8px' }}>
                   <Label marginBottom="50px">
@@ -425,7 +419,13 @@ export const AdminSecurityCatalog: FC = () => {
                 </>
               ) : (
                 <NoData>
-                  <Trans>No results</Trans>
+                  {loadingRequest ? (
+                    <Loader>
+                      <LoaderThin size={96} />
+                    </Loader>
+                  ) : (
+                    <Trans>No results</Trans>
+                  )}
                 </NoData>
               )}
             </Flex>

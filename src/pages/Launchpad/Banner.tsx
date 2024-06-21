@@ -1,12 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
+import _get from 'lodash/get'
 
 import LearnMoreIcon from 'assets/launchpad/icons/learn-more.png'
 import { text31, text52, text6 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
 import { isMobile } from 'react-device-detect'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export const Banner = () => {
+  const { config } = useWhitelabelState()
+  const launchpadBannerTitle = config?.launchpadBannerTitle ?? 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunites'
+  const launchpadBannerInfoRedirectTitle = config?.launchpadBannerInfoRedirectTitle ?? 'How does IXS Launchpad work?'
+  const launchpadBannerInfoRedirectUrl = config?.launchpadBannerInfoRedirectUrl ?? 'https://www.ixswap.io/academy'
+
   return (
     <BannerContainer>
       {isMobile ? (
@@ -15,16 +22,14 @@ export const Banner = () => {
           <BannerTitleMobile>Next Generation Fundraising</BannerTitleMobile>
         </>
       ) : (
-        <BannerTitle>
-          Invest in Startups <br /> and Other Unicorn <br /> Like Opportunites
-        </BannerTitle>
+        <BannerTitle dangerouslySetInnerHTML={{ __html: launchpadBannerTitle }} />
       )}
 
       <BannerInfoRedirect>
         <BannerInfoRedirectImage src={LearnMoreIcon} />
         <BannerInfoRedirectLabel>
-          <BannerInfoRedirectTitle>How does IXS Launchpad work?</BannerInfoRedirectTitle>
-          <BannerInfoRedirectSubtitle href="https://www.ixswap.io/academy">Learn more</BannerInfoRedirectSubtitle>
+          <BannerInfoRedirectTitle>{launchpadBannerInfoRedirectTitle}</BannerInfoRedirectTitle>
+          <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl}>Learn more</BannerInfoRedirectSubtitle>
         </BannerInfoRedirectLabel>
       </BannerInfoRedirect>
     </BannerContainer>

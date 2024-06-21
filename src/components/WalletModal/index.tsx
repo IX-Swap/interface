@@ -319,8 +319,8 @@ export default function WalletModal({
           <AutoRow style={{ flexWrap: 'nowrap' }}>
             <Text style={{ fontSize: '13px', color: '#666680', fontWeight: '400', lineHeight: '19.5px' }}>
               <Trans>
-                Connecting your wallet allows IX Swap to see your wallet address and, consequently, the funds you hold
-                on the blockchain. This does not grant IX Swap the ability to manage or transfer your tokens; for that,
+                Connecting your wallet allows {config?.name || 'IX Swap'} to see your wallet address and, consequently, the funds you hold
+                on the blockchain. This does not grant {config?.name || 'IX Swap'} the ability to manage or transfer your tokens; for that,
                 you will be asked to sign a token approval.
                 {/* By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
                   <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and

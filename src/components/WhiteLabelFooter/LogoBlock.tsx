@@ -1,5 +1,6 @@
 import React from 'react'
 import { Trans } from '@lingui/macro'
+import styled from 'styled-components'
 
 import { AppLogo } from 'components/AppLogo'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
@@ -12,11 +13,23 @@ export const LogoBlock = () => {
   return (
     <LogoBlockContainer>
       <AppLogo withText height="49px" width="auto" />
-      <Trans>
-        {config?.footerConfig?.block1 ||
-          `IX Swap is built by a global team of capital markets, legal and blockchain experts, bringing you the next
+
+      <DescText>
+        <Trans>
+          {config?.footerConfig?.block1 ||
+            `IX Swap is built by a global team of capital markets, legal and blockchain experts, bringing you the next
         generation of trading for Security tokens and tokenized stocks`}
-      </Trans>
+        </Trans>
+      </DescText>
     </LogoBlockContainer>
   )
 }
+
+const DescText = styled.div`
+  font-style: normal;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  color: rgb(184, 184, 204);
+`

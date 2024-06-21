@@ -55,7 +55,7 @@ export const Offers = () => {
   // }
 
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <Pinned />
       <InvestmentList
         offers={offers}

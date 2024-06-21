@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Offer, OfferFile, OfferFileType } from 'state/launchpad/types'
 
 import { ReactComponent as TelegramLogo } from 'assets/launchpad/svg/social/telegram.svg'
-import { ReactComponent as TwitterLogo } from 'assets/launchpad/svg/social/twitter.svg'
+import { ReactComponent as XLogo } from 'assets/launchpad/svg/social/twitter.svg'
 import { ReactComponent as MLogo } from 'assets/launchpad/svg/social/m.svg'
 import { ReactComponent as DiscordLogo } from 'assets/launchpad/svg/social/discord.svg'
 import { ReactComponent as YoutubeLogo } from 'assets/launchpad/svg/social/youtube.svg'
@@ -27,7 +27,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
 
   const socialMedialLinks = React.useMemo(
     () => [
-      { url: props.offer?.socialMedia?.twitter, logo: <TwitterLogo /> },
+      { url: props.offer?.socialMedia?.x, logo: <XLogo /> },
       { url: props.offer?.socialMedia?.telegram, logo: <TelegramLogo /> },
       { url: props.offer?.socialMedia?.linkedin, logo: <LinkedInLogo /> },
       { url: props.offer?.socialMedia?.youtube, logo: <YoutubeLogo /> },
