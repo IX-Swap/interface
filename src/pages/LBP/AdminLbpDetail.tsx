@@ -47,39 +47,40 @@ const AdminLbpDetail = () => {
   return (
     <>
       <Header />
-      <Wrapper>
-        {loader ? (
+
+      {loader ? (
+        <LoaderWrapper>
           <Loader>
             <LoaderThin size={96} />
           </Loader>
-        ) : (
-          <>
-            <AdminHeader
-              lbpId={id}
-              status={status || lbpData?.status || ''}
-              lbpShareName={lbpData?.title}
-              lbpShareLogo={lbpData?.logo}
-              updateStatus={updateStatus}
-              contractAddress={lbpData?.contractAddress}
-            />
-            <SummaryFields statsData={statsData} lbpData={lbpData} noOfParticipants={noOfParticipants} />
-            <DetailsChart
-              contractAddress={lbpData?.contractAddress}
-              currentAssetReserve={statsData?.currentAssetReserve}
-              currentShareReserve={statsData?.currentShareReserve}
-              startDate={lbpData?.startDate}
-              endDate={lbpData?.endDate}
-              startWeight={lbpData?.startWeight}
-              endWeight={lbpData?.endWeight}
-              shareAmount={lbpData?.shareAmount}
-              assetAmount={lbpData?.assetTokenAmount}
-              chartWidth={1200}
-            />
-            <StatisticData isAdmin={true} statsData={statsData} lbpData={lbpData} />
-            <InvestorInformation lbpId={lbpId} title={lbpData?.title} setNoOfParticipants={setNoOfParticipants} />
-          </>
-        )}
-      </Wrapper>
+        </LoaderWrapper>
+      ) : (
+        <Wrapper>
+          <AdminHeader
+            lbpId={id}
+            status={status || lbpData?.status || ''}
+            lbpShareName={lbpData?.title}
+            lbpShareLogo={lbpData?.logo}
+            updateStatus={updateStatus}
+            contractAddress={lbpData?.contractAddress}
+          />
+          <SummaryFields statsData={statsData} lbpData={lbpData} noOfParticipants={noOfParticipants} />
+          <DetailsChart
+            contractAddress={lbpData?.contractAddress}
+            currentAssetReserve={statsData?.currentAssetReserve}
+            currentShareReserve={statsData?.currentShareReserve}
+            startDate={lbpData?.startDate}
+            endDate={lbpData?.endDate}
+            startWeight={lbpData?.startWeight}
+            endWeight={lbpData?.endWeight}
+            shareAmount={lbpData?.shareAmount}
+            assetAmount={lbpData?.assetTokenAmount}
+            chartWidth={1200}
+          />
+          <StatisticData isAdmin={true} statsData={statsData} lbpData={lbpData} />
+          <InvestorInformation lbpId={lbpId} title={lbpData?.title} setNoOfParticipants={setNoOfParticipants} />
+        </Wrapper>
+      )}
     </>
   )
 }
@@ -89,6 +90,13 @@ const Wrapper = styled.article`
   padding: 0px 100px;
   margin: 90px 200px 0px 200px;
   // width: 100%;
+`
+
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 `
 
 export default AdminLbpDetail
