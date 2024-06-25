@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import { useWeb3React } from '@web3-react/core'
 
 import { AutoColumn, ColumnCenter } from 'components/Column'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { ReactComponent as PausedButtonIcon } from '../../../assets/images/paused.svg'
 import { Line } from 'components/Line'
 import { LbpFormValues } from '../types'
@@ -103,6 +103,9 @@ const ShareTokenWrapper = styled.div`
   display: flex;
   gap: 5px;
   border-radius: 6px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 8px;
+  }
 `
 
 const SideBarContainer = styled.div`

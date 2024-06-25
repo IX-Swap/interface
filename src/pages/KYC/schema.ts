@@ -11,7 +11,6 @@ interface TaxDeclaration {
 }
 
 export const FinancialRequiredCoutries = ['Russian Federation', 'Nigeria', 'Turkey']
-
 export const individualErrorsSchemaV2 = yup.object().shape({
   firstName: yup
     .string()

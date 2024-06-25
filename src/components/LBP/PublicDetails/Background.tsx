@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import backgroundImg from '../../../assets/images/background.jpg'
 // import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
 import { ReactComponent as ArrowUp } from '../../../assets/images/varyArrow.svg'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { LbpFormValues } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 
@@ -24,6 +24,9 @@ const FullWidthImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    object-fit: fill;
+  }
 `
 
 const LogoIcon = styled.img`
@@ -33,13 +36,18 @@ const LogoIcon = styled.img`
   height: 50px;
   width: 50px;
   border-radius: 50%;
-`;
+`
 
 const Description = styled(TYPE.description7)`
   position: absolute;
   bottom: 22%;
   left: 15.5%;
   color: #ffffff;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 32px !important;
+    bottom: 22%;
+    left: 28.5%;
+  }
 `
 
 const Amount = styled(TYPE.description7)`
@@ -47,6 +55,10 @@ const Amount = styled(TYPE.description7)`
   bottom: 22%;
   right: 10%;
   color: #ffffff;
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 32px !important;
+    top: 30%;
+  }
 `
 
 const Vary = styled.div<{ positive: boolean }>`
@@ -83,10 +95,8 @@ const Background: React.FC<BackgroundProps> = ({ lbpData, currentSharePriceUSD }
 
   return (
     <FullWidthContainer>
-        <FullWidthImage src={lbpData?.banner.public} alt="Background" />
-        {lbpData && lbpData.logo && (
-        <LogoIcon as="img" src={lbpData.logo.public} alt="Serenity Logo" />
-      )}
+      <FullWidthImage src={lbpData?.banner.public} alt="Background" />
+      {lbpData && lbpData.logo && <LogoIcon as="img" src={lbpData.logo.public} alt="Serenity Logo" />}
       <Description fontSize={'48px'}>{lbpData?.title}</Description>
       <Amount fontSize={'40px'}>${useFormatNumberWithDecimal(currentSharePriceUSD || 0, 3)}</Amount>
       {/* <Vary positive={isPositive}>

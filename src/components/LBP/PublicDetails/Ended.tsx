@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { ColumnCenter } from 'components/Column'
 import { ReactComponent as ComingSoonIcon } from '../../../assets/images/ended.svg'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
 import { useLBPPurchasedShares } from 'state/lbp/hooks'
@@ -97,4 +97,8 @@ const ShareTokenWrapper = styled.div`
   display: flex;
   gap: 5px;
   border-radius: 6px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 8px;
+  }
 `

@@ -3,8 +3,8 @@ import _get from 'lodash/get'
 import styled from 'styled-components'
 
 import Column, { AutoColumn } from 'components/Column'
-import { RowBetween } from 'components/Row'
-import { TYPE } from 'theme'
+import { RowBetween as OriginalRowBetween } from 'components/Row'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
@@ -186,6 +186,18 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
   )
 }
 
+const RowBetween = styled(OriginalRowBetween)`
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+
+    & > div {
+      margin-right: 0;
+    }
+  }
+`
+
 const QuantitiesBox = styled.div<{ isAdmin?: boolean }>`
   border: 1px solid #e6e6ff;
   border-radius: 8px;
@@ -194,6 +206,9 @@ const QuantitiesBox = styled.div<{ isAdmin?: boolean }>`
   padding: 16px;
   min-width: ${(props) => (props.isAdmin ? '190px' : '270px')};
   margin-right: ${(props) => (props.isAdmin ? '20px' : '0')};
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    min-width: 160px;
+  }
 `
 
 const TokenWrapper = styled.div`
