@@ -202,13 +202,19 @@ export default function IndividualKycFormV2() {
   }, [account])
 
   useEffect(() => {
+    // Condition 1: Check if personal verification or email verification is true
     if (isPersonalVerified || kyc?.individual?.isEmailVerified) {
+      // Condition 1.1: Check if secondary contact details exist
       if (kyc?.individual?.secondaryContactDetails) {
+        // Set initial values including business email if secondary contact details exist
         setInitialValues({ ...initialValuesBusinessEmail, businessEmail: kyc.individual.secondaryContactDetails })
       } else {
+        // Set initial values with default business email value
         setInitialValues({ ...initialValuesBusinessEmail })
       }
     } else {
+      // Condition 2: If personal verification and email verification are false
+      // Set initial values for personal information section
       setInitialValues(getInitialValues())
     }
   }, [isPersonalVerified, kyc?.individual?.isEmailVerified, kyc?.individual?.secondaryContactDetails])
@@ -245,10 +251,11 @@ export default function IndividualKycFormV2() {
       validateValue(key, value)
     }
 
+    // Check if the KYC individual data exists and if the current value is different from the KYC individual data value
     if (kyc?.individual && values[key] !== value) {
-      const kycValue = kyc.individual[key]
+      const kycValue = kyc.individual[key] // Get the current value from KYC data for comparison
       if (value.length === 0 || value !== kycValue) {
-        setFieldValue(key, value, true)
+        setFieldValue(key, value, true) // Update the form field value if it's different or empty
       }
     }
   }
