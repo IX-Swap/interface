@@ -280,6 +280,7 @@ export default function IndividualKycFormV2() {
     if (section === SuccessType.PERSONAL) {
       await fetchKYCData()
       setIsPersonalVerified(true)
+      fetchKYCData()
     } else if (section === SuccessType.BUSINESS) {
       await fetchKYCData()
       setIsBusinessEmailVerified(true)
