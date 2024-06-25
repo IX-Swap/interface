@@ -367,7 +367,6 @@ export const AdminSecurityCatalog: FC = () => {
                 <Trans>Cancel</Trans>
               </PinnedContentButton>
               <PinnedContentButton
-                disabled={!(currentIssuer?.tokens?.length > 0)}
                 onClick={handleSaveClick}
                 style={{ width: 226, marginLeft: '10px' }}
               >
