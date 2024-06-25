@@ -21,6 +21,7 @@ import {
 } from './styled'
 import { useKyc } from 'state/user/hooks'
 import { text9 } from 'components/LaunchpadMisc/typography'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 interface Props {
   offerId?: string
@@ -33,7 +34,11 @@ export const KYCPrompt: React.FC<Props> = (props) => {
   const { kyc } = useKYCState()
   const { isApproved, isRejected, isAccredited, isPending, isInProgress, isChangeRequested, isNotSubmitted, isDraft } =
     useKyc()
+  const { config } = useWhitelabelState()
+
   const [isOpen, setIsOpen] = React.useState(true)
+  const [contactFormOpen, setContactForm] = React.useState(false)
+
   const toggleModal = React.useCallback((isOpen?: boolean) => {
     setIsOpen((state) => isOpen ?? !state)
 
@@ -41,8 +46,6 @@ export const KYCPrompt: React.FC<Props> = (props) => {
       props.onClose()
     }
   }, [])
-
-  const [contactFormOpen, setContactForm] = React.useState(false)
 
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
 
@@ -63,7 +66,6 @@ export const KYCPrompt: React.FC<Props> = (props) => {
       toggleModal(false)
     }
   }, [account, !!kyc, isChangeRequested, isPending, isInProgress, isRejected, isAccredited, isDraft])
-  
 
   return (
     <Modal isOpen={isOpen} onDismiss={() => toggleModal(false)}>
@@ -89,7 +91,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
                     <KYCPromptIcon />
                   </KYCPromptIconContainer>
 
-                  <KYCPromptTitle>Verify your account to use the IXS Launchpad</KYCPromptTitle>
+                  <KYCPromptTitle>Verify your account to use the {config?.name} Launchpad</KYCPromptTitle>
 
                   <VerifyButton to="/kyc">Verify Account</VerifyButton>
                 </>
@@ -112,7 +114,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
                     <Loading />
                   </KYCLoadingIconContainer>
 
-                  <KYCPromptTitle>Verify your account to use the  IXS Launchpad</KYCPromptTitle>
+                  <KYCPromptTitle>Verify your account to use the {config?.name} Launchpad</KYCPromptTitle>
 
                   <VerifyButton to="/kyc">Verify Account</VerifyButton>
                 </>
@@ -151,8 +153,8 @@ export const KYCPrompt: React.FC<Props> = (props) => {
                   </KYCPromptIconContainer>
 
                   <KYCPromptTitle>
-                    Account verification was unsuccessful. Therefore, you are not able to use the IXS Launchpad. Please
-                    try again or contact us for more information.
+                    Account verification was unsuccessful. Therefore, you are not able to use the {config?.name}{' '}
+                    Launchpad. Please try again or contact us for more information.
                   </KYCPromptTitle>
 
                   <VerifyButton to="/kyc">Try Again</VerifyButton>
