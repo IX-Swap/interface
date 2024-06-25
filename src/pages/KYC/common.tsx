@@ -288,7 +288,10 @@ export const KycTextInput: FC<TextInputProps> = ({
       <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
       {disabled && value ? (
         <div>
-          <StyledInput style={{ background: '#F7F7FA' }} value={value} />
+          <StyledInput
+            style={{ background: '#F7F7FA', color: '#6d6d73', pointerEvents: 'none', cursor: 'not-allowed' }}
+            value={value}
+          />
         </div>
       ) : (
         <StyledInput

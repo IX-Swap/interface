@@ -178,7 +178,7 @@ const SecondaryContactOption: React.FC<Props> = ({
               <SubTitle>
                 {buttonText === KYCV2RequestButtonText.VERIFY_CODE
                   ? `A 6-digit verification code has been sent to your email. Enter the code below to verify your email.`
-                  : `Get a verification code sent to your email address so we ncan confirm that you are not a robot.`}
+                  : `Get a verification code sent to your email address so we can confirm that you are not a robot.`}
               </SubTitle>
             </>
           )}
