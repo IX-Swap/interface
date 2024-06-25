@@ -114,14 +114,6 @@ const CheckboxInput = styled.input<{ disabled: boolean }>`
   }
 `
 
-interface Individual {
-  email?: string
-  firstName?: string
-  middleName?: string
-  lastName?: string
-  isEmailVerified?: boolean
-}
-
 export default function IndividualKycFormV2() {
   const canLeavePage = useRef(false)
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -141,6 +133,18 @@ export default function IndividualKycFormV2() {
   const [loading, setLoading] = useState(false)
   const [initialValues, setInitialValues] = useState(individualFormV2InitialValues)
   const getMyKyc = useGetMyKyc()
+
+  const getInitialValues = () => {
+    if (kyc?.individual) {
+      return {
+        firstName: kyc.individual.firstName || '',
+        middleName: kyc.individual.middleName || '',
+        lastName: kyc.individual.lastName || '',
+        email: kyc.individual.email || '',
+      }
+    }
+    return individualFormV2InitialValues
+  }
 
   useEffect(() => {
     const code = new URL(window.location.href).href?.split('=')[1]
@@ -198,27 +202,16 @@ export default function IndividualKycFormV2() {
   }, [account])
 
   useEffect(() => {
-    const individual: Individual = kyc?.individual || {}
-    const { email, firstName, middleName, lastName, isEmailVerified } = individual
-    if (isEmailVerified) {
-      setInitialValues((prevValues) => ({
-        ...prevValues,
-        ...initialValuesBusinessEmail,
-        email: email || '',
-        firstName: firstName || '',
-        middleName: middleName || '',
-        lastName: lastName || '',
-      }))
+    if (isPersonalVerified || kyc?.individual?.isEmailVerified) {
+      if (kyc?.individual?.secondaryContactDetails) {
+        setInitialValues({ ...initialValuesBusinessEmail, businessEmail: kyc.individual.secondaryContactDetails })
+      } else {
+        setInitialValues({ ...initialValuesBusinessEmail })
+      }
     } else {
-      setInitialValues((prevValues) => ({
-        ...prevValues,
-        email: email || '',
-        firstName: firstName || '',
-        middleName: middleName || '',
-        lastName: lastName || '',
-      }))
+      setInitialValues(getInitialValues())
     }
-  }, [kyc?.individual])
+  }, [isPersonalVerified, kyc?.individual?.isEmailVerified, kyc?.individual?.secondaryContactDetails])
 
   const validateValue = async (key: string, value: any) => {
     if (form.current.values[key] === value) {
@@ -247,19 +240,26 @@ export default function IndividualKycFormV2() {
     if (values[key] !== value) {
       setFieldValue(key, value, true)
     }
+
     if (errors[key] || form.current.touched[key]) {
       validateValue(key, value)
     }
-  }
 
+    if (kyc?.individual && values[key] !== value) {
+      const kycValue = kyc.individual[key]
+      if (value.length === 0 || value !== kycValue) {
+        setFieldValue(key, value, true)
+      }
+    }
+  }
   const handleCheckboxChange = (event: { target: { value: any } }) => {
     const { value } = event.target
     setSelectedCheckbox(value)
   }
-
   const handleSuccess = (section: string) => {
     if (section === SuccessType.PERSONAL) {
       setIsPersonalVerified(true)
+      fetchKYCData()
     } else if (section === SuccessType.BUSINESS) {
       setIsBusinessEmailVerified(true)
     }
@@ -321,6 +321,8 @@ export default function IndividualKycFormV2() {
             }}
           >
             {({ values, handleSubmit, setFieldValue, errors, touched, isValid }) => {
+              const disabled = kyc?.individual?.isEmailVerified || isPersonalVerified
+              const businessEmailDisabled = kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
@@ -346,36 +348,36 @@ export default function IndividualKycFormV2() {
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
                             <TextInput
-                              disabled={kyc?.individual?.isEmailVerified || isPersonalVerified}
+                              disabled={disabled}
                               kycVersion={'v2'}
                               id="firstNameInput"
                               label="First Name *"
                               placeholder="First Name"
-                              value={values.firstName}
+                              value={values.firstName || (disabled ? kyc?.individual?.firstName : '')}
                               error={touched.firstName && errors.firstName}
                               onChange={(e: any) =>
                                 onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)
                               }
                             />
                             <TextInput
-                              disabled={kyc?.individual?.isEmailVerified || isPersonalVerified}
+                              disabled={disabled}
                               id="middleNameInput"
                               kycVersion={'v2'}
                               label="Middle Name"
                               placeholder="Middle Name"
-                              value={values.middleName}
+                              value={values.middleName || (disabled ? kyc?.individual?.middleName : '')}
                               error={touched.middleName && errors.middleName}
                               onChange={(e: any) =>
                                 onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)
                               }
                             />
                             <TextInput
-                              disabled={kyc?.individual?.isEmailVerified || isPersonalVerified}
+                              disabled={disabled}
                               id="lastNameInput"
                               kycVersion={'v2'}
                               label="Last Name *"
                               placeholder="Last Name"
-                              value={values.lastName}
+                              value={values.lastName || (disabled ? kyc?.individual?.lastName : '')}
                               error={touched.lastName && errors.lastName}
                               onChange={(e: any) =>
                                 onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)
@@ -383,12 +385,12 @@ export default function IndividualKycFormV2() {
                             />
                           </FormGrid>
                           <TextInput
-                            disabled={kyc?.individual?.isEmailVerified || isPersonalVerified}
+                            disabled={disabled}
                             placeholder="Email address"
                             kycVersion={'v2'}
                             id="emailAddressField"
                             label="Email address *"
-                            value={values.email}
+                            value={values.email || (disabled ? kyc?.individual?.email : '')}
                             error={touched.email && errors.email}
                             onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
                           />
@@ -514,12 +516,14 @@ export default function IndividualKycFormV2() {
                                 <TextInput
                                   kycVersion={'v2'}
                                   placeholder="Business Email"
-                                  id="emailAddressField"
+                                  id="businessEmailAddressField"
                                   label="Business Email *"
-                                  disabled={kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified}
-                                  value={values.businessEmail || kyc?.individual?.secondaryContactDetails}
+                                  disabled={businessEmailDisabled}
+                                  value={
+                                    values.businessEmail ||
+                                    (businessEmailDisabled ? kyc?.individual?.secondaryContactDetails : '')
+                                  }
                                   error={touched.businessEmail && errors.businessEmail}
-                                  // error={errors.businessEmail}
                                   onChange={(e: any) =>
                                     onChangeInput('businessEmail', e.currentTarget.value, values, setFieldValue)
                                   }
@@ -529,7 +533,9 @@ export default function IndividualKycFormV2() {
                               {!kyc?.individual?.isSecondaryContactVerified && !isBusinessEmailVerified && (
                                 <SecondaryContactOption
                                   emailType={'secondary_email'}
-                                  error={!isValid}
+                                  error={
+                                    kyc?.individual?.secondaryContactDetails === values.businessEmail ? false : !isValid
+                                  }
                                   verificationSecation="Business Email"
                                   email={values.businessEmail}
                                   isVerifiedBusinessEmail={false}
