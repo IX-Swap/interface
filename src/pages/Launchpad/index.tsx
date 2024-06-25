@@ -2,28 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 import Portal from '@reach/portal'
 import { Offers } from 'components/Launchpad/Offers'
-import { useSetHideHeader } from 'state/application/hooks'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Banner } from './Banner'
-import { Footer } from './Footer'
-import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export default function Launchpad() {
-  const { chainId, account } = useActiveWeb3React()
+  const { chainId } = useActiveWeb3React()
+  const { config } = useWhitelabelState()
 
-  const hideHeader = useSetHideHeader()
-
-  React.useEffect(() => {
-    hideHeader(true)
-
-    return () => {
-      hideHeader(false)
-    }
-  }, [])
-
+  const isIxSwap = config?.isIxSwap ?? false
+  const enableLaunchpadBanner = config?.enableLaunchpadBanner ?? false
   const blurred = detectWrongNetwork(chainId)
 
   if (blurred) {
@@ -38,10 +29,8 @@ export default function Launchpad() {
 
   return (
     <>
-      <Header />
-      <Banner />
+      {isIxSwap || enableLaunchpadBanner ? <Banner /> : null}
       <Offers />
-      <Footer />
     </>
   )
 }

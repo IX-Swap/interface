@@ -30,6 +30,8 @@ import { routes } from 'utils/routes'
 import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
+import WhiteLabelFooter from 'components/WhiteLabelFooter'
 
 interface OfferPageParams {
   offerId: string
@@ -39,14 +41,15 @@ export default function LaunchpadOffer() {
   const theme = useTheme()
   const history = useHistory()
   const params = useParams<OfferPageParams>()
-
+  const { chainId, account } = useActiveWeb3React()
   const offer = useGetOffer(params.offerId)
   const hideHeader = useSetHideHeader()
   const checkKYC = useCheckKYC()
+  const { config } = useWhitelabelState()
 
   const [isAllowed, setIsAllowed] = React.useState<boolean>()
 
-  const { chainId, account } = useActiveWeb3React()
+  const isIxSwap = config?.isIxSwap ?? false
 
   React.useEffect(() => {
     if (offer.data) {
@@ -72,8 +75,6 @@ export default function LaunchpadOffer() {
       hideHeader(false)
     }
   }, [])
-
-
 
   if (offer.loading) {
     return (
@@ -141,7 +142,8 @@ export default function LaunchpadOffer() {
 
         <footer>
           <BackToTopButton />
-          <Footer offerId={params.offerId} />
+
+          {isIxSwap ? <Footer offerId={params.offerId} /> : <WhiteLabelFooter />}
         </footer>
       </OfferContainer>
     </OfferBackgroundWrapper>

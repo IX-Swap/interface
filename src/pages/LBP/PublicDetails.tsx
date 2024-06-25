@@ -9,13 +9,15 @@ import { Loader } from 'components/AdminTransactionsTable'
 import { useWeb3React } from '@web3-react/core'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import AppBody from 'pages/AppBody'
 
 interface RouteParams {
   id: string
 }
 
 const PublicDetails: React.FC = () => {
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
   const { kyc } = useKYCState()
   const { id } = useParams<RouteParams>()
   const fetchLbpData = useGetLbp()
@@ -25,8 +27,8 @@ const PublicDetails: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
+  const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
 
-  
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -47,12 +49,15 @@ const PublicDetails: React.FC = () => {
 
   useEffect(() => {
     if (!isLoading && (!account || !isKycApproved)) {
-      history.push(`/kyc/`);
+      history.push(`/kyc/`)
     }
-  }, [isLoading, account, isKycApproved, history]);
-  
+  }, [isLoading, account, isKycApproved, history])
 
-  return (
+  return blurred ? (
+    <AppBody blurred>
+      <div></div>
+    </AppBody>
+  ) : (
     <>
       {isLoading ? (
         <Loader>

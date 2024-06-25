@@ -26,6 +26,12 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import back from 'assets/images/newBack.svg'
 import { MetaMask } from '@web3-react/metamask'
 import WalletConnectIcon from '../../../assets/images/walletConnectIcon.svg'
+import { useAppDispatch } from 'state/hooks'
+import { setWalletState } from 'state/wallet'
+import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
+import { getAddChainParameters } from 'chains'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { SupportedChainId } from 'constants/chains'
 
 export enum PromptView {
   options,
@@ -39,13 +45,19 @@ interface Props {
   onClose: () => void
 }
 
+const iconWalletMapping = {
+  MetaMask: metamaskmobile,
+  WalletConnect: WalletConnectIcon,
+  'Coinbase Wallet': coinbase,
+} as any
+
 export const ConnectionDialog: React.FC<Props> = (props) => {
+  const dispatch = useAppDispatch()
+
   const [walletView, setWalletView] = React.useState(PromptView.options)
   const { config } = useWhitelabelState()
   const [showPendingScreen, setShowPendingScreen] = React.useState(false)
-  const [userSelected, setUserSelected] = React.useState(false) // Define userSelected state
-
-  const [isMetaMaskClicked, setIsMetaMaskClicked] = React.useState(false)
+  const [selectedWalletName, setSelectedWalletName] = React.useState<string>('')
 
   const tryActivation = async (connector: Connector | undefined) => {
     const wallet = Object.values(SUPPORTED_WALLETS).find((wallet) => wallet.connector === connector)
@@ -61,24 +73,28 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     }
 
     try {
-      await connector.activate()
+      setSelectedWalletName(wallet?.name ?? '')
+      const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
+      if (connector instanceof CoinbaseWallet) {
+        const chainParams = getAddChainParameters(defaultChain)
+
+        await connector.activate(chainParams)
+      } else {
+        await connector.activate(defaultChain)
+      }
       setWalletView(PromptView.account)
       props.onConnect()
       props.onClose()
+      dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
     } catch (error) {
-      connector.activate()
+      console.log('Error activating connector', error)
     }
   }
 
   const onSelect = React.useCallback(
     (option: WalletInfo) => {
+      dispatch
       tryActivation(option.connector)
-      if (option.connector instanceof MetaMask) {
-        setIsMetaMaskClicked(true)
-      } else {
-        setIsMetaMaskClicked(false)
-      }
-      setUserSelected(true) // Set userSelected to true when user selects a wallet
     },
     [tryActivation]
   )
@@ -92,25 +108,16 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     setWalletView(PromptView.options) // Show wallet selection options
   }
 
-  const isMetamaskInstalled = typeof window.ethereum !== 'undefined'
-
   return (
     <ModalContainer style={{ overflow: 'auto', maxHeight: '90vh' }}>
       {walletView === PromptView.pending && showPendingScreen ? (
         <>
-          <PromptTitle>
-            {' '}
-            {isMetaMaskClicked ? 'Connecting to Metamask..' : 'Connecting to WalletConnect.. '}
-          </PromptTitle>
+          <PromptTitle>{`Connecting to ${selectedWalletName}..`}</PromptTitle>
           <ContentWrapper>
             <AutoRow>
               <TextContent>
                 <ConnectingContainer style={{ width: isMobile ? '264px' : '350px' }}>
-                  {isMetaMaskClicked ? (
-                    <ConnectingImage src={metamaskmobile} alt="Metamask" />
-                  ) : (
-                    <ConnectingImage src={WalletConnectIcon} alt="Metamask" />
-                  )}
+                  <ConnectingImage src={iconWalletMapping[selectedWalletName]} alt={selectedWalletName} />
 
                   <ConnectingText>Connecting...</ConnectingText>
                 </ConnectingContainer>
@@ -142,9 +149,9 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
             <AutoRow>
               <TextContent>
                 <Trans>
-                  Connecting your wallet allows IX Swap to see your wallet address and, consequently, the funds you hold
-                  on the blockchain. This does not grant IX Swap the ability to manage or transfer your tokens; for
-                  that, you will be asked to sign a token approval.
+                  Connecting your wallet allows {config?.name || 'IX Swap'} to see your wallet address and,
+                  consequently, the funds you hold on the blockchain. This does not grant {config?.name || 'IX Swap'}{' '}
+                  the ability to manage or transfer your tokens; for that, you will be asked to sign a token approval.
                 </Trans>
                 <br />
                 <br />

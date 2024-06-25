@@ -49,6 +49,10 @@ import { kyc } from 'services/apiUrls'
 import { useKYCState } from 'state/kyc/hooks'
 import { EmailVerification } from 'pages/KYC/EmailVerifyModal'
 import { ResendEmailModal } from 'pages/KYC/ResendEmailModal'
+import { tryDeactivateConnector } from 'connectors'
+import { setWalletState } from 'state/wallet'
+import { clearUserData } from 'state/user/actions'
+import { clearEventLog } from 'state/eventLog/actions'
 
 function renderTransactions(transactions: string[]) {
   return (
@@ -184,6 +188,13 @@ export default function AccountDetails({
     })
   }
 
+  const disconnectWallet = async () => {
+    await tryDeactivateConnector(connector)
+    dispatch(setWalletState({ isConnected: false, walletName: '' }))
+    dispatch(clearUserData())
+    dispatch(clearEventLog())
+  }
+
   return (
     <>
       <UpperSection>
@@ -217,22 +228,18 @@ export default function AccountDetails({
                 <Line style={{ margin: '20px 0px' }} />
                 {/* {formatConnectorName()} */}
                 <div>
-                  {connector !== metaMask && (
-                    <WalletAction
-                      style={{
-                        fontSize: '13px',
-                        color: '#666680',
-                        fontWeight: 400,
-                        marginRight: '8px',
-                        marginBottom: '12px',
-                      }}
-                      onClick={() => {
-                        ;(connector as any).deactivate()
-                      }}
-                    >
-                      <Trans>{`Disconnect`}</Trans>
-                    </WalletAction>
-                  )}
+                  <WalletAction
+                    style={{
+                      fontSize: '13px',
+                      color: '#666680',
+                      fontWeight: 400,
+                      marginRight: '8px',
+                      marginBottom: '12px',
+                    }}
+                    onClick={disconnectWallet}
+                  >
+                    <Trans>{`Disconnect`}</Trans>
+                  </WalletAction>
                 </div>
               </AccountGroupingRow>
               <AccountGroupingRow id="web3-account-identifier-row">
@@ -298,7 +305,9 @@ export default function AccountDetails({
               <Line style={{ marginTop: '10px' }} />
               <div style={{ display: 'flex', gap: '10px' }}>
                 <NewEmail />
-                <span style={{ fontSize: '13px', color: '#292933', fontWeight: '500' }}>{kyc?.individual?.email ?kyc?.individual?.email : kyc?.corporate?.email }</span>
+                <span style={{ fontSize: '13px', color: '#292933', fontWeight: '500' }}>
+                  {kyc?.individual?.email ? kyc?.individual?.email : kyc?.corporate?.email}
+                </span>
               </div>
 
               <span

@@ -23,6 +23,7 @@ import { ExternalLink, MEDIA_WIDTHS } from 'theme'
 import { text10, text33, text6, text9 } from 'components/LaunchpadMisc/typography'
 import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
 import { useActiveWeb3React } from 'hooks/web3'
+import { InvestFailedModal } from '../InvestDialog/utils/InvestFailedModal'
 interface Props {
   offer: Offer
 }
@@ -89,7 +90,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const daysTillClosed = props.offer.daysTillClosed ?? 0
 
   const [showSuccess, setShowSuccess] = React.useState(false)
-  console.log(props.offer.investingTokenSymbol, 'stageStatus')
+  const [showFailed, setShowFailed] = React.useState(false)
   return (
     <Container>
       <OfferSidebarSummary>
@@ -158,6 +159,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </InvestButtonContainer>
 
         {showSuccess && <InvestSuccessModal show={showSuccess} onClose={() => setShowSuccess(false)} />}
+        {showFailed && <InvestFailedModal show={showFailed} onClose={() => setShowFailed(false)} />}
         {showInvestDialog && (
           <InvestDialog
             offer={props.offer}
@@ -167,6 +169,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
               closeInvestDialog()
               setShowSuccess(true)
             }}
+            openFailed={() => setShowFailed(false)}
           />
         )}
       </OfferSidebarSummary>

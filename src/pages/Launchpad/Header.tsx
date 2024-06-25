@@ -38,7 +38,7 @@ export const Header = () => {
             </TitleSection>
           ) : (
             <TitleSection to="/launchpad">
-              <NewLogo />
+              <NewLogo width="130px" height="47px" />
             </TitleSection>
           )}
           <HeaderLinks>

@@ -6,19 +6,22 @@ import { BodyRow, HeaderRow } from 'components/Table'
 import { ButtonIXSGradient } from 'components/Button'
 
 export const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   min-width: 950px;
   width: 100%;
-  margin-bottom: 0px;
-  // background-color: transparent;
   border: none;
+  margin-bottom: 0;
+
   > div {
     padding: 24px 10px;
   }
+
   > div:last-child {
-    justify-self: flex-end;
+    justify-self: end;
     min-width: 150px;
   }
+
   button {
     min-height: 32px;
     height: 32px;
@@ -30,7 +33,7 @@ export const StyledBodyRow = styled(BodyRow)`
 `
 
 export const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   min-width: 950px;
   width: 100%;
 `

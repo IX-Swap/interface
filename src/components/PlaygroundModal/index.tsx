@@ -13,10 +13,13 @@ import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useOpenModal, useToggleModal } from 'state/application/hooks'
 import { updateUnderstoodPlayground } from 'state/user/actions'
 import { useUserState } from 'state/user/hooks'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 import styled from 'styled-components'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 
 export default function PlaygroundModal() {
+  const { config } = useWhitelabelState()
+
   const isOpen = useModalOpen(ApplicationModal.PLAYGROUND_WARNING)
   const toggle = useToggleModal(ApplicationModal.PLAYGROUND_WARNING)
   const openModal = useOpenModal(ApplicationModal.PLAYGROUND_WARNING)
@@ -48,7 +51,7 @@ export default function PlaygroundModal() {
           <ModalTop>
             <RowBetween>
               <TYPE.title5>
-                <Trans>Welcome to the IX Swap Playground</Trans>
+                <Trans>Welcome to the {config?.name || 'IX Swap'} Playground</Trans>
               </TYPE.title5>
               <CloseIcon onClick={onClose} />
             </RowBetween>

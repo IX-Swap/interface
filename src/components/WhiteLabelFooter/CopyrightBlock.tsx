@@ -1,6 +1,7 @@
 import React from 'react'
 import { Trans, t } from '@lingui/macro'
 import dayjs from 'dayjs'
+import styled from 'styled-components'
 
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
@@ -13,24 +14,45 @@ export const CopyrightBlock = () => {
   return (
     <CopyrightBlockContainer>
       <div>
-        <a
+        <TermText
           href={config?.footerConfig?.termsLink || 'https://ixswap.io/terms-and-conditions/'}
           target="_blank"
           rel="noreferrer"
         >
           <Trans>Terms & Conditions</Trans>
-        </a>
-        <a
+        </TermText>
+        <TermText
           href={config?.footerConfig?.privacyLink || 'https://ixswap.io/privacy-policy/'}
           target="_blank"
           rel="noreferrer"
         >
           <Trans>Privacy Policy</Trans>
-        </a>
+        </TermText>
       </div>
-      <div>
-        &quot;<Trans>{`Copyright © ${config?.name || 'IX Swap'} ${year}`}</Trans>&quot;
-      </div>
+      <CopyrightText>
+        <Trans>{`Copyright © ${config?.name || 'IX Swap'} ${year}`}</Trans>
+      </CopyrightText>
     </CopyrightBlockContainer>
   )
 }
+
+const TermText = styled.a`
+  font-style: normal;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  line-height: 140%;
+  font-size: 12px;
+  color: rgb(184, 184, 204);
+  margin-bottom: 15px;
+`
+
+const CopyrightText = styled.div`
+  rid-area: copyright;
+  place-self: start;
+  font-style: normal;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  color: rgb(41, 41, 51);
+`

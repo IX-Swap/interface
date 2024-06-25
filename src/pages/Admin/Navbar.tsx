@@ -1,61 +1,65 @@
-// import { Trans } from '@lingui/macro'
-// import React from 'react'
-// import { useLogout } from 'state/admin/hooks'
-// import styled from 'styled-components'
-
-// export const Navbar = () => {
-//   const logout = useLogout()
-
-//   return (
-//     <Container>
-//       <Logout onClick={logout}>
-//         <Trans>Logout</Trans>
-//       </Logout>
-//     </Container>
-//   )
-// }
-
-// const Logout = styled.div`
-//   cursor: pointer;
-//   font-weight: 600;
-//   font-size: 18px;
-// `
-
-// const Container = styled.div`
-//   height: 21px;
-//   margin-bottom: 26px;
-//   text-align: right;
-//   padding: 0 33px;
-// `
-
-import React, { useCallback } from 'react'
-import { NavLink } from 'react-router-dom'
-import { Text } from 'rebass'
+import React from 'react'
 import styled, { css } from 'styled-components'
-import { useCookies } from 'react-cookie'
-
-import { useKYCState } from 'state/kyc/hooks'
-import { routes } from 'utils/routes'
-import { ReactComponent as ProfileIcon } from 'assets/images/ProfileIcon.svg'
-import { ReactComponent as TimerIcon } from 'assets/images/TimerIcon.svg'
-import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
-import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
-import { isUserWhitelisted } from 'utils/isUserWhitelisted'
-import { useActiveWeb3React } from '../../hooks/web3'
-
-// import { MobileMenu } from '../Mobile-Menu'
-// import { RowFixed } from '../Row'
-// import Web3Status from '../Web3Status'
-// import { HeaderLinks } from './HeaderLinks'
-import { Announcement } from 'components/Announcement'
+import { isMobile } from 'react-device-detect'
+import _get from 'lodash/get'
+import { Link } from 'react-router-dom'
 
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-import { useRole } from 'state/user/hooks'
 import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
-import { isMobile } from 'react-device-detect'
 import { AdminHeaderLinks } from 'components/Header/HeaderLinks'
 import { MobileMenu } from 'components/Mobile-Menu'
 import { RowFixed } from 'components/Row'
+
+export const Navbar = () => {
+  const { config } = useWhitelabelState()
+
+  const logoUrl = _get(config, 'logoUrl', null)
+
+  return (
+    <>
+      {isMobile && (
+        <HeaderWrapper>
+          <HeaderFrame>
+            <HeaderRow>
+              <Title to="/">
+                {logoUrl ? (
+                  <div style={{ width: 150 }}>
+                    <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
+                  </div>
+                ) : (
+                  <IXSIcon>
+                    <NewLogo width="130px" height="47px" />
+                  </IXSIcon>
+                )}
+              </Title>
+            </HeaderRow>
+            <MobileMenu isAdmin="true" />
+          </HeaderFrame>
+        </HeaderWrapper>
+      )}
+      {!isMobile && (
+        <HeaderWrapper>
+          <HeaderFrame>
+            <HeaderRow marginLeft={100}>
+              <Title to="/">
+                {logoUrl ? (
+                  <div style={{ width: 150 }}>
+                    <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
+                  </div>
+                ) : (
+                  <IXSIcon>
+                    <NewLogo width="130px" height="47px" />
+                  </IXSIcon>
+                )}
+              </Title>
+            </HeaderRow>
+            <AdminHeaderLinks />
+          </HeaderFrame>
+        </HeaderWrapper>
+      )}
+    </>
+  )
+}
 
 const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
   display: grid;
@@ -95,63 +99,11 @@ const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boo
   }
 `
 
-const HeaderControls = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-self: flex-end;
-`
-
-const HeaderElement = styled.div`
-  display: flex;
-  align-items: center;
-
-  & > *:not(:first-child) {
-    margin-left: 8px;
-  }
-`
-
 const HeaderRow = styled(RowFixed)`
   width: 100%;
 `
 
-const HeaderRowNew = styled(RowFixed)`
-  width: 100%;
-  display: flex;
-  grid-gap: 28px;
-  @media (max-width: 500px) {
-    grid-gap: 12px;
-  }
-`
-
-const AccountElement = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 12px;
-  white-space: nowrap;
-  width: fit-content;
-  cursor: pointer;
-  :focus {
-    border: 1px solid blue;
-  }
-`
-
-const BalanceText = styled(Text)`
-  // background: ${({ theme }) => theme.bgG2};
-  color: ${({ theme }) => theme.text2};
-  font-weight: 600;
-  font-size: 12px;
-  opacity: ${({ theme }) => (theme.config.background ? '1' : '0.5')};
-  border-radius: 0 0 40px 40px;
-  padding: 0 18px;
-
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    display: none;
-  `};
-`
-
-const Title = styled.a`
+const Title = styled(Link)`
   display: flex;
   align-items: center;
   pointer-events: auto;
@@ -215,100 +167,3 @@ const HeaderWrapper = styled.div`
       background: ${({ theme }) => theme.config.background.secondary};
     `}
 `
-
-const IconWrapper = styled.div`
-  display: block;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: none;
-  `};
-`
-
-export const Navbar = () => {
-  const [cookies] = useCookies(['annoucementsSeen'])
-  const { account, chainId } = useActiveWeb3React()
-  const { kyc } = useKYCState()
-  const { config } = useWhitelabelState()
-  const { isTokenManager } = useRole()
-  const isWhitelisted = isUserWhitelisted({ account, chainId })
-
-  const isAllowed = useCallback(
-    (path: string) => {
-      if (!config || !config.pages || config.pages.length === 0) {
-        return true
-      }
-
-      return config.pages.includes(path)
-    },
-    [config]
-  )
-
-  return (
-    <>
-      {isMobile && (
-        <HeaderWrapper>
-          <HeaderFrame>
-            <HeaderRow>
-              <Title href={config?.defaultUrl || '.'}>
-                <IXSIcon>
-                  <NewLogo width="auto" height="47px" {...config?.customStyles?.logo} />
-                </IXSIcon>
-              </Title>
-            </HeaderRow>
-
-            {/* <HeaderRowNew>
-              <HeaderElement>
-                <NavLink
-                  style={{ textDecoration: 'none', color: 'inherit', marginRight: 8, marginTop: '4px' }}
-                  to={routes.tokenManager('my-tokens', null)}
-                >
-                  <ProfileIcon width="50px" height="50px" />
-                </NavLink>
-              </HeaderElement>
-            </HeaderRowNew>
-            <HeaderElement>
-              <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to="/kyc">
-                <TimerIcon width="50px" height="50px" />
-              </NavLink>
-            </HeaderElement> */}
-            <MobileMenu isAdmin="true" />
-          </HeaderFrame>
-        </HeaderWrapper>
-      )}
-      {!isMobile && (
-        <HeaderWrapper>
-          <HeaderFrame>
-            <HeaderRow marginLeft={100}>
-              <Title href={config?.defaultUrl || '.'}>
-                <IXSIcon>
-                  <NewLogo width="auto" height="47px" {...config?.customStyles?.logo} />
-                </IXSIcon>
-              </Title>
-            </HeaderRow>
-            <AdminHeaderLinks />
-            {/* <HeaderControls>
-              <IconWrapper>
-                <HeaderElement>
-                  <NavLink
-                    style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }}
-                    to={routes.tokenManager('my-tokens', null)}
-                  >
-                    <ProfileIcon width="50px" height="50px" />
-                  </NavLink>
-                </HeaderElement>
-              </IconWrapper>
-
-              <IconWrapper>
-                <HeaderElement>
-                  <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to="/kyc">
-                    <TimerIcon width="50px" height="50px" />
-                  </NavLink>
-                </HeaderElement>
-              </IconWrapper>
-            </HeaderControls> */}
-          </HeaderFrame>
-        </HeaderWrapper>
-      )}
-    </>
-  )
-}

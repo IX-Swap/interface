@@ -13,14 +13,14 @@ import { switchToNetwork } from 'hooks/switchToNetwork'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 import { VioletCard } from '../Card'
-import { Box } from 'rebass'
 
 const SelectorControls = styled(VioletCard)`
-  border-radius: 12px;
+  cursor: pointer;
   padding: 2px 3px;
   background: transparent;
-  width: fit-content;
+  min-width: 120px;
   display: flex;
+  justify-content: space-between;
   button {
     ${({ theme }) => theme.mediaWidth.upToSmall`
      padding: 0 3px 0 1px;
@@ -49,7 +49,8 @@ const FlyoutMenu = styled.div`
   background-color: ${({ theme }) => theme.bg1};
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
     0px 24px 32px rgba(0, 0, 0, 0.01);
-  border-radius: 20px;
+  border-radius: 8px;
+  border: 1px solid #e6e6ff;
   display: flex;
   flex-direction: column;
   font-size: 16px;
@@ -63,13 +64,16 @@ const FlyoutMenu = styled.div`
     margin-bottom: 12px;
   }
   @media screen and (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    top: 67px;
+    top: 54px;
+    left: 0;
   }
   @media screen and (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
     right: 70px;
+    left: 0;
   }
   @media screen and (max-width: 400px) {
     right: 30px;
+    left: 0;
   }
 `
 const FlyoutRow = styled.div<{ active: boolean }>`
@@ -105,11 +109,20 @@ const Selector = styled.div`
 const StyledBox = styled.div`
   font-size: 12px;
   border: 1px solid #e6e6ff;
-  margin-top: 10px;
-  padding: 10px 12px 10px 10px;
+  padding: 12px;
+  border-radius: 4px;
   ${({ theme }) => theme.mediaWidth.upToMedium`
      padding: 10px 20px 10px 20px;
   `};
+  :active {
+    border: 1px solid #4d8fea;
+  }
+  :hover {
+    transform: scale(0.99);
+    transition: 0.2s;
+    border: 1px solid #4d8fea;
+  }
+  position: relative;
 `
 
 export const NetworkCard = () => {
