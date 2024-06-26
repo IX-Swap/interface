@@ -27,10 +27,13 @@ const Swap = lazy(() => import('pages/Swap'))
 const PoolV2 = lazy(() => import('pages/Pool/v2'))
 const RemoveLiquidity = lazy(() => import('pages/RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('pages/SecTokenDetails'))
+
 const KYC = lazy(() => import('pages/KYC'))
 const IndividualKYC = lazy(() => import('pages/KYC/IndividualKycForm'))
 const CorporateKYC = lazy(() => import('pages/KYC/CorporateKycForm'))
+
 const SecurityTokens = lazy(() => import('pages/SecurityTokens'))
+
 const ListNFT = lazy(() => import('pages/ListNFT'))
 const CreateNFT = lazy(() => import('pages/CreateNFT'))
 const NftImport = lazy(() => import('pages/NftImport'))

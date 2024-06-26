@@ -30,10 +30,8 @@ import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
-import Maintenance from 'pages/Maintenance'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import { detectWrongNetwork } from 'utils'
-
 
 interface DescriptionProps {
   description: string | null
@@ -96,6 +94,7 @@ const KYC = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
   const { config } = useWhitelabelState()
   const { kyc, loadingRequest } = useKYCState()
+  const [isModalOpen, handleIsModalOpen] = useState(false)
   const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false, referralCode: '' })
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
@@ -339,18 +338,6 @@ const KYC = () => {
     }
   }, [status, description, kyc])
 
-  const marginTop = useMemo(() => {
-    if (status === KYCStatuses.NOT_SUBMITTED || status === null) {
-      return '8px'
-    } else {
-      return '10px'
-    }
-  }, [status])
-
-  if (status !== KYCStatuses.APPROVED) {
-    return <Maintenance />
-  }
-
   if (!account) return <NotAvailablePage />
 
   const blurred = detectWrongNetwork(chainId);
@@ -375,7 +362,11 @@ const KYC = () => {
           </RowCenter>
         ) : (
           <Column style={{ alignItems: 'center' }}>
-            <Content flexDirection="column" marginTop={marginTop} alignItems="center">
+            <Content
+              flexDirection="column"
+              marginTop={status === KYCStatuses.NOT_SUBMITTED || status === null ? '8px' : '10px'}
+              alignItems="center"
+            >
               <TYPE.description6 fontWeight={'800'} marginTop={'30px'} marginBottom="15px">
                 <Trans>{config?.name || 'IX Swap'} KYC</Trans>
               </TYPE.description6>
