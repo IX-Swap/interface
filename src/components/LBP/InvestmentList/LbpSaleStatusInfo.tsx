@@ -4,13 +4,14 @@ import _get from 'lodash/get'
 
 import { LbpStatus } from '../types'
 import { text5 } from 'components/LaunchpadMisc/typography'
-import { displayRemainingTime } from 'utils/time'
+import Countdown, { renderer } from 'components/Countdown'
 
 interface Props {
   daysTillEnded?: number
   hoursTillEnded?: number
   status: string
   startDate: string
+  endDate: string
   margin?: string
 }
 
@@ -37,8 +38,6 @@ export const LbpSaleStatusInfo: React.FC<Props> = (props) => {
 
     return () => clearInterval(intervalId)
   }, [calculateRemainingTime])
-
-  const info = displayRemainingTime(props?.daysTillEnded ?? 0, props?.hoursTillEnded ?? 0)
 
   if ([LbpStatus.ended, LbpStatus.closed].includes(props.status as LbpStatus)) {
     let label: string = ''
@@ -102,10 +101,15 @@ export const LbpSaleStatusInfo: React.FC<Props> = (props) => {
     }
   }
 
-  if (info) {
+  if ([LbpStatus.live].includes(props.status as LbpStatus)) {
+    const endDate = props?.endDate ? new Date(props?.endDate) : new Date()
+
     return (
       <ActiveContainer status={props.status}>
-        <span className="bold">{info} </span> until LBP ends
+        <span className="bold">
+          <Countdown date={endDate} renderer={renderer} />{' '}
+        </span>{' '}
+        until LBP ends
       </ActiveContainer>
     )
   }

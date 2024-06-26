@@ -64,6 +64,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
     }
   }, [lbp])
 
+  console.log('lbp', lbp)
   return (
     <>
       {showKYCModal && (
@@ -95,6 +96,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
             hoursTillEnded={lbp.hoursTillEnded}
             status={lbp.status}
             startDate={lbp.startDate}
+            endDate={lbp.endDate}
           />
 
           <LbpCardFooter>

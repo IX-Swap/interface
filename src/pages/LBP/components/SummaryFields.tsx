@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Column, { AutoColumn } from 'components/Column'
+import Column from 'components/Column'
 import styled from 'styled-components'
 import _get from 'lodash/get'
 
@@ -10,8 +10,8 @@ import { useCurrency } from 'hooks/Tokens'
 import Copy from 'components/AccountDetails/Copy'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
 import { useTokenContract } from 'hooks/useContract'
-import { displayRemainingTime } from 'utils/time'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import Countdown, { renderer } from 'components/Countdown'
 
 interface SummaryFieldsProps {
   noOfParticipants: number
@@ -21,7 +21,6 @@ interface SummaryFieldsProps {
 
 const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants, statsData }) => {
   const shareTokenContract = useTokenContract(lbpData?.shareAddress ?? '')
-  const [remainingTime, setRemainingTime] = useState(28 * 24 * 60 * 60)
   const tokenCurrency = useCurrency(lbpData?.assetTokenAddress || '')
 
   const [shareSymbol, setShareSymbol] = useState<string>('')
@@ -32,43 +31,11 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
   )
   const status = _get(lbpData, 'status', '')
   const currentSharePriceUSD = statsData?.currentSharePriceUSD
-
-  const remainingDays = Math.ceil(remainingTime / (24 * 60 * 60))
-  const remainingHours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))
+  const endDate = lbpData?.endDate ? new Date(lbpData?.endDate) : new Date()
 
   const calculateSharedWeight = (assetWeight: number): number => {
     return 100 - assetWeight
   }
-
-  const isClosed = React.useMemo(
-    () => !!lbpData?.status && [LbpStatus.closed, LbpStatus.ended, LbpStatus.pending].includes(lbpData?.status),
-    [lbpData?.status]
-  )
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRemainingTime((prevTime) => prevTime - 1)
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  useEffect(() => {
-    const calculateRemainingTime = () => {
-      if (lbpData && lbpData.startDate && lbpData.endDate) {
-        const endDate = new Date(lbpData.endDate).getTime()
-        const currentTime = new Date().getTime()
-        const remainingTimeInSeconds = Math.max(0, endDate - currentTime) / 1000
-        setRemainingTime(remainingTimeInSeconds)
-      }
-    }
-    calculateRemainingTime()
-    const interval = setInterval(() => {
-      calculateRemainingTime()
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [lbpData])
 
   useEffect(() => {
     async function fetchShareSymbol() {
@@ -104,7 +71,7 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
           <TYPE.subHeader1 color={'#555566'}>LBP closes in</TYPE.subHeader1>
           <TokenWrapper>
             <TYPE.label fontSize={'14px'} marginTop={9}>
-              {displayRemainingTime(remainingDays, remainingHours)}
+              <Countdown date={endDate} renderer={renderer} />
             </TYPE.label>
           </TokenWrapper>
         </GridItem4Columns>
