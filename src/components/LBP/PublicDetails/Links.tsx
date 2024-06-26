@@ -91,7 +91,7 @@ const SocialMediaLink = styled.a`
     transform: scale(1.2);
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    width: auto;
+    width: fit-content;
   }
 `
 

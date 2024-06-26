@@ -9,6 +9,7 @@ import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
 import { useActiveWeb3React } from 'hooks/web3'
+import { isMobile } from 'react-device-detect'
 
 const composeLbpVolumeQuery = (lbpAddress: string) => {
   return `
@@ -139,13 +140,14 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
               </QuantitiesBox>
             </>
           ) : null}
-
-          <QuantitiesBox isAdmin={isAdmin}>
-            <TYPE.subHeader1 color={'#555566'}>Funds Raised</TYPE.subHeader1>
-            <TokenWrapper>
-              <TYPE.label fontSize={'14px'}>${useFormatNumberWithDecimal(calculateFundsRaised(), 2)}</TYPE.label>
-            </TokenWrapper>
-          </QuantitiesBox>
+          {!isMobile && (
+            <QuantitiesBox isAdmin={isAdmin}>
+              <TYPE.subHeader1 color={'#555566'}>Funds Raised</TYPE.subHeader1>
+              <TokenWrapper>
+                <TYPE.label fontSize={'14px'}>${useFormatNumberWithDecimal(calculateFundsRaised(), 2)}</TYPE.label>
+              </TokenWrapper>
+            </QuantitiesBox>
+          )}
         </RowBetween>
       </AutoColumn>
 
@@ -174,12 +176,19 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
               <TYPE.label fontSize={'14px'}>
                 {tokensReleased}/{formatValueWithSuffix(parseFloat(lbpData?.shareAmount?.toString() || '0'))}
               </TYPE.label>
-
               <TYPE.label color={'#6666FF'} fontSize={'14px'}>
                 {`${calculatePercentage(statsData?.currentShareReserve, lbpData?.shareAmount).toFixed(2)}%`}
               </TYPE.label>
             </TokenWrapper>
           </QuantitiesBox>
+          {isMobile && (
+            <QuantitiesBox isAdmin={isAdmin}>
+              <TYPE.subHeader1 color={'#555566'}>Funds Raised</TYPE.subHeader1>
+              <TokenWrapper>
+                <TYPE.label fontSize={'14px'}>${useFormatNumberWithDecimal(calculateFundsRaised(), 2)}</TYPE.label>
+              </TokenWrapper>
+            </QuantitiesBox>
+          )}
         </RowBetween>
       </AutoColumn>
     </Column>

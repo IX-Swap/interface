@@ -20,7 +20,7 @@ import { LbpFile, LbpFormValues } from 'components/LBP/types'
 import { useLoader } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { useHistory } from 'react-router-dom'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { SubmitSummary } from 'components/LBP/Forms/SubmitSummary'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { constants } from 'ethers'
@@ -135,9 +135,11 @@ export default function LBPForm() {
   const updateSubmitButtonState = (formData: FormData) => {
     const isComplete = (data: any) => {
       if (data.title && data.title.length > 20) {
-        return false;
+        return false
       }
-      const keysToCheck = Object.keys(data).filter((key) => key !== 'maxPrice' && key !== 'maxSupply' && key !== 'xTokenLiteProxyAddress')
+      const keysToCheck = Object.keys(data).filter(
+        (key) => key !== 'maxPrice' && key !== 'maxSupply' && key !== 'xTokenLiteProxyAddress'
+      )
       return keysToCheck.every((key) => !!data[key])
     }
 
@@ -327,7 +329,7 @@ export default function LBPForm() {
           <TYPE.title4
             fontWeight={'800'}
             fontSize={isMobile ? 24 : 24}
-            style={{lineHeight: '32px', marginBottom: '20px', marginTop: 16}}
+            style={{ lineHeight: '32px', marginBottom: '20px', marginTop: 16 }}
             marginLeft="10px"
           >
             <Trans>{formData?.projectInfo?.title}</Trans>
@@ -389,7 +391,7 @@ export default function LBPForm() {
           </Column>
         </FormContainer>
         <div style={{ display: 'block', width: 332 }}>
-          <StyledStickyBox style={{ marginTop: '78px', marginBottom: '1700px' }}>
+          <StyledStickyBox style={{ marginTop: '78px', marginBottom: isMobile ? '100px' : '1700px' }}>
             <KYCProgressBar
               disabled={!canSubmit || !isEditable}
               handleSubmit={handleSubmit}
@@ -416,8 +418,9 @@ export default function LBPForm() {
               description={null}
             />
           </StyledStickyBox>
-
-          <Graph step={1} graphData={formData.tokenomics} setEndPrice={setEndPrice} setStartPrice={setStartPrice} />
+          {!isMobile && (
+            <Graph step={1} graphData={formData.tokenomics} setEndPrice={setEndPrice} setStartPrice={setStartPrice} />
+          )}
         </div>
 
         <IssuanceDialog show={showSummary} onClose={toggleModal} width="550px">
@@ -440,4 +443,8 @@ const FormRow = styled.div`
   max-width: 1180px;
   margin: 0 auto;
   margin-bottom: 113px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+    text-align: -webkit-center;
+  }
 `

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import Header from 'components/Header'
 import { useSetHideHeader } from 'state/application/hooks'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   background?: string
@@ -36,5 +37,10 @@ export const LbpContainer = styled.div<{ background?: string }>`
 
   * {
     font-family: ${(props) => props.theme.launchpad.font};
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: auto;
+    padding: 0px;
   }
 `

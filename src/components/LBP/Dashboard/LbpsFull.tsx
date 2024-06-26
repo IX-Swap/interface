@@ -28,6 +28,7 @@ import { ReactComponent as Disabled } from '../../../assets/images/newCurrencyLo
 import { getStageLabel } from 'utils/stage'
 import { ReactComponent as Ended } from '../../../assets/images/status/ended.svg'
 import { ReactComponent as Closed } from '../../../assets/images/status/closed.svg'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   type: string
@@ -283,6 +284,9 @@ export const LbpsFull: React.FC<Props> = (props) => {
 
 const Container = styled.article`
   min-height: 100vh;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 300px;
+  }
 `
 
 const ActionButtons = styled.div`

@@ -16,6 +16,7 @@ import Links from './Links'
 import RedeemedSideBar from './RedeemedSideBar'
 import { useTokenContract } from 'hooks/useContract'
 import SideBarPaused from './SideBarPaused'
+import { isMobile } from 'react-device-detect'
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
@@ -101,6 +102,12 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
   return (
     <MiddleSectionWrapper>
       <MiddleSectionContainer>
+        {isMobile && (
+          <Column>
+            {SideBarByStatus}
+            <AdditionalDocuments uploadDocs={lbpData?.uploadDocs || []} />
+          </Column>
+        )}
         <Column>
           <TYPE.body1 color={'#666680'}>
             {showMore || !isTextLong ? sampleText : sampleText.slice(0, 300) + '...'}
@@ -123,10 +130,12 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
           />
           <StatisticData statsData={statsData} lbpData={lbpData} />
         </Column>
-        <Column>
-          {SideBarByStatus}
-          <AdditionalDocuments uploadDocs={lbpData?.uploadDocs || []} />
-        </Column>
+        {!isMobile && (
+          <Column>
+            {SideBarByStatus}
+            <AdditionalDocuments uploadDocs={lbpData?.uploadDocs || []} />
+          </Column>
+        )}
       </MiddleSectionContainer>
       <TradeHistory
         contractAddress={lbpData?.contractAddress}

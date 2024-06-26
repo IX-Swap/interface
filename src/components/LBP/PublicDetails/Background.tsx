@@ -26,6 +26,7 @@ const FullWidthImage = styled.img`
   object-fit: cover;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     object-fit: fill;
+    margin-top: 100px;
   }
 `
 
@@ -36,6 +37,10 @@ const LogoIcon = styled.img`
   height: 50px;
   width: 50px;
   border-radius: 50%;
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+  bottom: 12%;
+    left: 7%;
+  }
 `
 
 const Description = styled(TYPE.description7)`
@@ -45,8 +50,8 @@ const Description = styled(TYPE.description7)`
   color: #ffffff;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     font-size: 32px !important;
-    bottom: 22%;
-    left: 28.5%;
+    bottom: 12%;
+    left: 23.5%;
   }
 `
 
@@ -55,7 +60,7 @@ const Amount = styled(TYPE.description7)`
   bottom: 22%;
   right: 10%;
   color: #ffffff;
-    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     font-size: 32px !important;
     top: 30%;
   }
