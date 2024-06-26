@@ -59,10 +59,7 @@ const TradeTabs: React.FC<SideTabsBarProps> = ({ currentTab, onTabSelect }) => {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
-  const [activeTab, setActiveTab] = React.useState<PublicDetails>(() => {
-    const savedTab = localStorage.getItem('ActiveTab')
-    return (savedTab as PublicDetails) ?? PublicDetails.buy
-  })
+  const [activeTab, setActiveTab] = React.useState<PublicDetails>(PublicDetails.buy)
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)

@@ -147,6 +147,17 @@ const KYC = () => {
     console.log('Closing modal')
     setModalProps({ isModalOpen: false, referralCode: '', kycType: undefined })
   }
+
+  const getKYCLink = () => {
+    const referralCodeParam = new URL(window.location.href).href?.split('=')[1]
+    const baseLink = '/kyc/individual'
+    if (kyc?.individual?.version === 'v2' || !kyc?.individual?.version) {
+      return referralCodeParam ? `${baseLink}/v2?referralCode=${referralCodeParam}` : `${baseLink}/v2`
+    } else {
+      return referralCodeParam ? `${baseLink}?referralCode=${referralCodeParam}` : `${baseLink}`
+    }
+  }
+
   const getKYCDescription = useCallback(() => {
     switch (status) {
       case KYCStatuses.NOT_SUBMITTED:
@@ -160,7 +171,7 @@ const KYC = () => {
               sx={{ gap: '1rem', marginTop: '40px' }}
             >
               <Flex
-                onClick={() => openModal('individual')}
+                // onClick={() => openModal('individual')}
                 sx={{
                   border: '1px solid #E6E6FF',
                   marginBottom: isMobile ? '32px' : '0px',
@@ -183,18 +194,11 @@ const KYC = () => {
                   >
                     <Trans>Pass KYC as Individual</Trans>
                   </Text>
-                  {/* <Link
-                    style={{ textDecoration: 'none' }}
-                    to={
-                      new URL(window.location.href).href?.split('=')[1]
-                        ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
-                        : '/kyc/individual'
-                    }
-                  > */}
-                  <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
-                    <Trans>Start Now</Trans>
-                  </Text>
-                  {/* </Link> */}
+                  <Link style={{ textDecoration: 'none' }} to={getKYCLink()}>
+                    <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
+                      <Trans>Start Now</Trans>
+                    </Text>
+                  </Link>
                 </>
               </Flex>
 
@@ -239,14 +243,7 @@ const KYC = () => {
               {kyc?.individual && (
                 <Flex sx={{ marginBottom: isMobile ? '32px' : '0px' }} flexDirection="column" alignItems="center">
                   <IndividualKYC />
-                  <Link
-                    style={{ textDecoration: 'none' }}
-                    to={
-                      new URL(window.location.href).href?.split('=')[1]
-                        ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
-                        : '/kyc/individual'
-                    }
-                  >
+                  <Link style={{ textDecoration: 'none' }} to={getKYCLink()}>
                     <PinnedContentButton sx={{ padding: '16px 24px', marginTop: '32px' }}>
                       <Trans>Continue Pass KYC as Individual</Trans>
                     </PinnedContentButton>
@@ -271,40 +268,22 @@ const KYC = () => {
       case KYCStatuses.REJECTED:
         return (
           <>
-            <Description description={description} />
+            {/* <Description description={description} /> */}
             <DateInfo info={infoText} submittedDate={kyc?.createdAt} rejectedDate={kyc?.updatedAt} />
           </>
         )
       case KYCStatuses.PENDING:
         return (
           <>
-            <Description description={getStatusDescription(status)} />
-            <DateInfo submittedDate={kyc?.updatedAt || kyc?.createdAt} />
+            {/* <Description description={getStatusDescription(status)} /> */}
+            <DateInfo info={infoText} submittedDate={kyc?.updatedAt || kyc?.createdAt} />
           </>
         )
       case KYCStatuses.CHANGES_REQUESTED:
         return (
           <>
-            <Description description={description} />
+            {/* <Description description={description} /> */}
             <DateInfo info={infoText} submittedDate={kyc?.createdAt} changeRequestDate={kyc?.updatedAt} />
-            <Link
-              style={{ textDecoration: 'none' }}
-              to={
-                kyc?.corporateKycId
-                  ? `/kyc/corporate`
-                  : new URL(window.location.href).href?.split('=')[1]
-                  ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
-                  : `/kyc/individual`
-              }
-            >
-              {/* <Link style={{ textDecoration: 'none ' }} to={`/kyc/${kyc?.corporateKycId ? 'corporate' : 'individual'}`}> */}
-              <PinnedContentButton
-                sx={{ padding: '16px 24px', marginTop: '32px', boxShadow: '0px 16px 16px 0px #6666FF21' }}
-                data-testid="makeChangesAndResendKycButton"
-              >
-                <Trans>Make changes and resend KYC</Trans>
-              </PinnedContentButton>
-            </Link>
           </>
         )
       case KYCStatuses.APPROVED:
@@ -324,14 +303,12 @@ const KYC = () => {
       case KYCStatuses.IN_PROGRESS:
         return (
           <>
-            <Description description={getStatusDescription(status)} />
             <DateInfo info={infoText} submittedDate={kyc?.updatedAt || kyc?.createdAt} />
           </>
         )
       case KYCStatuses.FAILED:
         return (
           <>
-            <Description description={getStatusDescription(status)} />
             <DateInfo info={infoText} submittedDate={kyc?.updatedAt || kyc?.createdAt} />
           </>
         )
@@ -340,7 +317,7 @@ const KYC = () => {
 
   if (!account) return <NotAvailablePage />
 
-  const blurred = detectWrongNetwork(chainId);
+  const blurred = detectWrongNetwork(chainId)
 
   if (blurred) {
     return (
@@ -370,25 +347,84 @@ const KYC = () => {
               <TYPE.description6 fontWeight={'800'} marginTop={'30px'} marginBottom="15px">
                 <Trans>{config?.name || 'IX Swap'} KYC</Trans>
               </TYPE.description6>
-              {/* {description && <Description description={description} />} */}
               <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />
               {referralCode && (
                 <>
+                  <>
+                    {kyc?.status == KYCStatuses.CHANGES_REQUESTED && (
+                      <div
+                        style={{
+                          background: '#F7F7FA',
+                          padding: '32px',
+                          marginTop: '20px',
+                          borderRadius: '8px',
+                          width: '360px',
+                        }}
+                      >
+                        {
+                          <>
+                            <TYPE.black textAlign={'center'}>Changes Required</TYPE.black>
+                            <Description
+                              description={`We kindly inform you that adjustments are needed in your KYC submission. Please review the provided documentation and make the necessary changes to ensure compliance with our verification standards. Your cooperation in this matter is appreciated.`}
+                            />
+                          </>
+                        }
+                        <Link
+                          style={{ textDecoration: 'none' }}
+                          to={
+                            kyc?.corporateKycId
+                              ? `/kyc/corporate`
+                              : new URL(window.location.href).href?.split('=')[1]
+                              ? `/kyc/individual?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
+                              : `/kyc/individual`
+                          }
+                        >
+                          <PinnedContentButton
+                            sx={{ padding: '16px 24px', marginTop: '32px', boxShadow: '0px 16px 16px 0px #6666FF21' }}
+                            data-testid="makeChangesAndResendKycButton"
+                          >
+                            <Trans>Make changes and resend KYC</Trans>
+                          </PinnedContentButton>
+                        </Link>
+                      </div>
+                    )}
+                  </>
+                  {kyc?.status == KYCStatuses.REJECTED && (
+                    <div
+                      style={{
+                        background: '#F7F7FA',
+                        padding: '32px',
+                        marginTop: '20px',
+                        borderRadius: '8px',
+                        width: '360px',
+                      }}
+                    >
+                      {
+                        <>
+                          <TYPE.black textAlign={'center'}>Reason for KYC Verification Rejection</TYPE.black>
+                          <Description
+                            description={
+                              description
+                                ? description
+                                : `We regret to inform you that your KYC verification has been rejected`
+                            }
+                          />
+                        </>
+                      }
+                    </div>
+                  )}
+
                   <Column style={{ margin: '20px 0px' }}>
                     <TYPE.title11>Refer a Friend</TYPE.title11>
                   </Column>
+
                   <Column style={{ margin: '5px 0px' }}>
                     <StyledDiv>
-                      <CenteredDiv>
-                        <TitleSpan>{referralCode}</TitleSpan>
-                      </CenteredDiv>
+                      <TitleSpan>{referralCode}</TitleSpan>
                       <FlexContainer>
                         <Copy
                           toCopy={`${new URL(window.location.href).href?.split('?')[0]}?referralCode=${referralCode}`}
-                        >
-                          <Trans>{`Copy Referral Link`}</Trans>
-                        </Copy>
-                        {/* <TextSpan></TextSpan> */}
+                        ></Copy>
                       </FlexContainer>
                     </StyledDiv>
                   </Column>
@@ -409,6 +445,9 @@ const StyledDiv = styled.div`
   border: 1px solid #e6e6ff;
   padding: 10px 16px;
   width: 280px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 8px;
 `
 
 const CenteredDiv = styled.div`

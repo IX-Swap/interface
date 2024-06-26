@@ -784,6 +784,7 @@ const BalanceText = styled.div`
   gap: 3px;
 `
 
+
 const BuySellFieldsSelect = styled.div`
   flex: 1;
   display: flex;

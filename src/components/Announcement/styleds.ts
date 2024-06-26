@@ -3,8 +3,10 @@ import styled from 'styled-components'
 import { RowCenter } from 'components/Row'
 
 export const Card = styled(RowCenter)`
-  height: 40px;
+  height: 30px;
   align-items: center;
+  z-index: 2;
+  position: absolute;
   background: radial-gradient(24.62% 985% at 50% 50%, #9191FE 0%, #6666FF 100%);
   
   ${({ theme }) => theme.mediaWidth.upToLarge`

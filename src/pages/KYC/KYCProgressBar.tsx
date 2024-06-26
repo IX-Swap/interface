@@ -22,6 +22,7 @@ interface Props {
   disabled?: boolean
   handleSubmit?: (e: any) => void
   handleSaveProgress?: (e: any) => void
+  isKycV2?: boolean
 }
 
 export const KYCProgressBar: FC<Props> = ({
@@ -30,6 +31,7 @@ export const KYCProgressBar: FC<Props> = ({
   disabled,
   handleSubmit,
   handleSaveProgress,
+  isKycV2,
 }: Props) => {
   const [activeTopic, setActiveTopic] = useState<number>(0)
 
@@ -90,21 +92,23 @@ export const KYCProgressBar: FC<Props> = ({
               )
           )}
         </Column>
-        <Box style={{ padding: '0px 20px' }}>
-          <PinnedContentButton
-            onClick={handleSubmit}
-            disabled={disabled}
-            type="submit"
-            data-testid="submitButton"
-            style={{ width: '100%' }}
-            marginY="24px"
-          >
-            Submit form
-          </PinnedContentButton>
-          <ButtonOutlined style={{ width: '100%' }} onClick={handleSaveProgress}>
-            Save Progress
-          </ButtonOutlined>
-        </Box>
+        {!isKycV2 && (
+          <Box style={{ padding: '0px 20px' }}>
+            <PinnedContentButton
+              onClick={handleSubmit}
+              disabled={disabled}
+              type="submit"
+              data-testid="submitButton"
+              style={{ width: '100%' }}
+              marginY="24px"
+            >
+              Submit form
+            </PinnedContentButton>
+            <ButtonOutlined style={{ width: '100%' }} onClick={handleSaveProgress}>
+              Save Progress
+            </ButtonOutlined>
+          </Box>
+        )}
       </FormCard>
 
       {/* <ButtonIXSGradient

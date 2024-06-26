@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const TaxDeclarations: FC<Props> = ({ data }: Props) => {
-  if (data.taxDeclarations.length === 0) {
+  if (data?.taxDeclarations?.length === 0) {
     return null
   }
   return (
