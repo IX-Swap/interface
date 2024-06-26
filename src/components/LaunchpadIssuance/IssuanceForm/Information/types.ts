@@ -19,7 +19,7 @@ export enum OfferTokenType {
 }
 
 export enum SocialMediaType {
-  twitter = 'twitter',
+  x = 'x',
   telegram = 'telegram',
   linkedIn = 'linkedin',
   discord = 'discord',

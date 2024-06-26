@@ -129,6 +129,16 @@ export const FormGrid = styled.div`
   `};
 `
 
+export const FormGridNew = styled.div`
+  display: grid;
+  grid-template-columns: 0.2fr 1fr;
+  margin-left: 50px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    grid-template-columns: 1fr;
+  `};
+`
+
 export const Logo = styled.div<{ error?: boolean }>`
   display: flex;
   justify-content: center;

@@ -5,12 +5,11 @@ import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 
 import { Input, Textarea } from 'components/Input'
-import { ButtonGradient, ButtonOutlined, PinnedContentButton } from 'components/Button'
-import { TYPE, EllipsisText, MEDIA_WIDTHS, LinkStyledButton } from 'theme'
+import { PinnedContentButton } from 'components/Button'
+import { TYPE, MEDIA_WIDTHS, LinkStyledButton } from 'theme'
 import { Label } from 'components/Label'
 import Upload from 'components/Upload'
 import { FilePreview } from 'components/FilePreview'
-import { GradientText } from 'pages/CustodianV2/styleds'
 import { Select as ReactSelect } from 'components/Select'
 import { AcceptFiles } from 'components/Upload/types'
 
@@ -28,10 +27,10 @@ import { Text } from 'rebass'
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer, ExtraInfoCardCountry } from './styleds'
 import Row, { RowCenter } from 'components/Row'
 import SelfieImage from 'assets/images/selfie.svg'
-import { alignItems } from 'styled-system'
 import { isMobile } from 'react-device-detect'
 import { ImagePreview } from 'components/FilePreview/ImagePreview'
 import { Plus } from 'react-feather'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export interface UploaderProps {
   files: FileWithPath[]
@@ -288,7 +287,10 @@ export const KycTextInput: FC<TextInputProps> = ({
       <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
       {disabled && value ? (
         <div>
-          <StyledInput style={{ background: '#F7F7FA' }} value={value} />
+          <StyledInput
+            style={{ background: '#F7F7FA', color: '#6d6d73', pointerEvents: 'none', cursor: 'not-allowed' }}
+            value={value}
+          />
         </div>
       ) : (
         <StyledInput
@@ -381,7 +383,6 @@ export const Uploader: FC<UploaderProps> = ({
                 handleDeleteClick(index)
               }}
               isDisabled={isDisabled}
-              // style={{ marginRight: index !== files.length - 1 ? 0 : 0 }}
             />
           ))}
         </Flex>
@@ -430,6 +431,8 @@ export const SelfieUploader: FC<UploaderProps> = ({
   tooltipText,
   isDisabled = false,
 }: UploaderProps) => {
+  const { config } = useWhitelabelState()
+
   return (
     <Box>
       <Flex>
@@ -494,8 +497,8 @@ export const SelfieUploader: FC<UploaderProps> = ({
                   <ThreeIcon style={{ marginRight: '10px' }} /> Hold up handwritten verification text and ID
                 </SubHeading>
                 <Paragraph>
-                  Write down “For IXS Verification” and the current <br /> date on a piece of paper and hold it up
-                  together with <br /> your valid ID.
+                  Write down “For {config?.name} Verification” and the current <br /> date on a piece of paper and hold
+                  it up together with <br /> your valid ID.
                 </Paragraph>
                 <PinnedContentButton
                   style={{
@@ -653,7 +656,6 @@ export const UploaderDocs: FC<UploaderProps> = ({
                 handleDeleteClick(index)
               }}
               isDisabled={isDisabled}
-              // style={{ marginRight: index !== files.length - 1 ? 0 : 0 }}
             />
           ))}
         </Flex>
@@ -693,12 +695,6 @@ export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }
       {file ? (
         <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
       ) : (
-        // <Upload file={file} onDrop={onDrop} data-testid={id}>
-        //   <ButtonOutlined type="button" style={{ height: 52, padding: '7px 16px' }}>
-        //     <EllipsisText>{(file as any)?.name || <Trans>Choose File</Trans>}</EllipsisText>
-        //   </ButtonOutlined>
-        // </Upload>
-
         <Upload
           accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
           data-testid={id}
@@ -872,13 +868,6 @@ const DeleteIcon = styled.div`
   cursor: pointer;
 `
 
-// const UploaderCard = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   max-width: 100px;
-// `
-
 const Column = styled.div`
   flex: 1;
   padding: 16px;
@@ -921,17 +910,6 @@ const Paragraph = styled.p`
   font-weight 500;
   margin-bottom: 18px;
 `
-
-// const Button = styled.button`
-//   background-color: #6666ff;
-//   color: white;
-//   border: none;
-//   padding: 10px 20px;
-//   font-size: 16px;
-//   border-radius: 4px;
-//   margin-top: 16px;
-//   cursor: pointer;
-// `
 
 export const SelfieUploaderCard = styled.div`
   display: flex;

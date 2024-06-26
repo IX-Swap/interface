@@ -187,27 +187,29 @@ export const ConvertationField: React.FC<Props> = (props) => {
   }
 
   const fetchTokenBalance = async () => {
+    setIsBalanceLoading(true)
     try {
-      if (!account || !investingTokenContract) {
+      if (!account || !investingTokenContract || !inputCurrency) {
         return
       }
-      setIsBalanceLoading(true)
       const value = await investingTokenContract.balanceOf(account)
 
       const amount =
         value && inputCurrency ? CurrencyAmount.fromRawAmount(inputCurrency, JSBI.BigInt(value.toString())) : undefined
-
       setBalance(amount)
+
+      if (amount !== undefined) {
+        setIsBalanceLoading(false)
+      }
     } catch (error) {
       console.error('Error fetching token balance', error)
-    } finally {
       setIsBalanceLoading(false)
     }
   }
 
   useEffect(() => {
     fetchTokenBalance()
-  }, [account, investingTokenContract])
+  }, [account, investingTokenContract?.address, inputCurrency?.chainId])
 
   return (
     <>
@@ -240,25 +242,25 @@ export const ConvertationField: React.FC<Props> = (props) => {
           <ArrowDown color={theme.launchpad.colors.primary} size="14" />
         </ConvertationArrow>
       </ConvertationContainer>
-      {insufficientWarning === warning && (
-        <FlexContainer border={true} flexDirection="row" padding="0.4rem 1.5rem">
-          <RowBetween>
-            <FlexContainer flexDirection="column" gap={'0.35rem'}>
-              <WarningContainer style={{ fontSize: '0.7rem' }}>{warning}</WarningContainer>
-              <div>
-                {offerInvestmentToken && (
-                  <Trailing fontSize="0.7rem" fontWeight="500">
-                    {formatCurrencyAmount(balance, balance?.currency?.decimals ?? 18)}
-                    <span style={{ margin: '0px 5px' }}>{offerInvestmentToken.name} </span>
-                    <span style={{ marginTop: '-2px', transform: 'scale(0.8)' }}>{offerInvestmentToken.icon}</span>
-                  </Trailing>
-                )}
-              </div>
-            </FlexContainer>
-            <InvestButton onClick={openModal}>Buy Now</InvestButton>
-          </RowBetween>
-        </FlexContainer>
-      )}
+
+      <FlexContainer border={true} flexDirection="row" padding="0.55rem 1.5rem">
+        <RowBetween>
+          <FlexContainer flexDirection="column">
+            <WarningContainer style={{ fontSize: '0.7rem' }}>{warning}</WarningContainer>
+            <div>
+              {offerInvestmentToken && (
+                <Trailing fontSize="0.7rem" fontWeight="500" style={{ display: 'flex', alignItems: 'center' }}>
+                  <span style={{ marginRight: 5 }}>Balance: </span>
+                  {formatCurrencyAmount(balance, balance?.currency?.decimals ?? 18)}
+                  <span style={{ margin: '0px 5px' }}>{offerInvestmentToken.name} </span>
+                  <span style={{ paddingTop: 2, transform: 'scale(0.8)' }}>{offerInvestmentToken.icon}</span>
+                </Trailing>
+              )}
+            </div>
+          </FlexContainer>
+          {insufficientWarning === warning ? <InvestButton onClick={openModal}>Buy Now</InvestButton> : null}
+        </RowBetween>
+      </FlexContainer>
     </>
   )
 }

@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
 
 import { ReactComponent as telegramImg } from 'assets/launchpad/svg/social/telegram.svg'
-import { ReactComponent as twitterImg } from 'assets/launchpad/svg/social/twitter.svg'
+import { ReactComponent as xImg } from 'assets/launchpad/svg/social/twitter.svg'
 import { ReactComponent as linkedinImg } from 'assets/launchpad/svg/social/linkedin.svg'
 import { ReactComponent as youtubeImg } from 'assets/launchpad/svg/social/youtube.svg'
 import { ReactComponent as coingekoImg } from 'assets/launchpad/svg/social/coingecko.svg'
@@ -17,7 +17,7 @@ import { SocialBlockContainer } from './styleds'
 
 const data = [
   { href: 'https://t.me/ixswapofficial', Icon: telegramImg, name: 'telegram' },
-  { href: 'https://twitter.com/IxSwap', Icon: twitterImg, name: 'twitter' },
+  { href: 'https://x.com/IxSwap', Icon: xImg, name: 'x' },
   { href: 'https://www.linkedin.com/company/ixswap', Icon: linkedinImg, name: 'linkedin' },
   { href: 'https://www.youtube.com/channel/UCaYPNR-eLs9iuB5ZVKRx-fw', Icon: youtubeImg, name: 'youtube' },
   { href: 'https://www.coingecko.com/en/coins/ix-swap', Icon: coingekoImg, name: 'coingeko' },
