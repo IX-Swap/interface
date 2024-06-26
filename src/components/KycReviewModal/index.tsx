@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
-
 import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { ButtonIXSWide, ButtonPinkBorder, ButtonGradientBorder, PinnedContentButton } from 'components/Button'
+import {  ButtonPinkBorder, ButtonGradientBorder, PinnedContentButton } from 'components/Button'
 import { ReasonModal } from 'components/ReasonModal'
 import { CorporateKyc, IndividualKyc, KycItem } from 'state/admin/actions'
 import { shortenAddress } from 'utils'
@@ -12,13 +11,13 @@ import { useApproveKyc, useRejectKyc, useResetKyc, useResubmitKyc } from 'state/
 import { getCynopsisRisks } from 'state/kyc/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { KYCStatuses } from 'pages/KYC/enum'
-
 import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
 
 import { ReactComponent as ArrowLeft } from '../../assets/images/newBack.svg'
 import { isMobile } from 'react-device-detect'
 import Copy from 'components/AccountDetails/Copy'
+import { KycReviewModalV2 } from './KycReviewModalV2'
 
 interface Props {
   isOpen: boolean
@@ -96,7 +95,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
 
   if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
 
-  const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data.status as any)
+  const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data?.status as any)
 
   const renderReferralInfo = () => {
     const referredBy = data?.individual?.referredBy || '-'
@@ -137,82 +136,81 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
       </span>
     )
   }
-
   return (
     <>
-      <ReasonModal
-        isOpen={Boolean(openReasonModal)}
-        onAction={onReasonAction}
-        onClose={closeModal}
-        actionBtnText="Submit"
-        inputLabel="Accompanying text"
-        title={openReasonModal === 'reject' ? 'Reject annotation' : 'Change request'}
-        isRejectingApprovedKYC={openReasonModal === 'reject' && data.status === KYCStatuses.APPROVED}
-      />
-      <RedesignedWideModal
-        isOpen={isOpen}
-        onDismiss={onClose}
-        minHeight={false}
-        maxHeight={'fit-content'}
-        scrollable
-        isLarge
-      >
-        <ModalBlurWrapper touchable data-testid="kyc-review">
-          <ModalContent>
-            <TitleContainer>
-              <Title>
-                <div>
-                  <Trans>
-                    <ArrowLeft style={{ cursor: 'pointer' }} data-testid="cross" onClick={onClose} />
-                  </Trans>
-                  &nbsp;&nbsp;
-                </div>
-                <TYPE.title7
-                  fontWeight="800"
-                  lineHeight={isMobile ? '16px' : '40px'}
-                  fontSize={isMobile ? '12px' : '24px'}
-                >
-                  {/* {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
-                  <Trans>{constructName(data)}</Trans>
-      
-                </TYPE.title7>
-                {/* {shortenAddress(data.user.ethAddress)} ({`${data.individualKycId ? 'Individual' : 'Corporate'}`}) */}
-              </Title>
-
-              {/* {referralCode && ( */}
-
-              {data?.individual?.referredBy || data?.individual?.referralCode ? renderReferralInfo() : ''}
-
-              {/* )} */}
-
-              {/* <CloseIcon style={{ color: '#555566' }} data-testid="cross" onClick={onClose} /> */}
-            </TitleContainer>
-            <Body>
-              {data.individualKycId ? (
-                <IndividualForm riskJSON={riskJSON} data={kyc} />
-              ) : (
-                <CorporateForm riskJSON={riskJSON} data={kyc} />
-              )}
-            </Body>
-            <ActionsContainer buttons={needResubmit ? 4 : 3}>
-              <PinnedContentButton onClick={approve} data-testid="approveButton" disabled={needResubmit}>
-                <Trans>Approve</Trans>
-              </PinnedContentButton>
-              <ButtonPinkBorder onClick={reject} data-testid="rejectButton" disabled={needResubmit}>
-                <Trans>Reject</Trans>
-              </ButtonPinkBorder>
-              <ButtonGradientBorder onClick={changeRequest} data-testid="changeRequestButton" disabled={needResubmit}>
-                <Trans>Request a change</Trans>
-              </ButtonGradientBorder>
-              {needResubmit && (
-                <PinnedContentButton onClick={resubmit}>
-                  <Trans>Resubmit</Trans>
-                </PinnedContentButton>
-              )}
-            </ActionsContainer>
-          </ModalContent>
-        </ModalBlurWrapper>
-      </RedesignedWideModal>
+      {data?.individual?.version === 'v2' ? (
+        <KycReviewModalV2 isOpen={isOpen} onClose={onClose} data={data} />
+      ) : (
+        <>
+          <ReasonModal
+            isOpen={Boolean(openReasonModal)}
+            onAction={onReasonAction}
+            onClose={closeModal}
+            actionBtnText="Submit"
+            inputLabel="Accompanying text"
+            title={openReasonModal === 'reject' ? 'Reject annotation' : 'Change request'}
+            isRejectingApprovedKYC={openReasonModal === 'reject' && data.status === KYCStatuses.APPROVED}
+          />
+          <RedesignedWideModal
+            isOpen={isOpen}
+            onDismiss={onClose}
+            minHeight={false}
+            maxHeight={'fit-content'}
+            scrollable
+            isLarge
+          >
+            <ModalBlurWrapper touchable data-testid="kyc-review">
+              <ModalContent>
+                <TitleContainer>
+                  <Title>
+                    <div>
+                      <Trans>
+                        <ArrowLeft style={{ cursor: 'pointer' }} data-testid="cross" onClick={onClose} />
+                      </Trans>
+                      &nbsp;&nbsp;
+                    </div>
+                    <TYPE.title7
+                      fontWeight="800"
+                      lineHeight={isMobile ? '16px' : '40px'}
+                      fontSize={isMobile ? '12px' : '24px'}
+                    >
+                      <Trans>{constructName(data)}</Trans>
+                    </TYPE.title7>
+                  </Title>
+                  {data?.individual?.referredBy || data?.individual?.referralCode ? renderReferralInfo() : ''}
+                </TitleContainer>
+                <Body>
+                  {data?.individualKycId ? (
+                    <IndividualForm riskJSON={riskJSON} data={kyc} />
+                  ) : (
+                    <CorporateForm riskJSON={riskJSON} data={kyc} />
+                  )}
+                </Body>
+                <ActionsContainer buttons={needResubmit ? 4 : 3}>
+                  <PinnedContentButton onClick={approve} data-testid="approveButton" disabled={needResubmit}>
+                    <Trans>Approve</Trans>
+                  </PinnedContentButton>
+                  <ButtonPinkBorder onClick={reject} data-testid="rejectButton" disabled={needResubmit}>
+                    <Trans>Reject</Trans>
+                  </ButtonPinkBorder>
+                  <ButtonGradientBorder
+                    onClick={changeRequest}
+                    data-testid="changeRequestButton"
+                    disabled={needResubmit}
+                  >
+                    <Trans>Request a change</Trans>
+                  </ButtonGradientBorder>
+                  {needResubmit && (
+                    <PinnedContentButton onClick={resubmit}>
+                      <Trans>Resubmit</Trans>
+                    </PinnedContentButton>
+                  )}
+                </ActionsContainer>
+              </ModalContent>
+            </ModalBlurWrapper>
+          </RedesignedWideModal>
+        </>
+      )}
     </>
   )
 }

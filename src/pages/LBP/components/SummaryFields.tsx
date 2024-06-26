@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Column, { AutoColumn } from 'components/Column'
-import { RowBetween } from 'components/Row'
 import styled from 'styled-components'
 import _get from 'lodash/get'
 
@@ -12,6 +11,7 @@ import Copy from 'components/AccountDetails/Copy'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
 import { useTokenContract } from 'hooks/useContract'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { displayRemainingTime } from 'utils/time'
 
 interface SummaryFieldsProps {
   noOfParticipants: number
@@ -82,61 +82,83 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
 
   return (
     <Column>
-      <AutoColumn style={{ marginBottom: '20px' }} justify="center" gap="md">
-        <RowBetween>
-          <TopBox style={{ background: '#F7F7FA' }}>
-            <TYPE.subHeader1 color={'#8F8FB2'}>Token Address</TYPE.subHeader1>
-            <TokenWrapper>
-              <>
-                <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'} marginTop={9}>
-                  <Copy toCopy={lbpData?.shareAddress ?? ''}>
-                    {lbpData?.shareAddress
-                      ? `${lbpData?.shareAddress.substring(0, 7)}...${lbpData?.shareAddress.substring(
-                          lbpData?.shareAddress.length - 10
-                        )}`
-                      : null}
-                  </Copy>
-                </TYPE.body3>
-              </>
-            </TokenWrapper>
-          </TopBox>
+      <GridContainer4Columns>
+        <GridItem4Columns style={{ background: '#F7F7FA' }}>
+          <TYPE.subHeader1 color={'#8F8FB2'}>Token Address</TYPE.subHeader1>
+          <TokenWrapper>
+            <>
+              <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'} marginTop={9}>
+                <Copy toCopy={lbpData?.shareAddress ?? ''}>
+                  {lbpData?.shareAddress
+                    ? `${lbpData?.shareAddress.substring(0, 7)}...${lbpData?.shareAddress.substring(
+                        lbpData?.shareAddress.length - 10
+                      )}`
+                    : null}
+                </Copy>
+              </TYPE.body3>
+            </>
+          </TokenWrapper>
+        </GridItem4Columns>
 
-          <TopBox>
-            <TYPE.subHeader1 color={'#555566'}>LBP closes in</TYPE.subHeader1>
-            <TokenWrapper>
-              <TYPE.label fontSize={'14px'} marginTop={9}>
-                {remainingDays > 0 ? `${remainingDays} Days` : `${remainingHours} Hours`}
-              </TYPE.label>
-            </TokenWrapper>
-          </TopBox>
+        <GridItem4Columns>
+          <TYPE.subHeader1 color={'#555566'}>LBP closes in</TYPE.subHeader1>
+          <TokenWrapper>
+            <TYPE.label fontSize={'14px'} marginTop={9}>
+              {displayRemainingTime(remainingDays, remainingHours)}
+            </TYPE.label>
+          </TokenWrapper>
+        </GridItem4Columns>
 
-          <TopBox>
-            <TYPE.subHeader1 color={'#555566'}>No. of Participants</TYPE.subHeader1>
-            <TokenWrapper>
-              <TYPE.label fontSize={'14px'} marginTop={9}>
-                {noOfParticipants}
-              </TYPE.label>
-            </TokenWrapper>
-          </TopBox>
+        <GridItem4Columns>
+          <TYPE.subHeader1 color={'#555566'}>No. of Participants</TYPE.subHeader1>
+          <TokenWrapper>
+            <TYPE.label fontSize={'14px'} marginTop={9}>
+              {noOfParticipants}
+            </TYPE.label>
+          </TokenWrapper>
+        </GridItem4Columns>
 
-          <TopBox>
-            <TYPE.subHeader1 color={'#555566'}>Current Price</TYPE.subHeader1>
-            <TokenWrapper>
-              <TYPE.label fontSize={'14px'} marginTop={9}>
-                ${useFormatNumberWithDecimal(currentSharePriceUSD || 0, 3)}
-              </TYPE.label>
-            </TokenWrapper>
-          </TopBox>
-        </RowBetween>
-      </AutoColumn>
-      <AutoColumn style={{ marginBottom: '20px' }} justify="center" gap="md">
-        <RowBetween>
-          <QuantitiesBox>
-            <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
+        <GridItem4Columns>
+          <TYPE.subHeader1 color={'#555566'}>Current Price</TYPE.subHeader1>
+          <TokenWrapper>
+            <TYPE.label fontSize={'14px'} marginTop={9}>
+              ${useFormatNumberWithDecimal(currentSharePriceUSD || 0, 3)}
+            </TYPE.label>
+          </TokenWrapper>
+        </GridItem4Columns>
+      </GridContainer4Columns>
+
+      <GridContainer2Columns>
+        <GridItem2Columns>
+          <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
+          <TokenWrapper>
+            <>
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <TYPE.label fontSize={'14px'}>{lbpData?.shareAmount}</TYPE.label>
+              <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
+                {shareSymbol || lbpData?.title}
+              </TYPE.body3>
+            </>
+            <VerticalLine />
+            <>
+              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+              <TYPE.label fontSize={'14px'}>{lbpData?.assetTokenAmount}</TYPE.label>
+              <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
+                {lbpData?.assetTokenSymbol}
+              </TYPE.body3>
+            </>
+          </TokenWrapper>
+        </GridItem2Columns>
+
+        {status && ![LbpStatus.ended, LbpStatus.closed, LbpStatus.pending].includes(status as any) ? (
+          <GridItem2Columns>
+            <TYPE.subHeader1 color={'#555566'}>Current Quantities</TYPE.subHeader1>
             <TokenWrapper>
               <>
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>{lbpData?.shareAmount}</TYPE.label>
+                <TYPE.label fontSize={'14px'}>
+                  {useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)}{' '}
+                </TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
                   {shareSymbol || lbpData?.title}
                 </TYPE.body3>
@@ -144,97 +166,70 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
               <VerticalLine />
               <>
                 <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>{lbpData?.assetTokenAmount}</TYPE.label>
+                <TYPE.label fontSize={'14px'}>
+                  {useFormatNumberWithDecimal(statsData?.currentAssetReserve || '', 2)}{' '}
+                </TYPE.label>
                 <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
                   {lbpData?.assetTokenSymbol}
                 </TYPE.body3>
               </>
             </TokenWrapper>
-          </QuantitiesBox>
+          </GridItem2Columns>
+        ) : null}
+      </GridContainer2Columns>
 
-          {status && ![LbpStatus.ended, LbpStatus.closed, LbpStatus.pending].includes(status as any) ? (
-            <QuantitiesBox>
-              <TYPE.subHeader1 color={'#555566'}>Current Quantities</TYPE.subHeader1>
-              <TokenWrapper>
-                <>
-                  <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                  <TYPE.label fontSize={'14px'}>
-                    {useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)}{' '}
-                  </TYPE.label>
-                  <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                    {shareSymbol || lbpData?.title}
-                  </TYPE.body3>
-                </>
-                <VerticalLine />
-                <>
-                  <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                  <TYPE.label fontSize={'14px'}>
-                    {useFormatNumberWithDecimal(statsData?.currentAssetReserve || '', 2)}{' '}
-                  </TYPE.label>
-                  <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
-                    {lbpData?.assetTokenSymbol}
-                  </TYPE.body3>
-                </>
-              </TokenWrapper>
-            </QuantitiesBox>
-          ) : null}
-        </RowBetween>
-      </AutoColumn>
+      <GridContainer3Columns>
+        <GridItem3Columns>
+          <TYPE.subHeader1 color={'#555566'}>Start Weight</TYPE.subHeader1>
+          <TokenWrapper>
+            <>
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <TYPE.label fontSize={'14px'}>{lbpData?.startWeight}% </TYPE.label>
+            </>
+            <VerticalLine />
+            <>
+              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+              <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.startWeight || 0)}% </TYPE.label>
+            </>
+          </TokenWrapper>
+        </GridItem3Columns>
 
-      <AutoColumn justify="center" gap="md">
-        <RowBetween style={{ gap: '25px' }}>
-          <WeightBox>
-            <TYPE.subHeader1 color={'#555566'}>Start Weight</TYPE.subHeader1>
+        {status && ![LbpStatus.ended, LbpStatus.closed, LbpStatus.pending].includes(status as any) ? (
+          <GridItem3Columns>
+            <TYPE.subHeader1 color={'#555566'}>Current Weight</TYPE.subHeader1>
             <TokenWrapper>
               <>
                 <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>{lbpData?.startWeight}% </TYPE.label>
+                <TYPE.label fontSize={'14px'}>
+                  {useFormatNumberWithDecimal(statsData?.currentShareWeight || '', 2)}%{' '}
+                </TYPE.label>
               </>
               <VerticalLine />
               <>
                 <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.startWeight || 0)}% </TYPE.label>
+                <TYPE.label fontSize={'14px'}>
+                  {useFormatNumberWithDecimal(statsData?.currentAssetWeight || '', 2)}%{' '}
+                </TYPE.label>
               </>
             </TokenWrapper>
-          </WeightBox>
+          </GridItem3Columns>
+        ) : null}
 
-          {status && ![LbpStatus.ended, LbpStatus.closed, LbpStatus.pending].includes(status as any) ? (
-            <WeightBox>
-              <TYPE.subHeader1 color={'#555566'}>Current Weight</TYPE.subHeader1>
-              <TokenWrapper>
-                <>
-                  <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                  <TYPE.label fontSize={'14px'}>
-                    {useFormatNumberWithDecimal(statsData?.currentShareWeight || '', 2)}%{' '}
-                  </TYPE.label>
-                </>
-                <VerticalLine />
-                <>
-                  <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                  <TYPE.label fontSize={'14px'}>
-                    {useFormatNumberWithDecimal(statsData?.currentAssetWeight || '', 2)}%{' '}
-                  </TYPE.label>
-                </>
-              </TokenWrapper>
-            </WeightBox>
-          ) : null}
-
-          <WeightBox>
-            <TYPE.subHeader1 color={'#555566'}>End Weight</TYPE.subHeader1>
-            <TokenWrapper>
-              <>
-                <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
-                <TYPE.label fontSize={'14px'}>{lbpData?.endWeight}% </TYPE.label>
-              </>
-              <VerticalLine />
-              <>
-                <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
-                <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.endWeight || 0)}% </TYPE.label>
-              </>
-            </TokenWrapper>
-          </WeightBox>
-        </RowBetween>
-      </AutoColumn>
+        <GridItem3Columns>
+          <TYPE.subHeader1 color={'#555566'}>End Weight</TYPE.subHeader1>
+          <TokenWrapper>
+            <>
+              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <TYPE.label fontSize={'14px'}>{lbpData?.endWeight}% </TYPE.label>
+            </>
+            <VerticalLine />
+            <>
+              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+              <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.endWeight || 0)}% </TYPE.label>
+            </>
+          </TokenWrapper>
+        </GridItem3Columns>
+      </GridContainer3Columns>
     </Column>
   )
 }
@@ -247,36 +242,6 @@ const LogoIcon = styled.img`
 
 export default SummaryFields
 
-const TopBox = styled.div`
-  border: 1px solid #e6e6ff;
-  border-radius: 8px;
-  width: auto;
-  height: 80px;
-  gap: 20px;
-  padding: 16px;
-  min-width: 300px;
-`
-
-const WeightBox = styled.div`
-  border: 1px solid #e6e6ff;
-  border-radius: 8px;
-  width: auto;
-  height: 80px;
-  gap: 20px;
-  padding: 16px;
-  min-width: 410px;
-`
-
-const QuantitiesBox = styled.div`
-  border: 1px solid #e6e6ff;
-  border-radius: 8px;
-  width: auto;
-  height: 80px;
-  gap: 20px;
-  padding: 16px;
-  min-width: 600px;
-`
-
 const TokenWrapper = styled.div`
   display: flex;
   gap: 5px;
@@ -288,4 +253,66 @@ const VerticalLine = styled.div`
   height: 20px;
   background-color: #e5e5ff;
   margin: 7px 10px;
+`
+
+const GridContainer2Columns = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 20px;
+`
+
+const GridItem2Columns = styled.div`
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
+  width: auto;
+  height: 80px;
+  gap: 20px;
+  padding: 16px;
+  min-width: 410px;
+
+  &:only-child {
+    grid-column: 1 / -1; /* Makes the only child span all columns */
+  }
+`
+
+const GridContainer3Columns = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+`
+
+const GridItem3Columns = styled.div`
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
+  width: auto;
+  height: 80px;
+  gap: 20px;
+  padding: 16px;
+  min-width: 250px;
+
+  &:only-child {
+    grid-column: 1 / -1; /* Makes the only child span all columns */
+  }
+`
+
+const GridContainer4Columns = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 20px;
+`
+
+const GridItem4Columns = styled.div`
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
+  width: auto;
+  height: 80px;
+  gap: 20px;
+  padding: 16px;
+  min-width: 300px;
+
+  &:only-child {
+    grid-column: 1 / -1; /* Makes the only child span all columns */
+  }
 `

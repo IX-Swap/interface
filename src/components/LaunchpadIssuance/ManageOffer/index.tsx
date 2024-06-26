@@ -222,7 +222,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 22px 0 16px;
+  margin: 35px 0 16px;
 `
 const HeaderItem = styled.div`
   display: flex;

@@ -1,13 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-
 import Portal from '@reach/portal'
-
 import { Offers } from 'components/Launchpad/Offers'
-
 import { useSetHideHeader } from 'state/application/hooks'
-
-import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Banner } from './Banner'
@@ -15,7 +10,6 @@ import { Footer } from './Footer'
 import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
-// import { Header } from './Header'
 
 export default function Launchpad() {
   const { chainId, account } = useActiveWeb3React()

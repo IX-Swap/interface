@@ -1,20 +1,39 @@
-import { ButtonIXSGradient } from 'components/Button'
 import React, { FC, useState } from 'react'
+import styled from 'styled-components'
+import { PinnedContentButton } from 'components/Button'
 import { TYPE } from 'theme'
 import Column from 'components/Column'
-
 import Modal from 'components/Modal'
 import { FormCard } from './styleds'
-import home from 'assets/images/home.png'
-import group from 'assets/images/group.png'
+import home from 'assets/images/newHomeIcon.svg'
+import group from 'assets/images/newLearnMoreIcon.svg'
+
+const CustomColumn = styled(Column)`
+  align-items: stretch;
+`
+
+const StyledButton = styled(PinnedContentButton)`
+  width: 100%;
+  margin-top: 32px;
+  border: 1px solid #6666ff33;
+  background: #ffffff;
+  color: #292933;
+  justify-content: left;
+`
+
+const ButtonImage = styled.img`
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+`
 
 export const RestrictedModal: FC = () => {
   const [showTaxModal, setShowTaxModal] = useState(true)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   return (
     <Modal isOpen={showTaxModal} onDismiss={() => setShowTaxModal(true)}>
       <FormCard>
-        <Column style={{ alignItems: 'stretch' }}>
+        <CustomColumn>
           <TYPE.mediumHeader>Restricted Access</TYPE.mediumHeader>
           <br />
           <TYPE.description2>
@@ -22,35 +41,15 @@ export const RestrictedModal: FC = () => {
             <br />
           </TYPE.description2>
 
-          <ButtonIXSGradient
-            type="button"
-            onClick={() => (location.replace('https://www.ixswap.io/learning-hub'))}
-            style={{
-              width: '100%',
-              marginTop: '32px',
-              background: '#1f1129',
-              color: '#EDCEFF',
-              justifyContent: 'left',
-            }}
-          >
-            <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={home} alt="homeImg" />
+          <StyledButton type="button" onClick={() => location.replace('https://www.ixswap.io/learning-hub')}>
+            <ButtonImage src={home} alt="homeImg" />
             IXSwap Home
-          </ButtonIXSGradient>
-          <ButtonIXSGradient
-            type="button"
-            onClick={() => (location.replace('https://www.ixswap.io/faq'))}
-            style={{
-              width: '100%',
-              marginTop: '32px',
-              background: '#1f1129',
-              color: '#EDCEFF',
-              justifyContent: 'left',
-            }}
-          >
-            <img style={{ width: '32px', height: '32px', marginRight: '10px' }} src={group} alt="groupImg" />
+          </StyledButton>
+          <StyledButton type="button" onClick={() => location.replace('https://www.ixswap.io/faq')}>
+            <ButtonImage src={group} alt="groupImg" />
             Learn More
-          </ButtonIXSGradient>
-        </Column>
+          </StyledButton>
+        </CustomColumn>
       </FormCard>
     </Modal>
   )

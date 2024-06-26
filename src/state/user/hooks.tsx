@@ -564,8 +564,9 @@ export function useAccount() {
 
   useEffect(() => {
     if (account && account !== savedAccount) {
-      localStorage.removeItem('Disclaimer');
-      localStorage.removeItem('SDisclaimer');
+      localStorage.removeItem('Disclaimer')
+      localStorage.removeItem('SDisclaimer')
+      localStorage.removeItem('referralCode')
       handleAccountChanged(true)
       dispatch(saveAccount({ account }))
       dispatch(clearSwapState())
