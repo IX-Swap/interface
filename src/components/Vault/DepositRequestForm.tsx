@@ -32,6 +32,7 @@ import { Line } from 'components/Line'
 import { useTokenContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import useDecimals from 'hooks/useDecimals'
 
 export const ArrowWrapper = styled.div`
   // padding: 7px 5px;
@@ -59,6 +60,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const { address, loading } = useENS(sender)
   const { secTokens } = useUserSecTokens()
   const deposit = useDepositCallback()
+  const tokenDecimals = useDecimals(token?.address ?? '') ?? 18
 
   const [isWarningOpen, handleIsWarningOpen] = useState(false)
   const [amountInputValue, setAmountInputValue] = useState('')
@@ -83,7 +85,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     }
 
     const balance = await tokenContract.balanceOf(walletAddress)
-    const exactBalance = ethers.utils.formatUnits(balance, 18)
+    const exactBalance = ethers.utils.formatUnits(balance, tokenDecimals)
 
     setTokenBalance(exactBalance)
   }
@@ -126,7 +128,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
 
   useEffect(() => {
     fetchTokenBalance()
-  }, [account, tokenContract, sender])
+  }, [account, tokenContract, sender, tokenDecimals])
 
   return (
     <div style={{ position: 'relative' }}>
