@@ -64,7 +64,6 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
     }
   }, [lbp])
 
-  console.log('lbp', lbp)
   return (
     <>
       {showKYCModal && (
