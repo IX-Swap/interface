@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { AutoColumn, ColumnCenter } from 'components/Column'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { ReactComponent as PlayButtonIcon } from '../../../assets/images/playButton.svg'
 import { ReactComponent as PausedButtonIcon } from '../../../assets/images/paused.svg'
 import { ReactComponent as Settings } from '../../../assets/images/settingnew.svg'
@@ -20,6 +20,7 @@ import { ethers } from 'ethers'
 import { useLBPContract, useTokenContract } from 'hooks/useContract'
 // import NoTokenSidebar from './NoTokensSideBar'
 import Remaining from './Remaining'
+import { isMobile } from 'react-device-detect'
 
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
@@ -117,8 +118,6 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
     fetchData()
   }, [assetTokenContract, account, lbpData, chainId])
 
-
-
   const handleTabChange = (tab: PublicDetails) => {
     setActiveTab(tab)
     localStorage.setItem('ActiveTab', tab)
@@ -143,12 +142,12 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
     <SideBarContainer>
       <MiddleSection>
         <AutoColumn justify="center">
-         <Remaining lbpData={lbpData} />
+          <Remaining lbpData={lbpData} />
 
           <ContentColumn style={{ gridColumn: '9 / span 4' }}>
             {!isPaused ? (
               <LiveButton onClick={togglePaused}>
-                <PlayButtonIcon style={{ position: 'absolute', left: '24%', top: '31%' }} />
+                <PlayButtonIcon style={{ position: 'absolute', left: isMobile ? '18%' : '24%', top: '31%' }} />
                 <TYPE.subHeader1 style={{ color: '#1FBA66' }}>Live</TYPE.subHeader1>
               </LiveButton>
             ) : (
@@ -365,14 +364,9 @@ const ModalContainer = styled.div`
   &:focus {
     outline: none;
   }
-`
 
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.5); /* semi-transparent white */
-  z-index: 10; /* ensure it's above the blurred content */
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    left: 50%;
+    width: 300px;
+  }
 `

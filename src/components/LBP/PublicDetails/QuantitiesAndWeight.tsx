@@ -3,7 +3,7 @@ import Column from 'components/Column'
 import styled from 'styled-components'
 import _get from 'lodash/get'
 
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 import { useCurrency } from 'hooks/Tokens'
@@ -137,17 +137,12 @@ const QuantitiesAndWeight: React.FC<QuantitiesAndWeightProps> = ({ lbpData, stat
   )
 }
 
+export default QuantitiesAndWeight
 const LogoIcon = styled.img`
-  // position: absolute;
-  // bottom: 21%;
-  // left: 11%;
   height: 25px;
   width: 25px;
   border-radius: 50%;
 `
-
-export default QuantitiesAndWeight
-
 
 const TokenWrapper = styled.div`
   display: flex;
@@ -166,6 +161,10 @@ const GridContainer2Columns = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+  }
 `
 
 const GridItem2Columns = styled.div`
@@ -180,12 +179,21 @@ const GridItem2Columns = styled.div`
   &:only-child {
     grid-column: 1 / -1; /* Makes the only child span all columns */
   }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-bottom: 18px;
+    min-width: 310px;
+  }
 `
 
 const GridContainer3Columns = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 18px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: block;
+    gap: 18px;
+  }
 `
 
 const GridItem3Columns = styled.div`
@@ -199,5 +207,9 @@ const GridItem3Columns = styled.div`
 
   &:only-child {
     grid-column: 1 / -1; /* Makes the only child span all columns */
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-bottom: 18px;
   }
 `

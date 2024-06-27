@@ -69,7 +69,8 @@ const SocialMediaLinks = styled.div`
   align-items: center;
   gap: 1rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    justify-content: center;
+    // justify-content: center;
+    display: grid;
   }
 `
 
@@ -90,7 +91,7 @@ const SocialMediaLink = styled.a`
     transform: scale(1.2);
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    width: 42%;
+    width: fit-content;
   }
 `
 

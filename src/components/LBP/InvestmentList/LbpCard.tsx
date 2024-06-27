@@ -12,6 +12,7 @@ import { useKyc } from 'state/user/hooks'
 import Portal from '@reach/portal'
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 import { useWeb3React } from '@web3-react/core'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   lbp: any
@@ -144,7 +145,10 @@ const LbpCardImage = styled.img`
   width: 380px;
   overflow-x: hidden;
   border-radius: 6px;
-  height: 300px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 368px;
+  }
 `
 
 const LbpCardTagsContainer = styled.header`

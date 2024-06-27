@@ -4,7 +4,7 @@ import _get from 'lodash/get'
 import { ethers } from 'ethers'
 
 import { ReactComponent as ComingSoonIcon } from '../../../assets/images/colsedIcon.svg'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -147,6 +147,9 @@ const ShareTokenWrapper = styled.div`
   display: flex;
   gap: 5px;
   border-radius: 6px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 8px;
+  }
 `
 
 const RedeemedText = styled.div`
