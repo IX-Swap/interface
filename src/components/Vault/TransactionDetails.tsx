@@ -123,7 +123,7 @@ export const TransactionDetails = ({ currency }: Props) => {
               <div style={{ color: '#FF6161', fontSize: '13px', fontWeight: 600 }}>WARNING</div>
               <span style={{ color: '#666680', fontSize: '13px', fontWeight: 400 }}>
                 Please execute the transaction of {currency?.originalSymbol} Tokens to the Custodians wallet address on
-                the Ethereum Blockchain.
+                the {networkName} Blockchain.
               </span>
             </DepositWarningInfo>
           )}

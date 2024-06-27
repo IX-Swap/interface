@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { ReactComponent as DownArrow } from 'assets/images/DownArrow.svg'
 
-import { ButtonIXSWide, ButtonGradient, ButtonText, PinnedContentButton } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 import Column from 'components/Column'
 import Row, { RowBetween } from 'components/Row'
 import useENS from 'hooks/useENS'
@@ -20,18 +20,18 @@ import { BlueGreyCard } from 'components/Card'
 import { useUserSecTokens } from 'state/user/hooks'
 import { TYPE } from 'theme'
 import { currencyId } from 'utils/currencyId'
-import { HideSmall, SmallOnly } from 'theme'
-import { chainIdToNetworkName, getOriginalNetworkFromToken } from 'components/CurrencyLogo'
+import { HideSmall } from 'theme'
+import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
-import { SupportedChainId } from 'constants/chains'
 import { SecCurrency } from 'types/secToken'
-import useTheme from 'hooks/useTheme'
 
 import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
-import info from '../../assets/images/info-filled.svg'
 import { DepositWarningModal } from './DepositWarningModal'
 import { Line } from 'components/Line'
+import { useTokenContract } from 'hooks/useContract'
+import { ethers } from 'ethers'
+import { formatNumberWithDecimals } from 'state/lbp/hooks'
 
 export const ArrowWrapper = styled.div`
   // padding: 7px 5px;
@@ -50,27 +50,43 @@ interface Props {
 }
 
 export const DepositRequestForm = ({ currency, token }: Props) => {
-  const [isWarningOpen, handleIsWarningOpen] = useState(false)
-  const [amountInputValue, setAmountInputValue] = useState('')
-
-  const theme = useTheme()
+  const tokenContract = useTokenContract(token?.address ?? '')
   const showAboutWrapping = useShowAboutWrappingCallback()
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const { amount, sender, currencyId: cid } = useDepositState()
   const { inputError, parsedAmount } = useDerivedDepositInfo()
   const { onTypeAmount, onTypeSender, onCurrencySet, onNetworkSet, onResetDeposit } = useDepositActionHandlers()
   const { address, loading } = useENS(sender)
   const { secTokens } = useUserSecTokens()
   const deposit = useDepositCallback()
+
+  const [isWarningOpen, handleIsWarningOpen] = useState(false)
+  const [amountInputValue, setAmountInputValue] = useState('')
+  const [tokenBalance, setTokenBalance] = useState('0')
+
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const networkName = getOriginalNetworkFromToken(tokenInfo)
   const error = Boolean(sender.length > 0 && !loading && !address && networkName === 'Ethereum')
   const computedAddress = networkName === 'Ethereum' ? address : sender
-  const accountNetwork = chainId ? chainIdToNetworkName(chainId as SupportedChainId) : ''
 
   // useEffect(() => {
   //   onResetDeposit()
   // }, [])
+
+  const fetchTokenBalance = async () => {
+    if (!tokenContract || !account) return
+
+    let walletAddress = account
+
+    if (sender) {
+      walletAddress = sender
+    }
+
+    const balance = await tokenContract.balanceOf(walletAddress)
+    const exactBalance = ethers.utils.formatUnits(balance, 18)
+
+    setTokenBalance(exactBalance)
+  }
 
   const makeDeposit = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
@@ -108,6 +124,10 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     setAmountInputValue(typedValue)
   }
 
+  useEffect(() => {
+    fetchTokenBalance()
+  }, [account, tokenContract, sender])
+
   return (
     <div style={{ position: 'relative' }}>
       {isWarningOpen && (
@@ -116,9 +136,13 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
       <Column style={{ gap: '25px', marginTop: '16px' }}>
         <BlueGreyCard>
           <Column style={{ gap: '11px' }}>
-            <Row>
+            <Row justify="space-between">
               <TYPE.title11>
                 <Trans>I want to deposit:</Trans>
+              </TYPE.title11>
+
+              <TYPE.title11>
+                <Trans>Balance: {formatNumberWithDecimals(tokenBalance, 3, true)}</Trans>
               </TYPE.title11>
             </Row>
             <AmountInput
@@ -139,7 +163,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               </TYPE.body1>
             </Row>
             <AddressInput
-              {...{ id: 'sender-input', value: sender ?? '', error, onChange: onTypeSender }}
+              {...{ id: 'sender-input', value: sender || account, error, onChange: onTypeSender }}
               placeholder={`Paste your ${networkName || ''} wallet`}
             />
           </Column>
@@ -194,7 +218,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
           <Column style={{ marginTop: '20px', marginBottom: '10px', gap: '11px' }}>
             <Row>
               <TYPE.body1>
-                <Trans>{`To your ${capitalizeFirstLetter(accountNetwork || '')} wallet`}</Trans>
+                <Trans>{`To your ${capitalizeFirstLetter(networkName)} wallet`}</Trans>
               </TYPE.body1>
             </Row>
             <AddressInput
@@ -204,7 +228,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
                 error,
                 onChange: onTypeSender,
                 disabled: true,
-                placeholder: `Paste your ${capitalizeFirstLetter(accountNetwork || '')} wallet`,
+                placeholder: `Paste your ${capitalizeFirstLetter(networkName || '')} wallet`,
               }}
             />
           </Column>
