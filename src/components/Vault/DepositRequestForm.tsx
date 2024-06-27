@@ -130,6 +130,12 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     fetchTokenBalance()
   }, [account, tokenContract, sender, tokenDecimals])
 
+  useEffect(() => {
+    if (!sender) {
+      onTypeSender(account || '')
+    }
+  }, [])
+
   return (
     <div style={{ position: 'relative' }}>
       {isWarningOpen && (
@@ -165,7 +171,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               </TYPE.body1>
             </Row>
             <AddressInput
-              {...{ id: 'sender-input', value: sender || account, error, onChange: onTypeSender }}
+              {...{ id: 'sender-input', value: sender, error, onChange: onTypeSender }}
               placeholder={`Paste your ${networkName || ''} wallet`}
             />
           </Column>
