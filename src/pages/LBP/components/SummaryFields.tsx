@@ -10,6 +10,7 @@ import { useCurrency } from 'hooks/Tokens'
 import Copy from 'components/AccountDetails/Copy'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
 import { useTokenContract } from 'hooks/useContract'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { displayRemainingTime } from 'utils/time'
 
 interface SummaryFieldsProps {
@@ -25,7 +26,10 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
 
   const [shareSymbol, setShareSymbol] = useState<string>('')
 
-  const tokenOption = getTokenOption(lbpData?.assetTokenAddress || '', tokenCurrency?.chainId || 1)
+  const tokenOption = getTokenOption(
+    lbpData?.assetTokenAddress || '',
+    tokenCurrency?.chainId || ENV_SUPPORTED_TGE_CHAINS?.[0] || 1
+  )
   const status = _get(lbpData, 'status', '')
   const currentSharePriceUSD = statsData?.currentSharePriceUSD
 
