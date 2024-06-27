@@ -27,7 +27,7 @@ export const AddressInput = ({ id, value, error, placeholder, disabled, rightIte
       <ContainerRow>
         <InputContainer>
           <Input
-            style={{ backgroundColor: '#FFFFFF' }}
+            style={{ backgroundColor: '#FFFFFF', textOverflow: 'unset', fontSize: 16 }}
             className="recipient-address-input"
             type="text"
             autoComplete="off"
