@@ -208,19 +208,10 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               token={token}
               currency={currency}
               originalDecimals={tokenInfo.originalDecimals}
-              // value={amount ? `${amount} ${currency?.symbol || currency?.originalSymbol}` : ''}
               value={amount ? amount : ''}
               onUserInput={onTypeAmount}
               amount={parsedAmount}
-              // rightItem={
-              //   <>
-              //     <SmallOnly>
-              //       <ButtonText onClick={showAboutWrapping}>
-              //         <img src={info} alt="info icon" width="20px" height="20px" />
-              //       </ButtonText>
-              //     </SmallOnly>
-              //   </>
-              // }
+              disabled
             />
           </Column>
           <Column style={{ marginTop: '20px', marginBottom: '10px', gap: '11px' }}>
@@ -232,7 +223,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
             <AddressInput
               {...{
                 id: 'sender-input',
-                value: shortAddress(account || ''),
+                value: account || '',
                 error,
                 onChange: onTypeSender,
                 disabled: true,

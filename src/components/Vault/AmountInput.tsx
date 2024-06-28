@@ -8,6 +8,7 @@ import { TYPE } from 'theme'
 import { formatCurrencySymbol } from 'utils/formatCurrencySymbol'
 import CurrencyLogo from '../CurrencyLogo'
 import { Input as NumericalInput } from '../NumericalInput'
+import { style } from 'styled-system'
 
 const InputPanel = styled.div<{ hideInput?: boolean }>`
   ${({ theme }) => theme.flexColumnNoWrap}
@@ -26,12 +27,13 @@ const InputRow = styled.div`
       padding: 0;
   `};
 `
-const Container = styled.div`
+const Container = styled.div<{ disabled?: boolean }>`
   border-radius: 6px;
   border: 1px solid #e6e6ff;
-  background-color: ${({ theme }) => theme.bg7};
+  background-color: ${({ theme, disabled }) => (disabled ? theme.bg7 : theme.bg0)};
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'initial')};
   width: 'initial';
-  padding: 12px 31px 12px 27px;
+  padding: 10px 27px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       boder-radius: 1rem;
   `};
@@ -44,6 +46,16 @@ const Aligner = styled.span`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+`
+
+const StyledNumericalInput = styled(NumericalInput)`
+  background-color: ${({ theme }) => theme.bg0};
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.bg7};
+    color: ${({ theme }) => theme.text3};
+    cursor: not-allowed;
+  }
 `
 
 type SecCurrency = Currency & {
@@ -60,6 +72,7 @@ interface Props {
   token: any
   widthdraw?: boolean
   originalDecimals?: number
+  disabled?: boolean
 }
 export const AmountInput = ({
   currency,
@@ -71,18 +84,20 @@ export const AmountInput = ({
   token,
   widthdraw,
   originalDecimals = 0,
+  disabled = false,
   ...rest
 }: Props) => {
   return (
     <InputPanel id={'amount-input'} {...rest}>
-      <Container>
+      <Container disabled={disabled}>
         <InputRow style={{}}>
           <Aligner>
             <>
-              <NumericalInput
+              <StyledNumericalInput
                 className="token-amount-input"
                 data-testid="token-amount-input"
                 value={value}
+                disabled={disabled}
                 onUserInput={(val) => {
                   const floatingPart = val.split('.')[1]
                   if (floatingPart && currency && originalDecimals < floatingPart.length) return
