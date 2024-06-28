@@ -268,8 +268,8 @@ export default function AccountDetails({
                   <span style={{ color: '#666680', fontSize: '13px', fontWeight: '500' }}>
                     In order to make changes to your KYC please <br /> get in touch with us via
                     <span>
-                      <a href="mailto:info@ixswap.io" style={{ color: '#6666FF', marginLeft: '5px' }}>
-                        info@ixswap.io
+                      <a href="mailto:c@ixswap.io" style={{ color: '#6666FF', marginLeft: '5px' }}>
+                        c@ixswap.io
                       </a>
                     </span>
                   </span>
