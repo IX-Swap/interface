@@ -122,8 +122,8 @@ export const HeaderLinks = () => {
   )
 
   const showIssuance = useMemo(
-    () => account && (isAdmin || (isCorporate && isApproved && isOfferManager)),
-    [account, isAdmin, isCorporate, isApproved, isOfferManager]
+    () => account && (isAdmin || (isApproved && isOfferManager)),
+    [account, isAdmin, isApproved, isOfferManager]
   )
 
   return (

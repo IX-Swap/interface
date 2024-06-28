@@ -70,8 +70,8 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
   const { isOfferManager, isAdmin, isTokenManager } = useRole()
 
   const showIssuance = useMemo(
-    () => account && (isAdmin || (isCorporate && isApproved && isOfferManager)),
-    [account, isAdmin, isCorporate, isApproved, isOfferManager]
+    () => account && (isAdmin || (isApproved && isOfferManager)),
+    [account, isAdmin, isApproved, isOfferManager]
   )
   return isAdminMenu ? (
     <ModalContainer>
@@ -292,7 +292,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                 to="/issuance"
                 onClick={close}
               >
-                <Trans>Issuance Dashboard</Trans>
+                <Trans>Issuance</Trans>
               </MenuListItem>
               <Line />
             </>
