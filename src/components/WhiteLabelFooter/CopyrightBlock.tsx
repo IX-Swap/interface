@@ -2,18 +2,20 @@ import React from 'react'
 import { Trans, t } from '@lingui/macro'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
+import { Flex } from 'rebass'
 
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-
-import { CopyrightBlockContainer } from './styleds'
 
 export const CopyrightBlock = () => {
   const year = dayjs().format('YYYY')
   const { config } = useWhitelabelState()
 
   return (
-    <CopyrightBlockContainer>
-      <div>
+    <Flex flexDirection="column" mb={86} mt={16}>
+      <CopyrightText>
+        <Trans>{`Copyright © ${config?.name || 'IX Swap'} ${year}`}</Trans>
+      </CopyrightText>
+      <Flex alignItems="center">
         <TermText
           href={config?.footerConfig?.termsLink || 'https://ixswap.io/terms-and-conditions/'}
           target="_blank"
@@ -21,6 +23,7 @@ export const CopyrightBlock = () => {
         >
           <Trans>Terms & Conditions</Trans>
         </TermText>
+        <Dot />
         <TermText
           href={config?.footerConfig?.privacyLink || 'https://ixswap.io/privacy-policy/'}
           target="_blank"
@@ -28,22 +31,19 @@ export const CopyrightBlock = () => {
         >
           <Trans>Privacy Policy</Trans>
         </TermText>
-      </div>
-      <CopyrightText>
-        <Trans>{`Copyright © ${config?.name || 'IX Swap'} ${year}`}</Trans>
-      </CopyrightText>
-    </CopyrightBlockContainer>
+      </Flex>
+    </Flex>
   )
 }
 
 const TermText = styled.a`
   font-style: normal;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.24px;
   font-weight: 500;
   line-height: 140%;
   font-size: 12px;
-  color: rgb(184, 184, 204);
-  margin-bottom: 15px;
+  color: #b8b8cc;
+  text-decoration: none;
 `
 
 const CopyrightText = styled.div`
@@ -55,4 +55,15 @@ const CopyrightText = styled.div`
   font-size: 14px;
   line-height: 140%;
   color: rgb(41, 41, 51);
+  margin-bottom: 8px;
+`
+
+const Dot = styled.div`
+  height: 3px;
+  width: 3px;
+  background-color: #b8b8cc;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 16px;
+  margin-right: 16px;
 `

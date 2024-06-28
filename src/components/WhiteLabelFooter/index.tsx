@@ -13,7 +13,6 @@ const WhiteLabelFooter = () => {
       <Content>
         <HeaderContainer>
           <LogoBlock />
-          <ProductsBlock />
           <SocialBlock />
         </HeaderContainer>
         <Divider />
