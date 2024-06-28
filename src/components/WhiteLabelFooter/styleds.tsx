@@ -6,7 +6,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   background-color: ${({ theme }) => theme.white};
-  z-index: 2;
+  z-index: 0;
 `
 
 export const Content = styled.div`
