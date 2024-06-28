@@ -76,12 +76,12 @@ export const InfoBlockContainer = styled.div`
   justify-content: space-between;
   column-gap: 32px;
   > div {
-    font-weight: 00;
+    font-weight: 400;
     font-size: 14px;
     display: flex;
     flex-direction: column;
     row-gap: 16px;
-    max-width: 544px;
+    flex: 1;
     @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
       max-width: 100%;
     }
@@ -115,6 +115,7 @@ export const CopyrightBlockContainer = styled.div`
 export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 32px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-wrap: wrap;
