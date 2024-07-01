@@ -238,11 +238,9 @@ export default function App() {
     [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
   )
 
-  const useRedirect = account ? kyc !== null : true
   if (!config) {
     return <LoadingIndicator isLoading />
   }
-
   return (
     <>
       <CustomHeaders />
@@ -272,12 +270,6 @@ export default function App() {
             >
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
-
-                {useRedirect && (
-                  <Route
-                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                  />
-                )}
               </Switch>
             </Suspense>
             {/* </Web3ReactManager> */}
