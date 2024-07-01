@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import JSBI from 'jsbi'
 import { Text } from 'rebass'
 import { Trans } from '@lingui/macro'
@@ -11,7 +11,7 @@ import useIsArgentWallet from 'hooks/useIsArgentWallet'
 import { useIsSwapUnsupported } from 'hooks/useIsSwapUnsupported'
 import { useSwapCallbackError } from 'hooks/useSwapCallback'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useShowError, useWalletModalToggle } from 'state/application/hooks'
+import { useShowError } from 'state/application/hooks'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
 import { ParsedAmounts } from 'state/swap/typings'
 import { useSetSwapState } from 'state/swapHelper/hooks'
@@ -29,6 +29,8 @@ import { WrapText } from './typings'
 import { usePriceImpact } from './usePriceImpact'
 import { useSwapApproval } from './useSwapApproval'
 import { AccreditationStatusEnum } from 'components/Vault/enum'
+import Modal from 'components/Modal'
+import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
 
 export const SwapButtons = ({
   parsedAmounts,
@@ -66,12 +68,13 @@ export const SwapButtons = ({
   const handleSwap = useHandleSwap({ priceImpact })
 
   // toggle wallet when disconnected
-  const toggleWalletModal = useWalletModalToggle()
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
   const [singleHopOnly] = useUserSingleHopOnly()
 
   //const isSecToken = Boolean(secTokens[token.address])
   const showError = useShowError()
+
+  const [isOpenConnectWallet, setOpenConnectWallet] = useState(false)
 
   const isAccredited = (currency: any): boolean => {
     const currencyId = currency?.address
@@ -167,10 +170,27 @@ export const SwapButtons = ({
           )}
 
           {showConnectWallet && (
-            <PinnedContentButton onClick={toggleWalletModal} data-testid="connect-wallet-from-swap">
-              <Trans>Connect Wallet</Trans>
-            </PinnedContentButton>
+            <>
+              <PinnedContentButton onClick={() => setOpenConnectWallet(true)} data-testid="connect-wallet-from-swap">
+                <Trans>Connect Wallet</Trans>
+              </PinnedContentButton>
+
+              <Modal
+                isOpen={isOpenConnectWallet}
+                onDismiss={() => setOpenConnectWallet(false)}
+                maxWidth="430px"
+                maxHeight="310px"
+              >
+                <ConnectionDialog
+                  onConnect={() => {
+                    console.log('Connected')
+                  }}
+                  onClose={() => setOpenConnectWallet(false)}
+                />
+              </Modal>
+            </>
           )}
+
           {showWrapButton && (
             <PinnedContentButton disabled={Boolean(wrapInputError)} onClick={onWrap} data-testid="wrap">
               <Trans>{wrapInputError ?? WrapText[wrapType] ?? null}</Trans>

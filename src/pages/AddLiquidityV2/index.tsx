@@ -51,7 +51,8 @@ import { useHandleCurrencySelect } from './useHandleCurrencySelect'
 import { ReactComponent as ExternalIcon } from '../../assets/images/rightcheck.svg'
 import styled from 'styled-components/macro'
 import { isMobile } from 'react-device-detect'
-// import { AddLiduidityContainer } from './redirects'
+import Modal from 'components/Modal'
+import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
@@ -127,6 +128,7 @@ export default function AddLiquidity({
   // modal and loading
   const [showConfirm, setShowConfirm] = useState<boolean>(false)
   const [attemptingTxn, setAttemptingTxn] = useState<boolean>(false) // clicked confirm
+  const [isOpenConnectWallet, setOpenConnectWallet] = useState(false)
   const toggleMitigation = useCallback(() => {
     setEnableMitigation(!enableMitigation)
   }, [enableMitigation, setEnableMitigation])
@@ -424,9 +426,28 @@ export default function AddLiquidity({
                         </TYPE.main>
                       </PinnedContentButton>
                     ) : !account ? (
-                      <PinnedContentButton onClick={toggleWalletModal} data-testid="connect-wallet-add-liquidity">
-                        <Trans>Connect Wallet</Trans>
-                      </PinnedContentButton>
+                      <>
+                        <PinnedContentButton
+                          onClick={() => setOpenConnectWallet(true)}
+                          data-testid="connect-wallet-add-liquidity"
+                        >
+                          <Trans>Connect Wallet</Trans>
+                        </PinnedContentButton>
+
+                        <Modal
+                          isOpen={isOpenConnectWallet}
+                          onDismiss={() => setOpenConnectWallet(false)}
+                          maxWidth="430px"
+                          maxHeight="310px"
+                        >
+                          <ConnectionDialog
+                            onConnect={() => {
+                              console.log('Connected')
+                            }}
+                            onClose={() => setOpenConnectWallet(false)}
+                          />
+                        </Modal>
+                      </>
                     ) : (
                       <AutoColumn gap={'md'}>
                         {(approvalA === ApprovalState.NOT_APPROVED ||
