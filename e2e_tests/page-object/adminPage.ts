@@ -11,7 +11,7 @@ export class AdminPage extends WebPage {
   readonly rejectAnnotationTextField: Locator;
   readonly submitRejectAnnotationButton: Locator;
 
-  kycAdminURL = config.use.baseURL + '#/admin/kyc';
+  kycAdminURL = config.use.baseURL + '/admin/kyc';
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);

@@ -20,7 +20,7 @@ interface Props {
 }
 
 const handleRedirect = () => {
-    window.location.href = '/#/kyc';
+    window.location.href = '/kyc';
   };
 
 export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
@@ -63,7 +63,7 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
               <div style={{ marginBottom: '10px', marginTop: isMobile ? '15px' : '' }}>
                 <OfferSaleAllocation {...offer} />
               </div>
-     
+
 
               {offer.hasPresale && (
                 <div style={{ marginTop: '10px' }}>
@@ -90,7 +90,7 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
               <span style={{ fontSize: '16px', fontWeight: '800', color: '#292933',  width: isMobile ? '100%' : '60%' }}>
                 This deal is only available to KYC-ed users
               </span>
-             {!isMobile && <PinnedContentButton onClick={handleRedirect} style={{ width: '190px' }}>Complete KYC</PinnedContentButton>} 
+             {!isMobile && <PinnedContentButton onClick={handleRedirect} style={{ width: '190px' }}>Complete KYC</PinnedContentButton>}
             </div>
             <div>
               <span style={{ color: '#666680', fontSize: '13px', fontWeight: '600' }}>
@@ -98,7 +98,7 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
               </span>
 
             </div>
-            {isMobile && <PinnedContentButton onClick={handleRedirect} style={{ marginTop: '18px' }}>Complete KYC</PinnedContentButton>} 
+            {isMobile && <PinnedContentButton onClick={handleRedirect} style={{ marginTop: '18px' }}>Complete KYC</PinnedContentButton>}
           </div>
         </ModalContent>
       </ModalContainer>
