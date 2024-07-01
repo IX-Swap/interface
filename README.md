@@ -1,6 +1,6 @@
 # IXswap Interface
 
-[![RELEASE - AWS build & deploy](https://github.com/IX-Swap/interface/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/IX-Swap/interface/actions/workflows/release.yaml) 
+[![RELEASE - AWS build & deploy](https://github.com/IX-Swap/interface/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/IX-Swap/interface/actions/workflows/release.yaml)
 [![Unit Tests](https://github.com/IX-Swap/interface/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/unit-tests.yaml)
 [![Integration Tests](https://github.com/IX-Swap/interface/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/integration-tests.yaml)
 ---------------------------------------------------------------------------------------------------------------------------
@@ -13,7 +13,7 @@
 
 # Development
 Environment: Machine on Linux or MacOS
-Dependencies: 
+Dependencies:
   1. yarn - at least v 1.22.
   2. npm - at least v 7.15.1
   3. node - at least v 14.17.0
@@ -27,9 +27,9 @@ Steps:
 
 The IXswap App supports swapping, adding liquidity, removing liquidity.
 
-- Swap on IXswap: https://app.ixswap.io/#/swap
-- View IXswap liquidity: https://app.ixswap.io/#/pool
-- Add Liquidity: https://app.ixswap.io/#/add
+- Swap on IXswap: https://app.ixswap.io/swap
+- View IXswap liquidity: https://app.ixswap.io/pool
+- Add Liquidity: https://app.ixswap.io/add
 
 ## *(FIRST DEPLOY)*  Provision your infrastructure using `terraform`
 ```bash
@@ -44,13 +44,13 @@ AWS_AZS='["ap-southeast-1a", "ap-southeast-1b"]'
 #AWS_ACM_ARN=''
 EOF
 # Configure AWS CLI
-aws configure 
+aws configure
 # Initialize terraform (s3 bucket for tf.status, plugins, modules etc)
-./bin/tf-init.sh 
-# Apply infrastructure terraform scripts 
+./bin/tf-init.sh
+# Apply infrastructure terraform scripts
 ./bin/tf-apply.sh
 ```
-###### Sync existent s3-bucket 
+###### Sync existent s3-bucket
 ```bash
 aws s3 sync ./build/ s3://<s3-buket-name>/ --acl public-read
 aws s3 website s3://<s3-buket-name/ --index-document index.html
