@@ -169,7 +169,7 @@ export default function IndividualKycFormV2() {
     const checkboxTypeMap = [
       {
         condition: (isEmailVerified || isPersonalVerified) && !(isBusinessEmailVerified || isSecondaryContactVerified),
-        type: SecondaryContactTypeV2.PROOF_OF_ADDRESS,
+        type: SecondaryContactTypeV2.TELEGRAM,
       },
       {
         condition: secondaryContact === EmailType.SECONDARY,
@@ -178,6 +178,10 @@ export default function IndividualKycFormV2() {
       {
         condition: secondaryContact === EmailType.SOCIAL_ACCOUNT,
         type: SecondaryContactTypeV2.TELEGRAM,
+      },
+      {
+        condition: secondaryContact === EmailType.PROOF_OF_ADDRESS,
+        type: SecondaryContactTypeV2.PROOF_OF_ADDRESS,
       },
     ]
 
@@ -290,11 +294,9 @@ export default function IndividualKycFormV2() {
   const getValidationSchema = (selectedCheckbox: any) => {
     if (selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL) {
       return businessEmailSchema
-    }
-    if (selectedCheckbox !== SecondaryContactTypeV2.TELEGRAM) {
+    } else {
       return individualErrorsSchemaV2
     }
-    return
   }
 
   return (
@@ -442,30 +444,31 @@ export default function IndividualKycFormV2() {
                           <RowStart>
                             <CheckboxContainer>
                               <CheckboxLabel
-                                selected={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}
+                                selected={selectedCheckbox === SecondaryContactTypeV2.TELEGRAM}
                                 disabled={
                                   selectedCheckbox !== null &&
-                                  selectedCheckbox !== SecondaryContactTypeV2.PROOF_OF_ADDRESS &&
+                                  selectedCheckbox !== SecondaryContactTypeV2.TELEGRAM &&
                                   (kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified)
                                 }
                               >
                                 <BoxWrapper>
-                                  <AddressIcon />
-                                  <TYPE.subHeader1> Proof of Address</TYPE.subHeader1>
+                                  <TelegramIcon style={{ marginTop: '3px' }} />
+                                  <TYPE.subHeader1> {SecondaryContactTypeV2.TELEGRAM}</TYPE.subHeader1>
                                 </BoxWrapper>
 
                                 <CheckboxInput
                                   type="checkbox"
-                                  value="ProofOfAddress"
-                                  checked={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}
+                                  value="Telegram"
+                                  checked={selectedCheckbox === SecondaryContactTypeV2.TELEGRAM}
+                                  onChange={handleCheckboxChange}
                                   disabled={
                                     selectedCheckbox !== null &&
-                                    selectedCheckbox !== SecondaryContactTypeV2.PROOF_OF_ADDRESS &&
+                                    selectedCheckbox !== SecondaryContactTypeV2.TELEGRAM &&
                                     (kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified)
                                   }
-                                  onChange={handleCheckboxChange}
                                 />
                               </CheckboxLabel>
+
                               <CheckboxLabel
                                 selected={selectedCheckbox === SecondaryContactTypeV2.BUSINESS_EMAIL}
                                 disabled={
@@ -492,28 +495,28 @@ export default function IndividualKycFormV2() {
                                 />
                               </CheckboxLabel>
                               <CheckboxLabel
-                                selected={selectedCheckbox === SecondaryContactTypeV2.TELEGRAM}
+                                selected={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}
                                 disabled={
                                   selectedCheckbox !== null &&
-                                  selectedCheckbox !== SecondaryContactTypeV2.TELEGRAM &&
+                                  selectedCheckbox !== SecondaryContactTypeV2.PROOF_OF_ADDRESS &&
                                   (kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified)
                                 }
                               >
                                 <BoxWrapper>
-                                  <TelegramIcon style={{ marginTop: '3px' }} />
-                                  <TYPE.subHeader1> {SecondaryContactTypeV2.TELEGRAM}</TYPE.subHeader1>
+                                  <AddressIcon />
+                                  <TYPE.subHeader1> Proof of Address</TYPE.subHeader1>
                                 </BoxWrapper>
 
                                 <CheckboxInput
                                   type="checkbox"
-                                  value="Telegram"
-                                  checked={selectedCheckbox === SecondaryContactTypeV2.TELEGRAM}
-                                  onChange={handleCheckboxChange}
+                                  value="ProofOfAddress"
+                                  checked={selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS}
                                   disabled={
                                     selectedCheckbox !== null &&
-                                    selectedCheckbox !== SecondaryContactTypeV2.TELEGRAM &&
+                                    selectedCheckbox !== SecondaryContactTypeV2.PROOF_OF_ADDRESS &&
                                     (kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified)
                                   }
+                                  onChange={handleCheckboxChange}
                                 />
                               </CheckboxLabel>
                             </CheckboxContainer>
