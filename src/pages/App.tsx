@@ -206,8 +206,6 @@ export default function App() {
 
   const userRole = useRawRole()
 
-  console.log('userRole', userRole)
-
   const routeGenerator = useCallback(
     (route: RouteMapEntry) => {
       const roleGuard =
