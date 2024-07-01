@@ -202,7 +202,7 @@ export class LiquidityPoolsPage extends WebPage {
   }
 
   async removeCreatedLiqudityPool(pool) {
-    await this.page.goto(config.use.baseURL + '#/pool')
+    await this.page.goto(config.use.baseURL + '/pool')
     await this.removeLiquidityPool(pool);
   }
 
