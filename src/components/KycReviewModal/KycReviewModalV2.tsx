@@ -10,7 +10,6 @@ import { ReasonModal } from 'components/ReasonModal'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { useApproveKyc, useRejectKyc, useResetKyc } from 'state/admin/hooks'
 import { PinnedContentButton } from 'components/Button'
-import { getCynopsisRisks } from 'state/kyc/hooks'
 import { ReactComponent as KycApproveIcon } from 'assets/images/kyc_approve_icon.svg'
 import { ReactComponent as KycRejectIcon } from 'assets/images/kyc_reject_icon.svg'
 import { isMobile } from 'react-device-detect'
@@ -34,19 +33,11 @@ interface CopyContainerProps {
 
 export const KycReviewModalV2 = ({ isOpen, onClose, data }: Props) => {
   const [openReasonModal, handleOpenReasonModal] = useState('')
-  const [riskReportId, handleRiskReportId] = useState(0)
+  const riskReportId = 0
 
   const approveKyc = useApproveKyc()
   const rejectKyc = useRejectKyc()
   const resetKyc = useResetKyc()
-
-  useEffect(() => {
-    const fetchCynopsisRisks = async () => {
-      const result = await getCynopsisRisks(data?.user.ethAddress)
-      handleRiskReportId(result?.riskReport?.id || 0)
-    }
-    fetchCynopsisRisks()
-  }, [data?.user.ethAddress])
 
   const closeModal = () => handleOpenReasonModal('')
 

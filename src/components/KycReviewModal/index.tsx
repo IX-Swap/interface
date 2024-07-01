@@ -3,7 +3,7 @@ import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import {  ButtonPinkBorder, ButtonGradientBorder, PinnedContentButton } from 'components/Button'
+import { ButtonPinkBorder, ButtonGradientBorder, PinnedContentButton } from 'components/Button'
 import { ReasonModal } from 'components/ReasonModal'
 import { CorporateKyc, IndividualKyc, KycItem } from 'state/admin/actions'
 import { shortenAddress } from 'utils'
@@ -37,21 +37,22 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
 
   useEffect(() => {
     const fetchCynopsisRisks = async () => {
+      if (!data || !data.user || !data.user.ethAddress || data.individualKycId) {
+        return
+      }
       handleLoadingCynopsis(true)
-      const result = await getCynopsisRisks(data?.user.ethAddress)
-      setRiskJSON(
-        result?.riskReport?.riskScore
-          ? result.riskReport
-          : result?.riskReport?.riskJson?.riskScore
-          ? result.riskReport.riskJson
-          : null
-      )
-      handleRiskReportId(result?.riskReport?.id || 0)
-      handleLoadingCynopsis(false)
+      try {
+        const result = await getCynopsisRisks(data.user.ethAddress)
+        setRiskJSON(result?.riskReport?.riskScore || result?.riskReport?.riskJson?.riskScore || null)
+        handleRiskReportId(result?.riskReport?.id || 0)
+      } catch (error) {
+        console.error('Error fetching Cynopsis risks:', error)
+      } finally {
+        handleLoadingCynopsis(false)
+      }
     }
-
     fetchCynopsisRisks()
-  }, [data?.user.ethAddress])
+  }, [data])
 
   const kyc = (data?.individualKycId ? data?.individual : data?.corporate) || ({} as IndividualKyc | CorporateKyc)
 
@@ -181,7 +182,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
                 </TitleContainer>
                 <Body>
                   {data?.individualKycId ? (
-                    <IndividualForm riskJSON={riskJSON} data={kyc} />
+                    <IndividualForm data={kyc} />
                   ) : (
                     <CorporateForm riskJSON={riskJSON} data={kyc} />
                   )}

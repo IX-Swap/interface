@@ -8,7 +8,6 @@ import {
   Information,
   Address,
   SourceOfFunds,
-  Fatca,
   UploadedDocuments,
   Occupation,
   InvestorStatusDeclaration,
@@ -22,17 +21,9 @@ import SecondaryContactDetails from './Blocks/SecondaryContactDetails'
 
 interface Props {
   data: IndividualKyc | CorporateKyc | undefined // Make sure data is optional
-  riskJSON: any
 }
 
-export const IndividualForm = ({ data, riskJSON }: Props) => {
-  const filteredDocuments = data?.documents?.filter((document) => {
-    if (data && +data.accredited === 0) {
-      return document?.type !== 'accreditation' // Use optional chaining for document
-    }
-    return document
-  })
-
+export const IndividualForm = ({ data }: Props) => {
   const sections = [
     { component: Cynopsis },
     { component: Information, kycKey: 'individual' },
@@ -53,7 +44,11 @@ export const IndividualForm = ({ data, riskJSON }: Props) => {
     <>
       {sections.map((section, index) => (
         <React.Fragment key={index}>
-          <section.component title='Upload Documents' data={section.dataKey ? data?.[section.dataKey] : data} kycKey={section.kycKey} />
+          <section.component
+            title="Upload Documents"
+            data={section.dataKey ? data?.[section.dataKey] : data}
+            kycKey={section.kycKey}
+          />
           {index < sections.length - 1 && section.component.name !== 'SecondaryContactDetails' && <Line />}
         </React.Fragment>
       ))}
