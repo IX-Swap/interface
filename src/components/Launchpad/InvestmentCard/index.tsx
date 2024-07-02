@@ -134,7 +134,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
                 <InvestmentCardDetailsSeparator />
 
                 <InvestmentCardDetailsEntry>
-                  <InvestmentCardDetailsEntryLabel>Currency</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryLabel>Investing Token</InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>{offer.investingTokenSymbol}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
 
@@ -309,14 +309,9 @@ const InvestmentCardDescription = styled.div`
 const InvestmentCardDetailsContainer = styled.div<{ show: boolean }>`
   opacity: ${(props) => (props.show ? '1' : '0')};
   height: ${(props) => (props.show ? '180px' : '0')};
-
   transition: height 0.3s ease-in-out, opacity 0.2s ease-out 0.1s;
-
   ${(props) => props.show && `margin: 0.5rem -1.5rem;`}
-
   border-top: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
-  // border-bottom: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
-
   width: 380px;
 `
 const InvestmentCardDetailsEntry = styled.div`
