@@ -255,7 +255,7 @@ export default function Header() {
           {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
             <HeaderRow marginLeft={50}>
-              <Title to="/">
+              <Title to="/kyc">
                 {logoUrl ? (
                   <div style={{ width: 130 }}>
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
