@@ -212,7 +212,7 @@ export default function Header() {
           {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
             <HeaderRow>
-              <Title to="/">
+              <Title to="/kyc">
                 {logoUrl ? (
                   <img src={logoUrl} alt="logo" width="auto" height="47px" />
                 ) : (

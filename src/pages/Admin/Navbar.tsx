@@ -21,7 +21,7 @@ export const Navbar = () => {
         <HeaderWrapper>
           <HeaderFrame>
             <HeaderRow>
-              <Title to="/">
+              <Title to="/kyc">
                 {logoUrl ? (
                   <div style={{ width: 150 }}>
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
@@ -41,7 +41,7 @@ export const Navbar = () => {
         <HeaderWrapper>
           <HeaderFrame>
             <HeaderRow marginLeft={100}>
-              <Title to="/">
+              <Title to="/kyc">
                 {logoUrl ? (
                   <div style={{ width: 150 }}>
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
