@@ -2,7 +2,7 @@ import React, { useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
 
-import { CHAIN_INFO, NETWORK_LABELS } from 'constants/chains'
+import { CHAIN_INFO, NETWORK_LABELS, SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ApplicationModal } from 'state/application/actions'
@@ -63,7 +63,7 @@ export const NetworkCard = () => {
 
           {open && (
             <FlyoutMenu>
-              {(ENV_SUPPORTED_TGE_CHAINS || [42]).map((chainId) => (
+              {(ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]).map((chainId) => (
                 <Row targetChain={chainId} key={chainId} />
               ))}
             </FlyoutMenu>

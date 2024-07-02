@@ -120,7 +120,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     },
     logoUrl: baseLogoUrl,
     rpcUrls: ['	https://mainnet.base.org'],
-    blockExplorerUrls: ['https://base.blockscout.com'],
+    blockExplorerUrls: ['https://basescan.org'],
   },
   [SupportedChainId.BASE_SEPOLIA]: {
     chainName: 'Base Sepolia',
@@ -131,6 +131,6 @@ export const CHAIN_INFO: ChainInfoMap = {
     },
     logoUrl: baseLogoUrl,
     rpcUrls: ['https://sepolia.base.org'],
-    blockExplorerUrls: ['https://sepolia-explorer.base.org'],
+    blockExplorerUrls: ['https://sepolia.basescan.org'],
   },
 }
