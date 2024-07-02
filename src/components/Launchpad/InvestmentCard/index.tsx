@@ -22,6 +22,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { PreviewModal } from './PreviewModal'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
+import { formatNumberWithDecimals } from 'state/lbp/hooks'
 
 interface Props {
   offer: any
@@ -81,6 +82,10 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const openModal = () => handleIsModalOpen(true)
   const closeModal = () => handleIsModalOpen(false)
 
+  function capitalizeFirstLetter(offerType: string) {
+    return offerType.charAt(0).toUpperCase() + offerType.slice(1)
+  }
+
   return (
     <>
       <PreviewModal offer={offer} isModalOpen={isModalOpen} closeModal={closeModal} />
@@ -112,25 +117,37 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
               <>
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Projected fundraise</InvestmentCardDetailsEntryLabel>
-                  <InvestmentCardDetailsEntryValue>{offer.hardCap}</InvestmentCardDetailsEntryValue>
+                  <InvestmentCardDetailsEntryValue>
+                    {formatNumberWithDecimals(offer.hardCap, 2, true)}
+                  </InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
 
                 <InvestmentCardDetailsSeparator />
 
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Minimum Investment</InvestmentCardDetailsEntryLabel>
-                  <InvestmentCardDetailsEntryValue>{offer.minInvestment}</InvestmentCardDetailsEntryValue>
+                  <InvestmentCardDetailsEntryValue>
+                    {formatNumberWithDecimals(offer.minInvestment, 2, true)}
+                  </InvestmentCardDetailsEntryValue>
+                </InvestmentCardDetailsEntry>
+
+                <InvestmentCardDetailsSeparator />
+
+                <InvestmentCardDetailsEntry>
+                  <InvestmentCardDetailsEntryLabel>Investing Token</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryValue>{offer.investingTokenSymbol}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
 
                 <InvestmentCardDetailsSeparator />
 
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Investment type</InvestmentCardDetailsEntryLabel>
-                  <InvestmentCardDetailsEntryValue>{offer.investmentType}</InvestmentCardDetailsEntryValue>
+                  <InvestmentCardDetailsEntryValue>
+                    {capitalizeFirstLetter(offer.investmentType)}
+                  </InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
 
                 <InvestmentCardDetailsSeparator />
-
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Issuer</InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>{offer.issuerName}</InvestmentCardDetailsEntryValue>
@@ -291,17 +308,10 @@ const InvestmentCardDescription = styled.div`
 
 const InvestmentCardDetailsContainer = styled.div<{ show: boolean }>`
   opacity: ${(props) => (props.show ? '1' : '0')};
-  height: ${(props) => (props.show ? '170px' : '0')};
-
+  height: ${(props) => (props.show ? '180px' : '0')};
   transition: height 0.3s ease-in-out, opacity 0.2s ease-out 0.1s;
-
-  z-index: 10;
-
   ${(props) => props.show && `margin: 0.5rem -1.5rem;`}
-
   border-top: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
-  border-bottom: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
-
   width: 380px;
 `
 const InvestmentCardDetailsEntry = styled.div`
