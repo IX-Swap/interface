@@ -37,6 +37,18 @@ export const POOL_SIZE_LIMITS: {
     [PERIOD.TWO_MONTHS]: '1000000',
     [PERIOD.THREE_MONTHS]: '500000',
   },
+  [SupportedChainId.BASE_SEPOLIA]: {
+    [PERIOD.ONE_WEEK]: '2000000',
+    [PERIOD.ONE_MONTH]: '500000',
+    [PERIOD.TWO_MONTHS]: '1000000',
+    [PERIOD.THREE_MONTHS]: '500000',
+  },
+  [SupportedChainId.BASE]: {
+    [PERIOD.ONE_WEEK]: '2000000',
+    [PERIOD.ONE_MONTH]: '500000',
+    [PERIOD.TWO_MONTHS]: '1000000',
+    [PERIOD.THREE_MONTHS]: '500000',
+  },
 }
 
 export const POOL_SIZE_LIMIT_TEXTS: {
@@ -69,6 +81,18 @@ export const POOL_SIZE_LIMIT_TEXTS: {
     [PERIOD.THREE_MONTHS]: `500k`,
   },
   [SupportedChainId.AMOY]: {
+    [PERIOD.ONE_WEEK]: `Unlimited`,
+    [PERIOD.ONE_MONTH]: `500k`,
+    [PERIOD.TWO_MONTHS]: `1 mln`,
+    [PERIOD.THREE_MONTHS]: `500k`,
+  },
+  [SupportedChainId.BASE_SEPOLIA]: {
+    [PERIOD.ONE_WEEK]: `Unlimited`,
+    [PERIOD.ONE_MONTH]: `500k`,
+    [PERIOD.TWO_MONTHS]: `1 mln`,
+    [PERIOD.THREE_MONTHS]: `500k`,
+  },
+  [SupportedChainId.BASE]: {
     [PERIOD.ONE_WEEK]: `Unlimited`,
     [PERIOD.ONE_MONTH]: `500k`,
     [PERIOD.TWO_MONTHS]: `1 mln`,
