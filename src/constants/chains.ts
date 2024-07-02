@@ -1,5 +1,6 @@
 import ethereumLogoUrl from 'assets/images/ethereum-logo.png'
 import polygonLogoUrl from 'assets/images/polygon.svg'
+import baseLogoUrl from 'assets/images/base.svg'
 
 export enum SupportedChainId {
   MAINNET = 1,
@@ -7,6 +8,8 @@ export enum SupportedChainId {
   MATIC = 137,
   MUMBAI = 80001,
   AMOY = 80002,
+  BASE = 8453,
+  BASE_SEPOLIA = 84532,
 }
 
 export const NETWORK_LABELS: { [chainId: number]: string } = {
@@ -18,6 +21,8 @@ export const NETWORK_LABELS: { [chainId: number]: string } = {
   [80001]: 'Polygon Mumbai',
   [80002]: 'Polygon Amoy',
   [137]: 'Polygon',
+  [84532]: 'Base Sepolia',
+  [8453]: 'Base',
 }
 
 export const NETWORK_NAMES: { [chainId: number]: string } = {
@@ -28,9 +33,7 @@ export const NETWORK_NAMES: { [chainId: number]: string } = {
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
-
   SupportedChainId.KOVAN,
-
   SupportedChainId.MATIC,
   SupportedChainId.MUMBAI,
 ]
@@ -107,5 +110,27 @@ export const CHAIN_INFO: ChainInfoMap = {
     logoUrl: polygonLogoUrl,
     rpcUrls: ['https://rpc-amoy.polygon.technology/'],
     blockExplorerUrls: ['https://www.oklink.com/amoy'],
+  },
+  [SupportedChainId.BASE]: {
+    chainName: 'Base',
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    logoUrl: baseLogoUrl,
+    rpcUrls: ['	https://mainnet.base.org'],
+    blockExplorerUrls: ['https://base.blockscout.com'],
+  },
+  [SupportedChainId.BASE_SEPOLIA]: {
+    chainName: 'Base Sepolia',
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    logoUrl: baseLogoUrl,
+    rpcUrls: ['https://sepolia.base.org'],
+    blockExplorerUrls: ['https://sepolia-explorer.base.org'],
   },
 }
