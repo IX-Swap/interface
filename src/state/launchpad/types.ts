@@ -22,10 +22,10 @@ export enum OfferNetwork {
 }
 
 export enum OfferCapitalStructure {
-  equity = 'equity',
-  debt = 'debt',
-  hybrid = 'hybrid',
-  crypto = 'crypto',
+  equity = 'Equity',
+  debt = 'Debt',
+  hybrid = 'Hybrid',
+  crypto = 'Crypto',
 }
 export enum OfferTimeframeType {
   whitelist = 'whitelist',
@@ -167,10 +167,10 @@ export enum InvestmentStatus {
 }
 
 export enum OfferInvestmentStructure {
-  equity = 'equity',
-  debt = 'debt',
-  hybrid = 'hybrid',
-  other = 'others',
+  equity = 'Equity',
+  debt = 'Debt',
+  hybrid = 'Hybrid',
+  other = 'Others',
 }
 
 export interface OfferInvestment {
