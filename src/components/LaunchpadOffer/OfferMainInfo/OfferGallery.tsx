@@ -12,7 +12,6 @@ import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/link
 import { ReactComponent as RedditLogo } from 'assets/launchpad/svg/social/reddit.svg'
 import { ReactComponent as CoingeckoLogo } from 'assets/launchpad/svg/social/coingecko.svg'
 import { ReactComponent as InstagramLogo } from 'assets/launchpad/svg/social/instagram.svg'
-import { ReactComponent as OtherLogo } from 'assets/images/newCurrencyLogo.svg'
 import { MediaEntry, OfferGalleryViewer } from './OfferGalleryViewer'
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
