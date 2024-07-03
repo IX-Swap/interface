@@ -22,6 +22,7 @@ import {
 import { useKyc } from 'state/user/hooks'
 import { text9 } from 'components/LaunchpadMisc/typography'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { routes } from 'utils/routes'
 
 interface Props {
   offerId?: string
@@ -93,7 +94,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
                   <KYCPromptTitle>Verify your account to use the {config?.name} Launchpad</KYCPromptTitle>
 
-                  <VerifyButton to="/kyc">Verify Account</VerifyButton>
+                  <VerifyButton to={routes.defaultRoute}>Verify Account</VerifyButton>
                 </>
               )}
               {isChangeRequested && (
@@ -104,7 +105,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
                   <KYCPromptTitle>We have requested an update to your account verification process.</KYCPromptTitle>
 
-                  <VerifyButton to="/kyc">Update</VerifyButton>
+                  <VerifyButton to={routes.defaultRoute}>Update</VerifyButton>
                 </>
               )}
 
@@ -116,7 +117,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
                   <KYCPromptTitle>Verify your account to use the {config?.name} Launchpad</KYCPromptTitle>
 
-                  <VerifyButton to="/kyc">Verify Account</VerifyButton>
+                  <VerifyButton to={routes.defaultRoute}>Verify Account</VerifyButton>
                 </>
               )}
 
@@ -128,7 +129,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
                   <KYCPromptTitle>We are still verifying your account</KYCPromptTitle>
 
-                  <VerifyButton to="/kyc">Check status</VerifyButton>
+                  <VerifyButton to={routes.defaultRoute}>Check status</VerifyButton>
                 </>
               )}
 
@@ -157,7 +158,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
                     Launchpad. Please try again or contact us for more information.
                   </KYCPromptTitle>
 
-                  <VerifyButton to="/kyc">Try Again</VerifyButton>
+                  <VerifyButton to={routes.defaultRoute}>Try Again</VerifyButton>
 
                   <Caption>Account verification is a one-time process.</Caption>
 

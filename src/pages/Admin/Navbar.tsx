@@ -9,6 +9,7 @@ import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
 import { AdminHeaderLinks } from 'components/Header/HeaderLinks'
 import { MobileMenu } from 'components/Mobile-Menu'
 import { RowFixed } from 'components/Row'
+import { routes } from 'utils/routes'
 
 export const Navbar = () => {
   const { config } = useWhitelabelState()
@@ -21,7 +22,7 @@ export const Navbar = () => {
         <HeaderWrapper>
           <HeaderFrame>
             <HeaderRow>
-              <Title to="/kyc">
+              <Title to={routes.defaultRoute}>
                 {logoUrl ? (
                   <div style={{ width: 150 }}>
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
@@ -41,7 +42,7 @@ export const Navbar = () => {
         <HeaderWrapper>
           <HeaderFrame>
             <HeaderRow marginLeft={100}>
-              <Title to="/kyc">
+              <Title to={routes.defaultRoute}>
                 {logoUrl ? (
                   <div style={{ width: 150 }}>
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />

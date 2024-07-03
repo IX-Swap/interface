@@ -30,6 +30,7 @@ import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
 import { detectWrongNetwork } from 'utils'
+import { routes } from 'utils/routes'
 
 interface DescriptionProps {
   description: string | null
@@ -255,7 +256,7 @@ const KYC = () => {
               {kyc?.corporate && (
                 <Flex flexDirection="column" alignItems="center">
                   <CorporateKYC />
-                  <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
+                  <Link style={{ textDecoration: 'none ' }} to={`${routes.defaultRoute}/corporate`}>
                     <PinnedContentButton sx={{ padding: '16px 24px', marginTop: '32px' }}>
                       <Trans>Continue Pass KYC as Corporate</Trans>
                     </PinnedContentButton>
