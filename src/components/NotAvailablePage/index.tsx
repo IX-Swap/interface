@@ -1,21 +1,15 @@
-// Import necessary libraries and components
 import React from 'react'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { useLocation } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
-
-import ethereumIcon from 'assets/images/ethereum-clear-logo.svg'
-import polygonIcon from 'assets/images/polygon.svg'
+import { Text } from 'rebass'
 import { useWeb3React } from '@web3-react/core'
+
 import { switchToNetwork } from 'hooks/switchToNetwork'
-import { SupportedChainId } from 'constants/chains'
-import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
-import { useWalletModalToggle } from 'state/application/hooks'
+import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
+import { PinnedContentButton } from 'components/Button'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-import { Text } from 'rebass'
-
-// Import styled components
 import {
   Container,
   Title,
@@ -23,12 +17,21 @@ import {
   NetworksRow,
   NetworkCard,
   InfoRows,
-  PlaygroundBadge,
   ConnectWalletContainer,
 } from './styled'
 import Modal from 'components/Modal'
 import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 import { PRODUCTION_APP_URL } from 'config'
+
+
+function arrayToString(arr: string[]) {
+  if (arr.length === 0) return ''
+  if (arr.length === 1) return arr[0]
+  if (arr.length === 2) return arr.join(' or ')
+
+  const lastItem = arr.pop()
+  return `${arr.join(', ')} or ${lastItem}`
+}
 
 // Define the NotAvailablePage component
 export const NotAvailablePage = () => {
@@ -36,7 +39,6 @@ export const NotAvailablePage = () => {
   const { pathname } = useLocation()
   const [cookies] = useCookies(['announcementsSeen'])
   const { config } = useWhitelabelState()
-  const toggleWalletModal = useWalletModalToggle()
   const [showConnectModal, setShowConnectModal] = React.useState(false)
   const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
@@ -107,6 +109,7 @@ export const NotAvailablePage = () => {
   }
 
   const network = window.location.href.includes(PRODUCTION_APP_URL) ? 'Polygon' : 'Amoy'
+
   if (!provider?.provider?.isMetaMask) {
     return (
       <Container>
@@ -123,7 +126,8 @@ export const NotAvailablePage = () => {
     )
   }
 
-  const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+  const chains = ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]
+  const chainsNames = chains.map((chain) => CHAIN_INFO[chain].chainName)
 
   return (
     <Container>
@@ -136,88 +140,19 @@ export const NotAvailablePage = () => {
       </Info>
 
       <NetworksRow elements={farming ? chains.length + 1 : chains.length}>
-        {(chains.includes(SupportedChainId.MAINNET) || farming) && (
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.MAINNET)}>
-            <img src={ethereumIcon} alt="ethereumIcon" />
-            Ethereum Mainnet
+        {chains.map((chain) => (
+          <NetworkCard onClick={() => changeNetwork(chain)} key={chain}>
+            <img src={CHAIN_INFO[chain].logoUrl} alt="icon" />
+            {CHAIN_INFO[chain].chainName}
           </NetworkCard>
-        )}
-        {chains.includes(SupportedChainId.KOVAN) && (
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.KOVAN)}>
-            <PlaygroundBadge>
-              <div>
-                <Trans>Playground</Trans>
-              </div>
-            </PlaygroundBadge>
-            <img src={ethereumIcon} alt="ethereumIcon" />
-            Kovan Testnet
-          </NetworkCard>
-        )}
-        {chains.includes(SupportedChainId.MATIC) && (
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.MATIC)}>
-            <img src={polygonIcon} alt="polygonIcon" />
-            Polygon Mainnet
-          </NetworkCard>
-        )}
-        {chains.includes(SupportedChainId.MUMBAI) && (
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.MUMBAI)}>
-            <img src={polygonIcon} alt="polygonIcon" />
-            Mumbai Testnet
-          </NetworkCard>
-        )}
-        {chains.includes(SupportedChainId.AMOY) && (
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.AMOY)}>
-            <img src={polygonIcon} alt="polygonIcon" />
-            Polygon amoy Testnet
-          </NetworkCard>
-        )}
+        ))}
       </NetworksRow>
+
       <InfoRows>
-        {(chains.includes(SupportedChainId.MAINNET) || farming) && (
-          <Info>
-            <li>
-              <Trans>
-                Switch to<b> Ethereum Mainnet</b> if you have ongoing Staking or Vesting there
-              </Trans>
-            </li>
-          </Info>
-        )}
-        {chains.includes(SupportedChainId.KOVAN) && (
-          <Info>
-            <li>
-              <Trans>
-                Switch to<b> Kovan Testnet</b> if you want to see the demo playground
-              </Trans>
-            </li>
-          </Info>
-        )}
-        {chains.includes(SupportedChainId.MATIC) && (
-          <Info>
-            <li>
-              <Trans>
-                Switch to<b> Polygon Mainnet</b> to get full functionality
-              </Trans>
-            </li>
-          </Info>
-        )}
-        {chains.includes(SupportedChainId.MUMBAI) && (
-          <Info>
-            <li>
-              <Trans>
-                Switch to<b> Mumbai Testnet</b> to get full functionality
-              </Trans>
-            </li>
-          </Info>
-        )}
-        {chains.includes(SupportedChainId.AMOY) && (
-          <Info>
-            <li>
-              <Trans>
-                Switch to<b> Amoy Testnet</b> to get full functionality
-              </Trans>
-            </li>
-          </Info>
-        )}
+        <div>
+          Switch to <b style={{ color: '#292933' }}>{arrayToString(chainsNames)}</b>
+        </div>
+        <div>to get full functionality</div>
       </InfoRows>
     </Container>
   )
