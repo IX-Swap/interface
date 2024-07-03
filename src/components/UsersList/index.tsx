@@ -1,31 +1,24 @@
 import React, { FC, useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
-
 import { Trans, t } from '@lingui/macro'
 import { AccordionSummary, AccordionDetails } from '@material-ui/core'
-
 import { Wallet } from 'components/AdminKyc'
 import { CopyAddress } from 'components/CopyAddress'
 import { NoData } from 'components/UsersList/styleds'
 import { MultipleFilters } from 'components/MultipleFilters'
 import { Container } from 'components/AdminAccreditationTable'
 import { FILTERS } from 'components/MultipleFilters/constants'
-
 import { useSecTokenState } from 'state/secTokens/hooks'
 import { useAdminState, useGetUsersList, useOnlyAdminAccess } from 'state/admin/hooks'
-
 import { adminOffset as offset } from 'state/admin/constants'
 import { TokenManagerEntry, User } from 'state/admin/actions'
-
 import checkIcon from 'assets/images/newRightCheck.svg'
 import notCheckIcon from 'assets/images/newReject.svg'
 import expandIcon from 'assets/images/dropdown.svg'
-
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { Pagination } from 'components/Pagination'
 import { ROLES_LABEL, ROLES } from 'constants/roles'
-
 import { Table } from '../Table'
 import { UserModal } from './UserModal'
 import { TopContent, StyledBodyRow, StyledHeaderRow, StyledAccordion, ExpandIcon, AddButton } from './styleds'
@@ -35,10 +28,9 @@ import { Flex } from 'rebass'
 import { isMobile } from 'react-device-detect'
 import { TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
-import { UserMobileFilters } from './userMobileFilters'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 
-const headerCells = [`Wallet address`, `Role`, `Name`, t`Security Token`, `Tenant`, `Waive Withdrawal Fees`, '']
+const headerCells = [`Wallet address`, `Role`, `Name`, `Security Token`, `Tenant`, `Waive Withdrawal Fees`, '']
 
 interface BodyProps {
   changeUser: (item: User) => void
