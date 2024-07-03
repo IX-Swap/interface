@@ -11,7 +11,7 @@ import { ReactComponent as YoutubeLogo } from 'assets/launchpad/svg/social/youtu
 import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/linkedin.svg'
 import { ReactComponent as RedditLogo } from 'assets/launchpad/svg/social/reddit.svg'
 import { ReactComponent as CoingeckoLogo } from 'assets/launchpad/svg/social/coingecko.svg'
-
+import { ReactComponent as InstagramLogo } from 'assets/launchpad/svg/social/instagram.svg'
 import { MediaEntry, OfferGalleryViewer } from './OfferGalleryViewer'
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
@@ -25,8 +25,11 @@ export const OfferGallery: React.FC<Props> = (props) => {
   const [showViewer, setShowViewer] = React.useState(false)
   const [initialViewerFile, setInitialViewerFile] = React.useState<OfferFile>()
 
+
+
   const socialMedialLinks = React.useMemo(
     () => [
+      { url: props.offer?.socialMedia?.others, logo: 'Others'},
       { url: props.offer?.socialMedia?.x, logo: <XLogo /> },
       { url: props.offer?.socialMedia?.telegram, logo: <TelegramLogo /> },
       { url: props.offer?.socialMedia?.linkedin, logo: <LinkedInLogo /> },
@@ -35,6 +38,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
       { url: props.offer?.socialMedia?.coingecko, logo: <CoingeckoLogo /> },
       { url: props.offer?.socialMedia?.discord, logo: <DiscordLogo /> },
       { url: props.offer?.socialMedia?.reddit, logo: <RedditLogo /> },
+      { url: props.offer?.socialMedia?.instagram, logo: <InstagramLogo /> },
     ],
     []
   )

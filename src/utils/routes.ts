@@ -53,6 +53,7 @@ export const routes = {
   lbpCreate: '/lbp-admin/create',
   publicDetails: '/lbp/:id',
   adminDetails: '/lbp-admin/detail/:id',
+  defaultRoute: '/kyc',
 
   //admin urls
 
