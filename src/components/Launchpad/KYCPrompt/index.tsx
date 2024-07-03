@@ -94,7 +94,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
                   <KYCPromptTitle>Verify your account to use the {config?.name} Launchpad</KYCPromptTitle>
 
-                  <VerifyButton to={routes.defaultRoute}>Verify Account</VerifyButton>
+                  <VerifyButton to={routes.kyc}>Verify Account</VerifyButton>
                 </>
               )}
               {isChangeRequested && (
@@ -105,7 +105,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
                   <KYCPromptTitle>We have requested an update to your account verification process.</KYCPromptTitle>
 
-                  <VerifyButton to={routes.defaultRoute}>Update</VerifyButton>
+                  <VerifyButton to={routes.kyc}>Update</VerifyButton>
                 </>
               )}
 
@@ -117,7 +117,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
                   <KYCPromptTitle>Verify your account to use the {config?.name} Launchpad</KYCPromptTitle>
 
-                  <VerifyButton to={routes.defaultRoute}>Verify Account</VerifyButton>
+                  <VerifyButton to={routes.kyc}>Verify Account</VerifyButton>
                 </>
               )}
 
@@ -129,7 +129,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
                   <KYCPromptTitle>We are still verifying your account</KYCPromptTitle>
 
-                  <VerifyButton to={routes.defaultRoute}>Check status</VerifyButton>
+                  <VerifyButton to={routes.kyc}>Check status</VerifyButton>
                 </>
               )}
 
@@ -158,7 +158,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
                     Launchpad. Please try again or contact us for more information.
                   </KYCPromptTitle>
 
-                  <VerifyButton to={routes.defaultRoute}>Try Again</VerifyButton>
+                  <VerifyButton to={routes.kyc}>Try Again</VerifyButton>
 
                   <Caption>Account verification is a one-time process.</Caption>
 
