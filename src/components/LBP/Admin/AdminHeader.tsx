@@ -155,7 +155,7 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({
 
   const handlePoolButtonClick = () => {
     if (contractAddress) {
-      window.open(`${chainInfo?.blockExplorerUrls[0]}/address/${contractAddress}`, '_blank')
+      window.open(`${chainInfo?.blockExplorerUrls[0]}address/${contractAddress}`, '_blank')
     }
   }
 
