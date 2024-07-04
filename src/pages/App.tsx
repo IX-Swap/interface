@@ -49,6 +49,7 @@ import { NotAvailablePage } from 'components/NotAvailablePage'
 import { CustomHeaders } from 'components/CustomHeaders'
 import { useWalletState } from 'state/wallet/hooks'
 import { coinbaseWallet } from 'connectors/coinbaseWallet'
+import { blockedCountries } from 'constants/countriesList'
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -85,7 +86,6 @@ export default function App() {
 
   const isIxSwap = whiteLabelConfig?.isIxSwap ?? false
   const routeFinalConfig = isAdmin ? routeConfigs : routeConfigs.filter((route) => !lbpAdminRoutes.includes(route.path))
-  const blockedCountries = ['US', 'KP']
   useEffect(() => {
     const getCountryCode = async () => {
       const response = await axios.get(ip.getIPAddress)
