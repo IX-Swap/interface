@@ -10,7 +10,8 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export const Banner = () => {
   const { config } = useWhitelabelState()
-  const launchpadBannerTitle = config?.launchpadBannerTitle ?? 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunites'
+  const launchpadBannerTitle =
+    config?.launchpadBannerTitle ?? 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunites'
   const launchpadBannerInfoRedirectTitle = config?.launchpadBannerInfoRedirectTitle ?? 'How does IXS Launchpad work?'
   const launchpadBannerInfoRedirectUrl = config?.launchpadBannerInfoRedirectUrl ?? 'https://www.ixswap.io/academy'
 
@@ -18,7 +19,7 @@ export const Banner = () => {
     <BannerContainer>
       {isMobile ? (
         <>
-          <BannerTitle>Invest in Startups and Other Unicorn Like Opportunites</BannerTitle>
+          <BannerTitle dangerouslySetInnerHTML={{ __html: launchpadBannerTitle.replaceAll('<br /> ', '') }}></BannerTitle>
           <BannerTitleMobile>Next Generation Fundraising</BannerTitleMobile>
         </>
       ) : (
@@ -41,7 +42,7 @@ const BannerContainer = styled.div`
   margin: 8rem 1rem 0rem 0rem;
   width: 100%;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    margin: 7rem 5rem 0rem 5rem;
+    margin: 0rem 5rem 0rem 5rem;
   }
 `
 

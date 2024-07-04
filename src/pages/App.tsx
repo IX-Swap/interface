@@ -270,6 +270,10 @@ export default function App() {
             >
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
+                <Route
+                  path={'/'}
+                  component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                />
               </Switch>
             </Suspense>
             {/* </Web3ReactManager> */}
