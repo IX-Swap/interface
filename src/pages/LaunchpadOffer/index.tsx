@@ -192,7 +192,7 @@ const OfferContainer = styled.article`
   gap: 4rem 6rem;
 
   @media (max-width: 1440px) {
-    grid-template-columns: 100px minmax(auto, 800px) 380px 8px;
+    grid-template-columns: 100px minmax(auto, 800px) 330px 8px;
   }
 
   > main,
