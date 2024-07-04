@@ -46,6 +46,7 @@ import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
 import { Footer } from './Launchpad/Footer'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { blockedCountries } from 'constants/countriesList'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -266,7 +267,7 @@ export default function App() {
   return (
     <>
       {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
-      {countryCode === 'US' && <RestrictedModal />}
+      {countryCode && blockedCountries.includes(countryCode) && <RestrictedModal />}
       <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
         <Route component={DarkModeQueryParamReader} />
