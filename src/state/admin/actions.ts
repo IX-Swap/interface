@@ -410,6 +410,11 @@ export interface KycList {
   prevPage: number
 }
 
+export enum IndividualKycVersion {
+  v1 = 'v1',
+  v2 = 'v2',
+}
+
 export interface IndividualKyc {
   accredited: number
   address: {
@@ -452,7 +457,7 @@ export interface IndividualKyc {
   investorDeclarationStatus: InvestorDeclaration
   taxDeclarations: TaxDeclaration[]
   [key: string]: any
-  version: string
+  version: IndividualKycVersion
 }
 
 export interface TaxDeclaration {
