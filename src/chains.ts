@@ -122,6 +122,18 @@ export const TESTNET_CHAINS: ChainConfig = {
     nativeCurrency: CELO,
     blockExplorerUrls: ['https://alfajores-blockscout.celo-testnet.org'],
   },
+  84532: {
+    urls: ['https://sepolia.basechain.infura.io'],
+    name: 'Base Sepolia',
+    nativeCurrency: ETH,
+    blockExplorerUrls: ['https://sepolia.basescan.org'],
+  },
+  8453: {
+    urls: ['https://basechain.infura.io'],
+    name: 'Base',
+    nativeCurrency: ETH,
+    blockExplorerUrls: ['https://basescan.org'],
+  },
 }
 
 export const CHAINS: ChainConfig = {

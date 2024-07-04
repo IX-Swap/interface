@@ -7,6 +7,8 @@ const ETHERSCAN_PREFIXES: { [chainId: number]: string } = {
   80001: 'mumbai.',
   80002: 'oklink.com/',
   137: '',
+  84532: 'sepolia.basescan.org',
+  8453: 'basescan.org',
 }
 const CHAIN_EXPLORERS: { [chainId: number]: string } = {
   1: 'etherscan.io',
@@ -17,6 +19,8 @@ const CHAIN_EXPLORERS: { [chainId: number]: string } = {
   80001: 'polygonscan.com',
   80002: 'amoy',
   137: 'polygonscan.com',
+  84532: 'sepolia.basescan.org',
+  8453: 'basescan.org',
 }
 
 export enum ExplorerDataType {
