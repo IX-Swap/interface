@@ -9,7 +9,7 @@ import { File } from 'react-feather'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
 import { CopyAddress } from 'components/CopyAddress'
-import { KycItem } from 'state/admin/actions'
+import { IndividualKycVersion, KycItem } from 'state/admin/actions'
 import { AdminKycFilters, TStats } from 'components/AdminKycFilters'
 import { adminOffset as offset } from 'state/admin/constants'
 
@@ -25,7 +25,7 @@ import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { isMobile } from 'react-device-detect'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { useOnChangeOrder } from 'state/launchpad/hooks'
-import { AbstractOrder, KycOrderConfig, OrderTypes } from 'state/launchpad/types'
+import { AbstractOrder, KycOrderConfig } from 'state/launchpad/types'
 import { OrderType } from 'state/launchpad/types'
 const headerCells = [
   { key: 'ethAddress', label: 'Wallet address', show: false },
@@ -52,15 +52,21 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
     updatedAt,
     individualKycId,
     audits,
+    individual,
+    corporate,
   } = item
 
-  const kyc = individualKycId ? item.individual : item.corporate
-  const completedKycOfProvider = item?.individual?.completedKycOfProvider
+  const kyc = individualKycId ? individual : corporate
+  const completedKycOfProvider = individual?.completedKycOfProvider
   const fullName = individualKycId
     ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
     : kyc?.corporateName
-  const approverUser = audits.length > 0 && audits[audits.length-1]?.approvedByUser || audits[audits.length-1]?.rejectedByUser
-  const approverName = approverUser ? [approverUser?.firstName, approverUser?.lastName].join(' ') : 'Automatic'
+
+  let approverName = '-'
+  if (individual?.version === IndividualKycVersion.v2) {
+    const approverUser = audits.length > 0 && audits[audits.length-1]?.approvedByUser || audits[audits.length-1]?.rejectedByUser
+    approverName = approverUser ? [approverUser?.firstName, approverUser?.lastName].join(' ') : 'Automatic'
+  }
 
   return (
     <StyledBodyRow key={id}>
