@@ -1286,7 +1286,7 @@ export default function CorporateKycForm() {
                         <Column style={{ gap: '40px' }}>
                           <Uploader
                             title="Additional Documents"
-                            subtitle={`For ${config?.name} Launchpad Issuers and IXS DEX Applicants, please also enclose the most recent financial documents (balance sheet, P&L statement or Annual Returns), Certificate of Incumbency and Company Organization Chart showing Ownership Structure (signed copy). All documents must be dated within the last 3 months.`}
+                            subtitle={`For ${config?.name || 'IXS'} Launchpad Issuers and ${config?.name || 'IXS'} DEX Applicants, please also enclose the most recent financial documents (balance sheet, P&L statement or Annual Returns), Certificate of Incumbency and Company Organization Chart showing Ownership Structure (signed copy). All documents must be dated within the last 3 months.`}
                             files={values.financialDocuments}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'financialDocuments', setFieldValue)
