@@ -29,6 +29,12 @@ export const socialMediaPlatform = ['Telegram', 'Discord', 'X.com', 'Facebook', 
   (name, index) => ({ value: ++index, label: name })
 )
 
+export const blockchainNetworks = [
+  { value: 'polygon', label: 'Polygon' },
+  { value: 'base', label: 'Base' }
+];
+
+
 export const fatcaOptions = [
   'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus.',
   'Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.',

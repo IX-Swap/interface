@@ -72,6 +72,7 @@ export default function LBPForm() {
       maxPrice: '',
       startDate: '',
       endWeight: 1,
+      network: ''
     },
   })
   const [canSubmit, setCanSubmit] = useState(false)
@@ -174,6 +175,7 @@ export default function LBPForm() {
     setCanSubmit(brandingComplete && hasSocialLinks && projectInfoComplete && tokenomicsComplete && datesValid)
   }
 
+
   const saveLbp = async (actionType: string) => {
     loader.start()
     try {
@@ -229,6 +231,7 @@ export default function LBPForm() {
       startDate: dayjs(formData.tokenomics?.startDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
       endDate: dayjs(formData.tokenomics?.endDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
       additionalDocumentIds: [],
+      network: formData?.tokenomics?.network
     }
 
     if (formData?.tokenomics?.maxSupply) {
@@ -272,6 +275,7 @@ export default function LBPForm() {
         endDate: dayjs(data.endDate)?.local()?.format('YYYY-MM-DD HH:mm:ss'),
         maxPrice: data.maxPrice,
         endWeight: data.endWeight,
+        network: data?.network
       },
     }
   }
