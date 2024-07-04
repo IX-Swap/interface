@@ -85,7 +85,7 @@ export default function App() {
 
   const isIxSwap = whiteLabelConfig?.isIxSwap ?? false
   const routeFinalConfig = isAdmin ? routeConfigs : routeConfigs.filter((route) => !lbpAdminRoutes.includes(route.path))
-
+  const blockedCountries = ['US', 'KP']
   useEffect(() => {
     const getCountryCode = async () => {
       const response = await axios.get(ip.getIPAddress)
@@ -245,7 +245,7 @@ export default function App() {
     <>
       <CustomHeaders />
       {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
-      {countryCode === 'US' && <RestrictedModal />}
+      {countryCode && blockedCountries.includes(countryCode) && <RestrictedModal />}
       <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
         <Route component={DarkModeQueryParamReader} />
