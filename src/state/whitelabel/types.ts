@@ -53,6 +53,7 @@ export interface Whitelabel {
   appUrl?: string
   termsAndConditionsUrl?: string
   privacyPolicyUrl?: string
+  supportEmail?: string
 }
 
 export interface WlColors {
