@@ -51,6 +51,8 @@ export interface Whitelabel {
   isIxSwap?: boolean
   enableLaunchpadBanner?: boolean
   appUrl?: string
+  termsAndConditionsUrl?: string
+  privacyPolicyUrl?: string
 }
 
 export interface WlColors {

@@ -153,6 +153,10 @@ const HeaderWrapper = styled.div`
   top: 0;
   z-index: 2;
 
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  position: relative;
+  `};
+
   ${({ theme }) =>
     theme.config.background &&
     css`
