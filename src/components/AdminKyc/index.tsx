@@ -60,7 +60,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
     ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
     : kyc?.corporateName
   const approverUser = audits.length > 0 && audits[audits.length-1]?.approvedByUser || audits[audits.length-1]?.rejectedByUser
-  const approverName = approverUser ? [approverUser?.firstName, approverUser?.middleName, approverUser?.lastName].join(' ') : 'Automatic'
+  const approverName = approverUser ? [approverUser?.firstName, approverUser?.lastName].join(' ') : 'Automatic'
 
   return (
     <StyledBodyRow key={id}>
