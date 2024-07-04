@@ -280,101 +280,87 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
       />
 
       <Agreement>
-        <AgreementCheckbox state={purchaseAgreed} toggle={() => setPurchaseAgreed((state) => !state)} />
-        <AgreementText>
-          I have read, fully understood and agree to be bound by the&nbsp;
-          <a
-            style={{
-              textDecoration: 'none',
-              color: '#6667FF',
-            }}
-            href={
-              purchaseAgreement
-                ? purchaseAgreement.file?.public
-                : 'https://drive.google.com/file/d/1IyTwpKXXX2akqYimUstvwfcfFEPuOGBa/view?usp=sharing'
-            }
-            target="_blank"
-            rel="noreferrer"
-          >
-            Purchase Agreement
-          </a>
-          &nbsp;in respect of this token sale.
-        </AgreementText>
+        {purchaseAgreement && (
+          <>
+            <AgreementCheckbox state={purchaseAgreed} toggle={() => setPurchaseAgreed((state) => !state)} />
+            <AgreementText>
+              I have read, fully understood and agree to be bound by the&nbsp;
+              <a
+                style={{
+                  textDecoration: 'none',
+                  color: '#6667FF',
+                }}
+                href={purchaseAgreement.file?.public}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Purchase Agreement
+              </a>
+              &nbsp;in respect of this token sale.
+            </AgreementText>
+          </>
+        )}
       </Agreement>
       <Agreement>
-        <AgreementCheckbox
-          state={investmentMemorandumAgreed}
-          toggle={() => setInvestmentMemorandumAgreed((state) => !state)}
-        />
-        <AgreementText>
-          I have read, fully understood and agree to be bound by the&nbsp;
-          <a
-            style={{
-              textDecoration: 'none',
-              color: '#6667FF',
-            }}
-            href={
-              investmentMemorandum
-                ? investmentMemorandum.file?.public
-                : 'https://drive.google.com/file/d/1cpYhcSYbxodNWB_OpvyjbFLwnHgGF6lj/view?usp=sharing'
-            }
-            target="_blank"
-            rel="noreferrer"
-          >
-            Investment Memorandum
-          </a>
-          &nbsp;in respect of this token sale.
-        </AgreementText>
+        {investmentMemorandum && (
+          <>
+            <AgreementCheckbox
+              state={investmentMemorandumAgreed}
+              toggle={() => setInvestmentMemorandumAgreed((state) => !state)}
+            />
+            <AgreementText>
+              I have read, fully understood and agree to be bound by the&nbsp;
+              <a
+                style={{
+                  textDecoration: 'none',
+                  color: '#6667FF',
+                }}
+                href={investmentMemorandum.file?.public}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Investment Memorandum
+              </a>
+              &nbsp;in respect of this token sale.
+            </AgreementText>
+          </>
+        )}
       </Agreement>
       <Agreement>
-        <AgreementCheckbox state={otherDocumentsAgreed} toggle={() => setOtherDocumentsAgreed((state) => !state)} />
-        <AgreementText>
-          I have read, fully understood and agree to be bound by the other relevant agreements here in respect of this
-          token sale:
-          {otherExecutionDocuments.length > 0 ? (
-            otherExecutionDocuments.map((document, idx) => (
-              <>
-                <br />
-                <a
-                  style={{
-                    textDecoration: 'none',
-                    color: '#6667FF',
-                  }}
-                  href={
-                    document
-                      ? document.file?.public
-                      : 'https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing'
-                  }
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  &#xB7; {`Support Document ${idx + 1}`}
-                </a>
-              </>
-            ))
-          ) : (
-            <a
-              style={{
-                textDecoration: 'none',
-                color: '#6667FF',
-              }}
-              href="https://drive.google.com/file/d/1Bga3eEP8krZ8efFUUkpRgc4tQKcezY75/view?usp=sharing"
-              target="_blank"
-              rel="noreferrer"
-            >
-              &#xB7; Support Document 1
-            </a>
-          )}
-        </AgreementText>
+        {otherExecutionDocuments.length > 0 && (
+          <>
+            <AgreementCheckbox state={otherDocumentsAgreed} toggle={() => setOtherDocumentsAgreed((state) => !state)} />
+            <AgreementText>
+              I have read, fully understood and agree to be bound by the other relevant agreements here in respect of
+              this token sale:
+              {otherExecutionDocuments.map((document, idx) => (
+                <>
+                  <br />
+                  <a
+                    style={{
+                      textDecoration: 'none',
+                      color: '#6667FF',
+                    }}
+                    href={document.file?.public}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    &#xB7; {`Support Document ${idx + 1}`}
+                  </a>
+                </>
+              ))}
+            </AgreementText>
+          </>
+        )}
       </Agreement>
 
       <InvestFormSubmitButton
         state={submitState.current}
         disabled={
           isDisabled ||
-          !purchaseAgreed ||
-          !investmentMemorandumAgreed ||
-          !otherDocumentsAgreed ||
+          (purchaseAgreement && !purchaseAgreed) ||
+          (investmentMemorandum && !investmentMemorandumAgreed) ||
+          (otherExecutionDocuments.length > 0 && !otherDocumentsAgreed) ||
           submitState.current !== InvestSubmitState.default
         }
         onSubmit={submit}
