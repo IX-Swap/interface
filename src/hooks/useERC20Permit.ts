@@ -60,6 +60,14 @@ const PERMITTABLE_TOKENS: {
     [IXS[137].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
     [USDC[137].address]: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
   },
+  [84532]: {
+    [IXS[84532].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
+    [USDC[84532].address]: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
+  },
+  [8453]: {
+    [IXS[8453].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
+    [USDC[8453].address]: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
+  },
 }
 
 export enum UseERC20PermitState {
