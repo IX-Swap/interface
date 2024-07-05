@@ -88,15 +88,20 @@ export const OfferGallery: React.FC<Props> = (props) => {
           <SocialMediaLinks>
             <SocialMediaLink href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
             {props.offer?.whitepaperUrl && <SocialMediaLink href={props.offer.whitepaperUrl}>Dataroom</SocialMediaLink>}
+            {socialMedialLinks?.slice(0, 3)?.map((link, idx) => (
+              <SocialMediaLink key={`link-${idx}`} href={link.url}>
+                {link.logo}
+              </SocialMediaLink>
+            ))}
           </SocialMediaLinks>
-          <SocialMediaLinks style={{ marginTop: '20px', justifyContent: 'left', width: '30%', marginLeft: '20px' }}>
-            {socialMedialLinks
-              .filter((link) => link.url)
-              .map((link, idx) => (
-                <SocialMediaLink key={`link-${idx}`} href={link.url}>
-                  {link.logo}
-                </SocialMediaLink>
-              ))}
+          <SocialMediaLinks
+            style={{ marginTop: '20px', justifyContent: 'flex-start',}}
+          >
+            {socialMedialLinks?.slice(3)?.map((link, idx) => (
+              <SocialMediaLink key={`link-${idx}`} href={link.url}>
+                {link.logo}
+              </SocialMediaLink>
+            ))}
           </SocialMediaLinks>
         </>
       ) : (
@@ -205,8 +210,9 @@ const SocialMediaLinks = styled.div`
   align-items: center;
   gap: 1.5rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    // padding: 20px;
-    justify-content: center;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-left: 20px;
   }
 `
 
@@ -216,7 +222,6 @@ const SocialMediaLink = styled.a`
   height: 36px;
   padding: 10px;
   text-decoration: none;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 
@@ -235,7 +240,8 @@ const SocialMediaLink = styled.a`
     transform: scale(1.2);
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    width: 42%;
+
+    padding: 12px;
   }
   cursor: pointer;
   target: '_blank';
