@@ -69,36 +69,40 @@ export const NotAvailablePage = () => {
             <Trans>Connect Wallet</Trans>
           </Text>
         </PinnedContentButton>
-        <span>
-          While your wallet is not connected, you can see our New <br />
-          <a
-            style={{ color: '#6666FF', textDecoration: 'none' }}
-            href="https://ixswap.defiterm.io/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Staking Program
-          </a>
-          ,&nbsp;
-          <a
-            style={{ color: '#6666FF', textDecoration: 'none' }}
-            href="https://ixswap.defiterm.io/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Liquidity Mining on Polygon
-          </a>
-          &nbsp;and&nbsp; <br />
-          <a
-            style={{ color: '#6666FF', textDecoration: 'none' }}
-            href="https://app.uniswap.org/#/add/v2/ETH/0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4?chain=polygon"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Liquidity Mining on Ethereum
-          </a>
-          .
-        </span>
+
+        {config?.isIxSwap ? (
+          <span>
+            While your wallet is not connected, you can see our New <br />
+            <a
+              style={{ color: '#6666FF', textDecoration: 'none' }}
+              href="https://ixswap.defiterm.io/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Staking Program
+            </a>
+            ,&nbsp;
+            <a
+              style={{ color: '#6666FF', textDecoration: 'none' }}
+              href="https://ixswap.defiterm.io/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Liquidity Mining on Polygon
+            </a>
+            &nbsp;and&nbsp; <br />
+            <a
+              style={{ color: '#6666FF', textDecoration: 'none' }}
+              href="https://app.uniswap.org/#/add/v2/ETH/0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4?chain=polygon"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Liquidity Mining on Ethereum
+            </a>
+            .
+          </span>
+        ) : null}
+
         <Modal isOpen={showConnectModal} onDismiss={toggleModal} maxWidth="430px" maxHeight="310px">
           <ConnectionDialog onConnect={onConnect} onClose={toggleModal} />
         </Modal>
