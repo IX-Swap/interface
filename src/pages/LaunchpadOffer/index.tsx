@@ -119,14 +119,14 @@ export default function LaunchpadOffer() {
   return (
     <OfferBackgroundWrapper>
       <OfferContainer>
-        <div className="back-button">
-          <BackButton as={DiscreteInternalLink} onClick={() => history.goBack()}>
-            <ArrowLeft color={theme.launchpad.colors.primary} />
-          </BackButton>
-        </div>
         <header>
           <Header />
         </header>
+        <div className="back-button">
+          <BackButton onClick={() => history.goBack()}>
+            <ArrowLeft color={theme.launchpad.colors.primary} />
+          </BackButton>
+        </div>
 
         <section>
           <OfferSummary offer={offer.data} />
@@ -242,7 +242,6 @@ const BackButton = styled(FilledButton)`
   border-radius: 6px;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    margin-top: 80px;
     position: relative;
     right: 85%;
   }

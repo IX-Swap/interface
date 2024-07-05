@@ -301,8 +301,8 @@ const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
   flex: 1;
   z-index: 1;
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 12px;
-    margin-top: 64px;
+    padding: 0 12px;
+    margin-top: 0;
   `};
 `
 
