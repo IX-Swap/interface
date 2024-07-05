@@ -267,11 +267,11 @@ export default function IndividualKycFormV2() {
     const { value } = event.target
     setSelectedCheckbox(value)
   }
+
   const handleSuccess = async (section: string) => {
     if (section === SuccessType.PERSONAL) {
       await fetchKYCData()
       setIsPersonalVerified(true)
-      fetchKYCData()
     } else if (section === SuccessType.BUSINESS) {
       await fetchKYCData()
       setIsBusinessEmailVerified(true)
