@@ -31,8 +31,8 @@ export const BodyWrapper = styled.div<{
   `};
   z-index: 1;
 
-  ${({ theme, hasAnnouncement }) => theme.mediaWidth.upToMedium`
-    margin-top: ${hasAnnouncement ? '9rem' : '1rem'};
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    margin-top: 1rem;
   `};
 
   /* Media Query for Mobile */
