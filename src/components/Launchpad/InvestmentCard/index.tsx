@@ -237,7 +237,7 @@ const InvestmentCardImage = styled.img`
   width: 380px;
   overflow-x: hidden;
   border-radius: 6px;
-  height: 300px;
+  height: auto;
 `
 
 const InvestmentCardTagsContainer = styled.header`
@@ -308,7 +308,7 @@ const InvestmentCardDescription = styled.div`
 
 const InvestmentCardDetailsContainer = styled.div<{ show: boolean }>`
   opacity: ${(props) => (props.show ? '1' : '0')};
-  height: ${(props) => (props.show ? '180px' : '0')};
+  height: ${(props) => (props.show ? '200px' : '0')};
   transition: height 0.3s ease-in-out, opacity 0.2s ease-out 0.1s;
   ${(props) => props.show && `margin: 0.5rem -1.5rem;`}
   border-top: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
