@@ -20,6 +20,7 @@ interface Props {
   offer: Offer
   onClose: () => void
   openSuccess: () => void
+  openFailed: () => void
   investedData: InvestedDataRes
 }
 

@@ -7,6 +7,7 @@ import { useChangeLbpStatus } from 'state/lbp/hooks'
 import { ReactComponent as PauseIcon } from '../../../../assets/images/circlePause.svg'
 import { ReactComponent as CloseStopIcon } from '../../../../assets/images/circleStop.svg'
 import { ReactComponent as PlayIcon } from '../../../../assets/images/circlePlay.svg'
+import { useShowError } from 'state/application/hooks'
 
 interface BuyModalProps {
   isOpen: boolean
@@ -18,8 +19,11 @@ interface BuyModalProps {
 }
 
 const ConfirmStatus = ({ isOpen, onClose, statusText, lbpId, updateStatus }: BuyModalProps) => {
-  const [loading, setLoading] = useState(false)
   const changeLbpStatus = useChangeLbpStatus()
+  const showError = useShowError()
+
+  const [loading, setLoading] = useState(false)
+
   const handleConfirm = () => {
     setLoading(true)
     const newStatus = getStatusFromString(statusText)
@@ -31,8 +35,11 @@ const ConfirmStatus = ({ isOpen, onClose, statusText, lbpId, updateStatus }: Buy
           setLoading(false)
         })
         .catch((error: any) => {
-          setLoading(false)
           console.error('Error changing LBP status:', error)
+          const message = error?.message || 'An error occurred';
+
+          showError(message)
+          setLoading(false)
         })
     }
   }

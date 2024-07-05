@@ -30,13 +30,13 @@ import { useRole } from 'state/user/hooks'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { OfferStatus } from 'state/launchpad/types'
 import { Line } from 'components/Line'
-
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
   const history = useHistory()
   const { isAdmin } = useRole()
-
+  const { config } = useWhitelabelState()
 
   const issuance = useGetIssuance()
   const issuances = useGetIssuancePlain()
@@ -66,6 +66,7 @@ export const NewIssuanceForm = () => {
     },
     [history]
   )
+  const supportEmail = config?.supportEmail || 'c@ixswap.io'
 
   React.useEffect(() => {
     issuance.load(Number(issuanceId))
@@ -96,9 +97,9 @@ export const NewIssuanceForm = () => {
 
           {showDropdown && (
             <IssuanceList>
-              {issuances.items.map((item) =>  (
+              {issuances.items.map((item) => (
                 <>
-                  <Line style={{marginBottom: '3px'}} />
+                  <Line style={{ marginBottom: '3px' }} />
                   <IssuanceEntry
                     key={item.id}
                     onClick={() => {
@@ -107,11 +108,15 @@ export const NewIssuanceForm = () => {
                       setShowDropdown(true)
                     }}
                     style={{
-                      color: selectedIssuanceId === null
-                        ? (Number(issuanceId) === item.id ? 'blue' : theme.launchpad.colors.text.title)
-                        : (selectedIssuanceId === item?.id ? 'blue' : theme.launchpad.colors.text.title),
+                      color:
+                        selectedIssuanceId === null
+                          ? Number(issuanceId) === item.id
+                            ? 'blue'
+                            : theme.launchpad.colors.text.title
+                          : selectedIssuanceId === item?.id
+                          ? 'blue'
+                          : theme.launchpad.colors.text.title,
                     }}
-                    
                   >
                     {item.name}
                   </IssuanceEntry>
@@ -168,7 +173,7 @@ export const NewIssuanceForm = () => {
                 description={
                   <>
                     To make changes to your application, please contact{' '}
-                    <ContactEmail href="mailto:C@ixswap.io">C@ixswap.io</ContactEmail>
+                    <ContactEmail href={`mailto:${supportEmail}`}>{supportEmail}</ContactEmail>
                   </>
                 }
               >
@@ -288,7 +293,7 @@ export const NewIssuanceForm = () => {
                 description={
                   <>
                     To make changes to your listing, please contact{' '}
-                    <ContactEmail href="mailto:C@ixswap.io">C@ixswap.io</ContactEmail>
+                    <ContactEmail href={`mailto:${supportEmail}`}>{supportEmail}</ContactEmail>
                   </>
                 }
               >

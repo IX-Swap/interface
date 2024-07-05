@@ -217,6 +217,7 @@ export interface User {
   tenant: string
   updatedAt: string
   managerOf: ManagerOfToken[]
+  whiteLabelConfig?: any
 }
 
 export interface TokenManagerEntry {
@@ -409,6 +410,11 @@ export interface KycList {
   prevPage: number
 }
 
+export enum IndividualKycVersion {
+  v1 = 'v1',
+  v2 = 'v2',
+}
+
 export interface IndividualKyc {
   accredited: number
   address: {
@@ -451,7 +457,7 @@ export interface IndividualKyc {
   investorDeclarationStatus: InvestorDeclaration
   taxDeclarations: TaxDeclaration[]
   [key: string]: any
-  version: string
+  version: IndividualKycVersion
 }
 
 export interface TaxDeclaration {
@@ -506,10 +512,26 @@ interface InvestorDeclaration {
   acceptRefusalRight: boolean
 }
 
+interface IndividualAudit {
+  firstName: string
+  middleName: string
+  lastName: string
+}
+
+interface Audit {
+  id: number
+  approvedBy?: number
+  approvedByUser?: IndividualAudit
+  rejectedBy?: number
+  rejectedByUser?: IndividualAudit
+  createdAt: string
+  updatedAt: string
+}
+
 export interface KycItem {
   customerId?: number
   documentVerificationStatus?: string | undefined
-  amlVerificationStatus?:  string | undefined
+  amlVerificationStatus?: string | undefined
   poaVerificationStatus?: string | undefined
   identityVerificationStatus?: string | undefined
   createdAt: string
@@ -537,6 +559,8 @@ export interface KycItem {
     updatedAt: string
     referredBy?: string
     referralCode?: string
+    whiteLabelConfig?: any
   }
   userId: number
+  audits: Audit[]
 }

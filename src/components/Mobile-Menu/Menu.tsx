@@ -70,8 +70,8 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
   const { isOfferManager, isAdmin, isTokenManager } = useRole()
 
   const showIssuance = useMemo(
-    () => account && (isAdmin || (isCorporate && isApproved && isOfferManager)),
-    [account, isAdmin, isCorporate, isApproved, isOfferManager]
+    () => account && (isAdmin || (isApproved && isOfferManager)),
+    [account, isAdmin, isApproved, isOfferManager]
   )
   return isAdminMenu ? (
     <ModalContainer>
@@ -156,18 +156,18 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             </>
           )}
 
-          {isAllowed('/pool') && chainId && chains.includes(chainId) && isWhitelisted && (
+          {isAllowed(routes.pool) && chainId && chains.includes(chainId) && isWhitelisted && (
             <>
-              <MenuListItem id={`pool-nav-link`} to={`/pool`} onClick={close}>
+              <MenuListItem id={`pool-nav-link`} to={routes.pool} onClick={close}>
                 <Trans>Liquidity Pools</Trans>
               </MenuListItem>
               <Line />
             </>
           )}
 
-          {isAllowed('/swap') && chainId && chains.includes(chainId) && isWhitelisted && (
+          {isAllowed(routes.swap) && chainId && chains.includes(chainId) && isWhitelisted && (
             <>
-              <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} data-testid={`swap-nav-link`}>
+              <MenuListItem id={`swap-nav-link`} to={routes.swap} onClick={close} data-testid={`swap-nav-link`}>
                 <Trans>Swap/Trade</Trans>
               </MenuListItem>{' '}
               <Line />
@@ -184,15 +184,15 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             </ExternalListItem>
           )} */}
 
-          {isAllowed('/faucet') && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-            <MenuListItem disabled={!isApproved} id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
+          {isAllowed(routes.faucet) && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+            <MenuListItem disabled={!isApproved} id={`faucet-nav-link`} to={routes.faucet} onClick={close}>
               <Trans>Faucet</Trans>
             </MenuListItem>
           )}
 
-          {isAllowed('/kyc') && (
+          {isAllowed(routes.kyc) && (
             <>
-              <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
+              <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={routes.kyc} onClick={close}>
                 <Trans>KYC</Trans>
               </MenuListItem>
               <Line />
@@ -292,7 +292,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                 to="/issuance"
                 onClick={close}
               >
-                <Trans>Issuance Dashboard</Trans>
+                <Trans>Issuance</Trans>
               </MenuListItem>
               <Line />
             </>
@@ -314,10 +314,10 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         </MenuList>
       </Container>
       <StyledFooter>
-        <span>Copyright © IX Swap 2024</span>
+        <span>Copyright ©{config?.name || 'IX Swap'} 2024</span>
         <div>
           <a
-            href={config?.footerConfig?.termsLink || 'https://ixswap.io/terms-and-conditions/'}
+            href={config?.termsAndConditionsUrl || 'https://ixswap.io/terms-and-conditions/'}
             target="_blank"
             rel="noreferrer"
           >
@@ -325,7 +325,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
           </a>
 
           <a
-            href={config?.footerConfig?.privacyLink || 'https://ixswap.io/privacy-policy/'}
+            href={config?.privacyPolicyUrl || 'https://ixswap.io/privacy-policy/'}
             target="_blank"
             rel="noreferrer"
           >

@@ -39,6 +39,22 @@ type ErrorBoundaryState = {
   isChunkError: boolean
 }
 
+const isForceRefreshed = "page-has-been-force-refreshed";
+
+const retryPageLoading = () => {
+  const pageHasAlreadyBeenForceRefreshed = JSON.parse(
+    window.localStorage.getItem(isForceRefreshed) || "false"
+  ) as boolean;
+
+  if (!pageHasAlreadyBeenForceRefreshed) {
+    window.localStorage.setItem(isForceRefreshed, "true");
+    return window.location.reload();
+  } else {
+    window.localStorage.setItem(isForceRefreshed, "false");
+  }
+};
+
+
 export default class ErrorBoundary extends React.Component<unknown, ErrorBoundaryState> {
   constructor(props: unknown) {
     super(props)
@@ -50,6 +66,7 @@ export default class ErrorBoundary extends React.Component<unknown, ErrorBoundar
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    retryPageLoading();
     ReactGA.exception({
       ...error,
       ...errorInfo,

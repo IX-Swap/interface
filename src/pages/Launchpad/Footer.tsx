@@ -8,7 +8,7 @@ import { ReactComponent as DotSeparator } from 'assets/launchpad/svg/investment-
 // import { ReactComponent as Logo } from 'assets/images/FooterlogoNew.svg'
 import { ReactComponent as Logo } from 'assets/images/ix-swapNew.svg'
 import { ReactComponent as TelegramLogo } from 'assets/launchpad/svg/social/telegram.svg'
-import { ReactComponent as TwitterLogo } from 'assets/launchpad/svg/social/twitter.svg'
+import { ReactComponent as XLogo } from 'assets/launchpad/svg/social/twitter.svg'
 import { ReactComponent as MLogo } from 'assets/launchpad/svg/social/m.svg'
 import { ReactComponent as DiscordLogo } from 'assets/launchpad/svg/social/discord.svg'
 import { ReactComponent as YoutubeLogo } from 'assets/launchpad/svg/social/youtube.svg'
@@ -80,8 +80,8 @@ export const Footer: React.FC<Props> = (props) => {
           <SocialMediaLink href="https://t.me/ixswapofficial" target="_blank" rel="noreferrer">
             <TelegramLogo />
           </SocialMediaLink>
-          <SocialMediaLink href="https://twitter.com/IxSwap" target="_blank" rel="noreferrer">
-            <TwitterLogo />
+          <SocialMediaLink href="https://x.com/IxSwap" target="_blank" rel="noreferrer">
+            <XLogo />
           </SocialMediaLink>
           <SocialMediaLink href="https://coinmarketcap.com/currencies/ix-swap/" target="_blank" rel="noreferrer">
             <MLogo />

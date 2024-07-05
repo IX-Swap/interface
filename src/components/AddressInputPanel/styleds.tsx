@@ -10,11 +10,8 @@ export const InputPanel = styled.div<{ hideInput?: boolean }>`
 `
 
 export const ContainerRow = styled.div`
-  border-radius: 8px;
-  border: 1px solid #e6e6ff;
   background-color: ${({ theme }) => theme.bg0};
   width: 'initial';
-  padding: 10px 31px 10px 27px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       boder-radius: 1rem;
   `};
@@ -32,10 +29,9 @@ export const InputContainer = styled.div`
 export const Input = styled.input<{ error?: boolean }>`
   font-size: 1.25rem;
   outline: none;
-  border: none;
   flex: 1 1 auto;
   width: 0;
-  background-color: ${({ theme }) => theme.bg7};
+  background-color: ${({ theme }) => theme.bg0};
   transition: color 300ms ${({ error }) => (error ? 'step-end' : 'step-start')};
   color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
   overflow: hidden;
@@ -45,10 +41,12 @@ export const Input = styled.input<{ error?: boolean }>`
   font-size: 17px;
   line-height: 40px;
   width: 100%;
+  padding: 10px 27px;
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
   ::placeholder {
     color: ${({ theme }) => theme.text4};
   }
-  padding: 0px;
   -webkit-appearance: textfield;
 
   ::-webkit-search-decoration {
@@ -64,5 +62,10 @@ export const Input = styled.input<{ error?: boolean }>`
     color: ${({ theme }) => theme.text2};
     opacity: 0.5;
     font-weight: 500;
+  }
+  &:disabled {
+    color: ${({ theme }) => theme.text2};
+    background-color: ${({ theme }) => theme.bg7};
+    cursor: not-allowed;
   }
 `

@@ -18,8 +18,8 @@ export const Header = () => {
   const [isActiveRoute, setIsActiveRoute] = useState(false)
 
   const showIssuance = useMemo(
-    () => account && (isAdmin || (isCorporate && isApproved && isOfferManager)),
-    [account, isAdmin, isCorporate, isApproved, isOfferManager]
+    () => account && (isAdmin || (isApproved && isOfferManager)),
+    [account, isAdmin, isApproved, isOfferManager]
   )
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export const Header = () => {
             </TitleSection>
           ) : (
             <TitleSection to="/launchpad">
-              <NewLogo />
+              <NewLogo width="130px" height="47px" />
             </TitleSection>
           )}
           <HeaderLinks>
