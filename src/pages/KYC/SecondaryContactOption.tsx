@@ -153,6 +153,7 @@ const SecondaryContactOption: React.FC<Props> = ({
   const handleTelegramRedirect = () => {
     window.open(telegramUrl, '_blank')
   }
+
   return (
     <EmailVerificationContainer>
       <ContentContainer>

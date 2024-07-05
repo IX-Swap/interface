@@ -266,6 +266,7 @@ export default createReducer(initialState, (builder) =>
     .addCase(clearUserData, (state) => {
       state.secTokenAuthorizations = {}
       state.userSecTokens = []
+      state.me = {} as RawGetMePayload
     })
     .addCase(updateUnderstoodPlayground, (state, { payload: { understood } }) => {
       state.hasUnderstoodPlayground = understood

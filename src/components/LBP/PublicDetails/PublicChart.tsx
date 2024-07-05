@@ -5,6 +5,8 @@ import { useWeb3React } from '@web3-react/core'
 import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
 import { unixTimeToFormat } from 'utils/time'
 import { getPrice, getDecayAtStep } from '../utils/calculation'
+import { MEDIA_WIDTHS } from 'theme'
+import { isMobile } from 'react-device-detect'
 
 const composeHistoricalPriceQuery = (lbpAddress: string) => {
   return `
@@ -188,6 +190,20 @@ export default function DetailsChart({
       }
     }
 
+    const endPrice = getPrice(
+      parseFloat(currentShareReserve),
+      shareEndWeight,
+      parseFloat(currentAssetReserve),
+      1 - shareEndWeight
+    ).toFixed(PRICE_PRECISION)
+    bucketMap[DATA_POINT_COUNT] = {
+      bucketIndex: DATA_POINT_COUNT,
+      date: unixTimeToFormat({ time: new Date(endDate || '').getTime() / 1000, format: 'MMM DD' }),
+      dateWithTime: unixTimeToFormat({ time: new Date(endDate || '').getTime() / 1000, format: 'MMM DD, HH:mm:ss' }),
+      blockTimestamp: 0,
+      price: endPrice,
+    }
+
     // Convert bucketMap object to array and sort by bucketIndex
     const result = Object.values(bucketMap).sort((a: any, b: any) => a.bucketIndex - b.bucketIndex)
     return result
@@ -213,16 +229,22 @@ export default function DetailsChart({
     }
 
     const bucketIndex = getBucketIndex(currentTime.getTime())
-    const currentPointIndex = dataPoints.findIndex((point: any) => point.bucketIndex === bucketIndex)
+    let currentPointIndex = dataPoints.findIndex((point: any) => point.bucketIndex === bucketIndex)
+
+    if (currentPointIndex === -1) {
+      currentPointIndex = dataPoints.findIndex((point: any) => point.bucketIndex > bucketIndex)
+    }
+
     const progressPercentage = ((currentPointIndex + 1) / dataPoints.length) * 100
+
     return progressPercentage
   }, [getBucketIndex, dataPoints, endDate])
 
   return (
     <ChartContainer>
       <AreaChart
-        width={chartWidth ? chartWidth : 800}
-        height={400}
+        width={isMobile ? 300 : chartWidth ? chartWidth : 800}
+        height={isMobile ? 300 : 400}
         data={dataPoints}
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
       >
@@ -283,6 +305,11 @@ const ChartContainer = styled.div`
   padding: 24px;
   margin-bottom: 30px;
   position: relative;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 100%;
+    padding: 16px;
+  }
 `
 
 const RightLegend = styled.div`

@@ -16,7 +16,7 @@ export const getWhitelabelConfigReq = async () => {
   return response.data
 }
 
-export const useGetWihitelabelConfig = () => {
+export const useGetWhitelabelConfig = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(async () => {

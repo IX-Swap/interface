@@ -6,13 +6,11 @@ import { Formik } from 'formik'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
 import { Prompt } from 'react-router-dom'
-import { ReactComponent as TrashIcon } from 'assets/images/newDelete.svg'
 import { ReactComponent as TrashNoBorder } from 'assets/images/TrashNoBorder.svg'
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
-import { ButtonText, ButtonIXSGradient } from 'components/Button'
+import { ButtonText } from 'components/Button'
 import { TYPE } from 'theme'
-import { GradientText } from 'pages/CustodianV2/styleds'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import { RowBetween, RowCenter } from 'components/Row'
 import { PhoneInput } from 'components/PhoneInput'
@@ -30,26 +28,18 @@ import { DateInput } from 'components/DateInput'
 import moment from 'moment'
 import dayjs from 'dayjs'
 
-import { CorporateMembersTable, Select, TextInput, Uploader } from './common'
+import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
-import {
-  FormCard,
-  FormGrid,
-  ExtraInfoCard,
-  Divider,
-  StyledStickyBox,
-  StyledBigPassed,
-  ExtraInfoCardCountry,
-} from './styleds'
-import { ChooseFile, BeneficialOwnersTable, DeleteRow } from './common'
+import { FormCard, FormGrid, ExtraInfoCard, StyledStickyBox, StyledBigPassed, ExtraInfoCardCountry } from './styleds'
+import { ChooseFile } from './common'
 import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
 import { Box } from 'rebass'
 import { Plus } from 'react-feather'
-import { IconButton } from '@material-ui/core'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 type FormSubmitHanderArgs = {
   createFn: (body: any) => any
@@ -60,12 +50,7 @@ type FormSubmitHanderArgs = {
 export default function CorporateKycForm() {
   const canLeavePage = useRef(false)
   const [cookies] = useCookies(['annoucementsSeen'])
-  const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
-  const [updateKycId, setUpdateKycId] = useState<any>(null)
-  const [formData, setFormData] = useState<any>(null)
-  const [canSubmit, setCanSubmit] = useState(true)
-  const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
-  const [errors, setErrors] = useState<any>({})
+  const form = useRef<any>(null)
   const history = useHistory()
   const { kyc, loadingRequest } = useKYCState()
   const showError = useShowError()
@@ -74,13 +59,18 @@ export default function CorporateKycForm() {
   const updateCorporateKYC = useUpdateCorporateKYC()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
-  const [isTaxNumberDisabled, setIsTaxNumberDisabled] = useState<boolean>(false)
+  const prevAccount = usePrevious(account)
+  const { config } = useWhitelabelState()
 
-  const form = useRef<any>(null)
+  const [isTaxNumberDisabled, setIsTaxNumberDisabled] = useState<boolean>(false)
+  const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
+  const [updateKycId, setUpdateKycId] = useState<any>(null)
+  const [formData, setFormData] = useState<any>(null)
+  const [canSubmit, setCanSubmit] = useState(true)
+  const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
+  const [errors, setErrors] = useState<any>({})
 
   const isLoggedIn = !!token && !!account
-
-  const prevAccount = usePrevious(account)
 
   useEffect(() => {
     if (account && prevAccount && account !== prevAccount) {
@@ -90,17 +80,6 @@ export default function CorporateKycForm() {
 
   useEffect(() => {
     setWaitingForInitialValues(true)
-
-    // const getProgress = async () => {
-    //   const data = await getCorporateProgress()
-    //   if (data) {
-    //     const transformedData = corporateTransformApiData(data)
-    //     setFormData(transformedData)
-    //     if (!data.taxIdAvailable) {
-    //       setIsTaxNumberDisabled(true)
-    //     }
-    //   }
-    // }
 
     const getProgress = async () => {
       const data = await getCorporateProgress()
@@ -174,7 +153,10 @@ export default function CorporateKycForm() {
   const addBeneficiary = (owners: any, setFieldValue: any) => {
     setFieldValue(
       'beneficialOwners',
-      [...owners, { fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfIdentity: null }],
+      [
+        ...owners,
+        { fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfIdentity: null },
+      ],
       false
     )
   }
@@ -187,7 +169,14 @@ export default function CorporateKycForm() {
     newData.splice(index, 1)
 
     if (!newData.length) {
-      newData.push({ fullName: '', nationality: '', dateOfBirth: '', address: '', shareholding: '', proofOfIdentity: null })
+      newData.push({
+        fullName: '',
+        nationality: '',
+        dateOfBirth: '',
+        address: '',
+        shareholding: '',
+        proofOfIdentity: null,
+      })
     }
     setFieldValue('beneficialOwners', newData, false)
   }
@@ -339,8 +328,6 @@ export default function CorporateKycForm() {
       } catch (error: any) {
         const newErrors: any = {}
 
-        // console.log(error, 'kjkjkjkjkj')
-
         error?.inner.forEach((e: any) => {
           newErrors[e.path] = e?.message
         })
@@ -374,39 +361,6 @@ export default function CorporateKycForm() {
       <LoadingIndicator isLoading={loadingRequest} />
 
       <StyledBodyWrapper style={{ background: 'none', boxShadow: 'none' }} hasAnnouncement={!cookies.annoucementsSeen}>
-        {/* <ButtonText
-          style={{ textDecoration: 'none' }}
-          display="flex"
-          marginBottom={isMobile ? '32px' : '64px'}
-          onClick={goBack}
-        >
-          <ArrowLeft style={{ width: isMobile ? 20 : 26 }} />
-          <TYPE.title4 fontSize={isMobile ? 24 : 36} style={{ whiteSpace: 'nowrap' }} marginLeft="10px">
-            <Trans>KYC as</Trans>
-          </TYPE.title4>
-          <TYPE.title4>
-            <GradientText style={{ marginLeft: 8, fontSize: isMobile ? 26 : 36 }}>Corporate</GradientText>
-          </TYPE.title4>
-        </ButtonText> */}
-
-        {/* <ButtonText
-          style={{ textDecoration: 'none' }}
-          display="flex"
-          marginBottom={isMobile ? '0px' : '30px'}
-          marginTop={isMobile ? '80px' : '10px'}
-          onClick={goBack}
-        >
-          <ArrowLeft style={{ width: isMobile ? 20 : 26 }} />
-          <TYPE.title4
-            fontWeight={'800'}
-            fontSize={isMobile ? 24 : 24}
-            style={{ whiteSpace: 'nowrap' }}
-            marginLeft="10px"
-          >
-            <Trans>KYC as Corporate</Trans>
-          </TYPE.title4>
-        </ButtonText> */}
-
         {!waitingForInitialValues && formData && (
           <Formik
             innerRef={form}
@@ -430,14 +384,6 @@ export default function CorporateKycForm() {
                 }
                 const body = corporateTransformKycDto(values)
                 const data = updateKycId ? await updateCorporateKYC(updateKycId, body) : await createCorporateKYC(body)
-
-                // let data: any = null
-
-                // if (updateKycId) {
-                //   data = await updateCorporateKYC(updateKycId, body)
-                // } else {
-                //   data = await createCorporateKYC(body)
-                // }
 
                 if (data?.id) {
                   history.push('/kyc')
@@ -470,23 +416,6 @@ export default function CorporateKycForm() {
                 setCanSubmit(true)
                 canLeavePage.current = false
               }
-              // })
-              // .catch((error) => {
-              //   const newErrors: any = {}
-              //   error.inner.forEach((e: any) => {
-              //     newErrors[e.path] = e.message
-              //   })
-              // addPopup({
-              //   info: {
-              //     success: false,
-              //     summary: 'Please, fill the valid data',
-              //   },
-              // })
-              // setIsSubmittedOnce(true)
-              // setErrors(newErrors)
-              // setCanSubmit(false)
-              // canLeavePage.current = false
-              // })
             }}
           >
             {({ values, setFieldValue, dirty, handleSubmit }) => {
@@ -497,12 +426,6 @@ export default function CorporateKycForm() {
 
                 values.taxIdAvailable = true
               }
-              // if (!values.reason) values.reason = 'A'
-              // {
-              //   /* {({ values, setFieldValue, dirty, handleSubmit }) => {
-              // if (values.taxIdAvailable === undefined) values.taxIdAvailable = true
-              // if (!values.reason) values.reason = 'A' */
-              // }
 
               const shouldValidate = dirty && isSubmittedOnce
               const infoFilled =
@@ -530,7 +453,6 @@ export default function CorporateKycForm() {
                 !errors.residentialAddressCity
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
-              // const investorFilled = shouldValidate && !errors.accredited
               const taxDeclarationFilled = values.taxIdAvailable
                 ? shouldValidate && !errors.taxCountry && !errors.taxNumber
                 : shouldValidate
@@ -620,15 +542,6 @@ export default function CorporateKycForm() {
                               error={errors.typeOfLegalEntity && errors.typeOfLegalEntity}
                             />
                           </FormGrid>
-                          {/* <FormGrid columns={1}>
-                            <Checkbox
-                              checked={values.inFatfJurisdiction}
-                              onClick={() =>
-                                onChangeInput('inFatfJurisdiction', !values.inFatfJurisdiction, values, setFieldValue)
-                              }
-                              label="Is The Ultimate Holding Company A Regulated Entity Or Listed Company In a FATF Jurisdiction?"
-                            />
-                          </FormGrid> */}
                         </Column>
                       </FormCard>
 
@@ -860,39 +773,6 @@ export default function CorporateKycForm() {
                         )}
                       </FormCard>
 
-                      {/* <FormCard id="corporate">
-                        <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
-                            <Trans>Investor Status Declaration</Trans>
-                          </TYPE.title6>
-                          {investorFilled && <StyledBigPassed />}
-                        </RowBetween>
-
-                        <Column style={{ gap: '34px' }}>
-                          <Column style={{ gap: '12px' }}>
-                            <Checkbox
-                              name="accredited"
-                              isRadio
-                              checked={values.accredited === 0}
-                              onClick={() => onSelectChange('accredited', 0, setFieldValue)}
-                              label="I am not an accredited investor"
-                            />
-                            <Checkbox
-                              name="accredited"
-                              isRadio
-                              checked={values.accredited === 1}
-                              onClick={() => onSelectChange('accredited', 1, setFieldValue)}
-                              label={`I declare that I am “individual accredited Investor"`}
-                            />
-                            {errors.accredited && (
-                              <TYPE.small marginTop="-4px" color={'red1'}>
-                                <Trans>Choose one</Trans>
-                              </TYPE.small>
-                            )}
-                          </Column>
-                        </Column>
-                      </FormCard> */}
-
                       <FormCard id="fatca">
                         <RowBetween marginBottom="32px">
                           <TYPE.title7>
@@ -1027,167 +907,170 @@ export default function CorporateKycForm() {
                         </ExtraInfoCard>
                         {/* <BeneficialOwnersTable data={values.beneficialOwners} /> */}
                         {values.beneficialOwners?.map((beneficiar: Record<string, string | any>, index: number) => (
-                            <Column style={{ gap: '20px', marginBottom: '24px', borderRadius: '8px', border: 'solid 1px #E6E6FF', padding: '24px 24px' }} key={index}>
-                              <FormGrid columns={2}>
-                                <TextInput
-                                  value={beneficiar.fullName}
-                                  placeholder='Full Name'
-                                  label='Full Name'
-                                  onChange={(e: any) =>
-                                    changeBeneficiar(
-                                      'fullName',
-                                      e.currentTarget.value,
-                                      index,
-                                      values.beneficialOwners,
-                                      setFieldValue,
-                                      `beneficialOwners[${index}].fullName`
-                                    )
-                                  }
-                                  error={
-                                    errors[`beneficialOwners[${index}].fullName`] &&
-                                    errors[`beneficialOwners[${index}].fullName`]
-                                  }
-                                />
-                                <TextInput
-                                  value={beneficiar.nationality}
-                                  placeholder='Nationality'
-                                  label='Nationality'
-                                  onChange={(e: any) =>
-                                    changeBeneficiar(
-                                      'nationality',
-                                      e.currentTarget.value,
-                                      index,
-                                      values.beneficialOwners,
-                                      setFieldValue,
-                                      `beneficialOwners[${index}].nationality`
-                                    )
-                                  }
-                                  error={
-                                    errors[`beneficialOwners[${index}].nationality`] &&
-                                    errors[`beneficialOwners[${index}].nationality`]
-                                  }
-                                />
-                                <DateInput
-                                  // maxHeight={60}
-                                  error={errors[`beneficialOwners[${index}].dateOfBirth`] &&
-                                         errors[`beneficialOwners[${index}].dateOfBirth`]}
-                                  value={beneficiar.dateOfBirth}
-                                  id="dateOfBirthButton"
-                                  placeholder="Date of Birth"
-                                  onChange={(value) =>
-                                    changeBeneficiar(
-                                      'dateOfBirth',
-                                      dayjs(value).local().format('YYYY-MM-DD'),
-                                      index,
-                                      values.beneficialOwners,
-                                      setFieldValue,
-                                      `beneficialOwners[${index}].dateOfBirth`
-                                    )
-                                  }
-                                  maxDate={moment().subtract(18, 'years')}
-                                />
-                                <TextInput
-                                  value={beneficiar.address}
-                                  placeholder='Address'
-                                  label='Address'
-                                  onChange={(e: any) =>
-                                    changeBeneficiar(
-                                      'address',
-                                      e.currentTarget.value,
-                                      index,
-                                      values.beneficialOwners,
-                                      setFieldValue,
-                                      `beneficialOwners[${index}].address`
-                                    )
-                                  }
-                                  error={
-                                    errors[`beneficialOwners[${index}].address`] &&
-                                    errors[`beneficialOwners[${index}].address`]
-                                  }
-                                />
-                                {/* </DeleteRow> */}
-                                {/* </IconButton> */}
-                              </FormGrid>
-                              <FormGrid columns={1}>
-                                <TextInput
-                                    type="number"
-                                    onWheel={() => (document.activeElement as HTMLElement).blur()}
-                                    placeholder='%'
-                                    label='% Beneficial Ownership'
-                                    value={beneficiar.shareholding}
-                                    onChange={(e: any) =>
-                                      changeBeneficiar(
-                                        'shareholding',
-                                        e.currentTarget.value,
-                                        index,
-                                        values.beneficialOwners,
-                                        setFieldValue,
-                                        `beneficialOwners[${index}].shareholding`
-                                      )
-                                    }
-                                    error={errors[`beneficialOwners[${index}].shareholding`] }
-                                  />
-                                <ChooseFile
-                                    file={beneficiar.proofOfIdentity}
-                                    label='Proof of Identity'
-                                    onDrop={(file) =>
-                                      changeBeneficiar(
-                                        'proofOfIdentity',
-                                        file,
-                                        index,
-                                        values.beneficialOwners,
-                                        setFieldValue,
-                                        `beneficialOwners[${index}].proofOfIdentity`
-                                      )
-                                    }
-                                    error={
-                                      errors[`beneficialOwners[${index}].proofOfIdentity`] &&
-                                      errors[`beneficialOwners[${index}].proofOfIdentity`]
-                                    }
-                                    handleDeleteClick={() =>
-                                      changeBeneficiar(
-                                        'proofOfIdentity',
-                                        null,
-                                        index,
-                                        values.beneficialOwners,
-                                        setFieldValue,
-                                        `beneficialOwners[${index}].proofOfIdentity`
-                                      )
-                                    }
-                                  />
-                                  {/* <TrashIcon
-                                    style={{ cursor: 'pointer', marginTop: '5px', width: '100%' }}
-                                    onClick={() =>
-                                      deleteBeneficiar(
-                                        index,
-                                        values?.beneficialOwners,
-                                        values?.removedBeneficialOwners,
-                                        setFieldValue
-                                      )
-                                    }
-                                  /> */}
-                                  <ButtonText style={{ width: '100%', minHeight: 18, borderRadius: '8px', border: 'solid 1px #E6E6FF',padding: '18px 21px'}} onClick={(e) => {
-                                    e.preventDefault();
-                                    deleteBeneficiar(
-                                      index,
-                                      values?.beneficialOwners,
-                                      values?.removedBeneficialOwners,
-                                      setFieldValue
-                                    )
-                                  }}>
-                                    <TrashNoBorder style={{ margin: 'auto' }} type="button" />
-                                  </ButtonText>
-                              </FormGrid>
-                              {/* {values.beneficialOwners.length - 1 > index && <Divider />} */}
-                            </Column>
-                          ))}
-                        {/* {errors.beneficialOwners && (
-                          <TYPE.small marginTop="4px" color={'red1'}>
-                            <Trans>{`${errors.beneficialOwners}`}</Trans>
-                          </TYPE.small>
-                        )} */}
+                          <Column
+                            style={{
+                              gap: '20px',
+                              marginBottom: '24px',
+                              borderRadius: '8px',
+                              border: 'solid 1px #E6E6FF',
+                              padding: '24px 24px',
+                            }}
+                            key={index}
+                          >
+                            <FormGrid columns={2}>
+                              <TextInput
+                                value={beneficiar.fullName}
+                                placeholder="Full Name"
+                                label="Full Name"
+                                onChange={(e: any) =>
+                                  changeBeneficiar(
+                                    'fullName',
+                                    e.currentTarget.value,
+                                    index,
+                                    values.beneficialOwners,
+                                    setFieldValue,
+                                    `beneficialOwners[${index}].fullName`
+                                  )
+                                }
+                                error={
+                                  errors[`beneficialOwners[${index}].fullName`] &&
+                                  errors[`beneficialOwners[${index}].fullName`]
+                                }
+                              />
+                              <TextInput
+                                value={beneficiar.nationality}
+                                placeholder="Nationality"
+                                label="Nationality"
+                                onChange={(e: any) =>
+                                  changeBeneficiar(
+                                    'nationality',
+                                    e.currentTarget.value,
+                                    index,
+                                    values.beneficialOwners,
+                                    setFieldValue,
+                                    `beneficialOwners[${index}].nationality`
+                                  )
+                                }
+                                error={
+                                  errors[`beneficialOwners[${index}].nationality`] &&
+                                  errors[`beneficialOwners[${index}].nationality`]
+                                }
+                              />
+                              <DateInput
+                                // maxHeight={60}
+                                error={
+                                  errors[`beneficialOwners[${index}].dateOfBirth`] &&
+                                  errors[`beneficialOwners[${index}].dateOfBirth`]
+                                }
+                                value={beneficiar.dateOfBirth}
+                                id="dateOfBirthButton"
+                                placeholder="Date of Birth"
+                                onChange={(value) =>
+                                  changeBeneficiar(
+                                    'dateOfBirth',
+                                    dayjs(value).local().format('YYYY-MM-DD'),
+                                    index,
+                                    values.beneficialOwners,
+                                    setFieldValue,
+                                    `beneficialOwners[${index}].dateOfBirth`
+                                  )
+                                }
+                                maxDate={moment().subtract(18, 'years')}
+                              />
+                              <TextInput
+                                value={beneficiar.address}
+                                placeholder="Address"
+                                label="Address"
+                                onChange={(e: any) =>
+                                  changeBeneficiar(
+                                    'address',
+                                    e.currentTarget.value,
+                                    index,
+                                    values.beneficialOwners,
+                                    setFieldValue,
+                                    `beneficialOwners[${index}].address`
+                                  )
+                                }
+                                error={
+                                  errors[`beneficialOwners[${index}].address`] &&
+                                  errors[`beneficialOwners[${index}].address`]
+                                }
+                              />
+                              {/* </DeleteRow> */}
+                              {/* </IconButton> */}
+                            </FormGrid>
+                            <FormGrid columns={1}>
+                              <TextInput
+                                type="number"
+                                onWheel={() => (document.activeElement as HTMLElement).blur()}
+                                placeholder="%"
+                                label="% Beneficial Ownership"
+                                value={beneficiar.shareholding}
+                                onChange={(e: any) =>
+                                  changeBeneficiar(
+                                    'shareholding',
+                                    e.currentTarget.value,
+                                    index,
+                                    values.beneficialOwners,
+                                    setFieldValue,
+                                    `beneficialOwners[${index}].shareholding`
+                                  )
+                                }
+                                error={errors[`beneficialOwners[${index}].shareholding`]}
+                              />
+                              <ChooseFile
+                                file={beneficiar.proofOfIdentity}
+                                label="Proof of Identity"
+                                onDrop={(file) =>
+                                  changeBeneficiar(
+                                    'proofOfIdentity',
+                                    file,
+                                    index,
+                                    values.beneficialOwners,
+                                    setFieldValue,
+                                    `beneficialOwners[${index}].proofOfIdentity`
+                                  )
+                                }
+                                error={
+                                  errors[`beneficialOwners[${index}].proofOfIdentity`] &&
+                                  errors[`beneficialOwners[${index}].proofOfIdentity`]
+                                }
+                                handleDeleteClick={() =>
+                                  changeBeneficiar(
+                                    'proofOfIdentity',
+                                    null,
+                                    index,
+                                    values.beneficialOwners,
+                                    setFieldValue,
+                                    `beneficialOwners[${index}].proofOfIdentity`
+                                  )
+                                }
+                              />
+                              <ButtonText
+                                style={{
+                                  width: '100%',
+                                  minHeight: 18,
+                                  borderRadius: '8px',
+                                  border: 'solid 1px #E6E6FF',
+                                  padding: '18px 21px',
+                                }}
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  deleteBeneficiar(
+                                    index,
+                                    values?.beneficialOwners,
+                                    values?.removedBeneficialOwners,
+                                    setFieldValue
+                                  )
+                                }}
+                              >
+                                <TrashNoBorder style={{ margin: 'auto' }} type="button" />
+                              </ButtonText>
+                            </FormGrid>
+                          </Column>
+                        ))}
+
                         <ExtraInfoCardCountry
-                          // type="button"
                           style={{ fontSize: 16, padding: 15 }}
                           onClick={() => addBeneficiary(values.beneficialOwners, setFieldValue)}
                         >
@@ -1211,16 +1094,24 @@ export default function CorporateKycForm() {
                             last 3 months.
                           </TYPE.buttonMuted>
                         </ExtraInfoCard>
-                        {/* <CorporateMembersTable data={values.corporateMembers} /> */}
-                        
+
                         {values.corporateMembers?.map(
                           (corporateMember: Record<string, string | any>, index: number) => (
-                            <Column style={{ gap: '20px', marginBottom: '24px', borderRadius: '8px', border: 'solid 1px #E6E6FF', padding: '24px 24px' }} key={index}>
+                            <Column
+                              style={{
+                                gap: '20px',
+                                marginBottom: '24px',
+                                borderRadius: '8px',
+                                border: 'solid 1px #E6E6FF',
+                                padding: '24px 24px',
+                              }}
+                              key={index}
+                            >
                               <FormGrid columns={3}>
                                 <TextInput
-                                  label='Full Name'
+                                  label="Full Name"
                                   value={corporateMember.fullName}
-                                  placeholder='Full Name'
+                                  placeholder="Full Name"
                                   onChange={(e: any) =>
                                     changeCorporateMembers(
                                       'fullName',
@@ -1237,9 +1128,9 @@ export default function CorporateKycForm() {
                                   }
                                 />
                                 <TextInput
-                                  label='Nationality'
+                                  label="Nationality"
                                   value={corporateMember.nationality}
-                                  placeholder='Nationality'
+                                  placeholder="Nationality"
                                   onChange={(e: any) =>
                                     changeCorporateMembers(
                                       'nationality',
@@ -1256,9 +1147,9 @@ export default function CorporateKycForm() {
                                   }
                                 />
                                 <TextInput
-                                  label='Designation'
+                                  label="Designation"
                                   value={corporateMember.designation}
-                                  placeholder='Designation'
+                                  placeholder="Designation"
                                   onChange={(e: any) =>
                                     changeCorporateMembers(
                                       'designation',
@@ -1276,9 +1167,9 @@ export default function CorporateKycForm() {
                                 />
                               </FormGrid>
                               <FormGrid columns={1}>
-                              <ChooseFile
+                                <ChooseFile
                                   file={corporateMember.proofOfIdentity}
-                                  label='Proof of Identity'
+                                  label="Proof of Identity"
                                   onDrop={(file) =>
                                     changeCorporateMembers(
                                       'proofOfIdentity',
@@ -1304,15 +1195,24 @@ export default function CorporateKycForm() {
                                     )
                                   }
                                 />
-                                <ButtonText style={{ width: '100%', minHeight: 18, borderRadius: '8px', border: 'solid 1px #E6E6FF',padding: '18px 21px'}} onClick={(e) => {
-                                  e.preventDefault();
-                                  deleteCorporateMembers(
-                                    index,
-                                    values?.corporateMembers,
-                                    values?.removedCorporateMembers,
-                                    setFieldValue
-                                  )
-                                }}>
+                                <ButtonText
+                                  style={{
+                                    width: '100%',
+                                    minHeight: 18,
+                                    borderRadius: '8px',
+                                    border: 'solid 1px #E6E6FF',
+                                    padding: '18px 21px',
+                                  }}
+                                  onClick={(e) => {
+                                    e.preventDefault()
+                                    deleteCorporateMembers(
+                                      index,
+                                      values?.corporateMembers,
+                                      values?.removedCorporateMembers,
+                                      setFieldValue
+                                    )
+                                  }}
+                                >
                                   <TrashNoBorder style={{ margin: 'auto' }} type="button" />
                                 </ButtonText>
                               </FormGrid>
@@ -1320,7 +1220,7 @@ export default function CorporateKycForm() {
                             </Column>
                           )
                         )}
-                        
+
                         {errors.corporateMembers && (
                           <TYPE.small marginTop="4px" color={'red1'}>{t`${errors.corporateMembers}`}</TYPE.small>
                         )}
@@ -1386,7 +1286,7 @@ export default function CorporateKycForm() {
                         <Column style={{ gap: '40px' }}>
                           <Uploader
                             title="Additional Documents"
-                            subtitle="For IXS Launchpad Issuers and IXS DEX Applicants, please also enclose the most recent financial documents (balance sheet, P&L statement or Annual Returns), Certificate of Incumbency and Company Organization Chart showing Ownership Structure (signed copy). All documents must be dated within the last 3 months."
+                            subtitle={`For ${config?.name || 'IXS'} Launchpad Issuers and ${config?.name || 'IXS'} DEX Applicants, please also enclose the most recent financial documents (balance sheet, P&L statement or Annual Returns), Certificate of Incumbency and Company Organization Chart showing Ownership Structure (signed copy). All documents must be dated within the last 3 months.`}
                             files={values.financialDocuments}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'financialDocuments', setFieldValue)

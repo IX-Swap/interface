@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ReactComponent as TelegramLogo } from 'assets/images/telegramIcon.svg'
-import { ReactComponent as TwitterLogo } from 'assets/images/xIcon.svg'
+import { ReactComponent as XLogo } from 'assets/images/xIcon.svg'
 import { ReactComponent as DiscordLogo } from 'assets/images/discordNew.svg'
 import { ReactComponent as YoutubeLogo } from 'assets/images/youtubeIcon.svg'
 import { ReactComponent as CoingeckoLogo } from 'assets/images/coinMarketNew.svg'
@@ -19,7 +19,7 @@ interface LinksProps {
 }
 
 const socialMediaIcons = {
-  'x.com': <TwitterLogo />,
+  'x.com': <XLogo />,
   telegram: <TelegramLogo />,
   youtube: <YoutubeLogo />,
   coingecko: <CoingeckoLogo />,
@@ -69,7 +69,8 @@ const SocialMediaLinks = styled.div`
   align-items: center;
   gap: 1rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    justify-content: center;
+    // justify-content: center;
+    display: grid;
   }
 `
 
@@ -90,7 +91,7 @@ const SocialMediaLink = styled.a`
     transform: scale(1.2);
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    width: 42%;
+    width: fit-content;
   }
 `
 

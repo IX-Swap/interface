@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Trans } from '@lingui/macro'
+import React from 'react'
 import styled, { css } from 'styled-components'
-import ReactPaginate from 'react-paginate'
-import { Input } from 'components/Input'
-import { inputGradientBorder, MEDIA_WIDTHS, TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 
 import { ReactComponent as ArrowIcon } from '../../assets/images/newArrow.svg'
 
@@ -14,36 +11,6 @@ interface Props {
 }
 
 export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
-  const [inputPage, hanldeInputPage] = useState<number | string>(0)
-
-  useEffect(() => {
-    hanldeInputPage(page)
-  }, [page])
-
-  const onPageClick = ({ selected }: { selected: number }) => {
-    onPageChange(selected + 1)
-  }
-
-  const onPageInputChange = ({ target: { value } }: { target: { value: string } }) => {
-    hanldeInputPage(+value || value)
-  }
-
-  const onClickButton = () => {
-    if (!inputPage) {
-      hanldeInputPage(1)
-      onPageChange(1)
-      return
-    }
-
-    if (+inputPage && +inputPage > totalPages) {
-      hanldeInputPage(totalPages)
-      onPageChange(totalPages)
-
-      return
-    }
-    onPageChange(+inputPage)
-  }
-
   if (!totalPages) return null
 
   return (
@@ -157,6 +124,7 @@ const Button = styled.div<{ disabled?: boolean }>`
     css`
       opacity: 0.5;
       cursor: not-allowed;
+      pointer-events: none;
     `}
   > img {
     width: 12px;

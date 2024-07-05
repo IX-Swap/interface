@@ -1,24 +1,22 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components/macro'
-import Column, { AutoColumn, ColumnCenter } from 'components/Column'
-import { TYPE } from 'theme'
+import Column from 'components/Column'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import SideBar from './SideBar'
 import QuantitiesAndWeight from './QuantitiesAndWeight'
 import { Line } from 'components/Line'
 import DetailsChart from './PublicChart'
 import StatisticData from './StatisticData'
-import { EmptyTable } from '../Dashboard/EmptyTable'
-import { LbpsFull } from '../Dashboard/LbpsFull'
 import TradeHistory from './HistoryTable'
 import AdditionalDocuments from './DocumentSec'
 import ComingSoon from './ComingSoon'
 import EndedSideBar from './Ended'
-import CloseSideBar from './ClosedSideBar'
 import { LbpFormValues, MarketData, LbpStatus } from '../types'
 import Links from './Links'
 import RedeemedSideBar from './RedeemedSideBar'
 import { useTokenContract } from 'hooks/useContract'
 import SideBarPaused from './SideBarPaused'
+import { isMobile } from 'react-device-detect'
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
@@ -29,6 +27,12 @@ const MiddleSectionWrapper = styled.div`
   background: #ffffff;
   padding: 0px 80px;
   margin: 0px 200px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 0px 20px;
+    margin: 0px;
+    width: -webkit-fill-available;
+  }
 `
 
 const MiddleSectionContainer = styled.div`
@@ -36,18 +40,9 @@ const MiddleSectionContainer = styled.div`
   background: #ffffff;
   display: flex;
   gap: 50px;
-`
-
-const ContentColumn = styled(ColumnCenter)`
-  width: 100%;
-  align-items: baseline;
-  @media (min-width: 768px) {
-    & + & {
-      margin-left: 80px;
-    }
-  }
-  @media (max-width: 768px) {
-    margin-bottom: 80px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    flex-direction: column;
+    gap: 20px;
   }
 `
 
@@ -107,6 +102,12 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
   return (
     <MiddleSectionWrapper>
       <MiddleSectionContainer>
+        {isMobile && (
+          <Column>
+            {SideBarByStatus}
+            <AdditionalDocuments uploadDocs={lbpData?.uploadDocs || []} />
+          </Column>
+        )}
         <Column>
           <TYPE.body1 color={'#666680'}>
             {showMore || !isTextLong ? sampleText : sampleText.slice(0, 300) + '...'}
@@ -129,10 +130,12 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
           />
           <StatisticData statsData={statsData} lbpData={lbpData} />
         </Column>
-        <Column>
-          {SideBarByStatus}
-          <AdditionalDocuments uploadDocs={lbpData?.uploadDocs || []} />
-        </Column>
+        {!isMobile && (
+          <Column>
+            {SideBarByStatus}
+            <AdditionalDocuments uploadDocs={lbpData?.uploadDocs || []} />
+          </Column>
+        )}
       </MiddleSectionContainer>
       <TradeHistory
         contractAddress={lbpData?.contractAddress}

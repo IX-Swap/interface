@@ -8,6 +8,8 @@ import { LbpsFull } from './LbpsFull'
 import { Footer } from 'pages/Launchpad/Footer'
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { LbpCreateButton } from '../LbpCreateButton'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
+import WhiteLabelFooter from 'components/WhiteLabelFooter'
 
 const tabs = [
   { title: 'Drafts', value: LbpStatus.draft },
@@ -42,7 +44,10 @@ const LblTabs: React.FC<TabsProps> = (props) => {
 export const LbpDashboard = () => {
   const location = useLocation()
   const history = useHistory()
+  const { config } = useWhitelabelState()
+
   const searchParams = new URLSearchParams(location.search)
+  const isIxSwap = config?.isIxSwap ?? false
 
   const [activeTab, setActiveTab] = React.useState<LbpStatus>(() => {
     const tabQuery = searchParams.get('tab')
@@ -83,7 +88,7 @@ export const LbpDashboard = () => {
         {activeTab === LbpStatus.ended && <LbpsFull type={LbpStatus.ended} />}
       </Body>
 
-      <Footer />
+      {isIxSwap ? <Footer /> : <WhiteLabelFooter />}
     </Container>
   )
 }

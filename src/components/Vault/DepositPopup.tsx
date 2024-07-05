@@ -37,7 +37,7 @@ export const DepositPopup = ({ currency, token }: Props) => {
   const dispatch = useDispatch<AppDispatch>()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const networkName = getOriginalNetworkFromToken(tokenInfo)
-  const {  onResetDeposit } = useDepositActionHandlers()
+  const { onResetDeposit } = useDepositActionHandlers()
 
   const onClose = useCallback(() => {
     onResetDeposit()
@@ -49,8 +49,8 @@ export const DepositPopup = ({ currency, token }: Props) => {
   }, [toggle, dispatch, hideAboutWrapping])
 
   return (
-    <RedesignedWideModal  isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
-      <ModalBlurWrapper style={{width: '500px'}} data-testid="depositPopup">
+    <RedesignedWideModal isOpen={isOpen} onDismiss={() => {}} minHeight={false} maxHeight={'fit-content'} scrollable>
+      <ModalBlurWrapper style={{ width: '500px' }} data-testid="depositPopup">
         <ModalContentWrapper>
           <ModalPadding>
             <RowBetween>

@@ -9,6 +9,8 @@ import { useMultipleContractSingleData, useSingleCallResult, useSingleContractMu
 import { Interface } from '@ethersproject/abi'
 import ERC20ABI from 'abis/erc20.json'
 import { Erc20Interface } from 'abis/types/Erc20'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.
@@ -154,3 +156,9 @@ export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<
   const balances = useTokenBalances(account ?? undefined, allTokensArray)
   return balances ?? {}
 }
+
+export const useWalletState = () => {
+  const walletState = useSelector((state: AppState) => state.wallet);
+
+  return walletState;
+};
