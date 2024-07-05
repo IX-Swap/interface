@@ -17,7 +17,7 @@ export const CopyrightBlock = () => {
       </CopyrightText>
       <Flex alignItems="center">
         <TermText
-          href={config?.footerConfig?.termsLink || 'https://ixswap.io/terms-and-conditions/'}
+          href={config?.termsAndConditionsUrl || 'https://ixswap.io/terms-and-conditions/'}
           target="_blank"
           rel="noreferrer"
         >
@@ -25,7 +25,7 @@ export const CopyrightBlock = () => {
         </TermText>
         <Dot />
         <TermText
-          href={config?.footerConfig?.privacyLink || 'https://ixswap.io/privacy-policy/'}
+          href={config?.privacyPolicyUrl || 'https://ixswap.io/privacy-policy/'}
           target="_blank"
           rel="noreferrer"
         >
