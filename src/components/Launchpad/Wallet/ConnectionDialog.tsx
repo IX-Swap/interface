@@ -178,7 +178,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
             By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
             <ExternalLink href={config?.termsAndConditionsUrl ?? "https://ixswap.io/terms-and-conditions/"}>Terms and Conditions</ExternalLink> and
             acknowledge that you have read and understood the{' '}
-            <ExternalLink href="https://ixswap.io/privacy-policy/">
+            <ExternalLink href={config?.privacyPolicyUrl ?? "https://ixswap.io/privacy-policy/"}>
               {config?.name || 'IX Swap'} Privacy Policy
             </ExternalLink>
             .
