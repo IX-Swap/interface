@@ -12,7 +12,7 @@ export const MULTICALL2_ADDRESSES = {
   [80002]: '0x099c0EBa98713231f2585F1dD7DCB01e6a1e0DD1',
   [137]: '0x65Eed76951B6660bb0b80AF8D8A3AC6b10C6e65F',
   [84532]: '0xcA11bde05977b3631167028862bE2a173976CA11',
-  [8453]: '', // TODO: add base chain
+  // [8453]: '', // TODO: add base chain
 }
 export const NFT_ADDRESS = {
   [1]: '',
@@ -81,7 +81,7 @@ export const IXS_ADDRESS: { [key: number]: string } = {
   [80002]: '0x30fada52969974d31f2738e7a890334266636d40',
   [137]: '0x1ba17c639bdaecd8dc4aac37df062d17ee43a1b8',
   [84532]: '0x949546713004ee02537292b1F41046f705909191',
-  [8453]: '', // TODO: add base chain
+  // [8453]: '', // TODO: add base chain
 }
 
 export const IXS_GOVERNANCE_ADDRESS: { [key: number]: string } = {
@@ -110,7 +110,7 @@ export const SWAP_ROUTER_ADDRESS: { [key: number]: string } = {
   [80002]: '0x84bb01821Bec8173be51bab99dDEB4123496304c',
   [137]: '0x72f54BEbabE8A26794B8BFeA832b65B7Bd88da37',
   [84532]: '0x58AeF810462eF25A38d4842afE7241687cbaB007',
-  [8453]: '', // TODO: add base chain
+  // [8453]: '', // TODO: add base chain
 }
 export const LIQUIDITY_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
@@ -119,7 +119,7 @@ export const LIQUIDITY_ROUTER_ADDRESS: { [key: number]: string } = {
   [80002]: '0x3390cDAfb5a6E5a9407BF7AAB98C24669b70ee4E',
   [137]: '0x342172484664093B1F15Eb10B91721ba3e3DC97A',
   [84532]: '0xee8e537bdD14D9170396dDAf91dC2537e59eD040',
-  [8453]: '', // TODO: add base chain
+  // [8453]: '', // TODO: add base chain
 }
 export const V2_CORE_FACTORY_ADDRESSES = constructSameAddressMap(FACTORY_ADDRESS as string)
 export const ARGENT_WALLET_DETECTOR_ADDRESS: { [chainId: number]: string } = {
@@ -139,7 +139,7 @@ export const FACTORY_ROUTER_ADDRESS: { [key: number]: string } = {
   [80002]: '0xA9f8EB060f36ECa31a05C3920A78883f7F650312',
   [137]: '0xc2D0e0bc81494adB71Ce9Aa350cC875DaE12D81D',
   [84532]: '0x9aA5f0Fab0D7F13ff528a0d637DE343cf23A0218',
-  [8453]: '', // TODO: add base chain
+  // [8453]: '', // TODO: add base chain
 }
 
 export const IXSALE_ADDRESS: { [key: number]: string } = {
@@ -149,7 +149,7 @@ export const IXSALE_ADDRESS: { [key: number]: string } = {
   [80002]: process.env.REACT_APP_IXSALE_ADDRESS_AMOY || '',
   [137]: process.env.REACT_APP_IXSALE_ADDRESS_POLYGON || '',
   [84532]: process.env.REACT_APP_IXSALE_ADDRESS_BASE_SEPOLIA || '',
-  [8453]: process.env.REACT_APP_IXSALE_ADDRESS_BASE || '', // TODO: add base chain
+  // [8453]: process.env.REACT_APP_IXSALE_ADDRESS_BASE || '', // TODO: add base chain
 }
 
 export const PAYOUT_ADDRESS = {
