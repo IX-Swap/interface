@@ -71,6 +71,9 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     async (values: FormValues) => {
       try {
         submitState.setLoading()
+        if (!values.isInterested) {
+          throw new Error('Not interested in investing')
+        }
         await requestWhitelist({ amount: values.amount ?? 0, isInterested: Boolean(values.isInterested) })
         submitState.setSuccess()
         showSuccess('Register to invest successfully')
@@ -78,9 +81,10 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
       } catch (err: any) {
         submitState.setError()
         showError(err?.message ?? '')
+        props.onClose()
       }
     },
-    [submitState]
+    [submitState, props.onClose]
   )
 
   const onChangeInterested = async (value: any, setValue: ValueSetter, setFieldTouched: TouchSetter) => {
