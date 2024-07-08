@@ -188,38 +188,33 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
             </>
           )}
 
-          {!whitelist.loading && whitelist.status && whitelist.isInterested && (
+          {!whitelist.loading && whitelist.status && whitelist.isInterested ? (
             <Column justifyContent="center" alignItems="center" gap="1rem">
               <KYCPromptIconContainer>
-                {whitelist.status === WhitelistStatus.accepted && (
+                {whitelist.status === WhitelistStatus.accepted ? (
                   <Check color={theme.launchpad.colors.success} size="35" />
-                )}
-                {whitelist.status !== WhitelistStatus.accepted && (
+                ) : (
                   <Clock color={theme.launchpad.colors.primary} size="35" />
                 )}
               </KYCPromptIconContainer>
 
               <WhitelistMessage>
-                {whitelist.status === WhitelistStatus.pending && (
+                {whitelist.status === WhitelistStatus.pending ? (
                   <>
                     Thank you. Please check by <b>{moment(props.offer.timeframe.preSale).format('DD/MM/YYYY')}</b> for
                     the result of your registration application.
                   </>
-                )}
-
-                {whitelist.status === WhitelistStatus.declined && (
+                ) : whitelist.status === WhitelistStatus.declined ? (
                   <>
                     Your registration to invest was unsuccessful. You can invest in this deal once the public sale
                     opens.
                   </>
-                )}
-
-                {whitelist.status === WhitelistStatus.accepted && (
+                ) : whitelist.status === WhitelistStatus.accepted ? (
                   <>Your registration to invest was successful. You can invest in this deal once the pre-sale starts.</>
-                )}
+                ) : null}
               </WhitelistMessage>
             </Column>
-          )}
+          ) : null}
         </InvestFormContainer>
       )}
     </Formik>
