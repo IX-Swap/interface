@@ -29,6 +29,7 @@ import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import * as Sentry from '@sentry/react'
+import RedirectHashToPath from 'RedirectHashToPath'
 
 /* eslint-disable react/display-name */
 
@@ -92,6 +93,7 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
+          <RedirectHashToPath />
           <LanguageProvider>
             <Web3ReactProvider connectors={connectors}>
               <Blocklist>
