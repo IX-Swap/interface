@@ -127,24 +127,26 @@ export default function CustodianV2() {
             </MySecTokensTab>
           )}
           {(isIxswap || enableFeaturedSecurityVaults) && featuredTokens?.length > 0 ? (
-            <Box marginBottom="72px">
-              <TYPE.title5 marginBottom="32px">
-                <Trans>Featured</Trans>
-              </TYPE.title5>
-              <FeaturedTokensGrid>
-                {featuredTokens.map((token: any) => (
-                  <FeaturedToken token={token} key={`featured-${token.id}`} />
-                ))}
-              </FeaturedTokensGrid>
-            </Box>
+            <>
+              <Box marginBottom="72px">
+                <TYPE.title5 marginBottom="32px">
+                  <Trans>Featured</Trans>
+                </TYPE.title5>
+                <FeaturedTokensGrid>
+                  {featuredTokens.map((token: any) => (
+                    <FeaturedToken token={token} key={`featured-${token.id}`} />
+                  ))}
+                </FeaturedTokensGrid>
+              </Box>
+              <SecTokensTable
+                page={tokens.page}
+                totalPages={tokens.totalPages}
+                totalItems={tokens.totalItems}
+                tokens={activeTokens}
+                offset={offset}
+              />
+            </>
           ) : null}
-          <SecTokensTable
-            page={tokens.page}
-            totalPages={tokens.totalPages}
-            totalItems={tokens.totalItems}
-            tokens={activeTokens}
-            offset={offset}
-          />
         </>
       )}
     </>
