@@ -1,5 +1,6 @@
 import ethereumLogoUrl from 'assets/images/ethereum-logo.png'
 import polygonLogoUrl from 'assets/images/polygon.svg'
+import { supportedChainId } from 'utils/supportedChainId'
 
 export enum SupportedChainId {
   MAINNET = 1,
@@ -7,6 +8,8 @@ export enum SupportedChainId {
   MATIC = 137,
   MUMBAI = 80001,
   AMOY = 80002,
+  BASE = 8453,
+  BASE_SEPOLIA = 84532,
 }
 
 export const NETWORK_LABELS: { [chainId: number]: string } = {
@@ -53,6 +56,7 @@ export const nameChainMap = {
   polygon: SupportedChainId.MATIC,
   kovan: SupportedChainId.KOVAN,
   ethereum: SupportedChainId.MAINNET,
+  base: SupportedChainId.BASE
 }
 
 export const CHAIN_INFO: ChainInfoMap = {

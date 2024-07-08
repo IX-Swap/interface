@@ -131,7 +131,6 @@ export const InformationForm = (props: Props) => {
 
   const onSubmit = async () => {
     const newErrors = await validateForm()
-
     const shouldSubmit = !Object.keys(newErrors).length
     if (shouldSubmit) {
       submitForm()
@@ -356,12 +355,12 @@ export const InformationForm = (props: Props) => {
             setter={setFieldValue}
             touch={setFieldTouched}
             label="Token Ticker"
-            placeholder="2-11 letters"
+            placeholder="2-16 letters"
             disabled={edit}
             inputFilter={uppercaseFilter}
             value={values.tokenTicker}
             error={(touched.tokenTicker && errors.tokenTicker) as string}
-            maxLength={11}
+            maxLength={16}
           />
           <FormField
             field="decimals"
