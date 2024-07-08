@@ -33,6 +33,7 @@ interface Props {
   totalPages: number
   offset: number
   totalItems: number
+  enableFeaturedSecurityVaults?: boolean
 }
 
 interface BodyProps {
@@ -120,7 +121,16 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
   )
 }
 
-export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, totalItems }: Props) => {
+export const SecTokensTable: FC<Props> = ({
+  tokens,
+  page,
+  offset,
+  totalPages,
+  enableFeaturedSecurityVaults,
+}: Props) => {
+  const { config } = useWhitelabelState()
+  const isIxswap = config?.isIxSwap ?? false
+
   const [searchValue, setSearchValue] = useState('')
   // const [filters] = useState<any>({
   //   industry: null,
@@ -219,55 +229,62 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
         </TYPE.title5>
       </TYPE.title5>
 
-      <Flex marginBottom="40px" flexDirection={isMobile ? 'column' : 'row'}>
-        <StyledSearchInput
-          // style={isMobile ? { marginBottom: 16, padding: '16px 22px' } : { marginRight: 16 }}
-          value={searchValue}
-          placeholder={`Search`}
-          onChange={onSearchChange}
-        />
-
-        <Flex>
-          <FilterDropdown
-            placeholder="Issuers"
-            selectedItem={filters.issuer}
-            onSelect={(item) => onFilterChange('issuer', item)}
-            items={issuersWithTokens}
-            // style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1, padding: 8, width: 132 }}
-          />
-          <FilterDropdown
-            selectedItem={filters.country}
-            placeholder="Country"
-            onSelect={(item) => onFilterChange('country', item)}
-            items={countries}
-            // style={{ borderRadius: '0px', marginRight: 1, padding: 8, width: 132 }}
-            withScroll
-          />
-          <FilterDropdown
-            selectedItem={filters.industry}
-            placeholder="Industry"
-            onSelect={(item) => onFilterChange('industry', item)}
-            items={industries}
-            // style={{ borderRadius: '1px', padding: 8, width: 132 }}
-          />
-        </Flex>
-
-        <PinnedContentButton
-          onClick={handleResetFilters}
-          style={isMobile ? { width: '100%', marginTop: 16 } : { width: 150, marginLeft: 16 }}
-        >
-          <TYPE.body2 style={{ color: '#FFFFFF' }}>Reset filters</TYPE.body2>
-        </PinnedContentButton>
-      </Flex>
-
-      {loadingRequest ? (
-        <RowCenter>
-          <LoaderThin size={64} />
-        </RowCenter>
-      ) : tokens.length > 0 ? (
+      {isIxswap || enableFeaturedSecurityVaults ? (
         <>
-          <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={tokens} />} />
-          <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+          <Flex marginBottom="40px" flexDirection={isMobile ? 'column' : 'row'}>
+            <StyledSearchInput
+              // style={isMobile ? { marginBottom: 16, padding: '16px 22px' } : { marginRight: 16 }}
+              value={searchValue}
+              placeholder={`Search`}
+              onChange={onSearchChange}
+            />
+
+            <Flex>
+              <FilterDropdown
+                placeholder="Issuers"
+                selectedItem={filters.issuer}
+                onSelect={(item) => onFilterChange('issuer', item)}
+                items={issuersWithTokens}
+                // style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1, padding: 8, width: 132 }}
+              />
+              <FilterDropdown
+                selectedItem={filters.country}
+                placeholder="Country"
+                onSelect={(item) => onFilterChange('country', item)}
+                items={countries}
+                // style={{ borderRadius: '0px', marginRight: 1, padding: 8, width: 132 }}
+                withScroll
+              />
+              <FilterDropdown
+                selectedItem={filters.industry}
+                placeholder="Industry"
+                onSelect={(item) => onFilterChange('industry', item)}
+                items={industries}
+                // style={{ borderRadius: '1px', padding: 8, width: 132 }}
+              />
+            </Flex>
+
+            <PinnedContentButton
+              onClick={handleResetFilters}
+              style={isMobile ? { width: '100%', marginTop: 16 } : { width: 150, marginLeft: 16 }}
+            >
+              <TYPE.body2 style={{ color: '#FFFFFF' }}>Reset filters</TYPE.body2>
+            </PinnedContentButton>
+          </Flex>
+          {loadingRequest ? (
+            <RowCenter>
+              <LoaderThin size={64} />
+            </RowCenter>
+          ) : tokens.length > 0 ? (
+            <>
+              <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={tokens} />} />
+              <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+            </>
+          ) : (
+            <TYPE.body2 textAlign="center">
+              <Trans>No results</Trans>
+            </TYPE.body2>
+          )}
         </>
       ) : (
         <TYPE.body2 textAlign="center">
