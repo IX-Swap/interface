@@ -12,7 +12,7 @@ import { useUserState } from 'state/user/hooks'
 import { FeaturedToken } from './FeaturedToken'
 import { SecTokensTable } from './SecTokensTable'
 import { MySecToken } from './MySecToken'
-import { FeaturedTokensGrid, MySecTokensTab, MySecTokensGrid, Divider } from './styleds'
+import { FeaturedTokensGrid, MySecTokensTab, MySecTokensGrid, Divider, StyledBodyWrapper } from './styleds'
 import { isMobile } from 'react-device-detect'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
@@ -126,36 +126,42 @@ export default function CustodianV2() {
               )}
             </MySecTokensTab>
           )}
-          {isIxswap || enableFeaturedSecurityVaults ? (
-            <>
-              {featuredTokens?.length > 0 ? (
-                <Box marginBottom="72px">
-                  <TYPE.title5 marginBottom="32px">
-                    <Trans>Featured</Trans>
-                  </TYPE.title5>
-                  <FeaturedTokensGrid>
-                    {featuredTokens.map((token: any) => (
-                      <FeaturedToken token={token} key={`featured-${token.id}`} />
-                    ))}
-                  </FeaturedTokensGrid>
-                </Box>
-              ) : null}
 
-              <SecTokensTable
-                page={tokens.page}
-                totalPages={tokens.totalPages}
-                totalItems={tokens.totalItems}
-                tokens={activeTokens}
-                offset={offset}
-              />
-            </>
-          ) : (
-            <div>
-              <TYPE.body2 textAlign="center">
-                <Trans>No results</Trans>
-              </TYPE.body2>
-            </div>
-          )}
+          <StyledBodyWrapper>
+            <Box marginBottom="72px">
+              <TYPE.title5 marginBottom="32px">
+                <Trans>Featured</Trans>
+              </TYPE.title5>
+              {isIxswap || enableFeaturedSecurityVaults ? (
+                <>
+                  {featuredTokens?.length > 0 ? (
+                    <FeaturedTokensGrid>
+                      {featuredTokens.map((token: any) => (
+                        <FeaturedToken token={token} key={`featured-${token.id}`} />
+                      ))}
+                    </FeaturedTokensGrid>
+                  ) : (
+                    <TYPE.body2 textAlign="center">
+                      <Trans>No results</Trans>
+                    </TYPE.body2>
+                  )}
+                </>
+              ) : (
+                <TYPE.body2 textAlign="center">
+                  <Trans>No results</Trans>
+                </TYPE.body2>
+              )}
+            </Box>
+          </StyledBodyWrapper>
+
+          <SecTokensTable
+            page={tokens.page}
+            totalPages={tokens.totalPages}
+            totalItems={tokens.totalItems}
+            tokens={activeTokens}
+            offset={offset}
+            enableFeaturedSecurityVaults={enableFeaturedSecurityVaults}
+          />
         </>
       )}
     </>
