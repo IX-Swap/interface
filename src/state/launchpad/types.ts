@@ -66,6 +66,8 @@ export interface OfferSocialMediaLinks {
   coingecko?: string
   discord?: string
   reddit?: string
+  instagram?: string
+  others?: string
 }
 
 export enum OfferDistributionFrequency {

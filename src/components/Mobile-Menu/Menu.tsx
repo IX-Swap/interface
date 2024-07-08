@@ -317,7 +317,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         <span>Copyright ©{config?.name || 'IX Swap'} 2024</span>
         <div>
           <a
-            href={config?.footerConfig?.termsLink || 'https://ixswap.io/terms-and-conditions/'}
+            href={config?.termsAndConditionsUrl || 'https://ixswap.io/terms-and-conditions/'}
             target="_blank"
             rel="noreferrer"
           >
@@ -325,7 +325,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
           </a>
 
           <a
-            href={config?.footerConfig?.privacyLink || 'https://ixswap.io/privacy-policy/'}
+            href={config?.privacyPolicyUrl || 'https://ixswap.io/privacy-policy/'}
             target="_blank"
             rel="noreferrer"
           >

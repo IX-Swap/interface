@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { useWeb3React } from '@web3-react/core'
 
 import Header from 'components/Header'
 import { useSetHideHeader } from 'state/application/hooks'
 import { MEDIA_WIDTHS } from 'theme'
+import { NotAvailablePage } from 'components/NotAvailablePage'
+import { useUserState } from 'state/user/hooks'
 
 interface Props {
   background?: string
@@ -11,6 +14,10 @@ interface Props {
 
 export const LbpLayout: React.FC<React.PropsWithChildren<Props>> = (props) => {
   const hideHeader = useSetHideHeader()
+  const { account } = useWeb3React()
+  const { me } = useUserState()
+
+  const isLogged = account && me?.role
 
   useEffect(() => {
     hideHeader(true)
@@ -19,6 +26,11 @@ export const LbpLayout: React.FC<React.PropsWithChildren<Props>> = (props) => {
       hideHeader(false)
     }
   }, [])
+
+  if (!isLogged) {
+    return <NotAvailablePage />
+  }
+
   return (
     <>
       <Header />

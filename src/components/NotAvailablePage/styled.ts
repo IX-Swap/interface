@@ -164,7 +164,7 @@ export const ConnectWalletContainer = styled(Container)<{ hasAnnouncement?: bool
     line-height: 20.8px;
   }
 
-  ${({ theme, hasAnnouncement }) => theme.mediaWidth.upToMedium`
-    margin-top: ${hasAnnouncement ? '9rem' : '1rem'};
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    margin-top: 1rem;
   `};
 `

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Trans } from '@lingui/macro'
 import { Connector } from '@web3-react/types'
 import { useWeb3React } from '@web3-react/core'
@@ -356,11 +356,11 @@ export default function WalletModal({
 
         <div style={{ fontSize: '13px', justifyContent: 'center', marginTop: '20px', color: '#666680' }}>
           By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
-          <ExternalLink style={{ color: '#6666FF' }} href="https://ixswap.io/terms-and-conditions/">
+          <ExternalLink style={{ color: '#6666FF' }} href={config?.termsAndConditionsUrl ?? "https://ixswap.io/terms-and-conditions/"}>
             Terms and Conditions
           </ExternalLink>{' '}
           and acknowledge that you have read and understood the{' '}
-          <ExternalLink style={{ color: '#6666FF' }} href="https://ixswap.io/privacy-policy/">
+          <ExternalLink style={{ color: '#6666FF' }} href={config?.privacyPolicyUrl ?? "https://ixswap.io/privacy-policy/"}>
             {config?.name || 'IX Swap'} Privacy Policy
           </ExternalLink>
           .

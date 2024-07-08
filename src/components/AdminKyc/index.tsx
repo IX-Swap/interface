@@ -9,7 +9,7 @@ import { File } from 'react-feather'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
 import { CopyAddress } from 'components/CopyAddress'
-import { KycItem } from 'state/admin/actions'
+import { IndividualKycVersion, KycItem } from 'state/admin/actions'
 import { AdminKycFilters, TStats } from 'components/AdminKycFilters'
 import { adminOffset as offset } from 'state/admin/constants'
 
@@ -25,7 +25,7 @@ import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { isMobile } from 'react-device-detect'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { useOnChangeOrder } from 'state/launchpad/hooks'
-import { AbstractOrder, KycOrderConfig, OrderTypes } from 'state/launchpad/types'
+import { AbstractOrder, KycOrderConfig } from 'state/launchpad/types'
 import { OrderType } from 'state/launchpad/types'
 const headerCells = [
   { key: 'ethAddress', label: 'Wallet address', show: false },
@@ -36,6 +36,7 @@ const headerCells = [
   { key: 'status', label: 'KYC Status', show: false },
   { key: 'completedKycOfProvider', label: 'Review Status', show: false },
   { key: 'updatedAt', label: 'Updated At', show: true },
+  { key: 'approver', label: 'Approver', show: true },
 ]
 interface RowProps {
   item: KycItem
@@ -50,13 +51,23 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
     createdAt,
     updatedAt,
     individualKycId,
+    audits,
+    individual,
+    corporate,
   } = item
 
-  const kyc = individualKycId ? item.individual : item.corporate
-  const completedKycOfProvider = item?.individual?.completedKycOfProvider
+  const kyc = individualKycId ? individual : corporate
+  const completedKycOfProvider = individual?.completedKycOfProvider
   const fullName = individualKycId
     ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
     : kyc?.corporateName
+
+  let approverName = '-'
+  if (individual?.version === IndividualKycVersion.v2) {
+    const approverUser = audits.length > 0 && audits[audits.length-1]?.approvedByUser || audits[audits.length-1]?.rejectedByUser
+    approverName = approverUser ? [approverUser?.firstName, approverUser?.lastName].join(' ') : 'Automatic'
+  }
+
   return (
     <StyledBodyRow key={id}>
       <Wallet style={{ fontSize: '12px' }}>
@@ -73,6 +84,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <StatusCell status={completedKycOfProvider} />
       </div>
       <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
+      <div style={{ fontSize: '12px' }}>{approverName}</div>
       <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
         Review
       </TYPE.main2>
@@ -275,7 +287,7 @@ export const StyledDoc = styled(File)`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: repeat(8, 1fr) 180px;
+  grid-template-columns: repeat(9, 1fr) 100px;
   padding-bottom: 15px;
   margin-bottom: 20px;
   border-bottom: 1px solid;
@@ -286,7 +298,7 @@ const StyledHeaderRow = styled(HeaderRow)`
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: repeat(8, 1fr) 180px;
+  grid-template-columns: repeat(9, 1fr) 100px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     min-width: 1370px;
   }

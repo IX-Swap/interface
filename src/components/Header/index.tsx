@@ -153,6 +153,10 @@ const HeaderWrapper = styled.div`
   top: 0;
   z-index: 2;
 
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  position: relative;
+  `};
+
   ${({ theme }) =>
     theme.config.background &&
     css`
@@ -212,7 +216,7 @@ export default function Header() {
           {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
             <HeaderRow>
-              <Title to="/">
+              <Title to={routes.defaultRoute}>
                 {logoUrl ? (
                   <img src={logoUrl} alt="logo" width="auto" height="47px" />
                 ) : (
@@ -225,7 +229,7 @@ export default function Header() {
             <HeaderControls>
               {isAllowed(routes.kyc) && isWhitelisted && (
                 <HeaderElement>
-                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to="/kyc">
+                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to={routes.defaultRoute}>
                     {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
                   </NavLink>
                 </HeaderElement>
@@ -255,7 +259,7 @@ export default function Header() {
           {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
             <HeaderRow marginLeft={50}>
-              <Title to="/">
+              <Title to={routes.defaultRoute}>
                 {logoUrl ? (
                   <div style={{ width: 130 }}>
                     <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
@@ -339,7 +343,7 @@ export default function Header() {
                       {account && (
                         <NavLink
                           style={{ textDecoration: 'none', color: 'inherit', marginRight: 16, marginTop: 5 }}
-                          to="/kyc"
+                          to={routes.defaultRoute}
                         >
                           {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
                         </NavLink>

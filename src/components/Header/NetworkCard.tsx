@@ -92,6 +92,7 @@ const SelectorControls = styled(VioletCard)`
     text-overflow: ellipsis;
     flex-shrink: 1;
     padding: 0;
+    min-width: 10px;
   `};
 `
 

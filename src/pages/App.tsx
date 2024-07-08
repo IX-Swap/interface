@@ -49,6 +49,7 @@ import { NotAvailablePage } from 'components/NotAvailablePage'
 import { CustomHeaders } from 'components/CustomHeaders'
 import { useWalletState } from 'state/wallet/hooks'
 import { coinbaseWallet } from 'connectors/coinbaseWallet'
+import { blockedCountries } from 'constants/countriesList'
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -85,7 +86,6 @@ export default function App() {
 
   const isIxSwap = whiteLabelConfig?.isIxSwap ?? false
   const routeFinalConfig = isAdmin ? routeConfigs : routeConfigs.filter((route) => !lbpAdminRoutes.includes(route.path))
-
   useEffect(() => {
     const getCountryCode = async () => {
       const response = await axios.get(ip.getIPAddress)
@@ -238,16 +238,14 @@ export default function App() {
     [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
   )
 
-  const useRedirect = account ? kyc !== null : true
   if (!config) {
     return <LoadingIndicator isLoading />
   }
-
   return (
     <>
       <CustomHeaders />
       {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
-      {countryCode === 'US' && <RestrictedModal />}
+      {countryCode && blockedCountries.includes(countryCode) && <RestrictedModal />}
       <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
         <Route component={DarkModeQueryParamReader} />
@@ -272,12 +270,10 @@ export default function App() {
             >
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
-
-                {useRedirect && (
-                  <Route
-                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                  />
-                )}
+                <Route
+                  path={'/'}
+                  component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                />
               </Switch>
             </Suspense>
             {/* </Web3ReactManager> */}
@@ -305,8 +301,8 @@ const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
   flex: 1;
   z-index: 1;
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 12px;
-    margin-top: 64px;
+    padding: 0 12px;
+    margin-top: 0;
   `};
 `
 

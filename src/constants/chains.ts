@@ -109,7 +109,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     },
     logoUrl: polygonLogoUrl,
     rpcUrls: ['https://rpc-amoy.polygon.technology/'],
-    blockExplorerUrls: ['https://www.oklink.com/amoy'],
+    blockExplorerUrls: ['https://amoy.polygonscan.com/'],
   },
   [SupportedChainId.BASE]: {
     chainName: 'Base',

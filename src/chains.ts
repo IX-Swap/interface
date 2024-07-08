@@ -114,7 +114,7 @@ export const TESTNET_CHAINS: ChainConfig = {
     urls: ['https://rpc-amoy.polygon.technology/', getInfuraUrlFor('polygon-amoy')].filter(Boolean),
     name: 'Polygon Amoy',
     nativeCurrency: MATIC,
-    blockExplorerUrls: ['https://www.oklink.com/amoy'],
+    blockExplorerUrls: ['https://amoy.polygonscan.com/'],
   },
   44787: {
     urls: ['https://alfajores-forno.celo-testnet.org'],
