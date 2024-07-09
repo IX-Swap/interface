@@ -277,6 +277,7 @@ export default function App() {
 
                 {isRedirect ? (
                   <Route
+                    path={'/'}
                     component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
                   />
                 ) : null}
