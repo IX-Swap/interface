@@ -238,11 +238,13 @@ export default function App() {
     [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
   )
 
-  const isRedirect = userRole === ROLES.OFFER_MANAGER && !pathname.includes(routes.issuance);
+  const isRedirect =
+    userRole !== ROLES.OFFER_MANAGER || (userRole === ROLES.OFFER_MANAGER && !pathname.includes(routes.issuance))
 
   if (!config) {
     return <LoadingIndicator isLoading />
   }
+
   return (
     <>
       <CustomHeaders />
