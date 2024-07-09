@@ -31,7 +31,7 @@ export const ImportPool = () => {
         <Text color={'#666680'} fontWeight={300} fontSize={'12px'} lineHeight={'18px'}>
           <Trans>Don&apos;t see a pool you joined?</Trans>&nbsp;
         </Text>
-        <Text color={'#6666FF'} fontWeight={600} fontSize={'12px'} lineHeight={'18px'}>
+        <Text color={theme.launchpad.colors.primary} fontWeight={600} fontSize={'12px'} lineHeight={'18px'}>
           <Trans>Import it.</Trans>
         </Text>
       </StyledButtonEmpty>
