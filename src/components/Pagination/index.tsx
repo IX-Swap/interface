@@ -31,7 +31,7 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
         <TYPE.small>
           {page}-{Math.min(page + 4, totalPages)} of {totalPages}
         </TYPE.small>
-        <Button onClick={() => onPageChange(page - 1)} disabled={page !== totalPages}>
+        <Button onClick={() => onPageChange(page - 1)} disabled={page === 1}>
           <Prev />
         </Button>
         <Button onClick={() => onPageChange(page + 1)} disabled={page === totalPages}>
