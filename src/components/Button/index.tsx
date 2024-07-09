@@ -258,7 +258,8 @@ export const ButtonIXSWide = styled(ButtonIXSGradient)`
   background-color: #6666ff;
 `
 export const ButtonGradient = styled(Base)`
-  background: ${({ theme }) => theme.config.primary?.main || theme.bg26};
+ color: ${(props) => props.theme.launchpad.colors.text.light};
+  background-color: ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
   font-weight: 600;
   font-size: 14px;
@@ -266,7 +267,6 @@ export const ButtonGradient = styled(Base)`
   text-align: center;
   padding: 7px 0;
   cursor: pointer;
-  color: white;
 `
 
 export const NewButtonGradient = styled(Base)`
