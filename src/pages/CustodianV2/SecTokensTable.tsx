@@ -21,6 +21,7 @@ import { ButtonGradientBorder, PinnedContentButton } from 'components/Button'
 import { StyledSearchInput, StyledNonTradable, StyledTradable } from './styleds'
 import { routes } from 'utils/routes'
 import { BodyWrapper } from 'pages/AppBody'
+import EmptyData from './EmptyData'
 // import { Pagination } from 'components/Vault/Pagination'
 // import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 // import Pagination from '@mui/material/Pagination/Pagination'
@@ -223,7 +224,7 @@ export const SecTokensTable: FC<Props> = ({
   return (
     <StyledBodyWrapper>
       <TYPE.title5 marginBottom="40px" display="flex" id="other-security-tokens-title">
-        {`Other security tokens`}
+        {`Other Security Tokens`}
         <TYPE.title5 marginLeft="4px" color="text2">
           {/* {`(${totalItems})`} */}
         </TYPE.title5>
@@ -281,15 +282,11 @@ export const SecTokensTable: FC<Props> = ({
               <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
             </>
           ) : (
-            <TYPE.body2 textAlign="center">
-              <Trans>No results</Trans>
-            </TYPE.body2>
+            <EmptyData title="No other Security Tokens" desc="You have no other Security Tokens at the moment" />
           )}
         </>
       ) : (
-        <TYPE.body2 textAlign="center">
-          <Trans>No results</Trans>
-        </TYPE.body2>
+        <EmptyData title="No other Security Tokens" desc="You have no other Security Tokens at the moment" />
       )}
     </StyledBodyWrapper>
   )

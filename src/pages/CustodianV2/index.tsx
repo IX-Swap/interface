@@ -15,6 +15,7 @@ import { MySecToken } from './MySecToken'
 import { FeaturedTokensGrid, MySecTokensTab, MySecTokensGrid, Divider, StyledBodyWrapper } from './styleds'
 import { isMobile } from 'react-device-detect'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import EmptyData from './EmptyData'
 
 const checkPendingAccreditationRequest = (accreditationRequest: any) =>
   accreditationRequest?.brokerDealerStatus !== 'approved' || accreditationRequest?.custodianStatus !== 'approved'
@@ -64,6 +65,12 @@ export default function CustodianV2() {
   const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
 
+  let featuredTokensFinal = featuredTokens
+
+  if (!isIxswap) {
+    featuredTokensFinal = featuredTokens.filter(({ token }: any) => configTokens.includes(token?.id))
+  }
+
   const approvedSecFilterCondition = ({ token: { accreditationRequest, id } }: any) =>
     isIxswap
       ? checkApprovedAccreditationRequest(accreditationRequest)
@@ -87,83 +94,75 @@ export default function CustodianV2() {
         paddingTop={isMobile ? '20px' : '24px'}
         data-testid="securityTokensTitle"
       >
-        <Trans>Security tokens</Trans>
+        <Trans>Security Tokens</Trans>
       </TYPE.title4>
-      {/* <Info /> */}
-      {tokens && (
-        <>
-          {mySecTokens?.length > 0 && (
-            <MySecTokensTab marginBottom="72px">
-              {/* <GradientText> */}
-              <TYPE.title5 marginBottom="32px">
-                <Trans>My security tokens</Trans>
-              </TYPE.title5>
-              {/* </GradientText> */}
-              {approvedSecTokens.length > 0 && (
-                <>
-                  <TYPE.title6 fontSize={'13px'} marginBottom="32px">
-                    <Trans>Accredited</Trans>
-                  </TYPE.title6>
-                  <MySecTokensGrid>
-                    {approvedSecTokens.map((token: any) => (
-                      <MySecToken key={`my-sec-${token.id}`} token={token} />
-                    ))}
-                  </MySecTokensGrid>
-                </>
-              )}
-              {pendingSecTokens.length > 0 && (
-                <>
-                  <Divider style={{ marginTop: '50px', marginBottom: '40px' }} />
-                  <TYPE.title6 fontSize={'13px'} marginBottom="32px">
-                    <Trans>Pending Accreditations</Trans>
-                  </TYPE.title6>
-                  <MySecTokensGrid>
-                    {pendingSecTokens.map((token: any) => (
-                      <MySecToken key={`pending-${token.id}`} token={token} />
-                    ))}
-                  </MySecTokensGrid>
-                </>
-              )}
-            </MySecTokensTab>
-          )}
+      <MySecTokensTab marginBottom="72px">
+        <TYPE.title5 marginBottom="32px">
+          <Trans>My Security Tokens</Trans>
+        </TYPE.title5>
 
-          <StyledBodyWrapper>
-            <Box marginBottom="72px">
-              <TYPE.title5 marginBottom="32px">
-                <Trans>Featured</Trans>
-              </TYPE.title5>
-              {isIxswap || enableFeaturedSecurityVaults ? (
-                <>
-                  {featuredTokens?.length > 0 ? (
-                    <FeaturedTokensGrid>
-                      {featuredTokens.map((token: any) => (
-                        <FeaturedToken token={token} key={`featured-${token.id}`} />
-                      ))}
-                    </FeaturedTokensGrid>
-                  ) : (
-                    <TYPE.body2 textAlign="center">
-                      <Trans>No results</Trans>
-                    </TYPE.body2>
-                  )}
-                </>
+        {approvedSecTokens?.length > 0 ? (
+          <>
+            <TYPE.title6 fontSize={'13px'} marginBottom="32px">
+              <Trans>Accredited</Trans>
+            </TYPE.title6>
+            <MySecTokensGrid>
+              {approvedSecTokens?.map((token: any) => (
+                <MySecToken key={`my-sec-${token?.id}`} token={token} />
+              ))}
+            </MySecTokensGrid>
+          </>
+        ) : (
+          <EmptyData title="No Security Tokens" desc="You have no Security Tokens at the moment" />
+        )}
+        {pendingSecTokens?.length > 0 && (
+          <>
+            <Divider style={{ marginTop: '50px', marginBottom: '40px' }} />
+            <TYPE.title6 fontSize={'13px'} marginBottom="32px">
+              <Trans>Pending Accreditations</Trans>
+            </TYPE.title6>
+            <MySecTokensGrid>
+              {pendingSecTokens?.map((token: any) => (
+                <MySecToken key={`pending-${token.id}`} token={token} />
+              ))}
+            </MySecTokensGrid>
+          </>
+        )}
+      </MySecTokensTab>
+
+      <StyledBodyWrapper>
+        <Box marginBottom="72px">
+          <TYPE.title5 marginBottom="32px">
+            <Trans>Featured</Trans>
+          </TYPE.title5>
+          {isIxswap || enableFeaturedSecurityVaults ? (
+            <>
+              {featuredTokensFinal?.length > 0 ? (
+                <FeaturedTokensGrid>
+                  {featuredTokensFinal?.map((token: any) => (
+                    <FeaturedToken token={token} key={`featured-${token?.id}`} />
+                  ))}
+                </FeaturedTokensGrid>
               ) : (
-                <TYPE.body2 textAlign="center">
-                  <Trans>No results</Trans>
-                </TYPE.body2>
+                <EmptyData title="No Featured Tokens" desc="You have no Featured Tokens at the moment" />
               )}
-            </Box>
-          </StyledBodyWrapper>
+            </>
+          ) : (
+            <EmptyData title="No Featured Tokens" desc="You have no Featured Tokens at the moment" />
+          )}
+        </Box>
+      </StyledBodyWrapper>
 
-          <SecTokensTable
-            page={tokens.page}
-            totalPages={tokens.totalPages}
-            totalItems={tokens.totalItems}
-            tokens={activeTokens}
-            offset={offset}
-            enableFeaturedSecurityVaults={enableFeaturedSecurityVaults}
-          />
-        </>
-      )}
+      {isIxswap ? (
+        <SecTokensTable
+          page={tokens?.page}
+          totalPages={tokens?.totalPages}
+          totalItems={tokens?.totalItems}
+          tokens={activeTokens}
+          offset={offset}
+          enableFeaturedSecurityVaults={enableFeaturedSecurityVaults}
+        />
+      ) : null}
     </>
   )
 }
