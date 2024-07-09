@@ -86,8 +86,10 @@ const Row: FC<RowProps> = ({ item, searchValue, openReviewModal }: RowProps) => 
       <Wallet style={{fontSize: '12px'}}>
         <CopyAddress  address={ethAddress} />
       </Wallet>
-      <div style={{fontSize: '12px'}}>{userKyc?.individual?.address?.country || userKyc?.corporate?.countryOfIncorporation || '-'}</div>
-      <div style={{fontSize: '12px'}}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+      <div style={{ fontSize: '12px', whiteSpace: 'break-spaces' }}>
+        {userKyc?.individual?.nationality || userKyc?.corporate?.countryOfIncorporation || '-'}
+      </div>
+      <div style={{ fontSize: '12px' }}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
 
       <div style={{fontSize: '12px'}}>{statusLegend[investorType] || '-'}</div>
       <div>
