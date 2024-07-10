@@ -201,7 +201,7 @@ export const AdminKycTable = () => {
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
 
   return (
-    <div style={{ margin: isMobile ? '30px 20px 0px 20px' : '30px 0px 0px 0px' }} id="kyc-container">
+    <div style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 30px 0 30px' }} id="kyc-container">
       {/* version v2 is hardcoded for testing purpose only */}
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} marginBottom="30px" data-testid="securityTokensTitle">

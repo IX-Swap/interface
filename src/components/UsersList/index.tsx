@@ -77,7 +77,7 @@ export const UsersList: FC = () => {
   }
 
   return (
-    <Container style={{ margin: '30px 0px 0px 0px' }}>
+    <Container style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 30px 0 30px' }}>
       <Flex
         justifyContent="space-between"
         flexDirection={isMobile ? 'column' : 'row'}
