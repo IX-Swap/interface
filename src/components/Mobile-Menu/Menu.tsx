@@ -31,6 +31,9 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
   const { config } = useWhitelabelState()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
+  const isIxSwap = config?.isIxSwap ?? false
+
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -124,7 +127,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         </CloseContainer>
 
         <MenuList>
-          {isWhitelisted && (
+          {isIxSwap && isWhitelisted ? (
             <>
               <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
                 <Trans>Charts</Trans>
@@ -132,7 +135,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
 
               <Line />
             </>
-          )}
+          ) : null}
 
           <>
             <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
@@ -219,58 +222,59 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             <Line />
           </> */}
 
-          <div>
-            <div
-              style={{ fontSize: '20px', fontWeight: '700', marginTop: '20px', height: '40px' }}
-              id="fade-button"
-              aria-controls={open ? 'fade-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              onClick={handleClick}
-            >
-              Farming
-            </div>
-            <MenuMobile
-              style={{ width: '90vw' }}
-              id="fade-menu"
-              MenuListProps={{
-                'aria-labelledby': 'fade-button',
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-            >
-              {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
-                <>
-                  <MenuItem onClick={handleClose}>
-                    <ExternalListItem
-                      style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '400' }}
-                      href={`https://ixswap.defiterm.io/`}
-                    >
-                      <Trans>Live Pools</Trans>
-                    </ExternalListItem>
-                  </MenuItem>
-                </>
-              )}
+          {isIxSwap ? (
+            <div>
+              <div
+                style={{ fontSize: '20px', fontWeight: '700', marginTop: '20px', height: '40px' }}
+                id="fade-button"
+                aria-controls={open ? 'fade-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+              >
+                Farming
+              </div>
+              <MenuMobile
+                style={{ width: '90vw' }}
+                id="fade-menu"
+                MenuListProps={{
+                  'aria-labelledby': 'fade-button',
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+              >
+                {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
+                  <>
+                    <MenuItem onClick={handleClose}>
+                      <ExternalListItem
+                        style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '400' }}
+                        href={`https://ixswap.defiterm.io/`}
+                      >
+                        <Trans>Live Pools</Trans>
+                      </ExternalListItem>
+                    </MenuItem>
+                  </>
+                )}
 
-              {isAllowed(routes.vesting) && (
-                <>
-                  <MenuItem onClick={handleClose}>
-                    <MenuListItem
-                      style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '400' }}
-                      activeClassName="active-item"
-                      id={`vesting-nav-link`}
-                      to={routes.vesting}
-                      onClick={close}
-                    >
-                      Token Sale Distribution
-                    </MenuListItem>
-                  </MenuItem>
-                </>
-              )}
+                {isAllowed(routes.vesting) && (
+                  <>
+                    <MenuItem onClick={handleClose}>
+                      <MenuListItem
+                        style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '400' }}
+                        activeClassName="active-item"
+                        id={`vesting-nav-link`}
+                        to={routes.vesting}
+                        onClick={close}
+                      >
+                        Token Sale Distribution
+                      </MenuListItem>
+                    </MenuItem>
+                  </>
+                )}
 
-              {/* {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
+                {/* {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
                 <MenuItem onClick={handleClose}>
                   <ExternalListItem
                     style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '500' }}
@@ -280,9 +284,10 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                   </ExternalListItem>
                 </MenuItem>
               )} */}
-            </MenuMobile>
-            <Line />
-          </div>
+              </MenuMobile>
+              <Line />
+            </div>
+          ) : null}
 
           {showIssuance && (
             <>
@@ -306,11 +311,11 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
               <Line />
             </>
           )}
-          {isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted && (
+          {isIxSwap && isAdmin && account && chainId && chains.includes(chainId) && isWhitelisted ? (
             <MenuListItem to={'/lbp-admin'} data-testid={`lbp-nav-link`}>
               <Trans>LBP</Trans>
             </MenuListItem>
-          )}
+          ) : null}
         </MenuList>
       </Container>
       <StyledFooter>
@@ -324,11 +329,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             Terms & Conditions
           </a>
 
-          <a
-            href={config?.privacyPolicyUrl || 'https://ixswap.io/privacy-policy/'}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={config?.privacyPolicyUrl || 'https://ixswap.io/privacy-policy/'} target="_blank" rel="noreferrer">
             Privacy Policy
           </a>
         </div>
