@@ -180,7 +180,7 @@ export const AdminSecurityCatalog: FC = () => {
 
   return (
     <>
-      <Container>
+      <Container style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 30px 0 30px' }}>
         {['add_issuer', 'edit_issuer'].includes(showMode) && (
           <>
             <Box style={{ background: '#FFFFFF', padding: '40px' }}>

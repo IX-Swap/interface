@@ -124,7 +124,7 @@ export const AdminTransactionsTable = () => {
   }
 
   return (
-    <div style={{ margin: isMobile ? '30px 10px 0px 20px' : '30px 80px 0px 40px' }}>
+    <div style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 30px 0 30px' }}>
       <TYPE.title4
         fontSize={isMobile ? '29px' : '40px'}
         lineHeight={isMobile ? '40px' : '56px'}

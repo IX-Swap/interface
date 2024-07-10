@@ -151,7 +151,7 @@ export const AdminAccreditationTable = () => {
 
   return (
     <>
-      <div style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 80px 0px 40px' }} id="accreditation-container">
+      <div style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 30px 0 30px' }} id="accreditation-container">
         {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
         <TYPE.title4 fontSize={'29px'} marginBottom="30px" data-testid="securityTokensTitle">
           <Trans>Accreditation</Trans>

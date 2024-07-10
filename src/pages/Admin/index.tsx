@@ -151,7 +151,7 @@ export const Container = styled.div<{ background?: string }>`
 
 export const Body = styled.div`
   // padding: 0 30px;
-  max-width: 1360px;
+  max-width: 1440px;
   margin: 100px auto;
   width: 100%;
 
