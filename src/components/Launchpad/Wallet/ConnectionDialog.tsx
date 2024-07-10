@@ -61,41 +61,31 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
   const [showPendingScreen, setShowPendingScreen] = React.useState(false)
   const [selectedWalletName, setSelectedWalletName] = React.useState<string>('')
 
-  const connectWallet = async (connector: any, wallet: any) => {
-    setSelectedWalletName(wallet?.name ?? '')
-    const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
-    if (connector instanceof CoinbaseWallet) {
-      const chainParams = getAddChainParameters(defaultChain)
-
-      await connector.activate(chainParams)
-    } else {
-      await connector.activate(defaultChain)
-    }
-    setWalletView(PromptView.account)
-    props.onConnect()
-    props.onClose()
-    dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
-  }
-
   const tryActivation = async (connector: Connector | undefined) => {
-    const wallet = Object.values(SUPPORTED_WALLETS).find((wallet) => wallet.connector === connector)
-
-    window.ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
-    ReactGA.event({ category: 'Wallet', action: 'Change Wallet', label: wallet?.name ?? '' })
-
-    setWalletView(PromptView.pending)
-    setShowPendingScreen(true)
-
     if (!connector) {
       return
     }
 
+    const wallet = Object.values(SUPPORTED_WALLETS).find((wallet) => wallet.connector === connector)
+    const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
+
+    window.ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
+    ReactGA.event({ category: 'Wallet', action: 'Change Wallet', label: wallet?.name ?? '' })
+    setWalletView(PromptView.pending)
+    setShowPendingScreen(true)
+    setSelectedWalletName(wallet?.name ?? '')
+
     try {
-      connectWallet(connector, wallet);
+      if (connector instanceof CoinbaseWallet) {
+        const chainParams = getAddChainParameters(defaultChain)
+
+        await connector.activate(chainParams)
+      } else {
+        await connector.activate(defaultChain)
+      }
     } catch (error) {
       console.log('Error activating connector', error)
-
-      const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
+      debugger;
       const formattedChainId = hexStripZeros(BigNumber.from(defaultChain).toHexString())
       const info = CHAIN_INFO[defaultChain]
 
@@ -112,7 +102,19 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
         ],
       })
 
-      connectWallet(connector, wallet);
+      // Reconnect again
+      if (connector instanceof CoinbaseWallet) {
+        const chainParams = getAddChainParameters(defaultChain)
+
+        await connector.activate(chainParams)
+      } else {
+        await connector.activate(defaultChain)
+      }
+    } finally {
+      setWalletView(PromptView.account)
+      dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
+      props.onConnect()
+      props.onClose()
     }
   }
 
