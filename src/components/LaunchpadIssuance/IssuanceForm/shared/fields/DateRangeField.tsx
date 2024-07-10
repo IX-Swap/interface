@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import moment, { Moment } from 'moment'
 import { Calendar, ChevronLeft, ChevronRight } from 'react-feather'
@@ -206,6 +206,10 @@ export const DateRangeField: React.FC<Props> = (props) => {
     }
   }, [props.value])
 
+  const handlePickerClose = useCallback(() => {
+    setShowPicker(false)
+  }, [])
+
   return (
     <Column>
       <FieldContainer disabled={props.disabled} onClick={toggle}>
@@ -216,7 +220,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
         <FieldValue isPlaceholder={formattedDate.startsWith('m')}>{formattedDate}</FieldValue>
       </FieldContainer>
-      <IssuanceDialog show={showPicker} onClose={toggle}>
+      <IssuanceDialog show={showPicker} onClose={handlePickerClose}>
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <DatePicker>
             <DatePickerHeader area="current-header">
