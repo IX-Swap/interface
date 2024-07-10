@@ -80,7 +80,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       <div style={{ fontSize: '12px' }}>
         <StatusCell status={status} />
       </div>
-      <div style={{ fontSize: '12px' }}>
+      <div style={{ fontSize: '12px'}}>
         <StatusCell status={completedKycOfProvider} />
       </div>
       <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
@@ -200,7 +200,7 @@ export const AdminKycTable = () => {
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
 
   return (
-    <div style={{ margin: isMobile ? '30px 20px 0px 20px' : '30px 90px 0px 90px' }} id="kyc-container">
+    <div style={{ margin: isMobile ? '30px 20px 0px 20px' : '30px 0px 0px 0px' }} id="kyc-container">
       {/* version v2 is hardcoded for testing purpose only */}
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} marginBottom="30px" data-testid="securityTokensTitle">
