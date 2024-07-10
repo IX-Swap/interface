@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, memo } from 'react'
 import styled from 'styled-components'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
 import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
 import { ethers, constants, BigNumber } from 'ethers'
@@ -653,7 +653,6 @@ const BuySellFields: React.FC<BuySellFieldsProps> = ({
                 <BuySellFieldsSelect>
                   <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={logo?.public} />
                   <TYPE.body4 fontSize={'14px'} lineHeight={'normal'}>
-                    {' '}
                     {shareSymbol}
                   </TYPE.body4>
                 </BuySellFieldsSelect>
@@ -784,7 +783,6 @@ const BalanceText = styled.div`
   gap: 3px;
 `
 
-
 const BuySellFieldsSelect = styled.div`
   flex: 1;
   display: flex;
@@ -794,6 +792,11 @@ const BuySellFieldsSelect = styled.div`
   align-items: center;
   gap: 4px;
   border-radius: 6px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    position: absolute;
+    right: 67px;
+  }
 `
 
 const BuySellFieldsSpan = styled.span`

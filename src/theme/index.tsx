@@ -228,7 +228,7 @@ export function theme(darkMode: boolean, config: Whitelabel | null): DefaultThem
       flex-flow: row nowrap;
     `,
 
-    launchpad: launchpadTheme(),
+    launchpad: launchpadTheme(config?.colors),
     lbp: lbpTheme(),
   }
 }
@@ -257,7 +257,7 @@ export function lbpTheme() {
   }
 }
 
-export function launchpadTheme() {
+export function launchpadTheme(colors?: WlColors) {
   return {
     font: 'Inter',
 
@@ -266,7 +266,7 @@ export function launchpadTheme() {
     },
 
     colors: {
-      primary: '#6666FF',
+      primary: colors?.button?.primary ?? '#6666FF',
       accent: '#E6E6FF',
 
       success: '#1DC78A',

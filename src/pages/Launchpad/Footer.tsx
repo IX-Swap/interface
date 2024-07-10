@@ -8,7 +8,7 @@ import { ReactComponent as DotSeparator } from 'assets/launchpad/svg/investment-
 // import { ReactComponent as Logo } from 'assets/images/FooterlogoNew.svg'
 import { ReactComponent as Logo } from 'assets/images/ix-swapNew.svg'
 import { ReactComponent as TelegramLogo } from 'assets/launchpad/svg/social/telegram.svg'
-import { ReactComponent as TwitterLogo } from 'assets/launchpad/svg/social/twitter.svg'
+import { ReactComponent as XLogo } from 'assets/launchpad/svg/social/twitter.svg'
 import { ReactComponent as MLogo } from 'assets/launchpad/svg/social/m.svg'
 import { ReactComponent as DiscordLogo } from 'assets/launchpad/svg/social/discord.svg'
 import { ReactComponent as YoutubeLogo } from 'assets/launchpad/svg/social/youtube.svg'
@@ -80,8 +80,8 @@ export const Footer: React.FC<Props> = (props) => {
           <SocialMediaLink href="https://t.me/ixswapofficial" target="_blank" rel="noreferrer">
             <TelegramLogo />
           </SocialMediaLink>
-          <SocialMediaLink href="https://twitter.com/IxSwap" target="_blank" rel="noreferrer">
-            <TwitterLogo />
+          <SocialMediaLink href="https://x.com/IxSwap" target="_blank" rel="noreferrer">
+            <XLogo />
           </SocialMediaLink>
           <SocialMediaLink href="https://coinmarketcap.com/currencies/ix-swap/" target="_blank" rel="noreferrer">
             <MLogo />
@@ -135,23 +135,22 @@ export const Footer: React.FC<Props> = (props) => {
             <DiscreteExternalLink href="https://ixswap.io/community/">Exchange</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/blog/">Fractionalized-NFT Exchange </DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/community/">
-              Staking and liquidity mining
+              Staking and Liquidity Mining
             </DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/blog/">Borrowing and lending</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/blog/">Borrowing and Lending</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/community/">IXS Custody</DiscreteExternalLink>
           </div>
 
           <div>
             <header>Company</header>
 
-            <DiscreteExternalLink href="https://ixswap.io/about/">Roadmap</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/team/">Ecosystem</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/careers/">Documents</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/about/">Team</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/team/">Community</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/careers/">Ambassador</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/about/">program</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/team/">Contact Us</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/roadmap/">Roadmap</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/ecosystem/">Ecosystem</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/documentation/">Documents</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/team/">Team</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/community/">Community</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/ambassador-program/">Ambassador program</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/contact-us/">Contact Us</DiscreteExternalLink>
           </div>
 
           <div>

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
 import Portal from '@reach/portal'
+import _get from 'lodash/get'
 
 import { useActiveWeb3React } from 'hooks/web3'
 import { TYPE } from 'theme'
@@ -16,21 +17,18 @@ import { usePendingSignState } from 'state/application/hooks'
 import { useKYCState } from 'state/kyc/hooks'
 import { ReactComponent as IndividualKYC } from 'assets/images/newIndividual.svg'
 import { ReactComponent as CorporateKYC } from 'assets/images/newCorporate.svg'
-import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
 import { Content, getStatusDescription, StatusCard, DateInfoContainer } from './styleds'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-import { ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 import { RowCenter } from 'components/Row'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { ReactComponent as CopyIcon } from '../../assets/images/newCopyIcon.svg'
 import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
-import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import { detectWrongNetwork } from 'utils'
 
 interface DescriptionProps {
@@ -43,6 +41,12 @@ interface DateInfoProps {
   approvedDate?: string | null
   changeRequestDate?: string | null
   info?: any
+}
+
+interface ModalProps {
+  isModalOpen: boolean
+  kycType?: string
+  referralCode: string
 }
 
 const DateInfo: FC<DateInfoProps> = ({
@@ -101,11 +105,8 @@ const KYC = () => {
   const [referralCode, setReferralCode] = useState<string | null>('')
   const getMe = useGetMe()
 
-  interface ModalProps {
-    isModalOpen: boolean
-    kycType?: string
-    referralCode: string
-  }
+  const supportEmail = _get(config, 'supportEmail', 'c@ixswap.io')
+
   const fetchMe = useCallback(async () => {
     const result = await getMe()
     setReferralCode(result?.referralCode)
@@ -114,8 +115,8 @@ const KYC = () => {
   const infoText = (
     <p>
       In order to make changes to your KYC please get in touch with us via{' '}
-      <a href="mailto:c@ixswap.io" style={{ textDecoration: 'none', color: '#6666FF' }}>
-        c@ixswap.io
+      <a href={`mailto:${supportEmail}`} style={{ textDecoration: 'none', color: '#6666FF' }}>
+        {supportEmail}
       </a>
     </p>
   )

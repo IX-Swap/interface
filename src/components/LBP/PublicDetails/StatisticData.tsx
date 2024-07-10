@@ -3,12 +3,13 @@ import _get from 'lodash/get'
 import styled from 'styled-components'
 
 import Column, { AutoColumn } from 'components/Column'
-import { RowBetween } from 'components/Row'
-import { TYPE } from 'theme'
+import { RowBetween as OriginalRowBetween } from 'components/Row'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { LbpFormValues, LbpStatus, MarketData } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
 import { useActiveWeb3React } from 'hooks/web3'
+import { isMobile } from 'react-device-detect'
 
 const composeLbpVolumeQuery = (lbpAddress: string) => {
   return `
@@ -139,13 +140,14 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
               </QuantitiesBox>
             </>
           ) : null}
-
-          <QuantitiesBox isAdmin={isAdmin}>
-            <TYPE.subHeader1 color={'#555566'}>Funds Raised</TYPE.subHeader1>
-            <TokenWrapper>
-              <TYPE.label fontSize={'14px'}>${useFormatNumberWithDecimal(calculateFundsRaised(), 2)}</TYPE.label>
-            </TokenWrapper>
-          </QuantitiesBox>
+          {!isMobile && (
+            <QuantitiesBox isAdmin={isAdmin}>
+              <TYPE.subHeader1 color={'#555566'}>Funds Raised</TYPE.subHeader1>
+              <TokenWrapper>
+                <TYPE.label fontSize={'14px'}>${useFormatNumberWithDecimal(calculateFundsRaised(), 2)}</TYPE.label>
+              </TokenWrapper>
+            </QuantitiesBox>
+          )}
         </RowBetween>
       </AutoColumn>
 
@@ -174,17 +176,36 @@ const StatisticData: React.FC<MiddleSectionProps> = ({ statsData, lbpData, isAdm
               <TYPE.label fontSize={'14px'}>
                 {tokensReleased}/{formatValueWithSuffix(parseFloat(lbpData?.shareAmount?.toString() || '0'))}
               </TYPE.label>
-
               <TYPE.label color={'#6666FF'} fontSize={'14px'}>
                 {`${calculatePercentage(statsData?.currentShareReserve, lbpData?.shareAmount).toFixed(2)}%`}
               </TYPE.label>
             </TokenWrapper>
           </QuantitiesBox>
+          {isMobile && (
+            <QuantitiesBox isAdmin={isAdmin}>
+              <TYPE.subHeader1 color={'#555566'}>Funds Raised</TYPE.subHeader1>
+              <TokenWrapper>
+                <TYPE.label fontSize={'14px'}>${useFormatNumberWithDecimal(calculateFundsRaised(), 2)}</TYPE.label>
+              </TokenWrapper>
+            </QuantitiesBox>
+          )}
         </RowBetween>
       </AutoColumn>
     </Column>
   )
 }
+
+const RowBetween = styled(OriginalRowBetween)`
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+
+    & > div {
+      margin-right: 0;
+    }
+  }
+`
 
 const QuantitiesBox = styled.div<{ isAdmin?: boolean }>`
   border: 1px solid #e6e6ff;
@@ -194,6 +215,9 @@ const QuantitiesBox = styled.div<{ isAdmin?: boolean }>`
   padding: 16px;
   min-width: ${(props) => (props.isAdmin ? '190px' : '270px')};
   margin-right: ${(props) => (props.isAdmin ? '20px' : '0')};
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    min-width: 160px;
+  }
 `
 
 const TokenWrapper = styled.div`

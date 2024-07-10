@@ -13,6 +13,7 @@ import { Pair } from '@ixswap1/v2-sdk'
 
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
+import { TYPE } from 'theme'
 
 interface Props {
   currency: Currency | null
@@ -44,6 +45,30 @@ const StyledTokenName: any = styled.span<{ active?: boolean }>`
   color: ${({ theme }) => theme.text1};
 `
 
+const StyledRowFixed = styled(RowFixed)`
+  border: 1px solid #e6e6ff;
+  padding: 12px 12px 12px 18px;
+  background: #ffffff;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 10px;
+`
+
+const BalanceContainer = styled.div`
+  text-align: end;
+`
+
+const BalanceRow = styled.div`
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+`
+
+const BalanceDescription = styled(TYPE.description3)`
+  color: #b8b8cc;
+`
+const BalanceTitle = styled(TYPE.title10)``
+
 export const CurrencyRow = ({ currency, chooseToken, pair }: Props) => {
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
@@ -52,14 +77,7 @@ export const CurrencyRow = ({ currency, chooseToken, pair }: Props) => {
   return (
     <Container onClick={chooseToken}>
       <Aligner>
-        <RowFixed
-          style={{
-            border: '1px solid #E6E6FF',
-            padding: '8px 12px 8px 18px',
-            background: '#FFFFFF',
-            cursor: 'pointer',
-          }}
-        >
+        <StyledRowFixed>
           <AssetLogo pair={pair} currency={currency} />
           <StyledTokenName className="pair-name-container">
             {pair ? (
@@ -75,14 +93,18 @@ export const CurrencyRow = ({ currency, chooseToken, pair }: Props) => {
             )}
           </StyledTokenName>
           <NewDropDown />
-        </RowFixed>
+        </StyledRowFixed>
       </Aligner>
-      <div style={{ textAlign: 'end' }}>
-        <Trans>
-          <span style={{ color: '#B8B8CC' }}>Balance: </span>
-          {currency?.symbol} {formattedBalance}
-        </Trans>
-      </div>
+      <BalanceContainer>
+        <BalanceRow>
+          <BalanceDescription>
+            <Trans>Balance: </Trans>
+          </BalanceDescription>
+          <BalanceTitle>
+            {currency?.symbol} {formattedBalance}
+          </BalanceTitle>
+        </BalanceRow>
+      </BalanceContainer>
     </Container>
   )
 }

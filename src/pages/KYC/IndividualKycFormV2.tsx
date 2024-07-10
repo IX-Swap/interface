@@ -99,7 +99,7 @@ const BoxWrapper = styled.div`
 `
 
 const CheckboxInput = styled.input<{ disabled: boolean }>`
-  margin-right: 8px;  
+  margin-right: 8px;
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -267,14 +267,17 @@ export default function IndividualKycFormV2() {
     const { value } = event.target
     setSelectedCheckbox(value)
   }
-  const handleSuccess = (section: string) => {
+
+  const handleSuccess = async (section: string) => {
     if (section === SuccessType.PERSONAL) {
+      await fetchKYCData()
       setIsPersonalVerified(true)
-      fetchKYCData()
     } else if (section === SuccessType.BUSINESS) {
+      await fetchKYCData()
       setIsBusinessEmailVerified(true)
     }
   }
+
   const handleVerifyDocuments = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault()
     setLoading(true)

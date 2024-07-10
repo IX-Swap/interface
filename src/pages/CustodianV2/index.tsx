@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Box } from 'rebass'
 import { Trans } from '@lingui/macro'
+import _get from 'lodash/get'
 
 import { TYPE } from 'theme'
 import { useAuthState } from 'state/auth/hooks'
@@ -11,21 +12,32 @@ import { useUserState } from 'state/user/hooks'
 import { FeaturedToken } from './FeaturedToken'
 import { SecTokensTable } from './SecTokensTable'
 import { MySecToken } from './MySecToken'
-import { Info } from './Info'
-import { FeaturedTokensGrid, MySecTokensTab, GradientText, MySecTokensGrid, Divider } from './styleds'
+import { FeaturedTokensGrid, MySecTokensTab, MySecTokensGrid, Divider, StyledBodyWrapper } from './styleds'
 import { isMobile } from 'react-device-detect'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
+import EmptyData from './EmptyData'
+
+const checkPendingAccreditationRequest = (accreditationRequest: any) =>
+  accreditationRequest?.brokerDealerStatus !== 'approved' || accreditationRequest?.custodianStatus !== 'approved'
+const checkApprovedAccreditationRequest = (accreditationRequest: any) =>
+  accreditationRequest?.brokerDealerStatus === 'approved' && accreditationRequest?.custodianStatus === 'approved'
 
 export default function CustodianV2() {
-  const offset = 10
   const { token } = useAuthState()
-  const [mySecTokens, setMySecTokens] = useState([])
   const fetchTokens = useFetchTokens()
-  const [noFilteredTokens, setNoFilteredTokens] = useState([])
   const { tokens } = useSecCatalogState()
   const { account } = useActiveWeb3React()
   const { account: userAccount } = useUserState()
+  const { config } = useWhitelabelState()
+  const isIxswap = config?.isIxSwap ?? false
+  const enableFeaturedSecurityVaults = _get(config, 'enableFeaturedSecurityVaults', false)
+  const configTokens = config?.tokens || []
+
+  const [mySecTokens, setMySecTokens] = useState([])
+  const [noFilteredTokens, setNoFilteredTokens] = useState([])
 
   const isLoggedIn = !!token && !!account
+  const offset = 10
 
   useEffect(() => {
     const fetchMyTokens = async () => {
@@ -52,20 +64,25 @@ export default function CustodianV2() {
 
   const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
-  const approvedSecTokens = mySecTokens
-    ? mySecTokens.filter(
-        ({ token: { accreditationRequest } }: any) =>
-          accreditationRequest?.brokerDealerStatus === 'approved' &&
-          accreditationRequest?.custodianStatus === 'approved'
-      )
-    : []
-  const pendingSecTokens = mySecTokens
-    ? mySecTokens.filter(
-        ({ token: { accreditationRequest } }: any) =>
-          accreditationRequest?.brokerDealerStatus !== 'approved' ||
-          accreditationRequest?.custodianStatus !== 'approved'
-      )
-    : []
+
+  let featuredTokensFinal = featuredTokens
+
+  if (!isIxswap) {
+    featuredTokensFinal = featuredTokens.filter(({ token }: any) => configTokens.includes(token?.id))
+  }
+
+  const approvedSecFilterCondition = ({ token: { accreditationRequest, id } }: any) =>
+    isIxswap
+      ? checkApprovedAccreditationRequest(accreditationRequest)
+      : configTokens.includes(id) && checkApprovedAccreditationRequest(accreditationRequest)
+
+  const pendingSecFilterCondition = ({ token: { accreditationRequest, id } }: any) =>
+    isIxswap
+      ? checkPendingAccreditationRequest(accreditationRequest)
+      : configTokens.includes(id) && checkPendingAccreditationRequest(accreditationRequest)
+
+  const approvedSecTokens = mySecTokens ? mySecTokens.filter(approvedSecFilterCondition) : []
+  const pendingSecTokens = mySecTokens ? mySecTokens.filter(pendingSecFilterCondition) : []
 
   return (
     <>
@@ -74,68 +91,78 @@ export default function CustodianV2() {
         fontSize={isMobile ? '24px' : '40px'}
         marginLeft={isMobile ? '30px' : ''}
         marginBottom="30px"
+        paddingTop={isMobile ? '20px' : '24px'}
         data-testid="securityTokensTitle"
       >
-        <Trans>Security tokens</Trans>
+        <Trans>Security Tokens</Trans>
       </TYPE.title4>
-      {/* <Info /> */}
-      {tokens && (
-        <>
-          {mySecTokens?.length > 0 && (
-            <MySecTokensTab marginBottom="72px">
-              {/* <GradientText> */}
-              <TYPE.title5 marginBottom="32px">
-                <Trans>My security tokens</Trans>
-              </TYPE.title5>
-              {/* </GradientText> */}
-              {approvedSecTokens.length > 0 && (
-                <>
-                  <TYPE.title6 fontSize={'13px'} marginBottom="32px">
-                    <Trans>Accredited</Trans>
-                  </TYPE.title6>
-                  <MySecTokensGrid>
-                    {approvedSecTokens.map((token: any) => (
-                      <MySecToken key={`my-sec-${token.id}`} token={token} />
-                    ))}
-                  </MySecTokensGrid>
-                </>
+      <MySecTokensTab marginBottom="72px">
+        <TYPE.title5 marginBottom="32px">
+          <Trans>My Security Tokens</Trans>
+        </TYPE.title5>
+
+        {approvedSecTokens?.length > 0 ? (
+          <>
+            <TYPE.title6 fontSize={'13px'} marginBottom="32px">
+              <Trans>Accredited</Trans>
+            </TYPE.title6>
+            <MySecTokensGrid>
+              {approvedSecTokens?.map((token: any) => (
+                <MySecToken key={`my-sec-${token?.id}`} token={token} />
+              ))}
+            </MySecTokensGrid>
+          </>
+        ) : (
+          <EmptyData title="No Security Tokens" desc="You have no Security Tokens at the moment" />
+        )}
+        {pendingSecTokens?.length > 0 && (
+          <>
+            <Divider style={{ marginTop: '50px', marginBottom: '40px' }} />
+            <TYPE.title6 fontSize={'13px'} marginBottom="32px">
+              <Trans>Pending Accreditations</Trans>
+            </TYPE.title6>
+            <MySecTokensGrid>
+              {pendingSecTokens?.map((token: any) => (
+                <MySecToken key={`pending-${token.id}`} token={token} />
+              ))}
+            </MySecTokensGrid>
+          </>
+        )}
+      </MySecTokensTab>
+
+      <StyledBodyWrapper>
+        <Box marginBottom="72px">
+          <TYPE.title5 marginBottom="32px">
+            <Trans>Featured</Trans>
+          </TYPE.title5>
+          {isIxswap || enableFeaturedSecurityVaults ? (
+            <>
+              {featuredTokensFinal?.length > 0 ? (
+                <FeaturedTokensGrid>
+                  {featuredTokensFinal?.map((token: any) => (
+                    <FeaturedToken token={token} key={`featured-${token?.id}`} />
+                  ))}
+                </FeaturedTokensGrid>
+              ) : (
+                <EmptyData title="No Featured Tokens" desc="You have no Featured Tokens at the moment" />
               )}
-              {pendingSecTokens.length > 0 && (
-                <>
-                  <Divider style={{ marginTop: '50px', marginBottom: '40px' }} />
-                  <TYPE.title6 fontSize={'13px'} marginBottom="32px">
-                    <Trans>Pending Accreditations</Trans>
-                  </TYPE.title6>
-                  <MySecTokensGrid>
-                    {pendingSecTokens.map((token: any) => (
-                      <MySecToken key={`pending-${token.id}`} token={token} />
-                    ))}
-                  </MySecTokensGrid>
-                </>
-              )}
-            </MySecTokensTab>
+            </>
+          ) : (
+            <EmptyData title="No Featured Tokens" desc="You have no Featured Tokens at the moment" />
           )}
-          {featuredTokens?.length > 0 && (
-            <Box marginBottom="72px">
-              <TYPE.title5 marginBottom="32px">
-                <Trans>Featured</Trans>
-              </TYPE.title5>
-              <FeaturedTokensGrid>
-                {featuredTokens.map((token: any) => (
-                  <FeaturedToken token={token} key={`featured-${token.id}`} />
-                ))}
-              </FeaturedTokensGrid>
-            </Box>
-          )}
-          <SecTokensTable
-            page={tokens.page}
-            totalPages={tokens.totalPages}
-            totalItems={tokens.totalItems}
-            tokens={activeTokens}
-            offset={offset}
-          />
-        </>
-      )}
+        </Box>
+      </StyledBodyWrapper>
+
+      {isIxswap ? (
+        <SecTokensTable
+          page={tokens?.page}
+          totalPages={tokens?.totalPages}
+          totalItems={tokens?.totalItems}
+          tokens={activeTokens}
+          offset={offset}
+          enableFeaturedSecurityVaults={enableFeaturedSecurityVaults}
+        />
+      ) : null}
     </>
   )
 }

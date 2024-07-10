@@ -11,6 +11,7 @@ import { useEmailVerify, useEmailVerifyCode } from 'state/kyc/hooks'
 import { ReactComponent as ArrowBack } from 'assets/images/newBack.svg'
 import { useHistory } from 'react-router-dom'
 import { resendEmail } from 'state/admin/hooks'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 interface Props {
   isModalOpen: boolean
@@ -20,6 +21,8 @@ interface Props {
 }
 
 export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCode }: Props) => {
+  const { config } = useWhitelabelState()
+
   const [active, setActive] = React.useState(false)
   const [step, setStep] = React.useState(1)
   const emailVerify = useEmailVerify()
@@ -172,14 +175,14 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
           onClick={closeModal}
         />
         <ModalContent style={{ width: '100%' }}>
-          {step === 1 && <IXSTitle>Welcome to IX Swap</IXSTitle>}
+          {step === 1 && <IXSTitle>Welcome to {config?.name || 'IX Swap'}</IXSTitle>}
           {step === 2 && (
             <FlexContainer>
               <ArrowBack
                 style={{ position: 'absolute', left: '55px', top: isMobile ? '94px' : '100px', cursor: 'pointer' }}
                 onClick={handleBackClick}
               />
-              <IXSTitle>Welcome to IX Swap</IXSTitle>
+              <IXSTitle>Welcome to {config?.name || 'IX Swap'}</IXSTitle>
             </FlexContainer>
           )}
 

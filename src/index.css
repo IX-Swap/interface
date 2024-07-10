@@ -58,7 +58,7 @@ body {
 /* Adjust native scrollbars */
 ::-webkit-scrollbar {
   background: transparent;
-  width: 8px;
+  width: 0px;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 40px;

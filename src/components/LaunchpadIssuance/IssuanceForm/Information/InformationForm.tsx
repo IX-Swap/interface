@@ -51,6 +51,7 @@ import { FormSideBar, FormBody } from '../shared/styled'
 import { IssuanceTooltip } from '../shared/fields/IssuanceTooltip'
 import { text11 } from 'components/LaunchpadMisc/typography'
 import { useFormatOfferValue } from 'state/launchpad/hooks'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 interface Props {
   formikProps: FormikProps<InformationFormValues>
@@ -69,6 +70,8 @@ interface Props {
 }
 
 export const InformationForm = (props: Props) => {
+  const { config } = useWhitelabelState()
+
   const {
     formikProps,
     setShowConfirmDialog,
@@ -128,6 +131,7 @@ export const InformationForm = (props: Props) => {
 
   const onSubmit = async () => {
     const newErrors = await validateForm()
+
     const shouldSubmit = !Object.keys(newErrors).length
     if (shouldSubmit) {
       submitForm()
@@ -352,12 +356,12 @@ export const InformationForm = (props: Props) => {
             setter={setFieldValue}
             touch={setFieldTouched}
             label="Token Ticker"
-            placeholder="2-6 letters"
+            placeholder="2-11 letters"
             disabled={edit}
             inputFilter={uppercaseFilter}
             value={values.tokenTicker}
             error={(touched.tokenTicker && errors.tokenTicker) as string}
-            maxLength={6}
+            maxLength={11}
           />
           <FormField
             field="decimals"
@@ -551,7 +555,7 @@ export const InformationForm = (props: Props) => {
                 setFieldValue('tokenomicsAgreement', !values.tokenomicsAgreement)
               }}
               disabled={edit}
-              label="I understand and agree that once I submit this form and it is approved, IX Swap will mint and deposit the tokens into a smart contract based on the information provided."
+              label={`I understand and agree that once I submit this form and it is approved, ${config?.name || 'IX Swap'} will mint and deposit the tokens into a smart contract based on the information provided.`}
             />
             {touched.tokenomicsAgreement && errors.tokenomicsAgreement && (
               <ErrorText>{errors.tokenomicsAgreement}</ErrorText>

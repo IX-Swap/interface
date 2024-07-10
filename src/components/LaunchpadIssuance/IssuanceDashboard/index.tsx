@@ -8,6 +8,8 @@ import { IssuanceCreateButton } from '../IssuanceCreateButton'
 
 import { Footer } from 'pages/Launchpad/Footer'
 import { text8 } from 'components/LaunchpadMisc/typography'
+import WhiteLabelFooter from 'components/WhiteLabelFooter'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 const tabs = [
   { title: 'Live', value: IssuanceFilter.live },
@@ -39,10 +41,14 @@ const IssuanceTabs: React.FC<TabsProps> = (props) => {
 }
 
 export const IssuanceDashboard = () => {
+  const { config } = useWhitelabelState()
+
   const [activeTab, setActiveTab] = React.useState<IssuanceFilter>(() => {
     const issuanceTab = localStorage.getItem('issuanceTab')
     return (issuanceTab as IssuanceFilter) ?? IssuanceFilter.pending
   })
+
+  const isIxSwap = config?.isIxSwap ?? false
 
   const handleTabChange = (tab: IssuanceFilter) => {
     setActiveTab(tab)
@@ -66,7 +72,8 @@ export const IssuanceDashboard = () => {
         {activeTab === IssuanceFilter.old && <OffersFull type={'Old'} />}
       </Body>
 
-      <Footer />
+      {isIxSwap ? <Footer /> : <WhiteLabelFooter />}
+
     </Container>
   )
 }

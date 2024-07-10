@@ -1,9 +1,9 @@
 import React from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
-import defaultFavicon from 'assets/images/favicon.png'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import loadingIcon from 'assets/images/loader_thin.svg'
+import defaultFavicon from 'assets/images/favicon.png'
 
 export const CustomHeaders = () => {
   const { config } = useWhitelabelState()
@@ -18,8 +18,17 @@ export const CustomHeaders = () => {
 
   return (
     <Helmet>
-      <title>{config.title || 'IX Swap'}</title>
-      <link rel="icon" href={config.faviconUrl || defaultFavicon} sizes="32x32" />
+      <title>{config?.title}</title>
+      <link rel="icon" href={config?.faviconUrl || defaultFavicon} sizes="32x32" />
+      <meta name="robots" content="index, follow" />
+      <meta name="description" content={config?.description} />
+      <meta property="og:title" content={config?.title} />
+      <meta property="og:title" content={config?.title} />
+      <meta property="og:image" content={config?.bannerImageUrl} />
+      <meta property="og:url" content={config?.domain} />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content={config?.title} />
+      <link rel="apple-touch-icon" href={config?.faviconUrl} />
     </Helmet>
   )
 }

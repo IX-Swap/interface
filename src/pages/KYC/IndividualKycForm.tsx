@@ -63,6 +63,7 @@ import { Plus } from 'react-feather'
 import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
 import { KYCValidationErrors } from './KYCValidationErrors'
 import { error } from 'console'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 type FormSubmitHanderArgs = {
   createFn: (body: any) => any
@@ -101,6 +102,7 @@ export const FormContainer = styled(FormWrapper)`
 `
 
 export default function IndividualKycForm() {
+  const { config } = useWhitelabelState()
   const canLeavePage = useRef(false)
   const [cookies] = useCookies(['annoucementsSeen'])
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
@@ -1203,7 +1205,7 @@ export default function IndividualKycForm() {
                             id="SecondaryContactDetails"
                             selectedItem={values.sourceOfFunds}
                             items={SecondaryContactDetails}
-                      
+
                             onSelect={(item) => onSecondaryContactDetailsChange(item, values.SecondaryContactDetails, setFieldValue)}
                           />
 
@@ -1341,7 +1343,7 @@ export default function IndividualKycForm() {
                                     US to report customers who are US tax residents to the US tax authorities.
                                     <br />
                                     <br />
-                                    IX Swap is collecting information regarding tax residency status of each Account
+                                    {config?.name || 'IX Swap'} is collecting information regarding tax residency status of each Account
                                     holder in order to comply with Income Tax Act and Singapore Income Tax
                                     (International Tax Compliance Agreements) (Common Reporting Standard) Regulations
                                     2016.
@@ -1391,7 +1393,7 @@ export default function IndividualKycForm() {
                                           }
                                           error={errors[`taxDeclarations[${index}].country`]}
                                         />
-                                        {/* 
+                                        {/*
                                         {errors[`taxDeclarations[${index}].country`] && (
                                           <TYPE.small marginTop="8px" color={'red1'}>
                                             {errors[`taxDeclarations[${index}].country`]}
@@ -1505,7 +1507,7 @@ export default function IndividualKycForm() {
                           <TYPE.title7>
                             <Trans>FATCA</Trans>
                           </TYPE.title7>
-           
+
                         </RowBetween>
 
                         {/* <ExtraInfoCard>
