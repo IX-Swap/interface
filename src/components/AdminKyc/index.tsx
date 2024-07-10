@@ -64,7 +64,8 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
 
   let approverName = '-'
   if (individual?.version === IndividualKycVersion.v2) {
-    const approverUser = audits.length > 0 && audits[audits.length-1]?.approvedByUser || audits[audits.length-1]?.rejectedByUser
+    const approverUser =
+      (audits.length > 0 && audits[audits.length - 1]?.approvedByUser) || audits[audits.length - 1]?.rejectedByUser
     approverName = approverUser ? [approverUser?.firstName, approverUser?.lastName].join(' ') : 'Automatic'
   }
 
@@ -77,10 +78,10 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       <div style={{ fontSize: '12px' }}>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>
       <div style={{ fontSize: '12px' }}>{t`${whiteLabelConfig?.name}`}</div>
       <div style={{ fontSize: '12px' }}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-      <div style={{ fontSize: '12px' }}>
+      <div style={{ fontSize: '12px', whiteSpace: 'break-spaces' }}>
         <StatusCell status={status} />
       </div>
-      <div style={{ fontSize: '12px'}}>
+      <div style={{ fontSize: '12px', whiteSpace: 'break-spaces' }}>
         <StatusCell status={completedKycOfProvider} />
       </div>
       <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
