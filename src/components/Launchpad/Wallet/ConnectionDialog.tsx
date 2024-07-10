@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactGA from 'react-ga'
+import { BigNumber } from '@ethersproject/bignumber'
+import { hexStripZeros } from '@ethersproject/bytes'
 import styled, { useTheme } from 'styled-components'
 import { SUPPORTED_WALLETS, WalletInfo } from 'constants/wallet'
 import { ConnectionOptions } from './ConnectionOptions'
@@ -31,7 +33,7 @@ import { setWalletState } from 'state/wallet'
 import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
 import { getAddChainParameters } from 'chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-import { SupportedChainId } from 'constants/chains'
+import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 
 export enum PromptView {
   options,
@@ -59,6 +61,22 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
   const [showPendingScreen, setShowPendingScreen] = React.useState(false)
   const [selectedWalletName, setSelectedWalletName] = React.useState<string>('')
 
+  const connectWallet = async (connector: any, wallet: any) => {
+    setSelectedWalletName(wallet?.name ?? '')
+    const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
+    if (connector instanceof CoinbaseWallet) {
+      const chainParams = getAddChainParameters(defaultChain)
+
+      await connector.activate(chainParams)
+    } else {
+      await connector.activate(defaultChain)
+    }
+    setWalletView(PromptView.account)
+    props.onConnect()
+    props.onClose()
+    dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
+  }
+
   const tryActivation = async (connector: Connector | undefined) => {
     const wallet = Object.values(SUPPORTED_WALLETS).find((wallet) => wallet.connector === connector)
 
@@ -73,21 +91,28 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     }
 
     try {
-      setSelectedWalletName(wallet?.name ?? '')
-      const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
-      if (connector instanceof CoinbaseWallet) {
-        const chainParams = getAddChainParameters(defaultChain)
-
-        await connector.activate(chainParams)
-      } else {
-        await connector.activate(defaultChain)
-      }
-      setWalletView(PromptView.account)
-      props.onConnect()
-      props.onClose()
-      dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
+      connectWallet(connector, wallet);
     } catch (error) {
       console.log('Error activating connector', error)
+
+      const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
+      const formattedChainId = hexStripZeros(BigNumber.from(defaultChain).toHexString())
+      const info = CHAIN_INFO[defaultChain]
+
+      await window?.ethereum?.request({
+        method: 'wallet_addEthereumChain',
+        params: [
+          {
+            chainId: formattedChainId,
+            chainName: info.chainName,
+            rpcUrls: info.rpcUrls,
+            nativeCurrency: info.nativeCurrency,
+            blockExplorerUrls: info.blockExplorerUrls,
+          },
+        ],
+      })
+
+      connectWallet(connector, wallet);
     }
   }
 
@@ -128,9 +153,11 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
                 <AgreementNotice>
                   <Line style={{ marginBottom: '20px' }} />
                   By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
-                  <ExternalLink href={config?.termsAndConditionsUrl ?? "https://ixswap.io/terms-and-conditions/"}>Terms and Conditions</ExternalLink> and
-                  acknowledge that you have read and understood the{' '}
-                  <ExternalLink href={config?.privacyPolicyUrl ?? "https://ixswap.io/privacy-policy/"}>
+                  <ExternalLink href={config?.termsAndConditionsUrl ?? 'https://ixswap.io/terms-and-conditions/'}>
+                    Terms and Conditions
+                  </ExternalLink>{' '}
+                  and acknowledge that you have read and understood the{' '}
+                  <ExternalLink href={config?.privacyPolicyUrl ?? 'https://ixswap.io/privacy-policy/'}>
                     {config?.name || 'IX Swap'} Privacy Policy
                   </ExternalLink>
                   .
@@ -176,9 +203,11 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
           <Line />
           <AgreementNotice>
             By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
-            <ExternalLink href={config?.termsAndConditionsUrl ?? "https://ixswap.io/terms-and-conditions/"}>Terms and Conditions</ExternalLink> and
-            acknowledge that you have read and understood the{' '}
-            <ExternalLink href={config?.privacyPolicyUrl ?? "https://ixswap.io/privacy-policy/"}>
+            <ExternalLink href={config?.termsAndConditionsUrl ?? 'https://ixswap.io/terms-and-conditions/'}>
+              Terms and Conditions
+            </ExternalLink>{' '}
+            and acknowledge that you have read and understood the{' '}
+            <ExternalLink href={config?.privacyPolicyUrl ?? 'https://ixswap.io/privacy-policy/'}>
               {config?.name || 'IX Swap'} Privacy Policy
             </ExternalLink>
             .
