@@ -83,38 +83,43 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
       } else {
         await connector.activate(defaultChain)
       }
-    } catch (error) {
-      console.log('Error activating connector', error)
-      debugger;
-      const formattedChainId = hexStripZeros(BigNumber.from(defaultChain).toHexString())
-      const info = CHAIN_INFO[defaultChain]
-
-      await window?.ethereum?.request({
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            chainId: formattedChainId,
-            chainName: info.chainName,
-            rpcUrls: info.rpcUrls,
-            nativeCurrency: info.nativeCurrency,
-            blockExplorerUrls: info.blockExplorerUrls,
-          },
-        ],
-      })
-
-      // Reconnect again
-      if (connector instanceof CoinbaseWallet) {
-        const chainParams = getAddChainParameters(defaultChain)
-
-        await connector.activate(chainParams)
-      } else {
-        await connector.activate(defaultChain)
-      }
-    } finally {
       setWalletView(PromptView.account)
       dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
       props.onConnect()
       props.onClose()
+    } catch (error: any) {
+      console.log('Error activating connector', error)
+      if (error.code === 4902) {
+        const formattedChainId = hexStripZeros(BigNumber.from(defaultChain).toHexString())
+        const info = CHAIN_INFO[defaultChain]
+
+        await window?.ethereum?.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: formattedChainId,
+              chainName: info.chainName,
+              rpcUrls: info.rpcUrls,
+              nativeCurrency: info.nativeCurrency,
+              blockExplorerUrls: info.blockExplorerUrls,
+            },
+          ],
+        })
+
+        // Reconnect again
+        if (connector instanceof CoinbaseWallet) {
+          const chainParams = getAddChainParameters(defaultChain)
+
+          await connector.activate(chainParams)
+        } else {
+          await connector.activate(defaultChain)
+        }
+
+        setWalletView(PromptView.account)
+        dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
+        props.onConnect()
+        props.onClose()
+      }
     }
   }
 
