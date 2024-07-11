@@ -27,6 +27,8 @@ import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { useOnChangeOrder } from 'state/launchpad/hooks'
 import { AbstractOrder, KycOrderConfig } from 'state/launchpad/types'
 import { OrderType } from 'state/launchpad/types'
+import { KYCStatus } from 'pages/KYC/KYCStatus'
+import { KYCStatuses } from 'pages/KYC/enum'
 const headerCells = [
   { key: 'ethAddress', label: 'Wallet address', show: false },
   { key: 'fullName', label: 'Name', show: false },
@@ -84,7 +86,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <StatusCell status={completedKycOfProvider} />
       </div>
       <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
-      <div style={{ fontSize: '12px' }}> {status === 'pending' ? '-' :  approverName}</div>
+      <div style={{ fontSize: '12px' }}>{status === KYCStatuses.APPROVED ? approverName : '-'}</div>
       <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
         Review
       </TYPE.main2>
