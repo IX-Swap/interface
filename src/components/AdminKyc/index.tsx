@@ -27,7 +27,6 @@ import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { useOnChangeOrder } from 'state/launchpad/hooks'
 import { AbstractOrder, KycOrderConfig } from 'state/launchpad/types'
 import { OrderType } from 'state/launchpad/types'
-import { KYCStatus } from 'pages/KYC/KYCStatus'
 import { KYCStatuses } from 'pages/KYC/enum'
 const headerCells = [
   { key: 'ethAddress', label: 'Wallet address', show: false },
