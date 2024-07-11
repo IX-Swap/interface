@@ -68,7 +68,6 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       (audits.length > 0 && audits[audits.length - 1]?.approvedByUser) || audits[audits.length - 1]?.rejectedByUser
     approverName = approverUser ? [approverUser?.firstName, approverUser?.lastName].join(' ') : 'Automatic'
   }
-console.log(status)
   return (
     <StyledBodyRow key={id}>
       <Wallet style={{ fontSize: '12px' }}>
