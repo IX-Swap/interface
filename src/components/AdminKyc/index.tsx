@@ -68,7 +68,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       (audits.length > 0 && audits[audits.length - 1]?.approvedByUser) || audits[audits.length - 1]?.rejectedByUser
     approverName = approverUser ? [approverUser?.firstName, approverUser?.lastName].join(' ') : 'Automatic'
   }
-
+console.log(status)
   return (
     <StyledBodyRow key={id}>
       <Wallet style={{ fontSize: '12px' }}>
@@ -85,7 +85,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <StatusCell status={completedKycOfProvider} />
       </div>
       <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
-      <div style={{ fontSize: '12px' }}>{approverName}</div>
+      <div style={{ fontSize: '12px' }}> {status === 'pending' ? '-' :  approverName}</div>
       <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
         Review
       </TYPE.main2>
