@@ -220,6 +220,7 @@ const InvestmentCardContainer = styled.article`
   align-items: stretch;
   width: 380px;
   overflow: hidden;
+
 `
 
 const InvestmentCardHeader = styled.header`
@@ -237,7 +238,7 @@ const InvestmentCardImage = styled.img`
   width: 380px;
   overflow-x: hidden;
   border-radius: 6px;
-  height: auto;
+  height: 300px;
 `
 
 const InvestmentCardTagsContainer = styled.header`
