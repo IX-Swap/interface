@@ -11,6 +11,7 @@ import 'react-phone-input-2/lib/bootstrap.css'
 import { Web3ReactProvider } from '@web3-react/core'
 import { connectors } from 'connectors'
 import { PersistGate } from 'redux-persist/integration/react'
+import { HelmetProvider } from 'react-helmet-async'
 
 import { MuiThemeProvider } from './theme/muiTheme'
 import { CustomHeaders } from './components/CustomHeaders'
@@ -32,7 +33,6 @@ import { metaMask } from 'connectors/metaMask'
 import { walletConnectV2 } from 'connectors/walletConnectV2'
 
 /* eslint-disable react/display-name */
-
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
 }
@@ -102,9 +102,9 @@ ReactDOM.render(
                   <MuiThemeProvider>
                     <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
-                        <CustomHeaders />
-
-                        <App />
+                        <HelmetProvider>
+                          <App />
+                        </HelmetProvider>
                       </CookiesProvider>
                     </LocalizationProvider>
                   </MuiThemeProvider>

@@ -4,14 +4,15 @@ import styled from 'styled-components'
 import { Offer, OfferFile, OfferFileType } from 'state/launchpad/types'
 
 import { ReactComponent as TelegramLogo } from 'assets/launchpad/svg/social/telegram.svg'
-import { ReactComponent as TwitterLogo } from 'assets/launchpad/svg/social/twitter.svg'
+import { ReactComponent as XLogo } from 'assets/launchpad/svg/social/twitter.svg'
 import { ReactComponent as MLogo } from 'assets/launchpad/svg/social/m.svg'
 import { ReactComponent as DiscordLogo } from 'assets/launchpad/svg/social/discord.svg'
 import { ReactComponent as YoutubeLogo } from 'assets/launchpad/svg/social/youtube.svg'
 import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/linkedin.svg'
 import { ReactComponent as RedditLogo } from 'assets/launchpad/svg/social/reddit.svg'
 import { ReactComponent as CoingeckoLogo } from 'assets/launchpad/svg/social/coingecko.svg'
-
+import { ReactComponent as InstagramLogo } from 'assets/launchpad/svg/social/instagram.svg'
+import OtherLogo from 'assets/images/otherMediaIcon.svg'
 import { MediaEntry, OfferGalleryViewer } from './OfferGalleryViewer'
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
@@ -27,7 +28,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
 
   const socialMedialLinks = React.useMemo(
     () => [
-      { url: props.offer?.socialMedia?.twitter, logo: <TwitterLogo /> },
+      { url: props.offer?.socialMedia?.x, logo: <XLogo /> },
       { url: props.offer?.socialMedia?.telegram, logo: <TelegramLogo /> },
       { url: props.offer?.socialMedia?.linkedin, logo: <LinkedInLogo /> },
       { url: props.offer?.socialMedia?.youtube, logo: <YoutubeLogo /> },
@@ -35,6 +36,8 @@ export const OfferGallery: React.FC<Props> = (props) => {
       { url: props.offer?.socialMedia?.coingecko, logo: <CoingeckoLogo /> },
       { url: props.offer?.socialMedia?.discord, logo: <DiscordLogo /> },
       { url: props.offer?.socialMedia?.reddit, logo: <RedditLogo /> },
+      { url: props.offer?.socialMedia?.instagram, logo: <InstagramLogo /> },
+      { url: props.offer?.socialMedia?.others, logo: <img src={OtherLogo}/> },
     ],
     []
   )
@@ -43,7 +46,10 @@ export const OfferGallery: React.FC<Props> = (props) => {
     () => ({ file: props.offer?.cardPicture, type: OfferFileType.image, videoUrl: '' }),
     []
   )
-  const gallery = React.useMemo(() => props.offer?.files.filter((x) => x.type === OfferFileType.video || x.type === OfferFileType.image), [])
+  const gallery = React.useMemo(
+    () => props.offer?.files.filter((x) => x.type === OfferFileType.video || x.type === OfferFileType.image),
+    []
+  )
 
   const openViewer = React.useCallback((file?: OfferFile) => {
     setShowViewer(true)
@@ -57,9 +63,9 @@ export const OfferGallery: React.FC<Props> = (props) => {
           <GalleryCarouselImage src={props.offer?.cardPicture.public} />
         </GalleryCarouselMainImage>
 
-        <GalleryCarouselExtraMediaList style={{height: gallery?.length > 0 ? '120px' : ''}}>
+        <GalleryCarouselExtraMediaList style={{ height: gallery?.length > 0 ? '120px' : '' }}>
           {gallery.slice(0, 3).map((media, idx) => (
-            <GalerryCarouselEntry    key={`carousel-${idx}`} onClick={() => openViewer(media)}>
+            <GalerryCarouselEntry key={`carousel-${idx}`} onClick={() => openViewer(media)}>
               <MediaEntry media={media} />
             </GalerryCarouselEntry>
           ))}
@@ -82,21 +88,32 @@ export const OfferGallery: React.FC<Props> = (props) => {
           <SocialMediaLinks>
             <SocialMediaLink href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
             {props.offer?.whitepaperUrl && <SocialMediaLink href={props.offer.whitepaperUrl}>Dataroom</SocialMediaLink>}
+            {socialMedialLinks?.slice(0, 3)?.map((link, idx) => (
+              <SocialMediaLink key={`link-${idx}`} href={link.url}>
+                {link.logo}
+              </SocialMediaLink>
+            ))}
           </SocialMediaLinks>
-          <SocialMediaLinks style={{ marginTop: '20px', justifyContent: 'left', width: '30%', marginLeft: '20px' }}>
-            {socialMedialLinks
-              .filter((link) => link.url)
-              .map((link, idx) => (
-                <SocialMediaLink  key={`link-${idx}`} href={link.url}>
-                  {link.logo}
-                </SocialMediaLink>
-              ))}
+          <SocialMediaLinks
+            style={{ marginTop: '20px', justifyContent: 'flex-start',}}
+          >
+            {socialMedialLinks?.slice(3)?.map((link, idx) => (
+              <SocialMediaLink key={`link-${idx}`} href={link.url}>
+                {link.logo}
+              </SocialMediaLink>
+            ))}
           </SocialMediaLinks>
         </>
       ) : (
         <SocialMediaLinks>
-          <SocialMediaLink target="_blank" rel="noopener noreferrer" href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
-          {props.offer?.whitepaperUrl && <SocialMediaLink target="_blank" rel="noopener noreferrer" href={props.offer.whitepaperUrl}>Dataroom</SocialMediaLink>}
+          <SocialMediaLink target="_blank" rel="noopener noreferrer" href={props.offer?.issuerWebsite}>
+            Website
+          </SocialMediaLink>
+          {props.offer?.whitepaperUrl && (
+            <SocialMediaLink target="_blank" rel="noopener noreferrer" href={props.offer.whitepaperUrl}>
+              Dataroom
+            </SocialMediaLink>
+          )}
           {socialMedialLinks
             .filter((link) => link.url)
             .map((link, idx) => (
@@ -191,10 +208,11 @@ const SocialMediaLinks = styled.div`
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    // padding: 20px;
-    justify-content: center;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-left: 20px;
   }
 `
 
@@ -202,9 +220,8 @@ const SocialMediaLink = styled.a`
   display: grid;
   place-content: center;
   height: 36px;
-  padding: 1rem;
+  padding: 10px;
   text-decoration: none;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 
@@ -223,10 +240,10 @@ const SocialMediaLink = styled.a`
     transform: scale(1.2);
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    width: 42%;
+
+    padding: 12px;
   }
   cursor: pointer;
   target: '_blank';
   rel: 'noopener noreferrer';
-`;
-
+`

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Trans } from '@lingui/macro'
 import { Connector } from '@web3-react/types'
 import { useWeb3React } from '@web3-react/core'
@@ -319,8 +319,8 @@ export default function WalletModal({
           <AutoRow style={{ flexWrap: 'nowrap' }}>
             <Text style={{ fontSize: '13px', color: '#666680', fontWeight: '400', lineHeight: '19.5px' }}>
               <Trans>
-                Connecting your wallet allows IX Swap to see your wallet address and, consequently, the funds you hold
-                on the blockchain. This does not grant IX Swap the ability to manage or transfer your tokens; for that,
+                Connecting your wallet allows {config?.name || 'IX Swap'} to see your wallet address and, consequently, the funds you hold
+                on the blockchain. This does not grant {config?.name || 'IX Swap'} the ability to manage or transfer your tokens; for that,
                 you will be asked to sign a token approval.
                 {/* By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
                   <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
@@ -356,11 +356,11 @@ export default function WalletModal({
 
         <div style={{ fontSize: '13px', justifyContent: 'center', marginTop: '20px', color: '#666680' }}>
           By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
-          <ExternalLink style={{ color: '#6666FF' }} href="https://ixswap.io/terms-and-conditions/">
+          <ExternalLink style={{ color: '#6666FF' }} href={config?.termsAndConditionsUrl ?? "https://ixswap.io/terms-and-conditions/"}>
             Terms and Conditions
           </ExternalLink>{' '}
           and acknowledge that you have read and understood the{' '}
-          <ExternalLink style={{ color: '#6666FF' }} href="https://ixswap.io/privacy-policy/">
+          <ExternalLink style={{ color: '#6666FF' }} href={config?.privacyPolicyUrl ?? "https://ixswap.io/privacy-policy/"}>
             {config?.name || 'IX Swap'} Privacy Policy
           </ExternalLink>
           .

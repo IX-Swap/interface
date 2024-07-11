@@ -41,7 +41,7 @@ export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, 
 
   const socialOptions = React.useMemo(() => {
     const defaultLinks = [
-      { label: 'Twitter', value: SocialMediaType.twitter },
+      { label: 'X', value: SocialMediaType.x },
       { label: 'Telegram', value: SocialMediaType.telegram },
       { label: 'LinkedIn', value: SocialMediaType.linkedIn },
       { label: 'Discord', value: SocialMediaType.discord },
@@ -49,6 +49,8 @@ export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, 
       { label: 'YouTube', value: SocialMediaType.youTube },
       { label: 'CoinMarketCap', value: SocialMediaType.coinMarketCap },
       { label: 'CoinGecko', value: SocialMediaType.coinGecko },
+      { label: 'Instagram', value: SocialMediaType.instagram },
+      { label: 'Others', value: SocialMediaType.others },
     ]
 
     const selectedLinks = new Set(values.social.map((x) => x.type))

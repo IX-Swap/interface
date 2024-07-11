@@ -17,7 +17,7 @@ import Popups from 'components/Popups'
 import ErrorBoundary from 'components/ErrorBoundary'
 import GoogleAnalyticsReporter from 'components/analytics/GoogleAnalyticsReporter'
 
-// import { Footer } from 'components/Footer'
+import WhiteLabelFooter from 'components/WhiteLabelFooter'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
@@ -28,7 +28,7 @@ import { useAuthState } from 'state/auth/hooks'
 import { useHideHeader, useModalOpen } from 'state/application/hooks'
 import { useAccount, useGetMe, useRawRole, useRole } from 'state/user/hooks'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
-import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
+import { useGetWhitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { ApplicationModal, clearStore } from 'state/application/actions'
 
@@ -44,43 +44,12 @@ import { metaMask } from 'connectors/metaMask'
 import { walletConnectV2 } from 'connectors/walletConnectV2'
 import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
-import { Footer } from './Launchpad/Footer'
+import { Footer as DefaultFooter } from './Launchpad/Footer'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { CustomHeaders } from 'components/CustomHeaders'
+import { useWalletState } from 'state/wallet/hooks'
+import { coinbaseWallet } from 'connectors/coinbaseWallet'
 import { blockedCountries } from 'constants/countriesList'
-
-const AppWrapper = styled.div`
-  display: flex;
-  flex-flow: column;
-  align-items: flex-start;
-  position: relative;
-`
-
-const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  ${(props) => !props.hideHeader && 'margin-top: 120px;'}
-  align-items: center;
-  flex: 1;
-  z-index: 1;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 12px;
-    margin-top: 64px;
-  `};
-`
-
-const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: boolean }>`
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  min-height: calc(100vh - 120px);
-
-  ${(props) => !props.hideHeader && 'padding-bottom: 48px;'}
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    min-height: calc(100vh - 64px);
-    // width: 100%;
-    // padding: 0px 20px;
-  `}
-`
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -99,22 +68,24 @@ const initSafary = () => {
 export default function App() {
   const getMe = useGetMe()
   const { isAdmin } = useRole()
-
+  const { config: whiteLabelConfig } = useWhitelabelState()
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
   const { chainId, account } = useActiveWeb3React()
   const getMyKyc = useGetMyKyc()
   const { token } = useAuthState()
   const dispatch = useDispatch()
-  const getWitelabelConfig = useGetWihitelabelConfig()
+  const getWitelabelConfig = useGetWhitelabelConfig()
   const { config } = useWhitelabelState()
   const hideHeader = useHideHeader()
   const { kyc } = useKYCState()
+  const { isConnected, walletName } = useWalletState()
+
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [countryCode, setCountryCode] = useState()
 
+  const isIxSwap = whiteLabelConfig?.isIxSwap ?? false
   const routeFinalConfig = isAdmin ? routeConfigs : routeConfigs.filter((route) => !lbpAdminRoutes.includes(route.path))
-
   useEffect(() => {
     const getCountryCode = async () => {
       const response = await axios.get(ip.getIPAddress)
@@ -199,21 +170,29 @@ export default function App() {
   useEffect(() => {
     clearLocaleStorage()
 
-    // connect eagerly for metamask
-    void metaMask.connectEagerly().catch(() => {
-      console.debug('Failed to connect eagerly to metamask')
-    })
+    if (isConnected && walletName === 'MetaMask') {
+      // connect eagerly for metamask
+      void metaMask.connectEagerly().catch(() => {
+        console.debug('Failed to connect eagerly to metamask')
+      })
+    }
 
-    // connect eagerly for walletConnectV2
-    walletConnectV2.connectEagerly().catch((error) => {
-      console.debug('Failed to connect eagerly to walletconnect', error)
-    })
-  }, [])
+    if (isConnected && walletName === 'WalletConnect') {
+      // connect eagerly for walletConnectV2
+      walletConnectV2.connectEagerly().catch((error) => {
+        console.debug('Failed to connect eagerly to walletconnect', error)
+      })
+    }
+
+    if (isConnected && walletName === 'Coinbase Wallet') {
+      void coinbaseWallet.connectEagerly().catch(() => {
+        console.debug('Failed to connect eagerly to coinbase wallet')
+      })
+    }
+  }, [isConnected, walletName])
 
   useEffect(() => {
-    if (window.location.host.split('.')[1] !== 'ixswap') {
-      getWitelabelConfig()
-    }
+    getWitelabelConfig()
   }, [])
 
   useEffect(() => {
@@ -259,13 +238,16 @@ export default function App() {
     [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
   )
 
-  const useRedirect = account ? kyc !== null : true
+  const isRedirect =
+    userRole !== ROLES.OFFER_MANAGER || (userRole === ROLES.OFFER_MANAGER && !pathname.includes(routes.issuance))
+
   if (!config) {
     return <LoadingIndicator isLoading />
   }
 
   return (
     <>
+      <CustomHeaders />
       {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
       {countryCode && blockedCountries.includes(countryCode) && <RestrictedModal />}
       <ErrorBoundary>
@@ -293,18 +275,53 @@ export default function App() {
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
-                {useRedirect && (
+                {isRedirect ? (
                   <Route
+                    path={'/'}
                     component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
                   />
-                )}
+                ) : null}
               </Switch>
             </Suspense>
             {/* </Web3ReactManager> */}
           </ToggleableBody>
-          {!hideHeader && <Footer />}
+          {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
         </AppWrapper>
       </ErrorBoundary>
     </>
   )
 }
+
+const AppWrapper = styled.div`
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  position: relative;
+`
+
+const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  ${(props) => !props.hideHeader && 'margin-top: 120px;'}
+  align-items: center;
+  flex: 1;
+  z-index: 1;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0 12px;
+    margin-top: 0;
+  `};
+`
+
+const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: boolean }>`
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  min-height: calc(100vh - 120px);
+
+  ${(props) => !props.hideHeader && 'padding-bottom: 48px;'}
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    min-height: calc(100vh - 64px);
+    // width: 100%;
+    // padding: 0px 20px;
+  `}
+`

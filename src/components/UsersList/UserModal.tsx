@@ -1,11 +1,11 @@
 import React, { useState, FC, useMemo } from 'react'
 import styled from 'styled-components'
 import { Label } from '@rebass/forms'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { useFormik } from 'formik'
 
 import { User } from 'state/admin/actions'
-import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { LoadingIndicator } from 'components/LoadingIndicator'
@@ -26,8 +26,9 @@ import { RemoveTokensWarning } from './RemoveTokensWarning'
 import { RoleChangeWarning } from './RoleChangeWarning'
 import { UpdateSummary } from './UpdateSummary'
 import { Line } from 'components/Line'
-import { HelpCircle, Info } from 'react-feather'
+import { HelpCircle } from 'react-feather'
 import { MouseoverTooltip } from 'components/Tooltip'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 interface Props {
   item: User | null
@@ -36,17 +37,17 @@ interface Props {
 }
 
 export const UserModal: FC<Props> = ({ item, close, filters }) => {
+  const { adminLoading } = useAdminState()
+  const addPopup = useAddPopup()
+  const createUser = useCreateUser()
+  const updateUser = useUpdateUser()
+  const { tokens: secTokens } = useSecTokenState()
+  const { config } = useWhitelabelState()
+
   const [tokensToRemove, handleTokensToRemove] = useState<Option[]>([])
   const [showDeleteTokensWarning, handleShowDeleteTokensWarning] = useState(false)
   const [changeRole, handleChangeRole] = useState(false)
   const [showSummary, handleShowSummary] = useState(false)
-  const { adminLoading } = useAdminState()
-  const addPopup = useAddPopup()
-
-  const createUser = useCreateUser()
-  const updateUser = useUpdateUser()
-
-  const { tokens: secTokens } = useSecTokenState()
 
   const tokensOptions = useMemo((): Record<number, Option> => {
     if (secTokens?.length) {
@@ -295,9 +296,10 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                 <MouseoverTooltip
                   text={
                     <Trans>
-                      IXS custody service provider charges 20 USD withdrawal fees when users withdraw STOs from Vaults.
-                      IXS passes the withdrawal fees to the user by charging the user an equivalent amount in native
-                      tokens. By checking this box, the user will incur 1000% less withdrawal fees.
+                      {config?.name} custody service provider charges 20 USD withdrawal fees when users withdraw STOs
+                      from Vaults.
+                      {config?.name} passes the withdrawal fees to the user by charging the user an equivalent amount in
+                      native tokens. By checking this box, the user will incur 1000% less withdrawal fees.
                     </Trans>
                   }
                 >
@@ -325,15 +327,6 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
   )
 }
 
-const Tooltip = styled.div`
-  font-weight: 500;
-  font-size: 9px;
-  line-height: 160%;
-  text-align: center;
-  color: ${({ theme }) => theme.text9};
-  max-width: 319px;
-`
-
 const ExistingWallet = styled.div`
   display: flex;
   flex-direction: column;
@@ -342,17 +335,6 @@ const ExistingWallet = styled.div`
     font-size: 16px;
     line-height: 24px;
   }
-`
-
-const ButtonWrapper = styled.div`
-  padding-top: 24px;
-  margin-top: 8px;
-  width: 100%;
-  border-top: 1px solid rgba(39, 32, 70, 0.72); ;
-`
-
-const StyledButton = styled(ButtonIXSGradient)`
-  width: 100%;
 `
 
 const ModalContent = styled(ModalContentWrapper)`

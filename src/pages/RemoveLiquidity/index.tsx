@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
@@ -8,7 +8,6 @@ import { TextRow } from 'components/TextRow/TextRow'
 import { TipWithMessage } from 'components/TipWithMessage'
 import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
 import AppBody from 'pages/AppBody'
-import React, { useCallback, useMemo, useState } from 'react'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router'
 import { Box, Text } from 'rebass'
@@ -27,7 +26,6 @@ import { useLiquidityRouterContract, usePairContract } from '../../hooks/useCont
 import { UseERC20PermitState, useV2LiquidityTokenPermit } from '../../hooks/useERC20Permit'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { useWeb3React } from '@web3-react/core'
-import { useWalletModalToggle } from '../../state/application/hooks'
 import { Field } from '../../state/burn/actions'
 import { useBurnState, useDerivedBurnInfo } from '../../state/burn/hooks'
 import { useTransactionAdder } from '../../state/transactions/hooks'
@@ -49,6 +47,8 @@ import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
+import Modal from 'components/Modal'
+import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
 
 const DEFAULT_REMOVE_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(5, 100)
 
@@ -62,7 +62,6 @@ export default function RemoveLiquidity({
   const { account, chainId, provider } = useWeb3React()
   const [tokenA, tokenB] = useMemo(() => [currencyA?.wrapped, currencyB?.wrapped], [currencyA, currencyB])
   // toggle wallet when disconnected
-  const toggleWalletModal = useWalletModalToggle()
   const setCurrentPoolTransctionHash = setPoolTransactionHash()
 
   // burn state
@@ -75,7 +74,7 @@ export default function RemoveLiquidity({
   // modal and loading
   const [showConfirm, setShowConfirm] = useState<boolean>(false)
   const [attemptingTxn, setAttemptingTxn] = useState(false) // clicked confirm
-
+  const [isOpenConnectWallet, setOpenConnectWallet] = useState(false)
   // txn values
   const [txHash, setTxHash] = useState<string>('')
   const deadline = useTransactionDeadline()
@@ -392,9 +391,28 @@ export default function RemoveLiquidity({
                 )}
                 <div style={{ position: 'relative' }}>
                   {!account ? (
-                    <ButtonIXSWide onClick={toggleWalletModal} data-testid="connect-wallet-remove-liquidity">
-                      <Trans>Connect Wallet</Trans>
-                    </ButtonIXSWide>
+                    <>
+                      <ButtonIXSWide
+                        onClick={() => setOpenConnectWallet(true)}
+                        data-testid="connect-wallet-remove-liquidity"
+                      >
+                        <Trans>Connect Wallet</Trans>
+                      </ButtonIXSWide>
+
+                      <Modal
+                        isOpen={isOpenConnectWallet}
+                        onDismiss={() => setOpenConnectWallet(false)}
+                        maxWidth="430px"
+                        maxHeight="310px"
+                      >
+                        <ConnectionDialog
+                          onConnect={() => {
+                            console.log('Connected')
+                          }}
+                          onClose={() => setOpenConnectWallet(false)}
+                        />
+                      </Modal>
+                    </>
                   ) : (
                     <>
                       <RowBetween style={{ gap: '16px' }}>

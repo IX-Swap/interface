@@ -9,7 +9,7 @@ import { File } from 'react-feather'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
 import { CopyAddress } from 'components/CopyAddress'
-import { KycItem } from 'state/admin/actions'
+import { IndividualKycVersion, KycItem } from 'state/admin/actions'
 import { AdminKycFilters, TStats } from 'components/AdminKycFilters'
 import { adminOffset as offset } from 'state/admin/constants'
 
@@ -25,16 +25,18 @@ import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { isMobile } from 'react-device-detect'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { useOnChangeOrder } from 'state/launchpad/hooks'
-import { AbstractOrder, KycOrderConfig, OrderTypes } from 'state/launchpad/types'
+import { AbstractOrder, KycOrderConfig } from 'state/launchpad/types'
 import { OrderType } from 'state/launchpad/types'
 const headerCells = [
   { key: 'ethAddress', label: 'Wallet address', show: false },
   { key: 'fullName', label: 'Name', show: false },
   { key: 'identity', label: 'Identity', show: false },
+  { key: 'Tenant', label: 'Tenant', show: false },
   { key: 'createdAt', label: 'Date of request', show: true },
   { key: 'status', label: 'KYC Status', show: false },
   { key: 'completedKycOfProvider', label: 'Review Status', show: false },
   { key: 'updatedAt', label: 'Updated At', show: true },
+  { key: 'approver', label: 'Approver', show: true },
 ]
 interface RowProps {
   item: KycItem
@@ -44,18 +46,29 @@ interface RowProps {
 const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   const {
     id,
-    user: { ethAddress },
+    user: { ethAddress, whiteLabelConfig },
     status,
     createdAt,
     updatedAt,
     individualKycId,
+    audits,
+    individual,
+    corporate,
   } = item
 
-  const kyc = individualKycId ? item.individual : item.corporate
-  const completedKycOfProvider = item?.individual?.completedKycOfProvider
+  const kyc = individualKycId ? individual : corporate
+  const completedKycOfProvider = individual?.completedKycOfProvider
   const fullName = individualKycId
     ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
     : kyc?.corporateName
+
+  let approverName = '-'
+  if (individual?.version === IndividualKycVersion.v2) {
+    const approverUser =
+      (audits.length > 0 && audits[audits.length - 1]?.approvedByUser) || audits[audits.length - 1]?.rejectedByUser
+    approverName = approverUser ? [approverUser?.firstName, approverUser?.lastName].join(' ') : 'Automatic'
+  }
+
   return (
     <StyledBodyRow key={id}>
       <Wallet style={{ fontSize: '12px' }}>
@@ -63,14 +76,16 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       </Wallet>
       <div style={{ fontSize: '12px' }}>{fullName || '-'}</div>
       <div style={{ fontSize: '12px' }}>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>
+      <div style={{ fontSize: '12px' }}>{t`${whiteLabelConfig?.name}`}</div>
       <div style={{ fontSize: '12px' }}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-      <div style={{ fontSize: '12px' }}>
+      <div style={{ fontSize: '12px', whiteSpace: 'break-spaces' }}>
         <StatusCell status={status} />
       </div>
-      <div style={{ fontSize: '12px' }}>
+      <div style={{ fontSize: '12px', whiteSpace: 'break-spaces' }}>
         <StatusCell status={completedKycOfProvider} />
       </div>
       <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
+      <div style={{ fontSize: '12px' }}>{approverName}</div>
       <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
         Review
       </TYPE.main2>
@@ -112,7 +127,6 @@ export const AdminKycTable = () => {
   const history = useHistory()
 
   const { id } = useParams<AdminParams>()
-
   const getKycFilters = (page: number, withStatus = true) => {
     let kycFilter: any = {
       page,
@@ -187,7 +201,7 @@ export const AdminKycTable = () => {
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
 
   return (
-    <div style={{ margin: isMobile ? '30px 20px 0px 20px' : '30px 90px 0px 90px' }} id="kyc-container">
+    <div style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 30px 0 30px' }} id="kyc-container">
       {/* version v2 is hardcoded for testing purpose only */}
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <TYPE.title4 fontSize={isMobile ? '29px' : '40px'} marginBottom="30px" data-testid="securityTokensTitle">
@@ -204,15 +218,15 @@ export const AdminKycTable = () => {
         setEndDate={setEndDate}
       />
 
-      {(adminLoading || isLoading) && (
-        <Loader>
-          <LoaderThin size={96} />
-        </Loader>
-      )}
-
       {items.length === 0 ? (
         <NoData>
-          <Trans>No results</Trans>
+          {adminLoading || isLoading ? (
+            <Loader>
+              <LoaderThin size={96} />
+            </Loader>
+          ) : (
+            <Trans>No results</Trans>
+          )}
         </NoData>
       ) : (
         <Container>
@@ -242,16 +256,9 @@ export const AdminKycTable = () => {
 export default AdminKycTable
 
 const Loader = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000000;
 `
 
 export const Wallet = styled.div`
@@ -281,7 +288,7 @@ export const StyledDoc = styled(File)`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: repeat(7, 2fr) 140px;
+  grid-template-columns: repeat(9, 1fr) 100px;
   padding-bottom: 15px;
   margin-bottom: 20px;
   border-bottom: 1px solid;
@@ -292,7 +299,7 @@ const StyledHeaderRow = styled(HeaderRow)`
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: repeat(7, 2fr) 140px;
+  grid-template-columns: repeat(9, 1fr) 100px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     min-width: 1370px;
   }

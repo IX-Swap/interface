@@ -5,6 +5,8 @@ import { useWeb3React } from '@web3-react/core'
 import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
 import { unixTimeToFormat } from 'utils/time'
 import { getPrice, getDecayAtStep } from '../utils/calculation'
+import { MEDIA_WIDTHS } from 'theme'
+import { isMobile } from 'react-device-detect'
 
 const composeHistoricalPriceQuery = (lbpAddress: string) => {
   return `
@@ -241,8 +243,8 @@ export default function DetailsChart({
   return (
     <ChartContainer>
       <AreaChart
-        width={chartWidth ? chartWidth : 800}
-        height={400}
+        width={isMobile ? 300 : chartWidth ? chartWidth : 800}
+        height={isMobile ? 300 : 400}
         data={dataPoints}
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
       >
@@ -303,6 +305,11 @@ const ChartContainer = styled.div`
   padding: 24px;
   margin-bottom: 30px;
   position: relative;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 100%;
+    padding: 16px;
+  }
 `
 
 const RightLegend = styled.div`

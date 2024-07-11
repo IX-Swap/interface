@@ -1,33 +1,24 @@
 import React, { FC, useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
-
 import { Trans, t } from '@lingui/macro'
 import { AccordionSummary, AccordionDetails } from '@material-ui/core'
-
 import { Wallet } from 'components/AdminKyc'
 import { CopyAddress } from 'components/CopyAddress'
 import { NoData } from 'components/UsersList/styleds'
-import { ButtonGradientBorder } from 'components/Button'
 import { MultipleFilters } from 'components/MultipleFilters'
 import { Container } from 'components/AdminAccreditationTable'
-import { LoadingIndicator } from 'components/LoadingIndicator'
 import { FILTERS } from 'components/MultipleFilters/constants'
-
 import { useSecTokenState } from 'state/secTokens/hooks'
 import { useAdminState, useGetUsersList, useOnlyAdminAccess } from 'state/admin/hooks'
-
 import { adminOffset as offset } from 'state/admin/constants'
 import { TokenManagerEntry, User } from 'state/admin/actions'
-
 import checkIcon from 'assets/images/newRightCheck.svg'
 import notCheckIcon from 'assets/images/newReject.svg'
 import expandIcon from 'assets/images/dropdown.svg'
-
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { Pagination } from 'components/Pagination'
 import { ROLES_LABEL, ROLES } from 'constants/roles'
-
 import { Table } from '../Table'
 import { UserModal } from './UserModal'
 import { TopContent, StyledBodyRow, StyledHeaderRow, StyledAccordion, ExpandIcon, AddButton } from './styleds'
@@ -37,9 +28,9 @@ import { Flex } from 'rebass'
 import { isMobile } from 'react-device-detect'
 import { TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
-import { UserMobileFilters } from './userMobileFilters'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
-const headerCells = [`Wallet address`, `Role`, `Name`, t`Security Token`, `Waive Withdrawal Fees`, '']
+const headerCells = [`Wallet address`, `Role`, `Name`, `Security Token`, `Tenant`, `Waive Withdrawal Fees`, '']
 
 interface BodyProps {
   changeUser: (item: User) => void
@@ -86,9 +77,7 @@ export const UsersList: FC = () => {
   }
 
   return (
-    <Container style={{ margin: '30px 80px 0px 40px' }} >
-      <LoadingIndicator isLoading={adminLoading} />
-      {/* <div style={{ backgroundColor: '#FFFFFF', width: '100%', padding: '40px' }}> */}
+    <Container style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 30px 0 30px' }}>
       <Flex
         justifyContent="space-between"
         flexDirection={isMobile ? 'column' : 'row'}
@@ -113,9 +102,7 @@ export const UsersList: FC = () => {
           <Trans>+ Add User</Trans>
         </StyledButtonGradientBorder>
       </Flex>
-      <Flex>
-        {/* <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={`Search`} /> */}
-      </Flex>
+      <Flex>{/* <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={`Search`} /> */}</Flex>
       {/* </div> */}
       {modalOpen && <UserModal item={selectedItem} close={closeUpdateModal} filters={filters} />}
       <TopContent marginBottom="33px">
@@ -133,7 +120,13 @@ export const UsersList: FC = () => {
         </>
       ) : (
         <NoData>
-          <Trans>{haveFilters ? `We couldn't find anything with this criteria` : 'No results'}</Trans>
+          {adminLoading ? (
+            <Loader>
+              <LoaderThin size={96} />
+            </Loader>
+          ) : (
+            <Trans>{haveFilters ? `We couldn't find anything with this criteria` : 'No results'}</Trans>
+          )}
         </NoData>
       )}
     </Container>
@@ -143,6 +136,12 @@ export const UsersList: FC = () => {
 interface TokenListPreviewProps {
   items: TokenManagerEntry[]
 }
+
+export const Loader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 const TokenList = styled.div`
   display: flex;
@@ -177,9 +176,8 @@ const TokenListPreview = (props: TokenListPreviewProps) => {
 
 const Row: FC<RowProps> = ({ item, changeUser }) => {
   const [expanded, handleExpanded] = useState(false)
-  const { ethAddress, role, username, isWhitelisted, managerOf } = item
+  const { ethAddress, role, username, isWhitelisted, managerOf, whiteLabelConfig } = item
   const needAccordion = role === ROLES.TOKEN_MANAGER && Boolean(managerOf?.length)
-
   const toggleAccordion = () => {
     if (needAccordion) {
       handleExpanded((state) => !state)
@@ -201,7 +199,9 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
 
             {role === ROLES.TOKEN_MANAGER && <TokenListPreview items={managerOf as TokenManagerEntry[]} />}
             {role !== ROLES.TOKEN_MANAGER && <div> - </div>}
-
+            <div>
+              <span style={{ marginLeft: '2px' }}>{whiteLabelConfig?.name}</span>
+            </div>
             <div>
               <img src={isWhitelisted ? checkIcon : notCheckIcon} alt="is-whitelisted" />
               <span style={{ marginLeft: '10px' }}>{isWhitelisted ? 'Yes' : 'No'}</span>

@@ -49,6 +49,11 @@ import { kyc } from 'services/apiUrls'
 import { useKYCState } from 'state/kyc/hooks'
 import { EmailVerification } from 'pages/KYC/EmailVerifyModal'
 import { ResendEmailModal } from 'pages/KYC/ResendEmailModal'
+import { tryDeactivateConnector } from 'connectors'
+import { setWalletState } from 'state/wallet'
+import { clearUserData } from 'state/user/actions'
+import { clearEventLog } from 'state/eventLog/actions'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 function renderTransactions(transactions: string[]) {
   return (
@@ -80,6 +85,7 @@ export default function AccountDetails({
   confirmedTransactions,
   ENSName,
 }: AccountDetailsProps) {
+  const { config } = useWhitelabelState()
   const { chainId, account, connector } = useWeb3React()
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const getMe = useGetMe()
@@ -91,6 +97,8 @@ export default function AccountDetails({
   const theme = useTheme()
   const { kyc } = useKYCState()
   const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false, referralCode: '' })
+
+  const supportEmail = config?.supportEmail || 'c@ixswap.io'
 
   useEffect(() => {
     fetchMe()
@@ -184,6 +192,13 @@ export default function AccountDetails({
     })
   }
 
+  const disconnectWallet = async () => {
+    await tryDeactivateConnector(connector)
+    dispatch(setWalletState({ isConnected: false, walletName: '' }))
+    dispatch(clearUserData())
+    dispatch(clearEventLog())
+  }
+
   return (
     <>
       <UpperSection>
@@ -217,22 +232,18 @@ export default function AccountDetails({
                 <Line style={{ margin: '20px 0px' }} />
                 {/* {formatConnectorName()} */}
                 <div>
-                  {connector !== metaMask && (
-                    <WalletAction
-                      style={{
-                        fontSize: '13px',
-                        color: '#666680',
-                        fontWeight: 400,
-                        marginRight: '8px',
-                        marginBottom: '12px',
-                      }}
-                      onClick={() => {
-                        ;(connector as any).deactivate()
-                      }}
-                    >
-                      <Trans>{`Disconnect`}</Trans>
-                    </WalletAction>
-                  )}
+                  <WalletAction
+                    style={{
+                      fontSize: '13px',
+                      color: '#666680',
+                      fontWeight: 400,
+                      marginRight: '8px',
+                      marginBottom: '12px',
+                    }}
+                    onClick={disconnectWallet}
+                  >
+                    <Trans>{`Disconnect`}</Trans>
+                  </WalletAction>
                 </div>
               </AccountGroupingRow>
               <AccountGroupingRow id="web3-account-identifier-row">
@@ -261,8 +272,8 @@ export default function AccountDetails({
                   <span style={{ color: '#666680', fontSize: '13px', fontWeight: '500' }}>
                     In order to make changes to your KYC please <br /> get in touch with us via
                     <span>
-                      <a href="mailto:c@ixswap.io" style={{ color: '#6666FF', marginLeft: '5px' }}>
-                        c@ixswap.io
+                      <a href={`mailto:${supportEmail}`} style={{ color: '#6666FF', marginLeft: '5px' }}>
+                        {supportEmail}
                       </a>
                     </span>
                   </span>
@@ -298,7 +309,9 @@ export default function AccountDetails({
               <Line style={{ marginTop: '10px' }} />
               <div style={{ display: 'flex', gap: '10px' }}>
                 <NewEmail />
-                <span style={{ fontSize: '13px', color: '#292933', fontWeight: '500' }}>{kyc?.individual?.email ?kyc?.individual?.email : kyc?.corporate?.email }</span>
+                <span style={{ fontSize: '13px', color: '#292933', fontWeight: '500' }}>
+                  {kyc?.individual?.email ? kyc?.individual?.email : kyc?.corporate?.email}
+                </span>
               </div>
 
               <span

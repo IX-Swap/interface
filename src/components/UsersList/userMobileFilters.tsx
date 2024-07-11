@@ -5,7 +5,7 @@ import { Trans, t } from '@lingui/macro'
 import { useFormik } from 'formik'
 
 import { User } from 'state/admin/actions'
-import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useAdminState, useCreateUser, useUpdateUser } from 'state/admin/hooks'
 import { useAddPopup } from 'state/application/hooks'
@@ -24,28 +24,28 @@ import { RemoveTokensWarning } from './RemoveTokensWarning'
 import { RoleChangeWarning } from './RoleChangeWarning'
 import { UpdateSummary } from './UpdateSummary'
 import { Line } from 'components/Line'
-import { HelpCircle, Info } from 'react-feather'
+import { HelpCircle } from 'react-feather'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { TYPE } from 'theme'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 interface Props {
   item?: User | null
-  // close: () => void
   filters: Record<string, any>
 }
 
 export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
+  const { adminLoading } = useAdminState()
+  const addPopup = useAddPopup()
+  const createUser = useCreateUser()
+  const updateUser = useUpdateUser()
+  const { tokens: secTokens } = useSecTokenState()
+  const { config } = useWhitelabelState()
+
   const [tokensToRemove, handleTokensToRemove] = useState<Option[]>([])
   const [showDeleteTokensWarning, handleShowDeleteTokensWarning] = useState(false)
   const [changeRole, handleChangeRole] = useState(false)
   const [showSummary, handleShowSummary] = useState(false)
-  const { adminLoading } = useAdminState()
-  const addPopup = useAddPopup()
-
-  const createUser = useCreateUser()
-  const updateUser = useUpdateUser()
-
-  const { tokens: secTokens } = useSecTokenState()
 
   const tokensOptions = useMemo((): Record<number, Option> => {
     if (secTokens?.length) {
@@ -84,10 +84,10 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
   }, [item, tokensOptions])
 
   const submit = async () => {
-    const isManager = role === ROLES.TOKEN_MANAGER;
+    const isManager = role === ROLES.TOKEN_MANAGER
     try {
-      handleShowDeleteTokensWarning(false);
-      handleChangeRole(false);
+      handleShowDeleteTokensWarning(false)
+      handleChangeRole(false)
       if (item) {
         await updateUser(
           item.id,
@@ -99,8 +99,8 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
             removedTokens: tokensToRemove.map(({ value }) => value),
           },
           filters
-        );
-        handleShowSummary(true);
+        )
+        handleShowSummary(true)
       } else {
         await createUser(
           {
@@ -111,54 +111,54 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
             managerOf: isManager ? managerOf.map((el) => el.value || el) : [],
           },
           filters
-        );
-        close();
+        )
+        close()
       }
-      handleTokensToRemove([]);
+      handleTokensToRemove([])
 
       addPopup({
         info: {
           success: true,
           summary: `User was ${item ? 'updated' : 'added'} successfully`,
         },
-      });
+      })
     } catch (err: any) {
-      handleTokensToRemove([]);
+      handleTokensToRemove([])
       addPopup({
         info: {
           success: false,
           summary: `Failed to ${item ? 'update' : 'add'} user. ${err.message}`,
         },
-      });
+      })
     }
-  };
+  }
 
   const tryToSubmit = () => {
     if (!item) {
-      submit();
-      return;
+      submit()
+      return
     }
 
     if (item.role !== role) {
-      handleChangeRole(true);
-      return;
+      handleChangeRole(true)
+      return
     }
 
     const tokensToDelete = Object.values(initialValues.managerOf).reduce((acc: Option[], el) => {
-      const isRemoved = managerOf.findIndex(({ value }) => value === el.value) === -1;
+      const isRemoved = managerOf.findIndex(({ value }) => value === el.value) === -1
 
-      if (isRemoved) acc.push(el);
+      if (isRemoved) acc.push(el)
 
-      return acc;
-    }, []);
+      return acc
+    }, [])
 
     if (tokensToDelete.length > 0) {
-      handleTokensToRemove(tokensToDelete);
-      handleShowDeleteTokensWarning(true);
-      return;
+      handleTokensToRemove(tokensToDelete)
+      handleShowDeleteTokensWarning(true)
+      return
     }
-    submit();
-  };
+    submit()
+  }
 
   const {
     values: { ethAddress, role, isWhitelisted, username, managerOf },
@@ -171,33 +171,33 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
     enableReinitialize: true,
     initialValues,
     onSubmit: tryToSubmit,
-  });
+  })
 
   const handleSelectedTokens = (selectedTokens: Option[]) => {
-    setFieldValue('managerOf', selectedTokens);
-  };
+    setFieldValue('managerOf', selectedTokens)
+  }
 
   const closeTokensWarning = () => {
-    handleShowDeleteTokensWarning(false);
-    setFieldValue('managerOf', initialValues.managerOf);
-  };
+    handleShowDeleteTokensWarning(false)
+    setFieldValue('managerOf', initialValues.managerOf)
+  }
 
   const closeRoleWarning = () => {
-    handleChangeRole(false);
-  };
+    handleChangeRole(false)
+  }
 
   const closeSummary = () => {
-    handleShowSummary(false);
-    close();
-  };
+    handleShowSummary(false)
+    close()
+  }
 
   const canNotEditRole = useMemo(() => {
     if (item && role === ROLES.TOKEN_MANAGER) {
-      return item.managerOf.some(({ token: { payoutEvents } }) => Boolean(payoutEvents.length));
+      return item.managerOf.some(({ token: { payoutEvents } }) => Boolean(payoutEvents.length))
     }
 
-    return false;
-  }, [item]);
+    return false
+  }, [item])
 
   return (
     <>
@@ -294,8 +294,8 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
                 <MouseoverTooltip
                   text={
                     <Trans>
-                      IXS custody service provider charges 20 USD withdrawal fees when users withdraw STOs from Vaults.
-                      IXS passes the withdrawal fees to the user by charging the user an equivalent amount in native
+                      {config?.name} custody service provider charges 20 USD withdrawal fees when users withdraw STOs from Vaults.
+                      {config?.name} passes the withdrawal fees to the user by charging the user an equivalent amount in native
                       tokens. By checking this box, the user will incur 1000% less withdrawal fees.
                     </Trans>
                   }
@@ -321,8 +321,8 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 const ExistingWallet = styled.div`
   display: flex;
@@ -332,7 +332,7 @@ const ExistingWallet = styled.div`
     font-size: 16px;
     line-height: 24px;
   }
-`;
+`
 
 const Title = styled.div`
   font-weight: 600;
@@ -343,6 +343,4 @@ const Title = styled.div`
   justify-content: space-between;
   padding-bottom: 24px;
   border-bottom: 1px solid rgba(39, 32, 70, 0.72);
-`;
-
-// Remove Modal-related styled components and imports
+`

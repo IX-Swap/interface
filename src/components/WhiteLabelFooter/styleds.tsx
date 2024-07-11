@@ -5,8 +5,8 @@ export const Container = styled.div`
   width: 100vw;
   display: flex;
   justify-content: center;
-  background-color: ${({ theme }) => theme.bg16};
-  z-index: 2;
+  background-color: ${({ theme }) => theme.white};
+  z-index: 0;
 `
 
 export const Content = styled.div`
@@ -76,11 +76,12 @@ export const InfoBlockContainer = styled.div`
   justify-content: space-between;
   column-gap: 32px;
   > div {
-    font-size: 10px;
+    font-weight: 400;
+    font-size: 14px;
     display: flex;
     flex-direction: column;
     row-gap: 16px;
-    max-width: 544px;
+    flex: 1;
     @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
       max-width: 100%;
     }
@@ -114,6 +115,7 @@ export const CopyrightBlockContainer = styled.div`
 export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 32px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-wrap: wrap;

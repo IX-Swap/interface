@@ -118,7 +118,7 @@ const PinnedWrapper = styled.div`
   background-color: ${(props) => props.theme.launchpad.colors.foreground};
   padding: 2rem;
   margin: 2rem 0;
-  width: 1400px;
+  width: auto;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: 100%;

@@ -83,23 +83,23 @@ const Row: FC<RowProps> = ({ item, searchValue, openReviewModal }: RowProps) => 
   return (
     <StyledBodyRow key={id}>
       <div style={{ fontWeight: 700, fontSize: '12px' }}>{token?.symbol || '-'}</div>
-      <Wallet style={{fontSize: '12px'}}>
-        <CopyAddress  address={ethAddress} />
+      <Wallet style={{ fontSize: '12px' }}>
+        <CopyAddress address={ethAddress} />
       </Wallet>
       <div style={{ fontSize: '12px', whiteSpace: 'break-spaces' }}>
         {userKyc?.individual?.nationality || userKyc?.corporate?.countryOfIncorporation || '-'}
       </div>
       <div style={{ fontSize: '12px' }}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
 
-      <div style={{fontSize: '12px'}}>{statusLegend[investorType] || '-'}</div>
+      <div style={{ fontSize: '12px' }}>{statusLegend[investorType] || '-'}</div>
       <div>
         <KycSource onKycClick={onKycClick} kyc={kyc} userKyc={userKyc} status={status} />
       </div>
       <div>
-        <BrokerDealerStatus  status={brokerDealerStatus} kyc={kyc} broker={broker} />
+        <BrokerDealerStatus status={brokerDealerStatus} kyc={kyc} broker={broker} />
       </div>
       <div>
-        <CustodianStatus  status={custodianStatus} searchValue={searchValue} id={id} custodian={custodian} />
+        <CustodianStatus status={custodianStatus} searchValue={searchValue} id={id} custodian={custodian} />
       </div>
     </StyledBodyRow>
   )
@@ -144,35 +144,36 @@ export const AdminAccreditationTable = () => {
 
   useEffect(() => {
     getAccreditationList({ page: 1, offset, ...(searchValue && { search: searchValue }) })
-  }, [getAccreditationList, searchValue])
+  }, [searchValue])
 
   const closeModal = () => handleKyc({} as KycItem)
   const openModal = (kyc: KycItem) => handleKyc(kyc)
 
   return (
     <>
-    <div  style={{ margin: isMobile ? '30px 0px 0px 40px'  : '30px 80px 0px 40px' }} id="accreditation-container">
-      {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
-      <TYPE.title4 fontSize={'29px'} marginBottom="30px" data-testid="securityTokensTitle">
-        <Trans>Accreditation</Trans>
-      </TYPE.title4>
-      <Search setSearchValue={setSearchValue} />
-      {adminLoading && (
-        <Loader>
-          <LoaderThin size={96} />
-        </Loader>
-      )}
-      {items.length === 0 ? (
-        <NoData>
-          <Trans>No results</Trans>
-        </NoData>
-      ) : (
-        <Container>
-          <Table body={<Body searchValue={searchValue} openReviewModal={openModal} />} header={<Header />} />
-          <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
-        </Container>
-      )}
-    </div>
+      <div style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 30px 0 30px' }} id="accreditation-container">
+        {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
+        <TYPE.title4 fontSize={'29px'} marginBottom="30px" data-testid="securityTokensTitle">
+          <Trans>Accreditation</Trans>
+        </TYPE.title4>
+        <Search setSearchValue={setSearchValue} />
+        {items.length === 0 ? (
+          <NoData>
+            {adminLoading ? (
+              <Loader>
+                <LoaderThin size={96} />
+              </Loader>
+            ) : (
+              <Trans>No results</Trans>
+            )}
+          </NoData>
+        ) : (
+          <Container>
+            <Table body={<Body searchValue={searchValue} openReviewModal={openModal} />} header={<Header />} />
+            <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+          </Container>
+        )}
+      </div>
     </>
   )
 }
@@ -180,16 +181,9 @@ export const AdminAccreditationTable = () => {
 export default AdminAccreditationTable
 
 const Loader = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000000;
 `
 
 const Wallet = styled.div`

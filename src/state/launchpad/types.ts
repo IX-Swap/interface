@@ -58,7 +58,7 @@ export enum OfferType {
 }
 
 export interface OfferSocialMediaLinks {
-  twitter?: string
+  x?: string
   telegram?: string
   linkedin?: string
   youtube?: string
@@ -66,6 +66,8 @@ export interface OfferSocialMediaLinks {
   coingecko?: string
   discord?: string
   reddit?: string
+  instagram?: string
+  others?: string
 }
 
 export enum OfferDistributionFrequency {
