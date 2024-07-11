@@ -319,7 +319,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         </MenuList>
       </Container>
       <StyledFooter>
-        <span>Copyright ©{config?.name || 'IX Swap'} 2024</span>
+        <span>Copyright © IX Swap 2024</span>
         <div>
           <a
             href={config?.termsAndConditionsUrl || 'https://ixswap.io/terms-and-conditions/'}
