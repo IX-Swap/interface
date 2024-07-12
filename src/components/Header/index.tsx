@@ -273,7 +273,7 @@ export default function Header() {
             </HeaderRow>
             <HeaderLinks />
             <HeaderControls>
-              {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
+              {isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
                 <IconWrapper>
                   <HeaderElement>
                     <NavLink
