@@ -1,5 +1,5 @@
 import React, { useCallback, FC, useEffect, useState, useMemo } from 'react'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex, Text } from 'rebass'
 import { Link } from 'react-router-dom'
@@ -7,8 +7,8 @@ import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
 import Portal from '@reach/portal'
 import _get from 'lodash/get'
+import { useWeb3React } from '@web3-react/core'
 
-import { useActiveWeb3React } from 'hooks/web3'
 import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Column from 'components/Column'
@@ -92,13 +92,12 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 const KYC = () => {
-  const { account, chainId } = useActiveWeb3React()
+  const { account, chainId } = useWeb3React()
   const [loading, setLoading] = useState(false)
   const pendingSign = usePendingSignState()
   const [cookies] = useCookies(['annoucementsSeen'])
   const { config } = useWhitelabelState()
   const { kyc, loadingRequest } = useKYCState()
-  const [isModalOpen, handleIsModalOpen] = useState(false)
   const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false, referralCode: '' })
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
@@ -318,7 +317,7 @@ const KYC = () => {
 
   if (!account) return <NotAvailablePage />
 
-  const blurred = detectWrongNetwork(chainId)
+  const blurred = detectWrongNetwork(chainId || 0)
 
   if (blurred) {
     return (
@@ -451,11 +450,6 @@ const StyledDiv = styled.div`
   border-radius: 8px;
 `
 
-const CenteredDiv = styled.div`
-  text-align: center;
-  margin-bottom: 12px;
-`
-
 const TitleSpan = styled.span`
   font-size: 16px;
   font-weight: 600;
@@ -465,11 +459,4 @@ const TitleSpan = styled.span`
 const FlexContainer = styled.div`
   display: flex;
   justify-content: center;
-`
-
-const TextSpan = styled.span`
-  color: #666680;
-  font-size: 11px;
-  font-weight: 400;
-  margin-left: 3px;
 `
