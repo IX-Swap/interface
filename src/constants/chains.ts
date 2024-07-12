@@ -12,6 +12,12 @@ export enum SupportedChainId {
   BASE_SEPOLIA = 84532,
 }
 
+export const NETWORK_LOGOS: { [chainName: string]: string } = {
+  ethereum: ethereumLogoUrl,
+  polygon: polygonLogoUrl,
+  base: baseLogoUrl,
+}
+
 export const NETWORK_LABELS: { [chainId: number]: string } = {
   [1]: 'Ethereum',
   [4]: 'Rinkeby',
