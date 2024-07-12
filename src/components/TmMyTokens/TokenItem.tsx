@@ -15,18 +15,18 @@ interface Props {
 export const TokenItem = ({ item: { token } }: Props) => {
   const history = useHistory()
 
-  const currency = new WrappedTokenInfo(token)
+  const currency = token && new WrappedTokenInfo(token)
 
   const onClick = () => {
-    history.push(routes.securityToken((currency.tokenInfo as any).catalogId))
+    history.push(routes.securityToken((currency?.tokenInfo as any).catalogId))
   }
 
   return (
     <Item onClick={onClick}>
-      <CurrencyLogo currency={currency} size="46px" />
+      {currency ? <CurrencyLogo currency={currency} size="46px" /> : null}
       <InfoContainer>
-        <Symbol>{token.symbol}</Symbol>
-        <Name>{token.name}</Name>
+        <Symbol>{token?.symbol}</Symbol>
+        <Name>{token?.name}</Name>
       </InfoContainer>
     </Item>
   )
