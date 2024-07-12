@@ -1,11 +1,10 @@
-/* eslint-disable react/no-deprecated */
 import { CookiesProvider } from 'react-cookie'
-import React, { StrictMode } from 'react'
+import { StrictMode } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { LocalizationProvider } from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import 'react-phone-input-2/lib/bootstrap.css'
@@ -15,6 +14,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { HelmetProvider } from 'react-helmet-async'
 
 import { MuiThemeProvider } from './theme/muiTheme'
+import { CustomHeaders } from './components/CustomHeaders'
 import Blocklist from './components/Blocklist'
 import { LanguageProvider } from './i18n'
 import './index.css'
@@ -29,7 +29,8 @@ import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import * as Sentry from '@sentry/react'
-import RedirectHashToPath from 'RedirectHashToPath'
+import { metaMask } from 'connectors/metaMask'
+import { walletConnectV2 } from 'connectors/walletConnectV2'
 
 /* eslint-disable react/display-name */
 
@@ -92,8 +93,7 @@ ReactDOM.render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <RedirectHashToPath />
+        <HashRouter>
           <LanguageProvider>
             <Web3ReactProvider connectors={connectors}>
               <Blocklist>
@@ -113,7 +113,7 @@ ReactDOM.render(
               </Blocklist>
             </Web3ReactProvider>
           </LanguageProvider>
-        </BrowserRouter>
+        </HashRouter>
       </PersistGate>
     </Provider>
   </StrictMode>,

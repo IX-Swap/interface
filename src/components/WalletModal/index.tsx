@@ -252,7 +252,7 @@ export default function WalletModal({
             onClick={() => {
               if (isMetamaskAppInstalled) {
                 // Open Coinbase Wallet app
-                window.location.href = 'coinbasewallet://crypto?_a=connect&url=https://app.ixswap.io/kyc'
+                window.location.href = 'coinbasewallet://crypto?_a=connect&url=https://app.ixswap.io/#/kyc'
               } else {
                 // Handle the case where Coinbase Wallet app is not installed
                 console.log('Coinbase Wallet app is not installed')
