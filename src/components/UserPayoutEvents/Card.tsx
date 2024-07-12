@@ -21,7 +21,7 @@ export const Card = ({ data: { secToken, type, recordDate, payoutToken, startDat
   const history = useHistory()
   const token = useCurrency(payoutToken)
 
-  const secCurrency = new WrappedTokenInfo(secToken)
+  const secCurrency = secToken ? new WrappedTokenInfo(secToken) : null
 
   const dateFormat = 'MMM DD, YYYY'
 
@@ -33,7 +33,7 @@ export const Card = ({ data: { secToken, type, recordDate, payoutToken, startDat
     <CardContainer onClick={redirect}>
       <PayoutTitle>
         <CurrencyLogo currency={secCurrency} size="40px" />
-        <div>{`${PAYOUT_TYPE_LABEL[type] || '-'} - ${secToken.symbol}`}</div>
+        <div>{`${PAYOUT_TYPE_LABEL[type] || '-'} - ${secToken?.symbol}`}</div>
       </PayoutTitle>
       <PayoutInfoContainer>
         <div>

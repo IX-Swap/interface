@@ -53,8 +53,8 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
     if (secTokens?.length) {
       return secTokens.reduce((acc, token) => {
         const isDisabled = Boolean(
-          (item?.managerOf || []).find(({ token: { payoutEvents } }) =>
-            Boolean(payoutEvents.find(({ secTokenId }) => secTokenId === token.id))
+          (item?.managerOf || []).find(({ token }) =>
+            Boolean(token?.payoutEvents.find(({ secTokenId }) => secTokenId === token.id))
           )
         )
 
@@ -77,7 +77,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
     if (item && Object.keys(tokensOptions).length) {
       return {
         ...item,
-        managerOf: item.managerOf.map(({ token: { id } }) => tokensOptions[id]),
+        managerOf: item.managerOf.filter(_ => _.token?.id).map(({ token }) => tokensOptions[token!.id]),
         username: item.username || '',
       }
     }
@@ -195,7 +195,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
 
   const canNotEditRole = useMemo(() => {
     if (item && role === ROLES.TOKEN_MANAGER) {
-      return item.managerOf.some(({ token: { payoutEvents } }) => Boolean(payoutEvents.length))
+      return item.managerOf.some(({ token }) => Boolean(token?.payoutEvents?.length))
     }
 
     return false
