@@ -54,8 +54,8 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
             </Title>
           </TitleContent>
 
-          <SecTokenLink to={routes.securityToken(secToken.catalogId)}>
-            {secToken.originalSymbol ?? secToken.symbol}
+          <SecTokenLink to={routes.securityToken(secToken?.catalogId)}>
+            {secToken?.originalSymbol ?? secToken?.symbol}
           </SecTokenLink>
 
           <StatusAndEdit>
