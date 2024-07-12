@@ -89,7 +89,7 @@ export interface ManagerOfToken {
   createdAt: null | string
   updatedAt: null | string
   deletedAt: null | string
-  token: SecToken & {
+  token?: SecToken & {
     payoutEvents: PayoutEvent[]
   }
 }
