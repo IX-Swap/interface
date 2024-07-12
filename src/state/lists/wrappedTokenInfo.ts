@@ -30,32 +30,31 @@ export class WrappedTokenInfo implements Token {
 
   public get address(): string {
     if (this._checksummedAddress) return this._checksummedAddress
-    const checksummedAddress =
-      isAddress(this.tokenInfo.address) || isAddress((this.tokenInfo as any).contractAddress ?? '')
+    const checksummedAddress = this.tokenInfo && (isAddress(this.tokenInfo.address) || isAddress((this.tokenInfo as any).contractAddress ?? ''))
     if (!checksummedAddress) return ''
     return (this._checksummedAddress = checksummedAddress)
   }
 
   public get chainId(): number {
-    return this.tokenInfo.chainId
+    return this.tokenInfo?.chainId
   }
 
   public get decimals(): number {
-    return this.tokenInfo.decimals
+    return this.tokenInfo?.decimals
   }
 
   public get name(): string {
-    return this.tokenInfo.name
+    return this.tokenInfo?.name
   }
   public get description(): string {
     return (this.tokenInfo as any)?.description ?? ''
   }
   public get symbol(): string {
-    return this.tokenInfo.symbol
+    return this.tokenInfo?.symbol
   }
 
   public get logoURI(): string | undefined {
-    return this.tokenInfo.logoURI
+    return this.tokenInfo?.logoURI
   }
 
   private _tags: TagInfo[] | null = null

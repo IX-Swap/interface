@@ -50,9 +50,9 @@ export const MultipleFilters = ({
   const managerSecTokensOptions = useMemo(() => {
     if (me?.managerOf?.length) {
       return me.managerOf.map(({ token }) => ({
-        label: token.symbol,
-        value: token.id,
-        icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+        label: token?.symbol,
+        value: token?.id,
+        icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
       }))
     }
     return []
@@ -184,11 +184,11 @@ export const MultipleFilters = ({
     ),
     [FILTERS.SEC_TOKENS]: (
       <>  <CalanderIcon style={{ position: 'relative', top: '5px', left: '150px', zIndex: '1' }} />     <FilterDropdown
-      placeholder="Security token"
-      selectedItems={values[FILTERS.SEC_TOKENS]}
-      onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item)}
-      items={forManager ? managerSecTokensOptions : secTokensOptions}
-    /></>
+        placeholder="Security token"
+        selectedItems={values[FILTERS.SEC_TOKENS]}
+        onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item)}
+        items={forManager ? managerSecTokensOptions : secTokensOptions}
+      /></>
 
     ),
     [FILTERS.STATUS]: (
