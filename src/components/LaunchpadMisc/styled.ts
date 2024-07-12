@@ -45,7 +45,7 @@ export const Flex = styled.div<FlexProps>`
   ${(props) => props.gap && `gap: ${props.gap};`}
   ${(props) => props.margin && `margin: ${props.margin};`}
   ${(props) => props.padding && `padding: ${props.padding};`}
-  
+
   ${(props) => props.height && `height: ${props.height};`}
   ${(props) => props.width && `width: ${props.width};`}
 `
@@ -76,13 +76,12 @@ export const CenteredAbsolute = styled.div`
 `
 
 export const CenteredFixed = styled(Centered)`
+  background: rgba(143, 143, 204, 0.2);
+  backdrop-filter: blur(8px);
   position: fixed;
-
   top: 0;
   left: 0;
-
   z-index: 10;
-
   ${(props) => props.width && `width: ${props.width};`}
   ${(props) => props.height && `height: ${props.height};`}
 `

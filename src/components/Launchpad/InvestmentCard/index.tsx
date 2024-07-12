@@ -23,6 +23,7 @@ import { PreviewModal } from './PreviewModal'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import { NETWORK_LOGOS } from 'constants/chains'
 
 interface Props {
   offer: any
@@ -37,6 +38,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const history = useHistory()
   const theme = useTheme()
   const { account } = useActiveWeb3React()
+  const { kyc } = useKYCState()
 
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
@@ -45,7 +47,8 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
-  const { kyc } = useKYCState()
+  const network = offer?.network ?? ''
+  const networkLogo = network ? NETWORK_LOGOS[network] : ''
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const isClosed = React.useMemo(
@@ -103,6 +106,12 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
         <InvestmentCardInfoWrapper></InvestmentCardInfoWrapper>
 
         <InvestmentCardInfoContainer expanded={showDetails}>
+          {networkLogo ? (
+            <LogoWrap>
+              <NetworkLogo src={networkLogo} alt="network logo" />
+            </LogoWrap>
+          ) : null}
+
           <InvestmentCardIcon src={offer.profilePicture.public} />
 
           <InvestmentTypeInfo industry={offer.industry} type={offer.type} status={offer.status} />
@@ -220,7 +229,6 @@ const InvestmentCardContainer = styled.article`
   align-items: stretch;
   width: 380px;
   overflow: hidden;
-
 `
 
 const InvestmentCardHeader = styled.header`
@@ -354,4 +362,15 @@ const InvestButton = styled.button`
   text-align: center;
   font-family: ${(props) => props.theme.launchpad.font};
   ${text1}
+`
+
+const LogoWrap = styled.div`
+  position: absolute;
+  top: 25px;
+  right: 25px;
+`
+
+const NetworkLogo = styled.img`
+  height: 32px;
+  width: 32px;
 `
