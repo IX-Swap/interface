@@ -1,5 +1,5 @@
-import polygonIcon from '../../../src/assets/images/polygonIcon.svg';
-import ixsDropDown from '../../../src/assets/images/baseIcon.svg';
+import PolygonIcon from '@assets/images/polygonIcon.svg';
+import BaseIcon from '@assets/images/baseIcon.svg';
 
 export const incomes = ['< 50,000', '50,000-100,000', '100,000-300,000', '> 300,000'].map((name, index) => ({
   value: ++index,
@@ -33,8 +33,8 @@ export const socialMediaPlatform = ['Telegram', 'Discord', 'X.com', 'Facebook', 
 )
 
 export const blockchainNetworks = [
-  { value: 'polygon', label: 'Polygon', icon: polygonIcon},
-  { value: 'base', label: 'Base', icon: ixsDropDown }
+  { value: 'polygon', label: 'Polygon', icon: PolygonIcon},
+  { value: 'base', label: 'Base', icon: BaseIcon }
 ];
 
 

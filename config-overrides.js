@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const { alias } = require('react-app-rewire-alias')
 module.exports = function override(config) {
   const fallback = config.resolve.fallback || {}
   Object.assign(fallback, {
@@ -17,5 +18,8 @@ module.exports = function override(config) {
       Buffer: ['buffer', 'Buffer'],
     }),
   ])
+  alias({
+    '@assets': 'src/assets',
+  })(config)
   return config
 }

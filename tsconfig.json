@@ -24,6 +24,9 @@
     "allowSyntheticDefaultImports": true,
     "types": ["react-spring", "jest"],
     "baseUrl": "src",
+      "paths": {
+      "@assets/*": ["assets/*"]
+    },
     "sourceMap": true,
     "inlineSources": true,
     "strictPropertyInitialization": false,
