@@ -62,6 +62,7 @@ export const nameChainMap = {
   polygon: SupportedChainId.MATIC,
   kovan: SupportedChainId.KOVAN,
   ethereum: SupportedChainId.MAINNET,
+  base: SupportedChainId.BASE
 }
 
 export const CHAIN_INFO: ChainInfoMap = {

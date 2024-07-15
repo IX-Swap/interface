@@ -86,7 +86,6 @@ const colourStyles = {
       // flexWrap: 'nowrap',
       display: 'flex',
 
-
       flexDirection: isMulti ? 'row' : '',
       flexWrap: 'wrap',
     }
@@ -121,7 +120,7 @@ const MultiValue = (props: any) => {
 const SingleValue = (props: any) => {
   return (
     <StyledValue disabled={props.isDisabled}>
-      {props?.data?.icon}
+      {<img src={props?.data?.icon} />}
       {props?.data?.label}
     </StyledValue>
   )
@@ -141,7 +140,7 @@ const Option = (props: any) => {
           }
         }}
       >
-        {props?.data?.icon}
+        <img src={props?.data?.icon}></img>
         {props?.data?.label}
         {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
 
@@ -275,7 +274,7 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
 const StyledValue = styled.div<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
-  column-gap: 4px;
+  column-gap: 6px;
   ${({ disabled }) =>
     disabled &&
     css`

@@ -1,3 +1,6 @@
+import PolygonIcon from 'assets/images/polygonIcon.svg';
+import BaseIcon from 'assets/images/baseIcon.svg';
+
 export const incomes = ['< 50,000', '50,000-100,000', '100,000-300,000', '> 300,000'].map((name, index) => ({
   value: ++index,
   label: name,
@@ -28,6 +31,12 @@ export const SecondaryContactDetails = ['Proof of Address', 'Business Email Addr
 export const socialMediaPlatform = ['Telegram', 'Discord', 'X.com', 'Facebook', 'Instagram', 'LinkedIn'].map(
   (name, index) => ({ value: ++index, label: name })
 )
+
+export const blockchainNetworks = [
+  { value: 'polygon', label: 'Polygon', icon: PolygonIcon},
+  { value: 'base', label: 'Base', icon: BaseIcon }
+];
+
 
 export const fatcaOptions = [
   'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus.',

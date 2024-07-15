@@ -3,7 +3,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
-import { TextInput } from 'pages/KYC/common'
+import { Select, TextInput } from 'pages/KYC/common'
 import { TYPE } from 'theme'
 import { RowStart } from 'components/Row'
 import { Line } from 'components/Line'
@@ -11,7 +11,6 @@ import Stack from '@mui/material/Stack'
 import Slider from '@mui/material/Slider'
 import { FormGrid } from 'pages/KYC/styleds'
 import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
-import { ReactComponent as Disabled } from '../../../assets/images/newCurrencyLogo.svg'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
@@ -28,6 +27,7 @@ import timezone from 'dayjs/plugin/timezone'
 import { ethers } from 'ethers'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { isEmptyObject, isEthChainAddress } from 'utils'
+import { blockchainNetworks } from 'pages/KYC/mock'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -81,6 +81,7 @@ interface TokenomicsData {
   endWeight: number
   startDate: any
   endDate: string
+  network: string
 }
 
 const validationSchema = Yup.object().shape({
@@ -93,7 +94,7 @@ const validationSchema = Yup.object().shape({
     .test('is-valid-address', 'Please enter a valid address', (value) => Boolean(isEthChainAddress(value))),
   shareInput: Yup.string().required('Project Token Amount is required'),
   assetInput: Yup.string().required('Base Token Amount is required'),
-  // maxSupply: Yup.string().required('Max. Supply is required'),
+  network: Yup.string().required('Network is required'),
 })
 
 interface ProjectInfoProps {
@@ -146,6 +147,7 @@ const Tokenomics = ({
       endWeight: 0.0,
       startDate: null,
       endDate: '',
+      network: '',
     },
     validationSchema: validationSchema,
     onSubmit: () => {},
@@ -235,7 +237,7 @@ const Tokenomics = ({
 
   const handleChangeStart = (event: Event, newValue: number | number[]) => {
     const newStartValue = Math.min(Math.max(newValue as number, 1), 99)
-    const newEndValue = Math.min(valueEnd, newStartValue == 1 ? 1: newStartValue - 1 )
+    const newEndValue = Math.min(valueEnd, newStartValue == 1 ? 1 : newStartValue - 1)
     setStartValue(newStartValue)
     setEndValue(newEndValue)
     const updatedFormData = {
@@ -317,6 +319,15 @@ const Tokenomics = ({
     onChange(updatedFormData)
   }
 
+  const handleSelectNetwork = (selectedOption: any) => {
+    const updatedFormData = {
+      ...formDataTokenomics,
+      network: selectedOption?.value,
+    }
+
+    onChange(updatedFormData)
+  }
+
   const tokenOptions = useMemo(() => {
     // exclude tokens that has tokenAddress of undefined
     return TokenOptions(chainId || 0).filter((option) => option.tokenAddress)
@@ -353,6 +364,7 @@ const Tokenomics = ({
     formik.setFieldValue('shareAddress', formDataTokenomics.shareAddress)
     formik.setFieldValue('shareInput', formDataTokenomics.shareInput)
     formik.setFieldValue('assetInput', formDataTokenomics.assetInput)
+    formik.setFieldValue('network', formDataTokenomics.network)
     setStartValue(formDataTokenomics.startWeight)
     setEndValue(formDataTokenomics.endWeight)
   }, [formDataTokenomics])
@@ -365,21 +377,42 @@ const Tokenomics = ({
 
   return (
     <Container>
-      <div>
-        <TextInput
-          placeholder="Project Token Address"
-          id="shareAddress"
-          label="Project Token Address *"
-          name="shareAddress"
-          onChange={handleInputChange}
-          onBlur={formik.handleBlur}
-          value={formDataTokenomics.shareAddress}
-          disabled={!isEditable}
-        />
-        {formik.touched.shareAddress && (formik.errors.shareAddress || !formDataTokenomics.shareAddress) ? (
-          <ErrorText>{formik.errors.shareAddress}</ErrorText>
-        ) : null}
-      </div>
+      <InputeWrapper>
+        <Block>
+          <TextInput
+            placeholder="Project Token Address"
+            id="shareAddress"
+            label="Project Token Address *"
+            name="shareAddress"
+            onChange={handleInputChange}
+            onBlur={formik.handleBlur}
+            value={formDataTokenomics.shareAddress}
+            disabled={!isEditable}
+          />
+          {formik.touched.shareAddress && (formik.errors.shareAddress || !formDataTokenomics.shareAddress) ? (
+            <ErrorText>{formik.errors.shareAddress}</ErrorText>
+          ) : null}
+        </Block>
+
+        <Block>
+          <Select
+            name="network"
+            id="network"
+            label="Blockchain Network"
+            placeholder="Blockchain Network"
+            selectedItem={formik.values.network}
+            items={blockchainNetworks}
+            value={formDataTokenomics.network}
+            onSelect={(selectedItem) => {
+              handleSelectNetwork(selectedItem)
+              formik.setFieldTouched('network', true)
+            }}
+          />
+          {formik.touched.network && (formik.errors.network || !formDataTokenomics.network) ? (
+            <ErrorText>{formik.errors.network}</ErrorText>
+          ) : null}
+        </Block>
+      </InputeWrapper>
 
       <div style={{ marginTop: 16 }}>
         <TextInput
@@ -901,4 +934,14 @@ const LogoIcon = styled.img`
   width: 22px;
   border-radius: 50%;
   margib-right: 20px;
+`
+
+const InputeWrapper = styled.div`
+  display: flex;
+  gap: 20px;
+`
+
+const Block = styled.div`
+  display: block;
+  width: -webkit-fill-available;
 `
