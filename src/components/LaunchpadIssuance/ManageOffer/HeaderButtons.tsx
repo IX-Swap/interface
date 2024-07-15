@@ -9,7 +9,7 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import { ReactComponent as HelpIcon } from 'assets/launchpad/svg/help-icon.svg'
 import { ContactFormModal } from '../utils/ContactFormModal'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import { nameChainMap, SupportedChainId } from 'constants/chains'
+import { getChainFromName, SupportedChainId } from 'constants/chains'
 import { DiscreteInternalLink, DiscreteExternalLink } from 'theme'
 import { text10, text8 } from 'components/LaunchpadMisc/typography'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -45,11 +45,14 @@ export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
   }
   const { chainId } = useActiveWeb3React()
   const explorerLink = useMemo(() => {
-    const nameChainMapNetwork = chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[network]
+    const isTestnet = [SupportedChainId.AMOY, SupportedChainId.BASE_SEPOLIA].includes(chainId)
+    const nameChainMapNetwork = getChainFromName(network, isTestnet)
+
     return getExplorerLink(nameChainMapNetwork, tokenAddress, ExplorerDataType.TOKEN)
   }, [network, tokenAddress])
   const editLink = useMemo(() => `/issuance/edit/information?id=${issuanceId}`, [issuanceId])
 
+  console.log('offer', offer)
   return (
     <Header>
       <HeaderItem>
@@ -135,6 +138,7 @@ const BtnContainer = styled.div`
   height: 40px;
   cursor: pointer;
   position: relative;
+  margin-bottom: 0;
 `
 const RightBtn = styled.div<{ mr: string }>`
   display: flex;

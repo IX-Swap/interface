@@ -65,6 +65,15 @@ export const nameChainMap = {
   base: SupportedChainId.BASE
 }
 
+export const getChainFromName = (name: string, isTestnet = false): SupportedChainId => {
+  const chainByName = {
+    polygon: isTestnet ? SupportedChainId.AMOY : SupportedChainId.MATIC,
+    base: isTestnet ? SupportedChainId.BASE_SEPOLIA : SupportedChainId.BASE,
+  } as any
+
+  return chainByName[name]
+}
+
 export const CHAIN_INFO: ChainInfoMap = {
   [SupportedChainId.MAINNET]: {
     blockExplorerUrls: ['https://etherscan.io/'],
