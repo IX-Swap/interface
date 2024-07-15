@@ -19,6 +19,7 @@ export enum OfferNetwork {
   kovan = 'kovan',
   polygon = 'polygon',
   ethereum = 'ethereum',
+  base = 'base'
 }
 
 export enum OfferCapitalStructure {
