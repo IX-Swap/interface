@@ -1,5 +1,5 @@
-import PolygonIcon from '@assets/images/polygonIcon.svg';
-import BaseIcon from '@assets/images/baseIcon.svg';
+import PolygonIcon from 'assets/images/polygonIcon.svg';
+import BaseIcon from 'assets/images/baseIcon.svg';
 
 export const incomes = ['< 50,000', '50,000-100,000', '100,000-300,000', '> 300,000'].map((name, index) => ({
   value: ++index,
