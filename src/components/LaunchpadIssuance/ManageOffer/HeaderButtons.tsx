@@ -52,7 +52,6 @@ export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
   }, [network, tokenAddress])
   const editLink = useMemo(() => `/issuance/edit/information?id=${issuanceId}`, [issuanceId])
 
-  console.log('offer', offer)
   return (
     <Header>
       <HeaderItem>
