@@ -315,7 +315,7 @@ const KYC = () => {
     }
   }, [status, description, kyc])
 
-  if (!account) return <NotAvailablePage />
+  if (!account && !loadingRequest && !loading) return <NotAvailablePage />
 
   const blurred = detectWrongNetwork(chainId || 0)
 
