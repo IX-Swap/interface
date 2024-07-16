@@ -41,8 +41,6 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
     [lbp?.status]
   )
 
-  console.log(network)
-
   const onClick = React.useCallback(() => {
     if (!account || isChangeRequested || isPending || isDraft || isRejected || isNotSubmitted) {
       toggleKYCModal()
