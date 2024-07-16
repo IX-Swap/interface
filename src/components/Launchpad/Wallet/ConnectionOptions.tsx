@@ -64,7 +64,7 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
         //   )
         // }
         if (option.connector === metaMask) {
-          if (!(window.web3 || window.ethereum)) {
+          if (!window.ethereum) {
             if (option.name === 'MetaMask') {
               return (
                 <Option
