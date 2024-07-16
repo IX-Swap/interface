@@ -2,6 +2,7 @@ import React, { FC, useMemo } from 'react'
 import { Flex } from 'rebass'
 import { NavLink } from 'react-router-dom'
 import { isMobileOnly } from 'react-device-detect'
+import styled from 'styled-components'
 
 import Column from 'components/Column'
 import { TYPE } from 'theme'
@@ -12,7 +13,7 @@ import CurrencyLogo from 'components/CurrencyLogo'
 
 import { MySecTokenCard } from './styleds'
 import { routes } from 'utils/routes'
-import { marginRight } from 'styled-system'
+import { NETWORK_LOGOS } from 'constants/chains'
 
 interface Props {
   token: any
@@ -22,6 +23,9 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
   const wrappedToken = token?.token
   const { account } = useActiveWeb3React()
   const balance = useCurrencyBalance(account ?? undefined, { isToken: true, ...wrappedToken } ?? undefined)
+
+  const network = token?.token?.network
+  const networkLogo = network ? NETWORK_LOGOS[network] : ''
 
   const status = useMemo(() => {
     const statuses = [
@@ -58,11 +62,20 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
             marginBottom={isMobileOnly ? '16px' : '0px'}
             alignItems="center"
           >
-            {token.logo ? (
-              <img style={{ marginRight: 16, borderRadius: 24 }} width="46px" height="46px" src={token.logo.public} />
-            ) : (
-              <CurrencyLogo currency={undefined} size={'46px'} style={{ marginRight: 16, minWidth: 46 }} />
-            )}
+            <div style={{ position: 'relative' }}>
+              {token.logo ? (
+                <img style={{ marginRight: 16, borderRadius: 24 }} width="46px" height="46px" src={token.logo.public} />
+              ) : (
+                <CurrencyLogo currency={undefined} size={'46px'} style={{ marginRight: 16, minWidth: 46 }} />
+              )}
+
+              {networkLogo ? (
+                <LogoWrap>
+                  <NetworkLogo src={networkLogo} alt="network logo" />
+                </LogoWrap>
+              ) : null}
+            </div>
+
             <Column>
               <TYPE.title11>{token.ticker}</TYPE.title11>
               {/* <TYPE.small fontWeight={600}>{wrappedToken.name}</TYPE.small> */}
@@ -84,3 +97,14 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
     </NavLink>
   )
 }
+
+const LogoWrap = styled.div`
+  position: absolute;
+  top: 0px;
+  right: 8px;
+`
+
+const NetworkLogo = styled.img`
+  height: 16px;
+  width: 16px;
+`

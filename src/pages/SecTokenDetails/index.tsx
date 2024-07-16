@@ -20,6 +20,7 @@ import { AddToMetamask } from './AddToMetamask'
 import { AtlasInfo } from './AtlasInfo'
 import { NotTradable } from './NotTradable'
 import styled from 'styled-components'
+import { NETWORK_LOGOS } from 'constants/chains'
 
 export default function SecTokenDetails({
   match: {
@@ -33,6 +34,8 @@ export default function SecTokenDetails({
   const { account } = useActiveWeb3React()
 
   const isLoggedIn = !!account
+  const network = token?.token?.network
+  const networkLogo = network ? NETWORK_LOGOS[network] : ''
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -59,7 +62,12 @@ export default function SecTokenDetails({
       <DepositPopup currency={token?.token} token={token} />
       <WithdrawPopup currency={token?.token} token={token} />
       <TokenInfoContainer>
-        <Container>
+        <Container style={{ position: 'relative' }}>
+          {networkLogo ? (
+            <LogoWrap>
+              <NetworkLogo src={networkLogo} alt="network logo" />
+            </LogoWrap>
+          ) : null}
           {/* <LightBackground /> */}
           <InfoTitle>
             <BackArrowButton onBack={onBack} />
@@ -107,4 +115,15 @@ export const TokenInfoContainer = styled.div<{ background?: string }>`
     padding: 0 1rem;
     background: #ffffff;
   }
+`
+
+const LogoWrap = styled.div`
+  position: absolute;
+  top: 25px;
+  right: 0px;
+`
+
+const NetworkLogo = styled.img`
+  height: 32px;
+  width: 32px;
 `
