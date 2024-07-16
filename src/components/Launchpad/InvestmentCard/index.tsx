@@ -93,6 +93,12 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     <>
       <PreviewModal offer={offer} isModalOpen={isModalOpen} closeModal={closeModal} />
       <InvestmentCardContainer>
+        {networkLogo ? (
+          <LogoWrap>
+            <NetworkLogo src={networkLogo} alt="network logo" />
+          </LogoWrap>
+        ) : null}
+
         <InvestmentCardImage src={offer.cardPicture.public} />
 
         <InvestmentCardHeader>
@@ -106,12 +112,6 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
         <InvestmentCardInfoWrapper></InvestmentCardInfoWrapper>
 
         <InvestmentCardInfoContainer expanded={showDetails}>
-          {networkLogo ? (
-            <LogoWrap>
-              <NetworkLogo src={networkLogo} alt="network logo" />
-            </LogoWrap>
-          ) : null}
-
           <InvestmentCardIcon src={offer.profilePicture.public} />
 
           <InvestmentTypeInfo industry={offer.industry} type={offer.type} status={offer.status} />
@@ -366,8 +366,10 @@ const InvestButton = styled.button`
 
 const LogoWrap = styled.div`
   position: absolute;
-  top: 25px;
+  top: 50%;
   right: 25px;
+  transform: translateY(100%);
+  z-index: 10;
 `
 
 const NetworkLogo = styled.img`
