@@ -13,6 +13,7 @@ import Portal from '@reach/portal'
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 import { useWeb3React } from '@web3-react/core'
 import { MEDIA_WIDTHS } from 'theme'
+import { NETWORK_LOGOS } from 'constants/chains'
 
 interface Props {
   lbp: any
@@ -33,11 +34,14 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
 
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
-
+  const network = lbp?.network ?? ''
+  const networkLogo = network ? NETWORK_LOGOS[network] : ''
   const isClosed = React.useMemo(
     () => !!lbp.status && [LbpStatus.closed, LbpStatus.ended, LbpStatus.pending].includes(lbp.status),
     [lbp?.status]
   )
+
+  console.log(network)
 
   const onClick = React.useCallback(() => {
     if (!account || isChangeRequested || isPending || isDraft || isRejected || isNotSubmitted) {
@@ -85,6 +89,11 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
 
         <LbpCardInfoContainer expanded={showDetails}>
           <LbpCardIcon src={lbp.logo?.public} />
+          {networkLogo ? (
+            <LogoWrap>
+              <NetworkLogo src={networkLogo} alt="network logo" />
+            </LogoWrap>
+          ) : null}
 
           <div>
             <LbpCardTitle>{lbp.title}</LbpCardTitle>
@@ -252,4 +261,14 @@ const InvestButton = styled.button`
   text-align: center;
   font-family: ${(props) => props.theme.launchpad.font};
   ${text1}
+`
+const LogoWrap = styled.div`
+  position: absolute;
+  top: 25px;
+  right: 25px;
+`
+
+const NetworkLogo = styled.img`
+  height: 32px;
+  width: 32px;
 `
