@@ -1,4 +1,5 @@
 import type { AddEthereumChainParameter } from '@web3-react/types'
+import { SupportedChainId } from 'constants/chains'
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
   name: 'Ether',
@@ -153,3 +154,32 @@ export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<
   },
   {}
 )
+
+export const checkIsTestnet = (chainId: number) => {
+  return [SupportedChainId.AMOY, SupportedChainId.BASE_SEPOLIA].includes(chainId)
+}
+
+export enum NetworkName {
+  BASE = 'base',
+  POLYGON = 'polygon',
+}
+
+export const checkWrongChain = (chainId: number, network: string) => {
+  let isWrongChain = false
+  let expectChain = null
+
+  if ([SupportedChainId.AMOY, SupportedChainId.MATIC].includes(chainId) && network === NetworkName.BASE) {
+    isWrongChain = true
+    expectChain = checkIsTestnet(chainId) ? SupportedChainId.BASE_SEPOLIA : SupportedChainId.BASE
+  }
+
+  if ([SupportedChainId.BASE, SupportedChainId.BASE_SEPOLIA].includes(chainId) && network === NetworkName.POLYGON) {
+    isWrongChain = true
+    expectChain = checkIsTestnet(chainId) ? SupportedChainId.AMOY : SupportedChainId.MATIC
+  }
+
+  return {
+    isWrongChain,
+    expectChain,
+  }
+}

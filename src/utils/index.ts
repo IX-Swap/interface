@@ -155,3 +155,12 @@ export function delay(ms: number) {
 export function isEmptyObject(obj: object) {
   return Object.keys(obj).length === 0;
 }
+
+export function arrayToString(arr: string[]) {
+  if (arr.length === 0) return ''
+  if (arr.length === 1) return arr[0]
+  if (arr.length === 2) return arr.join(' or ')
+
+  const lastItem = arr.pop()
+  return `${arr.join(', ')} or ${lastItem}`
+}
