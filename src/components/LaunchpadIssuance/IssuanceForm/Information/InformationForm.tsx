@@ -87,8 +87,18 @@ export const InformationForm = (props: Props) => {
     initialValues,
     smartContractStrategy,
   } = props
-  const { values, errors, touched, setFieldValue, setFieldTouched, submitForm, resetForm, validateForm, setTouched } =
-    formikProps
+  const {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    setFieldTouched,
+    submitForm,
+    resetForm,
+    validateForm,
+    setTouched,
+    setFieldError,
+  } = formikProps
 
   // hooks
   const history = useHistory()
@@ -173,6 +183,11 @@ export const InformationForm = (props: Props) => {
     onConfirmationClose()
     showError('Cannot save changes, please check the form for error messages')
   }
+
+  const handleDateError = (errorText: any) => {
+    setFieldError('timeframe.sale', errorText)
+  }
+
 
   return (
     <>
@@ -555,7 +570,9 @@ export const InformationForm = (props: Props) => {
                 setFieldValue('tokenomicsAgreement', !values.tokenomicsAgreement)
               }}
               disabled={edit}
-              label={`I understand and agree that once I submit this form and it is approved, ${config?.name || 'IX Swap'} will mint and deposit the tokens into a smart contract based on the information provided.`}
+              label={`I understand and agree that once I submit this form and it is approved, ${
+                config?.name || 'IX Swap'
+              } will mint and deposit the tokens into a smart contract based on the information provided.`}
             />
             {touched.tokenomicsAgreement && errors.tokenomicsAgreement && (
               <ErrorText>{errors.tokenomicsAgreement}</ErrorText>
@@ -674,8 +691,9 @@ export const InformationForm = (props: Props) => {
               setFieldValue('timeframe.sale', start)
               setFieldValue('timeframe.closed', end)
             }}
+            onError={handleDateError}
             error={`${(touched.timeframe?.sale ? errors?.timeframe?.sale ?? '' : '') as string}
-               ${(touched.timeframe?.closed ? errors?.timeframe?.closed ?? '' : '') as string}`}
+            ${(touched.timeframe?.closed ? errors?.timeframe?.closed ?? '' : '') as string}`}
           />
 
           <DateRangeField

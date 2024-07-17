@@ -29,6 +29,7 @@ interface Props {
   onChange?: (range: DateRangeValue) => void
   showButton?: boolean
   dateFormat?: string
+  onError?: any
 }
 
 export const DateRangeField: React.FC<Props> = (props) => {
@@ -70,6 +71,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const onStartTimeChanged = (value: moment.Moment | null) => {
     if (value) {
       setStartTime(value)
+      validateSelections(selectedRangeRef.current, value, endTimeRef.current)
       if (props.mode === 'single') {
         setSelectedRange([copyTime(selectedRangeRef.current[0], value)])
       } else {
@@ -83,6 +85,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const onEndTimeChanged = (value: moment.Moment | null) => {
     if (value) {
       setEndTime(value)
+      validateSelections(selectedRangeRef.current, startTimeRef.current || null, value)
       if (props.mode === 'range') {
         if (range.length === 1) {
           selectedRangeRef.current[1] = selectedRangeRef.current[0].clone()
@@ -92,6 +95,33 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
       callPropsOnChange()
     }
+  }
+
+  const validateSelections = (
+    range: moment.Moment[],
+    start: moment.Moment | null,
+    end: moment.Moment | null | undefined
+  ) => {
+    if (!start || !end) {
+      setDateErrorText('Please select both start and end time')
+      return
+    }
+
+    if (range.length === 2) {
+      const duration = moment.duration(end.diff(start))
+      const minutes = duration.asMinutes()
+      if (minutes < 20) {
+        setDateErrorText('The end time should be later than the start time by at least 20 minutes')
+        return
+      }
+    }
+
+    if (start.get('minute') % 10 !== 0 || (end && end.get('minute') % 10 !== 0)) {
+      setDateErrorText('The minute must be divisible by 10')
+      return
+    }
+
+    setDateErrorText('')
   }
 
   const onStartTimeError = (error: TimeValidationError, value: moment.Moment | null) => {
@@ -146,36 +176,34 @@ export const DateRangeField: React.FC<Props> = (props) => {
     }
   }, [props.disabled, showPicker, range, props.minDate, startTimeError, endTimeError])
 
-  const onSelect = React.useCallback(
-    (value: moment.Moment) => {
-      if (props.mode === 'single') {
-        if (startTimeRef.current) {
-          value = copyTime(value, startTimeRef.current)
-        }
-        setSelectedRange([value])
-      } else if (range.length === 1) {
-        let first = range[0]
-        if (first.isBefore(value)) {
-          if (startTimeRef.current && endTimeRef.current) {
-            first = copyTime(first, startTimeRef.current)
-            value = copyTime(value, endTimeRef.current)
-          }
-          setSelectedRange([first, value])
-        } else {
-          if (startTimeRef.current && endTimeRef.current) {
-            value = copyTime(value, startTimeRef.current)
-            first = copyTime(first, endTimeRef.current)
-          }
-          setSelectedRange([value, first])
-        }
-      } else {
-        setSelectedRange([value])
+  const onSelect = (value: moment.Moment) => {
+    if (props.mode === 'single') {
+      if (startTimeRef.current) {
+        value = copyTime(value, startTimeRef.current)
       }
+      setSelectedRange([value])
+    } else if (range.length === 1) {
+      let first = range[0]
+      if (first.isBefore(value)) {
+        if (startTimeRef.current && endTimeRef.current) {
+          first = copyTime(first, startTimeRef.current)
+          value = copyTime(value, endTimeRef.current)
+        }
+        setSelectedRange([first, value])
+      } else {
+        if (startTimeRef.current && endTimeRef.current) {
+          value = copyTime(value, startTimeRef.current)
+          first = copyTime(first, endTimeRef.current)
+        }
+        setSelectedRange([value, first])
+      }
+    } else {
+      setSelectedRange([value])
+    }
 
-      callPropsOnChange()
-    },
-    [range, selectedRange, startTime, endTime]
-  )
+    callPropsOnChange()
+    validateSelections(selectedRangeRef.current, startTimeRef.current || null, endTimeRef.current)
+  }
 
   const moveMonthBack = React.useCallback(
     () => setCurrentMonth((state) => state.clone().month(state.get('month') - 1)),
@@ -208,7 +236,10 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   const handlePickerClose = useCallback(() => {
     setShowPicker(false)
-  }, [])
+    if (dateErrorText) {
+      props?.onError(dateErrorText)
+    }
+  }, [dateErrorText])
 
   return (
     <Column>
