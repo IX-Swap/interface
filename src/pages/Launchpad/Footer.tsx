@@ -133,7 +133,6 @@ export const Footer: React.FC<Props> = (props) => {
             <DiscreteExternalLink href="https://ixswap.io/community/">IXS Token</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/blog/">IXS Launchpad </DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/community/">Exchange</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/blog/">Fractionalized-NFT Exchange </DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/community/">
               Staking and Liquidity Mining
             </DiscreteExternalLink>
