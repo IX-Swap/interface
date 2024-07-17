@@ -130,7 +130,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
           secTokenId: secToken.value,
           tokenAddress: token.value,
           payoutNonce,
-          fund: utils.parseUnits(tokenAmount, '18'),
+          fund: utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
           startDate,
           ...(endDate && {
             endDate,
