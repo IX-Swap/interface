@@ -28,6 +28,10 @@ import { ethers } from 'ethers'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { isEmptyObject, isEthChainAddress } from 'utils'
 import { blockchainNetworks } from 'pages/KYC/mock'
+import { checkWrongChain } from 'chains'
+import Portal from '@reach/portal'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -125,6 +129,7 @@ const Tokenomics = ({
   const [startDateError, setStartDateError] = useState<string>('')
   const [endDateError, setEndDateError] = useState<string>('')
   const { chainId, account } = useWeb3React()
+  const [selectedNetwork, setSelectedNetwork] = useState<string>('')
   const [selectedToken, setSelectedToken] = useState<any>({
     tokenSymbol: 'USDC',
     logo: usdcDropDown,
@@ -319,12 +324,14 @@ const Tokenomics = ({
     onChange(updatedFormData)
   }
 
+  const { isWrongChain, expectChain } = checkWrongChain(chainId || 0, selectedNetwork)
+
   const handleSelectNetwork = (selectedOption: any) => {
     const updatedFormData = {
       ...formDataTokenomics,
       network: selectedOption?.value,
     }
-
+    setSelectedNetwork(selectedOption?.value)
     onChange(updatedFormData)
   }
 
@@ -412,6 +419,15 @@ const Tokenomics = ({
             <ErrorText>{formik.errors.network}</ErrorText>
           ) : null}
         </Block>
+
+        {/* open dailog box for change network */}
+        {isWrongChain ? (
+          <Portal>
+            <CenteredFixed width="100vw" height="100vh">
+              <NetworkNotAvailable expectChain={expectChain} />
+            </CenteredFixed>
+          </Portal>
+        ) : null}
       </InputeWrapper>
 
       <div style={{ marginTop: 16 }}>
