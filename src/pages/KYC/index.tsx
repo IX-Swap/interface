@@ -30,6 +30,7 @@ import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
 import { detectWrongNetwork } from 'utils'
+import { useWalletState } from 'state/wallet/hooks'
 
 interface DescriptionProps {
   description: string | null
@@ -92,7 +93,8 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 const KYC = () => {
-  const { account, chainId } = useWeb3React()
+  const { chainId } = useWeb3React()
+  const { isConnected } = useWalletState()
   const [loading, setLoading] = useState(false)
   const pendingSign = usePendingSignState()
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -315,7 +317,7 @@ const KYC = () => {
     }
   }, [status, description, kyc])
 
-  if (!account && !loadingRequest && !loading) return <NotAvailablePage />
+  if (!isConnected && !loadingRequest && !loading) return <NotAvailablePage />
 
   const blurred = detectWrongNetwork(chainId || 0)
 
