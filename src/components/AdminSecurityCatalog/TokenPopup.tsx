@@ -217,9 +217,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
 
   const chainsOptions = useMemo(
     () => [
-      { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Ethereum' },
-      { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
       { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Polygon' },
+      { id: SUPPORTED_TGE_CHAINS.BASE, name: 'Base' },
     ],
     []
   )
@@ -310,7 +309,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </TYPE.small>
                         )}
                       </Box>
-                      <Box>
+                      <Box style={{ marginLeft: 12 }}>
                         <Label marginBottom="11px" htmlFor="token-address">
                           <TYPE.title11 color="text2">
                             <Trans>Contract Address</Trans>
@@ -341,6 +340,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           <ContainerRow>
                             <InputContainer>
                               <Input
+                                style={{ fontSize: '16px' }}
                                 id="token-ticker"
                                 value={token.ticker}
                                 onChange={(e: any) => setToken({ ...token, ticker: e.currentTarget.value })}
@@ -408,6 +408,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           <ContainerRow>
                             <InputContainer>
                               <Input
+                                style={{ fontSize: '16px' }}
                                 id="token-company-name"
                                 value={token.companyName}
                                 onChange={(e: any) => setToken({ ...token, companyName: e.currentTarget.value })}
@@ -431,6 +432,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           <ContainerRow>
                             <InputContainer>
                               <Input
+                                style={{ fontSize: '16px' }}
                                 id="token-website"
                                 value={token.url}
                                 onChange={(e: any) => setToken({ ...token, url: e.currentTarget.value })}
@@ -493,6 +495,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           <ContainerRow>
                             <InputContainer>
                               <Input
+                                style={{ fontSize: '16px' }}
                                 id="token-atlas-id"
                                 value={token.atlasOneId}
                                 onChange={(e: any) => setToken({ ...token, atlasOneId: e.currentTarget.value })}
