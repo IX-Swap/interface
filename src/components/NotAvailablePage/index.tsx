@@ -10,30 +10,12 @@ import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { PinnedContentButton } from 'components/Button'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-import {
-  Container,
-  Title,
-  Info,
-  NetworksRow,
-  NetworkCard,
-  InfoRows,
-  ConnectWalletContainer,
-} from './styled'
+import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, ConnectWalletContainer } from './styled'
 import Modal from 'components/Modal'
 import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 import { PRODUCTION_APP_URL } from 'config'
+import { arrayToString } from 'utils'
 
-
-function arrayToString(arr: string[]) {
-  if (arr.length === 0) return ''
-  if (arr.length === 1) return arr[0]
-  if (arr.length === 2) return arr.join(' or ')
-
-  const lastItem = arr.pop()
-  return `${arr.join(', ')} or ${lastItem}`
-}
-
-// Define the NotAvailablePage component
 export const NotAvailablePage = () => {
   const { chainId, provider, account } = useWeb3React()
   const { pathname } = useLocation()
