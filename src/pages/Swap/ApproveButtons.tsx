@@ -56,6 +56,10 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
           data-testid="approve-use-token"
           altDisabledStyle={approvalState === ApprovalState.PENDING} // show solid button while waiting
           confirmed={approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED}
+          style={{
+            height: 53,
+            fontSize: 16,
+          }}
         >
           <AutoRow justify="center" style={{ flexWrap: 'nowrap' }}>
             <span

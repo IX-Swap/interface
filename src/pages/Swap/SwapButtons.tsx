@@ -232,7 +232,7 @@ export const SwapButtons = ({
                 shouldGetAuthorization
               }
             >
-              <Text fontSize={18} fontWeight={600}>
+              <Text fontSize={16} fontWeight={600}>
                 {swapInputError ? (
                   swapInputError
                 ) : shouldGetAuthorization ? (
