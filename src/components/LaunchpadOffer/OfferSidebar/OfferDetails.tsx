@@ -40,7 +40,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
   const investedData = useInvestedData(props.offer.id)
   const { amount: amountToClaim } = investedData
-  const { status: whitelistedStatus } = useGetWhitelistStatus(props.offer.id)
+  const { status: whitelistedStatus, isInterested } = useGetWhitelistStatus(props.offer.id)
   const { chainId } = useActiveWeb3React()
   const isTestnet = [SupportedChainId.AMOY, SupportedChainId.BASE_SEPOLIA].includes(chainId)
   const nameChainMapNetwork = getChainFromName(props?.offer?.network, isTestnet)
@@ -91,6 +91,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
   const [showSuccess, setShowSuccess] = React.useState(false)
   const [showFailed, setShowFailed] = React.useState(false)
+
   return (
     <Container>
       <OfferSidebarSummary>
@@ -148,14 +149,14 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </OfferStats>
 
         <InvestButtonContainer>
-          {stageStatus !== OfferStageStatus.disabled && (
+          {stageStatus !== OfferStageStatus.disabled && isInterested !== 0 ? (
             <InvestButton onClick={openInvestDialog}>
               {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
               {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
               {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
             </InvestButton>
-          )}
+          ) : null}
         </InvestButtonContainer>
 
         {showSuccess && <InvestSuccessModal show={showSuccess} onClose={() => setShowSuccess(false)} />}
