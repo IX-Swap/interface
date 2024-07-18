@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import Portal from '@reach/portal'
+import { useWeb3React } from '@web3-react/core'
+
 import Background from 'components/LBP/PublicDetails/Background'
 import MiddleSection from 'components/LBP/PublicDetails/MiddleSection'
 import { useGetLbp, useGetLbpStats } from 'state/lbp/hooks'
 import { LbpFormValues, MarketData } from 'components/LBP/types'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Loader } from 'components/AdminTransactionsTable'
-import { useWeb3React } from '@web3-react/core'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import AppBody from 'pages/AppBody'
+import { checkWrongChain } from 'chains'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
 interface RouteParams {
   id: string
@@ -26,8 +31,11 @@ const PublicDetails: React.FC = () => {
   const [statsData, setStatsData] = useState<MarketData>()
   const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
+
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
   const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
+  const network = lbpData?.network ?? ''
+  const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
 
   useEffect(() => {
     const loadData = async () => {
@@ -67,6 +75,13 @@ const PublicDetails: React.FC = () => {
         <>
           <Background currentSharePriceUSD={statsData?.currentSharePriceUSD} lbpData={lbpData} />
           <MiddleSection statsData={statsData} lbpData={lbpData} />
+          {isWrongChain ? (
+            <Portal>
+              <CenteredFixed width="100vw" height="100vh">
+                <NetworkNotAvailable expectChain={expectChain} />
+              </CenteredFixed>
+            </Portal>
+          ) : null}
         </>
       )}
     </>
