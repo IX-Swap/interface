@@ -93,7 +93,7 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 const KYC = () => {
-  const { chainId } = useWeb3React()
+  const { account, chainId } = useWeb3React()
   const { isConnected } = useWalletState()
   const [loading, setLoading] = useState(false)
   const pendingSign = usePendingSignState()
@@ -335,7 +335,7 @@ const KYC = () => {
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
       <EmailVerification {...modalProps} closeModal={closeModal} />
       <StatusCard>
-        {loadingRequest || loading ? (
+        {loadingRequest || loading || !account ? (
           <RowCenter>
             <LoaderThin size={96} />
           </RowCenter>
