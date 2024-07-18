@@ -54,33 +54,34 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
     return null
   }
 
+  // Show the first authorization only
+  const address = missingAuthorizations[0]
+
   return (
     <RowBetween style={{ flexWrap: 'wrap', gap: '16px' }}>
-      {missingAuthorizations.map((address) => (
-        <React.Fragment key={address}>
-          {address && secTokens[address] && allowSwap && (
-            <>
-              {Boolean(authorizationInProgress) ? (
-                <PinnedContentButton
-                  disabled
-                  style={{ width: '100%' }}
-                  data-testid={'authorize' + secTokens[address]?.symbol + 'button'}
-                >
-                  Confirming transaction with broker...
-                </PinnedContentButton>
-              ) : (
-                <PinnedContentButton
-                  onClick={() => startFirstStep(address)}
-                  style={{ width: '100%' }}
-                  data-testid={'authorize' + secTokens[address]?.symbol + 'button'}
-                >
-                  Authorize {secTokens[address]?.symbol}
-                </PinnedContentButton>
-              )}
-            </>
-          )}
-        </React.Fragment>
-      ))}
+      <React.Fragment key={address}>
+        {address && secTokens[address] && allowSwap && (
+          <>
+            {Boolean(authorizationInProgress) ? (
+              <PinnedContentButton
+                disabled
+                style={{ width: '100%' }}
+                data-testid={'authorize' + secTokens[address]?.symbol + 'button'}
+              >
+                Confirming transaction with broker...
+              </PinnedContentButton>
+            ) : (
+              <PinnedContentButton
+                onClick={() => startFirstStep(address)}
+                style={{ width: '100%' }}
+                data-testid={'authorize' + secTokens[address]?.symbol + 'button'}
+              >
+                Authorize {secTokens[address]?.symbol}
+              </PinnedContentButton>
+            )}
+          </>
+        )}
+      </React.Fragment>
     </RowBetween>
   )
 }
