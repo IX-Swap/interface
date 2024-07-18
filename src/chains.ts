@@ -164,7 +164,7 @@ export enum NetworkName {
   POLYGON = 'polygon',
 }
 
-export const checkWrongChain = (chainId: number, network: string) => {
+export const checkWrongChain = (chainId: any, network: string) => {
   let isWrongChain = false
   let expectChain = null
 
