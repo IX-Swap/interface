@@ -20,7 +20,6 @@ const RateRow = styled(Row)<{ active: boolean }>`
   font-size: 14px;
   line-height: 21px;
   color: ${({ theme }) => theme.text2};
-  padding: 0 0 0 2rem;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       padding: 0 10px 0 1rem;
   `};
@@ -28,9 +27,12 @@ const RateRow = styled(Row)<{ active: boolean }>`
 
 export const CurrentRate = ({ trade, allowedSlippage }: Props) => {
   const [showInverted, setShowInverted] = useState<boolean>(false)
+
+  if (!trade) return null;
+
   return (
     <RateRow active={!!trade} data-testid="currentRate">
-      <RowFixed>
+      <RowFixed style={{ color: '#292933', fontWeight: 600 }}>
         <Trans>Current Rate</Trans>
       </RowFixed>
       {trade ? (
@@ -40,7 +42,7 @@ export const CurrentRate = ({ trade, allowedSlippage }: Props) => {
           </MouseoverTooltipContent>
         </RowFixed>
       ) : (
-        <RowEnd style={{ maxWidth: '10px', paddingRight: '36px' }}>-</RowEnd>
+        <RowEnd style={{ maxWidth: '10px' }}>-</RowEnd>
       )}
     </RateRow>
   )
