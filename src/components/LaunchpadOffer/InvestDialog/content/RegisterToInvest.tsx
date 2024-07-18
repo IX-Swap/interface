@@ -71,10 +71,10 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     async (values: FormValues) => {
       try {
         submitState.setLoading()
+        await requestWhitelist({ amount: values.amount ?? 0, isInterested: Boolean(values.isInterested) })
         if (!values.isInterested) {
           throw new Error('Not interested in investing')
         }
-        await requestWhitelist({ amount: values.amount ?? 0, isInterested: Boolean(values.isInterested) })
         submitState.setSuccess()
         showSuccess('Register to invest successfully')
         props.onClose()
