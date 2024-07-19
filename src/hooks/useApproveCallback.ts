@@ -179,6 +179,7 @@ export function useAllowanceV2(
   useEffect(() => {
     if (!amountToApprove || !spender || !currentAllowance || !tokenContract) {
       setApprovalState(ApprovalState.UNKNOWN)
+      return
     }
     if (approving) {
       setApprovalState(ApprovalState.PENDING)
