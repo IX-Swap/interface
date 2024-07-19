@@ -92,6 +92,20 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const [showSuccess, setShowSuccess] = React.useState(false)
   const [showFailed, setShowFailed] = React.useState(false)
 
+  const shouldShowInvestButton = (
+    stageStatus: OfferStageStatus,
+    offerStatus: OfferStatus,
+    isInterested: number | undefined
+  ) => {
+    if (stageStatus === OfferStageStatus.disabled) {
+      return false
+    }
+    if (offerStatus === OfferStatus.preSale && isInterested === 0) {
+      return false
+    }
+    return true
+  }
+
   return (
     <Container>
       <OfferSidebarSummary>
@@ -149,7 +163,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </OfferStats>
 
         <InvestButtonContainer>
-          {stageStatus !== OfferStageStatus.disabled && isInterested !== 0 ? (
+          {shouldShowInvestButton(stageStatus, props?.offer?.status, isInterested) ? (
             <InvestButton onClick={openInvestDialog}>
               {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
               {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
