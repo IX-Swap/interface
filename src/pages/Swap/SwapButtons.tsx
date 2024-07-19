@@ -144,6 +144,21 @@ export const SwapButtons = ({
     !swapIsUnsupported && account && !showWrap && routeNotFound && userHasSpecifiedInputOutput
   const showSwapButton = account && !showWrap && !showInsufficientLiquidity
 
+  console.log(
+    (showApproveFlow && approvalState !== ApprovalState.APPROVED && signatureState !== UseERC20PermitState.SIGNED) ||
+      !isValid ||
+      // priceImpactTooHigh ||
+      !!swapCallbackError ||
+      shouldGetAuthorization
+  )
+
+  console.log('showApproveFlow', showApproveFlow)
+  console.log('approvalState', approvalState)
+  console.log('signatureState', signatureState)
+  console.log('isValid', isValid)
+  console.log('swapCallbackError', swapCallbackError)
+  console.log('shouldGetAuthorization', shouldGetAuthorization)
+
   return (
     <>
       {showConfirm && (

@@ -55,9 +55,13 @@ export function useAllowance(
     // we might not have enough data to know whether or not we need to approve
     if (!currentAllowance) return ApprovalState.UNKNOWN
 
+    console.log('currentAllowance', currentAllowance.toString())
+    console.log('amountToApprove', amountToApprove.toString())
+    console.log('currentAllowance < amountToApprove', currentAllowance.lt(amountToApprove))
+    console.log(currentAllowance.lt(amountToApprove) ? ApprovalState.NOT_APPROVED : ApprovalState.APPROVED)
     // amountToApprove will be defined if currentAllowance is
     return currentAllowance.lt(amountToApprove) ? ApprovalState.NOT_APPROVED : ApprovalState.APPROVED
-  }, [amountToApprove, currentAllowance, spender, tokenContract])
+  }, [amountToApprove, currentAllowance, spender, tokenContract, shouldRefereshAllowance])
 
   const addTransaction = useTransactionAdder()
 
@@ -97,6 +101,7 @@ export function useAllowance(
       })
       .then((receipt: TransactionReceipt) => {
         console.log('Transaction confirmed:', receipt)
+        debugger
         refreshAllowance()
       })
       .catch((error: Error) => {
@@ -201,8 +206,12 @@ export function useApproveCallbackFromTrade(
     () => (trade && trade.inputAmount.currency?.isToken ? trade.maximumAmountIn(allowedSlippage) : undefined),
     [trade, allowedSlippage]
   )
-  return useApproveCallback(
-    amountToApprove,
+  console.log('amountToApprove', amountToApprove?.toSignificant(6))
+  const tokenAddress = amountToApprove?.currency?.isToken ? amountToApprove.currency.address : undefined
+
+  return useAllowance(
+    tokenAddress,
+    amountToApprove ? BigNumber.from(amountToApprove?.quotient?.toString()) : BigNumber.from(0),
     chainId ? (trade instanceof V2Trade ? SWAP_ROUTER_ADDRESS[chainId] : undefined) : undefined
   )
 }

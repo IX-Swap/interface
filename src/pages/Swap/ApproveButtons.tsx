@@ -43,6 +43,7 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
     return null
   }
 
+  console.log('approvalState', approvalState)
   return (
     <AutoRow style={{ flexWrap: 'nowrap', width: '100%', marginBottom: '10px' }}>
       <AutoColumn style={{ width: '100%', textAlign: 'center' }} gap="12px">
