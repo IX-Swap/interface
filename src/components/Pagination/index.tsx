@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 
 import { ReactComponent as ArrowIcon } from '../../assets/images/newArrow.svg'
+import { adminOffset } from 'state/admin/constants'
 
 interface Props {
   page: number
@@ -13,7 +14,7 @@ interface Props {
 export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
   if (!totalPages) return null
 
-  const itemsPerPage = 20
+  const itemsPerPage = adminOffset
   const startItem = (page - 1) * itemsPerPage + 1
   const endItem = Math.min(page * itemsPerPage, totalPages * itemsPerPage)
 
