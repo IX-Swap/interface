@@ -42,7 +42,7 @@ const BannerContainer = styled.div`
   margin: 8rem 1rem 0rem 0rem;
   width: 100%;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    margin: 0rem 5rem 0rem 5rem;
+    margin: 2rem 5rem 0rem 5rem;
   }
 `
 
