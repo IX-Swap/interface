@@ -203,6 +203,6 @@ export const TOKEN_ADDRESSES: { [key: string]: { [key: number]: string } } = {
 export const LBP_FACTORY_ADDRESS = {
   [80002]: '0x812A5D130D8bc37c9201318cE851EcC2492aB311',
   [137]: '0xA9F30b54C732BD12E2a2373a50642a4E0d4A89B5',
-  [84532]: '0x8e1832aCBD7E92Cac4c6D9B9ecc487CfCc78e6B4',
+  [84532]: '0x50629ad11a66Da346364F96695BD5F299a70664B',
   // [8453]: '', // TODO: add base chain
 } as Record<number, string>
