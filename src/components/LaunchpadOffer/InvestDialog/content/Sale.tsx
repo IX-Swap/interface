@@ -430,11 +430,10 @@ const AgreementCheckbox = styled(BaseCheckbox)`
 
 const WhitelistMessage = styled.div`
   ${text59}
-
   text-align: center;
   max-width: 80%;
+  font-size: 18px;
   color: ${(props) => props.theme.launchpad.colors.text.title};
-
   b {
     color: ${(props) => props.theme.launchpad.colors.primary};
   }
