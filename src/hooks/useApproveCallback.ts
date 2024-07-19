@@ -54,12 +54,6 @@ export function useAllowance(
     if (approving) return ApprovalState.PENDING
     // we might not have enough data to know whether or not we need to approve
     if (!currentAllowance) return ApprovalState.UNKNOWN
-
-    console.log('currentAllowance', currentAllowance.toString())
-    console.log('amountToApprove', amountToApprove.toString())
-    console.log('currentAllowance < amountToApprove', currentAllowance.lt(amountToApprove))
-    console.log(currentAllowance.lt(amountToApprove) ? ApprovalState.NOT_APPROVED : ApprovalState.APPROVED)
-    // amountToApprove will be defined if currentAllowance is
     return currentAllowance.lt(amountToApprove) ? ApprovalState.NOT_APPROVED : ApprovalState.APPROVED
   }, [amountToApprove, currentAllowance, spender, tokenContract, shouldRefereshAllowance])
 
@@ -101,7 +95,6 @@ export function useAllowance(
       })
       .then((receipt: TransactionReceipt) => {
         console.log('Transaction confirmed:', receipt)
-        debugger
         refreshAllowance()
       })
       .catch((error: Error) => {
@@ -124,7 +117,6 @@ export function useAllowanceV2(
   const addTransaction = useTransactionAdder()
 
   const [currentAllowance, setCurrentAllowance] = useState<any>(ethers.constants.Zero)
-  const [shouldRefereshAllowance, setShouldRefereshAllowance] = useState<boolean>(false)
   const [approving, setApproving] = useState<boolean>(false)
   const [approvalState, setApprovalState] = useState<ApprovalState>(ApprovalState.UNKNOWN)
 
@@ -168,7 +160,7 @@ export function useAllowanceV2(
           summary: 'Approve token spending',
           approval: { tokenAddress: tokenAddress || '', spender: spender },
         })
-        return response.wait()
+        return response.wait(1)
       })
       .then((receipt: TransactionReceipt) => {
         console.log('Transaction confirmed:', receipt)
@@ -182,20 +174,18 @@ export function useAllowanceV2(
 
   useEffect(() => {
     fetchAllowance()
-  }, [tokenContract, account, spender, shouldRefereshAllowance])
+  }, [tokenContract, account, spender])
 
   useEffect(() => {
-    if (!amountToApprove || !spender || !currentAllowance || !tokenContract) return
+    if (!amountToApprove || !spender || !currentAllowance || !tokenContract) {
+      setApprovalState(ApprovalState.UNKNOWN)
+    }
     if (approving) {
       setApprovalState(ApprovalState.PENDING)
     } else {
-      if (!currentAllowance) {
-        setApprovalState(ApprovalState.UNKNOWN)
-      } else {
-        setApprovalState(currentAllowance.lt(amountToApprove) ? ApprovalState.NOT_APPROVED : ApprovalState.APPROVED)
-      }
+      setApprovalState(currentAllowance.lt(amountToApprove) ? ApprovalState.NOT_APPROVED : ApprovalState.APPROVED)
     }
-  }, [amountToApprove, currentAllowance, spender, tokenContract, shouldRefereshAllowance])
+  }, [amountToApprove, currentAllowance, spender, tokenContract])
 
   return [approvalState, approve, fetchAllowance]
 }
@@ -292,9 +282,7 @@ export function useApproveCallbackFromTrade(
     () => (trade && trade.inputAmount.currency?.isToken ? trade.maximumAmountIn(allowedSlippage) : undefined),
     [trade, allowedSlippage]
   )
-  console.log('amountToApprove', amountToApprove?.toSignificant(6))
   const tokenAddress = amountToApprove?.currency?.isToken ? amountToApprove.currency.address : undefined
-
   return useAllowanceV2(
     tokenAddress,
     amountToApprove ? BigNumber.from(amountToApprove?.quotient?.toString()) : BigNumber.from(0),
