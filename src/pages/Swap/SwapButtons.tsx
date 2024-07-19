@@ -57,7 +57,7 @@ export const SwapButtons = ({
     execute: onWrap,
     inputError: wrapInputError,
   } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
-  const { approvalState, signatureState } = useSwapApproval()
+  const { approvalState, handleApprove, signatureState } = useSwapApproval()
 
   const { secTokens: userSecTokens } = useUserSecTokens()
   const { showConfirm, swapErrorMessage, setSwapState } = useSetSwapState()
@@ -153,7 +153,7 @@ export const SwapButtons = ({
   )
 
   console.log('showApproveFlow', showApproveFlow)
-  console.log('approvalState', approvalState)
+  console.log('approvalState SwapButtons', approvalState)
   console.log('signatureState', signatureState)
   console.log('isValid', isValid)
   console.log('swapCallbackError', swapCallbackError)
@@ -177,7 +177,12 @@ export const SwapButtons = ({
       )}
       {!showConfirm && (
         <BottomGrouping>
-          <ApproveButtons parsedAmounts={parsedAmounts} />
+          <ApproveButtons
+            parsedAmounts={parsedAmounts}
+            approvalState={approvalState}
+            handleApprove={handleApprove}
+            signatureState={signatureState}
+          />
           {swapIsUnsupported && (
             <PinnedContentButton disabled={true} data-testid="unsupported-asset">
               <Trans>Unsupported asset</Trans>
