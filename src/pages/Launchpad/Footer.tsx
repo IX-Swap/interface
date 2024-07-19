@@ -118,7 +118,10 @@ export const Footer: React.FC<Props> = (props) => {
           Copyright © IX Swap 2024
           <br />
           <div>
-            <DiscreteExternalLink style={{display: 'flex', alignItems: 'center'}} href="https://ixswap.io/terms-and-conditions/">
+            <DiscreteExternalLink
+              style={{ display: 'flex', alignItems: 'center' }}
+              href="https://ixswap.io/terms-and-conditions/"
+            >
               <UpdatedBox>Updated</UpdatedBox> Terms & Conditions
             </DiscreteExternalLink>
             <DotSeparator />
