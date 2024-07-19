@@ -87,7 +87,7 @@ const IndividualFormV2 = ({ data }: Props) => {
         {statusBoxes.map((box, index) => renderStatusBox(box.title, box.status))}
       </StatusBoxContainer>
 
-      <Line style={{ marginTop: '50px' }} />
+      <Line style={{ marginTop: '30px' }} />
 
       <StatusHeader>
         <TYPE.body4>Personal Information</TYPE.body4>
@@ -99,13 +99,13 @@ const IndividualFormV2 = ({ data }: Props) => {
         {renderInfoBox('Email Address', data?.individual?.email || '-')}
       </StatusBoxContainerInfo>
 
-      <Line style={{ marginTop: '50px' }} />
+      <Line style={{ marginTop: '10px' }} />
 
       <StatusHeader>
         <TYPE.body4>Secondary Contact Details</TYPE.body4>
       </StatusHeader>
       <StatusBoxContainer>{renderInfoBox(getSecondaryContactLabel(), getSecondaryContactValue())}</StatusBoxContainer>
-      <Line style={{ marginTop: '20px' }} />
+      <Line style={{ marginTop: '10px' }} />
     </FormContainer>
   )
 }

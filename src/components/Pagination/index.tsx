@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 
 import { ReactComponent as ArrowIcon } from '../../assets/images/newArrow.svg'
+import { adminOffset } from 'state/admin/constants'
 
 interface Props {
   page: number
@@ -13,23 +14,15 @@ interface Props {
 export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
   if (!totalPages) return null
 
+  const itemsPerPage = adminOffset
+  const startItem = (page - 1) * itemsPerPage + 1
+  const endItem = Math.min(page * itemsPerPage, totalPages * itemsPerPage)
+
   return (
     <Container>
-      {/* <ReactPaginate
-        forcePage={page - 1}
-        breakLabel="..."
-        onPageChange={onPageClick}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={3}
-        pageCount={totalPages}
-        previousLabel={<Prev />}
-        nextLabel={<Next />}
-        containerClassName="pagination-container"
-        pageClassName="page"
-      /> */}
       <InfoContainer>
         <TYPE.small>
-          {page}-{Math.min(page + 4, totalPages)} of {totalPages}
+          {startItem} - {endItem} of {totalPages * itemsPerPage}
         </TYPE.small>
         <Button onClick={() => onPageChange(page - 1)} disabled={page === 1}>
           <Prev />
