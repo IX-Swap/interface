@@ -5,12 +5,9 @@ import { useERC20PermitFromTrade, UseERC20PermitState } from '../../hooks/useERC
 
 export function useSwapApproval() {
   const { toggledTrade: trade, allowedSlippage } = useDerivedSwapInfo()
-  console.log('trade', trade?.inputAmount.toSignificant(6))
-
   const { state: signatureState, gatherPermitSignature } = useERC20PermitFromTrade(trade, allowedSlippage)
 
   const [approvalState, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
-  console.log('approvalState callback', approvalState)
   const handleApprove = useCallback(async () => {
     if (signatureState === UseERC20PermitState.NOT_SIGNED && gatherPermitSignature) {
       try {
