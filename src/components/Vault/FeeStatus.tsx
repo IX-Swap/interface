@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import styled, { css } from 'styled-components'
-import { Trans, t } from '@lingui/macro'
-
+import { Trans } from '@lingui/macro'
+import { useNativeCurrency } from 'hooks/useNativeCurrency'
 import { ReactComponent as SuccessIcon } from 'assets/images/check-2.svg'
 
 import { WithdrawStatus } from './enum'
@@ -14,12 +14,17 @@ interface Props {
 
 export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
   const paid = [WithdrawStatus.FEE_ACCEPTED, WithdrawStatus.PENDING].includes(status as WithdrawStatus)
+  const native = useNativeCurrency()
 
   const feeText = useMemo(() => {
-    if (paid || feePrice) {
-      return `${(+feePrice).toFixed(4)} Matic`
+    if (!native) {
+      return ''
     }
-    return `~${estimatedPrice ? `${estimatedPrice.toFixed(4)} Matic` : ' - '}`
+
+    if (paid || feePrice) {
+      return `${+feePrice} ${native.symbol}`
+    }
+    return `~${estimatedPrice ? `${estimatedPrice} ${native.symbol}` : ' - '}`
   }, [estimatedPrice, feePrice, paid])
 
   return (
