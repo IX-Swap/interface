@@ -181,7 +181,6 @@ export const checkWrongChain = (
       expectChain: null,
     }
   }
-
   const [testChain, mainChain] = expectedChains
   if (isProd) {
     return {
@@ -195,4 +194,3 @@ export const checkWrongChain = (
     expectChain: testChain,
   }
 }
-
