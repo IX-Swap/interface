@@ -7,8 +7,6 @@ import styled from 'styled-components'
 import Column from 'components/Column'
 import { TYPE } from 'theme'
 import { Status } from './Status'
-import { useCurrencyBalance } from 'state/wallet/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
 import CurrencyLogo from 'components/CurrencyLogo'
 
 import { MySecTokenCard } from './styleds'
@@ -21,10 +19,9 @@ interface Props {
 
 export const MySecToken: FC<Props> = ({ token }: Props) => {
   const wrappedToken = token?.token
-  const { account } = useActiveWeb3React()
-  const balance = useCurrencyBalance(account ?? undefined, { isToken: true, ...wrappedToken } ?? undefined)
 
   const network = token?.token?.network
+  const balance = token?.token?.balance
   const networkLogo = network ? NETWORK_LOGOS[network] : ''
 
   const status = useMemo(() => {
@@ -78,21 +75,14 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
 
             <Column>
               <TYPE.title11>{token.ticker}</TYPE.title11>
-              {/* <TYPE.small fontWeight={600}>{wrappedToken.name}</TYPE.small> */}
             </Column>
             <Column style={{ minWidth: '100%', marginLeft: '10px' }}>
-              {/* <TYPE.title11>{token.ticker}</TYPE.title11> */}
               <TYPE.small fontWeight={600}>{wrappedToken.name}</TYPE.small>
             </Column>
           </Flex>
-          {/* <Flex
-            alignItems="center"
-            justifyContent={isMobileOnly ? 'flex-start' : 'flex-end'}
-            width="-webkit-fill-available"
-          > */}
+
           <Status status={status} amount={balance} decimals={token.token.decimals ?? 18} />
         </Flex>
-        {/* </Flex> */}
       </MySecTokenCard>
     </NavLink>
   )

@@ -11,11 +11,11 @@ import { useUserState } from 'state/user/hooks'
 
 import { FeaturedToken } from './FeaturedToken'
 import { SecTokensTable } from './SecTokensTable'
-import { MySecToken } from './MySecToken'
-import { FeaturedTokensGrid, MySecTokensTab, MySecTokensGrid, Divider, StyledBodyWrapper } from './styleds'
+import { FeaturedTokensGrid, MySecTokensTab, Divider, StyledBodyWrapper } from './styleds'
 import { isMobile } from 'react-device-detect'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import EmptyData from './EmptyData'
+import SecTokenSection from './SecTokenSection'
 
 const checkPendingAccreditationRequest = (accreditationRequest: any) =>
   accreditationRequest?.brokerDealerStatus !== 'approved' || accreditationRequest?.custodianStatus !== 'approved'
@@ -102,30 +102,14 @@ export default function CustodianV2() {
         </TYPE.title5>
 
         {approvedSecTokens?.length > 0 ? (
-          <>
-            <TYPE.title6 fontSize={'13px'} marginBottom="32px">
-              <Trans>Accredited</Trans>
-            </TYPE.title6>
-            <MySecTokensGrid>
-              {approvedSecTokens?.map((token: any) => (
-                <MySecToken key={`my-sec-${token?.id}`} token={token} />
-              ))}
-            </MySecTokensGrid>
-          </>
+          <SecTokenSection secTokens={approvedSecTokens} keyName="my-sec" title="Accredited" />
         ) : (
           <EmptyData title="No Security Tokens" desc="You have no Security Tokens at the moment" />
         )}
         {pendingSecTokens?.length > 0 && (
           <>
             <Divider style={{ marginTop: '50px', marginBottom: '40px' }} />
-            <TYPE.title6 fontSize={'13px'} marginBottom="32px">
-              <Trans>Pending Accreditations</Trans>
-            </TYPE.title6>
-            <MySecTokensGrid>
-              {pendingSecTokens?.map((token: any) => (
-                <MySecToken key={`pending-${token.id}`} token={token} />
-              ))}
-            </MySecTokensGrid>
+            <SecTokenSection secTokens={pendingSecTokens} keyName="pending-sec" title="Pending Accreditation" />
           </>
         )}
       </MySecTokensTab>
