@@ -177,7 +177,7 @@ export const checkWrongChain = (
   const expectedChains = Chains[network as NetworkName] || [] // Default to an empty array if network is not found
   if (!expectedChains.length) {
     return {
-      isWrongChain: true,
+      isWrongChain: false,
       expectChain: null,
     }
   }
