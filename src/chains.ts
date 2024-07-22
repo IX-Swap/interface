@@ -156,7 +156,7 @@ export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<
 )
 
 export const checkIsTestnet = (chainId: number) => {
-  return [SupportedChainId.AMOY, SupportedChainId.BASE_SEPOLIA].includes(chainId)
+  return ![SupportedChainId.BASE_SEPOLIA, SupportedChainId.AMOY].includes(chainId)
 }
 
 export enum NetworkName {
@@ -168,12 +168,12 @@ export const checkWrongChain = (chainId: any, network: string) => {
   let isWrongChain = false
   let expectChain = null
 
-  if ([SupportedChainId.AMOY, SupportedChainId.MATIC].includes(chainId) && network === NetworkName.BASE) {
+  if (![SupportedChainId.BASE, SupportedChainId.BASE_SEPOLIA].includes(chainId) && network === NetworkName.BASE) {
     isWrongChain = true
     expectChain = checkIsTestnet(chainId) ? SupportedChainId.BASE_SEPOLIA : SupportedChainId.BASE
   }
 
-  if ([SupportedChainId.BASE, SupportedChainId.BASE_SEPOLIA].includes(chainId) && network === NetworkName.POLYGON) {
+  if (![SupportedChainId.AMOY, SupportedChainId.MATIC].includes(chainId) && network === NetworkName.POLYGON) {
     isWrongChain = true
     expectChain = checkIsTestnet(chainId) ? SupportedChainId.AMOY : SupportedChainId.MATIC
   }
