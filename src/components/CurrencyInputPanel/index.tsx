@@ -338,7 +338,7 @@ export default function CurrencyInputPanel({
                       ) : (
                         <Trans>
                           Balance:
-                          <span style={{ color: '#292933', fontWeight: 600 }}>
+                          <span style={{ color: '#292933', fontWeight: 600, marginLeft: 4 }}>
                             {formatCurrencyAmount(selectedCurrencyBalance, decimals)} {currency.symbol}
                           </span>
                         </Trans>

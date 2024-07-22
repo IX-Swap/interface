@@ -13,19 +13,25 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
-import CurrencyLogo from '../../components/CurrencyLogo'
 import Loader from '../../components/Loader'
 import { AutoRow } from '../../components/Row'
 import { ApprovalState } from '../../hooks/useApproveCallback'
 import { UseERC20PermitState } from '../../hooks/useERC20Permit'
 import { Field } from '../../state/swap/actions'
 import { usePriceImpact } from './usePriceImpact'
-import { useSwapApproval } from './useSwapApproval'
 
-export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts | undefined }) => {
-  const { approvalState, handleApprove, signatureState } = useSwapApproval()
+export const ApproveButtons = ({
+  parsedAmounts,
+  approvalState,
+  handleApprove,
+  signatureState,
+}: {
+  parsedAmounts: ParsedAmounts | undefined
+  approvalState: ApprovalState
+  handleApprove: () => Promise<void>
+  signatureState: UseERC20PermitState
+}) => {
   const { approvalSubmitted } = useSwapState()
-  const theme = useTheme()
   const isArgentWallet = useIsArgentWallet()
   const { config } = useWhitelabelState()
   const { currencies, inputError: swapInputError, shouldGetAuthorization } = useDerivedSwapInfo()
@@ -67,15 +73,8 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
                 display: 'flex',
                 alignItems: 'center',
                 marginRight: '12px',
-                // color: ApprovalState.PENDING ? '#ffffff' : '#0ec080',
               }}
             >
-              {/* <CurrencyLogo
-                currency={currencies[Field.INPUT]}
-                size={'20px'}
-                style={{ marginRight: '8px', flexShrink: 0 }}
-              /> */}
-              {/* we need to shorten this string on mobile */}
               {approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED ? (
                 <span style={{ textAlign: 'center' }} color="#0ec080">
                   <Trans>You can now trade {currencies[Field.INPUT]?.symbol}</Trans>
@@ -88,24 +87,12 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
                 </span>
               )}
             </span>
-            {
-              approvalState === ApprovalState.PENDING ? (
-                <Loader stroke="white" />
-              ) : (approvalSubmitted && approvalState === ApprovalState.APPROVED) ||
-                signatureState === UseERC20PermitState.SIGNED ? (
-                <CheckCircle />
-              ) : null
-              // <MouseoverTooltip
-              //   text={
-              //     <Trans>
-              //       You must give the IXS smart contracts permission to use your {currencies[Field.INPUT]?.symbol}. You
-              //       only have to do this once per token.
-              //     </Trans>
-              //   }
-              // >
-              //   <HelpCircle size="20" color={'white'} style={{ marginLeft: '8px' }} />
-              // </MouseoverTooltip>
-            }
+            {approvalState === ApprovalState.PENDING ? (
+              <Loader stroke="white" />
+            ) : (approvalSubmitted && approvalState === ApprovalState.APPROVED) ||
+              signatureState === UseERC20PermitState.SIGNED ? (
+              <CheckCircle />
+            ) : null}
           </AutoRow>
         </ButtonIXSWide>
       </AutoColumn>
