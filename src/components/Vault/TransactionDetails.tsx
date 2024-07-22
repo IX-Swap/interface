@@ -8,17 +8,13 @@ import { Flex } from 'rebass'
 import Column from 'components/Column'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { QRCodeWrap } from 'components/QRCodeWrap'
-import Row, { RowCenter, RowBetween } from 'components/Row'
+import  { RowCenter, RowBetween } from 'components/Row'
 import { CopyAddress } from 'components/CopyAddress'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleTransactionModal } from 'state/application/hooks'
 import { useDepositState } from 'state/deposit/hooks'
 import { useEventState } from 'state/eventLog/hooks'
 import { ModalBlurWrapper, TYPE, CloseIcon, ExternalLink } from 'theme'
-import { shortenAddress } from 'utils'
-import { ReactComponent as SuccessIcon } from 'assets/images/check-2.svg'
-import { ReactComponent as ErrorIcon } from 'assets/images/newCloseIcon.svg'
-import { ReactComponent as PendingIcon } from 'assets/images/NewPendingIcon.svg'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { LogItem } from 'state/eventLog/actions'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -42,7 +38,6 @@ import {
 import {
   InfoModalHeader,
   InfoModalBody,
-  StyledQrInfo,
   LiniarProgressContainer,
   PendingDepositInfo,
   DepositWarningInfo,
@@ -51,7 +46,6 @@ import {
 import { DepoistStatusInfo } from './DepoistStatusInfo'
 import { getNetworkFromToken, getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { WithdrawalWarning } from './WithdrawalWarning'
-import { PinnedContentButton } from 'components/Button'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -98,8 +92,6 @@ export const TransactionDetails = ({ currency }: Props) => {
   const originalNetworkName = getOriginalNetworkFromToken(currency)
   const networkName = getNetworkFromToken(currency)
 
-  console.log(status, 'hhhhhhhh')
-
   return (
     <RedesignedWideModal
       isOpen={isOpen}
@@ -107,13 +99,12 @@ export const TransactionDetails = ({ currency }: Props) => {
       minHeight={isDeposit(data.type) ? 50 : 30}
       maxHeight={'fit-content'}
       mobileMaxHeight={90}
+      
     >
-      <ModalBlurWrapper data-testid="depositPopup" style={{ overflowY: 'scroll', width: '500px' }}>
+      <ModalBlurWrapper data-testid="depositPopup" style={{ overflowY: 'scroll', width: '500px', padding: '20px' }}>
         <InfoModalHeader>
           <TYPE.title5>
-            <Trans>
               {currency?.originalSymbol}&nbsp;{ActionTypeText[data.type]}
-            </Trans>
           </TYPE.title5>
           <CloseIcon style={{ color: '#B8B8CC' }} data-testid="cross" onClick={toggle} />
         </InfoModalHeader>
@@ -204,7 +195,6 @@ export const TransactionDetails = ({ currency }: Props) => {
                   <div
                     style={{
                       margin: '0 auto',
-                      padding: '10px 10px',
                       border: '1px solid #E6E6FF',
                       background: '#FFFFFF',
                       width: '100%',
