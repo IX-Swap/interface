@@ -1,22 +1,21 @@
-import React, { FC } from 'react'
-import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
+import { FC } from 'react'
 import { Trans } from '@lingui/macro'
+import { ethers } from 'ethers'
 
 import { TYPE } from 'theme'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
-
 import { StyledButtonMuted } from './styleds'
 import PendingIcon from 'assets/images/newPending.svg'
 import RejectIcon from 'assets/images/newReject.svg'
+import { formatNumberWithDecimals } from 'state/lbp/hooks'
 
 interface Props {
   status: string
-  amount: CurrencyAmount<Currency> | undefined
+  amount: string
   decimals: number
 }
 
 export const Status: FC<Props> = ({ status, amount: propAmount, decimals }: Props) => {
-  const amount = formatCurrencyAmount(propAmount, decimals ?? 18)
+  const amount = formatNumberWithDecimals(ethers.utils.formatUnits(propAmount || '0', decimals), 4)
 
   const getStatus = () => {
     switch (status) {
