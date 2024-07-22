@@ -1,5 +1,6 @@
 import type { AddEthereumChainParameter } from '@web3-react/types'
 import { SupportedChainId } from 'constants/chains'
+import { isProd } from 'utils/isEnvMode'
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
   name: 'Ether',
@@ -155,31 +156,38 @@ export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<
   {}
 )
 
-export const checkIsTestnet = (chainId: number) => {
-  return ![SupportedChainId.BASE_SEPOLIA, SupportedChainId.AMOY].includes(chainId)
-}
 
 export enum NetworkName {
   BASE = 'base',
   POLYGON = 'polygon',
 }
 
-export const checkWrongChain = (chainId: any, network: string) => {
-  let isWrongChain = false
-  let expectChain = null
+const Chains = {
+  // network name : tesnet, mainnet
+  [NetworkName.BASE]: [SupportedChainId.BASE_SEPOLIA, SupportedChainId.BASE], 
+  [NetworkName.POLYGON]: [SupportedChainId.AMOY, SupportedChainId.MATIC],
+}
 
-  if (![SupportedChainId.BASE, SupportedChainId.BASE_SEPOLIA].includes(chainId) && network === NetworkName.BASE) {
-    isWrongChain = true
-    expectChain = checkIsTestnet(chainId) ? SupportedChainId.BASE_SEPOLIA : SupportedChainId.BASE
+export const checkWrongChain = (chainId: any, network: string) => {
+  const expectedChains = Chains[network as NetworkName] || [] // Default to an empty array if network is not found
+  const isWrongChain = !expectedChains.includes(chainId)
+  if (!isWrongChain) {
+    return {
+      isWrongChain: false,
+      expectChain: null,
+    }
   }
 
-  if (![SupportedChainId.AMOY, SupportedChainId.MATIC].includes(chainId) && network === NetworkName.POLYGON) {
-    isWrongChain = true
-    expectChain = checkIsTestnet(chainId) ? SupportedChainId.AMOY : SupportedChainId.MATIC
+  const [testChain, mainChain] = expectedChains
+  if (isProd) {
+    return {
+      isWrongChain: chainId != mainChain,
+      expectedChains: mainChain
+    }
   }
 
   return {
-    isWrongChain,
-    expectChain,
+    isWrongChain: chainId != testChain,
+    expectedChains: testChain,
   }
 }
