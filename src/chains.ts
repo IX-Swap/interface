@@ -1,6 +1,5 @@
 import type { AddEthereumChainParameter } from '@web3-react/types'
 import { SupportedChainId } from 'constants/chains'
-import { isProd } from 'utils/isEnvMode'
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
   name: 'Ether',
@@ -156,41 +155,31 @@ export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<
   {}
 )
 
+export const checkIsTestnet = (chainId: number) => {
+  return [SupportedChainId.AMOY, SupportedChainId.BASE_SEPOLIA].includes(chainId)
+}
+
 export enum NetworkName {
   BASE = 'base',
   POLYGON = 'polygon',
 }
 
-const Chains = {
-  // network name : tesnet, mainnet
-  [NetworkName.BASE]: [SupportedChainId.BASE_SEPOLIA, SupportedChainId.BASE],
-  [NetworkName.POLYGON]: [SupportedChainId.AMOY, SupportedChainId.MATIC],
-}
+export const checkWrongChain = (chainId: any, network: string) => {
+  let isWrongChain = false
+  let expectChain = null
 
-export const checkWrongChain = (
-  chainId: any,
-  network: string
-): {
-  isWrongChain: boolean
-  expectChain: number | null
-} => {
-  const expectedChains = Chains[network as NetworkName] || [] // Default to an empty array if network is not found
-  if (!expectedChains.length) {
-    return {
-      isWrongChain: true,
-      expectChain: null,
-    }
+  if ([SupportedChainId.AMOY, SupportedChainId.MATIC].includes(chainId) && network === NetworkName.BASE) {
+    isWrongChain = true
+    expectChain = checkIsTestnet(chainId) ? SupportedChainId.BASE_SEPOLIA : SupportedChainId.BASE
   }
-  const [testChain, mainChain] = expectedChains
-  if (isProd) {
-    return {
-      isWrongChain: chainId != mainChain,
-      expectChain: mainChain,
-    }
+
+  if ([SupportedChainId.BASE, SupportedChainId.BASE_SEPOLIA].includes(chainId) && network === NetworkName.POLYGON) {
+    isWrongChain = true
+    expectChain = checkIsTestnet(chainId) ? SupportedChainId.AMOY : SupportedChainId.MATIC
   }
 
   return {
-    isWrongChain: chainId != testChain,
-    expectChain: testChain,
+    isWrongChain,
+    expectChain,
   }
 }
