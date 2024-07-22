@@ -156,7 +156,6 @@ export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<
   {}
 )
 
-
 export enum NetworkName {
   BASE = 'base',
   POLYGON = 'polygon',
@@ -164,11 +163,17 @@ export enum NetworkName {
 
 const Chains = {
   // network name : tesnet, mainnet
-  [NetworkName.BASE]: [SupportedChainId.BASE_SEPOLIA, SupportedChainId.BASE], 
+  [NetworkName.BASE]: [SupportedChainId.BASE_SEPOLIA, SupportedChainId.BASE],
   [NetworkName.POLYGON]: [SupportedChainId.AMOY, SupportedChainId.MATIC],
 }
 
-export const checkWrongChain = (chainId: any, network: string) => {
+export const checkWrongChain = (
+  chainId: any,
+  network: string
+): {
+  isWrongChain: boolean
+  expectChain: number | null
+} => {
   const expectedChains = Chains[network as NetworkName] || [] // Default to an empty array if network is not found
   const isWrongChain = !expectedChains.includes(chainId)
   if (!isWrongChain) {
@@ -182,12 +187,13 @@ export const checkWrongChain = (chainId: any, network: string) => {
   if (isProd) {
     return {
       isWrongChain: chainId != mainChain,
-      expectedChains: mainChain
+      expectChain: mainChain,
     }
   }
 
   return {
     isWrongChain: chainId != testChain,
-    expectedChains: testChain,
+    expectChain: testChain,
   }
 }
+
