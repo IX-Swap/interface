@@ -157,41 +157,49 @@ const Tokenomics = ({
     validationSchema: validationSchema,
     onSubmit: () => {},
   })
+  const assetTokenAddress = formDataTokenomics?.assetTokenAddress || TOKEN_ADDRESSES.USDC[chainId || 0]
+  const shareTokenAddress = formDataTokenomics?.shareAddress || ''
 
-  const assetTokenContract = useTokenContract(
-    formDataTokenomics.assetTokenAddress ? formDataTokenomics.assetTokenAddress : TOKEN_ADDRESSES.USDC[chainId || 0]
-  )
-  const shareTokenContract = useTokenContract(formDataTokenomics.shareAddress ?? '')
+  const assetTokenContract = useTokenContract(assetTokenAddress)
+  const shareTokenContract = useTokenContract(shareTokenAddress)
 
   useEffect(() => {
-    // console.log(assetTokenContract, shareTokenContract)
     if (!account) return
+
     const loadBalances = async () => {
-      if (assetTokenContract) {
-        const assetBalance = await assetTokenContract.balanceOf(account)
-        const assetDecimals = await assetTokenContract.decimals()
-        setBalances((prevBalances: any) => ({
-          ...prevBalances,
-          assetBalance: formatUnits(assetBalance, assetDecimals),
-        }))
+      try {
+        if (assetTokenContract) {
+          const assetBalance = await assetTokenContract.balanceOf(account)
+          const assetDecimals = await assetTokenContract.decimals()
+          setBalances((prevBalances: any) => ({
+            ...prevBalances,
+            assetBalance: formatUnits(assetBalance, assetDecimals),
+          }))
+        }
+      } catch (error) {
+        console.error('Error fetching asset balance:', error)
       }
 
-      if (shareTokenContract) {
-        const shareBalance = await shareTokenContract.balanceOf(account)
-        const shareDecimals = await shareTokenContract.decimals()
-        const shareSymbol = await shareTokenContract.symbol()
-        setProjectTokenSymbol(shareSymbol)
-        setBalances((prevBalances: any) => ({
-          ...prevBalances,
-          shareBalance: formatUnits(shareBalance, shareDecimals),
-        }))
-      } else {
-        setProjectTokenSymbol('')
+      try {
+        if (shareTokenContract) {
+          const shareBalance = await shareTokenContract.balanceOf(account)
+          const shareDecimals = await shareTokenContract.decimals()
+          const shareSymbol = await shareTokenContract.symbol()
+          setProjectTokenSymbol(shareSymbol)
+          setBalances((prevBalances: any) => ({
+            ...prevBalances,
+            shareBalance: formatUnits(shareBalance, shareDecimals),
+          }))
+        } else {
+          setProjectTokenSymbol('')
+        }
+      } catch (error) {
+        console.error('Error fetching share balance:', error)
       }
     }
 
     loadBalances()
-  }, [account, assetTokenContract, shareTokenContract])
+  }, [account, assetTokenContract, shareTokenContract, setBalances, setProjectTokenSymbol])
 
   useEffect(() => {
     if (!formDataTokenomics.assetTokenSymbol) {
