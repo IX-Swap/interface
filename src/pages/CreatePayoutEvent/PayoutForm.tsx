@@ -49,9 +49,9 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   const secTokensOptions = useMemo(() => {
     if (me?.managerOf?.length) {
       return me.managerOf.map(({ token }) => ({
-        label: token.symbol,
-        value: token.id,
-        icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+        label: token?.symbol,
+        value: token?.id,
+        icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
       }))
     }
     return []
@@ -204,8 +204,8 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
                 values.startDate
                   ? dayjs(values.startDate).subtract(1, 'days')
                   : values.endDate
-                  ? dayjs(values.endDate).subtract(2, 'days')
-                  : undefined
+                    ? dayjs(values.endDate).subtract(2, 'days')
+                    : undefined
               }
               onChange={(newDate) => {
                 onValueChange('recordDate', dayjs(newDate).local().format('YYYY-MM-DD'))

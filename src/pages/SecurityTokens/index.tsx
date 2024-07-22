@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
@@ -14,7 +14,6 @@ import { useCookies } from 'react-cookie'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { useAuthState } from 'state/auth/hooks'
 import { routes } from 'utils/routes'
-import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { MEDIA_WIDTHS } from 'theme'
 
 type SecurityTab = 'tokens' | 'payout-events' | ':tab'
@@ -36,12 +35,12 @@ const tabs: Tab[] = [
 
 const renderTab = (selectedTab: SecurityTab | string) => {
   switch (selectedTab) {
-    case 'tokens':
-      return <CustodianV2 />
-    case 'payout-events':
-      return <UserPayoutEvents />
-    default:
-      return <CustodianV2 />
+  case 'tokens':
+    return <CustodianV2 />
+  case 'payout-events':
+    return <UserPayoutEvents />
+  default:
+    return <CustodianV2 />
   }
 }
 
@@ -53,8 +52,6 @@ const SecurityTokens = () => {
 
   const history = useHistory()
   const params = useParams<AdminParams>()
-
-  const { config } = useWhitelabelState()
 
   const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const isLoggedIn = !!token && !!account
@@ -79,19 +76,16 @@ const SecurityTokens = () => {
     </AppBody>
   ) : (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
-      {!config?.id && (
-        <TabsContainer>
-          {tabs.map(({ value, label }, index) => (
-            <>
-              <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-                <TabLabel>{/* <Trans>{label}</Trans> */}</TabLabel>
-                <Border active={selectedTab === value} />
-              </ToggleOption>
-            </>
-          ))}
-        </TabsContainer>
-      )}
-
+      <TabsContainer>
+        {tabs.map(({ value, label }, index) => (
+          <>
+            <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
+              <TabLabel><Trans>{label}</Trans></TabLabel>
+              <Border active={selectedTab === value} />
+            </ToggleOption>
+          </>
+        ))}
+      </TabsContainer>
       {renderTab(selectedTab)}
     </StyledBodyWrapper>
   )
