@@ -5,4 +5,4 @@ const isEnvMode = (mode: string[]) => {
 export const isLocal = isEnvMode(['localhost'])
 export const isDevelopment = isEnvMode(['dev.ixswap.io', 'localhost'])
 export const isStaging = isEnvMode(['staging.ixswap.io'])
-export const isProd = ['production'].includes(process.env.NODE_ENV)
+export const isProd = (process.env.REACT_APP_ENV || '').includes('production')
