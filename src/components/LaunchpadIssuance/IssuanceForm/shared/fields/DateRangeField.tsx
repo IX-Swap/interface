@@ -29,7 +29,7 @@ interface Props {
   onChange?: (range: DateRangeValue) => void
   showButton?: boolean
   dateFormat?: string
-  onError?: any
+  onError?: (field: string, errorText: string) => void
 }
 
 export const DateRangeField: React.FC<Props> = (props) => {
@@ -204,12 +204,18 @@ export const DateRangeField: React.FC<Props> = (props) => {
     }
   }, [props.value])
 
+  // Closes the date picker and handles errors via onError callback.
   const handlePickerClose = useCallback(() => {
     setShowPicker(false)
-    if (dateErrorText) {
-      props?.onError(dateErrorText)
+    if (typeof props.onError === 'function') {
+      try {
+        props.onError(props.field || '', dateErrorText || '')
+      } catch (error) {
+        console.error('Error in handlePickerClose:', error)
+        props.onError(props.field || '', 'An unexpected error occurred. Please try again.')
+      }
     }
-  }, [dateErrorText])
+  }, [dateErrorText, props.field, props.onError])
 
   return (
     <Column>

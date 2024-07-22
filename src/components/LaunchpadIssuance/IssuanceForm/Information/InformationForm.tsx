@@ -184,10 +184,9 @@ export const InformationForm = (props: Props) => {
     showError('Cannot save changes, please check the form for error messages')
   }
 
-  const handleDateError = (errorText: any) => {
-    setFieldError('timeframe.sale', errorText)
+  const handleDateError = (field: string, errorText: string) => {
+    setFieldError(field, errorText)
   }
-
 
   return (
     <>
@@ -660,7 +659,12 @@ export const InformationForm = (props: Props) => {
             disabled={edit || !values.hasPresale}
             minDate={moment().subtract(1, 'minute').toDate()}
             maxDate={values?.timeframe?.preSale ? getMinutesBefore(values?.timeframe?.preSale, 20) : undefined}
-            error={(touched.timeframe?.whitelist && (touched.timeframe && errors.timeframe)?.whitelist) as string}
+            onError={handleDateError}
+            onChange={() => {
+              setFieldTouched('timeframe.whitelist')
+            }}
+            error={`${(touched.timeframe?.whitelist ? errors?.timeframe?.whitelist ?? '' : '') as string}
+            `}
           />
 
           <DateRangeField
@@ -673,7 +677,12 @@ export const InformationForm = (props: Props) => {
             disabled={edit || !values.hasPresale || !values.timeframe.whitelist}
             minDate={getMinutesAfter(values?.timeframe?.whitelist, 20)}
             maxDate={values?.timeframe?.sale ? getMinutesBefore(values?.timeframe?.sale, 20) : undefined}
-            error={(touched.timeframe?.preSale && (touched.timeframe && errors.timeframe)?.preSale) as string}
+            onError={handleDateError}
+            onChange={() => {
+              setFieldTouched('timeframe.preSale')
+            }}
+            error={`${(touched.timeframe?.preSale ? errors?.timeframe?.preSale ?? '' : '') as string}
+            `}
           />
 
           <DateRangeField
@@ -705,7 +714,12 @@ export const InformationForm = (props: Props) => {
             disabled={edit || !values.timeframe.closed}
             minDate={getMinutesAfter(values.timeframe.closed, 20)}
             value={values.timeframe.claim}
-            error={(touched.timeframe?.claim && (touched.timeframe && errors.timeframe)?.claim) as string}
+            onError={handleDateError}
+            onChange={() => {
+              setFieldTouched('timeframe.claim')
+            }}
+            error={`${(touched.timeframe?.claim ? errors?.timeframe?.claim ?? '' : '') as string}
+            `}
           />
         </FormGrid>
 
