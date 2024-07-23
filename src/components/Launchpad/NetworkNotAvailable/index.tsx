@@ -6,7 +6,6 @@ import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
 import { useWeb3React } from '@web3-react/core'
-import { arrayToString } from 'utils'
 
 interface Props {
   expectChain: SupportedChainId | null
@@ -62,7 +61,14 @@ export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
 
       <InfoRows>
         <div>
-          Switch to <b style={{ color: '#292933' }}>{arrayToString(chainsNames)}</b>
+          Switch to{' '}
+          {chainsNames.map((chainName, index) => (
+            <span key={index}>
+              <b style={{ color: '#292933' }}>{chainName}</b>
+              {index < chainsNames.length - 2 ? ', ' : ''}
+              {index === chainsNames.length - 2 ? ' or ' : ''}
+            </span>
+          ))}
         </div>
         <div>to get full functionality</div>
       </InfoRows>
