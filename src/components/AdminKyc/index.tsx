@@ -64,9 +64,10 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
     : kyc?.corporateName
 
   let approverName = '-'
-  if (individual?.version === IndividualKycVersion.v2 && (
-    status === KYCStatuses.APPROVED || status === KYCStatuses.REJECTED
-  )) {
+  if (
+    individual?.version === IndividualKycVersion.v2 &&
+    (status === KYCStatuses.APPROVED || status === KYCStatuses.REJECTED)
+  ) {
     let approverUser = null
     const lastIndex = audits.length > 0 ? audits.length - 1 : 0
     if (status === KYCStatuses.APPROVED) {
@@ -127,7 +128,7 @@ export const AdminKycTable = () => {
   const [order, setOrder] = React.useState<KycOrderConfig>({})
 
   const {
-    kycList: { totalPages, page, items },
+    kycList: { totalPages, page, items, totalItems },
     adminLoading,
   } = useAdminState()
   const getKycList = useGetKycList()
@@ -254,7 +255,7 @@ export const AdminKycTable = () => {
               </>
             }
           />
-          <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+          <Pagination totalItems={totalItems} page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
       )}
     </div>
