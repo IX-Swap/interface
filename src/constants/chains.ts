@@ -135,8 +135,8 @@ export const CHAIN_INFO: ChainInfoMap = {
       decimals: 18,
     },
     logoUrl: baseLogoUrl,
-    rpcUrls: ['	https://mainnet.base.org'],
-    blockExplorerUrls: ['https://basescan.org'],
+    rpcUrls: ['	https://mainnet.base.org/'],
+    blockExplorerUrls: ['https://basescan.org/'],
   },
   [SupportedChainId.BASE_SEPOLIA]: {
     chainName: 'Base Sepolia',
@@ -146,7 +146,7 @@ export const CHAIN_INFO: ChainInfoMap = {
       decimals: 18,
     },
     logoUrl: baseLogoUrl,
-    rpcUrls: ['https://sepolia.base.org'],
-    blockExplorerUrls: ['https://sepolia.basescan.org'],
+    rpcUrls: ['https://sepolia.base.org/'],
+    blockExplorerUrls: ['https://sepolia.basescan.org/'],
   },
 }
