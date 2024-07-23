@@ -21,7 +21,7 @@ import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { IXS_ADDRESS, TOKEN_ADDRESSES } from 'constants/addresses'
 import { useWeb3React } from '@web3-react/core'
-import { useTokenContract } from 'hooks/useContract'
+import { getTokenContract, useTokenContract } from 'hooks/useContract'
 import { formatUnits } from 'ethers/lib/utils'
 import timezone from 'dayjs/plugin/timezone'
 import { ethers } from 'ethers'
@@ -160,8 +160,10 @@ const Tokenomics = ({
   const assetTokenAddress = formDataTokenomics?.assetTokenAddress || TOKEN_ADDRESSES.USDC[chainId || 0]
   const shareTokenAddress = formDataTokenomics?.shareAddress || ''
 
-  const assetTokenContract = useTokenContract(assetTokenAddress)
-  const shareTokenContract = useTokenContract(shareTokenAddress)
+  const assetTokenContract = getTokenContract(assetTokenAddress)
+  const shareTokenContract = getTokenContract(shareTokenAddress)
+
+  console.log(assetTokenAddress, shareTokenAddress)
 
   useEffect(() => {
     if (!account) return

@@ -7,7 +7,7 @@ import { useCallback, useMemo } from 'react'
 import { SWAP_ROUTER_ADDRESS } from '../constants/addresses'
 import { useHasPendingApproval, useTransactionAdder } from '../state/transactions/hooks'
 import { calculateGasMargin } from '../utils/calculateGasMargin'
-import { useTokenContract } from './useContract'
+import { getTokenContract, useTokenContract } from './useContract'
 import { useTokenAllowance } from './useTokenAllowance'
 import { useActiveWeb3React } from './web3'
 import { useWeb3React } from '@web3-react/core'
@@ -27,7 +27,7 @@ export function useAllowance(
   spender?: string
 ): [ApprovalState, () => Promise<void>, () => void] {
   const { account } = useWeb3React()
-  const tokenContract = useTokenContract(tokenAddress || '')
+  const tokenContract = getTokenContract(tokenAddress || '')
   const [currentAllowance, setCurrentAllowance] = useState<any>(ethers.constants.Zero)
   const [shouldRefereshAllowance, setShouldRefereshAllowance] = useState<boolean>(false)
   const [approving, setApproving] = useState<boolean>(false)

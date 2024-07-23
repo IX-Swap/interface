@@ -106,6 +106,14 @@ export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: b
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
 }
 
+export function getTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Erc20 | null {
+  if (!tokenAddress) {
+    return null;
+  }
+  return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible);
+}
+
+
 export function useNftContract(contractAddress?: string) {
   // sample deployed contract '0xadc2e42d74f57028d7be2da41ba9643bdb70d99b'
   return useContract(contractAddress, NFT_CREATE_ABI)

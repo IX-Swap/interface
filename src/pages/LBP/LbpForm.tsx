@@ -374,7 +374,6 @@ export default function LBPForm() {
                 />
               </Column>
             </FormCard>
-
             <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="Approvals">
               <RowStart marginBottom="32px">
                 <TYPE.label>Approvals</TYPE.label>
