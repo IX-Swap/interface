@@ -1,22 +1,22 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import { MEDIA_WIDTHS, TYPE } from 'theme';
-import { ReactComponent as ArrowIcon } from '../../assets/images/newArrow.svg';
-import { adminOffset } from 'state/admin/constants';
+import React from 'react'
+import styled, { css } from 'styled-components'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
+import { ReactComponent as ArrowIcon } from '../../assets/images/newArrow.svg'
+import { adminOffset } from 'state/admin/constants'
 
 interface Props {
-  page: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  totalItems?: number;
+  page: number
+  totalPages: number
+  onPageChange: (page: number) => void
+  totalItems?: number
 }
 
 export const Pagination = ({ page, onPageChange, totalPages, totalItems }: Props) => {
-  if (!totalPages) return null;
+  if (!totalPages) return null
 
-  const itemsPerPage = adminOffset;
-  const startItem = (page - 1) * itemsPerPage + 1;
-  const endItem = Math.min(page * itemsPerPage, totalPages * itemsPerPage);
+  const itemsPerPage = adminOffset
+  const startItem = (page - 1) * itemsPerPage + 1
+  const endItem = Math.min(page * itemsPerPage, totalPages * itemsPerPage)
 
   return (
     <Container>
@@ -32,8 +32,8 @@ export const Pagination = ({ page, onPageChange, totalPages, totalItems }: Props
         </NavButton>
       </InfoContainer>
     </Container>
-  );
-};
+  )
+}
 
 const Container = styled.div`
   display: flex;
@@ -42,14 +42,14 @@ const Container = styled.div`
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-direction: column;
   }
-`;
+`
 
 const InfoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
   margin-left: auto;
-`;
+`
 
 const NavButton = styled.button<{ disabled?: boolean }>`
   cursor: pointer;
@@ -68,10 +68,10 @@ const NavButton = styled.button<{ disabled?: boolean }>`
       cursor: not-allowed;
       pointer-events: none;
     `}
-`;
+`
 
-const NextIcon = styled(ArrowIcon)``;
+const NextIcon = styled(ArrowIcon)``
 
 const PrevIcon = styled(ArrowIcon)`
   transform: rotate(-180deg);
-`;
+`
