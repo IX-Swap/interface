@@ -317,7 +317,7 @@ const KYC = () => {
     }
   }, [status, description, kyc])
 
-  if (!isConnected && !loadingRequest && !loading) return <NotAvailablePage />
+  if (!account && !loadingRequest && !loading) return <NotAvailablePage />
 
   const blurred = detectWrongNetwork(chainId || 0)
 
@@ -335,7 +335,7 @@ const KYC = () => {
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
       <EmailVerification {...modalProps} closeModal={closeModal} />
       <StatusCard>
-        {loadingRequest || loading || !account ? (
+        {loadingRequest || loading ? (
           <RowCenter>
             <LoaderThin size={96} />
           </RowCenter>

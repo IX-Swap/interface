@@ -14,7 +14,6 @@ import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, ConnectWall
 import Modal from 'components/Modal'
 import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 import { PRODUCTION_APP_URL } from 'config'
-import { arrayToString } from 'utils'
 
 export const NotAvailablePage = () => {
   const { chainId, provider, account } = useWeb3React()
@@ -100,8 +99,9 @@ export const NotAvailablePage = () => {
     return (
       <Container>
         <Title>
-          <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
-          <br /> <Trans>{`on this Blockchain network`}</Trans>
+          Connect to the Right
+          <br />
+          Blockchain Network
         </Title>
         <Info>
           <Trans>
@@ -118,12 +118,11 @@ export const NotAvailablePage = () => {
   return (
     <Container>
       <Title>
-        <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
-        <br /> <Trans>{`on this Blockchain network`}</Trans>
+        Connect to the Right
+        <br />
+        Blockchain Network
       </Title>
-      <Info>
-        <Trans>{`${config?.name || 'IX Swap'} is available only on:`}</Trans>
-      </Info>
+      <Info>Available Blockchain Network:</Info>
 
       <NetworksRow elements={farming ? chains.length + 1 : chains.length}>
         {chains.map((chain) => (
@@ -136,7 +135,14 @@ export const NotAvailablePage = () => {
 
       <InfoRows>
         <div>
-          Switch to <b style={{ color: '#292933' }}>{arrayToString(chainsNames)}</b>
+          Switch to{' '}
+          {chainsNames.map((chainName, index) => (
+            <span key={index}>
+              <b style={{ color: '#292933' }}>{chainName}</b>
+              {index < chainsNames.length - 2 ? ', ' : ''}
+              {index === chainsNames.length - 2 ? ' or ' : ''}
+            </span>
+          ))}
         </div>
         <div>to get full functionality</div>
       </InfoRows>
