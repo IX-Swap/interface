@@ -15,9 +15,10 @@ import { NETWORK_LOGOS } from 'constants/chains'
 
 interface Props {
   token: any
+  loading: boolean
 }
 
-export const MySecToken: FC<Props> = ({ token }: Props) => {
+export const MySecToken: FC<Props> = ({ token, loading }: Props) => {
   const wrappedToken = token?.token
 
   const network = token?.token?.network
@@ -81,7 +82,7 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
             </Column>
           </Flex>
 
-          <Status status={status} amount={balance} decimals={token.token.decimals ?? 18} />
+          {!loading ? <Status status={status} amount={balance} decimals={token.token.decimals ?? 18} /> : null}
         </Flex>
       </MySecTokenCard>
     </NavLink>

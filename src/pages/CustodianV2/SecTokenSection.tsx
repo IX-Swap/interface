@@ -17,9 +17,11 @@ interface SecTokenSectionProps {
 const SecTokenSection: React.FC<SecTokenSectionProps> = ({ secTokens, keyName, title }) => {
   const { account } = useWeb3React()
   const [tokens, setTokens] = useState<any[]>(secTokens)
+  const [loading, setLoading] = useState(false)
 
   const getBalance = async () => {
     try {
+      setLoading(true)
       const payload = {
         address: account,
         tokens: tokens.map((token) => {
@@ -41,6 +43,8 @@ const SecTokenSection: React.FC<SecTokenSectionProps> = ({ secTokens, keyName, t
       }
     } catch (error) {
       console.error('Error getting balance', error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -57,7 +61,7 @@ const SecTokenSection: React.FC<SecTokenSectionProps> = ({ secTokens, keyName, t
       </TYPE.title6>
       <MySecTokensGrid>
         {tokens?.map((token: any) => (
-          <MySecToken key={`${keyName}-${token?.id}`} token={token} />
+          <MySecToken key={`${keyName}-${token?.id}`} token={token} loading={loading} />
         ))}
       </MySecTokensGrid>
     </>
