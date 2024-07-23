@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box } from 'rebass'
+import { Box, Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
 import _get from 'lodash/get'
 
@@ -16,6 +16,7 @@ import { isMobile } from 'react-device-detect'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import EmptyData from './EmptyData'
 import SecTokenSection from './SecTokenSection'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 const checkPendingAccreditationRequest = (accreditationRequest: any) =>
   accreditationRequest?.brokerDealerStatus !== 'approved' || accreditationRequest?.custodianStatus !== 'approved'
@@ -25,25 +26,51 @@ const checkApprovedAccreditationRequest = (accreditationRequest: any) =>
 export default function CustodianV2() {
   const { token } = useAuthState()
   const fetchTokens = useFetchTokens()
-  const { tokens } = useSecCatalogState()
+  const { tokens, loadingRequest } = useSecCatalogState()
   const { account } = useActiveWeb3React()
   const { account: userAccount } = useUserState()
   const { config } = useWhitelabelState()
-  const isIxswap = config?.isIxSwap ?? false
-  const enableFeaturedSecurityVaults = _get(config, 'enableFeaturedSecurityVaults', false)
-  const configTokens = config?.tokens || []
 
   const [mySecTokens, setMySecTokens] = useState([])
   const [noFilteredTokens, setNoFilteredTokens] = useState([])
+  const [loading, setLoading] = useState(false)
 
+  const isIxswap = config?.isIxSwap ?? false
+  const enableFeaturedSecurityVaults = _get(config, 'enableFeaturedSecurityVaults', false)
+  const configTokens = config?.tokens || []
   const isLoggedIn = !!token && !!account
   const offset = 10
+  const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
+  const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
+  let featuredTokensFinal = featuredTokens
+  if (!isIxswap) {
+    featuredTokensFinal = featuredTokens.filter(({ token }: any) => configTokens.includes(token?.id))
+  }
+  const approvedSecFilterCondition = ({ token: { accreditationRequest, id } }: any) =>
+    isIxswap
+      ? checkApprovedAccreditationRequest(accreditationRequest)
+      : configTokens.includes(id) && checkApprovedAccreditationRequest(accreditationRequest)
 
-  useEffect(() => {
-    const fetchMyTokens = async () => {
+  const pendingSecFilterCondition = ({ token: { accreditationRequest, id } }: any) =>
+    isIxswap
+      ? checkPendingAccreditationRequest(accreditationRequest)
+      : configTokens.includes(id) && checkPendingAccreditationRequest(accreditationRequest)
+  const approvedSecTokens = mySecTokens ? mySecTokens.filter(approvedSecFilterCondition) : []
+  const pendingSecTokens = mySecTokens ? mySecTokens.filter(pendingSecFilterCondition) : []
+
+  const fetchMyTokens = async () => {
+    try {
+      setLoading(true)
       const data = await getMyTokens({ active: true, my: true, offset: 100000 })
       setMySecTokens(data?.items.length > 0 ? data.items : [])
+    } catch (error: any) {
+      console.error('Error fetching my tokens', error)
+    } finally {
+      setLoading(false)
     }
+  }
+
+  useEffect(() => {
     if (isLoggedIn) {
       fetchMyTokens()
       setNoFilteredTokens([])
@@ -62,28 +89,6 @@ export default function CustodianV2() {
     }
   }, [tokens])
 
-  const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
-  const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
-
-  let featuredTokensFinal = featuredTokens
-
-  if (!isIxswap) {
-    featuredTokensFinal = featuredTokens.filter(({ token }: any) => configTokens.includes(token?.id))
-  }
-
-  const approvedSecFilterCondition = ({ token: { accreditationRequest, id } }: any) =>
-    isIxswap
-      ? checkApprovedAccreditationRequest(accreditationRequest)
-      : configTokens.includes(id) && checkApprovedAccreditationRequest(accreditationRequest)
-
-  const pendingSecFilterCondition = ({ token: { accreditationRequest, id } }: any) =>
-    isIxswap
-      ? checkPendingAccreditationRequest(accreditationRequest)
-      : configTokens.includes(id) && checkPendingAccreditationRequest(accreditationRequest)
-
-  const approvedSecTokens = mySecTokens ? mySecTokens.filter(approvedSecFilterCondition) : []
-  const pendingSecTokens = mySecTokens ? mySecTokens.filter(pendingSecFilterCondition) : []
-
   return (
     <>
       <TYPE.title4
@@ -101,15 +106,23 @@ export default function CustodianV2() {
           <Trans>My Security Tokens</Trans>
         </TYPE.title5>
 
-        {approvedSecTokens?.length > 0 ? (
-          <SecTokenSection secTokens={approvedSecTokens} keyName="my-sec" title="Accredited" />
+        {loading ? (
+          <Flex justifyContent="center" my={64}>
+            <LoaderThin size={64} />
+          </Flex>
         ) : (
-          <EmptyData title="No Security Tokens" desc="You have no Security Tokens at the moment" />
-        )}
-        {pendingSecTokens?.length > 0 && (
           <>
-            <Divider style={{ marginTop: '50px', marginBottom: '40px' }} />
-            <SecTokenSection secTokens={pendingSecTokens} keyName="pending-sec" title="Pending Accreditation" />
+            {approvedSecTokens?.length > 0 ? (
+              <SecTokenSection secTokens={approvedSecTokens} keyName="my-sec" title="Accredited" />
+            ) : (
+              <EmptyData title="No Security Tokens" desc="You have no Security Tokens at the moment" />
+            )}
+            {pendingSecTokens?.length > 0 && (
+              <>
+                <Divider style={{ marginTop: '50px', marginBottom: '40px' }} />
+                <SecTokenSection secTokens={pendingSecTokens} keyName="pending-sec" title="Pending Accreditation" />
+              </>
+            )}
           </>
         )}
       </MySecTokensTab>
@@ -119,20 +132,29 @@ export default function CustodianV2() {
           <TYPE.title5 marginBottom="32px">
             <Trans>Featured</Trans>
           </TYPE.title5>
-          {isIxswap || enableFeaturedSecurityVaults ? (
+
+          {loadingRequest ? (
+            <Flex justifyContent="center" my={64}>
+              <LoaderThin size={64} />
+            </Flex>
+          ) : (
             <>
-              {featuredTokensFinal?.length > 0 ? (
-                <FeaturedTokensGrid>
-                  {featuredTokensFinal?.map((token: any) => (
-                    <FeaturedToken token={token} key={`featured-${token?.id}`} />
-                  ))}
-                </FeaturedTokensGrid>
+              {isIxswap || enableFeaturedSecurityVaults ? (
+                <>
+                  {featuredTokensFinal?.length > 0 ? (
+                    <FeaturedTokensGrid>
+                      {featuredTokensFinal?.map((token: any) => (
+                        <FeaturedToken token={token} key={`featured-${token?.id}`} />
+                      ))}
+                    </FeaturedTokensGrid>
+                  ) : (
+                    <EmptyData title="No Featured Tokens" desc="You have no Featured Tokens at the moment" />
+                  )}
+                </>
               ) : (
                 <EmptyData title="No Featured Tokens" desc="You have no Featured Tokens at the moment" />
               )}
             </>
-          ) : (
-            <EmptyData title="No Featured Tokens" desc="You have no Featured Tokens at the moment" />
           )}
         </Box>
       </StyledBodyWrapper>
