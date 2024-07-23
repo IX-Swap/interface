@@ -38,7 +38,7 @@ const FilterPopover = ({ options, tokenId }: { options: ActionFilterTabs[]; toke
               <Trans>{ActionTypeTextHeader[option]}</Trans>
             </TYPE.popOver>
           </UnpaddedLinkStyledButton>
-          {index < options.length - 1 && <div style={{ display: 'inline', marginLeft: '10px' }} />}
+          {index < options.length - 1 && <div style={{ display: 'block', marginBottom: '10px' }} />}
         </React.Fragment>
       ))}
     </PopOverContent>
