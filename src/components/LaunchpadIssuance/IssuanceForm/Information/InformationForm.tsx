@@ -185,7 +185,9 @@ export const InformationForm = (props: Props) => {
   }
 
   const handleDateError = (field: string, errorText: string) => {
-    setFieldError(field, errorText)
+    const currentErrors = (errors as any)[field] || []
+    const updatedErrors = [...currentErrors, ...errorText]
+    setFieldValue(field, updatedErrors)
   }
 
   return (
@@ -663,7 +665,11 @@ export const InformationForm = (props: Props) => {
             onChange={() => {
               setFieldTouched('timeframe.whitelist')
             }}
-            error={`${(touched.timeframe?.whitelist ? errors?.timeframe?.whitelist ?? '' : '') as string}
+            error={`${
+              (touched.timeframe?.whitelist && errors?.timeframe?.whitelist
+                ? 'Please select a valid time'
+                : '') as string
+            }
             `}
           />
 
@@ -681,7 +687,9 @@ export const InformationForm = (props: Props) => {
             onChange={() => {
               setFieldTouched('timeframe.preSale')
             }}
-            error={`${(touched.timeframe?.preSale ? errors?.timeframe?.preSale ?? '' : '') as string}
+            error={`${
+              (touched.timeframe?.preSale && errors?.timeframe?.preSale ? 'Please select a valid time' : '') as string
+            }
             `}
           />
 
@@ -701,8 +709,8 @@ export const InformationForm = (props: Props) => {
               setFieldValue('timeframe.closed', end)
             }}
             onError={handleDateError}
-            error={`${(touched.timeframe?.sale ? errors?.timeframe?.sale ?? '' : '') as string}
-            ${(touched.timeframe?.closed ? errors?.timeframe?.closed ?? '' : '') as string}`}
+            error={`
+            ${(touched.timeframe?.closed && errors?.timeframe?.closed ? 'Please select a valid time' : '') as string}`}
           />
 
           <DateRangeField
@@ -718,7 +726,9 @@ export const InformationForm = (props: Props) => {
             onChange={() => {
               setFieldTouched('timeframe.claim')
             }}
-            error={`${(touched.timeframe?.claim ? errors?.timeframe?.claim ?? '' : '') as string}
+            error={`${
+              (touched.timeframe?.claim && errors?.timeframe?.claim ? 'Please select a valid time' : '') as string
+            }
             `}
           />
         </FormGrid>

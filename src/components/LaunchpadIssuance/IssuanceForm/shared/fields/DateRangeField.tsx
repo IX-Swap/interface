@@ -206,6 +206,8 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   // Closes the date picker and handles errors via onError callback.
   const handlePickerClose = useCallback(() => {
+    setStartTime(moment().startOf('day'))
+    setEndTime(moment().startOf('day'))
     setShowPicker(false)
     if (typeof props.onError === 'function') {
       try {
