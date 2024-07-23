@@ -1,7 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
-
 import { ReactComponent as ArrowIcon } from '../../assets/images/newArrow.svg'
 import { adminOffset } from 'state/admin/constants'
 
