@@ -54,6 +54,7 @@ export interface Whitelabel {
   termsAndConditionsUrl?: string
   privacyPolicyUrl?: string
   supportEmail?: string
+  enableLbp?: boolean
 }
 
 export interface WlColors {
