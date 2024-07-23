@@ -13,6 +13,7 @@ import ConfirmStatus from './Modals/ConfirmStatusModal'
 import { useHistory } from 'react-router-dom'
 import { useActiveWeb3React } from 'hooks/web3'
 import { CHAIN_INFO } from 'constants/chains'
+import { checkWrongChain } from 'chains'
 
 interface MiddleSectionProps {
   lbpShareLogo: any
@@ -21,6 +22,7 @@ interface MiddleSectionProps {
   lbpId: string
   updateStatus?: any
   contractAddress?: string
+  network: string
 }
 
 const Wrapper = styled.div`
@@ -136,6 +138,7 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({
   lbpId,
   updateStatus,
   contractAddress,
+  network,
 }) => {
   const history = useHistory()
   const createLbp = useCallback((id: number) => history.push(`/lbp-admin/edit?id=${id}`), [history])
@@ -155,7 +158,9 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({
 
   const handlePoolButtonClick = () => {
     if (contractAddress) {
-      window.open(`${chainInfo?.blockExplorerUrls[0]}address/${contractAddress}`, '_blank')
+      const lbpChainInfo = checkWrongChain(chainId, network)
+      const chain = lbpChainInfo?.expectChain ? CHAIN_INFO[lbpChainInfo?.expectChain] : chainInfo;
+      window.open(`${chain?.blockExplorerUrls[0]}address/${contractAddress}`, '_blank')
     }
   }
 
