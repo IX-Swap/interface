@@ -70,16 +70,11 @@ export default function SecTokenDetails({
               <NetworkLogo src={networkLogo} alt="network logo" />
             </LogoWrap>
           ) : null}
-          {/* <LightBackground /> */}
           <InfoTitle>
             <BackArrowButton onBack={onBack} />
             {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}
             <Box display="flex" alignItems="center">
               <StyledTitleBig fontWeight="600">{token?.ticker}</StyledTitleBig>
-              {/* <CompanyName>
-                &nbsp;-&nbsp;
-                {token?.companyName}
-              </CompanyName> */}
             </Box>
           </InfoTitle>
           {token && <DetailsInfo token={token} />}
