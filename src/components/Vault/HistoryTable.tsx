@@ -11,7 +11,6 @@ import useTheme from 'hooks/useTheme'
 import useToggle from 'hooks/useToggle'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { DesktopAndTablet, LinkStyledButton, TYPE } from 'theme'
-
 import { ActionFilterTabs, ActionTypeTextHeader, filterTabs } from './enum'
 import { getStatusIcon, HistoryHeaderWrapper } from './styleds'
 import { TransactionHistoryRow } from './TransactionHistoryRow'
