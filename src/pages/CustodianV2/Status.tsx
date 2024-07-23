@@ -21,7 +21,7 @@ export const Status: FC<Props> = ({ status, amount: propAmount, decimals }: Prop
     switch (status) {
       case 'approved':
         return (
-          <TYPE.description7 color="text1" overflow="hidden" style={{ textOverflow: 'ellipsis' }}>
+          <TYPE.description7 color="text1" overflow="hidden" style={{ textOverflow: 'ellipsis', textAlignLast: 'end' }}>
             {amount}
           </TYPE.description7>
         )
