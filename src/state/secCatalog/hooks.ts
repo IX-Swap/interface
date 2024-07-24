@@ -281,7 +281,7 @@ export const validateToken = (token: any) => {
     ...urlValidator(url),
     ...stringLengthValidator('companyName', companyName, 100),
     ...stringLengthValidator('description', description, 1000),
-    ...stringLengthValidator('ticker', ticker, 5),
+    ...stringLengthValidator('ticker', ticker, 11),
     ...logoValidator(file),
   }
 }
