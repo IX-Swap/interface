@@ -17,6 +17,8 @@ import RedeemedSideBar from './RedeemedSideBar'
 import { useTokenContract } from 'hooks/useContract'
 import SideBarPaused from './SideBarPaused'
 import { isMobile } from 'react-device-detect'
+import { checkWrongChain } from 'chains'
+import { useWeb3React } from '@web3-react/core'
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null
@@ -53,13 +55,15 @@ const MoreText = styled.span`
 
 const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => {
   const shareTokenContract = useTokenContract(lbpData?.shareAddress ?? '')
+  const { chainId } = useWeb3React()
 
   const [showMore, setShowMore] = useState(false)
   const [shareSymbol, setShareSymbol] = useState<string>('')
 
   const sampleText = useMemo(() => `${lbpData?.description}`, [lbpData])
-
   const isTextLong = useMemo(() => sampleText.length > 300, [sampleText])
+  const network = lbpData?.network ?? ''
+  const { isWrongChain } = checkWrongChain(chainId, network)
 
   const SideBarByStatus = useMemo(() => {
     switch (lbpData?.status) {
@@ -96,8 +100,10 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ lbpData, statsData }) => 
       }
     }
 
-    fetchShareSymbol()
-  }, [lbpData?.shareAddress])
+    if (!isWrongChain) {
+      fetchShareSymbol()
+    }
+  }, [lbpData?.shareAddress, isWrongChain])
 
   return (
     <MiddleSectionWrapper>

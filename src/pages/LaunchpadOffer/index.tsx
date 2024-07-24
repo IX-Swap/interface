@@ -21,8 +21,6 @@ import { FilledButton } from 'components/LaunchpadMisc/buttons'
 import { MEDIA_WIDTHS } from 'theme'
 import { routes } from 'utils/routes'
 import Header from 'components/Header'
-import { NotAvailablePage } from 'components/NotAvailablePage'
-import { detectWrongNetwork } from 'utils'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import WhiteLabelFooter from 'components/WhiteLabelFooter'
 import { checkWrongChain } from 'chains'
@@ -86,18 +84,6 @@ export default function LaunchpadOffer() {
       <Centered>
         <ErrorTitle>{offer.error || 'Offer not found'}</ErrorTitle>
       </Centered>
-    )
-  }
-
-  const blurred = detectWrongNetwork(chainId)
-
-  if (blurred) {
-    return (
-      <Portal>
-        <CenteredFixed width="100vw" height="100vh">
-          <NotAvailablePage />
-        </CenteredFixed>
-      </Portal>
     )
   }
 
