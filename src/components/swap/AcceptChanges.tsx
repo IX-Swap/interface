@@ -10,7 +10,7 @@ export const AcceptChanges = ({ handleAcceptChanges }: { handleAcceptChanges: ()
     <SwapShowAcceptChanges justify="flex-start" gap={'0px'}>
       <RowBetween>
         <RowFixed>
-          <AlertTriangle size={24} style={{ marginRight: '8px', minWidth: 24, fontWeight: 900 }} />
+          <AlertTriangle size={24} style={{ marginRight: '8px', minWidth: 24 }} />
 
           <Trans>Price Updated</Trans>
         </RowFixed>
