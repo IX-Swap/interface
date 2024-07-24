@@ -209,7 +209,7 @@ export const HeaderLinks = () => {
           <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom-start'}>
             <RowFixed onClick={toggle}>
               <Trans>Farming</Trans>
-              <ChevronElement showMore={open} />
+              <ChevronElement marginLeft={5} showMore={open} />
             </RowFixed>
           </Popover>
         </StyledNavLink>
