@@ -126,6 +126,7 @@ export function CurrencySearch({
             ref={inputRef as RefObject<HTMLInputElement>}
             onChange={handleInput}
             onKeyDown={handleEnter}
+            style={{ paddingLeft: 40 }}
           />
           <img
             src={searchIcon}
