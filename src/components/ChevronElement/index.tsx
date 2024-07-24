@@ -36,7 +36,7 @@ export const ChevronElement = ({ showMore, setShowMore, marginLeft }: Props) => 
         }}
       >
         <StyledChevron open={showMore}>
-        <ChevronUp style={{marginLeft: `${marginLeft}px`}} size="20" color={theme.text2} />
+          <ChevronUp style={{ marginLeft: `${marginLeft}px` }} size="20" color={theme.text2} />
         </StyledChevron>
       </ButtonEmpty>
     </RowFixed>
