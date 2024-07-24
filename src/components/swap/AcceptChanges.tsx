@@ -10,13 +10,20 @@ export const AcceptChanges = ({ handleAcceptChanges }: { handleAcceptChanges: ()
     <SwapShowAcceptChanges justify="flex-start" gap={'0px'}>
       <RowBetween>
         <RowFixed>
-          <AlertTriangle size={20} style={{ marginRight: '8px', minWidth: 24 }} />
+          <AlertTriangle size={24} style={{ marginRight: '8px', minWidth: 24 }} />
 
           <Trans>Price Updated</Trans>
         </RowFixed>
         <ButtonGradient
           data-testid="accept-swap-changes"
-          style={{ padding: '.5rem', width: 'fit-content', fontSize: '0.825rem', borderRadius: '12px' }}
+          style={{
+            padding: '.5rem',
+            width: 'fit-content',
+            fontSize: '0.825rem',
+            borderRadius: '12px',
+            background: '#FF9F43',
+            color: '#fff',
+          }}
           onClick={handleAcceptChanges}
         >
           <Trans>Accept</Trans>
