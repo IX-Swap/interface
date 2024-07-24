@@ -470,71 +470,59 @@ export default function AddLiquidity({
                           approvalB === ApprovalState.PENDING ||
                           approvalB === ApprovalState.APPROVED) &&
                           isValid && (
-                            <ButtonRow marginBottom={'0.5rem'}>
-                              {approvalA !== ApprovalState.APPROVED && (
-                                <PinnedContentButton
-                                  onClick={approveACallback}
-                                  disabled={approvalA === ApprovalState.PENDING}
-                                  data-testid="approve-currency-a"
-                                  style={{ flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2 }}
-                                >
-                                  {approvalA === ApprovalState.PENDING ? (
-                                    <Dots>
-                                      <Trans>Approving {currencies[Field.CURRENCY_A]?.symbol}</Trans>
-                                    </Dots>
-                                  ) : (
-                                    <Trans>Approve {currencies[Field.CURRENCY_A]?.symbol}</Trans>
-                                  )}
-                                </PinnedContentButton>
-                              )}
-                              {approvalA === ApprovalState.APPROVED && (
-                                <NewApproveButton
-                                  data-testid="approved-currency-a"
-                                  style={{
-                                    flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2,
-                                    gap: '10px',
-                                    height: '100%',
-                                  }}
-                                >
-                                  <div style={{ width: 24 }}>
-                                    <ExternalIcon />
-                                  </div>
-                                  <Trans>Approved {currencies[Field.CURRENCY_A]?.symbol}</Trans>
-                                </NewApproveButton>
-                              )}
-                              {approvalB !== ApprovalState.APPROVED && (
-                                <PinnedContentButton
-                                  onClick={approveBCallback}
-                                  disabled={approvalB === ApprovalState.PENDING}
-                                  data-testid="approve-currency-b"
-                                  style={{ flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2 }}
-                                >
-                                  {approvalB === ApprovalState.PENDING ? (
-                                    <Dots>
-                                      <Trans>Approving {currencies[Field.CURRENCY_B]?.symbol}</Trans>
-                                    </Dots>
-                                  ) : (
-                                    <Trans>Approve {currencies[Field.CURRENCY_B]?.symbol}</Trans>
-                                  )}
-                                </PinnedContentButton>
-                              )}
-                              {approvalB === ApprovalState.APPROVED && (
-                                <NewApproveButton
-                                  data-testid="approved-currency-b"
-                                  style={{
-                                    flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2,
-                                    gap: '10px',
-                                    height: '100%',
-                                  }}
-                                >
-                                  <div style={{ width: 24 }}>
-                                    <ExternalIcon />
-                                  </div>
-                                  <Trans>Approved {currencies[Field.CURRENCY_B]?.symbol}</Trans>
-                                </NewApproveButton>
-                              )}
-                            </ButtonRow>
-                          )}
+                          <ButtonRow marginBottom={'0.5rem'}>
+                            {approvalA !== ApprovalState.APPROVED && (
+                              <PinnedContentButton
+                                onClick={approveACallback}
+                                disabled={approvalA === ApprovalState.PENDING}
+                                data-testid="approve-currency-a"
+                                style={{ flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2 }}
+                              >
+                                {approvalA === ApprovalState.PENDING ? (
+                                  <Dots>
+                                    <Trans>Approving {currencies[Field.CURRENCY_A]?.symbol}</Trans>
+                                  </Dots>
+                                ) : (
+                                  <Trans>Approve {currencies[Field.CURRENCY_A]?.symbol}</Trans>
+                                )}
+                              </PinnedContentButton>
+                            )}
+                            {approvalA === ApprovalState.APPROVED && (
+                              <NewApproveButton
+                                data-testid="approved-currency-a"
+                                style={{ flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2, gap: '10px' }}
+                              >
+                                <ExternalIcon />
+                                <Trans>Approved {currencies[Field.CURRENCY_A]?.symbol}</Trans>
+                              </NewApproveButton>
+                            )}
+                            {approvalB !== ApprovalState.APPROVED && (
+                              <PinnedContentButton
+                                onClick={approveBCallback}
+                                disabled={approvalB === ApprovalState.PENDING}
+                                data-testid="approve-currency-b"
+                                style={{ flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2 }}
+                              >
+                                {approvalB === ApprovalState.PENDING ? (
+                                  <Dots>
+                                    <Trans>Approving {currencies[Field.CURRENCY_B]?.symbol}</Trans>
+                                  </Dots>
+                                ) : (
+                                  <Trans>Approve {currencies[Field.CURRENCY_B]?.symbol}</Trans>
+                                )}
+                              </PinnedContentButton>
+                            )}
+                            {approvalB === ApprovalState.APPROVED && (
+                              <NewApproveButton
+                                data-testid="approved-currency-b"
+                                style={{ flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2, gap: '10px' }}
+                              >
+                                <ExternalIcon />
+                                <Trans>Approved {currencies[Field.CURRENCY_B]?.symbol}</Trans>
+                              </NewApproveButton>
+                            )}
+                          </ButtonRow>
+                        )}
                         <PinnedContentButton
                           data-testid="supply"
                           onClick={() => {
