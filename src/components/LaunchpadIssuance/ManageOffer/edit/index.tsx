@@ -16,6 +16,7 @@ import { useShowError } from 'state/application/hooks'
 import { getDaysAhead, isFutureDate } from 'utils/time'
 import { text1, text48 } from 'components/LaunchpadMisc/typography'
 import { getDaysAfter } from 'utils/time'
+import {  MIN_DATE_DIFF_MINUTES } from 'components/LaunchpadIssuance/IssuanceForm/shared/constants'
 
 interface Props {
   open: boolean
@@ -104,7 +105,7 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
         // if (startDate.isSame(endDate, 'day')) {
         //   return 'Invalid Range - end date should come after start date (min 1 day)';
         // }
-        if (endDate.diff(startDate, 'minutes') < 20) {
+        if (endDate.diff(startDate, 'minutes') < MIN_DATE_DIFF_MINUTES) {
           return 'Invalid Range - end date should be at least 20 minutes later than the start date'
         }
         if (startDate.isBefore(now) || endDate.isBefore(now)) {

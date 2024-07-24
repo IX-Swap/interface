@@ -12,6 +12,7 @@ import { LocalizationProvider, TimePicker, TimeValidationError } from '@mui/x-da
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import useStateRef from 'react-usestateref'
 import { formatDateRange } from 'components/LaunchpadIssuance/ManageOffer/utils'
+import { MIN_DATE_DIFF_MINUTES } from '../constants'
 
 type DateRange = moment.Moment[]
 type DateRangeValue = Date[]
@@ -135,7 +136,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
         if (props.mode === 'range' && range.length === 2) {
           const duration = moment.duration(range[1].diff(range[0]))
           const minutes = duration.asMinutes()
-          if (minutes < 20) {
+          if (minutes < MIN_DATE_DIFF_MINUTES) {
             setDateErrorText('The end date should be later than the start date at least 20 minutes')
             return
           }
