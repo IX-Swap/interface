@@ -11,8 +11,6 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Loader } from 'components/AdminTransactionsTable'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
-import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
-import AppBody from 'pages/AppBody'
 import { checkWrongChain } from 'chains'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
@@ -33,7 +31,6 @@ const PublicDetails: React.FC = () => {
   const history = useHistory()
 
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
-  const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const network = lbpData?.network ?? ''
   const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
 
@@ -61,11 +58,7 @@ const PublicDetails: React.FC = () => {
     }
   }, [isLoading, account, isKycApproved, history])
 
-  return blurred ? (
-    <AppBody blurred>
-      <div></div>
-    </AppBody>
-  ) : (
+  return (
     <>
       {isLoading ? (
         <Loader>
