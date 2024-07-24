@@ -48,23 +48,34 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const nextMonth = React.useMemo(() => currentMonth.clone().month(currentMonth.get('month') + 1), [currentMonth])
 
   const copyTime = (date: moment.Moment, time: moment.Moment): moment.Moment => {
-    return date.set({
-      hour: time.get('hour'),
-      minute: time.get('minute'),
-      second: time.get('second'),
-    })
+    try {
+      return date.set({
+        hour: time.get('hour'),
+        minute: time.get('minute'),
+        second: time.get('second'),
+      })
+    } catch (error) {
+      console.error('Error in copyTime function:', error)
+      return date
+    }
   }
 
   const callPropsOnChange = () => {
-    if (props.field && props.setter && selectedRangeRef.current) {
-      props.setter(
-        props.field,
-        props.mode === 'single' ? selectedRangeRef.current[0].toDate() : selectedRangeRef.current.map((x) => x.toDate())
-      )
-    }
+    try {
+      if (props.field && props.setter && selectedRangeRef.current) {
+        props.setter(
+          props.field,
+          props.mode === 'single'
+            ? selectedRangeRef.current[0].toDate()
+            : selectedRangeRef.current.map((x) => x.toDate())
+        )
+      }
 
-    if (props.onChange) {
-      props.onChange(selectedRangeRef.current.map((x) => x.toDate()))
+      if (props.onChange) {
+        props.onChange(selectedRangeRef.current.map((x) => x.toDate()))
+      }
+    } catch (error) {
+      console.error('Error in callPropsOnChange:', error)
     }
   }
 
