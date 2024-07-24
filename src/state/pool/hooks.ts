@@ -55,6 +55,7 @@ interface AddLiquidity {
   network: string
   blockNumber: number
   decimals: number
+  txHash: string
 }
 
 const addLiquidityReq = async (data: AddLiquidity) => {
