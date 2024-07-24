@@ -139,16 +139,16 @@ const Tokenomics = ({
     assetBalance: '',
     shareBalance: '',
   })
+  const { isWrongChain, expectChain } = checkWrongChain(chainId || 0, selectedNetwork)
 
-  const getAddresses = (chainId: number) => ({
-    assetTokenAddress: TOKEN_ADDRESSES.USDC[chainId] || '',
+  const getAddresses = (chainId: number, tokenAddress: string = TOKEN_ADDRESSES.USDC[chainId || 0]) => ({
+    assetTokenAddress: tokenAddress || '',
     shareTokenAddress: formDataTokenomics?.shareAddress || '',
   })
 
   const [addresses, setAddresses] = useState(getAddresses(chainId || 0))
   const assetTokenContract = useTokenContract(addresses.assetTokenAddress)
   const shareTokenContract = useTokenContract(addresses.shareTokenAddress)
-
   const formik = useFormik({
     initialValues: {
       shareAddress: '',
@@ -336,23 +336,24 @@ const Tokenomics = ({
       assetTokenSymbol: selectedOption.tokenSymbol,
       // logo: selectedOption.logo,
     }
-
+    setAddresses(getAddresses(chainId || 0, selectedOption.tokenAddress))
     onChange(updatedFormData)
   }
 
-  const { isWrongChain, expectChain } = checkWrongChain(chainId || 0, selectedNetwork)
+
 
   const handleSelectNetwork = (selectedOption: any) => {
-    const newChainId = selectedOption?.value
-    const updatedAddresses = getAddresses(newChainId)
+    const chainName = selectedOption?.value
+    const updatedAddresses = getAddresses(chainName)
     const updatedFormData = {
       ...formDataTokenomics,
-      network: newChainId,
+      network: chainName,
       assetTokenAddress: updatedAddresses.assetTokenAddress,
     }
     setSelectedNetwork(selectedOption?.value)
     onChange(updatedFormData)
   }
+
 
   const tokenOptions = useMemo(() => {
     // exclude tokens that has tokenAddress of undefined
