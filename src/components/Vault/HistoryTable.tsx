@@ -57,7 +57,7 @@ const HistoryHeader = () => {
           <Popover show={open} content={<FilterPopover options={options} tokenId={tokenId} />} placement={'bottom'}>
             <RowFixed onClick={toggle}>
               <TYPE.description2>{ActionTypeTextHeader[filter]}</TYPE.description2>
-              <ChevronElement showMore={open} />
+              <ChevronElement marginLeft={3} showMore={open} />
             </RowFixed>
           </Popover>
         </th>
