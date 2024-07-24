@@ -8,7 +8,7 @@ import { Flex } from 'rebass'
 import Column from 'components/Column'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { QRCodeWrap } from 'components/QRCodeWrap'
-import  { RowCenter, RowBetween } from 'components/Row'
+import { RowCenter, RowBetween } from 'components/Row'
 import { CopyAddress } from 'components/CopyAddress'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleTransactionModal } from 'state/application/hooks'
@@ -46,6 +46,7 @@ import {
 import { DepoistStatusInfo } from './DepoistStatusInfo'
 import { getNetworkFromToken, getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { WithdrawalWarning } from './WithdrawalWarning'
+import { useNativeCurrency } from 'hooks/useNativeCurrency'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -56,6 +57,7 @@ export const TransactionDetails = ({ currency }: Props) => {
   const toggle = useToggleTransactionModal()
   const { depositError } = useDepositState()
   const { activeEvent, eventLog } = useEventState()
+  const native = useNativeCurrency()
 
   const { chainId } = useActiveWeb3React()
 
@@ -99,12 +101,11 @@ export const TransactionDetails = ({ currency }: Props) => {
       minHeight={isDeposit(data.type) ? 50 : 30}
       maxHeight={'fit-content'}
       mobileMaxHeight={90}
-      
     >
       <ModalBlurWrapper data-testid="depositPopup" style={{ overflowY: 'scroll', width: '500px', padding: '20px' }}>
         <InfoModalHeader>
           <TYPE.title5>
-              {currency?.originalSymbol}&nbsp;{ActionTypeText[data.type]}
+            {currency?.originalSymbol}&nbsp;{ActionTypeText[data.type]}
           </TYPE.title5>
           <CloseIcon style={{ color: '#B8B8CC' }} data-testid="cross" onClick={toggle} />
         </InfoModalHeader>
@@ -155,7 +156,10 @@ export const TransactionDetails = ({ currency }: Props) => {
               >
                 <RowBetween>
                   {/* <TYPE.description2 color={statusColor}>{statusText} </TYPE.description2> */}
-                  <LiniarProgressContainer style={{width: '100%'}} statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
+                  <LiniarProgressContainer
+                    style={{ width: '100%' }}
+                    statusColor={statusColor as Exclude<keyof Colors, 'config'>}
+                  >
                     <TYPE.description2 marginBottom={'10px'} color={statusColor}>
                       {statusText}
                     </TYPE.description2>
@@ -272,7 +276,9 @@ export const TransactionDetails = ({ currency }: Props) => {
             {isWithdraw(data.type) && chainId && data.feeTxHash && (
               <RowBetween style={{ flexWrap: 'wrap' }}>
                 <label>
-                  <TYPE.small>Fee paid ({data.feeAmount} MATIC):</TYPE.small>
+                  <TYPE.small>
+                    Fee paid ({data.feeAmount} {native?.symbol || 'ETH'}):
+                  </TYPE.small>
                 </label>
                 <ExternalLink href={getExplorerLink(chainId, data.feeTxHash, ExplorerDataType.TRANSACTION)}>
                   <TYPE.small style={{ color: '#6666FF', textDecoration: 'none !important' }}>

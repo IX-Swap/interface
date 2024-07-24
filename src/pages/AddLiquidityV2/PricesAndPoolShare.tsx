@@ -9,7 +9,6 @@ import { PoolPriceBar } from './PoolPriceBar'
 const PricesWrapper = styled.div`
   backdrop-filter: blur(4px);
   border-radius: 6px;
-  margin-top: 1rem;
 `
 const TitleWrapper = styled.div`
   font-weight: 600;
