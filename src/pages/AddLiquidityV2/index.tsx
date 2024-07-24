@@ -272,6 +272,7 @@ export default function AddLiquidity({
                 network: NETWORK_NAMES[chainId],
                 blockNumber: res.events[last].blockNumber,
                 decimals: pair?.liquidityToken?.decimals || 18,
+                txHash: response.hash,
               })
             }
           })
