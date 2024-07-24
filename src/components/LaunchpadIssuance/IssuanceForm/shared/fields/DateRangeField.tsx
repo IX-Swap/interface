@@ -12,6 +12,7 @@ import { LocalizationProvider, TimePicker, TimeValidationError } from '@mui/x-da
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import useStateRef from 'react-usestateref'
 import { formatDateRange } from 'components/LaunchpadIssuance/ManageOffer/utils'
+import { MIN_DATE_DIFF_MINUTES } from '../constants'
 
 type DateRange = moment.Moment[]
 type DateRangeValue = Date[]
@@ -48,23 +49,34 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const nextMonth = React.useMemo(() => currentMonth.clone().month(currentMonth.get('month') + 1), [currentMonth])
 
   const copyTime = (date: moment.Moment, time: moment.Moment): moment.Moment => {
-    return date.set({
-      hour: time.get('hour'),
-      minute: time.get('minute'),
-      second: time.get('second'),
-    })
+    try {
+      return date.set({
+        hour: time.get('hour'),
+        minute: time.get('minute'),
+        second: time.get('second'),
+      })
+    } catch (error) {
+      console.error('Error in copyTime function:', error)
+      return date
+    }
   }
 
   const callPropsOnChange = () => {
-    if (props.field && props.setter && selectedRangeRef.current) {
-      props.setter(
-        props.field,
-        props.mode === 'single' ? selectedRangeRef.current[0].toDate() : selectedRangeRef.current.map((x) => x.toDate())
-      )
-    }
+    try {
+      if (props.field && props.setter && selectedRangeRef.current) {
+        props.setter(
+          props.field,
+          props.mode === 'single'
+            ? selectedRangeRef.current[0].toDate()
+            : selectedRangeRef.current.map((x) => x.toDate())
+        )
+      }
 
-    if (props.onChange) {
-      props.onChange(selectedRangeRef.current.map((x) => x.toDate()))
+      if (props.onChange) {
+        props.onChange(selectedRangeRef.current.map((x) => x.toDate()))
+      }
+    } catch (error) {
+      console.error('Error in callPropsOnChange:', error)
     }
   }
 
@@ -124,7 +136,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
         if (props.mode === 'range' && range.length === 2) {
           const duration = moment.duration(range[1].diff(range[0]))
           const minutes = duration.asMinutes()
-          if (minutes < 20) {
+          if (minutes < MIN_DATE_DIFF_MINUTES) {
             setDateErrorText('The end date should be later than the start date at least 20 minutes')
             return
           }
