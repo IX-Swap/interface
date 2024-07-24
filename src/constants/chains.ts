@@ -35,6 +35,8 @@ export const NETWORK_NAMES: { [chainId: number]: string } = {
   [1]: 'ethereum',
   [42]: 'kovan',
   [137]: 'polygon',
+  [8453]: 'base',
+  [84532]: 'base-sepolia',
 }
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
