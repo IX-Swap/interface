@@ -2,17 +2,15 @@ import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
 import { initializeConnector } from '@web3-react/core'
 
 import { URLS } from '../chains'
-
-const IXS_DOMAIN = 'app.ixswap.io'
-const POLYGON_CHAIN_ID = 137
-const POLYGON_AMOY_CHAIN_ID = 80002
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { SupportedChainId } from 'constants/chains'
 
 export const [coinbaseWallet, hooks] = initializeConnector<CoinbaseWallet>(
   (actions) =>
     new CoinbaseWallet({
       actions,
       options: {
-        url: URLS[window.location.hostname === IXS_DOMAIN ? POLYGON_CHAIN_ID : POLYGON_AMOY_CHAIN_ID][0],
+        url: URLS[ENV_SUPPORTED_TGE_CHAINS ? ENV_SUPPORTED_TGE_CHAINS[0] : SupportedChainId.BASE][0],
         appName: 'rwa',
       },
     })
