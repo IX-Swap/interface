@@ -1,6 +1,7 @@
 import type { AddEthereumChainParameter } from '@web3-react/types'
 import { SupportedChainId } from 'constants/chains'
 import { isProd } from 'utils/isEnvMode'
+import { capitalizeWords } from 'utils/strings'
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
   name: 'Ether',
@@ -165,6 +166,16 @@ const Chains = {
   // network name : tesnet, mainnet
   [NetworkName.BASE]: [SupportedChainId.BASE_SEPOLIA, SupportedChainId.BASE],
   [NetworkName.POLYGON]: [SupportedChainId.AMOY, SupportedChainId.MATIC],
+}
+
+export const findChainName = (chainId: number): string | null => {
+  for (const [network, chains] of Object.entries(Chains)) {
+    if (chains.includes(chainId)) {
+      return capitalizeWords(network)
+    }
+  }
+
+  return null
 }
 
 export const checkWrongChain = (
