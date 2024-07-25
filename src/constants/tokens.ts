@@ -3,6 +3,7 @@ import invariant from 'tiny-invariant'
 
 import { IXS_ADDRESS } from './addresses'
 import { SupportedChainId } from './chains'
+import { isProd } from 'utils/isEnvMode'
 
 export const USDC: { [chainId: number]: Token } = {
   [1]: new Token(1, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'USDC', 'USD//C'),
@@ -11,7 +12,13 @@ export const USDC: { [chainId: number]: Token } = {
   [80001]: new Token(80001, '0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747', 6, 'USDC', 'USD//C'),
   [80002]: new Token(80002, '0xA9bc9D3F0fF05AB339D1E195982794B15beA0f88', 6, 'USDC', 'USD//C'),
   [84532]: new Token(84532, '0xA9c2c7D5E9bdA19bF9728384FFD3cF71Ada5dfcB', 6, 'USDC', 'USD//C'),
-  // [8453]: new Token(8453, '0xA9c2c7D5E9bdA19bF9728384FFD3cF71Ada5dfcB', 6, 'USDC', 'USD//C'), // TODO: add base chain
+  [8453]: new Token(
+    8453,
+    isProd ? '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' : '0xD971d0d96cc21576fbbc237C7a5B27A249cF67ca',
+    6,
+    'USDC',
+    'USD//C'
+  ),
 }
 
 // Mirror Protocol compat.
@@ -25,7 +32,7 @@ export const IXS: { [chainId: number]: Token } = {
   [80002]: new Token(80002, IXS_ADDRESS[80002], 18, 'IXS', 'IXS'),
   [137]: new Token(137, IXS_ADDRESS[137], 18, 'IXS', 'IXS'),
   [84532]: new Token(84532, IXS_ADDRESS[84532], 18, 'IXS', 'IXS'),
-  // [8453]: new Token(8453, IXS_ADDRESS[8453], 18, 'IXS', 'IXS'),
+  [8453]: new Token(8453, IXS_ADDRESS[8453], 18, 'IXS', 'IXS'),
 }
 
 export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } = {
