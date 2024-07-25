@@ -20,6 +20,7 @@ import { RowBetween } from 'components/Row'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { BuyModal } from '../BuyModal'
 import { useTokenContract } from 'hooks/useContract'
+import { getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
 
 interface Props {
   offer: Offer
@@ -65,25 +66,18 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
     if (value === '') {
       warning = ''
     } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
-      warning = `Max Amount to invest ${availableToInvest} ${
-        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
-      }`
+      warning = `Max Amount to invest ${availableToInvest} ${getTokenSymbol(
+        offer?.network,
+        offer?.investingTokenSymbol
+      )}`
     } else if (Number(min) > realValue) {
-      warning = `Min. investment size ${min} ${
-        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
-      }`
+      warning = `Min. investment size ${min} ${getTokenSymbol(offer?.network, offer?.investingTokenSymbol)}`
     } else if (Number(max) < realValue) {
-      warning = `Max. investment size ${max} ${
-        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
-      }`
+      warning = `Max. investment size ${max} ${getTokenSymbol(offer?.network, offer?.investingTokenSymbol)}`
     } else if (available < realValue) {
-      warning = `Available to invest ${available} ${
-        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
-      }`
+      warning = `Available to invest ${available} ${getTokenSymbol(offer?.network, offer?.investingTokenSymbol)}`
     } else if (isCheckBalance && !isSufficientBalance) {
-      warning = `Insufficient ${
-        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
-      } balance`
+      warning = `Insufficient ${getTokenSymbol(offer?.network, offer?.investingTokenSymbol)} balance`
     }
     return warning
   }
@@ -93,14 +87,19 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
 
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
-  const { tokenPrice, tokenAddress, tokenSymbol, investingTokenAddress, investingTokenSymbol, investingTokenDecimals } =
-    props.offer
+  const {
+    tokenPrice,
+    tokenAddress,
+    tokenSymbol,
+    investingTokenAddress,
+    investingTokenSymbol,
+    investingTokenDecimals,
+    network,
+  } = props.offer
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
   const getWarning = useGetWarning(props.offer, true)
-  const insufficientWarning = `Insufficient ${
-    investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
-  } balance`
+  const insufficientWarning = `Insufficient ${getTokenSymbol(network, investingTokenSymbol)} balance`
   const { account } = useActiveWeb3React()
   const inputCurrency = useCurrency(investingTokenAddress)
   const investingTokenContract = useTokenContract(investingTokenAddress)
@@ -182,7 +181,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
   const formatTokenOption = (tokenOption: any) => {
     if (!tokenOption) return undefined
-    const formattedName = tokenOption.name + (tokenOption.name === 'USDC' ? '.e' : '')
+    const formattedName = getTokenSymbol(props?.offer?.network, props?.offer?.investingTokenSymbol)
     return { ...tokenOption, name: formattedName }
   }
 
