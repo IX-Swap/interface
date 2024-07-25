@@ -22,6 +22,7 @@ import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { ethers } from 'ethers'
 import { IXSALE_ADDRESS } from 'constants/addresses'
+import { getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
 
 interface Props {
   offer: Offer
@@ -120,12 +121,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
           {amountLoading && <Loader />}
           {!amountLoading && !amountError && (
             <MyInvestmentAmount>
-              {isSuccessfull ? amountClaim : amount}{' '}
-              {isSuccessfull
-                ? tokenSymbol
-                : investingTokenSymbol === 'USDC'
-                ? `${investingTokenSymbol}.e`
-                : investingTokenSymbol}
+              {isSuccessfull ? amountClaim : amount}
+              {getTokenSymbol(network, investingTokenSymbol)}
             </MyInvestmentAmount>
           )}
           {amountError}
