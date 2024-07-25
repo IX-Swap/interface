@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import styled from 'styled-components'
@@ -139,7 +139,16 @@ const Tokenomics = ({
     assetBalance: '',
     shareBalance: '',
   })
+  const { isWrongChain, expectChain } = checkWrongChain(chainId || 0, selectedNetwork)
 
+  const getAddresses = (chainId: number, assetTokenAddress: string = TOKEN_ADDRESSES.USDC[chainId || 0]) => ({
+    assetTokenAddress: assetTokenAddress || '',
+    shareTokenAddress: formDataTokenomics?.shareAddress || '',
+  })
+
+  const [addresses, setAddresses] = useState(getAddresses(chainId || 0))
+  const assetTokenContract = useTokenContract(addresses.assetTokenAddress)
+  const shareTokenContract = useTokenContract(addresses.shareTokenAddress)
   const formik = useFormik({
     initialValues: {
       shareAddress: '',
@@ -158,15 +167,10 @@ const Tokenomics = ({
     onSubmit: () => {},
   })
 
-  const assetTokenContract = useTokenContract(
-    formDataTokenomics.assetTokenAddress ? formDataTokenomics.assetTokenAddress : TOKEN_ADDRESSES.USDC[chainId || 0]
-  )
-  const shareTokenContract = useTokenContract(formDataTokenomics.shareAddress ?? '')
-
-  useEffect(() => {
-    // console.log(assetTokenContract, shareTokenContract)
+  const loadBalances = useCallback(async () => {
     if (!account) return
-    const loadBalances = async () => {
+
+    try {
       if (assetTokenContract) {
         const assetBalance = await assetTokenContract.balanceOf(account)
         const assetDecimals = await assetTokenContract.decimals()
@@ -175,7 +179,11 @@ const Tokenomics = ({
           assetBalance: formatUnits(assetBalance, assetDecimals),
         }))
       }
+    } catch (error) {
+      console.error('Error fetching asset balance:', error)
+    }
 
+    try {
       if (shareTokenContract) {
         const shareBalance = await shareTokenContract.balanceOf(account)
         const shareDecimals = await shareTokenContract.decimals()
@@ -188,10 +196,18 @@ const Tokenomics = ({
       } else {
         setProjectTokenSymbol('')
       }
+    } catch (error) {
+      console.error('Error fetching share balance:', error)
     }
+  }, [account, assetTokenContract, shareTokenContract, setProjectTokenSymbol])
 
+  useEffect(() => {
+    setAddresses(getAddresses(chainId || 0)) // Update addresses when chainId changes
+  }, [chainId])
+
+  useEffect(() => {
     loadBalances()
-  }, [account, assetTokenContract, shareTokenContract])
+  }, [loadBalances, addresses, chainId])
 
   useEffect(() => {
     if (!formDataTokenomics.assetTokenSymbol) {
@@ -320,20 +336,24 @@ const Tokenomics = ({
       assetTokenSymbol: selectedOption.tokenSymbol,
       // logo: selectedOption.logo,
     }
-
+    setAddresses(getAddresses(chainId || 0, selectedOption.tokenAddress))
     onChange(updatedFormData)
   }
 
-  const { isWrongChain, expectChain } = checkWrongChain(chainId || 0, selectedNetwork)
+
 
   const handleSelectNetwork = (selectedOption: any) => {
+    const chainName = selectedOption?.value
+    const updatedAddresses = getAddresses(chainName)
     const updatedFormData = {
       ...formDataTokenomics,
-      network: selectedOption?.value,
+      network: chainName,
+      assetTokenAddress: updatedAddresses.assetTokenAddress,
     }
     setSelectedNetwork(selectedOption?.value)
     onChange(updatedFormData)
   }
+
 
   const tokenOptions = useMemo(() => {
     // exclude tokens that has tokenAddress of undefined
