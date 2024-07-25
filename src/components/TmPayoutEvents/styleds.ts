@@ -55,9 +55,9 @@ export const StatusContainer = styled.div<{ color: Exclude<keyof Colors | 'trans
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
-  padding: 4px 12px;
+  padding: 8px 23px;
   background-color: ${({ theme, color }) => (color === 'transparent' ? 'transparent' : theme[color])};
-  border-radius: 40px;
+  border-radius: 4px;
   ${({ color }) =>
     color === 'transparent' &&
     css`
