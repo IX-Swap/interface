@@ -101,14 +101,17 @@ export interface Colors {
   green1: Color
   green2: Color
   green3: Color
+  green4: Color
   yellow1: Color
   yellow2: Color
   yellow3: Color
   yellow4: Color
+  yellow5: Color
   orange: Color
   blue1: Color
   blue2: Color
   blue3: Color
+  blue4: Color
   orange1: Color
 
   error: Color
@@ -166,7 +169,7 @@ export interface LaunchpadTheme {
   }
 }
 
-export interface LbpTheme {  
+export interface LbpTheme {
   colors: {
     status: {
       background: {
