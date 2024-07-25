@@ -4,6 +4,7 @@ import { Trans, t } from '@lingui/macro'
 import { RowCenter } from 'components/Row'
 import { TYPE } from 'theme'
 import { Checkbox } from 'components/Checkbox'
+import { ReactComponent as ArrowDownIcon } from 'assets/images/arrow-down.svg'
 
 import { DarkBlueCard, PopOverContent, StyledPopover, Icon } from './styleds'
 
@@ -17,7 +18,7 @@ interface Props {
   className?: string
 }
 
-export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder }: Props) => {
+export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder, className }: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null)
 
   const isOpen = Boolean(anchorEl)
@@ -52,7 +53,7 @@ export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder }: 
 
   return (
     <>
-      <DarkBlueCard className="dropdown" onClick={handleOpen} isOpen={isOpen || (selectedItems?.length ? true : false)}>
+      <DarkBlueCard className={`dropdown ${className || ''}`} onClick={handleOpen} isOpen={isOpen || (selectedItems?.length ? true : false)}>
         <TYPE.main1
           color="#8F8FB2"
           fontWeight={300}
@@ -61,6 +62,7 @@ export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder }: 
         >
           <Trans>{`${placeholder}`}</Trans>
         </TYPE.main1>
+        <ArrowDownIcon />
       </DarkBlueCard>
       <StyledPopover
         elevation={0}
