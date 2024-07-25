@@ -35,6 +35,7 @@ import { WaitingWitdrawalFee, WarningPaidFee } from './styleds'
 import { ReactComponent as IButton } from 'assets/images/newIbutton.svg'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
+import { findChainName } from 'chains'
 
 interface Props {
   currency?: SecCurrency
@@ -57,7 +58,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
     loadingFee,
     loadingWithdraw,
   } = useWithdrawState()
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const { secTokens } = useUserSecTokens()
   const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName } = useWithdrawActionHandlers()
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
@@ -70,6 +71,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
   const haveActiveWithdrawal = isPending(withdrawStatus.status || 'pending')
 
   const paid = [WithdrawStatus.FEE_ACCEPTED, WithdrawStatus.PENDING].includes(withdrawStatus.status as WithdrawStatus)
+  const chainName = findChainName(chainId) || 'Base'
 
   useEffect(() => {
     if (tokenInfo.id) {
@@ -118,6 +120,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
     const id = currencyId(currency)
     onCurrencySet(id)
   }, [currency, onCurrencySet])
+
   return (
     <div style={{ position: 'relative', padding: isMobile ? '0px 10px 0px 10px' : '' }}>
       <Column style={{ gap: '25px', marginTop: '18px' }}>
@@ -127,13 +130,13 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
               <Trans>
                 <IButton style={{ margin: '0px 5px 0px 0px', width: '35px' }} />
                 &nbsp; <strong>{`Info:`} &nbsp;</strong> Your wrapped {currency?.originalSymbol || tokenInfo?.symbol}{' '}
-                will be extracted from your Polygon wallet and burnt automatically.
+                will be extracted from your {chainName} wallet and burnt automatically.
               </Trans>
             ) : (
               <Trans>
                 <IButton style={{ margin: '0px 10px 0px 0px' }} />
                 <strong>{`Info:`}</strong> Your wrapped {currency?.originalSymbol || tokenInfo?.symbol} will be
-                extracted from your Polygon wallet and burnt automatically.
+                extracted from your {chainName} wallet and burnt automatically.
               </Trans>
             )}
           </TYPE.description3>
