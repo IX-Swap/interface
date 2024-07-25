@@ -110,6 +110,7 @@ export const UsersList: FC = () => {
           filters={[FILTERS.SEARCH, FILTERS.ROLES, FILTERS.SEC_TOKENS]}
           onFiltersChange={handleFilters}
           searchPlaceholder="Search by Wallet or Name"
+          isClearable
         />
       </TopContent>
 
