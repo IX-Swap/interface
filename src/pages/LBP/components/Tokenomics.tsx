@@ -202,12 +202,18 @@ const Tokenomics = ({
   }, [account, assetTokenContract, shareTokenContract, setProjectTokenSymbol])
 
   useEffect(() => {
-    setAddresses(getAddresses(chainId || 0)) // Update addresses when chainId changes
-  }, [chainId])
+    setAddresses(getAddresses(chainId || 0))
+  }, [chainId, formDataTokenomics?.shareAddress])
 
   useEffect(() => {
+    if (isWrongChain) {
+      const updatedFormData = {
+        shareAddress: '',
+      }
+      onChange(updatedFormData)
+    }
     loadBalances()
-  }, [loadBalances, addresses, chainId])
+  }, [isWrongChain, loadBalances, addresses, chainId])
 
   useEffect(() => {
     if (!formDataTokenomics.assetTokenSymbol) {
@@ -340,8 +346,6 @@ const Tokenomics = ({
     onChange(updatedFormData)
   }
 
-
-
   const handleSelectNetwork = (selectedOption: any) => {
     const chainName = selectedOption?.value
     const updatedAddresses = getAddresses(chainName)
@@ -353,7 +357,6 @@ const Tokenomics = ({
     setSelectedNetwork(selectedOption?.value)
     onChange(updatedFormData)
   }
-
 
   const tokenOptions = useMemo(() => {
     // exclude tokens that has tokenAddress of undefined
