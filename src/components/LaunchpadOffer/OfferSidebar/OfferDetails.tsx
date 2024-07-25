@@ -238,8 +238,6 @@ type GeneralInfoProps = Partial<Pick<Offer, GeneralInfoFields>>
 export function getTokenSymbol(network: any, investingTokenSymbol: any) {
   if (network === OfferNetwork.polygon && investingTokenSymbol === INVESTING_TOKEN_SYMBOL.USDC) {
     return INVESTING_TOKEN_SYMBOL['USDC.e']
-  } else if (network === OfferNetwork.base && INVESTING_TOKEN_SYMBOL.USDC) {
-    return INVESTING_TOKEN_SYMBOL.USDC
   }
   return investingTokenSymbol
 }
