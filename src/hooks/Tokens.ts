@@ -146,8 +146,8 @@ function parseStringOrBytes32(str: string | undefined, bytes32: string | undefin
     ? str
     : // need to check for proper bytes string and valid terminator
     bytes32 && BYTES32_REGEX.test(bytes32) && arrayify(bytes32)[31] === 0
-    ? parseBytes32String(bytes32)
-    : defaultValue
+      ? parseBytes32String(bytes32)
+      : defaultValue
 }
 
 // undefined if invalid or does not exist
@@ -231,12 +231,35 @@ export function useCurrencyFromMap(tokens: any, currencyId?: string | null): Cur
   try {
     const wrappedNative = nativeCurrency?.wrapped
     if (wrappedNative?.address?.toUpperCase() === currencyId?.toUpperCase()) return wrappedNative
-  } catch (_) {}
+  } catch (_) { }
   return isNative ? nativeCurrency : token
 }
 
+/**
+ * The useCurrency obtains the configured tokens from current network.
+ * Returns the Currency by currencyId from argument and current chain id from wallet.
+ */
 export function useCurrency(currencyId: string | undefined): Currency | null | undefined {
   const tokens = useAllTokens()
 
   return useCurrencyFromMap(tokens, currencyId)
+}
+
+/**
+ * The useSafeCurrency obtains the configured tokens from all networks.
+ * Returns the Currency by currencyId
+ */
+export function useSafeCurrency(currencyId: string | undefined): Currency | null | undefined {
+  const allTokensByChain = useCombinedActiveList()
+
+  const allTokens = {}
+  Object.values(allTokensByChain).forEach(tokenByChain => {
+    Object.keys(tokenByChain).forEach(tokenAddress => {
+      Object.assign(allTokens, {
+        [tokenAddress]: tokenByChain[tokenAddress].token
+      })
+    })
+  })
+
+  return useCurrencyFromMap(allTokens, currencyId)
 }
