@@ -141,8 +141,8 @@ const Tokenomics = ({
   })
   const { isWrongChain, expectChain } = checkWrongChain(chainId || 0, selectedNetwork)
 
-  const getAddresses = (chainId: number, tokenAddress: string = TOKEN_ADDRESSES.USDC[chainId || 0]) => ({
-    assetTokenAddress: tokenAddress || '',
+  const getAddresses = (chainId: number, assetTokenAddress: string = TOKEN_ADDRESSES.USDC[chainId || 0]) => ({
+    assetTokenAddress: assetTokenAddress || '',
     shareTokenAddress: formDataTokenomics?.shareAddress || '',
   })
 
