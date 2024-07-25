@@ -11,7 +11,7 @@ import { Option, useTokensList } from 'hooks/useTokensList'
 import { useCurrency } from 'hooks/Tokens'
 
 import { LoadingIndicator } from 'components/LoadingIndicator'
-import { useDerivedBalanceInfo } from 'state/launchpad/hooks'
+import useInvestingTokenSymbol, { useDerivedBalanceInfo } from 'state/launchpad/hooks'
 import { text35 } from 'components/LaunchpadMisc/typography'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
@@ -60,30 +60,20 @@ export const useGetWarning = (offer: Offer, isCheckBalance = false) => {
     const max = isPresale ? offer.presaleMaxInvestment : offer.maxInvestment
     const total = isPresale ? offer.presaleAlocated : offer.hardCap
     const available = +total - offer.totalInvestment
-
+    const updatedInvestingTokenSymbol = useInvestingTokenSymbol(offer?.investingTokenSymbol || '')
     let warning = ''
     if (value === '') {
       warning = ''
     } else if (typeof availableToInvest === 'number' && realValue > availableToInvest) {
-      warning = `Max Amount to invest ${availableToInvest} ${
-        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
-      }`
+      warning = `Max Amount to invest ${availableToInvest} ${updatedInvestingTokenSymbol}`
     } else if (Number(min) > realValue) {
-      warning = `Min. investment size ${min} ${
-        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
-      }`
+      warning = `Min. investment size ${min} ${updatedInvestingTokenSymbol}`
     } else if (Number(max) < realValue) {
-      warning = `Max. investment size ${max} ${
-        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
-      }`
+      warning = `Max. investment size ${max} ${updatedInvestingTokenSymbol}`
     } else if (available < realValue) {
-      warning = `Available to invest ${available} ${
-        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
-      }`
+      warning = `Available to invest ${available} ${updatedInvestingTokenSymbol}`
     } else if (isCheckBalance && !isSufficientBalance) {
-      warning = `Insufficient ${
-        offer.investingTokenSymbol === 'USDC' ? `${offer.investingTokenSymbol}.e` : offer.investingTokenSymbol
-      } balance`
+      warning = `Insufficient ${updatedInvestingTokenSymbol} balance`
     }
     return warning
   }
@@ -98,9 +88,8 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
   const getWarning = useGetWarning(props.offer, true)
-  const insufficientWarning = `Insufficient ${
-    investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
-  } balance`
+  const updatedInvestingTokenSymbol = useInvestingTokenSymbol(investingTokenSymbol || '')
+  const insufficientWarning = `Insufficient ${updatedInvestingTokenSymbol} balance`
   const { account } = useActiveWeb3React()
   const inputCurrency = useCurrency(investingTokenAddress)
   const investingTokenContract = useTokenContract(investingTokenAddress)

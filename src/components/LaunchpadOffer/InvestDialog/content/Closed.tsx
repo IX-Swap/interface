@@ -3,7 +3,7 @@ import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 import { CheckCircle, Clock, Info } from 'react-feather'
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
-import { useCheckClaimed, useClaimOfferRefund } from 'state/launchpad/hooks'
+import useInvestingTokenSymbol, { useCheckClaimed, useClaimOfferRefund } from 'state/launchpad/hooks'
 import { InvestedDataRes, Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
@@ -61,7 +61,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const launchpadContract = useLaunchpadInvestmentContract(contractAddress)
   const { chainId = 137, account } = useActiveWeb3React()
   const tokenCurrency = useCurrency(investingTokenAddress)
-
+  const updatedInvestingTokenSymbol = useInvestingTokenSymbol(investingTokenSymbol || '')
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
@@ -120,12 +120,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
           {amountLoading && <Loader />}
           {!amountLoading && !amountError && (
             <MyInvestmentAmount>
-              {isSuccessfull ? amountClaim : amount}{' '}
-              {isSuccessfull
-                ? tokenSymbol
-                : investingTokenSymbol === 'USDC'
-                ? `${investingTokenSymbol}.e`
-                : investingTokenSymbol}
+              {isSuccessfull ? amountClaim : amount} {isSuccessfull ? tokenSymbol : updatedInvestingTokenSymbol}
             </MyInvestmentAmount>
           )}
           {amountError}

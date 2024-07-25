@@ -1,5 +1,5 @@
 import lodash from 'lodash'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { useDispatch, useSelector } from 'react-redux'
@@ -54,6 +54,8 @@ import apiService from 'services/apiService'
 import { useKyc } from 'state/user/hooks'
 import { PaginateResponse } from 'types/pagination'
 import { useActiveWeb3React } from 'hooks/web3'
+import { SupportedChainId } from 'constants/chains'
+import { INVESTING_TOKEN_SYMBOL } from './constants'
 
 interface OfferPagination {
   page: number
@@ -68,6 +70,8 @@ interface OfferPagination {
 
   items: Offer[]
 }
+
+const POLYGON_CHAIN_IDS = [SupportedChainId.MATIC, SupportedChainId.MUMBAI, SupportedChainId.AMOY]
 
 export const useLoader = (initial = true) => {
   const [isLoading, setLoading] = React.useState(initial)
@@ -931,22 +935,25 @@ const useUploadOfferFiles = () => {
 
     return files
   }, [])
-  
-  const getOtherExecutionDocumentFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
-    const uploadedFiles = new Set(initial.otherExecutionDocuments.filter((x) => x.file?.id).map((x) => x.file?.id))
 
-    const files: FileUpload[] = []
+  const getOtherExecutionDocumentFiles = React.useCallback(
+    (payload: InformationFormValues, initial: InformationFormValues) => {
+      const uploadedFiles = new Set(initial.otherExecutionDocuments.filter((x) => x.file?.id).map((x) => x.file?.id))
 
-    payload.otherExecutionDocuments.forEach((entry, idx) => {
-      if (!entry.file || uploadedFiles.has(entry.file?.id)) {
-        return
-      }
+      const files: FileUpload[] = []
 
-      files.push({ name: `otherExecutionDocument.${idx}`, file: entry.file?.file })
-    })
+      payload.otherExecutionDocuments.forEach((entry, idx) => {
+        if (!entry.file || uploadedFiles.has(entry.file?.id)) {
+          return
+        }
 
-    return files
-  }, [])
+        files.push({ name: `otherExecutionDocument.${idx}`, file: entry.file?.file })
+      })
+
+      return files
+    },
+    []
+  )
 
   return React.useCallback(
     (payload: InformationFormValues, initial: InformationFormValues) => {
@@ -965,14 +972,21 @@ const useUploadOfferFiles = () => {
         files.push({ name: 'profile', file: payload.profilePicture?.file })
       }
 
-      const firstUploadedPurchaseAgreement = payload.purchaseAgreement?.file && !payload.purchaseAgreement?.file?.id;
-      const firstUploadedInvestmentMemorandum = payload.investmentMemorandum?.file && !payload.investmentMemorandum?.file?.id;
+      const firstUploadedPurchaseAgreement = payload.purchaseAgreement?.file && !payload.purchaseAgreement?.file?.id
+      const firstUploadedInvestmentMemorandum =
+        payload.investmentMemorandum?.file && !payload.investmentMemorandum?.file?.id
 
-      if (firstUploadedPurchaseAgreement || payload.purchaseAgreement?.file?.id !== initial.purchaseAgreement?.file?.id) {
+      if (
+        firstUploadedPurchaseAgreement ||
+        payload.purchaseAgreement?.file?.id !== initial.purchaseAgreement?.file?.id
+      ) {
         files.push({ name: 'purchaseAgreement', file: payload.purchaseAgreement?.file?.file })
       }
 
-      if (firstUploadedInvestmentMemorandum || payload.investmentMemorandum?.file?.id !== initial.investmentMemorandum?.file?.id) {
+      if (
+        firstUploadedInvestmentMemorandum ||
+        payload.investmentMemorandum?.file?.id !== initial.investmentMemorandum?.file?.id
+      ) {
         files.push({ name: 'investmentMemorandum', file: payload.investmentMemorandum?.file?.file })
       }
 
@@ -1023,7 +1037,7 @@ export const useOfferFormInitialValues = (
         documents = [],
         otherExecutionDocuments = [],
         purchaseAgreement,
-        investmentMemorandum
+        investmentMemorandum,
       } = payload.files?.reduce(
         (accum: any, item) => {
           if (item.type === OfferFileType.image) {
@@ -1041,7 +1055,14 @@ export const useOfferFormInitialValues = (
           }
           return accum
         },
-        { images: [], videos: [], documents: [], otherExecutionDocuments: [], purchaseAgreement: null, investmentMemorandum: null}
+        {
+          images: [],
+          videos: [],
+          documents: [],
+          otherExecutionDocuments: [],
+          purchaseAgreement: null,
+          investmentMemorandum: null,
+        }
       )
 
       const res = {
@@ -1099,8 +1120,8 @@ export const useOfferFormInitialValues = (
             })
           : initialValues.additionalDocuments,
 
-        purchaseAgreement,  
-        investmentMemorandum,  
+        purchaseAgreement,
+        investmentMemorandum,
         otherExecutionDocuments: otherExecutionDocuments.length
           ? otherExecutionDocuments.map((document: any) => {
               const file = files.find((x) => x.id === document.file?.id)
@@ -1179,21 +1200,25 @@ export const useSubmitOffer = () => {
       const uploadedFiles = await uploadFiles(payload, initial)
       const findDoc = (prefix: 'member.photo' | 'document' | 'image' | 'otherExecutionDocument', idx: number) =>
         uploadedFiles.find((x) => x.name === `${prefix}.${idx}`)?.id
-      const purchaseAgreementId = uploadedFiles.find((x) => x.name === 'purchaseAgreement')?.id || 
-        payload.purchaseAgreement?.file?.id || null;
-      const investmentMemorandumId = uploadedFiles.find((x) => x.name === 'investmentMemorandum')?.id || 
-        payload.investmentMemorandum?.file?.id || null;
+      const purchaseAgreementId =
+        uploadedFiles.find((x) => x.name === 'purchaseAgreement')?.id || payload.purchaseAgreement?.file?.id || null
+      const investmentMemorandumId =
+        uploadedFiles.find((x) => x.name === 'investmentMemorandum')?.id ||
+        payload.investmentMemorandum?.file?.id ||
+        null
 
       const executionDocuments = []
-      if (purchaseAgreementId) executionDocuments.push({
-        type: OfferFileType.purchaseAgreement,
-        fileId: purchaseAgreementId
-      })
+      if (purchaseAgreementId)
+        executionDocuments.push({
+          type: OfferFileType.purchaseAgreement,
+          fileId: purchaseAgreementId,
+        })
 
-      if (investmentMemorandumId) executionDocuments.push({
-        type: OfferFileType.investmentMemorandum,
-        fileId: investmentMemorandumId
-      })
+      if (investmentMemorandumId)
+        executionDocuments.push({
+          type: OfferFileType.investmentMemorandum,
+          fileId: investmentMemorandumId,
+        })
 
       let data: Record<string, any> = {
         offerId,
@@ -1282,13 +1307,13 @@ export const useSubmitOffer = () => {
               fileId: findDoc('document', idx) || x.file?.id || null,
             }))
             .filter((x) => x.fileId),
-          
+
           ...payload.otherExecutionDocuments
             .map((x, idx) => ({
               type: OfferFileType.otherExecutionDocument,
               fileId: findDoc('otherExecutionDocument', idx) || x.file?.id || null,
             }))
-            .filter((x) => x.fileId),  
+            .filter((x) => x.fileId),
 
           ...payload.images
             .map((x, idx) => ({
@@ -1364,21 +1389,23 @@ export const useMinimalOfferEdit = () => {
     const find = (prefix: 'member.photo' | 'document' | 'image' | 'otherExecutionDocument', idx: number) =>
       files.find((x) => x.name === `${prefix}.${idx}`)?.id
 
-    const purchaseAgreementId = files.find((x) => x.name === 'purchaseAgreement')?.id || 
-      payload.purchaseAgreement?.file?.id || null;
-    const investmentMemorandumId = files.find((x) => x.name === 'investmentMemorandum')?.id || 
-      payload.investmentMemorandum?.file?.id || null;
+    const purchaseAgreementId =
+      files.find((x) => x.name === 'purchaseAgreement')?.id || payload.purchaseAgreement?.file?.id || null
+    const investmentMemorandumId =
+      files.find((x) => x.name === 'investmentMemorandum')?.id || payload.investmentMemorandum?.file?.id || null
 
     const executionDocuments = []
-    if (purchaseAgreementId) executionDocuments.push({
-      type: OfferFileType.purchaseAgreement,
-      fileId: purchaseAgreementId
-    })
+    if (purchaseAgreementId)
+      executionDocuments.push({
+        type: OfferFileType.purchaseAgreement,
+        fileId: purchaseAgreementId,
+      })
 
-    if (investmentMemorandumId) executionDocuments.push({
-      type: OfferFileType.investmentMemorandum,
-      fileId: investmentMemorandumId
-    })
+    if (investmentMemorandumId)
+      executionDocuments.push({
+        type: OfferFileType.investmentMemorandum,
+        fileId: investmentMemorandumId,
+      })
 
     const data = {
       shortDescription: payload.shortDescription,
@@ -1419,11 +1446,11 @@ export const useMinimalOfferEdit = () => {
       files: [
         ...executionDocuments,
         ...payload.otherExecutionDocuments
-            .map((x, idx) => ({
-              type: OfferFileType.otherExecutionDocument,
-              fileId: find('otherExecutionDocument', idx) || x.file?.id || null,
-            }))
-            .filter((x) => x.fileId),  
+          .map((x, idx) => ({
+            type: OfferFileType.otherExecutionDocument,
+            fileId: find('otherExecutionDocument', idx) || x.file?.id || null,
+          }))
+          .filter((x) => x.fileId),
 
         ...payload.additionalDocuments
           .map((x, idx) => ({
@@ -1480,25 +1507,34 @@ export const useGetManagedOfferPresaleStatistics = () => {
 }
 
 export const useGetManagedOfferPresaleWhitelists = () => {
-  return React.useCallback(async (offerId: string, page: number, isPending: boolean, order?: PresaleOrderConfig | ApprovedRejectedOrderConfig, size = 8) => {
-    const query = {
-      page,
-      offset: size,
-      order,
-      isPending
-    } as { [key: string]: any }
-    const result = await apiService
-      .get(`/offers/${offerId}/whitelists`, { paramsSerializer }, query)
-      .then((res) => res.data as PaginateResponse<OfferPresaleWhitelist>)
+  return React.useCallback(
+    async (
+      offerId: string,
+      page: number,
+      isPending: boolean,
+      order?: PresaleOrderConfig | ApprovedRejectedOrderConfig,
+      size = 8
+    ) => {
+      const query = {
+        page,
+        offset: size,
+        order,
+        isPending,
+      } as { [key: string]: any }
+      const result = await apiService
+        .get(`/offers/${offerId}/whitelists`, { paramsSerializer }, query)
+        .then((res) => res.data as PaginateResponse<OfferPresaleWhitelist>)
 
-    return {
-      hasMore: result.nextPage !== null,
-      items: result.items,
+      return {
+        hasMore: result.nextPage !== null,
+        items: result.items,
 
-      totalPages: result.totalPages,
-      totalItems: result.totalItems,
-    }
-  }, [])
+        totalPages: result.totalPages,
+        totalItems: result.totalItems,
+      }
+    },
+    []
+  )
 }
 
 export const useApproveRandomPresaleWhitelists = () => {
@@ -1602,7 +1638,7 @@ export const useOnChangeOrder = (
 
         setOrder({ [current]: manner })
       }
-      if(setPage) setPage(1)
+      if (setPage) setPage(1)
     },
     [order, setOrder, setPage]
   )
@@ -1655,3 +1691,18 @@ export const usePinOffer = () => {
   const getUrl = (issuanceId: number) => `/offers/${issuanceId}/pin`
   return useGenericPost(getUrl, GenericMethods.patch)
 }
+
+const useInvestingTokenSymbol = (investingTokenSymbol: string) => {
+  const { chainId } = useActiveWeb3React()
+  const isPolygonChain = POLYGON_CHAIN_IDS.includes(chainId)
+  const tokenSymbol = useMemo(() => {
+    if (isPolygonChain && investingTokenSymbol === INVESTING_TOKEN_SYMBOL.USDC) {
+      return INVESTING_TOKEN_SYMBOL['USDC.e']
+    }
+    return INVESTING_TOKEN_SYMBOL.USDC
+  }, [chainId, investingTokenSymbol])
+
+  return tokenSymbol
+}
+
+export default useInvestingTokenSymbol

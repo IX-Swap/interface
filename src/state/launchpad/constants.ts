@@ -1,14 +1,15 @@
-import { OfferIndustry, OfferStatus, OfferTimeframeType, OfferType } from "./types"
+import { USDC } from 'constants/tokens'
+import { OfferIndustry, OfferStatus, OfferTimeframeType, OfferType } from './types'
 
 export const OFFER_INDUSTRY_LABELS = [
-  { label: "Technology", value: OfferIndustry.technology},
-  { label: "Finance", value: OfferIndustry.finance },
-  { label: "Blockchain", value: OfferIndustry.blockchain },
-  { label: "Real Estate", value: OfferIndustry.realEstate },
-  { label: "Gaming", value: OfferIndustry.gaming },
-  { label: "Energy", value: OfferIndustry.energy },
-  { label: "Healthcare", value: OfferIndustry.healthcare},
-  { label: "Others", value: OfferIndustry.other },
+  { label: 'Technology', value: OfferIndustry.technology },
+  { label: 'Finance', value: OfferIndustry.finance },
+  { label: 'Blockchain', value: OfferIndustry.blockchain },
+  { label: 'Real Estate', value: OfferIndustry.realEstate },
+  { label: 'Gaming', value: OfferIndustry.gaming },
+  { label: 'Energy', value: OfferIndustry.energy },
+  { label: 'Healthcare', value: OfferIndustry.healthcare },
+  { label: 'Others', value: OfferIndustry.other },
 ]
 
 export const OFFER_STAGE_LABELS = [
@@ -29,9 +30,9 @@ export const OFFER_TIMEFRAME_TYPE_LABELS = [
 ]
 
 export const OFFER_TYPE_LABELS = [
-  { label: "Security token", value: OfferType.securityToken },
-  { label: "Fractionalized-NFT", value: OfferType.fNFT },
-  { label: "Cryptocurrency", value: OfferType.crypto } 
+  { label: 'Security token', value: OfferType.securityToken },
+  { label: 'Fractionalized-NFT', value: OfferType.fNFT },
+  { label: 'Cryptocurrency', value: OfferType.crypto },
 ]
 
 export const OFFER_RELATED_TIMEFRAMES = {
@@ -39,5 +40,10 @@ export const OFFER_RELATED_TIMEFRAMES = {
   preSale: 'sale',
   sale: 'closed',
   closed: 'claim',
-  claim: 'claim'
+  claim: 'claim',
+}
+
+export const INVESTING_TOKEN_SYMBOL = {
+  'USDC.e': 'USDC.e',
+  USDC: 'USDC',
 }

@@ -6,7 +6,11 @@ import { Offer, OfferStatus, WhitelistStatus } from 'state/launchpad/types'
 
 import MetamaskIcon from 'assets/images/metamask.png'
 
-import { useFormatOfferValue, useGetWhitelistStatus, useInvestedData } from 'state/launchpad/hooks'
+import useInvestingTokenSymbol, {
+  useFormatOfferValue,
+  useGetWhitelistStatus,
+  useInvestedData,
+} from 'state/launchpad/hooks'
 import { InvestmentSaleStatusInfo } from 'components/Launchpad/InvestmentCard/InvestmentSaleStatusInfo'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
@@ -91,7 +95,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
   const [showSuccess, setShowSuccess] = React.useState(false)
   const [showFailed, setShowFailed] = React.useState(false)
-
+  const updatedInvestingTokenSymbol = useInvestingTokenSymbol(props?.offer?.investingTokenSymbol || '')
   const shouldShowInvestButton = (
     stageStatus: OfferStageStatus,
     offerStatus: OfferStatus,
@@ -124,9 +128,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
           {stageStatus !== OfferStageStatus.notStarted && (
             <>
               <OfferInvestmentAmount>
-                {props.offer.investingTokenSymbol === 'USDC'
-                  ? `${props.offer.investingTokenSymbol}.e `
-                  : props.offer.investingTokenSymbol}
+                {updatedInvestingTokenSymbol}
                 &nbsp;{formatter.format(props.offer.totalInvestment)}
               </OfferInvestmentAmount>
 
@@ -246,6 +248,8 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
     [props.maxInvestment, props.tokenPrice]
   )
 
+  const updatedInvestingTokenSymbol = useInvestingTokenSymbol(props?.investingTokenSymbol || '')
+
   return (
     <InfoList
       entries={[
@@ -257,21 +261,19 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
         },
         {
           label: 'Token Price',
-          value: `${
-            props.investingTokenSymbol === 'USDC' ? `${props.investingTokenSymbol}.e ` : props.investingTokenSymbol
-          }  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}`,
+          value: `${updatedInvestingTokenSymbol}  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}`,
         },
         {
           label: 'Max. Investment Size',
-          value: `${
-            props.investingTokenSymbol === 'USDC' ? `${props.investingTokenSymbol}.e ` : props.investingTokenSymbol
-          } ${formatedValue(props.maxInvestment) ?? 'N/A'} / ${maxTokenInvestment} ${props.tokenSymbol}`,
+          value: `${updatedInvestingTokenSymbol} ${
+            formatedValue(props.maxInvestment) ?? 'N/A'
+          } / ${maxTokenInvestment} ${props.tokenSymbol}`,
         },
         {
           label: 'Min. Investment Size',
-          value: `${
-            props.investingTokenSymbol === 'USDC' ? `${props.investingTokenSymbol}.e ` : props.investingTokenSymbol
-          } ${formatedValue(props.minInvestment) ?? 'N/A'} / ${minTokenInvestment} ${props.tokenSymbol}`,
+          value: `${updatedInvestingTokenSymbol} ${
+            formatedValue(props.minInvestment) ?? 'N/A'
+          } / ${minTokenInvestment} ${props.tokenSymbol}`,
         },
       ]}
     />

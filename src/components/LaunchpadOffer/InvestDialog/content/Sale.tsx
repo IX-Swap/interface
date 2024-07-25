@@ -19,7 +19,12 @@ import { ConvertationField } from '../utils/ConvertationField'
 import { TokenClaimMessage } from '../utils/TokenClaimMessage'
 import { OfferLinks } from '../utils/OfferLinks'
 import { BaseCheckbox } from '../utils/Checkbox'
-import { useGetWhitelistStatus, useInvest, useInvestPublicSaleStructData, usePresaleProof } from 'state/launchpad/hooks'
+import useInvestingTokenSymbol, {
+  useGetWhitelistStatus,
+  useInvest,
+  useInvestPublicSaleStructData,
+  usePresaleProof,
+} from 'state/launchpad/hooks'
 import { text10, text11, text59 } from 'components/LaunchpadMisc/typography'
 import { useLaunchpadInvestmentContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
@@ -74,6 +79,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
   const formatter = useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
   const isPresale = useMemo(() => status === OfferStatus.preSale, [status])
   const { status: whitelistedStatus } = useGetWhitelistStatus(offer.id)
+  const updatedInvestingTokenSymbol = useInvestingTokenSymbol(investingTokenSymbol)
 
   const stageStatus = React.useMemo(() => {
     switch (offer.status) {
@@ -97,15 +103,15 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
     () => [
       {
         label: 'Min. Investment Size',
-        value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${
-          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
-        }`,
+        value: `${formatter.format(
+          Number(isPresale ? presaleMinInvestment : minInvestment)
+        )} ${updatedInvestingTokenSymbol}`,
       },
       {
         label: 'Max. Investment Size',
-        value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${
-          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
-        }`,
+        value: `${formatter.format(
+          Number(isPresale ? presaleMaxInvestment : maxInvestment)
+        )} ${updatedInvestingTokenSymbol}`,
       },
     ],
     [isPresale, presaleMaxInvestment, presaleMinInvestment, maxInvestment, minInvestment, investingTokenSymbol]
@@ -127,15 +133,11 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
     return [
       {
         label: 'Available to invest',
-        value: `${formatter.format(availableToInvest)} ${
-          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
-        }`,
+        value: `${formatter.format(availableToInvest)} ${updatedInvestingTokenSymbol}`,
       },
       {
         label: 'Already invested',
-        value: `${formatter.format(amountInvested)} ${
-          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
-        }`,
+        value: `${formatter.format(amountInvested)} ${updatedInvestingTokenSymbol}`,
       },
       {
         label: (

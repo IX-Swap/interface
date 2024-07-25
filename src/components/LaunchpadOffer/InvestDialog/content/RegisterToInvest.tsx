@@ -5,7 +5,7 @@ import { Formik } from 'formik'
 import { boolean, number, object, string } from 'yup'
 import { CheckCircle, Info, Clock, Check } from 'react-feather'
 import { Offer, WhitelistStatus } from 'state/launchpad/types'
-import { useGetWhitelistStatus, useRequestWhitelist } from 'state/launchpad/hooks'
+import useInvestingTokenSymbol, { useGetWhitelistStatus, useRequestWhitelist } from 'state/launchpad/hooks'
 import { Centered, Column, ErrorText, FormFieldContainer, Row } from 'components/LaunchpadMisc/styled'
 import { InvestFormContainer, Title } from './styled'
 import { InvestTextField } from '../utils/InvestTextField'
@@ -15,7 +15,6 @@ import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { text28, text59, text9 } from 'components/LaunchpadMisc/typography'
 import { useGetWarning } from '../utils/ConvertationField'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
-import { ReactComponent as NewEyeIcon } from '../../../../assets/images/NewEyeIcon.svg'
 
 interface Props {
   offer: Offer
@@ -67,6 +66,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
   const [amount, setAmount] = React.useState('')
   const showError = useShowError()
   const showSuccess = useShowSuccess()
+  const updatedInvestingTokenSymbol = useInvestingTokenSymbol(props?.offer?.investingTokenSymbol || '')
   const submit = React.useCallback(
     async (values: FormValues) => {
       try {
@@ -151,13 +151,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
                 <InvestTextField
                   type="number"
                   label="How much will be your estimated investment?"
-                  trailing={
-                    <CurrencyLabel>
-                      {props.offer.investingTokenSymbol === 'USDC'
-                        ? `${props.offer.investingTokenSymbol}.e`
-                        : props.offer.investingTokenSymbol}
-                    </CurrencyLabel>
-                  }
+                  trailing={<CurrencyLabel>{updatedInvestingTokenSymbol}</CurrencyLabel>}
                   value={amount}
                   onChange={(value) => onChangeAmount(value, setFieldValue)}
                   disabled={!values.isInterested}
