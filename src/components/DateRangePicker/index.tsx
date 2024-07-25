@@ -9,6 +9,7 @@ import { Input } from 'components/Input'
 import { TYPE } from 'theme'
 import { DarkBlueCard } from 'components/MultipleFilters/styleds'
 import { Props as LabelProps } from 'components/Label'
+import { ReactComponent as ArrowDownIcon } from 'assets/images/arrow-down.svg'
 
 interface Props extends Partial<LabelProps> {
   value: [null | string, null | string]
@@ -95,6 +96,7 @@ export const DateRangePickerFilter = ({ value, onChange, label, calendars = 1, .
             >
               {label}
             </TYPE.body2>
+            <ArrowDownIcon />
           </DarkBlueCard>
         )
       }}
