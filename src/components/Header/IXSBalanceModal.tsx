@@ -95,28 +95,33 @@ export const IXSBalanceModal = () => {
                   )
                 }
               />
-              <TextRow
-                textLeft={
-                  <RowBetween style={{ gap: '5px' }}>
-                    <Trans>Balance of IXGov</Trans>
-                    {IXSCurrency && library?.provider?.isMetaMask && (
-                      <TextGradient
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => !addIXSGov.success && addIXSGov.addToken()}
-                      >
-                        {!addIXSGov.success ? <Trans>Add to Metamask</Trans> : null}
-                      </TextGradient>
-                    )}
-                  </RowBetween>
-                }
-                textRight={
-                  IXSGovBalance ? (
-                    <>{`${formatAmount(Number(IXSGovBalance?.amount?.toSignificant(12)))} ${IXSGovCurrency?.symbol}`}</>
-                  ) : (
-                    <LoaderThin size={16} />
-                  )
-                }
-              />
+
+              {IXSGovBalance && IXSGovBalance.amount ? (
+                <TextRow
+                  textLeft={
+                    <RowBetween style={{ gap: '5px' }}>
+                      <Trans>Balance of IXGov</Trans>
+                      {IXSCurrency && library?.provider?.isMetaMask && (
+                        <TextGradient
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => !addIXSGov.success && addIXSGov.addToken()}
+                        >
+                          {!addIXSGov.success ? <Trans>Add to Metamask</Trans> : null}
+                        </TextGradient>
+                      )}
+                    </RowBetween>
+                  }
+                  textRight={
+                    IXSGovBalance ? (
+                      <>{`${formatAmount(Number(IXSGovBalance?.amount?.toSignificant(12)))} ${
+                        IXSGovCurrency?.symbol
+                      }`}</>
+                    ) : (
+                      <LoaderThin size={16} />
+                    )
+                  }
+                />
+              ) : null}
             </AdjustableColumn>
             <Column style={{ gap: '6px', marginTop: '22px' }}></Column>
           </ModalPadding>
