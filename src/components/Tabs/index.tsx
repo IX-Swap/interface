@@ -26,7 +26,7 @@ export const ToggleOption = styled.div<{ active?: boolean }>`
   line-height: 40px;
   /* text-transform: uppercase; */
   background-color: transparent;
-  color: ${({ theme, active }) => (active ? theme.text2 : hexToRGBA(theme.text2, 0.7))};
+  color: ${({ theme, active }) => (active ? theme.text1 : hexToRGBA(theme.text2, 0.7))};
   user-select: none;
 
   :hover {
@@ -34,10 +34,19 @@ export const ToggleOption = styled.div<{ active?: boolean }>`
     opacity: 0.7;
   }
 `
+
 export const Border = styled.div<{ active?: boolean }>`
   height: 2px;
   width: 100%;
   position: absolute;
   top: 100%;
   background: ${({ theme, active }) => (active ? theme.bgG3 : 'transparent')};
+`
+
+export const BorderSimple = styled.div<{ active?: boolean }>`
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  background: ${({ theme, active }) => (active ? theme.bg26 : 'transparent')};
 `
