@@ -50,8 +50,13 @@ export const CustodianStatus = ({ status, id, custodian, searchValue }: Props) =
                 <LoaderThin size={20} />
               ) : (
                 <>
-                  <CheckIcon onClick={approve} />
-                  <CrossIcon onClick={openModal} />
+                  <ActionButton>
+                    <CheckIcon onClick={approve} />
+                  </ActionButton>
+
+                  <ActionButton>
+                    <CrossIcon onClick={openModal} />
+                  </ActionButton>
                 </>
               )}
             </ButtonsContainer>
@@ -108,28 +113,4 @@ const Container = styled.div`
 
 const ActionButton = styled.div`
   cursor: pointer;
-  width: 40px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ theme: { bg1 } }) => bg1};
-  border-radius: 40px;
-`
-
-const StyledCheckIcon = styled(CheckIcon)`
-  width: 8.5px;
-  stroke: ${({ theme }) => theme.green1};
-  > path {
-    fill: ${({ theme }) => theme.green1};
-  }
-`
-
-const StyledCrossIcon = styled(CrossIcon)`
-  width: 6.5px;
-  height: 6.5px;
-  stroke: ${({ theme }) => theme.bg14};
-  > path {
-    fill: ${({ theme }) => theme.bg14};
-  }
 `
