@@ -37,6 +37,7 @@ export const Banner = () => {
           </BannerInfoRedirectLabel>
         </BannerInfoRedirect>
       </BannerContent>
+      {/* Comment out LPBackground for now. We may need this in the future when we improve the design. */}
       {/* <BannerImage>
         <LPBackground />
       </BannerImage> */}
