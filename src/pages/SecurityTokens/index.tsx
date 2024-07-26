@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import { Border, ToggleOption } from 'components/Tabs'
+import { BorderSimple, ToggleOption } from 'components/Tabs'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
 import CustodianV2 from 'pages/CustodianV2'
@@ -77,14 +77,17 @@ const SecurityTokens = () => {
   ) : (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
       <TabsContainer>
-        {tabs.map(({ value, label }, index) => (
-          <>
-            <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-              <TabLabel><Trans>{label}</Trans></TabLabel>
-              <Border active={selectedTab === value} />
-            </ToggleOption>
-          </>
-        ))}
+        {tabs.map(({ value, label }, index) => {
+          const active = selectedTab === value
+          return (
+            <>
+              <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={active}>
+                <TabLabel><Trans>{label}</Trans></TabLabel>
+                <BorderSimple active={selectedTab === value} />
+              </ToggleOption>
+            </>
+          )
+        })}
       </TabsContainer>
       {renderTab(selectedTab)}
     </StyledBodyWrapper>
@@ -101,13 +104,21 @@ const TabsContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 32px;
-  column-gap: 32px;
+  border-bottom: 1px solid;
+  border-color: ${({ theme }) => theme.bg24};
+  margin: 0 -40px 0 -40px;
+  padding: 0 40px 0 40px;
 `
 
 const TabLabel = styled.div`
-  @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
-    font-size: 20px;
-  }
+  cursor: pointer;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  height: 80px;
+  display: flex;
+  align-items: center;
 `
 
 export const StyledBodyWrapper = styled(BodyWrapper)`
