@@ -1,6 +1,6 @@
 import type { AddEthereumChainParameter } from '@web3-react/types'
 import { SupportedChainId } from 'constants/chains'
-import { isProd } from 'utils/isEnvMode'
+import { isProd, isStaging } from 'utils/isEnvMode'
 import { capitalizeWords } from 'utils/strings'
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
@@ -193,7 +193,7 @@ export const checkWrongChain = (
     }
   }
   const [testChain, mainChain] = expectedChains
-  if (isProd) {
+  if (isProd || isStaging) {
     return {
       isWrongChain: chainId != mainChain,
       expectChain: mainChain,
