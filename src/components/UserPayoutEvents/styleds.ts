@@ -1,3 +1,4 @@
+import { background } from 'styled-system'
 import styled, { css } from 'styled-components'
 import { ellipsisText, gradientBorder, MEDIA_WIDTHS } from 'theme'
 
@@ -10,27 +11,30 @@ export const Tabs = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  border-bottom: 1px solid;
+  border-color: ${({ theme }) => theme.bg24};
+  margin: 0 -40px 0 -40px;
+  padding: 0 40px 0 40px;
 `
 
 export const Tab = styled.div<{ active: boolean }>`
   cursor: pointer;
   padding: 12px 20px;
-  border-radius: 32px 32px 0px 0px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 13px;
   line-height: 16px;
+  height: 80px;
+  display: flex;
+  align-items: center;
   ${({ active }) =>
     active
       ? css`
-          background: ${({ theme }) => theme.bgG3};
+          border-bottom: 2px solid;
+          border-color: ${({ theme }) => theme.bg26};
         `
       : css`
           position: relative;
-          ${gradientBorder}
-          ::before {
-            border-radius: 32px 32px 0px 0px;
-            padding: 1px;
-          }
+          color: ${({ theme }) => theme.text6};
         `}
   @media(max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
     font-size: 13px;
@@ -42,9 +46,7 @@ export const Tab = styled.div<{ active: boolean }>`
 export const Body = styled.div`
   position: relative;
   padding: 32px;
-  ${gradientBorder}
   ::before {
-    border-radius: 0px 32px 32px 32px;
     padding: 1px;
     @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
       border-radius: 0px 0px 32px 32px;
@@ -154,6 +156,13 @@ export const AllPayoutContainer = styled.div`
   }
 `
 
+export const AllPayoutListLayout = styled.div`
+  margin: 0 -80px 0 -80px;
+  padding: 40px 80px;
+  background: ${({ theme }) => theme.bg1};
+`
+
+
 export const AllPayoutListContainer = styled.div`
   margin-bottom: 40px;
   display: grid;
@@ -175,7 +184,9 @@ export const AllPayoutListContainer = styled.div`
 `
 
 export const CardContainer = styled.div`
-  border: 1px solid #E6E6FF;
+  border: 1px solid;
+  border-color: ${({ theme }) => theme.bg24};
+  background: #ffffff;
   border-radius: 8px;
   padding: 24px;
   display: flex;
