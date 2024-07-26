@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import _get from 'lodash/get'
-
 import LearnMoreIcon from 'assets/launchpad/icons/learn-more.png'
 import { text31, text52, text6 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
 import { isMobile } from 'react-device-detect'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+// import { ReactComponent as LPBackground } from 'assets/images/LPBackground.svg'
 
 export const Banner = () => {
   const { config } = useWhitelabelState()
@@ -17,32 +17,53 @@ export const Banner = () => {
 
   return (
     <BannerContainer>
-      {isMobile ? (
-        <>
-          <BannerTitle dangerouslySetInnerHTML={{ __html: launchpadBannerTitle.replaceAll('<br /> ', '') }}></BannerTitle>
-          <BannerTitleMobile>Next Generation Fundraising</BannerTitleMobile>
-        </>
-      ) : (
-        <BannerTitle dangerouslySetInnerHTML={{ __html: launchpadBannerTitle }} />
-      )}
+      <BannerContent>
+        {isMobile ? (
+          <>
+            <BannerTitle
+              dangerouslySetInnerHTML={{ __html: launchpadBannerTitle.replaceAll('<br /> ', '') }}
+            ></BannerTitle>
+            <BannerTitleMobile>Next Generation Fundraising</BannerTitleMobile>
+          </>
+        ) : (
+          <BannerTitle dangerouslySetInnerHTML={{ __html: launchpadBannerTitle }} />
+        )}
 
-      <BannerInfoRedirect>
-        <BannerInfoRedirectImage src={LearnMoreIcon} />
-        <BannerInfoRedirectLabel>
-          <BannerInfoRedirectTitle>{launchpadBannerInfoRedirectTitle}</BannerInfoRedirectTitle>
-          <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl}>Learn more</BannerInfoRedirectSubtitle>
-        </BannerInfoRedirectLabel>
-      </BannerInfoRedirect>
+        <BannerInfoRedirect>
+          <BannerInfoRedirectImage src={LearnMoreIcon} />
+          <BannerInfoRedirectLabel>
+            <BannerInfoRedirectTitle>{launchpadBannerInfoRedirectTitle}</BannerInfoRedirectTitle>
+            <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl}>Learn more</BannerInfoRedirectSubtitle>
+          </BannerInfoRedirectLabel>
+        </BannerInfoRedirect>
+      </BannerContent>
+      {/* <BannerImage>
+        <LPBackground />
+      </BannerImage> */}
     </BannerContainer>
   )
 }
 
 const BannerContainer = styled.div`
+  display: grid;
+  grid-template-columns: 60% 40%;
   max-width: ${(props) => props.theme.launchpad.content.maxWidth};
-  margin: 8rem 1rem 0rem 0rem;
+  margin: 0 1rem;
   width: 100%;
+  height: 100vh;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    margin: 2rem 5rem 0rem 5rem;
+    grid-template-columns: 1fr;
+    margin: 2rem 1rem 0rem 1rem;
+  }
+`
+
+const BannerContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8rem 1rem 0rem 0rem;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 2rem 1rem 0rem 1rem;
   }
 `
 
@@ -107,4 +128,16 @@ const BannerInfoRedirectSubtitle = styled.a`
   font-family: ${(props) => props.theme.launchpad.font};
   ${text6}
   text-decoration: none;
+`
+
+const BannerImage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin-left: auto;
+  padding: 0;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    height: auto;
+  }
 `

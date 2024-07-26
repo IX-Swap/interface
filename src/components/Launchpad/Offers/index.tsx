@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react'
-
+import styled from 'styled-components'
 import { InvestmentList } from 'components/Launchpad/InvestmentList'
 import { FilterConfig } from 'components/Launchpad/InvestmentList/Filter'
-
 import { Pinned } from './Pinned'
-
 import { Offer } from 'state/launchpad/types'
 import { useGetOffers } from 'state/launchpad/hooks'
+
+const InvestmentListWrapper = styled.div`
+  background-color: #ffffff;
+  padding: 1rem;
+  padding-top: 80px;
+  padding-bottom: 50px;
+`
 
 export const Offers = () => {
   const getOffers = useGetOffers()
@@ -46,25 +51,19 @@ export const Offers = () => {
     setLoading(false)
   }, [offers, page, filter])
 
-  // if (loading) {
-  //   return (
-  //     <Centered width="100%">
-  //       <Loader />
-  //     </Centered>
-  //   )
-  // }
-
   return (
     <div style={{ width: '100%' }}>
       <Pinned />
-      <InvestmentList
-        offers={offers}
-        filter={filter}
-        onFilter={setFilter}
-        fetchMore={fetchMore}
-        isLoading={loading}
-        hasMore={hasMore}
-      />
+      <InvestmentListWrapper>
+        <InvestmentList
+          offers={offers}
+          filter={filter}
+          onFilter={setFilter}
+          fetchMore={fetchMore}
+          isLoading={loading}
+          hasMore={hasMore}
+        />
+      </InvestmentListWrapper>
     </div>
   )
 }

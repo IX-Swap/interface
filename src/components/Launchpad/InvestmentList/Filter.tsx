@@ -53,13 +53,6 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
           onSelect={handleDropdownSelect('stage')}
         />
 
-        {!isMobile && (
-          <FilterSearchField>
-            <FilterSearchInput value={filter.search} onChange={onSearchChange} />
-            <SearchIcon />
-          </FilterSearchField>
-        )}
-
         {!isMobile && <Spacer />}
         {/* Disabled for version 2 https://app.clickup.com/t/4733323/IXS-2662 */}
         <FilterDropdown
@@ -74,6 +67,12 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
           <FilterIcon /> Filter
         </FilterButton>
       </FilterContainer>
+      {!isMobile && (
+        <FilterSearchField>
+          <SearchIcon />
+          <FilterSearchInput placeholder='Search' value={filter.search} onChange={onSearchChange} />
+        </FilterSearchField>
+      )}
 
       {isMobile && (
         <FilterSearchField>
@@ -115,7 +114,7 @@ const FilterSearchField = styled.div`
   border-radius: 8px;
   height: 40px;
   flex-basis: 300px;
-
+  margin: 10px 0px 20px 0px;
   @media (max-width: 768px) {
     flex-basis: 50px;
     margin-bottom: 20px;
@@ -138,9 +137,9 @@ const FilterButton = styled.button`
   padding: 0.5rem 0.75rem;
   height: 40px;
   background: ${(props) =>
-    props.disabled ? props.theme.launchpad.colors.disabled : props.theme.launchpad.colors.background};
+ props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
-  opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   border: 1px solid #e6e6ff;
   border-radius: 6px;
   font-family: ${(props) => props.theme.launchpad.font};

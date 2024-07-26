@@ -24,6 +24,7 @@ import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { NETWORK_LOGOS } from 'constants/chains'
+import { PinnedContentButton } from 'components/Button'
 
 interface Props {
   offer: any
@@ -175,9 +176,9 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
           <InvestmentCardFooter>
             {!isClosed && !offer.allowOnlyAccredited && (
-              <InvestButton type="button" onClick={onClick}>
+              <PinnedContentButton type="button" onClick={onClick}>
                 Invest
-              </InvestButton>
+              </PinnedContentButton>
             )}
 
             {!isClosed && offer.allowOnlyAccredited && (

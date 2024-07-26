@@ -74,7 +74,7 @@ export const Pinned: React.FC = () => {
   if (!offer) {
     return (
       <>
-        <PinnedWrapper>
+        <PinnedWrapper style={{margin: '0px', padding: '0px'}}>
           <PinnedContainer></PinnedContainer>
         </PinnedWrapper>
       </>
