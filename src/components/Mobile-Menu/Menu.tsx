@@ -3,23 +3,21 @@ import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useCallback, useEffect, useMemo } from 'react'
+import { useCookies } from 'react-cookie'
 import { NavLink } from 'react-router-dom'
 import styled, { css } from 'styled-components'
+
 import { ExternalLink } from 'theme'
 import { routes } from 'utils/routes'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
-
 import { ReactComponent as CloseIcon } from '../../assets/images/newCross.svg'
 import { disabledStyle } from 'components/Header/HeaderLinks'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { useKyc, useRole } from 'state/user/hooks'
 import { Line } from 'components/Line'
-import { Li } from 'pages/KYC/styleds'
-
 import MenuMobile from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Fade from '@mui/material/Fade'
-import { Button } from 'rebass'
 
 interface Props {
   close: () => void
@@ -29,6 +27,7 @@ interface Props {
 export const Menu = ({ close, isAdminMenu }: Props) => {
   const { chainId, account } = useActiveWeb3React()
   const { config } = useWhitelabelState()
+  const [cookies] = useCookies(['annoucementsSeen'])
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -69,7 +68,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
     [config]
   )
 
-  const { isCorporate, isApproved } = useKyc()
+  const { isApproved } = useKyc()
   const { isOfferManager, isAdmin, isTokenManager } = useRole()
 
   const showIssuance = useMemo(
@@ -126,7 +125,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
           <CloseIcon onClick={close} />
         </CloseContainer>
 
-        <MenuList>
+        <MenuList style={!cookies.annoucementsSeen ? { marginTop: 130 } : {}}>
           {isIxSwap && isWhitelisted ? (
             <>
               <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
@@ -319,7 +318,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         </MenuList>
       </Container>
       <StyledFooter>
-        <span>Copyright ©{config?.name || 'IX Swap'} 2024</span>
+        <span>Copyright © IX Swap 2024</span>
         <div>
           <a
             href={config?.termsAndConditionsUrl || 'https://ixswap.io/terms-and-conditions/'}
@@ -398,14 +397,6 @@ const CloseContainer = styled.div`
   border: 1px solid #e6e6ff;
   border-radius: 6px;
   padding: 10px 12px;
-`
-
-const StyledCloseIcon = styled(CloseIcon)`
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  z-index: 9999;
-  color: black;
 `
 
 const MenuList = styled.div`

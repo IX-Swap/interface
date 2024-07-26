@@ -12,6 +12,7 @@ import { CopyAddress } from 'components/CopyAddress'
 import { IndividualKycVersion, KycItem } from 'state/admin/actions'
 import { AdminKycFilters, TStats } from 'components/AdminKycFilters'
 import { adminOffset as offset } from 'state/admin/constants'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 import { Pagination } from '../Pagination'
 import { BodyRow, HeaderRow, Table } from '../Table'
@@ -36,7 +37,7 @@ const headerCells = [
   { key: 'status', label: 'KYC Status', show: false },
   { key: 'completedKycOfProvider', label: 'Review Status', show: false },
   { key: 'updatedAt', label: 'Updated At', show: true },
-  { key: 'approver', label: 'Approver', show: true },
+  { key: 'authorizer', label: 'Authorizer', show: true },
 ]
 interface RowProps {
   item: KycItem
@@ -63,9 +64,17 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
     : kyc?.corporateName
 
   let approverName = '-'
-  if (individual?.version === IndividualKycVersion.v2) {
-    const approverUser =
-      (audits.length > 0 && audits[audits.length - 1]?.approvedByUser) || audits[audits.length - 1]?.rejectedByUser
+  if (
+    individual?.version === IndividualKycVersion.v2 &&
+    (status === KYCStatuses.APPROVED || status === KYCStatuses.REJECTED)
+  ) {
+    let approverUser = null
+    const lastIndex = audits.length > 0 ? audits.length - 1 : 0
+    if (status === KYCStatuses.APPROVED) {
+      approverUser = audits[lastIndex]?.approvedByUser
+    } else if (status === KYCStatuses.REJECTED) {
+      approverUser = audits[lastIndex]?.rejectedByUser
+    }
     approverName = approverUser ? [approverUser?.firstName, approverUser?.lastName].join(' ') : 'Automatic'
   }
 
@@ -119,7 +128,7 @@ export const AdminKycTable = () => {
   const [order, setOrder] = React.useState<KycOrderConfig>({})
 
   const {
-    kycList: { totalPages, page, items },
+    kycList: { totalPages, page, items, totalItems },
     adminLoading,
   } = useAdminState()
   const getKycList = useGetKycList()
@@ -246,7 +255,7 @@ export const AdminKycTable = () => {
               </>
             }
           />
-          <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+          <Pagination totalItems={totalItems} page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
       )}
     </div>

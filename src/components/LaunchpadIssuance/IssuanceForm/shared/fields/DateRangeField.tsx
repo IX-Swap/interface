@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import moment, { Moment } from 'moment'
 import { Calendar, ChevronLeft, ChevronRight } from 'react-feather'
@@ -12,6 +12,7 @@ import { LocalizationProvider, TimePicker, TimeValidationError } from '@mui/x-da
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import useStateRef from 'react-usestateref'
 import { formatDateRange } from 'components/LaunchpadIssuance/ManageOffer/utils'
+import { MIN_DATE_DIFF_MINUTES } from '../constants'
 
 type DateRange = moment.Moment[]
 type DateRangeValue = Date[]
@@ -29,6 +30,7 @@ interface Props {
   onChange?: (range: DateRangeValue) => void
   showButton?: boolean
   dateFormat?: string
+  onError?: (field: string, errorText: string) => void
 }
 
 export const DateRangeField: React.FC<Props> = (props) => {
@@ -47,23 +49,34 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const nextMonth = React.useMemo(() => currentMonth.clone().month(currentMonth.get('month') + 1), [currentMonth])
 
   const copyTime = (date: moment.Moment, time: moment.Moment): moment.Moment => {
-    return date.set({
-      hour: time.get('hour'),
-      minute: time.get('minute'),
-      second: time.get('second'),
-    })
+    try {
+      return date.set({
+        hour: time.get('hour'),
+        minute: time.get('minute'),
+        second: time.get('second'),
+      })
+    } catch (error) {
+      console.error('Error in copyTime function:', error)
+      return date
+    }
   }
 
   const callPropsOnChange = () => {
-    if (props.field && props.setter && selectedRangeRef.current) {
-      props.setter(
-        props.field,
-        props.mode === 'single' ? selectedRangeRef.current[0].toDate() : selectedRangeRef.current.map((x) => x.toDate())
-      )
-    }
+    try {
+      if (props.field && props.setter && selectedRangeRef.current) {
+        props.setter(
+          props.field,
+          props.mode === 'single'
+            ? selectedRangeRef.current[0].toDate()
+            : selectedRangeRef.current.map((x) => x.toDate())
+        )
+      }
 
-    if (props.onChange) {
-      props.onChange(selectedRangeRef.current.map((x) => x.toDate()))
+      if (props.onChange) {
+        props.onChange(selectedRangeRef.current.map((x) => x.toDate()))
+      }
+    } catch (error) {
+      console.error('Error in callPropsOnChange:', error)
     }
   }
 
@@ -123,7 +136,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
         if (props.mode === 'range' && range.length === 2) {
           const duration = moment.duration(range[1].diff(range[0]))
           const minutes = duration.asMinutes()
-          if (minutes < 20) {
+          if (minutes < MIN_DATE_DIFF_MINUTES) {
             setDateErrorText('The end date should be later than the start date at least 20 minutes')
             return
           }
@@ -146,36 +159,33 @@ export const DateRangeField: React.FC<Props> = (props) => {
     }
   }, [props.disabled, showPicker, range, props.minDate, startTimeError, endTimeError])
 
-  const onSelect = React.useCallback(
-    (value: moment.Moment) => {
-      if (props.mode === 'single') {
-        if (startTimeRef.current) {
-          value = copyTime(value, startTimeRef.current)
-        }
-        setSelectedRange([value])
-      } else if (range.length === 1) {
-        let first = range[0]
-        if (first.isBefore(value)) {
-          if (startTimeRef.current && endTimeRef.current) {
-            first = copyTime(first, startTimeRef.current)
-            value = copyTime(value, endTimeRef.current)
-          }
-          setSelectedRange([first, value])
-        } else {
-          if (startTimeRef.current && endTimeRef.current) {
-            value = copyTime(value, startTimeRef.current)
-            first = copyTime(first, endTimeRef.current)
-          }
-          setSelectedRange([value, first])
-        }
-      } else {
-        setSelectedRange([value])
+  const onSelect = (value: moment.Moment) => {
+    if (props.mode === 'single') {
+      if (startTimeRef.current) {
+        value = copyTime(value, startTimeRef.current)
       }
+      setSelectedRange([value])
+    } else if (range.length === 1) {
+      let first = range[0]
+      if (first.isBefore(value)) {
+        if (startTimeRef.current && endTimeRef.current) {
+          first = copyTime(first, startTimeRef.current)
+          value = copyTime(value, endTimeRef.current)
+        }
+        setSelectedRange([first, value])
+      } else {
+        if (startTimeRef.current && endTimeRef.current) {
+          value = copyTime(value, startTimeRef.current)
+          first = copyTime(first, endTimeRef.current)
+        }
+        setSelectedRange([value, first])
+      }
+    } else {
+      setSelectedRange([value])
+    }
 
-      callPropsOnChange()
-    },
-    [range, selectedRange, startTime, endTime]
-  )
+    callPropsOnChange()
+  }
 
   const moveMonthBack = React.useCallback(
     () => setCurrentMonth((state) => state.clone().month(state.get('month') - 1)),
@@ -206,6 +216,21 @@ export const DateRangeField: React.FC<Props> = (props) => {
     }
   }, [props.value])
 
+  // Closes the date picker and handles errors via onError callback.
+  const handlePickerClose = useCallback(() => {
+    setStartTime(moment().startOf('day'))
+    setEndTime(moment().startOf('day'))
+    setShowPicker(false)
+    if (typeof props.onError === 'function') {
+      try {
+        props.onError(props.field || '', dateErrorText || '')
+      } catch (error) {
+        console.error('Error in handlePickerClose:', error)
+        props.onError(props.field || '', 'An unexpected error occurred. Please try again.')
+      }
+    }
+  }, [dateErrorText, props.field, props.onError])
+
   return (
     <Column>
       <FieldContainer disabled={props.disabled} onClick={toggle}>
@@ -216,7 +241,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
         <FieldValue isPlaceholder={formattedDate.startsWith('m')}>{formattedDate}</FieldValue>
       </FieldContainer>
-      <IssuanceDialog show={showPicker} onClose={toggle}>
+      <IssuanceDialog show={showPicker} onClose={handlePickerClose}>
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <DatePicker>
             <DatePickerHeader area="current-header">

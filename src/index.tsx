@@ -29,11 +29,8 @@ import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import * as Sentry from '@sentry/react'
-import { metaMask } from 'connectors/metaMask'
-import { walletConnectV2 } from 'connectors/walletConnectV2'
 
 /* eslint-disable react/display-name */
-
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
 }

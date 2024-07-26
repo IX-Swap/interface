@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
 import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { RowBetween } from 'components/Row'
@@ -13,7 +13,7 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
   const showFakeApproval = useFakeApprovalState()
   const setShowFakeApproval = useToggleFakeApproval()
   const { authorizationInProgress } = useSwapHelpersState()
-  const [clickedAddress, setClickedAddress] = useState<string | null>(null);
+
   const brokerDealerDTO = useBrokerDealerState()
   const submitToBrokerDealer = useSubmitBrokerDealerForm()
 
@@ -25,58 +25,63 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
   const authorizeFirstStep = useSwapAuthorizeFirstStep(trade, allowedSlippage, formRef)
 
   useEffect(() => {
-    if (showFakeApproval && authorizationInProgress) {
+    if (showFakeApproval) {
       setTimeout(() => {
-        setShowFakeApproval(false);
+        setShowFakeApproval(false)
         submitToBrokerDealer({
-          dto: { ...brokerDealerDTO, pairAddress: authorizationInProgress.pairAddress },
+          dto: { ...brokerDealerDTO, pairAddress: authorizationInProgress?.pairAddress },
           formRef,
-        });
-      }, 5000);
+        })
+      }, 5000)
     }
-  }, [setShowFakeApproval, brokerDealerDTO, formRef, submitToBrokerDealer, showFakeApproval, authorizationInProgress?.pairAddress]);
+  }, [
+    setShowFakeApproval,
+    brokerDealerDTO,
+    formRef,
+    submitToBrokerDealer,
+    showFakeApproval,
+    authorizationInProgress?.pairAddress,
+  ])
 
   const startFirstStep = useCallback(
     (address: any) => {
-      setClickedAddress(address);
-      authorizeFirstStep(secTokens[address]);
+      authorizeFirstStep(secTokens[address])
     },
-    [setClickedAddress, authorizeFirstStep, secTokens]
-  );
+    [authorizeFirstStep, secTokens]
+  )
 
   if (!missingAuthorizations || missingAuthorizations?.length === 0 || insufficientBalance) {
     return null
   }
 
-
-
-  if (!missingAuthorizations || missingAuthorizations.length === 0 || insufficientBalance) {
-    return null;
-  }
+  // Show the first authorization only
+  const address = missingAuthorizations[0]
 
   return (
     <RowBetween style={{ flexWrap: 'wrap', gap: '16px' }}>
-      {missingAuthorizations.map((address) => (
-        <React.Fragment key={address}>
-          {address && secTokens[address] && allowSwap && (
-            <>
-              {clickedAddress === address ? (
-                <PinnedContentButton disabled style={{ width: '100%' }} data-testid={'authorize' + secTokens[address]?.symbol + 'button'}>
-                  Confirming transaction with broker...
-                </PinnedContentButton>
-              ) : (
-                <PinnedContentButton
-                  onClick={() => startFirstStep(address)}
-                  style={{ width: '100%' }}
-                  data-testid={'authorize' + secTokens[address]?.symbol + 'button'}
-                >
-                  Authorize {secTokens[address]?.symbol}
-                </PinnedContentButton>
-              )}
-            </>
-          )}
-        </React.Fragment>
-      ))}
+      <React.Fragment key={address}>
+        {address && secTokens[address] && allowSwap && (
+          <>
+            {Boolean(authorizationInProgress) ? (
+              <PinnedContentButton
+                disabled
+                style={{ width: '100%' }}
+                data-testid={'authorize' + secTokens[address]?.symbol + 'button'}
+              >
+                Confirming transaction with broker...
+              </PinnedContentButton>
+            ) : (
+              <PinnedContentButton
+                onClick={() => startFirstStep(address)}
+                style={{ width: '100%' }}
+                data-testid={'authorize' + secTokens[address]?.symbol + 'button'}
+              >
+                Authorize {secTokens[address]?.symbol}
+              </PinnedContentButton>
+            )}
+          </>
+        )}
+      </React.Fragment>
     </RowBetween>
-  );
+  )
 }

@@ -142,7 +142,6 @@ const TitleContainer = styled.div`
 const ActionContainer = styled.div`
   display: flex;
   gap: 16px;
-  margin-top: 20px;
   width: -webkit-fill-available;
 `
 

@@ -50,18 +50,6 @@ const NewContainer = styled.div<{ hideInput: boolean }>`
   border: solid 1px #e6e6ff;
   background-color: ${({ theme }) => theme.config.background?.main || theme.bg1};
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      border-radius: 20px;
-  `};
-`
-
-const Container = styled.div<{ hideInput: boolean }>`
-  border-radius: 36px;
-  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
-  width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      border-radius: 20px;
-  `};
 `
 
 const CurrencySelect = styled(ButtonEmpty)<{ selected: boolean; hideInput?: boolean }>`
@@ -158,10 +146,10 @@ const BalanceWrap = styled(RowFixed)`
 `
 export const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
   background-color: transparent;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   text-transform: uppercase;
-  padding: 15px 20px;
+  padding: 14px 20px;
   border: 1px solid #e6e6ff;
   background: white;
 
@@ -183,6 +171,20 @@ export const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
     margin-right: 0rem;
      padding: 10px 10px;
   `};
+`
+
+const StyledChooseToken = styled.span`
+  color: #b8b8cc;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.42px;
+
+  :hover {
+    cursor: pointer;
+    color: #66f;
+  }
 `
 
 interface CurrencyInputPanelProps {
@@ -287,7 +289,14 @@ export default function CurrencyInputPanel({
             }}
           >
             <Aligner>
-              <RowFixed style={{ border: '1px solid #E6E6FF', padding: '5px 12px 5px 12px', background: '#FFFFFF' }}>
+              <RowFixed
+                style={{
+                  border: '1px solid #E6E6FF',
+                  padding: '5px 12px 5px 12px',
+                  background: '#FFFFFF',
+                  borderRadius: 6,
+                }}
+              >
                 <AssetLogo pair={pair} currency={currency} />
                 {pair ? (
                   <StyledTokenName className="pair-name-container">
@@ -297,14 +306,16 @@ export default function CurrencyInputPanel({
                   <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
                     {formatCurrencySymbol({ currency }) || (
                       <Box>
-                        <Trans>Choose token</Trans>
+                        <StyledChooseToken>
+                          <Trans>Choose Token</Trans>
+                        </StyledChooseToken>
                       </Box>
                     )}
                   </StyledTokenName>
                 )}
                 <NewDropDown />
               </RowFixed>
-              {onCurrencySelect && <StyledDropDown selected={!!currency} />}
+              {/* {onCurrencySelect && <StyledDropDown selected={!!currency} />} */}
             </Aligner>
           </CurrencySelect>
         </InputRow>
@@ -327,7 +338,7 @@ export default function CurrencyInputPanel({
                       ) : (
                         <Trans>
                           Balance:
-                          <span style={{ color: '#292933' }}>
+                          <span style={{ color: '#292933', fontWeight: 600, marginLeft: 4 }}>
                             {formatCurrencyAmount(selectedCurrencyBalance, decimals)} {currency.symbol}
                           </span>
                         </Trans>

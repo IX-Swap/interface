@@ -1,4 +1,7 @@
 import type { AddEthereumChainParameter } from '@web3-react/types'
+import { SupportedChainId } from 'constants/chains'
+import { isProd } from 'utils/isEnvMode'
+import { capitalizeWords } from 'utils/strings'
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
   name: 'Ether',
@@ -122,6 +125,18 @@ export const TESTNET_CHAINS: ChainConfig = {
     nativeCurrency: CELO,
     blockExplorerUrls: ['https://alfajores-blockscout.celo-testnet.org'],
   },
+  84532: {
+    urls: ['https://sepolia.basechain.infura.io'],
+    name: 'Base Sepolia',
+    nativeCurrency: ETH,
+    blockExplorerUrls: ['https://sepolia.basescan.org'],
+  },
+  8453: {
+    urls: ['https://basechain.infura.io'],
+    name: 'Base',
+    nativeCurrency: ETH,
+    blockExplorerUrls: ['https://basescan.org'],
+  },
 }
 
 export const CHAINS: ChainConfig = {
@@ -141,3 +156,52 @@ export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<
   },
   {}
 )
+
+export enum NetworkName {
+  BASE = 'base',
+  POLYGON = 'polygon',
+}
+
+const Chains = {
+  // network name : tesnet, mainnet
+  [NetworkName.BASE]: [SupportedChainId.BASE_SEPOLIA, SupportedChainId.BASE],
+  [NetworkName.POLYGON]: [SupportedChainId.AMOY, SupportedChainId.MATIC],
+}
+
+export const findChainName = (chainId: number): string | null => {
+  for (const [network, chains] of Object.entries(Chains)) {
+    if (chains.includes(chainId)) {
+      return capitalizeWords(network)
+    }
+  }
+
+  return null
+}
+
+export const checkWrongChain = (
+  chainId: any,
+  network: string
+): {
+  isWrongChain: boolean
+  expectChain: number | null
+} => {
+  const expectedChains = Chains[network as NetworkName] || [] // Default to an empty array if network is not found
+  if (!expectedChains.length) {
+    return {
+      isWrongChain: false,
+      expectChain: null,
+    }
+  }
+  const [testChain, mainChain] = expectedChains
+  if (isProd) {
+    return {
+      isWrongChain: chainId != mainChain,
+      expectChain: mainChain,
+    }
+  }
+
+  return {
+    isWrongChain: chainId != testChain,
+    expectChain: testChain,
+  }
+}

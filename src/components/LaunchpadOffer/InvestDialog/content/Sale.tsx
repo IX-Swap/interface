@@ -30,7 +30,7 @@ import { IXSALE_ADDRESS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/shared/fields/IssuanceTooltip'
 import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
-import { OfferStageStatus } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
+import { OfferStageStatus, getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { WalletEvent, INVEST_FLOW_EVENTS } from 'utils/event-logs'
 
@@ -97,15 +97,17 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
     () => [
       {
         label: 'Min. Investment Size',
-        value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${
-          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
-        }`,
+        value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${getTokenSymbol(
+          network,
+          investingTokenSymbol
+        )}`,
       },
       {
         label: 'Max. Investment Size',
-        value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${
-          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
-        }`,
+        value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${getTokenSymbol(
+          network,
+          investingTokenSymbol
+        )}`,
       },
     ],
     [isPresale, presaleMaxInvestment, presaleMinInvestment, maxInvestment, minInvestment, investingTokenSymbol]
@@ -127,15 +129,11 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
     return [
       {
         label: 'Available to invest',
-        value: `${formatter.format(availableToInvest)} ${
-          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
-        }`,
+        value: `${formatter.format(availableToInvest)} ${getTokenSymbol(network, investingTokenSymbol)}`,
       },
       {
         label: 'Already invested',
-        value: `${formatter.format(amountInvested)} ${
-          investingTokenSymbol === 'USDC' ? `${investingTokenSymbol}.e` : investingTokenSymbol
-        }`,
+        value: `${formatter.format(amountInvested)} ${getTokenSymbol(network, investingTokenSymbol)}`,
       },
       {
         label: (
@@ -430,11 +428,10 @@ const AgreementCheckbox = styled(BaseCheckbox)`
 
 const WhitelistMessage = styled.div`
   ${text59}
-
   text-align: center;
   max-width: 80%;
+  font-size: 18px;
   color: ${(props) => props.theme.launchpad.colors.text.title};
-
   b {
     color: ${(props) => props.theme.launchpad.colors.primary};
   }

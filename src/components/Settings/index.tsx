@@ -42,6 +42,7 @@ const StyledMenuButton = styled.button`
   background: transparent;
   margin: 0;
   padding: 13px;
+  padding-right: 0;
   border-radius: 100%;
   height: fit-content;
   display: flex;

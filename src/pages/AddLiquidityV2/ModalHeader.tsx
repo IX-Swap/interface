@@ -14,7 +14,7 @@ import { isMobile } from 'react-device-detect'
 
 const TextContainer = styled.div`
   color: #292933;
-  font-size: 40px;
+  font-size: 34px;
   font-weight: 600;
   line-height: 60px;
   margin-right: 10px;

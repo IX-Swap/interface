@@ -1,16 +1,15 @@
 import React, { FC } from 'react'
 import { Flex } from 'rebass'
 import { NavLink } from 'react-router-dom'
+import styled from 'styled-components'
 
 import Column from 'components/Column'
-import { MouseoverTooltip } from 'components/Tooltip'
 import { TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { routes } from 'utils/routes'
-
-import { FeaturedTokenCard, StyledNonTradable, StyledTradable } from './styleds'
+import { FeaturedTokenCard } from './styleds'
 import { NewApproveButton } from 'components/Button'
+import { NETWORK_LOGOS } from 'constants/chains'
 
 interface Props {
   token: any
@@ -42,10 +41,19 @@ const Info: FC<InfoProps> = ({ label, title }: InfoProps) => {
 }
 
 export const FeaturedToken: FC<Props> = ({ token }: Props) => {
-  const { config } = useWhitelabelState()
+  const network = token?.token?.network
+  const networkLogo = network ? NETWORK_LOGOS[network] : ''
 
   return (
-    <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to={routes.securityToken(token.id)}>
+    <NavLink
+      style={{ textDecoration: 'none', color: 'inherit', position: 'relative' }}
+      to={routes.securityToken(token.id)}
+    >
+      {networkLogo ? (
+        <LogoWrap>
+          <NetworkLogo src={networkLogo} alt="network logo" />
+        </LogoWrap>
+      ) : null}
       <FeaturedTokenCard>
         <Flex alignItems="center">
           {token.logo ? (
@@ -72,13 +80,6 @@ export const FeaturedToken: FC<Props> = ({ token }: Props) => {
           <Info label="Country:" title={token.country} />
           <Info label="Industry:" title={token.industry} />
         </div>
-        {/* <MouseoverTooltip
-          style={{ padding: '8px' }}
-          placement="top"
-          text={`${token.token ? 'Ready' : 'Not ready'} for trading on ${config?.name || 'IX Swap'}`}
-        >
-          {token.token ? <StyledTradable width={22} height={22} /> : <StyledNonTradable width={22} height={22} />}
-        </MouseoverTooltip> */}
 
         <NewApproveButton
           style={{
@@ -95,3 +96,14 @@ export const FeaturedToken: FC<Props> = ({ token }: Props) => {
     </NavLink>
   )
 }
+
+const LogoWrap = styled.div`
+  position: absolute;
+  top: 25px;
+  right: 25px;
+`
+
+const NetworkLogo = styled.img`
+  height: 32px;
+  width: 32px;
+`

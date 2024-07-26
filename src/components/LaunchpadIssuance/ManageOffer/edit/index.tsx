@@ -16,6 +16,7 @@ import { useShowError } from 'state/application/hooks'
 import { getDaysAhead, isFutureDate } from 'utils/time'
 import { text1, text48 } from 'components/LaunchpadMisc/typography'
 import { getDaysAfter } from 'utils/time'
+import {  MIN_DATE_DIFF_MINUTES } from 'components/LaunchpadIssuance/IssuanceForm/shared/constants'
 
 interface Props {
   open: boolean
@@ -85,18 +86,52 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
     }))
   }, [status])
 
+  const isDivisibleBy10 = (date: Date) => {
+    return moment(date).minutes() % 10 === 0
+  }
+
   const rangeError = useMemo(() => {
     if (!stage) return ''
+
+    const now = moment()
+
     if (!isSingle) {
       if (dates.startDate && dates.endDate) {
-        const isSame = moment(dates.startDate).isSame(dates.endDate)
-        if (isSame) {
-          return 'Invalid Range - end date should come after start date(min 1 day)'
+        const startDate = moment(dates.startDate)
+        const endDate = moment(dates.endDate)
+
+        /* just comment it for now we may need this validation is future */
+
+        // if (startDate.isSame(endDate, 'day')) {
+        //   return 'Invalid Range - end date should come after start date (min 1 day)';
+        // }
+        if (endDate.diff(startDate, 'minutes') < MIN_DATE_DIFF_MINUTES) {
+          return 'Invalid Range - end date should be at least 20 minutes later than the start date'
+        }
+        if (startDate.isBefore(now) || endDate.isBefore(now)) {
+          return 'Invalid Range - start and end dates should be in the future'
+        }
+        if (!isDivisibleBy10(dates.startDate) || !isDivisibleBy10(dates.endDate)) {
+          return 'Invalid Time - start and end times must be divisible by 10'
         }
       } else {
         return 'Invalid Range - start and end dates required'
       }
+    } else {
+      if (dates.startDate) {
+        const startDate = moment(dates.startDate)
+
+        if (startDate.isBefore(now)) {
+          return 'Invalid Date - start date should be in the future'
+        }
+        if (!isDivisibleBy10(dates.startDate)) {
+          return 'Invalid Time - start times must be divisible by 10'
+        }
+      } else {
+        return 'Invalid Date - start date required'
+      }
     }
+
     return ''
   }, [isSingle, stage, dates])
 
@@ -201,6 +236,7 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
               }}
             />
             <DateRangeField
+              showButton
               mode={(isSingle ? 'single' : 'range') as RangeMode}
               label={label}
               field="timeframe"

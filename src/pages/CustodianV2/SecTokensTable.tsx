@@ -16,12 +16,13 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { FilterDropdown } from './FilterDropdown'
 import { industries } from 'components/AdminSecurityCatalog/mock'
-import { ButtonGradientBorder, PinnedContentButton } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 
-import { StyledSearchInput, StyledNonTradable, StyledTradable } from './styleds'
+import { StyledSearchInput } from './styleds'
 import { routes } from 'utils/routes'
 import { BodyWrapper } from 'pages/AppBody'
 import EmptyData from './EmptyData'
+import { NETWORK_LOGOS } from 'constants/chains'
 // import { Pagination } from 'components/Vault/Pagination'
 // import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 // import Pagination from '@mui/material/Pagination/Pagination'
@@ -41,7 +42,7 @@ interface BodyProps {
   tokens: any[]
 }
 
-const headerCells = ['Name', 'Issuer', 'Country', 'Industry', '']
+const headerCells = ['Name', 'Issuer', 'Country', 'Industry', 'Network', '']
 
 let timer = null as any
 
@@ -101,6 +102,16 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
             </div>
             <div>
               <TYPE.main1 fontWeight={400}>{token.industry}</TYPE.main1>
+            </div>
+            <div>
+              {token?.token?.network ? (
+                <Flex alignItems="center">
+                  <NetworkLogo src={NETWORK_LOGOS[token?.token?.network]} alt="logo" />
+                  <NetworkText>{token?.token?.network}</NetworkText>
+                </Flex>
+              ) : (
+                ''
+              )}
             </div>
             <div>
               <MouseoverTooltip
@@ -293,12 +304,12 @@ export const SecTokensTable: FC<Props> = ({
 }
 
 export const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 3fr 3fr 2fr 2fr 1fr;
+  grid-template-columns: 2fr 2fr 2fr 2fr 1fr 1fr;
   min-width: 1000px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 3fr 3fr 2fr 2fr 1fr;
+  grid-template-columns: 2fr 2fr 2fr 2fr 1fr 1fr;
   background: transparent;
   margin-bottom: 8px;
   border: none;
@@ -310,4 +321,21 @@ const StyledBodyRow = styled(BodyRow)`
     display: flex;
     justify-content: start;
   }
+`
+
+const NetworkLogo = styled.img`
+  height: 16px;
+  width: 16px;
+`
+
+const NetworkText = styled.div`
+  color: #292933;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.26px;
+  text-transform: capitalize;
+  margin-left: 6px;
 `

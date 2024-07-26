@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { RouteComponentProps, useHistory } from 'react-router-dom'
 import { Box } from 'rebass'
+import styled from 'styled-components'
+import Portal from '@reach/portal'
 
 import { Vault } from 'components/Vault'
 import { DepositPopup } from 'components/Vault/DepositPopup'
@@ -8,18 +10,18 @@ import { WithdrawPopup } from 'components/Vault/WithdrawPopup'
 import { useCurrency } from 'hooks/Tokens'
 import { routes } from 'utils/routes'
 import { getAtlasInfo, getToken } from 'state/secCatalog/hooks'
-import { LightBackground } from 'theme/Background'
 import { BackArrowButton } from 'components/BackArrowButton'
 import { TokenLogo } from 'components/TokenLogo'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { useActiveWeb3React } from 'hooks/web3'
-
-import { Container, ValutContainer, InfoTitle, Logo, StyledTitleBig, CompanyName } from './styleds'
+import { Container, ValutContainer, InfoTitle, Logo, StyledTitleBig } from './styleds'
 import { DetailsInfo } from './DetailsInfo'
-import { AddToMetamask } from './AddToMetamask'
 import { AtlasInfo } from './AtlasInfo'
 import { NotTradable } from './NotTradable'
-import styled from 'styled-components'
+import { NETWORK_LOGOS } from 'constants/chains'
+import { checkWrongChain } from 'chains'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
 export default function SecTokenDetails({
   match: {
@@ -30,9 +32,12 @@ export default function SecTokenDetails({
   const currency = (useCurrency(currencyId) as any) ?? undefined
   const [token, setToken] = useState<any>(null)
   const [atlasInfo, setAtlasInfo] = useState<any | null>(null)
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
 
   const isLoggedIn = !!account
+  const network = token?.token?.network
+  const networkLogo = network ? NETWORK_LOGOS[network] : ''
+  const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -59,17 +64,17 @@ export default function SecTokenDetails({
       <DepositPopup currency={token?.token} token={token} />
       <WithdrawPopup currency={token?.token} token={token} />
       <TokenInfoContainer>
-        <Container>
-          {/* <LightBackground /> */}
+        <Container style={{ position: 'relative' }}>
+          {networkLogo ? (
+            <LogoWrap>
+              <NetworkLogo src={networkLogo} alt="network logo" />
+            </LogoWrap>
+          ) : null}
           <InfoTitle>
             <BackArrowButton onBack={onBack} />
             {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}
             <Box display="flex" alignItems="center">
               <StyledTitleBig fontWeight="600">{token?.ticker}</StyledTitleBig>
-              {/* <CompanyName>
-                &nbsp;-&nbsp;
-                {token?.companyName}
-              </CompanyName> */}
             </Box>
           </InfoTitle>
           {token && <DetailsInfo token={token} />}
@@ -83,6 +88,13 @@ export default function SecTokenDetails({
         </ValutContainer>
       )}
       {token && !token.token?.id && <NotTradable ticker={token.ticker} />}
+      {isWrongChain ? (
+        <Portal>
+          <CenteredFixed width="100vw" height="100vh">
+            <NetworkNotAvailable expectChain={expectChain} />
+          </CenteredFixed>
+        </Portal>
+      ) : null}
     </>
   )
 }
@@ -107,4 +119,15 @@ export const TokenInfoContainer = styled.div<{ background?: string }>`
     padding: 0 1rem;
     background: #ffffff;
   }
+`
+
+const LogoWrap = styled.div`
+  position: absolute;
+  top: 25px;
+  right: 0px;
+`
+
+const NetworkLogo = styled.img`
+  height: 32px;
+  width: 32px;
 `

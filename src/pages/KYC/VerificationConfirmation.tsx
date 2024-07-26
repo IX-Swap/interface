@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ReactComponent as CheckIcon } from 'assets/images/newRoundCheck.svg'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
 
 const VerificationConfirmation = () => {
@@ -30,6 +30,11 @@ const Container = styled.div`
   height: 252px;
   padding: 64px;
   background: #e9fcf5;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    padding: 28px;
+    height: 200px;
+  }
 `
 
 const CenteredDiv = styled.div`

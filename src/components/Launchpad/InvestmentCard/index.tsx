@@ -23,6 +23,7 @@ import { PreviewModal } from './PreviewModal'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import { NETWORK_LOGOS } from 'constants/chains'
 
 interface Props {
   offer: any
@@ -37,6 +38,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const history = useHistory()
   const theme = useTheme()
   const { account } = useActiveWeb3React()
+  const { kyc } = useKYCState()
 
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
@@ -45,7 +47,8 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
-  const { kyc } = useKYCState()
+  const network = offer?.network ?? ''
+  const networkLogo = network ? NETWORK_LOGOS[network] : ''
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const isClosed = React.useMemo(
@@ -104,6 +107,12 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
         <InvestmentCardInfoContainer expanded={showDetails}>
           <InvestmentCardIcon src={offer.profilePicture.public} />
+
+          {networkLogo ? (
+            <LogoWrap>
+              <NetworkLogo src={networkLogo} alt="network logo" />
+            </LogoWrap>
+          ) : null}
 
           <InvestmentTypeInfo industry={offer.industry} type={offer.type} status={offer.status} />
 
@@ -237,7 +246,7 @@ const InvestmentCardImage = styled.img`
   width: 380px;
   overflow-x: hidden;
   border-radius: 6px;
-  height: auto;
+  height: 300px;
 `
 
 const InvestmentCardTagsContainer = styled.header`
@@ -353,4 +362,16 @@ const InvestButton = styled.button`
   text-align: center;
   font-family: ${(props) => props.theme.launchpad.font};
   ${text1}
+`
+
+const LogoWrap = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 1rem;
+  z-index: 10;
+`
+
+const NetworkLogo = styled.img`
+  height: 32px;
+  width: 32px;
 `
