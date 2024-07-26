@@ -1,11 +1,11 @@
 import React from 'react'
 import { Trans } from '@lingui/macro'
-import { switchToNetwork } from 'hooks/switchToNetwork'
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
 import { useWeb3React } from '@web3-react/core'
+import { useSwitchChain } from 'hooks/useSwitchChainV2'
 
 interface Props {
   expectChain: SupportedChainId | null
@@ -14,10 +14,11 @@ interface Props {
 export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
   const { chainId, provider } = useWeb3React()
   const { config } = useWhitelabelState()
+  const switchChain = useSwitchChain()
 
   const changeNetwork = (targetChain: number) => {
-    if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
-      switchToNetwork({ provider, chainId: targetChain })
+    if (chainId !== targetChain && provider) {
+      switchChain(targetChain)
     }
   }
 
