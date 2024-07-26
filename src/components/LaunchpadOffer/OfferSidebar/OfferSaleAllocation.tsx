@@ -35,12 +35,12 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
       <SaleAllocationEntry>
         <div>
           <span className="bold">
-            {getTokenSymbol(props?.network, props?.investingTokenSymbol)}
+            {getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
             {formatedValue(props.softCap) ?? 'N/A'}
           </span>{' '}
           Soft Cap /
           <span className="bold">
-            {getTokenSymbol(props?.network, props?.investingTokenSymbol)}
+            &nbsp;{getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
             {formatedValue(props.hardCap) ?? 'N/A'}
           </span>{' '}
           Hard Cap
@@ -54,7 +54,7 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
           <SaleAllocationEntry>
             <div>
               <span className="bold">
-                {getTokenSymbol(props?.network, props?.investingTokenSymbol)}
+                {getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
                 {formatedValue(props.presaleAlocated)}
               </span>{' '}
               Allocated for Pre-Sale
@@ -68,7 +68,7 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
       <SaleAllocationEntry>
         <div>
           <span className="bold">
-            {getTokenSymbol(props?.network, props?.investingTokenSymbol)}
+            {getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
             {allocatedPublicSale}
           </span>{' '}
           Allocated for Public Sale
@@ -103,7 +103,7 @@ export const OfferPreSaleInfo: React.FC<PresaleProps> = (props) => {
       <SaleAllocationEntry>
         <EntryLabel>Max. Investment Size</EntryLabel>
         <EntryValue>
-          {getTokenSymbol(props?.network, props?.investingTokenSymbol)}
+          {getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
           {formatedValue(formatter.format(Number(props.presaleMaxInvestment)))}
         </EntryValue>
       </SaleAllocationEntry>
@@ -112,7 +112,7 @@ export const OfferPreSaleInfo: React.FC<PresaleProps> = (props) => {
       <SaleAllocationEntry>
         <EntryLabel>Min. Investment Size</EntryLabel>
         <EntryValue>
-          {getTokenSymbol(props?.network, props?.investingTokenSymbol)}
+          {getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
           {formatedValue(formatter.format(Number(props.presaleMinInvestment)))}
         </EntryValue>
       </SaleAllocationEntry>

@@ -121,7 +121,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
           {amountLoading && <Loader />}
           {!amountLoading && !amountError && (
             <MyInvestmentAmount>
-              {isSuccessfull ? amountClaim : amount}
+              {isSuccessfull ? amountClaim : amount}&nbsp;
               {getTokenSymbol(network, investingTokenSymbol)}
             </MyInvestmentAmount>
           )}
