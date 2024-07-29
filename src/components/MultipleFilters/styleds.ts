@@ -3,8 +3,9 @@ import { Popover } from '@material-ui/core'
 
 import { ButtonText } from 'components/Button'
 import { MEDIA_WIDTHS } from 'theme'
+import Box from '@mui/material/Box'
 
-export const Container = styled.div`
+export const Container = styled(Box)`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr auto auto;
@@ -14,16 +15,14 @@ export const Container = styled.div`
   }
   @media (max-width: ${MEDIA_WIDTHS.upToLarge}px) {
     grid-template-columns: 1fr;
-    // display: none;
   }
 `
 
 export const FiltersContainer = styled.div`
   display: flex;
   align-items: center;
-  column-gap: 10px;
+  column-gap: 30px;
   .dropdown {
-    // min-width: 160px;
     border-radius: 0;
   }
   > div:nth-child(2) {
@@ -34,14 +33,14 @@ export const FiltersContainer = styled.div`
     border-radius: 6px;
   }
   > div:last-child {
- border-radius: 6px;
+    border-radius: 6px;
   }
 `
 
 export const DarkBlueCard = styled.div<{ isOpen: boolean }>`
   display: flex;
-  align-items: left;
-  justify-content: left;
+  align-items: center;
+  justify-content: space-between;
   flex: 1;
   min-width: 150px;
   width: 100%;
@@ -51,17 +50,15 @@ export const DarkBlueCard = styled.div<{ isOpen: boolean }>`
   padding: 18px;
   font-size: 13px;
   border: 1px solid #e6e6ff;
-  // background-color: ${({ theme, isOpen }) => (isOpen ? theme.bg7 : theme.bg19)};
+  border-radius: 8px;
   color: ${({ theme, isOpen }) => (isOpen ? theme.text6 : theme.text6)};
 `
 
 export const StyledPopover = styled(Popover)`
   .MuiPaper-root {
     margin-top: 2px;
-    // background-color: ${({ theme }) => theme.bg7};
     border: 1px solid #e6e6ff;
     border-radius: 8px;
-    // padding: 10px;
     max-height: 216px;
     overflow: hidden;
   }
@@ -100,7 +97,6 @@ export const ResetFilters = styled(ButtonText)`
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
-  // color: ${({ theme }) => theme.text2};
   white-space: nowrap;
   text-decoration: underline;
 `
