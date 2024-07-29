@@ -33,8 +33,8 @@ export const socialMediaPlatform = ['Telegram', 'Discord', 'X.com', 'Facebook', 
 )
 
 export const blockchainNetworks = [
-  { value: 'polygon', label: 'Polygon', icon: PolygonIcon},
-  { value: 'base', label: 'Base', icon: BaseIcon }
+  { value: 'polygon', label: 'Polygon', icon: PolygonIcon, chainId: 80002},
+  { value: 'base', label: 'Base', icon: BaseIcon,chainId: 84532 }
 ];
 
 

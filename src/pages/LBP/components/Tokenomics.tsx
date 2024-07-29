@@ -348,7 +348,7 @@ const Tokenomics = ({
 
   const handleSelectNetwork = (selectedOption: any) => {
     const chainName = selectedOption?.value
-    const updatedAddresses = getAddresses(chainName)
+    const updatedAddresses = getAddresses(selectedOption.chainId)
     const updatedFormData = {
       ...formDataTokenomics,
       network: chainName,
@@ -404,6 +404,10 @@ const Tokenomics = ({
       setDirty(true)
     }
   }, [JSON.stringify(formik.touched)])
+
+
+
+  console.log(formDataTokenomics.assetTokenAddress, chainId, 'assetTokenAddress')
 
   return (
     <Container>
