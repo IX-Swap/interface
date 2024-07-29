@@ -205,6 +205,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
   }, [range, props.mode, props.dateFormat])
 
   React.useEffect(() => {
+    setDateErrorText(' ')
     if (props.value !== undefined) {
       if (props.mode === 'single') {
         setRange([moment(props.value as Date)])
@@ -221,6 +222,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
     setStartTime(moment().startOf('day'))
     setEndTime(moment().startOf('day'))
     setShowPicker(false)
+
     if (typeof props.onError === 'function') {
       try {
         props.onError(props.field || '', dateErrorText || '')
