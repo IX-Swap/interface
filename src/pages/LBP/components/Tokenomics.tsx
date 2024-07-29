@@ -19,7 +19,7 @@ import ixsDropDown from '../../../assets/images/ixsToken.svg'
 import usdtropDown from '../../../assets/images/usdtNewToken.svg'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
-import { IXS_ADDRESS, TOKEN_ADDRESSES } from 'constants/addresses'
+import { IXS_ADDRESS, TOKEN_ADDRESSES, ixSwapToken } from 'constants/addresses'
 import { useWeb3React } from '@web3-react/core'
 import { useTokenContract } from 'hooks/useContract'
 import { formatUnits } from 'ethers/lib/utils'
@@ -59,6 +59,7 @@ export const TokenOptions = (chainId: number) => [
     logo: usdtropDown,
   },
   {
+    value: 'IXS',
     tokenSymbol: 'IXS',
     tokenAddress: IXS_ADDRESS[chainId],
     tokenDecimals: 18,
@@ -141,10 +142,17 @@ const Tokenomics = ({
   })
   const { isWrongChain, expectChain } = checkWrongChain(chainId || 0, selectedNetwork)
 
-  const getAddresses = (chainId: number, assetTokenAddress: string = TOKEN_ADDRESSES.USDC[chainId || 0]) => ({
-    assetTokenAddress: assetTokenAddress || '',
-    shareTokenAddress: formDataTokenomics?.shareAddress || '',
-  })
+  const getAddresses = (chainId: number, assetTokenAddress?: string) => {
+    const defaultAssetTokenAddress = TOKEN_ADDRESSES.USDC[chainId || 0]
+    const ixsAssetTokenAddress = IXS_ADDRESS[chainId || 0]
+    return {
+      assetTokenAddress:
+        selectedToken.value !== ixSwapToken[0].symbol
+          ? assetTokenAddress || defaultAssetTokenAddress
+          : ixsAssetTokenAddress,
+      shareTokenAddress: formDataTokenomics?.shareAddress || '',
+    }
+  }
 
   const [addresses, setAddresses] = useState(getAddresses(chainId || 0))
   const assetTokenContract = useTokenContract(addresses.assetTokenAddress)
@@ -203,15 +211,10 @@ const Tokenomics = ({
 
   useEffect(() => {
     setAddresses(getAddresses(chainId || 0))
-  }, [chainId, formDataTokenomics?.shareAddress])
+  }, [chainId, formDataTokenomics?.shareAddress, selectedToken])
 
   useEffect(() => {
-    if (isWrongChain) {
-      const updatedFormData = {
-        shareAddress: '',
-      }
-      onChange(updatedFormData)
-    }
+    setBalances(0)
     loadBalances()
   }, [isWrongChain, loadBalances, addresses, chainId])
 
@@ -404,10 +407,6 @@ const Tokenomics = ({
       setDirty(true)
     }
   }, [JSON.stringify(formik.touched)])
-
-
-
-  console.log(formDataTokenomics.assetTokenAddress, chainId, 'assetTokenAddress')
 
   return (
     <Container>
