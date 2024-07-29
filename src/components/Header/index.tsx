@@ -9,7 +9,6 @@ import _get from 'lodash/get'
 import { useKYCState } from 'state/kyc/hooks'
 import { routes } from 'utils/routes'
 import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
-import { ReactComponent as NewDropdown } from 'assets/images/dropdownIcon.svg'
 import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -294,63 +293,7 @@ export default function Header() {
               <HeaderElement>
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
-                {isAllowed(routes.kyc) && isWhitelisted && (
-                  <IconWrapper>
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <div
-                        style={{
-                          height: '32px',
-                          borderLeft: '1px solid #B8B8CC',
-                          opacity: '0.4',
-                        }}
-                      ></div>
-                      {account && (
-                        <HeaderElement onClick={toggleWalletModal}>
-                          <div style={{ display: 'flex', gap: '5px' }}>
-                            <span
-                              style={{
-                                background: '#6666FF',
-                                padding: '8px 13px',
-                                color: '#FFFFFF',
-                                borderRadius: '100%',
-                                fontWeight: '600',
-                                margin: '0px 0px 0px 10px',
-                              }}
-                            >
-                              {kyc?.individual?.firstName
-                                ? kyc.individual.firstName.charAt(0).toUpperCase()
-                                : kyc?.corporate?.corporateName?.charAt(0).toUpperCase()}
-                            </span>
 
-                            <NewDropdown style={{ marginTop: '14px', marginRight: '10px' }} />
-                          </div>
-                        </HeaderElement>
-                      )}
-
-                      {/* <div
-                        style={{
-                          height: '32px',
-                          borderRight: '1px solid #B8B8CC',
-                          opacity: '0.4',
-                        }}
-                      ></div> */}
-                      {account && (
-                        <NavLink
-                          style={{ textDecoration: 'none', color: 'inherit', marginRight: 16, marginTop: 5 }}
-                          to={routes.defaultRoute}
-                        >
-                          {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
-                        </NavLink>
-                      )}
-                    </div>
-                  </IconWrapper>
-                )}
                 {!account && (
                   <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleModal}>
                     <Text className="connect-wallet-button">
