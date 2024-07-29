@@ -144,7 +144,7 @@ export enum NetworkName {
   POLYGON = 'polygon',
 }
 
-const Chains = {
+export const Chains = {
   // network name : tesnet, mainnet
   [NetworkName.BASE]: [SupportedChainId.BASE_SEPOLIA, SupportedChainId.BASE],
   [NetworkName.POLYGON]: [SupportedChainId.AMOY, SupportedChainId.MATIC],

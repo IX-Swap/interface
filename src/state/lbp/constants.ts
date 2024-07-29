@@ -1,4 +1,4 @@
-import { LbpStatus } from "components/LBP/types"
+import { LbpStatus } from 'components/LBP/types'
 
 export const LBP_ACTION_TYPES = {
   save: 'save',
@@ -12,3 +12,9 @@ export const LBP_STAGE_LABELS = [
   { label: 'Closed', value: LbpStatus.closed },
   { label: 'Ended', value: LbpStatus.ended },
 ]
+
+export const NETWORKS_NAME = {
+  USDC: 'USDC',
+  USDT: 'USDT',
+  IXS: 'IXS',
+}

@@ -32,6 +32,7 @@ import { checkWrongChain } from 'chains'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import { NETWORKS_NAME } from 'state/lbp/constants'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -137,19 +138,22 @@ const Tokenomics = ({
   })
 
   const [balances, setBalances] = useState<any>({
-    assetBalance: '',
-    shareBalance: '',
+    assetBalance: '0',
+    shareBalance: '0',
   })
   const { isWrongChain, expectChain } = checkWrongChain(chainId || 0, selectedNetwork)
 
   const getAddresses = (chainId: number, assetTokenAddress?: string) => {
-    const defaultAssetTokenAddress = TOKEN_ADDRESSES.USDC[chainId || 0]
-    const ixsAssetTokenAddress = IXS_ADDRESS[chainId || 0]
+    const addresses = {
+      [NETWORKS_NAME.USDC]: TOKEN_ADDRESSES.USDC[chainId || 0],
+      [NETWORKS_NAME.IXS]: IXS_ADDRESS[chainId || 0],
+      [NETWORKS_NAME.USDT]: TOKEN_ADDRESSES.USDT[chainId || 0],
+    }
+
+    const resolvedAssetTokenAddress =
+      assetTokenAddress || addresses[selectedToken.value] || TOKEN_ADDRESSES.USDC[chainId || 0]
     return {
-      assetTokenAddress:
-        selectedToken.value !== ixSwapToken[0].symbol
-          ? assetTokenAddress || defaultAssetTokenAddress
-          : ixsAssetTokenAddress,
+      assetTokenAddress: resolvedAssetTokenAddress,
       shareTokenAddress: formDataTokenomics?.shareAddress || '',
     }
   }
@@ -210,7 +214,7 @@ const Tokenomics = ({
   }, [account, assetTokenContract, shareTokenContract, setProjectTokenSymbol])
 
   useEffect(() => {
-    setAddresses(getAddresses(chainId || 0))
+    setAddresses(getAddresses(chainId || 0, formDataTokenomics.assetTokenAddress))
   }, [chainId, formDataTokenomics?.shareAddress, selectedToken])
 
   useEffect(() => {
@@ -407,7 +411,6 @@ const Tokenomics = ({
       setDirty(true)
     }
   }, [JSON.stringify(formik.touched)])
-
   return (
     <Container>
       <InputeWrapper>
