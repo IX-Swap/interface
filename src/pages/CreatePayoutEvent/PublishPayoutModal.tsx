@@ -27,6 +27,7 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalance, useETHBalances } from 'state/wallet/hooks'
 
 import { transformPayoutDraftDTO } from './utils'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 interface Props {
   close: () => void
@@ -60,7 +61,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
   const currencyBalance = useCurrencyBalance(account ?? undefined, tokenCurrency ?? undefined)
 
-  const tokenBalance = (tokenCurrency?.isNative ? nativeBalance?.toFixed(4) : currencyBalance?.toFixed(4)) || 0
+  const tokenBalance = (tokenCurrency?.isNative ? nativeBalance?.toFixed(4) : currencyBalance?.toFixed(4))
 
   const [approvalState, approve] = useApproveCallback(
     tokenCurrency ? CurrencyAmount.fromRawAmount(tokenCurrency, utils.parseUnits(tokenAmount, '18') as any) : undefined,
@@ -312,18 +313,19 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               </TYPE.title10>
             </Card>
           )}
-          {+tokenBalance < +tokenAmount && (
+          {tokenBalance && +tokenBalance < +tokenAmount ? (
             <Card marginBottom="32px">
               <TYPE.title10 padding="0px 32px" color={'error'} textAlign="center">
                 <Trans>{`Insufficient token amount.`}</Trans>
               </TYPE.title10>
             </Card>
-          )}
+          ) : null}
           <StyledButtonIXSGradient
             type="button"
             onClick={() => (onlyPay || payNow ? publishAndPaid() : onlyPublish())}
-            disabled={!tokenAmount || (payNow && +tokenBalance < +tokenAmount)}
+            disabled={!tokenAmount || !tokenBalance || (payNow && +tokenBalance < +tokenAmount)}
           >
+            {!tokenBalance ? <LoaderThin size={20} /> : null}
             <Trans>{`${buttonText}`}</Trans>
           </StyledButtonIXSGradient>
         </ModalBody>
