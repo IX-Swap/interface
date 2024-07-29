@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { Flex, Box } from 'rebass'
 import { Trans, t } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
@@ -23,6 +23,7 @@ import { LoadingIndicator } from 'components/LoadingIndicator'
 import { FetchingBalance } from './FetchingBalance'
 import { Claimed } from './Claimed'
 import { UserClaim } from './dto'
+import { SecToken } from 'types/secToken'
 
 interface Props {
   payout: PayoutEvent
@@ -174,7 +175,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   if (secTokenBalance === '-') return <FetchingBalance />
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
   if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.catalogId} />
-  if (isNotTokenHolder) return <NotTokenHoldersView status={status} payoutToken={payoutToken} />
+  if (isNotTokenHolder) return <NotTokenHoldersView status={status} payoutToken={payoutToken} secToken={secToken} />
 
   return (
     <Column style={{ gap: '32px' }}>
@@ -195,8 +196,9 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   )
 }
 
-const NotTokenHoldersView: FC<{ payoutToken: any; status: PAYOUT_STATUS }> = ({ payoutToken, status }) => {
+const NotTokenHoldersView: FC<{ payoutToken: any; secToken?: SecToken; status: PAYOUT_STATUS }> = ({ payoutToken, secToken, status }) => {
   const history = useHistory()
+  const secTokenSymbol = secToken?.symbol
 
   const onBuyClick = () => {
     history.push('/swap')
@@ -223,14 +225,14 @@ const NotTokenHoldersView: FC<{ payoutToken: any; status: PAYOUT_STATUS }> = ({ 
                 This payout event is <strong style={{ marginLeft: '4px', color: '#ED0376' }}>delayed.</strong>
               </Trans>
             </Flex>
-            <Box marginBottom="24px"><Trans>{`You have no pending payout as you have 0 SEC tokens as of record date.`}</Trans></Box>
+            <Box marginBottom="24px"><Trans>{`You have no pending payout as you have 0 ${secTokenSymbol} tokens as of record date.`}</Trans></Box>
           </>
         )
       default:
         return (
           <>
             <Box marginBottom="4px"><Trans>{`Payout unavailable.`}</Trans></Box>
-            <Box marginBottom="24px"><Trans>{`You have 0 SEC tokens as of record date.`}</Trans></Box>
+            <Box marginBottom="24px"><Trans>{`You have 0 ${secTokenSymbol} tokens as of record date.`}</Trans></Box>
           </>
         )
     }
