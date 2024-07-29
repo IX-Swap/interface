@@ -19,7 +19,7 @@ import ixsDropDown from '../../../assets/images/ixsToken.svg'
 import usdtropDown from '../../../assets/images/usdtNewToken.svg'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
-import { IXS_ADDRESS, TOKEN_ADDRESSES, ixSwapToken } from 'constants/addresses'
+import { IXS_ADDRESS, TOKEN_ADDRESSES } from 'constants/addresses'
 import { useWeb3React } from '@web3-react/core'
 import { useTokenContract } from 'hooks/useContract'
 import { formatUnits } from 'ethers/lib/utils'
@@ -143,6 +143,7 @@ const Tokenomics = ({
   })
   const { isWrongChain, expectChain } = checkWrongChain(chainId || 0, selectedNetwork)
 
+  // Handle all asset token address values
   const getAddresses = (chainId: number, assetTokenAddress?: string) => {
     const addresses = {
       [NETWORKS_NAME.USDC]: TOKEN_ADDRESSES.USDC[chainId || 0],

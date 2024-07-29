@@ -34,6 +34,9 @@ export const socialMediaPlatform = ['Telegram', 'Discord', 'X.com', 'Facebook', 
   (name, index) => ({ value: ++index, label: name })
 )
 
+
+// Create a dynamic dropdown with chainId for different environments
+
 const networkIcons = {
   [NetworkName.BASE]: BaseIcon,
   [NetworkName.POLYGON]: PolygonIcon,
