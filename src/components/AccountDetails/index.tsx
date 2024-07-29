@@ -76,7 +76,7 @@ export default function AccountDetails({ ENSName, toggleWalletModal }: AccountDe
 
               <Line style={{ marginTop: '10px' }} />
 
-              <KycStatus kyc={kyc} />
+              <KycStatus kyc={kyc} toggleWalletModal={toggleWalletModal} />
 
               <Line style={{ marginTop: '10px' }} />
 
