@@ -21,6 +21,8 @@ import { Info } from './Info'
 
 import { ROLES } from 'constants/roles'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+import styled from 'styled-components'
+import { TYPE } from 'theme'
 
 const CreatePayoutEventPage: FC = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -43,21 +45,35 @@ const CreatePayoutEventPage: FC = () => {
     history.push('/token-manager/my-tokens')
   }
 
+  const FullScreenBackground = styled.div`
+    background-color: #ffffff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `
+
   return (
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
-      <StyledBodyWrapper style={{ maxWidth: 840 }} hasAnnouncement={!cookies.annoucementsSeen}>
-        <Flex marginBottom="32px" alignItems="center">
-          <ButtonText onClick={onBack}>
-            <ArrowLeft fill="white !important" />
-          </ButtonText>
-          <PageTitle textAlign="center" margin="0 auto">
-            <Trans>Create Payout Event</Trans>
-          </PageTitle>
-        </Flex>
-        <Info />
-        <PayoutForm />
-      </StyledBodyWrapper>
+      <FullScreenBackground>
+        <StyledBodyWrapper style={{ maxWidth: 840, marginTop: '170px' }} hasAnnouncement={!cookies.annoucementsSeen}>
+          <Flex marginBottom="32px" alignItems="center">
+            <ButtonText onClick={onBack}>
+              <ArrowLeft fill="white !important" />
+            </ButtonText>
+            <PageTitle textAlign="center" margin="0 auto">
+              <TYPE.title6>Create Payout Event</TYPE.title6>
+            </PageTitle>
+          </Flex>
+          <Info />
+          <PayoutForm />
+        </StyledBodyWrapper>
+      </FullScreenBackground>
     </Loadable>
   )
 }
