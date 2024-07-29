@@ -139,3 +139,81 @@ export function useV2TradeExactOut(
 
   return { V2TradeExactOut, isLoading }
 }
+
+export function useTrade(isExactIn: boolean, first: any, second: any, third: any) {
+  const currencyAmountIn = first
+  const currencyAmountOut = second
+  const currencyOut = second
+  const currencyIn = first
+  const { maxHops = MAX_HOPS } = third
+
+  const [tokensToExclude, handleTokensToExclude] = useState<string[]>([])
+
+  const { allowedPairs, isLoading } = useAllCommonPairs(
+    isExactIn ? currencyAmountIn?.currency : currencyIn,
+    isExactIn ? currencyOut : currencyAmountOut?.currency,
+    tokensToExclude
+  )
+
+  const V2TradeExactIn = () => {
+    if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
+      if (maxHops === 1) {
+        return (
+          Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops: 1, maxNumResults: 1 })[0] ??
+          null
+        )
+      }
+      // search through trades with varying hops, find best trade out of them
+      let bestTradeSoFar: Trade<Currency, Currency, TradeType.EXACT_INPUT> | null = null
+      for (let i = 1; i <= maxHops; i++) {
+        const currentTrade: Trade<Currency, Currency, TradeType.EXACT_INPUT> | null =
+          Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops: i, maxNumResults: 1 })[0] ??
+          null
+        // if current trade is best yet, save it
+        if (isTradeBetter(bestTradeSoFar, currentTrade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
+          bestTradeSoFar = currentTrade
+        }
+      }
+      return bestTradeSoFar
+    }
+
+    return null
+  }
+
+  const V2TradeExactOut = () => {
+    if (currencyIn && currencyAmountOut && allowedPairs.length > 0) {
+      if (maxHops === 1) {
+        return (
+          Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops: 1, maxNumResults: 1 })[0] ??
+          null
+        )
+      }
+      // search through trades with varying hops, find best trade out of them
+      let bestTradeSoFar: Trade<Currency, Currency, TradeType.EXACT_OUTPUT> | null = null
+      for (let i = 1; i <= maxHops; i++) {
+        const currentTrade =
+          Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops: i, maxNumResults: 1 })[0] ??
+          null
+        if (isTradeBetter(bestTradeSoFar, currentTrade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
+          bestTradeSoFar = currentTrade
+        }
+      }
+      return bestTradeSoFar
+    }
+    return null
+  }
+
+  const v2Trade = isExactIn ? V2TradeExactIn() : V2TradeExactOut();
+
+  const tokenPath = v2Trade?.route?.path || []
+  const lastButOneToken = tokenPath[tokenPath.length - 2]
+  const secToken = useSecToken({ currencyId: lastButOneToken?.address })
+  const invalidRoute = tokenPath.length > 2 && Boolean(secToken?.isSecToken)
+
+  if (v2Trade && secToken && invalidRoute && !tokensToExclude.includes(secToken.address)) {
+    handleTokensToExclude((state) => [...state, secToken.address])
+    return { v2Trade: null, isLoading }
+  }
+
+  return { v2Trade, isLoading }
+}
