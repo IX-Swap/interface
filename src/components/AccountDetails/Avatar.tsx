@@ -6,6 +6,7 @@ import { TYPE } from '../../theme'
 import { CloseColor, CloseIcon, HeaderRow } from './styleds'
 import { MyKyc } from 'state/kyc/actions'
 import { ReactComponent as Edit } from '../../assets/images/edit.svg'
+import { ReactComponent as DefaultAvatar } from '../../assets/images/default-avatar.svg'
 import styled from 'styled-components'
 
 interface ModalProps {
@@ -41,20 +42,33 @@ const Avatar: React.FC<AvatarProps> = ({ kyc, toggleWalletModal }) => {
       <HeaderRow>
         <Flex>
           <TYPE.title7>
-            <IconNameCircle>
-              {kyc?.individual?.firstName
-                ? kyc.individual.firstName.charAt(0).toUpperCase()
-                : kyc?.corporate?.corporateName?.charAt(0).toUpperCase()}
-            </IconNameCircle>
+            {kyc?.individual?.firstName || kyc?.corporate?.corporateName ? (
+              <IconNameCircle>
+                {kyc?.individual?.firstName
+                  ? kyc.individual.firstName.charAt(0).toUpperCase()
+                  : kyc?.corporate?.corporateName?.charAt(0).toUpperCase()}
+              </IconNameCircle>
+            ) : (
+              <DefaultAvatar />
+            )}
           </TYPE.title7>
 
-          <div>
-            <Name>{kyc?.individual?.fullName ? kyc.individual.fullName : kyc?.corporate?.corporateName}</Name>
-            <EmailItem>{kyc?.individual?.email ? kyc?.individual?.email : kyc?.corporate?.email}</EmailItem>
-            <ChangeEmail onClick={() => openModal('resend')}>
-              <Edit /> Change Email
-            </ChangeEmail>
-          </div>
+          {kyc ? (
+            <div>
+              {kyc?.individual?.firstName || kyc?.corporate?.corporateName ? (
+                <Name>{kyc?.individual?.fullName ? kyc.individual.fullName : kyc?.corporate?.corporateName}</Name>
+              ) : null}
+
+              {kyc?.individual?.email || kyc?.corporate?.email ? (
+                <>
+                  <EmailItem>{kyc?.individual?.email ? kyc?.individual?.email : kyc?.corporate?.email}</EmailItem>
+                  <ChangeEmail onClick={() => openModal('resend')}>
+                    <Edit /> Change Email
+                  </ChangeEmail>
+                </>
+              ) : null}
+            </div>
+          ) : null}
         </Flex>
 
         <CloseIcon onClick={toggleWalletModal}>
