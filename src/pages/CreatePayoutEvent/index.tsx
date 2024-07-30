@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { Flex } from 'rebass'
-import { Trans } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
 import { useActiveWeb3React } from 'hooks/web3'
 
@@ -61,11 +60,8 @@ const CreatePayoutEventPage: FC = () => {
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
       <FullScreenBackground>
-        <StyledBodyWrapper style={{ maxWidth: 840, marginTop: '170px' }} hasAnnouncement={!cookies.annoucementsSeen}>
+        <StyledBodyWrapper style={{ maxWidth: 1200, marginTop: '170px' }} hasAnnouncement={!cookies.annoucementsSeen}>
           <Flex marginBottom="32px" alignItems="center">
-            <ButtonText onClick={onBack}>
-              <ArrowLeft fill="white !important" />
-            </ButtonText>
             <PageTitle textAlign="center" margin="0 auto">
               <TYPE.title6>Create Payout Event</TYPE.title6>
             </PageTitle>

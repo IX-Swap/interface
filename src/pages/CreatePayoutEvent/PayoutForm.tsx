@@ -28,7 +28,7 @@ import {
 import { routes } from 'utils/routes'
 import { availableInputsForEdit, FormValues, transformPayoutDraftDTO } from './utils'
 
-import { FormCard } from './styleds'
+import { FormCard, PayoutFormCard } from './styleds'
 import { initialValues } from './mock'
 import { validation } from './validation'
 
@@ -174,10 +174,8 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
-        <FormCard marginBottom="32px">
-          <TYPE.title6 marginBottom="28px">
-            <Trans>SECURITY TOKENS</Trans>
-          </TYPE.title6>
+        <PayoutFormCard marginBottom="32px">
+          <TYPE.body fontWeight='600' marginBottom="28px">Security Tokens</TYPE.body>
           <FormGrid style={{ marginBottom: 20 }}>
             <Select
               tooltipText="Select the security token you want to distribute for this payout event."
@@ -204,8 +202,8 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
                 values.startDate
                   ? dayjs(values.startDate).subtract(1, 'days')
                   : values.endDate
-                    ? dayjs(values.endDate).subtract(2, 'days')
-                    : undefined
+                  ? dayjs(values.endDate).subtract(2, 'days')
+                  : undefined
               }
               onChange={(newDate) => {
                 onValueChange('recordDate', dayjs(newDate).local().format('YYYY-MM-DD'))
@@ -225,7 +223,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
             setTokenAmount={setTokenAmount}
             onValueChange={onValueChange}
           />
-        </FormCard>
+        </PayoutFormCard>
 
         <PayoutEventBlock
           status={status}
