@@ -140,12 +140,17 @@ export function useV2TradeExactOut(
   return { V2TradeExactOut, isLoading }
 }
 
-export function useTrade(isExactIn: boolean, first: any, second: any, third: any) {
-  const currencyAmountIn = first
-  const currencyAmountOut = second
-  const currencyOut = second
-  const currencyIn = first
-  const { maxHops = MAX_HOPS } = third
+export function useTrade(
+  isExactIn: boolean,
+  currencyOrAmountIn?: Currency | CurrencyAmount<Currency>,
+  currencyOrAmountOut?: Currency | CurrencyAmount<Currency>,
+  optional?: { maxHops?: number }
+) {
+  const currencyAmountIn = currencyOrAmountIn as CurrencyAmount<Currency>
+  const currencyAmountOut = currencyOrAmountOut as CurrencyAmount<Currency>
+  const currencyOut = currencyOrAmountOut as Currency
+  const currencyIn = currencyOrAmountIn as Currency
+  const maxHops = optional?.maxHops ?? MAX_HOPS
 
   const [tokensToExclude, handleTokensToExclude] = useState<string[]>([])
 
@@ -203,7 +208,7 @@ export function useTrade(isExactIn: boolean, first: any, second: any, third: any
     return null
   }
 
-  const v2Trade = isExactIn ? V2TradeExactIn() : V2TradeExactOut();
+  const v2Trade = isExactIn ? V2TradeExactIn() : V2TradeExactOut()
 
   const tokenPath = v2Trade?.route?.path || []
   const lastButOneToken = tokenPath[tokenPath.length - 2]
