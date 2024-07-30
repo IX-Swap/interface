@@ -19,6 +19,7 @@ frontend:
           fi
         - yarn install
           # add the commentdd
+          # add the second comment
     build:
       commands:
         - if [ "${AWS_BRANCH}" = "development" ]; then cp -fv .env.development .env.production; fi
