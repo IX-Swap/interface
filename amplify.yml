@@ -18,6 +18,7 @@ frontend:
             aws ssm get-parameter --name ${PARAMETER_STORE_PROD} --with-decryption --query "Parameter.Value" --output text > .env.production;
           fi
         - yarn install
+          # add a single comment
     build:
       commands:
         - if [ "${AWS_BRANCH}" = "development" ]; then cp -fv .env.development .env.production; fi
