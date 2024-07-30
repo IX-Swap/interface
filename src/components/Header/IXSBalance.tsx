@@ -38,7 +38,7 @@ export const IXSBalance = () => {
   return (
     <BalanceWrapper onClick={() => toggle()}>
       {!IXSBalance.loading && !IXSGovBalance.loading && (
-        <IconWrapper size={40} style={{ marginRight: '8px' }}>
+        <IconWrapper size={32} style={{ marginRight: '8px' }}>
           <img src={IXSToken} alt="logo" />
         </IconWrapper>
       )}
