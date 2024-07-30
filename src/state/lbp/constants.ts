@@ -13,7 +13,7 @@ export const LBP_STAGE_LABELS = [
   { label: 'Ended', value: LbpStatus.ended },
 ]
 
-export const NETWORKS_NAME = {
+export const LBP_NETWORKS = {
   USDC: 'USDC',
   USDT: 'USDT',
   IXS: 'IXS',

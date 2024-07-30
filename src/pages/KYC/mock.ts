@@ -2,6 +2,7 @@ import PolygonIcon from 'assets/images/polygonIcon.svg'
 import BaseIcon from 'assets/images/baseIcon.svg'
 import { Chains, NetworkName } from 'chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { capitalizeWords } from 'utils/strings'
 
 export const incomes = ['< 50,000', '50,000-100,000', '100,000-300,000', '> 300,000'].map((name, index) => ({
   value: ++index,
@@ -34,7 +35,6 @@ export const socialMediaPlatform = ['Telegram', 'Discord', 'X.com', 'Facebook', 
   (name, index) => ({ value: ++index, label: name })
 )
 
-
 // Create a dynamic dropdown with chainId for different environments
 
 const networkIcons = {
@@ -47,7 +47,7 @@ export const blockchainNetworks = Object.entries(NetworkName).map(([key, value])
   const chainId = ENV_SUPPORTED_TGE_CHAINS?.includes(chainIds[0]) ? chainIds[0] : chainIds[1]
   return {
     value,
-    label: value.charAt(0).toUpperCase() + value.slice(1),
+    label: capitalizeWords(value),
     icon: networkIcons[value],
     chainId: chainId,
   }

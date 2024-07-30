@@ -149,6 +149,8 @@ export default function Approvals({
     )
   }
 
+  console.log(addressA, addressB, chainId, 'approval page')
+
   return (
     <CardContainer>
       <Card approved={approvalA === 'APPROVED'}>

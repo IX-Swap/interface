@@ -32,7 +32,7 @@ import { checkWrongChain } from 'chains'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
-import { NETWORKS_NAME } from 'state/lbp/constants'
+import { LBP_NETWORKS } from 'state/lbp/constants'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -146,9 +146,9 @@ const Tokenomics = ({
   // Handle all asset token address values
   const getAddresses = (chainId: number, assetTokenAddress?: string) => {
     const addresses = {
-      [NETWORKS_NAME.USDC]: TOKEN_ADDRESSES.USDC[chainId || 0],
-      [NETWORKS_NAME.IXS]: IXS_ADDRESS[chainId || 0],
-      [NETWORKS_NAME.USDT]: TOKEN_ADDRESSES.USDT[chainId || 0],
+      [LBP_NETWORKS.USDC]: TOKEN_ADDRESSES.USDC[chainId || 0],
+      [LBP_NETWORKS.IXS]: IXS_ADDRESS[chainId || 0],
+      [LBP_NETWORKS.USDT]: TOKEN_ADDRESSES.USDT[chainId || 0],
     }
 
     const resolvedAssetTokenAddress =
@@ -215,13 +215,13 @@ const Tokenomics = ({
   }, [account, assetTokenContract, shareTokenContract, setProjectTokenSymbol])
 
   useEffect(() => {
-    setAddresses(getAddresses(chainId || 0, formDataTokenomics.assetTokenAddress))
-  }, [chainId, formDataTokenomics?.shareAddress, selectedToken])
+    setAddresses(getAddresses(chainId || 0, formDataTokenomics?.assetTokenAddress))
+  }, [chainId, formDataTokenomics?.shareAddress, selectedToken, formDataTokenomics?.assetTokenAddress])
 
   useEffect(() => {
     setBalances(0)
     loadBalances()
-  }, [isWrongChain, loadBalances, addresses, chainId])
+  }, [isWrongChain, loadBalances, addresses, chainId, formDataTokenomics?.assetTokenAddress])
 
   useEffect(() => {
     if (!formDataTokenomics.assetTokenSymbol) {
@@ -237,7 +237,7 @@ const Tokenomics = ({
         onChange(updatedFormData)
       }
     }
-  }, [formDataTokenomics.assetTokenSymbol, chainId])
+  }, [formDataTokenomics.assetTokenSymbol, chainId, formDataTokenomics?.assetTokenAddress])
 
   useEffect(() => {
     // skip if already deployed
@@ -412,6 +412,8 @@ const Tokenomics = ({
       setDirty(true)
     }
   }, [JSON.stringify(formik.touched)])
+
+  console.log(formDataTokenomics.assetTokenAddress, chainId, 'token page')
   return (
     <Container>
       <InputeWrapper>
