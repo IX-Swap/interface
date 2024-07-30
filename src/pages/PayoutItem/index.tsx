@@ -5,7 +5,6 @@ import styled from 'styled-components'
 
 import Column from 'components/Column'
 import Row from 'components/Row'
-
 import { Loadable } from 'components/LoaderHover'
 import { Card } from 'components/UserPayoutEvents/Card'
 import { LoadingIndicator } from 'components/LoadingIndicator'
@@ -14,7 +13,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 
 import { PAYOUT_STATUS } from 'constants/enums'
-
+import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
 import { PayoutEvent } from 'state/token-manager/types'
 import {
@@ -41,6 +40,7 @@ export default function PayoutItemForUser({
   },
 }: RouteComponentProps<{ payoutId: string }>) {
   const [cookies] = useCookies(['annoucementsSeen'])
+  const { me } = useUserState()
   const [payout, setPayout] = useState<null | PayoutEvent>(null)
   const [page, setPage] = useState(1)
   const [claimHistory, setClaimHistory] = useState([])
@@ -90,10 +90,10 @@ export default function PayoutItemForUser({
   return (
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
+      {payout && (<PayoutHeader payout={payout} isMyPayout={payout.userId === me.id} />)}
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '40px' }}>
-            <PayoutHeader payout={payout} isMyPayout={false} />
             <PayoutTimeline payout={payout} />
             <PayoutActionBlock payout={payout} isMyPayout={false} myAmount={myAmount} onUpdate={getPayoutItem} />
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (

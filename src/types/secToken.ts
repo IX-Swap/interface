@@ -1,7 +1,7 @@
 import { TokenInfo } from '@uniswap/token-lists'
 import { Currency } from '@ixswap1/sdk-core'
 
-interface SecTokenLogo {
+export interface SecTokenLogo {
   public: string
 }
 
