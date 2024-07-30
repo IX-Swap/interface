@@ -13,8 +13,9 @@ export const LBP_STAGE_LABELS = [
   { label: 'Ended', value: LbpStatus.ended },
 ]
 
-export const LBP_NETWORKS = {
+export const LBP_TOKENS = {
   USDC: 'USDC',
   USDT: 'USDT',
   IXS: 'IXS',
+  'USDC.e': 'USDC.e',
 }

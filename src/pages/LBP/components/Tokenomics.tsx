@@ -32,7 +32,7 @@ import { checkWrongChain } from 'chains'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
-import { LBP_NETWORKS } from 'state/lbp/constants'
+import { LBP_TOKENS } from 'state/lbp/constants'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -146,9 +146,10 @@ const Tokenomics = ({
   // Handle all asset token address values
   const getAddresses = (chainId: number, assetTokenAddress?: string) => {
     const addresses = {
-      [LBP_NETWORKS.USDC]: TOKEN_ADDRESSES.USDC[chainId || 0],
-      [LBP_NETWORKS.IXS]: IXS_ADDRESS[chainId || 0],
-      [LBP_NETWORKS.USDT]: TOKEN_ADDRESSES.USDT[chainId || 0],
+      [LBP_TOKENS.USDC]: TOKEN_ADDRESSES.USDC[chainId || 0],
+      [LBP_TOKENS.IXS]: IXS_ADDRESS[chainId || 0],
+      [LBP_TOKENS.USDT]: TOKEN_ADDRESSES.USDT[chainId || 0],
+      [LBP_TOKENS['USDC.e']]: TOKEN_ADDRESSES['USDC.e'][chainId || 0],
     }
 
     const resolvedAssetTokenAddress =
@@ -413,7 +414,6 @@ const Tokenomics = ({
     }
   }, [JSON.stringify(formik.touched)])
 
-  console.log(formDataTokenomics.assetTokenAddress, chainId, 'token page')
   return (
     <Container>
       <InputeWrapper>
