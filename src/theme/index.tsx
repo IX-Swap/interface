@@ -439,6 +439,9 @@ export const TYPE = {
   description7(props: TextProps) {
     return <TextWrapper fontWeight={700} fontSize={24} lineHeight={'45px'} color={'text2'} {...props} />
   },
+  description8(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={13} lineHeight={'30px'} color={'text2'} {...props} />
+  },
   small(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={13} color={'text11'} {...props} />
   },
