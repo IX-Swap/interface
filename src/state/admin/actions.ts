@@ -372,24 +372,26 @@ export type BrokerDealerSwapItem = {
   transactionHash?: string | null
 }
 
+export interface Asset {
+  createdAt: string
+  deletedAt: string | null
+  id: number
+  isPrivate: false
+  mimeType: string
+  name: string
+  otc: string | null
+  path: string
+  public: string
+  size: string | null
+  state: string
+  tenant: string
+  updatedAt: string
+  userId: number
+  uuid: string
+}
+
 export interface Document {
-  asset: {
-    createdAt: string
-    deletedAt: string | null
-    id: number
-    isPrivate: false
-    mimeType: string
-    name: string
-    otc: string | null
-    path: string
-    public: string
-    size: string | null
-    state: string
-    tenant: string
-    updatedAt: string
-    userId: number
-    uuid: string
-  }
+  asset: Asset
   assetId: number
   createdAt: string
   deletedAt: string | null
