@@ -122,7 +122,6 @@ const TabLabel = styled.div`
 `
 
 export const StyledBodyWrapper = styled(BodyWrapper)`
-  // background: ${({ theme }) => theme.bg0};
   box-shadow: none;
   width: 100%;
   max-width: 1358px;
