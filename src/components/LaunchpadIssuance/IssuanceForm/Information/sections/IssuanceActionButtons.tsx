@@ -66,6 +66,7 @@ export const IssuanceActionButtons = ({
   const onReject = async () => {
     try {
       await reject({ reasonRequested: reasonRejected, changesRequested: changesRejected })
+      await refetch?.()
       showSuccess('Offer rejected successfully')
       setShowConfirmReject(false)
       setShowReject(false)
@@ -76,6 +77,7 @@ export const IssuanceActionButtons = ({
   const onRequestChanges = async () => {
     try {
       await requestChanges({ reasonRequested, changesRequested })
+      await refetch?.()
       showSuccess('Requested changes for offer successfully')
       setShowConfirmUpdate(false)
       setShowUpdate(false)

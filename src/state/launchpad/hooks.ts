@@ -1157,6 +1157,7 @@ export const useOfferFormInitialValues = (
 
   const refetch = async () => {
     await issuance.load(issuanceId)
+    await offer.load()
   }
 
   return {
