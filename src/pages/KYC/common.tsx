@@ -3,27 +3,23 @@ import { Box, Flex } from 'rebass'
 import styled, { css } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
-
 import { Input, Textarea } from 'components/Input'
 import { PinnedContentButton } from 'components/Button'
 import { TYPE, MEDIA_WIDTHS, LinkStyledButton } from 'theme'
 import { Label } from 'components/Label'
 import Upload from 'components/Upload'
-import { FilePreview, FilePreviewPayout } from 'components/FilePreview'
+import { FilePreview } from 'components/FilePreview'
 import { Select as ReactSelect } from 'components/Select'
 import { AcceptFiles } from 'components/Upload/types'
-
 import { ReactComponent as UploadLogo } from 'assets/images/NewDownloads.svg'
 import { ReactComponent as UploadLogoLbp } from 'assets/images/Browse.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
-
 import { ReactComponent as OneIcon } from 'assets/images/one.svg'
 import { ReactComponent as TwoIcon } from 'assets/images/two.svg'
 import { ReactComponent as ThreeIcon } from 'assets/images/three .svg'
 import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
 import { Text } from 'rebass'
-
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer, ExtraInfoCardCountry } from './styleds'
 import Row, { RowCenter } from 'components/Row'
 import SelfieImage from 'assets/images/selfie.svg'
@@ -189,7 +185,6 @@ export const KycSelect: FC<SelectProps> = ({
       {label !== 'Nationality' && (
         <p style={{ color: '#B8B8CC', fontSize: '12px', padding: '0px 80px 0px 0px' }}>{subText}</p>
       )}
-
       {isDisabled && selectedItem ? (
         <Row alignItems="center" style={{ columnGap: 4 }}>
           {selectedItem?.icon}
@@ -346,97 +341,7 @@ export const TextareaInput: FC<TextInputProps> = ({
   )
 }
 
-export const Uploader: FC<UploaderProps> = ({
-  id,
-  title,
-  subtitle,
-  files,
-  required,
-  error,
-  handleDeleteClick,
-  onDrop,
-  optional = false,
-  tooltipText,
-  isDisabled = false,
-  isPayoutpage,
-}: UploaderProps) => {
-  return (
-    <Box>
-      <Flex>
-        <Label label={title} required={required} tooltipText={tooltipText} />
-        {optional && (
-          <>
-            <TYPE.body1 marginLeft="4px" marginRight="8px" color={`text9`}>
-              (optional)
-            </TYPE.body1>
-            <InfoLogo />
-          </>
-        )}
-      </Flex>
-      {subtitle && <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>}
-      {files && files.length > 0 && (
-        <Flex flexWrap="wrap">
-          {isPayoutpage ? (
-            <>
-              {files.map((file: any, index) => (
-                <FilePreviewPayout
-                  key={`file-${index}-${file.name}`}
-                  file={file?.asset ? file.asset : file}
-                  index={1}
-                  handleDeleteClick={() => {
-                    handleDeleteClick(index)
-                  }}
-                  isDisabled={isDisabled}
-                />
-              ))}
-            </>
-          ) : (
-            <>
-              {files.map((file: any, index) => (
-                <FilePreview
-                  key={`file-${index}-${file.name}`}
-                  file={file?.asset ? file.asset : file}
-                  index={1}
-                  handleDeleteClick={() => {
-                    handleDeleteClick(index)
-                  }}
-                  isDisabled={isDisabled}
-                />
-              ))}
-            </>
-          )}
-        </Flex>
-      )}
-      {!isDisabled && (
-        <Upload
-          isDisabled={isDisabled}
-          accept={`${AcceptFiles.PDF},image/jpeg,image/png` as AcceptFiles}
-          data-testid={id}
-          file={null}
-          onDrop={onDrop}
-        >
-          <UploaderCard>
-            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
-              <StyledUploadLogo />
-              <TYPE.small textAlign="center" marginTop="8px" color={'#666680'}>
-                Drag and Drop
-              </TYPE.small>
-              <TYPE.small display="flex" textAlign="center" color={'#666680'}>
-                or <Text style={{ marginLeft: 2, color: '#6666FF' }}>Upload</Text>
-              </TYPE.small>
-            </Flex>
-          </UploaderCard>
-        </Upload>
-      )}
 
-      {error && (
-        <TYPE.small marginTop="4px" color={'red1'}>
-          {error}
-        </TYPE.small>
-      )}
-    </Box>
-  )
-}
 
 export const SelfieUploader: FC<UploaderProps> = ({
   id,
