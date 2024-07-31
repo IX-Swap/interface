@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
-import { ButtonIXSGradient } from 'components/Button'
-import { gradientBorder, MEDIA_WIDTHS } from 'theme'
+import { ButtonIXSWide } from 'components/Button'
+import { MEDIA_WIDTHS } from 'theme'
 
 const commonStyles = css`
   display: flex;
@@ -9,32 +9,31 @@ const commonStyles = css`
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 32px;
+  padding: 65px 0;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-radius: 30px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 14px;
   line-height: 150%;
+  color: ${({ theme }) => theme.text2};
 `
 
 export const Container = styled.div`
   ${commonStyles}
-  background: ${({ theme }) => theme.bgG12};
-  ${gradientBorder}
+  background: ${({ theme }) => theme.bg0};
   :before {
     border-radius: 30px;
     padding: 1px;
   }
 `
 
-export const StyledButtonIXSGradient = styled(ButtonIXSGradient)`
-  font-size: 16px;
-  line-height: 16px;
+export const StyledButton = styled(ButtonIXSWide)`
+  font-size: 13px;
   font-weight: 600;
-  max-height: 40px;
-  min-height: 40px;
-  border-radius: 40px;
-  padding: 12px 24px;
+  border-radius: 6px;
+  padding: 15px 63px;
+  margin-right: 0;
+  width: auto;
 `
 
 export const FuturePayoutContainer = styled.div`
