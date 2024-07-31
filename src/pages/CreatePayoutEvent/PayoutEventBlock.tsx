@@ -29,7 +29,7 @@ import { FormValues } from './utils'
 import { PayoutType } from './PayoutType'
 import { PublishPayoutModal } from './PublishPayoutModal'
 
-import { FormCard, ButtonsContainer } from './styleds'
+import { FormCard, ButtonsContainer, PayoutFormCard } from './styleds'
 import { MouseoverTooltip } from 'components/Tooltip'
 
 interface Props {
@@ -56,7 +56,7 @@ export const PayoutEventBlock: FC<Props> = ({
   const [isWarningOpen, setIsWarningOpen] = useState(false)
   const { values, errors, touched, validateForm, setTouched } = useFormikContext<FormValues>()
 
-  const { bg19 } = useTheme()
+  const { bg0 } = useTheme()
   const [openModal, setOpenModal] = useState(false)
   const { token, tokenAmount, recordDate, startDate, secToken, endDate } = values
   const { tokensOptions } = useTokensList()
@@ -127,16 +127,14 @@ export const PayoutEventBlock: FC<Props> = ({
   }
 
   return (
-    <FormCard>
+    <PayoutFormCard>
       <AreYouSureModal
         onAccept={onDelete}
         onDecline={toggleIsWarningOpen}
         isOpen={isWarningOpen}
         declineText="Cancel"
       />
-      <TYPE.title6 marginBottom="28px">
-        <Trans>PAYOUT EVENT</Trans>
-      </TYPE.title6>
+      <TYPE.body fontWeight='600' marginBottom="28px">Payout Event</TYPE.body>
 
       <PayoutType onValueChange={onValueChange} availableForEditing={availableForEditing} />
 
@@ -232,7 +230,7 @@ export const PayoutEventBlock: FC<Props> = ({
           required
           placeholder="Give a brief description of this payout event"
           value={values.description}
-          style={{ height: '162px', background: bg19, marginBottom: 0 }}
+          style={{ height: '162px', background: bg0, marginBottom: 0 }}
           onChange={(e: any) => onValueChange('description', e.currentTarget.value)}
           error={touched.description ? errors.description : ''}
           disabled={!availableForEditing.includes('description')}
@@ -299,6 +297,6 @@ export const PayoutEventBlock: FC<Props> = ({
           availableForEditing={availableForEditing}
         />
       )}
-    </FormCard>
+    </PayoutFormCard>
   )
 }
