@@ -44,10 +44,9 @@ export const PayoutHeaderCard = styled(Box)`
 
 export const ButtonsContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: end;
+  justify-content: end;
   margin-top: 32px;
-  gap: 32px;
   > button {
     min-height: 40px;
     height: 40px;
