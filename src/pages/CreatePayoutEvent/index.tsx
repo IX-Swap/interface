@@ -46,7 +46,6 @@ const CreatePayoutEventPage: FC = () => {
 
   const FullScreenBackground = styled.div`
     background-color: #ffffff;
-    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -60,7 +59,7 @@ const CreatePayoutEventPage: FC = () => {
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
       <FullScreenBackground>
-        <StyledBodyWrapper style={{ maxWidth: 1200, marginTop: '170px' }} hasAnnouncement={!cookies.annoucementsSeen}>
+        <StyledBodyWrapper style={{ maxWidth: 1200, marginTop: '50px' }} hasAnnouncement={!cookies.annoucementsSeen}>
           <Flex marginBottom="32px" alignItems="center">
             <PageTitle textAlign="center" margin="0 auto">
               <TYPE.title6>Create Payout Event</TYPE.title6>
