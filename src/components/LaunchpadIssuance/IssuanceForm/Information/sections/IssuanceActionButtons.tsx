@@ -118,7 +118,7 @@ export const IssuanceActionButtons = ({
 
   return (
     <Column style={{ gap: '1rem' }}>
-       {loading && (
+      {loading && (
         <LoaderContainer width="100vw" height="100vh">
           <Loader />
         </LoaderContainer>
