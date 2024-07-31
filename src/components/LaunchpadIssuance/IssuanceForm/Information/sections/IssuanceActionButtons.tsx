@@ -12,6 +12,8 @@ import { useRole } from 'state/user/hooks'
 import { FormSubmitContainer } from '../../shared/styled'
 import { RequestChangesPopup } from '../../../utils/RequestChangesPopup'
 import { OfferStatus } from 'state/launchpad/types'
+import { LoaderContainer } from 'components/LaunchpadMisc/styled'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
 
 interface IssuanceButtonsProps {
   onSaveDraft: () => void
@@ -36,10 +38,14 @@ export const IssuanceActionButtons = ({
   status,
   offerId,
   isReset,
-  refetch
+  refetch,
 }: IssuanceButtonsProps) => {
   const theme = useTheme()
   const { isAdmin } = useRole()
+  const showError = useShowError()
+  const { approve, reject, requestChanges } = useReviewOffer(offerId)
+  const showSuccess = useShowSuccess()
+
   const [showApprove, setShowApprove] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
   const [showReject, setShowReject] = useState(false)
@@ -49,22 +55,24 @@ export const IssuanceActionButtons = ({
   const [reasonRejected, setReasonRejected] = useState('')
   const [changesRequested, setChangesRequested] = useState('')
   const [changesRejected, setChangesRejected] = useState('')
-  const showError = useShowError()
-  const { approve, reject, requestChanges } = useReviewOffer(offerId)
-  const showSuccess = useShowSuccess()
+  const [loading, setLoading] = useState(false)
 
   const onApprove = async () => {
     try {
+      setLoading(true)
       await approve()
       await refetch?.()
       showSuccess('Offer approved successfully')
       setShowApprove(false)
     } catch (e: any) {
       showError(e?.message)
+    } finally {
+      setLoading(false)
     }
   }
   const onReject = async () => {
     try {
+      setLoading(true)
       await reject({ reasonRequested: reasonRejected, changesRequested: changesRejected })
       await refetch?.()
       showSuccess('Offer rejected successfully')
@@ -72,10 +80,13 @@ export const IssuanceActionButtons = ({
       setShowReject(false)
     } catch (e: any) {
       showError(e?.message)
+    } finally {
+      setLoading(false)
     }
   }
   const onRequestChanges = async () => {
     try {
+      setLoading(true)
       await requestChanges({ reasonRequested, changesRequested })
       await refetch?.()
       showSuccess('Requested changes for offer successfully')
@@ -83,6 +94,8 @@ export const IssuanceActionButtons = ({
       setShowUpdate(false)
     } catch (e: any) {
       showError(e?.message)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -105,6 +118,11 @@ export const IssuanceActionButtons = ({
 
   return (
     <Column style={{ gap: '1rem' }}>
+       {loading && (
+        <LoaderContainer width="100vw" height="100vh">
+          <Loader />
+        </LoaderContainer>
+      )}
       <ConfirmPopup
         isOpen={showApprove}
         onAccept={onApprove}
