@@ -990,8 +990,6 @@ export const useOfferFormInitialValues = (
 
   const issuance = useGetIssuance()
   const offer = useGetOffer(issuance?.data?.vetting?.offer?.id)
-  console.log('offer', offer)
-  console.log('issuance', issuance)
   const [values, setValues] = React.useState<InformationFormValues>()
 
   React.useEffect(() => {
