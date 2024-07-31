@@ -134,7 +134,9 @@ export const PayoutEventBlock: FC<Props> = ({
         isOpen={isWarningOpen}
         declineText="Cancel"
       />
-      <TYPE.body fontWeight='600' marginBottom="28px">Payout Event</TYPE.body>
+      <TYPE.body fontWeight="600" marginBottom="28px">
+        Payout Event
+      </TYPE.body>
 
       <PayoutType onValueChange={onValueChange} availableForEditing={availableForEditing} />
 
@@ -238,6 +240,7 @@ export const PayoutEventBlock: FC<Props> = ({
       </FormGrid>
 
       <Uploader
+        isPayoutpage={true}
         title="Payout Attachments"
         files={values.files}
         onDrop={handleDropImage}

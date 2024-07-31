@@ -46,6 +46,7 @@ export interface UploaderProps {
   id?: any
   name?: string
   onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  isPayoutpage?: boolean
 }
 
 interface SelectProps {
@@ -357,6 +358,7 @@ export const Uploader: FC<UploaderProps> = ({
   optional = false,
   tooltipText,
   isDisabled = false,
+  isPayoutpage,
 }: UploaderProps) => {
   return (
     <Box>
@@ -374,17 +376,35 @@ export const Uploader: FC<UploaderProps> = ({
       {subtitle && <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>}
       {files && files.length > 0 && (
         <Flex flexWrap="wrap">
-          {files.map((file: any, index) => (
-            <FilePreviewPayout
-              key={`file-${index}-${file.name}`}
-              file={file?.asset ? file.asset : file}
-              index={1}
-              handleDeleteClick={() => {
-                handleDeleteClick(index)
-              }}
-              isDisabled={isDisabled}
-            />
-          ))}
+          {isPayoutpage ? (
+            <>
+              {files.map((file: any, index) => (
+                <FilePreviewPayout
+                  key={`file-${index}-${file.name}`}
+                  file={file?.asset ? file.asset : file}
+                  index={1}
+                  handleDeleteClick={() => {
+                    handleDeleteClick(index)
+                  }}
+                  isDisabled={isDisabled}
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              {files.map((file: any, index) => (
+                <FilePreview
+                  key={`file-${index}-${file.name}`}
+                  file={file?.asset ? file.asset : file}
+                  index={1}
+                  handleDeleteClick={() => {
+                    handleDeleteClick(index)
+                  }}
+                  isDisabled={isDisabled}
+                />
+              ))}
+            </>
+          )}
         </Flex>
       )}
       {!isDisabled && (
