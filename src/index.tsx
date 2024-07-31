@@ -1,7 +1,7 @@
 import { CookiesProvider } from 'react-cookie'
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
 import { isMobile } from 'react-device-detect'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
@@ -29,6 +29,7 @@ import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import * as Sentry from '@sentry/react'
+import Providers from 'Providers'
 
 /* eslint-disable react/display-name */
 if (!!window.ethereum) {
@@ -86,35 +87,36 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
 })
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <HashRouter>
-          <LanguageProvider>
-            <Web3ReactProvider connectors={connectors}>
-              <Blocklist>
-                <Updaters />
-                <ThemeProvider>
-                  <ThemedGlobalStyle />
-                  <MuiThemeProvider>
-                    <LocalizationProvider dateAdapter={DayJsUtils}>
-                      <CookiesProvider>
-                        <HelmetProvider>
-                          <App />
-                        </HelmetProvider>
-                      </CookiesProvider>
-                    </LocalizationProvider>
-                  </MuiThemeProvider>
-                </ThemeProvider>
-              </Blocklist>
-            </Web3ReactProvider>
-          </LanguageProvider>
-        </HashRouter>
-      </PersistGate>
-    </Provider>
-  </StrictMode>,
-  document.getElementById('root')
+    {/* <Providers> */}
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <HashRouter>
+            <LanguageProvider>
+              <Web3ReactProvider connectors={connectors}>
+                <Blocklist>
+                  <Updaters />
+                  <ThemeProvider>
+                    <ThemedGlobalStyle />
+                    <MuiThemeProvider>
+                      <LocalizationProvider dateAdapter={DayJsUtils}>
+                        <CookiesProvider>
+                          <HelmetProvider>
+                            <App />
+                          </HelmetProvider>
+                        </CookiesProvider>
+                      </LocalizationProvider>
+                    </MuiThemeProvider>
+                  </ThemeProvider>
+                </Blocklist>
+              </Web3ReactProvider>
+            </LanguageProvider>
+          </HashRouter>
+        </PersistGate>
+      </Provider>
+    {/* </Providers> */}
+  </StrictMode>
 )
 
 serviceWorkerRegistration.unregister()
