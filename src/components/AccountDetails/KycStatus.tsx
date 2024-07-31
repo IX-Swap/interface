@@ -66,6 +66,10 @@ const BoxContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+
+  &:hover {
+    border: 1px solid #6666ff;
+  }
 `
 
 const Status = styled.div`

@@ -84,6 +84,7 @@ const HeaderElement = styled.div`
 
 const HeaderRow = styled(RowFixed)`
   width: 100%;
+  margin-left: 16px;
 `
 
 const HeaderRowNew = styled(RowFixed)`
