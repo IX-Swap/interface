@@ -34,7 +34,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
     <Container>
       <Flex justifyContent='center'>
         <StyledBodyWrapper>
-          <Flex justifyContent='space-between'>
+          <StyledSummaryBlock>
             <TokenInformationContainer>
               <TitleContent>
                 <TokenNetwork
@@ -66,7 +66,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
                 attachments={attachments}
               />
             </EventContainer>
-          </Flex>
+          </StyledSummaryBlock>
         </StyledBodyWrapper>
       </Flex>
     </Container>
@@ -88,6 +88,10 @@ const Container = styled.div`
   background: ${({ theme }) => theme.bg0};
   padding: 5rem 0;
   margin-top: -35px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: calc(100% + 24px);
+    padding: 3rem 1rem;
+  }
 `
 
 const TitleContent = styled.div`
@@ -108,15 +112,30 @@ const StatusAndEdit = styled.div`
   gap: 24px;
 `
 
-const TokenInformationContainer = styled.div`
-  width: 60%;
+const StyledSummaryBlock = styled(Flex)`
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 32px;
+  @media (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    flex-direction: row;
+    column-gap: 0;
+  }
 `
 
-const EventContainer = styled.div`
-  width: 35%;
-  display: flex;
+const TokenInformationContainer = styled.div`
+  width: 100%;
+  @media (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 60%;
+  }
+`
+
+const EventContainer = styled(Flex)`
+  width: 100%;
   flex-direction: column;
   gap: 18px;
+  @media (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 35%;
+  }
 `
 
 const SecTokenLink = styled(NavLink)`

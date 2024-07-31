@@ -1,6 +1,6 @@
-import { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import { Flex, Box } from 'rebass'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
 
 import Column from 'components/Column'
@@ -14,7 +14,7 @@ import { routes } from 'utils/routes'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 
-import { Container, DelayedContainer, FuturePayoutContainer, StyledButtonIXSGradient } from './styleds'
+import { Container, DelayedContainer, FuturePayoutContainer, StyledButton } from './styleds'
 import { getClaimAuthorization, useGetUserClaim, useSaveUserClaim } from 'state/payout/hooks'
 import dayjs from 'dayjs'
 import { usePayoutContract } from 'hooks/useContract'
@@ -24,6 +24,7 @@ import { FetchingBalance } from './FetchingBalance'
 import { Claimed } from './Claimed'
 import { UserClaim } from './dto'
 import { SecToken } from 'types/secToken'
+import styled from 'styled-components'
 
 interface Props {
   payout: PayoutEvent
@@ -110,65 +111,65 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
     )
 
     switch (status) {
-      case PAYOUT_STATUS.STARTED:
-        return claimStatus?.status ? (
-          <Claimed
-            claimStatus={claimStatus.status}
-            payoutToken={payoutToken}
-            amountToClaim={Number(amountToClaim || '0').toFixed(decimals)}
-          />
-        ) : (
-          <>
-            <Flex alignItems="center" marginBottom="4px" fontWeight={600}>
-              <Box fontSize="20px" lineHeight="30px" marginRight="4px"><Trans>{`You can now claim your payout of`}</Trans></Box>
-              <CurrencyLogo size="24px" currency={payoutToken} />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
-                amountToClaim || '0'
-              ).toFixed(decimals)}`}</Box>
-            </Flex>
-            {recordDateText}
-          </>
-        )
-      case PAYOUT_STATUS.SCHEDULED:
-        return (
-          <>
-            <Flex alignItems="center" marginBottom="4px" fontWeight={600}>
-              <Box fontSize="20px" lineHeight="30px" marginRight="4px"><Trans>{`You have a payout of`}</Trans></Box>
-              <CurrencyLogo currency={payoutToken} size="24px" />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
-                amountToClaim || '0'
-              ).toFixed(decimals)} available`}</Box>
-            </Flex>
-            {recordDateText}
-          </>
-        )
-      case PAYOUT_STATUS.DELAYED:
-        return (
-          <DelayedContainer>
-            <div>
-              <Trans>
+    case PAYOUT_STATUS.STARTED:
+      return claimStatus?.status ? (
+        <Claimed
+          claimStatus={claimStatus.status}
+          payoutToken={payoutToken}
+          amountToClaim={Number(amountToClaim || '0').toFixed(decimals)}
+        />
+      ) : (
+        <>
+          <Flex alignItems="center" marginBottom="4px" fontWeight={600}>
+            <Box fontSize="20px" lineHeight="30px" marginRight="4px"><Trans>{`You can now claim your payout of`}</Trans></Box>
+            <CurrencyLogo size="24px" currency={payoutToken} />
+            <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
+              amountToClaim || '0'
+            ).toFixed(decimals)}`}</Box>
+          </Flex>
+          {recordDateText}
+        </>
+      )
+    case PAYOUT_STATUS.SCHEDULED:
+      return (
+        <>
+          <Flex alignItems="center" marginBottom="4px" fontWeight={600}>
+            <Box fontSize="20px" lineHeight="30px" marginRight="4px"><Trans>{`You have a payout of`}</Trans></Box>
+            <CurrencyLogo currency={payoutToken} size="24px" />
+            <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
+              amountToClaim || '0'
+            ).toFixed(decimals)} available`}</Box>
+          </Flex>
+          {recordDateText}
+        </>
+      )
+    case PAYOUT_STATUS.DELAYED:
+      return (
+        <DelayedContainer>
+          <div>
+            <Trans>
                 This payout event is <strong style={{ marginLeft: '4px', color: '#ED0376' }}>delayed.</strong>
-              </Trans>
-            </div>
-            <div>
-              <Box><Trans>{`Your payout of`}</Trans></Box>
-              <Flex fontSize={24} fontWeight={600} style={{ gap: 4 }} alignItems="center">
-                <CurrencyLogo currency={payoutToken} />
-                <Box>{`${payoutToken.symbol} ${Number(amountToClaim || '0')}`}</Box>
-              </Flex>
-              <Box><Trans>{`based on your Security token balance of`}</Trans></Box>
-            </div>
-            <div>
-              <CurrencyLogo currency={secPayoutToken} size="20px" />
-              <Box marginX="4px">{`${(tokenInfo as any).originalSymbol ?? tokenInfo.symbol} ${myAmount.toFixed(
-                decimals
-              )}`}</Box>
-              <Box><Trans>{`as of record date will become available once payout starts.`}</Trans></Box>
-            </div>
-          </DelayedContainer>
-        )
-      default:
-        return null
+            </Trans>
+          </div>
+          <div>
+            <Box><Trans>{`Your payout of`}</Trans></Box>
+            <Flex fontSize={24} fontWeight={600} style={{ gap: 4 }} alignItems="center">
+              <CurrencyLogo currency={payoutToken} />
+              <Box>{`${payoutToken.symbol} ${Number(amountToClaim || '0')}`}</Box>
+            </Flex>
+            <Box><Trans>{`based on your Security token balance of`}</Trans></Box>
+          </div>
+          <div>
+            <CurrencyLogo currency={secPayoutToken} size="20px" />
+            <Box marginX="4px">{`${(tokenInfo as any).originalSymbol ?? tokenInfo.symbol} ${myAmount.toFixed(
+              decimals
+            )}`}</Box>
+            <Box><Trans>{`as of record date will become available once payout starts.`}</Trans></Box>
+          </div>
+        </DelayedContainer>
+      )
+    default:
+      return null
     }
   }, [status, payoutToken, claimStatus, secPayoutToken])
 
@@ -184,10 +185,10 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
         <Container>
           {getContentByStatus()}
           {!claimStatus?.status && (
-            <StyledButtonIXSGradient
+            <StyledButton
               disabled={status !== PAYOUT_STATUS.STARTED || isLoading}
               onClick={claim}
-            ><Trans>{`Claim Now`}</Trans></StyledButtonIXSGradient>
+            ><Trans>{`Claim Now`}</Trans></StyledButton>
           )}
         </Container>
       )}
@@ -206,41 +207,44 @@ const NotTokenHoldersView: FC<{ payoutToken: any; secToken?: SecToken; status: P
 
   const getContentByStatus = () => {
     switch (status) {
-      case PAYOUT_STATUS.ANNOUNCED:
-        return (
-          <Flex marginBottom="24px">
-            <Box marginX="4px"><Trans>{`Add`}</Trans></Box>
-            <CurrencyLogo currency={payoutToken} size="24px" />
-            <Box marginX="4px" fontWeight="bold">
-              {payoutToken.symbol}{' '}
-            </Box>
-            <Box><Trans>{`to increase possible payout.`}</Trans></Box>
-          </Flex>
-        )
-      case PAYOUT_STATUS.DELAYED:
-        return (
-          <>
-            <Flex marginBottom="4px">
-              <Trans>
+    case PAYOUT_STATUS.ANNOUNCED:
+      return (
+        <Flex marginBottom="24px">
+          <Box marginX="4px"><Trans>{`Add`}</Trans></Box>
+          <CurrencyLogo currency={payoutToken} size="24px" />
+          <Box marginX="4px" fontWeight="bold">
+            {payoutToken.symbol}{' '}
+          </Box>
+          <Box><Trans>{`to increase possible payout.`}</Trans></Box>
+        </Flex>
+      )
+    case PAYOUT_STATUS.DELAYED:
+      return (
+        <>
+          <Flex marginBottom="4px">
+            <Trans>
                 This payout event is <strong style={{ marginLeft: '4px', color: '#ED0376' }}>delayed.</strong>
-              </Trans>
-            </Flex>
-            <Box marginBottom="24px"><Trans>{`You have no pending payout as you have 0 ${secTokenSymbol} tokens as of record date.`}</Trans></Box>
-          </>
-        )
-      default:
-        return (
-          <>
-            <Box marginBottom="4px"><Trans>{`Payout unavailable.`}</Trans></Box>
-            <Box marginBottom="24px"><Trans>{`You have 0 ${secTokenSymbol} tokens as of record date.`}</Trans></Box>
-          </>
-        )
+            </Trans>
+          </Flex>
+          <Box marginBottom="24px"><Trans>{`You have no pending payout as you have 0 ${secTokenSymbol} tokens as of record date.`}</Trans></Box>
+        </>
+      )
+    default:
+      return (
+        <Box marginBottom="16px">
+          <Trans>
+            <span>Payout unavailable. You have</span>
+            <img style={{ borderRadius: '50%', margin: '0 4px -4px' }} width="18px" height="18px" src={secToken?.logo?.public} />
+            <span><StyledTokenBalance>0 {secTokenSymbol}</StyledTokenBalance> tokens as of record date.</span>
+          </Trans>
+        </Box>
+      )
     }
   }
   return (
     <Container>
       {getContentByStatus()}
-      <StyledButtonIXSGradient onClick={onBuyClick}><Trans>{`Buy Now`}</Trans></StyledButtonIXSGradient>
+      <StyledButton onClick={onBuyClick}><Trans>{`Buy Now`}</Trans></StyledButton>
     </Container>
   )
 }
@@ -255,7 +259,7 @@ const NotAccreditedView: FC<{ secTokenId: any }> = ({ secTokenId }) => {
   return (
     <Container>
       <Box marginBottom="24px"><Trans>{`You need to pass KYC and get accredited to be eligible for this payout.`}</Trans></Box>
-      <StyledButtonIXSGradient onClick={redirect}><Trans>{`Pass Accreditation`}</Trans></StyledButtonIXSGradient>
+      <StyledButton onClick={redirect}><Trans>{`Pass Accreditation`}</Trans></StyledButton>
     </Container>
   )
 }
@@ -287,7 +291,11 @@ const FuturePayout: FC<{ secToken: any }> = ({ secToken }) => {
         </Flex>
         <Trans>{`to increase possible profits in future payout.`}</Trans>
       </Flex>
-      <StyledButtonIXSGradient onClick={onBuyClick}><Trans>{`Buy Now`}</Trans></StyledButtonIXSGradient>
+      <StyledButton onClick={onBuyClick}><Trans>{`Buy Now`}</Trans></StyledButton>
     </FuturePayoutContainer>
   )
 }
+
+const StyledTokenBalance = styled.span`
+  color: ${({ theme }) => theme.text6};
+`
