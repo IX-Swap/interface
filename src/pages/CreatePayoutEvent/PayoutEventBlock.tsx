@@ -29,7 +29,7 @@ import { FormValues } from './utils'
 import { PayoutType } from './PayoutType'
 import { PublishPayoutModal } from './PublishPayoutModal'
 
-import { FormCard, ButtonsContainer, PayoutFormCard } from './styleds'
+import { ButtonsContainer, PayoutFormCard } from './styleds'
 import { MouseoverTooltip } from 'components/Tooltip'
 
 interface Props {
