@@ -32,6 +32,7 @@ import { checkWrongChain } from 'chains'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import { LBP_TOKENS } from 'state/lbp/constants'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -59,6 +60,7 @@ export const TokenOptions = (chainId: number) => [
     logo: usdtropDown,
   },
   {
+    value: 'IXS',
     tokenSymbol: 'IXS',
     tokenAddress: IXS_ADDRESS[chainId],
     tokenDecimals: 18,
@@ -136,15 +138,27 @@ const Tokenomics = ({
   })
 
   const [balances, setBalances] = useState<any>({
-    assetBalance: '',
-    shareBalance: '',
+    assetBalance: '0',
+    shareBalance: '0',
   })
   const { isWrongChain, expectChain } = checkWrongChain(chainId || 0, selectedNetwork)
 
-  const getAddresses = (chainId: number, assetTokenAddress: string = TOKEN_ADDRESSES.USDC[chainId || 0]) => ({
-    assetTokenAddress: assetTokenAddress || '',
-    shareTokenAddress: formDataTokenomics?.shareAddress || '',
-  })
+  // Handle all asset token address values
+  const getAddresses = (chainId: number, assetTokenAddress?: string) => {
+    const addresses = {
+      [LBP_TOKENS.USDC]: TOKEN_ADDRESSES.USDC[chainId || 0],
+      [LBP_TOKENS.IXS]: IXS_ADDRESS[chainId || 0],
+      [LBP_TOKENS.USDT]: TOKEN_ADDRESSES.USDT[chainId || 0],
+      [LBP_TOKENS['USDC.e']]: TOKEN_ADDRESSES['USDC.e'][chainId || 0],
+    }
+
+    const resolvedAssetTokenAddress =
+      assetTokenAddress || addresses[selectedToken.value] || TOKEN_ADDRESSES.USDC[chainId || 0]
+    return {
+      assetTokenAddress: resolvedAssetTokenAddress,
+      shareTokenAddress: formDataTokenomics?.shareAddress || '',
+    }
+  }
 
   const [addresses, setAddresses] = useState(getAddresses(chainId || 0))
   const assetTokenContract = useTokenContract(addresses.assetTokenAddress)
@@ -202,18 +216,13 @@ const Tokenomics = ({
   }, [account, assetTokenContract, shareTokenContract, setProjectTokenSymbol])
 
   useEffect(() => {
-    setAddresses(getAddresses(chainId || 0))
-  }, [chainId, formDataTokenomics?.shareAddress])
+    setAddresses(getAddresses(chainId || 0, formDataTokenomics?.assetTokenAddress))
+  }, [chainId, formDataTokenomics?.shareAddress, selectedToken, formDataTokenomics?.assetTokenAddress])
 
   useEffect(() => {
-    if (isWrongChain) {
-      const updatedFormData = {
-        shareAddress: '',
-      }
-      onChange(updatedFormData)
-    }
+    setBalances(0)
     loadBalances()
-  }, [isWrongChain, loadBalances, addresses, chainId])
+  }, [isWrongChain, loadBalances, addresses, chainId, formDataTokenomics?.assetTokenAddress])
 
   useEffect(() => {
     if (!formDataTokenomics.assetTokenSymbol) {
@@ -229,7 +238,7 @@ const Tokenomics = ({
         onChange(updatedFormData)
       }
     }
-  }, [formDataTokenomics.assetTokenSymbol, chainId])
+  }, [formDataTokenomics.assetTokenSymbol, chainId, formDataTokenomics?.assetTokenAddress])
 
   useEffect(() => {
     // skip if already deployed
@@ -348,7 +357,7 @@ const Tokenomics = ({
 
   const handleSelectNetwork = (selectedOption: any) => {
     const chainName = selectedOption?.value
-    const updatedAddresses = getAddresses(chainName)
+    const updatedAddresses = getAddresses(selectedOption.chainId)
     const updatedFormData = {
       ...formDataTokenomics,
       network: chainName,
