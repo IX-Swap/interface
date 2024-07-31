@@ -8,6 +8,7 @@ import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
 import CustodianV2 from 'pages/CustodianV2'
 import { UserPayoutEvents } from 'components/UserPayoutEvents'
+import UserPayoutHistory from 'components/UserPayoutHistory'
 import AppBody, { BodyWrapper } from 'pages/AppBody'
 import { useWeb3React } from '@web3-react/core'
 import { useCookies } from 'react-cookie'
@@ -16,7 +17,7 @@ import { useAuthState } from 'state/auth/hooks'
 import { routes } from 'utils/routes'
 import { MEDIA_WIDTHS } from 'theme'
 
-type SecurityTab = 'tokens' | 'payout-events' | ':tab'
+export type SecurityTab = 'tokens' | 'payout-events' | 'payout-history' | ':tab'
 
 interface Tab {
   label: string
@@ -31,6 +32,7 @@ export interface AdminParams {
 const tabs: Tab[] = [
   { label: 'Security Tokens', value: 'tokens' },
   { label: 'Payout Events', value: 'payout-events' },
+  { label: 'Payout History', value: 'payout-history' },
 ]
 
 const renderTab = (selectedTab: SecurityTab | string) => {
@@ -39,6 +41,8 @@ const renderTab = (selectedTab: SecurityTab | string) => {
     return <CustodianV2 />
   case 'payout-events':
     return <UserPayoutEvents />
+  case 'payout-history':
+    return <UserPayoutHistory />
   default:
     return <CustodianV2 />
   }

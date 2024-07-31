@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 
 import { postLogin } from 'state/auth/actions'
-import { PayoutList } from 'state/token-manager/types'
+import { PayoutHistoryList, PayoutList } from 'state/payout/types'
 
 import {
   createDraft,
@@ -14,6 +14,7 @@ import {
   getUserClaim,
   getTotalClaims,
   getClaimAuthorization,
+  getPayoutHistoryList,
 } from './actions'
 
 export interface PayoutState {
@@ -23,6 +24,8 @@ export interface PayoutState {
   accredited: PayoutList
   owningTokens: PayoutList
   claimed: PayoutList
+
+  payoutHistory: PayoutHistoryList
 }
 
 export const payoutTypeFilterLegend = {
@@ -47,6 +50,17 @@ const initialState: PayoutState = {
     prevPage: 0,
   },
   claimed: { page: 1, offset: 10, totalItems: 0, totalPages: 0, itemCount: 0, items: [], nextPage: 2, prevPage: 0 },
+
+  payoutHistory: {
+    page: 1,
+    offset: 10,
+    totalItems: 0,
+    totalPages: 0,
+    itemCount: 0,
+    items: [],
+    nextPage: 2,
+    prevPage: 1,
+  },
 }
 
 export default createReducer<PayoutState>(initialState, (builder) =>
@@ -196,5 +210,11 @@ export default createReducer<PayoutState>(initialState, (builder) =>
     .addCase(getClaimAuthorization.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingRequest = false
       state.error = errorMessage
+    })
+
+    .addCase(getPayoutHistoryList.fulfilled, (state, { payload }) => {
+      state.loadingRequest = false
+      state.error = null
+      state.payoutHistory = payload
     })
 )

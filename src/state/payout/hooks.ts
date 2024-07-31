@@ -19,6 +19,7 @@ import {
   saveUserClaim,
   getUserClaim,
   getTotalClaims,
+  getPayoutHistoryList,
 } from './actions'
 import { useAddPopup } from 'state/application/hooks'
 import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
@@ -581,4 +582,35 @@ export const useGetRemainingTokens = () => {
     },
     [dispatch]
   )
+}
+
+
+
+export const getPayoutHistory = async (params: Record<string, any>) => {
+  const result = await apiService.get(payout.payoutHistory, undefined, params)
+  return result.data
+}
+
+export const useGetPayoutHistory = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const {
+    payoutList: { page, offset },
+  } = useTokenManagerState()
+
+  const callback = useCallback(
+    async (params: Record<string, any>) => {
+      try {
+        dispatch(getPayoutHistoryList.pending())
+        const data = await getPayoutHistory({ page, offset, ...params })
+        dispatch(getPayoutHistoryList.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(getPayoutHistoryList.rejected({ errorMessage: 'Could not get payout history' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+
+  return callback
 }

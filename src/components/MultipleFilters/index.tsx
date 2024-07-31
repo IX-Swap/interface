@@ -269,6 +269,7 @@ export const MultipleFilters = ({
             >
               <Trans>Date of claim</Trans>
             </TYPE.body2>
+            <ArrowDownIcon />
           </DarkBlueCard>
         )}
       />

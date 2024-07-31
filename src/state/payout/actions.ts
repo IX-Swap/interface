@@ -1,6 +1,6 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 
-import { PayoutList } from 'state/token-manager/types'
+import { PayoutHistoryList, PayoutList } from 'state/token-manager/types'
 
 export const createDraft: Readonly<{
   pending: ActionCreatorWithoutPayload
@@ -100,4 +100,14 @@ export const getClaimAuthorization: Readonly<{
   pending: createAction('payout/getClaimAuthorization/pending'),
   fulfilled: createAction('payout/getClaimAuthorization/fulfilled'),
   rejected: createAction('payout/getClaimAuthorization/rejected'),
+}
+
+export const getPayoutHistoryList: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<PayoutHistoryList>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('payout/getPayoutHistoryList/pending'),
+  fulfilled: createAction('payout/getPayoutHistoryList/fulfilled'),
+  rejected: createAction('payout/getPayoutHistoryList/rejected'),
 }
