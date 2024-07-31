@@ -9,7 +9,7 @@ import { PinnedContentButton } from 'components/Button'
 import { TYPE, MEDIA_WIDTHS, LinkStyledButton } from 'theme'
 import { Label } from 'components/Label'
 import Upload from 'components/Upload'
-import { FilePreview } from 'components/FilePreview'
+import { FilePreview, FilePreviewPayout } from 'components/FilePreview'
 import { Select as ReactSelect } from 'components/Select'
 import { AcceptFiles } from 'components/Upload/types'
 
@@ -375,7 +375,7 @@ export const Uploader: FC<UploaderProps> = ({
       {files && files.length > 0 && (
         <Flex flexWrap="wrap">
           {files.map((file: any, index) => (
-            <FilePreview
+            <FilePreviewPayout
               key={`file-${index}-${file.name}`}
               file={file?.asset ? file.asset : file}
               index={1}
