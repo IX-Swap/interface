@@ -23,6 +23,7 @@ interface IssuanceButtonsProps {
   offerId?: string
   status: OfferStatus
   isReset: boolean
+  refetch?: () => void
 }
 
 export const IssuanceActionButtons = ({
@@ -35,6 +36,7 @@ export const IssuanceActionButtons = ({
   status,
   offerId,
   isReset,
+  refetch
 }: IssuanceButtonsProps) => {
   const theme = useTheme()
   const { isAdmin } = useRole()
@@ -50,9 +52,11 @@ export const IssuanceActionButtons = ({
   const showError = useShowError()
   const { approve, reject, requestChanges } = useReviewOffer(offerId)
   const showSuccess = useShowSuccess()
+
   const onApprove = async () => {
     try {
       await approve()
+      await refetch?.()
       showSuccess('Offer approved successfully')
       setShowApprove(false)
     } catch (e: any) {
