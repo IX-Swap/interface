@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import { Trans, t } from '@lingui/macro'
 
 import { MEDIA_WIDTHS, TYPE } from 'theme'
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonGradientBorder, ButtonIXSGradient, ButtonIXSWide } from 'components/Button'
 
 import { formatDate } from '../utils'
 
@@ -20,23 +20,21 @@ export const TimelineDate: FC<Props> = ({ date, label, withBackground = true, en
     <Container isStartDate={isStartDate}>
       {withBackground ? (
         <>
-          <StyledButtonIXSGradient ended={ended}>
+          <StyledButtonIXSWide ended={ended}>
             {formatDate(date)}
-            {/* {isSameDay && <TodayIndicator overlay />} */}
-          </StyledButtonIXSGradient>
-          <TYPE.buttonMuted>
+          </StyledButtonIXSWide>
+          <TYPE.small>
             <Trans>{`${label}`}</Trans>
-          </TYPE.buttonMuted>
+          </TYPE.small>
         </>
       ) : (
         <>
           <StyledButtonGradientBorder>
             {formatDate(date)}
-            {/* {isSameDay && <TodayIndicator overlay />} */}
           </StyledButtonGradientBorder>
-          <TYPE.body3 color={'text1'}>
+          <TYPE.small>
             <Trans>{`${label}`}</Trans>
-          </TYPE.body3>
+          </TYPE.small>
         </>
       )}
     </Container>
@@ -48,42 +46,36 @@ const Container = styled.div<{ isStartDate: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
   width: 140px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     margin-top: 0px;
-    transform: ${({ isStartDate }) => `translateX(${isStartDate ? '' : '-'}50%)`};
     > div:last-child {
       font-size: 12px !important;
       line-height: 18px !important;
-    }
-    > button {
-      border-radius: ${({ isStartDate }) => (isStartDate ? '0px 32px 32px 0px' : '32px 0px 0px 32px')};
-      :before {
-        border-radius: ${({ isStartDate }) => (isStartDate ? '0px 32px 32px 0px' : '32px 0px 0px 32px')};
-      }
     }
   }
 `
 
 const buttonCommonStyles = css`
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-  max-height: 34px;
-  min-height: 34px;
-  border-radius: 32px;
-  padding: 5px 10px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
   position: relative;
   width: 100%;
+  margin: 0 0 12px 0;
+  color: ${({ theme }) => theme.text5};
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: 140px;
   }
 `
 
-const StyledButtonIXSGradient = styled(ButtonIXSGradient)<{ ended: boolean }>`
+const StyledButtonIXSWide = styled(ButtonIXSWide)<{ ended: boolean }>`
   ${buttonCommonStyles}
   font-weight: 600;
+  min-height: 47px;
+  background: ${({ theme }) => theme.bg0};
+  border: 1px solid rgba(102, 102, 255, 0.5);
   ${({ ended }) =>
     ended &&
     css`
