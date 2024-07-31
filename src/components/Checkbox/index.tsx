@@ -52,10 +52,10 @@ export const Checkbox: FC<Props> = ({
       disabled={disabled}
       className="checkbox"
     >
-      <Flex style={{ gap: 8 }}>
+      <Flex style={{ gap: 8, alignItems: 'center' }}>
         {checked ? checkedImage : notCheckedImage}
         {scaleSize !== 1 ? (
-          <TYPE.title6 fontWeight={checked ? 700 : 400}>{label}</TYPE.title6>
+          <TYPE.main1 >{label}</TYPE.main1>
         ) : (
           <TYPE.body3>{label}</TYPE.body3>
         )}
