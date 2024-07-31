@@ -14,7 +14,7 @@ import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
 
 import { DateInput } from 'components/DateInput'
 
-import { ButtonError, ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonError, ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { useTokensList } from 'hooks/useTokensList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 
@@ -250,7 +250,7 @@ export const PayoutEventBlock: FC<Props> = ({
       <ButtonsContainer>
         {!isEdit && (
           <ButtonGradientBorder type="submit">
-            <Trans>Save as Draft</Trans>
+            <TYPE.main2>Save as Draft</TYPE.main2>
           </ButtonGradientBorder>
         )}
 
@@ -267,9 +267,9 @@ export const PayoutEventBlock: FC<Props> = ({
         )}
 
         {status === PAYOUT_STATUS.DRAFT ? (
-          <ButtonIXSGradient type="button" onClick={open}>
+          <PinnedContentButton type="button" onClick={open}>
             <Trans>Publish Event</Trans>
-          </ButtonIXSGradient>
+          </PinnedContentButton>
         ) : (
           !paid && (
             <MouseoverTooltip
