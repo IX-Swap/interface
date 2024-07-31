@@ -1,24 +1,23 @@
 import React, { FC } from 'react'
 import { Box, Flex } from 'rebass'
-import { Trans, t } from '@lingui/macro'
-import styled, { css } from 'styled-components'
+import { Trans } from '@lingui/macro'
+import styled from 'styled-components'
 import dayjs from 'dayjs'
-import { capitalize } from '@material-ui/core'
 
 import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { CopyAddress } from 'components/CopyAddress'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { ExternalLink, MEDIA_WIDTHS, TYPE } from 'theme'
-import { Pagination } from 'components/AdminAccreditationTable/Pagination'
+import { ExternalLink, TYPE } from 'theme'
+import { Pagination } from 'components/Pagination'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { useUserState } from 'state/user/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 
 import { formatDate } from '../utils'
+import { EyeIcon } from 'assets/launchpad/svg/components/EyeIcon'
 
-const headerCells = [`Recipient's wallet`, `Amount claimed`, `Date/Time of claim`, `Status`, `Transaction`]
+const headerCells = [`Recipient's wallet`, `Amount claimed`, `Date/Time of claim`, `Transaction`]
 
 interface Props {
   claimHistory: any
@@ -31,7 +30,7 @@ interface RowProps {
   item: any
 }
 
-export const PayoutHistory: FC<Props> = ({ page, isLoading, claimHistory, setPage }) => {
+export const PayoutHistory: FC<Props> = ({ isLoading, claimHistory, setPage }) => {
   const onPageChange = (newPage: number) => {
     setPage(newPage)
   }
@@ -45,7 +44,7 @@ export const PayoutHistory: FC<Props> = ({ page, isLoading, claimHistory, setPag
       ) : (
         <>
           <Table style={{ marginBottom: 24 }} body={<Body claimHistory={claimHistory} />} header={<Header />} />
-          <Pagination page={page} totalPages={claimHistory.totalPages} onPageChange={onPageChange} />
+          <Pagination page={claimHistory.page || 1} totalPages={claimHistory.totalPages} onPageChange={onPageChange} />
         </>
       )}
     </Box>
@@ -56,9 +55,9 @@ const Header = () => {
   return (
     <StyledHeaderRow>
       {headerCells.map((cell) => (
-        <TYPE.buttonMuted fontWeight="600 !important" opacity="0.5" key={cell}>
+        <TYPE.small key={cell}>
           <Trans>{cell}</Trans>
-        </TYPE.buttonMuted>
+        </TYPE.small>
       ))}
     </StyledHeaderRow>
   )
@@ -75,14 +74,13 @@ const Body: FC<{ claimHistory: any }> = ({ claimHistory }) => {
 }
 
 const Row: FC<RowProps> = ({ item }) => {
-  const { createdAt, payoutEvent, sum, userId, user, status, txHash } = item
-  const { me } = useUserState()
+  const { createdAt, payoutEvent, sum, user, txHash } = item
   const { payoutToken } = payoutEvent
   const currency = useCurrency(payoutToken)
   const { chainId } = useActiveWeb3React()
 
   return (
-    <StyledBodyRow isMyClaim={me.id === userId}>
+    <StyledBodyRow>
       <div>
         <CopyAddress address={user.ethAddress} />
       </div>
@@ -92,20 +90,18 @@ const Row: FC<RowProps> = ({ item }) => {
         <Box>{Number(sum).toFixed(4)}</Box>
       </Flex>
       <div>{`${formatDate(createdAt)} - ${dayjs(createdAt).format('HH:mm')}`}</div>
-      <div>{capitalize(status || '-')}</div>
-      <div style={{ textDecoration: 'underline' }}>
-        <ExternalLink href={getExplorerLink(chainId || 137, txHash, ExplorerDataType.TRANSACTION)}>View</ExternalLink>
-      </div>
+      <StyledView>
+        <ExternalLink href={getExplorerLink(chainId || 137, txHash, ExplorerDataType.TRANSACTION)}>
+          <EyeIcon stroke="#B8B8CC"/>
+        </ExternalLink>
+      </StyledView>
     </StyledBodyRow>
   )
 }
 
 const StyledHeaderRow = styled(HeaderRow)`
   min-width: 800px;
-  grid-template-columns: repeat(3, 1fr) 200px 200px;
-  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
-    grid-template-columns: repeat(3, 1fr) 100px 150px;
-  }
+  grid-template-columns: repeat(4, 1fr);
   > div:first-child {
     padding-left: 32px;
   }
@@ -113,19 +109,10 @@ const StyledHeaderRow = styled(HeaderRow)`
 
 const StyledBodyRow = styled(BodyRow)<{ isMyClaim?: boolean }>`
   min-width: 800px;
-  grid-template-columns: repeat(3, 1fr) 200px 200px;
-  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
-    grid-template-columns: repeat(3, 1fr) 100px 150px;
-  }
+  grid-template-columns: repeat(4, 1fr);
   font-weight: 400;
-  font-size: 16px;
+  font-size: 13px;
   line-height: 20px;
-
-  ${({ isMyClaim, theme }) =>
-    isMyClaim &&
-    css`
-      background: ${theme.borderG1};
-    `}
 
   > div:first-child {
     padding-left: 32px;
@@ -138,4 +125,11 @@ const LoaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`
+
+const StyledView = styled(Flex)`
+  display: flex;
+  svg {
+    width: 14px;
+  }
 `

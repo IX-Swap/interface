@@ -9,9 +9,10 @@ interface Props {
   totalPages: number
   onPageChange: (page: number) => void
   totalItems?: number
+  hidePaginationLabel?: boolean
 }
 
-export const Pagination = ({ page, onPageChange, totalPages, totalItems }: Props) => {
+export const Pagination = ({ page, onPageChange, totalPages, totalItems, hidePaginationLabel }: Props) => {
   if (!totalPages) return null
 
   const itemsPerPage = adminOffset
@@ -21,9 +22,11 @@ export const Pagination = ({ page, onPageChange, totalPages, totalItems }: Props
   return (
     <Container>
       <InfoContainer>
-        <TYPE.small>
-          {startItem} - {endItem} of {totalItems}
-        </TYPE.small>
+        {!hidePaginationLabel ? (
+          <TYPE.small>
+            {startItem} - {endItem} of {totalItems}
+          </TYPE.small>
+        ) : null}
         <NavButton onClick={() => onPageChange(page - 1)} disabled={page === 1}>
           <PrevIcon />
         </NavButton>
