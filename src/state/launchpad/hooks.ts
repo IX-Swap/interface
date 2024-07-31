@@ -931,7 +931,7 @@ const useUploadOfferFiles = () => {
 
     return files
   }, [])
-  
+
   const getOtherExecutionDocumentFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
     const uploadedFiles = new Set(initial.otherExecutionDocuments.filter((x) => x.file?.id).map((x) => x.file?.id))
 
@@ -990,6 +990,8 @@ export const useOfferFormInitialValues = (
 
   const issuance = useGetIssuance()
   const offer = useGetOffer(issuance?.data?.vetting?.offer?.id)
+  console.log('offer', offer)
+  console.log('issuance', issuance)
   const [values, setValues] = React.useState<InformationFormValues>()
 
   React.useEffect(() => {
@@ -1099,8 +1101,8 @@ export const useOfferFormInitialValues = (
             })
           : initialValues.additionalDocuments,
 
-        purchaseAgreement,  
-        investmentMemorandum,  
+        purchaseAgreement,
+        investmentMemorandum,
         otherExecutionDocuments: otherExecutionDocuments.length
           ? otherExecutionDocuments.map((document: any) => {
               const file = files.find((x) => x.id === document.file?.id)
@@ -1153,12 +1155,17 @@ export const useOfferFormInitialValues = (
     [offer.data?.status, smartContractStrategy]
   )
 
+  const refetch = async () => {
+    await issuance.load(issuanceId)
+  }
+
   return {
     data: values,
     loading: issuance.loading || offer.loading,
     vettingId: issuance.data?.vetting?.id,
     error: issuance.error,
     issuance: issuance.data,
+    refetch,
   }
 }
 
@@ -1179,9 +1186,9 @@ export const useSubmitOffer = () => {
       const uploadedFiles = await uploadFiles(payload, initial)
       const findDoc = (prefix: 'member.photo' | 'document' | 'image' | 'otherExecutionDocument', idx: number) =>
         uploadedFiles.find((x) => x.name === `${prefix}.${idx}`)?.id
-      const purchaseAgreementId = uploadedFiles.find((x) => x.name === 'purchaseAgreement')?.id || 
+      const purchaseAgreementId = uploadedFiles.find((x) => x.name === 'purchaseAgreement')?.id ||
         payload.purchaseAgreement?.file?.id || null;
-      const investmentMemorandumId = uploadedFiles.find((x) => x.name === 'investmentMemorandum')?.id || 
+      const investmentMemorandumId = uploadedFiles.find((x) => x.name === 'investmentMemorandum')?.id ||
         payload.investmentMemorandum?.file?.id || null;
 
       const executionDocuments = []
@@ -1282,13 +1289,13 @@ export const useSubmitOffer = () => {
               fileId: findDoc('document', idx) || x.file?.id || null,
             }))
             .filter((x) => x.fileId),
-          
+
           ...payload.otherExecutionDocuments
             .map((x, idx) => ({
               type: OfferFileType.otherExecutionDocument,
               fileId: findDoc('otherExecutionDocument', idx) || x.file?.id || null,
             }))
-            .filter((x) => x.fileId),  
+            .filter((x) => x.fileId),
 
           ...payload.images
             .map((x, idx) => ({
@@ -1364,9 +1371,9 @@ export const useMinimalOfferEdit = () => {
     const find = (prefix: 'member.photo' | 'document' | 'image' | 'otherExecutionDocument', idx: number) =>
       files.find((x) => x.name === `${prefix}.${idx}`)?.id
 
-    const purchaseAgreementId = files.find((x) => x.name === 'purchaseAgreement')?.id || 
+    const purchaseAgreementId = files.find((x) => x.name === 'purchaseAgreement')?.id ||
       payload.purchaseAgreement?.file?.id || null;
-    const investmentMemorandumId = files.find((x) => x.name === 'investmentMemorandum')?.id || 
+    const investmentMemorandumId = files.find((x) => x.name === 'investmentMemorandum')?.id ||
       payload.investmentMemorandum?.file?.id || null;
 
     const executionDocuments = []
@@ -1423,7 +1430,7 @@ export const useMinimalOfferEdit = () => {
               type: OfferFileType.otherExecutionDocument,
               fileId: find('otherExecutionDocument', idx) || x.file?.id || null,
             }))
-            .filter((x) => x.fileId),  
+            .filter((x) => x.fileId),
 
         ...payload.additionalDocuments
           .map((x, idx) => ({
