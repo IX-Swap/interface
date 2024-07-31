@@ -3,34 +3,26 @@ import { useHistory } from 'react-router-dom'
 import { Box } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { useFormikContext } from 'formik'
-
 import dayjs from 'dayjs'
-
 import { TYPE } from 'theme'
-
 import { formatDate, isBefore } from 'pages/PayoutItem/utils'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
-import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
-
+import { Select, TextareaInput, TextInput } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
-
 import { ButtonError, ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { useTokensList } from 'hooks/useTokensList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
-
 import useTheme from 'hooks/useTheme'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { useDeletePayoutItem } from 'state/payout/hooks'
 import { AreYouSureModal } from 'components/AreYouSureModal'
-
 import { useShowError } from 'state/application/hooks'
-
 import { FormValues } from './utils'
 import { PayoutType } from './PayoutType'
 import { PublishPayoutModal } from './PublishPayoutModal'
-
 import { ButtonsContainer, PayoutFormCard } from './styleds'
 import { MouseoverTooltip } from 'components/Tooltip'
+import { Uploader } from 'components/Uploader'
 
 interface Props {
   onValueChange: (key: string, value: any) => void
