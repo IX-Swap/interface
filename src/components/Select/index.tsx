@@ -7,6 +7,8 @@ import { isValidAddress, shortAddress } from 'utils'
 import { useAddUserToken } from 'state/user/hooks'
 import { useToken } from 'hooks/Tokens'
 import { Line } from 'components/Line'
+import { ReactComponent as DefaultTokenItem } from 'assets/images/NoToken.svg'
+import CurrencyLogo from 'components/CurrencyLogo'
 
 type Option = { label?: string; value?: any; disabled?: boolean }
 
@@ -110,7 +112,7 @@ const MultiValue = (props: any) => {
 
   return (
     <StyledValue>
-      {props?.data?.icon}
+      {renderIcon(props?.data)}
       {`${props?.data?.label}${isLast ? '' : `,`}`}
       {!isLast && <>&nbsp;</>}
     </StyledValue>
@@ -120,15 +122,26 @@ const MultiValue = (props: any) => {
 const SingleValue = (props: any) => {
   return (
     <StyledValue disabled={props.isDisabled}>
-      {<img src={props?.data?.icon} />}
+      {renderIcon(props?.data)}
       {props?.data?.label}
     </StyledValue>
   )
 }
 
+const renderIcon = (data: any) => {
+  const { icon } = data
+
+  if (typeof icon === 'string') {
+    return <img src={icon} alt="currency icon" />
+  } else if (icon && icon.$$typeof === Symbol.for('react.element')) {
+    return icon
+  } else {
+    return <CurrencyLogo />
+  }
+}
+
 const Option = (props: any) => {
   const addToken = useAddUserToken()
-
   return (
     <components.Option {...props}>
       <StyledValue
@@ -140,7 +153,7 @@ const Option = (props: any) => {
           }
         }}
       >
-        <img src={props?.data?.icon}></img>
+        {renderIcon(props?.data)}
         {props?.data?.label}
         {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
 
