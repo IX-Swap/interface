@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 import { Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { useHistory } from 'react-router-dom'
@@ -18,20 +18,18 @@ import {
   PaymentPeriod,
   PayoutType,
   PayoutHeader ,
-  PayoutToken,
-  PayoutTokenContainer,
-  PayoutChain,
 } from './styleds'
 import { Divider } from '@material-ui/core'
 import { ThemeContext } from 'styled-components'
-import { NETWORK_LOGOS } from 'constants/chains'
 import { useSafeCurrency } from 'hooks/Tokens'
+import TokenNetwork from 'components/TokenNetwork'
 
 interface Props {
   data: PayoutEvent
+  secTokenWidth?: string
 }
 
-export const Card = ({ data: { secToken, type, recordDate, payoutToken, startDate, endDate, status, id } }: Props) => {
+export const Card = ({ secTokenWidth, data: { secToken, type, recordDate, payoutToken, startDate, endDate, status, id } }: Props) => {
   const history = useHistory()
   const token = useSafeCurrency(payoutToken)
   const theme = useContext(ThemeContext)
@@ -42,19 +40,16 @@ export const Card = ({ data: { secToken, type, recordDate, payoutToken, startDat
     history.push(routes.payoutItem(id))
   }
 
-  const networkLogo = useMemo(() => {
-    const network = secToken?.network
-    return network ? NETWORK_LOGOS[network] : ''
-  }, [secToken])
-
   return (
     <CardContainer onClick={redirect}>
       <PayoutHeader>
         <PayoutTitle>
-          <PayoutTokenContainer>
-            <PayoutToken width="40px" height="40px" src={secToken?.logo?.public} />
-            <PayoutChain width="20px" height="20px" src={networkLogo} />
-          </PayoutTokenContainer>
+          {secToken ? <TokenNetwork
+            width={secTokenWidth}
+            height={secTokenWidth}
+            token={secToken}
+            network={secToken?.network}
+          /> : null}
           <div>{`${secToken?.symbol}`}</div>
         </PayoutTitle>
         <PayoutType>
