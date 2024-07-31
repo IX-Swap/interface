@@ -51,6 +51,7 @@ import { useWalletState } from 'state/wallet/hooks'
 import { coinbaseWallet } from 'connectors/coinbaseWallet'
 import { blockedCountries } from 'constants/countriesList'
 import { SupportedChainId } from 'constants/chains'
+import { getAddChainParameters } from 'chains'
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -186,10 +187,11 @@ export default function App() {
     }
 
     if (isConnected && walletName === 'Coinbase Wallet') {
-      const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
-
       void coinbaseWallet.connectEagerly().catch((error) => {
-        coinbaseWallet.activate(defaultChain).catch((errorConnect) => {
+        const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.BASE
+        const chainParams = getAddChainParameters(defaultChain)
+
+        coinbaseWallet.activate(chainParams).catch((errorConnect) => {
           console.debug('Failed to connect eagerly to coinbase wallet', errorConnect)
         })
         console.debug('Failed to connect eagerly to coinbase wallet', error)

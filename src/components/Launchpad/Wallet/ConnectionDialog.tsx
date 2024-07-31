@@ -34,6 +34,7 @@ import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
 import { getAddChainParameters } from 'chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
+import { delay } from 'utils'
 
 export enum PromptView {
   options,
@@ -55,6 +56,7 @@ const iconWalletMapping = {
 
 export const ConnectionDialog: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch()
+  const { account, chainId } = useWeb3React()
 
   const [walletView, setWalletView] = React.useState(PromptView.options)
   const { config } = useWhitelabelState()
@@ -67,7 +69,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
     }
 
     const wallet = Object.values(SUPPORTED_WALLETS).find((wallet) => wallet.connector === connector)
-    const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
+    const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.BASE
 
     window.ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
     ReactGA.event({ category: 'Wallet', action: 'Change Wallet', label: wallet?.name ?? '' })
@@ -80,13 +82,23 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
         const chainParams = getAddChainParameters(defaultChain)
 
         await connector.activate(chainParams)
+        setWalletView(PromptView.account)
+        dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
+        props.onConnect()
+        props.onClose()
+        await delay(3000)
+        const isForceReload = window.localStorage.getItem("-walletlink:https://www.walletlink.org:session:linked")
+        if (isForceReload === '1') {
+          window.location.reload()
+        }
       } else {
         await connector.activate(defaultChain)
+        setWalletView(PromptView.account)
+        dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
+        props.onConnect()
+        props.onClose()
       }
-      setWalletView(PromptView.account)
-      dispatch(setWalletState({ isConnected: true, walletName: wallet?.name }))
-      props.onConnect()
-      props.onClose()
+
     } catch (error: any) {
       console.log('Error activating connector', error)
       if (error.code === 4902) {
@@ -108,6 +120,7 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
 
         // Reconnect again
         if (connector instanceof CoinbaseWallet) {
+          debugger
           const chainParams = getAddChainParameters(defaultChain)
 
           await connector.activate(chainParams)
