@@ -2,18 +2,12 @@ import React, { FC, useEffect, useState, useMemo } from 'react'
 import { useFormik, FormikProvider } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { useWeb3React } from '@web3-react/core'
-import { Trans } from '@lingui/macro'
-
 import dayjs from 'dayjs'
-
 import { Select } from 'pages/KYC/common'
 import { FormGrid } from 'pages/KYC/styleds'
-
 import { DateInput } from 'components/DateInput'
 import CurrencyLogo from 'components/CurrencyLogo'
-
 import { TYPE } from 'theme'
-
 import { useUserState } from 'state/user/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
@@ -24,14 +18,11 @@ import {
   useUpdateDraftPayout,
   useUpdatePayout,
 } from 'state/payout/hooks'
-
 import { routes } from 'utils/routes'
 import { availableInputsForEdit, FormValues, transformPayoutDraftDTO } from './utils'
-
-import { FormCard, PayoutFormCard } from './styleds'
+import { PayoutFormCard } from './styleds'
 import { initialValues } from './mock'
 import { validation } from './validation'
-
 import { Summary } from './Summary'
 import { PayoutEventBlock } from './PayoutEventBlock'
 import { PAYOUT_STATUS } from 'constants/enums'
