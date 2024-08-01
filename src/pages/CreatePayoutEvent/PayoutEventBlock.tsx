@@ -3,34 +3,26 @@ import { useHistory } from 'react-router-dom'
 import { Box } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { useFormikContext } from 'formik'
-
 import dayjs from 'dayjs'
-
 import { TYPE } from 'theme'
-
 import { formatDate, isBefore } from 'pages/PayoutItem/utils'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
-import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
-
+import { Select, TextareaInput, TextInput } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
-
-import { ButtonError, ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonError, ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 import { useTokensList } from 'hooks/useTokensList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
-
 import useTheme from 'hooks/useTheme'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { useDeletePayoutItem } from 'state/payout/hooks'
 import { AreYouSureModal } from 'components/AreYouSureModal'
-
 import { useShowError } from 'state/application/hooks'
-
 import { FormValues } from './utils'
 import { PayoutType } from './PayoutType'
 import { PublishPayoutModal } from './PublishPayoutModal'
-
-import { FormCard, ButtonsContainer } from './styleds'
+import { ButtonsContainer, PayoutFormCard } from './styleds'
 import { MouseoverTooltip } from 'components/Tooltip'
+import { Uploader } from 'components/Uploader'
 
 interface Props {
   onValueChange: (key: string, value: any) => void
@@ -56,7 +48,7 @@ export const PayoutEventBlock: FC<Props> = ({
   const [isWarningOpen, setIsWarningOpen] = useState(false)
   const { values, errors, touched, validateForm, setTouched } = useFormikContext<FormValues>()
 
-  const { bg19 } = useTheme()
+  const { bg0 } = useTheme()
   const [openModal, setOpenModal] = useState(false)
   const { token, tokenAmount, recordDate, startDate, secToken, endDate } = values
   const { tokensOptions } = useTokensList()
@@ -127,16 +119,16 @@ export const PayoutEventBlock: FC<Props> = ({
   }
 
   return (
-    <FormCard>
+    <PayoutFormCard>
       <AreYouSureModal
         onAccept={onDelete}
         onDecline={toggleIsWarningOpen}
         isOpen={isWarningOpen}
         declineText="Cancel"
       />
-      <TYPE.title6 marginBottom="28px">
-        <Trans>PAYOUT EVENT</Trans>
-      </TYPE.title6>
+      <TYPE.body fontWeight="600" marginBottom="28px">
+        Payout Event
+      </TYPE.body>
 
       <PayoutType onValueChange={onValueChange} availableForEditing={availableForEditing} />
 
@@ -232,7 +224,7 @@ export const PayoutEventBlock: FC<Props> = ({
           required
           placeholder="Give a brief description of this payout event"
           value={values.description}
-          style={{ height: '162px', background: bg19, marginBottom: 0 }}
+          style={{ height: '162px', background: bg0, marginBottom: 0 }}
           onChange={(e: any) => onValueChange('description', e.currentTarget.value)}
           error={touched.description ? errors.description : ''}
           disabled={!availableForEditing.includes('description')}
@@ -240,6 +232,7 @@ export const PayoutEventBlock: FC<Props> = ({
       </FormGrid>
 
       <Uploader
+        isPayoutpage={true}
         title="Payout Attachments"
         files={values.files}
         onDrop={handleDropImage}
@@ -252,7 +245,7 @@ export const PayoutEventBlock: FC<Props> = ({
       <ButtonsContainer>
         {!isEdit && (
           <ButtonGradientBorder type="submit">
-            <Trans>Save as Draft</Trans>
+            <TYPE.main2>Save as Draft</TYPE.main2>
           </ButtonGradientBorder>
         )}
 
@@ -269,9 +262,9 @@ export const PayoutEventBlock: FC<Props> = ({
         )}
 
         {status === PAYOUT_STATUS.DRAFT ? (
-          <ButtonIXSGradient type="button" onClick={open}>
+          <PinnedContentButton type="button" onClick={open}>
             <Trans>Publish Event</Trans>
-          </ButtonIXSGradient>
+          </PinnedContentButton>
         ) : (
           !paid && (
             <MouseoverTooltip
@@ -299,6 +292,6 @@ export const PayoutEventBlock: FC<Props> = ({
           availableForEditing={availableForEditing}
         />
       )}
-    </FormCard>
+    </PayoutFormCard>
   )
 }

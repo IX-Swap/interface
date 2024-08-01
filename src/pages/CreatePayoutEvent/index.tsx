@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { Flex } from 'rebass'
-import { Trans } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
 import { useActiveWeb3React } from 'hooks/web3'
 
@@ -21,6 +20,8 @@ import { Info } from './Info'
 
 import { ROLES } from 'constants/roles'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+import styled from 'styled-components'
+import { TYPE } from 'theme'
 
 const CreatePayoutEventPage: FC = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -43,21 +44,31 @@ const CreatePayoutEventPage: FC = () => {
     history.push('/token-manager/my-tokens')
   }
 
+  const FullScreenBackground = styled.div`
+    background-color: #ffffff;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `
+
   return (
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
-      <StyledBodyWrapper style={{ maxWidth: 840 }} hasAnnouncement={!cookies.annoucementsSeen}>
-        <Flex marginBottom="32px" alignItems="center">
-          <ButtonText onClick={onBack}>
-            <ArrowLeft fill="white !important" />
-          </ButtonText>
-          <PageTitle textAlign="center" margin="0 auto">
-            <Trans>Create Payout Event</Trans>
-          </PageTitle>
-        </Flex>
-        <Info />
-        <PayoutForm />
-      </StyledBodyWrapper>
+      <FullScreenBackground>
+        <StyledBodyWrapper style={{ maxWidth: 1200, marginTop: '50px' }} hasAnnouncement={!cookies.annoucementsSeen}>
+          <Flex marginBottom="32px" alignItems="center">
+            <PageTitle textAlign="center" margin="0 auto">
+              <TYPE.title6>Create Payout Event</TYPE.title6>
+            </PageTitle>
+          </Flex>
+          <Info />
+          <PayoutForm />
+        </StyledBodyWrapper>
+      </FullScreenBackground>
     </Loadable>
   )
 }
