@@ -1,5 +1,4 @@
 import React, { FC, useMemo } from 'react'
-import { Box } from 'rebass'
 import styled from 'styled-components'
 
 import { PayoutEvent } from 'state/token-manager/types'
@@ -9,7 +8,6 @@ import { TodayIndicator } from './TodayIndicator'
 import { TimelineDate } from './TimelineDate'
 import { isSameDay, isSameOrBefore, isSameOrAfter, isBefore } from '../utils'
 import { MEDIA_WIDTHS } from 'theme'
-import { BodyWrapper } from 'pages/AppBody'
 
 import { ReactComponent as ArrowHead } from '../../../assets/svg/arrow-head.svg'
 
@@ -47,21 +45,28 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
   }, [recordDate, startDate, endDate, needFake])
 
   const hideTodayIndicator = [PAYOUT_STATUS.DELAYED, PAYOUT_STATUS.ENDED].includes(status)
+  const isAnnounced = status === PAYOUT_STATUS.ANNOUNCED
 
   return (
     <LineContainer>
       {needFake && <FakeFirstButton />}
 
-      {recordDate && (
+      {isAnnounced && <TodayIndicator offset={todayPosition} overlay={todayActionDate} isTodayStartDate={isTodayStartDate} />}
+
+      {!isAnnounced && recordDate && (
         <TimelineDate withBackground={isSameOrAfter(recordDate)} date={recordDate} label="Record Date" />
       )}
-      <ArrowContainer>
+      <ArrowContainer
+        hasLeftSpace={!isAnnounced}
+      >
         <ArrowHead />
       </ArrowContainer>
       {startDate && (
         <TimelineDate withBackground={isSameOrAfter(startDate)} date={startDate} label="Payment Start Date" />
       )}
-      <ArrowContainer className='dashed'>
+      <ArrowContainer
+        className='dashed'
+      >
         <ArrowHead />
       </ArrowContainer>
       {endDate && (
@@ -80,6 +85,7 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
 }
 
 const LineContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: start;
   justify-content: space-between;
@@ -88,15 +94,15 @@ const LineContainer = styled.div`
     flex-direction: column;
     height: 320px;
     align-items: center;
+    padding-top: 48px;
   }
 `
 
-const ArrowContainer = styled.div`
-  margin-top: 23.5px;
+const ArrowContainer = styled.div<{hasLeftSpace?: boolean}>`
+  padding-top: 23.5px;
   margin-right: 20px;
-  margin-bottom: 0;
-  margin-left: 20px;
-  width: 280px;
+  margin-left: ${({ hasLeftSpace }) => hasLeftSpace ? '20px' : '0'};
+  width: 100%;
   height: 1px;
   position: relative;
   border-bottom: ${({ theme }) => `1px solid ${theme.bg26}`};
@@ -106,7 +112,7 @@ const ArrowContainer = styled.div`
   > svg {
     position: absolute;
     right: -1.5px;
-    top: -2.5px;
+    top: 20.5px;
     bottom: inherit;
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
