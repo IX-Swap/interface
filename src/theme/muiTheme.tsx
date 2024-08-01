@@ -3,13 +3,13 @@ import { createTheme, MuiThemeProvider as ThemeProvider } from '@material-ui/cor
 import { DefaultTheme } from 'styled-components'
 import useTheme from 'hooks/useTheme'
 
-export const muiTheme = ({ bg1, bg2, bg0, bg26, text1, text7, text9, config }: DefaultTheme) =>
+export const muiTheme = ({ bg1, bg2, bg0, bg26, text1, text7, text9, config, bg23, bg24 }: DefaultTheme) =>
   createTheme({
     overrides: {
       MuiPickersBasePicker: {
         pickerView: {
           backgroundColor: bg0,
-          borderBottom: '1px solid #E6E6FF',
+          borderBottom: `1px solid ${bg24}`,
           borderRadius: '6px',
           '&:focus-visible': {
             outline: 'none',
@@ -27,7 +27,7 @@ export const muiTheme = ({ bg1, bg2, bg0, bg26, text1, text7, text9, config }: D
             border: 'none !important',
           },
           outline: 'none',
-          backgroundColor: '#F7F7FA',
+          backgroundColor: bg23,
           borderRadius: '6px',
           color: '#555566',
           '&:focus-visible': {
@@ -222,7 +222,7 @@ export const muiTheme = ({ bg1, bg2, bg0, bg26, text1, text7, text9, config }: D
 
           '&:hover': {
             background: bg2,
-            color: text1
+            color: text1,
           },
           '&:focus': {
             '&$selected': {
