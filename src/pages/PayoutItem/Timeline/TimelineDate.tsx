@@ -46,7 +46,7 @@ const Container = styled.div<{ isStartDate: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 140px;
+  width: 400px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     margin-top: 0px;
     > div:last-child {
@@ -65,6 +65,7 @@ const buttonCommonStyles = css`
   width: 100%;
   margin: 0 0 12px 0;
   color: ${({ theme }) => theme.text5};
+  min-height: 45px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: 140px;
   }
@@ -73,7 +74,6 @@ const buttonCommonStyles = css`
 const StyledButtonIXSWide = styled(ButtonIXSWide)<{ ended: boolean }>`
   ${buttonCommonStyles}
   font-weight: 600;
-  min-height: 47px;
   background: ${({ theme }) => theme.bg0};
   border: 1px solid rgba(102, 102, 255, 0.5);
   ${({ ended }) =>
