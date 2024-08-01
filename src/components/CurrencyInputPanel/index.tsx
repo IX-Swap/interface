@@ -133,7 +133,6 @@ const StyledTokenName: any = styled.span<{ active?: boolean }>`
   ${({ active }) => (active ? '  margin: 0 0.25rem 0 0.25rem;' : '  margin: 0 0.25rem 0 0.25rem;')}
   font-size:  ${({ active }) => (active ? '14px' : '14px')};
   color: ${({ theme }) => theme.text1};
-  // border: solid 1px red;
 `
 const BalanceRow = styled(RowEnd)``
 const BalanceWrap = styled(RowFixed)`
