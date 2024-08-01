@@ -9,6 +9,9 @@ import { TodayIndicator } from './TodayIndicator'
 import { TimelineDate } from './TimelineDate'
 import { isSameDay, isSameOrBefore, isSameOrAfter, isBefore } from '../utils'
 import { MEDIA_WIDTHS } from 'theme'
+import { BodyWrapper } from 'pages/AppBody'
+
+import { ReactComponent as ArrowHead } from '../../../assets/svg/arrow-head.svg'
 
 interface Props {
   payout: PayoutEvent
@@ -46,43 +49,85 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
   const hideTodayIndicator = [PAYOUT_STATUS.DELAYED, PAYOUT_STATUS.ENDED].includes(status)
 
   return (
-    <Box style={{ marginTop: 24, padding: '0px 36px' }}>
-      <LineContainer>
-        {needFake && <FakeFirstButton />}
-        {recordDate && (
-          <TimelineDate withBackground={isSameOrAfter(recordDate)} date={recordDate} label="Record Date" />
-        )}
-        {startDate && (
-          <TimelineDate withBackground={isSameOrAfter(startDate)} date={startDate} label="Payment Start Date" />
-        )}
-        {endDate && (
-          <TimelineDate
-            withBackground={isSameOrAfter(endDate)}
-            ended={status === PAYOUT_STATUS.ENDED}
-            date={endDate}
-            label="Payment Deadline"
-          />
-        )}
-        <Line>
-          {!hideTodayIndicator && (
+    <LineContainer>
+      {needFake && <FakeFirstButton />}
+
+      {recordDate && (
+        <TimelineDate withBackground={isSameOrAfter(recordDate)} date={recordDate} label="Record Date" />
+      )}
+      <ArrowContainer>
+        <ArrowHead />
+      </ArrowContainer>
+      {startDate && (
+        <TimelineDate withBackground={isSameOrAfter(startDate)} date={startDate} label="Payment Start Date" />
+      )}
+      <ArrowContainer className='dashed'>
+        <ArrowHead />
+      </ArrowContainer>
+      {endDate && (
+        <TimelineDate
+          withBackground={isSameOrAfter(endDate)}
+          ended={status === PAYOUT_STATUS.ENDED}
+          date={endDate}
+          label="Payment Deadline"
+        />
+      )}
+      {/* {!hideTodayIndicator && (
             <TodayIndicator offset={todayPosition} overlay={todayActionDate} isTodayStartDate={isTodayStartDate} />
-          )}
-        </Line>
-      </LineContainer>
-    </Box>
+          )} */}
+    </LineContainer>
   )
 }
 
 const LineContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
-  position: relative;
-  height: 34px;
   pointer-events: none;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-direction: column;
     height: 320px;
+    align-items: center;
+  }
+`
+
+const ArrowContainer = styled.div`
+  margin-top: 23.5px;
+  margin-right: 20px;
+  margin-bottom: 0;
+  margin-left: 20px;
+  width: 280px;
+  height: 1px;
+  position: relative;
+  border-bottom: ${({ theme }) => `1px solid ${theme.bg26}`};
+  &.dashed {
+    border-bottom: ${({ theme }) => `1px dashed ${theme.bg26}`};
+  }
+  > svg {
+    position: absolute;
+    right: -1.5px;
+    top: -2.5px;
+    bottom: inherit;
+  }
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-top: 10px;
+    margin-right: 0;
+    margin-bottom: 10px;
+    margin-left: 0;
+    height: 100px;
+    width: 1px;
+    border-bottom: 0px;
+    border-right: ${({ theme }) => `1px solid ${theme.bg26}`};
+    &.dashed {
+      border-bottom: 0px;
+      border-right: ${({ theme }) => `1px dashed ${theme.bg26}`};
+    }
+    > svg {
+      transform: rotate(90deg);
+      top: inherit;
+      right: -3px;
+      bottom: -2.5px;
+    }
   }
 `
 

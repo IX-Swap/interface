@@ -1,6 +1,5 @@
-import { background } from 'styled-system'
 import styled, { css } from 'styled-components'
-import { ellipsisText, gradientBorder, MEDIA_WIDTHS } from 'theme'
+import { ellipsisText, MEDIA_WIDTHS } from 'theme'
 
 export const Container = styled.div`
   display: flex;
@@ -196,7 +195,6 @@ export const CardContainer = styled.div`
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     min-width: 152px;
     border-radius: 12px;
-    padding: 12px 8px;
     min-width: 150px;
   }
 `
@@ -208,8 +206,8 @@ export const PayoutTitle = styled.div`
   > div {
     font-weight: 600;
     font-size: 22px;
-    line-height: 33px;
     ${ellipsisText}
+    width: auto;
     @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
       font-size: 14px;
       line-height: 21px;
@@ -250,11 +248,7 @@ export const PayoutChain = styled.img`
   background: ${({ theme }) => theme.bg24};
 `
 
-export const PaymentPeriod = styled.div`
-  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    display: none !important;
-  }
-`
+export const PaymentPeriod = styled.div``
 
 export const PayoutInfoContainer = styled.div`
   display: grid;
@@ -267,10 +261,6 @@ export const PayoutInfoContainer = styled.div`
     flex-direction: column;
     justify-self: flex-start;
     width: 100%;
-  }
-
-  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    grid-template-columns: 1fr;
   }
 `
 
