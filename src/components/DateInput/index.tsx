@@ -1,8 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { MobileDatePicker } from '@material-ui/pickers'
 import styled from 'styled-components'
-import { t } from '@lingui/macro'
-
 import { Input } from 'components/Input'
 import { ReactComponent as CalendarIcon } from 'assets/images/newCalendar.svg'
 import { Props as LabelProps } from 'components/Label'
@@ -39,16 +37,16 @@ export const DateInput = ({
   format,
   ...props
 }: Props & Partial<LabelProps>) => {
-  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false)
   const handleIconClick = () => {
-    setDatePickerOpen(true);
-  };
+    setDatePickerOpen(true)
+  }
   const handleCloseDatePicker = () => {
-    setDatePickerOpen(false);
-  };
+    setDatePickerOpen(false)
+  }
   const handleInputClick = () => {
-    setDatePickerOpen(true);
-  };
+    setDatePickerOpen(true)
+  }
   return (
     <Container>
       <KycInputLabel label={`${label}`} error={error} tooltipText={tooltipText} />
@@ -58,9 +56,9 @@ export const DateInput = ({
         </Row>
       ) : (
         <MobileDatePicker
-        open={isDatePickerOpen}
-        onClose={handleCloseDatePicker}
-          value={value || null}
+          open={isDatePickerOpen}
+          onClose={handleCloseDatePicker}
+          value={value || dayjs()}
           onChange={onChange}
           openTo={openTo ?? 'year'}
           views={['year', 'month', 'date']}
@@ -74,9 +72,9 @@ export const DateInput = ({
                 placeholder={placeholder}
                 disabled={isDisabled}
                 error={error}
-                onClick={handleInputClick} 
+                onClick={handleInputClick}
               />
-              <StyledCalendarIcon onClick={handleIconClick}  />
+              <StyledCalendarIcon onClick={handleIconClick} />
             </TextFieldContainer>
           )}
           disabled={isDisabled}
@@ -101,7 +99,7 @@ const StyledCalendarIcon = styled(CalendarIcon)`
   position: absolute;
   right: 26px;
   top: 19px;
-  z-index: 1; 
+  z-index: 1;
   cursor: pointer;
 `
 
