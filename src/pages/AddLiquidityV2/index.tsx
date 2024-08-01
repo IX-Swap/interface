@@ -489,9 +489,15 @@ export default function AddLiquidity({
                               {approvalA === ApprovalState.APPROVED && (
                                 <NewApproveButton
                                   data-testid="approved-currency-a"
-                                  style={{ flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2, gap: '10px' }}
+                                  style={{
+                                    flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2,
+                                    gap: '10px',
+                                    height: '100%',
+                                  }}
                                 >
-                                  <ExternalIcon />
+                                  <div style={{ width: 24 }}>
+                                    <ExternalIcon />
+                                  </div>
                                   <Trans>Approved {currencies[Field.CURRENCY_A]?.symbol}</Trans>
                                 </NewApproveButton>
                               )}
@@ -514,9 +520,15 @@ export default function AddLiquidity({
                               {approvalB === ApprovalState.APPROVED && (
                                 <NewApproveButton
                                   data-testid="approved-currency-b"
-                                  style={{ flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2, gap: '10px' }}
+                                  style={{
+                                    flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2,
+                                    gap: '10px',
+                                    height: '100%',
+                                  }}
                                 >
-                                  <ExternalIcon />
+                                  <div style={{ width: 24 }}>
+                                    <ExternalIcon />
+                                  </div>
                                   <Trans>Approved {currencies[Field.CURRENCY_B]?.symbol}</Trans>
                                 </NewApproveButton>
                               )}
