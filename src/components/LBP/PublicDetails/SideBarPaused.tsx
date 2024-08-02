@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { ethers } from 'ethers'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { MEDIA_WIDTHS, TYPE } from 'theme'

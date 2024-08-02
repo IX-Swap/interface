@@ -13,6 +13,7 @@ import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import { TextInput } from 'pages/KYC/common'
 import { PinnedContentButton } from 'components/Button'
+import { useWeb3React } from 'connection/web3reactShim'
 import { LbpFormValues } from '../types'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
 import { ethers } from 'ethers'
@@ -20,7 +21,6 @@ import { useLBPContract, useTokenContract } from 'hooks/useContract'
 import Remaining from './Remaining'
 import { isMobile } from 'react-device-detect'
 import { checkWrongChain } from 'chains'
-import { useWeb3React } from '@web3-react/core'
 
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },

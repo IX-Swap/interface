@@ -1,23 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ChevronDown } from 'react-feather'
 
 import { useETHBalances } from 'state/wallet/hooks'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
-
 import { CHAIN_INFO, NETWORK_LABELS, SupportedChainId } from 'constants/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-
 import { shortenAddress } from 'utils'
 import { formatAmount } from 'utils/formatCurrencyAmount'
-
 import { VioletCard } from 'components/Card'
-
 import useTheme from 'hooks/useTheme'
-
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 import { switchToNetwork } from 'hooks/switchToNetwork'
-
-import { ChevronDown } from 'react-feather'
 import { text10, text16, text8 } from 'components/LaunchpadMisc/typography'
 
 export const WalletInformation = () => {

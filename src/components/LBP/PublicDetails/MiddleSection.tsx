@@ -18,7 +18,7 @@ import { useTokenContract } from 'hooks/useContract'
 import SideBarPaused from './SideBarPaused'
 import { isMobile } from 'react-device-detect'
 import { checkWrongChain } from 'chains'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 
 interface MiddleSectionProps {
   lbpData: LbpFormValues | null

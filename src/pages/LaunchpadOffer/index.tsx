@@ -42,7 +42,7 @@ export default function LaunchpadOffer() {
   const network = offer?.data?.network ?? ''
   const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
 
-  const [isAllowed, setIsAllowed] = React.useState<boolean>()
+  const [isAllowed, setIsAllowed] = React.useState<boolean>(true)
 
   const isIxSwap = config?.isIxSwap ?? false
 
