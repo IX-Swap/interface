@@ -181,7 +181,9 @@ const apiService = {
     }
     const { auth, user } = store.getState()
 
-    const token = auth.token[user.account ?? '']
+    const account = user?.account ?? ''
+    const token = auth?.token ? auth.token[account] : ''
+
     if (token) {
       headers.Authorization = `Bearer ${token}`
     }
