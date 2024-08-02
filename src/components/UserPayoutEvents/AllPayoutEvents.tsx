@@ -8,7 +8,7 @@ import { FILTERS } from 'components/MultipleFilters/constants'
 
 import { EmptyState } from './EmptyState'
 import { Card } from './Card'
-import { AllPayoutContainer, AllPayoutListContainer, AllPayoutListLayout } from './styleds'
+import { AllPayoutContainer, AllPayoutFilterContainer, AllPayoutListContainer, AllPayoutListLayout } from './styleds'
 
 export const AllPayoutEvents = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
@@ -35,17 +35,19 @@ export const AllPayoutEvents = () => {
       <LoadingIndicator isLoading={loadingRequest} />
       {list.items?.length || haveFilters ? (
         <AllPayoutContainer>
-          <MultipleFilters
-            filters={[
-              FILTERS.STATUS,
-              FILTERS.PAYOUT_TYPE,
-              FILTERS.SEC_TOKENS,
-              FILTERS.PAYOUT_PERIOD,
-              FILTERS.RECORD_DATE,
-            ]}
-            onFiltersChange={handleFilters}
-            fullWidth={false}
-          />
+          <AllPayoutFilterContainer>
+            <MultipleFilters
+              filters={[
+                FILTERS.STATUS,
+                FILTERS.PAYOUT_TYPE,
+                FILTERS.SEC_TOKENS,
+                FILTERS.PAYOUT_PERIOD,
+                FILTERS.RECORD_DATE,
+              ]}
+              onFiltersChange={handleFilters}
+              fullWidth={false}
+            />
+          </AllPayoutFilterContainer>
           <AllPayoutListLayout>
             {list.items?.length ? (
               <>
