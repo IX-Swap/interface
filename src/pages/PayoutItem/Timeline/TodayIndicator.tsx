@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { Trans } from '@lingui/macro'
-import styled, { css } from 'styled-components'
+import styled, { ThemeContext, css } from 'styled-components'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 
 interface Props {
@@ -10,10 +10,11 @@ interface Props {
 }
 
 export const TodayIndicator: FC<Props> = ({ offset, overlay, isTodayStartDate }) => {
+  const theme = useContext(ThemeContext)
   return (
     <Container offset={offset} overlay={overlay} isTodayStartDate={isTodayStartDate}>
       <Label overlay={overlay}>
-        <TYPE.main1>
+        <TYPE.main1 sx={{ color: theme.bg26 }}>
           <Trans>{`Today`}</Trans>
         </TYPE.main1>
       </Label>
@@ -60,27 +61,26 @@ const Container = styled.div<{ offset?: string; overlay?: boolean; isTodayStartD
   display: flex;
   flex-direction: column;
   align-items: center;
-  bottom: ${({ overlay }) => (overlay ? '11px' : '41px')};
-  gap: 20px;
+  top: -22px;
+  gap: 10px;
+  height: 48px;
   transform: translateX(-50%);
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     position: relative;
+    left: 0;
     width: 100%;
     gap: 14px;
-    bottom: 0;
+    height: 24px;
+    top: -12px;
     margin-bottom: 6px;
     transform: ${({ isTodayStartDate }) => `translateX(${isTodayStartDate ? '-100%' : '0px'})`};
   }
 `
 
 const Bullet = styled.div<{ overlay?: boolean; isTodayStartDate: boolean }>`
-  width: 13px;
-  height: 13px;
+  width: 8px;
+  height: 8px;
   background: ${({ theme }) => theme.bg26};
   border-radius: 100%;
   transform: ${({ overlay }) => (overlay ? 'translate(0px,50%)' : 'translate(0px,-50%)')};
-  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    width: 8px;
-    height: 8px;
-  }
 `
