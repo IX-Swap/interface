@@ -424,9 +424,7 @@ const KYC = () => {
                     <StyledDiv>
                       <TitleSpan>{referralCode}</TitleSpan>
                       <FlexContainer>
-                        <Copy
-                          toCopy={`${new URL(window.location.href).href?.split('?')[0]}?referralCode=${referralCode}`}
-                        ></Copy>
+                        <Copy toCopy={`${window.location.origin}/#/kyc?referralCode=${referralCode}`}></Copy>
                       </FlexContainer>
                     </StyledDiv>
                   </Column>
