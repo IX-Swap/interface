@@ -7,8 +7,6 @@ interface ReferFriendProps {
 }
 
 const ReferFriend: React.FC<ReferFriendProps> = ({ referralCode }) => {
-  // Add your component logic here
-
   return (
     <div>
       <Title>Refer a Friend</Title>
@@ -16,7 +14,7 @@ const ReferFriend: React.FC<ReferFriendProps> = ({ referralCode }) => {
       <BoxContainer>
         <ReferCode>{referralCode}</ReferCode>
 
-        <Copy toCopy={`${new URL(window.location.href).href?.split('?')[0]}?referralCode=${referralCode}`} />
+        <Copy toCopy={`${window.location.origin}/#/kyc?referralCode=${referralCode}`} />
       </BoxContainer>
     </div>
   )
