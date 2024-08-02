@@ -18,9 +18,15 @@ const commonStyles = css`
   color: ${({ theme }) => theme.text2};
 `
 
+export const TokenSymbol = styled.span`
+  color: rgba(143, 143, 178, 1);
+`
+
 export const Container = styled.div`
   ${commonStyles}
   background: ${({ theme }) => theme.bg0};
+  color: rgba(41, 41, 51, 1);
+  letter-spacing: -0.02em;
   :before {
     border-radius: 30px;
     padding: 1px;
@@ -66,11 +72,6 @@ export const DelayedContainer = styled.div`
     line-height: 36px;
     @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
       line-height: 24px;
-      font-weight: 400;
-      font-size: 16px;
-      > div:nth-child(2) {
-        font-size: 18px;
-      }
     }
   }
   > div:last-child {
