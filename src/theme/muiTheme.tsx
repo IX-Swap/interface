@@ -1,18 +1,15 @@
 import React from 'react'
 import { createTheme, MuiThemeProvider as ThemeProvider } from '@material-ui/core'
 import { DefaultTheme } from 'styled-components'
-
 import useTheme from 'hooks/useTheme'
-import { useActiveWeb3React } from 'hooks/web3'
-import { metaMask } from 'connectors/metaMask'
-import { walletConnectV2 } from 'connectors/walletConnectV2'
 
-export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, config }: DefaultTheme) =>
+export const muiTheme = ({ bg1, bg2, bg0, bg26, text1, text7, text9, config, bg23, bg24 }: DefaultTheme) =>
   createTheme({
     overrides: {
       MuiPickersBasePicker: {
         pickerView: {
-          backgroundColor: bg1,
+          backgroundColor: bg0,
+          borderBottom: `1px solid ${bg24}`,
           borderRadius: '6px',
           '&:focus-visible': {
             outline: 'none',
@@ -30,7 +27,7 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
             border: 'none !important',
           },
           outline: 'none',
-          backgroundColor: bg1,
+          backgroundColor: bg23,
           borderRadius: '6px',
           color: '#555566',
           '&:focus-visible': {
@@ -63,9 +60,6 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
         root: {
           backgroundColor: bg1,
           color: '#8D8DA3',
-          // '&:hover .MuiSvgIcon-root': {
-          //   color: 'red',
-          // },
         },
       },
       MuiTouchRipple: {
@@ -211,12 +205,12 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
       },
       MuiPickersDay: {
         root: {
-          backgroundColor: bg1,
           color: text1,
           fontWeight: 400,
           fontSize: '16px',
           '&$selected': {
-            backgroundColor: bg1,
+            backgroundColor: bg26,
+            borderRadius: '6px',
             '&:hover': {
               backgroundColor: bg1,
             },
@@ -228,10 +222,11 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
 
           '&:hover': {
             background: bg2,
+            color: text1,
           },
           '&:focus': {
             '&$selected': {
-              backgroundColor: bg2,
+              backgroundColor: bg26,
             },
           },
         },
