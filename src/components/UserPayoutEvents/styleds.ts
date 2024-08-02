@@ -44,7 +44,7 @@ export const Tab = styled.div<{ active: boolean }>`
 
 export const Body = styled.div`
   position: relative;
-  padding: 32px;
+  padding: 0 32px;
   ::before {
     padding: 1px;
     @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
@@ -155,9 +155,14 @@ export const AllPayoutContainer = styled.div`
   }
 `
 
+export const AllPayoutFilterContainer = styled.div`
+  margin: 0 -80px 0 -80px;
+  padding: 32px 68px 0 68px;
+`
+
 export const AllPayoutListLayout = styled.div`
   margin: 0 -80px 0 -80px;
-  padding: 40px 80px;
+  padding: 40px 68px 0 68px;
   background: ${({ theme }) => theme.bg1};
 `
 
@@ -273,7 +278,7 @@ export const PayoutLabel = styled.div`
 export const PayoutValue = styled.div`
   color: ${({ theme }) => theme.text5};
   font-weight: 500;
-  font-size: 16px;
+  font-size: 13px;
   line-height: 21px;
   display: flex;
   align-items: center;
@@ -285,6 +290,9 @@ export const MyPayoutContainer = styled.div`
   z-index: 2;
   position: relative;
   row-gap: 24px;
+  margin: 0 -80px 0 -80px;
+  padding: 40px 68px 0 68px;
+  background: ${({ theme }) => theme.bg1};
 `
 
 export const MyPayoutListContainer = styled.div`
@@ -293,10 +301,18 @@ export const MyPayoutListContainer = styled.div`
   row-gap: 12px;
 `
 
+export const MyPayoutTitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
 export const MyListTitle = styled.div`
   font-weight: 600;
   font-size: 24px;
   line-height: 24px;
+  margin-top: 8px;
+  margin-bottom: 20px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     font-size: 20px;
     line-height: 30px;
@@ -322,7 +338,7 @@ export const MyListContainer = styled.div`
 `
 
 export const Hr = styled.div`
-  background-color: ${({ theme }) => theme.text9};
+  background-color: rgba(230, 230, 255, 1);
   height: 1px;
   width: 100%;
 `
@@ -346,9 +362,9 @@ export const ViewMoreBtnContainer = styled.div`
 `
 
 export const MyEventsEmptyText = styled.div`
-  color: ${({ theme }) => theme.text9};
+  color: rgba(143, 143, 178, 1);
   font-weight: 500;
-  font-size: 20px;
+  font-size: 13px;
   line-height: 24px;
   text-align: center;
   margin: 20px 0px 56px;
