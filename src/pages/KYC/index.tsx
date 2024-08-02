@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
 import Portal from '@reach/portal'
 import _get from 'lodash/get'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 
 import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'

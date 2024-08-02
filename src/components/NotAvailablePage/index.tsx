@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 import { useLocation } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import { Text } from 'rebass'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 
 import { switchToNetwork } from 'hooks/switchToNetwork'
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
