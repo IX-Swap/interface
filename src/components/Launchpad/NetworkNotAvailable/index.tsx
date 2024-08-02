@@ -5,7 +5,7 @@ import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 
 interface Props {
   expectChain: SupportedChainId | null
