@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 import { Link } from 'react-router-dom'
+
 import { PromptFooter } from './PromptFooter'
 import { ReactComponent as KYCPromptIcon } from 'assets/launchpad/svg/kyc-prompt-icon.svg'
 import { ReactComponent as Loading } from 'assets/launchpad/svg/loader.svg'

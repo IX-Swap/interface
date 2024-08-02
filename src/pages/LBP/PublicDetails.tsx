@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import Portal from '@reach/portal'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 
 import Background from 'components/LBP/PublicDetails/Background'
 import MiddleSection from 'components/LBP/PublicDetails/MiddleSection'

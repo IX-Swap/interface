@@ -54,7 +54,7 @@ import { useMemo } from 'react'
 import { getContract } from 'utils'
 
 import { ArgentWalletDetector, EnsPublicResolver, EnsRegistrar, Erc20, Multicall2, Weth } from '../abis/types'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
