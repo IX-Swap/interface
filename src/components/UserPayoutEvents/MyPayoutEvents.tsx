@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useGetMyPayoutList, usePayoutState } from 'state/payout/hooks'
-import { ButtonIXSGradient } from 'components/Button'
+import { ButtonEmpty } from 'components/Button'
 import { useUserSecTokenState } from 'state/user/hooks'
 
 import { EmptyState } from './EmptyState'
@@ -16,7 +16,10 @@ import {
   MyEventsEmptyText,
   MyListTitle,
   MyListContainer,
+  MyPayoutTitleContainer,
 } from './styleds'
+
+const itemsPerLine = 4
 
 export const MyPayouts = () => {
   const { accredited, owningTokens, claimed, loadingRequest } = usePayoutState()
@@ -31,9 +34,9 @@ export const MyPayouts = () => {
   ]
 
   useEffect(() => {
-    getMyPayoutList({ offset: 4, listType: 'passed-accreditation' })
-    getMyPayoutList({ offset: 4, listType: 'owning-tokens' })
-    getMyPayoutList({ offset: 4, listType: 'already-claimed' })
+    getMyPayoutList({ offset: itemsPerLine, listType: 'passed-accreditation' })
+    getMyPayoutList({ offset: itemsPerLine, listType: 'owning-tokens' })
+    getMyPayoutList({ offset: itemsPerLine, listType: 'already-claimed' })
   }, [getMyPayoutList])
 
   const viewMore = async (type: string, offset: number) => {
@@ -41,7 +44,7 @@ export const MyPayouts = () => {
   }
 
   const viewLess = async (type: string) => {
-    await getMyPayoutList({ listType: type, offset: 4 })
+    await getMyPayoutList({ listType: type, offset: itemsPerLine })
   }
 
   const isEmpty = useMemo(() => {
@@ -58,9 +61,26 @@ export const MyPayouts = () => {
           {items.map(({ label, data, type }, index) => (
             <>
               <MyPayoutListContainer>
-                <MyListTitle>
-                  <Trans>{`${label}`}</Trans>
-                </MyListTitle>
+                <MyPayoutTitleContainer>
+                  <MyListTitle>
+                    <Trans>{`${label}`}</Trans>
+                  </MyListTitle>
+                  {data.totalItems > itemsPerLine && (
+                    <ViewMoreBtnContainer>
+                      <ButtonEmpty
+                        onClick={() => {
+                          if (data.totalItems === data.itemCount) {
+                            viewLess(type)
+                          } else {
+                            viewMore(type, data.totalItems)
+                          }
+                        }}
+                      >
+                        <Trans>{data.totalItems === data.itemCount ? 'View Less' : 'View More'}</Trans>
+                      </ButtonEmpty>
+                    </ViewMoreBtnContainer>
+                  )}
+                </MyPayoutTitleContainer>
                 {data.totalItems ? (
                   <MyListContainer>
                     {data.items.map((item) => (
@@ -73,21 +93,6 @@ export const MyPayouts = () => {
                   </MyEventsEmptyText>
                 )}
               </MyPayoutListContainer>
-              {data.totalItems > 4 && (
-                <ViewMoreBtnContainer>
-                  <ButtonIXSGradient
-                    onClick={() => {
-                      if (data.totalItems === data.itemCount) {
-                        viewLess(type)
-                      } else {
-                        viewMore(type, data.totalItems)
-                      }
-                    }}
-                  >
-                    <Trans>{data.totalItems === data.itemCount ? 'View Less' : 'View More'}</Trans>
-                  </ButtonIXSGradient>
-                </ViewMoreBtnContainer>
-              )}
               {index < items.length - 1 && <Hr />}
             </>
           ))}

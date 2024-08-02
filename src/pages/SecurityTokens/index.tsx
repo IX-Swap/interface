@@ -125,8 +125,8 @@ export const StyledBodyWrapper = styled(BodyWrapper)`
   box-shadow: none;
   width: 100%;
   max-width: 1358px;
-  // border-radius: 8px;
   padding-top: 0px;
+  padding-bottom: 0px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 0px;
   }
