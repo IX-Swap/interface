@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { TYPE } from 'theme'
 import { Trans } from '@lingui/macro'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 
 import apiService from 'services/apiService'
 import { MySecTokensGrid } from './styleds'

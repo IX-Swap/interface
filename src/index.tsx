@@ -8,8 +8,6 @@ import { HashRouter } from 'react-router-dom'
 import { LocalizationProvider } from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import 'react-phone-input-2/lib/bootstrap.css'
-import { Web3ReactProvider } from '@web3-react/core'
-import { connectors } from 'connectors'
 import { PersistGate } from 'redux-persist/integration/react'
 import { HelmetProvider } from 'react-helmet-async'
 
@@ -29,7 +27,7 @@ import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import * as Sentry from '@sentry/react'
-import Providers from 'Providers'
+import Web3Provider from 'components/Web3Provider'
 
 /* eslint-disable react/display-name */
 if (!!window.ethereum) {
@@ -89,33 +87,31 @@ Sentry.init({
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/* <Providers> */}
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <HashRouter>
-            <LanguageProvider>
-              <Web3ReactProvider connectors={connectors}>
-                <Blocklist>
-                  <Updaters />
-                  <ThemeProvider>
-                    <ThemedGlobalStyle />
-                    <MuiThemeProvider>
-                      <LocalizationProvider dateAdapter={DayJsUtils}>
-                        <CookiesProvider>
-                          <HelmetProvider>
-                            <App />
-                          </HelmetProvider>
-                        </CookiesProvider>
-                      </LocalizationProvider>
-                    </MuiThemeProvider>
-                  </ThemeProvider>
-                </Blocklist>
-              </Web3ReactProvider>
-            </LanguageProvider>
-          </HashRouter>
-        </PersistGate>
-      </Provider>
-    {/* </Providers> */}
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <HashRouter>
+          <LanguageProvider>
+            <Web3Provider>
+              <Blocklist>
+                <Updaters />
+                <ThemeProvider>
+                  <ThemedGlobalStyle />
+                  <MuiThemeProvider>
+                    <LocalizationProvider dateAdapter={DayJsUtils}>
+                      <CookiesProvider>
+                        <HelmetProvider>
+                          <App />
+                        </HelmetProvider>
+                      </CookiesProvider>
+                    </LocalizationProvider>
+                  </MuiThemeProvider>
+                </ThemeProvider>
+              </Blocklist>
+            </Web3Provider>
+          </LanguageProvider>
+        </HashRouter>
+      </PersistGate>
+    </Provider>
   </StrictMode>
 )
 
