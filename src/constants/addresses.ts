@@ -30,8 +30,8 @@ export const NFT_ADDRESS = {
 // export const ENV_SUPPORTED_TGE_CHAINS = [1, 42, 137] as number[] | undefined
 
 export const ENV_SUPPORTED_TGE_CHAINS = (
-  process.env.REACT_APP_SUPPORTED_TGE_CHAINS ? JSON.parse(process.env.REACT_APP_SUPPORTED_TGE_CHAINS) : undefined
-) as number[] | undefined
+  process.env.REACT_APP_SUPPORTED_TGE_CHAINS ? JSON.parse(process.env.REACT_APP_SUPPORTED_TGE_CHAINS) : [SupportedChainId.BASE]
+) as number[]
 
 export const SUPPORTED_TGE_CHAINS = {
   MAIN: 1,
