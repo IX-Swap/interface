@@ -3,14 +3,17 @@ import { createClient } from 'viem'
 import { createConfig, http } from 'wagmi'
 import { connect } from 'wagmi/actions'
 import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
-import { baseSepolia, base, mainnet, polygon, polygonAmoy } from 'wagmi/chains'
 
 import { injectedWithFallback } from './injectedWithFallback'
 import { WC_PARAMS } from './walletConnect'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { WAGMI_CHAIN_INFO } from './constants'
+
 
 // @ts-ignore
 export const wagmiConfig = createConfig({
-  chains: [baseSepolia, base, mainnet, polygon, polygonAmoy],
+  // @ts-ignore
+  chains: [...ENV_SUPPORTED_TGE_CHAINS.map((chain) => WAGMI_CHAIN_INFO[chain])],
   connectors: [
     injectedWithFallback(),
     walletConnect(WC_PARAMS),
