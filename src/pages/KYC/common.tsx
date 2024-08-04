@@ -138,7 +138,7 @@ export const Select: FC<SelectProps> = ({
     <Box>
       {label && <Label required={isDisabled ? false : required} label={label} tooltipText={tooltipText} />}
       {isDisabled && selectedItem ? (
-        <Row alignItems="center" style={{ columnGap: 4 }}>
+        <Row alignItems="center" style={{ columnGap: 4, marginBottom: '20px'}}>
           {selectedItem?.icon}
           {selectedItem?.label}
         </Row>
