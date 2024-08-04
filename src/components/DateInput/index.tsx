@@ -21,6 +21,7 @@ interface Props {
   isDisabled?: boolean
   format?: string
   id?: any
+  isDelayed?: boolean
 }
 
 export const DateInput = ({
@@ -35,6 +36,7 @@ export const DateInput = ({
   placeholder,
   isDisabled = false,
   format,
+  isDelayed,
   ...props
 }: Props & Partial<LabelProps>) => {
   const [isDatePickerOpen, setDatePickerOpen] = useState(false)
@@ -50,7 +52,7 @@ export const DateInput = ({
   return (
     <Container>
       <KycInputLabel label={`${label}`} error={error} tooltipText={tooltipText} />
-      {isDisabled && value ? (
+      {(isDisabled && value) || isDelayed ? (
         <Row>
           {dayjs(value).format(format || 'MMM DD, YYYY')} <CalendarIcon style={{ marginLeft: 9 }} />
         </Row>
