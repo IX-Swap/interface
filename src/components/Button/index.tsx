@@ -222,7 +222,7 @@ export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   color: #b8b8cc;
   border: 1px solid #e6e6ff;
   padding: 28px 18px;
-  margin-right: 20px;
+  margin-right: 0px;
 
   :focus,
   :hover {
@@ -258,7 +258,7 @@ export const ButtonIXSWide = styled(ButtonIXSGradient)`
   background-color: #6666ff;
 `
 export const ButtonGradient = styled(Base)`
- color: ${(props) => props.theme.launchpad.colors.text.light};
+  color: ${(props) => props.theme.launchpad.colors.text.light};
   background-color: ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
   font-weight: 600;
@@ -407,18 +407,10 @@ const ButtonConfirmedStyle = styled(Base)`
 `
 
 const ButtonErrorStyle = styled(Base)`
-  background-color: ${({ theme }) => theme.error};
-  border: 1px solid ${({ theme }) => theme.error};
-
-  &:focus {
-    background-color: ${({ theme }) => darken(0.05, theme.error)};
-  }
-  &:hover {
-    background-color: ${({ theme }) => darken(0.05, theme.error)};
-  }
-  &:active {
-    background-color: ${({ theme }) => darken(0.1, theme.error)};
-  }
+  background-color: ${({ theme }) => darken(0.0, theme.bg25)};
+  border: 1px solid #ff616133;
+  color: #ff6161;
+  border-radius: 6px;
   &:disabled {
     opacity: 50%;
     cursor: auto;
