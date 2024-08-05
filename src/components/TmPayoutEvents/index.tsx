@@ -28,6 +28,7 @@ import { StatusCell } from './StatusCell'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton, ActionsContainer } from './styleds'
 import { PAYOUT_TYPE_LABEL } from './constants'
 import { TYPE } from 'theme'
+import { Line } from 'components/Line'
 
 const headerCells = [`ID`, `Status`, `Payout type`, `SEC token`, `Payment period`, `Record date`, `Amount claimed`, '']
 
@@ -35,7 +36,6 @@ export const TmPayoutEvents = () => {
   const history = useHistory()
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
-
   const { account } = useUserState()
   const { token } = useAuthState()
   const { payoutList, isLoading } = useTokenManagerState()
@@ -82,10 +82,18 @@ export const TmPayoutEvents = () => {
             forManager
           />
           {payoutList.items?.length ? (
-            <Flex flexDirection="column" style={{ gap: 32 }}>
-              <Table body={<Body items={payoutList.items} />} header={<Header />} />
-              <Pagination totalItems={payoutList.totalItems} totalPages={payoutList.totalPages} page={payoutList.page || 1} onPageChange={onPageChange} />
-            </Flex>
+            <>
+              <Line style={{ marginTop: '20px' }} />
+              <Flex flexDirection="column" style={{ gap: 32 }}>
+                <Table body={<Body items={payoutList.items} />} header={<Header />} />
+                <Pagination
+                  totalItems={payoutList.totalItems}
+                  totalPages={payoutList.totalPages}
+                  page={payoutList.page || 1}
+                  onPageChange={onPageChange}
+                />
+              </Flex>
+            </>
           ) : (
             <TmEmptyPage tab="payout-events" filtred />
           )}
@@ -204,8 +212,12 @@ interface IBody {
 const Body = ({ items }: IBody) => {
   return (
     <BodyContainer>
-      {items.map((item) => (
-        <Row item={item} key={`payout-${item.id}`} />
+      {items.map((item, index) => (
+        <React.Fragment key={`payout-${item.id}`}>
+          <Line />
+          <Row item={item} />
+          {index === items.length - 1 && <Line />}
+        </React.Fragment>
       ))}
     </BodyContainer>
   )
