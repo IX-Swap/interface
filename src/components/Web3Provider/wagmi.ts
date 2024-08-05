@@ -19,8 +19,6 @@ export function createWagmiConfig() {
       coinbaseWallet({
         appName: 'IX Swap',
         appLogoUrl: 'https://app.ixswap.io/favicon.png',
-        reloadOnDisconnect: false,
-        enableMobileWalletLink: true,
       }),
     ],
     client({ chain }: any) {
