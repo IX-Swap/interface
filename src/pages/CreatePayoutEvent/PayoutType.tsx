@@ -32,7 +32,10 @@ export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) =>
     <>
       <Box marginBottom="24px">
         {!availableForEditing.includes('type') ? (
-          <div>{values.type || values.otherType}</div>
+          <>
+            <div style={{ color: '#555566', fontSize: '13px', marginBottom: '18px' }}>Payout Type</div>
+            <div>{values.type || values.otherType}</div>
+          </>
         ) : (
           <>
             {payoutTypes.map(({ id, label }) => (
@@ -55,9 +58,11 @@ export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) =>
               </TYPE.small>
             )}
             {values.type && (
-              <ExtraInfoCard style={{display: 'flex', gap: '8px', marginBottom: '10px'}}>
+              <ExtraInfoCard style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
                 <TYPE.buttonMuted color={'#292933'}>{description?.split('-')[0]}</TYPE.buttonMuted>
-                <TYPE.buttonMuted color={'#666680'} fontWeight={400}>{description?.split('-')[1]}</TYPE.buttonMuted>
+                <TYPE.buttonMuted color={'#666680'} fontWeight={400}>
+                  {description?.split('-')[1]}
+                </TYPE.buttonMuted>
               </ExtraInfoCard>
             )}
             {values.type === 'Other' && (
@@ -91,4 +96,4 @@ const Card = styled.div`
   &:last-child {
     margin-right: 0;
   }
-`;
+`
