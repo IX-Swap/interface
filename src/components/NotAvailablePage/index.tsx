@@ -93,7 +93,8 @@ export const NotAvailablePage = () => {
     )
   }
 
-  const network = window.location.href.includes(PRODUCTION_APP_URL) ? 'Polygon' : 'Amoy'
+  const chains = ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]
+  const chainsNames = chains.map((chain) => CHAIN_INFO[chain].chainName)
 
   if (!provider?.provider?.isMetaMask) {
     return (
@@ -105,15 +106,20 @@ export const NotAvailablePage = () => {
         </Title>
         <Info>
           <Trans>
-            Please switch the network to {network} in your wallet.
+            Please switch the network to{' '}
+            {chainsNames.map((chainName, index) => (
+              <span key={index}>
+                <b style={{ color: '#292933' }}>{chainName}</b>
+                {index < chainsNames.length - 2 ? ', ' : ''}
+                {index === chainsNames.length - 2 ? ' or ' : ''}
+              </span>
+            ))}{' '}
+            in your wallet.
           </Trans>
         </Info>
       </Container>
     )
   }
-
-  const chains = ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]
-  const chainsNames = chains.map((chain) => CHAIN_INFO[chain].chainName)
 
   return (
     <Container>

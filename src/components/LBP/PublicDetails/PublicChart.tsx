@@ -243,7 +243,7 @@ export default function DetailsChart({
   return (
     <ChartContainer>
       <AreaChart
-        width={isMobile ? 300 : chartWidth ? chartWidth : 800}
+        width={isMobile ? 290 : chartWidth ? chartWidth : 800}
         height={isMobile ? 300 : 400}
         data={dataPoints}
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
@@ -265,7 +265,7 @@ export default function DetailsChart({
         <Tooltip content={<CustomTooltip />} labelFormatter={() => ''} /> {/* Disable default label */}
         {/* <Line type="monotone" dataKey="price" strokeWidth={2} stroke="url(#gradient)" dot={false} /> */}
         <XAxis dataKey="date" axisLine={false} tick={false} />
-        <XAxis xAxisId="1" dataKey="date" allowDuplicatedCategory={false} axisLine={false} />
+        <XAxis tick={{ fontSize: 14 }} xAxisId="1" dataKey="date" allowDuplicatedCategory={false} axisLine={false} />
         <YAxis tick={{ fontSize: 14 }} tickFormatter={(value) => `$${value}`} axisLine={false} />
         <Area
           type="monotone"
@@ -296,6 +296,10 @@ const TextLegend = styled.div`
   color: #292933;
   font-size: 14px;
   font-weight: 500;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 12px;
+  }
 `
 
 const ChartContainer = styled.div`

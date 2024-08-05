@@ -19,6 +19,7 @@ import Column, { AutoColumn } from '../Column'
 import { RowBetween, RowCenter, RowFixed } from '../Row'
 import MetamaskIcon from 'assets/images/metamask.png'
 import { isMobile } from 'react-device-detect'
+import { Flex } from 'rebass'
 
 export const StyledSuccess = styled(Success)`
   ${({ theme }) =>
@@ -68,9 +69,9 @@ export function ConfirmationPendingContent({
     <ModalBlurWrapper>
       <StyledModalContentWrapper>
         <Column>
-          <RowBetween>
+          <Flex justifyContent="flex-end">
             <CloseIcon onClick={onDismiss} />
-          </RowBetween>
+          </Flex>
           <RowCenter>
             <StyledTitle>
               <Trans>Waiting For Confirmation</Trans>

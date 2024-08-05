@@ -142,11 +142,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
           }
         }
 
-        if (startTimeError || endTimeError) {
-          setDateErrorText('Invalid time')
-          return
-        }
-
         if (props.mode === 'range' && !range[1]) {
           setDateErrorText('Please select both start and end date')
           return
@@ -199,12 +194,13 @@ export const DateRangeField: React.FC<Props> = (props) => {
     const dateFormat = props.dateFormat || 'Do MMM, HH:mm'
     const hasEmptyState = range.length === 0 || range.some((date) => !date.isValid())
     if (hasEmptyState) {
-      return `Do MMM, HH:mm ${props.mode === 'range' ? ` - ${dateFormat.toLowerCase()}` : ''}`
+      return `Do MMM, HH:mm ${props.mode === 'range' ? ` - ${dateFormat}` : ''}`
     }
     return formatDateRange(range[0]?.toDate(), range[1]?.toDate())
   }, [range, props.mode, props.dateFormat])
 
   React.useEffect(() => {
+    setDateErrorText(' ')
     if (props.value !== undefined) {
       if (props.mode === 'single') {
         setRange([moment(props.value as Date)])
@@ -221,6 +217,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
     setStartTime(moment().startOf('day'))
     setEndTime(moment().startOf('day'))
     setShowPicker(false)
+
     if (typeof props.onError === 'function') {
       try {
         props.onError(props.field || '', dateErrorText || '')

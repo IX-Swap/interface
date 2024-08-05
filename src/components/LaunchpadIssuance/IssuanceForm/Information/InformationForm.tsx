@@ -710,7 +710,11 @@ export const InformationForm = (props: Props) => {
             }}
             onError={handleDateError}
             error={`
-            ${(touched.timeframe?.closed && errors?.timeframe?.closed ? 'Please select a valid time' : '') as string}`}
+            ${
+              (touched.timeframe?.closed && (errors?.timeframe?.closed || errors?.timeframe?.sale)
+                ? 'Please select a valid time'
+                : '') as string
+            }`}
           />
 
           <DateRangeField

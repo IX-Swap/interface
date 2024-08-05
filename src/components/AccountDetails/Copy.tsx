@@ -37,19 +37,17 @@ export default function CopyHelper(props: { toCopy: string; children?: React.Rea
     <CopyIcon onClick={() => setCopied(toCopy)}>
       {isAdmin === true ? (
         <>
-              {isCopied ? t`Copied` : children}
+          {isCopied ? t`Copied` : children}
           <TransactionStatusText></TransactionStatusText>
-          <CopySvg style={{ marginLeft: '10px', width: '30px', height: '15px'}} />
+          <CopySvg style={{ marginLeft: '10px', width: '30px', height: '15px' }} />
         </>
       ) : (
         <>
-          <CopySvg style={{ marginRight: '5px' }} /> 
+          <CopySvg style={{ marginRight: '5px', width: 18, height: 18 }} />
           <TransactionStatusText></TransactionStatusText>
           {isCopied ? t`Copied` : children}
         </>
       )}
-
-
     </CopyIcon>
   )
 }

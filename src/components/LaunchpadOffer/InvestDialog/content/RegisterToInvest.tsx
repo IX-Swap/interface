@@ -16,6 +16,7 @@ import { text28, text59, text9 } from 'components/LaunchpadMisc/typography'
 import { useGetWarning } from '../utils/ConvertationField'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import { ReactComponent as NewEyeIcon } from '../../../../assets/images/NewEyeIcon.svg'
+import { getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
 
 interface Props {
   offer: Offer
@@ -153,9 +154,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
                   label="How much will be your estimated investment?"
                   trailing={
                     <CurrencyLabel>
-                      {props.offer.investingTokenSymbol === 'USDC'
-                        ? `${props.offer.investingTokenSymbol}.e`
-                        : props.offer.investingTokenSymbol}
+                      {getTokenSymbol(props?.offer?.network, props?.offer?.investingTokenSymbol)}
                     </CurrencyLabel>
                   }
                   value={amount}

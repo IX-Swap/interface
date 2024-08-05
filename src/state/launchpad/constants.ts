@@ -41,3 +41,8 @@ export const OFFER_RELATED_TIMEFRAMES = {
   closed: 'claim',
   claim: 'claim'
 }
+
+export const INVESTING_TOKEN_SYMBOL = {
+  'USDC.e': 'USDC.e',
+  USDC: 'USDC',
+}

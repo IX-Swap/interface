@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 import { capitalize } from '@material-ui/core'
 import { Copy, Info } from 'react-feather'
-import { Offer, OfferStatus, WhitelistStatus } from 'state/launchpad/types'
+import { Offer, OfferNetwork, OfferStatus, WhitelistStatus } from 'state/launchpad/types'
 
 import MetamaskIcon from 'assets/images/metamask.png'
 
@@ -24,6 +24,7 @@ import { text10, text33, text6, text9 } from 'components/LaunchpadMisc/typograph
 import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
 import { useActiveWeb3React } from 'hooks/web3'
 import { InvestFailedModal } from '../InvestDialog/utils/InvestFailedModal'
+import { INVESTING_TOKEN_SYMBOL } from 'state/launchpad/constants'
 interface Props {
   offer: Offer
 }
@@ -124,9 +125,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
           {stageStatus !== OfferStageStatus.notStarted && (
             <>
               <OfferInvestmentAmount>
-                {props.offer.investingTokenSymbol === 'USDC'
-                  ? `${props.offer.investingTokenSymbol}.e `
-                  : props.offer.investingTokenSymbol}
+                {getTokenSymbol(props?.offer?.network, props?.offer?.investingTokenSymbol)}
                 &nbsp;{formatter.format(props.offer.totalInvestment)}
               </OfferInvestmentAmount>
 
@@ -232,8 +231,16 @@ type GeneralInfoFields =
   | 'investingTokenSymbol'
   | 'tokenPrice'
   | 'tokenSymbol'
+  | 'network'
 
 type GeneralInfoProps = Partial<Pick<Offer, GeneralInfoFields>>
+
+export function getTokenSymbol(network: any, investingTokenSymbol: any) {
+  if (network === OfferNetwork.polygon && investingTokenSymbol === INVESTING_TOKEN_SYMBOL.USDC) {
+    return INVESTING_TOKEN_SYMBOL['USDC.e']
+  }
+  return investingTokenSymbol
+}
 
 export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
   const formatedValue = useFormatOfferValue()
@@ -257,21 +264,21 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
         },
         {
           label: 'Token Price',
-          value: `${
-            props.investingTokenSymbol === 'USDC' ? `${props.investingTokenSymbol}.e ` : props.investingTokenSymbol
-          }  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}`,
+          value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)}  ${
+            formatedValue(props.tokenPrice) ?? 'N/A'
+          } / 1 ${props.tokenSymbol}`,
         },
         {
           label: 'Max. Investment Size',
-          value: `${
-            props.investingTokenSymbol === 'USDC' ? `${props.investingTokenSymbol}.e ` : props.investingTokenSymbol
-          } ${formatedValue(props.maxInvestment) ?? 'N/A'} / ${maxTokenInvestment} ${props.tokenSymbol}`,
+          value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)} ${
+            formatedValue(props.maxInvestment) ?? 'N/A'
+          } / ${maxTokenInvestment} ${props.tokenSymbol}`,
         },
         {
           label: 'Min. Investment Size',
-          value: `${
-            props.investingTokenSymbol === 'USDC' ? `${props.investingTokenSymbol}.e ` : props.investingTokenSymbol
-          } ${formatedValue(props.minInvestment) ?? 'N/A'} / ${minTokenInvestment} ${props.tokenSymbol}`,
+          value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)} ${
+            formatedValue(props.minInvestment) ?? 'N/A'
+          } / ${minTokenInvestment} ${props.tokenSymbol}`,
         },
       ]}
     />

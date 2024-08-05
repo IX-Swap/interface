@@ -40,6 +40,7 @@ const SubmitButton = styled.button<{ state: InvestSubmitState; disabled?: boolea
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
 
   ${(props) =>
     props.state === InvestSubmitState.default &&
@@ -78,7 +79,7 @@ const SubmitButton = styled.button<{ state: InvestSubmitState; disabled?: boolea
     color: ${props.theme.launchpad.colors.error};
     border: 1px solid ${props.theme.launchpad.colors.error};
   `}
-  
+
   ${(props) => !props.disabled && 'cursor: pointer;'}
 
 
