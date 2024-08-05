@@ -321,10 +321,6 @@ const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
 
 const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: boolean }>`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  min-height: calc(100vh - 120px);
-
-  ${(props) => !props.hideHeader && 'padding-bottom: 48px;'}
-
   ${({ theme }) => theme.mediaWidth.upToSmall`
     min-height: calc(100vh - 64px);
     // width: 100%;

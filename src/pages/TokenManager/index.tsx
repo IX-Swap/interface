@@ -82,7 +82,7 @@ const TokenManager = () => {
 
   return (
     <>
-      <StyledBodyWrapper>
+      <StyledHeaderWrapper>
         <TabsContainer>
           {tabs.map(({ value, label }, index) => {
             const active = selectedTab === value
@@ -104,21 +104,22 @@ const TokenManager = () => {
             </CreateButton>
           </ButtonContainer>
         </TabsContainer>
-      </StyledBodyWrapper>
-      <div style={{ marginTop: '20px' }}>{renderTab(selectedTab)}</div>
+      </StyledHeaderWrapper>
+      <StyledBodyWrapper style={{ marginTop: '20px' }}>{renderTab(selectedTab)}</StyledBodyWrapper>
     </>
   )
 }
 
-export const Container = styled.div`
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
+
+export const StyledHeaderWrapper = styled.div`
+  padding: 0 200px;
+  background-color: #ffffff;
+  margin: 0 auto;
+  width: 100%;
 `
 
 export const StyledBodyWrapper = styled.div`
-  padding: 0 250px;
-  background-color: #ffffff;
+  padding: 0 200px;
   margin: 0 auto;
   width: 100%;
 `
