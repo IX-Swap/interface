@@ -32,7 +32,7 @@ export const AllPayoutEvents = () => {
 
   return (
     <>
-      <LoadingIndicator isLoading={loadingRequest} />
+      {list.items?.length === 0 ? <LoadingIndicator isLoading={loadingRequest} /> : null}
       {list.items?.length || haveFilters ? (
         <AllPayoutContainer>
           <AllPayoutFilterContainer>
