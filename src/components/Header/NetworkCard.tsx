@@ -9,10 +9,10 @@ import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import { ChevronElement } from 'components/ChevronElement'
 import { MEDIA_WIDTHS } from 'theme'
-import { switchToNetwork } from 'hooks/switchToNetwork'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { ReactComponent as Checked } from 'assets/images/checked-blue.svg'
 import { VioletCard } from '../Card'
+import useSelectChain from 'hooks/useSelectChain'
 
 export const NetworkCard = () => {
   const { chainId, provider, account } = useActiveWeb3React()
@@ -23,10 +23,12 @@ export const NetworkCard = () => {
   useOnClickOutside(node, open ? toggle : undefined)
 
   function Row({ targetChain }: { targetChain: number }) {
-    const handleRowClick = () => {
-      if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
-        switchToNetwork({ provider, chainId: targetChain })
-        toggle()
+    const selectChain = useSelectChain()
+
+    const handleRowClick = async () => {
+      toggle()
+      if (chainId !== targetChain) {
+        await selectChain(targetChain)
       }
     }
     const active = chainId === targetChain
@@ -72,7 +74,6 @@ export const NetworkCard = () => {
     </StyledBox>
   )
 }
-
 
 const SelectorControls = styled(VioletCard)`
   cursor: pointer;

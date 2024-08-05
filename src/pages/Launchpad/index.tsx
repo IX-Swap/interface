@@ -8,14 +8,17 @@ import { Banner } from './Banner'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { useWeb3React } from 'connection/web3reactShim'
 
 export default function Launchpad() {
-  const { chainId } = useActiveWeb3React()
+  const { chainId } = useWeb3React()
   const { config } = useWhitelabelState()
 
   const isIxSwap = config?.isIxSwap ?? false
   const enableLaunchpadBanner = config?.enableLaunchpadBanner ?? false
+  console.log('chainId', chainId)
   const blurred = detectWrongNetwork(chainId)
+
 
   if (blurred) {
     return (
