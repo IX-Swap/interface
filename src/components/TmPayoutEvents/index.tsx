@@ -84,7 +84,7 @@ export const TmPayoutEvents = () => {
           {payoutList.items?.length ? (
             <Flex flexDirection="column" style={{ gap: 32 }}>
               <Table body={<Body items={payoutList.items} />} header={<Header />} />
-              <Pagination totalPages={payoutList.totalPages} page={payoutList.page || 1} onPageChange={onPageChange} />
+              <Pagination totalItems={payoutList.totalItems} totalPages={payoutList.totalPages} page={payoutList.page || 1} onPageChange={onPageChange} />
             </Flex>
           ) : (
             <TmEmptyPage tab="payout-events" filtred />
