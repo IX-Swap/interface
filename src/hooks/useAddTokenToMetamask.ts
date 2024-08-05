@@ -3,7 +3,7 @@ import { Currency, Token } from '@ixswap1/sdk-core'
 import { useCallback, useEffect, useState } from 'react'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useSecTokens } from 'state/secTokens/hooks'
-import useAddToMetamask from './useAddToMetamask'
+import useAddTokenToWallet from './useAddToWallet'
 
 export default function useAddTokenToMetamask(currencyToAdd: Currency | undefined): {
   addToken: () => void
@@ -17,22 +17,22 @@ export default function useAddTokenToMetamask(currencyToAdd: Currency | undefine
   useEffect(() => {
     setSuccess(false)
   }, [currencyToAdd])
-  const addToMetamask = useAddToMetamask()
-  const addToken = useCallback(() => {
+  const { addTokenToWallet } = useAddTokenToWallet()
+  const addToken = useCallback(async () => {
     if (token) {
       let wrappedSymbol
       if (secTokens[token?.address]) {
         wrappedSymbol = `${token?.symbol}`
       }
-      addToMetamask({
+      const isSuccess = await addTokenToWallet({
         address: token.address,
         symbol: wrappedSymbol ?? token.symbol ?? '',
         decimals: token.decimals,
         image: getTokenLogoURL(token.address, chainId),
-        onSuccess: setSuccess,
       })
+      setSuccess(isSuccess)
     }
-  }, [addToMetamask, token, secTokens, chainId])
+  }, [token, secTokens, chainId])
 
   return { addToken, success }
 }
