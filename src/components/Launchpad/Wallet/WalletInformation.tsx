@@ -11,12 +11,12 @@ import { formatAmount } from 'utils/formatCurrencyAmount'
 import { VioletCard } from 'components/Card'
 import useTheme from 'hooks/useTheme'
 import { useWeb3React } from 'connection/web3reactShim'
-import { switchToNetwork } from 'hooks/switchToNetwork'
 import { text10, text16, text8 } from 'components/LaunchpadMisc/typography'
+import useSelectChain from 'hooks/useSelectChain'
 
 export const WalletInformation = () => {
-  const { chainId, provider, account } = useWeb3React()
-
+  const { chainId, account } = useWeb3React()
+  const selectChain = useSelectChain()
   const theme = useTheme()
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
@@ -26,15 +26,11 @@ export const WalletInformation = () => {
 
   const toggleNetworkMenu = React.useCallback(() => setNetworkMenyOpen((state) => !state), [])
 
-  const onNetworkSelect = React.useCallback(
-    (targetChain: number) => {
-      if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
-        switchToNetwork({ provider, chainId: targetChain })
-        toggleNetworkMenu()
-      }
-    },
-    [chainId, provider, toggleNetworkMenu]
-  )
+  const onNetworkSelect = async (targetChain: number) => {
+    if (chainId !== targetChain) {
+      await selectChain(targetChain)
+    }
+  }
 
   return (
     <WalletInfoContainer>

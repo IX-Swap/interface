@@ -5,7 +5,6 @@ import { useCookies } from 'react-cookie'
 import { Text } from 'rebass'
 import { useWeb3React } from 'connection/web3reactShim'
 
-import { switchToNetwork } from 'hooks/switchToNetwork'
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { PinnedContentButton } from 'components/Button'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
@@ -13,9 +12,10 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, ConnectWalletContainer } from './styled'
 import Modal from 'components/Modal'
 import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
-import { PRODUCTION_APP_URL } from 'config'
+import useSelectChain from 'hooks/useSelectChain'
 
 export const NotAvailablePage = () => {
+  const selectChain = useSelectChain()
   const { chainId, provider, account } = useWeb3React()
   const { pathname } = useLocation()
   const [cookies] = useCookies(['announcementsSeen'])
@@ -25,10 +25,9 @@ export const NotAvailablePage = () => {
 
   const farming = ['/vesting', '/staking'].includes(pathname)
 
-  const changeNetwork = (targetChain: number) => {
-    if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
-      switchToNetwork({ provider, chainId: targetChain })
-    } else {
+  const changeNetwork = async (targetChain: number) => {
+    if (chainId !== targetChain) {
+      await selectChain(targetChain)
     }
   }
 
@@ -95,31 +94,6 @@ export const NotAvailablePage = () => {
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]
   const chainsNames = chains.map((chain) => CHAIN_INFO[chain].chainName)
-
-  if (!provider?.provider?.isMetaMask) {
-    return (
-      <Container>
-        <Title>
-          Connect to the Right
-          <br />
-          Blockchain Network
-        </Title>
-        <Info>
-          <Trans>
-            Please switch the network to{' '}
-            {chainsNames.map((chainName, index) => (
-              <span key={index}>
-                <b style={{ color: '#292933' }}>{chainName}</b>
-                {index < chainsNames.length - 2 ? ', ' : ''}
-                {index === chainsNames.length - 2 ? ' or ' : ''}
-              </span>
-            ))}{' '}
-            in your wallet.
-          </Trans>
-        </Info>
-      </Container>
-    )
-  }
 
   return (
     <Container>
