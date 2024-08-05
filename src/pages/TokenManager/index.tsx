@@ -3,17 +3,17 @@ import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useActiveWeb3React } from 'hooks/web3'
-
 import { MEDIA_WIDTHS } from 'theme'
 import { useUserState } from 'state/user/hooks'
-import { Border, ToggleOption } from 'components/Tabs'
+import { BorderSimple, ToggleOption } from 'components/Tabs'
 import { ROLES } from 'constants/roles'
 import { TmMyTokens } from 'components/TmMyTokens'
-import { ButtonIXSGradient } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 import { TmPayoutEvents } from 'components/TmPayoutEvents'
 import { TmPayoutHistory } from 'components/TmPayoutHistory'
 import { routes } from 'utils/routes'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 
 export type TokenManagerTab = 'my-tokens' | 'payout-events' | 'payout-history'
 
@@ -84,25 +84,51 @@ const TokenManager = () => {
   }
 
   return (
-    <Container>
-      <Body>
+    // <Container>
+    //   <Body>
+    //     <TabsContainer>
+    //       {tabs.map(({ value, label }) => (
+    //         <ToggleOption key={`tabs-${value}`} onClick={() => changeTab(value)} active={selectedTab === value}>
+    //           <Trans>{label}</Trans>
+    //           <Border active={selectedTab === value} />
+    //         </ToggleOption>
+    //       ))}
+    //       <ButtonContainer>
+    //         <CreateButton onClick={goToCreate}>
+    //           <Trans>Create Payout Event</Trans>
+    //         </CreateButton>
+    //       </ButtonContainer>
+    //     </TabsContainer>
+
+    //     {renderTab(selectedTab)}
+    //   </Body>
+    // </Container>
+    <>
+      <StyledBodyWrapper>
         <TabsContainer>
-          {tabs.map(({ value, label }) => (
-            <ToggleOption key={`tabs-${value}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-              <Trans>{label}</Trans>
-              <Border active={selectedTab === value} />
-            </ToggleOption>
-          ))}
+          {tabs.map(({ value, label }, index) => {
+            const active = selectedTab === value
+            return (
+              <>
+                <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={active}>
+                  <TabLabel>
+                    <Trans>{label}</Trans>
+                  </TabLabel>
+                  <BorderSimple active={selectedTab === value} />
+                </ToggleOption>
+              </>
+            )
+          })}
           <ButtonContainer>
             <CreateButton onClick={goToCreate}>
+              <CreateIcon/>
               <Trans>Create Payout Event</Trans>
             </CreateButton>
           </ButtonContainer>
         </TabsContainer>
-
-        {renderTab(selectedTab)}
-      </Body>
-    </Container>
+      </StyledBodyWrapper>
+      <div style={{ marginTop: '20px' }}>{renderTab(selectedTab)}</div>
+    </>
   )
 }
 
@@ -112,9 +138,9 @@ export const Container = styled.div`
   flex-direction: column;
 `
 
-export const Body = styled.div`
-  padding: 0 30px;
-  max-width: 1330px;
+export const StyledBodyWrapper = styled.div`
+  padding: 0 250px;
+  background-color: #ffffff;
   margin: 0 auto;
   width: 100%;
 `
@@ -122,7 +148,6 @@ export const Body = styled.div`
 const TabsContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 60px;
   column-gap: 32px;
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     flex-direction: column;
@@ -136,13 +161,25 @@ const ButtonContainer = styled.div`
   flex: 1;
 `
 
-const CreateButton = styled(ButtonIXSGradient)`
+const CreateButton = styled(PinnedContentButton)`
   min-height: 40px;
-  height: 40px;
-  padding: 12px 24px;
+  height: 50px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 13px;
   line-height: 16px;
+  width: 200px;
+  gap: 8px;
+`
+
+const TabLabel = styled.div`
+  cursor: pointer;
+  padding: 12px 20px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  height: 80px;
+  display: flex;
+  align-items: center;
 `
 
 export default TokenManager
