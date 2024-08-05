@@ -4,7 +4,6 @@ import { Trans } from '@lingui/macro'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useGetMyPayoutList, usePayoutState } from 'state/payout/hooks'
 import { ButtonEmpty } from 'components/Button'
-import { useUserSecTokenState } from 'state/user/hooks'
 
 import { EmptyState } from './EmptyState'
 import { Card } from './Card'
@@ -23,7 +22,6 @@ const itemsPerLine = 4
 
 export const MyPayouts = () => {
   const { accredited, owningTokens, claimed, loadingRequest } = usePayoutState()
-  const secTokens = useUserSecTokenState()
 
   const getMyPayoutList = useGetMyPayoutList()
 
@@ -48,14 +46,22 @@ export const MyPayouts = () => {
   }
 
   const isEmpty = useMemo(() => {
-    return secTokens?.length === 0
-  }, [secTokens])
+    return accredited.items?.length === 0
+      && owningTokens.items?.length === 0
+      && claimed.items?.length === 0
+  }, [
+    accredited.items?.length,
+    owningTokens.items?.length,
+    claimed.items?.length,
+  ])
 
   return (
     <>
-      <LoadingIndicator isLoading={loadingRequest} />
       {isEmpty ? (
-        <EmptyState my />
+        <>
+          <LoadingIndicator isLoading={loadingRequest} />
+          <EmptyState my />
+        </>
       ) : (
         <MyPayoutContainer>
           {items.map(({ label, data, type }, index) => (
