@@ -50,12 +50,9 @@ const TokenManager = () => {
   const [selectedTab, setSelectedTab] = useState<TokenManagerTab>('my-tokens')
   const { account } = useActiveWeb3React()
   const { me } = useUserState()
-
   const isLogged = account && me?.role
-
   const history = useHistory()
   const params = useParams<TokenManagerParams>()
-
   const changeTab = useCallback(
     (tab: TokenManagerTab) => {
       history.push(`/token-manager/${tab}`)
@@ -84,25 +81,6 @@ const TokenManager = () => {
   }
 
   return (
-    // <Container>
-    //   <Body>
-    //     <TabsContainer>
-    //       {tabs.map(({ value, label }) => (
-    //         <ToggleOption key={`tabs-${value}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-    //           <Trans>{label}</Trans>
-    //           <Border active={selectedTab === value} />
-    //         </ToggleOption>
-    //       ))}
-    //       <ButtonContainer>
-    //         <CreateButton onClick={goToCreate}>
-    //           <Trans>Create Payout Event</Trans>
-    //         </CreateButton>
-    //       </ButtonContainer>
-    //     </TabsContainer>
-
-    //     {renderTab(selectedTab)}
-    //   </Body>
-    // </Container>
     <>
       <StyledBodyWrapper>
         <TabsContainer>
@@ -121,7 +99,7 @@ const TokenManager = () => {
           })}
           <ButtonContainer>
             <CreateButton onClick={goToCreate}>
-              <CreateIcon/>
+              <CreateIcon />
               <Trans>Create Payout Event</Trans>
             </CreateButton>
           </ButtonContainer>
