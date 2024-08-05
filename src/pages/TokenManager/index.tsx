@@ -36,11 +36,22 @@ const tabs: Tab[] = [
 const renderTab = (selectedTab: TokenManagerTab | string) => {
   switch (selectedTab) {
     case 'my-tokens':
-      return <TmMyTokens />
+      return (
+        <StyledBodyWrapper style={{ marginTop: '20px' }}>
+          <TmMyTokens />
+        </StyledBodyWrapper>
+      )
+
     case 'payout-events':
-      return <TmPayoutEvents />
+      return (
+        <StyledHeaderWrapper style={{ marginTop: '20px' }}>
+          <TmPayoutEvents />
+        </StyledHeaderWrapper>
+      )
+
     case 'payout-history':
       return <TmPayoutHistory />
+
     default:
       return null
   }
@@ -105,11 +116,10 @@ const TokenManager = () => {
           </ButtonContainer>
         </TabsContainer>
       </StyledHeaderWrapper>
-      <StyledBodyWrapper style={{ marginTop: '20px' }}>{renderTab(selectedTab)}</StyledBodyWrapper>
+      {renderTab(selectedTab)}
     </>
   )
 }
-
 
 export const StyledHeaderWrapper = styled.div`
   padding: 0 200px;

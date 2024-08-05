@@ -7,6 +7,9 @@ import { ButtonIXSGradient } from 'components/Button'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
 `
 
 export const BodyContainer = styled.div`
