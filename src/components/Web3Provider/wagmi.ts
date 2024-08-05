@@ -5,16 +5,14 @@ import { coinbaseWallet, walletConnect } from 'wagmi/connectors'
 
 import { injectedWithFallback } from './injectedWithFallback'
 import { WC_PARAMS } from './walletConnect'
-import { CHAINS, CLIENT_CONFIG, transports } from './constants'
+import { CHAINS, CLIENT_CONFIG, PUBLIC_NODES, transports } from './constants'
 
 export function createWagmiConfig() {
   // @ts-ignore
   return createConfig({
     chains: CHAINS,
-    ssr: true,
     syncConnectedChain: true,
     transports,
-    ...CLIENT_CONFIG,
     connectors: [
       injectedWithFallback(),
       walletConnect(WC_PARAMS),
@@ -25,12 +23,11 @@ export function createWagmiConfig() {
         enableMobileWalletLink: true,
       }),
     ],
-    // @ts-ignore
-    client({ chain }) {
+    client({ chain }: any) {
       return createClient({
         chain,
         ...CLIENT_CONFIG,
-        transport: http(chain.rpcUrls.default.http[0]),
+        transport: http(PUBLIC_NODES[chain.id][0] || chain.rpcUrls.default.http[0]),
       })
     },
   })

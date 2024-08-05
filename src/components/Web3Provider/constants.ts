@@ -77,4 +77,4 @@ export const transports = CHAINS.reduce((ts, chain) => {
   return {
     [chain.id]: fallback(httpStrings.map((t: any) => http(t))),
   }
-}, {} as Record<number, Transport>)
+}, {} as Record<number, Transport>) as any
