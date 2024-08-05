@@ -14,7 +14,7 @@ interface Props {
 
 export const Pagination = ({ page, onPageChange, totalPages, totalItems, hidePaginationLabel }: Props) => {
   if (!totalPages) return null
-
+console.log(page, totalPages, totalItems, )
   const itemsPerPage = adminOffset
   const startItem = (page - 1) * itemsPerPage + 1
   const endItem = Math.min(page * itemsPerPage, totalPages * itemsPerPage)

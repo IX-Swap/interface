@@ -18,16 +18,35 @@ export const BodyContainer = styled.div`
   row-gap: 8px;
 `
 
+const gridTemplateColumns = '70px 125px 125px 150px 220px 125px 155px minmax(100px, 120px)'
+const minWidth = '100px'
+
+export const StyledHeaderRow = styled(HeaderRow)`
+  grid-template-columns: ${gridTemplateColumns};
+  place-content: center;
+  min-width: ${minWidth};
+  margin-top: 22px;
+  > div {
+    color: ${({ theme }) => theme.text9};
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 21px;
+  }
+`
+
 export const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 75px 125px repeat(5, 1fr) minmax(200px, 1fr);
+  grid-template-columns: ${gridTemplateColumns};
+  place-content: center;
   height: 80px;
-  min-width: 1150px;
-  width: 100%;
+  min-width: ${minWidth};
   margin-bottom: 0px;
   border: none;
+
   > div {
     padding: 24px 10px;
+    gap: 4px;
   }
+
   button {
     min-height: 32px;
     height: 32px;
@@ -35,19 +54,6 @@ export const StyledBodyRow = styled(BodyRow)`
     font-size: 14px;
     padding: 8px 24px;
     line-height: 16px;
-  }
-`
-
-export const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 75px 125px repeat(5, 1fr) minmax(200px, 1fr);
-  min-width: 1150px;
-  width: 100%;
-  margin-top: 22px;
-  > div {
-    color: ${({ theme }) => theme.text9};
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 21px;
   }
 `
 

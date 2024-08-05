@@ -3,15 +3,14 @@ import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { useHistory } from 'react-router-dom'
 import { Flex } from 'rebass'
-
 import { routes } from 'utils/routes'
 import { MultipleFilters } from 'components/MultipleFilters'
 import { FILTERS } from 'components/MultipleFilters/constants'
-import { ButtonGradientBorder } from 'components/Button'
 import { Table } from 'components/Table'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { ReactComponent as EyeIcon } from 'assets/images/eye.svg'
+import { ReactComponent as EyeIcon } from 'assets/images/gray_eye_icon.svg'
+import { ReactComponent as EditIcon } from 'assets/images/gray_edit_icon.svg'
 import { useCurrency } from 'hooks/Tokens'
 import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
 import { Pagination } from 'components/Pagination'
@@ -25,21 +24,12 @@ import { AreYouSureModal } from 'components/AreYouSureModal'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { ReactComponent as DeleteIcon } from 'assets/images/delete-basket.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
-
 import { StatusCell } from './StatusCell'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton, ActionsContainer } from './styleds'
 import { PAYOUT_TYPE_LABEL } from './constants'
+import { TYPE } from 'theme'
 
-const headerCells = [
-  `ID`,
-  `Status`,
-  `Payout type`,
-  `SEC token`,
-  `Payment period`,
-  `Record date`,
-  `Amount claimed`,
-  '',
-]
+const headerCells = [`ID`, `Status`, `Payout type`, `SEC token`, `Payment period`, `Record date`, `Amount claimed`, '']
 
 export const TmPayoutEvents = () => {
   const history = useHistory()
@@ -156,51 +146,49 @@ const Row = ({ item }: IRow) => {
     <>
       <AreYouSureModal onAccept={onDelete} onDecline={toggleIsWarningOpen} isOpen={isWarningOpen} />
       <StyledBodyRow>
-        <div>#{id}</div>
+        <TYPE.main1 color={'#B8B8CC'}>#{id}</TYPE.main1>
         <div>
           <StatusCell status={status} />
         </div>
-        <div>{PAYOUT_TYPE_LABEL[type] || type}</div>
-        <div>
+        <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
+        <div style={{ gap: '8px' }}>
           <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
-          {secToken?.symbol || '-'}
+          <TYPE.main1 color={'#8F8FB2'}>{secToken?.symbol || '-'}</TYPE.main1>
         </div>
-        <div>
+        <TYPE.main1>
           {dayjs(startDate).format(dateFormat)}
           {Boolean(endDate) && (
             <>
-              &nbsp;-
-              <br />
+              &nbsp;- &nbsp;
               {dayjs(endDate).format(dateFormat)}
             </>
           )}
-        </div>
-        <div>{dayjs(recordDate).format(dateFormat)}</div>
-        <div style={{ fontWeight: 500 }}>
+        </TYPE.main1>
+        <TYPE.main1>{dayjs(recordDate).format(dateFormat)}</TYPE.main1>
+        <TYPE.main1 style={{ fontWeight: 500 }}>
           {amountClaimed ? (
             <>
-              <MouseoverTooltip style={{ height: '24px' }} text={tooltipText} textStyle={{ whiteSpace: 'pre-line' }}>
-                <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
+              <MouseoverTooltip style={{ height: '30px' }} text={tooltipText} textStyle={{ whiteSpace: 'pre-line' }}>
+                <CurrencyLogo currency={currency} style={{ marginRight: 4 }} />
               </MouseoverTooltip>
-              {currency?.symbol || '-'}&nbsp;{amountClaimed}/{tokenAmount}
+              {currency?.symbol || '-'}&nbsp;{<TYPE.main1>{amountClaimed}</TYPE.main1>}&nbsp;/&nbsp;
+              <TYPE.main1>{tokenAmount}</TYPE.main1>
             </>
           ) : (
             '-'
           )}
-        </div>
+        </TYPE.main1>
 
         <ActionsContainer>
           {status === PAYOUT_STATUS.DRAFT && <DeleteIcon onClick={toggleIsWarningOpen} />}
           {status !== PAYOUT_STATUS.ENDED && (
-            <ButtonGradientBorder
+            <EditIcon
               onClick={(e: any) => {
                 e.preventDefault()
                 e.stopPropagation()
                 onEdit()
               }}
-            >
-              <Trans>Edit</Trans>
-            </ButtonGradientBorder>
+            ></EditIcon>
           )}
           <EyeIcon onClick={clickView} style={{ cursor: 'pointer' }} />
         </ActionsContainer>
@@ -228,7 +216,7 @@ const Header = () => {
     <StyledHeaderRow>
       {headerCells.map((cell) => (
         <div key={cell}>
-          <Trans>{cell}</Trans>
+          <TYPE.main1 color={'#B8B8CC'}>{cell}</TYPE.main1>
         </div>
       ))}
     </StyledHeaderRow>

@@ -44,9 +44,9 @@ const renderTab = (selectedTab: TokenManagerTab | string) => {
 
     case 'payout-events':
       return (
-        <StyledHeaderWrapper style={{ marginTop: '20px' }}>
+        <StyledTableWrapper style={{ marginTop: '20px' }}>
           <TmPayoutEvents />
-        </StyledHeaderWrapper>
+        </StyledTableWrapper>
       )
 
     case 'payout-history':
@@ -123,6 +123,13 @@ const TokenManager = () => {
 
 export const StyledHeaderWrapper = styled.div`
   padding: 0 200px;
+  background-color: #ffffff;
+  margin: 0 auto;
+  width: 100%;
+`
+
+export const StyledTableWrapper = styled.div`
+  padding: 0 150px;
   background-color: #ffffff;
   margin: 0 auto;
   width: 100%;
