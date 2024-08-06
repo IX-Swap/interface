@@ -10,7 +10,7 @@ import { calculateGasMargin } from '../utils/calculateGasMargin'
 import { useTokenContract } from './useContract'
 import { useTokenAllowance } from './useTokenAllowance'
 import { useActiveWeb3React } from './web3'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 import { ethers, BigNumber } from 'ethers'
 
 export enum ApprovalState {

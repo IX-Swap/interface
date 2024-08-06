@@ -1,20 +1,17 @@
-import { t, Trans } from '@lingui/macro'
+import {  Trans } from '@lingui/macro'
 import EthereumRound from 'assets/images/ethereum-round.svg'
 import PolygonRound from 'assets/images/polygon-round.svg'
-import { ButtonGradientBorder } from 'components/Button'
 import { Line } from 'components/Line'
 import { RowCenter } from 'components/Row'
 import { SupportedChainId } from 'constants/chains'
-import useSwitchChain from 'hooks/useSwitchChain'
-import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import { isMobile } from 'react-device-detect'
 import { DesktopAndTablet, TYPE } from 'theme'
 import { OptionList, StakingTierCardWrapper, SwitchNetworkWrap } from './style'
+import { useWeb3React } from 'connection/web3reactShim'
 
 export const StakingOtherNetworkCard = () => {
-  const switchChain = useSwitchChain()
-  const { library, chainId } = useActiveWeb3React()
+  const { chainId } = useWeb3React()
 
   const switchToParams = useMemo(
     () => ({
@@ -103,13 +100,6 @@ export const StakingOtherNetworkCard = () => {
           </OptionList>
         </TYPE.body1>
       </RowCenter>
-      {library?.provider?.isMetaMask && chainId && !isMobile && (
-        <RowCenter style={{ marginBottom: '50px', marginTop: 'auto' }}>
-          <ButtonGradientBorder style={{ width: '100%' }} onClick={() => switchChain.addChain()}>
-            Switch network
-          </ButtonGradientBorder>
-        </RowCenter>
-      )}
       {isMobile && (
         <SwitchNetworkWrap>
           <TYPE.body1 fontWeight={400} style={{ width: '10rem', textAlign: 'center' }}>

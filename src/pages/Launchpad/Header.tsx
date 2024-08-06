@@ -6,7 +6,7 @@ import { routes } from 'utils/routes'
 import { Link } from 'react-router-dom'
 import { useKyc, useRole } from 'state/user/hooks'
 import { text29, text57, text8 } from 'components/LaunchpadMisc/typography'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'connection/web3reactShim'
 import { isMobile } from 'react-device-detect'
 
 import { Wallet } from 'components/Launchpad/Wallet'

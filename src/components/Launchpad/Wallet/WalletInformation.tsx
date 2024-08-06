@@ -1,28 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ChevronDown } from 'react-feather'
 
 import { useETHBalances } from 'state/wallet/hooks'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
-
 import { CHAIN_INFO, NETWORK_LABELS, SupportedChainId } from 'constants/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-
 import { shortenAddress } from 'utils'
 import { formatAmount } from 'utils/formatCurrencyAmount'
-
 import { VioletCard } from 'components/Card'
-
 import useTheme from 'hooks/useTheme'
-
-import { useWeb3React } from '@web3-react/core'
-import { switchToNetwork } from 'hooks/switchToNetwork'
-
-import { ChevronDown } from 'react-feather'
+import { useWeb3React } from 'connection/web3reactShim'
 import { text10, text16, text8 } from 'components/LaunchpadMisc/typography'
+import useSelectChain from 'hooks/useSelectChain'
 
 export const WalletInformation = () => {
-  const { chainId, provider, account } = useWeb3React()
-
+  const { chainId, account } = useWeb3React()
+  const selectChain = useSelectChain()
   const theme = useTheme()
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
@@ -32,15 +26,11 @@ export const WalletInformation = () => {
 
   const toggleNetworkMenu = React.useCallback(() => setNetworkMenyOpen((state) => !state), [])
 
-  const onNetworkSelect = React.useCallback(
-    (targetChain: number) => {
-      if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
-        switchToNetwork({ provider, chainId: targetChain })
-        toggleNetworkMenu()
-      }
-    },
-    [chainId, provider, toggleNetworkMenu]
-  )
+  const onNetworkSelect = async (targetChain: number) => {
+    if (chainId !== targetChain) {
+      await selectChain(targetChain)
+    }
+  }
 
   return (
     <WalletInfoContainer>

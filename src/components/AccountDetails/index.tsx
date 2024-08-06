@@ -1,24 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Trans } from '@lingui/macro'
 import { useDispatch } from 'react-redux'
-import { useWeb3React } from '@web3-react/core'
+import { useDisconnect } from 'wagmi'
 
 import { AppDispatch } from '../../state'
-import { shortenAddress } from '../../utils'
-import {
-  AccountControl,
-  AccountGroupingRow,
-  AccountSection,
-  InfoCard,
-  UpperSection,
-  WalletAction,
-  YourAccount,
-} from './styleds'
+import { AccountControl, AccountSection, InfoCard, UpperSection, YourAccount } from './styleds'
 import { Line } from 'components/Line'
 import { useGetMe } from 'state/user/hooks'
 import { useKYCState } from 'state/kyc/hooks'
-
-import { tryDeactivateConnector } from 'connectors'
 import { setWalletState } from 'state/wallet'
 import { clearUserData } from 'state/user/actions'
 import { clearEventLog } from 'state/eventLog/actions'
@@ -30,15 +18,12 @@ import WalletInfo from './WalletInfo'
 
 interface AccountDetailsProps {
   toggleWalletModal: () => void
-  pendingTransactions: string[]
-  confirmedTransactions: string[]
   ENSName?: string
-  openOptions: () => void
 }
 
 export default function AccountDetails({ ENSName, toggleWalletModal }: AccountDetailsProps) {
+  const { disconnect } = useDisconnect()
   const { config } = useWhitelabelState()
-  const { connector } = useWeb3React()
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const getMe = useGetMe()
 
@@ -57,7 +42,8 @@ export default function AccountDetails({ ENSName, toggleWalletModal }: AccountDe
   }, [])
 
   const disconnectWallet = async () => {
-    await tryDeactivateConnector(connector)
+    disconnect()
+    toggleWalletModal()
     dispatch(setWalletState({ isConnected: false, walletName: '' }))
     dispatch(clearUserData())
     dispatch(clearEventLog())

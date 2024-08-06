@@ -24,7 +24,6 @@ import { useRole } from 'state/user/hooks'
 import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
 import { isMobile } from 'react-device-detect'
 import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
-import { useWalletModalToggle } from 'state/application/hooks'
 import { PinnedContentButton } from 'components/Button'
 import Modal from 'components/Modal'
 import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
@@ -181,7 +180,6 @@ export default function Header() {
   const { isTokenManager } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [openPreviewModal, setPreviewModal] = React.useState(false)
-  const toggleWalletModal = useWalletModalToggle()
   const [showConnectModal, setShowConnectModal] = React.useState(false)
   const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
