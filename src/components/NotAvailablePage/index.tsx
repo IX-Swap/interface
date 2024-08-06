@@ -13,8 +13,10 @@ import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, ConnectWall
 import Modal from 'components/Modal'
 import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 import useSelectChain from 'hooks/useSelectChain'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 export const NotAvailablePage = () => {
+  const { openConnectModal } = useConnectModal()
   const selectChain = useSelectChain()
   const { chainId, provider, account } = useWeb3React()
   const { pathname } = useLocation()
@@ -46,11 +48,13 @@ export const NotAvailablePage = () => {
         </div>
         {/* <div>Please connect your wallet to use the application.</div> */}
         {/* <ButtonIXSGradient onClick={toggleModal}>Connect Wallet</ButtonIXSGradient> */}
-        <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleModal}>
-          <Text className="connect-wallet-button">
-            <Trans>Connect Wallet</Trans>
-          </Text>
-        </PinnedContentButton>
+        {openConnectModal && (
+          <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={openConnectModal}>
+            <Text className="connect-wallet-button">
+              <Trans>Connect Wallet</Trans>
+            </Text>
+          </PinnedContentButton>
+        )}
 
         {config?.isIxSwap ? (
           <span>
