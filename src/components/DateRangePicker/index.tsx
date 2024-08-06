@@ -88,14 +88,9 @@ export const DateRangePickerFilter = ({ value, onChange, label, calendars = 1, .
             onClick={inputProps?.onClick as any}
             isOpen={Boolean(focused || haveValue)}
           >
-            <TYPE.body2
-              color="inherit"
-              fontWeight={300}
-              overflow="hidden"
-              style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-            >
+            <TYPE.main1 color="##8F8FB2" overflow="hidden" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {label}
-            </TYPE.body2>
+            </TYPE.main1>
             <ArrowDownIcon />
           </DarkBlueCard>
         )

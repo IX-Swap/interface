@@ -53,10 +53,9 @@ export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder, cl
 
   return (
     <>
-      <DarkBlueCard className={`dropdown ${className || ''}`} onClick={handleOpen} isOpen={isOpen || (selectedItems?.length ? true : false)}>
+      <DarkBlueCard style={{borderRadius: '8px'}} className={`dropdown ${className || ''}`} onClick={handleOpen} isOpen={isOpen || (selectedItems?.length ? true : false)}>
         <TYPE.main1
-          color="#8F8FB2"
-          fontWeight={300}
+          color="##8F8FB2"
           overflow="hidden"
           style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
         >
