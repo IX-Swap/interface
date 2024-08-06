@@ -16,7 +16,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 export const NotAvailablePage = () => {
   const { openConnectModal } = useConnectModal()
   const selectChain = useSelectChain()
-  const { chainId, account } = useWeb3React()
+  const { chainId } = useWeb3React()
   const { pathname } = useLocation()
   const [cookies] = useCookies(['announcementsSeen'])
   const { config } = useWhitelabelState()
@@ -29,7 +29,7 @@ export const NotAvailablePage = () => {
     }
   }
 
-  if (!account) {
+  if (openConnectModal) {
     return (
       <ConnectWalletContainer hasAnnouncement={!cookies.announcementsSeen}>
         <Text>
