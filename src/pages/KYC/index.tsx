@@ -5,7 +5,6 @@ import { Flex, Text } from 'rebass'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
-import Portal from '@reach/portal'
 import _get from 'lodash/get'
 import { useWeb3React } from 'connection/web3reactShim'
 
@@ -17,7 +16,6 @@ import { usePendingSignState } from 'state/application/hooks'
 import { useKYCState } from 'state/kyc/hooks'
 import { ReactComponent as IndividualKYC } from 'assets/images/newIndividual.svg'
 import { ReactComponent as CorporateKYC } from 'assets/images/newCorporate.svg'
-import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
 import { Content, getStatusDescription, StatusCard, DateInfoContainer } from './styleds'
@@ -29,8 +27,7 @@ import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
-import { detectWrongNetwork } from 'utils'
-import { useWalletState } from 'state/wallet/hooks'
+import { WrongNetworkModal } from 'components/WrongNetworkModal'
 
 interface DescriptionProps {
   description: string | null
@@ -93,8 +90,7 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 const KYC = () => {
-  const { account, chainId } = useWeb3React()
-  const { isConnected } = useWalletState()
+  const { account } = useWeb3React()
   const [loading, setLoading] = useState(false)
   const pendingSign = usePendingSignState()
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -317,17 +313,11 @@ const KYC = () => {
     }
   }, [status, description, kyc])
 
-  if (!account && !loadingRequest && !loading) return <NotAvailablePage />
-
-  const blurred = detectWrongNetwork(chainId || 0)
-
-  if (blurred) {
+  if (!account) {
     return (
-      <Portal>
-        <CenteredFixed width="100vw" height="100vh" style={{ background: 'rgba(0, 0, 0, .5)' }}>
-          <NotAvailablePage />
-        </CenteredFixed>
-      </Portal>
+      <Flex justifyContent="center" width="100%" mt="3rem">
+        <NotAvailablePage />
+      </Flex>
     )
   }
 
@@ -435,6 +425,7 @@ const KYC = () => {
           </Column>
         )}
       </StatusCard>
+      <WrongNetworkModal />
     </StyledBodyWrapper>
   )
 }
