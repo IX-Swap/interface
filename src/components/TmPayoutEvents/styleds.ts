@@ -18,12 +18,11 @@ export const BodyContainer = styled.div`
   row-gap: 8px;
 `
 
-const gridTemplateColumns = '70px 125px 125px 150px 220px 125px 155px minmax(100px, 120px)'
+const gridTemplateColumns = '70px 125px 125px 150px 250px 150px 130px minmax(120px, 150px)'
 const minWidth = '100px'
 
 export const StyledHeaderRow = styled(HeaderRow)`
   grid-template-columns: ${gridTemplateColumns};
-  place-content: center;
   min-width: ${minWidth};
   margin-top: 22px;
   > div {
@@ -36,7 +35,6 @@ export const StyledHeaderRow = styled(HeaderRow)`
 
 export const StyledBodyRow = styled(BodyRow)`
   grid-template-columns: ${gridTemplateColumns};
-  place-content: center;
   height: 80px;
   min-width: ${minWidth};
   margin-bottom: 0px;

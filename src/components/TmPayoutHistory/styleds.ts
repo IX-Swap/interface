@@ -5,6 +5,7 @@ import { BodyRow, HeaderRow } from 'components/Table'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 `
 
 export const BodyContainer = styled.div`

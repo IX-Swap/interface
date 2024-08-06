@@ -32,20 +32,15 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
 
   return (
     <Container>
-      <Flex justifyContent='center'>
+      <Flex justifyContent="center">
         <StyledBodyWrapper>
           <StyledSummaryBlock>
             <TokenInformationContainer>
               <TitleContent>
-                <TokenNetwork
-                  token={secToken}
-                  network={secToken.network}
-                />
+                <TokenNetwork token={secToken} network={secToken.network} />
                 <SecTokenLink to={routes.securityToken(secToken?.catalogId)}>
                   <Trans>{title}</Trans>
-                  <span className='secTokenLinkSymbol'>
-                    {secToken?.originalSymbol ?? secToken?.symbol}
-                  </span>
+                  <span className="secTokenLinkSymbol">{secToken?.originalSymbol ?? secToken?.symbol}</span>
                 </SecTokenLink>
               </TitleContent>
               <ReadMoreContainer>
@@ -87,7 +82,6 @@ const Container = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.bg0};
   padding: 5rem 0;
-  margin-top: -35px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: calc(100% + 24px);
     padding: 3rem 1rem;
@@ -152,7 +146,7 @@ const SecTokenLink = styled(NavLink)`
   }
 
   .secTokenLinkSymbol {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
     color: ${({ theme }) => theme.text6};
   }
 `

@@ -44,13 +44,17 @@ const renderTab = (selectedTab: TokenManagerTab | string) => {
 
     case 'payout-events':
       return (
-        <StyledTableWrapper style={{ marginTop: '20px' }}>
+        <StyledTableWrapper style={{ marginTop: '1px' }}>
           <TmPayoutEvents />
         </StyledTableWrapper>
       )
 
     case 'payout-history':
-      return <TmPayoutHistory />
+      return (
+        <StyledTableWrapper style={{ marginTop: '1px' }}>
+          <TmPayoutHistory />
+        </StyledTableWrapper>
+      )
 
     default:
       return null

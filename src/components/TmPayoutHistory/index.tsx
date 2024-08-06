@@ -22,6 +22,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
+import { Line } from 'components/Line'
 
 const headerCells = [
   `Recipient's wallet`,
@@ -68,14 +69,17 @@ export const TmPayoutHistory = () => {
             forManager
           />
           {payoutHistory.items?.length ? (
-            <Flex flexDirection="column" style={{ gap: 32 }}>
-              <Table body={<Body items={payoutHistory.items} />} header={<Header />} />
-              <Pagination
-                totalPages={payoutHistory.totalPages}
-                page={payoutHistory.page || 1}
-                onPageChange={onPageChange}
-              />
-            </Flex>
+            <>
+              <Line style={{ marginTop: '20px' }} />
+              <Flex flexDirection="column" style={{ gap: 32 }}>
+                <Table body={<Body items={payoutHistory.items} />} header={<Header />} />
+                <Pagination
+                  totalPages={payoutHistory.totalPages}
+                  page={payoutHistory.page || 1}
+                  onPageChange={onPageChange}
+                />
+              </Flex>
+            </>
           ) : (
             <TmEmptyPage tab="payout-history" filtred />
           )}

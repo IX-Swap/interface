@@ -256,6 +256,7 @@ export const MultipleFilters = ({
         views={['year', 'month', 'date']}
         renderInput={({ inputProps, focused }) => (
           <DarkBlueCard
+          style={{borderRadius: '8px'}}
             className="dropdown"
             onClick={inputProps?.onClick as any}
             isOpen={Boolean(focused || values.createdAt)}
