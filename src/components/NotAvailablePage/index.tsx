@@ -10,20 +10,16 @@ import { PinnedContentButton } from 'components/Button'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, ConnectWalletContainer } from './styled'
-import Modal from 'components/Modal'
-import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 import useSelectChain from 'hooks/useSelectChain'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 export const NotAvailablePage = () => {
   const { openConnectModal } = useConnectModal()
   const selectChain = useSelectChain()
-  const { chainId, provider, account } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const { pathname } = useLocation()
   const [cookies] = useCookies(['announcementsSeen'])
   const { config } = useWhitelabelState()
-  const [showConnectModal, setShowConnectModal] = React.useState(false)
-  const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
   const farming = ['/vesting', '/staking'].includes(pathname)
 
@@ -32,10 +28,6 @@ export const NotAvailablePage = () => {
       await selectChain(targetChain)
     }
   }
-
-  const onConnect = React.useCallback(() => {
-    console.log('Connected')
-  }, [])
 
   if (!account) {
     return (
@@ -46,8 +38,6 @@ export const NotAvailablePage = () => {
         <div>
           Please Connect <br /> your Wallet to use <br /> the Application.
         </div>
-        {/* <div>Please connect your wallet to use the application.</div> */}
-        {/* <ButtonIXSGradient onClick={toggleModal}>Connect Wallet</ButtonIXSGradient> */}
         {openConnectModal && (
           <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={openConnectModal}>
             <Text className="connect-wallet-button">
@@ -88,10 +78,6 @@ export const NotAvailablePage = () => {
             .
           </span>
         ) : null}
-
-        <Modal isOpen={showConnectModal} onDismiss={toggleModal} maxWidth="430px" maxHeight="310px">
-          <ConnectionDialog onConnect={onConnect} onClose={toggleModal} />
-        </Modal>
       </ConnectWalletContainer>
     )
   }

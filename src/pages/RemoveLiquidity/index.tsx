@@ -11,6 +11,8 @@ import AppBody from 'pages/AppBody'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router'
 import { Box, Text } from 'rebass'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+
 import { setPoolTransactionHash, useMitigationEnabled } from 'state/pool/hooks'
 import { routes } from 'utils/routes'
 import { ButtonIXSWide, NewApproveButton, PinnedContentButton } from '../../components/Button'
@@ -23,7 +25,7 @@ import TransactionConfirmationModal from '../../components/TransactionConfirmati
 import { useCurrency } from '../../hooks/Tokens'
 import { ApprovalState, useAllowanceV2 } from '../../hooks/useApproveCallback'
 import { useLiquidityRouterContract, usePairContract } from '../../hooks/useContract'
-import { UseERC20PermitState, useV2LiquidityTokenPermit } from '../../hooks/useERC20Permit'
+import { useV2LiquidityTokenPermit } from '../../hooks/useERC20Permit'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { useWeb3React } from 'connection/web3reactShim'
 import { Field } from '../../state/burn/actions'
@@ -37,17 +39,12 @@ import { ModalHeader } from './ModalHeader'
 import { RemoveAmount } from './RemoveAmount'
 import { RemovedLiquidity } from './RemovedLiquidity'
 import useCurrencyInput from './useCurrencyInput'
-// import { AddLiduidityContainer } from 'pages/AddLiquidityV2/redirects'
-// import { Header } from 'pages/Launchpad/Header'
 import { useSetHideHeader } from 'state/application/hooks'
-import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
-import Modal from 'components/Modal'
-import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
 
 const DEFAULT_REMOVE_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(5, 100)
 
@@ -62,6 +59,7 @@ export default function RemoveLiquidity({
   const [tokenA, tokenB] = useMemo(() => [currencyA?.wrapped, currencyB?.wrapped], [currencyA, currencyB])
   // toggle wallet when disconnected
   const setCurrentPoolTransctionHash = setPoolTransactionHash()
+  const { openConnectModal } = useConnectModal()
 
   // burn state
   const { independentField, typedValue } = useBurnState()
@@ -397,26 +395,9 @@ export default function RemoveLiquidity({
                 <div style={{ position: 'relative' }}>
                   {!account ? (
                     <>
-                      <ButtonIXSWide
-                        onClick={() => setOpenConnectWallet(true)}
-                        data-testid="connect-wallet-remove-liquidity"
-                      >
+                      <ButtonIXSWide onClick={openConnectModal} data-testid="connect-wallet-remove-liquidity">
                         <Trans>Connect Wallet</Trans>
                       </ButtonIXSWide>
-
-                      <Modal
-                        isOpen={isOpenConnectWallet}
-                        onDismiss={() => setOpenConnectWallet(false)}
-                        maxWidth="430px"
-                        maxHeight="310px"
-                      >
-                        <ConnectionDialog
-                          onConnect={() => {
-                            console.log('Connected')
-                          }}
-                          onClose={() => setOpenConnectWallet(false)}
-                        />
-                      </Modal>
                     </>
                   ) : (
                     <>
