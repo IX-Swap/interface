@@ -23,8 +23,9 @@ export const TokenItem = ({ item: { token } }: Props) => {
 
   return (
     <Item onClick={onClick}>
-      {currency ? <CurrencyLogo currency={currency} size="46px" /> : null}
+
       <InfoContainer>
+      {currency ? <CurrencyLogo currency={currency} size="46px" /> : null}
         <Symbol>{token?.symbol}</Symbol>
         <Name>{token?.name}</Name>
       </InfoContainer>

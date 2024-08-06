@@ -6,6 +6,7 @@ import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import Popover, { PopoverProps } from '../Popover'
 import { TOOLTIP_ARROW_TYPE } from 'constants/enums'
 import { Trans } from '@lingui/macro'
+import { TYPE } from 'theme'
 
 export const IconWrapper = styled.div<{ size?: number; strokeColor?: string }>`
   ${({ theme }) => theme.flexColumnNoWrap};
@@ -70,7 +71,7 @@ export default function Tooltip({ text, width, ...rest }: TooltipProps) {
     <Popover
       content={
         <TooltipContainer width={width}>
-          <Trans>{text}</Trans>
+          <TYPE.main1>{text}</TYPE.main1>
         </TooltipContainer>
       }
       hideShadow

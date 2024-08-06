@@ -43,7 +43,7 @@ export const MultipleFilters = ({
   onFiltersChange,
   forManager = false,
   isClearable,
-  fullWidth = true
+  fullWidth = true,
 }: Props) => {
   // const isMobile = useMediaQuery(`(max-width:${MEDIA_WIDTHS.upToLarge}px)`)
 
@@ -156,7 +156,7 @@ export const MultipleFilters = ({
   }
 
   const onResetFilters = () => {
-    setValues({ ...initialValues, ...(withSearch  && { search: values.search }) })
+    setValues({ ...initialValues, ...(withSearch && { search: values.search }) })
   }
 
   const isEmpty = useMemo(() => Object.values(values).every((value) => !value || value?.length === 0), [values])
@@ -180,7 +180,7 @@ export const MultipleFilters = ({
     ),
     [FILTERS.SEC_TOKENS]: (
       <FilterDropdown
-        placeholder="Security token"
+        placeholder="SEC token"
         selectedItems={values[FILTERS.SEC_TOKENS]}
         onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item)}
         items={forManager ? managerSecTokensOptions : secTokensOptions}
@@ -235,14 +235,13 @@ export const MultipleFilters = ({
             onClick={inputProps?.onClick as any}
             isOpen={Boolean(focused || values.recordDate)}
           >
-            <TYPE.body2
-              color="inherit"
-              fontWeight={300}
+            <TYPE.main1
+              color="#8F8FB2"
               overflow="hidden"
               style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
             >
               <Trans>Record date</Trans>
-            </TYPE.body2>
+            </TYPE.main1>
             <ArrowDownIcon />
           </DarkBlueCard>
         )}
@@ -296,7 +295,7 @@ export const MultipleFilters = ({
   return (
     <Container sx={{ gap: fullWidth ? '16px' : 0 }}>
       {withSearch && filterComponents[FILTERS.SEARCH]}
-      <FiltersContainer className='filters-container'>
+      <FiltersContainer className="filters-container">
         {filters.map(
           (filter, index) =>
             filter !== FILTERS.SEARCH && (
@@ -308,7 +307,7 @@ export const MultipleFilters = ({
         <PinnedContentButton disabled={isEmpty} onClick={onResetFilters}>
           Clear Filters
         </PinnedContentButton>
-      ) : null }
+      ) : null}
     </Container>
   )
 }
