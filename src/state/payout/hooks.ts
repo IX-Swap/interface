@@ -377,6 +377,11 @@ export const getMyPayoutAmount = async (id: number) => {
   return result.data
 }
 
+export const getMyClaimableAmount = async (id: number) => {
+  const result = await apiService.get(payout.getMyClaimableAmount(id))
+  return result.data
+}
+
 interface GetClaimAuthorization {
   token: string
   nonce: number
