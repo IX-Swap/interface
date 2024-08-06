@@ -104,6 +104,7 @@ export const HeaderLinks = () => {
 
   const { config } = useWhitelabelState()
   const { chainId, account } = useActiveWeb3React()
+  const bridgeUrl = process.env.REACT_APP_BRIDGE_URL || ''
 
   useOnClickOutside(farmNode, open ? toggle : undefined)
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
@@ -137,6 +138,11 @@ export const HeaderLinks = () => {
           <Trans>Charts</Trans>
         </MenuExternalLink>
       )}
+      {config?.isIxSwap ? (
+        <MenuExternalLink target="_blank" href={bridgeUrl}>
+          <Trans>Bridge</Trans>
+        </MenuExternalLink>
+      ) : null}
       <StyledNavLink
         id={`issuance-nav-link`}
         to={'/launchpad'}
@@ -172,32 +178,6 @@ export const HeaderLinks = () => {
           <Trans>Swap/Trade</Trans>
         </StyledNavLink>
       )}
-
-      {/* {account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <MenuExternalLink
-          disabled={!isApproved}
-          target="_self"
-          href={'https://ixswap.io/fractionalized-nfts-coming-soon-on-ix-swap/'}
-        >
-          <Trans>FNFT</Trans>
-        </MenuExternalLink>
-      )} */}
-
-      {/* {account && chainId && isWhitelisted && isDevelopment && (
-        <StyledNavLink
-          ref={nftNode as any}
-          id={`nft-nav-link`}
-          to={'#'}
-          isActive={(match, { pathname }) => pathname.startsWith('/nft')}
-        >
-          <Popover hideArrow show={openNFT} content={<NFTPopover />} placement={'bottom-start'}>
-            <RowFixed onClick={toggleNFT}>
-              <Trans>NFT</Trans>
-              <ChevronElement showMore={openNFT} />
-            </RowFixed>
-          </Popover>
-        </StyledNavLink>
-      )} */}
 
       {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
         <StyledNavLink

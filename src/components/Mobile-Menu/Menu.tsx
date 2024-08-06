@@ -32,6 +32,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const isIxSwap = config?.isIxSwap ?? false
+  const bridgeUrl = process.env.REACT_APP_BRIDGE_URL || ''
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -130,6 +131,16 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             <>
               <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
                 <Trans>Charts</Trans>
+              </ExternalListItem>
+
+              <Line />
+            </>
+          ) : null}
+
+          {isIxSwap ? (
+            <>
+              <ExternalListItem disabled={!isApproved} target="_blank" href={bridgeUrl}>
+                <Trans>Bridge</Trans>
               </ExternalListItem>
 
               <Line />

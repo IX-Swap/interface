@@ -11,8 +11,10 @@ export function createWagmiConfig() {
   // @ts-ignore
   return createConfig({
     chains: CHAINS,
+    ssr: true,
     syncConnectedChain: true,
     transports,
+    ...CLIENT_CONFIG,
     connectors: [
       injectedWithFallback(),
       walletConnect(WC_PARAMS),
