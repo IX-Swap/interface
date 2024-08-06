@@ -9,7 +9,7 @@ import Row from 'components/Row'
 import { KycInputLabel } from 'pages/KYC/common'
 
 interface Props {
-  value?: string | Date | number
+  value?: any
   onChange: (value: any) => void
   name?: string
   error?: any | JSX.Element
