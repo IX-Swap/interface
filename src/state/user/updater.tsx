@@ -20,11 +20,16 @@ export default function Updater(): null {
     if (!isWindowVisible || !savedAccount) {
       return
     }
-    fetchList()
+    try {
+      await fetchList(false) // Ensure fetchList doesn't cause state reset
+    } catch (error) {
+      console.error('Failed to fetch list:', error)
+    }
   }, [fetchList, isWindowVisible, savedAccount])
 
   useInterval(fetchListCallback, account && refreshToken ? 1000 * 60 * 1 : null)
-  // keep dark mode in sync with the system
+
+  // Keep dark mode in sync with the system
   useEffect(() => {
     const darkHandler = (match: MediaQueryListEvent) => {
       dispatch(updateMatchesDarkMode({ matchesDarkMode: match.matches }))
