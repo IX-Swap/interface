@@ -11,7 +11,6 @@ import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
 import Modal from 'components/Modal'
 import { useKYCState } from 'state/kyc/hooks'
 import { ContactForm } from './ContactForm'
-import { ConnectionDialog } from '../Wallet/ConnectionDialog'
 import {
   Caption,
   ExitIconContainer,
@@ -69,16 +68,10 @@ export const KYCPrompt: React.FC<Props> = (props) => {
     }
   }, [account, !!kyc, isChangeRequested, isPending, isInProgress, isRejected, isAccredited, isDraft])
 
+  if (!account) return null
+
   return (
     <Modal isOpen={isOpen} onDismiss={() => toggleModal(false)}>
-      {!account && (
-        <ConnectionDialog
-          onConnect={() => {
-            toggleModal(true)
-          }}
-          onClose={() => toggleModal(false)}
-        />
-      )}
       {account && (
         <KYCPromptContainer>
           <ExitIconContainer onClick={() => toggleModal(false)}>
