@@ -38,16 +38,6 @@ const getAlchemyUrlFor = (network: string) =>
 
 export const CHAINS: [Chain, ...Chain[]] = [baseSepolia, base, mainnet, polygon, polygonAmoy]
 
-export const CLIENT_CONFIG = {
-  batch: {
-    multicall: {
-      batchSize: 1024 * 200,
-      wait: 16,
-    },
-  },
-  pollingInterval: 6_000,
-}
-
 const PUBLIC_MAINNET = 'https://ethereum.publicnode.com'
 
 export const PUBLIC_NODES = {
