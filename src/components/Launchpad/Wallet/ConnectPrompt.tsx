@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import Modal from 'components/Modal'
-
-import { ConnectionDialog } from './ConnectionDialog'
 import { text1, text15 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
@@ -11,20 +9,14 @@ interface Props {
 }
 
 export const ConnectPrompt: React.FC<Props> = (props: Props) => {
-  const [showConnectModal, setShowConnectModal] = React.useState(false)
-
-  const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
+  const { openConnectModal } = useConnectModal()
 
   return (
     <>
-      <ConnectButton onClick={toggleModal}>
+      <ConnectButton onClick={openConnectModal}>
         <span className="title">Connect Wallet</span> <br />
         <span className="subtitle">Sign-up/Login</span>
       </ConnectButton>
-
-      <Modal isOpen={showConnectModal} onDismiss={toggleModal} maxWidth="430px" maxHeight="310px">
-        <ConnectionDialog onConnect={props.onConnect} onClose={toggleModal} />
-      </Modal>
     </>
   )
 }
