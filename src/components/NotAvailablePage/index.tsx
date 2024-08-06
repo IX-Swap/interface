@@ -13,6 +13,7 @@ import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, ConnectWall
 import Modal from 'components/Modal'
 import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 import useSelectChain from 'hooks/useSelectChain'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 
 export const NotAvailablePage = () => {
   const selectChain = useSelectChain()
@@ -22,6 +23,7 @@ export const NotAvailablePage = () => {
   const { config } = useWhitelabelState()
   const [showConnectModal, setShowConnectModal] = React.useState(false)
   const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
+  const modal = useWeb3Modal()
 
   const farming = ['/vesting', '/staking'].includes(pathname)
 
@@ -46,7 +48,7 @@ export const NotAvailablePage = () => {
         </div>
         {/* <div>Please connect your wallet to use the application.</div> */}
         {/* <ButtonIXSGradient onClick={toggleModal}>Connect Wallet</ButtonIXSGradient> */}
-        <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleModal}>
+        <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={() => modal.open()}>
           <Text className="connect-wallet-button">
             <Trans>Connect Wallet</Trans>
           </Text>

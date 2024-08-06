@@ -1,28 +1,23 @@
 import { QueryClient } from '@tanstack/react-query'
 import { createClient } from 'viem'
-import { createConfig, http } from 'wagmi'
-import { coinbaseWallet, walletConnect } from 'wagmi/connectors'
+import { http } from 'wagmi'
 
-import { injectedWithFallback } from './injectedWithFallback'
+import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
+import { createWeb3Modal } from '@web3modal/wagmi/react'
+
 import { WC_PARAMS } from './walletConnect'
-import { CHAINS, CLIENT_CONFIG, PUBLIC_NODES, transports } from './constants'
+import { CHAINS, CLIENT_CONFIG, PUBLIC_NODES } from './constants'
 
 export function createWagmiConfig() {
-  // @ts-ignore
-  return createConfig({
+  const wagmiConfig = defaultWagmiConfig({
     chains: CHAINS,
-    ssr: true,
-    syncConnectedChain: true,
-    transports,
-    ...CLIENT_CONFIG,
-    connectors: [
-      injectedWithFallback(),
-      walletConnect(WC_PARAMS),
-      coinbaseWallet({
-        appName: 'IX Swap',
-        appLogoUrl: 'https://app.ixswap.io/favicon.png',
-      }),
-    ],
+    projectId: WC_PARAMS.projectId,
+    metadata: {
+      name: 'Web3Modal React Example',
+      description: 'Web3Modal React Example',
+      url: '',
+      icons: [],
+    },
     client({ chain }: any) {
       return createClient({
         chain,
@@ -31,6 +26,18 @@ export function createWagmiConfig() {
       })
     },
   })
+
+  createWeb3Modal({
+    wagmiConfig,
+    projectId: WC_PARAMS.projectId,
+    themeMode: 'light',
+    themeVariables: {
+      '--w3m-color-mix': '#fff',
+      '--w3m-color-mix-strength': 20,
+    },
+  })
+
+  return wagmiConfig
 }
 
 export const queryClient = new QueryClient()

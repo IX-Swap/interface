@@ -27,6 +27,7 @@ import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
 import { PinnedContentButton } from 'components/Button'
 import Modal from 'components/Modal'
 import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 
 const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
   display: grid;
@@ -178,6 +179,8 @@ export default function Header() {
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
   const { isTokenManager } = useRole()
+  const modal = useWeb3Modal()
+
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [openPreviewModal, setPreviewModal] = React.useState(false)
   const [showConnectModal, setShowConnectModal] = React.useState(false)
@@ -294,7 +297,10 @@ export default function Header() {
                 <Web3Status />
 
                 {!account && (
-                  <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleModal}>
+                  <PinnedContentButton
+                    style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }}
+                    onClick={() => modal.open()}
+                  >
                     <Text className="connect-wallet-button">
                       <Trans>Connect Wallet</Trans>
                     </Text>
