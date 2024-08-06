@@ -15,7 +15,7 @@ import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 
 import { Container, DelayedContainer, StyledButton, TokenSymbol } from './styleds'
-import { getClaimAuthorization, useGetUserClaim, useSaveUserClaim } from 'state/payout/hooks'
+import { getClaimAuthorization, useGetUserClaim, useSaveUserClaim, getMyClaimableAmount } from 'state/payout/hooks'
 import dayjs from 'dayjs'
 import { usePayoutContract } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
@@ -35,12 +35,13 @@ interface Props {
 
 export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const { account } = useActiveWeb3React()
-  const { secToken, status, secTokenAmount, tokenAmount, id, contractPayoutId } = payout
+  const { secToken, status, id, contractPayoutId } = payout
   const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)
   const statuses = [custodianStatus, brokerDealerStatus]
   const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
   const [isLoading, handleIsLoading] = useState(false)
   const theme = useTheme()
+  const [amountToClaim, setAmountToClaim] = useState(0)
 
   const getUserClaim = useGetUserClaim()
   const saveUserClaim = useSaveUserClaim()
@@ -54,19 +55,19 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const secPayoutToken = new WrappedTokenInfo(secToken)
   const tokenInfo = secPayoutToken?.tokenInfo
   const isNotAccredited = statuses.some((status) => !status)
-  const isNotTokenHolder = '0' === secTokenBalance || !myAmount
+  const isNotTokenHolder = '0' === secTokenBalance || !amountToClaim
 
   useEffect(() => {
     const fetch = async () => {
       const res = await getUserClaim(id)
       handleClaimStatus(res)
+      const _amountToClaim = await getMyClaimableAmount(+id)
+      setAmountToClaim(+_amountToClaim)
     }
-    if (id) {
+    if (id && account) {
       fetch()
     }
   }, [id, account])
-
-  const amountToClaim = +tokenAmount * (+secTokenAmount > 0 ? myAmount / +secTokenAmount : myAmount)
 
   const decimals = tokenInfo?.decimals < 7 ? tokenInfo.decimals : 6
 
