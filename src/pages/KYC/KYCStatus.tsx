@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import { isTransactionRecent, useAllTransactions } from 'state/transactions/hooks'
 import { TransactionDetails } from 'state/transactions/reducer'
 import { useAccount } from 'hooks/useAccount'
+import { CONNECTOR_ICON_OVERRIDE_MAP } from 'components/Web3Provider/constants'
 interface Props {
   status: KYCStatuses
 }
@@ -37,7 +38,7 @@ function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
 // eslint-disable-next-line react/prop-types
 function StatusIcon() {
   const { connector } = useAccount()
-  const icon = connector ? connector?.icon : undefined
+  const icon = connector ? CONNECTOR_ICON_OVERRIDE_MAP[connector?.id] ?? connector?.icon : undefined
 
   return (
     <>
