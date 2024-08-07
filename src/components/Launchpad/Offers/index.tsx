@@ -6,7 +6,6 @@ import { Pinned } from './Pinned'
 import { Offer } from 'state/launchpad/types'
 import { useGetOffers } from 'state/launchpad/hooks'
 import { MEDIA_WIDTHS } from 'theme'
-import { getWhitelabelConfig } from 'state/whitelabel/actions'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 const InvestmentListWrapper = styled.div`
