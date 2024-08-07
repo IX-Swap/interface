@@ -59,7 +59,12 @@ export const InvestmentList: React.FC<Props> = (props) => {
   const { config } = useWhitelabelState()
   const enableLbp = config?.enableLbp ?? false
   const [activeTab, setActiveTab] = React.useState<InvesmentTabs>(() => {
+    if (!enableLbp) {
+      return InvesmentTabs.issuance
+    }
+
     const investmentTab = localStorage.getItem('investmentTab')
+
     return (investmentTab as InvesmentTabs) ?? InvesmentTabs.issuance
   })
 
