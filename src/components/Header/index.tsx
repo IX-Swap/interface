@@ -141,13 +141,13 @@ export default function Header() {
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
 
-                {openConnectModal && (
+                {!account && openConnectModal ? (
                   <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={openConnectModal}>
                     <Text className="connect-wallet-button">
                       <Trans>Connect Wallet</Trans>
                     </Text>
                   </PinnedContentButton>
-                )}
+                ) : null}
 
                 {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
               </HeaderElement>
