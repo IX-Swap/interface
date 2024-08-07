@@ -11,8 +11,7 @@ export const CHAIN_SWITCH_STRINGS: { [key in SupportedChainId]: string } = {
   [SupportedChainId.AMOY]: `Ethereum`,
   [SupportedChainId.BASE]: `Base`,
   [SupportedChainId.BASE_SEPOLIA]: `Base`,
-} as any;
-
+} as any
 
 export default function useSwitchChain() {
   const { switchChain } = useSwitchChainWagmi()
