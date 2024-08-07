@@ -9,10 +9,8 @@ import { LocalizationProvider } from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import 'react-phone-input-2/lib/bootstrap.css'
 import { PersistGate } from 'redux-persist/integration/react'
-import { HelmetProvider } from 'react-helmet-async'
 
 import { MuiThemeProvider } from './theme/muiTheme'
-import { CustomHeaders } from './components/CustomHeaders'
 import Blocklist from './components/Blocklist'
 import { LanguageProvider } from './i18n'
 import './index.css'
@@ -99,9 +97,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   <MuiThemeProvider>
                     <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
-                        <HelmetProvider>
                           <App />
-                        </HelmetProvider>
                       </CookiesProvider>
                     </LocalizationProvider>
                   </MuiThemeProvider>
