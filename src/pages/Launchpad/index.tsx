@@ -17,6 +17,7 @@ const BannerWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding-bottom: 70px;
+  margin-top: -7px;
 `
 
 export default function Launchpad() {

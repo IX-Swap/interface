@@ -1,14 +1,10 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-
 import Portal from '@reach/portal'
-
 import { useHistory } from 'react-router-dom'
-
 import { Offer, OfferStatus } from 'state/launchpad/types'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
 import { useGetPinnedOffer, useCheckKYC } from 'state/launchpad/hooks'
-
 import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentStatusBadge } from 'components/Launchpad/InvestmentCard/InvestmentStatusBadge'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
@@ -115,9 +111,8 @@ export const Pinned: React.FC = () => {
 }
 
 const PinnedWrapper = styled.div`
-  background-color: ${(props) => props.theme.launchpad.colors.foreground};
-  padding: 2rem;
-  margin: 2rem 0;
+  background-color: #ffffff;
+  padding: 3rem;
   width: auto;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {

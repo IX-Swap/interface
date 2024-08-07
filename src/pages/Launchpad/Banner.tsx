@@ -6,12 +6,13 @@ import { text31, text52, text6 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
 import { isMobile } from 'react-device-detect'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-// import { ReactComponent as LPBackground } from 'assets/images/LPBackground.svg'
+import { ReactComponent as LPBackground } from 'assets/images/LPBackground.svg'
+import { ReactComponent as LaunchpadHeader } from 'assets/images/lauchpadHeader.svg'
 
 export const Banner = () => {
   const { config } = useWhitelabelState()
   const launchpadBannerTitle =
-    config?.launchpadBannerTitle ?? 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunites'
+    config?.launchpadBannerTitle ?? 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunities'
   const launchpadBannerInfoRedirectTitle = config?.launchpadBannerInfoRedirectTitle ?? 'How does IXS Launchpad work?'
   const launchpadBannerInfoRedirectUrl = config?.launchpadBannerInfoRedirectUrl ?? 'https://www.ixswap.io/academy'
 
@@ -37,19 +38,23 @@ export const Banner = () => {
           </BannerInfoRedirectLabel>
         </BannerInfoRedirect>
       </BannerContent>
-      {/* Comment out LPBackground for now. We may need this in the future when we improve the design. */}
-      {/* <BannerImage>
-        <LPBackground />
-      </BannerImage> */}
+      <BannerImage>
+        <LPBackgroundWrapper>
+          <LPBackground />
+          <LaunchpadHeaderWrapper>
+            <LaunchpadHeader />
+          </LaunchpadHeaderWrapper>
+        </LPBackgroundWrapper>
+      </BannerImage>
     </BannerContainer>
   )
 }
 
 const BannerContainer = styled.div`
   display: grid;
-  grid-template-columns: 60% 40%;
-  max-width: ${(props) => props.theme.launchpad.content.maxWidth};
-  margin: 0 1rem;
+  grid-template-columns: 50% 50%;
+  margin: 0 0rem 0 -5rem;
+  justify-items: right;
   width: 100%;
   height: 100vh;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
@@ -94,12 +99,12 @@ const BannerTitleMobile = styled.div`
 const BannerInfoRedirect = styled.a`
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
-  padding: 1rem;
+  padding: 6px;
   display: grid;
   grid-template-columns: 80px 1fr;
   grid-template-rows: 80px;
-  gap: 2rem;
-  width: 375px;
+  gap: 1rem;
+  width: 250px;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: 100%;
@@ -108,17 +113,19 @@ const BannerInfoRedirect = styled.a`
 
 const BannerInfoRedirectImage = styled.img`
   border-radius: 4px;
+  width: 65px;
+  margin-top: 7px;
+    margin-left: 10px;
 `
+
 const BannerInfoRedirectLabel = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  max-width: 60%;
 `
 
 const BannerInfoRedirectTitle = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
-
   font-family: ${(props) => props.theme.launchpad.font};
   ${text31}
 `
@@ -134,11 +141,25 @@ const BannerInfoRedirectSubtitle = styled.a`
 const BannerImage = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   height: 100vh;
   margin-left: auto;
   padding: 0;
+  position: relative;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     height: auto;
   }
+`
+
+const LPBackgroundWrapper = styled.div`
+  position: absolute;
+  right: 0px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+`
+
+const LaunchpadHeaderWrapper = styled.div`
+  position: absolute;
+  top: 150px;
 `

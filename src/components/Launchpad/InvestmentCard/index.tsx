@@ -182,7 +182,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
             )}
 
             {!isClosed && offer.allowOnlyAccredited && (
-              <InvestButton type="button" onClick={onClick}>
+              <InvestButton style={{height: '51px'}} type="button" onClick={onClick}>
                 <Tooltip
                   title="Accredited investors only"
                   body={
@@ -198,10 +198,10 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
             )}
 
             {isClosed && (
-              <InvestButton type="button" onClick={onClick}>
+              <InvestButton style={{height: '51px'}} type="button" onClick={onClick}>
                 Learn More
               </InvestButton>
-            )}
+           )} 
 
             {!isKycApproved && (
               <InvestButton style={{ marginTop: '10px' }} type="button" onClick={openModal}>
