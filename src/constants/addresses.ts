@@ -83,7 +83,7 @@ export const IXS_ADDRESS: { [key: number]: string } = {
   [80002]: '0x30fada52969974d31f2738e7a890334266636d40',
   [137]: '0x1ba17c639bdaecd8dc4aac37df062d17ee43a1b8',
   [84532]: '0x949546713004ee02537292b1F41046f705909191',
-  [8453]: isProd ? '0x7913B2F933911c4FCf29DA62DB0Db2CF3CdEA894' : '0x7913B2F933911c4FCf29DA62DB0Db2CF3CdEA894', // TODO: update address for base chain
+  [8453]: isProd ? '0x7913B2F933911c4FCf29DA62DB0Db2CF3CdEA894' : '0xb473dc4C4B7d51247c01F07A9dCB7f947D9F9389', // TODO: update address for base chain
 }
 
 export const IXS_GOVERNANCE_ADDRESS: { [key: number]: string } = {
