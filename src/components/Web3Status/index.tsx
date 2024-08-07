@@ -17,7 +17,6 @@ import { useETHBalances } from 'state/wallet/hooks'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { useAccount } from 'hooks/useAccount'
-import { CONNECTOR_ICON_OVERRIDE_MAP } from 'components/Web3Provider/constants'
 
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
   return b.addedTime - a.addedTime
@@ -25,7 +24,7 @@ function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
 
 export function StatusIcon() {
   const { connector } = useAccount()
-  const icon = connector ? CONNECTOR_ICON_OVERRIDE_MAP[connector?.id] ?? connector?.icon : undefined
+  const icon = connector ? connector?.icon : undefined
 
   return (
     <>
