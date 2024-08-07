@@ -18,10 +18,11 @@ const BannerWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding-bottom: 70px;
-  margin-top: -7px;
+  margin-top: -37px;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-  height: auto;
+    height: auto;
+    margin-top: 0px;
   }
 `
 

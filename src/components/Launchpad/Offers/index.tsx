@@ -6,28 +6,31 @@ import { Pinned } from './Pinned'
 import { Offer } from 'state/launchpad/types'
 import { useGetOffers } from 'state/launchpad/hooks'
 import { MEDIA_WIDTHS } from 'theme'
+import { getWhitelabelConfig } from 'state/whitelabel/actions'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 const InvestmentListWrapper = styled.div`
   background-color: #ffffff;
   padding: 1rem;
   padding-top: 80px;
   padding-bottom: 50px;
-    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-  padding: 0rem;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 0rem;
   }
 `
 
 export const Offers = () => {
   const getOffers = useGetOffers()
-
   const [page, setPage] = React.useState(1)
   const [hasMore, setHasMore] = React.useState(true)
   const [offers, setOffers] = React.useState<Offer[]>([])
   const [loading, setLoading] = React.useState<boolean>(true)
+  const { config } = useWhitelabelState()
   const [filter, setFilter] = React.useState<FilterConfig>(() => {
     const newFilter = localStorage.getItem('offersFilter')
     return newFilter ? (JSON.parse(newFilter) as FilterConfig) : { search: '', industry: [], stage: [], type: [] }
   })
+  const isIxSwap = config?.isIxSwap ?? false
 
   useEffect(() => {
     localStorage.setItem('offersFilter', JSON.stringify(filter))
@@ -57,7 +60,7 @@ export const Offers = () => {
 
   return (
     <div style={{ width: '100%' }}>
-      <Pinned />
+      {isIxSwap ? <Pinned /> : null}
       <InvestmentListWrapper>
         <InvestmentList
           offers={offers}

@@ -23,6 +23,7 @@ import { useETHBalances } from 'state/wallet/hooks'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { coinbaseWallet } from 'connectors/coinbaseWallet'
+import { isMobile } from 'react-device-detect'
 
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
   return b.addedTime - a.addedTime
@@ -84,7 +85,7 @@ function Web3StatusInner() {
         {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
         {hasPendingTransactions ? (
           <RowBetween>
-            <Text style={{ margin: '4px 13px 4px 0' }}>
+            <Text style={{ margin: '4px 13px 4px 0'}}>
               <Trans>{pending?.length} Pending</Trans>
             </Text>{' '}
             <Loader stroke="white" />
@@ -92,7 +93,7 @@ function Web3StatusInner() {
         ) : (
           <Text style={{ margin: '4px 10px 4px 5px', width: '100%' }}>{ENSName || shortenAddress(account)}</Text>
         )}
-        <AccountElement style={{ pointerEvents: 'auto', fontSize: '10px' }}>
+        <AccountElement style={{ pointerEvents: 'auto', fontSize: isMobile ? '10px' : '12px' }}>
           {account && userEthBalance ? (
             <Trans>
               {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
@@ -190,7 +191,7 @@ const Text = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 10px;
+  font-size: 12px;
   width: fit-content;
   font-weight: 600;
   line-height: 18px;
