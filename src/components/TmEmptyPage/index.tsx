@@ -2,9 +2,10 @@ import React, { useMemo } from 'react'
 import { Trans, t } from '@lingui/macro'
 
 import { TokenManagerTab } from 'pages/TokenManager'
-import logoImg from 'assets/svg/logo-white.svg'
+import logoImg from 'assets/images/nothingFound.svg'
 
 import { Container, Title, NothingFound } from './styleds'
+import { TYPE } from 'theme'
 
 interface Props {
   tab: TokenManagerTab
@@ -27,20 +28,20 @@ export const TmEmptyPage = ({ tab, children, filtred }: Props) => {
   }, [tab])
 
   return (
-    <Container>
-      <img src={logoImg} alt="logoImg" />
+    <Container style={{marginTop: '130px'}}>
+      <img style={{width: '200px'}} src={logoImg} alt="logoImg" />
       {!filtred ? (
         <>
-          <Title>{text}</Title>
+          <TYPE.title5 style={{marginTop: '20px'}}>{text}</TYPE.title5>
           {children}
         </>
       ) : (
         <NothingFound>
           <div>
-            <Trans>Nothing found</Trans>
+            <TYPE.title5>Nothing found</TYPE.title5>
           </div>
           <div>
-            <Trans>{`We couldn't find anything with this criteria`}</Trans>
+            <TYPE.main1 lineHeight={'1px'} color={'#8F8FB2'}>{`We couldn't find anything with this criteria`}</TYPE.main1>
           </div>
         </NothingFound>
       )}

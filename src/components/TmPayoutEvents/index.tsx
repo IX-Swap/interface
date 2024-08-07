@@ -7,6 +7,7 @@ import { routes } from 'utils/routes'
 import { MultipleFilters } from 'components/MultipleFilters'
 import { FILTERS } from 'components/MultipleFilters/constants'
 import { Table } from 'components/Table'
+import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { ReactComponent as EyeIcon } from 'assets/images/gray_eye_icon.svg'
@@ -29,6 +30,7 @@ import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton,
 import { PAYOUT_TYPE_LABEL } from './constants'
 import { TYPE } from 'theme'
 import { Line } from 'components/Line'
+import { PinnedContentButton } from 'components/Button'
 
 const headerCells = [`ID`, `Status`, `Payout type`, `SEC token`, `Payment period`, `Record date`, `Amount claimed`, '']
 
@@ -100,9 +102,10 @@ export const TmPayoutEvents = () => {
         </Container>
       ) : (
         <TmEmptyPage tab="payout-events">
-          <CreateButton onClick={goToCreate}>
+          <PinnedContentButton style={{ width: '240px', gap: '10px', margin: '30px 0px' }} onClick={goToCreate}>
+            <CreateIcon />
             <Trans>Create Payout Event</Trans>
-          </CreateButton>
+          </PinnedContentButton>
         </TmEmptyPage>
       )}
     </>
