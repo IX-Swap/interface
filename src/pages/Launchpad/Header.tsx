@@ -9,8 +9,6 @@ import { text29, text57, text8 } from 'components/LaunchpadMisc/typography'
 import { useWeb3React } from 'connection/web3reactShim'
 import { isMobile } from 'react-device-detect'
 
-import { Wallet } from 'components/Launchpad/Wallet'
-
 export const Header = () => {
   const { isCorporate, isApproved } = useKyc()
   const { isOfferManager, isAdmin } = useRole()
@@ -52,8 +50,6 @@ export const Header = () => {
           </HeaderLinks>
 
           {showIssuance && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
-
-          <Wallet />
         </HeaderContainer>
       )}
     </>
