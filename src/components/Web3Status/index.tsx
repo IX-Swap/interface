@@ -90,9 +90,9 @@ function Web3StatusInner() {
             <Loader stroke="white" />
           </RowBetween>
         ) : (
-          <Text style={{ margin: '4px 13px 4px 5px', width: '100%' }}>{ENSName || shortenAddress(account)}</Text>
+          <Text style={{ margin: '4px 10px 4px 5px', width: '100%' }}>{ENSName || shortenAddress(account)}</Text>
         )}
-        <AccountElement style={{ pointerEvents: 'auto' }}>
+        <AccountElement style={{ pointerEvents: 'auto', fontSize: '10px' }}>
           {account && userEthBalance ? (
             <Trans>
               {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
@@ -181,7 +181,6 @@ const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
   border: 1px solid #e6e6ff;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
-     padding: 8px 3px 8px 20px;
      z-index: 0;
   `};
 `
@@ -191,7 +190,7 @@ const Text = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 12px;
+  font-size: 10px;
   width: fit-content;
   font-weight: 600;
   line-height: 18px;

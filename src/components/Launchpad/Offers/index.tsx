@@ -5,12 +5,16 @@ import { FilterConfig } from 'components/Launchpad/InvestmentList/Filter'
 import { Pinned } from './Pinned'
 import { Offer } from 'state/launchpad/types'
 import { useGetOffers } from 'state/launchpad/hooks'
+import { MEDIA_WIDTHS } from 'theme'
 
 const InvestmentListWrapper = styled.div`
   background-color: #ffffff;
   padding: 1rem;
   padding-top: 80px;
   padding-bottom: 50px;
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+  padding: 0rem;
+  }
 `
 
 export const Offers = () => {

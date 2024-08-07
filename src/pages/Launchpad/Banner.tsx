@@ -60,6 +60,7 @@ const BannerContainer = styled.div`
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     grid-template-columns: 1fr;
     margin: 2rem 1rem 0rem 1rem;
+    height: auto;
   }
 `
 
@@ -69,7 +70,7 @@ const BannerContent = styled.div`
   justify-content: center;
   padding: 8rem 1rem 0rem 0rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    padding: 2rem 1rem 0rem 1rem;
+    padding: 0rem 1rem 0rem 0rem;
   }
 `
 
@@ -90,7 +91,7 @@ const BannerTitle = styled.div`
 const BannerTitleMobile = styled.div`
   font-family: ${(props) => props.theme.launchpad.font};
   margin-bottom: 2rem;
-  font-size: 45px;
+  font-size: 36px;
   color: #292933;
   font-weight: 800;
   text-align: center;
@@ -115,7 +116,7 @@ const BannerInfoRedirectImage = styled.img`
   border-radius: 4px;
   width: 65px;
   margin-top: 7px;
-    margin-left: 10px;
+  margin-left: 10px;
 `
 
 const BannerInfoRedirectLabel = styled.div`
@@ -157,9 +158,15 @@ const LPBackgroundWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: none;
+  }
 `
 
 const LaunchpadHeaderWrapper = styled.div`
   position: absolute;
   top: 150px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: none;
+  }
 `

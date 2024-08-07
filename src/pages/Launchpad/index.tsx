@@ -8,6 +8,7 @@ import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Banner } from './Banner'
+import { MEDIA_WIDTHS } from 'theme'
 
 const BannerWrapper = styled.div`
   background-color: #ffffff;
@@ -18,6 +19,10 @@ const BannerWrapper = styled.div`
   justify-content: center;
   padding-bottom: 70px;
   margin-top: -7px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+  height: auto;
+  }
 `
 
 export default function Launchpad() {

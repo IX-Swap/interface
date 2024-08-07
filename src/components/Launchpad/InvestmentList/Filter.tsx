@@ -100,7 +100,7 @@ const FilterContainer = styled.div`
   @media (max-width: 768px) {
     display: grid;
     grid-template-columns: repeat(4, auto);
-    grid-gap: 12px;
+    grid-gap: 10px;
   }
 `
 
