@@ -78,7 +78,6 @@ const BannerContent = styled.div`
 const BannerTitle = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
   font-family: system-ui;
-  width: 530px;
   ${text52}
   margin-bottom: 2rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
@@ -86,6 +85,7 @@ const BannerTitle = styled.div`
     color: #666680;
     font-weight: 400;
     text-align: center;
+      width: auto;
   }
 `
 
