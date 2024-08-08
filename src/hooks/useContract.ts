@@ -187,8 +187,8 @@ export function useIXSFaucetContract(tokenAddress: string) {
   return useContract(tokenAddress, IXS_FAUCET_ABI, true)
 }
 
-export function usePayoutContract(): Contract | null {
-  return useContract(PAYOUT_ADDRESS, PAYOUT_ABI, true)
+export function usePayoutContract(payoutContractAddress?: string): Contract | null {
+  return useContract(payoutContractAddress || PAYOUT_ADDRESS, PAYOUT_ABI, true)
 }
 
 export function useLaunchpadInvestmentContract(contractAddress: string) {

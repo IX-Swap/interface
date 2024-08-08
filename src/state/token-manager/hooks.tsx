@@ -71,6 +71,7 @@ export const useGetPayoutHistory = () => {
 
 interface GetPayoutAuthorization {
   secTokenId: number
+  payoutEventId: number
   tokenAddress: string
   payoutNonce: number
   fund: number
