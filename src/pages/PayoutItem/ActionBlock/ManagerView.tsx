@@ -40,7 +40,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   const getRemainingTokens = useGetRemainingTokens()
 
   const { account } = useActiveWeb3React()
-  const { status, isPaid, secToken, tokenAmount, recordDate, id, startDate, contractPayoutId, paidTxHash } = payout
+  const { status, isPaid, secToken, tokenAmount, recordDate, id, startDate, contractPayoutId, paidTxHash, payoutContractAddress } = payout
 
   const [totalClaims, handleTotalClaims] = useState(0)
   const [remaining, setRemaining] = useState<string | undefined>(undefined)
@@ -69,7 +69,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
 
   const balance = useCurrencyBalance(account ?? undefined, ({ ...secToken, isToken: true } as any) ?? undefined)
   const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
-  const payoutContract = usePayoutContract()
+  const payoutContract = usePayoutContract(payoutContractAddress)
 
   const addTransaction = useTransactionAdder()
 
