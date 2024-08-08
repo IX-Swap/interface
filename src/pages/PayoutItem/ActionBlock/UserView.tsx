@@ -35,7 +35,7 @@ interface Props {
 
 export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const { account } = useActiveWeb3React()
-  const { secToken, status, id, contractPayoutId } = payout
+  const { secToken, status, id, contractPayoutId, payoutContractAddress } = payout
   const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)
   const statuses = [custodianStatus, brokerDealerStatus]
   const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
@@ -48,7 +48,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
 
   const balance = useCurrencyBalance(account ?? undefined, ({ ...secToken, isToken: true } as any) ?? undefined)
   const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
-  const payoutContract = usePayoutContract()
+  const payoutContract = usePayoutContract(payoutContractAddress)
 
   const addTransaction = useTransactionAdder()
 
