@@ -38,14 +38,10 @@ import { ROLES } from 'constants/roles'
 import { RestrictedModal } from './RestrictedModal'
 import axios from 'axios'
 import { ip } from 'services/apiUrls'
-import { isMobile } from 'react-device-detect'
-import { ConnectWalletModal } from './Connect Wallet Modal'
 import { metaMask } from 'connectors/metaMask'
 import { walletConnectV2 } from 'connectors/walletConnectV2'
-import { URI_AVAILABLE } from '@web3-react/walletconnect-v2'
 /* eslint-disable react/display-name */
 import { Footer as DefaultFooter } from './Launchpad/Footer'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { CustomHeaders } from 'components/CustomHeaders'
 import { useWalletState } from 'state/wallet/hooks'
 import { coinbaseWallet } from 'connectors/coinbaseWallet'
@@ -206,6 +202,7 @@ export default function App() {
   }, [pathname])
 
   const isAdminKyc = pathname.includes('admin')
+  const isLaunchpad = pathname === routes.launchpad
   const visibleBody = useMemo(() => {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
@@ -262,7 +259,7 @@ export default function App() {
         <Route component={ApeModeQueryParamReader} />
         <AppBackground />
         <Popups />
-        <AppWrapper>
+        <AppWrapper isLaunchpad={isLaunchpad}>
           {!isAdminKyc && !hideHeader && <Header />}
           <ToggleableBody
             isVisible={visibleBody}
@@ -298,11 +295,12 @@ export default function App() {
   )
 }
 
-const AppWrapper = styled.div`
+const AppWrapper = styled.div<{ isLaunchpad: boolean }>`
   display: flex;
   flex-flow: column;
   align-items: flex-start;
   position: relative;
+  background: ${({ isLaunchpad }) => (isLaunchpad ? '#ffffff' : 'initial')};
 `
 
 const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
