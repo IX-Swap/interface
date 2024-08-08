@@ -86,6 +86,7 @@ const BannerTitle = styled.div`
     color: #666680;
     font-weight: 400;
     text-align: center;
+    width: auto;
   }
 `
 
