@@ -210,6 +210,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               offerData={offer?.data}
               initialValues={initialValues}
               smartContractStrategy={smartContractStrategy}
+              refetch={offer.refetch}
             />
           )
         }}
