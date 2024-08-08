@@ -13,12 +13,12 @@ import { MEDIA_WIDTHS } from 'theme'
 const BannerWrapper = styled.div`
   background-color: #ffffff;
   width: 100vw;
-  height: 50vh;
+  height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-bottom: 70px;
-  margin-top: -37px;
+  margin-top: -41px;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     height: auto;

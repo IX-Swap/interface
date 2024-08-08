@@ -11,8 +11,9 @@ import { ReactComponent as LaunchpadHeader } from 'assets/images/lauchpadHeader.
 
 export const Banner = () => {
   const { config } = useWhitelabelState()
-  const launchpadBannerTitle =
-    config?.launchpadBannerTitle ?? 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunities'
+  const launchpadBannerTitle = config?.launchpadBannerTitle
+    ? config.launchpadBannerTitle
+    : 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunities'
   const launchpadBannerInfoRedirectTitle = config?.launchpadBannerInfoRedirectTitle ?? 'How does IXS Launchpad work?'
   const launchpadBannerInfoRedirectUrl = config?.launchpadBannerInfoRedirectUrl ?? 'https://www.ixswap.io/academy'
 
@@ -77,7 +78,7 @@ const BannerContent = styled.div`
 const BannerTitle = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
   font-family: system-ui;
-
+  width: 530px;
   ${text52}
   margin-bottom: 2rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
@@ -106,7 +107,6 @@ const BannerInfoRedirect = styled.a`
   grid-template-rows: 80px;
   gap: 1rem;
   width: 250px;
-
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: 100%;
   }
@@ -154,7 +154,8 @@ const BannerImage = styled.div`
 
 const LPBackgroundWrapper = styled.div`
   position: absolute;
-  right: 0px;
+  right: -40px;
+  margin-top: 20px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
@@ -165,7 +166,8 @@ const LPBackgroundWrapper = styled.div`
 
 const LaunchpadHeaderWrapper = styled.div`
   position: absolute;
-  top: 150px;
+  top: 160px;
+  right: 70px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     display: none;
   }
