@@ -130,7 +130,6 @@ const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
   border: 1px solid #e6e6ff;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
-     padding: 8px 3px 8px 20px;
      z-index: 0;
   `};
 `

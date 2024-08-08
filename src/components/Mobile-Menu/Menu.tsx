@@ -363,7 +363,7 @@ const StyledFooter = styled.div`
 
     & > a {
       color: #b8b8cc;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 500;
       margin-right: 10px;
       text-decoration: none;
