@@ -88,6 +88,7 @@ const EditPayoutEventPage: FC = () => {
         tokenAmount: payout.tokenAmount,
         type: capitalize(payout.type),
         otherType: payout.otherType,
+        payoutContractAddress: payout.payoutContractAddress,
       })
     }
   }, [payout, payoutTokenCurrency])

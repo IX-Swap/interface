@@ -47,7 +47,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   const [payNow, handlePayNow] = useState(onlyPay)
   const [isLoading, handleIsLoading] = useState(false)
 
-  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id } = values
+  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id, payoutContractAddress } = values
   const validatePayout = usePayoutValidation()
   const publishPayout = usePublishPayout()
   const addPopup = useAddPopup()
@@ -69,7 +69,8 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     PAYOUT_ADDRESS[chainId]
   )
 
-  const payoutContract = usePayoutContract()
+  // payoutContractAddress is nullable when creating payout event
+  const payoutContract = usePayoutContract(payoutContractAddress)
 
   const publishAndPaid = async () => {
     try {
@@ -130,6 +131,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
         const authorization = await getAuthorization({
           secTokenId: secToken.value,
+          payoutEventId: id,
           tokenAddress: token.value,
           payoutNonce,
           fund: utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
