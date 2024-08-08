@@ -25,6 +25,8 @@ export function createWagmiConfig() {
           wallets.uniswapWallet,
           wallets.safepalWallet,
           wallets.rainbowWallet,
+          wallets.zerionWallet,
+          wallets.rabbyWallet,
           wallets.injectedWallet,
         ],
       },
