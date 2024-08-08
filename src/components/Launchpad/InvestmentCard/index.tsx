@@ -24,6 +24,8 @@ import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { NETWORK_LOGOS } from 'constants/chains'
+import { PinnedContentButton } from 'components/Button'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   offer: any
@@ -175,13 +177,13 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
           <InvestmentCardFooter>
             {!isClosed && !offer.allowOnlyAccredited && (
-              <InvestButton type="button" onClick={onClick}>
+              <PinnedContentButton type="button" onClick={onClick}>
                 Invest
-              </InvestButton>
+              </PinnedContentButton>
             )}
 
             {!isClosed && offer.allowOnlyAccredited && (
-              <InvestButton type="button" onClick={onClick}>
+              <InvestButton style={{ height: '51px' }} type="button" onClick={onClick}>
                 <Tooltip
                   title="Accredited investors only"
                   body={
@@ -197,7 +199,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
             )}
 
             {isClosed && (
-              <InvestButton type="button" onClick={onClick}>
+              <InvestButton style={{ height: '51px' }} type="button" onClick={onClick}>
                 Learn More
               </InvestButton>
             )}
@@ -247,6 +249,9 @@ const InvestmentCardImage = styled.img`
   overflow-x: hidden;
   border-radius: 6px;
   height: 300px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 365px;
+  }
 `
 
 const InvestmentCardTagsContainer = styled.header`

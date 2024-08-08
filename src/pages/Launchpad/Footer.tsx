@@ -174,7 +174,7 @@ export const Footer: React.FC<Props> = (props) => {
 
 const FooterContainer = styled.div`
   background-color: ${(props) => props.theme.bg0};
-  margin: 5rem auto;
+  margin: 3rem auto;
   width: 100%;
   padding: 120px;
   // max-width: ${(props) => props.theme.launchpad.content.maxWidth};
