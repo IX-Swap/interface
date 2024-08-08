@@ -5,7 +5,6 @@ import { useCookies } from 'react-cookie'
 import { Text } from 'rebass'
 import { useWeb3React } from '@web3-react/core'
 
-import { switchToNetwork } from 'hooks/switchToNetwork'
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { PinnedContentButton } from 'components/Button'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
@@ -14,9 +13,11 @@ import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, ConnectWall
 import Modal from 'components/Modal'
 import { ConnectionDialog } from 'components/Launchpad/Wallet/ConnectionDialog'
 import { PRODUCTION_APP_URL } from 'config'
+import { useSwitchChain } from 'hooks/useSwitchChainV2'
 
 export const NotAvailablePage = () => {
   const { chainId, provider, account } = useWeb3React()
+  const switchChain = useSwitchChain()
   const { pathname } = useLocation()
   const [cookies] = useCookies(['announcementsSeen'])
   const { config } = useWhitelabelState()
@@ -26,9 +27,8 @@ export const NotAvailablePage = () => {
   const farming = ['/vesting', '/staking'].includes(pathname)
 
   const changeNetwork = (targetChain: number) => {
-    if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
-      switchToNetwork({ provider, chainId: targetChain })
-    } else {
+    if (chainId !== targetChain) {
+      switchChain(targetChain)
     }
   }
 

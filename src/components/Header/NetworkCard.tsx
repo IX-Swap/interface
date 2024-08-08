@@ -9,12 +9,13 @@ import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import { ChevronElement } from 'components/ChevronElement'
 import { MEDIA_WIDTHS } from 'theme'
-import { switchToNetwork } from 'hooks/switchToNetwork'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { ReactComponent as Checked } from 'assets/images/checked-blue.svg'
 import { VioletCard } from '../Card'
+import { useSwitchChain } from 'hooks/useSwitchChainV2'
 
 export const NetworkCard = () => {
+  const switchChain = useSwitchChain()
   const { chainId, provider, account } = useActiveWeb3React()
   const node = useRef<HTMLDivElement>()
   const open = useModalOpen(ApplicationModal.NETWORK_SELECTOR)
@@ -24,8 +25,8 @@ export const NetworkCard = () => {
 
   function Row({ targetChain }: { targetChain: number }) {
     const handleRowClick = () => {
-      if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
-        switchToNetwork({ provider, chainId: targetChain })
+      if (chainId !== targetChain) {
+        switchChain(targetChain)
         toggle()
       }
     }
