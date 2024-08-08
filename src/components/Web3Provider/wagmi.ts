@@ -20,10 +20,8 @@ export function createWagmiConfig() {
         wallets: [
           wallets.trustWallet,
           wallets.phantomWallet,
-          wallets.ledgerWallet,
           wallets.braveWallet,
           wallets.uniswapWallet,
-          wallets.safepalWallet,
           wallets.rainbowWallet,
           wallets.zerionWallet,
           wallets.rabbyWallet,
