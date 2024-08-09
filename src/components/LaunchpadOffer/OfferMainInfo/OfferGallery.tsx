@@ -15,7 +15,7 @@ import { ReactComponent as InstagramLogo } from 'assets/launchpad/svg/social/ins
 import OtherLogo from 'assets/images/otherMediaIcon.svg'
 import { MediaEntry, OfferGalleryViewer } from './OfferGalleryViewer'
 import { text8 } from 'components/LaunchpadMisc/typography'
-import { MEDIA_WIDTHS } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { isMobile } from 'react-device-detect'
 
 interface Props {
@@ -71,7 +71,8 @@ export const OfferGallery: React.FC<Props> = (props) => {
           ))}
 
           {gallery.length > 3 && (
-            <GalleryCarouselExtra onClick={() => openViewer()}>+{gallery.length - 3}</GalleryCarouselExtra>
+            <GalleryCarouselExtra onClick={() => openViewer()}>
+              <TYPE.blue fontWeight={'800'}>+{gallery.length - 3}</TYPE.blue></GalleryCarouselExtra>
           )}
         </GalleryCarouselExtraMediaList>
       </GalleryCarousel>
