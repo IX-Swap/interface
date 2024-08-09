@@ -63,7 +63,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
           <GalleryCarouselImage src={props.offer?.cardPicture.public} />
         </GalleryCarouselMainImage>
 
-        <GalleryCarouselExtraMediaList style={{ height: gallery?.length > 0 ? '120px' : '' }}>
+        <GalleryCarouselExtraMediaList style={{ height: gallery?.length > 0 ? '145px' : '' }}>
           {gallery.slice(0, 3).map((media, idx) => (
             <GalerryCarouselEntry key={`carousel-${idx}`} onClick={() => openViewer(media)}>
               <MediaEntry media={media} />
@@ -173,15 +173,25 @@ const GalleryCarouselImage = styled.img`
 const GalerryCarouselEntry = styled.div`
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
-  height: 120px;
-  max-width: 180px;
+  height: 150px;
+  width: 160px;
   color: ${(props) => props.theme.launchpad.colors.text.title};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   cursor: pointer;
   transition: transform 0.3s;
 
   :hover {
     transform: scale(1.05);
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: inherit;
   }
 `
 
