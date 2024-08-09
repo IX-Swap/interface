@@ -235,7 +235,7 @@ export const SecTokensTable: FC<Props> = ({
   return (
     <StyledBodyWrapper>
       <TYPE.title5 marginBottom="40px" display="flex" id="other-security-tokens-title">
-        {`Other Security Tokens`}
+        {`Other RWAs`}
         <TYPE.title5 marginLeft="4px" color="text2">
           {/* {`(${totalItems})`} */}
         </TYPE.title5>
@@ -293,11 +293,11 @@ export const SecTokensTable: FC<Props> = ({
               <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
             </>
           ) : (
-            <EmptyData title="No other Security Tokens" desc="You have no other Security Tokens at the moment" />
+            <EmptyData title="No other RWAs" desc="You have no other RWAs at the moment" />
           )}
         </>
       ) : (
-        <EmptyData title="No other Security Tokens" desc="You have no other Security Tokens at the moment" />
+        <EmptyData title="No other RWAs" desc="You have no other RWAs at the moment" />
       )}
     </StyledBodyWrapper>
   )

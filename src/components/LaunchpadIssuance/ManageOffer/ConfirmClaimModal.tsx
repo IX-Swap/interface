@@ -19,7 +19,7 @@ const Content = ({
   const [controllerCopied, setControllerCopied] = useCopyClipboard()
   const titleText =
     title ||
-    'Before starting the Claim process please make sure the corresponding amount of Security Tokens has been transferred to this address'
+    'Before starting the Claim process please make sure the corresponding amount of RWAs has been transferred to this address'
   return (
     <ContentContainer>
       <div>{titleText}</div>
