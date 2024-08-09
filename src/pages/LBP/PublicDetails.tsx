@@ -14,6 +14,8 @@ import { KYCStatuses } from 'pages/KYC/enum'
 import { checkWrongChain } from 'chains'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import NotFound from './NotFound'
+import styled from 'styled-components'
 
 interface RouteParams {
   id: string
@@ -24,11 +26,13 @@ const PublicDetails: React.FC = () => {
   const { kyc } = useKYCState()
   const { id } = useParams<RouteParams>()
   const fetchLbpData = useGetLbp()
+  const history = useHistory()
   const fetchLbpStatsData = useGetLbpStats()
+
   const [lbpData, setLbpData] = useState<LbpFormValues | null>(null)
   const [statsData, setStatsData] = useState<MarketData>()
   const [isLoading, setIsLoading] = useState(true)
-  const history = useHistory()
+  const [isError, setIsError] = useState<boolean>(false)
 
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
   const network = lbpData?.network ?? ''
@@ -43,6 +47,7 @@ const PublicDetails: React.FC = () => {
         setLbpData(lbpDataResponse)
         setStatsData(statsDataResponse)
       } catch (error) {
+        setIsError(true)
         console.error('Error fetching LBP data:', error)
       } finally {
         setIsLoading(false)
@@ -61,20 +66,28 @@ const PublicDetails: React.FC = () => {
   return (
     <>
       {isLoading ? (
-        <Loader>
-          <LoaderThin size={96} />
-        </Loader>
+        <LoaderWrapper>
+          <Loader>
+            <LoaderThin size={96} />
+          </Loader>
+        </LoaderWrapper>
       ) : (
         <>
-          <Background currentSharePriceUSD={statsData?.currentSharePriceUSD} lbpData={lbpData} />
-          <MiddleSection statsData={statsData} lbpData={lbpData} />
-          {isWrongChain ? (
-            <Portal>
-              <CenteredFixed width="100vw" height="100vh">
-                <NetworkNotAvailable expectChain={expectChain} />
-              </CenteredFixed>
-            </Portal>
-          ) : null}
+          {isError ? (
+            <NotFound />
+          ) : (
+            <>
+              <Background currentSharePriceUSD={statsData?.currentSharePriceUSD} lbpData={lbpData} />
+              <MiddleSection statsData={statsData} lbpData={lbpData} />
+              {isWrongChain ? (
+                <Portal>
+                  <CenteredFixed width="100vw" height="100vh">
+                    <NetworkNotAvailable expectChain={expectChain} />
+                  </CenteredFixed>
+                </Portal>
+              ) : null}
+            </>
+          )}
         </>
       )}
     </>
@@ -82,3 +95,10 @@ const PublicDetails: React.FC = () => {
 }
 
 export default PublicDetails
+
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 200px);
+`
