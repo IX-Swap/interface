@@ -163,7 +163,7 @@ export const HeaderLinks = () => {
             return pathname.includes('security-token')
           }}
         >
-          <Trans>Security Tokens</Trans>
+          <Trans>RWAs</Trans>
         </StyledNavLink>
       )}
 

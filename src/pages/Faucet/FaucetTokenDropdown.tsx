@@ -62,7 +62,7 @@ export const FaucetTokenDropdown = ({
         </Row>
         <RowStart>
           <TYPE.body2 style={{ fontWeight: 600 }}>
-            <Trans>Security Tokens</Trans>
+            <Trans>RWAs</Trans>
           </TYPE.body2>
         </RowStart>
         {[...testSecTokens].map((token) => {
