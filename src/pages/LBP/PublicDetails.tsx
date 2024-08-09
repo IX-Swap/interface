@@ -38,22 +38,24 @@ const PublicDetails: React.FC = () => {
   const network = lbpData?.network ?? ''
   const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const lbpDataResponse = await fetchLbpData(parseInt(id))
-        const statsDataResponse = await fetchLbpStatsData(parseInt(id))
+  const loadData = async () => {
+    try {
+      const [lbpDataResponse, statsDataResponse] = await Promise.all([
+        fetchLbpData(parseInt(id)),
+        fetchLbpStatsData(parseInt(id)),
+      ])
 
-        setLbpData(lbpDataResponse)
-        setStatsData(statsDataResponse)
-      } catch (error) {
-        setIsError(true)
-        console.error('Error fetching LBP data:', error)
-      } finally {
-        setIsLoading(false)
-      }
+      setLbpData(lbpDataResponse)
+      setStatsData(statsDataResponse)
+    } catch (error) {
+      setIsError(true)
+      console.error('Error fetching LBP data:', error)
+    } finally {
+      setIsLoading(false)
     }
+  }
 
+  useEffect(() => {
     loadData()
   }, [fetchLbpData, fetchLbpStatsData, id])
 
