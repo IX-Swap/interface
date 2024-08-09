@@ -261,7 +261,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
                 minutesStep={10}
                 value={startTime}
                 onChange={onStartTimeChanged}
-                ampm={false}
                 format="HH:mm"
                 // minTime={moment(props.minDate)}
                 onError={onStartTimeError}
@@ -290,7 +289,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
                   minutesStep={10}
                   value={endTime}
                   onChange={onEndTimeChanged}
-                  ampm={false}
                   format="HH:mm"
                   // minTime={moment(props.minDate)}
                   onError={onEndTimeError}
