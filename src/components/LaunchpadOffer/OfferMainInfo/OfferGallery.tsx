@@ -37,7 +37,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
       { url: props.offer?.socialMedia?.discord, logo: <DiscordLogo /> },
       { url: props.offer?.socialMedia?.reddit, logo: <RedditLogo /> },
       { url: props.offer?.socialMedia?.instagram, logo: <InstagramLogo /> },
-      { url: props.offer?.socialMedia?.others, logo: <img src={OtherLogo}/> },
+      { url: props.offer?.socialMedia?.others, logo: <img src={OtherLogo} /> },
     ],
     []
   )
@@ -94,9 +94,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
               </SocialMediaLink>
             ))}
           </SocialMediaLinks>
-          <SocialMediaLinks
-            style={{ marginTop: '20px', justifyContent: 'flex-start',}}
-          >
+          <SocialMediaLinks style={{ marginTop: '20px', justifyContent: 'flex-start' }}>
             {socialMedialLinks?.slice(3)?.map((link, idx) => (
               <SocialMediaLink key={`link-${idx}`} href={link.url}>
                 {link.logo}
@@ -142,7 +140,6 @@ const GalleryCarousel = styled.div`
 `
 
 const GalleryCarouselMainImage = styled.div`
-  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
   display: flex;
   justify-content: center;
@@ -163,13 +160,14 @@ const GalleryCarouselExtraMediaList = styled.div`
   flex-flow: row nowrap;
   justify-content: flex-start;
   gap: 1rem;
-  // height: 120px;
 `
 
 const GalleryCarouselImage = styled.img`
   border-radius: 8px;
   max-width: 100%;
   max-height: 100%;
+  width: -webkit-fill-available;
+  object-fit: fill;
 `
 
 const GalerryCarouselEntry = styled.div`
@@ -240,7 +238,6 @@ const SocialMediaLink = styled.a`
     transform: scale(1.2);
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-
     padding: 12px;
   }
   cursor: pointer;

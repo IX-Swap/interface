@@ -245,6 +245,8 @@ const Image = styled.img`
   max-width: 100%;
   max-height: 100%;
   border-radius: 8px;
+  width: 150px;
+  height: 140px;
 `
 
 const Video = styled.video`

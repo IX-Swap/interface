@@ -173,6 +173,7 @@ export default function App() {
   }, [pathname])
 
   const isAdminKyc = pathname.includes('admin')
+  const isLaunchpad = pathname === routes.launchpad
   const visibleBody = useMemo(() => {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
@@ -229,7 +230,7 @@ export default function App() {
         <Route component={ApeModeQueryParamReader} />
         <AppBackground />
         <Popups />
-        <AppWrapper>
+        <AppWrapper isLaunchpad={isLaunchpad}>
           {!isAdminKyc && !hideHeader && <Header />}
           <ToggleableBody
             isVisible={visibleBody}
@@ -263,11 +264,12 @@ export default function App() {
   )
 }
 
-const AppWrapper = styled.div`
+const AppWrapper = styled.div<{ isLaunchpad: boolean }>`
   display: flex;
   flex-flow: column;
   align-items: flex-start;
   position: relative;
+  background: ${({ isLaunchpad }) => (isLaunchpad ? '#ffffff' : 'initial')};
 `
 
 const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
