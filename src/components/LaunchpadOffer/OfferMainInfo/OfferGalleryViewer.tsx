@@ -204,7 +204,6 @@ const ViewerActiveMedia = styled.div`
   grid-area: main-media;
   place-self: center;
 
-
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     height: auto;
   }
@@ -242,11 +241,14 @@ const ViewerMediaEntry = styled.div<{ active: boolean }>`
 `
 
 const Image = styled.img`
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 84vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
   border-radius: 8px;
-  width: 150px;
-  height: 140px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 `
 
 const Video = styled.video`
