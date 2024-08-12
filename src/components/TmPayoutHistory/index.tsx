@@ -60,47 +60,43 @@ export const TmPayoutHistory = () => {
   }
 
   return (
-<>
-  <LoadingIndicator isLoading={isLoading} />
-
-  {(payoutHistory.items?.length || haveFilters) ? (
     <>
-      <Container style={{ marginTop: '20px' }}>
-        <MultipleFilters
-          filters={[FILTERS.SEARCH, FILTERS.DATE_OF_CLAIM, FILTERS.SEC_TOKENS]}
-          searchPlaceholder="Search by Wallet or ID"
-          onFiltersChange={handleFilters}
-          forManager
-        />
-      </Container>
+      <LoadingIndicator isLoading={isLoading} />
 
-      <Line style={{width: 'webkit-fill-available'}} />
-
-      <Container>
-        {payoutHistory.items?.length ? (
-          <Flex flexDirection="column" style={{ gap: 32 }}>
-            <Table 
-              header={<Header />} 
-              body={<Body items={payoutHistory.items} />} 
+      {payoutHistory.items?.length || haveFilters ? (
+        <>
+          <Container style={{ marginTop: '20px' }}>
+            <MultipleFilters
+              filters={[FILTERS.SEARCH, FILTERS.DATE_OF_CLAIM, FILTERS.SEC_TOKENS]}
+              searchPlaceholder="Search by Wallet or ID"
+              onFiltersChange={handleFilters}
+              forManager
             />
+          </Container>
 
-            <Pagination
-              totalPages={payoutHistory.totalPages}
-              page={payoutHistory.page || 1}
-              onPageChange={onPageChange}
-              totalItems={payoutHistory.totalItems}
-            />
-          </Flex>
-        ) : (
-          <TmEmptyPage tab="payout-history" filtred />
-        )}
-      </Container>
+          <Line style={{ width: 'webkit-fill-available' }} />
+
+          <Container>
+            {payoutHistory.items?.length ? (
+              <Flex flexDirection="column" style={{ gap: 32 }}>
+                <Table header={<Header />} body={<Body items={payoutHistory.items} />} />
+
+                <Pagination
+                  totalPages={payoutHistory.totalPages}
+                  page={payoutHistory.page || 1}
+                  onPageChange={onPageChange}
+                  totalItems={payoutHistory.totalItems}
+                />
+              </Flex>
+            ) : (
+              <TmEmptyPage tab="payout-history" filtred />
+            )}
+          </Container>
+        </>
+      ) : (
+        <TmEmptyPage tab="payout-history" />
+      )}
     </>
-  ) : (
-    <TmEmptyPage tab="payout-history" />
-  )}
-</>
-
   )
 }
 
@@ -128,12 +124,16 @@ const Row = ({ item }: IRow) => {
       </TYPE.main1>
 
       <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
+      
+      {/* The logo URL is currently hardcoded; we'll render it dynamically with the network key later */}
       <div style={{ position: 'relative' }}>
         <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
         <img style={{ position: 'absolute', left: '30px', bottom: '40px', width: '18px' }} src={baseLogoUrl}></img>
         {secToken?.symbol || '-'}
       </div>
       <TYPE.main1>{dayjs(createdAt).format('MMM DD, YYYY - HH:mm')}</TYPE.main1>
+
+      {/* The logo URL is currently hardcoded; we'll render it dynamically with the network key later */}
       <div style={{ fontWeight: 500 }}>
         <div style={{ position: 'relative' }}>
           <CurrencyLogo currency={token} style={{ marginRight: 4 }} size="24px" />

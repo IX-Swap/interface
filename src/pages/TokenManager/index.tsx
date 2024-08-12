@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -15,6 +15,7 @@ import { routes } from 'utils/routes'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 import { Line } from 'components/Line'
+import { Li } from 'pages/KYC/styleds'
 
 export type TokenManagerTab = 'my-tokens' | 'payout-events' | 'payout-history'
 
@@ -53,10 +54,9 @@ const renderTab = (selectedTab: TokenManagerTab | string) => {
     case 'payout-history':
       return (
         <StyledTableWrapper style={{ marginTop: '2px' }}>
-       <TmPayoutHistory />
-      </StyledTableWrapper>
+          <TmPayoutHistory />
+        </StyledTableWrapper>
       )
-
 
     default:
       return null
@@ -70,6 +70,7 @@ const TokenManager = () => {
   const isLogged = account && me?.role
   const history = useHistory()
   const params = useParams<TokenManagerParams>()
+  const { pathname } = useLocation()
   const changeTab = useCallback(
     (tab: TokenManagerTab) => {
       history.push(`/token-manager/${tab}`)
@@ -96,9 +97,9 @@ const TokenManager = () => {
   if (!isLogged) {
     return <NotAvailablePage />
   }
-
   return (
     <>
+      {pathname !== routes.manageTokens ? <Line /> : null}
       <StyledHeaderWrapper>
         <TabsContainer>
           {tabs.map(({ value, label }, index) => {
@@ -122,9 +123,8 @@ const TokenManager = () => {
           </ButtonContainer>
         </TabsContainer>
       </StyledHeaderWrapper>
-      <Line/>
+      <Line />
       {renderTab(selectedTab)}
-
     </>
   )
 }
