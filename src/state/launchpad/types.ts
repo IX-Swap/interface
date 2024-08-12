@@ -44,6 +44,7 @@ export enum OfferIndustry {
   gaming = 'gaming',
   energy = 'energy',
   healthcare = 'healthcare',
+  mediaAndEntertainment = 'mediaAndEntertainment',
   other = 'other',
 }
 

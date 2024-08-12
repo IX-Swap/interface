@@ -115,7 +115,9 @@ export const industryOptions = [
   { label: 'Healthcare', value: OfferIndustry.healthcare },
   { label: 'Real Estate', value: OfferIndustry.realEstate },
   { label: 'Technology', value: OfferIndustry.technology },
+  { label: 'Media & Entertainment', value: OfferIndustry.mediaAndEntertainment },
   { label: 'Other', value: OfferIndustry.other },
+
 ]
 
 export const investmentStructureOptions = [
