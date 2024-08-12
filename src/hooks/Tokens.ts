@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { parseBytes32String } from '@ethersproject/strings'
 import { Currency, Token } from '@ixswap1/sdk-core'
-import { TOKEN_SHORTHANDS } from 'constants/tokens'
+import { TOKEN_SHORTHANDS, WRAPPED_NATIVE_CURRENCY } from 'constants/tokens'
 import { arrayify } from 'ethers/lib/utils'
 import keys from 'lodash.keys'
 import omit from 'lodash.omit'
@@ -246,7 +246,7 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
 }
 
 /**
- * The useSafeCurrency obtains the configured tokens from all networks.
+ * The useSafeCurrency obtains the configured and native tokens from all networks.
  * Returns the Currency by currencyId
  */
 export function useSafeCurrency(currencyId: string | undefined): Currency | null | undefined {
@@ -258,6 +258,11 @@ export function useSafeCurrency(currencyId: string | undefined): Currency | null
       Object.assign(allTokens, {
         [tokenAddress]: tokenByChain[tokenAddress].token
       })
+    })
+  })
+  Object.values(WRAPPED_NATIVE_CURRENCY).forEach(tokenByChain => {
+    Object.assign(allTokens, {
+      [tokenByChain?.address as string]: tokenByChain
     })
   })
 
