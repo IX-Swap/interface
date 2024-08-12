@@ -15,7 +15,7 @@ import { ReactComponent as InstagramLogo } from 'assets/launchpad/svg/social/ins
 import OtherLogo from 'assets/images/otherMediaIcon.svg'
 import { MediaEntry, OfferGalleryViewer } from './OfferGalleryViewer'
 import { text8 } from 'components/LaunchpadMisc/typography'
-import { MEDIA_WIDTHS } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { isMobile } from 'react-device-detect'
 
 interface Props {
@@ -37,7 +37,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
       { url: props.offer?.socialMedia?.discord, logo: <DiscordLogo /> },
       { url: props.offer?.socialMedia?.reddit, logo: <RedditLogo /> },
       { url: props.offer?.socialMedia?.instagram, logo: <InstagramLogo /> },
-      { url: props.offer?.socialMedia?.others, logo: <img src={OtherLogo}/> },
+      { url: props.offer?.socialMedia?.others, logo: <img src={OtherLogo} /> },
     ],
     []
   )
@@ -63,7 +63,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
           <GalleryCarouselImage src={props.offer?.cardPicture.public} />
         </GalleryCarouselMainImage>
 
-        <GalleryCarouselExtraMediaList style={{ height: gallery?.length > 0 ? '120px' : '' }}>
+        <GalleryCarouselExtraMediaList style={{ height: gallery?.length > 0 ? '145px' : '' }}>
           {gallery.slice(0, 3).map((media, idx) => (
             <GalerryCarouselEntry key={`carousel-${idx}`} onClick={() => openViewer(media)}>
               <MediaEntry media={media} />
@@ -71,7 +71,8 @@ export const OfferGallery: React.FC<Props> = (props) => {
           ))}
 
           {gallery.length > 3 && (
-            <GalleryCarouselExtra onClick={() => openViewer()}>+{gallery.length - 3}</GalleryCarouselExtra>
+            <GalleryCarouselExtra onClick={() => openViewer()}>
+              <TYPE.blue fontWeight={'800'}>+{gallery.length - 3}</TYPE.blue></GalleryCarouselExtra>
           )}
         </GalleryCarouselExtraMediaList>
       </GalleryCarousel>
@@ -94,9 +95,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
               </SocialMediaLink>
             ))}
           </SocialMediaLinks>
-          <SocialMediaLinks
-            style={{ marginTop: '20px', justifyContent: 'flex-start',}}
-          >
+          <SocialMediaLinks style={{ marginTop: '20px', justifyContent: 'flex-start' }}>
             {socialMedialLinks?.slice(3)?.map((link, idx) => (
               <SocialMediaLink key={`link-${idx}`} href={link.url}>
                 {link.logo}
@@ -142,7 +141,6 @@ const GalleryCarousel = styled.div`
 `
 
 const GalleryCarouselMainImage = styled.div`
-  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
   display: flex;
   justify-content: center;
@@ -163,27 +161,38 @@ const GalleryCarouselExtraMediaList = styled.div`
   flex-flow: row nowrap;
   justify-content: flex-start;
   gap: 1rem;
-  // height: 120px;
 `
 
 const GalleryCarouselImage = styled.img`
   border-radius: 8px;
   max-width: 100%;
   max-height: 100%;
+  width: -webkit-fill-available;
+  object-fit: fill;
 `
 
 const GalerryCarouselEntry = styled.div`
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
-  height: 120px;
-  max-width: 180px;
+  height: 150px;
+  width: 160px;
   color: ${(props) => props.theme.launchpad.colors.text.title};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   cursor: pointer;
   transition: transform 0.3s;
 
   :hover {
     transform: scale(1.05);
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: inherit;
   }
 `
 
@@ -240,7 +249,6 @@ const SocialMediaLink = styled.a`
     transform: scale(1.2);
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-
     padding: 12px;
   }
   cursor: pointer;
