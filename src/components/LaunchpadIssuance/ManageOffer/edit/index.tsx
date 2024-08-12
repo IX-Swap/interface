@@ -15,7 +15,7 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { useShowError } from 'state/application/hooks'
 import { getDaysAhead, isFutureDate } from 'utils/time'
 import { text1, text48 } from 'components/LaunchpadMisc/typography'
-import { getDaysAfter } from 'utils/time'
+import { getMinutesAfter } from 'utils/time'
 import {  MIN_DATE_DIFF_MINUTES } from 'components/LaunchpadIssuance/IssuanceForm/shared/constants'
 
 interface Props {
@@ -155,7 +155,7 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
       return new Date()
     }
     const date = timeframe[getPreviousStage(stage) as keyof OfferTimeframe]
-    return isFutureDate(date) ? getDaysAfter(date, 1) : new Date()
+    return isFutureDate(date) ? getMinutesAfter(date, MIN_DATE_DIFF_MINUTES) : new Date()
   }, [stage, timeframe])
 
   const maxDate = useMemo(() => {
