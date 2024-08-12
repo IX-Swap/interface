@@ -18,8 +18,8 @@ export const BodyContainer = styled.div`
   row-gap: 8px;
 `
 
-const gridTemplateColumns = '70px 125px 125px 150px 220px 125px 155px minmax(100px, 120px)'
-const minWidth = '100px'
+const gridTemplateColumns = '70px 10% 10% 12% 20% 10% 20% minmax(100px, 10%)';
+const minWidth = '900px';
 
 export const StyledHeaderRow = styled(HeaderRow)`
   grid-template-columns: ${gridTemplateColumns};

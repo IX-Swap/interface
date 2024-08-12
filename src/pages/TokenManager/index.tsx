@@ -14,6 +14,7 @@ import { TmPayoutHistory } from 'components/TmPayoutHistory'
 import { routes } from 'utils/routes'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
+import { Line } from 'components/Line'
 
 export type TokenManagerTab = 'my-tokens' | 'payout-events' | 'payout-history'
 
@@ -44,13 +45,18 @@ const renderTab = (selectedTab: TokenManagerTab | string) => {
 
     case 'payout-events':
       return (
-        <StyledTableWrapper style={{ marginTop: '20px' }}>
+        <StyledTableWrapper style={{ marginTop: '2px' }}>
           <TmPayoutEvents />
         </StyledTableWrapper>
       )
 
     case 'payout-history':
-      return <TmPayoutHistory />
+      return (
+        <StyledTableWrapper style={{ marginTop: '2px' }}>
+       <TmPayoutHistory />
+      </StyledTableWrapper>
+      )
+
 
     default:
       return null
@@ -116,7 +122,9 @@ const TokenManager = () => {
           </ButtonContainer>
         </TabsContainer>
       </StyledHeaderWrapper>
+      <Line/>
       {renderTab(selectedTab)}
+
     </>
   )
 }

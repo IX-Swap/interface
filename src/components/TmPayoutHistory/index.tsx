@@ -20,8 +20,11 @@ import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-
+import polygonLogoUrl from 'assets/images/polygon.svg'
+import baseLogoUrl from 'assets/images/base.svg'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
+import { Line } from 'components/Line'
+import { TYPE } from 'theme'
 
 const headerCells = [
   `Recipient's wallet`,
@@ -57,33 +60,47 @@ export const TmPayoutHistory = () => {
   }
 
   return (
+<>
+  <LoadingIndicator isLoading={isLoading} />
+
+  {(payoutHistory.items?.length || haveFilters) ? (
     <>
-      <LoadingIndicator isLoading={isLoading} />
-      {payoutHistory.items?.length || haveFilters ? (
-        <Container>
-          <MultipleFilters
-            filters={[FILTERS.SEARCH, FILTERS.DATE_OF_CLAIM, FILTERS.SEC_TOKENS]}
-            searchPlaceholder="Search by Wallet or ID"
-            onFiltersChange={handleFilters}
-            forManager
-          />
-          {payoutHistory.items?.length ? (
-            <Flex flexDirection="column" style={{ gap: 32 }}>
-              <Table body={<Body items={payoutHistory.items} />} header={<Header />} />
-              <Pagination
-                totalPages={payoutHistory.totalPages}
-                page={payoutHistory.page || 1}
-                onPageChange={onPageChange}
-              />
-            </Flex>
-          ) : (
-            <TmEmptyPage tab="payout-history" filtred />
-          )}
-        </Container>
-      ) : (
-        <TmEmptyPage tab="payout-history" />
-      )}
+      <Container style={{ marginTop: '20px' }}>
+        <MultipleFilters
+          filters={[FILTERS.SEARCH, FILTERS.DATE_OF_CLAIM, FILTERS.SEC_TOKENS]}
+          searchPlaceholder="Search by Wallet or ID"
+          onFiltersChange={handleFilters}
+          forManager
+        />
+      </Container>
+
+      <Line style={{width: 'webkit-fill-available'}} />
+
+      <Container>
+        {payoutHistory.items?.length ? (
+          <Flex flexDirection="column" style={{ gap: 32 }}>
+            <Table 
+              header={<Header />} 
+              body={<Body items={payoutHistory.items} />} 
+            />
+
+            <Pagination
+              totalPages={payoutHistory.totalPages}
+              page={payoutHistory.page || 1}
+              onPageChange={onPageChange}
+              totalItems={payoutHistory.totalItems}
+            />
+          </Flex>
+        ) : (
+          <TmEmptyPage tab="payout-history" filtred />
+        )}
+      </Container>
     </>
+  ) : (
+    <TmEmptyPage tab="payout-history" />
+  )}
+</>
+
   )
 }
 
@@ -106,20 +123,27 @@ const Row = ({ item }: IRow) => {
 
   return (
     <StyledBodyRow>
-      <div>
+      <TYPE.main1 color={'#B8B8CC'}>
         <CopyAddress address={ethAddress} />
-      </div>
-      <div>{PAYOUT_TYPE_LABEL[type] || type}</div>
-      <div>
+      </TYPE.main1>
+
+      <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
+      <div style={{ position: 'relative' }}>
         <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
+        <img style={{ position: 'absolute', left: '30px', bottom: '40px', width: '18px' }} src={baseLogoUrl}></img>
         {secToken?.symbol || '-'}
       </div>
-      <div>{dayjs(createdAt).format('MMM DD, YYYY - HH:mm')}</div>
+      <TYPE.main1>{dayjs(createdAt).format('MMM DD, YYYY - HH:mm')}</TYPE.main1>
       <div style={{ fontWeight: 500 }}>
-        <CurrencyLogo currency={token} style={{ marginRight: 4 }} size="24px" />
-        {token?.symbol || '-'}&nbsp;{Number(sum).toFixed(4)}
-      </div>
+        <div style={{ position: 'relative' }}>
+          <CurrencyLogo currency={token} style={{ marginRight: 4 }} size="24px" />
+          <img style={{ position: 'absolute', left: '20px', bottom: '20px', width: '18px' }} src={polygonLogoUrl}></img>
+        </div>
 
+        <TYPE.main1>
+          {token?.symbol || '-'}&nbsp;{Number(sum).toFixed(4)}
+        </TYPE.main1>
+      </div>
       <div>
         {/* TO DO - replace with txHash */}
         <ViewBtn
@@ -127,7 +151,7 @@ const Row = ({ item }: IRow) => {
           target="_blank"
           rel="noopener"
         >
-          View
+          View on Explorer
         </ViewBtn>
         {/* <ViewBtn href={`https://polygonscan.com/tx/${txHash}`} target="_blank" rel="noopener">
           View
@@ -144,8 +168,12 @@ interface IBody {
 const Body = ({ items }: IBody) => {
   return (
     <BodyContainer>
-      {items.map((item) => (
-        <Row item={item} key={`payout-${item.id}`} />
+      {items.map((item, index) => (
+        <React.Fragment key={`payout-${item.id}`}>
+          <Line />
+          <Row item={item} key={`payout-${item.id}`} />
+          {index === items.length - 1 && <Line />}
+        </React.Fragment>
       ))}
     </BodyContainer>
   )
@@ -156,7 +184,7 @@ const Header = () => {
     <StyledHeaderRow>
       {headerCells.map((cell) => (
         <div key={cell}>
-          <Trans>{cell}</Trans>
+          <TYPE.main1 color={'#B8B8CC'}>{cell}</TYPE.main1>
         </div>
       ))}
     </StyledHeaderRow>
