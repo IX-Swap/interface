@@ -9,11 +9,13 @@ import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.s
 import { OFFER_INDUSTRY_LABELS, OFFER_STAGE_LABELS, OFFER_TYPE_LABELS } from 'state/launchpad/constants'
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { isMobile } from 'react-device-detect'
+import { networkOptions } from 'components/LaunchpadIssuance/IssuanceForm/Information/util'
 
 export interface FilterConfig {
   search: string
   industry: FilterOption<string>[]
   stage: FilterOption<string>[]
+  network: FilterOption<string>[]
   type: FilterOption<string>[]
 }
 
@@ -52,6 +54,12 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
           options={OFFER_STAGE_LABELS}
           onSelect={handleDropdownSelect('stage')}
         />
+        <FilterDropdown
+          selected={filter.network}
+          label="Network"
+          options={networkOptions}
+          onSelect={handleDropdownSelect('network')}
+        />
 
         {!isMobile && <Spacer />}
         {/* Disabled for version 2 https://app.clickup.com/t/4733323/IXS-2662 */}
@@ -70,7 +78,7 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
       {!isMobile && (
         <FilterSearchField>
           <SearchIcon />
-          <FilterSearchInput placeholder='Search' value={filter.search} onChange={onSearchChange} />
+          <FilterSearchInput placeholder="Search" value={filter.search} onChange={onSearchChange} />
         </FilterSearchField>
       )}
 
@@ -136,8 +144,7 @@ const FilterButton = styled.button`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   padding: 0.5rem 0.75rem;
   height: 40px;
-  background: ${(props) =>
- props.theme.launchpad.colors.background};
+  background: ${(props) => props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   border: 1px solid #e6e6ff;
