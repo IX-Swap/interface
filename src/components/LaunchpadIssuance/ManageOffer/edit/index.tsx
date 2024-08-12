@@ -155,7 +155,7 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
       return new Date()
     }
     const date = timeframe[getPreviousStage(stage) as keyof OfferTimeframe]
-    return isFutureDate(date) ? getMinutesAfter(date, 20) : new Date()
+    return isFutureDate(date) ? getMinutesAfter(date, MIN_DATE_DIFF_MINUTES) : new Date()
   }, [stage, timeframe])
 
   const maxDate = useMemo(() => {

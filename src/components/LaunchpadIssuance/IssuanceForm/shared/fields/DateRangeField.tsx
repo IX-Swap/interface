@@ -196,12 +196,9 @@ export const DateRangeField: React.FC<Props> = (props) => {
     if (hasEmptyState) {
       return `Do MMM, HH:mm ${props.mode === 'range' ? ` - ${dateFormat}` : ''}`
     }
-    console.log('selectedRange', selectedRange)
-    console.log('range', range)
+
     return formatDateRange(range[0]?.toDate(), range[1]?.toDate())
   }, [range, props.mode, props.dateFormat])
-
-  console.log('formattedDate', formattedDate)
 
   React.useEffect(() => {
     setDateErrorText(' ')
