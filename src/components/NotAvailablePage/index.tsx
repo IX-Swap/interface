@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 import { useLocation } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import { Text } from 'rebass'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { PinnedContentButton } from 'components/Button'

@@ -2,7 +2,7 @@ import React, { FC, useMemo } from 'react'
 import { Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
 
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { shortAddress } from 'utils'
 import { TYPE } from 'theme'
 import { KYCStatuses } from './enum'

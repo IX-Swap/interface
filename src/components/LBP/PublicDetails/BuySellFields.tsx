@@ -10,7 +10,7 @@ import { formatNumberWithDecimals, useGetLBPAuthorization } from 'state/lbp/hook
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import BuySellModal from './Modals/BuySellModal'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
 import { getPriceFromRawReservesAndWeights } from '../utils/calculation'
 import { useTransactionAdder } from 'state/transactions/hooks'

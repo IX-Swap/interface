@@ -1,5 +1,5 @@
 import React from 'react'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import Portal from '@reach/portal'
 
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'

@@ -6,7 +6,7 @@ import { ethers } from 'ethers'
 import { useHistory } from 'react-router-dom'
 
 import { FormData } from 'pages/LBP/LbpForm'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
 import { useMemo, useEffect, useState, useCallback } from 'react'
 import { useLBPFactory } from 'hooks/useContract'

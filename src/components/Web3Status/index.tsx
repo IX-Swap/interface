@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { Trans } from '@lingui/macro'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import styled from 'styled-components'
 import { ChevronDown } from 'react-feather'
 

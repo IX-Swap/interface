@@ -27,7 +27,6 @@ import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import * as Sentry from '@sentry/react'
 import Web3Provider from 'components/Web3Provider'
 
-/* eslint-disable react/display-name */
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
 }
@@ -45,8 +44,8 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
     customBrowserType: !isMobile
       ? 'desktop'
       : 'web3' in window || 'ethereum' in window
-      ? 'mobileWeb3'
-      : 'mobileRegular',
+        ? 'mobileWeb3'
+        : 'mobileRegular',
   })
 } else {
   ReactGA.initialize('test', { testMode: true, debug: true })
@@ -97,7 +96,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   <MuiThemeProvider>
                     <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
-                          <App />
+                        <App />
                       </CookiesProvider>
                     </LocalizationProvider>
                   </MuiThemeProvider>

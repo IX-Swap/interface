@@ -23,7 +23,7 @@ import { routes } from 'utils/routes'
 import Header from 'components/Header'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import WhiteLabelFooter from 'components/WhiteLabelFooter'
-import { checkWrongChain } from 'chains'
+import { checkWrongChain } from 'utils/chains'
 
 interface OfferPageParams {
   offerId: string
