@@ -17,7 +17,7 @@ import { Vesting } from './Vesting/Vesting'
 import { StyledBodyWrapper } from './styleds'
 import { Pinned } from 'components/Launchpad/Offers/Pinned'
 import { PinnedContentButton } from 'components/Button'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 const PaddedRow = styled(RowBetween)`
   padding: 40px 30px 0px 30px;

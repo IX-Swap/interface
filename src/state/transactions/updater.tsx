@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { updateBlockNumber } from '../application/actions'
 import { useAddPopup, useBlockNumber } from '../application/hooks'
 import { AppDispatch, AppState } from '../index'

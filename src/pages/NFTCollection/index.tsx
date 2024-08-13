@@ -6,7 +6,7 @@ import NFTPreview from './NFTPreview'
 import { ButtonGradientBorder, ButtonIXSGradient, ButtonPrimary } from 'components/Button'
 import { routes } from 'utils/routes'
 import AppBody from 'pages/AppBody'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 

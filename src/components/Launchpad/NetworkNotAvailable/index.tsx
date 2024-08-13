@@ -2,7 +2,7 @@ import React from 'react'
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import useSelectChain from 'hooks/useSelectChain'
 
 interface Props {

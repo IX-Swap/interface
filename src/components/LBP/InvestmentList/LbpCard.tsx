@@ -10,7 +10,7 @@ import { LbpStatusBadge } from './LbpStatusBadge'
 import { LbpSaleStatusInfo } from './LbpSaleStatusInfo'
 import { useKyc } from 'state/user/hooks'
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { MEDIA_WIDTHS } from 'theme'
 import { NETWORK_LOGOS } from 'constants/chains'
 

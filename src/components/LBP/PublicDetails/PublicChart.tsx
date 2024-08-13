@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import { AreaChart, XAxis, YAxis, Tooltip, DefaultTooltipContent, Area } from 'recharts'
 import styled from 'styled-components'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
 import { unixTimeToFormat } from 'utils/time'
 import { getPrice, getDecayAtStep } from '../utils/calculation'
