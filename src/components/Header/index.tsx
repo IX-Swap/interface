@@ -5,7 +5,6 @@ import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 import _get from 'lodash/get'
-
 import { useKYCState } from 'state/kyc/hooks'
 import { routes } from 'utils/routes'
 import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
@@ -178,7 +177,7 @@ export default function Header() {
   const { account, chainId } = useActiveWeb3React()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
-  const { isTokenManager } = useRole()
+  const { isTokenManager, isAdmin } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [openPreviewModal, setPreviewModal] = React.useState(false)
   const toggleWalletModal = useWalletModalToggle()
@@ -273,7 +272,7 @@ export default function Header() {
             </HeaderRow>
             <HeaderLinks />
             <HeaderControls>
-              {isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
+              {isAllowed(routes.tokenManager()) && account && isWhitelisted && (isTokenManager || isAdmin) && (
                 <IconWrapper>
                   <HeaderElement>
                     <NavLink

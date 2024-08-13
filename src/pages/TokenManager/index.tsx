@@ -74,7 +74,6 @@ const TokenManager = () => {
   const isLogged = account && me?.role
   const history = useHistory()
   const params = useParams<TokenManagerParams>()
-  const { pathname } = useLocation()
   const changeTab = useCallback(
     (tab: TokenManagerTab) => {
       history.push(`/token-manager/${tab}`)
@@ -88,11 +87,13 @@ const TokenManager = () => {
     setSelectedTab(tab)
   }, [params])
 
+  const isValidRole = me.role === ROLES.TOKEN_MANAGER || me.role === ROLES.ADMIN
   useEffect(() => {
-    if (me && me.role !== ROLES.TOKEN_MANAGER) {
-      history.push('/kyc')
+    if (me && isValidRole) {
+      return
     }
-  }, [me, history])
+    history.push('/kyc')
+  }, [me, history, isValidRole])
 
   const goToCreate = () => {
     history.push(routes.createPayoutEvent)
