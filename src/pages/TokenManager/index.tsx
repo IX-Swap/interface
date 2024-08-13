@@ -15,9 +15,13 @@ import { routes } from 'utils/routes'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 import { Line } from 'components/Line'
-import { Li } from 'pages/KYC/styleds'
 
-export type TokenManagerTab = 'my-tokens' | 'payout-events' | 'payout-history'
+export type TokenManagerTab =
+  | 'my-tokens'
+  | 'payout-events'
+  | 'payout-history'
+  | 'all-payout-events'
+  | 'no-upcoming-event'
 
 interface Tab {
   label: string
@@ -99,7 +103,7 @@ const TokenManager = () => {
   }
   return (
     <>
-      {pathname !== routes.manageTokens ? <Line /> : null}
+      <Line />
       <StyledHeaderWrapper>
         <TabsContainer>
           {tabs.map(({ value, label }, index) => {

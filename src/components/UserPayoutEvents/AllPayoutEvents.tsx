@@ -9,6 +9,7 @@ import { FILTERS } from 'components/MultipleFilters/constants'
 import { EmptyState } from './EmptyState'
 import { Card } from './Card'
 import { AllPayoutContainer, AllPayoutFilterContainer, AllPayoutListContainer, AllPayoutListLayout } from './styleds'
+import { TmEmptyPage } from 'components/TmEmptyPage'
 
 export const AllPayoutEvents = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
@@ -64,7 +65,7 @@ export const AllPayoutEvents = () => {
           </AllPayoutListLayout>
         </AllPayoutContainer>
       ) : (
-        <EmptyState />
+        <TmEmptyPage tab={'all-payout-events'} />
       )}
     </>
   )

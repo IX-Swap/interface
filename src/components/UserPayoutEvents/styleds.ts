@@ -10,10 +10,16 @@ export const Tabs = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-  border-bottom: 1px solid;
-  border-color: ${({ theme }) => theme.bg24};
-  margin: 0 -40px 0 -40px;
-  padding: 0 40px 0 40px;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 10px;
+    right: 10px;
+    border-bottom: 1px solid ${({ theme }) => theme.bg24};
+  }
 `
 
 export const Tab = styled.div<{ active: boolean }>`
@@ -163,9 +169,8 @@ export const AllPayoutFilterContainer = styled.div`
 export const AllPayoutListLayout = styled.div`
   margin: 0 -80px 0 -80px;
   padding: 40px 68px 0 68px;
-  background: ${({ theme }) => theme.bg1};
+  background: ${({ theme }) => theme.bg25};
 `
-
 
 export const AllPayoutListContainer = styled.div`
   margin-bottom: 40px;

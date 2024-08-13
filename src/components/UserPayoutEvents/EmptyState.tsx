@@ -1,12 +1,10 @@
 import React, { useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
-
-import { ButtonIXSGradient } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 import { routes } from 'utils/routes'
-import logoImg from 'assets/svg/logo-white.svg'
-
 import { EmptyContainer, EmptyText, NothingFound } from './styleds'
+import { TmEmptyPage } from 'components/TmEmptyPage'
 
 interface Props {
   filtred?: boolean
@@ -22,14 +20,12 @@ export const EmptyState = ({ filtred, my }: Props) => {
   const content = useMemo(() => {
     if (my) {
       return (
-        <NothingFound>
-          <EmptyText>
-            <Trans>{`Oops, you do not have any upcoming payout events!`}</Trans>
-          </EmptyText>
-          <ButtonIXSGradient onClick={redirectToSwap}>
-            <Trans>Buy Now</Trans>
-          </ButtonIXSGradient>
-        </NothingFound>
+        <>
+          <TmEmptyPage tab={'no-upcoming-event'} />
+          <PinnedContentButton style={{ width: '200px', marginTop: '20px' }} onClick={redirectToSwap}>
+            Buy Now
+          </PinnedContentButton>
+        </>
       )
     }
 
@@ -55,7 +51,6 @@ export const EmptyState = ({ filtred, my }: Props) => {
 
   return (
     <EmptyContainer>
-      <img src={logoImg} alt="logoImg" />
       {content}
     </EmptyContainer>
   )

@@ -15,6 +15,7 @@ import { NotAvailablePage } from 'components/NotAvailablePage'
 import { useAuthState } from 'state/auth/hooks'
 import { routes } from 'utils/routes'
 import { MEDIA_WIDTHS } from 'theme'
+import { Line } from 'components/Line'
 
 type SecurityTab = 'tokens' | 'payout-events' | ':tab'
 
@@ -35,12 +36,12 @@ const tabs: Tab[] = [
 
 const renderTab = (selectedTab: SecurityTab | string) => {
   switch (selectedTab) {
-  case 'tokens':
-    return <CustodianV2 />
-  case 'payout-events':
-    return <UserPayoutEvents />
-  default:
-    return <CustodianV2 />
+    case 'tokens':
+      return <CustodianV2 />
+    case 'payout-events':
+      return <UserPayoutEvents />
+    default:
+      return <CustodianV2 />
   }
 }
 
@@ -75,22 +76,27 @@ const SecurityTokens = () => {
       <Trans>RWAs</Trans>
     </AppBody>
   ) : (
-    <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
-      <TabsContainer>
-        {tabs.map(({ value, label }, index) => {
-          const active = selectedTab === value
-          return (
-            <>
-              <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={active}>
-                <TabLabel><Trans>{label}</Trans></TabLabel>
-                <BorderSimple active={selectedTab === value} />
-              </ToggleOption>
-            </>
-          )
-        })}
-      </TabsContainer>
-      {renderTab(selectedTab)}
-    </StyledBodyWrapper>
+    <>
+      <Line />
+      <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
+        <TabsContainer>
+          {tabs.map(({ value, label }, index) => {
+            const active = selectedTab === value
+            return (
+              <>
+                <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={active}>
+                  <TabLabel>
+                    <Trans>{label}</Trans>
+                  </TabLabel>
+                  <BorderSimple active={selectedTab === value} />
+                </ToggleOption>
+              </>
+            )
+          })}
+        </TabsContainer>
+        {renderTab(selectedTab)}
+      </StyledBodyWrapper>
+    </>
   )
 }
 
@@ -104,10 +110,17 @@ const TabsContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 32px;
-  border-bottom: 1px solid;
   border-color: ${({ theme }) => theme.bg24};
-  margin: 0 -40px 0 -40px;
-  padding: 0 40px 0 40px;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 10px;
+    right: 10px;
+    border-bottom: 1px solid ${({ theme }) => theme.bg24};
+  }
 `
 
 const TabLabel = styled.div`
