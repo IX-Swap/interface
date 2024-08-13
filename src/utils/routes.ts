@@ -35,7 +35,9 @@ export const routes = {
   tokenManager: (tab?: string, id?: number | null) =>
     `/token-manager/${tab || ':tab'}${id !== null ? `/${id || ':id?'}` : ''}`,
   admin: (tab?: string, id?: number | null) => `/admin/${tab || ':tab'}${id !== null ? `/${id || ':id?'}` : ''}`,
-
+  payoutHistory: '/token-manager/payout-history',
+  payoutEvent: '/token-manager/payout-events',
+  manageTokens: '/token-manager/my-tokens',
   launchpad: '/launchpad',
   offerPage: '/offers/:offerId',
   issuance: '/issuance',
