@@ -20,7 +20,7 @@ import { routes } from 'utils/routes'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
 import { PAYOUT_ADDRESS } from 'constants/addresses'
-import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
+import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useGetPayoutAuthorization } from 'state/token-manager/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
@@ -64,9 +64,10 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
   const tokenBalance = tokenCurrency?.isNative ? nativeBalance?.toFixed(4) : currencyBalance?.toFixed(4)
 
-  const [approvalState, approve] = useApproveCallback(
-    tokenCurrency ? CurrencyAmount.fromRawAmount(tokenCurrency, utils.parseUnits(tokenAmount, '18') as any) : undefined,
-    PAYOUT_ADDRESS[chainId]
+  const [approvalState, approve, refreshAllowance] = useAllowance(
+    token.value,
+    utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
+    PAYOUT_ADDRESS[chainId],
   )
 
   // payoutContractAddress is nullable when creating payout event
@@ -123,8 +124,9 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
   const pay = async () => {
     try {
-      if (approvalState === 'NOT_APPROVED') {
+      if (approvalState === ApprovalState.NOT_APPROVED) {
         await approve()
+        await refreshAllowance()
         handleIsLoading(false)
       } else {
         const payoutNonce = await payoutContract?.numberPayouts()
@@ -203,7 +205,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   }
 
   const buttonText = useMemo(() => {
-    if (approvalState === ApprovalState.NOT_APPROVED) {
+    if (payNow && approvalState === ApprovalState.NOT_APPROVED) {
       return `Approve ${token.label}`
     }
 
@@ -286,7 +288,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               name="payNow"
               isRadio
               checked={payNow}
-              disabled={isRecordFuture}
+              disabled={isRecordFuture || !id}
               onClick={() => handlePayNow(true)}
               label={
                 <Box>
@@ -324,7 +326,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               </TYPE.title10>
             </ErrorCard>
           )}
-          {tokenBalance && +tokenBalance < +tokenAmount ? (
+          {(payNow && tokenBalance && +tokenBalance < +tokenAmount) ? (
             <ErrorCard marginBottom="32px">
               <TYPE.title10 width={'350px'} color={'#FF6161'} textAlign="left">
                 <Trans>{`Insufficient token amount.`}</Trans>
@@ -334,7 +336,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
           <PinnedContentButton
             type="button"
             onClick={() => (onlyPay || payNow ? publishAndPaid() : onlyPublish())}
-            disabled={!tokenAmount || !tokenBalance || (payNow && +tokenBalance < +tokenAmount)}
+            disabled={!tokenAmount || !tokenBalance}
           >
             {!tokenBalance ? <LoaderThin size={20} /> : null}
             <Trans>{`${buttonText}`}</Trans>
