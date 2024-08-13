@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { useWeb3React } from 'hooks/useWeb3React'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import { PromptFooter } from './PromptFooter'
 import { ReactComponent as KYCPromptIcon } from 'assets/launchpad/svg/kyc-prompt-icon.svg'
@@ -68,11 +68,9 @@ export const KYCPrompt: React.FC<Props> = (props) => {
     }
   }, [account, !!kyc, isChangeRequested, isPending, isInProgress, isRejected, isAccredited, isDraft])
 
-  if (!account) return null
-
   return (
-    <Modal isOpen={isOpen} onDismiss={() => toggleModal(false)}>
-      {account && (
+    <Modal isOpen={isOpen} onDismiss={() => {}}>
+      {account ? (
         <KYCPromptContainer>
           <ExitIconContainer onClick={() => toggleModal(false)}>
             <CrossIcon />
@@ -168,6 +166,8 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
           {contactFormOpen && <ContactForm onSubmit={() => toggleModal(false)} />}
         </KYCPromptContainer>
+      ) : (
+        <Redirect to={routes.launchpad} />
       )}
     </Modal>
   )

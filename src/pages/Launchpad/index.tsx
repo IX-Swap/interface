@@ -29,11 +29,10 @@ const BannerWrapper = styled.div`
 export default function Launchpad() {
   const { chainId } = useWeb3React()
   const { config } = useWhitelabelState()
+  const blurred = detectWrongNetwork(chainId)
 
   const isIxSwap = config?.isIxSwap ?? false
   const enableLaunchpadBanner = config?.enableLaunchpadBanner ?? false
-  console.log('chainId', chainId)
-  const blurred = detectWrongNetwork(chainId)
 
 
   if (blurred) {
