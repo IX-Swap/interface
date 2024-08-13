@@ -13,7 +13,6 @@ import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import { TextInput } from 'pages/KYC/common'
 import { PinnedContentButton } from 'components/Button'
-import { useWeb3React } from '@web3-react/core'
 import { LbpFormValues } from '../types'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
 import { ethers } from 'ethers'
@@ -21,6 +20,8 @@ import { useLBPContract, useTokenContract } from 'hooks/useContract'
 // import NoTokenSidebar from './NoTokensSideBar'
 import Remaining from './Remaining'
 import { isMobile } from 'react-device-detect'
+import { checkWrongChain } from 'chains'
+import { useWeb3React } from '@web3-react/core'
 
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
@@ -60,21 +61,26 @@ const TradeTabs: React.FC<SideTabsBarProps> = ({ currentTab, onTabSelect }) => {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
+  const { account, chainId } = useWeb3React()
+  const lbp = useLBPContract(lbpData?.contractAddress ?? '')
+  const assetTokenContract = useTokenContract(lbpData?.assetTokenAddress ?? '')
   const [activeTab, setActiveTab] = React.useState<PublicDetails>(PublicDetails.buy)
   const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+
   const [clickedButton, setClickedButton] = useState<any>(null)
   const [slippage, setSlippage] = useState<any>('1.0')
   const [isPaused, setIsPaused] = useState(isPausedSideBar)
   const [isBlurred, setIsBlurred] = useState(isPausedSideBar)
   const [tokenBalance, setTokenBalance] = useState('')
   const [tokenDecimals, setTokenDecimals] = useState(0)
-  const { account, chainId } = useWeb3React()
   const [shareBalance, setShareBalance] = useState<string | null>(null)
   const [tokenOption, setTokenOption] = useState<any | null>(null)
-  const lbp = useLBPContract(lbpData?.contractAddress ?? '')
-  const assetTokenContract = useTokenContract(lbpData?.assetTokenAddress ?? '')
+
+  const network = lbpData?.network ?? ''
+  const { isWrongChain } = checkWrongChain(chainId, network)
+
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   const fetchShareBalance = async () => {
     try {
@@ -115,8 +121,10 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
   }
 
   useEffect(() => {
-    fetchData()
-  }, [assetTokenContract, account, lbpData, chainId])
+    if (!isWrongChain) {
+      fetchData()
+    }
+  }, [assetTokenContract, account, lbpData, chainId, isWrongChain])
 
   const handleTabChange = (tab: PublicDetails) => {
     setActiveTab(tab)
@@ -174,21 +182,23 @@ const SideBar: React.FC<SideBarProps> = ({ lbpData, isPausedSideBar }) => {
         </Header>
         <Body>
           {/* <NoTokenSidebar/> Hiding for now will render conditionals. */}
-          <BuySellFields
-            allowSlippage={lbpData?.allowSlippage || false}
-            tokenDecimals={tokenDecimals}
-            contractAddress={lbpData?.contractAddress}
-            assetTokenAddress={lbpData?.assetTokenAddress}
-            shareTokenAddress={lbpData?.shareAddress}
-            tokenBalance={tokenBalance}
-            activeTab={activeTab}
-            slippage={slippage}
-            shareBalance={shareBalance}
-            tokenOption={tokenOption}
-            id={lbpData?.id}
-            logo={lbpData?.logo}
-            fetchBalance={fetchData}
-          />
+          {!isWrongChain ? (
+            <BuySellFields
+              allowSlippage={lbpData?.allowSlippage || false}
+              tokenDecimals={tokenDecimals}
+              contractAddress={lbpData?.contractAddress}
+              assetTokenAddress={lbpData?.assetTokenAddress}
+              shareTokenAddress={lbpData?.shareAddress}
+              tokenBalance={tokenBalance}
+              activeTab={activeTab}
+              slippage={slippage}
+              shareBalance={shareBalance}
+              tokenOption={tokenOption}
+              id={lbpData?.id}
+              logo={lbpData?.logo}
+              fetchBalance={fetchData}
+            />
+          ) : null}
         </Body>
       </Container>
 
