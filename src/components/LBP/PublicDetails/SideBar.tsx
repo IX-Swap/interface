@@ -20,7 +20,7 @@ import { ethers } from 'ethers'
 import { useLBPContract, useTokenContract } from 'hooks/useContract'
 import Remaining from './Remaining'
 import { isMobile } from 'react-device-detect'
-import { checkWrongChain } from 'chains'
+import { checkWrongChain } from 'utils/chains'
 
 const TabsData = [
   { title: 'BUY', value: PublicDetails.buy },
