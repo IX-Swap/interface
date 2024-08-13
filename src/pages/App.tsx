@@ -204,7 +204,10 @@ export default function App() {
   const isAdminKyc = pathname.includes('admin')
   const isTokenManager = pathname === routes.manageTokens
   const isWhiteBackground =
-    pathname === routes.launchpad || pathname === routes.payoutHistory || pathname === routes.payoutEvent
+    pathname === routes.launchpad ||
+    pathname === routes.payoutHistory ||
+    pathname === routes.payoutEvent ||
+    pathname === routes.manageTokens
   const visibleBody = useMemo(() => {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
