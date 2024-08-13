@@ -277,12 +277,12 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
                   withScroll
                   isMulti
                   error={touched.managerOf && errors.managerOf}
-                  label={`Security Tokens:`}
+                  label={`RWAs:`}
                   isClearable={false}
                   selectedItem={managerOf}
                   items={Object.values(tokensOptions)}
                   onSelect={handleSelectedTokens}
-                  placeholder="Choose Security Tokens"
+                  placeholder="Choose RWAs"
                 />
               )}
               <div style={{ display: 'flex' }}>

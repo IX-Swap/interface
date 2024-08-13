@@ -29,7 +29,7 @@ export interface AdminParams {
 }
 
 const tabs: Tab[] = [
-  { label: 'Security Tokens', value: 'tokens' },
+  { label: 'RWAs', value: 'tokens' },
   { label: 'Payout Events', value: 'payout-events' },
 ]
 
@@ -72,7 +72,7 @@ const SecurityTokens = () => {
 
   return blurred ? (
     <AppBody blurred>
-      <Trans>Security Tokens</Trans>
+      <Trans>RWAs</Trans>
     </AppBody>
   ) : (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
