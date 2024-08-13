@@ -1,42 +1,37 @@
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { Flex } from 'rebass'
-import { Trans } from '@lingui/macro'
 import { useHistory, useParams } from 'react-router-dom'
 import { capitalize } from '@material-ui/core'
-
 import { useActiveWeb3React } from 'hooks/web3'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import { Loadable } from 'components/LoaderHover'
-import { ButtonText } from 'components/Button'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useAuthState } from 'state/auth/hooks'
 import { useUserState } from 'state/user/hooks'
 import { useGetPayoutItem, usePayoutState } from 'state/payout/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import { ROLES } from 'constants/roles'
-import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+// import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { PayoutEvent } from 'state/token-manager/types'
 import { useTokensList } from 'hooks/useTokensList'
 import { PAYOUT_STATUS } from 'constants/enums'
-
 import { PayoutForm } from './PayoutForm'
 import { PageTitle } from './styleds'
 import { Info } from './Info'
 import { FormValues } from './utils'
+import { TYPE } from 'theme'
+import styled from 'styled-components'
 
 const EditPayoutEventPage: FC = () => {
   const { id } = useParams<{ id?: string }>()
   const [cookies] = useCookies(['annoucementsSeen'])
   const history = useHistory()
-
   const { account } = useActiveWeb3React()
   const { token: jwtToken } = useAuthState()
   const { me } = useUserState()
-
   const { loadingRequest } = usePayoutState()
   const isLoggedIn = !!jwtToken && !!account
-
   const [payout, setPayout] = useState<PayoutEvent>()
   const [status, setStatus] = useState<PAYOUT_STATUS>()
   const [payoutFormData, setPayoutFormData] = useState<FormValues>()
@@ -93,6 +88,7 @@ const EditPayoutEventPage: FC = () => {
         tokenAmount: payout.tokenAmount,
         type: capitalize(payout.type),
         otherType: payout.otherType,
+        payoutContractAddress: payout.payoutContractAddress,
       })
     }
   }, [payout, payoutTokenCurrency])
@@ -114,20 +110,34 @@ const EditPayoutEventPage: FC = () => {
   return (
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
-      <StyledBodyWrapper style={{ maxWidth: 840 }} hasAnnouncement={!cookies.annoucementsSeen}>
-        <Flex marginBottom="32px" alignItems="center">
-          <ButtonText onClick={onBack}>
+      <FullScreenBackground>
+        <StyledBodyWrapper style={{ minWidth: 1200 }} hasAnnouncement={!cookies.annoucementsSeen}>
+          <Flex marginBottom="32px" alignItems="center">
+            <PageTitle textAlign="center" margin="0 auto">
+              <TYPE.title6>Edit Payout Event</TYPE.title6>
+            </PageTitle>
+            {/* just comment it for now we may need this validation is future  */}
+            {/* <ButtonText onClick={onBack}>
             <ArrowLeft fill="white !important" />
-          </ButtonText>
-          <PageTitle textAlign="center" margin="0 auto">
-            <Trans>Edit Payout Event</Trans>
-          </PageTitle>
-        </Flex>
-        <Info />
-        <PayoutForm payoutData={payoutFormData} status={status} paid={payout?.isPaid ?? false} />
-      </StyledBodyWrapper>
+          </ButtonText> */}
+          </Flex>
+          <Info />
+          <PayoutForm payoutData={payoutFormData} status={status} paid={payout?.isPaid ?? false} />
+        </StyledBodyWrapper>
+      </FullScreenBackground>
     </Loadable>
   )
 }
 
 export default EditPayoutEventPage
+
+const FullScreenBackground = styled.div`
+  background-color: #ffffff;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`

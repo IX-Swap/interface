@@ -15,11 +15,12 @@ import { DateRangePickerFilter } from 'components/DateRangePicker'
 import { useUserState } from 'state/user/hooks'
 
 import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions } from './constants'
-import { Container, DarkBlueCard, FiltersContainer, ResetFilters } from './styleds'
+import { Container, DarkBlueCard, FiltersContainer } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
 import { MobileFilters } from './MobileFilters'
 import { Option, useTokensList } from 'hooks/useTokensList'
 import { ReactComponent as IdentityIcon } from 'assets/images/identityIcon.svg'
+import { ReactComponent as ArrowDownIcon } from 'assets/images/arrow-down.svg'
 import { ReactComponent as CalanderIcon } from 'assets/images/newCalander.svg'
 import { PinnedContentButton } from 'components/Button'
 
@@ -29,6 +30,8 @@ interface Props {
   searchPlaceholder?: string
   onFiltersChange?: (params: Record<string, any>) => void
   forManager?: boolean
+  isClearable?: boolean
+  fullWidth?: boolean
 }
 
 let timer = null as any
@@ -39,6 +42,8 @@ export const MultipleFilters = ({
   searchPlaceholder = 'Search for Wallet',
   onFiltersChange,
   forManager = false,
+  isClearable,
+  fullWidth = true,
 }: Props) => {
   // const isMobile = useMediaQuery(`(max-width:${MEDIA_WIDTHS.upToLarge}px)`)
 
@@ -50,9 +55,9 @@ export const MultipleFilters = ({
   const managerSecTokensOptions = useMemo(() => {
     if (me?.managerOf?.length) {
       return me.managerOf.map(({ token }) => ({
-        label: token.symbol,
-        value: token.id,
-        icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+        label: token?.symbol,
+        value: token?.id,
+        icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
       }))
     }
     return []
@@ -151,7 +156,7 @@ export const MultipleFilters = ({
   }
 
   const onResetFilters = () => {
-    setValues({ ...initialValues, ...(withSearch  && { search: values.search }) })
+    setValues({ ...initialValues, ...(withSearch && { search: values.search }) })
   }
 
   const isEmpty = useMemo(() => Object.values(values).every((value) => !value || value?.length === 0), [values])
@@ -166,33 +171,24 @@ export const MultipleFilters = ({
       />
     ),
     [FILTERS.ROLES]: (
-      <>
-        <IdentityIcon style={{ position: 'relative', top: '3px', left: '120px', zIndex: '1' }} />
-        <FilterDropdown
-          placeholder="Role"
-          selectedItems={values[FILTERS.ROLES]}
-          onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item)}
-          items={rolesOptions}
-        />
-      </>
-      // <FilterDropdown
-      //   placeholder="Role"
-      //   selectedItems={values[FILTERS.ROLES]}
-      //   onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item)}
-      //   items={rolesOptions}
-      // />
+      <FilterDropdown
+        placeholder="Role"
+        selectedItems={values[FILTERS.ROLES]}
+        onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item)}
+        items={rolesOptions}
+      />
     ),
     [FILTERS.SEC_TOKENS]: (
-      <>  <CalanderIcon style={{ position: 'relative', top: '5px', left: '150px', zIndex: '1' }} />     <FilterDropdown
-      placeholder="Security token"
-      selectedItems={values[FILTERS.SEC_TOKENS]}
-      onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item)}
-      items={forManager ? managerSecTokensOptions : secTokensOptions}
-    /></>
-
+      <FilterDropdown
+        placeholder="SEC token"
+        selectedItems={values[FILTERS.SEC_TOKENS]}
+        onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item)}
+        items={forManager ? managerSecTokensOptions : secTokensOptions}
+      />
     ),
     [FILTERS.STATUS]: (
       <FilterDropdown
+        className="filter-status"
         placeholder="Status"
         selectedItems={values[FILTERS.STATUS]}
         onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item)}
@@ -224,7 +220,6 @@ export const MultipleFilters = ({
           setFieldValue('startDate', value[0] ? dayjs(value[0]).format(format) : value[0])
           setFieldValue('endDate', value[1] ? dayjs(value[1]).format(format) : value[1])
         }}
-        // maxDate={new Date()}
       />
     ),
     [FILTERS.RECORD_DATE]: (
@@ -240,14 +235,14 @@ export const MultipleFilters = ({
             onClick={inputProps?.onClick as any}
             isOpen={Boolean(focused || values.recordDate)}
           >
-            <TYPE.body2
-              color="inherit"
-              fontWeight={300}
+            <TYPE.main1
+              color="#8F8FB2"
               overflow="hidden"
               style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
             >
               <Trans>Record date</Trans>
-            </TYPE.body2>
+            </TYPE.main1>
+            <ArrowDownIcon />
           </DarkBlueCard>
         )}
       />
@@ -298,9 +293,9 @@ export const MultipleFilters = ({
   // }
 
   return (
-    <Container>
+    <Container sx={{ gap: fullWidth ? '16px' : 0 }}>
       {withSearch && filterComponents[FILTERS.SEARCH]}
-      <FiltersContainer>
+      <FiltersContainer className="filters-container">
         {filters.map(
           (filter, index) =>
             filter !== FILTERS.SEARCH && (
@@ -308,9 +303,11 @@ export const MultipleFilters = ({
             )
         )}
       </FiltersContainer>
-      <PinnedContentButton disabled={isEmpty} onClick={onResetFilters}>
-        Clear Filters
-      </PinnedContentButton>
+      {isClearable ? (
+        <PinnedContentButton disabled={isEmpty} onClick={onResetFilters}>
+          Clear Filters
+        </PinnedContentButton>
+      ) : null}
     </Container>
   )
 }

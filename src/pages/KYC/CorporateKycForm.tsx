@@ -28,7 +28,7 @@ import { DateInput } from 'components/DateInput'
 import moment from 'moment'
 import dayjs from 'dayjs'
 
-import { Select, TextInput, Uploader } from './common'
+import { Select, TextInput } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, StyledStickyBox, StyledBigPassed, ExtraInfoCardCountry } from './styleds'
@@ -40,6 +40,7 @@ import { corporateTransformApiData, corporateTransformKycDto } from './utils'
 import { Box } from 'rebass'
 import { Plus } from 'react-feather'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { Uploader } from 'components/Uploader'
 
 type FormSubmitHanderArgs = {
   createFn: (body: any) => any
@@ -598,7 +599,7 @@ export default function CorporateKycForm() {
                               title="Authorization Document"
                               subtitle="Board Resolution or equivalent dated within the last 3 months"
                               files={values.authorizationDocuments}
-                              onDrop={(file) => {
+                              onDrop={(file: any) => {
                                 handleDropImage(file, values, 'authorizationDocuments', setFieldValue)
                               }}
                               error={errors.authorizationDocuments && errors.authorizationDocuments}
@@ -614,7 +615,7 @@ export default function CorporateKycForm() {
                               error={errors.authorizationIdentity}
                               title="Proof of Identity"
                               files={values.authorizationIdentity}
-                              onDrop={(file) => {
+                              onDrop={(file: any) => {
                                 handleDropImage(file, values, 'authorizationIdentity', setFieldValue)
                               }}
                               handleDeleteClick={handleImageDelete(
@@ -1255,7 +1256,7 @@ export default function CorporateKycForm() {
                             title="Corporate documents"
                             subtitle="Certificate of Incorporation, Registration or Formation, Certificate of Good Standing, Memorandum and Articles of Association, Register of Shareholders, Directors, Managers and/or Officers, Board Resolution or Mandate authorizing the establishment of business relationship with AMM (Bahamas) Ltd, Partnership or Trust Agreement or Deed, or their respective equivalents."
                             files={values.corporateDocuments}
-                            onDrop={(file) => {
+                            onDrop={(file: any) => {
                               handleDropImage(file, values, 'corporateDocuments', setFieldValue)
                             }}
                             error={errors.corporateDocuments && errors.corporateDocuments}
@@ -1288,7 +1289,7 @@ export default function CorporateKycForm() {
                             title="Additional Documents"
                             subtitle={`For ${config?.name || 'IXS'} Launchpad Issuers and ${config?.name || 'IXS'} DEX Applicants, please also enclose the most recent financial documents (balance sheet, P&L statement or Annual Returns), Certificate of Incumbency and Company Organization Chart showing Ownership Structure (signed copy). All documents must be dated within the last 3 months.`}
                             files={values.financialDocuments}
-                            onDrop={(file) => {
+                            onDrop={(file: any) => {
                               handleDropImage(file, values, 'financialDocuments', setFieldValue)
                             }}
                             error={errors.financialDocuments && errors.financialDocuments}

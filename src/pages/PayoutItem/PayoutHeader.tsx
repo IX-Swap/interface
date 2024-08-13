@@ -1,23 +1,21 @@
 import React, { FC } from 'react'
 import { Flex } from 'rebass'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { NavLink, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { ButtonGradientBorder, ButtonPrimary, ButtonText } from 'components/Button'
-import CurrencyLogo from 'components/CurrencyLogo'
+import { ButtonSecondary, ButtonPrimary } from 'components/Button'
 import { ReadMore } from 'components/ReadMore'
-import Column from 'components/Column'
-import { MEDIA_WIDTHS, TYPE } from 'theme'
-import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+import { MEDIA_WIDTHS } from 'theme'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { routes } from 'utils/routes'
 import { PayoutEvent } from 'state/token-manager/types'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 
 import { useStatusButtonInfo } from './utils'
 import { InfoBlock } from './InfoBlock'
+import { StyledBodyWrapper } from 'pages/SecurityTokens'
+import TokenNetwork from 'components/TokenNetwork'
 
 interface Props {
   payout: PayoutEvent
@@ -28,55 +26,50 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
   const { secToken, payoutToken, description, status, type, attachments, title, otherType } = payout
   const history = useHistory()
 
-  const goBack = () => {
-    history.push(isMyPayout ? '/token-manager/payout-events' : routes.securityTokens('payout-events'))
-  }
-
   const edit = () => {
     history.push(`/payout/edit/${payout.id}`)
   }
 
   return (
-    <Column style={{ gap: '32px' }}>
-      <Flex>
-        <BackContainer>
-          <ButtonText height="fit-content" onClick={goBack}>
-            <ArrowLeft fill="white !important" />
-          </ButtonText>
-        </BackContainer>
-        <TitleContainer>
-          <TitleContent>
-            <LogoContainer>
-              <CurrencyLogo currency={new WrappedTokenInfo(secToken)} size="52px" />
-            </LogoContainer>
-            <Title>
-              <Trans>{title}</Trans>
-            </Title>
-          </TitleContent>
+    <Container>
+      <Flex justifyContent='center'>
+        <StyledBodyWrapper>
+          <StyledSummaryBlock>
+            <TokenInformationContainer>
+              <TitleContent>
+                <TokenNetwork
+                  token={secToken}
+                  network={secToken.network}
+                />
+                <SecTokenLink to={routes.securityToken(secToken?.catalogId)}>
+                  <Trans>{title}</Trans>
+                  <span className='secTokenLinkSymbol'>
+                    {secToken?.originalSymbol ?? secToken?.symbol}
+                  </span>
+                </SecTokenLink>
+              </TitleContent>
+              <ReadMoreContainer>
+                <ReadMore more={`Read More`} less={`Show Less`} lines={8}>
+                  {description}
+                </ReadMore>
+              </ReadMoreContainer>
+            </TokenInformationContainer>
 
-          <SecTokenLink to={routes.securityToken(secToken.catalogId)}>
-            {secToken.originalSymbol ?? secToken.symbol}
-          </SecTokenLink>
-
-          <StatusAndEdit>
-            {isMyPayout && status !== PAYOUT_STATUS.ENDED && <EditButton onClick={edit}>Edit</EditButton>}
-            <PayoutStatus status={status} />
-          </StatusAndEdit>
-        </TitleContainer>
+            <EventContainer>
+              <StatusAndEdit>
+                {isMyPayout && status !== PAYOUT_STATUS.ENDED && <EditButton onClick={edit}>Edit</EditButton>}
+                <PayoutStatus status={status} />
+              </StatusAndEdit>
+              <InfoBlock
+                type={capitalizeFirstLetter(type === 'other' ? otherType : type)}
+                token={payoutToken}
+                attachments={attachments}
+              />
+            </EventContainer>
+          </StyledSummaryBlock>
+        </StyledBodyWrapper>
       </Flex>
-
-      <ReadMoreContainer>
-        <ReadMore more={`Read More`} less={`Show Less`} lines={8}>
-          {description}
-        </ReadMore>
-      </ReadMoreContainer>
-
-      <InfoBlock
-        type={capitalizeFirstLetter(type === 'other' ? otherType : type)}
-        token={payoutToken}
-        attachments={attachments}
-      />
-    </Column>
+    </Container>
   )
 }
 
@@ -90,6 +83,17 @@ export const PayoutStatus: FC<{ status: PAYOUT_STATUS }> = ({ status }) => {
   )
 }
 
+const Container = styled.div`
+  width: 100%;
+  background: ${({ theme }) => theme.bg0};
+  padding: 5rem 0;
+  margin-top: -35px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: calc(100% + 24px);
+    padding: 3rem 1rem;
+  }
+`
+
 const TitleContent = styled.div`
   display: flex;
   align-items: center;
@@ -102,104 +106,73 @@ const TitleContent = styled.div`
   }
 `
 
-const LogoContainer = styled.div`
-  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    display: flex;
-    align-items: center;
-    height: 42px;
-    > img,
-    svg {
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
-      min-height: 32px;
-    }
-  }
-`
-
-const BackContainer = styled.div`
-  display: flex;
-  align-items: center;
-  height: 56px;
-  margin-right: 16px;
-  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    height: 42px;
-  }
-`
-
 const StatusAndEdit = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
-  order: 2;
-  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    order: 3;
+`
+
+const StyledSummaryBlock = styled(Flex)`
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 32px;
+  @media (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    flex-direction: row;
+    column-gap: 0;
   }
 `
 
-const TitleContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1;
-  row-gap: 2px;
-  > * {
-    align-self: center;
+const TokenInformationContainer = styled.div`
+  width: 100%;
+  @media (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 60%;
   }
 `
 
-const Title = styled(TYPE.title4)`
-  margin-left: 4px !important;
-  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    font-size: 28px !important;
-    line-height: 42px !important;
+const EventContainer = styled(Flex)`
+  width: 100%;
+  flex-direction: column;
+  gap: 18px;
+  @media (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 35%;
   }
 `
 
 const SecTokenLink = styled(NavLink)`
-  font-size: 18px;
-  line-height: 27px;
-  text-decoration: underline;
-  flex: 1;
+  font-size: 40px;
+  font-weight: 800;
+  text-decoration: auto;
   color: ${({ theme }) => theme.text1};
-  order: 3;
   @media (min-width: ${MEDIA_WIDTHS.upToSmall + 1}px) {
-    margin-left: 52px;
-    min-width: 100%;
+    margin-left: 14px;
   }
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     order: 2;
   }
+
+  .secTokenLinkSymbol {
+    margin-left: .5rem;
+    color: ${({ theme }) => theme.text6};
+  }
 `
 
-const EditButton = styled(ButtonGradientBorder)`
-  min-height: 32px;
-  max-height: 32px;
-  padding: 8px 24px;
-  font-size: 14px;
-  line-height: 16px;
+const EditButton = styled(ButtonSecondary)`
+  padding: 15px 0;
+  font-size: 13px;
   font-weight: 600;
-  border-radius: 40px;
-
-  :before {
-    padding: 1px;
-  }
+  border-radius: 6px;
 `
 
 const Status = styled(ButtonPrimary)<{ backgroundColor: string; color: string; borderColor: string | null }>`
   background: ${({ backgroundColor }) => backgroundColor};
   color: ${({ color }) => color};
   border: ${({ borderColor }) => (borderColor ? `1px solid ${borderColor}` : 'none')};
-  min-height: 32px;
-  max-height: 32px;
-  padding: 8px 16px;
-  font-size: 16px;
-  line-height: 16px;
+  padding: 15px 0;
+  font-size: 13px;
   font-weight: 600;
   pointer-events: none;
-  border-radius: 40px;
-  width: auto;
-  margin-left: 16px;
+  border-radius: 6px;
 `
 
 export const ReadMoreContainer = styled.div`

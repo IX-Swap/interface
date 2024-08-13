@@ -2,18 +2,12 @@ import React, { FC, useEffect, useState, useMemo } from 'react'
 import { useFormik, FormikProvider } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { useWeb3React } from '@web3-react/core'
-import { Trans } from '@lingui/macro'
-
 import dayjs from 'dayjs'
-
 import { Select } from 'pages/KYC/common'
 import { FormGrid } from 'pages/KYC/styleds'
-
 import { DateInput } from 'components/DateInput'
 import CurrencyLogo from 'components/CurrencyLogo'
-
 import { TYPE } from 'theme'
-
 import { useUserState } from 'state/user/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
@@ -24,14 +18,11 @@ import {
   useUpdateDraftPayout,
   useUpdatePayout,
 } from 'state/payout/hooks'
-
 import { routes } from 'utils/routes'
 import { availableInputsForEdit, FormValues, transformPayoutDraftDTO } from './utils'
-
-import { FormCard } from './styleds'
+import { PayoutFormCard } from './styleds'
 import { initialValues } from './mock'
 import { validation } from './validation'
-
 import { Summary } from './Summary'
 import { PayoutEventBlock } from './PayoutEventBlock'
 import { PAYOUT_STATUS } from 'constants/enums'
@@ -49,9 +40,9 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   const secTokensOptions = useMemo(() => {
     if (me?.managerOf?.length) {
       return me.managerOf.map(({ token }) => ({
-        label: token.symbol,
-        value: token.id,
-        icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+        label: token?.symbol,
+        value: token?.id,
+        icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
       }))
     }
     return []
@@ -174,15 +165,13 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
-        <FormCard marginBottom="32px">
-          <TYPE.title6 marginBottom="28px">
-            <Trans>SECURITY TOKENS</Trans>
-          </TYPE.title6>
+        <PayoutFormCard marginBottom="32px">
+          <TYPE.body fontWeight='600' marginBottom="28px">Security Tokens</TYPE.body>
           <FormGrid style={{ marginBottom: 20 }}>
             <Select
               tooltipText="Select the security token you want to distribute for this payout event."
               label="Security Token"
-              placeholder="Choose security token"
+              placeholder=" security token"
               selectedItem={values.secToken}
               items={secTokensOptions}
               onSelect={(newToken) => {
@@ -225,7 +214,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
             setTokenAmount={setTokenAmount}
             onValueChange={onValueChange}
           />
-        </FormCard>
+        </PayoutFormCard>
 
         <PayoutEventBlock
           status={status}

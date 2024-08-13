@@ -8,7 +8,7 @@ import { FILTERS } from 'components/MultipleFilters/constants'
 
 import { EmptyState } from './EmptyState'
 import { Card } from './Card'
-import { AllPayoutContainer, AllPayoutListContainer } from './styleds'
+import { AllPayoutContainer, AllPayoutFilterContainer, AllPayoutListContainer, AllPayoutListLayout } from './styleds'
 
 export const AllPayoutEvents = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
@@ -32,31 +32,36 @@ export const AllPayoutEvents = () => {
 
   return (
     <>
-      <LoadingIndicator isLoading={loadingRequest} />
+      {list.items?.length === 0 ? <LoadingIndicator isLoading={loadingRequest} /> : null}
       {list.items?.length || haveFilters ? (
         <AllPayoutContainer>
-          <MultipleFilters
-            filters={[
-              FILTERS.STATUS,
-              FILTERS.PAYOUT_TYPE,
-              FILTERS.SEC_TOKENS,
-              FILTERS.PAYOUT_PERIOD,
-              FILTERS.RECORD_DATE,
-            ]}
-            onFiltersChange={handleFilters}
-          />
-          {list.items?.length ? (
-            <>
-              <AllPayoutListContainer>
-                {list.items.map((payout) => (
-                  <Card key={payout.id} data={payout} />
-                ))}
-              </AllPayoutListContainer>
-              <Pagination totalPages={list.totalPages} page={list.page || 1} onPageChange={onPageChange} />
-            </>
-          ) : (
-            <EmptyState filtred />
-          )}
+          <AllPayoutFilterContainer>
+            <MultipleFilters
+              filters={[
+                FILTERS.STATUS,
+                FILTERS.PAYOUT_TYPE,
+                FILTERS.SEC_TOKENS,
+                FILTERS.PAYOUT_PERIOD,
+                FILTERS.RECORD_DATE,
+              ]}
+              onFiltersChange={handleFilters}
+              fullWidth={false}
+            />
+          </AllPayoutFilterContainer>
+          <AllPayoutListLayout>
+            {list.items?.length ? (
+              <>
+                <AllPayoutListContainer>
+                  {list.items.map((payout) => (
+                    <Card key={payout.id} data={payout} />
+                  ))}
+                </AllPayoutListContainer>
+                <Pagination totalPages={list.totalPages} page={list.page || 1} onPageChange={onPageChange} />
+              </>
+            ) : (
+              <EmptyState filtred />
+            )}
+          </AllPayoutListLayout>
         </AllPayoutContainer>
       ) : (
         <EmptyState />

@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import { Border, ToggleOption } from 'components/Tabs'
+import { BorderSimple, ToggleOption } from 'components/Tabs'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
 import CustodianV2 from 'pages/CustodianV2'
@@ -14,7 +14,6 @@ import { useCookies } from 'react-cookie'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { useAuthState } from 'state/auth/hooks'
 import { routes } from 'utils/routes'
-import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { MEDIA_WIDTHS } from 'theme'
 
 type SecurityTab = 'tokens' | 'payout-events' | ':tab'
@@ -36,12 +35,12 @@ const tabs: Tab[] = [
 
 const renderTab = (selectedTab: SecurityTab | string) => {
   switch (selectedTab) {
-    case 'tokens':
-      return <CustodianV2 />
-    case 'payout-events':
-      return <UserPayoutEvents />
-    default:
-      return <CustodianV2 />
+  case 'tokens':
+    return <CustodianV2 />
+  case 'payout-events':
+    return <UserPayoutEvents />
+  default:
+    return <CustodianV2 />
   }
 }
 
@@ -53,8 +52,6 @@ const SecurityTokens = () => {
 
   const history = useHistory()
   const params = useParams<AdminParams>()
-
-  const { config } = useWhitelabelState()
 
   const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const isLoggedIn = !!token && !!account
@@ -79,19 +76,19 @@ const SecurityTokens = () => {
     </AppBody>
   ) : (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
-      {!config?.id && (
-        <TabsContainer>
-          {tabs.map(({ value, label }, index) => (
+      <TabsContainer>
+        {tabs.map(({ value, label }, index) => {
+          const active = selectedTab === value
+          return (
             <>
-              <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-                <TabLabel>{/* <Trans>{label}</Trans> */}</TabLabel>
-                <Border active={selectedTab === value} />
+              <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={active}>
+                <TabLabel><Trans>{label}</Trans></TabLabel>
+                <BorderSimple active={selectedTab === value} />
               </ToggleOption>
             </>
-          ))}
-        </TabsContainer>
-      )}
-
+          )
+        })}
+      </TabsContainer>
       {renderTab(selectedTab)}
     </StyledBodyWrapper>
   )
@@ -107,22 +104,29 @@ const TabsContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 32px;
-  column-gap: 32px;
+  border-bottom: 1px solid;
+  border-color: ${({ theme }) => theme.bg24};
+  margin: 0 -40px 0 -40px;
+  padding: 0 40px 0 40px;
 `
 
 const TabLabel = styled.div`
-  @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
-    font-size: 20px;
-  }
+  cursor: pointer;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  height: 80px;
+  display: flex;
+  align-items: center;
 `
 
 export const StyledBodyWrapper = styled(BodyWrapper)`
-  // background: ${({ theme }) => theme.bg0};
   box-shadow: none;
   width: 100%;
   max-width: 1358px;
-  // border-radius: 8px;
   padding-top: 0px;
+  padding-bottom: 0px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 0px;
   }

@@ -92,6 +92,7 @@ export function colors(configColors?: WlColors): Colors {
     bg24: '#E6E6FF',
     bg25: '#FFFFFF',
     bg26: '#6666FF',
+    bg27: '#e8e8ff',
     bgG1:
       wlColors.background?.main ||
       'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
@@ -178,18 +179,27 @@ export function colors(configColors?: WlColors): Colors {
     red1: '#FD4040',
     red2: '#F82D3A',
     red3: '#D60000',
+    red4: '#FF9999',
+    red41: 'rgba(255, 153, 153, 0.1)',
+    red45: 'rgba(255, 153, 153, 0.5)',
     green1: wlColors.status?.success || '#0ECC88',
     green2: '#9DF9B1B2',
     green3: '#9DF9B1B3',
+    green4: '#24E49F',
     yellow1: '#e3a507',
     yellow2: '#ff8f00',
     yellow3: '#F3B71E',
     yellow4: wlColors.status?.warning || '#D1BF1E',
+    yellow5: '#FFD056',
     orange: '#FF6D41',
     blue1: '#2172E5',
     blue2: '#5199FF',
     blue3: '#5B7BCF',
+    blue4: '#48A1F3',
+
     orange1: '#FF6D41',
+    orange2: '#FFAD31',
+    orange25: 'rgba(255, 173, 49, 0.1)',
 
     error: wlColors.status?.error || '#FF9999',
     success: wlColors.status?.success || '#27AE60',
@@ -436,6 +446,9 @@ export const TYPE = {
   description7(props: TextProps) {
     return <TextWrapper fontWeight={700} fontSize={24} lineHeight={'45px'} color={'text2'} {...props} />
   },
+  description8(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={13} lineHeight={'30px'} color={'text2'} {...props} />
+  },
   small(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={13} color={'text11'} {...props} />
   },
@@ -486,7 +499,7 @@ export const ThemedGlobalStyle = createGlobalStyle`
 
   /* svg{
     ${({ theme }) =>
-      theme.config.elements &&
+    theme.config.elements &&
       css`
         stroke: ${({ theme }) => theme.config.elements.main};
       `};

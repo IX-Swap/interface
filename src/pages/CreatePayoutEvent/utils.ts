@@ -23,6 +23,7 @@ export interface FormValues {
   secToken: Option | null
   token: Option | null
   files: any[]
+  payoutContractAddress?: string
 }
 
 export const availableInputsForEdit = (status = '', paid = false) => {
