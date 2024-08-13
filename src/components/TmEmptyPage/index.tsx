@@ -22,17 +22,21 @@ export const TmEmptyPage = ({ tab, children, filtred }: Props) => {
         return `No Payout Event Created`
       case 'payout-history':
         return `No Payout History`
+      case 'all-payout-events':
+        return `No Payout Events!`
+           case 'no-upcoming-event':
+        return 'Oops, you do not have any upcoming payout events!'
       default:
         return `No Data`
     }
   }, [tab])
 
   return (
-    <Container style={{marginTop: '130px'}}>
-      <img style={{width: '200px'}} src={logoImg} alt="logoImg" />
+    <Container style={{ marginTop: '130px' }}>
+      <img style={{ width: '200px' }} src={logoImg} alt="logoImg" />
       {!filtred ? (
         <>
-          <TYPE.title5 style={{marginTop: '20px'}}>{text}</TYPE.title5>
+          <TYPE.title5 style={{ marginTop: '20px' }}>{text}</TYPE.title5>
           {children}
         </>
       ) : (
@@ -41,7 +45,10 @@ export const TmEmptyPage = ({ tab, children, filtred }: Props) => {
             <TYPE.title5>Nothing found</TYPE.title5>
           </div>
           <div>
-            <TYPE.main1 lineHeight={'1px'} color={'#8F8FB2'}>{`We couldn't find anything with this criteria`}</TYPE.main1>
+            <TYPE.main1
+              lineHeight={'1px'}
+              color={'#8F8FB2'}
+            >{`We couldn't find anything with this criteria`}</TYPE.main1>
           </div>
         </NothingFound>
       )}

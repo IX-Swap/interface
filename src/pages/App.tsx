@@ -202,12 +202,12 @@ export default function App() {
   }, [pathname])
 
   const isAdminKyc = pathname.includes('admin')
-  const isTokenManager = pathname === routes.manageTokens
   const isWhiteBackground =
     pathname === routes.launchpad ||
     pathname === routes.payoutHistory ||
     pathname === routes.payoutEvent ||
-    pathname === routes.manageTokens
+    pathname === routes.manageTokens ||
+    pathname.includes('security-tokens')
   const visibleBody = useMemo(() => {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
@@ -270,7 +270,6 @@ export default function App() {
             isVisible={visibleBody}
             {...(isAdminKyc && { style: { marginTop: 26 } })}
             hideHeader={hideHeader}
-            isTokenManager={isTokenManager}
           >
             <IXSBalanceModal />
             {/* <Web3ReactManager> */}
@@ -309,12 +308,11 @@ const AppWrapper = styled.div<{ isLaunchpad: boolean }>`
   background: ${({ isLaunchpad }) => (isLaunchpad ? '#ffffff' : 'initial')};
 `
 
-const BodyWrapper = styled.div<{ hideHeader?: boolean; isTokenManager?: boolean }>`
+const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  ${(props) => !props.hideHeader && !props.isTokenManager && 'margin-top: 120px;'}
-  ${(props) => props.isTokenManager && 'margin-top: 85px;'}
+  ${(props) => !props.hideHeader && 'margin-top: 120px;'}
   align-items: center;
   flex: 1;
   z-index: 1;
@@ -324,7 +322,7 @@ const BodyWrapper = styled.div<{ hideHeader?: boolean; isTokenManager?: boolean 
   `};
 `
 
-const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: boolean; isTokenManager?: boolean }>`
+const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: boolean }>`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   ${({ theme }) => theme.mediaWidth.upToSmall`
     min-height: calc(100vh - 64px);
