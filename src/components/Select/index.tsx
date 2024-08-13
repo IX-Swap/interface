@@ -248,7 +248,7 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
     background: ${({ theme }) => theme.bg0};
     border: none;
     ${({ error }) =>
-      error &&
+    error &&
       css`
         border: 1px solid;
         border-color: #ff6161 !important;
@@ -291,6 +291,7 @@ const StyledValue = styled.div<{ disabled?: boolean }>`
   ${({ disabled }) =>
     disabled &&
     css`
+      cursor: not-allowed;
       opacity: 0.5;
     `}
 `
