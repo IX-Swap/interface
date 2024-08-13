@@ -144,6 +144,17 @@ export enum NetworkName {
   POLYGON = 'polygon',
 }
 
+// chainIdToNetworkName covert chainId to network name regardless of whether it is testnet or mainnet
+export const chainIdToNetworkName = (chainId: number): string => {
+  for (const [network, chains] of Object.entries(Chains)) {
+    if (chains.includes(chainId)) {
+      return network
+    }
+  }
+
+  return ''
+}
+
 export const Chains = {
   // network name : tesnet, mainnet
   [NetworkName.BASE]: [SupportedChainId.BASE_SEPOLIA, SupportedChainId.BASE],

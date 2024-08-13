@@ -53,6 +53,7 @@ import styled from 'styled-components/macro'
 import { isMobile } from 'react-device-detect'
 import Modal from 'components/Modal'
 import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
+import { chainIdToNetworkName } from 'chains'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
@@ -269,7 +270,7 @@ export default function AddLiquidity({
                 tokenId: secTokenId,
                 token0: currencyA.wrapped.address,
                 token1: currencyB.wrapped.address,
-                network: NETWORK_NAMES[chainId],
+                network: chainIdToNetworkName(chainId),
                 blockNumber: res.events[last].blockNumber,
                 decimals: pair?.liquidityToken?.decimals || 18,
                 txHash: response.hash,
