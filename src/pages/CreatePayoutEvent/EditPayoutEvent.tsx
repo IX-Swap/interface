@@ -91,15 +91,14 @@ const EditPayoutEventPage: FC = () => {
     }
   }, [payout, payoutTokenCurrency])
 
+  const isValidRole = me.role === ROLES.TOKEN_MANAGER || me.role === ROLES.ADMIN
   useEffect(() => {
-    if (me && me.role !== ROLES.TOKEN_MANAGER) {
-      history.push('/kyc')
+    if (me && isValidRole) {
+      return
     }
-  }, [me, history])
+    history.push('/kyc')
+  }, [me, history, isValidRole])
 
-  const onBack = () => {
-    history.push('/token-manager/my-tokens')
-  }
 
   if (!payoutFormData) {
     return null
