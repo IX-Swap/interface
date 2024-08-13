@@ -17,7 +17,7 @@ import { WithdrawPending } from './WithdrawPending'
 import { WithdrawRequestForm } from './WithdrawRequestForm'
 import { WithdrawSuccess } from './WithDrawSuccess'
 import { useActiveWeb3React } from 'hooks/web3'
-import { findChainName } from 'chains'
+import { findChainName } from 'utils/chains'
 
 export enum WithdrawModalView {
   WITHDRAW_REQUEST,

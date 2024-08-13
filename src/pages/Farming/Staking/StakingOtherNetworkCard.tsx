@@ -8,7 +8,7 @@ import React, { useMemo } from 'react'
 import { isMobile } from 'react-device-detect'
 import { DesktopAndTablet, TYPE } from 'theme'
 import { OptionList, StakingTierCardWrapper, SwitchNetworkWrap } from './style'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 export const StakingOtherNetworkCard = () => {
   const { chainId } = useWeb3React()

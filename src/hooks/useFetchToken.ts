@@ -3,7 +3,7 @@ import { metamask } from 'services/apiUrls'
 
 import { login } from './login'
 import { sign } from './personalSign'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 interface Hash {
   hash: string

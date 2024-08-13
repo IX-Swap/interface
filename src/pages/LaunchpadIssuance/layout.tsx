@@ -5,7 +5,7 @@ import { LaunchpadContainer } from 'pages/Launchpad'
 
 import { useSetHideHeader } from 'state/application/hooks'
 import Header from 'components/Header'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 
 interface Props {

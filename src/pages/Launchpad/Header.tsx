@@ -6,7 +6,7 @@ import { routes } from 'utils/routes'
 import { Link } from 'react-router-dom'
 import { useKyc, useRole } from 'state/user/hooks'
 import { text29, text57, text8 } from 'components/LaunchpadMisc/typography'
-import { useWeb3React } from 'connection/web3reactShim'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { isMobile } from 'react-device-detect'
 
 export const Header = () => {
