@@ -23,7 +23,7 @@ export const EmptyState = ({ filtred, my }: Props) => {
         <>
           <TmEmptyPage tab={'no-upcoming-event'} />
           <PinnedContentButton style={{ width: '200px', marginTop: '20px' }} onClick={redirectToSwap}>
-            Buy Now
+            Buy RWAs
           </PinnedContentButton>
         </>
       )
