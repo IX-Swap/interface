@@ -22,6 +22,8 @@ import { Info } from './Info'
 import { FormValues } from './utils'
 import { TYPE } from 'theme'
 import styled from 'styled-components'
+import CurrencyLogo from 'components/CurrencyLogo'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 
 const EditPayoutEventPage: FC = () => {
   const { id } = useParams<{ id?: string }>()
@@ -36,7 +38,7 @@ const EditPayoutEventPage: FC = () => {
   const [status, setStatus] = useState<PAYOUT_STATUS>()
   const [payoutFormData, setPayoutFormData] = useState<FormValues>()
   const getPayoutItem = useGetPayoutItem()
-  const { tokensOptions, secTokensOptions } = useTokensList()
+  const { tokensOptions } = useTokensList()
   const payoutTokenCurrency = useCurrency(payout?.payoutToken)
 
   useEffect(() => {
@@ -56,14 +58,6 @@ const EditPayoutEventPage: FC = () => {
     load()
   }, [])
 
-  const secToken = useMemo(() => {
-    if (payout?.secToken) {
-      return secTokensOptions.find((el) => el.value === payout.secToken.id) || null
-    }
-
-    return null
-  }, [payout])
-
   const token = useMemo(() => {
     if (payout?.payoutToken) {
       return tokensOptions.find((el) => el.value === payout.payoutToken || el.address === payout.payoutToken) || null
@@ -81,7 +75,11 @@ const EditPayoutEventPage: FC = () => {
         startDate: payout.startDate,
         files: payout.attachments,
         recordDate: payout.recordDate,
-        secToken,
+        secToken: {
+          label: payout.secToken.symbol,
+          value: payout.secToken.id,
+          icon: <CurrencyLogo currency={new WrappedTokenInfo(payout.secToken)} />,
+        },
         secTokenAmount: payout.secTokenAmount,
         title: payout.title,
         token,
