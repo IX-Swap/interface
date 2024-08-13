@@ -7,7 +7,6 @@ import { CHAINS, transports } from './constants'
 const WALLET_CONNECT_PROJECT_ID = <string>process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID
 
 export function createWagmiConfig() {
-  console.log('WALLET_CONNECT_PROJECT_ID', WALLET_CONNECT_PROJECT_ID)
   const config = getDefaultConfig({
     appName: 'IXSwap',
     projectId: WALLET_CONNECT_PROJECT_ID,
