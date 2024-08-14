@@ -19,7 +19,7 @@ const Header = styled.div`
   font-weight: 700;
   font-size: 22px;
   line-height: 33px;
-  padding: 20px 0px;
+  padding-bottom: 20px;
   color: ${({ theme }) => theme.text1};
   gap: 16px;
 
@@ -35,10 +35,14 @@ const Header = styled.div`
 `
 
 const LabelContainer = styled.div`
-  border-bottom: 1px solid ${({ theme }) => theme.text9};
+  border-bottom: 1px solid #E6E6FF;
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+
+  &:last-child {
+    border-bottom: none;
+  }
 `
 
 const SummaryContainer = styled.div`
@@ -50,8 +54,6 @@ const SummaryContainer = styled.div`
   }
 
   > div {
-    padding: 16px;
-    border-radius: 20px;
     min-width: 500px;
     width: 100%;
 
@@ -97,12 +99,19 @@ const Token = styled.div`
 `
 
 interface Props {
-  item: { ethAddress: string; role: string; isWhitelisted: boolean; username: string; managerOf: Option[] }
+  item: {
+    ethAddress: string
+    role: string
+    isWhitelisted: boolean
+    username: string
+    managerOf: Option[]
+    tenant?: any
+  }
   close: () => void
 }
 
 export const UpdateSummary = ({ item, close }: Props) => {
-  const { role, isWhitelisted, username, ethAddress, managerOf } = item
+  const { role, isWhitelisted, username, ethAddress, managerOf, tenant } = item
 
   return (
     <RedesignedWideModal isOpen onDismiss={close}>
@@ -119,19 +128,8 @@ export const UpdateSummary = ({ item, close }: Props) => {
         <CloseIcon style={{ position: 'absolute', right: '30px', top: '30px' }} data-testid="cross" onClick={close} />
         <Header>
           <div>
-            <Trans>
-              Information has <br /> been updated
-            </Trans>
+            <Trans>Information has been updated</Trans>
           </div>
-          {/* <img
-            src={closeIcon}
-            alt="closeIcon"
-            onClick={close}
-            style={{ cursor: 'pointer' }}
-            width="20px"
-            height="20px"
-            color="red"
-          /> */}
         </Header>
         <SummaryContainer>
           <div>
@@ -150,6 +148,13 @@ export const UpdateSummary = ({ item, close }: Props) => {
                 <Label>{`User's Role:`}</Label>
                 {ROLES_LABEL[role]}
               </LabelContainer>
+
+              {tenant ? (
+                <LabelContainer>
+                  <Label>Tenant</Label>
+                  {tenant?.name}
+                </LabelContainer>
+              ) : null}
 
               <LabelContainer>
                 <Label>Whitelisted:</Label>
