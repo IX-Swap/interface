@@ -51,8 +51,7 @@ const colourStyles = {
       color: isSelected && !isMulti ? '#292933' : '#8F8FB2',
       fontWeight: 500,
       borderBottom: '1px solid #E6E6FF',
-      margin: '0 18px',
-      padding: '18px 0',
+      padding: '18px',
       ':active': {
         backgroundColor: 'transparent', // Ensures background stays the same when clicked
       },
@@ -226,6 +225,7 @@ export const Select = ({
 
   return (
     <StyledReactSelect
+      menuIsOpen
       menuPortalTarget={document.body}
       onInputChange={handleSearch}
       error={error}
