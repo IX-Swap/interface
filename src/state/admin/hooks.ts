@@ -100,6 +100,7 @@ interface CreateUser {
   managerOf: any[]
   removedTokens?: any[]
   role: string
+  tenantId?: number
 }
 
 export const createUser = async (params: CreateUser) => {
@@ -432,7 +433,6 @@ export const resendEmail = async (params?: Record<string, string | number>) => {
   const result = await apiService.post(admin.resendEmail, undefined, params)
   return result.data
 }
-
 
 export function useResetKyc() {
   const dispatch = useDispatch<AppDispatch>()

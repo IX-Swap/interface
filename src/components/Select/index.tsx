@@ -29,19 +29,38 @@ interface Props {
 }
 
 const colourStyles = {
+  menuPortal: (styles: Record<string, any>) => {
+    return {
+      ...styles,
+      zIndex: 9999,
+    }
+  },
   placeholder: (styles: Record<string, any>) => {
     return {
       ...styles,
       color: '#B8B8CC',
     }
   },
-  option: (styles: Record<string, any>, { isSelected, isMulti }: { isSelected: boolean; isMulti: boolean }) => {
+  option: (
+    styles: Record<string, any>,
+    { isSelected, isFocused, isMulti }: { isSelected: boolean; isMulti: boolean; isFocused: boolean }
+  ) => {
     return {
       ...styles,
-      backgroundColor: isSelected && !isMulti ? 'bg11' : 'transparend',
+      backgroundColor: isSelected && !isMulti ? 'bg11' : isFocused ? 'transparent' : 'transparent',
       color: isSelected && !isMulti ? '#292933' : '#8F8FB2',
       fontWeight: 500,
-      margin: '20px 0px',
+      borderBottom: '1px solid #E6E6FF',
+      padding: '18px',
+      ':active': {
+        backgroundColor: 'transparent', // Ensures background stays the same when clicked
+      },
+      ':last-child': {
+        borderBottom: 'none',
+      },
+      ':hover': {
+        color: '#292933',
+      },
     }
   },
   singleValue: (styles: Record<string, any>) => {
@@ -112,7 +131,7 @@ const MultiValue = (props: any) => {
 
   return (
     <StyledValue>
-      {renderIcon(props?.data)}
+      {props.data?.token ? renderIcon(props?.data) : null}
       {`${props?.data?.label}${isLast ? '' : `,`}`}
       {!isLast && <>&nbsp;</>}
     </StyledValue>
@@ -122,7 +141,7 @@ const MultiValue = (props: any) => {
 const SingleValue = (props: any) => {
   return (
     <StyledValue disabled={props.isDisabled}>
-      {renderIcon(props?.data)}
+      {props.data?.token ? renderIcon(props?.data) : null}
       {props?.data?.label}
     </StyledValue>
   )
@@ -142,6 +161,7 @@ const renderIcon = (data: any) => {
 
 const Option = (props: any) => {
   const addToken = useAddUserToken()
+
   return (
     <components.Option {...props}>
       <StyledValue
@@ -153,14 +173,10 @@ const Option = (props: any) => {
           }
         }}
       >
-        {renderIcon(props?.data)}
+        {props.data?.token ? renderIcon(props?.data) : null}
         {props?.data?.label}
         {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
-
-        {!props.isMulti && <CheckMark checked={props.isSelected} label="" />}
       </StyledValue>
-
-      <Line style={{ marginTop: '10px' }} />
     </components.Option>
   )
 }
@@ -209,6 +225,7 @@ export const Select = ({
 
   return (
     <StyledReactSelect
+      menuPortalTarget={document.body}
       onInputChange={handleSearch}
       error={error}
       options={customOptions}
@@ -248,11 +265,13 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
     background: ${({ theme }) => theme.bg0};
     border: none;
     ${({ error }) =>
-    error &&
+      error &&
       css`
         border: 1px solid;
         border-color: #ff6161 !important;
-      `}
+      `}import { stake } from '../../state/stake/actions'
+import { style } from 'styled-system'
+
   }
   *[class*='indicatorSeparator'] {
     display: none;
@@ -288,6 +307,8 @@ const StyledValue = styled.div<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
   column-gap: 6px;
+  cursor: pointer;
+
   ${({ disabled }) =>
     disabled &&
     css`

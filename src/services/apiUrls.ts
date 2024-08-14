@@ -129,6 +129,7 @@ export const users = {
 
 export const whitelabel = {
   config: '/white-label/config',
+  all: '/white-label/all',
 }
 
 export const pool = {
