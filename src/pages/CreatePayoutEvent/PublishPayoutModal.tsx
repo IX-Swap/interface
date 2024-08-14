@@ -84,10 +84,18 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
         return
       }
 
+      /** The event was created, need to pay only */
+      if (values.id) {
+        await pay({
+          id: values.id,
+          payoutContractAddress: values.payoutContractAddress,
+        })
+        return
+      }
+
       const body = setBody()
       const data = await createDraft({ ...body })
       if (!data?.id) return
-
       await pay({
         id: data.id,
         payoutContractAddress: data.payoutContractAddress,
