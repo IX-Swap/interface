@@ -220,8 +220,6 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
     }
   }
 
-  console.log(tenants)
-
   useEffect(() => {
     getAllTenants()
   }, [])
