@@ -225,7 +225,6 @@ export const Select = ({
 
   return (
     <StyledReactSelect
-      menuIsOpen
       menuPortalTarget={document.body}
       onInputChange={handleSearch}
       error={error}
