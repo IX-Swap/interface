@@ -26,6 +26,7 @@ import { validation } from './validation'
 import { Summary } from './Summary'
 import { PayoutEventBlock } from './PayoutEventBlock'
 import { PAYOUT_STATUS } from 'constants/enums'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface PayoutFormProps {
   payoutData?: Partial<FormValues>
@@ -36,14 +37,17 @@ interface PayoutFormProps {
 export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, status = PAYOUT_STATUS.DRAFT }) => {
   const { account } = useWeb3React()
   const { me } = useUserState()
+  const { chainId } = useActiveWeb3React()
 
   const secTokensOptions = useMemo(() => {
     if (me?.managerOf?.length) {
-      return me.managerOf.map(({ token }) => ({
-        label: token?.symbol,
-        value: token?.id,
-        icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
-      }))
+      return me.managerOf
+        .map(({ token }) => ({
+          isDisabled: token?.chainId !== chainId,
+          label: token?.symbol,
+          value: token?.id,
+          icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
+        }))
     }
     return []
   }, [me])
@@ -193,8 +197,8 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
                 values.startDate
                   ? dayjs(values.startDate).subtract(1, 'days')
                   : values.endDate
-                  ? dayjs(values.endDate).subtract(2, 'days')
-                  : undefined
+                    ? dayjs(values.endDate).subtract(2, 'days')
+                    : undefined
               }
               onChange={(newDate) => {
                 onValueChange('recordDate', dayjs(newDate).local().format('YYYY-MM-DD'))
