@@ -11,11 +11,15 @@ import { PAYOUT_STATUS } from 'constants/enums'
 import { routes } from 'utils/routes'
 import { PayoutEvent } from 'state/token-manager/types'
 import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
-
+import { checkWrongChain } from 'chains'
 import { useStatusButtonInfo } from './utils'
 import { InfoBlock } from './InfoBlock'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import TokenNetwork from 'components/TokenNetwork'
+import Portal from '@reach/portal'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import { useWeb3React } from '@web3-react/core'
 
 interface Props {
   payout: PayoutEvent
@@ -23,29 +27,32 @@ interface Props {
 }
 
 export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
-  const { secToken, payoutToken, description, status, type, attachments, title, otherType } = payout
+  const { secToken, payoutToken, description, status, type, attachments, title, otherType, network } = payout
   const history = useHistory()
-
+  const { chainId } = useWeb3React()
+  const { isWrongChain, expectChain } = checkWrongChain(chainId, network || '')
   const edit = () => {
     history.push(`/payout/edit/${payout.id}`)
   }
 
   return (
     <Container>
-      <Flex justifyContent='center'>
+      {isWrongChain ? (
+        <Portal>
+          <CenteredFixed width="100vw" height="100vh">
+            <NetworkNotAvailable expectChain={expectChain} />
+          </CenteredFixed>
+        </Portal>
+      ) : null}
+      <Flex justifyContent="center">
         <StyledBodyWrapper>
           <StyledSummaryBlock>
             <TokenInformationContainer>
               <TitleContent>
-                <TokenNetwork
-                  token={secToken}
-                  network={secToken.network}
-                />
+                <TokenNetwork token={secToken} network={secToken.network} />
                 <SecTokenLink to={routes.securityToken(secToken?.catalogId)}>
                   <Trans>{title}</Trans>
-                  <span className='secTokenLinkSymbol'>
-                    {secToken?.originalSymbol ?? secToken?.symbol}
-                  </span>
+                  <span className="secTokenLinkSymbol">{secToken?.originalSymbol ?? secToken?.symbol}</span>
                 </SecTokenLink>
               </TitleContent>
               <ReadMoreContainer>
@@ -152,7 +159,7 @@ const SecTokenLink = styled(NavLink)`
   }
 
   .secTokenLinkSymbol {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
     color: ${({ theme }) => theme.text6};
   }
 `

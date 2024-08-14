@@ -13,7 +13,6 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { routes } from 'utils/routes'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
-
 import { Container, DelayedContainer, StyledButton, TokenSymbol } from './styleds'
 import { getClaimAuthorization, useGetUserClaim, useSaveUserClaim, getMyClaimableAmount } from 'state/payout/hooks'
 import dayjs from 'dayjs'
@@ -42,16 +41,12 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const [isLoading, handleIsLoading] = useState(false)
   const theme = useTheme()
   const [amountToClaim, setAmountToClaim] = useState(0)
-
   const getUserClaim = useGetUserClaim()
   const saveUserClaim = useSaveUserClaim()
-
   const balance = useCurrencyBalance(account ?? undefined, ({ ...secToken, isToken: true } as any) ?? undefined)
   const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
   const payoutContract = usePayoutContract(payoutContractAddress)
-
   const addTransaction = useTransactionAdder()
-
   const secPayoutToken = new WrappedTokenInfo(secToken)
   const tokenInfo = secPayoutToken?.tokenInfo
   const isNotAccredited = statuses.some((status) => !status)
@@ -207,6 +202,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   return (
     <Column style={{ gap: '32px' }}>
       <LoadingIndicator isLoading={isLoading} />
+
       {status !== PAYOUT_STATUS.ANNOUNCED && (
         <Container>
           {getContentByStatus()}
