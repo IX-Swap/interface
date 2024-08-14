@@ -1,11 +1,11 @@
 import React, { FC, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
 import { useHistory } from 'react-router-dom'
-import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { utils } from 'ethers'
-
+import { useWeb3React } from '@web3-react/core'
+import PAYOUT_ABI from 'abis/payout.json'
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { PinnedContentButton } from 'components/Button'
@@ -13,12 +13,15 @@ import { Checkbox } from 'components/Checkbox'
 import Column from 'components/Column'
 import { formatDate } from 'pages/PayoutItem/utils'
 import { useAddPopup } from 'state/application/hooks'
-import { usePublishPayout, usePayoutValidation } from 'state/payout/hooks'
-import { usePayoutContract } from 'hooks/useContract'
+import {
+  usePublishPayout,
+  useCreateDraftPayout,
+  usePayoutValidation,
+} from 'state/payout/hooks'
+import { getContractInstance } from 'hooks/useContract'
 import { routes } from 'utils/routes'
 
 import { useCurrency } from 'hooks/Tokens'
-import { useActiveWeb3React } from 'hooks/web3'
 import { PAYOUT_ADDRESS } from 'constants/addresses'
 import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
 import { LoadingIndicator } from 'components/LoadingIndicator'
@@ -47,14 +50,15 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   const [payNow, handlePayNow] = useState(onlyPay)
   const [isLoading, handleIsLoading] = useState(false)
 
-  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id, payoutContractAddress } = values
+  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id } = values
   const validatePayout = usePayoutValidation()
   const publishPayout = usePublishPayout()
+  const createDraft = useCreateDraftPayout()
   const addPopup = useAddPopup()
-  const { chainId = 0, account } = useActiveWeb3React()
   const history = useHistory()
   const getAuthorization = useGetPayoutAuthorization()
   const addTransaction = useTransactionAdder()
+  const { provider: library, account, chainId = 0 } = useWeb3React()
 
   const tokenCurrency = useCurrency(token.value)
 
@@ -70,9 +74,6 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     PAYOUT_ADDRESS[chainId],
   )
 
-  // payoutContractAddress is nullable when creating payout event
-  const payoutContract = usePayoutContract(payoutContractAddress)
-
   const publishAndPaid = async () => {
     try {
       handleIsLoading(true)
@@ -83,8 +84,15 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
         return
       }
 
-      await pay()
-    } catch (e: any) {
+      const body = setBody()
+      const data = await createDraft({ ...body })
+      if (!data?.id) return
+
+      await pay({
+        id: data.id,
+        payoutContractAddress: data.payoutContractAddress,
+      })
+    } finally {
       handleIsLoading(false)
     }
   }
@@ -100,12 +108,13 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     handleIsLoading(false)
   }
 
-  const handleFormSubmit = async (paidTxHash?: string, contractPayoutId?: string) => {
+  const handleFormSubmit = async (id: string, paidTxHash?: string, contractPayoutId?: string) => {
     const body = setBody()
     const data = await publishPayout({
       ...body,
-      ...(paidTxHash && { paidTxHash }),
-      ...(contractPayoutId && { contractPayoutId }),
+      id,
+      paidTxHash,
+      contractPayoutId,
     })
 
     return data
@@ -122,45 +131,53 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     return data
   }
 
-  const pay = async () => {
-    try {
-      if (approvalState === ApprovalState.NOT_APPROVED) {
-        await approve()
-        await refreshAllowance()
-        handleIsLoading(false)
-      } else {
-        const payoutNonce = await payoutContract?.numberPayouts()
-
-        const authorization = await getAuthorization({
-          secTokenId: secToken.value,
-          payoutEventId: id,
-          tokenAddress: token.value,
-          payoutNonce,
-          fund: utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
-          startDate,
-          ...(endDate && {
-            endDate,
-          }),
-        })
-
-        const gasLimit = await payoutContract?.estimateGas.initPayout(authorization)
-
-        const res = await payoutContract?.initPayout(authorization, { gasLimit })
-        addTransaction(res, {
-          summary: `The transaction was successful. Waiting for system confirmation.`,
-        })
-
-        const data = await handleFormSubmit(res.hash, authorization.payoutId)
-        if (data?.id) {
-          closeForm(data.id, res.hash)
-        }
-
-        handleIsLoading(false)
-
-        //confirmPaidInfo(payoutId, )
-      }
-    } catch (e: any) {
+  const pay = async ({
+    id,
+    payoutContractAddress,
+  }: {
+    id: string
+    payoutContractAddress: string
+  }) => {
+    if (approvalState === ApprovalState.NOT_APPROVED) {
+      await approve()
+      await refreshAllowance()
       handleIsLoading(false)
+    } else {
+      const payoutContract = getContractInstance({
+        addressOrAddressMap: payoutContractAddress,
+        ABI: PAYOUT_ABI,
+        withSignerIfPossible: true,
+        library,
+        account,
+        chainId,
+      })
+      const payoutNonce = await payoutContract?.numberPayouts()
+
+      const authorization = await getAuthorization({
+        secTokenId: secToken.value,
+        payoutEventId: id,
+        tokenAddress: token.value,
+        payoutNonce,
+        fund: utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
+        startDate,
+        ...(endDate && {
+          endDate,
+        }),
+      })
+
+      const gasLimit = await payoutContract?.estimateGas.initPayout(authorization)
+
+      const res = await payoutContract?.initPayout(authorization, { gasLimit })
+      addTransaction(res, {
+        summary: `The transaction was successful. Waiting for system confirmation.`,
+      })
+
+      const data = await handleFormSubmit(id, res.hash, authorization.payoutId)
+      if (data?.id) {
+        closeForm(data.id, res.hash)
+      }
+
+      //confirmPaidInfo(payoutId, )
     }
   }
 
@@ -218,7 +235,9 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     }
 
     return 'Publish Payout Event'
-  }, [onlyPay, approvalState])
+  }, [onlyPay, payNow, approvalState])
+
+  const isInsufficientBalance = payNow && tokenBalance && +tokenBalance < +tokenAmount
 
   return (
     <RedesignedWideModal scrollable isOpen onDismiss={close}>
@@ -288,7 +307,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               name="payNow"
               isRadio
               checked={payNow}
-              disabled={isRecordFuture || !id}
+              disabled={isRecordFuture}
               onClick={() => handlePayNow(true)}
               label={
                 <Box>
@@ -326,7 +345,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               </TYPE.title10>
             </ErrorCard>
           )}
-          {(payNow && tokenBalance && +tokenBalance < +tokenAmount) ? (
+          {(isInsufficientBalance) ? (
             <ErrorCard marginBottom="32px">
               <TYPE.title10 width={'350px'} color={'#FF6161'} textAlign="left">
                 <Trans>{`Insufficient token amount.`}</Trans>
@@ -336,7 +355,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
           <PinnedContentButton
             type="button"
             onClick={() => (onlyPay || payNow ? publishAndPaid() : onlyPublish())}
-            disabled={!tokenAmount || !tokenBalance}
+            disabled={!tokenAmount || !tokenBalance || !!isInsufficientBalance}
           >
             {!tokenBalance ? <LoaderThin size={20} /> : null}
             <Trans>{`${buttonText}`}</Trans>

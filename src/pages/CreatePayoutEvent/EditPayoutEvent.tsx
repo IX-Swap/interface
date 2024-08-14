@@ -6,11 +6,9 @@ import { capitalize } from '@material-ui/core'
 import { useActiveWeb3React } from 'hooks/web3'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import { Loadable } from 'components/LoaderHover'
-import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useAuthState } from 'state/auth/hooks'
 import { useUserState } from 'state/user/hooks'
-import { useGetPayoutItem, usePayoutState } from 'state/payout/hooks'
-import { useCurrency } from 'hooks/Tokens'
+import { useGetPayoutItem } from 'state/payout/hooks'
 import { ROLES } from 'constants/roles'
 // import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { PayoutEvent } from 'state/token-manager/types'
@@ -32,14 +30,12 @@ const EditPayoutEventPage: FC = () => {
   const { account } = useActiveWeb3React()
   const { token: jwtToken } = useAuthState()
   const { me } = useUserState()
-  const { loadingRequest } = usePayoutState()
   const isLoggedIn = !!jwtToken && !!account
   const [payout, setPayout] = useState<PayoutEvent>()
   const [status, setStatus] = useState<PAYOUT_STATUS>()
   const [payoutFormData, setPayoutFormData] = useState<FormValues>()
   const getPayoutItem = useGetPayoutItem()
   const { tokensOptions } = useTokensList()
-  const payoutTokenCurrency = useCurrency(payout?.payoutToken)
 
   useEffect(() => {
     async function load() {
@@ -67,7 +63,7 @@ const EditPayoutEventPage: FC = () => {
   }, [payout])
 
   useEffect(() => {
-    if (payout && payoutTokenCurrency) {
+    if (payout) {
       setPayoutFormData({
         id: payout.id.toString(),
         description: payout.description,
@@ -89,7 +85,7 @@ const EditPayoutEventPage: FC = () => {
         payoutContractAddress: payout.payoutContractAddress,
       })
     }
-  }, [payout, payoutTokenCurrency])
+  }, [payout])
 
   const isValidRole = me.role === ROLES.TOKEN_MANAGER || me.role === ROLES.ADMIN
   useEffect(() => {
@@ -106,7 +102,6 @@ const EditPayoutEventPage: FC = () => {
 
   return (
     <Loadable loading={!isLoggedIn}>
-      <LoadingIndicator isLoading={loadingRequest} />
       <FullScreenBackground>
         <StyledBodyWrapper style={{ minWidth: 1200 }} hasAnnouncement={!cookies.annoucementsSeen}>
           <Flex marginBottom="32px" alignItems="center">
