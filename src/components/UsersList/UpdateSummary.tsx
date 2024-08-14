@@ -156,7 +156,7 @@ export const UpdateSummary = ({ item, close }: Props) => {
                 <img src={isWhitelisted ? checkIcon : notCheckIcon} alt="is-whitelisted" />
               </LabelContainer>
 
-              {role === ROLES.TOKEN_MANAGER && (
+              {role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN && (
                 <LabelContainer style={{ border: 'none', whiteSpace: 'pre' }}>
                   <Label>{`Managed Tokens:`}</Label>
                   <TokenList>
