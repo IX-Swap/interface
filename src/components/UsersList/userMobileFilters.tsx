@@ -85,7 +85,7 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
   }, [item, tokensOptions])
 
   const submit = async () => {
-    const isManager = role === ROLES.TOKEN_MANAGER
+    const isManager = role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN
     try {
       handleShowDeleteTokensWarning(false)
       handleChangeRole(false)
@@ -271,7 +271,7 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
                 placeholder="Choose Role of User"
                 isDisabled={canNotEditRole}
               />
-              {role === ROLES.TOKEN_MANAGER && (
+              {role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN && (
                 <Select
                   style={{ background: '#F7F7FA' }}
                   withScroll

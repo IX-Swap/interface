@@ -77,7 +77,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
     if (item && Object.keys(tokensOptions).length) {
       return {
         ...item,
-        managerOf: item.managerOf.filter(_ => _.token?.id).map(({ token }) => tokensOptions[token!.id]),
+        managerOf: item.managerOf.filter((_) => _.token?.id).map(({ token }) => tokensOptions[token!.id]),
         username: item.username || '',
       }
     }
@@ -86,7 +86,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
   }, [item, tokensOptions])
 
   const submit = async () => {
-    const isManager = role === ROLES.TOKEN_MANAGER
+    const isManager = role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN
     try {
       handleShowDeleteTokensWarning(false)
       handleChangeRole(false)
@@ -272,7 +272,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                 placeholder="Choose Role of User"
                 isDisabled={canNotEditRole}
               />
-              {role === ROLES.TOKEN_MANAGER && (
+              {(role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN) && (
                 <Select
                   style={{ background: '#F7F7FA' }}
                   withScroll
@@ -287,7 +287,6 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                 />
               )}
               <div style={{ display: 'flex' }}>
-                {' '}
                 <Checkbox
                   checked={isWhitelisted}
                   onClick={() => setFieldValue('isWhitelisted', !isWhitelisted)}
@@ -307,7 +306,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                 </MouseoverTooltip>
               </div>
 
-              {item && role === ROLES.TOKEN_MANAGER && (
+              {item && role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN && (
                 <TokensBlock
                   initialItems={initialValues?.managerOf || []}
                   currentItems={managerOf || []}

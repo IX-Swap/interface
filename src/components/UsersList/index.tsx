@@ -178,7 +178,7 @@ const TokenListPreview = (props: TokenListPreviewProps) => {
 const Row: FC<RowProps> = ({ item, changeUser }) => {
   const [expanded, handleExpanded] = useState(false)
   const { ethAddress, role, username, isWhitelisted, managerOf, whiteLabelConfig } = item
-  const needAccordion = role === ROLES.TOKEN_MANAGER && Boolean(managerOf?.length)
+  const needAccordion = role === ROLES.TOKEN_MANAGER  || role === ROLES.ADMIN && Boolean(managerOf?.length)
   const toggleAccordion = () => {
     if (needAccordion) {
       handleExpanded((state) => !state)
@@ -198,8 +198,11 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
             <div>{ROLES_LABEL[role]}</div>
             <div>{username || '-'}</div>
 
-            {role === ROLES.TOKEN_MANAGER && <TokenListPreview items={managerOf as TokenManagerEntry[]} />}
-            {role !== ROLES.TOKEN_MANAGER && <div> - </div>}
+            {role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN ? (
+              <TokenListPreview items={managerOf as TokenManagerEntry[]} />
+            ) : (
+              <div>-</div>
+            )}
             <div>
               <span style={{ marginLeft: '2px' }}>{whiteLabelConfig?.name}</span>
             </div>
