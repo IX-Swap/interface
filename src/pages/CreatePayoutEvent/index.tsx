@@ -7,19 +7,15 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 
 import { Loadable } from 'components/LoaderHover'
-import { ButtonText } from 'components/Button'
-import { LoadingIndicator } from 'components/LoadingIndicator'
 
 import { useAuthState } from 'state/auth/hooks'
 import { useUserState } from 'state/user/hooks'
-import { usePayoutState } from 'state/payout/hooks'
 
 import { PayoutForm } from './PayoutForm'
 import { PageTitle } from './styleds'
 import { Info } from './Info'
 
 import { ROLES } from 'constants/roles'
-import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
 
@@ -31,7 +27,6 @@ const CreatePayoutEventPage: FC = () => {
   const { token } = useAuthState()
   const { me } = useUserState()
 
-  const { loadingRequest } = usePayoutState()
   const isLoggedIn = !!token && !!account
 
   const isValidRole = me.role === ROLES.TOKEN_MANAGER || me.role === ROLES.ADMIN
@@ -41,10 +36,6 @@ const CreatePayoutEventPage: FC = () => {
     }
     history.push('/kyc')
   }, [me, history, isValidRole])
-
-  const onBack = () => {
-    history.push('/token-manager/my-tokens')
-  }
 
   const FullScreenBackground = styled.div`
     background-color: #ffffff;
@@ -59,7 +50,6 @@ const CreatePayoutEventPage: FC = () => {
 
   return (
     <Loadable loading={!isLoggedIn}>
-      <LoadingIndicator isLoading={loadingRequest} />
       <FullScreenBackground>
         <StyledBodyWrapper style={{ maxWidth: 1200, marginTop: '50px' }} hasAnnouncement={!cookies.annoucementsSeen}>
           <Flex marginBottom="32px" alignItems="center">
