@@ -30,6 +30,7 @@ export interface PayoutEvent {
   isReturned?: boolean
   claimed?: number
   payoutContractAddress?: string
+  network?: string
 }
 
 export interface ClaimInfo {
