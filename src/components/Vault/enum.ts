@@ -97,7 +97,7 @@ const WithdrawStatusText = {
 } as Record<string, string>
 
 const DepositStatusText = {
-  [DepositStatus.PENDING]: 'Waiting for deposit...',
+  [DepositStatus.PENDING]: 'Waiting for confirmation...',
   [DepositStatus.CANCELLED]: 'Deposit cancelled due timeout',
   [DepositStatus.FAILED]: 'Deposit failed (contact support)',
   [DepositStatus.APPROVED]: 'Deposit received, minting ${symbol}...',
