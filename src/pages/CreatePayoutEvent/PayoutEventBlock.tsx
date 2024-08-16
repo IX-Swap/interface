@@ -58,12 +58,6 @@ export const PayoutEventBlock: FC<Props> = ({
 
   const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
 
-  useEffect(() => {
-    const { title, secToken, type } = values
-    if (!title && secToken?.value && type) {
-      onValueChange('title', `${type} payout event for ${secToken.label}`)
-    }
-  }, [values])
 
   const onDelete = () => {
     toggleIsWarningOpen()
