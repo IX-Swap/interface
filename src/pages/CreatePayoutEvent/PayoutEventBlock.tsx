@@ -331,7 +331,7 @@ export const PayoutEventBlock: FC<Props> = ({
 
         {status === PAYOUT_STATUS.DRAFT ? (
           <PinnedContentButton type="button" onClick={open}>
-            <Trans>Publish Event</Trans>
+            <Trans>Publish Payout Event</Trans>
           </PinnedContentButton>
         ) : (
           !paid && (
