@@ -31,6 +31,7 @@ import { PAYOUT_TYPE_LABEL } from './constants'
 import { TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
+import { TokenImage } from 'pages/PayoutItem/ActionBlock/UserView'
 
 const headerCells = [`ID`, `Status`, `Payout type`, `SEC token`, `Payment period`, `Record date`, `Amount claimed`, '']
 
@@ -166,7 +167,7 @@ const Row = ({ item }: IRow) => {
   const tooltipText = `Token: ${currency?.symbol || '-'} 
   Token amount: ${tokenAmount}
   Claimed: ${amountClaimed}`
-
+  
   return (
     <>
       <AreYouSureModal onAccept={onDelete} onDecline={toggleIsWarningOpen} isOpen={isWarningOpen} />
@@ -177,7 +178,7 @@ const Row = ({ item }: IRow) => {
         </div>
         <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
         <div style={{ gap: '8px' }}>
-          <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
+          <TokenImage src={secToken?.logo?.public} />
           <TYPE.main1 color={'#8F8FB2'}>{secToken?.symbol || '-'}</TYPE.main1>
         </div>
         <TYPE.main1>
