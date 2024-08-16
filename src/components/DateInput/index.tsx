@@ -7,6 +7,7 @@ import { Props as LabelProps } from 'components/Label'
 import dayjs from 'dayjs'
 import Row from 'components/Row'
 import { KycInputLabel } from 'pages/KYC/common'
+import { TYPE } from 'theme'
 
 interface Props {
   value?: any
@@ -60,7 +61,7 @@ export const DateInput = ({
         <MobileDatePicker
           open={isDatePickerOpen}
           onClose={handleCloseDatePicker}
-          value={value || dayjs()}
+          value={value}
           onChange={onChange}
           openTo={openTo ?? 'year'}
           views={['year', 'month', 'date']}
@@ -84,11 +85,11 @@ export const DateInput = ({
           {...props}
         />
       )}
-      {/* {error && (
+      {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}
         </TYPE.small>
-      )} */}
+      )}
     </Container>
   )
 }

@@ -91,11 +91,6 @@ export const KycInputLabel: FC<KycInputLabelProps> = ({ label, error, name, tool
   }
   return (
     <Row style={{ marginTop: kycVersion && '10px' }} alignItems="center">
-      {error && (
-        <div>
-          <InvalidFormInputIcon style={{ margin: '0 0.5rem' }} />
-        </div>
-      )}
       <div>
         <Label label={label} htmlFor={name || ''} tooltipText={tooltipText} color={error && '#FF007F'} />
       </div>
