@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
+import { isMobile } from 'react-device-detect'
+import { useDispatch } from 'react-redux'
 
 import { useActiveWeb3React } from 'hooks/web3'
 import { useDepositModalToggle } from 'state/application/hooks'
@@ -12,11 +14,11 @@ import { BalanceRow } from './BalanceRow'
 import { HistoryBlock } from './HistoryBlock'
 import { ExistingTitle, ExistingWrapper, StyledTitle, TitleStatusRow } from './styleds'
 import { useUserState } from 'state/user/hooks'
-import { ButtonIXSGradient, PinnedContentButton } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { AddWrappedToMetamask } from 'pages/SecTokenDetails/AddToMetamask'
-import { isMobile } from 'react-device-detect'
+import { DepositView, setWalletState } from 'state/wallet'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -24,6 +26,7 @@ interface Props {
   token: any
 }
 export const ExistingVault = ({ currency, custodian, token }: Props) => {
+  const dispatch = useDispatch()
   const symbolText = useMemo(() => token?.ticker ?? currency?.symbol, [currency?.symbol, token?.ticker])
 
   const { account } = useActiveWeb3React()
@@ -53,6 +56,9 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
   `};
   `
 
+  const handleDeposit = () => {
+    dispatch(setWalletState({ isOpenDepositCard: true, depositView: DepositView.CREATE_REQUEST }))
+  }
   return (
     <ExistingWrapper>
       <TitleStatusRow style={{ marginBottom: '0rem', justifyContent: isMobile ? 'center' : 'space-between' }}>
@@ -77,7 +83,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
             <PinnedContentButton
               style={{ width: '200px', marginTop: '45px', marginBottom: '10px' }}
               data-testid="deposit"
-              onClick={() => toggle()}
+              onClick={handleDeposit}
               disabled={isDisabled}
             >
               <Trans>Deposit</Trans>

@@ -22,6 +22,8 @@ import { NETWORK_LOGOS } from 'constants/chains'
 import { checkWrongChain } from 'chains'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import { DepositCard } from 'components/Vault/DepositCard'
+import { useWalletState } from 'state/wallet/hooks'
 
 export default function SecTokenDetails({
   match: {
@@ -30,9 +32,11 @@ export default function SecTokenDetails({
 }: RouteComponentProps<{ currencyId: string }>) {
   const history = useHistory()
   const currency = (useCurrency(currencyId) as any) ?? undefined
+  const { account, chainId } = useActiveWeb3React()
+  const { isOpenDepositCard } = useWalletState()
+
   const [token, setToken] = useState<any>(null)
   const [atlasInfo, setAtlasInfo] = useState<any | null>(null)
-  const { account, chainId } = useActiveWeb3React()
 
   const isLoggedIn = !!account
   const network = token?.token?.network
@@ -58,6 +62,10 @@ export default function SecTokenDetails({
   }
 
   if (!isLoggedIn) return <NotAvailablePage />
+
+  if (isOpenDepositCard && token && token?.token) {
+    return <DepositCard currency={token?.token} token={token} />
+  }
 
   return (
     <>
