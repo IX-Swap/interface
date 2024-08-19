@@ -13,6 +13,7 @@ import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { Colors } from 'theme/styled'
 import {
   ActionTypes,
+  DepositStatus,
   depositSuccessStatuses,
   getActionStatusPercent,
   getActionStatusText,
@@ -56,7 +57,7 @@ export const DepositTransaction = ({ currency }: Props) => {
 
   if (!data) return null
 
-  const status = data?.status ?? data?.params?.status ?? 'pending'
+  const status = data?.status ?? data?.params?.status ?? DepositStatus.PENDING
   const statusText = getActionStatusText(data.type, status, currency?.originalSymbol, currency?.symbol)
   const formattedDate = dayjs(data?.createdAt).format('MMM D, YYYY HH:mm')
   const isSuccess = (data.type === ActionTypes.DEPOSIT ? depositSuccessStatuses : withdrawSuccessStatuses).includes(

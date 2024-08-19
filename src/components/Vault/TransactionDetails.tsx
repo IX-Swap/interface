@@ -30,6 +30,7 @@ import {
   withdrawSuccessStatuses,
   depositErrorStatuses,
   withdrawErrorStatuses,
+  DepositStatus,
 } from './enum'
 
 import { InfoModalHeader, LiniarProgressContainer } from './styleds'
@@ -65,7 +66,7 @@ export const TransactionDetails = ({ currency }: Props) => {
 
   if (!data) return null
 
-  const status = data?.status ?? data?.params?.status ?? 'pending'
+  const status = data?.status ?? data?.params?.status ?? DepositStatus.PENDING
   const statusText = getActionStatusText(data.type, status, currency?.originalSymbol, currency?.symbol)
   const formattedDate = dayjs(data?.createdAt).format('MMM D, YYYY HH:mm')
   const isSuccess = (data.type === ActionTypes.DEPOSIT ? depositSuccessStatuses : withdrawSuccessStatuses).includes(

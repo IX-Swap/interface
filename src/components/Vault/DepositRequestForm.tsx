@@ -91,7 +91,10 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
           throw new Error(`Something went wrong. Could not deposit amount`)
         }
         requestId = response.data.id
-        const transaction = await tokenContract?.transfer(tokenInfo?.custodyAssetAddress || '', parseUnits(amount, 18))
+        const transaction = await tokenContract?.transfer(
+          tokenInfo?.custodyAssetAddress || '',
+          parseUnits(amount, tokenDecimals)
+        )
         await getEvents({ tokenId, filter: 'all' })
         dispatch(setWalletState({ depositView: DepositView.PENDING }))
         await transaction?.wait()
