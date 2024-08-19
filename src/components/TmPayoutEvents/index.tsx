@@ -42,16 +42,26 @@ export const TmPayoutEvents = () => {
   const { token } = useAuthState()
   const { payoutList, isLoading } = useTokenManagerState()
   const { loadingRequest } = usePayoutState()
+  const [hasMoreData, setHasMoreData] = useState(true)
   const getMyPayouts = useGetMyPayout()
 
   useEffect(() => {
-    if (account && token) {
-      if (Object.keys(filters).length) {
-        handleHaveFilters(true)
+    if (account && token && hasMoreData) {
+      const shouldFetch = !payoutList.items?.length || Object.keys(filters).length > 0
+      handleHaveFilters(shouldFetch)
+      if (shouldFetch) {
+        getMyPayouts({ ...filters, offset: 10, my: true, page: 1 })
+          .then((response) => {
+            if (response.items?.length === 0) {
+              setHasMoreData(false)
+            }
+          })
+          .catch((error) => {
+            console.error('Failed to fetch data:', error)
+          })
       }
-      getMyPayouts({ ...filters, offset: 10, my: true, page: 1 })
     }
-  }, [filters, getMyPayouts, account, token])
+  }, [filters, getMyPayouts, account, token, hasMoreData, payoutList.items])
 
   const fetch = (params: Record<string, any>) => {
     getMyPayouts({ ...params, my: true })

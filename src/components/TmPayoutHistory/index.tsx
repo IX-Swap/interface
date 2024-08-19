@@ -47,8 +47,10 @@ export const TmPayoutHistory = () => {
 
   useEffect(() => {
     if (account && token) {
-      if (Object.keys(filters).length) {
+      if (Object.keys(filters).length > 0) {
         handleHaveFilters(true)
+      } else {
+        handleHaveFilters(false)
       }
       getPayoutHistory({ ...filters, offset: 10, page: 1 })
     }
@@ -124,7 +126,7 @@ const Row = ({ item }: IRow) => {
       </TYPE.main1>
 
       <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
-      
+
       {/* The logo URL is currently hardcoded; we'll render it dynamically with the network key later */}
       <div style={{ position: 'relative' }}>
         <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
