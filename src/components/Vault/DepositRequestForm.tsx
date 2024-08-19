@@ -14,6 +14,7 @@ import {
   useDepositState,
   useDerivedDepositInfo,
   useShowAboutWrappingCallback,
+  cancelDeposit,
 } from 'state/deposit/hooks'
 import { BlueGreyCard } from 'components/Card'
 import { useUserSecTokens } from 'state/user/hooks'
@@ -80,22 +81,28 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   }
 
   const handleDeposit = async () => {
+    let requestId = 0
     try {
       setLoadingDeposit(true)
       const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
       if (tokenId && !error && parsedAmount && !inputError && computedAddress) {
         const response = await depositToken({ tokenId, amount, fromAddress: computedAddress })
-
         if (!response?.data) {
           throw new Error(`Something went wrong. Could not deposit amount`)
         }
+        requestId = response.data.id
         const transaction = await tokenContract?.transfer(tokenInfo?.custodyAssetAddress || '', parseUnits(amount, 18))
         await getEvents({ tokenId, filter: 'all' })
         dispatch(setWalletState({ depositView: DepositView.PENDING }))
         await transaction?.wait()
         onResetDeposit()
+        requestId = 0
       }
     } catch (error: any) {
+      if (requestId) {
+        cancelDeposit({ requestId })
+        onResetDeposit()
+      }
       console.error(`Could not deposit amount`, error)
     } finally {
       setLoadingDeposit(false)
