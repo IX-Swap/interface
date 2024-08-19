@@ -27,6 +27,7 @@ import { useWalletModalToggle } from 'state/application/hooks'
 import { PinnedContentButton } from 'components/Button'
 import Modal from 'components/Modal'
 import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
+import AdministrationMenu from './AdministrationMenu'
 
 const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
   display: grid;
@@ -272,24 +273,16 @@ export default function Header() {
             </HeaderRow>
             <HeaderLinks />
             <HeaderControls>
-              {isAllowed(routes.tokenManager()) && account && isWhitelisted && (isTokenManager || isAdmin) && (
-                <IconWrapper>
-                  <HeaderElement>
-                    <NavLink
-                      style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }}
-                      to={routes.tokenManager('my-tokens', null)}
-                    >
-                      <TokenManager />
-                    </NavLink>
-                  </HeaderElement>
-                </IconWrapper>
-              )}
-
               {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
                 <HeaderElement>
                   <IXSBalance />
                 </HeaderElement>
               )}
+
+              {isAllowed(routes.tokenManager()) && account && isWhitelisted && (isTokenManager || isAdmin) && (
+                <AdministrationMenu />
+              )}
+
               <HeaderElement>
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
