@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
-import { Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { LinearProgress } from '@material-ui/core'
 import { Flex } from 'rebass'
@@ -22,7 +21,6 @@ import { Colors } from 'theme/styled'
 import {
   ActionTypes,
   ActionTypeText,
-  DepositStatus,
   depositSuccessStatuses,
   getActionStatusPercent,
   getActionStatusText,
@@ -34,8 +32,7 @@ import {
   withdrawErrorStatuses,
 } from './enum'
 
-import { InfoModalHeader, InfoModalBody, LiniarProgressContainer, PendingDepositInfo } from './styleds'
-import { DepoistStatusInfo } from './DepoistStatusInfo'
+import { InfoModalHeader, LiniarProgressContainer } from './styleds'
 import { getNetworkFromToken, getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { WithdrawalWarning } from './WithdrawalWarning'
 import { useNativeCurrency } from 'hooks/useNativeCurrency'

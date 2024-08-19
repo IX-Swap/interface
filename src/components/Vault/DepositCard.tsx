@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Flex } from 'rebass'
 
@@ -52,7 +52,9 @@ export const DepositCard = ({ currency, token }: Props) => {
     dispatch(setWalletState({ isOpenDepositCard: false, depositView: DepositView.CREATE_REQUEST }))
   }
 
-  console.log('depositView', depositView)
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <Container>
