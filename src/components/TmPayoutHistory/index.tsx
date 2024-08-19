@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Trans, t } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { Flex } from 'rebass'
@@ -38,21 +38,30 @@ const headerCells = [
 export const TmPayoutHistory = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
-
   const { account } = useUserState()
   const { token } = useAuthState()
-
+  const [hasMoreData, setHasMoreData] = useState(true)
   const { payoutHistory, isLoading } = useTokenManagerState()
   const getPayoutHistory = useGetPayoutHistory()
 
   useEffect(() => {
-    if (account && token) {
-      if (Object.keys(filters).length) {
-        handleHaveFilters(true)
+    if (account && token && hasMoreData) {
+      const shouldFetch = !payoutHistory.items?.length || Object.keys(filters).length > 0
+      handleHaveFilters(shouldFetch)
+
+      if (shouldFetch) {
+        getPayoutHistory({ ...filters, offset: 10, page: 1 })
+          .then((response) => {
+            if (response.items?.length === 0) {
+              setHasMoreData(false)
+            }
+          })
+          .catch((error) => {
+            console.error('Failed to fetch data:', error)
+          })
       }
-      getPayoutHistory({ ...filters, offset: 10, page: 1 })
     }
-  }, [filters, getPayoutHistory, account, token])
+  }, [filters, getPayoutHistory, account, token, hasMoreData, payoutHistory.items])
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -124,7 +133,7 @@ const Row = ({ item }: IRow) => {
       </TYPE.main1>
 
       <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
-      
+
       {/* The logo URL is currently hardcoded; we'll render it dynamically with the network key later */}
       <div style={{ position: 'relative' }}>
         <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
