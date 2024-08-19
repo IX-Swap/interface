@@ -118,6 +118,7 @@ const WithdrawStatusColors = {
 } as Record<string, string>
 
 const DepositStatusColors = {
+  [DepositStatus.PENDING]: 'primary1',
   [DepositStatus.SETTLED]: 'green1',
   [DepositStatus.FAILED]: 'error',
   [DepositStatus.CANCELLED]: 'error',

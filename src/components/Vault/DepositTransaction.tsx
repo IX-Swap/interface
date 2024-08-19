@@ -67,7 +67,7 @@ export const DepositTransaction = ({ currency }: Props) => {
   const originalNetworkName = getOriginalNetworkFromToken(currency)
 
   const depositMore = () => {
-    dispatch(setWalletState(DepositView.CREATE_REQUEST))
+    dispatch(setWalletState({ depositView: DepositView.CREATE_REQUEST }))
   }
 
   return (

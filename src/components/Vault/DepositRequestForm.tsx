@@ -37,17 +37,6 @@ import { parseUnits } from 'ethers/lib/utils'
 import { DepositView, setWalletState } from 'state/wallet'
 import { useGetEventCallback } from 'state/eventLog/hooks'
 
-export const ArrowWrapper = styled.div`
-  // padding: 7px 5px;
-  border-radius: 100%;
-  margin: 0px auto;
-  height: 31px;
-  width: 31px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  // background-color: ${({ theme }) => theme.bg9};
-`
 interface Props {
   currency?: SecCurrency & { tokenInfo?: { decimals?: number; originalDecimals?: number } }
   token: any
@@ -74,10 +63,6 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const networkName = getOriginalNetworkFromToken(tokenInfo)
   const error = Boolean(sender.length > 0 && !loading && !address && networkName === 'Ethereum')
   const computedAddress = networkName === 'Ethereum' ? address : sender
-
-  // useEffect(() => {
-  //   onResetDeposit()
-  // }, [])
 
   const fetchTokenBalance = async () => {
     if (!tokenContract || !account) return
@@ -108,6 +93,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
         await getEvents({ tokenId, filter: 'all' })
         dispatch(setWalletState({ depositView: DepositView.PENDING }))
         await transaction?.wait()
+        onResetDeposit()
       }
     } catch (error: any) {
       console.error(`Could not deposit amount`, error)
@@ -261,4 +247,16 @@ const CurrentBalance = styled.div`
     line-height: normal;
     margin-left: 4px;
   }
+`
+
+export const ArrowWrapper = styled.div`
+  // padding: 7px 5px;
+  border-radius: 100%;
+  margin: 0px auto;
+  height: 31px;
+  width: 31px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // background-color: ${({ theme }) => theme.bg9};
 `
