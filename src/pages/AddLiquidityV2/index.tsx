@@ -52,7 +52,7 @@ import { useHandleCurrencySelect } from './useHandleCurrencySelect'
 import { ReactComponent as ExternalIcon } from '../../assets/images/rightcheck.svg'
 import styled from 'styled-components/macro'
 import { isMobile } from 'react-device-detect'
-import { chainIdToNetworkName } from 'chains'
+import { chainIdToNetworkName } from 'utils/chains'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
