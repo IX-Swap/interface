@@ -1,22 +1,45 @@
-import React, { useRef } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { darken } from 'polished'
 import { NavLink } from 'react-router-dom'
 
 import Column from 'components/Column'
 import { ExternalLink } from 'theme'
-import { Line } from 'components/Line'
-import Row from 'components/Row'
 import { routes } from 'utils/routes'
 import Popover from 'components/Popover'
 import useToggle from 'hooks/useToggle'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { ChevronElement } from 'components/ChevronElement'
 import starIcon from 'assets/svg/star.svg'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { useKyc, useRole } from 'state/user/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
+import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
 const activeClassName = 'ACTIVE'
 
 const Content = () => {
+  const { config } = useWhitelabelState()
+  const { chainId, account } = useActiveWeb3React()
+  const { isOfferManager, isAdmin } = useRole()
+  const { isCorporate, isApproved } = useKyc()
+  const showIssuance = useMemo(
+    () => account && (isAdmin || (isApproved && isOfferManager)),
+    [account, isAdmin, isApproved, isOfferManager]
+  )
+  const isWhitelisted = isUserWhitelisted({ account, chainId })
+
+  const isAllowed = useCallback(
+    (path: string): boolean => {
+      if (!config || !config.pages || config.pages.length === 0) {
+        return true
+      }
+
+      return config.pages.includes(path)
+    },
+    [config]
+  )
+
   return (
     <PopoverContent
       onClick={(e: any) => (e ? e.stopPropagation() : null)}
@@ -32,36 +55,21 @@ const Content = () => {
         <Line />
       </Row> */}
 
+      {isAllowed(routes.issuance) && showIssuance ? (
+        <Column>
+          <SubMenuLink to={routes.issuance}>Issuance</SubMenuLink>
+        </Column>
+      ) : null}
+
       <Column>
-        <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
-          Staking
-        </SubMenuLink>
+        <SubMenuLink to={routes.tokenManager('my-tokens', null)}>Payout</SubMenuLink>
       </Column>
-      <Column>
-        <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
-          Payout
-        </SubMenuLink>
-      </Column>
-      <Column>
-        <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
-          Issuance
-        </SubMenuLink>
-      </Column>
-      <Column>
-        <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
-          LBP
-        </SubMenuLink>
-      </Column>
-      <Column>
-        <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
-          Whitelabel
-        </SubMenuLink>
-      </Column>
-      <Column>
-        <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
-          Settings
-        </SubMenuLink>
-      </Column>
+
+      {isAllowed(routes.lbpDashboard) && account && isAdmin && isWhitelisted ? (
+        <Column>
+          <SubMenuLink to={routes.lbpDashboard}>LBP</SubMenuLink>
+        </Column>
+      ) : null}
     </PopoverContent>
   )
 }
