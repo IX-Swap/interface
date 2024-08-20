@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 import { ReactComponent as SerenityIcon } from '../../../assets/images/serenity.svg'
 import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
@@ -6,7 +7,7 @@ import { useCallback, useMemo } from 'react'
 import { getTokenOption } from './Tokenomics'
 import { ReactComponent as Checked } from '../../../assets/images/check-2.svg'
 import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 import useDecimals from 'hooks/useDecimals'
 
 const CardContainer = styled.div`

@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState, useMemo } from 'react'
 import { useFormik, FormikProvider } from 'formik'
 import { useHistory } from 'react-router-dom'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
+
 import dayjs from 'dayjs'
 import { Select } from 'pages/KYC/common'
 import { FormGrid } from 'pages/KYC/styleds'
