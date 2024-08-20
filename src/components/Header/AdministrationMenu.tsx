@@ -4,7 +4,7 @@ import { darken } from 'polished'
 import { NavLink } from 'react-router-dom'
 
 import Column from 'components/Column'
-import { ExternalLink } from 'theme'
+// import { ExternalLink } from 'theme'
 import { routes } from 'utils/routes'
 import Popover from 'components/Popover'
 import useToggle from 'hooks/useToggle'
@@ -21,8 +21,8 @@ const activeClassName = 'ACTIVE'
 const Content = () => {
   const { config } = useWhitelabelState()
   const { chainId, account } = useActiveWeb3React()
-  const { isOfferManager, isAdmin } = useRole()
-  const { isCorporate, isApproved } = useKyc()
+  const { isOfferManager, isAdmin, isTokenManager } = useRole()
+  const { isApproved } = useKyc()
   const showIssuance = useMemo(
     () => account && (isAdmin || (isApproved && isOfferManager)),
     [account, isAdmin, isApproved, isOfferManager]
@@ -45,15 +45,11 @@ const Content = () => {
       onClick={(e: any) => (e ? e.stopPropagation() : null)}
       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
-      {/* <Column >
-        <SubMenuExternalLink  href={`https://ixswap.defiterm.io/`}>
-          Live Pools
-        </SubMenuExternalLink>
-      </Column>
-
-      <Row style={{ padding: '0', margin: '5px 0' }}>
-        <Line />
-      </Row> */}
+      {isAllowed(routes.adminDashboard) && account && isAdmin && isWhitelisted ? (
+        <Column>
+          <SubMenuLink to={routes.admin('accreditation', null)}>Dashboard</SubMenuLink>
+        </Column>
+      ) : null}
 
       {isAllowed(routes.issuance) && showIssuance ? (
         <Column>
@@ -61,9 +57,11 @@ const Content = () => {
         </Column>
       ) : null}
 
-      <Column>
-        <SubMenuLink to={routes.tokenManager('my-tokens', null)}>Payout</SubMenuLink>
-      </Column>
+      {isAllowed(routes.tokenManager()) && account && isWhitelisted && (isTokenManager || isAdmin) ? (
+        <Column>
+          <SubMenuLink to={routes.tokenManager('my-tokens', null)}>Payout</SubMenuLink>
+        </Column>
+      ) : null}
 
       {isAllowed(routes.lbpDashboard) && account && isAdmin && isWhitelisted ? (
         <Column>
@@ -77,6 +75,7 @@ const Content = () => {
 const AdministrationMenu = () => {
   const [open, toggle] = useToggle(false)
   const node = useRef<HTMLDivElement>()
+
   useOnClickOutside(node, open ? toggle : undefined)
 
   return (
@@ -176,15 +175,15 @@ const SubMenuLink = styled(StyledNavLink)`
     color: ${({ theme }) => theme.text1};
   }
 `
-const SubMenuExternalLink = styled(ExternalLink)<{ disabled?: boolean }>`
-  ${navLinkStyles};
-  ${subMenuLinkStyle};
-  :hover,
-  :active,
-  :focus {
-    text-decoration: none;
-  }
-`
+// const SubMenuExternalLink = styled(ExternalLink)<{ disabled?: boolean }>`
+//   ${navLinkStyles};
+//   ${subMenuLinkStyle};
+//   :hover,
+//   :active,
+//   :focus {
+//     text-decoration: none;
+//   }
+// `
 
 const StyledBox = styled.div`
   font-size: 14px;

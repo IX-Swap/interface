@@ -200,8 +200,6 @@ export const HeaderLinks = () => {
           <Trans>Faucet</Trans>
         </StyledNavLink>
       )}
-
-      {isAllowed('/admin') && account && isAdmin && isWhitelisted && <StyledNavLink to="/admin">Admin</StyledNavLink>}
     </HeaderLinksWrap>
   )
 }
