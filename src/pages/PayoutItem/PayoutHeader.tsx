@@ -19,7 +19,7 @@ import TokenNetwork from 'components/TokenNetwork'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 interface Props {
   payout: PayoutEvent
