@@ -7,20 +7,23 @@ import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import { Loadable } from 'components/LoaderHover'
 import { useAuthState } from 'state/auth/hooks'
 import { useUserState } from 'state/user/hooks'
-import { PayoutForm } from './PayoutForm'
-import { PageTitle } from './styleds'
-import { Info } from './Info'
 import { ROLES } from 'constants/roles'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
+import { Info } from './Info'
+import { PageTitle } from 'pages/CreatePayoutEvent/styleds'
+import { AirdropForm } from './AirdropForm'
 
 const CreatePayoutEventPage: FC = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
   const history = useHistory()
+
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
   const { me } = useUserState()
+
   const isLoggedIn = !!token && !!account
+
   const isValidRole = me.role === ROLES.TOKEN_MANAGER || me.role === ROLES.ADMIN
   useEffect(() => {
     if (me && isValidRole) {
@@ -43,14 +46,14 @@ const CreatePayoutEventPage: FC = () => {
   return (
     <Loadable loading={!isLoggedIn}>
       <FullScreenBackground>
-        <StyledBodyWrapper style={{ maxWidth: 1200}} hasAnnouncement={!cookies.annoucementsSeen}>
+        <StyledBodyWrapper style={{ minWidth: 1200}} hasAnnouncement={!cookies.annoucementsSeen}>
           <Flex marginBottom="32px" alignItems="center">
             <PageTitle textAlign="center" margin="0 auto">
-              <TYPE.title6>Create Claim Payout Event</TYPE.title6>
+              <TYPE.title6>Create Airdrop Payout Event</TYPE.title6>
             </PageTitle>
           </Flex>
           <Info />
-          <PayoutForm />
+          <AirdropForm />
         </StyledBodyWrapper>
       </FullScreenBackground>
     </Loadable>

@@ -18,6 +18,9 @@ export const CreatePayoutModal = ({ isModalOpen, closeModal }: Props) => {
   const goToCreate = () => {
     history.push(routes.createPayoutEvent)
   }
+  const goToCreateAirdrop = () => {
+    history.push(routes.createAirdropEvent)
+  }
   return (
     <RedesignedWideModal isOpen={isModalOpen} onDismiss={closeModal}>
       <ModalContainer>
@@ -31,7 +34,7 @@ export const CreatePayoutModal = ({ isModalOpen, closeModal }: Props) => {
               <BoxTitle>Claim</BoxTitle>
               <BoxSubtitle>Users need to manually claim payout</BoxSubtitle>
             </Box>
-            <Box>
+            <Box  onClick={goToCreateAirdrop}>
               <StyledAirdropIcon />
               <BoxTitle>Airdrop</BoxTitle>
               <BoxSubtitle>
