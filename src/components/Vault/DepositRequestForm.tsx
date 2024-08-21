@@ -31,12 +31,12 @@ import { useTokenContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import useDecimals from 'hooks/useDecimals'
+import { useWeb3React } from '@web3-react/core'
 import { StatusIcon } from 'components/Web3Status'
 import Copy from 'components/AccountDetails/Copy'
 import { parseUnits } from 'ethers/lib/utils'
 import { DepositView, setWalletState } from 'state/wallet'
 import { useGetEventCallback } from 'state/eventLog/hooks'
-import { useWeb3React } from 'hooks/useWeb3React'
 
 interface Props {
   currency?: SecCurrency & { tokenInfo?: { decimals?: number; originalDecimals?: number } }
@@ -68,7 +68,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const fetchTokenBalance = async () => {
     if (!tokenContract || !account) return
 
-    let walletAddress = account as any;
+    let walletAddress = account
 
     if (sender) {
       walletAddress = sender
