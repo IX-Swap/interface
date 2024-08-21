@@ -106,6 +106,7 @@ export const tokens = {
   swapConfirm: (brokerDealerId: number) => `/token/swap-confirm/${brokerDealerId}`,
   all: `/token/list/all`,
   accreditation: (tokenId: number) => `token/accreditation/${tokenId}`,
+  getERC20Balances: `/token/getERC20Balances`,
 }
 
 export const secCatalog = {

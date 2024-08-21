@@ -2,166 +2,35 @@ import React, { useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import { Connector } from '@web3-react/types'
 import { useWeb3React } from '@web3-react/core'
-import { darken } from 'polished'
-import { Activity } from 'react-feather'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
+import { ChevronDown, ChevronUp } from 'react-feather'
 
 import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 import MetaMaskIcon from '../../assets/images/metamask.png'
-// import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
-// import PortisIcon from '../../assets/images/portisIcon.png'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
 import { metaMask } from '../../connectors/metaMask'
 import { walletConnectV2 } from '../../connectors/walletConnectV2'
-import { NetworkContextName } from '../../constants/misc'
 import useENSName from '../../hooks/useENSName'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { isTransactionRecent, useAllTransactions } from '../../state/transactions/hooks'
 import { TransactionDetails } from '../../state/transactions/reducer'
 import { shortenAddress } from '../../utils'
 import { ButtonSecondary, PinnedContentButton } from '../Button'
-import Identicon from '../Identicon'
 import Loader from '../Loader'
 import { RowBetween } from '../Row'
 import WalletModal from '../WalletModal'
-import { IXSBalance } from 'components/Header/IXSBalance'
 import { useETHBalances } from 'state/wallet/hooks'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { coinbaseWallet } from 'connectors/coinbaseWallet'
-
-const IconWrapper = styled.div<{ size?: number }>`
-  ${({ theme }) => theme.flexColumnNoWrap};
-  align-items: center;
-  justify-content: center;
-  & > * {
-    height: ${({ size }) => (size ? size + 'px' : '32px')};
-    width: ${({ size }) => (size ? size + 'px' : '32px')};
-  }
-`
-
-const Web3StatusGeneric = styled(ButtonSecondary)`
-  ${({ theme }) => theme.flexRowNoWrap}
-  width: 100%;
-  align-items: center;
-  padding: 0;
-  border: none;
-  opacity: unset;
-  border-radius: 6px;
-  cursor: pointer;
-  user-select: none;
-  outline: none;
-`
-const Web3StatusError = styled(Web3StatusGeneric)`
-  background-color: ${({ theme }) => theme.red1};
-  border: 1px solid ${({ theme }) => theme.red1};
-  padding: 8px 18px;
-  color: ${({ theme }) => theme.white};
-  font-weight: 500;
-  :hover,
-  :focus {
-    background-color: ${({ theme }) => darken(0.1, theme.red1)};
-  }
-`
-
-const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
-  background: ${({ theme }) => theme.bgG1};
-  border: none;
-  font-size: 14px;
-  line-height: 21px;
-  color: ${({ theme }) => theme.text1};
-  font-weight: 600;
-  border-radius: 40px;
-  padding: 0px 18px;
-
-  ${({ faded }) =>
-    faded &&
-    css`
-      background-color: ${({ theme }) => theme.bgG1};
-      color: ${({ theme }) => theme.text1};
-    `}
-`
-
-const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  background: ${({ theme }) => theme.bg25};
-  opacity: ${({ pending }) => (pending ? '0.7' : '1')};
-  padding: 10px 5px 10px 10px;
-  color: ${({ theme }) => theme.black};
-  // font-weight: 600;
-  border-radius: 4px;
-  font-size: 12px;
-  border: 1px solid #e6e6ff;
-
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-     padding: 8px 3px 8px 20px;
-  `};
-`
-
-const Text = styled.p`
-  flex: 1 1 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 12px;
-  width: fit-content;
-  font-weight: 600;
-  line-height: 18px;
-`
-
-const NetworkIcon = styled(Activity)`
-  margin-left: 0.25rem;
-  margin-right: 0.5rem;
-  width: 16px;
-  height: 16px;
-`
-
-const AccountElement = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 12px;
-  white-space: nowrap;
-  width: fit-content;
-  cursor: pointer;
-  :focus {
-    border: 1px solid blue;
-  }
-`
-
-const BalanceText = styled(Text)`
-  // background: ${({ theme }) => theme.bgG2};
-  color: ${({ theme }) => theme.text2};
-  font-weight: 600;
-  font-size: 12px;
-  opacity: ${({ theme }) => (theme.config.background ? '1' : '0.5')};
-  border-radius: 0 0 40px 40px;
-  padding: 0 18px;
-
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    display: none;
-  `};
-`
-
-const StyledPinnedContentButton = styled(PinnedContentButton)`
-  width: 100%;
-  margin-left: 35px;
-  margin-right: 35px;
-  padding: 10px 40px;
-
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-  width: 100%;
-  margin-left: 0px;
-  margin-right: 0px;
-  padding: 10px 40px;
-  `};
-`
+import { isMobile } from 'react-device-detect'
 
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
   return b.addedTime - a.addedTime
 }
 
 // eslint-disable-next-line react/prop-types
-function StatusIcon({ connector }: { connector: Connector }) {
+export function StatusIcon({ connector }: { connector: Connector }) {
   if (connector === metaMask) {
     return (
       <IconWrapper size={16}>
@@ -181,19 +50,7 @@ function StatusIcon({ connector }: { connector: Connector }) {
       </IconWrapper>
     )
   }
-  // else if (connector === fortmatic) {
-  //   return (
-  //     <IconWrapper size={16}>
-  //       <img src={FortmaticIcon} alt={'Fortmatic'} />
-  //     </IconWrapper>
-  //   )
-  // } else if (connector === portis) {
-  //   return (
-  //     <IconWrapper size={16}>
-  //       <img src={PortisIcon} alt={'Portis'} />
-  //     </IconWrapper>
-  //   )
-  // }
+
   return null
 }
 
@@ -228,21 +85,23 @@ function Web3StatusInner() {
         {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
         {hasPendingTransactions ? (
           <RowBetween>
-            <Text style={{ margin: '4px 13px 4px 0' }}>
+            <Text style={{ margin: '4px 13px 4px 0'}}>
               <Trans>{pending?.length} Pending</Trans>
             </Text>{' '}
             <Loader stroke="white" />
           </RowBetween>
         ) : (
-          <Text style={{ margin: '4px 13px 4px 5px', width: '100%' }}>{ENSName || shortenAddress(account)}</Text>
+          <Text style={{ margin: '4px 10px 4px 5px', width: '100%' }}>{ENSName || shortenAddress(account)}</Text>
         )}
-        <AccountElement style={{ pointerEvents: 'auto' }}>
+        <AccountElement style={{ pointerEvents: 'auto', fontSize: isMobile ? '10px' : '12px' }}>
           {account && userEthBalance ? (
             <Trans>
               {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
             </Trans>
           ) : null}
         </AccountElement>
+
+        <ChevronElement />
       </Web3StatusConnected>
     )
   } else {
@@ -259,7 +118,6 @@ function Web3StatusInner() {
       </StyledPinnedContentButton>
     )
   }
-  // return null
 }
 
 export default function Web3Status() {
@@ -289,3 +147,94 @@ export default function Web3Status() {
     </>
   )
 }
+
+const IconWrapper = styled.div<{ size?: number }>`
+  ${({ theme }) => theme.flexColumnNoWrap};
+  align-items: center;
+  justify-content: center;
+  & > * {
+    height: ${({ size }) => (size ? size + 'px' : '32px')};
+    width: ${({ size }) => (size ? size + 'px' : '32px')};
+  }
+`
+
+const Web3StatusGeneric = styled(ButtonSecondary)`
+  ${({ theme }) => theme.flexRowNoWrap}
+  width: 100%;
+  align-items: center;
+  padding: 0;
+  border: none;
+  opacity: unset;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+`
+
+const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
+  background: ${({ theme }) => theme.bg25};
+  opacity: ${({ pending }) => (pending ? '0.7' : '1')};
+  padding: 10px 5px 10px 10px;
+  color: ${({ theme }) => theme.black};
+  // font-weight: 600;
+  border-radius: 4px;
+  font-size: 12px;
+  border: 1px solid #e6e6ff;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+     z-index: 0;
+  `};
+`
+
+const Text = styled.p`
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  width: fit-content;
+  font-weight: 600;
+  line-height: 18px;
+`
+
+const AccountElement = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  white-space: nowrap;
+  width: fit-content;
+  cursor: pointer;
+  :focus {
+    border: 1px solid blue;
+  }
+`
+
+const StyledPinnedContentButton = styled(PinnedContentButton)`
+  width: 100%;
+  margin-left: 35px;
+  margin-right: 35px;
+  padding: 10px 40px;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 10px 40px;
+  `};
+`
+
+const ChevronElement = styled(ChevronDown)`
+  margin-left: 10px;
+  height: 20px;
+  min-width: 20px;
+  color: ${({ theme }) => theme.text1};
+  > svg {
+    height: 20px;
+    min-width: 20px;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+`

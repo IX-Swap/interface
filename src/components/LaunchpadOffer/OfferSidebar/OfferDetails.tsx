@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 import { capitalize } from '@material-ui/core'
 import { Copy, Info } from 'react-feather'
-import { Offer, OfferStatus, WhitelistStatus } from 'state/launchpad/types'
+import { Offer, OfferNetwork, OfferStatus, WhitelistStatus } from 'state/launchpad/types'
 
 import MetamaskIcon from 'assets/images/metamask.png'
 
@@ -18,12 +18,13 @@ import PlainCopy from 'components/PlainCopy/PlainCopy'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
 import { shortenAddress } from 'utils'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import { nameChainMap, SupportedChainId } from 'constants/chains'
+import { getChainFromName, SupportedChainId } from 'constants/chains'
 import { ExternalLink, MEDIA_WIDTHS } from 'theme'
 import { text10, text33, text6, text9 } from 'components/LaunchpadMisc/typography'
 import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
 import { useActiveWeb3React } from 'hooks/web3'
 import { InvestFailedModal } from '../InvestDialog/utils/InvestFailedModal'
+import { INVESTING_TOKEN_SYMBOL } from 'state/launchpad/constants'
 interface Props {
   offer: Offer
 }
@@ -40,10 +41,10 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
   const investedData = useInvestedData(props.offer.id)
   const { amount: amountToClaim } = investedData
-  const { status: whitelistedStatus } = useGetWhitelistStatus(props.offer.id)
+  const { status: whitelistedStatus, isInterested } = useGetWhitelistStatus(props.offer.id)
   const { chainId } = useActiveWeb3React()
-  const nameChainMapNetwork =
-    chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[props?.offer?.network]
+  const isTestnet = [SupportedChainId.AMOY, SupportedChainId.BASE_SEPOLIA].includes(chainId)
+  const nameChainMapNetwork = getChainFromName(props?.offer?.network, isTestnet)
   const explorerLink = getExplorerLink(nameChainMapNetwork, props.offer.tokenAddress, ExplorerDataType.TOKEN)
   const { addToken } = useAddTokenByDetailsToMetamask()
   const addToMetamask = () => {
@@ -91,6 +92,21 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
   const [showSuccess, setShowSuccess] = React.useState(false)
   const [showFailed, setShowFailed] = React.useState(false)
+
+  const shouldShowInvestButton = (
+    stageStatus: OfferStageStatus,
+    offerStatus: OfferStatus,
+    isInterested: number | undefined
+  ) => {
+    if (stageStatus === OfferStageStatus.disabled) {
+      return false
+    }
+    if (offerStatus === OfferStatus.preSale && isInterested === 0) {
+      return false
+    }
+    return true
+  }
+
   return (
     <Container>
       <OfferSidebarSummary>
@@ -109,9 +125,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
           {stageStatus !== OfferStageStatus.notStarted && (
             <>
               <OfferInvestmentAmount>
-                {props.offer.investingTokenSymbol === 'USDC'
-                  ? `${props.offer.investingTokenSymbol}.e `
-                  : props.offer.investingTokenSymbol}
+                {getTokenSymbol(props?.offer?.network, props?.offer?.investingTokenSymbol)}
                 &nbsp;{formatter.format(props.offer.totalInvestment)}
               </OfferInvestmentAmount>
 
@@ -148,14 +162,14 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </OfferStats>
 
         <InvestButtonContainer>
-          {stageStatus !== OfferStageStatus.disabled && (
+          {shouldShowInvestButton(stageStatus, props?.offer?.status, isInterested) ? (
             <InvestButton onClick={openInvestDialog}>
               {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
               {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
               {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
             </InvestButton>
-          )}
+          ) : null}
         </InvestButtonContainer>
 
         {showSuccess && <InvestSuccessModal show={showSuccess} onClose={() => setShowSuccess(false)} />}
@@ -217,8 +231,16 @@ type GeneralInfoFields =
   | 'investingTokenSymbol'
   | 'tokenPrice'
   | 'tokenSymbol'
+  | 'network'
 
 type GeneralInfoProps = Partial<Pick<Offer, GeneralInfoFields>>
+
+export function getTokenSymbol(network: any, investingTokenSymbol: any) {
+  if (network === OfferNetwork.polygon && investingTokenSymbol === INVESTING_TOKEN_SYMBOL.USDC) {
+    return INVESTING_TOKEN_SYMBOL['USDC.e']
+  }
+  return investingTokenSymbol
+}
 
 export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
   const formatedValue = useFormatOfferValue()
@@ -242,21 +264,21 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
         },
         {
           label: 'Token Price',
-          value: `${
-            props.investingTokenSymbol === 'USDC' ? `${props.investingTokenSymbol}.e ` : props.investingTokenSymbol
-          }  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}`,
+          value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)}  ${
+            formatedValue(props.tokenPrice) ?? 'N/A'
+          } / 1 ${props.tokenSymbol}`,
         },
         {
           label: 'Max. Investment Size',
-          value: `${
-            props.investingTokenSymbol === 'USDC' ? `${props.investingTokenSymbol}.e ` : props.investingTokenSymbol
-          } ${formatedValue(props.maxInvestment) ?? 'N/A'} / ${maxTokenInvestment} ${props.tokenSymbol}`,
+          value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)} ${
+            formatedValue(props.maxInvestment) ?? 'N/A'
+          } / ${maxTokenInvestment} ${props.tokenSymbol}`,
         },
         {
           label: 'Min. Investment Size',
-          value: `${
-            props.investingTokenSymbol === 'USDC' ? `${props.investingTokenSymbol}.e ` : props.investingTokenSymbol
-          } ${formatedValue(props.minInvestment) ?? 'N/A'} / ${minTokenInvestment} ${props.tokenSymbol}`,
+          value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)} ${
+            formatedValue(props.minInvestment) ?? 'N/A'
+          } / ${minTokenInvestment} ${props.tokenSymbol}`,
         },
       ]}
     />

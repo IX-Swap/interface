@@ -60,6 +60,7 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { CollectionCreateProps } from './types'
 import { groupKeyValues } from './utils'
 import { Web3Provider } from '@ethersproject/providers'
+import { adminOffset } from 'state/admin/constants'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -277,7 +278,7 @@ export const useNftCollection = (address: string) => {
   const [hasMore, setHasMore] = useState(false)
   const loading = useMemo(() => info === null, [info])
 
-  const pageSize = 20
+  const pageSize = adminOffset
 
   useEffect(() => {
     async function fetchCollectionInfo() {

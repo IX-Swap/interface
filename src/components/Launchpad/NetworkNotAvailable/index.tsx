@@ -1,23 +1,19 @@
 import React from 'react'
-import { Trans, t } from '@lingui/macro'
-import { useLocation } from 'react-router-dom'
-import ethereumIcon from 'assets/images/ethereum-clear-logo.svg'
-import polygonIcon from 'assets/images/polygon.svg'
-import { useActiveWeb3React } from 'hooks/web3'
+import { Trans } from '@lingui/macro'
 import { switchToNetwork } from 'hooks/switchToNetwork'
-import { SupportedChainId } from 'constants/chains'
+import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, PlaygroundBadge } from './styled'
-import { PRODUCTION_APP_URL } from 'config'
+import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
+import { useWeb3React } from '@web3-react/core'
 
-export const NetworkNotAvailable = () => {
-  const { chainId, provider } = useActiveWeb3React()
-  const { pathname } = useLocation()
+interface Props {
+  expectChain: SupportedChainId | null
+}
 
+export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
+  const { chainId, provider } = useWeb3React()
   const { config } = useWhitelabelState()
-
-  const farming = ['/vesting', '/staking'].includes(pathname)
 
   const changeNetwork = (targetChain: number) => {
     if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
@@ -25,9 +21,10 @@ export const NetworkNotAvailable = () => {
     }
   }
 
-  const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
-
-  const network = window.location.href.includes(PRODUCTION_APP_URL) ? 'Polygon' : 'Mumbai'
+  const sourceChains = ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]
+  const chains = sourceChains.filter((chain) => chain === expectChain)
+  const chainsNames = chains.map((chain) => CHAIN_INFO[chain].chainName)
+  const network = CHAIN_INFO[expectChain || SupportedChainId.BASE].chainName
 
   if (!provider?.provider?.isMetaMask) {
     return (
@@ -38,7 +35,7 @@ export const NetworkNotAvailable = () => {
         </Title>
         <Info>
           <Trans>
-            You have connected to Metamask through WalletConnect. Please switch the network to {network} in your wallet.
+            Please switch the network to {network} in your wallet.
           </Trans>
         </Info>
       </Container>
@@ -48,96 +45,32 @@ export const NetworkNotAvailable = () => {
   return (
     <Container>
       <Title>
-        <Trans>{`${config?.name || 'IX Swap'} is not available 2`}</Trans>
-        <br /> <Trans>{`on this Blockchain network`}</Trans>
+        Connect to the Right
+        <br />
+        Blockchain Network
       </Title>
-      <Info>
-        <Trans>{`${config?.name || 'IX Swap'} is available only on:`}</Trans>
-      </Info>
-
-      <NetworksRow elements={farming ? chains.length + 1 : chains.length}>
-        {(chains.includes(SupportedChainId.MAINNET) || farming) && (
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.MAINNET)}>
-            <img src={ethereumIcon} alt="ethereumIcon" />
-            Ethereum Mainnet
+      <Info>Available Blockchain Networks:</Info>
+      <NetworksRow elements={chains.length} style={chains.length === 1 ? { marginLeft: 70, marginRight: 70 } : {}}>
+        {chains.map((chain) => (
+          <NetworkCard onClick={() => changeNetwork(chain)} key={chain}>
+            <img src={CHAIN_INFO[chain].logoUrl} alt="icon" />
+            {CHAIN_INFO[chain].chainName}
           </NetworkCard>
-        )}
-        {chains.includes(SupportedChainId.KOVAN) && (
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.KOVAN)}>
-            <PlaygroundBadge>
-              <div>
-                <Trans>Playground</Trans>
-              </div>
-            </PlaygroundBadge>
-            <img src={ethereumIcon} alt="ethereumIcon" />
-            Kovan Testnet
-          </NetworkCard>
-        )}
-        {chains.includes(SupportedChainId.MATIC) && (
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.MATIC)}>
-            <img src={polygonIcon} alt="polygonIcon" />
-            Polygon Mainnet
-          </NetworkCard>
-        )}
-        {chains.includes(SupportedChainId.MUMBAI) && (
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.MUMBAI)}>
-            <img src={polygonIcon} alt="polygonIcon" />
-            Mumbai Testnet
-          </NetworkCard>
-        )}
-        {chains.includes(SupportedChainId.AMOY) && (
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.AMOY)}>
-            <img src={polygonIcon} alt="polygonIcon" />
-            Polygon Amoy Testnet
-          </NetworkCard>
-        )}
+        ))}
       </NetworksRow>
+
       <InfoRows>
-        {(chains.includes(SupportedChainId.MAINNET) || farming) && (
-          <Info>
-            <li>
-              <Trans>
-                Switch to<b> Ethereum Mainnet</b> if you have ongoing Staking or Vesting there
-              </Trans>
-            </li>
-          </Info>
-        )}
-        {chains.includes(SupportedChainId.KOVAN) && (
-          <Info>
-            <li>
-              <Trans>
-                Switch to<b> Kovan Testnet</b> if you want to see the demo playground
-              </Trans>
-            </li>
-          </Info>
-        )}
-        {chains.includes(SupportedChainId.MATIC) && (
-          <Info>
-            <li>
-              <Trans>
-                Switch to<b> Polygon Mainnet</b> to get full functionality
-              </Trans>
-            </li>
-          </Info>
-        )}
-        {chains.includes(SupportedChainId.MUMBAI) && (
-          <Info>
-            <li>
-              <Trans>
-                Switch to<b> Mumbai Testnet</b> to get full functionality
-              </Trans>
-            </li>
-          </Info>
-        )}
-        {chains.includes(SupportedChainId.AMOY) && (
-          <Info>
-            <li>
-              <Trans>
-                Switch to<b> Amoy Testnet</b> to get full functionality
-              </Trans>
-            </li>
-          </Info>
-        )}
+        <div>
+          Switch to{' '}
+          {chainsNames.map((chainName, index) => (
+            <span key={index}>
+              <b style={{ color: '#292933' }}>{chainName}</b>
+              {index < chainsNames.length - 2 ? ', ' : ''}
+              {index === chainsNames.length - 2 ? ' or ' : ''}
+            </span>
+          ))}
+        </div>
+        <div>to get full functionality</div>
       </InfoRows>
     </Container>
   )

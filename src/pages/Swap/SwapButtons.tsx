@@ -57,7 +57,7 @@ export const SwapButtons = ({
     execute: onWrap,
     inputError: wrapInputError,
   } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
-  const { approvalState, signatureState } = useSwapApproval()
+  const { approvalState, handleApprove, signatureState } = useSwapApproval()
 
   const { secTokens: userSecTokens } = useUserSecTokens()
   const { showConfirm, swapErrorMessage, setSwapState } = useSetSwapState()
@@ -162,7 +162,12 @@ export const SwapButtons = ({
       )}
       {!showConfirm && (
         <BottomGrouping>
-          <ApproveButtons parsedAmounts={parsedAmounts} />
+          <ApproveButtons
+            parsedAmounts={parsedAmounts}
+            approvalState={approvalState}
+            handleApprove={handleApprove}
+            signatureState={signatureState}
+          />
           {swapIsUnsupported && (
             <PinnedContentButton disabled={true} data-testid="unsupported-asset">
               <Trans>Unsupported asset</Trans>
@@ -232,7 +237,7 @@ export const SwapButtons = ({
                 shouldGetAuthorization
               }
             >
-              <Text fontSize={18} fontWeight={600}>
+              <Text fontSize={16} fontWeight={600}>
                 {swapInputError ? (
                   swapInputError
                 ) : shouldGetAuthorization ? (

@@ -54,10 +54,8 @@ export function useAllowance(
     if (approving) return ApprovalState.PENDING
     // we might not have enough data to know whether or not we need to approve
     if (!currentAllowance) return ApprovalState.UNKNOWN
-
-    // amountToApprove will be defined if currentAllowance is
     return currentAllowance.lt(amountToApprove) ? ApprovalState.NOT_APPROVED : ApprovalState.APPROVED
-  }, [amountToApprove, currentAllowance, spender, tokenContract])
+  }, [amountToApprove, currentAllowance, spender, tokenContract, shouldRefereshAllowance])
 
   const addTransaction = useTransactionAdder()
 
@@ -107,6 +105,90 @@ export function useAllowance(
 
   // return [approvalState, approve]
   return [approvalState, approve, refreshAllowance]
+}
+
+export function useAllowanceV2(
+  tokenAddress?: string,
+  amountToApprove?: BigNumber,
+  spender?: string
+): [ApprovalState, () => Promise<void>, () => void] {
+  const { account } = useWeb3React()
+  const tokenContract = useTokenContract(tokenAddress || '')
+  const addTransaction = useTransactionAdder()
+
+  const [currentAllowance, setCurrentAllowance] = useState<any>(ethers.constants.Zero)
+  const [approving, setApproving] = useState<boolean>(false)
+  const [approvalState, setApprovalState] = useState<ApprovalState>(ApprovalState.UNKNOWN)
+
+  const fetchAllowance = async () => {
+    if (!tokenContract || !account || !spender) return
+
+    const allowance = await tokenContract.allowance(account, spender)
+    setCurrentAllowance(allowance)
+    setApproving(false) // reset approving state
+  }
+
+  const approve = async (): Promise<void> => {
+    if (approvalState !== ApprovalState.NOT_APPROVED) {
+      console.error('approve was called unnecessarily')
+      return
+    }
+
+    if (!tokenContract) {
+      console.error('tokenContract is null')
+      return
+    }
+
+    if (!amountToApprove) {
+      console.error('missing amount to approve')
+      return
+    }
+
+    if (!spender) {
+      console.error('no spender')
+      return
+    }
+
+    const estimatedGas = await tokenContract.estimateGas.approve(spender, amountToApprove)
+    setApproving(true)
+    return tokenContract
+      .approve(spender, amountToApprove, {
+        gasLimit: calculateGasMargin(estimatedGas),
+      })
+      .then((response: TransactionResponse) => {
+        addTransaction(response, {
+          summary: 'Approve token spending',
+          approval: { tokenAddress: tokenAddress || '', spender: spender },
+        })
+        return response.wait(1)
+      })
+      .then((receipt: TransactionReceipt) => {
+        console.log('Transaction confirmed:', receipt)
+        fetchAllowance()
+      })
+      .catch((error: Error) => {
+        setApproving(false) // reset approving state
+        throw error
+      })
+  }
+
+  useEffect(() => {
+    fetchAllowance()
+  }, [tokenContract, account, spender])
+
+  useEffect(() => {
+    if (!amountToApprove || !spender || !currentAllowance || !tokenContract) {
+      setApprovalState(ApprovalState.UNKNOWN)
+      return
+    }
+    if (approving) {
+      setApprovalState(ApprovalState.PENDING)
+    } else {
+      setApprovalState(currentAllowance.lt(amountToApprove) ? ApprovalState.NOT_APPROVED : ApprovalState.APPROVED)
+    }
+  }, [amountToApprove, currentAllowance, spender, tokenContract])
+
+  return [approvalState, approve, fetchAllowance]
 }
 
 // DEPRECATED: useApproveCallback use multicalls that result in extremely slow performance please use `useAllowance` hook instead,
@@ -201,8 +283,10 @@ export function useApproveCallbackFromTrade(
     () => (trade && trade.inputAmount.currency?.isToken ? trade.maximumAmountIn(allowedSlippage) : undefined),
     [trade, allowedSlippage]
   )
-  return useApproveCallback(
-    amountToApprove,
+  const tokenAddress = amountToApprove?.currency?.isToken ? amountToApprove.currency.address : undefined
+  return useAllowanceV2(
+    tokenAddress,
+    amountToApprove ? BigNumber.from(amountToApprove?.quotient?.toString()) : BigNumber.from(0),
     chainId ? (trade instanceof V2Trade ? SWAP_ROUTER_ADDRESS[chainId] : undefined) : undefined
   )
 }

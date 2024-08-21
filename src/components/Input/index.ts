@@ -45,7 +45,7 @@ export const Input = styled.input<{ error?: boolean }>`
   font-size: 13px;
   line-height: 40px;
   border-radius: 6px;
-  padding: 12px;
+  padding: 10px 12px;
   width: 100%;
   ::placeholder {
     font-size: 16px;

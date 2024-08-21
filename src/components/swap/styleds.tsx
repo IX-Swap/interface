@@ -183,8 +183,8 @@ export function SwapCallbackError({ error }: { error: ReactNode }) {
 }
 
 export const SwapShowAcceptChanges = styled(AutoColumn)`
-  background: ${({ theme }) => theme.bg8};
-  color: ${({ theme }) => theme.text2};
+  background: #FF9F4329;
+  color: #FF9F43;
   padding: 0.5rem;
   border-radius: 12px;
   margin-top: 8px;

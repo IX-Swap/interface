@@ -1,37 +1,29 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 import Portal from '@reach/portal'
-
 import { useHistory, useParams } from 'react-router-dom'
+import { ArrowLeft } from 'react-feather'
 
 import { useActiveWeb3React } from 'hooks/web3'
-
-// import { Header } from 'pages/Launchpad/Header'
 import { Footer } from 'pages/Launchpad/Footer'
-
 import { OfferStatus } from 'state/launchpad/types'
 import { useCheckKYC, useGetOffer } from 'state/launchpad/hooks'
 import { useSetHideHeader } from 'state/application/hooks'
-
 import { OfferSummary } from 'components/LaunchpadOffer/OfferSummary'
 import { OfferMainInfo } from 'components/LaunchpadOffer/OfferMainInfo'
 import { OfferSidebar } from 'components/LaunchpadOffer/OfferSidebar'
-
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
-
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 import { BackToTopButton } from 'components/LaunchpadMisc/BackToTopButton'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
-import { DiscreteInternalLink, MEDIA_WIDTHS } from 'theme'
-import { ArrowLeft } from 'react-feather'
+import { MEDIA_WIDTHS } from 'theme'
 import { routes } from 'utils/routes'
 import Header from 'components/Header'
-import { NotAvailablePage } from 'components/NotAvailablePage'
-import { detectWrongNetwork } from 'utils'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import WhiteLabelFooter from 'components/WhiteLabelFooter'
+import { checkWrongChain } from 'chains'
 
 interface OfferPageParams {
   offerId: string
@@ -42,10 +34,13 @@ export default function LaunchpadOffer() {
   const history = useHistory()
   const params = useParams<OfferPageParams>()
   const { chainId, account } = useActiveWeb3React()
-  const offer = useGetOffer(params.offerId)
+  const offer: any = useGetOffer(params.offerId)
   const hideHeader = useSetHideHeader()
   const checkKYC = useCheckKYC()
   const { config } = useWhitelabelState()
+
+  const network = offer?.data?.network ?? ''
+  const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
 
   const [isAllowed, setIsAllowed] = React.useState<boolean>()
 
@@ -92,18 +87,6 @@ export default function LaunchpadOffer() {
     )
   }
 
-  const blurred = detectWrongNetwork(chainId)
-
-  if (blurred) {
-    return (
-      <Portal>
-        <CenteredFixed width="100vw" height="100vh">
-          <NotAvailablePage />
-        </CenteredFixed>
-      </Portal>
-    )
-  }
-
   if (!isAllowed) {
     return (
       <Portal>
@@ -146,6 +129,14 @@ export default function LaunchpadOffer() {
           {isIxSwap ? <Footer offerId={params.offerId} /> : <WhiteLabelFooter />}
         </footer>
       </OfferContainer>
+
+      {isWrongChain ? (
+        <Portal>
+          <CenteredFixed width="100vw" height="100vh">
+            <NetworkNotAvailable expectChain={expectChain} />
+          </CenteredFixed>
+        </Portal>
+      ) : null}
     </OfferBackgroundWrapper>
   )
 }
@@ -192,7 +183,8 @@ const OfferContainer = styled.article`
   gap: 4rem 6rem;
 
   @media (max-width: 1440px) {
-    grid-template-columns: 100px minmax(auto, 800px) 330px 8px;
+    grid-template-columns: 100px minmax(auto, 800px) 360px 8px;
+    gap: 4rem;
   }
 
   > main,

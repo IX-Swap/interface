@@ -21,7 +21,7 @@ import { RowBetween } from '../../components/Row'
 import { Dots } from '../../components/swap/styleds'
 import TransactionConfirmationModal from '../../components/TransactionConfirmationModal'
 import { useCurrency } from '../../hooks/Tokens'
-import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
+import { ApprovalState, useAllowanceV2 } from '../../hooks/useApproveCallback'
 import { useLiquidityRouterContract, usePairContract } from '../../hooks/useContract'
 import { UseERC20PermitState, useV2LiquidityTokenPermit } from '../../hooks/useERC20Permit'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
@@ -43,7 +43,6 @@ import { useSetHideHeader } from 'state/application/hooks'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
-import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import Header from 'components/Header'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
@@ -105,7 +104,13 @@ export default function RemoveLiquidity({
     router?.address
   )
 
-  const [approval, approveCallback] = useApproveCallback(parsedAmounts[Field.LIQUIDITY], router?.address)
+  const amountToApprove = parsedAmounts[Field.LIQUIDITY]
+  const tokenAddress = amountToApprove?.currency?.isToken ? amountToApprove.currency.address : undefined
+  const [approval, approveCallback] = useAllowanceV2(
+    tokenAddress,
+    amountToApprove ? BigNumber.from(amountToApprove?.quotient?.toString()) : BigNumber.from(0),
+    router?.address
+  )
 
   // useEffect(() => {
   //   const getSignature = async () => {

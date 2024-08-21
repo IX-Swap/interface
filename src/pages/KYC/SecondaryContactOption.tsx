@@ -12,7 +12,7 @@ import {
 import { PinnedContentButton } from 'components/Button'
 import { isMobile } from 'react-device-detect'
 import { EmailType, SuccessType, KYCV2RequestButtonText } from './enum'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { ReactComponent as CopyIcon } from 'assets/images/copy.svg'
 
 interface Props {
@@ -403,6 +403,9 @@ const Container = styled.div`
   justify-content: space-between;
   place-items: center;
   border-radius: 8px;
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    padding: 16px;
+  }
 `
 
 const EmailVerificationContainer = styled.div`
@@ -411,11 +414,9 @@ const EmailVerificationContainer = styled.div`
   border: 1px solid #e6e6ff;
   padding: 20px 40px;
   border-radius: 6px;
-  @media (max-width: 768px) {
-    width: calc(100% - 24px);
-    padding: 0px;
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    padding: 10px;
     border-radius: 12px;
-    margin: 0 auto;
   }
 `
 
@@ -459,9 +460,10 @@ const SubTitle = styled.div`
   color: #666680;
   margin: 10px 220px;
   line-height: 20px;
-  @media (max-width: 768px) {
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     font-size: 13px;
-    margin-top: 10px;
+    margin: 10px;
+    padding: 10px;
   }
 `
 
@@ -504,8 +506,8 @@ const NewCodeText = styled.span`
 const CodeBox = styled.input.attrs(
   (props: { borderColor: string; backgroundColor: string; color: string; placeholderColor: string }) => ({
     style: {
-      width: isMobile ? '40px' : '80px',
-      height: '80px',
+      width: isMobile ? '50px' : '80px',
+      height: isMobile ? '60px' : '80px',
       textAlign: 'center',
       marginRight: '10px',
       background: props.backgroundColor,

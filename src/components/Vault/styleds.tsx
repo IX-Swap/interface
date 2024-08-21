@@ -6,7 +6,7 @@ import { ReactComponent as Passed } from 'assets/images/check-2.svg'
 import Column from 'components/Column'
 import { ReactComponent as PendingIcon } from 'assets/images/newPending.svg'
 import { RowBetween } from 'components/Row'
-import { gradientBorder, MEDIA_WIDTHS, TYPE } from 'theme'
+import {  MEDIA_WIDTHS, TYPE } from 'theme'
 import { Colors } from 'theme/styled'
 
 import { WithdrawStatus, DepositStatus, ActionTypes } from './enum'
@@ -195,14 +195,12 @@ export const getStatusIcon = (action: ActionTypes, status: string) => {
 }
 
 export const InfoModalHeader = styled.div`
-  padding: 10px 0px;
-  // border-radius: 20px 20px 0px 0px;
-  // background: ${({ theme }) => theme.bg0};
+  padding: 5px 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-weight: 600;
-  font-size: 22px;
+  font-size: 18px;
   color: white;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
@@ -215,17 +213,17 @@ export const InfoModalBody = styled.div<{ isSuccess: boolean }>`
   // padding: 1px 32px;
   display: flex;
   flex-direction: column;
-  row-gap: 12px;
+  row-gap: 10px;
   background: ${({ theme }) => theme.bg0};
   border-radius: 0px 0px 20px 20px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    padding: 16px;
+    padding: 10px 16px;
   }
   > div {
     background: ${({ theme }) => theme.bg7};
     border-radius: 8px;
     border: 1px solid #e6e6ff;
-    padding: 20px;
+    padding: 5px 20px;
     label {
       font-weight: 500;
       font-size: 16px;

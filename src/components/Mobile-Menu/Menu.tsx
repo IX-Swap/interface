@@ -3,23 +3,21 @@ import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useCallback, useEffect, useMemo } from 'react'
+import { useCookies } from 'react-cookie'
 import { NavLink } from 'react-router-dom'
 import styled, { css } from 'styled-components'
+
 import { ExternalLink } from 'theme'
 import { routes } from 'utils/routes'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
-
 import { ReactComponent as CloseIcon } from '../../assets/images/newCross.svg'
 import { disabledStyle } from 'components/Header/HeaderLinks'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { useKyc, useRole } from 'state/user/hooks'
 import { Line } from 'components/Line'
-import { Li } from 'pages/KYC/styleds'
-
 import MenuMobile from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Fade from '@mui/material/Fade'
-import { Button } from 'rebass'
 
 interface Props {
   close: () => void
@@ -29,10 +27,12 @@ interface Props {
 export const Menu = ({ close, isAdminMenu }: Props) => {
   const { chainId, account } = useActiveWeb3React()
   const { config } = useWhitelabelState()
+  const [cookies] = useCookies(['annoucementsSeen'])
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const isIxSwap = config?.isIxSwap ?? false
+  const bridgeUrl = process.env.REACT_APP_BRIDGE_URL || ''
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -69,7 +69,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
     [config]
   )
 
-  const { isCorporate, isApproved } = useKyc()
+  const { isApproved } = useKyc()
   const { isOfferManager, isAdmin, isTokenManager } = useRole()
 
   const showIssuance = useMemo(
@@ -126,11 +126,21 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
           <CloseIcon onClick={close} />
         </CloseContainer>
 
-        <MenuList>
+        <MenuList style={!cookies.annoucementsSeen ? { marginTop: 130 } : {}}>
           {isIxSwap && isWhitelisted ? (
             <>
               <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
                 <Trans>Charts</Trans>
+              </ExternalListItem>
+
+              <Line />
+            </>
+          ) : null}
+
+          {isIxSwap ? (
+            <>
+              <ExternalListItem disabled={!isApproved} target="_blank" href={bridgeUrl}>
+                <Trans>Bridge</Trans>
               </ExternalListItem>
 
               <Line />
@@ -353,7 +363,7 @@ const StyledFooter = styled.div`
 
     & > a {
       color: #b8b8cc;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 500;
       margin-right: 10px;
       text-decoration: none;
@@ -398,14 +408,6 @@ const CloseContainer = styled.div`
   border: 1px solid #e6e6ff;
   border-radius: 6px;
   padding: 10px 12px;
-`
-
-const StyledCloseIcon = styled(CloseIcon)`
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  z-index: 9999;
-  color: black;
 `
 
 const MenuList = styled.div`

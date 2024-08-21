@@ -118,8 +118,11 @@ export const Footer: React.FC<Props> = (props) => {
           Copyright © IX Swap 2024
           <br />
           <div>
-            <DiscreteExternalLink href="https://ixswap.io/terms-and-conditions/">
-              Terms & Conditions
+            <DiscreteExternalLink
+              style={{ display: 'flex', alignItems: 'center' }}
+              href="https://ixswap.io/terms-and-conditions/"
+            >
+              <UpdatedBox>Updated</UpdatedBox> Terms & Conditions
             </DiscreteExternalLink>
             <DotSeparator />
             <DiscreteExternalLink href="https://ixswap.io/privacy-policy/">Privacy Policy</DiscreteExternalLink>
@@ -133,7 +136,6 @@ export const Footer: React.FC<Props> = (props) => {
             <DiscreteExternalLink href="https://ixswap.io/community/">IXS Token</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/blog/">IXS Launchpad </DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/community/">Exchange</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/blog/">Fractionalized-NFT Exchange </DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/community/">
               Staking and Liquidity Mining
             </DiscreteExternalLink>
@@ -172,7 +174,7 @@ export const Footer: React.FC<Props> = (props) => {
 
 const FooterContainer = styled.div`
   background-color: ${(props) => props.theme.bg0};
-  margin: 5rem auto;
+  margin: 3rem auto;
   width: 100%;
   padding: 120px;
   // max-width: ${(props) => props.theme.launchpad.content.maxWidth};
@@ -180,6 +182,16 @@ const FooterContainer = styled.div`
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
   padding: 10px;
   `};
+`
+
+const UpdatedBox = styled.span`
+  color: #696af9;
+  background-color: rgba(105, 106, 249, 0.1);
+  border: 1px solid rgba(105, 106, 249, 0.2);
+  border-radius: 4px;
+  margin-right: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
 `
 
 const SubscriptionFormContainer = styled.div`
@@ -245,6 +257,7 @@ const SocialMediaLink = styled.a`
 const Copyright = styled.div`
   grid-area: copyright;
   place-self: start;
+  text-align: center;
 
   ${text23}
 

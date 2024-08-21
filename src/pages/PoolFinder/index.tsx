@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Box, Text } from 'rebass'
 import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
@@ -32,7 +32,6 @@ import { useSetHideHeader } from 'state/application/hooks'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
-import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import Header from 'components/Header'
 import { isMobile } from 'react-device-detect'
 
@@ -48,6 +47,7 @@ export default function PoolFinder() {
   const query = useQuery()
   const theme = useTheme()
   const { account } = useActiveWeb3React()
+  const history = useHistory()
 
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [activeField, setActiveField] = useState<number>(Fields.TOKEN1)
@@ -154,23 +154,21 @@ export default function PoolFinder() {
                   </PinnedContentButton>
                 </EmptyStateInfoCard>
               )}
-              {noPool && currency0 && currency1 && (
+              {noPool && currency0 && currency1 ? (
                 <NewEmptyStateInfoCard>
                   <TYPE.title9 fontWeight={500}>
                     <Text color={'#B8B8CC'}>
                       <Trans>No pool found</Trans>
                     </Text>
                   </TYPE.title9>
-                  <PinnedContentButton height="60px">
-                    <Link
-                      to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}
-                      style={{ color: '#FFFFFF', fontWeight: '600' }}
-                    >
-                      <Trans>Create pool</Trans>
-                    </Link>
+                  <PinnedContentButton
+                    height="60px"
+                    onClick={() => history.push(`/add/${currencyId(currency0)}/${currencyId(currency1)}`)}
+                  >
+                    <span style={{ color: '#FFFFFF', fontWeight: '600' }}>Create pool</span>
                   </PinnedContentButton>
                 </NewEmptyStateInfoCard>
-              )}
+              ) : null}
               {invalidPair && (
                 <EmptyStateInfoCard>
                   <Trans>Invalid pair</Trans>

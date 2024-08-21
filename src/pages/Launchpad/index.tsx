@@ -4,10 +4,27 @@ import Portal from '@reach/portal'
 import { Offers } from 'components/Launchpad/Offers'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { useActiveWeb3React } from 'hooks/web3'
-import { Banner } from './Banner'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { Banner } from './Banner'
+import { MEDIA_WIDTHS } from 'theme'
+
+const BannerWrapper = styled.div`
+  background-color: #ffffff;
+  width: 100vw;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 70px;
+  margin-top: -41px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    height: auto;
+    margin-top: 0px;
+  }
+`
 
 export default function Launchpad() {
   const { chainId } = useActiveWeb3React()
@@ -29,7 +46,11 @@ export default function Launchpad() {
 
   return (
     <>
-      {isIxSwap || enableLaunchpadBanner ? <Banner /> : null}
+      {isIxSwap || enableLaunchpadBanner ? (
+        <BannerWrapper>
+          <Banner />
+        </BannerWrapper>
+      ) : null}
       <Offers />
     </>
   )

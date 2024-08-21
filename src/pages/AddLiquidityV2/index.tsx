@@ -23,7 +23,7 @@ import { FixedHeightRow, MinimalPositionCard } from '../../components/PositionCa
 import { ButtonRow, RowFixed } from '../../components/Row'
 import TransactionConfirmationModal from '../../components/TransactionConfirmationModal'
 import { ZERO_PERCENT } from '../../constants/misc'
-import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
+import { ApprovalState, useAllowanceV2 } from '../../hooks/useApproveCallback'
 import { useLiquidityRouterContract } from '../../hooks/useContract'
 import { useIsSwapUnsupported } from '../../hooks/useIsSwapUnsupported'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
@@ -167,8 +167,20 @@ export default function AddLiquidity({
   const router = useLiquidityRouterContract()
 
   // check whether the user has approved the router on the tokens
-  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], router?.address)
-  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], router?.address)
+  const amountToApproveA = parsedAmounts[Field.CURRENCY_A]
+  const amountToApproveB = parsedAmounts[Field.CURRENCY_B]
+  const tokenAddressA = amountToApproveA?.currency?.isToken ? amountToApproveA.currency.address : undefined
+  const tokenAddressB = amountToApproveB?.currency?.isToken ? amountToApproveB.currency.address : undefined
+  const [approvalA, approveACallback] = useAllowanceV2(
+    tokenAddressA,
+    amountToApproveA ? BigNumber.from(amountToApproveA?.quotient?.toString()) : BigNumber.from(0),
+    router?.address
+  )
+  const [approvalB, approveBCallback] = useAllowanceV2(
+    tokenAddressB,
+    amountToApproveB ? BigNumber.from(amountToApproveB?.quotient?.toString()) : BigNumber.from(0),
+    router?.address
+  )
 
   const addTransaction = useTransactionAdder()
 
@@ -477,9 +489,15 @@ export default function AddLiquidity({
                               {approvalA === ApprovalState.APPROVED && (
                                 <NewApproveButton
                                   data-testid="approved-currency-a"
-                                  style={{ flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2, gap: '10px' }}
+                                  style={{
+                                    flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2,
+                                    gap: '10px',
+                                    height: '100%',
+                                  }}
                                 >
-                                  <ExternalIcon />
+                                  <div style={{ width: 24 }}>
+                                    <ExternalIcon />
+                                  </div>
                                   <Trans>Approved {currencies[Field.CURRENCY_A]?.symbol}</Trans>
                                 </NewApproveButton>
                               )}
@@ -502,9 +520,15 @@ export default function AddLiquidity({
                               {approvalB === ApprovalState.APPROVED && (
                                 <NewApproveButton
                                   data-testid="approved-currency-b"
-                                  style={{ flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2, gap: '10px' }}
+                                  style={{
+                                    flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2,
+                                    gap: '10px',
+                                    height: '100%',
+                                  }}
                                 >
-                                  <ExternalIcon />
+                                  <div style={{ width: 24 }}>
+                                    <ExternalIcon />
+                                  </div>
                                   <Trans>Approved {currencies[Field.CURRENCY_B]?.symbol}</Trans>
                                 </NewApproveButton>
                               )}

@@ -13,6 +13,7 @@ import { ReactComponent as InstagramLogo } from 'assets/launchpad/svg/social/ins
 import { ReactComponent as FacebookLogo } from 'assets/launchpad/svg/social/facebook.svg'
 import { MEDIA_WIDTHS } from 'theme'
 import { LbpFormValues } from '../types'
+import { isMobile } from 'react-device-detect'
 
 interface LinksProps {
   lbpData: LbpFormValues | null
@@ -38,25 +39,52 @@ const Links: React.FC<LinksProps> = ({ lbpData }) => {
 
   return (
     <div>
-      <SocialMediaLinks>
-        <WebsiteLink target="_blank" rel="noopener noreferrer" href={lbpData?.officialWebsite}>
-          <WebSiteIcon />
-          Website
-        </WebsiteLink>
-        {lbpData?.whitePaper &&
-          lbpData.whitePaper.map((paper, idx) => (
-            <SocialMediaLink key={`whitepaper-${idx}`} onClick={() => handleClick((paper as { url: string }).url)}>
-              {paper.name}
-            </SocialMediaLink>
-          ))}
-        {lbpData?.socialMedia
-          .filter((link) => link?.url)
-          .map((link, idx) => (
-            <SocialMediaLink key={`link-${idx}`} onClick={() => handleClick((link as any).url)}>
-              {socialMediaIcons[link.name.toLowerCase() as keyof typeof socialMediaIcons]}
-            </SocialMediaLink>
-          ))}
-      </SocialMediaLinks>
+      {isMobile ? (
+        <div>
+          <SocialMediaLinks>
+            <WebsiteLink target="_blank" rel="noopener noreferrer" href={lbpData?.officialWebsite}>
+              <WebSiteIcon />
+              Website
+            </WebsiteLink>
+            {lbpData?.whitePaper &&
+              lbpData.whitePaper.slice(0, 2).map((paper, idx) => (
+                <SocialMediaLink key={`whitepaper-${idx}`} onClick={() => handleClick((paper as { url: string }).url)}>
+                  {paper.name}
+                </SocialMediaLink>
+              ))}
+          </SocialMediaLinks>
+          <SocialMediaLinks>
+            {lbpData?.socialMedia
+              ?.slice(0)
+              .filter((link) => link?.url)
+              .map((link, idx) => (
+                <SocialMediaLink key={`link-${idx}`} onClick={() => handleClick((link as any).url)}>
+                  {socialMediaIcons[link.name.toLowerCase() as keyof typeof socialMediaIcons]}
+                </SocialMediaLink>
+              ))}
+          </SocialMediaLinks>
+        </div>
+      ) : (
+        <SocialMediaLinks>
+          <WebsiteLink target="_blank" rel="noopener noreferrer" href={lbpData?.officialWebsite}>
+            <WebSiteIcon />
+            Website
+          </WebsiteLink>
+          {lbpData?.whitePaper &&
+            lbpData.whitePaper.map((paper, idx) => (
+              <SocialMediaLink key={`whitepaper-${idx}`} onClick={() => handleClick((paper as { url: string }).url)}>
+                {paper.name}
+              </SocialMediaLink>
+            ))}
+          {lbpData?.socialMedia
+            .filter((link) => link?.url)
+            .map((link, idx) => (
+              <SocialMediaLink key={`link-${idx}`} onClick={() => handleClick((link as any).url)}>
+                {socialMediaIcons[link.name.toLowerCase() as keyof typeof socialMediaIcons]}
+              </SocialMediaLink>
+            ))}
+        </SocialMediaLinks>
+      )}
     </div>
   )
 }
@@ -69,8 +97,9 @@ const SocialMediaLinks = styled.div`
   align-items: center;
   gap: 1rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    // justify-content: center;
-    display: grid;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-top: 20px;
   }
 `
 

@@ -24,6 +24,7 @@ export interface DashboardLbp {
   bannerId: number
   contractAddress: string
   shareAddress: string
+  network: string
   shareAmount: number
   shareMaxSupply: number
   assetTokenId: number
@@ -84,6 +85,7 @@ export interface LbpFormValues {
   logo?: any
   assetTokenSymbol?: any
   allowSlippage?: boolean
+  network: string
 }
 
 export interface TokenomicsProps {
@@ -100,6 +102,7 @@ export interface TokenomicsProps {
   maxPrice?: number | string
   startDate: string
   endWeight: number
+  network: string
 }
 
 export interface ProjectInfoProps {

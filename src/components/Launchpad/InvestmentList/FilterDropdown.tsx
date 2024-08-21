@@ -6,6 +6,7 @@ import { ChevronDown } from 'react-feather'
 import { ReactComponent as Checked } from 'assets/images/checked_solid.svg'
 import { ReactComponent as NotChecked } from 'assets/images/not_checked_solid.svg'
 import { text8 } from 'components/LaunchpadMisc/typography'
+import {ReactComponent as DropdownIcon} from 'assets/images/dropdownIcon.svg'
 
 export interface FilterOption<T> {
   label: React.ReactNode
@@ -92,7 +93,7 @@ export function FilterDropdown<T>({ label, options, single, disabled = false, on
         {label}
 
         <DropdownControl open={showDropdown}>
-          <ChevronDown />
+          <DropdownIcon  style={{height: '6px', width: '6px', marginTop: '7px' }}/>
         </DropdownControl>
       </DropdownButton>
 
@@ -111,11 +112,11 @@ export function FilterDropdown<T>({ label, options, single, disabled = false, on
 }
 
 const DropdownContainer = styled.div<{ disabled: boolean }>`
-  opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 `
 const DropdownButton = styled.button`
   background: ${(props) =>
-    props.disabled ? props.theme.launchpad.colors.disabled : props.theme.launchpad.colors.background};
+    props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   font-family: ${(props) => props.theme.launchpad.font};
   border-radius: 6px;

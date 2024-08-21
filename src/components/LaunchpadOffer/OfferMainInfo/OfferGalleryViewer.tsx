@@ -196,7 +196,14 @@ const ViewerContainer = styled.div`
   backdrop-filter: blur(16px);
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    padding: 0px;
+    padding: 1rem;
+    grid-template-columns: 50px 1fr 50px;
+    grid-template-areas:
+      'left-control main-media right-control'
+      '. media-selector .'
+      '. controls .';
+    align-items: center;
+    justify-items: center;
   }
 `
 
@@ -204,9 +211,9 @@ const ViewerActiveMedia = styled.div`
   grid-area: main-media;
   place-self: center;
 
-
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    height: auto;
+    width: 100%;
+    max-width: 100%;
   }
 `
 
@@ -218,6 +225,9 @@ const ViewerMediaSelector = styled.div`
   align-items: stretch;
   gap: 1rem;
   overflow-x: show;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: none;
+  }
 `
 
 const ViewerControl = styled.div<{ area: 'left' | 'right' }>`
@@ -227,6 +237,14 @@ const ViewerControl = styled.div<{ area: 'left' | 'right' }>`
   transition: transform 0.3s;
   &:hover {
     transform: scale(1.3);
+  }
+
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    position: absolute;
+    top: 50%;
+    ${(props) => (props.area === 'left' ? 'left: 10px;' : 'right: 10px;')}
+    transform: translateY(-50%);
   }
 `
 
@@ -242,9 +260,18 @@ const ViewerMediaEntry = styled.div<{ active: boolean }>`
 `
 
 const Image = styled.img`
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 84vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
   border-radius: 8px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    max-width: 62vw;
+    max-height: 80vh;
+  }
 `
 
 const Video = styled.video`

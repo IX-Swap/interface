@@ -12,7 +12,7 @@ import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import useENS from '../../hooks/useENS'
 import useParsedQueryString from '../../hooks/useParsedQueryString'
 import useSwapSlippageTolerance from '../../hooks/useSwapSlippageTolerance'
-import { useV2TradeExactIn, useV2TradeExactOut } from '../../hooks/useV2Trade'
+import { useTrade } from '../../hooks/useV2Trade'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { isAddress } from '../../utils'
 import { AppDispatch, AppState } from '../index'
@@ -131,22 +131,13 @@ export function useDerivedSwapInfo(): {
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
 
-  const { V2TradeExactIn, isLoading: V2TradeExactInLoading } = useV2TradeExactIn(
-    isExactIn ? parsedAmount : undefined,
-    outputCurrency ?? undefined,
-    {
-      maxHops: singleHopOnly ? 1 : undefined,
-    }
-  )
-  const { V2TradeExactOut, isLoading: V2TradeExactOutLoading } = useV2TradeExactOut(
-    inputCurrency ?? undefined,
-    !isExactIn ? parsedAmount : undefined,
-    {
-      maxHops: singleHopOnly ? 1 : undefined,
-    }
-  )
+  const params = isExactIn
+    ? { firstParam: parsedAmount, secondParam: outputCurrency }
+    : { firstParam: inputCurrency, secondParam: parsedAmount }
 
-  const v2Trade = isExactIn ? V2TradeExactIn : V2TradeExactOut
+  const { v2Trade, isLoading } = useTrade(isExactIn, params.firstParam, params.secondParam, {
+    maxHops: singleHopOnly ? 1 : undefined,
+  })
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
@@ -174,11 +165,7 @@ export function useDerivedSwapInfo(): {
   if (!to || !formattedTo) {
     inputError = inputError ?? `Enter a recipient`
   } else {
-    if (
-      BAD_RECIPIENT_ADDRESSES[formattedTo] ||
-      (V2TradeExactIn && involvesAddress(V2TradeExactIn, formattedTo)) ||
-      (V2TradeExactOut && involvesAddress(V2TradeExactOut, formattedTo))
-    ) {
+    if (BAD_RECIPIENT_ADDRESSES[formattedTo] || (v2Trade && involvesAddress(v2Trade, formattedTo))) {
       inputError = inputError ?? `Invalid recipient`
     }
   }
@@ -216,7 +203,7 @@ export function useDerivedSwapInfo(): {
     allowedSlippage,
     shouldGetAuthorization,
     insufficientBalance,
-    isLoading: V2TradeExactInLoading || V2TradeExactOutLoading,
+    isLoading,
   }
 }
 
