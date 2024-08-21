@@ -44,7 +44,7 @@ interface Props {
 }
 
 export const DepositRequestForm = ({ currency, token }: Props) => {
-  const { account } = useWeb3React()
+  const { account, connector } = useWeb3React()
   const tokenContract = useTokenContract(token?.address ?? '')
   const showAboutWrapping = useShowAboutWrappingCallback()
   const { amount, sender, currencyId: cid } = useDepositState()
@@ -174,7 +174,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
             <AddressInput
               {...{ id: 'sender-input', value: sender, error, onChange: onTypeSender, disabled: true }}
               placeholder="My wallet address"
-              rightItem={<StatusIcon />}
+              rightItem={<StatusIcon connector={connector} />}
             />
           </Column>
           <Line />

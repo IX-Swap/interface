@@ -1,6 +1,6 @@
 import PolygonIcon from 'assets/images/polygonIcon.svg'
 import BaseIcon from 'assets/images/baseIcon.svg'
-import { Chains, NetworkName } from 'utils/chains'
+import { Chains, NetworkName } from 'chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { capitalizeWords } from 'utils/strings'
 

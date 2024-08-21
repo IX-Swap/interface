@@ -10,21 +10,6 @@ declare module 'fortmatic'
 interface Window {
   ethereum?: {
     isMetaMask?: true
-    isSafePal?: true
-    isCoin98?: true
-    isBlocto?: true
-    isMathWallet?: true
-    isTrustWallet?: true
-    isBlocto?: true
-    isBinance?: true
-    isCoinbaseWallet?: true
-    isTrust?: true
-    isTokenPocket?: true
-    isMetaMask?: true
-    providers?: ExtendEthereum[]
-    isOpera?: true
-    isBraveWallet?: true
-    isRabby?: true
     request: (...args: any[]) => Promise<any>
     on?: (...args: any[]) => void
     removeListener?: (...args: any[]) => void

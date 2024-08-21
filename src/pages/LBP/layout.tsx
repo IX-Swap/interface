@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { useWeb3React } from '@web3-react/core'
 
 import Header from 'components/Header'
 import { useSetHideHeader } from 'state/application/hooks'

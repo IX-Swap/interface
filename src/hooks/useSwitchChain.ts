@@ -1,46 +1,47 @@
-import { useSwitchChain as useSwitchChainWagmi } from 'wagmi'
-
-import { useAccount } from 'hooks/useAccount'
+import { t } from '@lingui/macro'
+import { ALL_SUPPORTED_CHAIN_IDS, SupportedChainId } from 'constants/chains'
+import { useWeb3React } from '@web3-react/core'
 import { useCallback } from 'react'
-import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-import { InterfaceChainId, SupportedChainId } from 'types/chains'
+import { switchToNetwork } from './switchToNetwork'
+
+export const CHAIN_SWITCH_MAP: { [key in SupportedChainId]: SupportedChainId } = {
+  [SupportedChainId.MAINNET]: SupportedChainId.MATIC,
+  [SupportedChainId.KOVAN]: SupportedChainId.MUMBAI,
+  [SupportedChainId.MATIC]: SupportedChainId.MAINNET,
+  [SupportedChainId.MUMBAI]: SupportedChainId.KOVAN,
+  [SupportedChainId.AMOY]: SupportedChainId.KOVAN,
+  [SupportedChainId.BASE]: SupportedChainId.BASE,
+  [SupportedChainId.BASE_SEPOLIA]: SupportedChainId.BASE_SEPOLIA,
+}
 
 export const CHAIN_SWITCH_STRINGS: { [key in SupportedChainId]: string } = {
-  [SupportedChainId.POLYGON]: `Polygon`,
-  [SupportedChainId.MAINNET]: `Ethereum`,
+  [SupportedChainId.MAINNET]: `Polygon`,
+  [SupportedChainId.KOVAN]: `Polygon`,
+  [SupportedChainId.MATIC]: `Ethereum`,
+  [SupportedChainId.MUMBAI]: `Ethereum`,
   [SupportedChainId.AMOY]: `Ethereum`,
   [SupportedChainId.BASE]: `Base`,
   [SupportedChainId.BASE_SEPOLIA]: `Base`,
-} as any
+}
 
-export default function useSwitchChain() {
-  const { switchChain } = useSwitchChainWagmi()
-  const { connector } = useAccount()
+export default function useSwitchChain(): {
+  addChain: () => void
+} {
+  const { provider, chainId } = useWeb3React()
+  const addChain = useCallback(async () => {
+    if (
+      provider &&
+      provider.provider.isMetaMask &&
+      provider.provider.request &&
+      chainId &&
+      ALL_SUPPORTED_CHAIN_IDS.includes(chainId)
+    ) {
+      try {
+        const selectedChain = CHAIN_SWITCH_MAP[chainId as SupportedChainId]
+        await switchToNetwork({ chainId: selectedChain, provider })
+      } catch (e) {}
+    }
+  }, [provider, chainId])
 
-  return useCallback(
-    (chainId: InterfaceChainId) => {
-      const isSupportedChain = ENV_SUPPORTED_TGE_CHAINS?.includes(chainId)
-      if (!isSupportedChain) {
-        throw new Error(`Chain ${chainId} not supported for connector (${connector?.name})`)
-      }
-      return new Promise<void>((resolve, reject) => {
-        switchChain(
-          { chainId },
-          {
-            onSuccess() {
-              console.log('switchChain success')
-            },
-            onSettled(_, error) {
-              if (error) {
-                reject(error)
-              } else {
-                resolve()
-              }
-            },
-          }
-        )
-      })
-    },
-    [connector?.name, switchChain]
-  )
+  return { addChain }
 }

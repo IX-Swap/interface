@@ -2,6 +2,7 @@ import React from 'react'
 import { createTheme, MuiThemeProvider as ThemeProvider } from '@material-ui/core'
 import { DefaultTheme } from 'styled-components'
 import useTheme from 'hooks/useTheme'
+import { background, marginBottom, paddingTop } from 'styled-system'
 
 export const muiTheme = ({ bg1, bg2, bg0, bg26, text1, text7, text9, config, bg23, bg24, bg25 }: DefaultTheme) =>
   createTheme({

@@ -16,7 +16,7 @@ import { useArgentWalletContract } from './useArgentWalletContract'
 import { useSwapRouterContract } from './useContract'
 import useENS from './useENS'
 import useTransactionDeadline from './useTransactionDeadline'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { useWeb3React } from '@web3-react/core'
 
 export enum SwapCallbackState {
   INVALID,

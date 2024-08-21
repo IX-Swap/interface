@@ -1,12 +1,10 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { Text } from 'rebass'
 import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 import _get from 'lodash/get'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
-
 import { useKYCState } from 'state/kyc/hooks'
 import { routes } from 'utils/routes'
 import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
@@ -25,140 +23,10 @@ import { useRole } from 'state/user/hooks'
 import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
 import { isMobile } from 'react-device-detect'
 import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
+import { useWalletModalToggle } from 'state/application/hooks'
 import { PinnedContentButton } from 'components/Button'
-
-export default function Header() {
-  const [cookies] = useCookies(['annoucementsSeen'])
-  const { account, chainId } = useActiveWeb3React()
-  const { kyc } = useKYCState()
-  const { config } = useWhitelabelState()
-  const { isTokenManager } = useRole()
-  const isWhitelisted = isUserWhitelisted({ account, chainId })
-  const { openConnectModal } = useConnectModal()
-
-  const [openPreviewModal, setPreviewModal] = useState(false)
-
-  const logoUrl = _get(config, 'logoUrl', null)
-
-  const isAllowed = useCallback(
-    (path: string) => {
-      if (!config || !config.pages || config.pages.length === 0) {
-        return true
-      }
-
-      return config.pages.includes(path)
-    },
-    [config]
-  )
-
-  const closeModal = () => {
-    setPreviewModal(false)
-  }
-
-  return (
-    <>
-      {isMobile && (
-        <HeaderWrapper>
-          {!cookies.annoucementsSeen && <Announcement />}
-          <HeaderFrame>
-            <HeaderRow>
-              <Title to={routes.defaultRoute}>
-                {logoUrl ? (
-                  <img src={logoUrl} alt="logo" width="auto" height="47px" />
-                ) : (
-                  <IXSIcon>
-                    <NewLogo width="130px" height="47px" />
-                  </IXSIcon>
-                )}
-              </Title>
-            </HeaderRow>
-            <HeaderControls>
-              {isAllowed(routes.kyc) && isWhitelisted && (
-                <HeaderElement>
-                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to={routes.defaultRoute}>
-                    {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
-                  </NavLink>
-                </HeaderElement>
-              )}
-            </HeaderControls>
-            <MobileMenu />
-            {kyc?.status === 'approved' && (
-              <HeaderRowNew>
-                <HeaderElement>
-                  <NetworkCard />
-                </HeaderElement>
-                <HeaderElement>
-                  <Web3Status />
-                </HeaderElement>
-              </HeaderRowNew>
-            )}
-          </HeaderFrame>
-          {kyc?.status !== 'approved' && (
-            <HeaderElement style={{ background: 'white', padding: '18px 20px' }}>
-              <Web3Status />
-            </HeaderElement>
-          )}
-        </HeaderWrapper>
-      )}
-      {!isMobile && (
-        <HeaderWrapper>
-          {!cookies.annoucementsSeen && <Announcement />}
-          <HeaderFrame>
-            <HeaderRow marginLeft={50}>
-              <Title to={routes.defaultRoute}>
-                {logoUrl ? (
-                  <div style={{ width: 130 }}>
-                    <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
-                  </div>
-                ) : (
-                  <IXSIcon>
-                    <NewLogo width="130px" height="47px" />
-                  </IXSIcon>
-                )}
-              </Title>
-            </HeaderRow>
-            <HeaderLinks />
-            <HeaderControls>
-              {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
-                <IconWrapper>
-                  <HeaderElement>
-                    <NavLink
-                      style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }}
-                      to={routes.tokenManager('my-tokens', null)}
-                    >
-                      <TokenManager />
-                    </NavLink>
-                  </HeaderElement>
-                </IconWrapper>
-              )}
-
-              {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
-                <HeaderElement>
-                  <IXSBalance />
-                </HeaderElement>
-              )}
-              <HeaderElement>
-                {account ? <NetworkCard /> : ''}
-                <Web3Status />
-
-                {!account && openConnectModal ? (
-                  <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={openConnectModal}>
-                    <Text className="connect-wallet-button">
-                      <Trans>Connect Wallet</Trans>
-                    </Text>
-                  </PinnedContentButton>
-                ) : null}
-
-                {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
-              </HeaderElement>
-            </HeaderControls>
-            <MobileMenu />
-          </HeaderFrame>
-        </HeaderWrapper>
-      )}
-    </>
-  )
-}
+import Modal from 'components/Modal'
+import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
 
 const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
   display: grid;
@@ -303,3 +171,147 @@ const IconWrapper = styled.div`
     display: none;
   `};
 `
+
+export default function Header() {
+  const [cookies] = useCookies(['annoucementsSeen'])
+  const { account, chainId } = useActiveWeb3React()
+  const { kyc } = useKYCState()
+  const { config } = useWhitelabelState()
+  const { isTokenManager, isAdmin } = useRole()
+  const isWhitelisted = isUserWhitelisted({ account, chainId })
+  const [openPreviewModal, setPreviewModal] = React.useState(false)
+  const toggleWalletModal = useWalletModalToggle()
+  const [showConnectModal, setShowConnectModal] = React.useState(false)
+  const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
+
+  const logoUrl = _get(config, 'logoUrl', null)
+
+  const isAllowed = useCallback(
+    (path: string) => {
+      if (!config || !config.pages || config.pages.length === 0) {
+        return true
+      }
+
+      return config.pages.includes(path)
+    },
+    [config]
+  )
+
+  const openModal = () => {
+    setPreviewModal(true)
+  }
+
+  const closeModal = () => {
+    setPreviewModal(false)
+  }
+  const onConnect = React.useCallback(() => {
+    console.log('Connected')
+  }, [])
+
+  return (
+    <>
+      {isMobile && (
+        <HeaderWrapper>
+          {!cookies.annoucementsSeen && <Announcement />}
+          <HeaderFrame>
+            <HeaderRow>
+              <Title to={routes.defaultRoute}>
+                {logoUrl ? (
+                  <img src={logoUrl} alt="logo" width="auto" height="47px" />
+                ) : (
+                  <IXSIcon>
+                    <NewLogo width="130px" height="47px" />
+                  </IXSIcon>
+                )}
+              </Title>
+            </HeaderRow>
+            <HeaderControls>
+              {isAllowed(routes.kyc) && isWhitelisted && (
+                <HeaderElement>
+                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to={routes.defaultRoute}>
+                    {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
+                  </NavLink>
+                </HeaderElement>
+              )}
+            </HeaderControls>
+            <MobileMenu />
+            {kyc?.status === 'approved' && (
+              <HeaderRowNew>
+                <HeaderElement>
+                  <NetworkCard />
+                </HeaderElement>
+                <HeaderElement>
+                  <Web3Status />
+                </HeaderElement>
+              </HeaderRowNew>
+            )}
+          </HeaderFrame>
+          {kyc?.status !== 'approved' && (
+            <HeaderElement style={{ background: 'white', padding: '18px 20px' }}>
+              <Web3Status />
+            </HeaderElement>
+          )}
+        </HeaderWrapper>
+      )}
+      {!isMobile && (
+        <HeaderWrapper>
+          {!cookies.annoucementsSeen && <Announcement />}
+          <HeaderFrame>
+            <HeaderRow marginLeft={50}>
+              <Title to={routes.defaultRoute}>
+                {logoUrl ? (
+                  <div style={{ width: 130 }}>
+                    <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
+                  </div>
+                ) : (
+                  <IXSIcon>
+                    <NewLogo width="130px" height="47px" />
+                  </IXSIcon>
+                )}
+              </Title>
+            </HeaderRow>
+            <HeaderLinks />
+            <HeaderControls>
+              {isAllowed(routes.tokenManager()) && account && isWhitelisted && (isTokenManager || isAdmin) && (
+                <IconWrapper>
+                  <HeaderElement>
+                    <NavLink
+                      style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }}
+                      to={routes.tokenManager('my-tokens', null)}
+                    >
+                      <TokenManager />
+                    </NavLink>
+                  </HeaderElement>
+                </IconWrapper>
+              )}
+
+              {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
+                <HeaderElement>
+                  <IXSBalance />
+                </HeaderElement>
+              )}
+              <HeaderElement>
+                {account ? <NetworkCard /> : ''}
+                <Web3Status />
+
+                {!account && (
+                  <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={toggleModal}>
+                    <Text className="connect-wallet-button">
+                      <Trans>Connect Wallet</Trans>
+                    </Text>
+                  </PinnedContentButton>
+                )}
+
+                <Modal isOpen={showConnectModal} onDismiss={toggleModal} maxWidth="430px" maxHeight="310px">
+                  <ConnectionDialog onConnect={onConnect} onClose={toggleModal} />
+                </Modal>
+                {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
+              </HeaderElement>
+            </HeaderControls>
+            <MobileMenu />
+          </HeaderFrame>
+        </HeaderWrapper>
+      )}
+    </>
+  )
+}
