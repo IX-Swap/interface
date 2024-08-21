@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 import Column from 'components/Column'
 // import { ExternalLink } from 'theme'
-import { checkAllowed, routes } from 'utils/routes'
+import { allowedPages, routes } from 'utils/routes'
 import Popover from 'components/Popover'
 import useToggle from 'hooks/useToggle'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
@@ -34,25 +34,25 @@ const Content = () => {
       onClick={(e: any) => (e ? e.stopPropagation() : null)}
       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
-      {checkAllowed(routes.adminDashboard, config) && isAdmin && isWhitelisted ? (
+      {allowedPages(routes.adminDashboard, config) && isAdmin && isWhitelisted ? (
         <Column>
           <SubMenuLink to={routes.admin('accreditation', null)}>Dashboard</SubMenuLink>
         </Column>
       ) : null}
 
-      {checkAllowed(routes.issuance, config) && showIssuance ? (
+      {allowedPages(routes.issuance, config) && showIssuance ? (
         <Column>
           <SubMenuLink to={routes.issuance}>Issuance</SubMenuLink>
         </Column>
       ) : null}
 
-      {checkAllowed(routes.tokenManager(), config) && isWhitelisted && (isTokenManager || isAdmin) ? (
+      {allowedPages(routes.tokenManager(), config) && isWhitelisted && (isTokenManager || isAdmin) ? (
         <Column>
           <SubMenuLink to={routes.tokenManager('my-tokens', null)}>Payout</SubMenuLink>
         </Column>
       ) : null}
 
-      {checkAllowed(routes.lbpDashboard, config) && isAdmin && isWhitelisted ? (
+      {allowedPages(routes.lbpDashboard, config) && isAdmin && isWhitelisted ? (
         <Column>
           <SubMenuLink to={routes.lbpDashboard}>LBP</SubMenuLink>
         </Column>

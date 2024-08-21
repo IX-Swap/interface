@@ -69,7 +69,7 @@ export const routes = {
   adminUsers: 'admin/users-list',
 }
 
-export function checkAllowed(path: string, config: Whitelabel | null): boolean {
+export function allowedPages(path: string, config: Whitelabel | null): boolean {
   if (!config || !config.pages || config.pages.length === 0) {
     return true
   }
