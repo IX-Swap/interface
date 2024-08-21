@@ -113,6 +113,7 @@ export const AirdropEventBlock: FC<Props> = ({
 
       <Uploader
         isPayoutpage={true}
+        acceptedFileTypes={['.csv']}
         title="Payout Attachments"
         files={values.files}
         onDrop={handleDropImage}
