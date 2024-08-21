@@ -79,7 +79,7 @@ export interface RouteMapEntry {
 }
 const onlyOfferManager = {
   conditions: {
-    rolesSupported: [ROLES.OFFER_MANAGER, ROLES.ADMIN],
+    rolesSupported: [ROLES.OFFER_MANAGER, ROLES.ADMIN, ROLES.MASTER_TENANT],
     isKycApproved: true,
   },
 }

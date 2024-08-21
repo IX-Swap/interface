@@ -21,10 +21,10 @@ const activeClassName = 'ACTIVE'
 const Content = () => {
   const { config } = useWhitelabelState()
   const { chainId, account } = useActiveWeb3React()
-  const { isOfferManager, isAdmin, isTokenManager } = useRole()
+  const { isOfferManager, isAdmin, isTokenManager, isOperator, isMasterTenant } = useRole()
   const { isApproved } = useKyc()
   const showIssuance = useMemo(
-    () => account && (isAdmin || (isApproved && isOfferManager)),
+    () => account && (isAdmin || (isApproved && isOfferManager) || isMasterTenant),
     [account, isAdmin, isApproved, isOfferManager]
   )
   const isWhitelisted = isUserWhitelisted({ account, chainId })
@@ -34,9 +34,9 @@ const Content = () => {
       onClick={(e: any) => (e ? e.stopPropagation() : null)}
       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
-      {checkAllowed(routes.adminDashboard, config?.pages) && isAdmin && isWhitelisted ? (
+      {checkAllowed(routes.adminDashboard, config?.pages) && (isAdmin || isOperator) && isWhitelisted ? (
         <Column>
-          <SubMenuLink to={routes.admin('accreditation', null)}>Dashboard</SubMenuLink>
+          <SubMenuLink to={routes.admin(isOperator ? 'kyc' : 'accreditation', null)}>Dashboard</SubMenuLink>
         </Column>
       ) : null}
 
