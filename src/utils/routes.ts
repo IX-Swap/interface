@@ -1,6 +1,7 @@
 import { Currency } from '@ixswap1/sdk-core'
 
 import { currencyId } from './currencyId'
+import { Whitelabel } from 'state/whitelabel/types'
 
 export const routes = {
   add: (currency0: Currency, currency1: Currency) => `/add/${currencyId(currency0)}/${currencyId(currency1)}`,
@@ -66,4 +67,12 @@ export const routes = {
   adminTransactions: 'admin/transactions',
   adminCatalog: 'admin/security-catalog',
   adminUsers: 'admin/users-list',
+}
+
+export function checkAllowed(path: string, config: Whitelabel | null): boolean {
+  if (!config || !config.pages || config.pages.length === 0) {
+    return true
+  }
+
+  return config.pages.includes(path)
 }

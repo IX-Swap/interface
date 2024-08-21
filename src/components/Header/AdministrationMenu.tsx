@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { darken } from 'polished'
 import { NavLink } from 'react-router-dom'
 
 import Column from 'components/Column'
 // import { ExternalLink } from 'theme'
-import { routes } from 'utils/routes'
+import { checkAllowed, routes } from 'utils/routes'
 import Popover from 'components/Popover'
 import useToggle from 'hooks/useToggle'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
@@ -29,41 +29,30 @@ const Content = () => {
   )
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
-  const isAllowed = useCallback(
-    (path: string): boolean => {
-      if (!config || !config.pages || config.pages.length === 0) {
-        return true
-      }
-
-      return config.pages.includes(path)
-    },
-    [config]
-  )
-
   return (
     <PopoverContent
       onClick={(e: any) => (e ? e.stopPropagation() : null)}
       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
-      {isAllowed(routes.adminDashboard) && account && isAdmin && isWhitelisted ? (
+      {checkAllowed(routes.adminDashboard, config) && isAdmin && isWhitelisted ? (
         <Column>
           <SubMenuLink to={routes.admin('accreditation', null)}>Dashboard</SubMenuLink>
         </Column>
       ) : null}
 
-      {isAllowed(routes.issuance) && showIssuance ? (
+      {checkAllowed(routes.issuance, config) && showIssuance ? (
         <Column>
           <SubMenuLink to={routes.issuance}>Issuance</SubMenuLink>
         </Column>
       ) : null}
 
-      {isAllowed(routes.tokenManager()) && account && isWhitelisted && (isTokenManager || isAdmin) ? (
+      {checkAllowed(routes.tokenManager(), config) && isWhitelisted && (isTokenManager || isAdmin) ? (
         <Column>
           <SubMenuLink to={routes.tokenManager('my-tokens', null)}>Payout</SubMenuLink>
         </Column>
       ) : null}
 
-      {isAllowed(routes.lbpDashboard) && account && isAdmin && isWhitelisted ? (
+      {checkAllowed(routes.lbpDashboard, config) && isAdmin && isWhitelisted ? (
         <Column>
           <SubMenuLink to={routes.lbpDashboard}>LBP</SubMenuLink>
         </Column>
@@ -156,6 +145,7 @@ const StyledNavLink = styled(NavLink).attrs({
   ${navLinkStyles};
   ${({ disabled }) => disabled && `${disabledStyle}`};
   margin-right: 8px;
+  min-width: 168px;
 `
 
 const subMenuLinkStyle = css`
