@@ -200,15 +200,6 @@ export const HeaderLinks = () => {
           <Trans>Faucet</Trans>
         </StyledNavLink>
       )}
-
-      {isAllowed(routes.issuance) && showIssuance && <StyledNavLink to="/issuance">Issuance</StyledNavLink>}
-      {isAllowed('/admin') && account && isAdmin && isWhitelisted && <StyledNavLink to="/admin">Admin</StyledNavLink>}
-
-      {isAllowed(routes.lbpDashboard) && account && isAdmin && isWhitelisted && (
-        <StyledNavLink to={routes.lbpDashboard} data-testid={`lbp-nav-link`}>
-          <Trans>LBP</Trans>
-        </StyledNavLink>
-      )}
     </HeaderLinksWrap>
   )
 }
