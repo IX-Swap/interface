@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react'
 import JSBI from 'jsbi'
 import { Text } from 'rebass'
 import { Trans } from '@lingui/macro'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { SwapErrorCard } from 'components/Card'
 import { OutputInfo } from 'components/swap/OutputInfo'
@@ -19,6 +18,7 @@ import { useSetSwapState } from 'state/swapHelper/hooks'
 import { useExpertModeManager, useUserSingleHopOnly } from 'state/user/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
 import { verifySwap } from 'utils/verifySwap'
+
 import { ButtonIXSWide, PinnedContentButton } from '../../components/Button'
 import { BottomGrouping, SwapCallbackError } from '../../components/swap/styleds'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
@@ -29,6 +29,8 @@ import { WrapText } from './typings'
 import { usePriceImpact } from './usePriceImpact'
 import { useSwapApproval } from './useSwapApproval'
 import { AccreditationStatusEnum } from 'components/Vault/enum'
+import Modal from 'components/Modal'
+import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
 
 export const SwapButtons = ({
   parsedAmounts,
@@ -41,7 +43,6 @@ export const SwapButtons = ({
 }) => {
   const { account, chainId } = useActiveWeb3React()
   const { recipient, typedValue, independentField, approvalSubmitted } = useSwapState()
-  const { openConnectModal } = useConnectModal()
 
   const {
     toggledTrade: trade,
@@ -174,9 +175,25 @@ export const SwapButtons = ({
           )}
 
           {showConnectWallet && (
-            <PinnedContentButton onClick={openConnectModal} data-testid="connect-wallet-from-swap">
-              <Trans>Connect Wallet</Trans>
-            </PinnedContentButton>
+            <>
+              <PinnedContentButton onClick={() => setOpenConnectWallet(true)} data-testid="connect-wallet-from-swap">
+                <Trans>Connect Wallet</Trans>
+              </PinnedContentButton>
+
+              <Modal
+                isOpen={isOpenConnectWallet}
+                onDismiss={() => setOpenConnectWallet(false)}
+                maxWidth="430px"
+                maxHeight="310px"
+              >
+                <ConnectionDialog
+                  onConnect={() => {
+                    console.log('Connected')
+                  }}
+                  onClose={() => setOpenConnectWallet(false)}
+                />
+              </Modal>
+            </>
           )}
 
           {showWrapButton && (

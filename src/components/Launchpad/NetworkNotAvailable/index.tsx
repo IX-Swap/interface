@@ -1,27 +1,46 @@
 import React from 'react'
+import { Trans } from '@lingui/macro'
+import { switchToNetwork } from 'hooks/switchToNetwork'
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
-import { useWeb3React } from 'hooks/useWeb3React'
-import useSelectChain from 'hooks/useSelectChain'
+import { useWeb3React } from '@web3-react/core'
 
 interface Props {
   expectChain: SupportedChainId | null
 }
 
 export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
-  const { chainId } = useWeb3React()
-  const selectChain = useSelectChain()
+  const { chainId, provider } = useWeb3React()
+  const { config } = useWhitelabelState()
 
-  const changeNetwork = async (targetChain: number) => {
-    if (chainId !== targetChain) {
-      await selectChain(targetChain)
+  const changeNetwork = (targetChain: number) => {
+    if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
+      switchToNetwork({ provider, chainId: targetChain })
     }
   }
 
   const sourceChains = ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]
   const chains = sourceChains.filter((chain) => chain === expectChain)
   const chainsNames = chains.map((chain) => CHAIN_INFO[chain].chainName)
+  const network = CHAIN_INFO[expectChain || SupportedChainId.BASE].chainName
+
+  if (!provider?.provider?.isMetaMask) {
+    return (
+      <Container>
+        <Title>
+          <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
+          <br /> <Trans>{`on this Blockchain network`}</Trans>
+        </Title>
+        <Info>
+          <Trans>
+            Please switch the network to {network} in your wallet.
+          </Trans>
+        </Info>
+      </Container>
+    )
+  }
 
   return (
     <Container>

@@ -1,23 +1,22 @@
-import React from 'react'
+import { PinnedContentButton, ButtonOutlined } from 'components/Button'
 import styled from 'styled-components'
-import { AddressZero } from '@ethersproject/constants'
-import dayjs from 'dayjs'
-import { ethers } from 'ethers'
-import { useHistory } from 'react-router-dom'
-
+import ixsDropDown from '../../../assets/images/ixsToken.svg'
 import { FormData } from 'pages/LBP/LbpForm'
-import { useWeb3React } from 'hooks/useWeb3React'
+import dayjs from 'dayjs'
+import { useWeb3React } from '@web3-react/core'
 import { TokenOptions } from 'pages/LBP/components/Tokenomics'
 import { useMemo, useEffect, useState, useCallback } from 'react'
 import { useLBPFactory } from 'hooks/useContract'
 import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
+import { ethers } from 'ethers'
 import { toUnixTimeSeconds } from 'utils/time'
 import { useTokenContract } from 'hooks/useContract'
 import { useDeployLbp } from 'state/lbp/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import { useHistory } from 'react-router-dom'
 import { ReactComponent as SerenityIcon } from '../../../assets/images/serenity.svg'
-import { PinnedContentButton, ButtonOutlined } from 'components/Button'
+import { AddressZero } from '@ethersproject/constants';
 
 export const MAX_UINT88 = ethers.BigNumber.from('309485009821345068724781055')
 
