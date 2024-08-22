@@ -49,7 +49,6 @@ const TableContainer = styled.div`
   width: 100%;
   overflow-x: auto;
   width: 100%;
-  border: 1px solid #f0f0f0;
   border-radius: 4px;
   overflow: hidden;
 `
@@ -60,9 +59,7 @@ const TableStyled = styled.table`
   background-color: #fff;
 `
 
-const Thead = styled.thead`
-  background-color: #fafafa;
-`
+const Thead = styled.thead``
 
 const Tbody = styled.tbody`
   tr {
@@ -73,12 +70,19 @@ const Tbody = styled.tbody`
 `
 
 const Th = styled.th<{ fixed?: boolean | string; align?: string; width?: string | number }>`
-  color: #8F8FB2;
-  padding: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 24px;
+  padding-bottom: 24px;
   text-align: ${(props) => props.align || 'left'};
-  font-weight: 600;
-  border-bottom: 1px solid #f0f0f0;
-  background-color: #fafafa;
+  color: #8f8fb2;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.28px;
+  border-bottom: 1px solid #e6e6ff;
   position: ${(props) => (props.fixed ? 'sticky' : 'static')};
   width: ${(props) => (props.width ? (typeof props.width === 'number' ? `${props.width}px` : props.width) : 'auto')};
 
@@ -95,11 +99,21 @@ const Th = styled.th<{ fixed?: boolean | string; align?: string; width?: string 
 `
 
 const Td = styled.td<{ fixed?: boolean | string; align?: string; width?: string | number }>`
-  padding: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   text-align: ${(props) => props.align || 'left'};
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #e6e6ff;
   position: ${(props) => (props.fixed ? 'sticky' : 'static')};
   width: ${(props) => (props.width ? (typeof props.width === 'number' ? `${props.width}px` : props.width) : 'auto')};
+  color: #292933;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.14px;
 
   ${(props) =>
     props.fixed === 'left' ? 'left: 0; z-index: 1;' : props.fixed === 'right' ? 'right: 0; z-index: 1;' : ''}

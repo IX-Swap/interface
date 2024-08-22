@@ -3,6 +3,7 @@ import Table from './Table'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
 import { PinnedContentButton } from 'components/Button'
+import { Copy, Edit } from 'react-feather'
 
 import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.svg'
 
@@ -19,6 +20,18 @@ const Tenant: React.FC = () => {
       key: '1',
       name: 'Quantum',
       domain: 'www.quantum.ixswap.io',
+      created: '24 July. 2024 03:48AM',
+    },
+    {
+      key: '2',
+      name: 'Quantum 1',
+      domain: 'www.quantum1.ixswap.io',
+      created: '24 July. 2024 03:48AM',
+    },
+    {
+      key: '3',
+      name: 'Quantum 2',
+      domain: 'www.quantum2.ixswap.io',
       created: '24 July. 2024 03:48AM',
     },
   ]
@@ -44,10 +57,14 @@ const Tenant: React.FC = () => {
       key: 'action',
       align: 'right',
       render: (_: any, record: any) => (
-        <div>
-          <a style={{marginRight: 4}}>Invite</a>
-          <a>Delete</a>
-        </div>
+        <ActionWrapper>
+          <ActionButton>
+            <Copy />
+          </ActionButton>
+          <ActionButton>
+            <Edit />
+          </ActionButton>
+        </ActionWrapper>
       ),
     },
   ] as any
@@ -116,4 +133,14 @@ const SearchIconWrapper = styled.div`
   left: 16px;
   top: 50%;
   transform: translateY(-40%);
+`
+
+const ActionWrapper = styled.div`
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+`
+const ActionButton = styled.div`
+  cursor: pointer;
+  color: #b8b8cc;
 `
