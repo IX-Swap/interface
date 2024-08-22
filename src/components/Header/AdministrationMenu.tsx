@@ -4,7 +4,7 @@ import { darken } from 'polished'
 import { NavLink } from 'react-router-dom'
 
 import Column from 'components/Column'
-// import { ExternalLink } from 'theme'
+import { ExternalLink } from 'theme'
 import { checkAllowed, routes } from 'utils/routes'
 import Popover from 'components/Popover'
 import useToggle from 'hooks/useToggle'
@@ -15,6 +15,7 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { useKyc, useRole } from 'state/user/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+import { BRIDGE_ADMIN_URL } from 'config'
 
 const activeClassName = 'ACTIVE'
 
@@ -34,6 +35,12 @@ const Content = () => {
       onClick={(e: any) => (e ? e.stopPropagation() : null)}
       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
+      {isAdmin ? (
+        <Column>
+          <SubMenuExternalLink href={BRIDGE_ADMIN_URL}>Bridge</SubMenuExternalLink>
+        </Column>
+      ) : null}
+
       {checkAllowed(routes.adminDashboard, config?.pages) && (isAdmin || isOperator) && isWhitelisted ? (
         <Column>
           <SubMenuLink to={routes.admin(isOperator ? 'kyc' : 'accreditation', null)}>Dashboard</SubMenuLink>
@@ -165,15 +172,15 @@ const SubMenuLink = styled(StyledNavLink)`
     color: ${({ theme }) => theme.text1};
   }
 `
-// const SubMenuExternalLink = styled(ExternalLink)<{ disabled?: boolean }>`
-//   ${navLinkStyles};
-//   ${subMenuLinkStyle};
-//   :hover,
-//   :active,
-//   :focus {
-//     text-decoration: none;
-//   }
-// `
+const SubMenuExternalLink = styled(ExternalLink)<{ disabled?: boolean }>`
+  ${navLinkStyles};
+  ${subMenuLinkStyle};
+  :hover,
+  :active,
+  :focus {
+    text-decoration: none;
+  }
+`
 
 const StyledBox = styled.div`
   font-size: 14px;
