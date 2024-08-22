@@ -6,6 +6,7 @@ import { PinnedContentButton } from 'components/Button'
 import { Copy, Edit } from 'react-feather'
 
 import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.svg'
+import Paginator from './Paginator'
 
 interface Tenant {
   key: string
@@ -88,6 +89,9 @@ const Tenant: React.FC = () => {
         </InputWrapper>
 
         <Table columns={columns} dataSource={dataSource} />
+        <Flex justifyContent="flex-end">
+          <Paginator total={10} pageSize={10} currentPage={0} onPageChange={() => {}} />
+        </Flex>
       </Content>
     </Container>
   )
