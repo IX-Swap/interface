@@ -89,12 +89,9 @@ export const IXSBalanceModal = () => {
                     <RowBetween style={{ gap: '5px' }}>
                       <Trans>Balance of IXGov</Trans>
                       {IXSCurrency && library?.provider?.isMetaMask && (
-                        <TextGradient
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => !addIXSGov.success && addIXSGov.addToken()}
-                        >
+                        <AddToMetamask onClick={() => !addIXSGov.success && addIXSGov.addToken()}>
                           {!addIXSGov.success ? <Trans>Add to Metamask</Trans> : null}
-                        </TextGradient>
+                        </AddToMetamask>
                       )}
                     </RowBetween>
                   }
