@@ -1,12 +1,13 @@
-import React from 'react'
-import Table from './Table'
+import React, { useEffect, useState } from 'react'
+import Table from './components/Table'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
-import { PinnedContentButton } from 'components/Button'
-import { Copy, Edit } from 'react-feather'
+import { Edit } from 'react-feather'
 
-import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.svg'
-import Paginator from './Paginator'
+import { PinnedContentButton } from 'components/Button'
+import apiService from 'services/apiService'
+import { whitelabel } from 'services/apiUrls'
+import dayjs from 'dayjs'
 
 interface Tenant {
   key: string
@@ -16,26 +17,7 @@ interface Tenant {
 }
 
 const Tenant: React.FC = () => {
-  const dataSource = [
-    {
-      key: '1',
-      name: 'Quantum',
-      domain: 'www.quantum.ixswap.io',
-      created: '24 July. 2024 03:48AM',
-    },
-    {
-      key: '2',
-      name: 'Quantum 1',
-      domain: 'www.quantum1.ixswap.io',
-      created: '24 July. 2024 03:48AM',
-    },
-    {
-      key: '3',
-      name: 'Quantum 2',
-      domain: 'www.quantum2.ixswap.io',
-      created: '24 July. 2024 03:48AM',
-    },
-  ]
+  const [data, setData] = useState<Tenant[]>([])
 
   const columns = [
     {
@@ -47,11 +29,21 @@ const Tenant: React.FC = () => {
       title: 'Domain',
       dataIndex: 'domain',
       key: 'domain',
+      render: (text: string) => {
+        return <DomainText>{text}</DomainText>
+      },
     },
     {
       title: 'Created',
-      dataIndex: 'created',
-      key: 'created',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (text: string) => {
+        return (
+          <div>
+            {dayjs(text).format('MMM D, YYYY')} <TimeText>{dayjs(text).format('hh:mm A')}</TimeText>
+          </div>
+        )
+      },
     },
     {
       title: '',
@@ -60,15 +52,30 @@ const Tenant: React.FC = () => {
       render: (_: any, record: any) => (
         <ActionWrapper>
           <ActionButton>
-            <Copy />
-          </ActionButton>
-          <ActionButton>
             <Edit />
           </ActionButton>
         </ActionWrapper>
       ),
     },
   ] as any
+
+  const getData = async () => {
+    try {
+      const { status, data } = await apiService.get(whitelabel.all)
+
+      if (status === 200) {
+        setData(data)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  console.log('data', data)
 
   return (
     <Container>
@@ -83,17 +90,7 @@ const Tenant: React.FC = () => {
           </div>
         </Flex>
 
-        <InputWrapper>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <Input type="text" placeholder="Search" />
-        </InputWrapper>
-
-        <Table columns={columns} dataSource={dataSource} />
-        <Flex justifyContent="flex-end">
-          <Paginator total={10} pageSize={10} currentPage={0} onPageChange={() => {}} />
-        </Flex>
+        <Table columns={columns} dataSource={data} />
       </Content>
     </Container>
   )
@@ -107,38 +104,12 @@ const Container = styled.div`
   flex-direction: column;
   background: #ffffff;
 `
+
 const Content = styled.div`
   margin: 0 auto;
   max-width: 1440px;
   width: 100%;
   padding: 32px 16px;
-`
-
-const InputWrapper = styled.div`
-  display: flex;
-  gap: 16px;
-  margin-bottom: 16px;
-  position: relative;
-  border-radius: 8px;
-  border: solid 1px #e6e6ff;
-  background: #fff;
-  border-radius: 4px;
-  height: 48px;
-`
-
-const Input = styled.input`
-  width: 100%;
-  margin-left: 40px;
-  border: none;
-  outline: none;
-  font-size: 14px;
-`
-
-const SearchIconWrapper = styled.div`
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-40%);
 `
 
 const ActionWrapper = styled.div`
@@ -149,4 +120,12 @@ const ActionWrapper = styled.div`
 const ActionButton = styled.div`
   cursor: pointer;
   color: #b8b8cc;
+`
+
+const DomainText = styled.div`
+  color: #8f8fb2;
+`
+
+const TimeText = styled.span`
+  color: #8f8fb2;
 `
