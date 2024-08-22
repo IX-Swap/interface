@@ -77,7 +77,9 @@ const Tenant: React.FC = () => {
           <h1>Tenant Page</h1>
 
           <div>
-            <PinnedContentButton type="button">Add Tenant</PinnedContentButton>
+            <PinnedContentButton type="button">
+              <span style={{ fontSize: 20, marginRight: 8 }}>+</span> Add Tenant
+            </PinnedContentButton>
           </div>
         </Flex>
 
