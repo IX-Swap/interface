@@ -94,7 +94,7 @@ export const Pinned: React.FC = () => {
           {!isMobile && <InvestmentTypeInfo industry={offer.industry} type={offer.type} status={offer.status} />}
 
           <PinnedContentTitle>{offer.title}</PinnedContentTitle>
-          <PinnedContentBody>{offer.longDescription}</PinnedContentBody>
+          <PinnedContentBody>{offer.shortDescription}</PinnedContentBody>
           <PinnedContentButton type="button" onClick={onClick}>
             Invest
           </PinnedContentButton>
