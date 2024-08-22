@@ -8,7 +8,7 @@ import { useCookies } from 'react-cookie'
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
 import { PinnedContentButton } from 'components/Button'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { ReactComponent as KYCEmailIcon } from 'assets/images/newEmailgray.svg'
 import { ReactComponent as TelegramIcon } from 'assets/images/telegramNewIcon.svg'
 import { ReactComponent as AddressIcon } from 'assets/images/addressIcon.svg'
@@ -74,6 +74,11 @@ const CheckboxContainer = styled.div`
   gap: 30px;
   margin-top: 10px;
   margin-bottom: 20px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    display: block;
+    margin-bottom: 10px;
+  }
 `
 
 const CheckboxLabel = styled.label<{ selected: boolean; disabled: boolean }>`
@@ -89,6 +94,10 @@ const CheckboxLabel = styled.label<{ selected: boolean; disabled: boolean }>`
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
   svg {
     // fill: ${(props) => (props.selected ? '#6666FF' : '')};
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    margin-bottom: 14px;
   }
 `
 
@@ -277,7 +286,6 @@ export default function IndividualKycFormV2() {
       setIsBusinessEmailVerified(true)
     }
   }
-
   const handleVerifyDocuments = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault()
     setLoading(true)
@@ -337,7 +345,7 @@ export default function IndividualKycFormV2() {
               const businessEmailDisabled = kyc?.individual?.isSecondaryContactVerified || isBusinessEmailVerified
               return (
                 <FormRow>
-                  <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
+                  <FormContainer onSubmit={handleSubmit} style={{ gap: '35px', alignSelf: isMobile ? 'center' : '' }}>
                     <Column style={{ gap: '35px' }}>
                       <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="personal">
                         <HeaderContainer>
@@ -358,7 +366,7 @@ export default function IndividualKycFormV2() {
                           </TYPE.title7>
                         </RowStart>
                         <Column style={{ gap: '20px' }}>
-                          <FormGrid columns={3}>
+                          <FormGrid columns={isMobile ? 1 : 3}>
                             <TextInput
                               disabled={disabled}
                               kycVersion={'v2'}
@@ -424,7 +432,7 @@ export default function IndividualKycFormV2() {
                             }}
                             onSuccess={() => handleSuccess('personal')}
                           />
-                        )}
+                         )} 
 
                         {isPersonalVerified || kyc?.individual?.isEmailVerified ? <VerificationConfirmation /> : null}
                       </FormCard>
@@ -442,7 +450,7 @@ export default function IndividualKycFormV2() {
                               <Trans>Secondary Contact Details</Trans>
                             </TYPE.title7>
                           </RowStart>
-                          <RowStart>
+                          <RowStart style={{ justifyContent: isMobile ? 'center' : '' }}>
                             <CheckboxContainer>
                               <CheckboxLabel
                                 selected={selectedCheckbox === SecondaryContactTypeV2.TELEGRAM}
@@ -599,7 +607,9 @@ export default function IndividualKycFormV2() {
                           </TYPE.title7>
                         </RowCenter>
                         <RowCenter>
-                          <TYPE.description3 style={{ margin: '0px 190px 30px 190px', textAlign: 'center' }}>
+                          <TYPE.description3
+                            style={{ margin: isMobile ? '10px' : '0px 190px 30px 190px', textAlign: 'center' }}
+                          >
                             Please note that your documents will be verified through the ComplyCube service. This
                             process may take some time, and you will be notified within 10-15 minutes.
                           </TYPE.description3>
@@ -610,28 +620,29 @@ export default function IndividualKycFormV2() {
                       </FormCard>
                     </Column>
                   </FormContainer>
-
-                  <StyledStickyBox>
-                    <KYCProgressBar
-                      isKycV2={true}
-                      topics={[
-                        {
-                          title: 'Personal Information',
-                          href: 'personal',
-                        },
-                        {
-                          title: 'Secondary Contact Details',
-                          href: 'secondary-contact',
-                        },
-                        {
-                          title: 'Verify Documents',
-                          href: 'verify-documents',
-                        },
-                      ]}
-                      description={kyc?.message || null}
-                      reasons={['Last name', 'Gender', 'Middle name']}
-                    />
-                  </StyledStickyBox>
+                  {!isMobile && (
+                    <StyledStickyBox>
+                      <KYCProgressBar
+                        isKycV2={true}
+                        topics={[
+                          {
+                            title: 'Personal Information',
+                            href: 'personal',
+                          },
+                          {
+                            title: 'Secondary Contact Details',
+                            href: 'secondary-contact',
+                          },
+                          {
+                            title: 'Verify Documents',
+                            href: 'verify-documents',
+                          },
+                        ]}
+                        description={kyc?.message || null}
+                        reasons={['Last name', 'Gender', 'Middle name']}
+                      />
+                    </StyledStickyBox>
+                  )}
                 </FormRow>
               )
             }}

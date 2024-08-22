@@ -63,6 +63,7 @@ const AdminLbpDetail = () => {
             lbpShareLogo={lbpData?.logo}
             updateStatus={updateStatus}
             contractAddress={lbpData?.contractAddress}
+            network={lbpData ? lbpData.network : ''}
           />
           <SummaryFields statsData={statsData} lbpData={lbpData} noOfParticipants={noOfParticipants} />
           <DetailsChart

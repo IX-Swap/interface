@@ -1,27 +1,25 @@
 import React, { FC, useMemo } from 'react'
 import { Flex } from 'rebass'
 import { NavLink } from 'react-router-dom'
-import { isMobileOnly } from 'react-device-detect'
-
-import Column from 'components/Column'
+import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { Status } from './Status'
-import { useCurrencyBalance } from 'state/wallet/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
 import CurrencyLogo from 'components/CurrencyLogo'
-
 import { MySecTokenCard } from './styleds'
 import { routes } from 'utils/routes'
-import { marginRight } from 'styled-system'
+import { NETWORK_LOGOS } from 'constants/chains'
 
 interface Props {
   token: any
+  loading: boolean
 }
 
-export const MySecToken: FC<Props> = ({ token }: Props) => {
+export const MySecToken: FC<Props> = ({ token, loading }: Props) => {
   const wrappedToken = token?.token
-  const { account } = useActiveWeb3React()
-  const balance = useCurrencyBalance(account ?? undefined, { isToken: true, ...wrappedToken } ?? undefined)
+
+  const network = token?.token?.network
+  const balance = token?.token?.balance
+  const networkLogo = network ? NETWORK_LOGOS[network] : ''
 
   const status = useMemo(() => {
     const statuses = [
@@ -51,36 +49,39 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
   return (
     <NavLink style={{ textDecoration: 'none', overflow: 'hidden' }} to={routes.securityToken(token.id)}>
       <MySecTokenCard isPending={status !== 'approved'}>
-        <Flex flexDirection={isMobileOnly ? 'column' : 'row'} justifyContent="space-between">
-          <Flex
-            width="-webkit-fill-available"
-            marginRight="8px"
-            marginBottom={isMobileOnly ? '16px' : '0px'}
-            alignItems="center"
-          >
+        <Flex flexDirection={'row'} justifyContent="space-between" alignItems="center">
+          <div style={{ justifyContent: 'space-between', position: 'relative' }}>
             {token.logo ? (
               <img style={{ marginRight: 16, borderRadius: 24 }} width="46px" height="46px" src={token.logo.public} />
             ) : (
               <CurrencyLogo currency={undefined} size={'46px'} style={{ marginRight: 16, minWidth: 46 }} />
             )}
-            <Column>
-              <TYPE.title11>{token.ticker}</TYPE.title11>
-              {/* <TYPE.small fontWeight={600}>{wrappedToken.name}</TYPE.small> */}
-            </Column>
-            <Column style={{ minWidth: '100%', marginLeft: '10px' }}>
-              {/* <TYPE.title11>{token.ticker}</TYPE.title11> */}
-              <TYPE.small fontWeight={600}>{wrappedToken.name}</TYPE.small>
-            </Column>
-          </Flex>
-          {/* <Flex
-            alignItems="center"
-            justifyContent={isMobileOnly ? 'flex-start' : 'flex-end'}
-            width="-webkit-fill-available"
-          > */}
-          <Status status={status} amount={balance} decimals={token.token.decimals ?? 18} />
+
+            {networkLogo ? (
+              <LogoWrap>
+                <NetworkLogo src={networkLogo} alt="network logo" />
+              </LogoWrap>
+            ) : null}
+          </div>
+          <div style={{ display: 'block' }}>
+            <div style={{ display: 'flex', gap: '5px', alignItems: 'center', lineHeight: '1px' }}>
+              <TYPE.title11>{token.ticker}</TYPE.title11> -<TYPE.small fontWeight={600}>{wrappedToken.name}</TYPE.small>
+            </div>
+            <Status status={status} amount={balance} decimals={token.token.decimals ?? 18} />
+          </div>
         </Flex>
-        {/* </Flex> */}
       </MySecTokenCard>
     </NavLink>
   )
 }
+
+const LogoWrap = styled.div`
+  position: absolute;
+  top: 0px;
+  right: 8px;
+`
+
+const NetworkLogo = styled.img`
+  height: 16px;
+  width: 16px;
+`

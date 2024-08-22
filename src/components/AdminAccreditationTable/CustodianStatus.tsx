@@ -10,6 +10,7 @@ import { ReactComponent as CheckIcon } from 'assets/images/CheckOutline.svg'
 import { RejectModal } from './RejectModal'
 import { getStatusIcon } from './utils'
 import { MoreActions } from './MoreActions'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 interface Props {
   status: string
@@ -22,14 +23,20 @@ export const CustodianStatus = ({ status, id, custodian, searchValue }: Props) =
   const approveAccreditation = useApproveAccreditation()
 
   const [isModalOpen, handleIsModalOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const openModal = () => handleIsModalOpen(true)
   const closeModal = () => handleIsModalOpen(false)
 
   const approve = async () => {
     try {
+      setLoading(true)
       await approveAccreditation(id, searchValue)
-    } catch (e) {}
+    } catch (e) {
+      console.log('Error approving accreditation', e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -39,8 +46,19 @@ export const CustodianStatus = ({ status, id, custodian, searchValue }: Props) =
           <>
             <RejectModal searchValue={searchValue} isModalOpen={isModalOpen} closeModal={closeModal} id={id} />
             <ButtonsContainer>
-              <CheckIcon onClick={approve} />
-              <CrossIcon onClick={openModal} />
+              {loading ? (
+                <LoaderThin size={20} />
+              ) : (
+                <>
+                  <ActionButton>
+                    <CheckIcon onClick={approve} />
+                  </ActionButton>
+
+                  <ActionButton>
+                    <CrossIcon onClick={openModal} />
+                  </ActionButton>
+                </>
+              )}
             </ButtonsContainer>
           </>
         )}
@@ -49,7 +67,7 @@ export const CustodianStatus = ({ status, id, custodian, searchValue }: Props) =
         {status !== AccreditationStatusEnum.PENDING && (
           <img src={getStatusIcon(status)} alt="icon" width="20px" height="20px" />
         )}
-        <EllipsisText style={{fontSize: '12px'}}>{custodian}</EllipsisText>
+        <EllipsisText style={{ fontSize: '12px' }}>{custodian}</EllipsisText>
         <MoreActions id={id} searchValue={searchValue} />
       </div>
     </Container>
@@ -95,28 +113,4 @@ const Container = styled.div`
 
 const ActionButton = styled.div`
   cursor: pointer;
-  width: 40px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ theme: { bg1 } }) => bg1};
-  border-radius: 40px;
-`
-
-const StyledCheckIcon = styled(CheckIcon)`
-  width: 8.5px;
-  stroke: ${({ theme }) => theme.green1};
-  > path {
-    fill: ${({ theme }) => theme.green1};
-  }
-`
-
-const StyledCrossIcon = styled(CrossIcon)`
-  width: 6.5px;
-  height: 6.5px;
-  stroke: ${({ theme }) => theme.bg14};
-  > path {
-    fill: ${({ theme }) => theme.bg14};
-  }
 `

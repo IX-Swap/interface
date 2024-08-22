@@ -22,19 +22,6 @@ import { ModalContentWrapper } from 'theme/components'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { CloseIcon, TYPE } from '../../theme'
 
-const ModalPadding = styled.div`
-  padding: 37px 40px 19px 40px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-   padding: 1rem;
-  `};
-`
-const AdjustableColumn = styled(Column)`
-  gap: 6px;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      gap: 22px;
-  `};
-`
-
 export const IXSBalanceModal = () => {
   const IXSBalance = useIXSBalance()
   const IXSGovBalance = useIXSGovBalance()
@@ -58,11 +45,11 @@ export const IXSBalanceModal = () => {
       scrollable
     >
       <ModalBlurWrapper data-testid="ixs-balance-popup">
+        <CloseButtonWap>
+          <CloseIcon data-testid="cross" onClick={onClose} />
+        </CloseButtonWap>
         <ModalContentWrapper style={{ borderRadius: '12px' }}>
           <ModalPadding>
-            <RowEnd>
-              <CloseIcon data-testid="cross" onClick={onClose} />
-            </RowEnd>
             <RowCenter>
               <IconWrapper size={92}>
                 <img src={IXSToken} />
@@ -81,9 +68,9 @@ export const IXSBalanceModal = () => {
                   <RowBetween style={{ gap: '5px' }}>
                     <Trans>Balance of {IXSCurrency?.symbol}</Trans>
                     {IXSCurrency && library?.provider?.isMetaMask && (
-                      <TextGradient style={{ cursor: 'pointer' }} onClick={() => !addIXS.success && addIXS.addToken()}>
+                      <AddToMetamask onClick={() => !addIXS.success && addIXS.addToken()}>
                         {!addIXS.success ? <Trans>Add to Metamask</Trans> : null}
-                      </TextGradient>
+                      </AddToMetamask>
                     )}
                   </RowBetween>
                 }
@@ -95,34 +82,71 @@ export const IXSBalanceModal = () => {
                   )
                 }
               />
-              <TextRow
-                textLeft={
-                  <RowBetween style={{ gap: '5px' }}>
-                    <Trans>Balance of IXGov</Trans>
-                    {IXSCurrency && library?.provider?.isMetaMask && (
-                      <TextGradient
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => !addIXSGov.success && addIXSGov.addToken()}
-                      >
-                        {!addIXSGov.success ? <Trans>Add to Metamask</Trans> : null}
-                      </TextGradient>
-                    )}
-                  </RowBetween>
-                }
-                textRight={
-                  IXSGovBalance ? (
-                    <>{`${formatAmount(Number(IXSGovBalance?.amount?.toSignificant(12)))} ${IXSGovCurrency?.symbol}`}</>
-                  ) : (
-                    <LoaderThin size={16} />
-                  )
-                }
-              />
+
+              {IXSGovBalance && IXSGovBalance.amount ? (
+                <TextRow
+                  textLeft={
+                    <RowBetween style={{ gap: '5px' }}>
+                      <Trans>Balance of IXGov</Trans>
+                      {IXSCurrency && library?.provider?.isMetaMask && (
+                        <TextGradient
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => !addIXSGov.success && addIXSGov.addToken()}
+                        >
+                          {!addIXSGov.success ? <Trans>Add to Metamask</Trans> : null}
+                        </TextGradient>
+                      )}
+                    </RowBetween>
+                  }
+                  textRight={
+                    IXSGovBalance ? (
+                      <>{`${formatAmount(Number(IXSGovBalance?.amount?.toSignificant(12)))} ${
+                        IXSGovCurrency?.symbol
+                      }`}</>
+                    ) : (
+                      <LoaderThin size={16} />
+                    )
+                  }
+                />
+              ) : null}
             </AdjustableColumn>
             <Column style={{ gap: '6px', marginTop: '22px' }}></Column>
           </ModalPadding>
-          <ModalPadding></ModalPadding>
         </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const ModalPadding = styled.div`
+  padding: 37px 40px 19px 40px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+   padding: 1rem;
+  `};
+`
+const AdjustableColumn = styled(Column)`
+  gap: 6px;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      gap: 22px;
+  `};
+`
+
+const AddToMetamask = styled.div`
+  cursor: pointer;
+  color: #6666ff;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+const CloseButtonWap = styled.div`
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  margin-right: 8px;
+  margint-top: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  z-index: 9999;
+`

@@ -6,7 +6,7 @@ import { IconButton, Row } from 'components/LaunchpadMisc/styled'
 import { shortenAddress } from 'utils'
 import { OfferNetwork } from 'state/launchpad/types'
 import { useAddPopup } from 'state/application/hooks'
-import { NETWORK_NAMES, CHAIN_INFO, SupportedChainId, nameChainMap } from 'constants/chains'
+import { CHAIN_INFO, SupportedChainId, nameChainMap, getChainFromName } from 'constants/chains'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
 import { DiscreteExternalLink, MEDIA_WIDTHS } from 'theme'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
@@ -31,6 +31,9 @@ export const OfferLinks: React.FC<Props> = ({ network, address, symbol, decimals
   const networkLogoUrl = CHAIN_INFO[nameChainMapNetwork].logoUrl
 
   const explorerLink = useMemo(() => {
+    const isTestnet = [SupportedChainId.AMOY, SupportedChainId.BASE_SEPOLIA].includes(chainId)
+    const nameChainMapNetwork = getChainFromName(network, isTestnet)
+
     return getExplorerLink(nameChainMapNetwork, address, ExplorerDataType.TOKEN)
   }, [network, address, nameChainMapNetwork])
 

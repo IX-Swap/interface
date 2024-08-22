@@ -55,7 +55,7 @@ export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
     )
   }
 
-  return null
+  return <BaseContainer />
 }
 
 const BaseContainer = styled.div<{ margin?: string }>`

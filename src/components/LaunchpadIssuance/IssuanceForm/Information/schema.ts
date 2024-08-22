@@ -54,7 +54,7 @@ const checkMinSmallerThanMaximum = function (minimum: string, maximum: string, p
   if (!maximum || !minimum) {
     return true
   }
-  const condition = permitEqual ? Number(minimum) > Number(maximum) : Number(minimum) >= Number(maximum);
+  const condition = permitEqual ? Number(minimum) > Number(maximum) : Number(minimum) >= Number(maximum)
 
   if (condition) {
     return false
@@ -108,8 +108,8 @@ export const createValidationSchema = (account: string | null | undefined) => {
       .string()
       .nullable()
       .min(STRING_MIN, getLongerThanOrEqual('Token symbol', STRING_MIN))
-      .max(16, 'Token symbol should be at most 16 charachters')
-      .matches(/^(?=.*[a-zA-Z])[a-zA-Z\d]+$/, { message: 'Please enter only letters and numbers, min 1 letter' })
+      .max(11, 'Token symbol should be at most 11 charachters')
+      .matches(/^[a-zA-Z0-9_-]+$/, 'Only letters, numbers, underscores, and hyphens are allowed')
       .required(REQUIRED),
     tokenPrice: yup
       .string()

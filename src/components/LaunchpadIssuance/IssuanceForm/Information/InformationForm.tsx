@@ -87,8 +87,18 @@ export const InformationForm = (props: Props) => {
     initialValues,
     smartContractStrategy,
   } = props
-  const { values, errors, touched, setFieldValue, setFieldTouched, submitForm, resetForm, validateForm, setTouched } =
-    formikProps
+  const {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    setFieldTouched,
+    submitForm,
+    resetForm,
+    validateForm,
+    setTouched,
+    setFieldError,
+  } = formikProps
 
   // hooks
   const history = useHistory()
@@ -172,6 +182,12 @@ export const InformationForm = (props: Props) => {
   const onSaveError = () => {
     onConfirmationClose()
     showError('Cannot save changes, please check the form for error messages')
+  }
+
+  const handleDateError = (field: string, errorText: string) => {
+    const currentErrors = (errors as any)[field] || []
+    const updatedErrors = [...currentErrors, ...errorText]
+    setFieldValue(field, updatedErrors)
   }
 
   return (
@@ -555,7 +571,9 @@ export const InformationForm = (props: Props) => {
                 setFieldValue('tokenomicsAgreement', !values.tokenomicsAgreement)
               }}
               disabled={edit}
-              label={`I understand and agree that once I submit this form and it is approved, ${config?.name || 'IX Swap'} will mint and deposit the tokens into a smart contract based on the information provided.`}
+              label={`I understand and agree that once I submit this form and it is approved, ${
+                config?.name || 'IX Swap'
+              } will mint and deposit the tokens into a smart contract based on the information provided.`}
             />
             {touched.tokenomicsAgreement && errors.tokenomicsAgreement && (
               <ErrorText>{errors.tokenomicsAgreement}</ErrorText>
@@ -643,7 +661,16 @@ export const InformationForm = (props: Props) => {
             disabled={edit || !values.hasPresale}
             minDate={moment().subtract(1, 'minute').toDate()}
             maxDate={values?.timeframe?.preSale ? getMinutesBefore(values?.timeframe?.preSale, 20) : undefined}
-            error={(touched.timeframe?.whitelist && (touched.timeframe && errors.timeframe)?.whitelist) as string}
+            onError={handleDateError}
+            onChange={() => {
+              setFieldTouched('timeframe.whitelist')
+            }}
+            error={`${
+              (touched.timeframe?.whitelist && errors?.timeframe?.whitelist
+                ? 'Please select a valid time'
+                : '') as string
+            }
+            `}
           />
 
           <DateRangeField
@@ -656,7 +683,14 @@ export const InformationForm = (props: Props) => {
             disabled={edit || !values.hasPresale || !values.timeframe.whitelist}
             minDate={getMinutesAfter(values?.timeframe?.whitelist, 20)}
             maxDate={values?.timeframe?.sale ? getMinutesBefore(values?.timeframe?.sale, 20) : undefined}
-            error={(touched.timeframe?.preSale && (touched.timeframe && errors.timeframe)?.preSale) as string}
+            onError={handleDateError}
+            onChange={() => {
+              setFieldTouched('timeframe.preSale')
+            }}
+            error={`${
+              (touched.timeframe?.preSale && errors?.timeframe?.preSale ? 'Please select a valid time' : '') as string
+            }
+            `}
           />
 
           <DateRangeField
@@ -674,8 +708,13 @@ export const InformationForm = (props: Props) => {
               setFieldValue('timeframe.sale', start)
               setFieldValue('timeframe.closed', end)
             }}
-            error={`${(touched.timeframe?.sale ? errors?.timeframe?.sale ?? '' : '') as string}
-               ${(touched.timeframe?.closed ? errors?.timeframe?.closed ?? '' : '') as string}`}
+            onError={handleDateError}
+            error={`
+            ${
+              (touched.timeframe?.closed && (errors?.timeframe?.closed || errors?.timeframe?.sale)
+                ? 'Please select a valid time'
+                : '') as string
+            }`}
           />
 
           <DateRangeField
@@ -687,7 +726,14 @@ export const InformationForm = (props: Props) => {
             disabled={edit || !values.timeframe.closed}
             minDate={getMinutesAfter(values.timeframe.closed, 20)}
             value={values.timeframe.claim}
-            error={(touched.timeframe?.claim && (touched.timeframe && errors.timeframe)?.claim) as string}
+            onError={handleDateError}
+            onChange={() => {
+              setFieldTouched('timeframe.claim')
+            }}
+            error={`${
+              (touched.timeframe?.claim && errors?.timeframe?.claim ? 'Please select a valid time' : '') as string
+            }
+            `}
           />
         </FormGrid>
 

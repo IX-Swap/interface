@@ -1,4 +1,7 @@
 import type { AddEthereumChainParameter } from '@web3-react/types'
+import { SupportedChainId } from 'constants/chains'
+import { isProd, isStaging } from 'utils/isEnvMode'
+import { capitalizeWords } from 'utils/strings'
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
   name: 'Ether',
@@ -49,78 +52,72 @@ export function getAddChainParameters(chainId: number): AddEthereumChainParamete
   }
 }
 
-const getInfuraUrlFor = (network: string) =>
-  process.env.REACT_APP_INFURA_KEY ? `https://${network}.infura.io/v3/${process.env.REACT_APP_INFURA_KEY}` : ''
 const getAlchemyUrlFor = (network: string) =>
-  process.env.alchemyKey ? `https://${network}.alchemyapi.io/v2/${process.env.alchemyKey}` : ''
+  process.env.REACT_APP_ALCHEMY_KEY ? `https://${network}.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_KEY}` : ''
 
 type ChainConfig = { [chainId: number]: BasicChainInformation | ExtendedChainInformation }
 
 export const MAINNET_CHAINS: ChainConfig = {
   1: {
-    urls: [getInfuraUrlFor('mainnet'), getAlchemyUrlFor('eth-mainnet'), 'https://cloudflare-eth.com'].filter(Boolean),
+    urls: [getAlchemyUrlFor('eth-mainnet'), 'https://cloudflare-eth.com'].filter(Boolean),
     name: 'Mainnet',
   },
   10: {
-    urls: [getInfuraUrlFor('optimism-mainnet'), 'https://mainnet.optimism.io'].filter(Boolean),
+    urls: [getAlchemyUrlFor('opt-mainnet'), 'https://mainnet.optimism.io'].filter(Boolean),
     name: 'Optimism',
     nativeCurrency: ETH,
     blockExplorerUrls: ['https://optimistic.etherscan.io'],
   },
   42161: {
-    urls: [getInfuraUrlFor('arbitrum-mainnet'), 'https://arb1.arbitrum.io/rpc'].filter(Boolean),
+    urls: [getAlchemyUrlFor('arb-mainnet'), 'https://arb1.arbitrum.io/rpc'].filter(Boolean),
     name: 'Arbitrum One',
     nativeCurrency: ETH,
     blockExplorerUrls: ['https://arbiscan.io'],
   },
   137: {
-    urls: [getInfuraUrlFor('polygon-mainnet'), 'https://polygon-rpc.com'].filter(Boolean),
+    urls: [getAlchemyUrlFor('polygon-mainnet'), 'https://polygon-rpc.com'].filter(Boolean),
     name: 'Polygon Mainnet',
     nativeCurrency: MATIC,
     blockExplorerUrls: ['https://polygonscan.com'],
   },
-  42220: {
-    urls: ['https://forno.celo.org'],
-    name: 'Celo',
-    nativeCurrency: CELO,
-    blockExplorerUrls: ['https://explorer.celo.org'],
+  8453: {
+    urls: [getAlchemyUrlFor('base-mainnet'), 'https://basechain.infura.io'],
+    name: 'Base',
+    nativeCurrency: ETH,
+    blockExplorerUrls: ['https://basescan.org'],
   },
 }
 
 export const TESTNET_CHAINS: ChainConfig = {
-  5: {
-    urls: [getInfuraUrlFor('goerli')].filter(Boolean),
-    name: 'Görli',
-  },
   420: {
-    urls: [getInfuraUrlFor('optimism-goerli'), 'https://goerli.optimism.io'].filter(Boolean),
+    urls: [getAlchemyUrlFor('opt-sepolia'), 'https://goerli.optimism.io'].filter(Boolean),
     name: 'Optimism Goerli',
     nativeCurrency: ETH,
     blockExplorerUrls: ['https://goerli-explorer.optimism.io'],
   },
   421613: {
-    urls: [getInfuraUrlFor('arbitrum-goerli'), 'https://goerli-rollup.arbitrum.io/rpc'].filter(Boolean),
+    urls: [getAlchemyUrlFor('arb-sepolia'), 'https://goerli-rollup.arbitrum.io/rpc'].filter(Boolean),
     name: 'Arbitrum Goerli',
     nativeCurrency: ETH,
     blockExplorerUrls: ['https://testnet.arbiscan.io'],
   },
   80001: {
-    urls: [getInfuraUrlFor('polygon-mumbai')].filter(Boolean),
+    urls: ['https://rpc-mumbai.maticvigil.com'].filter(Boolean),
     name: 'Polygon Mumbai',
     nativeCurrency: MATIC,
     blockExplorerUrls: ['https://mumbai.polygonscan.com'],
   },
   80002: {
-    urls: ['https://rpc-amoy.polygon.technology/', getInfuraUrlFor('polygon-amoy')].filter(Boolean),
+    urls: [getAlchemyUrlFor('polygon-amoy'), 'https://rpc-amoy.polygon.technology/'].filter(Boolean),
     name: 'Polygon Amoy',
     nativeCurrency: MATIC,
     blockExplorerUrls: ['https://amoy.polygonscan.com/'],
   },
-  44787: {
-    urls: ['https://alfajores-forno.celo-testnet.org'],
-    name: 'Celo Alfajores',
-    nativeCurrency: CELO,
-    blockExplorerUrls: ['https://alfajores-blockscout.celo-testnet.org'],
+  84532: {
+    urls: [getAlchemyUrlFor('base-sepolia'), 'https://sepolia.basechain.infura.io'],
+    name: 'Base Sepolia',
+    nativeCurrency: ETH,
+    blockExplorerUrls: ['https://sepolia.basescan.org'],
   },
 }
 
@@ -141,3 +138,52 @@ export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<
   },
   {}
 )
+
+export enum NetworkName {
+  BASE = 'base',
+  POLYGON = 'polygon',
+}
+
+export const Chains = {
+  // network name : tesnet, mainnet
+  [NetworkName.BASE]: [SupportedChainId.BASE_SEPOLIA, SupportedChainId.BASE],
+  [NetworkName.POLYGON]: [SupportedChainId.AMOY, SupportedChainId.MATIC],
+}
+
+export const findChainName = (chainId: number): string | null => {
+  for (const [network, chains] of Object.entries(Chains)) {
+    if (chains.includes(chainId)) {
+      return capitalizeWords(network)
+    }
+  }
+
+  return null
+}
+
+export const checkWrongChain = (
+  chainId: any,
+  network: string
+): {
+  isWrongChain: boolean
+  expectChain: number | null
+} => {
+  const expectedChains = Chains[network as NetworkName] || [] // Default to an empty array if network is not found
+  if (!expectedChains.length) {
+    return {
+      isWrongChain: false,
+      expectChain: null,
+    }
+  }
+  const [testChain, mainChain] = expectedChains
+  if (isProd || isStaging) {
+    return {
+      isWrongChain: chainId != mainChain,
+      expectChain: mainChain,
+    }
+  }
+
+  return {
+    isWrongChain: chainId != testChain,
+    expectChain: testChain,
+  }
+}

@@ -57,9 +57,14 @@ interface Props {
 
 export const InvestmentList: React.FC<Props> = (props) => {
   const { config } = useWhitelabelState()
-  const isIxSwap = config?.isIxSwap ?? false
+  const enableLbp = config?.enableLbp ?? false
   const [activeTab, setActiveTab] = React.useState<InvesmentTabs>(() => {
+    if (!enableLbp) {
+      return InvesmentTabs.issuance
+    }
+
     const investmentTab = localStorage.getItem('investmentTab')
+
     return (investmentTab as InvesmentTabs) ?? InvesmentTabs.issuance
   })
 
@@ -71,7 +76,7 @@ export const InvestmentList: React.FC<Props> = (props) => {
   return (
     <InvestmentListContainer>
       <InvestmentTitle>Investments</InvestmentTitle>
-      {isIxSwap ? <LblTabs current={activeTab} options={tabs} onSelect={handleTabChange} /> : null}
+      {enableLbp ? <LblTabs current={activeTab} options={tabs} onSelect={handleTabChange} /> : null}
       {activeTab === InvesmentTabs.issuance && (
         <div>
           <InvestmentListFilter filter={props.filter} onFilter={props.onFilter} />

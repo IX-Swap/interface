@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { CopyAddress } from 'components/CopyAddress'
 import { Box } from 'rebass'
+import { formatNumberWithDecimals } from 'state/lbp/hooks'
 
 interface Props {
   originalSymbol?: string | null
@@ -17,7 +18,7 @@ export const DepoistStatusInfo = ({ fromAddress, toAddress, amount, originalSymb
     <Container>
       <Box>
         <Title>
-          Make Deposit {amount} {originalSymbol}:
+          Make Deposit {formatNumberWithDecimals(amount as string, 6)} {originalSymbol}:
         </Title>
         <CopyAddress
           address={fromAddress ?? ''}

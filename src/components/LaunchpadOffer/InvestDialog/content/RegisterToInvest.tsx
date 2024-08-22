@@ -16,6 +16,7 @@ import { text28, text59, text9 } from 'components/LaunchpadMisc/typography'
 import { useGetWarning } from '../utils/ConvertationField'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import { ReactComponent as NewEyeIcon } from '../../../../assets/images/NewEyeIcon.svg'
+import { getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
 
 interface Props {
   offer: Offer
@@ -71,10 +72,10 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     async (values: FormValues) => {
       try {
         submitState.setLoading()
+        await requestWhitelist({ amount: values.amount ?? 0, isInterested: Boolean(values.isInterested) })
         if (!values.isInterested) {
           throw new Error('Not interested in investing')
         }
-        await requestWhitelist({ amount: values.amount ?? 0, isInterested: Boolean(values.isInterested) })
         submitState.setSuccess()
         showSuccess('Register to invest successfully')
         props.onClose()
@@ -153,9 +154,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
                   label="How much will be your estimated investment?"
                   trailing={
                     <CurrencyLabel>
-                      {props.offer.investingTokenSymbol === 'USDC'
-                        ? `${props.offer.investingTokenSymbol}.e`
-                        : props.offer.investingTokenSymbol}
+                      {getTokenSymbol(props?.offer?.network, props?.offer?.investingTokenSymbol)}
                     </CurrencyLabel>
                   }
                   value={amount}

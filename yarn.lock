@@ -2949,10 +2949,10 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
-"@ixswap1/default-token-list@^1.4.3":
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.4.3.tgz#09efb2108900f215992bdceaee5adac19ccc3c8c"
-  integrity sha512-DIrC4V2/uYNZgSenUl8rZIPb+/ullVxbgbctV/JZmpEty2qaOzf14sVBv1+cYpXIeNM7oGsskD9oI1LBUKJ7hQ==
+"@ixswap1/default-token-list@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.5.0.tgz#1f85c6dfa7b36128baaf92dc0a43ec878852b0fa"
+  integrity sha512-McEghCoaJ8xtI73nZGkJN7QJufdNE6Q1DTRceR9eXBitWrrhfpVd2XTdvD0aqwUTu2BxdmR5WpZltX8pbHrdOQ==
 
 "@ixswap1/lib@1.x.x":
   version "1.3.0"
@@ -2971,10 +2971,10 @@
     tiny-invariant "^1.1.0"
     toformat "^2.0.0"
 
-"@ixswap1/sdk-core@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.3.3.tgz#e4f34c5f555c293390d443106b2b63d8240db04c"
-  integrity sha512-P9klKV6XxmUZveUGRv7jjdEAHaV6nsY+1TveMoG4lhICA3l7w66x8JzZRFd20CrBRk99MDayWb1N9Eidk/vHYQ==
+"@ixswap1/sdk-core@^1.3.4":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.3.4.tgz#6494c25de09b083a06a61cbbdd30740c66b659ab"
+  integrity sha512-YNWOs5/P4Y4+PWbCHp/Ak5hqG4C5mww9Vqv0DYLTO1ekqtGEFPPHAHrHQMsSErNEj1FVJ6z0767NskBnCrwUyw==
   dependencies:
     "@ethersproject/address" "^5.0.2"
     big.js "^5.2.2"
@@ -2998,10 +2998,10 @@
     "@ixswap1/lib" "1.x.x"
     "@ixswap1/v2-core" "1.x.x"
 
-"@ixswap1/v2-sdk@^1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.3.4.tgz#05226669c8a6e182180c02679915de65f72d5e1a"
-  integrity sha512-tWNfnzCO4MOyV0n0XQ9D7aiIfINef3waxzQBvT83KaDMuz5GOpgTv8PqNAub/hyE2Qx8aT2oUN4BPRt1st40DA==
+"@ixswap1/v2-sdk@1.3.7":
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.3.7.tgz#104cfeba9bf84dbe358890d43507094cd3a89956"
+  integrity sha512-+HCuE3J60I6JXYeN0DbA0k8UKC5dcfjIrhxU2Dscctp0Nrt1Y6l+ijDtPrynStlQtWgJ8dq6+NJ1V2vd8bXSdw==
   dependencies:
     "@ethersproject/address" "^5.0.0"
     "@ethersproject/solidity" "^5.0.0"

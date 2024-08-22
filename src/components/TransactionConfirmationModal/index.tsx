@@ -19,6 +19,7 @@ import Column, { AutoColumn } from '../Column'
 import { RowBetween, RowCenter, RowFixed } from '../Row'
 import MetamaskIcon from 'assets/images/metamask.png'
 import { isMobile } from 'react-device-detect'
+import { Flex } from 'rebass'
 
 export const StyledSuccess = styled(Success)`
   ${({ theme }) =>
@@ -45,7 +46,7 @@ export const StyledTitle = styled(TYPE.title7)`
 `
 
 type AdditionalParams = {
-  [key: string]: any 
+  [key: string]: any
 }
 
 const trackEvent = (eventType: string, eventName: string, additionalParams?: AdditionalParams) => {
@@ -68,9 +69,9 @@ export function ConfirmationPendingContent({
     <ModalBlurWrapper>
       <StyledModalContentWrapper>
         <Column>
-          <RowBetween>
+          <Flex justifyContent="flex-end">
             <CloseIcon onClick={onDismiss} />
-          </RowBetween>
+          </Flex>
           <RowCenter>
             <StyledTitle>
               <Trans>Waiting For Confirmation</Trans>
@@ -115,7 +116,6 @@ export function TransactionSubmittedContent({
   const { addToken, success } = useAddTokenToMetamask(currencyToAdd)
   const explorerName = useExplorerName()
 
-
   const trackTransactionSubmission = () => {
     try {
       if (trade && trade.inputAmount && trade.outputAmount) {
@@ -125,23 +125,22 @@ export function TransactionSubmittedContent({
           contractAddress: '0x72f54BEbabE8A26794B8BFeA832b65B7Bd88da37',
           toAmount: trade.outputAmount.toSignificant(6),
           toCurrency: trade.outputAmount.currency?.symbol,
-        };
-  
-        console.log('Tracking Transaction Submission:', additionalParams);
-  
-        trackEvent('swap', 'ixs-swap', additionalParams);
+        }
+
+        console.log('Tracking Transaction Submission:', additionalParams)
+
+        trackEvent('swap', 'ixs-swap', additionalParams)
       } else {
-        console.warn('Invalid trade data for tracking transaction submission:', trade);
+        console.warn('Invalid trade data for tracking transaction submission:', trade)
       }
     } catch (error) {
-      console.error('Error tracking transaction submission:', error);
+      console.error('Error tracking transaction submission:', error)
     }
-  };
-  
+  }
+
   useEffect(() => {
-    trackTransactionSubmission();
-  }, [trade]);
-  
+    trackTransactionSubmission()
+  }, [trade])
 
   return (
     <ModalBlurWrapper>
@@ -185,8 +184,8 @@ export function TransactionSubmittedContent({
               </ButtonGradient>
             </RowCenter>
           )}
-          <RowCenter style={{ marginTop: '61px', marginBottom: '53px' }}>
-            <SvgIconWrapper size={128}>
+          <RowCenter style={{ marginTop: '51px', marginBottom: '43px' }}>
+            <SvgIconWrapper size={84}>
               <StyledSuccess />
             </SvgIconWrapper>
           </RowCenter>
@@ -202,7 +201,13 @@ export function TransactionSubmittedContent({
             <ButtonGradientBorder
               onClick={onDismiss}
               data-testid="return-close"
-              style={{ width: isMobile ? '200px' : '450px', marginBottom: '35px', marginTop: '10px' }}
+              style={{
+                width: isMobile ? '200px' : '450px',
+                marginBottom: '35px',
+                marginTop: '10px',
+                padding: '18px 28px',
+                marginRight: 0,
+              }}
             >
               <Trans>Close</Trans>
             </ButtonGradientBorder>

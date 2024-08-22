@@ -1,12 +1,12 @@
 import React, { useState, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { Modal } from '@material-ui/core'
 import { ReactComponent as FileIcon } from '../../../assets/images/fileNew.svg'
 import { ReactComponent as EyeIcon } from '../../../assets/images/eyeIconNew.svg'
-import { event } from 'react-ga'
 import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer'
 import { AcceptFiles } from 'components/Upload/types'
+import { isMobile } from 'react-device-detect'
 
 interface Document {
   name: string
@@ -34,11 +34,17 @@ const DocumentView = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    justify-content: space-between;
+  }
 `
 
 const DocumentName = styled(TYPE.subHeader1)`
   color: #8f8fb2;
   margin-right: auto;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 12px !important;
+  }
 `
 
 const CustomModal = styled(Modal)`
@@ -129,17 +135,35 @@ export default function AdditionalDocuments({ uploadDocs }: AdditionalDocumentsP
   return (
     <DocumentWrapper>
       <TYPE.label fontSize={'20px'}>Additional Documents</TYPE.label>
-      {uploadDocs.map((doc: Document, index: number) => (
-        <DocumentView key={index} onClick={() => openModal(doc)}>
-          {doc.mimeType.startsWith('image') ? (
-            <img src={doc.public} alt={doc.name} style={{ marginRight: '6px', width: '24px', height: '24px' }} />
-          ) : (
-            <FileIcon style={{ marginRight: '6px' }} />
-          )}
-          <DocumentName>{doc.name}</DocumentName>
-          <EyeIcon style={{ marginLeft: '6px' }} />
-        </DocumentView>
-      ))}
+      {isMobile ? (
+        <div>
+          {uploadDocs.map((doc: Document, index: number) => (
+            <DocumentView key={index} onClick={() => openModal(doc)}>
+              <span style={{display: 'flex', placeItems: 'center'}}>
+                <FileIcon style={{ marginRight: '6px' }} />
+                <DocumentName>{doc.name}</DocumentName>
+              </span>
+              <span>
+                <EyeIcon style={{ marginLeft: '6px' }} />
+              </span>
+            </DocumentView>
+          ))}
+        </div>
+      ) : (
+        <div>
+          {uploadDocs.map((doc: Document, index: number) => (
+            <DocumentView key={index} onClick={() => openModal(doc)}>
+              {doc.mimeType.startsWith('image') ? (
+                <img src={doc.public} alt={doc.name} style={{ marginRight: '6px', width: '24px', height: '24px' }} />
+              ) : (
+                <FileIcon style={{ marginRight: '6px' }} />
+              )}
+              <DocumentName>{doc.name}</DocumentName>
+              <EyeIcon style={{ marginLeft: '6px' }} />
+            </DocumentView>
+          ))}
+        </div>
+      )}
       {isModalOpen && selectedDocument && (
         <CustomModal open={isModalOpen} onClose={closeModal}>
           {modalContent || <div>No content available</div>}

@@ -1,53 +1,39 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
-
 import { ReactComponent as ArrowIcon } from '../../assets/images/newArrow.svg'
+import { adminOffset } from 'state/admin/constants'
 
 interface Props {
   page: number
   totalPages: number
-  onPageChange: (data: number) => void
+  onPageChange: (page: number) => void
+  totalItems?: number
 }
 
-export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
+export const Pagination = ({ page, onPageChange, totalPages, totalItems }: Props) => {
   if (!totalPages) return null
+
+  const itemsPerPage = adminOffset
+  const startItem = (page - 1) * itemsPerPage + 1
+  const endItem = Math.min(page * itemsPerPage, totalPages * itemsPerPage)
 
   return (
     <Container>
-      {/* <ReactPaginate
-        forcePage={page - 1}
-        breakLabel="..."
-        onPageChange={onPageClick}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={3}
-        pageCount={totalPages}
-        previousLabel={<Prev />}
-        nextLabel={<Next />}
-        containerClassName="pagination-container"
-        pageClassName="page"
-      /> */}
       <InfoContainer>
         <TYPE.small>
-          {page}-{Math.min(page + 4, totalPages)} of {totalPages}
+          {startItem} - {endItem} of {totalItems}
         </TYPE.small>
-        <Button onClick={() => onPageChange(page - 1)} disabled={page === 1}>
-          <Prev />
-        </Button>
-        <Button onClick={() => onPageChange(page + 1)} disabled={page === totalPages}>
-          <Next />
-        </Button>
+        <NavButton onClick={() => onPageChange(page - 1)} disabled={page === 1}>
+          <PrevIcon />
+        </NavButton>
+        <NavButton onClick={() => onPageChange(page + 1)} disabled={page === totalPages}>
+          <NextIcon />
+        </NavButton>
       </InfoContainer>
     </Container>
   )
 }
-
-const InfoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-`
 
 const Container = styled.div`
   display: flex;
@@ -56,61 +42,16 @@ const Container = styled.div`
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-direction: column;
   }
-  .pagination-container {
-    margin: 0px;
-    padding: 0px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 16px;
-    display: flex;
-  }
-  * li {
-    cursor: pointer;
-    display: block;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 33px;
-    min-width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    > a {
-      color: ${({ theme }) => theme.text1};
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-  .break {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 33px;
-  }
-  .disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-  .page {
-    // border: ${({ theme }) => `1px solid ${theme.bg11};`};
-    border-radius: 50%;
-  }
-  .selected {
-    border: none;
-    background: ${({ theme }) => theme.bgG3};
-  }
-  .previous,
-  .next {
-    background-color: ${({ theme }) => theme.text10};
-    border-radius: 50%;
-  }
 `
 
-const Button = styled.div<{ disabled?: boolean }>`
+const InfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+`
+
+const NavButton = styled.button<{ disabled?: boolean }>`
   cursor: pointer;
   width: 32px;
   height: 32px;
@@ -119,6 +60,7 @@ const Button = styled.div<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
   ${({ disabled }) =>
     disabled &&
     css`
@@ -126,14 +68,10 @@ const Button = styled.div<{ disabled?: boolean }>`
       cursor: not-allowed;
       pointer-events: none;
     `}
-  > img {
-    width: 12px;
-    height: 12px;
-  }
 `
 
-const Next = styled(ArrowIcon)``
+const NextIcon = styled(ArrowIcon)``
 
-const Prev = styled(ArrowIcon)`
+const PrevIcon = styled(ArrowIcon)`
   transform: rotate(-180deg);
 `

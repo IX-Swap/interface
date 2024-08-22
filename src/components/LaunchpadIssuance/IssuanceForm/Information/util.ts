@@ -128,6 +128,7 @@ export const investmentStructureOptions = [
 export const networkOptions = [
   // { label: 'Etherium', value: OfferNetwork.ethereum },
   { label: 'Polygon', value: OfferNetwork.polygon },
+  { label: 'Base', value: OfferNetwork.base },
   // { label: 'Kovan', value: OfferNetwork.kovan },
 ]
 

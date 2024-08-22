@@ -16,6 +16,8 @@ import { WithdrawError } from './WithDrawError'
 import { WithdrawPending } from './WithdrawPending'
 import { WithdrawRequestForm } from './WithdrawRequestForm'
 import { WithdrawSuccess } from './WithDrawSuccess'
+import { useActiveWeb3React } from 'hooks/web3'
+import { findChainName } from 'chains'
 
 export enum WithdrawModalView {
   WITHDRAW_REQUEST,
@@ -35,6 +37,8 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
   const [modalView, setModalView] = useState<WithdrawModalView>(WithdrawModalView.WITHDRAW_REQUEST)
   const { loading } = useWithdrawState()
   const { onResetWithdraw } = useWithdrawActionHandlers()
+  const { chainId } = useActiveWeb3React()
+  const chainName = findChainName(chainId) || 'Base'
 
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const onClose = useCallback(() => {
@@ -61,7 +65,7 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
           >
             <Trans>{`${amount || '0'} ${
               tokenInfo?.symbol
-            } will be extracted from your Polygon wallet and burnt automatically.`}</Trans>
+            } will be extracted from your ${chainName} wallet and burnt automatically.`}</Trans>
           </TYPE.main1>
         </HideSmall>
       }

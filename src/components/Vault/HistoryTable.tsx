@@ -11,15 +11,12 @@ import useTheme from 'hooks/useTheme'
 import useToggle from 'hooks/useToggle'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { DesktopAndTablet, LinkStyledButton, TYPE } from 'theme'
-
 import { ActionFilterTabs, ActionTypeTextHeader, filterTabs } from './enum'
 import { getStatusIcon, HistoryHeaderWrapper } from './styleds'
 import { TransactionHistoryRow } from './TransactionHistoryRow'
-import { Line } from 'components/Line'
-import LineChart from 'components/LineChart'
 
 const PopOverContent = styled.div`
-  display: flex;
+  display: revert;
   gap: 6px;
   flex-direction: column;
   padding: 15px 20px;
@@ -29,17 +26,19 @@ const UnpaddedLinkStyledButton = styled(LinkStyledButton)`
   font-size: 1rem;
   opacity: ${({ disabled }) => (disabled ? '0.4' : '1')};
 `
-
 const FilterPopover = ({ options, tokenId }: { options: ActionFilterTabs[]; tokenId: number | null }) => {
   const getEvents = useGetEventCallback()
   return (
     <PopOverContent>
-      {options.map((option) => (
-        <UnpaddedLinkStyledButton key={option} onClick={() => getEvents({ filter: option, tokenId })}>
-          <TYPE.popOver>
-            <Trans>{ActionTypeTextHeader[option]}</Trans>
-          </TYPE.popOver>
-        </UnpaddedLinkStyledButton>
+      {options.map((option, index) => (
+        <React.Fragment key={option}>
+          <UnpaddedLinkStyledButton onClick={() => getEvents({ filter: option, tokenId })}>
+            <TYPE.popOver>
+              <Trans>{ActionTypeTextHeader[option]}</Trans>
+            </TYPE.popOver>
+          </UnpaddedLinkStyledButton>
+          {index < options.length - 1 && <div style={{ display: 'block', marginBottom: '10px' }} />}
+        </React.Fragment>
       ))}
     </PopOverContent>
   )
@@ -58,7 +57,7 @@ const HistoryHeader = () => {
           <Popover show={open} content={<FilterPopover options={options} tokenId={tokenId} />} placement={'bottom'}>
             <RowFixed onClick={toggle}>
               <TYPE.description2>{ActionTypeTextHeader[filter]}</TYPE.description2>
-              <ChevronElement showMore={open} />
+              <ChevronElement marginLeft={3} showMore={open} />
             </RowFixed>
           </Popover>
         </th>
