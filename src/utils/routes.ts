@@ -68,6 +68,7 @@ export const routes = {
   adminTransactions: 'admin/transactions',
   adminCatalog: 'admin/security-catalog',
   adminUsers: 'admin/users-list',
+  tenant: '/tenant',
 }
 
 export function checkAllowed(path: string, allowedPages: string[] | null | undefined): boolean {

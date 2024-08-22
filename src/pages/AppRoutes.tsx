@@ -63,6 +63,7 @@ const LaunchpadIssuanceInformationReview = lazy(() => import('pages/LaunchpadIss
 const ManageOffer = lazy(() => import('pages/LaunchpadIssuance/ManageOffer'))
 const LaunchpadIssuanceReport = lazy(() => import('pages/LaunchpadIssuance/Report'))
 const LBPPublicDetailsPage = lazy(() => import('./LBP/PublicDetails'))
+const TenantPage = lazy(() => import('./Tenant'))
 
 export interface RouteMapEntry {
   path: string
@@ -219,4 +220,5 @@ export const routeConfigs: RouteMapEntry[] = [
     ...onlyOfferManager,
   },
   { path: routes.manageOffer, component: ManageOffer, ...onlyOfferManager },
+  { path: routes.tenant, component: TenantPage },
 ]
