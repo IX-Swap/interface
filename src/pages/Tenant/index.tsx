@@ -3,11 +3,13 @@ import Table from './components/Table'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
 import { Edit } from 'react-feather'
+import dayjs from 'dayjs'
+import { useHistory } from 'react-router-dom'
 
 import { PinnedContentButton } from 'components/Button'
 import apiService from 'services/apiService'
 import { whitelabel } from 'services/apiUrls'
-import dayjs from 'dayjs'
+import { routes } from 'utils/routes'
 
 interface Tenant {
   key: string
@@ -17,6 +19,8 @@ interface Tenant {
 }
 
 const Tenant: React.FC = () => {
+  const history = useHistory()
+
   const [data, setData] = useState<Tenant[]>([])
 
   const columns = [
@@ -84,7 +88,7 @@ const Tenant: React.FC = () => {
           <h1>Tenant Page</h1>
 
           <div>
-            <PinnedContentButton type="button">
+            <PinnedContentButton type="button" onClick={() => history.push(routes.tenantCreate)}>
               <span style={{ fontSize: 20, marginRight: 8 }}>+</span> Add Tenant
             </PinnedContentButton>
           </div>
