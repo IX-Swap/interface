@@ -1,82 +1,171 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import styled from 'styled-components';
+import React from 'react'
+import { MEDIA_WIDTHS } from 'theme'
+import styled from 'styled-components'
+import StickyBox from 'react-sticky-box'
+import { isMobile } from 'react-device-detect'
 
-// Validation schema
-const validationSchema = Yup.object({
-  name: Yup.string()
-    .max(15, 'Must be 15 characters or less')
-    .required('Required'),
-  email: Yup.string()
-    .email('Invalid email address')
-    .required('Required'),
-});
+import { ProgressBar } from './components/ProgressBar'
+import GeneralInfo from './components/GeneralInfo'
+import SupportInformation from './components/SupportInformation'
+import KYCLinks from './components/KYCLinks'
+import FooterConfig from './components/FooterConfig'
+import SocialLinks from './components/SocialLinks'
+import PagesAndFeatures from './components/PagesAndFeatures'
+import LaunchpadBanner from './components/LaunchpadBanner'
+import Design from './components/Design'
 
-
-
-// Component
 const CreateTenant = () => {
   return (
-    <FormContainer>
-      <h1>Signup</h1>
-      <Formik
-        initialValues={{ name: '', email: '' }}
-        validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {formik => (
-          <Form>
-            <div>
-              <label htmlFor="name">Name</label>
-              <Field name="name" type="text" />
-              <ErrorMessage name="name" component="div" />
-            </div>
-            <div>
-              <label htmlFor="email">Email</label>
-              <Field name="email" type="email" />
-              <ErrorMessage name="email" component="div" />
-            </div>
-            <StyledButton type="submit" disabled={formik.isSubmitting}>
-              Create
-            </StyledButton>
-            <StyledButton type="button" onClick={() => formik.resetForm()}>
-              Cancel
-            </StyledButton>
-          </Form>
-        )}
-      </Formik>
-    </FormContainer>
-  );
-};
+    <Container>
+      <Content>
+        <Title>Create Tenant</Title>
+        <FormRow>
+          <FormContainer>
+            <FormCard id="GeneralInfo">
+              <GeneralInfo />
+            </FormCard>
+            <FormCard id="Design">
 
-export default CreateTenant;
+              <Design />
+            </FormCard>
+            <FormCard id="PagesAndFeatures">
+              <PagesAndFeatures />
+            </FormCard>
+            <FormCard id="SocialLinks">
+              <SocialLinks />
+            </FormCard>
+            <FormCard id="Tokens">
+              <h1 className="title">Tokens</h1>
+            </FormCard>
+            <FormCard id="SupportInformaton">
+              <SupportInformation />
+            </FormCard>
+            <FormCard id="KYCLinks">
+              <KYCLinks />
+            </FormCard>
+            <FormCard id="LaunchpadBanner">
+              <LaunchpadBanner />
+            </FormCard>
+            <FormCard id="FooterConfig">
+              <FooterConfig />
+            </FormCard>
+          </FormContainer>
 
+          <StyledStickyBox style={{ marginBottom: isMobile ? '100px' : '1700px' }}>
+            <ProgressBar
+              topics={[
+                {
+                  title: 'General Info',
+                  href: 'GeneralInfo',
+                },
+                {
+                  title: 'Design',
+                  href: 'Design',
+                },
+                {
+                  title: 'Pages and Features',
+                  href: 'PagesAndFeatures',
+                },
+                {
+                  title: 'Social Links',
+                  href: 'SocialLinks',
+                },
+                {
+                  title: 'Tokens',
+                  href: 'Tokens',
+                },
+                {
+                  title: 'Support Informaton',
+                  href: 'SupportInformaton',
+                },
+                {
+                  title: 'KYC Links',
+                  href: 'KYCLinks',
+                },
+                {
+                  title: 'Launchpad Banner',
+                  href: 'LaunchpadBanner',
+                },
+                {
+                  title: 'Footer Config',
+                  href: 'FooterConfig',
+                },
+              ]}
+              description={null}
+            />
+          </StyledStickyBox>
+        </FormRow>
+      </Content>
+    </Container>
+  )
+}
 
-// Styled components
-const StyledButton = styled.button`
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px;
+export default CreateTenant
 
-  &:hover {
-    background-color: #45a049;
+const Container = styled.div`
+  min-height: 100vh;
+  width: 100vw;
+  font-family: ${(props) => props.theme.launchpad.font};
+  background: #f7f7ff;
+  margin-top: 32px;
+
+  * {
+    font-family: ${(props) => props.theme.launchpad.font};
   }
-`;
 
-const FormContainer = styled.div`
-  margin: 20px;
-`;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: auto;
+    padding: 0px;
+  }
+`
+
+const Content = styled.div`
+  max-width: 1180px;
+  margin: 0 auto;
+`
+
+const FormRow = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+`
+
+export const FormCard = styled.div<{ filled?: boolean }>`
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 8px;
+
+  .title {
+    color: #292933;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 130%;
+    letter-spacing: -0.6px;
+    margin: 0;
+  }
+`
+
+export const FormContainer = styled.div`
+  gap: 20px;
+  flex-grow: 1;
+
+  & > * + * {
+    margin-top: 20px;
+  }
+`
+
+export const StyledStickyBox = styled(StickyBox).attrs(() => ({ offsetTop: 100 }))`
+  width: 332px;
+  border-radius: 8px;
+`
+
+const Title = styled.h1`
+  color: #292933;
+  font-family: Inter;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 110%;
+  letter-spacing: -0.96px;
+`

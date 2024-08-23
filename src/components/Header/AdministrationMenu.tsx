@@ -75,6 +75,12 @@ const Content: React.FC<ContentProps> = ({ open, toggle }) => {
           <Link onClick={() => navigateTo(routes.lbpDashboard)}>LBP</Link>
         </Column>
       ) : null}
+
+      {isAdmin ? (
+        <Column>
+          <SubMenuLink to={routes.tenant}>SaaS configuraiton</SubMenuLink>
+        </Column>
+      ) : null}
     </PopoverContent>
   )
 }
