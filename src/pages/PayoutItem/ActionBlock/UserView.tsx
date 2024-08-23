@@ -11,7 +11,7 @@ import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { routes } from 'utils/routes'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { floorToDecimals, formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { Container, DelayedContainer, StyledButton, TokenSymbol } from './styleds'
 import { getClaimAuthorization, useGetUserClaim, useSaveUserClaim, getMyClaimableAmount } from 'state/payout/hooks'
@@ -112,7 +112,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
         <CurrencyLogo currency={secPayoutToken} size="20px" />
         <Box marginX="4px">{(tokenInfo as SecToken).originalSymbol ?? tokenInfo.symbol}</Box>
         <Box marginX="4px" color={theme.text1}>
-          {myAmount.toFixed(decimals)}
+          {floorToDecimals(myAmount, decimals)}
         </Box>
         <Box>
           <Trans>{`as of record date.`}</Trans>
@@ -126,7 +126,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
           <Claimed
             claimStatus={claimStatus.status}
             payoutToken={payoutToken}
-            amountToClaim={Number(amountToClaim || '0').toFixed(decimals)}
+            amountToClaim={floorToDecimals(amountToClaim, decimals)}
           />
         ) : (
           <Box color={theme.text1}>
@@ -137,7 +137,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
               <CurrencyLogo size="24px" currency={payoutToken} />
               <Box marginLeft="4px" fontSize="24px" lineHeight="36px">
                 <TokenSymbol>{payoutToken.symbol}</TokenSymbol>
-                {` ${Number(amountToClaim || '0').toFixed(decimals)}`}
+                {` ${floorToDecimals(amountToClaim, decimals)}`}
               </Box>
             </Flex>
             {recordDateText}
@@ -151,9 +151,10 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
                 <Trans>{`You have a payout of`}</Trans>
               </Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
-                amountToClaim || '0'
-              ).toFixed(decimals)} available`}</Box>
+              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${floorToDecimals(
+                amountToClaim,
+                decimals
+              )} available`}</Box>
             </Flex>
             {recordDateText}
           </>
@@ -182,7 +183,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
               <Box marginX="4px" color={theme.text2}>
                 {(tokenInfo as SecToken).originalSymbol ?? tokenInfo.symbol}
               </Box>
-              <Box marginX="4px">{myAmount.toFixed(decimals)}</Box>
+              <Box marginX="4px">{floorToDecimals(myAmount, decimals)}</Box>
               <Box>
                 <Trans>{`as of record date will become available once payout starts.`}</Trans>
               </Box>
@@ -193,7 +194,6 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
         return null
     }
   }, [status, payoutToken, claimStatus, secPayoutToken])
-
 
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
   if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.catalogId} />
@@ -273,7 +273,8 @@ const NotTokenHoldersView: FC<{ payoutToken: any; secToken?: SecToken; status: P
               src={secToken?.logo?.public}
             />
             <TYPE.description4>
-              <StyledTokenBalance style={{fontWeight: '600'}}>0 {secTokenSymbol}</StyledTokenBalance> tokens as of record date.
+              <StyledTokenBalance style={{ fontWeight: '600' }}>0 {secTokenSymbol}</StyledTokenBalance> tokens as of
+              record date.
             </TYPE.description4>
           </Box>
         )

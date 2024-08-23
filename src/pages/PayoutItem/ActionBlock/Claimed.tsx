@@ -7,7 +7,7 @@ import CurrencyLogo from 'components/CurrencyLogo'
 interface Props {
   payoutToken: any
   claimStatus: string
-  amountToClaim: string
+  amountToClaim: string | number
 }
 enum ClaimSatus {
   PENDING = 'pending',
@@ -38,7 +38,7 @@ export const Claimed: FC<Props> = ({ payoutToken, amountToClaim, claimStatus }) 
       return (
         <>
           <Box marginBottom="4px" fontSize="20px" lineHeight="30px" fontWeight={600}>
-          <Trans>{`Your claim request has been submitted. Waiting for system confirmation.`}</Trans>
+            <Trans>{`Your claim request has been submitted. Waiting for system confirmation.`}</Trans>
           </Box>
           <Flex alignItems="center">
             <CurrencyLogo currency={payoutToken} size="24px" />
@@ -56,7 +56,7 @@ export const Claimed: FC<Props> = ({ payoutToken, amountToClaim, claimStatus }) 
       return (
         <>
           <Box marginBottom="4px" fontSize="20px" lineHeight="30px" fontWeight={600} color="#FF6161">
-          <Trans>{`Your claim request failed. Please contact support for further assistance.`}</Trans>
+            <Trans>{`Your claim request failed. Please contact support for further assistance.`}</Trans>
           </Box>
           <Flex alignItems="center">
             <CurrencyLogo currency={payoutToken} size="24px" />
