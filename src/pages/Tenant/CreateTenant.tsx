@@ -13,6 +13,8 @@ import SocialLinks from './components/SocialLinks'
 import PagesAndFeatures from './components/PagesAndFeatures'
 import LaunchpadBanner from './components/LaunchpadBanner'
 import Design from './components/Design'
+import { ButtonOutlined, PinnedContentButton } from 'components/Button'
+import { Flex } from 'rebass'
 
 const CreateTenant = () => {
   return (
@@ -25,7 +27,6 @@ const CreateTenant = () => {
               <GeneralInfo />
             </FormCard>
             <FormCard id="Design">
-
               <Design />
             </FormCard>
             <FormCard id="PagesAndFeatures">
@@ -49,6 +50,15 @@ const CreateTenant = () => {
             <FormCard id="FooterConfig">
               <FooterConfig />
             </FormCard>
+
+            <Flex justifyContent="flex-end" mt="20px">
+              <div style={{ marginRight: 16 }}>
+                <ButtonOutlined style={{ width: '200px', background: '#fff', fontSize: 14 }}>Cancel</ButtonOutlined>
+              </div>
+              <PinnedContentButton type="submit" style={{ width: '200px', height: 48, fontSize: 14 }}>
+                Submit
+              </PinnedContentButton>
+            </Flex>
           </FormContainer>
 
           <StyledStickyBox style={{ marginBottom: isMobile ? '100px' : '1700px' }}>

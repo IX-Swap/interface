@@ -69,6 +69,12 @@ export const ProgressBar: FC<Props> = ({ description, topics }: Props) => {
               )
           )}
         </Column>
+
+        <div style={{ padding: 24 }}>
+          <PinnedContentButton type="submit" style={{ width: '100%', height: 48, fontSize: 14 }}>
+            Submit
+          </PinnedContentButton>
+        </div>
       </FormCard>
     </div>
   )
