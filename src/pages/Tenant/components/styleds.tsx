@@ -73,3 +73,12 @@ export const FormControlLabel = styled(MuiFormControlLabel)`
     letter-spacing: -0.28px;
   }
 `
+
+export const ErrorText = styled.span`
+  color: #f44336;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.36px;
+`

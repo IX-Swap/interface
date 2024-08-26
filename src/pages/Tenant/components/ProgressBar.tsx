@@ -1,4 +1,3 @@
-import { Trans } from '@lingui/macro'
 import React, { FC, useState, useCallback } from 'react'
 
 import { PinnedContentButton } from 'components/Button'
@@ -16,10 +15,11 @@ interface ProgressTopic {
 
 interface Props {
   topics: ProgressTopic[]
-  description: string | null
+  isDisabled?: boolean
+  submitForm?: () => Promise<any>
 }
 
-export const ProgressBar: FC<Props> = ({ description, topics }: Props) => {
+export const ProgressBar: FC<Props> = ({ topics, isDisabled, submitForm }: Props) => {
   const [activeTopic, setActiveTopic] = useState<number>(0)
 
   const handleScrollToDiv = useCallback(
@@ -33,23 +33,6 @@ export const ProgressBar: FC<Props> = ({ description, topics }: Props) => {
 
   return (
     <div>
-      {description && (
-        <FormCard style={{ padding: 24, marginBottom: 24 }}>
-          <TYPE.title6
-            fontSize={15}
-            marginBottom="16px"
-            style={{ textTransform: 'uppercase', whiteSpace: 'nowrap' }}
-            color={'bg14'}
-          >
-            <Trans>Reason of changes requested</Trans>
-          </TYPE.title6>
-
-          <TYPE.body3 marginBottom="16px" opacity="0.5">
-            {description}
-          </TYPE.body3>
-        </FormCard>
-      )}
-
       <FormCard style={{ padding: '24px 0px' }}>
         <TYPE.title6 fontSize={'18px'} fontWeight={'700'} marginBottom="16px" paddingX="24px">
           Progress
@@ -71,7 +54,12 @@ export const ProgressBar: FC<Props> = ({ description, topics }: Props) => {
         </Column>
 
         <div style={{ padding: 24 }}>
-          <PinnedContentButton type="submit" style={{ width: '100%', height: 48, fontSize: 14 }}>
+          <PinnedContentButton
+            type="submit"
+            style={{ width: '100%', height: 48, fontSize: 14 }}
+            disabled={isDisabled}
+            onClick={submitForm}
+          >
             Submit
           </PinnedContentButton>
         </div>

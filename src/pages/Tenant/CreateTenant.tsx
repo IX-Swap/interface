@@ -17,17 +17,37 @@ import PagesAndFeatures from './components/PagesAndFeatures'
 import LaunchpadBanner from './components/LaunchpadBanner'
 import Design from './components/Design'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
+import { routeConfigs } from 'pages/AppRoutes'
 
 const validationSchema = yup.object({
-  name: yup.string().email('Enter a valid email').required('Email is required'),
+  name: yup.string().required('Tenant name is required'),
+  title: yup.string().required('Title is required'),
+  domain: yup.string().required('Domain is required'),
+  appUrl: yup.string().required('App URL is required'),
+  description: yup.string().required('Description is required'),
 })
+
+const initialValues = {
+  name: '',
+  title: '',
+  domain: '',
+  appUrl: '',
+  description: '',
+  isIxSwap: false,
+  pages: routeConfigs.reduce((acc: any, item) => {
+    const key = item.path.startsWith('/') ? item.path : '/' + item.path
+    acc[key] = key === '/link2' ? true : false
+
+    return acc
+  }, {}),
+}
 
 const CreateTenant = () => {
   const formik = useFormik({
-    initialValues: {
-      email: '',
-    },
+    initialValues,
     validationSchema: validationSchema,
+    validateOnChange: false,
+    validateOnBlur: false,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
     },
@@ -46,7 +66,7 @@ const CreateTenant = () => {
               <Design />
             </FormCard>
             <FormCard id="PagesAndFeatures">
-              <PagesAndFeatures />
+              <PagesAndFeatures formik={formik} />
             </FormCard>
             <FormCard id="SocialLinks">
               <SocialLinks />
@@ -71,7 +91,11 @@ const CreateTenant = () => {
               <div style={{ marginRight: 16 }}>
                 <ButtonOutlined style={{ width: '200px', background: '#fff', fontSize: 14 }}>Cancel</ButtonOutlined>
               </div>
-              <PinnedContentButton type="submit" style={{ width: '200px', height: 48, fontSize: 14 }}>
+              <PinnedContentButton
+                type="submit"
+                style={{ width: '200px', height: 48, fontSize: 14 }}
+                onClick={formik.submitForm}
+              >
                 Submit
               </PinnedContentButton>
             </Flex>
@@ -79,6 +103,8 @@ const CreateTenant = () => {
 
           <StyledStickyBox style={{ marginBottom: isMobile ? '100px' : '1700px' }}>
             <ProgressBar
+              isDisabled={formik.isSubmitting}
+              submitForm={formik.submitForm}
               topics={[
                 {
                   title: 'General Info',
@@ -117,7 +143,6 @@ const CreateTenant = () => {
                   href: 'FooterConfig',
                 },
               ]}
-              description={null}
             />
           </StyledStickyBox>
         </FormRow>

@@ -10,20 +10,20 @@ const SocialLinks: React.FC<SocialLinksProps> = () => {
 
       <FormWrapper>
         <div>
-          <Label htmlFor="telegramLink">Telegram</Label>
-          <InputWithLabel id="telegramLink" placeholder="Telegram Link" />
+          <Label htmlFor="telegram">Telegram</Label>
+          <InputWithLabel id="telegram" placeholder="Telegram Link" />
         </div>
         <div>
-          <Label htmlFor="linkedinLink">Linkedin</Label>
-          <InputWithLabel id="linkedinLink" placeholder="Linkedin Link" />
+          <Label htmlFor="linkedin">Linkedin</Label>
+          <InputWithLabel id="linkedin" placeholder="Linkedin Link" />
         </div>
         <div>
-          <Label htmlFor="youtubeLink">YouTube</Label>
-          <InputWithLabel id="youtubeLink" placeholder="Youtube Link" />
+          <Label htmlFor="youtube">YouTube</Label>
+          <InputWithLabel id="youtube" placeholder="Youtube Link" />
         </div>
         <div>
-          <Label htmlFor="xLink">X - Twitter</Label>
-          <InputWithLabel id="xLink" placeholder="X Link" />
+          <Label htmlFor="twitter">X - Twitter</Label>
+          <InputWithLabel id="twitter" placeholder="X Link" />
         </div>
       </FormWrapper>
     </>

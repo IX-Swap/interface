@@ -78,7 +78,7 @@ const Content: React.FC<ContentProps> = ({ open, toggle }) => {
 
       {isAdmin ? (
         <Column>
-          <SubMenuLink to={routes.tenant}>SaaS configuraiton</SubMenuLink>
+          <Link onClick={() => navigateTo(routes.tenant)}>SaaS configuraiton</Link>
         </Column>
       ) : null}
     </PopoverContent>
