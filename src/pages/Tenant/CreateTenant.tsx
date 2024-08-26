@@ -3,6 +3,9 @@ import { MEDIA_WIDTHS } from 'theme'
 import styled from 'styled-components'
 import StickyBox from 'react-sticky-box'
 import { isMobile } from 'react-device-detect'
+import { Flex } from 'rebass'
+import { useFormik } from 'formik'
+import * as yup from 'yup'
 
 import { ProgressBar } from './components/ProgressBar'
 import GeneralInfo from './components/GeneralInfo'
@@ -14,9 +17,22 @@ import PagesAndFeatures from './components/PagesAndFeatures'
 import LaunchpadBanner from './components/LaunchpadBanner'
 import Design from './components/Design'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
-import { Flex } from 'rebass'
+
+const validationSchema = yup.object({
+  name: yup.string().email('Enter a valid email').required('Email is required'),
+})
 
 const CreateTenant = () => {
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2))
+    },
+  })
+
   return (
     <Container>
       <Content>
@@ -24,7 +40,7 @@ const CreateTenant = () => {
         <FormRow>
           <FormContainer>
             <FormCard id="GeneralInfo">
-              <GeneralInfo />
+              <GeneralInfo formik={formik} />
             </FormCard>
             <FormCard id="Design">
               <Design />

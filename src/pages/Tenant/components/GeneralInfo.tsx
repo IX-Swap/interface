@@ -3,12 +3,11 @@ import React from 'react'
 import { FormWrapper, Label, InputWithLabel, TwoColumnGrid, FormControlLabel } from './styleds'
 
 interface GeneralInfoProps {
-  // Define the props for the GeneralInfo component here
+  formik: any
 }
 
-const GeneralInfo: React.FC<GeneralInfoProps> = () => {
-  // Implement the component logic here
-
+const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
+  console.log(formik)
   return (
     <>
       <h1 className="title">General Info</h1>
@@ -16,7 +15,17 @@ const GeneralInfo: React.FC<GeneralInfoProps> = () => {
       <FormWrapper>
         <div>
           <Label htmlFor="tenant-name">Tenant name</Label>
-          <InputWithLabel id="tenant-name" placeholder="Tenant name" />
+          <InputWithLabel
+            placeholder="Tenant name"
+            fullWidth
+            id="name"
+            name="name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            // helperText={formik.touched.email && formik.errors.email}
+          />
         </div>
 
         <div>

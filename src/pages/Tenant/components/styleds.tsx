@@ -42,6 +42,10 @@ export const InputWithLabel = styled(InputBase)`
       border-color: #007bff;
     }
   }
+
+  &.Mui-error .MuiInputBase-input {
+    border-color: #f44336; /* Material-UI error color */
+  }
 `
 
 export const FormWrapper = styled.div`

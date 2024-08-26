@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import React, { FC, useState, useCallback } from 'react'
 
-import { ButtonGradientBorder, ButtonIXSGradient, ButtonOutlined, PinnedContentButton } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 import Column from 'components/Column'
 import { TYPE } from 'theme'
 
