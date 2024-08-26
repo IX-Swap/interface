@@ -15,7 +15,6 @@ import { formatDate } from 'pages/PayoutItem/utils'
 import { useAddPopup } from 'state/application/hooks'
 import {
   usePublishPayout,
-  useCreateDraftPayout,
   usePayoutValidation,
 } from 'state/payout/hooks'
 import { getContractInstance } from 'hooks/useContract'
@@ -53,7 +52,6 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id } = values
   const validatePayout = usePayoutValidation()
   const publishPayout = usePublishPayout()
-  const createDraft = useCreateDraftPayout()
   const addPopup = useAddPopup()
   const history = useHistory()
   const getAuthorization = useGetPayoutAuthorization()
@@ -94,7 +92,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
       }
 
       const body = setBody()
-      const data = await createDraft({ ...body })
+      const data = await publishPayout({ ...body })
       if (!data?.id) return
       await pay({
         id: data.id,
