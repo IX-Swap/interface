@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FormControlLabel, Switch } from '@mui/material'
-import { InputWithLabel, TwoColumnGrid } from './styleds'
+import { FormWrapper, InputWithLabel, TwoColumnGrid } from './styleds'
 
 interface LaunchpadBannerProps {
   formik: any
@@ -13,6 +13,7 @@ const LaunchpadBanner: React.FC<LaunchpadBannerProps> = ({ formik }) => {
       <FormControlLabel
         control={
           <Switch
+            name="enableLaunchpadBanner"
             checked={formik.values.enableLaunchpadBanner}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -21,47 +22,49 @@ const LaunchpadBanner: React.FC<LaunchpadBannerProps> = ({ formik }) => {
         label={<Label>Launchpad Banner</Label>}
       />
 
-      <>
-        <div>
-          <Label htmlFor="launchpadBannerTitle">Launchpad Banner Title</Label>
-          <InputWithLabel
-            placeholder="Launchpad Banner Title"
-            id="launchpadBannerTitle"
-            name="launchpadBannerTitle"
-            value={formik.values.launchpadBannerTitle}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={Boolean(formik.errors.launchpadBannerTitle)}
-          />
-        </div>
+      {formik.values.enableLaunchpadBanner ? (
+        <FormWrapper style={{ marginTop: 24 }}>
+          <div>
+            <LabelSmall htmlFor="launchpadBannerTitle">Launchpad Banner Title</LabelSmall>
+            <InputWithLabel
+              placeholder="Launchpad Banner Title"
+              id="launchpadBannerTitle"
+              name="launchpadBannerTitle"
+              value={formik.values.launchpadBannerTitle}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={Boolean(formik.errors.launchpadBannerTitle)}
+            />
+          </div>
 
-        <TwoColumnGrid>
-          <div>
-            <Label htmlFor="launchpadBannerInfoRedirectTitle">Launchpad Banner Info Redirect Title</Label>
-            <InputWithLabel
-              placeholder="Launchpad Banner Info Redirect Title"
-              id="launchpadBannerInfoRedirectTitle"
-              name="launchpadBannerInfoRedirectTitle"
-              value={formik.values.launchpadBannerInfoRedirectTitle}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.launchpadBannerInfoRedirectTitle)}
-            />
-          </div>
-          <div>
-            <Label htmlFor="launchpadBannerInfoRedirectUrl">Launchpad Banner Info Redirect URL</Label>
-            <InputWithLabel
-              placeholder="Launchpad Banner Info Redirect URL"
-              id="launchpadBannerInfoRedirectUrl"
-              name="launchpadBannerInfoRedirectUrl"
-              value={formik.values.launchpadBannerInfoRedirectUrl}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.launchpadBannerInfoRedirectUrl)}
-            />
-          </div>
-        </TwoColumnGrid>
-      </>
+          <TwoColumnGrid>
+            <div>
+              <LabelSmall htmlFor="launchpadBannerInfoRedirectTitle">Launchpad Banner Info Redirect Title</LabelSmall>
+              <InputWithLabel
+                placeholder="Launchpad Banner Info Redirect Title"
+                id="launchpadBannerInfoRedirectTitle"
+                name="launchpadBannerInfoRedirectTitle"
+                value={formik.values.launchpadBannerInfoRedirectTitle}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={Boolean(formik.errors.launchpadBannerInfoRedirectTitle)}
+              />
+            </div>
+            <div>
+              <LabelSmall htmlFor="launchpadBannerInfoRedirectUrl">Launchpad Banner Info Redirect URL</LabelSmall>
+              <InputWithLabel
+                placeholder="Launchpad Banner Info Redirect URL"
+                id="launchpadBannerInfoRedirectUrl"
+                name="launchpadBannerInfoRedirectUrl"
+                value={formik.values.launchpadBannerInfoRedirectUrl}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={Boolean(formik.errors.launchpadBannerInfoRedirectUrl)}
+              />
+            </div>
+          </TwoColumnGrid>
+        </FormWrapper>
+      ) : null}
     </>
   )
 }
@@ -76,4 +79,23 @@ const Label = styled.label`
   font-weight: 600;
   line-height: 130%; /* 26px */
   letter-spacing: -0.6px;
+`
+
+export const LabelSmall = styled.label`
+  color: #556;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.28px;
+
+  .desc {
+    color: #8f8fb2;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.36px;
+  }
 `

@@ -6,6 +6,18 @@ interface PagesAndFeaturesProps {
   formik: any
 }
 
+const PagesMapping = {
+  admin: 'Admin Dashboard',
+  dex: 'DEX',
+  offer: 'Launchpad',
+  lbp: 'LBP',
+  issuance: 'Issuance Dashboard',
+  kyc: 'KYC',
+  securityTokens: 'RWA',
+  payout: 'Payout',
+  lbpAdmin: 'LBP Dashboard',
+} as any
+
 const PagesAndFeatures: React.FC<PagesAndFeaturesProps> = ({ formik }) => {
   // Implement the component logic here
 
@@ -25,7 +37,7 @@ const PagesAndFeatures: React.FC<PagesAndFeaturesProps> = ({ formik }) => {
                     onBlur={formik.handleBlur}
                   />
                 }
-                label={page}
+                label={PagesMapping[page]}
               />
             </div>
           ))}

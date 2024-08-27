@@ -19,6 +19,7 @@ import Design from './components/Design'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import apiService from 'services/apiService'
 import { whitelabel } from 'services/apiUrls'
+import { getActiveRoutes } from './helpers'
 
 const validationSchema = yup.object({
   name: yup.string().required('Tenant name is required'),
@@ -34,72 +35,16 @@ const validationSchema = yup.object({
   block1: yup.string().required('Block 1 is required'),
 })
 
-const defaults = ['/send', '/faucet', '/staking', '/vesting', '/launchpad']
-
-const dex = [
-  '/swap',
-  '/pool',
-  '/find',
-  '/swap/:outputCurrency',
-  '/add/:currencyIdA?/:currencyIdB?',
-  '/remove/:currencyIdA/:currencyIdB',
-]
-
-const kyc = ['/kyc', '/kyc/individual', '/kyc/individual/v2', '/kyc/corporate']
-
-const lbp = ['/lbp/:id']
-
-const offer = ['/offer/:id']
-
-const lbpAdmin = ['/lbp-admin', '/lbp-admin/create', '/lbp-admin/edit', '/lbp-admin/detail/:id']
-
-const issuance = [
-  '/issuance',
-  '/issuance/create',
-  '/issuance/create/vetting',
-  '/issuance/view/vetting',
-  '/issuance/create/information',
-  '/issuance/edit/information',
-  '/issuance/review/information',
-  '/issuance/extract/:issuanceId',
-  '/issuance/manage/:issuanceId',
-]
-
-const admin = [
-  '/admin',
-  '/admin/:tab/:id?',
-  '/admin/kyc',
-  '/admin/kyc/:kycId',
-  '/admin/accreditation',
-  '/admin/users-list',
-  '/admin/transactions',
-  '/admin/security-catalog',
-  '/tenant/create',
-  '/tenant',
-]
-
-const payout = [
-  '/payout/edit/:id?',
-  '/payout/:payoutId/manager',
-  '/payout/:payoutId',
-  '/payout/create',
-  '/token-manager/my-tokens',
-  '/token-manager/payout-history',
-  '/token-manager/payout-events',
-]
-
-const securityTokens = ['/security-token/:currencyId']
-
 const pages = {
   dex: false,
   kyc: false,
   lbp: false,
-  offer: false,
   lbpAdmin: false,
+  offer: false,
   issuance: false,
-  admin: false,
   payout: false,
   securityTokens: false,
+  admin: false,
 }
 
 const initialValues = {
@@ -130,8 +75,7 @@ const CreateTenant = () => {
           appUrl: values.appUrl,
           description: values.description,
           bannerImageUrl: 'https://pbs.twimg.com/profile_banners/1222418712466198529/1706865528/1500x500',
-          pages:
-            '["/kyc","/swap","/security-tokens/:tab","/security-token/:currencyId","/pool","/find","/add/:currencyIdA?/:currencyIdB?","/remove/:currencyIdA/:currencyIdB","/kyc/corporate","/kyc/individual","/admin/:tab/:id?","/admin","/launchpad","/offers/:offerId","/issuance","/issuance/create","/issuance/create/vetting","/issuance/view/vetting","/issuance/create/information","/issuance/edit/information","/issuance/review/information","/issuance/extract/:issuanceId","/issuance/manage/:issuanceId","/kyc/individual/v2"]',
+          pages: getActiveRoutes(values.pages),
           chartsUrl: values.appUrl,
           enableLbp: values.enableLbp,
           defaultUrl: values.defaultUrl,
@@ -168,6 +112,7 @@ const CreateTenant = () => {
   })
 
   console.log(formik)
+  console.log('getActiveRoutes', getActiveRoutes(formik.values.pages))
   return (
     <Container>
       <Content>
