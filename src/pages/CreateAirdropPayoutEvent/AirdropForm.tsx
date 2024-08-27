@@ -14,8 +14,6 @@ import { routes } from 'utils/routes'
 import { availableInputsForEdit, FormValues, transformPayoutDraftDTO } from './utils'
 import { initialValues } from './mock'
 import { validation } from './validation'
-// import { Summary } from './Summary'
-// import { PayoutEventBlock } from './PayoutEventBlock'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { useActiveWeb3React } from 'hooks/web3'
 import { PayoutFormCard } from 'pages/CreatePayoutEvent/styleds'
@@ -135,7 +133,7 @@ export const AirdropForm: FC<AirdropFormProps> = ({ payoutData, paid = false, st
             <Select
               tooltipText="Select the security token you want to distribute for this payout event."
               label="Security Token"
-              placeholder=" security token"
+              placeholder="security token"
               selectedItem={values.secToken}
               items={secTokensOptions}
               onSelect={(newToken) => {
@@ -147,24 +145,16 @@ export const AirdropForm: FC<AirdropFormProps> = ({ payoutData, paid = false, st
             />
 
             <TextInput
-              placeholder="Provide a name for this payout event"
-              label="Event Name"
-              onChange={(e: any) => onValueChange('title', e.currentTarget.value)}
-              value={values.title}
+              placeholder="Memo"
+              label="Memo"
+              onChange={(e: any) => onValueChange('memo', e.currentTarget.value)}
+              value={values.memo}
               required
-              error={touched.title ? errors.title : ''}
+              error={touched.memo ? errors.memo : ''}
               tooltipText="Select a name for this payout event. Note that this will be the title of this payout that your token holders can use as a reference."
-              disabled={!availableForEditing.includes('title')}
+              disabled={!availableForEditing.includes('memo')}
             />
           </FormGrid>
-
-          {/* <Summary
-            isRecordFuture={isRecordFuture}
-            isLoading={isAmountLoading}
-            tokenAmount={tokenAmount}
-            setTokenAmount={setTokenAmount}
-            onValueChange={onValueChange}
-          /> */}
         </PayoutFormCard>
 
         <AirdropEventBlock

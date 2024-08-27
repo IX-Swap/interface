@@ -34,6 +34,8 @@ export interface UploaderProps {
   onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   isPayoutpage?: boolean
   acceptedFileTypes?: string[]
+  setTotalWallets?: (value: number) => void;
+  setTotalAmount?: (value: number) => void;
 }
 
 export const Uploader: FC<UploaderProps> = ({
@@ -50,6 +52,8 @@ export const Uploader: FC<UploaderProps> = ({
   isDisabled = false,
   isPayoutpage,
   acceptedFileTypes,
+  setTotalWallets,
+  setTotalAmount,
 }: UploaderProps) => {
   const [csvRows, setCsvRows] = useState<string[][]>([])
   const defaultAcceptedFiles = `${AcceptFiles.PDF},image/jpeg,image/png`
@@ -99,9 +103,15 @@ export const Uploader: FC<UploaderProps> = ({
       // setHasError(true)
       showError('Invalid file: please ensure all addresses are valid and amounts are correctly formatted.')
       setCsvRows([])
+      setTotalWallets?.(0);
+      setTotalAmount?.(0);
     } else {
       setCsvRows(validatedRows)
       // setHasError(false)
+      const totalWallets = validatedRows.length
+      const totalAmount = validatedRows.reduce((sum, row) => sum + parseFloat(row[1]), 0)
+      setTotalWallets?.(totalWallets);
+      setTotalAmount?.(totalAmount);
     }
   }
 

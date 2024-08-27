@@ -4,7 +4,7 @@ import { Trans } from '@lingui/macro'
 import { useFormikContext } from 'formik'
 import { TYPE } from 'theme'
 import { FormGrid } from 'pages/KYC/styleds'
-import { TextInput } from 'pages/KYC/common'
+import { TextInput, Select } from 'pages/KYC/common'
 import { ButtonGradientBorder, PinnedContentButton } from 'components/Button'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { PAYOUT_STATUS } from 'constants/enums'
@@ -14,8 +14,10 @@ import { useShowError } from 'state/application/hooks'
 import { FormValues } from './utils'
 import { Uploader } from 'components/Uploader'
 import { ButtonsContainer, PayoutFormCard } from 'pages/CreatePayoutEvent/styleds'
-import { PublishPayoutModal } from 'pages/CreatePayoutEvent/PublishPayoutModal'
-
+import { useTokensList } from 'hooks/useTokensList'
+import { PublishAirdropModal } from './PublishAirdropModal'
+const OLDEST_UNIX_TIMESTAMP_DATE = new Date(0).toISOString()
+const CURRENT_DATE = new Date().toISOString()
 interface Props {
   onValueChange: (key: string, value: any) => void
   isEdit: boolean
@@ -35,14 +37,16 @@ export const AirdropEventBlock: FC<Props> = ({
 }) => {
   const [isWarningOpen, setIsWarningOpen] = useState(false)
   const { values, errors, touched, validateForm, setTouched } = useFormikContext<FormValues>()
-
+  const { token } = values
   const [openModal, setOpenModal] = useState(false)
+  const [totalWallets, setTotalWallets] = useState(0) // New state for total wallets
+  const [totalAmount, setTotalAmount] = useState(0)
   const deletePayout = useDeletePayoutItem()
   const showError = useShowError()
   const history = useHistory()
-
+  const { tokensOptions } = useTokensList()
   const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
-
+  const fallbackTimestamp = 0
   const onDelete = () => {
     toggleIsWarningOpen()
 
@@ -59,6 +63,7 @@ export const AirdropEventBlock: FC<Props> = ({
       secToken: true,
       token: true,
       files: true,
+      memo: true
     })
     const errors = await validateForm()
     if (Object.keys(errors).length === 0) {
@@ -89,6 +94,10 @@ export const AirdropEventBlock: FC<Props> = ({
     onValueChange('files', arrayOfFiles)
   }
 
+  const recordDate = OLDEST_UNIX_TIMESTAMP_DATE
+  const startDate = CURRENT_DATE
+  const endDate = CURRENT_DATE
+
   return (
     <PayoutFormCard>
       <AreYouSureModal
@@ -98,7 +107,19 @@ export const AirdropEventBlock: FC<Props> = ({
         declineText="Cancel"
       />
 
-      <FormGrid columns={1} style={{ marginBottom: 24 }}>
+      <FormGrid columns={2} style={{ marginBottom: 24 }}>
+        <Select
+          addCustom
+          label="Payout Token"
+          placeholder="Select token or paste address"
+          selectedItem={token}
+          items={tokensOptions}
+          onSelect={(item) => onValueChange('token', item)}
+          required
+          error={touched.token ? errors.token : ''}
+          tooltipText="Select the token you want to distribute for this payout event. (Used if your security token has other tokens in its governance)."
+          // isDisabled={!availableForEditing.includes('token')}
+        />
         <TextInput
           placeholder="Provide a name for this payout event"
           label="Event Name"
@@ -121,6 +142,8 @@ export const AirdropEventBlock: FC<Props> = ({
         error={touched.files ? errors.files : ''}
         tooltipText="Please attach any documentation relevant to the payout event (optional)."
         isDisabled={!availableForEditing.includes('files')}
+        setTotalWallets={setTotalWallets}
+        setTotalAmount={setTotalAmount}
       />
 
       <ButtonsContainer style={{ marginBottom: '25px' }}>
@@ -130,22 +153,19 @@ export const AirdropEventBlock: FC<Props> = ({
           </ButtonGradientBorder>
         )}
 
-        {status === PAYOUT_STATUS.DRAFT ? (
-          <PinnedContentButton type="button" onClick={open}>
-            <Trans>Submit</Trans>
-          </PinnedContentButton>
-        ) : (
-          !paid && null
-        )}
+        <PinnedContentButton type="button" onClick={open}>
+          <Trans>Submit</Trans>
+        </PinnedContentButton>
       </ButtonsContainer>
 
       {openModal && (
-        <PublishPayoutModal
-          values={values}
-          close={close}
-          isRecordFuture={false}
+        <PublishAirdropModal
           onlyPay={status !== PAYOUT_STATUS.DRAFT && !paid}
           availableForEditing={availableForEditing}
+          values={{ ...values, recordDate, startDate, endDate }}
+          totalWallets={totalWallets}
+          totalAmount={totalAmount}
+          close={close}
         />
       )}
     </PayoutFormCard>

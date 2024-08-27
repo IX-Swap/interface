@@ -5,4 +5,5 @@ export const validation = object().shape({
   type: string().required('Field is required'),
   secToken: object().nullable().required('Field is required'),
   token: object().nullable().required('Field is required'),
+  memo: string().required('Field is required')
 })

@@ -3,8 +3,12 @@ import { FormValues } from './utils'
 export const initialValues: FormValues = {
   id: '',
   title: '',
-  type: '',
+  type: 'airdrop',
+  memo: '',
   secToken: null,
+  recordDate: '',
+  startDate: '',
+  endDate: '',
   token: null,
   files: [],
 }
