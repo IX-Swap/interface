@@ -15,14 +15,14 @@ type Network = 'ethereum' | 'polygon'
 
 export function chainIdToNetworkName(networkId: SupportedChainId): Network {
   switch (networkId) {
-  case SupportedChainId.MAINNET:
-    return 'ethereum'
-  case SupportedChainId.MATIC:
-    return 'polygon'
-  case SupportedChainId.MUMBAI:
-    return 'polygon'
-  default:
-    return 'ethereum'
+    case SupportedChainId.MAINNET:
+      return 'ethereum'
+    case SupportedChainId.MATIC:
+      return 'polygon'
+    case SupportedChainId.MUMBAI:
+      return 'polygon'
+    default:
+      return 'ethereum'
   }
 }
 export const getTokenLogoURL = (address: string, chainId = SupportedChainId.MAINNET) => {
@@ -72,7 +72,9 @@ export default function CurrencyLogo({
 
   const uri =
     currency instanceof WrappedTokenInfo
-      ? currency?.logoURI || (tokens[currency?.address] as any)?.tokenInfo?.logoURI
+      ? currency?.logoURI ||
+        (tokens[currency?.address] as any)?.tokenInfo?.logoURI ||
+        (currency?.tokenInfo as any)?.logo?.public
       : undefined
   const uriLocations = useHttpLocations(uri)
   const { chainId } = useActiveWeb3React()
@@ -95,5 +97,5 @@ export default function CurrencyLogo({
     }
     return <StyledEthereumLogo src={EthereumLogo} size={size} style={style} {...rest} />
   }
-  return <StyledLogo  size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} {...rest} />
+  return <StyledLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} {...rest} />
 }
