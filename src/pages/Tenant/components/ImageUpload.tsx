@@ -5,6 +5,7 @@ import { Flex } from 'rebass'
 
 import { ReactComponent as UploadLogoLbp } from 'assets/images/Browse.svg'
 import { ReactComponent as TrashNoBorder } from 'assets/images/TrashNoBorder.svg'
+import apiService from 'services/apiService'
 
 interface ImageUploadProps {
   title: string
@@ -16,12 +17,18 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ title, description }) => {
   const [image, setImage] = useState<any>(null)
   const [imageName, setImageName] = useState('')
 
-  const handleImageUpload = (event: any) => {
+  const handleImageUpload = async (event: any) => {
     const file = event.target.files[0]
     if (file) {
       const url = URL.createObjectURL(file)
       setImage(url)
       setImageName(file.name)
+      const data = new FormData()
+      data.append(file.name, file)
+      const result: any = await apiService.post('/storage/batch', data)
+      if (result) {
+      }
+      console.log(result)
     }
   }
 

@@ -37,10 +37,32 @@ const PagesAndFeatures: React.FC<PagesAndFeaturesProps> = ({ formik }) => {
       <FormWrapper>
         <TwoColumnGrid>
           <div>
-            <FormControlLabel control={<Checkbox />} label="Featured Security Vaults" />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  id="enableFeaturedSecurityVaults"
+                  name="enableFeaturedSecurityVaults"
+                  checked={formik.values.enableFeaturedSecurityVaults}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              }
+              label="Featured Security Vaults"
+            />
           </div>
           <div>
-            <FormControlLabel control={<Checkbox />} label="LBP" />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  id="enableLbp"
+                  name="enableLbp"
+                  checked={formik.values.enableLbp}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              }
+              label="LBP"
+            />
           </div>
         </TwoColumnGrid>
       </FormWrapper>

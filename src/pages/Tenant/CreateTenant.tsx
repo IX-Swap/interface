@@ -17,7 +17,8 @@ import PagesAndFeatures from './components/PagesAndFeatures'
 import LaunchpadBanner from './components/LaunchpadBanner'
 import Design from './components/Design'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
-import { routeConfigs } from 'pages/AppRoutes'
+import apiService from 'services/apiService'
+import { whitelabel } from 'services/apiUrls'
 
 const validationSchema = yup.object({
   name: yup.string().required('Tenant name is required'),
@@ -25,7 +26,81 @@ const validationSchema = yup.object({
   domain: yup.string().required('Domain is required'),
   appUrl: yup.string().required('App URL is required'),
   description: yup.string().required('Description is required'),
+  defaultUrl: yup.string().required('Default URL is required'),
+  chartsUrl: yup.string().required('Charts URL is required'),
+  supportEmail: yup.string().required('Support Email is required'),
+  termLink: yup.string().required('Term Link is required'),
+  policyLink: yup.string().required('Policy Link is required'),
+  block1: yup.string().required('Block 1 is required'),
 })
+
+const defaults = ['/send', '/faucet', '/staking', '/vesting', '/launchpad']
+
+const dex = [
+  '/swap',
+  '/pool',
+  '/find',
+  '/swap/:outputCurrency',
+  '/add/:currencyIdA?/:currencyIdB?',
+  '/remove/:currencyIdA/:currencyIdB',
+]
+
+const kyc = ['/kyc', '/kyc/individual', '/kyc/individual/v2', '/kyc/corporate']
+
+const lbp = ['/lbp/:id']
+
+const offer = ['/offer/:id']
+
+const lbpAdmin = ['/lbp-admin', '/lbp-admin/create', '/lbp-admin/edit', '/lbp-admin/detail/:id']
+
+const issuance = [
+  '/issuance',
+  '/issuance/create',
+  '/issuance/create/vetting',
+  '/issuance/view/vetting',
+  '/issuance/create/information',
+  '/issuance/edit/information',
+  '/issuance/review/information',
+  '/issuance/extract/:issuanceId',
+  '/issuance/manage/:issuanceId',
+]
+
+const admin = [
+  '/admin',
+  '/admin/:tab/:id?',
+  '/admin/kyc',
+  '/admin/kyc/:kycId',
+  '/admin/accreditation',
+  '/admin/users-list',
+  '/admin/transactions',
+  '/admin/security-catalog',
+  '/tenant/create',
+  '/tenant',
+]
+
+const payout = [
+  '/payout/edit/:id?',
+  '/payout/:payoutId/manager',
+  '/payout/:payoutId',
+  '/payout/create',
+  '/token-manager/my-tokens',
+  '/token-manager/payout-history',
+  '/token-manager/payout-events',
+]
+
+const securityTokens = ['/security-token/:currencyId']
+
+const pages = {
+  dex: false,
+  kyc: false,
+  lbp: false,
+  offer: false,
+  lbpAdmin: false,
+  issuance: false,
+  admin: false,
+  payout: false,
+  securityTokens: false,
+}
 
 const initialValues = {
   name: '',
@@ -34,12 +109,10 @@ const initialValues = {
   appUrl: '',
   description: '',
   isIxSwap: false,
-  pages: routeConfigs.reduce((acc: any, item) => {
-    const key = item.path.startsWith('/') ? item.path : '/' + item.path
-    acc[key] = key === '/link2' ? true : false
-
-    return acc
-  }, {}),
+  pages,
+  enableLbp: false,
+  enableFeaturedSecurityVaults: false,
+  enableLaunchpadBanner: false,
 }
 
 const CreateTenant = () => {
@@ -48,11 +121,53 @@ const CreateTenant = () => {
     validationSchema: validationSchema,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: async (values: any) => {
+      try {
+        formik.setSubmitting(true)
+        const payload = {
+          name: values.name,
+          title: values.title,
+          appUrl: values.appUrl,
+          description: values.description,
+          bannerImageUrl: 'https://pbs.twimg.com/profile_banners/1222418712466198529/1706865528/1500x500',
+          pages:
+            '["/kyc","/swap","/security-tokens/:tab","/security-token/:currencyId","/pool","/find","/add/:currencyIdA?/:currencyIdB?","/remove/:currencyIdA/:currencyIdB","/kyc/corporate","/kyc/individual","/admin/:tab/:id?","/admin","/launchpad","/offers/:offerId","/issuance","/issuance/create","/issuance/create/vetting","/issuance/view/vetting","/issuance/create/information","/issuance/edit/information","/issuance/review/information","/issuance/extract/:issuanceId","/issuance/manage/:issuanceId","/kyc/individual/v2"]',
+          chartsUrl: values.appUrl,
+          enableLbp: values.enableLbp,
+          defaultUrl: values.defaultUrl,
+          faviconUrl: 'https://prime.investax.io/favicon.ico',
+          logoUrl: 'https://api.dev.ixswap.io/v1/storage/file/public/e66f7e04-c944-467f-a208-eb858b92ff07',
+          enableFeaturedSecurityVaults: values.enableFeaturedSecurityVaults,
+          colors: '{"button":{"primary":"#0081ff"}}',
+          customStyles: '{}',
+          supportEmail: values.supportEmail,
+          isIxSwap: values.isIxSwap,
+          tokens: '[]',
+          jwtSecretName: 'READI',
+          domain: values.domain,
+          enableLaunchpadBanner: true,
+          launchpadBannerTitle: 'Invest in potential RWA projects for financial & non-financial benefits',
+          launchpadBannerInfoRedirectTitle: 'What is READI?',
+          launchpadBannerInfoRedirectUrl: 'https://www.readi-innovative.com/',
+          complyCubeSuccessRedirectUrl: values.complyCubeSuccessRedirectUrl,
+          complyCubeCancelRedirectUrl: values.complyCubeCancelRedirectUrl,
+          footerConfig:
+            '{"socialLinks":{"telegram":"https://t.me/investaxtelegram","linkedin":"https://www.linkedin.com/company/investax","youtube":"https://www.youtube.com/channel/UCAJI2c_gP8TUbaKOrjMX0IA","twitter":"https://twitter.com/investax"},"termsLink":"https://investax.io/terms-of-use/","policyLink":"https://investax.io/privacy/","block1":"Readi Innovative Company Limited (Company Registration No.: 0105566197981) (\u201CReadi\u201D)\\nAMM (Bahamas) Ltd (Company Registration No.: 207865B) (\u201CIX Swap\u201D) offers an enterprise-grade tokenization solution that enables businesses to issue, manage, and distribute tokenized real-world assets, digital assets and securities in a compliant manner. This site is made available through a hosted software as a solution service provided by IX Swap to Readi and is jointly powered by IX Swap and Readi.","block2":"IX Swap is approved as a Digital Asset Business and Digital Token Exchange under the Digital Assets And Registered Exchanges Act, 2020, by the Securities Commission Of The Bahamas (\u201CDARE Licence\u201D). The DARE Licence allows IX Swap to provide digital asset services such as facilitating exchanges and transfers of digital assets, and providing financial services related to the offer or sale of digital assets. Any and all digital asset and/or securities offerings offered on this site by Readi are facilitated through IX Swap and the DARE Licence.","block3":"By visiting this site, you agree to be bound by IX Swap\u2019s Terms And Conditions Of Use and Privacy Policy. This site is intended for access only in those jurisdictions and to those persons where and to whom it may be lawfully accessed. No part of this site should form the basis of, or be relied upon in connection with, any investment decision or any contract or commitment to purchase or subscribe for any digital assets and/or securities. Investment in any digital assets and/or securities entails significant risks, including illiquidity, lack of dividends, loss of investment, and dilution, and should be done only with an accurate understanding and complete acceptance of these risks. Investors should invest only if they have the financial ability and willingness to accept such risks. To the fullest extent permitted by law, Readi and IX Swap disclaim all responsibility and liability for any and all loss, damage, or other adverse consequences arising out of or in relation to any reliance placed on any information contained on this site. "}',
+        }
+        const response = await apiService.post(whitelabel.create, payload)
+        if (response.status === 201) {
+          console.log('Tenant created successfully')
+        }
+        debugger
+      } catch (e) {
+        console.error(e)
+      } finally {
+        formik.setSubmitting(false)
+      }
     },
   })
 
+  console.log(formik)
   return (
     <Container>
       <Content>
@@ -69,22 +184,22 @@ const CreateTenant = () => {
               <PagesAndFeatures formik={formik} />
             </FormCard>
             <FormCard id="SocialLinks">
-              <SocialLinks />
+              <SocialLinks formik={formik} />
             </FormCard>
             <FormCard id="Tokens">
               <h1 className="title">Tokens</h1>
             </FormCard>
             <FormCard id="SupportInformaton">
-              <SupportInformation />
+              <SupportInformation formik={formik} />
             </FormCard>
             <FormCard id="KYCLinks">
-              <KYCLinks />
+              <KYCLinks formik={formik} />
             </FormCard>
             <FormCard id="LaunchpadBanner">
-              <LaunchpadBanner />
+              <LaunchpadBanner formik={formik} />
             </FormCard>
             <FormCard id="FooterConfig">
-              <FooterConfig />
+              <FooterConfig formik={formik} />
             </FormCard>
 
             <Flex justifyContent="flex-end" mt="20px">
