@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import useInterval from '../../hooks/useInterval'
 // import useIsWindowVisible from '../../hooks/useIsWindowVisible'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { useFetchSecTokenListCallback } from './hooks'
 
 export default function Updater(): null {

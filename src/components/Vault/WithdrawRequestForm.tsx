@@ -35,7 +35,7 @@ import { WaitingWitdrawalFee, WarningPaidFee } from './styleds'
 import { ReactComponent as IButton } from 'assets/images/newIbutton.svg'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
-import { findChainName } from 'chains'
+import { findChainName } from 'utils/chains'
 
 interface Props {
   currency?: SecCurrency
