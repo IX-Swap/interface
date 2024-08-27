@@ -23,7 +23,7 @@ import { routes } from 'utils/routes'
 import Header from 'components/Header'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import WhiteLabelFooter from 'components/WhiteLabelFooter'
-import { checkWrongChain } from 'utils/chains'
+import { checkWrongChain } from 'chains'
 
 interface OfferPageParams {
   offerId: string
@@ -42,7 +42,7 @@ export default function LaunchpadOffer() {
   const network = offer?.data?.network ?? ''
   const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
 
-  const [isAllowed, setIsAllowed] = React.useState<boolean>(true)
+  const [isAllowed, setIsAllowed] = React.useState<boolean>()
 
   const isIxSwap = config?.isIxSwap ?? false
 

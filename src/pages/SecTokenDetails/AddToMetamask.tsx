@@ -4,10 +4,15 @@ import { Trans } from '@lingui/macro'
 import { AboutWrapping } from 'components/Vault/AboutWrapping'
 import { useCurrency } from 'hooks/Tokens'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { useWeb3React } from '@web3-react/core'
+import { ApplicationModal } from 'state/application/actions'
+import { useToggleModal } from 'state/application/hooks'
 import { CopyAddress } from 'components/CopyAddress'
+import { ReactComponent as Info } from 'assets/images/info-filled.svg'
+
 import MetamaskIcon from 'assets/images/metamask.png'
-import { AddressToMetamask, StyledButtonGradientAddMetamask } from './styleds'
+
+import { AddressToMetamask, StyledButtonGradient, StyledButtonGradientAddMetamask } from './styleds'
 
 interface Props {
   token: any
@@ -49,6 +54,7 @@ export const AddToMetamask = ({ token }: Props) => {
 export const AddWrappedToMetamask = ({ token }: Props) => {
   const addCurrency = useAddTokenToMetamask({ ...token?.token, wrapped: token?.token } ?? undefined)
   const { provider } = useWeb3React()
+  const toggleAbout = useToggleModal(ApplicationModal.ABOUT_WRAPPING)
 
   return (
     <>
@@ -68,6 +74,10 @@ export const AddWrappedToMetamask = ({ token }: Props) => {
               </div>
             </>
             {provider?.provider?.isMetaMask && (
+              // <StyledButtonGradient onClick={() => !addCurrency.success && addCurrency.addToken()}>
+              //   <Trans>{!addCurrency.success ? 'Add to Metamask' : 'Added'}</Trans>
+              // </StyledButtonGradient>
+
               <StyledButtonGradientAddMetamask onClick={() => !addCurrency.success && addCurrency.addToken()}>
                 <Trans>{!addCurrency.success ? 'Add to Metamask' : 'Added'}</Trans>
                 <img src={MetamaskIcon} style={{ marginLeft: '10px' }} width="15" />

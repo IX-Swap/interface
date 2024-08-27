@@ -11,7 +11,7 @@ import { PAYOUT_STATUS } from 'constants/enums'
 import { routes } from 'utils/routes'
 import { PayoutEvent } from 'state/token-manager/types'
 import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
-import { checkWrongChain } from 'utils/chains'
+import { checkWrongChain } from 'chains'
 import { useStatusButtonInfo } from './utils'
 import { InfoBlock } from './InfoBlock'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
@@ -19,7 +19,7 @@ import TokenNetwork from 'components/TokenNetwork'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { useWeb3React } from '@web3-react/core'
 
 interface Props {
   payout: PayoutEvent

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory, useParams, useLocation } from 'react-router-dom' // Step 1: Import useLocation
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { useWeb3React } from '@web3-react/core'
 
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { MEDIA_WIDTHS } from 'theme'

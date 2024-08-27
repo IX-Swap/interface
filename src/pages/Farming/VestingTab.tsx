@@ -9,6 +9,7 @@ import { RowBetween } from 'components/Row'
 import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import useIXSCurrency from 'hooks/useIXSCurrency'
+import useSwitchChain, { CHAIN_SWITCH_STRINGS } from 'hooks/useSwitchChain'
 import { useActiveWeb3React } from 'hooks/web3'
 import { TextGradient, TYPE } from 'theme'
 import { LightBackground } from 'theme/Background'
@@ -17,7 +18,6 @@ import { Vesting } from './Vesting/Vesting'
 import { StyledBodyWrapper } from './styleds'
 import { Pinned } from 'components/Launchpad/Offers/Pinned'
 import { PinnedContentButton } from 'components/Button'
-import { useWeb3React } from 'hooks/useWeb3React'
 
 const PaddedRow = styled(RowBetween)`
   padding: 40px 30px 0px 30px;
@@ -35,7 +35,8 @@ const VestingText = styled.div`
 `
 
 export const VestingTab = () => {
-  const { chainId, account } = useWeb3React()
+  const { library, chainId, account } = useActiveWeb3React()
+  const switchChain = useSwitchChain()
   const IXSCurrency = useIXSCurrency()
   const [cookies] = useCookies(['annoucementsSeen'])
 
@@ -53,6 +54,20 @@ export const VestingTab = () => {
           <TYPE.title4>
             <Trans>Vesting {IXSCurrency?.symbol}</Trans>
           </TYPE.title4>
+          {library?.provider?.isMetaMask && chainId && !isMobile && (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <VestingText>
+                Vesting on <Trans>{CHAIN_SWITCH_STRINGS[chainId as SupportedChainId]}</Trans>?
+              </VestingText>
+
+              <PinnedContentButton
+                style={{ background: 'none', color: '#6666FF', border: '1px solid #E6E6FF', marginLeft: '15px' }}
+                onClick={() => switchChain.addChain()}
+              >
+                Switch networks
+              </PinnedContentButton>
+            </div>
+          )}
         </PaddedRow>
         <Vesting />
       </StyledBodyWrapper>

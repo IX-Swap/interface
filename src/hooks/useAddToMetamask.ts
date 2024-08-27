@@ -1,4 +1,4 @@
-import { useWeb3React } from 'hooks/useWeb3React'
+import { useWeb3React } from '@web3-react/core'
 import { useCallback } from 'react'
 
 export interface UseAddTokenByDetailsToMetamaskArgs {

@@ -8,7 +8,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { t, Trans } from '@lingui/macro'
 import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
@@ -29,7 +28,7 @@ import { useLiquidityRouterContract } from '../../hooks/useContract'
 import { useIsSwapUnsupported } from '../../hooks/useIsSwapUnsupported'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { PairState } from '../../hooks/useV2Pairs'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { useWeb3React } from '@web3-react/core'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { Field } from '../../state/mint/actions'
 import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
@@ -52,7 +51,9 @@ import { useHandleCurrencySelect } from './useHandleCurrencySelect'
 import { ReactComponent as ExternalIcon } from '../../assets/images/rightcheck.svg'
 import styled from 'styled-components/macro'
 import { isMobile } from 'react-device-detect'
-import { chainIdToNetworkName } from 'utils/chains'
+import Modal from 'components/Modal'
+import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
+import { chainIdToNetworkName } from 'chains'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
@@ -81,7 +82,6 @@ export default function AddLiquidity({
   const { account, chainId, provider: library } = useWeb3React()
   const theme = useContext(ThemeContext)
   const addLiquidity = useAddLiquidity()
-  const { openConnectModal } = useConnectModal()
 
   const currencyA = useAccreditedToken({ currencyId: currencyIdA }) as any
   const currencyB = useAccreditedToken({ currencyId: currencyIdB }) as any
@@ -441,9 +441,26 @@ export default function AddLiquidity({
                       </PinnedContentButton>
                     ) : !account ? (
                       <>
-                        <PinnedContentButton onClick={openConnectModal} data-testid="connect-wallet-add-liquidity">
+                        <PinnedContentButton
+                          onClick={() => setOpenConnectWallet(true)}
+                          data-testid="connect-wallet-add-liquidity"
+                        >
                           <Trans>Connect Wallet</Trans>
                         </PinnedContentButton>
+
+                        <Modal
+                          isOpen={isOpenConnectWallet}
+                          onDismiss={() => setOpenConnectWallet(false)}
+                          maxWidth="430px"
+                          maxHeight="310px"
+                        >
+                          <ConnectionDialog
+                            onConnect={() => {
+                              console.log('Connected')
+                            }}
+                            onClose={() => setOpenConnectWallet(false)}
+                          />
+                        </Modal>
                       </>
                     ) : (
                       <AutoColumn gap={'md'}>
