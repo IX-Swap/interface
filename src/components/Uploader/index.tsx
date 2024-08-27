@@ -34,8 +34,8 @@ export interface UploaderProps {
   onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   isPayoutpage?: boolean
   acceptedFileTypes?: string[]
-  setTotalWallets?: (value: number) => void;
-  setTotalAmount?: (value: number) => void;
+  setTotalWallets?: (value: number) => void
+  setTotalAmount?: (value: number) => void
 }
 
 export const Uploader: FC<UploaderProps> = ({
@@ -60,7 +60,7 @@ export const Uploader: FC<UploaderProps> = ({
   const accept = acceptedFileTypes?.join(',') || defaultAcceptedFiles
   const [currentPage, setCurrentPage] = useState(1)
   const showError = useShowError()
-  // const [hasError, setHasError] = useState(false) 
+  // const [hasError, setHasError] = useState(false)
 
   const handleFileUpload = (file: FileWithPath) => {
     if (file.type === 'text/csv') {
@@ -77,7 +77,22 @@ export const Uploader: FC<UploaderProps> = ({
     const parsed = Papa.parse<string[]>(csvText, { delimiter: ',', skipEmptyLines: true }).data
     let hasError = false
 
-    const validatedRows = parsed
+    if (parsed.length === 0) {
+      showError('Invalid file: The file is empty.')
+      return
+    }
+
+    const [headers, ...rows] = parsed
+
+    if (headers[0].trim() !== 'Wallet Address' || headers[1].trim() !== 'Amount') {
+      showError('Invalid file: The file headers must be "Wallet Address" and "Amount".')
+      setCsvRows([])
+      setTotalWallets?.(0)
+      setTotalAmount?.(0)
+      return
+    }
+
+    const validatedRows = rows
       .map(([address, amount]) => {
         const trimmedAddress = address?.trim()
         const trimmedAmount = amount?.trim()?.replace(/,/g, '')
@@ -100,18 +115,16 @@ export const Uploader: FC<UploaderProps> = ({
       .filter((row) => row !== null) as string[][]
 
     if (hasError) {
-      // setHasError(true)
       showError('Invalid file: please ensure all addresses are valid and amounts are correctly formatted.')
       setCsvRows([])
-      setTotalWallets?.(0);
-      setTotalAmount?.(0);
+      setTotalWallets?.(0)
+      setTotalAmount?.(0)
     } else {
       setCsvRows(validatedRows)
-      // setHasError(false)
       const totalWallets = validatedRows.length
       const totalAmount = validatedRows.reduce((sum, row) => sum + parseFloat(row[1]), 0)
-      setTotalWallets?.(totalWallets);
-      setTotalAmount?.(totalAmount);
+      setTotalWallets?.(totalWallets)
+      setTotalAmount?.(totalAmount)
     }
   }
 
