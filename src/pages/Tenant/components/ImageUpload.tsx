@@ -6,13 +6,18 @@ import { Flex } from 'rebass'
 import { ReactComponent as UploadLogoLbp } from 'assets/images/Browse.svg'
 import { ReactComponent as TrashNoBorder } from 'assets/images/TrashNoBorder.svg'
 import apiService from 'services/apiService'
+import { ErrorText } from './styleds'
 
 interface ImageUploadProps {
   title: string
   description: string
+  id: string
+  name: string
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
+  error?: string
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ title, description }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({ title, description, id, name, error, setFieldValue }) => {
   const fileInputRef = useRef<any>(null)
   const [image, setImage] = useState<any>(null)
   const [imageName, setImageName] = useState('')
@@ -24,11 +29,32 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ title, description }) => {
       setImage(url)
       setImageName(file.name)
       const data = new FormData()
-      data.append(file.name, file)
-      const result: any = await apiService.post('/storage/batch', data)
-      if (result) {
+      data.append('file', file) // Ensure you append the file under a consistent key.
+
+      try {
+        const result = await apiService.post('/storage/batch', data)
+        if (result.status === 201 && result.data) {
+          const id = result.data['file'] // Assuming file identifier returned is under 'file'.
+
+          const responseImage = await apiService.get(`/storage/file/public/metadata/${id}`)
+          if (responseImage.status === 200 && responseImage.data) {
+            const imageUrl = responseImage.data.public
+            setFieldValue(name, imageUrl, true) // The third argument true tells Formik to validate the field
+            setImage(imageUrl)
+          } else {
+            // Handle errors, e.g., unable to retrieve image metadata
+            console.error('Failed to retrieve image metadata:', responseImage)
+            setFieldValue(name, '', true) // Set field to an error state or empty, triggering validation
+          }
+        } else {
+          // Handle errors, e.g., upload failed
+          console.error('Image upload failed:', result)
+          setFieldValue(name, '', true)
+        }
+      } catch (error) {
+        console.error('Error during image upload process:', error)
+        setFieldValue(name, '', true) // Ensure this triggers validation and error handling
       }
-      console.log(result)
     }
   }
 
@@ -36,41 +62,46 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ title, description }) => {
     setImage(null)
     setImageName('')
     fileInputRef.current.value = null
+    setFieldValue(name, '')
   }
 
   return (
-    <div>
-      <Container>
-        <Flex alignItems="center">
-          <WrapIconUpload>
-            <StyledUploadLogoLbp />
-          </WrapIconUpload>
-          <div>
-            <Name>{title}</Name>
-            <Description>{description}</Description>
-          </div>
-        </Flex>
+    <>
+      <div>
+        <Container>
+          <Flex alignItems="center">
+            <WrapIconUpload>
+              <StyledUploadLogoLbp />
+            </WrapIconUpload>
+            <div>
+              <Name>{title}</Name>
+              <Description>{description}</Description>
+            </div>
+          </Flex>
 
-        <label htmlFor={title}>
-          <Input accept="image/*" id={title} type="file" ref={fileInputRef} onChange={handleImageUpload} />
-          <BrowserButton>Browse</BrowserButton>
-        </label>
-      </Container>
-      {image && (
-        <PreviewBox>
-          <FileNameLink onClick={() => window.open(image, '_blank')}>{imageName}</FileNameLink>
+          <label htmlFor={id}>
+            <Input accept="image/*" id={id} name={name} type="file" ref={fileInputRef} onChange={handleImageUpload} />
+            <BrowserButton>Browse</BrowserButton>
+          </label>
+        </Container>
+        {image && (
+          <PreviewBox>
+            <FileNameLink onClick={() => window.open(image, '_blank')}>{imageName}</FileNameLink>
 
-          <Button
-            variant="text"
-            color="secondary"
-            onClick={handleRemoveImage}
-            style={{ width: 'fit-content', minWidth: 'unset' }}
-          >
-            <TrashNoBorder style={{ cursor: 'pointer' }} />
-          </Button>
-        </PreviewBox>
-      )}
-    </div>
+            <Button
+              variant="text"
+              color="secondary"
+              onClick={handleRemoveImage}
+              style={{ width: 'fit-content', minWidth: 'unset' }}
+            >
+              <TrashNoBorder style={{ cursor: 'pointer' }} />
+            </Button>
+          </PreviewBox>
+        )}
+      </div>
+
+      {error ? <ErrorText>{error}</ErrorText> : null}
+    </>
   )
 }
 

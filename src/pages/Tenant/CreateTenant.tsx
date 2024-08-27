@@ -20,6 +20,8 @@ import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import apiService from 'services/apiService'
 import { whitelabel } from 'services/apiUrls'
 import { getActiveRoutes } from './helpers'
+import Token from './components/Token'
+import { useSecTokenState } from 'state/secTokens/hooks'
 
 const validationSchema = yup.object({
   name: yup.string().required('Tenant name is required'),
@@ -33,6 +35,9 @@ const validationSchema = yup.object({
   termLink: yup.string().required('Term Link is required'),
   policyLink: yup.string().required('Policy Link is required'),
   block1: yup.string().required('Block 1 is required'),
+  logoUrl: yup.string().required('A logo URL is required').url('Invalid URL format'),
+  faviconUrl: yup.string().required('A favicon URL is required').url('Invalid URL format'),
+  bannerImageUrl: yup.string().required('A banner URL is required').url('Invalid URL format'),
 })
 
 const pages = {
@@ -58,9 +63,13 @@ const initialValues = {
   enableLbp: false,
   enableFeaturedSecurityVaults: false,
   enableLaunchpadBanner: false,
+  tokens: [],
 }
 
 const CreateTenant = () => {
+  const { tokens, loadingRequest } = useSecTokenState()
+  const activeTokens = tokens && tokens.length > 0 ? tokens : []
+
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
@@ -111,8 +120,7 @@ const CreateTenant = () => {
     },
   })
 
-  console.log(formik)
-  console.log('getActiveRoutes', getActiveRoutes(formik.values.pages))
+  console.log('formik', formik)
   return (
     <Container>
       <Content>
@@ -123,7 +131,7 @@ const CreateTenant = () => {
               <GeneralInfo formik={formik} />
             </FormCard>
             <FormCard id="Design">
-              <Design />
+              <Design formik={formik} />
             </FormCard>
             <FormCard id="PagesAndFeatures">
               <PagesAndFeatures formik={formik} />
@@ -131,9 +139,11 @@ const CreateTenant = () => {
             <FormCard id="SocialLinks">
               <SocialLinks formik={formik} />
             </FormCard>
+
             <FormCard id="Tokens">
-              <h1 className="title">Tokens</h1>
+              {!loadingRequest ? <Token formik={formik} activeTokens={activeTokens} /> : null}
             </FormCard>
+
             <FormCard id="SupportInformaton">
               <SupportInformation formik={formik} />
             </FormCard>
