@@ -29,7 +29,6 @@ import { AmountInputV2 } from './AmountInputV2'
 import { useTokenContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
 import useDecimals from 'hooks/useDecimals'
-import { useWeb3React } from '@web3-react/core'
 import { StatusIcon } from 'components/Web3Status'
 import Copy from 'components/AccountDetails/Copy'
 import { parseUnits } from 'ethers/lib/utils'
@@ -37,6 +36,7 @@ import { DepositView, setWalletState } from 'state/wallet'
 import { useGetEventCallback } from 'state/eventLog/hooks'
 import { shortAddress } from 'utils'
 import { floorToDecimals } from 'utils/formatCurrencyAmount'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 interface Props {
   currency?: SecCurrency & { tokenInfo?: { decimals?: number; originalDecimals?: number } }
@@ -44,7 +44,7 @@ interface Props {
 }
 
 export const DepositRequestForm = ({ currency, token }: Props) => {
-  const { account, connector } = useWeb3React()
+  const { account } = useWeb3React()
   const tokenContract = useTokenContract(token?.address ?? '')
   const showAboutWrapping = useShowAboutWrappingCallback()
   const { amount, sender, currencyId: cid } = useDepositState()
@@ -70,7 +70,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const fetchTokenBalance = async () => {
     if (!tokenContract || !account) return
 
-    let walletAddress = account
+    let walletAddress: any = account
 
     if (sender) {
       walletAddress = sender
@@ -185,7 +185,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
                 disabled: true,
               }}
               placeholder="My wallet address"
-              rightItem={<StatusIcon connector={connector} />}
+              rightItem={<StatusIcon />}
             />
           </Column>
         </Section>

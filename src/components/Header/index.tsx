@@ -24,13 +24,14 @@ import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
 import { isMobile } from 'react-device-detect'
 import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
 import { PinnedContentButton } from 'components/Button'
+import AdministrationMenu from './AdministrationMenu'
 
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
   const { account, chainId } = useActiveWeb3React()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
-  const { isTokenManager } = useRole()
+  const { isUser } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const { openConnectModal } = useConnectModal()
 
@@ -117,24 +118,12 @@ export default function Header() {
             </HeaderRow>
             <HeaderLinks />
             <HeaderControls>
-              {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
-                <IconWrapper>
-                  <HeaderElement>
-                    <NavLink
-                      style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }}
-                      to={routes.tokenManager('my-tokens', null)}
-                    >
-                      <TokenManager />
-                    </NavLink>
-                  </HeaderElement>
-                </IconWrapper>
-              )}
-
               {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
                 <HeaderElement>
                   <IXSBalance />
                 </HeaderElement>
               )}
+              {account && !isUser ? <AdministrationMenu /> : null}
               <HeaderElement>
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
