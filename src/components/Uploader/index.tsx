@@ -84,8 +84,8 @@ export const Uploader: FC<UploaderProps> = ({
 
     const [headers, ...rows] = parsed
 
-    if (headers[0].trim() !== 'Wallet Address' || headers[1].trim() !== 'Amount') {
-      showError('Invalid file: The file headers must be "Wallet Address" and "Amount".')
+    if (headers[0].trim() !== 'walletAddress' || headers[1].trim() !== 'amount') {
+      showError('Invalid file: The file headers must be "WalletAddress" and "amount".')
       setCsvRows([])
       setTotalWallets?.(0)
       setTotalAmount?.(0)

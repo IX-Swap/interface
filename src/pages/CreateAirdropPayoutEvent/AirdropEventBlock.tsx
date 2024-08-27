@@ -123,16 +123,16 @@ export const AirdropEventBlock: FC<Props> = ({
           tooltipText="Select the token you want to distribute for this payout event. (Used if your security token has other tokens in its governance)."
           // isDisabled={!availableForEditing.includes('token')}
         />
-        <TextInput
-          placeholder="Provide a name for this payout event"
-          label="Event Name"
-          onChange={(e: any) => onValueChange('title', e.currentTarget.value)}
-          value={values.title}
-          required
-          error={touched.title ? errors.title : ''}
-          tooltipText="Select a name for this payout event. Note that this will be the title of this payout that your token holders can use as a reference."
-          disabled={!availableForEditing.includes('title')}
-        />
+          <TextInput
+              placeholder="Memo"
+              label="Memo"
+              onChange={(e: any) => onValueChange('memo', e.currentTarget.value)}
+              value={values.memo}
+              required
+              error={touched.memo ? errors.memo : ''}
+              tooltipText="Select a name for this payout event. Note that this will be the title of this payout that your token holders can use as a reference."
+              disabled={!availableForEditing.includes('memo')}
+            />
       </FormGrid>
 
       <Uploader

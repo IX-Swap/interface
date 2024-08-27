@@ -42,7 +42,6 @@ export const AirdropForm: FC<AirdropFormProps> = ({ payoutData, paid = false, st
     return []
   }, [me])
 
-
   const { error } = usePayoutState()
 
   const createDraft = useCreateDraftPayout()
@@ -145,14 +144,14 @@ export const AirdropForm: FC<AirdropFormProps> = ({ payoutData, paid = false, st
             />
 
             <TextInput
-              placeholder="Memo"
-              label="Memo"
-              onChange={(e: any) => onValueChange('memo', e.currentTarget.value)}
-              value={values.memo}
+              placeholder="Provide a name for this payout event"
+              label="Event Name"
+              onChange={(e: any) => onValueChange('title', e.currentTarget.value)}
+              value={values.title}
               required
-              error={touched.memo ? errors.memo : ''}
+              error={touched.title ? errors.title : ''}
               tooltipText="Select a name for this payout event. Note that this will be the title of this payout that your token holders can use as a reference."
-              disabled={!availableForEditing.includes('memo')}
+              disabled={!availableForEditing.includes('title')}
             />
           </FormGrid>
         </PayoutFormCard>
