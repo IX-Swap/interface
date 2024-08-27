@@ -13,10 +13,7 @@ import { Checkbox } from 'components/Checkbox'
 import Column from 'components/Column'
 import { formatDate } from 'pages/PayoutItem/utils'
 import { useAddPopup } from 'state/application/hooks'
-import {
-  usePublishPayout,
-  usePayoutValidation,
-} from 'state/payout/hooks'
+import { usePublishPayout, usePayoutValidation, useCreateDraftPayout } from 'state/payout/hooks'
 import { getContractInstance } from 'hooks/useContract'
 import { routes } from 'utils/routes'
 
@@ -52,6 +49,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id } = values
   const validatePayout = usePayoutValidation()
   const publishPayout = usePublishPayout()
+  const createDraftPayout = useCreateDraftPayout()
   const addPopup = useAddPopup()
   const history = useHistory()
   const getAuthorization = useGetPayoutAuthorization()
@@ -69,7 +67,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   const [approvalState, approve, refreshAllowance] = useAllowance(
     token.value,
     utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
-    PAYOUT_ADDRESS[chainId],
+    PAYOUT_ADDRESS[chainId]
   )
 
   const publishAndPaid = async () => {
@@ -78,6 +76,13 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
       const isValid = await validatePayoutEvent()
       if (!isValid) {
+        handleIsLoading(false)
+        return
+      }
+
+      if (approvalState === ApprovalState.NOT_APPROVED) {
+        await approve()
+        await refreshAllowance()
         handleIsLoading(false)
         return
       }
@@ -92,7 +97,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
       }
 
       const body = setBody()
-      const data = await publishPayout({ ...body })
+      const data = await createDraftPayout({ ...body })
       if (!data?.id) return
       await pay({
         id: data.id,
@@ -137,53 +142,39 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     return data
   }
 
-  const pay = async ({
-    id,
-    payoutContractAddress,
-  }: {
-    id: string
-    payoutContractAddress: string
-  }) => {
-    if (approvalState === ApprovalState.NOT_APPROVED) {
-      await approve()
-      await refreshAllowance()
-      handleIsLoading(false)
-    } else {
-      const payoutContract = getContractInstance({
-        addressOrAddressMap: payoutContractAddress,
-        ABI: PAYOUT_ABI,
-        withSignerIfPossible: true,
-        library,
-        account,
-        chainId,
-      })
-      const payoutNonce = await payoutContract?.numberPayouts()
+  const pay = async ({ id, payoutContractAddress }: { id: string; payoutContractAddress: string }) => {
+    const payoutContract = getContractInstance({
+      addressOrAddressMap: payoutContractAddress,
+      ABI: PAYOUT_ABI,
+      withSignerIfPossible: true,
+      library,
+      account,
+      chainId,
+    })
+    const payoutNonce = await payoutContract?.numberPayouts()
 
-      const authorization = await getAuthorization({
-        secTokenId: secToken.value,
-        payoutEventId: id,
-        tokenAddress: token.value,
-        payoutNonce,
-        fund: utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
-        startDate,
-        ...(endDate && {
-          endDate,
-        }),
-      })
+    const authorization = await getAuthorization({
+      secTokenId: secToken.value,
+      payoutEventId: id,
+      tokenAddress: token.value,
+      payoutNonce,
+      fund: utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
+      startDate,
+      ...(endDate && {
+        endDate,
+      }),
+    })
 
-      const gasLimit = await payoutContract?.estimateGas.initPayout(authorization)
+    const gasLimit = await payoutContract?.estimateGas.initPayout(authorization)
 
-      const res = await payoutContract?.initPayout(authorization, { gasLimit })
-      addTransaction(res, {
-        summary: `The transaction was successful. Waiting for system confirmation.`,
-      })
+    const res = await payoutContract?.initPayout(authorization, { gasLimit })
+    addTransaction(res, {
+      summary: `The transaction was successful. Waiting for system confirmation.`,
+    })
 
-      const data = await handleFormSubmit(id, res.hash, authorization.payoutId)
-      if (data?.id) {
-        closeForm(data.id, res.hash)
-      }
-
-      //confirmPaidInfo(payoutId, )
+    const data = await handleFormSubmit(id, res.hash, authorization.payoutId)
+    if (data?.id) {
+      closeForm(data.id, res.hash)
     }
   }
 
@@ -351,7 +342,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               </TYPE.title10>
             </ErrorCard>
           )}
-          {(isInsufficientBalance) ? (
+          {isInsufficientBalance ? (
             <ErrorCard marginBottom="32px">
               <TYPE.title10 width={'350px'} color={'#FF6161'} textAlign="left">
                 <Trans>{`Insufficient token amount.`}</Trans>
