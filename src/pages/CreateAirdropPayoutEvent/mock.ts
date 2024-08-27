@@ -10,5 +10,6 @@ export const initialValues: FormValues = {
   startDate: '',
   endDate: '',
   token: null,
+  tokenAmount: '1', // hardcoded for now
   files: [],
 }

@@ -17,7 +17,9 @@ import { ButtonsContainer, PayoutFormCard } from 'pages/CreatePayoutEvent/styled
 import { useTokensList } from 'hooks/useTokensList'
 import { PublishAirdropModal } from './PublishAirdropModal'
 const OLDEST_UNIX_TIMESTAMP_DATE = new Date(0).toISOString()
-const CURRENT_DATE = new Date().toISOString()
+const START_DATE = new Date().toISOString()
+const END_DATE = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString()
+
 interface Props {
   onValueChange: (key: string, value: any) => void
   isEdit: boolean
@@ -63,7 +65,7 @@ export const AirdropEventBlock: FC<Props> = ({
       secToken: true,
       token: true,
       files: true,
-      memo: true
+      memo: true,
     })
     const errors = await validateForm()
     if (Object.keys(errors).length === 0) {
@@ -93,10 +95,11 @@ export const AirdropEventBlock: FC<Props> = ({
 
     onValueChange('files', arrayOfFiles)
   }
-
+  
+  //hardcoded for now
   const recordDate = OLDEST_UNIX_TIMESTAMP_DATE
-  const startDate = CURRENT_DATE
-  const endDate = CURRENT_DATE
+  const startDate = START_DATE
+  const endDate = END_DATE
 
   return (
     <PayoutFormCard>

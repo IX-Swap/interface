@@ -21,14 +21,15 @@ export interface FormValues {
   recordDate: string
   startDate: string
   endDate: string
+  tokenAmount: string
 }
 
 export const availableInputsForEdit = (status = '', paid = false) => {
   const availableForEditing = {
-    [PAYOUT_STATUS.DRAFT]: ['title', 'type', 'secToken', 'files', 'memo', 'recordDate', 'startDate', 'endDate'],
+    [PAYOUT_STATUS.DRAFT]: ['title', 'type', 'secToken', 'files', 'memo', 'recordDate', 'startDate', 'endDate', 'token', 'tokenAmount'],
   } as Record<string, string[]>
 
-  if (paid) return ['id', 'title', 'type', 'secToken', 'files', 'memo', 'recordDate', 'startDate', 'endDate']
+  if (paid) return ['id', 'title', 'type', 'secToken', 'files', 'memo', 'recordDate', 'startDate', 'endDate', 'token', 'tokenAmount']
 
   return availableForEditing[status] || availableForEditing[PAYOUT_STATUS.DRAFT]
 }

@@ -20,7 +20,8 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { routes } from 'utils/routes'
 import { useHistory } from 'react-router-dom'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { useWeb3React } from '@web3-react/core'
+// import { useWeb3React } from 'hooks/useWeb3React'
 interface Props {
   close: () => void
   values: any
@@ -42,12 +43,11 @@ export const PublishAirdropModal: FC<Props> = ({ values, close, totalAmount, tot
   const createDraft = useCreateDraftPayout()
   const { provider: library, account, chainId = 0 } = useWeb3React()
 
-  console.log(values, 'valuesvaluesvaluesvalues')
-  const [approvalState, approve, refreshAllowance] = useAllowance(
-    token.value,
-    utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
-    PAYOUT_ADDRESS[chainId]
-  )
+//   const [approvalState, approve, refreshAllowance] = useAllowance(
+//     token.value,
+//     utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
+//     PAYOUT_ADDRESS[chainId]
+//   )
   const publishPayout = usePublishPayout()
 
   const publishAndPaid = async () => {
@@ -89,7 +89,6 @@ export const PublishAirdropModal: FC<Props> = ({ values, close, totalAmount, tot
 
   const onlyPublish = async () => {
     const body = setBody()
-    console.log(body)
     const data = await publishPayout({ ...body })
 
     if (data?.id) {
@@ -100,11 +99,11 @@ export const PublishAirdropModal: FC<Props> = ({ values, close, totalAmount, tot
   }
 
   const pay = async ({ id, payoutContractAddress }: { id: string; payoutContractAddress: string }) => {
-    if (approvalState === ApprovalState.NOT_APPROVED) {
-      await approve()
-      await refreshAllowance()
-      handleIsLoading(false)
-    } else {
+    // if (approvalState === ApprovalState.NOT_APPROVED) {
+    //   await approve()
+    //   await refreshAllowance()
+    //   handleIsLoading(false)
+    // } else {
       const payoutContract = getContractInstance({
         addressOrAddressMap: payoutContractAddress,
         ABI: PAYOUT_ABI,
@@ -140,7 +139,7 @@ export const PublishAirdropModal: FC<Props> = ({ values, close, totalAmount, tot
       }
 
     //   confirmPaidInfo(payoutId, )
-    }
+    // }
   }
 
   const handleFormSubmit = async (id: string, paidTxHash?: string, contractPayoutId?: string) => {

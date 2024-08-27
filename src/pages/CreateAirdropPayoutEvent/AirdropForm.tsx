@@ -17,7 +17,7 @@ import { PAYOUT_STATUS } from 'constants/enums'
 import { useActiveWeb3React } from 'hooks/web3'
 import { PayoutFormCard } from 'pages/CreatePayoutEvent/styleds'
 import { AirdropEventBlock } from './AirdropEventBlock'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { useWeb3React } from '@web3-react/core'
 
 interface AirdropFormProps {
   payoutData?: Partial<FormValues>
