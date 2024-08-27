@@ -186,7 +186,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
               </Box>
             </Flex>
           </Column>
-          <LoadingIndicator isLoading={isLoading} />
+          <LoadingIndicator isPayout={true} isLoading={isLoading} />
           {!isLoading && (
             <StyledButton onClick={claimBack}>
               <Box marginX="8px"><Trans>{`Claim Back `}</Trans></Box>
