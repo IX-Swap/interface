@@ -59,7 +59,7 @@ export const MyPayouts = () => {
     <>
       {isEmpty ? (
         <>
-          <LoadingIndicator isLoading={loadingRequest} />
+          <LoadingIndicator isPayout={true} isLoading={loadingRequest} />
           <EmptyState my />
         </>
       ) : (

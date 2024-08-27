@@ -201,7 +201,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
 
   return (
     <Column style={{ gap: '32px' }}>
-      <LoadingIndicator isLoading={isLoading} />
+      <LoadingIndicator isPayout={true} isLoading={isLoading} />
 
       {status !== PAYOUT_STATUS.ANNOUNCED && (
         <Container>
