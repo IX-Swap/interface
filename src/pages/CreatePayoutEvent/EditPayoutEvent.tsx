@@ -102,7 +102,7 @@ const EditPayoutEventPage: FC = () => {
   }
 
   return (
-    <Loadable loading={!isLoggedIn}>
+    <Loadable isPayout={true}  loading={!isLoggedIn}>
       <FullScreenBackground>
         <StyledBodyWrapper style={{ minWidth: 1200 }} hasAnnouncement={!cookies.annoucementsSeen}>
           <Flex marginBottom="32px" alignItems="center">
