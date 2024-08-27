@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, MEDIA_WIDTHS } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { ButtonPinkBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonPinkBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
 
 interface Props {
   isOpen: boolean
@@ -35,12 +35,12 @@ export const AreYouSureModal = ({ isOpen, title, acceptText, declineText, info, 
             </Info>
           )}
           <ButtonsContainer>
-            <ButtonIXSGradient color={'black'} onClick={onAccept}>
+            <PinnedContentButton color={'black'} onClick={onAccept}>
               <Trans>{`${acceptText || 'Yes'}`}</Trans>
-            </ButtonIXSGradient>
-            <ButtonPinkBorder onClick={onDecline}>
+            </PinnedContentButton>
+            <PinnedContentButton style={{background: 'none', color: '#B8B8CC', border: '1px solid #E6E6FF'}} onClick={onDecline}>
               <Trans>{`${declineText || 'No'}`}</Trans>
-            </ButtonPinkBorder>
+            </PinnedContentButton>
           </ButtonsContainer>
         </ModalContent>
       </ModalBlurWrapper>
