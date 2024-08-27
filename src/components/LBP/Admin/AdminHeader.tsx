@@ -13,7 +13,7 @@ import ConfirmStatus from './Modals/ConfirmStatusModal'
 import { useHistory } from 'react-router-dom'
 import { useActiveWeb3React } from 'hooks/web3'
 import { CHAIN_INFO } from 'constants/chains'
-import { checkWrongChain } from 'utils/chains'
+import { checkWrongChain } from 'chains'
 
 interface MiddleSectionProps {
   lbpShareLogo: any
