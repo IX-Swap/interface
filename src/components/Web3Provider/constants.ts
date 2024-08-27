@@ -38,8 +38,8 @@ export const PUBLIC_NODES = {
   [ChainId.Mainnet]: [getAlchemyUrlFor('eth-mainnet'), 'https://cloudflare-eth.com'].filter(Boolean),
   [ChainId.Polygon]: [getAlchemyUrlFor('polygon-mainnet'), 'https://polygon-rpc.com'].filter(Boolean),
   [ChainId.Amoy]: [getAlchemyUrlFor('polygon-amoy'), 'https://rpc-amoy.polygon.technology/'].filter(Boolean),
-  [ChainId.Base]: [getAlchemyUrlFor('base-mainnet'), 'https://basechain.infura.io'],
-  [ChainId.BaseSepolia]: [getAlchemyUrlFor('base-sepolia'), 'https://sepolia.basechain.infura.io'],
+  [ChainId.Base]: [getAlchemyUrlFor('base-mainnet')],
+  [ChainId.BaseSepolia]: [getAlchemyUrlFor('base-sepolia')],
 } as any
 
 export const transports = CHAINS.reduce((ts, chain) => {
