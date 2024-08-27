@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState, useMemo } from 'react'
 import { useFormik, FormikProvider } from 'formik'
 import { useHistory } from 'react-router-dom'
-import { useWeb3React } from '@web3-react/core'
 import { Select, TextInput } from 'pages/KYC/common'
 import { FormGrid } from 'pages/KYC/styleds'
 import CurrencyLogo from 'components/CurrencyLogo'
@@ -18,6 +17,7 @@ import { PAYOUT_STATUS } from 'constants/enums'
 import { useActiveWeb3React } from 'hooks/web3'
 import { PayoutFormCard } from 'pages/CreatePayoutEvent/styleds'
 import { AirdropEventBlock } from './AirdropEventBlock'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 interface AirdropFormProps {
   payoutData?: Partial<FormValues>

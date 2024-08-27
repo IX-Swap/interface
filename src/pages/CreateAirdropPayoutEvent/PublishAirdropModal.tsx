@@ -13,7 +13,6 @@ import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
 import { utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
 import { PAYOUT_ADDRESS } from 'constants/addresses'
-import { useWeb3React } from '@web3-react/core'
 import { getContractInstance } from 'hooks/useContract'
 import PAYOUT_ABI from 'abis/payout.json'
 import { useGetPayoutAuthorization } from 'state/token-manager/hooks'
@@ -21,6 +20,7 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { routes } from 'utils/routes'
 import { useHistory } from 'react-router-dom'
+import { useWeb3React } from 'hooks/useWeb3React'
 interface Props {
   close: () => void
   values: any
