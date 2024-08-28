@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Box } from 'rebass'
 import { Trans } from '@lingui/macro'
@@ -52,12 +52,12 @@ export const PayoutEventBlock: FC<Props> = ({
   const [openModal, setOpenModal] = useState(false)
   const { token, tokenAmount, recordDate, startDate, secToken, endDate } = values
   const { tokensOptions } = useTokensList()
+  const payoutTokensOptions = tokensOptions.filter((option) => !option.isNative)
   const deletePayout = useDeletePayoutItem()
   const showError = useShowError()
   const history = useHistory()
 
   const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
-
 
   const onDelete = () => {
     toggleIsWarningOpen()
@@ -150,7 +150,7 @@ export const PayoutEventBlock: FC<Props> = ({
                 label="Token Amount"
                 placeholder="Select token or paste address"
                 selectedItem={token}
-                items={tokensOptions}
+                items={payoutTokensOptions}
                 onSelect={(item) => onValueChange('token', item)}
                 required
                 error={touched.token ? errors.token : ''}
@@ -206,7 +206,7 @@ export const PayoutEventBlock: FC<Props> = ({
                 label="Payout Token"
                 placeholder="Select token or paste address"
                 selectedItem={token}
-                items={tokensOptions}
+                items={payoutTokensOptions}
                 onSelect={(item) => onValueChange('token', item)}
                 required
                 error={touched.token ? errors.token : ''}
