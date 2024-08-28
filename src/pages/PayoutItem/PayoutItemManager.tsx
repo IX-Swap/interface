@@ -39,7 +39,7 @@ export default function PayoutItemForManager({
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
-  
+
   const isValidRole = me.role === ROLES.TOKEN_MANAGER || me.role === ROLES.ADMIN
   useEffect(() => {
     if (me && isValidRole) {
@@ -48,15 +48,12 @@ export default function PayoutItemForManager({
     history.push('/kyc')
   }, [me, history, isValidRole])
 
-  const getPayoutItem = useCallback(
-    async () => {
-      const data = await getPayoutItemById(+payoutId)
-      if (data?.id) {
-        setPayout(data)
-      }
-    },
-    [payoutId]
-  )
+  const getPayoutItem = useCallback(async () => {
+    const data = await getPayoutItemById(+payoutId)
+    if (data?.id) {
+      setPayout(data)
+    }
+  }, [payoutId])
 
   useEffect(() => {
     getPayoutItem()
@@ -94,9 +91,13 @@ export default function PayoutItemForManager({
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '40px' }}>
-            <PayoutHeader payout={payout} isMyPayout />
-            <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
+            {payout.status !== PAYOUT_STATUS.ENDED && (
+              <>
+                <PayoutHeader payout={payout} isMyPayout />
+                <PayoutTimeline payout={payout} />
+                <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
+              </>
+            )}
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}
