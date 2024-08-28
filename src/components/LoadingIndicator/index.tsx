@@ -10,8 +10,6 @@ interface Props {
   noOverlay?: boolean
 }
 
-// noOverlay={true} 
-
 export const LoadingIndicator = ({ isLoading, size = 48, isRelative = false, noOverlay }: Props) => {
   if (!isLoading) return null
 
