@@ -38,15 +38,21 @@ export const AreYouSureModal = ({ isOpen, title, acceptText, declineText, info, 
             <PinnedContentButton color={'black'} onClick={onAccept}>
               <Trans>{`${acceptText || 'Yes'}`}</Trans>
             </PinnedContentButton>
-            <PinnedContentButton style={{background: 'none', color: '#B8B8CC', border: '1px solid #E6E6FF'}} onClick={onDecline}>
+            <Declinedbutton onClick={onDecline}>
               <Trans>{`${declineText || 'No'}`}</Trans>
-            </PinnedContentButton>
+            </Declinedbutton>
           </ButtonsContainer>
         </ModalContent>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const Declinedbutton = styled(PinnedContentButton)`
+  background: none;
+  color: ${({ theme: { text11 } }) => text11};
+  border: 1px solid #e6e6ff;
+`
 
 const ModalContent = styled(ModalContentWrapper)`
   // padding: 29px 38px 42px 42px;
