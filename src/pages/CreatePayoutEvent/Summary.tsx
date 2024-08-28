@@ -59,13 +59,13 @@ export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture, set
       <Card>
         <Flex marginBottom="16px" justifyContent="space-between" alignItems="center" opacity="50%">
           <TYPE.title11>
-            <Trans>Wrapped Tokens (Pools)</Trans>
+            <Trans>Total amount in liquidity pools</Trans>
           </TYPE.title11>
           <TYPE.title11>{getValue(poolsAmount?.toFixed(2))}</TYPE.title11>
         </Flex>
         <Flex marginBottom="16px" justifyContent="space-between" alignItems="center" opacity="50%">
           <TYPE.title11>
-            <Trans>Wrapped Tokens (Wallets)</Trans>
+            <Trans>Total amount of all wallets </Trans>
           </TYPE.title11>
           <TYPE.title11>{getValue(walletsAmount?.toFixed(2))}</TYPE.title11>
         </Flex>
@@ -74,7 +74,7 @@ export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture, set
 
         <Flex justifyContent="space-between">
           <TYPE.main1>
-            <Trans>Total Wrapped Token Supply</Trans>
+            <Trans>Total token supply</Trans>
           </TYPE.main1>
           <TYPE.body1 color={'text1'}>
             {isLoading || isRecordFuture ? '' : walletsAmount || poolsAmount ? `${totalSum} tokens` : '-'}

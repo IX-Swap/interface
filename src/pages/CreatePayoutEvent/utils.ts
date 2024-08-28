@@ -1,7 +1,7 @@
 import { PAYOUT_STATUS } from 'constants/enums'
 import { Option } from 'hooks/useTokensList'
 
-export const transformPayoutDraftDTO = ({ token, secToken, ...values }: any) => {
+export const transformPayoutDraftDTO = ({ token,secToken, ...values }: any) => {
   return {
     ...values,
     ...(token && { payoutToken: token.isNative ? token.address : token.value }),
@@ -24,7 +24,7 @@ export interface FormValues {
   token: Option | null
   files: any[]
   payoutContractAddress?: string
-  blocknumber?: number
+  blockNumber?: number
   includeOriginSupply?: boolean
 }
 
@@ -43,6 +43,8 @@ export const availableInputsForEdit = (status = '', paid = false) => {
       'secToken',
       'token',
       'files',
+      'includeOriginSupply',
+      'blockNumber'
     ],
     [PAYOUT_STATUS.ANNOUNCED]: [
       'title',
