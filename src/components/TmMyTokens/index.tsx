@@ -12,7 +12,7 @@ export const TmMyTokens = () => {
 
   return (
     <>
-      <LoadingIndicator isPayout={true} isLoading={isLoadingMe} />
+      <LoadingIndicator noOverlay={true} isLoading={isLoadingMe} />
 
       <Container>
         {me?.managerOf?.length ? (

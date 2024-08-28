@@ -82,7 +82,7 @@ export const TmPayoutEvents = () => {
 
   return (
     <>
-      <LoadingIndicator isPayout={true}  isLoading={isLoading || loadingRequest} />
+      <LoadingIndicator noOverlay={true}  isLoading={isLoading || loadingRequest} />
       {payoutList.items?.length || haveFilters ? (
         <Container>
           <MultipleFilters

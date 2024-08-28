@@ -88,7 +88,7 @@ export default function PayoutItemForManager({
 
   return (
     <Loadable loading={!isLoggedIn}>
-      <LoadingIndicator isPayout={true} isLoading={loadingRequest} />
+      <LoadingIndicator noOverlay={true} isLoading={loadingRequest} />
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '40px' }}>

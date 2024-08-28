@@ -67,7 +67,7 @@ export const TmPayoutHistory = () => {
   }
 
   if (isLoading) {
-    return <LoadingIndicator isPayout={true} isLoading={isLoading} />
+    return <LoadingIndicator noOverlay={true} isLoading={isLoading} />
   }
 
   return (

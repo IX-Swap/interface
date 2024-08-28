@@ -88,7 +88,7 @@ export default function PayoutItemForUser({
 
   return (
     <Loadable loading={!isLoggedIn}>
-      <LoadingIndicator isPayout={true} isLoading={loadingRequest} />
+      <LoadingIndicator noOverlay={true} isLoading={loadingRequest} />
       {payout && <PayoutHeader payout={payout} isMyPayout={payout.userId === me.id} />}
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (

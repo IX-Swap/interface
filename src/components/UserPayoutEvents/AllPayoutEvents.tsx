@@ -33,7 +33,7 @@ export const AllPayoutEvents = () => {
 
   return (
     <>
-      {list.items?.length === 0 ? <LoadingIndicator isLoading={loadingRequest} /> : null}
+      {list.items?.length === 0 ? <LoadingIndicator noOverlay={true}  isLoading={loadingRequest} /> : null}
       {list.items?.length || haveFilters ? (
         <AllPayoutContainer>
           <AllPayoutFilterContainer>

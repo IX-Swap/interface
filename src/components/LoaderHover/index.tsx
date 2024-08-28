@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { LoaderThin } from 'components/Loader/LoaderThin';
 
 interface LoaderHoverProps {
-  isPayout?: boolean;
+  noOverlay?: boolean;
 }
 
 export const LoaderHover = styled.div<LoaderHoverProps>`
@@ -27,9 +27,8 @@ export const LoaderHover = styled.div<LoaderHoverProps>`
   will-change: opacity;
   box-sizing: inherit;
 
-  /* Conditionally apply background-color */
-  ${({ isPayout }) =>
-    !isPayout &&
+  ${({ noOverlay }) =>
+    !noOverlay &&
     css`
       background-color: #380846;
     `}
@@ -37,18 +36,18 @@ export const LoaderHover = styled.div<LoaderHoverProps>`
 
 interface LoadableProps {
   loading: boolean;
-  isPayout?: boolean;
+  noOverlay?: boolean;
 }
 
 export const Loadable: React.FC<React.PropsWithChildren<LoadableProps>> = ({
   loading,
-  isPayout,
+  noOverlay,
   children,
 }) => {
   return (
     <>
       {loading && (
-        <LoaderHover isPayout={isPayout}>
+        <LoaderHover noOverlay={noOverlay}>
           <LoaderThin size={64} />
         </LoaderHover>
       )}
