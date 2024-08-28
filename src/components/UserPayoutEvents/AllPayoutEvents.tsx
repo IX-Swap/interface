@@ -57,7 +57,7 @@ export const AllPayoutEvents = () => {
                     <Card key={payout.id} data={payout} />
                   ))}
                 </AllPayoutListContainer>
-                <Pagination totalPages={list.totalPages} page={list.page || 1} onPageChange={onPageChange} />
+                <Pagination totalItems={list.totalItems} totalPages={list.totalPages} page={list.page || 1} onPageChange={onPageChange} />
               </>
             ) : (
               <EmptyState filtred />
