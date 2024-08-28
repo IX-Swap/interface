@@ -223,4 +223,5 @@ export const routeConfigs: RouteMapEntry[] = [
   { path: routes.manageOffer, component: ManageOffer, ...onlyOfferManager },
   { path: routes.tenant, component: TenantPage },
   { path: routes.tenantCreate, component: CreateTenantPage },
+  { path: routes.tenantEdit, component: CreateTenantPage },
 ]

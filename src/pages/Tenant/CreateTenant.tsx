@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { MEDIA_WIDTHS } from 'theme'
 import styled from 'styled-components'
 import StickyBox from 'react-sticky-box'
@@ -6,7 +6,7 @@ import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 import { ProgressBar } from './components/ProgressBar'
 import GeneralInfo from './components/GeneralInfo'
@@ -20,12 +20,41 @@ import Design from './components/Design'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import apiService from 'services/apiService'
 import { whitelabel } from 'services/apiUrls'
-import { getActiveRoutes } from './helpers'
+import { checkExistInPageGroup, getActiveRoutes } from './helpers'
 import Token from './components/Token'
 import { useSecTokenState } from 'state/secTokens/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import Loader from 'components/Loader'
 import { routes } from 'utils/routes'
+
+interface TenantDetails {
+  name?: string
+  title?: string
+  domain?: string
+  appUrl?: string
+  description?: string
+  bannerImageUrl?: string
+  pages?: any
+  chartsUrl?: string
+  enableLbp?: boolean
+  defaultUrl?: string
+  faviconUrl?: string
+  logoUrl?: string
+  enableFeaturedSecurityVaults?: boolean
+  colors?: string
+  customStyles?: string
+  supportEmail?: string
+  isIxSwap?: boolean
+  tokens?: any
+  enableLaunchpadBanner?: boolean
+  launchpadBannerTitle?: string
+  launchpadBannerInfoRedirectTitle?: string
+  launchpadBannerInfoRedirectUrl?: string
+  kycSuccessRedirectUrl?: string
+  kycCancelRedirectUrl?: string
+  footerConfig?: string
+  colorButtonPrimary?: string
+}
 
 const validationSchema = yup.object({
   name: yup.string().required('Tenant name is required'),
@@ -56,7 +85,7 @@ const pages = {
   admin: false,
 }
 
-const initialValues = {
+const initialValues: TenantDetails = {
   name: '',
   title: '',
   domain: '',
@@ -76,10 +105,11 @@ const CreateTenant = () => {
   const showSuccess = useShowSuccess()
   const { tokens, loadingRequest } = useSecTokenState()
   const history = useHistory()
+  const { id } = useParams<{ id: string }>()
 
   const activeTokens = tokens && tokens.length > 0 ? tokens : []
 
-  const formik = useFormik({
+  const formik = useFormik<TenantDetails>({
     initialValues,
     validationSchema: validationSchema,
     validateOnChange: false,
@@ -128,11 +158,21 @@ const CreateTenant = () => {
           }),
         }
         formik.setSubmitting(true)
-        const response = await apiService.post(whitelabel.create, payload)
 
-        if (response.status === 201) {
-          showSuccess('Tenant created successfully')
-          history.push(routes.tenant)
+        if (id) {
+          const response = await apiService.patch(`${whitelabel.create}/${id}`, payload)
+
+          if (response.status === 200) {
+            showSuccess('Tenant edit successfully')
+            history.push(routes.tenant)
+          }
+        } else {
+          const response = await apiService.post(whitelabel.create, payload)
+
+          if (response.status === 201) {
+            showSuccess('Tenant created successfully')
+            history.push(routes.tenant)
+          }
         }
       } catch (e: any) {
         showError(e?.message ?? '')
@@ -142,10 +182,64 @@ const CreateTenant = () => {
     },
   })
 
+  useEffect(() => {
+    const fetchTenantDetails = async () => {
+      if (id) {
+        try {
+          const response = await apiService.get(`${whitelabel.config}/${id}`)
+          const { data, status } = response
+
+          if (status !== 200) {
+            showError('Failed to fetch tenant details')
+            return
+          }
+          console.log('JSON.parse(data.tokens)', JSON.parse(data.tokens))
+          formik.setFieldValue('name', data.name)
+          formik.setFieldValue('title', data.title)
+          formik.setFieldValue('domain', data.domain)
+          formik.setFieldValue('appUrl', data.appUrl)
+          formik.setFieldValue('description', data.description)
+          formik.setFieldValue('bannerImageUrl', data.bannerImageUrl)
+          formik.setFieldValue('isIxSwap', data.isIxSwap)
+          formik.setFieldValue('enableLbp', data.enableLbp)
+          formik.setFieldValue('enableFeaturedSecurityVaults', data.enableFeaturedSecurityVaults)
+          formik.setFieldValue('pages', checkExistInPageGroup(data.pages))
+          formik.setFieldValue('chartsUrl', data.chartsUrl)
+          formik.setFieldValue('defaultUrl', data.defaultUrl)
+          formik.setFieldError('colorButtonPrimary', JSON.parse(data.colors).button.primary)
+          formik.setFieldValue('tokens', JSON.parse(data.tokens))
+          formik.setFieldValue('logoUrl', data.logoUrl)
+          formik.setFieldValue('faviconUrl', data.faviconUrl)
+          formik.setFieldValue('supportEmail', data.supportEmail)
+          formik.setFieldValue('launchpadBannerTitle', data.launchpadBannerTitle)
+          formik.setFieldValue('launchpadBannerInfoRedirectTitle', data.launchpadBannerInfoRedirectTitle)
+          formik.setFieldValue('launchpadBannerInfoRedirectUrl', data.launchpadBannerInfoRedirectUrl)
+          formik.setFieldValue('kycSuccessRedirectUrl', data.kycSuccessRedirectUrl)
+          formik.setFieldValue('kycCancelRedirectUrl', data.kycCancelRedirectUrl)
+          const footerConfig = JSON.parse(data.footerConfig)
+          formik.setFieldValue('termLink', footerConfig.termsLink)
+          formik.setFieldValue('policyLink', footerConfig.policyLink)
+          formik.setFieldValue('block1', footerConfig.block1)
+          formik.setFieldValue('block2', footerConfig.block2)
+          formik.setFieldValue('block3', footerConfig.block3)
+          formik.setFieldValue('telegram', footerConfig.socialLinks.telegram)
+          formik.setFieldValue('linkedin', footerConfig.socialLinks.linkedin)
+          formik.setFieldValue('youtube', footerConfig.socialLinks.youtube)
+          formik.setFieldValue('twitter', footerConfig.socialLinks.twitter)
+        } catch (error) {
+          showError('Failed to fetch tenant details')
+        }
+      }
+    }
+
+    fetchTenantDetails()
+  }, [id, showError, formik.setValues])
+
+  console.log('formik', formik)
   return (
     <Container>
       <Content>
-        <Title>Create Tenant</Title>
+        <Title>{!!id ? 'Edit Tenant' : 'Create Tenant'}</Title>
         <FormRow>
           <FormContainer>
             <FormCard id="GeneralInfo">
@@ -180,7 +274,12 @@ const CreateTenant = () => {
 
             <Flex justifyContent="flex-end" mt="20px">
               <div style={{ marginRight: 16 }}>
-                <ButtonOutlined style={{ width: '200px', background: '#fff', fontSize: 14 }}>Cancel</ButtonOutlined>
+                <ButtonOutlined
+                  style={{ width: '200px', background: '#fff', fontSize: 14 }}
+                  onClick={() => history.push(routes.tenant)}
+                >
+                  Cancel
+                </ButtonOutlined>
               </div>
               <PinnedContentButton
                 type="submit"

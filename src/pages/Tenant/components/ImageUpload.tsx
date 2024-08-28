@@ -15,9 +15,10 @@ interface ImageUploadProps {
   name: string
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
   error?: string
+  value?: string
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ title, description, id, name, error, setFieldValue }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({ title, description, id, name, error, value, setFieldValue }) => {
   const fileInputRef = useRef<any>(null)
   const [image, setImage] = useState<any>(null)
   const [imageName, setImageName] = useState('')
@@ -82,9 +83,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ title, description, id, name,
             <BrowserButton>Browse</BrowserButton>
           </label>
         </Container>
-        {image && (
+        {image || value ? (
           <PreviewBox>
-            <FileNameLink onClick={() => window.open(image, '_blank')}>{imageName}</FileNameLink>
+            <FileNameLink onClick={() => window.open(image || value, '_blank')}>{imageName || name}</FileNameLink>
 
             <Button
               variant="text"
@@ -95,7 +96,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ title, description, id, name,
               <TrashNoBorder style={{ cursor: 'pointer' }} />
             </Button>
           </PreviewBox>
-        )}
+        ) : null}
       </div>
 
       {error ? <ErrorText>{error}</ErrorText> : null}

@@ -78,3 +78,53 @@ export function getActiveRoutes(pages: PagesConfig): string {
 
   return JSON.stringify(activeRoutes)
 }
+
+function isSubset(largerArray: string[], smallerArray: string[]) {
+  return smallerArray.every(element => largerArray.includes(element));
+}
+
+export function checkExistInPageGroup(pagesSource: string) {
+  const pages = {
+    dex: false,
+    kyc: false,
+    lbp: false,
+    lbpAdmin: false,
+    offer: false,
+    issuance: false,
+    payout: false,
+    securityTokens: false,
+    admin: false,
+  }
+
+  const pagesArray = JSON.parse(pagesSource);
+
+  if (isSubset(pagesArray, pagesGroup.dex)) {
+    pages.dex = true
+  }
+  if (isSubset(pagesArray, pagesGroup.kyc)) {
+    pages.kyc = true
+  }
+  if (isSubset(pagesArray, pagesGroup.lbp)) {
+    pages.lbp = true
+  }
+  if (isSubset(pagesArray, pagesGroup.lbpAdmin)) {
+    pages.lbpAdmin = true
+  }
+  if (isSubset(pagesArray, pagesGroup.offer)) {
+    pages.offer = true
+  }
+  if (isSubset(pagesArray, pagesGroup.issuance)) {
+    pages.issuance = true
+  }
+  if (isSubset(pagesArray, pagesGroup.payout)) {
+    pages.payout = true
+  }
+  if (isSubset(pagesArray, pagesGroup.securityTokens)) {
+    pages.securityTokens = true
+  }
+  if (isSubset(pagesArray, pagesGroup.admin)) {
+    pages.admin = true
+  }
+
+  return pages;
+}

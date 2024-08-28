@@ -53,13 +53,15 @@ const Tenant: React.FC = () => {
       title: '',
       key: 'action',
       align: 'right',
-      render: (_: any, record: any) => (
-        <ActionWrapper>
-          <ActionButton>
-            <Edit />
-          </ActionButton>
-        </ActionWrapper>
-      ),
+      render: (_: any, record: any) => {
+        return (
+          <ActionWrapper>
+            <ActionButton onClick={() => history.push(`${routes.tenant}/edit/${record?.id}`)}>
+              <Edit />
+            </ActionButton>
+          </ActionWrapper>
+        )
+      },
     },
   ] as any
 
