@@ -29,31 +29,29 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ title, description, id, name,
       setImage(url)
       setImageName(file.name)
       const data = new FormData()
-      data.append('file', file) // Ensure you append the file under a consistent key.
+      data.append('file', file)
 
       try {
         const result = await apiService.post('/storage/batch', data)
         if (result.status === 201 && result.data) {
-          const id = result.data['file'] // Assuming file identifier returned is under 'file'.
+          const id = result.data['file']
 
           const responseImage = await apiService.get(`/storage/file/public/metadata/${id}`)
           if (responseImage.status === 200 && responseImage.data) {
             const imageUrl = responseImage.data.public
-            setFieldValue(name, imageUrl, true) // The third argument true tells Formik to validate the field
+            setFieldValue(name, imageUrl, true)
             setImage(imageUrl)
           } else {
-            // Handle errors, e.g., unable to retrieve image metadata
             console.error('Failed to retrieve image metadata:', responseImage)
-            setFieldValue(name, '', true) // Set field to an error state or empty, triggering validation
+            setFieldValue(name, '', true)
           }
         } else {
-          // Handle errors, e.g., upload failed
           console.error('Image upload failed:', result)
           setFieldValue(name, '', true)
         }
       } catch (error) {
         console.error('Error during image upload process:', error)
-        setFieldValue(name, '', true) // Ensure this triggers validation and error handling
+        setFieldValue(name, '', true)
       }
     }
   }

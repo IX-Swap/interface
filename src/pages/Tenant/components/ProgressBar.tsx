@@ -5,6 +5,7 @@ import Column from 'components/Column'
 import { TYPE } from 'theme'
 
 import styled from 'styled-components'
+import Loader from 'components/Loader'
 
 interface ProgressTopic {
   title: string
@@ -15,11 +16,11 @@ interface ProgressTopic {
 
 interface Props {
   topics: ProgressTopic[]
-  isDisabled?: boolean
+  isSubmitting?: boolean
   submitForm?: () => Promise<any>
 }
 
-export const ProgressBar: FC<Props> = ({ topics, isDisabled, submitForm }: Props) => {
+export const ProgressBar: FC<Props> = ({ topics, isSubmitting, submitForm }: Props) => {
   const [activeTopic, setActiveTopic] = useState<number>(0)
 
   const handleScrollToDiv = useCallback(
@@ -57,10 +58,10 @@ export const ProgressBar: FC<Props> = ({ topics, isDisabled, submitForm }: Props
           <PinnedContentButton
             type="submit"
             style={{ width: '100%', height: 48, fontSize: 14 }}
-            disabled={isDisabled}
+            disabled={isSubmitting}
             onClick={submitForm}
           >
-            Submit
+            {isSubmitting ? <Loader size="18px" /> : null} Submit
           </PinnedContentButton>
         </div>
       </FormCard>

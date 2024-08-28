@@ -1,4 +1,6 @@
-const defaults = ['/send', '/faucet', '/staking', '/vesting', '/launchpad']
+import { routes } from 'utils/routes'
+
+const defaults = [routes.send, routes.faucet, routes.staking, routes.vesting, routes.launchpad]
 
 interface PagesConfig {
   dex: boolean
@@ -18,51 +20,45 @@ interface PagesGroup {
 
 export const pagesGroup: PagesGroup = {
   admin: [
-    '/admin',
-    '/admin/:tab/:id?',
-    '/admin/kyc',
-    '/admin/kyc/:kycId',
-    '/admin/accreditation',
-    '/admin/users-list',
-    '/admin/transactions',
-    '/admin/security-catalog',
-    '/tenant/create',
-    '/tenant',
+    routes.adminDashboard,
+    routes.admin(),
+    routes.adminKYC,
+    routes.adminKYCID,
+    routes.adminAccreditation,
+    routes.adminUsers,
+    routes.adminTransactions,
+    routes.adminCatalog,
+    routes.tenant,
+    routes.tenantCreate,
   ],
-  dex: [
-    '/swap',
-    '/pool',
-    '/find',
-    '/swap/:outputCurrency',
-    '/add/:currencyIdA?/:currencyIdB?',
-    '/remove/:currencyIdA/:currencyIdB',
-  ],
-  kyc: ['/kyc', '/kyc/individual', '/kyc/individual/v2', '/kyc/corporate'],
-  lbp: ['/lbp/:id'],
-  offer: ['/offer/:id'],
-  lbpAdmin: ['/lbp-admin', '/lbp-admin/create', '/lbp-admin/edit', '/lbp-admin/detail/:id'],
+  dex: [routes.swap, routes.pool, routes.find, routes.swapOutputCurrency, routes.addCurrency, routes.removeCurrency],
+  kyc: [routes.kyc, routes.kycIndividual, routes.kycIndividualV2, routes.kycCorporate],
+  lbp: [routes.publicDetails],
+  offer: [routes.offerPage],
+  lbpAdmin: [routes.lbpDashboard, routes.lbpCreate, routes.lbpEdit, routes.adminDetails],
   issuance: [
-    '/issuance',
-    '/issuance/create',
-    '/issuance/create/vetting',
-    '/issuance/view/vetting',
-    '/issuance/create/information',
-    '/issuance/edit/information',
-    '/issuance/review/information',
-    '/issuance/extract/:issuanceId',
-    '/issuance/manage/:issuanceId',
+    routes.issuance,
+    routes.issuanceCreate,
+    routes.createVetting,
+    routes.viewVetting,
+    routes.createOffer,
+    routes.editOffer,
+    routes.reviewOffer,
+    routes.issuanceReport,
+    routes.manageOffer,
   ],
-  securityTokens: ['/security-token/:currencyId'],
+  securityTokens: [routes.securityToken(), routes.securityTokens()],
   payout: [
-    '/payout/edit/:id?',
-    '/payout/:payoutId/manager',
-    '/payout/:payoutId',
-    '/payout/create',
-    '/token-manager/my-tokens',
-    '/token-manager/payout-history',
-    '/token-manager/payout-events',
+    routes.editPayoutEvent(),
+    routes.payoutItemManager(),
+    routes.payoutItem(),
+    routes.createPayoutEvent,
+    routes.manageTokens,
+    routes.payoutHistory,
+    routes.payoutEvent,
+    routes.tokenMananger,
   ],
-  defaults: ['/send', '/faucet', '/staking', '/vesting', '/launchpad'],
+  defaults,
 }
 
 export function getActiveRoutes(pages: PagesConfig): string {

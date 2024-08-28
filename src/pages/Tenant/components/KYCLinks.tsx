@@ -13,34 +13,34 @@ const KYCLinks: React.FC<KYCLinksProps> = ({ formik }) => {
       <FormWrapper>
         <TwoColumnGrid>
           <div>
-            <Label htmlFor="complyCubeSuccessRedirectUrl">Success Redirect URL</Label>
+            <Label htmlFor="kycSuccessRedirectUrl">Success Redirect URL</Label>
             <InputWithLabel
-              id="complyCubeSuccessRedirectUrl"
+              id="kycSuccessRedirectUrl"
               placeholder="Success Redirect URL"
-              name="complyCubeSuccessRedirectUrl"
-              value={formik.values.complyCubeSuccessRedirectUrl}
+              name="kycSuccessRedirectUrl"
+              value={formik.values.kycSuccessRedirectUrl}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.complyCubeSuccessRedirectUrl)}
+              error={Boolean(formik.errors.kycSuccessRedirectUrl)}
             />
-            {Boolean(formik.errors.complyCubeSuccessRedirectUrl) ? (
-              <ErrorText>{formik.errors.complyCubeSuccessRedirectUrl}</ErrorText>
+            {Boolean(formik.errors.kycSuccessRedirectUrl) ? (
+              <ErrorText>{formik.errors.kycSuccessRedirectUrl}</ErrorText>
             ) : null}
           </div>
 
           <div>
-            <Label htmlFor="complyCubeCancelRedirectUrl">Cancel Redirect URL</Label>
+            <Label htmlFor="kycCancelRedirectUrl">Cancel Redirect URL</Label>
             <InputWithLabel
-              id="complyCubeCancelRedirectUrl"
+              id="kycCancelRedirectUrl"
               placeholder="Cancel Redirect URL"
-              name="complyCubeCancelRedirectUrl"
-              value={formik.values.complyCubeCancelRedirectUrl}
+              name="kycCancelRedirectUrl"
+              value={formik.values.kycCancelRedirectUrl}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.complyCubeCancelRedirectUrl)}
+              error={Boolean(formik.errors.kycCancelRedirectUrl)}
             />
-            {Boolean(formik.errors.complyCubeCancelRedirectUrl) ? (
-              <ErrorText>{formik.errors.complyCubeCancelRedirectUrl}</ErrorText>
+            {Boolean(formik.errors.kycCancelRedirectUrl) ? (
+              <ErrorText>{formik.errors.kycCancelRedirectUrl}</ErrorText>
             ) : null}
           </div>
         </TwoColumnGrid>

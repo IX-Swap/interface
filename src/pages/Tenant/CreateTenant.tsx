@@ -6,6 +6,7 @@ import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import { useHistory } from 'react-router-dom'
 
 import { ProgressBar } from './components/ProgressBar'
 import GeneralInfo from './components/GeneralInfo'
@@ -22,6 +23,9 @@ import { whitelabel } from 'services/apiUrls'
 import { getActiveRoutes } from './helpers'
 import Token from './components/Token'
 import { useSecTokenState } from 'state/secTokens/hooks'
+import { useShowError, useShowSuccess } from 'state/application/hooks'
+import Loader from 'components/Loader'
+import { routes } from 'utils/routes'
 
 const validationSchema = yup.object({
   name: yup.string().required('Tenant name is required'),
@@ -64,10 +68,15 @@ const initialValues = {
   enableFeaturedSecurityVaults: false,
   enableLaunchpadBanner: false,
   tokens: [],
+  colorButtonPrimary: '#6666FF',
 }
 
 const CreateTenant = () => {
+  const showError = useShowError()
+  const showSuccess = useShowSuccess()
   const { tokens, loadingRequest } = useSecTokenState()
+  const history = useHistory()
+
   const activeTokens = tokens && tokens.length > 0 ? tokens : []
 
   const formik = useFormik({
@@ -77,50 +86,62 @@ const CreateTenant = () => {
     validateOnBlur: false,
     onSubmit: async (values: any) => {
       try {
-        formik.setSubmitting(true)
         const payload = {
           name: values.name,
           title: values.title,
           appUrl: values.appUrl,
           description: values.description,
-          bannerImageUrl: 'https://pbs.twimg.com/profile_banners/1222418712466198529/1706865528/1500x500',
+          bannerImageUrl: values.bannerImageUrl,
           pages: getActiveRoutes(values.pages),
           chartsUrl: values.appUrl,
           enableLbp: values.enableLbp,
           defaultUrl: values.defaultUrl,
-          faviconUrl: 'https://prime.investax.io/favicon.ico',
-          logoUrl: 'https://api.dev.ixswap.io/v1/storage/file/public/e66f7e04-c944-467f-a208-eb858b92ff07',
+          faviconUrl: values.faviconUrl,
+          logoUrl: values.logoUrl,
           enableFeaturedSecurityVaults: values.enableFeaturedSecurityVaults,
-          colors: '{"button":{"primary":"#0081ff"}}',
+          colors: JSON.stringify({
+            button: { primary: values.colorButtonPrimary },
+          }),
           customStyles: '{}',
           supportEmail: values.supportEmail,
           isIxSwap: values.isIxSwap,
-          tokens: '[]',
-          jwtSecretName: 'READI',
+          tokens: JSON.stringify(values.tokens),
           domain: values.domain,
           enableLaunchpadBanner: true,
-          launchpadBannerTitle: 'Invest in potential RWA projects for financial & non-financial benefits',
-          launchpadBannerInfoRedirectTitle: 'What is READI?',
-          launchpadBannerInfoRedirectUrl: 'https://www.readi-innovative.com/',
-          complyCubeSuccessRedirectUrl: values.complyCubeSuccessRedirectUrl,
-          complyCubeCancelRedirectUrl: values.complyCubeCancelRedirectUrl,
-          footerConfig:
-            '{"socialLinks":{"telegram":"https://t.me/investaxtelegram","linkedin":"https://www.linkedin.com/company/investax","youtube":"https://www.youtube.com/channel/UCAJI2c_gP8TUbaKOrjMX0IA","twitter":"https://twitter.com/investax"},"termsLink":"https://investax.io/terms-of-use/","policyLink":"https://investax.io/privacy/","block1":"Readi Innovative Company Limited (Company Registration No.: 0105566197981) (\u201CReadi\u201D)\\nAMM (Bahamas) Ltd (Company Registration No.: 207865B) (\u201CIX Swap\u201D) offers an enterprise-grade tokenization solution that enables businesses to issue, manage, and distribute tokenized real-world assets, digital assets and securities in a compliant manner. This site is made available through a hosted software as a solution service provided by IX Swap to Readi and is jointly powered by IX Swap and Readi.","block2":"IX Swap is approved as a Digital Asset Business and Digital Token Exchange under the Digital Assets And Registered Exchanges Act, 2020, by the Securities Commission Of The Bahamas (\u201CDARE Licence\u201D). The DARE Licence allows IX Swap to provide digital asset services such as facilitating exchanges and transfers of digital assets, and providing financial services related to the offer or sale of digital assets. Any and all digital asset and/or securities offerings offered on this site by Readi are facilitated through IX Swap and the DARE Licence.","block3":"By visiting this site, you agree to be bound by IX Swap\u2019s Terms And Conditions Of Use and Privacy Policy. This site is intended for access only in those jurisdictions and to those persons where and to whom it may be lawfully accessed. No part of this site should form the basis of, or be relied upon in connection with, any investment decision or any contract or commitment to purchase or subscribe for any digital assets and/or securities. Investment in any digital assets and/or securities entails significant risks, including illiquidity, lack of dividends, loss of investment, and dilution, and should be done only with an accurate understanding and complete acceptance of these risks. Investors should invest only if they have the financial ability and willingness to accept such risks. To the fullest extent permitted by law, Readi and IX Swap disclaim all responsibility and liability for any and all loss, damage, or other adverse consequences arising out of or in relation to any reliance placed on any information contained on this site. "}',
+          launchpadBannerTitle: values.launchpadBannerTitle,
+          launchpadBannerInfoRedirectTitle: values.launchpadBannerInfoRedirectTitle,
+          launchpadBannerInfoRedirectUrl: values.launchpadBannerInfoRedirectUrl,
+          kycSuccessRedirectUrl: values.kycSuccessRedirectUrl,
+          kycCancelRedirectUrl: values.kycCancelRedirectUrl,
+          footerConfig: JSON.stringify({
+            socialLinks: {
+              telegram: values.telegram,
+              linkedin: values.linkedin,
+              youtube: values.youtube,
+              twitter: values.twitter,
+            },
+            termsLink: values.termLink,
+            policyLink: values.policyLink,
+            block1: values.block1,
+            block2: values.block2,
+            block3: values.block3,
+          }),
         }
+        formik.setSubmitting(true)
         const response = await apiService.post(whitelabel.create, payload)
+
         if (response.status === 201) {
-          console.log('Tenant created successfully')
+          showSuccess('Tenant created successfully')
+          history.push(routes.tenant)
         }
-        debugger
-      } catch (e) {
-        console.error(e)
+      } catch (e: any) {
+        showError(e?.message ?? '')
       } finally {
         formik.setSubmitting(false)
       }
     },
   })
 
-  console.log('formik', formik)
   return (
     <Container>
       <Content>
@@ -165,15 +186,16 @@ const CreateTenant = () => {
                 type="submit"
                 style={{ width: '200px', height: 48, fontSize: 14 }}
                 onClick={formik.submitForm}
+                disabled={formik.isSubmitting}
               >
-                Submit
+                {formik.isSubmitting ? <Loader size="18px" /> : null} Submit
               </PinnedContentButton>
             </Flex>
           </FormContainer>
 
           <StyledStickyBox style={{ marginBottom: isMobile ? '100px' : '1700px' }}>
             <ProgressBar
-              isDisabled={formik.isSubmitting}
+              isSubmitting={formik.isSubmitting}
               submitForm={formik.submitForm}
               topics={[
                 {

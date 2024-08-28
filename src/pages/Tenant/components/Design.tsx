@@ -1,6 +1,7 @@
 import React from 'react'
 import ImageUpload from './ImageUpload'
-import { FormWrapper } from './styleds'
+import { FormWrapper, Label } from './styleds'
+import ColorPicker from './ColorPicker'
 
 interface DesignProps {
   formik: any
@@ -41,6 +42,16 @@ const Design: React.FC<DesignProps> = ({ formik }) => {
             description="PNG, JPG, and SVG files only."
             setFieldValue={formik.setFieldValue}
             error={formik.errors.bannerImageUrl}
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="colorButtonPrimary">Colors (Button Primary)</Label>
+          <ColorPicker
+            id="colorButtonPrimary"
+            name="colorButtonPrimary"
+            value={formik.values.colorButtonPrimary}
+            setFieldValue={formik.setFieldValue}
           />
         </div>
       </FormWrapper>
