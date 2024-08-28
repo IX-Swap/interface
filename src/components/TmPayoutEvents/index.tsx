@@ -47,21 +47,24 @@ export const TmPayoutEvents = () => {
 
   useEffect(() => {
     if (account && token && hasMoreData) {
-      const shouldFetch = !payoutList.items?.length || Object.keys(filters).length > 0
-      handleHaveFilters(shouldFetch)
+      const filtersApplied = Object.keys(filters).length > 0;
+      const shouldFetch = !payoutList.items?.length || filtersApplied;
+      handleHaveFilters(filtersApplied);
+  
       if (shouldFetch) {
         getMyPayouts({ ...filters, offset: 10, my: true, page: 1 })
           .then((response) => {
             if (response.items?.length === 0) {
-              setHasMoreData(false)
+              setHasMoreData(false);
             }
           })
           .catch((error) => {
-            console.error('Failed to fetch data:', error)
-          })
+            console.error('Failed to fetch data:', error);
+          });
       }
     }
-  }, [filters, getMyPayouts, account, token, hasMoreData, payoutList.items])
+  }, [filters, getMyPayouts, account, token, hasMoreData, payoutList.items]);
+  
 
   const fetch = (params: Record<string, any>) => {
     getMyPayouts({ ...params, my: true })
@@ -120,6 +123,7 @@ export const TmPayoutEvents = () => {
       )}
     </>
   )
+  
 }
 
 interface IRow {

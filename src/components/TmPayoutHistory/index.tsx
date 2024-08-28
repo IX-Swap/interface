@@ -46,8 +46,9 @@ export const TmPayoutHistory = () => {
 
   useEffect(() => {
     if (account && token && hasMoreData) {
-      const shouldFetch = !payoutHistory.items?.length || Object.keys(filters).length > 0
-      handleHaveFilters(shouldFetch)
+      const filtersApplied = Object.keys(filters).length > 0;
+      const shouldFetch = !payoutHistory.items?.length || filtersApplied;
+      handleHaveFilters(filtersApplied);
 
       if (shouldFetch) {
         getPayoutHistory({ ...filters, offset: 10, page: 1 })
