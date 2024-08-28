@@ -24,8 +24,6 @@ export const FormCard = styled(Box)`
 export const PayoutFormCard = styled(Box)`
   background: ${({ theme }) => theme.bg0};
   border-radius: 16px;
-  padding: 32px;
-
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 24px;
 `};

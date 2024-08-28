@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -11,10 +11,10 @@ import { TmMyTokens } from 'components/TmMyTokens'
 import { PinnedContentButton } from 'components/Button'
 import { TmPayoutEvents } from 'components/TmPayoutEvents'
 import { TmPayoutHistory } from 'components/TmPayoutHistory'
-import { routes } from 'utils/routes'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 import { Line } from 'components/Line'
+import { CreatePayoutModal } from 'pages/PayoutItem/CreatePayoutModal/CreatePayoutModal'
 
 export type TokenManagerTab =
   | 'my-tokens'
@@ -73,6 +73,9 @@ const TokenManager = () => {
   const { me } = useUserState()
   const isLogged = account && me?.role
   const history = useHistory()
+  const [isModalOpen, handleIsModalOpen] = useState(false)
+  const openModal = () => handleIsModalOpen(true)
+  const closeModal = () => handleIsModalOpen(false)
   const params = useParams<TokenManagerParams>()
   const changeTab = useCallback(
     (tab: TokenManagerTab) => {
@@ -94,10 +97,6 @@ const TokenManager = () => {
     }
     history.push('/kyc')
   }, [me, history, isValidRole])
-
-  const goToCreate = () => {
-    history.push(routes.createPayoutEvent)
-  }
 
   if (!isLogged) {
     return <NotAvailablePage />
@@ -121,7 +120,9 @@ const TokenManager = () => {
             )
           })}
           <ButtonContainer>
-            <CreateButton onClick={goToCreate}>
+            <CreatePayoutModal isModalOpen={isModalOpen} closeModal={closeModal} />
+
+            <CreateButton onClick={openModal}>
               <CreateIcon />
               <Trans>Create Payout Event</Trans>
             </CreateButton>

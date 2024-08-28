@@ -297,7 +297,6 @@ export const MyPayoutContainer = styled.div`
   row-gap: 24px;
   margin: 0 -80px 0 -80px;
   padding: 40px 68px 0 68px;
-  background: ${({ theme }) => theme.bg1};
 `
 
 export const MyPayoutListContainer = styled.div`
