@@ -31,6 +31,8 @@ export interface PayoutEvent {
   claimed?: number
   payoutContractAddress?: string
   network?: string
+  blockNumber?: number
+  includeOriginSupply?: boolean
 }
 
 export interface ClaimInfo {

@@ -48,7 +48,8 @@ export const payout = {
   myPayoutsList: 'payout/list/my',
   payoutById: (id: number) => `/payout/${id}`,
   claims: (payoutId: number) => `payout/claims?payoutId=${payoutId}`,
-  totalAmount: (tokenId: number, recordDate: any) => `payout/total-amount/${tokenId}?recordDate=${recordDate}`,
+  totalAmount: (tokenId: number, blockNumber: number, includeOriginSupply: boolean) =>
+    `payout/total-amount/${tokenId}?blockNumber=${blockNumber}&includeOriginSupply=${includeOriginSupply}`,
   deleteDraft: (id: number) => `payout/draft/${id}`,
   payoutAuthorization: '/payout/init',
   paidPayout: (id: number) => `/payout/pay/${id}`,

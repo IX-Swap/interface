@@ -12,7 +12,7 @@ import { useUserState } from 'state/user/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import {
-  getTotalAmountByRecordDate,
+  getTotalAmountByBlockNumber,
   useCreateDraftPayout,
   usePayoutState,
   useUpdateDraftPayout,
@@ -27,6 +27,8 @@ import { Summary } from './Summary'
 import { PayoutEventBlock } from './PayoutEventBlock'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { useActiveWeb3React } from 'hooks/web3'
+// @ts-ignore:next-line
+import EthDater from 'ethereum-block-by-date'
 
 interface PayoutFormProps {
   payoutData?: Partial<FormValues>
@@ -35,19 +37,18 @@ interface PayoutFormProps {
 }
 
 export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, status = PAYOUT_STATUS.DRAFT }) => {
-  const { account } = useWeb3React()
+  const { account, provider } = useWeb3React()
   const { me } = useUserState()
   const { chainId } = useActiveWeb3React()
 
   const secTokensOptions = useMemo(() => {
     if (me?.managerOf?.length) {
-      return me.managerOf
-        .map(({ token }) => ({
-          isDisabled: token?.chainId !== chainId,
-          label: token?.symbol,
-          value: token?.id,
-          icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
-        }))
+      return me.managerOf.map(({ token }) => ({
+        isDisabled: token?.chainId !== chainId,
+        label: token?.symbol,
+        value: token?.id,
+        icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
+      }))
     }
     return []
   }, [me])
@@ -143,14 +144,26 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     setFieldValue(key, value, true)
   }
 
+  const convertDateToBlockNumber = async (date: string) => {
+    const dater = new EthDater(provider)
+    const formattedDate = dayjs.utc(date).startOf('day').format('YYYY-MM-DDTHH:mm:ss[Z]')
+    const result = await dater.getDate(
+      formattedDate, // Date, required. Any valid moment.js value: string, milliseconds, Date() object, moment() object.
+      true, // Block after, optional. Search for the nearest block before or after the given date. By default true.
+      false // Refresh boundaries, optional. Recheck the latest block before request. By default false.
+    )
+    return result.block
+  }
+
   const fetchAmountByRecordDate = async (secToken: any, recordDate: any) => {
     const isFuture = dayjs(recordDate)
       .local()
       .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
 
     if (secToken?.value && recordDate && !isFuture) {
+      const blockNumber = await convertDateToBlockNumber(recordDate)
       setIsAmountLoading(true)
-      const data = await getTotalAmountByRecordDate(secToken.value, recordDate)
+      const data = await getTotalAmountByBlockNumber(secToken.value, blockNumber, true)
 
       if (data) {
         const totalSum = (+data.walletTokens ?? 0) + (+data.poolTokens ?? 0)
@@ -170,7 +183,9 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
         <PayoutFormCard marginBottom="32px">
-          <TYPE.body fontWeight='600' marginBottom="28px">Security Tokens</TYPE.body>
+          <TYPE.body fontWeight="600" marginBottom="28px">
+            Security Tokens
+          </TYPE.body>
           <FormGrid style={{ marginBottom: 20 }}>
             <Select
               tooltipText="Select the security token you want to distribute for this payout event."
@@ -197,8 +212,8 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
                 values.startDate
                   ? dayjs(values.startDate).subtract(1, 'days')
                   : values.endDate
-                    ? dayjs(values.endDate).subtract(2, 'days')
-                    : undefined
+                  ? dayjs(values.endDate).subtract(2, 'days')
+                  : undefined
               }
               onChange={(newDate) => {
                 onValueChange('recordDate', dayjs(newDate).local().format('YYYY-MM-DD'))

@@ -263,8 +263,12 @@ export const getPayoutClaims = async (payoutId: number, params: Record<string, a
   return result.data
 }
 
-export const getTotalAmountByRecordDate = async (tokenId: number, recordDate: any) => {
-  const result = await apiService.get(payout.totalAmount(tokenId, moment(new Date(recordDate)).format('YYYY-MM-DD')))
+export const getTotalAmountByBlockNumber = async (
+  tokenId: number,
+  blockNumber: number,
+  includeOriginSupply: boolean
+) => {
+  const result = await apiService.get(payout.totalAmount(tokenId, blockNumber, includeOriginSupply))
   return result.data
 }
 

@@ -24,6 +24,8 @@ export interface FormValues {
   token: Option | null
   files: any[]
   payoutContractAddress?: string
+  blocknumber?: number
+  includeOriginSupply?: boolean
 }
 
 export const availableInputsForEdit = (status = '', paid = false) => {
