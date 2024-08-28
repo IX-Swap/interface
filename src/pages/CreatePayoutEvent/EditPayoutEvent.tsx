@@ -83,6 +83,8 @@ const EditPayoutEventPage: FC = () => {
         type: capitalize(payout.type),
         otherType: payout.otherType,
         payoutContractAddress: payout.payoutContractAddress,
+        blocknumber: payout.blockNumber,
+        includeOriginSupply: payout.includeOriginSupply,
       })
     }
   }, [payout])
@@ -94,7 +96,6 @@ const EditPayoutEventPage: FC = () => {
     }
     history.push('/kyc')
   }, [me, history, isValidRole])
-
 
   if (!payoutFormData) {
     return null

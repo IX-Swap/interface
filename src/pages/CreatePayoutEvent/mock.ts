@@ -1,4 +1,4 @@
-import { FormValues } from "./utils"
+import { FormValues } from './utils'
 
 export const payoutTypes = [
   {
@@ -46,4 +46,6 @@ export const initialValues: FormValues = {
   secToken: null,
   token: null,
   files: [],
+  blocknumber: 0,
+  includeOriginSupply: false,
 }

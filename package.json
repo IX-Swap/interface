@@ -187,6 +187,7 @@
     "async-wait-until": "^2.0.7",
     "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
+    "ethereum-block-by-date": "^1.5.0",
     "heic2any": "^0.0.4",
     "moment": "^2.29.1",
     "react-cookie": "^4.1.1",
