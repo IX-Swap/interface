@@ -26,6 +26,7 @@ import { PayoutActionBlock } from './ActionBlock'
 import { PayoutTimeline } from './Timeline/PayoutTimeline'
 import { BodyWrapper } from 'pages/AppBody'
 import MorePayoutEvents from './MoreEventBlock'
+import { PAYOUT_TYPE } from 'components/TmPayoutEvents/constants'
 
 export interface MyAmounts {
   poolTokens: number
@@ -92,8 +93,14 @@ export default function PayoutItemForUser({
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '65px' }}>
-            <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout={false} myAmount={myAmount} onUpdate={getPayoutItem} />
+                 {payout.type !== PAYOUT_TYPE.AIRDROPS && (
+              <>
+                <PayoutTimeline payout={payout} />
+                <PayoutActionBlock payout={payout} isMyPayout={false} myAmount={myAmount} onUpdate={getPayoutItem} />
+              </>
+            )}
+
+         
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}
