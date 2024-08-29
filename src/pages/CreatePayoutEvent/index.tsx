@@ -43,7 +43,7 @@ const CreatePayoutEventPage: FC = () => {
   return (
     <Loadable loading={!isLoggedIn}>
       <FullScreenBackground>
-        <StyledBodyWrapper style={{ maxWidth: 1200}} hasAnnouncement={!cookies.annoucementsSeen}>
+        <StyledBodyWrapper style={{ minWidth: 1000 }} hasAnnouncement={!cookies.annoucementsSeen}>
           <Flex marginBottom="32px" alignItems="center">
             <PageTitle textAlign="center" margin="0 auto">
               <TYPE.title6>Create Claim Payout Event</TYPE.title6>

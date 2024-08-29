@@ -94,7 +94,6 @@ const Container = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.bg0};
   padding: 5rem 0;
-  margin-top: -35px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     width: calc(100% + 24px);
     padding: 3rem 1rem;

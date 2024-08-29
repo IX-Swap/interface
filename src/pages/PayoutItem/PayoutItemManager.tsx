@@ -19,6 +19,7 @@ import { PayoutHistory } from './History'
 import { useUserState } from 'state/user/hooks'
 import { ROLES } from 'constants/roles'
 import { routes } from 'utils/routes'
+import { PAYOUT_TYPE } from 'components/TmPayoutEvents/constants'
 
 export default function PayoutItemForManager({
   match: {
@@ -39,7 +40,7 @@ export default function PayoutItemForManager({
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
-  
+
   const isValidRole = me.role === ROLES.TOKEN_MANAGER || me.role === ROLES.ADMIN
   useEffect(() => {
     if (me && isValidRole) {
@@ -48,15 +49,12 @@ export default function PayoutItemForManager({
     history.push('/kyc')
   }, [me, history, isValidRole])
 
-  const getPayoutItem = useCallback(
-    async () => {
-      const data = await getPayoutItemById(+payoutId)
-      if (data?.id) {
-        setPayout(data)
-      }
-    },
-    [payoutId]
-  )
+  const getPayoutItem = useCallback(async () => {
+    const data = await getPayoutItemById(+payoutId)
+    if (data?.id) {
+      setPayout(data)
+    }
+  }, [payoutId])
 
   useEffect(() => {
     getPayoutItem()
@@ -95,8 +93,12 @@ export default function PayoutItemForManager({
         {payout && (
           <Column style={{ gap: '40px' }}>
             <PayoutHeader payout={payout} isMyPayout />
-            <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
+            {payout.type !== PAYOUT_TYPE.AIRDROPS && (
+              <>
+                <PayoutTimeline payout={payout} />
+                <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
+              </>
+            )}
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}
