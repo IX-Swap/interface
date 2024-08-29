@@ -19,6 +19,7 @@ import { PayoutHistory } from './History'
 import { useUserState } from 'state/user/hooks'
 import { ROLES } from 'constants/roles'
 import { routes } from 'utils/routes'
+import { PAYOUT_TYPE } from 'components/TmPayoutEvents/constants'
 
 export default function PayoutItemForManager({
   match: {
@@ -91,7 +92,7 @@ export default function PayoutItemForManager({
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '40px' }}>
-            {payout.status !== PAYOUT_STATUS.ENDED && (
+            {payout.type !== PAYOUT_TYPE.AIRDROPS && (
               <>
                 <PayoutHeader payout={payout} isMyPayout />
                 <PayoutTimeline payout={payout} />
