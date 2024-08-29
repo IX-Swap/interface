@@ -61,11 +61,10 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   })
   const { error } = usePayoutState()
   const [isAmountLoading, setIsAmountLoading] = useState(false)
-
   const createDraft = useCreateDraftPayout()
   const updateDraft = useUpdateDraftPayout()
   const updatePayout = useUpdatePayout()
-
+  const [blockNumberCache, setBlockNumberCache] = useState<Record<string, number>>({})
   const addPopup = useAddPopup()
   const history = useHistory()
 
@@ -141,10 +140,10 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     .local()
     .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
 
-    const onValueChange = (key: string, value: any) => {
-      let processedValue = value;
-      setFieldValue(key, processedValue, true);
-    }
+  const onValueChange = (key: string, value: any) => {
+    let processedValue = value
+    setFieldValue(key, processedValue, true)
+  }
 
   const convertDateToBlockNumber = async (date: string) => {
     const dater = new EthDater(provider)
@@ -158,13 +157,20 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   }
 
   const fetchAmountByRecordDate = async (secToken: any, recordDate: any, includeOriginSupply?: boolean) => {
+    setIsAmountLoading(true)
     const isFuture = dayjs(recordDate)
       .local()
       .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
 
     if (secToken?.value && recordDate && !isFuture) {
-      const blockNumber = await convertDateToBlockNumber(recordDate)
-      setIsAmountLoading(true)
+      const formattedDate = dayjs(recordDate).local().format('YYYY-MM-DD')
+      let blockNumber = blockNumberCache[formattedDate]
+
+      if (!blockNumber) {
+        blockNumber = await convertDateToBlockNumber(recordDate)
+        setBlockNumberCache((prev) => ({ ...prev, [formattedDate]: blockNumber }))
+      }
+
       const data = await getTotalAmountByBlockNumber(secToken.value, blockNumber, includeOriginSupply || false)
 
       if (data) {
@@ -236,8 +242,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
                 onClick={() => {
                   const newIncludeOriginSupply = !values.includeOriginSupply
                   onValueChange('includeOriginSupply', newIncludeOriginSupply)
-
-                  if (newIncludeOriginSupply && values.secToken && values.recordDate) {
+                  if (values.secToken && values.recordDate) {
                     fetchAmountByRecordDate(
                       values.secToken,
                       dayjs(values.recordDate).local().format('YYYY-MM-DD'),
@@ -245,7 +250,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
                     )
                   }
                 }}
-                disabled={!availableForEditing.includes('includeOriginSupply')}
+                disabled={isAmountLoading || !availableForEditing.includes('includeOriginSupply')}
               />
             </Options>
           </FormGrid>
