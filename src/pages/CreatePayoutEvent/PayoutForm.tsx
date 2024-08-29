@@ -121,7 +121,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   })
 
   const { values, errors, touched, setFieldValue, handleSubmit } = formik
-  const { recordDate, secToken } = values
+  const { recordDate, secToken, includeOriginSupply } = values
 
   useEffect(() => {
     if (payoutData) {
@@ -165,7 +165,6 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     if (secToken?.value && recordDate && !isFuture) {
       const formattedDate = dayjs(recordDate).local().format('YYYY-MM-DD')
       let blockNumber = blockNumberCache[formattedDate]
-
       if (!blockNumber) {
         blockNumber = await convertDateToBlockNumber(recordDate)
         setBlockNumberCache((prev) => ({ ...prev, [formattedDate]: blockNumber }))
@@ -188,6 +187,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     }
   }
 
+
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
@@ -204,7 +204,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
               items={secTokensOptions}
               onSelect={(newToken) => {
                 onValueChange('secToken', newToken)
-                fetchAmountByRecordDate(newToken, recordDate)
+                fetchAmountByRecordDate(newToken, recordDate, includeOriginSupply)
               }}
               error={touched.secToken ? errors.secToken : ''}
               required
@@ -226,7 +226,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
               }
               onChange={(newDate) => {
                 onValueChange('recordDate', dayjs(newDate).local().format('YYYY-MM-DD'))
-                fetchAmountByRecordDate(secToken, dayjs(newDate).local().format('YYYY-MM-DD'))
+                fetchAmountByRecordDate(secToken, dayjs(newDate).local().format('YYYY-MM-DD'), includeOriginSupply)
               }}
               error={touched.recordDate ? errors.recordDate : ''}
               required
