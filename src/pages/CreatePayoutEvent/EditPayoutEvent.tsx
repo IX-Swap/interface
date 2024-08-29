@@ -83,7 +83,7 @@ const EditPayoutEventPage: FC = () => {
         type: capitalize(payout.type),
         otherType: payout.otherType,
         payoutContractAddress: payout.payoutContractAddress,
-        blocknumber: payout.blockNumber,
+        blockNumber: payout.blockNumber,
         includeOriginSupply: payout.includeOriginSupply,
       })
     }

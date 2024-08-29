@@ -29,7 +29,8 @@ import { PAYOUT_STATUS } from 'constants/enums'
 import { useActiveWeb3React } from 'hooks/web3'
 // @ts-ignore:next-line
 import EthDater from 'ethereum-block-by-date'
-
+import styled from 'styled-components'
+import { Checkbox } from 'components/Checkbox'
 interface PayoutFormProps {
   payoutData?: Partial<FormValues>
   status?: PAYOUT_STATUS
@@ -140,9 +141,10 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     .local()
     .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
 
-  const onValueChange = (key: string, value: any) => {
-    setFieldValue(key, value, true)
-  }
+    const onValueChange = (key: string, value: any) => {
+      let processedValue = value;
+      setFieldValue(key, processedValue, true);
+    }
 
   const convertDateToBlockNumber = async (date: string) => {
     const dater = new EthDater(provider)
@@ -155,7 +157,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     return result.block
   }
 
-  const fetchAmountByRecordDate = async (secToken: any, recordDate: any) => {
+  const fetchAmountByRecordDate = async (secToken: any, recordDate: any, includeOriginSupply?: boolean) => {
     const isFuture = dayjs(recordDate)
       .local()
       .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
@@ -163,7 +165,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     if (secToken?.value && recordDate && !isFuture) {
       const blockNumber = await convertDateToBlockNumber(recordDate)
       setIsAmountLoading(true)
-      const data = await getTotalAmountByBlockNumber(secToken.value, blockNumber, true)
+      const data = await getTotalAmountByBlockNumber(secToken.value, blockNumber, includeOriginSupply || false)
 
       if (data) {
         const totalSum = (+data.walletTokens ?? 0) + (+data.poolTokens ?? 0)
@@ -173,6 +175,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
           totalSum: totalSum.toFixed(2),
         })
         onValueChange('secTokenAmount', totalSum)
+        setFieldValue('blockNumber', blockNumber)
       }
 
       setIsAmountLoading(false)
@@ -225,6 +228,27 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
               isDisabled={!availableForEditing.includes('recordDate')}
             />
           </FormGrid>
+          <FormGrid>
+            <Options>
+              <Checkbox
+                label="Include supply of the original token"
+                checked={values.includeOriginSupply ?? false}
+                onClick={() => {
+                  const newIncludeOriginSupply = !values.includeOriginSupply
+                  onValueChange('includeOriginSupply', newIncludeOriginSupply)
+
+                  if (newIncludeOriginSupply && values.secToken && values.recordDate) {
+                    fetchAmountByRecordDate(
+                      values.secToken,
+                      dayjs(values.recordDate).local().format('YYYY-MM-DD'),
+                      newIncludeOriginSupply
+                    )
+                  }
+                }}
+                disabled={!availableForEditing.includes('includeOriginSupply')}
+              />
+            </Options>
+          </FormGrid>
 
           <Summary
             isRecordFuture={isRecordFuture}
@@ -249,3 +273,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     </FormikProvider>
   )
 }
+
+const Options = styled.div`
+  margin-bottom: 20px;
+`

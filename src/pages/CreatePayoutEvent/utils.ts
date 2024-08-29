@@ -24,7 +24,7 @@ export interface FormValues {
   token: Option | null
   files: any[]
   payoutContractAddress?: string
-  blocknumber?: number
+  blockNumber?: number
   includeOriginSupply?: boolean
 }
 
@@ -43,6 +43,8 @@ export const availableInputsForEdit = (status = '', paid = false) => {
       'secToken',
       'token',
       'files',
+      'includeOriginSupply',
+      'blockNumber',
     ],
     [PAYOUT_STATUS.ANNOUNCED]: [
       'title',

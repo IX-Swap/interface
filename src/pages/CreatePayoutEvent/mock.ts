@@ -40,6 +40,6 @@ export const initialValues: FormValues = {
   secToken: null,
   token: null,
   files: [],
-  blocknumber: 0,
+  blockNumber: 0,
   includeOriginSupply: false,
 }
