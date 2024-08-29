@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 
 import CurrencyLogo from 'components/CurrencyLogo'
 import { PayoutEvent } from 'state/token-manager/types'
-import { PAYOUT_TYPE_LABEL } from 'components/TmPayoutEvents/constants'
+import { PAYOUT_TYPE, PAYOUT_TYPE_LABEL } from 'components/TmPayoutEvents/constants'
 import { routes } from 'utils/routes'
 import { StatusCell } from 'components/TmPayoutEvents/StatusCell'
 
@@ -17,7 +17,7 @@ import {
   PayoutValue,
   PaymentPeriod,
   PayoutType,
-  PayoutHeader ,
+  PayoutHeader,
 } from './styleds'
 import { Divider } from '@material-ui/core'
 import { ThemeContext } from 'styled-components'
@@ -29,7 +29,10 @@ interface Props {
   secTokenWidth?: string
 }
 
-export const Card = ({ secTokenWidth, data: { secToken, type, recordDate, payoutToken, startDate, endDate, status, id } }: Props) => {
+export const Card = ({
+  secTokenWidth,
+  data: { secToken, type, recordDate, payoutToken, startDate, endDate, status, id },
+}: Props) => {
   const history = useHistory()
   const token = useSafeCurrency(payoutToken)
   const theme = useContext(ThemeContext)
@@ -44,26 +47,26 @@ export const Card = ({ secTokenWidth, data: { secToken, type, recordDate, payout
     <CardContainer onClick={redirect}>
       <PayoutHeader>
         <PayoutTitle>
-          {secToken ? <TokenNetwork
-            width={secTokenWidth}
-            height={secTokenWidth}
-            token={secToken}
-            network={secToken?.network}
-          /> : null}
+          {secToken ? (
+            <TokenNetwork width={secTokenWidth} height={secTokenWidth} token={secToken} network={secToken?.network} />
+          ) : null}
           <div>{`${secToken?.symbol}`}</div>
         </PayoutTitle>
-        <PayoutType>
-          {PAYOUT_TYPE_LABEL[type] || '-'}
-        </PayoutType>
+        <PayoutType>{PAYOUT_TYPE_LABEL[type] || '-'}</PayoutType>
       </PayoutHeader>
       <Divider style={{ backgroundColor: theme.bg24 }} />
       <PayoutInfoContainer>
-        <div>
-          <PayoutLabel>
-            <Trans>Record Date</Trans>
-          </PayoutLabel>
-          <PayoutValue>{dayjs(recordDate).format(dateFormat)}</PayoutValue>
-        </div>
+        {type !== PAYOUT_TYPE.AIRDROPS ? (
+          <div>
+            <PayoutLabel>
+              <Trans>Record Date</Trans>
+            </PayoutLabel>
+            <PayoutValue>{dayjs(recordDate).format(dateFormat)}</PayoutValue>
+          </div>
+        ) : (
+          ''
+        )}
+
         <div>
           <PayoutLabel>
             <Trans>Paid With</Trans>
@@ -80,9 +83,7 @@ export const Card = ({ secTokenWidth, data: { secToken, type, recordDate, payout
           <PayoutLabel>
             <Trans>{endDate ? 'Payment Period' : 'Payment Start Date'}</Trans>
           </PayoutLabel>
-          <PayoutValue>
-            {startDate ? dayjs(startDate).format(dateFormat) : '-'}
-          </PayoutValue>
+          <PayoutValue>{startDate ? dayjs(startDate).format(dateFormat) : '-'}</PayoutValue>
           {endDate && <PayoutValue>{' - ' + dayjs(endDate).format(dateFormat)}</PayoutValue>}
         </PaymentPeriod>
         <div>
