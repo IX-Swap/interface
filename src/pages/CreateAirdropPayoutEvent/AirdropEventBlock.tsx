@@ -16,8 +16,7 @@ import { Uploader } from 'components/Uploader'
 import { ButtonsContainer, PayoutFormCard } from 'pages/CreatePayoutEvent/styleds'
 import { useTokensList } from 'hooks/useTokensList'
 import { PublishAirdropModal } from './PublishAirdropModal'
-const OLDEST_UNIX_TIMESTAMP_DATE = new Date(0).toISOString()
-const START_DATE = new Date().toISOString()
+const CURRENT_DATE = new Date().toISOString()
 const END_DATE = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString()
 
 interface Props {
@@ -97,8 +96,8 @@ export const AirdropEventBlock: FC<Props> = ({
   }
   
   //hardcoded for now
-  const recordDate = OLDEST_UNIX_TIMESTAMP_DATE
-  const startDate = START_DATE
+  const recordDate = CURRENT_DATE
+  const startDate = CURRENT_DATE
   const endDate = END_DATE
 
   return (
