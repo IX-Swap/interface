@@ -1,7 +1,6 @@
 import { FormValues } from './utils'
 
 export const initialValues: FormValues = {
-  id: '',
   title: '',
   type: 'airdrop',
   memo: '',
@@ -10,6 +9,7 @@ export const initialValues: FormValues = {
   startDate: '',
   endDate: '',
   token: null,
-  tokenAmount: '1', // hardcoded for now
   files: [],
+  csvRows: [],
+  tokenAmount: 0,
 }

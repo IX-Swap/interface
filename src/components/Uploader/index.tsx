@@ -36,6 +36,7 @@ export interface UploaderProps {
   acceptedFileTypes?: string[]
   setTotalWallets?: (value: number) => void
   setTotalAmount?: (value: number) => void
+  onCsvRowsChange?: (value: string[][]) => void
 }
 
 export const Uploader: FC<UploaderProps> = ({
@@ -54,6 +55,7 @@ export const Uploader: FC<UploaderProps> = ({
   acceptedFileTypes,
   setTotalWallets,
   setTotalAmount,
+  onCsvRowsChange,
 }: UploaderProps) => {
   const [csvRows, setCsvRows] = useState<string[][]>([])
   const defaultAcceptedFiles = `${AcceptFiles.PDF},image/jpeg,image/png`
@@ -87,6 +89,7 @@ export const Uploader: FC<UploaderProps> = ({
     if (headers[0].trim() !== 'walletAddress' || headers[1].trim() !== 'amount') {
       showError('Invalid file: The file headers must be "WalletAddress" and "amount".')
       setCsvRows([])
+      onCsvRowsChange?.([])
       setTotalWallets?.(0)
       setTotalAmount?.(0)
       return
@@ -110,17 +113,19 @@ export const Uploader: FC<UploaderProps> = ({
           return null
         }
 
-        return [trimmedAddress, parsedAmount.toFixed(2)]
+        return [trimmedAddress, parsedAmount]
       })
       .filter((row) => row !== null) as string[][]
 
     if (hasError) {
       showError('Invalid file: please ensure all addresses are valid and amounts are correctly formatted.')
       setCsvRows([])
+      onCsvRowsChange?.([])
       setTotalWallets?.(0)
       setTotalAmount?.(0)
     } else {
       setCsvRows(validatedRows)
+      onCsvRowsChange?.(validatedRows)
       const totalWallets = validatedRows.length
       const totalAmount = validatedRows.reduce((sum, row) => sum + parseFloat(row[1]), 0)
       setTotalWallets?.(totalWallets)
@@ -140,6 +145,7 @@ export const Uploader: FC<UploaderProps> = ({
   const handleFileDelete = (index: number) => {
     handleDeleteClick(index)
     setCsvRows([])
+    onCsvRowsChange?.([])
   }
 
   const onPageChange = (page: number) => {

@@ -2,179 +2,125 @@ import React, { FC, useState } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { ModalBlurWrapper, ModalContentWrapper, TYPE } from 'theme'
+import { useHistory } from 'react-router-dom'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { PinnedContentButton } from 'components/Button'
 import { Line } from 'components/Line'
 import { ReactComponent as AirdropIcon } from 'assets/images/airdrop.svg'
-import { formatNumberWithDecimals } from 'state/lbp/hooks'
-import { transformPayoutDraftDTO } from './utils'
-import { useCreateDraftPayout, usePublishPayout } from 'state/payout/hooks'
+import { FormValues, transformPayoutDraftDTO } from './utils'
+import { usePublishPayout } from 'state/payout/hooks'
 import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
-import { utils } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
-import { PAYOUT_ADDRESS } from 'constants/addresses'
-import { getContractInstance } from 'hooks/useContract'
-import PAYOUT_ABI from 'abis/payout.json'
-import { useGetPayoutAuthorization } from 'state/token-manager/hooks'
+import { PAYOUT_AIRDROP_PROXY_ADDRESS } from 'constants/addresses'
+import { usePayoutAirdropContract } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
+import { useWeb3React } from '@web3-react/core'
+import { floorToDecimals } from 'utils/formatCurrencyAmount'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { parseUnits } from 'ethers/lib/utils'
 import { useAddPopup } from 'state/application/hooks'
 import { routes } from 'utils/routes'
-import { useHistory } from 'react-router-dom'
-import { useWeb3React } from '@web3-react/core'
-// import { useWeb3React } from 'hooks/useWeb3React'
+
 interface Props {
+  resetForm: () => void
   close: () => void
-  values: any
-  totalAmount: any
-  totalWallets: any
-  onlyPay?: boolean
+  values: FormValues
+  totalWallets: number
   availableForEditing: string[]
 }
 
-export const PublishAirdropModal: FC<Props> = ({ values, close, totalAmount, totalWallets, availableForEditing, onlyPay }) => {
-  const [payNow, handlePayNow] = useState(onlyPay)
-  const { token, secToken, tokenAmount, recordDate, startDate, endDate, id } = values
-  const tokenCurrency = useCurrency(token.value)
-  const [isLoading, handleIsLoading] = useState(false)
-  const getAuthorization = useGetPayoutAuthorization()
-  const addPopup = useAddPopup()
+export const PublishAirdropModal: FC<Props> = ({ resetForm, values, close, totalWallets, availableForEditing }) => {
   const history = useHistory()
+  const { token, csvRows, tokenAmount } = values
+  const tokenCurrency = useCurrency(token?.value as string)
+  const [isLoading, handleIsLoading] = useState(false)
   const addTransaction = useTransactionAdder()
-  const createDraft = useCreateDraftPayout()
-  const { provider: library, account, chainId = 0 } = useWeb3React()
-
-//   const [approvalState, approve, refreshAllowance] = useAllowance(
-//     token.value,
-//     utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
-//     PAYOUT_ADDRESS[chainId]
-//   )
   const publishPayout = usePublishPayout()
+  const { chainId = 0 } = useWeb3React()
+  const payoutContract = usePayoutAirdropContract()
+  const addPopup = useAddPopup()
+
+  const [approvalState, approve, refreshAllowance] = useAllowance(
+    token?.value as string,
+    utils.parseUnits(tokenAmount.toString(), tokenCurrency?.decimals),
+    PAYOUT_AIRDROP_PROXY_ADDRESS[chainId]
+  )
+  const isApproved = approvalState === ApprovalState.APPROVED
+
+  const paid = async () => {
+    if (!payoutContract) return
+
+    const maxTransfer = await payoutContract.maxTransfer()
+    const batchData: [string[], BigNumber[]][] = []
+    const recipientSet = new Set()
+
+    for (let i = 0; i < csvRows.length; i += maxTransfer) {
+      const batchedList = csvRows.slice(i, i + maxTransfer)
+      const recipients: string[] = []
+      const bnAmount: BigNumber[] = []
+      batchedList.forEach(([recipient, amount]) => {
+        recipientSet.add(recipient)
+        recipients.push(recipient)
+        bnAmount.push(parseUnits(amount.toString(), tokenCurrency?.decimals))
+      })
+      batchData.push([recipients, bnAmount])
+    }
+
+    if (recipientSet.size !== csvRows.length) {
+      addPopup({
+        info: {
+          success: false,
+          summary: 'There is duplicated recipient addresses',
+        },
+      })
+      return
+    }
+
+    const body = setBody()
+    const data = await publishPayout({ ...body })
+    if (!data?.id) return
+
+    for (let i = 0; i < batchData.length; i++) {
+      const [recipients, bnAmounts] = batchData[i]
+      const tx = await payoutContract.batchDistribute(data?.id, i, token?.value, recipients, bnAmounts)
+      if (!tx.hash) return
+      addTransaction(tx, {
+        summary: `Distribute batch ${i + 1} of ${batchData.length} successfully.`,
+      })
+    }
+    close()
+    resetForm()
+    history.push(routes.payoutItem(data.id))
+  }
 
   const publishAndPaid = async () => {
     try {
+      if (!payoutContract) return
       handleIsLoading(true)
 
-      const isValid = await validatePayoutEvent()
-      if (!isValid) {
+      if (!isApproved) {
+        await approve()
+        await refreshAllowance()
         handleIsLoading(false)
         return
       }
 
-      /** The event was created, need to pay only */
-      if (values.id) {
-        await pay({
-          id: values.id,
-          payoutContractAddress: values.payoutContractAddress,
-        })
-        return
-      }
-
-      const body = setBody()
-      const data = await createDraft({ ...body })
-      if (!data?.id) return
-      await pay({
-        id: data.id,
-        payoutContractAddress: data.payoutContractAddress,
-      })
+      await paid()
     } finally {
       handleIsLoading(false)
     }
   }
 
-  const validatePayoutEvent = async () => {
-    if (!id) {
-      return true
-    }
-  }
-
-  const onlyPublish = async () => {
-    const body = setBody()
-    const data = await publishPayout({ ...body })
-
-    if (data?.id) {
-      closeForm(data.id)
-    }
-
-    handleIsLoading(false)
-  }
-
-  const pay = async ({ id, payoutContractAddress }: { id: string; payoutContractAddress: string }) => {
-    // if (approvalState === ApprovalState.NOT_APPROVED) {
-    //   await approve()
-    //   await refreshAllowance()
-    //   handleIsLoading(false)
-    // } else {
-      const payoutContract = getContractInstance({
-        addressOrAddressMap: payoutContractAddress,
-        ABI: PAYOUT_ABI,
-        withSignerIfPossible: true,
-        library,
-        account,
-        chainId,
-      })
-      const payoutNonce = await payoutContract?.numberPayouts()
-
-      const authorization = await getAuthorization({
-        secTokenId: secToken.value,
-        payoutEventId: id,
-        tokenAddress: token.value,
-        payoutNonce,
-        fund: utils.parseUnits(tokenAmount, tokenCurrency?.decimals),
-        startDate,
-        ...(endDate && {
-          endDate,
-        }),
-      })
-
-      const gasLimit = await payoutContract?.estimateGas.initPayout(authorization)
-
-      const res = await payoutContract?.initPayout(authorization, { gasLimit })
-      addTransaction(res, {
-        summary: `The transaction was successful. Waiting for system confirmation.`,
-      })
-
-      const data = await handleFormSubmit(id, res.hash, authorization.payoutId)
-      if (data?.id) {
-        closeForm(data.id, res.hash)
-      }
-
-    //   confirmPaidInfo(payoutId, )
-    // }
-  }
-
-  const handleFormSubmit = async (id: string, paidTxHash?: string, contractPayoutId?: string) => {
-    const body = setBody()
-    const data = await publishPayout({
-      ...body,
-      id,
-      paidTxHash,
-      contractPayoutId,
-    })
-
-    return data
-  }
-
   const setBody = () => {
     const formattedValues = Object.entries(values).reduce((acc: Record<string, any>, [key, next]) => {
-        if (availableForEditing.includes(key)) {
-          acc[key] = next
-        }
+      if (availableForEditing.includes(key)) {
+        acc[key] = next
+      }
       return acc
     }, {})
 
     return transformPayoutDraftDTO(formattedValues)
-  }
-
-  const closeForm = async (id: number, paidTxHash?: string) => {
-    close()
-    addPopup({
-      info: {
-        success: true,
-        summary: `Payout was successfully ${!id ? 'created' : paidTxHash ? 'paid' : 'published'}`,
-      },
-    })
-
-    history.push({ pathname: routes.payoutItemManager(id) })
   }
 
   return (
@@ -199,15 +145,16 @@ export const PublishAirdropModal: FC<Props> = ({ values, close, totalAmount, tot
             <StyledDivider />
             <CardContentWrapper>
               <ContentLabel>{totalWallets}</ContentLabel>
-              <ContentLabel>{formatNumberWithDecimals(totalAmount, 3)}</ContentLabel>
+              <ContentLabel>{floorToDecimals(tokenAmount, 3)}</ContentLabel>
             </CardContentWrapper>
           </StyledCard>
           <ButtonContainer>
             <CancelButton onClick={close} type="button">
               <Trans>{`Cancel`}</Trans>
             </CancelButton>
-            <ConfirmButton type="button" onClick={() => (onlyPay || payNow ? publishAndPaid() : onlyPublish())}>
-              <Trans>{`Confirm`}</Trans>
+            <ConfirmButton type="button" onClick={() => publishAndPaid()} disabled={isLoading}>
+              {isLoading ? <LoaderThin size={20} /> : null}
+              <Trans>{isApproved ? 'Confirm' : 'Approve'}</Trans>
             </ConfirmButton>
           </ButtonContainer>
         </StyledModalBody>
