@@ -79,6 +79,8 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
     onValueChange('files', arrayOfFiles)
   }
 
+
+
   return (
     <PayoutFormCard>
       <AreYouSureModal
@@ -129,6 +131,13 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
       />
 
       <ButtonsContainer style={{ marginBottom: '25px' }}>
+        {/* comment draft button for now */}
+        {/* {!isEdit && (
+          <ButtonGradientBorder type="submit">
+            <TYPE.main2>Save as Draft</TYPE.main2>
+          </ButtonGradientBorder>
+        )} */}
+
         <PinnedContentButton type="button" onClick={open}>
           <Trans>Submit</Trans>
         </PinnedContentButton>

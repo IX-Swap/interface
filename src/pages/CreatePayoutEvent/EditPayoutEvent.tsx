@@ -22,7 +22,10 @@ import { TYPE } from 'theme'
 import styled from 'styled-components'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import { checkWrongChain } from 'chains'
+import Portal from '@reach/portal'
 const EditPayoutEventPage: FC = () => {
   const { id } = useParams<{ id?: string }>()
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -36,7 +39,9 @@ const EditPayoutEventPage: FC = () => {
   const [payoutFormData, setPayoutFormData] = useState<FormValues>()
   const getPayoutItem = useGetPayoutItem()
   const { tokensOptions } = useTokensList()
-
+  const { chainId } = useActiveWeb3React()
+  const network = payout?.secToken?.network ?? ''
+  const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
   useEffect(() => {
     async function load() {
       if (!id) {
@@ -52,7 +57,7 @@ const EditPayoutEventPage: FC = () => {
     }
 
     load()
-  }, [])
+  }, [!isWrongChain])
 
   const token = useMemo(() => {
     if (payout?.payoutToken) {
@@ -102,7 +107,14 @@ const EditPayoutEventPage: FC = () => {
   }
 
   return (
-    <Loadable noOverlay={true}  loading={!isLoggedIn}>
+    <Loadable loading={!isLoggedIn}>
+      {isWrongChain ? (
+        <Portal>
+          <CenteredFixed width="100vw" height="100vh">
+            <NetworkNotAvailable expectChain={expectChain} />
+          </CenteredFixed>
+        </Portal>
+      ) : null}
       <FullScreenBackground>
         <StyledBodyWrapper style={{ minWidth: 1200 }} hasAnnouncement={!cookies.annoucementsSeen}>
           <Flex marginBottom="32px" alignItems="center">
