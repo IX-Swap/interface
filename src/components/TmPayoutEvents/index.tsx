@@ -31,7 +31,7 @@ import { PAYOUT_TYPE_LABEL } from './constants'
 import { TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
-import { TokenImage } from 'pages/PayoutItem/ActionBlock/UserView'
+import { TokenLogo } from 'components/TokenLogo'
 
 const headerCells = [`ID`, `Status`, `Payout type`, `SEC token`, `Payment period`, `Record date`, `Amount claimed`, '']
 
@@ -178,7 +178,11 @@ const Row = ({ item }: IRow) => {
         </div>
         <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
         <div style={{ gap: '8px' }}>
-          <TokenImage src={secToken?.logo?.public} />
+        {secToken?.logo ? (
+          <TokenLogo logo={secToken.logo.public} width="32px" height="32px" />
+        ) : (
+          <CurrencyLogo currency={currency} size="72px" />
+        )}
           <TYPE.main1 color={'#8F8FB2'}>{secToken?.symbol || '-'}</TYPE.main1>
         </div>
         <TYPE.main1>
