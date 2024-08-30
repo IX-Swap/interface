@@ -35,8 +35,6 @@ export const PayoutHistory: FC<Props> = ({ isLoading, claimHistory, setPage }) =
     setPage(newPage)
   }
 
-  console.log(claimHistory.totalItems , claimHistory.page , claimHistory.totalPages )
-
   return claimHistory.length !== 0 ? (
     <Box marginTop="16px">
       {isLoading ? (
