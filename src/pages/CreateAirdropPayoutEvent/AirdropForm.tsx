@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useFormik, FormikProvider } from 'formik'
-import { useHistory } from 'react-router-dom'
+import dayjs from 'dayjs'
 import { Select, TextInput } from 'pages/KYC/common'
 import { FormGrid } from 'pages/KYC/styleds'
 import CurrencyLogo from 'components/CurrencyLogo'
@@ -8,25 +8,19 @@ import { TYPE } from 'theme'
 import { useUserState } from 'state/user/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { useCreateDraftPayout, usePayoutState, useUpdateDraftPayout, useUpdatePayout } from 'state/payout/hooks'
-import { routes } from 'utils/routes'
-import { availableInputsForEdit, FormValues, transformPayoutDraftDTO } from './utils'
+import { usePayoutState } from 'state/payout/hooks'
+import { availableInputsForEdit } from './utils'
 import { initialValues } from './mock'
 import { validation } from './validation'
-import { PAYOUT_STATUS } from 'constants/enums'
 import { useActiveWeb3React } from 'hooks/web3'
 import { PayoutFormCard } from 'pages/CreatePayoutEvent/styleds'
 import { AirdropEventBlock } from './AirdropEventBlock'
-import { useWeb3React } from '@web3-react/core'
+import { PAYOUT_STATUS } from 'constants/enums'
 
-interface AirdropFormProps {
-  payoutData?: Partial<FormValues>
-  status?: PAYOUT_STATUS
-  paid?: boolean
-}
+const START_DATE = dayjs.utc().format()
+const END_DATE = dayjs().add(1, 'days').utc().format()
 
-export const AirdropForm: FC<AirdropFormProps> = ({ payoutData, paid = false, status = PAYOUT_STATUS.DRAFT }) => {
-  const { account } = useWeb3React()
+export const AirdropForm = () => {
   const { me } = useUserState()
   const { chainId } = useActiveWeb3React()
 
@@ -44,12 +38,7 @@ export const AirdropForm: FC<AirdropFormProps> = ({ payoutData, paid = false, st
 
   const { error } = usePayoutState()
 
-  const createDraft = useCreateDraftPayout()
-  const updateDraft = useUpdateDraftPayout()
-  const updatePayout = useUpdatePayout()
-
   const addPopup = useAddPopup()
-  const history = useHistory()
 
   useEffect(() => {
     if (error) {
@@ -62,60 +51,21 @@ export const AirdropForm: FC<AirdropFormProps> = ({ payoutData, paid = false, st
     }
   }, [error])
 
-  const availableForEditing = useMemo(() => availableInputsForEdit(status, paid), [status, paid])
-
-  const handleFormSubmit = async (values: any) => {
-    const formattedValues = Object.entries(values).reduce((acc: Record<string, any>, [key, next]) => {
-      if (availableForEditing.includes(key)) {
-        acc[key] = next
-      }
-      return acc
-    }, {})
-
-    const body = transformPayoutDraftDTO(formattedValues)
-
-    let data: any
-
-    if (payoutData && status === PAYOUT_STATUS.DRAFT) {
-      data = await updateDraft(Number(payoutData?.id), body, payoutData)
-    } else if (payoutData) {
-      data = await updatePayout(Number(payoutData?.id), body, payoutData)
-    } else {
-      data = await createDraft(body)
-    }
-
-    if (data?.id) {
-      addPopup({
-        info: {
-          success: true,
-          summary: `Payout was successfully ${payoutData ? 'updated' : 'created'}`,
-        },
-      })
-      history.push({ pathname: routes.payoutItemManager(data.id) })
-    } else {
-    }
-  }
+  const availableForEditing = useMemo(() => availableInputsForEdit(PAYOUT_STATUS.DRAFT), [])
 
   const formik = useFormik({
-    initialValues: payoutData ?? initialValues,
-    onSubmit: handleFormSubmit,
+    initialValues: {
+      ...initialValues,
+      recordDate: START_DATE,
+      startDate: START_DATE,
+      endDate: END_DATE,
+    },
+    onSubmit: () => {},
     validationSchema: validation,
     enableReinitialize: true,
   })
 
   const { values, errors, touched, setFieldValue, handleSubmit } = formik
-
-  useEffect(() => {
-    if (payoutData) {
-      onValueChange('secToken', payoutData.secToken)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (account) {
-      setFieldValue('secToken', payoutData?.secToken ?? initialValues.secToken, false)
-    }
-  }, [setFieldValue, account])
 
   const onValueChange = (key: string, value: any) => {
     setFieldValue(key, value, true)
@@ -156,14 +106,7 @@ export const AirdropForm: FC<AirdropFormProps> = ({ payoutData, paid = false, st
           </FormGrid>
         </PayoutFormCard>
 
-        <AirdropEventBlock
-          status={status}
-          onValueChange={onValueChange}
-          availableForEditing={availableForEditing}
-          paid={paid}
-          isEdit={!!payoutData}
-          payoutId={payoutData?.id ? +payoutData.id : undefined}
-        />
+        <AirdropEventBlock onValueChange={onValueChange} availableForEditing={availableForEditing} />
       </form>
     </FormikProvider>
   )

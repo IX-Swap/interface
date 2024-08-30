@@ -8,7 +8,6 @@ import { Loadable } from 'components/LoaderHover'
 import { useAuthState } from 'state/auth/hooks'
 import { useUserState } from 'state/user/hooks'
 import { ROLES } from 'constants/roles'
-import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { Info } from './Info'
 import { PageTitle } from 'pages/CreatePayoutEvent/styleds'
@@ -32,30 +31,17 @@ const CreatePayoutEventPage: FC = () => {
     history.push('/kyc')
   }, [me, history, isValidRole])
 
-  const FullScreenBackground = styled.div`
-    background-color: #ffffff;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  `
-
   return (
     <Loadable loading={!isLoggedIn}>
-      <FullScreenBackground>
-        <StyledBodyWrapper style={{ minWidth: 1200}} hasAnnouncement={!cookies.annoucementsSeen}>
-          <Flex marginBottom="32px" alignItems="center">
-            <PageTitle textAlign="center" margin="0 auto">
-              <TYPE.title6>Create Airdrop Payout Event</TYPE.title6>
-            </PageTitle>
-          </Flex>
-          <Info />
-          <AirdropForm />
-        </StyledBodyWrapper>
-      </FullScreenBackground>
+      <StyledBodyWrapper maxWidth={'1200px'} hasAnnouncement={!cookies.annoucementsSeen}>
+        <Flex marginBottom="32px" alignItems="center">
+          <PageTitle textAlign="center" margin="0 auto">
+            <TYPE.title6>Create Airdrop Payout Event</TYPE.title6>
+          </PageTitle>
+        </Flex>
+        <Info />
+        <AirdropForm />
+      </StyledBodyWrapper>
     </Loadable>
   )
 }

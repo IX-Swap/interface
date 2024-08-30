@@ -10,7 +10,6 @@ export const transformPayoutDraftDTO = ({ token, secToken, ...values }: any) => 
 }
 
 export interface FormValues {
-  id: string
   title: string
   type: string
   secToken: Option | null
@@ -21,7 +20,8 @@ export interface FormValues {
   recordDate: string
   startDate: string
   endDate: string
-  tokenAmount: string
+  csvRows: string[][]
+  tokenAmount: number
 }
 
 export const availableInputsForEdit = (status = '', paid = false) => {
