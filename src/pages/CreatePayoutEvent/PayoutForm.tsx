@@ -123,10 +123,11 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   const { values, errors, touched, setFieldValue, handleSubmit } = formik
   const { recordDate, secToken, includeOriginSupply } = values
 
+
   useEffect(() => {
     if (payoutData) {
       onValueChange('secToken', payoutData.secToken)
-      fetchAmountByRecordDate(payoutData.secToken, recordDate)
+      fetchAmountByRecordDate(payoutData.secToken, recordDate, includeOriginSupply)
     }
   }, [])
 
