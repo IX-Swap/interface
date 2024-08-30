@@ -46,6 +46,7 @@ export const ButtonsContainer = styled.div`
   justify-content: end;
   margin-top: 32px;
   gap: 20px;
+  margin-bottom: 30px;
   > button {
     min-height: 40px;
     height: 40px;
