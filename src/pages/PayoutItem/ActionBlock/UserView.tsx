@@ -25,6 +25,7 @@ import { SecToken } from 'types/secToken'
 import styled, { useTheme } from 'styled-components'
 import PayoutStatusBadge from './StatusBadge'
 import { TYPE } from 'theme'
+import { TokenLogo } from 'components/TokenLogo'
 
 interface Props {
   payout: PayoutEvent
@@ -65,7 +66,6 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   }, [id, account])
 
   const decimals = tokenInfo?.decimals < 7 ? tokenInfo.decimals : 6
-
   const claim = useCallback(async () => {
     try {
       handleIsLoading(true)
@@ -109,7 +109,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
         <Box marginRight="4px">
           <Trans>{`Based on your SEC token balance of`}</Trans>
         </Box>
-        <CurrencyLogo currency={secPayoutToken} size="20px" />
+        {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="32px" height="32px" /> : null}
         <Box marginX="4px">{(tokenInfo as SecToken).originalSymbol ?? tokenInfo.symbol}</Box>
         <Box marginX="4px" color={theme.text1}>
           {floorToDecimals(myAmount, decimals)}
@@ -179,7 +179,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
               </Box>
             </div>
             <Flex marginBottom="24px" alignItems="center">
-              <CurrencyLogo currency={secPayoutToken} size="20px" />
+              {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="32px" height="32px" /> : null}
               <Box marginX="4px" color={theme.text2}>
                 {(tokenInfo as SecToken).originalSymbol ?? tokenInfo.symbol}
               </Box>
@@ -339,7 +339,7 @@ const FuturePayout: FC<{ secToken: any }> = ({ secToken }) => {
       >
         <Flex alignItems="center" style={{ gap: 4 }}>
           <Trans>{`Add`}</Trans>
-          <CurrencyLogo currency={secToken} size="20px" />
+          {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="24px" height="24px" /> : null}
           <Box color="#8f8fb2">{secToken.symbol}</Box>
         </Flex>
         <Trans>{`to increase possible payout.`}</Trans>
