@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { ModalBlurWrapper, ModalContentWrapper, TYPE } from 'theme'
@@ -23,6 +23,7 @@ import { useAddPopup } from 'state/application/hooks'
 import { routes } from 'utils/routes'
 
 interface Props {
+  maxTransfer: number
   resetForm: () => void
   close: () => void
   values: FormValues
@@ -30,7 +31,14 @@ interface Props {
   availableForEditing: string[]
 }
 
-export const PublishAirdropModal: FC<Props> = ({ resetForm, values, close, totalWallets, availableForEditing }) => {
+export const PublishAirdropModal: FC<Props> = ({
+  maxTransfer,
+  resetForm,
+  values,
+  close,
+  totalWallets,
+  availableForEditing,
+}) => {
   const history = useHistory()
   const { token, csvRows, tokenAmount } = values
   const tokenCurrency = useCurrency(token?.value as string)
@@ -48,24 +56,31 @@ export const PublishAirdropModal: FC<Props> = ({ resetForm, values, close, total
   )
   const isApproved = approvalState === ApprovalState.APPROVED
 
-  const paid = async () => {
-    if (!payoutContract) return
-
-    const maxTransfer = await payoutContract.maxTransfer()
-    const batchData: [string[], BigNumber[]][] = []
-    const recipientSet = new Set()
+  const batchData: [string[], BigNumber[]][] = useMemo(() => {
+    // max transfer could be 0 leads to regression bug
+    if (!payoutContract || !maxTransfer) return []
+    const result: [string[], BigNumber[]][] = []
 
     for (let i = 0; i < csvRows.length; i += maxTransfer) {
       const batchedList = csvRows.slice(i, i + maxTransfer)
       const recipients: string[] = []
       const bnAmount: BigNumber[] = []
       batchedList.forEach(([recipient, amount]) => {
-        recipientSet.add(recipient)
         recipients.push(recipient)
         bnAmount.push(parseUnits(amount.toString(), tokenCurrency?.decimals))
       })
-      batchData.push([recipients, bnAmount])
+      result.push([recipients, bnAmount])
     }
+
+    return result
+  }, [payoutContract, csvRows, tokenCurrency, maxTransfer])
+  const batchLength = batchData.length
+
+  const paid = async () => {
+    if (!payoutContract) return
+
+    const recipientSet = new Set()
+    csvRows.forEach(([recipient]) => recipientSet.add(recipient))
 
     if (recipientSet.size !== csvRows.length) {
       addPopup({
@@ -148,14 +163,24 @@ export const PublishAirdropModal: FC<Props> = ({ resetForm, values, close, total
               <ContentLabel>{floorToDecimals(tokenAmount, 3)}</ContentLabel>
             </CardContentWrapper>
           </StyledCard>
+          {batchLength > 1 && (
+            <BatchAlert>
+              <TYPE.body fontSize={13} textAlign="center">
+                <Trans>
+                  Your airdrop distribution will be separated into {batchLength} transactions due to blockchain gas
+                  limit. Please execute all {batchLength} transactions consecutively.
+                </Trans>
+              </TYPE.body>
+            </BatchAlert>
+          )}
           <ButtonContainer>
             <CancelButton onClick={close} type="button">
-              <Trans>{`Cancel`}</Trans>
+              <Trans>Cancel</Trans>
             </CancelButton>
-            <ConfirmButton type="button" onClick={() => publishAndPaid()} disabled={isLoading}>
+            <PinnedContentButton type="button" onClick={() => publishAndPaid()} disabled={isLoading}>
               {isLoading ? <LoaderThin size={20} /> : null}
               <Trans>{isApproved ? 'Confirm' : 'Approve'}</Trans>
-            </ConfirmButton>
+            </PinnedContentButton>
           </ButtonContainer>
         </StyledModalBody>
       </ModalBlurWrapper>
@@ -241,4 +266,9 @@ const CancelButton = styled(PinnedContentButton)`
   border: 1px solid #6666ff33;
 `
 
-const ConfirmButton = styled(PinnedContentButton)``
+const BatchAlert = styled.div`
+  margin-top: 32px;
+  background: ${({ theme }) => theme.launchpad.colors.warn};
+  border-radius: 4px;
+  padding: 0.8rem;
+`

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Trans } from '@lingui/macro'
 import { useFormikContext } from 'formik'
 import { FormGrid } from 'pages/KYC/styleds'
@@ -12,6 +12,7 @@ import { Uploader } from 'components/Uploader'
 import { ButtonsContainer, PayoutFormCard } from 'pages/CreatePayoutEvent/styleds'
 import { useTokensList } from 'hooks/useTokensList'
 import { PublishAirdropModal } from './PublishAirdropModal'
+import { usePayoutAirdropContract } from 'hooks/useContract'
 
 interface Props {
   onValueChange: (key: string, value: any) => void
@@ -24,6 +25,14 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
   const { token } = values
   const [openModal, setOpenModal] = useState(false)
   const [totalWallets, setTotalWallets] = useState(0) // New state for total wallets
+  const [maxTransfer, setMaxTransfer] = useState(0)
+  const payoutContract = usePayoutAirdropContract()
+
+  useEffect(() => {
+    if (payoutContract) {
+      payoutContract.maxTransfer().then(setMaxTransfer)
+    }
+  }, [payoutContract])
 
   const showError = useShowError()
   const { tokensOptions } = useTokensList()
@@ -127,6 +136,7 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
 
       {openModal && (
         <PublishAirdropModal
+          maxTransfer={maxTransfer}
           resetForm={resetForm}
           availableForEditing={availableForEditing}
           values={values}
