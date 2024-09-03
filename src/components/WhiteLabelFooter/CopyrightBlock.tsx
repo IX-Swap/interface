@@ -11,7 +11,7 @@ export const CopyrightBlock = () => {
   const { config } = useWhitelabelState()
 
   return (
-    <Flex flexDirection="column" mb={86} mt={16}>
+    <Flex flexDirection="column" mb={120} mt={16}>
       <CopyrightText>
         <Trans>{`Copyright © IX Swap ${year}`}</Trans>
       </CopyrightText>
