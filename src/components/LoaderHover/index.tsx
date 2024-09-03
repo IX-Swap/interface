@@ -1,48 +1,57 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled, { css } from 'styled-components';
 
-import { LoaderThin } from 'components/Loader/LoaderThin'
+import { LoaderThin } from 'components/Loader/LoaderThin';
 
-export const LoaderHover = styled.div`
+interface LoaderHoverProps {
+  noOverlay?: boolean;
+}
+
+export const LoaderHover = styled.div<LoaderHoverProps>`
   z-index: 5;
   opacity: 0.4;
   display: flex;
-  background-color: #380846;
-
   color: #ffffff;
   pointer-events: auto;
-
   align-items: center;
   justify-content: center;
   position: fixed;
   border-radius: inherit;
-
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-
   height: 100%;
   width: 100%;
-
   transition: inherit;
   will-change: opacity;
   box-sizing: inherit;
-`
+
+  ${({ noOverlay }) =>
+    !noOverlay &&
+    css`
+      background-color: #380846;
+    `}
+`;
+
 interface LoadableProps {
-  loading: boolean
+  loading: boolean;
+  noOverlay?: boolean;
 }
 
-export const Loadable = (props: React.PropsWithChildren<LoadableProps>) => {
+export const Loadable: React.FC<React.PropsWithChildren<LoadableProps>> = ({
+  loading,
+  noOverlay,
+  children,
+}) => {
   return (
     <>
-      {props.loading && (
-        <LoaderHover>
+      {loading && (
+        <LoaderHover noOverlay={noOverlay}>
           <LoaderThin size={64} />
         </LoaderHover>
       )}
-
-      {props.children}
+      {children}
     </>
-  )
-}
+  );
+};
