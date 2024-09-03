@@ -139,6 +139,7 @@ export const SecTokensTable: FC<Props> = ({
   offset,
   totalPages,
   enableFeaturedSecurityVaults,
+  totalItems
 }: Props) => {
   const { config } = useWhitelabelState()
   const isIxswap = config?.isIxSwap ?? false
@@ -290,7 +291,8 @@ export const SecTokensTable: FC<Props> = ({
           ) : tokens.length > 0 ? (
             <>
               <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={tokens} />} />
-              <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+              <Pagination totalItems={totalItems}  page={page} totalPages={totalPages} onPageChange={onPageChange} />
+
             </>
           ) : (
             <EmptyData title="No other RWAs" desc="You have no other RWAs at the moment" />
