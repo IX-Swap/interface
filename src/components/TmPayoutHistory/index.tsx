@@ -59,7 +59,8 @@ export const TmPayoutHistory = () => {
           })
       }
     }
-  }, [account, token, hasMoreData, isInitialLoad, filters, getPayoutHistory, payoutHistory.items])
+
+  },  [account, token, filters, hasMoreData]);
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
