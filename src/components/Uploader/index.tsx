@@ -226,7 +226,7 @@ export const Uploader: FC<UploaderProps> = ({
             body={<Body rows={csvRows.slice((currentPage - 1) * adminOffset, currentPage * adminOffset)} />}
           />
           <Pagination
-            totalPages={csvRows.length / adminOffset}
+            totalPages={Math.ceil(csvRows.length / adminOffset)}
             page={currentPage}
             onPageChange={onPageChange}
             totalItems={csvRows.length}

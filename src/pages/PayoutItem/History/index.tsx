@@ -44,7 +44,12 @@ export const PayoutHistory: FC<Props> = ({ isLoading, claimHistory, setPage }) =
       ) : (
         <>
           <Table style={{ marginBottom: 24 }} body={<Body claimHistory={claimHistory} />} header={<Header />} />
-          <Pagination page={claimHistory.page || 1} totalPages={claimHistory.totalPages} onPageChange={onPageChange} />
+          <Pagination
+            totalItems={claimHistory.totalItems}
+            page={claimHistory.page || 1}
+            totalPages={claimHistory.totalPages}
+            onPageChange={onPageChange}
+          />
         </>
       )}
     </Box>
@@ -92,7 +97,7 @@ const Row: FC<RowProps> = ({ item }) => {
       <div>{`${formatDate(createdAt)} - ${dayjs(createdAt).format('HH:mm')}`}</div>
       <StyledView>
         <ExternalLink href={getExplorerLink(chainId || 137, txHash, ExplorerDataType.TRANSACTION)}>
-          <EyeIcon stroke="#B8B8CC"/>
+          <EyeIcon stroke="#B8B8CC" />
         </ExternalLink>
       </StyledView>
     </StyledBodyRow>
