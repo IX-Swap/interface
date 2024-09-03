@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Trans, t } from '@lingui/macro'
-import dayjs from 'dayjs'
+import React, { useState, useEffect } from 'react'
 import { Flex } from 'rebass'
 
 import { MultipleFilters } from 'components/MultipleFilters'
@@ -25,6 +23,7 @@ import baseLogoUrl from 'assets/images/base.svg'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
 import { Line } from 'components/Line'
 import { TYPE } from 'theme'
+import dayjs from 'dayjs'
 
 const headerCells = [
   `Recipient's wallet`,
@@ -37,19 +36,17 @@ const headerCells = [
 
 export const TmPayoutHistory = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
-  const [haveFilters, handleHaveFilters] = useState(false)
   const { account } = useUserState()
   const { token } = useAuthState()
   const [hasMoreData, setHasMoreData] = useState(true)
   const { payoutHistory, isLoading } = useTokenManagerState()
   const getPayoutHistory = useGetPayoutHistory()
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
 
   useEffect(() => {
-    if (account && token && hasMoreData) {
-      const filtersApplied = Object.keys(filters).length > 0;
-      const shouldFetch = !payoutHistory.items?.length || filtersApplied;
-      handleHaveFilters(filtersApplied);
-
+    if (account && token && hasMoreData && isInitialLoad) {
+      setIsInitialLoad(false)
+      const shouldFetch = !payoutHistory.items?.length || Object.keys(filters).length > 0
       if (shouldFetch) {
         getPayoutHistory({ ...filters, offset: 10, page: 1 })
           .then((response) => {
@@ -62,6 +59,7 @@ export const TmPayoutHistory = () => {
           })
       }
     }
+
   },  [account, token, filters, hasMoreData]);
 
   const onPageChange = (page: number) => {
@@ -69,11 +67,13 @@ export const TmPayoutHistory = () => {
     getPayoutHistory({ ...filters, page, offset: 10 })
   }
 
+  if (isLoading) {
+    return <LoadingIndicator noOverlay={true} isLoading={isLoading} />
+  }
+
   return (
     <>
-      <LoadingIndicator isLoading={isLoading} />
-
-      {payoutHistory.items?.length || haveFilters ? (
+      {payoutHistory.items?.length ? (
         <>
           <Container style={{ marginTop: '20px' }}>
             <MultipleFilters

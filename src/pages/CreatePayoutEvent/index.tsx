@@ -41,7 +41,7 @@ const CreatePayoutEventPage: FC = () => {
   `
 
   return (
-    <Loadable loading={!isLoggedIn}>
+    <Loadable noOverlay={true} loading={!isLoggedIn}>
       <FullScreenBackground>
         <StyledBodyWrapper style={{ minWidth: 1000 }} hasAnnouncement={!cookies.annoucementsSeen}>
           <Flex marginBottom="32px" alignItems="center">
