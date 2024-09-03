@@ -2,27 +2,23 @@ import React, { useEffect, useMemo } from 'react'
 import { useFormik } from 'formik'
 import { t, Trans } from '@lingui/macro'
 import { MobileDatePicker } from '@material-ui/pickers'
-import { capitalize, useMediaQuery } from '@material-ui/core'
+import { capitalize } from '@material-ui/core'
 import { useLocation } from 'react-router-dom'
 import dayjs from 'dayjs'
-
 import { PAYOUT_STATUS } from 'constants/enums'
 import { Search } from 'components/Search'
-import { MEDIA_WIDTHS, TYPE } from 'theme'
+import {  TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { DateRangePickerFilter } from 'components/DateRangePicker'
 import { useUserState } from 'state/user/hooks'
-
 import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions } from './constants'
 import { Container, DarkBlueCard, FiltersContainer } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
-import { MobileFilters } from './MobileFilters'
-import { Option, useTokensList } from 'hooks/useTokensList'
-import { ReactComponent as IdentityIcon } from 'assets/images/identityIcon.svg'
+import { Option } from 'hooks/useTokensList'
 import { ReactComponent as ArrowDownIcon } from 'assets/images/arrow-down.svg'
-import { ReactComponent as CalanderIcon } from 'assets/images/newCalander.svg'
 import { PinnedContentButton } from 'components/Button'
+import { useAllTokensList } from 'hooks/useAllTokensList'
 
 interface Props {
   filters: FILTERS[]
@@ -45,12 +41,11 @@ export const MultipleFilters = ({
   isClearable,
   fullWidth = true,
 }: Props) => {
-  // const isMobile = useMediaQuery(`(max-width:${MEDIA_WIDTHS.upToLarge}px)`)
 
   const { pathname } = useLocation()
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
   const { me } = useUserState()
-  const { tokensOptions, secTokensOptions } = useTokensList()
+  const { tokensOptions, secTokensOptions } = useAllTokensList()
 
   const managerSecTokensOptions = useMemo(() => {
     if (me?.managerOf?.length) {
