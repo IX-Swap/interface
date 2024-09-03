@@ -126,152 +126,79 @@ export const PayoutEventBlock: FC<Props> = ({
       {status !== PAYOUT_STATUS.DELAYED && (
         <PayoutType onValueChange={onValueChange} availableForEditing={availableForEditing} />
       )}
-
-      {status === PAYOUT_STATUS.DELAYED ? (
-        <>
-          <div style={{ display: 'flex', gap: '80px', marginBottom: '20px' }}>
-            <PayoutType onValueChange={onValueChange} availableForEditing={availableForEditing} />
-            {/* just comment it for now we need this network section later  */}
-            {/* <Select
+      <>
+        <Box marginBottom="20px">
+          <FormGrid style={{ marginBottom: 8 }}>
+            <Select
               addCustom
-              label="Network Name"
+              label="Payout Token"
               placeholder="Select token or paste address"
               selectedItem={token}
-              items={tokensOptions}
+              items={payoutTokensOptions}
               onSelect={(item) => onValueChange('token', item)}
               required
               error={touched.token ? errors.token : ''}
               tooltipText="Select the token you want to distribute for this payout event. (Used if your security token has other tokens in its governance)."
               isDisabled={!availableForEditing.includes('token')}
-            /> */}
-            <div style={{ display: 'flex' }}>
-              <Select
-                addCustom
-                label="Token Amount"
-                placeholder="Select token or paste address"
-                selectedItem={token}
-                items={payoutTokensOptions}
-                onSelect={(item) => onValueChange('token', item)}
-                required
-                error={touched.token ? errors.token : ''}
-                tooltipText="Select the token you want to distribute for this payout event. (Used if your security token has other tokens in its governance)."
-                isDisabled={!availableForEditing.includes('token')}
-              />
-              <span style={{ marginTop: '30px', marginLeft: '-30px' }}>{tokenAmount}</span>
-            </div>
-
-            <DateInput
-              isDelayed
-              label="Payment Start Date"
-              placeholder="Choose start date"
-              maxHeight={60}
-              minDate={recordDate && isBefore(recordDate) ? dayjs(recordDate).add(1, 'days') : dayjs().add(1, 'days')}
-              maxDate={endDate ? dayjs(endDate).subtract(1, 'days') : undefined}
-              openTo="date"
-              value={startDate}
-              onChange={(newDate) => onValueChange('startDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
+            />
+            <TextInput
+              placeholder="1000"
+              label="Token Amount"
               required
-              error={touched.startDate ? errors.startDate : ''}
-              tooltipText="Select the date when the distribution of tokens for this payout event will start."
-              isDisabled={!availableForEditing.includes('startDate')}
-            />
-            <DateInput
-              isDelayed
-              label="Payment Deadline"
-              placeholder="Choose deadline"
-              maxHeight={60}
-              minDate={
-                startDate
-                  ? isBefore(dayjs(startDate))
-                    ? dayjs(startDate).add(1, 'days')
-                    : dayjs()
-                  : dayjs().add(2, 'days')
+              onChange={(e: any) =>
+                e.currentTarget.value.match(/^[\.0-9]*$/g) && onValueChange('tokenAmount', e.currentTarget.value)
               }
-              openTo="date"
-              value={values.endDate}
-              onChange={(newDate) => onValueChange('endDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
-              error={touched.endDate ? errors.endDate : ''}
-              tooltipText="Select the deadline when the distribution of tokens for this payout event will end."
-              isDisabled={!availableForEditing.includes('endDate')}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          {' '}
-          <Box marginBottom="20px">
-            <FormGrid style={{ marginBottom: 8 }}>
-              <Select
-                addCustom
-                label="Payout Token"
-                placeholder="Select token or paste address"
-                selectedItem={token}
-                items={payoutTokensOptions}
-                onSelect={(item) => onValueChange('token', item)}
-                required
-                error={touched.token ? errors.token : ''}
-                tooltipText="Select the token you want to distribute for this payout event. (Used if your security token has other tokens in its governance)."
-                isDisabled={!availableForEditing.includes('token')}
-              />
-              <TextInput
-                placeholder="1000"
-                label="Token Amount"
-                required
-                onChange={(e: any) =>
-                  e.currentTarget.value.match(/^[\.0-9]*$/g) && onValueChange('tokenAmount', e.currentTarget.value)
-                }
-                value={tokenAmount}
-                error={touched.tokenAmount ? errors.tokenAmount : ''}
-                tooltipText="Indicate the total number of tokens you want to distribute for this payout event."
-                disabled={!availableForEditing.includes('tokenAmount')}
-              />
-            </FormGrid>
-            {!isRecordFuture && recordDate && tokenAmount && token && secToken && (
-              <ExtraInfoCard>
-                <TYPE.description2 fontWeight={400}>
-                  <Trans>{`Payout token computed as of ${formatDate(recordDate, 'LL')} at ${(
-                    +tokenAmount / totalSecTokenSum
-                  ).toFixed(2)} ${token.label} per SEC token`}</Trans>
-                </TYPE.description2>
-              </ExtraInfoCard>
-            )}
-          </Box>
-          <FormGrid style={{ marginBottom: 24 }}>
-            <DateInput
-              label="Payment Start Date"
-              placeholder="Choose start date"
-              maxHeight={60}
-              minDate={recordDate && isBefore(recordDate) ? dayjs(recordDate).add(1, 'days') : dayjs().add(1, 'days')}
-              maxDate={endDate ? dayjs(endDate).subtract(1, 'days') : undefined}
-              openTo="date"
-              value={startDate}
-              onChange={(newDate) => onValueChange('startDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
-              required
-              error={touched.startDate ? errors.startDate : ''}
-              tooltipText="Select the date when the distribution of tokens for this payout event will start."
-              isDisabled={!availableForEditing.includes('startDate')}
-            />
-            <DateInput
-              label="Payment Deadline"
-              placeholder="Choose deadline"
-              maxHeight={60}
-              minDate={
-                startDate
-                  ? isBefore(dayjs(startDate))
-                    ? dayjs(startDate).add(1, 'days')
-                    : dayjs()
-                  : dayjs().add(2, 'days')
-              }
-              openTo="date"
-              value={values.endDate}
-              onChange={(newDate) => onValueChange('endDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
-              error={touched.endDate ? errors.endDate : ''}
-              tooltipText="Select the deadline when the distribution of tokens for this payout event will end."
-              isDisabled={!availableForEditing.includes('endDate')}
+              value={tokenAmount}
+              error={touched.tokenAmount ? errors.tokenAmount : ''}
+              tooltipText="Indicate the total number of tokens you want to distribute for this payout event."
+              disabled={!availableForEditing.includes('tokenAmount')}
             />
           </FormGrid>
-        </>
-      )}
+          {!isRecordFuture && recordDate && tokenAmount && token && secToken && (
+            <ExtraInfoCard>
+              <TYPE.description2 fontWeight={400}>
+                <Trans>{`Payout token computed as of ${formatDate(recordDate, 'LL')} at ${(
+                  +tokenAmount / totalSecTokenSum
+                ).toFixed(2)} ${token.label} per SEC token`}</Trans>
+              </TYPE.description2>
+            </ExtraInfoCard>
+          )}
+        </Box>
+        <FormGrid style={{ marginBottom: 24 }}>
+          <DateInput
+            label="Payment Start Date"
+            placeholder="Choose start date"
+            maxHeight={60}
+            minDate={recordDate && isBefore(recordDate) ? dayjs(recordDate).add(1, 'days') : dayjs().add(1, 'days')}
+            maxDate={endDate ? dayjs(endDate).subtract(1, 'days') : undefined}
+            openTo="date"
+            value={startDate}
+            onChange={(newDate) => onValueChange('startDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
+            required
+            error={touched.startDate ? errors.startDate : ''}
+            tooltipText="Select the date when the distribution of tokens for this payout event will start."
+            isDisabled={!availableForEditing.includes('startDate')}
+          />
+          <DateInput
+            label="Payment Deadline"
+            placeholder="Choose deadline"
+            maxHeight={60}
+            minDate={
+              startDate
+                ? isBefore(dayjs(startDate))
+                  ? dayjs(startDate).add(1, 'days')
+                  : dayjs()
+                : dayjs().add(2, 'days')
+            }
+            openTo="date"
+            value={values.endDate}
+            onChange={(newDate) => onValueChange('endDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
+            error={touched.endDate ? errors.endDate : ''}
+            tooltipText="Select the deadline when the distribution of tokens for this payout event will end."
+            isDisabled={!availableForEditing.includes('endDate')}
+          />
+        </FormGrid>
+      </>
 
       <FormGrid columns={1} style={{ marginBottom: 24 }}>
         <TextInput
