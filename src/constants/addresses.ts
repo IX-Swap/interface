@@ -158,8 +158,8 @@ export const IXSALE_ADDRESS: { [key: number]: string } = {
 export const PAYOUT_ADDRESS = {
   [42]: '0xBf432B246e20afa1E26170932b8aD067F2dD52B2',
   [137]: '0xd1B888b6fe05d9737ad0a0800253CD706254DB64',
-  [80002]: '0x26a75ae5083907f42a8bb05e5523471eCEdeF72A', // amoy
-  [84532]: '0xA77948a1B84f7F4BF4e7e390032E671a5835591D', // base sepolia
+  [80002]: '0xad254DcBBedD1455D21848F668fE120DCec52E4c', // amoy
+  [84532]: '0x72Dc60450Daf5c72d2b6b9a52f4Db7321Ffdb7Ad', // base sepolia
 } as Record<number, string>
 
 export const PAYOUT_AIRDROP_PROXY_ADDRESS = {

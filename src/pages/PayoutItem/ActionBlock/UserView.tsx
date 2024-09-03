@@ -69,13 +69,11 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const claim = useCallback(async () => {
     try {
       handleIsLoading(true)
-      const nonce = await payoutContract?.nonce(contractPayoutId, account)
 
       const authorization = await getClaimAuthorization({
         id,
         token: payoutToken.address,
         deadline: dayjs().add(1, 'hour').toISOString(),
-        nonce,
       })
 
       const tx = await payoutContract?.claim(authorization)

@@ -388,7 +388,6 @@ export const getMyClaimableAmount = async (id: number) => {
 
 interface GetClaimAuthorization {
   token: string
-  nonce: number
   deadline: string
   id: number
 }
