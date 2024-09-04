@@ -232,7 +232,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
       <Row style={{ marginTop: '4px', marginBottom: '8px' }}>
         <PinnedContentButton
           style={{ textTransform: 'unset' }}
-          disabled={!!inputError || loadingDeposit || amountInput > tokenBalance}
+          disabled={!!inputError || loadingDeposit || Number(amountInput) > Number(tokenBalance)}
           onClick={() => handleDeposit()}
         >
           {loadingDeposit ? <>Waiting for confirmation...</> : <> {inputError ?? <Trans>Deposit</Trans>}</>}
