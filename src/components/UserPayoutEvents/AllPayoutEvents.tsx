@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import { useLocation } from 'react-router-dom'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { MultipleFilters } from 'components/MultipleFilters'
 import { useGetPayoutList, usePayoutState } from 'state/payout/hooks'
@@ -12,6 +12,7 @@ import { AllPayoutContainer, AllPayoutFilterContainer, AllPayoutListContainer, A
 import { TmEmptyPage } from 'components/TmEmptyPage'
 
 export const AllPayoutEvents = () => {
+  const { pathname } = useLocation()
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
 
@@ -24,7 +25,7 @@ export const AllPayoutEvents = () => {
       handleHaveFilters(true)
     }
     getPayoutList({ ...filters, offset: 16, page: 1 })
-  }, [filters, getPayoutList])
+  }, [JSON.stringify(filters), getPayoutList, pathname])
 
   const onPageChange = async (page: number) => {
     await getPayoutList({ ...filters, page, offset: 16 })
@@ -33,7 +34,7 @@ export const AllPayoutEvents = () => {
 
   return (
     <>
-      {list.items?.length === 0 ? <LoadingIndicator noOverlay={true}  isLoading={loadingRequest} /> : null}
+      <LoadingIndicator noOverlay={true} isLoading={loadingRequest && list.items?.length === 0} />
       {list.items?.length || haveFilters ? (
         <AllPayoutContainer>
           <AllPayoutFilterContainer>
@@ -57,7 +58,12 @@ export const AllPayoutEvents = () => {
                     <Card key={payout.id} data={payout} />
                   ))}
                 </AllPayoutListContainer>
-                <Pagination totalItems={list.totalItems} totalPages={list.totalPages} page={list.page || 1} onPageChange={onPageChange} />
+                <Pagination
+                  totalItems={list.totalItems}
+                  totalPages={list.totalPages}
+                  page={list.page || 1}
+                  onPageChange={onPageChange}
+                />
               </>
             ) : (
               <EmptyState filtred />
