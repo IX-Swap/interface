@@ -15,12 +15,12 @@ import { useCurrency } from 'hooks/Tokens'
 import { PAYOUT_AIRDROP_PROXY_ADDRESS } from 'constants/addresses'
 import { usePayoutAirdropContract } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { floorToDecimals, safeParseUnits } from 'utils/formatCurrencyAmount'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { useAddPopup } from 'state/application/hooks'
 import { routes } from 'utils/routes'
-import { findChainName } from 'chains'
+import { findChainName } from 'utils/chains'
 
 interface Props {
   maxTransfer: number
