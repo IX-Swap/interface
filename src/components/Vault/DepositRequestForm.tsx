@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useDispatch } from 'react-redux'
+import { isMobile } from 'react-device-detect'
 
 import { ReactComponent as DownArrow } from 'assets/images/DownArrow.svg'
 import { PinnedContentButton } from 'components/Button'
@@ -37,10 +38,7 @@ import Copy from 'components/AccountDetails/Copy'
 import { parseUnits } from 'ethers/lib/utils'
 import { DepositView, setWalletState } from 'state/wallet'
 import { useGetEventCallback } from 'state/eventLog/hooks'
-import { setModalView } from 'state/deposit/actions'
-import { DepositModalView } from 'state/deposit/reducer'
-import { ApplicationModal } from 'state/application/actions'
-import { useToggleModal } from 'state/application/hooks'
+import { shortAddress } from 'utils'
 
 interface Props {
   currency?: SecCurrency & { tokenInfo?: { decimals?: number; originalDecimals?: number } }
@@ -59,7 +57,6 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const tokenDecimals = useDecimals(token?.address ?? '') ?? 18
   const dispatch = useDispatch()
   const getEvents = useGetEventCallback()
-  const toggle = useToggleModal(ApplicationModal.DEPOSIT)
 
   const [amountInputValue, setAmountInputValue] = useState('')
   const [tokenBalance, setTokenBalance] = useState('0')
@@ -147,7 +144,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '16px' }}>
-        <BlueGreyCard>
+        <Section>
           <Column style={{ gap: '11px' }}>
             <Row justify="space-between">
               <TYPE.title11>
@@ -178,19 +175,24 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               </TYPE.title11>
             </Row>
             <AddressInput
-              {...{ id: 'sender-input', value: sender, error, onChange: onTypeSender, disabled: true }}
+              {...{
+                id: 'sender-input',
+                value: isMobile ? shortAddress(sender) : sender,
+                error,
+                onChange: onTypeSender,
+                disabled: true,
+              }}
               placeholder="My wallet address"
               rightItem={<StatusIcon connector={connector} />}
             />
           </Column>
-          <Line />
-        </BlueGreyCard>
+        </Section>
       </Column>
       <ArrowWrapper>
         <DownArrow />
       </ArrowWrapper>
       <Column style={{ gap: '25px', marginTop: '10px' }}>
-        <BlueGreyCard>
+        <Section>
           <Column style={{ gap: '11px' }}>
             <Row>
               <TYPE.title11>
@@ -200,7 +202,9 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
             <AddressInput
               {...{
                 id: 'sender-input',
-                value: tokenInfo?.custodyAssetAddress || '',
+                value: isMobile
+                  ? shortAddress(tokenInfo?.custodyAssetAddress || '')
+                  : tokenInfo?.custodyAssetAddress || '',
                 error,
                 onChange: onTypeSender,
                 disabled: true,
@@ -232,9 +236,9 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               symbol={currency?.symbol}
             />
           </Column>
-        </BlueGreyCard>
+        </Section>
       </Column>
-      <Row style={{ padding: '1rem' }}>
+      <Row style={{ marginTop: 24 }}>
         <PinnedContentButton
           style={{ textTransform: 'unset' }}
           disabled={!!inputError || loadingDeposit || Number(amountInput) > Number(tokenBalance)}
@@ -266,7 +270,6 @@ const CurrentBalance = styled.div`
 `
 
 export const ArrowWrapper = styled.div`
-  // padding: 7px 5px;
   border-radius: 100%;
   margin: 0px auto;
   height: 31px;
@@ -274,5 +277,10 @@ export const ArrowWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  // background-color: ${({ theme }) => theme.bg9};
+`
+
+const Section = styled.div`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 16px 0;
+  `};
 `

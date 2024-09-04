@@ -156,7 +156,7 @@ const Container = styled.div<{ isSuccess: boolean }>`
   background: ${({ theme }) => theme.bg0};
   border-radius: 0px 0px 20px 20px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    padding: 10px 16px;
+    padding: 10px 0;
   }
 
   > div:first-child {

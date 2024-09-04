@@ -91,15 +91,14 @@ export const DepositCard = ({ currency, token }: Props) => {
         )}
 
         <TokenName>
-          {currency?.originalSymbol || ''} <span>({networkName} Network)</span>
+          <div>{currency?.originalSymbol || ''}</div>
+          <div className="network">({networkName} Network)</div>
         </TokenName>
       </Flex>
 
       <ModalContentWrapper>
-        <ModalPadding>
-          {depositView === DepositView.CREATE_REQUEST && <DepositRequestForm token={token} currency={currency} />}
-          {depositView === DepositView.PENDING && <DepositTransaction currency={token} />}
-        </ModalPadding>
+        {depositView === DepositView.CREATE_REQUEST && <DepositRequestForm token={token} currency={currency} />}
+        {depositView === DepositView.PENDING && <DepositTransaction currency={token} />}
       </ModalContentWrapper>
 
       <DepositPopup currency={token?.token} token={token} />
@@ -108,6 +107,10 @@ export const DepositCard = ({ currency, token }: Props) => {
 }
 
 const Container = styled.div`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100%;
+    padding: 24px 16px;
+  `};
   padding: 48px;
   width: 780px;
   background: #fff;
@@ -153,8 +156,16 @@ const TokenName = styled.div`
   line-height: 140%;
   letter-spacing: -0.6px;
   margin-left: 8px;
+  display: flex;
+  align-items: center;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex-direction: column;
+  `};
 
-  span {
+  .network {
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+      margin-left: 0
+    `};
     margin-left: 8px;
     color: #8f8fb2;
     font-size: 13px;
