@@ -26,6 +26,8 @@ import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { checkWrongChain } from 'chains'
 import Portal from '@reach/portal'
+import { BackButton, StyledArrowBack, BackText } from 'pages/PayoutItem/PayoutItemManager'
+import { routes } from 'utils/routes'
 const EditPayoutEventPage: FC = () => {
   const { id } = useParams<{ id?: string }>()
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -106,6 +108,10 @@ const EditPayoutEventPage: FC = () => {
     return null
   }
 
+  const handleBackClick = () => {
+    history.push(routes.payoutEvent)
+  }
+
   return (
     <Loadable loading={!isLoggedIn}>
       {isWrongChain ? (
@@ -117,6 +123,10 @@ const EditPayoutEventPage: FC = () => {
       ) : null}
       <FullScreenBackground>
         <StyledBodyWrapper style={{ minWidth: 1200 }} hasAnnouncement={!cookies.annoucementsSeen}>
+          <BackButton onClick={handleBackClick}>
+            <StyledArrowBack />
+            <BackText>Back</BackText>
+          </BackButton>
           <Flex marginBottom="32px" alignItems="center">
             <PageTitle textAlign="center" margin="0 auto">
               <TYPE.title6>Edit Payout Event</TYPE.title6>
