@@ -193,8 +193,6 @@ const CreateTenant = () => {
             return
           }
 
-          debugger
-
           formik.setFieldValue('name', data.name)
           formik.setFieldValue('title', data.title)
           formik.setFieldValue('domain', data.domain)
