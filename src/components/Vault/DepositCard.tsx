@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Flex } from 'rebass'
+import { useWeb3React } from '@web3-react/core'
 
 import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { AppDispatch } from 'state'
 import { useDepositModalToggle } from 'state/application/hooks'
 import { setError, setLoading, setModalView } from 'state/deposit/actions'
-import { useDepositActionHandlers, useHideAboutWrappingCallback } from 'state/deposit/hooks'
+import { useDepositActionHandlers, useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hooks'
 import { DepositModalView } from 'state/deposit/reducer'
 import { useUserSecTokens } from 'state/user/hooks'
 import { ModalContentWrapper, ModalPadding } from 'theme'
 import { SecCurrency } from 'types/secToken'
-
 import { DepositAboutWrapping } from './DepositAboutWrapping'
 import { DepositError } from './DepositError'
 import { DepositRequestForm } from './DepositRequestForm'
@@ -22,6 +22,8 @@ import CurrencyLogo from '../CurrencyLogo'
 import { DepositView, setWalletState } from 'state/wallet'
 import { useWalletState } from 'state/wallet/hooks'
 import { DepositTransaction } from './DepositTransaction'
+import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
+import { DepositStatus } from './enum'
 
 interface Props {
   currency?: SecCurrency
@@ -38,6 +40,12 @@ export const DepositCard = ({ currency, token }: Props) => {
   const networkName = getOriginalNetworkFromToken(tokenInfo)
   const { onResetDeposit } = useDepositActionHandlers()
   const { depositView } = useWalletState()
+  const { account } = useWeb3React()
+  const { currencyId: cid } = useDepositState()
+  const getEvents = useGetEventCallback()
+  const { eventLog } = useEventState()
+
+  const eventStatus = eventLog?.[0]?.status as DepositStatus
 
   const onClose = useCallback(() => {
     onResetDeposit()
@@ -55,6 +63,26 @@ export const DepositCard = ({ currency, token }: Props) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
+
+  useEffect(() => {
+    if (account) {
+      const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
+
+      const interval = setInterval(() => {
+        getEvents({ tokenId, page: 1, filter: 'all' })
+      }, 15000)
+
+      return () => {
+        clearInterval(interval)
+      }
+    }
+  }, [account])
+
+  useEffect(() => {
+    if ([DepositStatus.PENDING, DepositStatus.APPROVED].includes(eventStatus)) {
+      dispatch(setWalletState({ depositView: DepositView.PENDING }))
+    }
+  }, [eventStatus])
 
   return (
     <Container>
