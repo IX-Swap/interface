@@ -5,7 +5,6 @@ import { useWeb3React } from '@web3-react/core'
 
 import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { AppDispatch } from 'state'
-import { useDepositModalToggle } from 'state/application/hooks'
 import { setError, setLoading } from 'state/deposit/actions'
 import { useDepositActionHandlers, useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
@@ -32,7 +31,6 @@ interface Props {
 export const DepositCard = ({ currency, token }: Props) => {
   const { secTokens } = useUserSecTokens()
   const hideAboutWrapping = useHideAboutWrappingCallback()
-  const toggle = useDepositModalToggle()
   const dispatch = useDispatch<AppDispatch>()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const networkName = getOriginalNetworkFromToken(tokenInfo)
@@ -49,7 +47,6 @@ export const DepositCard = ({ currency, token }: Props) => {
     onResetDeposit()
     dispatch(setError({ errorMessage: '' }))
     dispatch(setLoading({ loading: false }))
-    toggle()
     hideAboutWrapping()
     dispatch(setWalletState({ isOpenDepositCard: false, depositView: DepositView.CREATE_REQUEST }))
   }
