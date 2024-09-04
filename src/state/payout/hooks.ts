@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import moment from 'moment'
 
 import { AppDispatch, AppState } from 'state'
 import apiService from 'services/apiService'
