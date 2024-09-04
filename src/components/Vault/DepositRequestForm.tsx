@@ -64,7 +64,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const networkName = getOriginalNetworkFromToken(tokenInfo)
   const error = Boolean(sender.length > 0 && !loading && !address && networkName === 'Ethereum')
   const computedAddress = networkName === 'Ethereum' ? address : sender
-  const amountInput = amount ?? amountInputValue;
+  const amountInput = amount ?? amountInputValue
 
   const fetchTokenBalance = async () => {
     if (!tokenContract || !account) return
@@ -229,7 +229,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
           </Column>
         </BlueGreyCard>
       </Column>
-      <Row style={{ marginTop: '4px', marginBottom: '8px' }}>
+      <Row style={{ padding: '1rem' }}>
         <PinnedContentButton
           style={{ textTransform: 'unset' }}
           disabled={!!inputError || loadingDeposit || Number(amountInput) > Number(tokenBalance)}
