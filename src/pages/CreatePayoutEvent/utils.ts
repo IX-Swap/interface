@@ -31,6 +31,7 @@ export interface FormValues {
 export const availableInputsForEdit = (status = '', paid = false) => {
   const availableForEditing = {
     [PAYOUT_STATUS.DRAFT]: [
+      'id',
       'title',
       'description',
       'type',
@@ -47,6 +48,7 @@ export const availableInputsForEdit = (status = '', paid = false) => {
       'blockNumber',
     ],
     [PAYOUT_STATUS.ANNOUNCED]: [
+      'id',
       'title',
       'description',
       'secTokenAmount',
@@ -57,9 +59,9 @@ export const availableInputsForEdit = (status = '', paid = false) => {
       'token',
       'files',
     ],
-    [PAYOUT_STATUS.SCHEDULED]: ['title', 'description', 'startDate', 'endDate', 'files'],
-    [PAYOUT_STATUS.DELAYED]: ['title', 'description', 'startDate', 'endDate', 'files'],
-    [PAYOUT_STATUS.STARTED]: ['title', 'description', 'endDate', 'files'],
+    [PAYOUT_STATUS.SCHEDULED]: ['id', 'title', 'description', 'startDate', 'endDate', 'files'],
+    [PAYOUT_STATUS.DELAYED]: ['id', 'title', 'description', 'startDate', 'endDate', 'files'],
+    [PAYOUT_STATUS.STARTED]: ['id', 'title', 'description', 'endDate', 'files'],
     [PAYOUT_STATUS.ENDED]: [],
   } as Record<string, string[]>
 

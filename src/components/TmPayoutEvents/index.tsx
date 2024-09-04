@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Flex } from 'rebass'
 import { routes } from 'utils/routes'
 import { MultipleFilters } from 'components/MultipleFilters'
@@ -20,13 +20,13 @@ import { TmEmptyPage } from 'components/TmEmptyPage'
 import { PayoutEvent } from 'state/token-manager/types'
 import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
-import { useDeletePayoutItem, usePayoutState } from 'state/payout/hooks'
+import { useDeletePayoutItem } from 'state/payout/hooks'
 import { AreYouSureModal } from 'components/AreYouSureModal'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { ReactComponent as DeleteIcon } from 'assets/images/delete-basket.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { StatusCell } from './StatusCell'
-import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton, ActionsContainer } from './styleds'
+import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ActionsContainer } from './styleds'
 import { PAYOUT_TYPE_LABEL } from './constants'
 import { TYPE } from 'theme'
 import { Line } from 'components/Line'
@@ -37,12 +37,12 @@ const headerCells = [`ID`, `Status`, `Payout type`, `SEC token`, `Payment period
 
 export const TmPayoutEvents = () => {
   const history = useHistory()
+  const { pathname } = useLocation()
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
   const { account } = useUserState()
   const { token } = useAuthState()
   const { payoutList, isLoading } = useTokenManagerState()
-  const { loadingRequest } = usePayoutState()
   const getMyPayouts = useGetMyPayout()
 
   useEffect(() => {
@@ -62,13 +62,12 @@ export const TmPayoutEvents = () => {
         getMyPayouts({ offset: 10, my: true, page: 1 })
       }
     }
-  }, [filters, account, token])
+  }, [JSON.stringify(filters), account, token, pathname])
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     getMyPayouts({ ...filters, page, offset: 10, my: true })
   }
-
 
   const goToCreate = () => {
     history.push(routes.createPayoutEvent)
@@ -76,7 +75,7 @@ export const TmPayoutEvents = () => {
 
   return (
     <>
-      <LoadingIndicator noOverlay={true}  isLoading={isLoading || loadingRequest} />
+      <LoadingIndicator noOverlay={true} isLoading={isLoading && payoutList.items?.length === 0} />
       {payoutList.items?.length || haveFilters ? (
         <Container>
           <MultipleFilters
