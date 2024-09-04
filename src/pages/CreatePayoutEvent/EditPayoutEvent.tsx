@@ -127,7 +127,7 @@ const EditPayoutEventPage: FC = () => {
           </ButtonText> */}
           </Flex>
           <Info />
-          <PayoutForm payoutData={payoutFormData} status={status} paid={payout?.isPaid ?? false} />
+          <PayoutForm payoutData={payoutFormData} status={status} paid={!!payout?.paidTxHash} />
         </StyledBodyWrapper>
       </FullScreenBackground>
     </Loadable>

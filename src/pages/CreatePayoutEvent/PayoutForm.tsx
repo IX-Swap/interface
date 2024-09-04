@@ -123,7 +123,6 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   const { values, errors, touched, setFieldValue, handleSubmit } = formik
   const { recordDate, secToken, includeOriginSupply } = values
 
-
   useEffect(() => {
     if (payoutData) {
       onValueChange('secToken', payoutData.secToken)
@@ -187,7 +186,6 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
       setIsAmountLoading(false)
     }
   }
-
 
   return (
     <FormikProvider value={formik}>
