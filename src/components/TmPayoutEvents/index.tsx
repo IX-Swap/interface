@@ -18,7 +18,7 @@ import { Pagination } from 'components/Pagination'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { TmEmptyPage } from 'components/TmEmptyPage'
 import { PayoutEvent } from 'state/token-manager/types'
-import { useUserState } from 'state/user/hooks'
+import { useRole, useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
 import { useDeletePayoutItem } from 'state/payout/hooks'
 import { AreYouSureModal } from 'components/AreYouSureModal'
@@ -36,6 +36,7 @@ import { TokenLogo } from 'components/TokenLogo'
 const headerCells = [`ID`, `Status`, `Payout type`, `SEC token`, `Payment period`, `Record date`, `Amount claimed`, '']
 
 export const TmPayoutEvents = () => {
+  const { isAdmin } = useRole()
   const history = useHistory()
   const { pathname } = useLocation()
   const [filters, handleFilters] = useState<Record<string, any>>({})
@@ -50,7 +51,7 @@ export const TmPayoutEvents = () => {
       const filtersApplied = Object.keys(filters).length > 0
       handleHaveFilters(filtersApplied)
       if (!payoutList.items?.length || filtersApplied) {
-        getMyPayouts({ ...filters, offset: 10, my: true, page: 1 })
+        getMyPayouts({ ...filters, offset: 10, my: !isAdmin, page: 1 })
           .then((response) => {
             if (!response.items?.length) {
             }
@@ -59,14 +60,14 @@ export const TmPayoutEvents = () => {
             console.error('Failed to fetch data:', error)
           })
       } else {
-        getMyPayouts({ offset: 10, my: true, page: 1 })
+        getMyPayouts({ offset: 10, my: !isAdmin, page: 1 })
       }
     }
-  }, [JSON.stringify(filters), account, token, pathname])
+  }, [JSON.stringify(filters), account, token, pathname, isAdmin])
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    getMyPayouts({ ...filters, page, offset: 10, my: true })
+    getMyPayouts({ ...filters, page, offset: 10, my: !isAdmin })
   }
 
   const goToCreate = () => {
