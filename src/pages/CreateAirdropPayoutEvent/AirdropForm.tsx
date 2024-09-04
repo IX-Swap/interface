@@ -26,15 +26,18 @@ export const AirdropForm = () => {
 
   const secTokensOptions = useMemo(() => {
     if (me?.managerOf?.length) {
-      return me.managerOf.map(({ token }) => ({
-        isDisabled: token?.chainId !== chainId,
-        label: token?.symbol,
-        value: token?.id,
-        icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
-      }))
+      return me.managerOf
+        .map(({ token }) => ({
+          isDisabled: token?.chainId !== chainId,
+          label: token?.symbol,
+          value: token?.id,
+          icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
+          network: token?.network,
+        }))
+        .sort((a: any, b: any) => a.isDisabled - b.isDisabled)
     }
     return []
-  }, [me])
+  }, [me, chainId])
 
   const { error } = usePayoutState()
 
@@ -91,6 +94,8 @@ export const AirdropForm = () => {
               error={touched.secToken ? errors.secToken : ''}
               required
               isDisabled={!availableForEditing.includes('secToken')}
+              isNetworkVisiable={true}
+              isTokenLogoVisible={true}
             />
 
             <TextInput

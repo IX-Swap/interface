@@ -140,6 +140,7 @@ export const PayoutEventBlock: FC<Props> = ({
               error={touched.token ? errors.token : ''}
               tooltipText="Select the token you want to distribute for this payout event. (Used if your security token has other tokens in its governance)."
               isDisabled={!availableForEditing.includes('token')}
+              isTokenLogoVisible={true}
             />
             <TextInput
               placeholder="1000"

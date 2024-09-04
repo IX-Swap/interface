@@ -65,6 +65,8 @@ interface SelectProps {
   id?: any
   value?: any
   subText?: string
+  isNetworkVisiable?: boolean
+  isTokenLogoVisible?: boolean
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
@@ -127,6 +129,8 @@ export const Select: FC<SelectProps> = ({
   required,
   tooltipText,
   isDisabled,
+  isNetworkVisiable,
+  isTokenLogoVisible,
   ...rest
 }: SelectProps) => {
   return (
@@ -147,6 +151,8 @@ export const Select: FC<SelectProps> = ({
           options={items}
           error={error}
           isDisabled={isDisabled}
+          isNetworkVisiable={isNetworkVisiable}
+          isTokenLogoVisible={isTokenLogoVisible}
           {...rest}
         />
       )}
