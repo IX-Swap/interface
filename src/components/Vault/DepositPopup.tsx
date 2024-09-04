@@ -17,7 +17,6 @@ import { useUserSecTokens } from 'state/user/hooks'
 import { ModalBlurWrapper, ModalContentWrapper, ModalPadding, CloseIcon, TYPE } from 'theme'
 import { SecCurrency } from 'types/secToken'
 
-import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { DepositAboutWrapping } from './DepositAboutWrapping'
 import { DepositError } from './DepositError'
 import { DepositPending } from './DepositPending'
