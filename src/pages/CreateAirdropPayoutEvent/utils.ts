@@ -21,7 +21,7 @@ export interface FormValues {
   startDate: string
   endDate: string
   csvRows: string[][]
-  tokenAmount: number
+  tokenAmount: string
 }
 
 export const availableInputsForEdit = (status = '', paid = false) => {

@@ -11,5 +11,5 @@ export const initialValues: FormValues = {
   token: null,
   files: [],
   csvRows: [],
-  tokenAmount: 0,
+  tokenAmount: '',
 }
