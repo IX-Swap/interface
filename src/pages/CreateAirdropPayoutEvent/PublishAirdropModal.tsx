@@ -160,7 +160,7 @@ export const PublishAirdropModal: FC<Props> = ({
             <StyledDivider />
             <CardContentWrapper>
               <ContentLabel>{totalWallets}</ContentLabel>
-              <ContentLabel>{floorToDecimals(tokenAmount, 3)}</ContentLabel>
+              <ContentLabel>{floorToDecimals(+tokenAmount, 3)}</ContentLabel>
             </CardContentWrapper>
           </StyledCard>
           {batchLength > 1 && (

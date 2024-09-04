@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { FileWithPath } from 'react-dropzone'
 import { TYPE } from 'theme'
+import Big from 'big.js'
 import { Label } from 'components/Label'
 import Upload from 'components/Upload'
 import { FilePreview, FilePreviewPayout } from 'components/FilePreview'
@@ -35,7 +36,7 @@ export interface UploaderProps {
   isPayoutpage?: boolean
   acceptedFileTypes?: string[]
   setTotalWallets?: (value: number) => void
-  setTotalAmount?: (value: number) => void
+  setTotalAmount?: (value: string) => void
   onCsvRowsChange?: (value: string[][]) => void
 }
 
@@ -87,11 +88,11 @@ export const Uploader: FC<UploaderProps> = ({
     const [headers, ...rows] = parsed
 
     if (headers[0].trim() !== 'walletAddress' || headers[1].trim() !== 'amount') {
-      showError('Invalid file: The file headers must be "WalletAddress" and "amount".')
+      showError('Invalid file: The file headers must be "walletAddress" and "amount"')
       setCsvRows([])
       onCsvRowsChange?.([])
       setTotalWallets?.(0)
-      setTotalAmount?.(0)
+      setTotalAmount?.('0')
       return
     }
 
@@ -122,14 +123,14 @@ export const Uploader: FC<UploaderProps> = ({
       setCsvRows([])
       onCsvRowsChange?.([])
       setTotalWallets?.(0)
-      setTotalAmount?.(0)
+      setTotalAmount?.('0')
     } else {
       setCsvRows(validatedRows)
       onCsvRowsChange?.(validatedRows)
       const totalWallets = validatedRows.length
-      const totalAmount = validatedRows.reduce((sum, row) => sum + parseFloat(row[1]), 0)
+      const totalAmount = validatedRows.reduce((sum, [, amount]) => sum.add(new Big(amount)), new Big(0))
       setTotalWallets?.(totalWallets)
-      setTotalAmount?.(totalAmount)
+      setTotalAmount?.(totalAmount.toString())
     }
   }
 
