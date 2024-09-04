@@ -133,10 +133,9 @@ const MultiValue = (props: any) => {
   const itemIndex = valuesArray.findIndex(({ value }) => value === props?.data?.value)
 
   const isLast = itemIndex === valuesArray.length - 1
-
   return (
     <StyledValue>
-      {props.data?.token ? renderIcon(props?.data) : null}
+      {props.data ? renderIcon(props?.data) : null}
       {`${props?.data?.label}${isLast ? '' : `,`}`}
       {!isLast && <>&nbsp;</>}
     </StyledValue>
@@ -246,7 +245,6 @@ export const Select = ({
     }
     return options
   }, [options, addCustom, search, token])
-
   return (
     <StyledReactSelect
       menuPortalTarget={document.body}

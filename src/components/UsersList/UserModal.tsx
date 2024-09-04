@@ -224,6 +224,8 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
     getAllTenants()
   }, [])
 
+
+
   return (
     <>
       <RedesignedWideModal isOpen onDismiss={close}>
@@ -320,6 +322,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                   items={Object.values(tokensOptions)}
                   onSelect={handleSelectedTokens}
                   placeholder="Choose RWAs"
+                  isTokenLogoVisible
                 />
               )}
               <div style={{ display: 'flex' }}>
