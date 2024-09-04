@@ -18,7 +18,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ id, name, value, setFieldValu
         name={name}
         format="hex"
         value={value}
-        onChange={(value) => setFieldValue(name, value)}
+        onChange={(value: string) => setFieldValue(name, value)}
         fullWidth
         variant="outlined"
       />

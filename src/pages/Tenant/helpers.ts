@@ -80,7 +80,7 @@ export function getActiveRoutes(pages: PagesConfig): string {
 }
 
 function isSubset(largerArray: string[], smallerArray: string[]) {
-  return smallerArray.every(element => largerArray.includes(element));
+  return smallerArray.every((element) => largerArray.includes(element))
 }
 
 export function checkExistInPageGroup(pagesSource: string) {
@@ -96,7 +96,7 @@ export function checkExistInPageGroup(pagesSource: string) {
     admin: false,
   }
 
-  const pagesArray = JSON.parse(pagesSource);
+  const pagesArray = JSON.parse(pagesSource)
 
   if (isSubset(pagesArray, pagesGroup.dex)) {
     pages.dex = true
@@ -126,5 +126,5 @@ export function checkExistInPageGroup(pagesSource: string) {
     pages.admin = true
   }
 
-  return pages;
+  return pages
 }

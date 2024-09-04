@@ -188,12 +188,13 @@ const CreateTenant = () => {
         try {
           const response = await apiService.get(`${whitelabel.config}/${id}`)
           const { data, status } = response
-
           if (status !== 200) {
             showError('Failed to fetch tenant details')
             return
           }
-          console.log('JSON.parse(data.tokens)', JSON.parse(data.tokens))
+
+          debugger
+
           formik.setFieldValue('name', data.name)
           formik.setFieldValue('title', data.title)
           formik.setFieldValue('domain', data.domain)
@@ -203,7 +204,6 @@ const CreateTenant = () => {
           formik.setFieldValue('isIxSwap', data.isIxSwap)
           formik.setFieldValue('enableLbp', data.enableLbp)
           formik.setFieldValue('enableFeaturedSecurityVaults', data.enableFeaturedSecurityVaults)
-          formik.setFieldValue('pages', checkExistInPageGroup(data.pages))
           formik.setFieldValue('chartsUrl', data.chartsUrl)
           formik.setFieldValue('defaultUrl', data.defaultUrl)
           formik.setFieldError('colorButtonPrimary', JSON.parse(data.colors).button.primary)
@@ -226,7 +226,9 @@ const CreateTenant = () => {
           formik.setFieldValue('linkedin', footerConfig.socialLinks.linkedin)
           formik.setFieldValue('youtube', footerConfig.socialLinks.youtube)
           formik.setFieldValue('twitter', footerConfig.socialLinks.twitter)
+          formik.setFieldValue('pages', checkExistInPageGroup(data.pages))
         } catch (error) {
+          console.error(error)
           showError('Failed to fetch tenant details')
         }
       }
