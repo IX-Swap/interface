@@ -101,6 +101,7 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
           required
           error={touched.token ? errors.token : ''}
           tooltipText="Select the token you want to distribute for this payout event. (Used if your security token has other tokens in its governance)."
+          isTokenLogoVisible={true}
           // isDisabled={!availableForEditing.includes('token')}
         />
         <TextInput

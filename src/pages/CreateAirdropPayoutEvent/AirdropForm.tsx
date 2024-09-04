@@ -31,6 +31,7 @@ export const AirdropForm = () => {
         label: token?.symbol,
         value: token?.id,
         icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
+        network: token?.network
       }))
     }
     return []
@@ -91,6 +92,8 @@ export const AirdropForm = () => {
               error={touched.secToken ? errors.secToken : ''}
               required
               isDisabled={!availableForEditing.includes('secToken')}
+              isNetworkVisiable={true}
+              isTokenLogoVisible={true}
             />
 
             <TextInput

@@ -9,8 +9,11 @@ import { useToken } from 'hooks/Tokens'
 import { Line } from 'components/Line'
 import { ReactComponent as DefaultTokenItem } from 'assets/images/NoToken.svg'
 import CurrencyLogo from 'components/CurrencyLogo'
+import { NETWORK_LOGOS } from 'constants/chains'
+import { NetworkLogo } from 'components/Launchpad/InvestmentCard'
+import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 
-type Option = { label?: string; value?: any; disabled?: boolean }
+type Option = { label?: string; value?: any; disabled?: boolean; network?: string }
 
 interface Props {
   onSelect: (item: any) => void
@@ -26,6 +29,8 @@ interface Props {
   isClearable?: boolean
   addCustom?: boolean
   id?: any
+  isNetworkVisiable?: boolean
+  isTokenLogoVisible?: boolean
 }
 
 const colourStyles = {
@@ -139,11 +144,20 @@ const MultiValue = (props: any) => {
 }
 
 const SingleValue = (props: any) => {
+  const networkLogo = props?.data?.network ? NETWORK_LOGOS[props?.data?.network] : ''
   return (
-    <StyledValue disabled={props.isDisabled}>
-      {props.data?.token ? renderIcon(props?.data) : null}
-      {props?.data?.label}
-    </StyledValue>
+    <div style={{ display: 'flex', justifyContent: 'space-between', width: '96%' }}>
+      <StyledValue disabled={props.isDisabled}>
+        {props?.isTokenLogoVisible && props?.data && renderIcon(props.data)}
+        {props?.data?.label}
+      </StyledValue>
+      {props?.isNetworkVisiable ? (
+        <StyledValue disabled={props.isDisabled}>
+          {capitalizeFirstLetter(props?.data?.network)}
+          <NetworkLogo style={{ width: '20px' }} src={networkLogo} alt="network logo" />
+        </StyledValue>
+      ) : null}
+    </div>
   )
 }
 
@@ -161,22 +175,30 @@ const renderIcon = (data: any) => {
 
 const Option = (props: any) => {
   const addToken = useAddUserToken()
+  const networkLogo = props?.data?.network ? NETWORK_LOGOS[props?.data?.network] : ''
 
   return (
     <components.Option {...props}>
-      <StyledValue
-        style={{ justifyContent: 'space-between' }}
-        disabled={props.isDisabled}
-        onClick={() => {
-          if (props.data?.token) {
-            addToken(props.data?.token)
-          }
-        }}
-      >
-        {props.data?.token ? renderIcon(props?.data) : null}
-        {props?.data?.label}
-        {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
-      </StyledValue>
+      <FlexContainer>
+        <MainStyledValue
+          disabled={props.isDisabled}
+          onClick={() => {
+            if (props.data?.token) {
+              addToken(props.data?.token)
+            }
+          }}
+        >
+          {props?.isTokenLogoVisible && props?.data && renderIcon(props.data)}
+          {props?.data?.label}
+          {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
+        </MainStyledValue>
+        {props?.isNetworkVisiable ? (
+          <MainStyledValue disabled={props.isDisabled}>
+            {capitalizeFirstLetter(props?.data?.network)}
+            <NetworkLogo style={{ width: '20px' }} src={networkLogo} alt="network logo" />
+          </MainStyledValue>
+        ) : null}
+      </FlexContainer>
     </components.Option>
   )
 }
@@ -195,6 +217,8 @@ export const Select = ({
   error = '',
   borderRadius = '36px',
   addCustom = false,
+  isNetworkVisiable,
+  isTokenLogoVisible,
 }: Props) => {
   const [search, handleSearch] = useState('')
 
@@ -238,7 +262,15 @@ export const Select = ({
       onChange={(option: unknown) => {
         onSelect(option as Option)
       }}
-      components={{ MultiValue, SingleValue, Option }}
+      components={{
+        MultiValue,
+        SingleValue: (props) => (
+          <SingleValue {...props} isNetworkVisiable={isNetworkVisiable} isTokenLogoVisible={isTokenLogoVisible} />
+        ),
+        Option: (props) => (
+          <Option {...props} isNetworkVisiable={isNetworkVisiable} isTokenLogoVisible={isTokenLogoVisible} />
+        ),
+      }}
       value={selectedValue}
       placeholder={placeholder}
       name={name}
@@ -315,4 +347,13 @@ const StyledValue = styled.div<{ disabled?: boolean }>`
       cursor: not-allowed;
       opacity: 0.5;
     `}
+`
+
+const FlexContainer = styled(StyledValue)`
+  justify-content: space-between;
+`
+
+const MainStyledValue = styled(StyledValue)`
+  display: flex;
+  align-items: center;
 `

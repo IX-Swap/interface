@@ -49,6 +49,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
         label: token?.symbol,
         value: token?.id,
         icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
+        network: token?.network
       }))
     }
     return []
@@ -208,6 +209,8 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
               error={touched.secToken ? errors.secToken : ''}
               required
               isDisabled={!availableForEditing.includes('secToken')}
+              isNetworkVisiable={true}
+              isTokenLogoVisible={true}
             />
 
             <DateInput
