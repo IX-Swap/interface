@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Flex } from 'rebass'
 import { useWeb3React } from '@web3-react/core'
@@ -6,14 +6,11 @@ import { useWeb3React } from '@web3-react/core'
 import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { AppDispatch } from 'state'
 import { useDepositModalToggle } from 'state/application/hooks'
-import { setError, setLoading, setModalView } from 'state/deposit/actions'
+import { setError, setLoading } from 'state/deposit/actions'
 import { useDepositActionHandlers, useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hooks'
-import { DepositModalView } from 'state/deposit/reducer'
 import { useUserSecTokens } from 'state/user/hooks'
 import { ModalContentWrapper, ModalPadding } from 'theme'
 import { SecCurrency } from 'types/secToken'
-import { DepositAboutWrapping } from './DepositAboutWrapping'
-import { DepositError } from './DepositError'
 import { DepositRequestForm } from './DepositRequestForm'
 import styled from 'styled-components'
 import back from 'assets/images/newBack.svg'
@@ -24,6 +21,7 @@ import { useWalletState } from 'state/wallet/hooks'
 import { DepositTransaction } from './DepositTransaction'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { DepositStatus } from './enum'
+import { DepositPopup } from './DepositPopup'
 
 interface Props {
   currency?: SecCurrency
@@ -47,16 +45,12 @@ export const DepositCard = ({ currency, token }: Props) => {
 
   const eventStatus = eventLog?.[0]?.status as DepositStatus
 
-  const onClose = useCallback(() => {
+  const handleBack = () => {
     onResetDeposit()
-    dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
     dispatch(setError({ errorMessage: '' }))
     dispatch(setLoading({ loading: false }))
     toggle()
     hideAboutWrapping()
-  }, [toggle, dispatch, hideAboutWrapping])
-
-  const handleBack = () => {
     dispatch(setWalletState({ isOpenDepositCard: false, depositView: DepositView.CREATE_REQUEST }))
   }
 
@@ -107,11 +101,11 @@ export const DepositCard = ({ currency, token }: Props) => {
       <ModalContentWrapper>
         <ModalPadding>
           {depositView === DepositView.CREATE_REQUEST && <DepositRequestForm token={token} currency={currency} />}
-          {depositView === DepositView.ERROR && <DepositError onClose={onClose} />}
-          {depositView === DepositView.ABOUT_WRAPPING && <DepositAboutWrapping />}
           {depositView === DepositView.PENDING && <DepositTransaction currency={token} />}
         </ModalPadding>
       </ModalContentWrapper>
+
+      <DepositPopup currency={token?.token} token={token} />
     </Container>
   )
 }

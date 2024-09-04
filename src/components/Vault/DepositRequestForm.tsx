@@ -37,6 +37,10 @@ import Copy from 'components/AccountDetails/Copy'
 import { parseUnits } from 'ethers/lib/utils'
 import { DepositView, setWalletState } from 'state/wallet'
 import { useGetEventCallback } from 'state/eventLog/hooks'
+import { setModalView } from 'state/deposit/actions'
+import { DepositModalView } from 'state/deposit/reducer'
+import { ApplicationModal } from 'state/application/actions'
+import { useToggleModal } from 'state/application/hooks'
 
 interface Props {
   currency?: SecCurrency & { tokenInfo?: { decimals?: number; originalDecimals?: number } }
@@ -55,6 +59,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const tokenDecimals = useDecimals(token?.address ?? '') ?? 18
   const dispatch = useDispatch()
   const getEvents = useGetEventCallback()
+  const toggle = useToggleModal(ApplicationModal.DEPOSIT)
 
   const [amountInputValue, setAmountInputValue] = useState('')
   const [tokenBalance, setTokenBalance] = useState('0')
@@ -107,7 +112,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
         cancelDeposit({ requestId })
         onResetDeposit()
       }
-      console.error(`Could not deposit amount`, error)
+      dispatch(setWalletState({ depositView: DepositView.CREATE_REQUEST }))
     } finally {
       setLoadingDeposit(false)
     }
