@@ -9,7 +9,6 @@ import { FILTERS } from 'components/MultipleFilters/constants'
 import { Table } from 'components/Table'
 import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { ReactComponent as EyeIcon } from 'assets/images/gray_eye_icon.svg'
 import { ReactComponent as EditIcon } from 'assets/images/gray_edit_icon.svg'
 import { useCurrency } from 'hooks/Tokens'
@@ -132,7 +131,6 @@ const Row = ({ item }: IRow) => {
 
   const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken, claimed } = item
 
-  const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
   const currency = useCurrency(payoutToken)
   const dateFormat = 'MMM DD, YYYY'
 
@@ -174,9 +172,7 @@ const Row = ({ item }: IRow) => {
         <div style={{ gap: '8px' }}>
           {secToken?.logo ? (
             <TokenLogo logo={secToken.logo.public} width="32px" height="32px" />
-          ) : (
-            <CurrencyLogo currency={currency} size="72px" />
-          )}
+          ) : null}
           <TYPE.main1 color={'#8F8FB2'}>{secToken?.symbol || '-'}</TYPE.main1>
         </div>
         <TYPE.main1>

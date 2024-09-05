@@ -42,6 +42,7 @@ export const auth = {
 export const payout = {
   createDraft: `payout/draft`,
   publish: `payout/publish`,
+  airdrop: `payout/airdrop`,
   validateEvent: (id: number) => `payout/validate/${id}`,
   payoutsList: 'payout/list',
   payoutHistory: 'payout/history',

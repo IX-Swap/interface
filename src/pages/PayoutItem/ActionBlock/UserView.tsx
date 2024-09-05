@@ -48,7 +48,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
   const payoutContract = usePayoutContract(payoutContractAddress)
   const addTransaction = useTransactionAdder()
-  const secPayoutToken = new WrappedTokenInfo(secToken)
+  const secPayoutToken = secToken ? new WrappedTokenInfo(secToken) : null
   const tokenInfo = secPayoutToken?.tokenInfo
   const isNotAccredited = statuses.some((status) => !status)
   const isNotTokenHolder = '0' === secTokenBalance || !amountToClaim
@@ -65,9 +65,11 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
     }
   }, [id, account])
 
-  const decimals = tokenInfo?.decimals < 7 ? tokenInfo.decimals : 6
+  const decimals = Math.min(tokenInfo?.decimals || 0, 6)
   const claim = useCallback(async () => {
     try {
+      if (!secToken) throw Error('No secToken')
+
       handleIsLoading(true)
 
       const authorization = await getClaimAuthorization({
@@ -108,7 +110,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
           <Trans>{`Based on your SEC token balance of`}</Trans>
         </Box>
         {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="32px" height="32px" /> : null}
-        <Box marginX="4px">{(tokenInfo as SecToken).originalSymbol ?? tokenInfo.symbol}</Box>
+        <Box marginX="4px">{(tokenInfo as SecToken).originalSymbol ?? tokenInfo?.symbol}</Box>
         <Box marginX="4px" color={theme.text1}>
           {floorToDecimals(myAmount, decimals)}
         </Box>
@@ -179,7 +181,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
             <Flex marginBottom="24px" alignItems="center">
               {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="32px" height="32px" /> : null}
               <Box marginX="4px" color={theme.text2}>
-                {(tokenInfo as SecToken).originalSymbol ?? tokenInfo.symbol}
+                {(tokenInfo as SecToken).originalSymbol ?? tokenInfo?.symbol}
               </Box>
               <Box marginX="4px">{floorToDecimals(myAmount, decimals)}</Box>
               <Box>
@@ -194,7 +196,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   }, [status, payoutToken, claimStatus, secPayoutToken])
 
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
-  if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.catalogId} />
+  if (isNotAccredited) return <NotAccreditedView secTokenId={secToken?.catalogId} />
   if (isNotTokenHolder) return <NotTokenHoldersView status={status} payoutToken={payoutToken} secToken={secToken} />
 
   return (

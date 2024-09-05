@@ -2,7 +2,6 @@ import { FormValues } from './utils'
 
 export const initialValues: FormValues = {
   title: '',
-  type: 'airdrop',
   memo: '',
   secToken: null,
   recordDate: '',
