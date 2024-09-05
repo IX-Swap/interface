@@ -80,6 +80,7 @@ export const TmPayoutEvents = () => {
       {payoutList.items?.length || haveFilters ? (
         <Container>
           <MultipleFilters
+            isClearable
             filters={[
               FILTERS.STATUS,
               FILTERS.PAYOUT_TYPE,
