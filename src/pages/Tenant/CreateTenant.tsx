@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useEffect } from 'react'
 import { MEDIA_WIDTHS } from 'theme'
 import styled from 'styled-components'
@@ -26,6 +27,10 @@ import { useSecTokenState } from 'state/secTokens/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import Loader from 'components/Loader'
 import { routes } from 'utils/routes'
+
+function checkObjectEmpty(obj: any) {
+  return Object.keys(obj).length === 0
+}
 
 interface TenantDetails {
   name?: string
@@ -106,6 +111,7 @@ const CreateTenant = () => {
   const { tokens, loadingRequest } = useSecTokenState()
   const history = useHistory()
   const { id } = useParams<{ id: string }>()
+  const [tenant, setTenant] = React.useState<any>({})
 
   const activeTokens = tokens && tokens.length > 0 ? tokens : []
 
@@ -116,51 +122,68 @@ const CreateTenant = () => {
     validateOnBlur: false,
     onSubmit: async (values: any) => {
       try {
+        const socialLinks = {} as any
+        const footerConfig = {} as any
+        values?.telegram && (socialLinks['telegram'] = values?.telegram)
+        values?.linkedin && (socialLinks['linkedin'] = values?.linkedin)
+        values?.youtube && (socialLinks['youtube'] = values?.youtube)
+        values?.twitter && (socialLinks['twitter'] = values?.twitter)
+        !checkObjectEmpty(socialLinks) && (footerConfig['socialLinks'] = socialLinks)
+        values?.termLink && (footerConfig['termsLink'] = values?.termLink)
+        values?.policyLink && (footerConfig['policyLink'] = values?.policyLink)
+        values?.block1 && (footerConfig['block1'] = values?.block1)
+        values?.block2 && (footerConfig['block2'] = values?.block2)
+        values?.block3 && (footerConfig['block3'] = values?.block3)
+
         const payload = {
-          name: values.name,
-          title: values.title,
-          appUrl: values.appUrl,
-          description: values.description,
-          bannerImageUrl: values.bannerImageUrl,
-          pages: getActiveRoutes(values.pages),
-          chartsUrl: values.appUrl,
-          enableLbp: values.enableLbp,
-          defaultUrl: values.defaultUrl,
-          faviconUrl: values.faviconUrl,
-          logoUrl: values.logoUrl,
-          enableFeaturedSecurityVaults: values.enableFeaturedSecurityVaults,
-          colors: JSON.stringify({
-            button: { primary: values.colorButtonPrimary },
-          }),
-          customStyles: '{}',
-          supportEmail: values.supportEmail,
-          isIxSwap: values.isIxSwap,
-          tokens: JSON.stringify(values.tokens),
-          domain: values.domain,
-          enableLaunchpadBanner: true,
-          launchpadBannerTitle: values.launchpadBannerTitle,
-          launchpadBannerInfoRedirectTitle: values.launchpadBannerInfoRedirectTitle,
-          launchpadBannerInfoRedirectUrl: values.launchpadBannerInfoRedirectUrl,
-          kycSuccessRedirectUrl: values.kycSuccessRedirectUrl,
-          kycCancelRedirectUrl: values.kycCancelRedirectUrl,
-          footerConfig: JSON.stringify({
-            socialLinks: {
-              telegram: values.telegram,
-              linkedin: values.linkedin,
-              youtube: values.youtube,
-              twitter: values.twitter,
-            },
-            termsLink: values.termLink,
-            policyLink: values.policyLink,
-            block1: values.block1,
-            block2: values.block2,
-            block3: values.block3,
-          }),
+          name: values?.name,
+          title: values?.title,
+          appUrl: values?.appUrl,
+          description: values?.description,
+          bannerImageUrl: values?.bannerImageUrl,
+          pages: values?.pages ? getActiveRoutes(values.pages) : null,
+          chartsUrl: values?.chartsUrl,
+          enableLbp: values?.enableLbp,
+          defaultUrl: values?.defaultUrl,
+          faviconUrl: values?.faviconUrl,
+          logoUrl: values?.logoUrl,
+          enableFeaturedSecurityVaults: values?.enableFeaturedSecurityVaults ?? false,
+          colors: values?.colorButtonPrimary
+            ? JSON.stringify({
+                button: { primary: values?.colorButtonPrimary },
+              })
+            : '',
+          customStyles: '',
+          supportEmail: values?.supportEmail,
+          isIxSwap: values?.isIxSwap ?? false,
+          tokens: values?.tokens ? JSON.stringify(values.tokens) : null,
+          domain: values?.domain,
+          enableLaunchpadBanner: values?.enableLaunchpadBanner ?? false,
+          launchpadBannerTitle: values?.launchpadBannerTitle,
+          launchpadBannerInfoRedirectTitle: values?.launchpadBannerInfoRedirectTitle,
+          launchpadBannerInfoRedirectUrl: values?.launchpadBannerInfoRedirectUrl,
+          kycSuccessRedirectUrl: values?.kycSuccessRedirectUrl,
+          kycCancelRedirectUrl: values?.kycCancelRedirectUrl,
+          footerConfig: !checkObjectEmpty(footerConfig) ? JSON.stringify(footerConfig) : '',
         }
         formik.setSubmitting(true)
 
+        const payloadPatch = {} as any
+
         if (id) {
-          const response = await apiService.patch(`${whitelabel.create}/${id}`, payload)
+          for (const [key, value] of Object.entries(payload)) {
+            if (['pages', 'tokens'].includes(key)) {
+              if (tenant.isIxSwap) {
+                payloadPatch[key] = null
+              }
+            } else if (tenant[key] != value) {
+              payloadPatch[key] = value
+            }
+          }
+          console.log('tenant', tenant)
+          console.log('payloadPatch', payloadPatch)
+          debugger
+          const response = await apiService.patch(`${whitelabel.create}/${id}`, payloadPatch)
 
           if (response.status === 200) {
             showSuccess('Tenant edit successfully')
@@ -193,6 +216,7 @@ const CreateTenant = () => {
             return
           }
 
+          setTenant(data)
           formik.setFieldValue('name', data.name)
           formik.setFieldValue('title', data.title)
           formik.setFieldValue('domain', data.domain)
@@ -208,12 +232,13 @@ const CreateTenant = () => {
           formik.setFieldValue('logoUrl', data.logoUrl)
           formik.setFieldValue('faviconUrl', data.faviconUrl)
           formik.setFieldValue('supportEmail', data.supportEmail)
+          formik.setFieldValue('enableLaunchpadBanner', data.enableLaunchpadBanner)
           formik.setFieldValue('launchpadBannerTitle', data.launchpadBannerTitle)
           formik.setFieldValue('launchpadBannerInfoRedirectTitle', data.launchpadBannerInfoRedirectTitle)
           formik.setFieldValue('launchpadBannerInfoRedirectUrl', data.launchpadBannerInfoRedirectUrl)
           formik.setFieldValue('kycSuccessRedirectUrl', data.kycSuccessRedirectUrl)
           formik.setFieldValue('kycCancelRedirectUrl', data.kycCancelRedirectUrl)
-          const footerConfig = JSON.parse(data.footerConfig)
+          const footerConfig = data.footerConfig ? JSON.parse(data.footerConfig) : null
           formik.setFieldValue('termLink', footerConfig?.termsLink)
           formik.setFieldValue('policyLink', footerConfig?.policyLink)
           formik.setFieldValue('block1', footerConfig?.block1)
@@ -223,9 +248,9 @@ const CreateTenant = () => {
           formik.setFieldValue('linkedin', footerConfig?.socialLinks?.linkedin)
           formik.setFieldValue('youtube', footerConfig?.socialLinks?.youtube)
           formik.setFieldValue('twitter', footerConfig?.socialLinks?.twitter)
-          const colors = JSON.parse(data.colors)
+          const colors = data.colors ? JSON.parse(data.colors) : null
           formik.setFieldValue('colorButtonPrimary', colors?.button?.primary)
-          formik.setFieldValue('pages', checkExistInPageGroup(data.pages))
+          formik.setFieldValue('pages', data?.pages ? checkExistInPageGroup(data.pages) : pages)
         } catch (error) {
           console.error(error)
           showError('Failed to fetch tenant details')
