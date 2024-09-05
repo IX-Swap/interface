@@ -121,6 +121,7 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
         acceptedFileTypes={['.csv']}
         title="Payout Attachments"
         files={values.files}
+        required
         onDrop={handleDropImage}
         handleDeleteClick={handleImageDelete}
         error={touched.files ? errors.files : ''}
