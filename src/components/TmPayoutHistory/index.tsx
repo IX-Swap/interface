@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Flex } from 'rebass'
-
+import { adminOffset as offset } from 'state/admin/constants'
 import { MultipleFilters } from 'components/MultipleFilters'
 import { FILTERS } from 'components/MultipleFilters/constants'
 import { Table } from 'components/Table'
@@ -24,6 +24,9 @@ import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } fro
 import { Line } from 'components/Line'
 import { TYPE } from 'theme'
 import dayjs from 'dayjs'
+import { NetworkName, chainIdToNetworkName } from 'chains'
+import styled from 'styled-components'
+import { useLocation } from 'react-router-dom'
 
 const headerCells = [
   `Recipient's wallet`,
@@ -38,74 +41,71 @@ export const TmPayoutHistory = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const { account } = useUserState()
   const { token } = useAuthState()
-  const [hasMoreData, setHasMoreData] = useState(true)
   const { payoutHistory, isLoading } = useTokenManagerState()
   const getPayoutHistory = useGetPayoutHistory()
   const [isInitialLoad, setIsInitialLoad] = useState(true)
+  const { pathname } = useLocation()
 
   useEffect(() => {
-    if (account && token && hasMoreData && isInitialLoad) {
+    if (account && token && isInitialLoad) {
       setIsInitialLoad(false)
-      const shouldFetch = !payoutHistory.items?.length || Object.keys(filters).length > 0
-      if (shouldFetch) {
-        getPayoutHistory({ ...filters, offset: 10, page: 1 })
-          .then((response) => {
-            if (response.items?.length === 0) {
-              setHasMoreData(false)
-            }
-          })
-          .catch((error) => {
-            console.error('Failed to fetch data:', error)
-          })
-      }
+      fetchPayoutHistory(1)
     }
+  }, [account, token])
 
-  },  [account, token, filters, hasMoreData]);
+  useEffect(() => {
+    if (Object.keys(filters).length > 0) {
+      fetchPayoutHistory(payoutHistory.page)
+    }
+  }, [filters, pathname])
+
+  const fetchPayoutHistory = (page: number) => {
+    getPayoutHistory({ ...filters, offset: offset, page })
+      .then((response) => {
+        if (response.items?.length === 0) {
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to fetch data:', error)
+      })
+  }
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    getPayoutHistory({ ...filters, page, offset: 10 })
+    getPayoutHistory({ ...filters, page, offset: offset })
   }
 
-  if (isLoading) {
+  if (isLoading && !filters) {
     return <LoadingIndicator noOverlay={true} isLoading={isLoading} />
   }
-
   return (
     <>
-      {payoutHistory.items?.length ? (
-        <>
-          <Container style={{ marginTop: '20px' }}>
-            <MultipleFilters
-              filters={[FILTERS.SEARCH, FILTERS.DATE_OF_CLAIM, FILTERS.SEC_TOKENS]}
-              searchPlaceholder="Search by Wallet or ID"
-              onFiltersChange={handleFilters}
-              forManager
-            />
-          </Container>
-
-          <Line style={{ width: 'webkit-fill-available' }} />
-
-          <Container>
-            {payoutHistory.items?.length ? (
-              <Flex flexDirection="column" style={{ gap: 32 }}>
-                <Table header={<Header />} body={<Body items={payoutHistory.items} />} />
-
-                <Pagination
-                  totalPages={payoutHistory.totalPages}
-                  page={payoutHistory.page || 1}
-                  onPageChange={onPageChange}
-                  totalItems={payoutHistory.totalItems}
-                />
-              </Flex>
-            ) : (
-              <TmEmptyPage tab="payout-history" filtred />
-            )}
-          </Container>
-        </>
-      ) : (
-        <TmEmptyPage tab="payout-history" />
-      )}
+      <>
+        <Container style={{ marginTop: '20px' }}>
+          <MultipleFilters
+            filters={[FILTERS.SEARCH, FILTERS.DATE_OF_CLAIM, FILTERS.SEC_TOKENS]}
+            searchPlaceholder="Search by Wallet or ID"
+            onFiltersChange={handleFilters}
+            forManager
+          />
+        </Container>
+        <Line style={{ width: 'webkit-fill-available' }} />
+        <Container>
+          {payoutHistory.items?.length ? (
+            <Flex flexDirection="column" style={{ gap: 32 }}>
+              <Table header={<Header />} body={<Body items={payoutHistory.items} />} />
+              <Pagination
+                totalPages={payoutHistory.totalPages}
+                page={payoutHistory.page || 1}
+                onPageChange={onPageChange}
+                totalItems={payoutHistory.totalItems}
+              />
+            </Flex>
+          ) : (
+            <TmEmptyPage tab="payout-history" filtred={Object.keys(filters)?.length > 0} />
+          )}
+        </Container>
+      </>
     </>
   )
 }
@@ -122,10 +122,26 @@ const Row = ({ item }: IRow) => {
     sum,
     txHash,
   } = item
+
+  const getTokenLogoUrl = (network: string | undefined) => {
+    if (network === NetworkName.BASE) {
+      return baseLogoUrl
+    } else if (network === NetworkName.POLYGON) {
+      return polygonLogoUrl
+    }
+    return null
+  }
+
+  const getPayoutTokenLogoUrl = (chainId: number | undefined) => {
+    const networkName = chainIdToNetworkName(chainId || 1)
+    return getTokenLogoUrl(networkName)
+  }
+
   const token = useToken(payoutToken)
   const { chainId } = useActiveWeb3React()
-
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
+  const secTokenLogoUrl = getTokenLogoUrl(secToken?.network)
+  const payoutTokenLogoUrl = getPayoutTokenLogoUrl(token?.chainId)
 
   return (
     <StyledBodyRow>
@@ -134,28 +150,24 @@ const Row = ({ item }: IRow) => {
       </TYPE.main1>
 
       <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
-
-      {/* The logo URL is currently hardcoded; we'll render it dynamically with the network key later */}
-      <div style={{ position: 'relative' }}>
+      <TokenContainer>
         <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
-        <img style={{ position: 'absolute', left: '30px', bottom: '40px', width: '18px' }} src={baseLogoUrl}></img>
+        {secTokenLogoUrl && <NetworkLogo src={secTokenLogoUrl} alt="network logo" />}
         {secToken?.symbol || '-'}
-      </div>
+      </TokenContainer>
+
       <TYPE.main1>{dayjs(createdAt).format('MMM DD, YYYY - HH:mm')}</TYPE.main1>
-
-      {/* The logo URL is currently hardcoded; we'll render it dynamically with the network key later */}
-      <div style={{ fontWeight: 500 }}>
-        <div style={{ position: 'relative' }}>
+      <TokenSymbol>
+        <TokenContainer>
           <CurrencyLogo currency={token} style={{ marginRight: 4 }} size="24px" />
-          <img style={{ position: 'absolute', left: '20px', bottom: '20px', width: '18px' }} src={polygonLogoUrl}></img>
-        </div>
-
+          {payoutTokenLogoUrl && <PayoutLogo src={payoutTokenLogoUrl} alt="network logo" />}
+        </TokenContainer>
         <TYPE.main1>
           {token?.symbol || '-'}&nbsp;{Number(sum).toFixed(4)}
         </TYPE.main1>
-      </div>
+      </TokenSymbol>
+
       <div>
-        {/* TO DO - replace with txHash */}
         <ViewBtn
           href={getExplorerLink(chainId || 137, txHash, ExplorerDataType.TRANSACTION)}
           target="_blank"
@@ -163,9 +175,6 @@ const Row = ({ item }: IRow) => {
         >
           View on Explorer
         </ViewBtn>
-        {/* <ViewBtn href={`https://polygonscan.com/tx/${txHash}`} target="_blank" rel="noopener">
-          View
-        </ViewBtn> */}
       </div>
     </StyledBodyRow>
   )
@@ -200,3 +209,25 @@ const Header = () => {
     </StyledHeaderRow>
   )
 }
+
+const TokenContainer = styled.div`
+  position: relative;
+`
+
+const TokenSymbol = styled.div`
+  font-weight: 500;
+`
+
+const NetworkLogo = styled.img`
+  position: absolute;
+  left: 30px;
+  bottom: 40px;
+  width: 18px;
+`
+
+const PayoutLogo = styled.img`
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  width: 18px;
+`
