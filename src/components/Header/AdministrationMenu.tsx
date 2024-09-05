@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { darken } from 'polished'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 
 import Column from 'components/Column'
 import { ExternalLink } from 'theme'
@@ -19,7 +19,12 @@ import { BRIDGE_ADMIN_URL } from 'config'
 
 const activeClassName = 'ACTIVE'
 
-const Content = () => {
+interface ContentProps {
+  open: boolean
+  toggle: () => void
+}
+
+const Content: React.FC<ContentProps> = ({ open, toggle }) => {
   const { config } = useWhitelabelState()
   const { chainId, account } = useActiveWeb3React()
   const { isOfferManager, isAdmin, isTokenManager, isOperator, isMasterTenant } = useRole()
@@ -29,6 +34,12 @@ const Content = () => {
     [account, isAdmin, isApproved, isOfferManager]
   )
   const isWhitelisted = isUserWhitelisted({ account, chainId })
+  const history = useHistory()
+
+  const navigateTo = (path: string) => {
+    history.replace(path)
+    open ? toggle() : null
+  }
 
   return (
     <PopoverContent
@@ -43,25 +54,25 @@ const Content = () => {
 
       {checkAllowed(routes.adminDashboard, config?.pages) && (isAdmin || isOperator) && isWhitelisted ? (
         <Column>
-          <SubMenuLink to={routes.admin(isOperator ? 'kyc' : 'accreditation', null)}>Dashboard</SubMenuLink>
+          <Link onClick={() => navigateTo(routes.admin(isOperator ? 'kyc' : 'accreditation', null))}>Dashboard</Link>
         </Column>
       ) : null}
 
       {checkAllowed(routes.issuance, config?.pages) && showIssuance ? (
         <Column>
-          <SubMenuLink to={routes.issuance}>Issuance</SubMenuLink>
+          <Link onClick={() => navigateTo(routes.issuance)}>Issuance</Link>
         </Column>
       ) : null}
 
       {checkAllowed(routes.tokenManager(), config?.pages) && isWhitelisted && (isTokenManager || isAdmin) ? (
         <Column>
-          <SubMenuLink to={routes.tokenManager('my-tokens', null)}>Payout</SubMenuLink>
+          <Link onClick={() => navigateTo(routes.tokenManager('my-tokens', null))}>Payout</Link>
         </Column>
       ) : null}
 
       {checkAllowed(routes.lbpDashboard, config?.pages) && isAdmin && isWhitelisted ? (
         <Column>
-          <SubMenuLink to={routes.lbpDashboard}>LBP</SubMenuLink>
+          <Link onClick={() => navigateTo(routes.lbpDashboard)}>LBP</Link>
         </Column>
       ) : null}
     </PopoverContent>
@@ -81,7 +92,13 @@ const AdministrationMenu = () => {
       to={'#'}
       isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
     >
-      <Popover hideArrow show={open} content={<Content />} placement={'bottom-start'} offset={[0, 8]}>
+      <Popover
+        hideArrow
+        show={open}
+        content={<Content open={open} toggle={toggle} />}
+        placement={'bottom-start'}
+        offset={[0, 8]}
+      >
         <StyledBox onClick={toggle}>
           <img src={starIcon} alt="star" />
           <div>Administration</div>
@@ -166,12 +183,7 @@ const subMenuLinkStyle = css`
     opacity: 1;
   }
 `
-const SubMenuLink = styled(StyledNavLink)`
-  ${subMenuLinkStyle}
-  &.${activeClassName} {
-    color: ${({ theme }) => theme.text1};
-  }
-`
+
 const SubMenuExternalLink = styled(ExternalLink)<{ disabled?: boolean }>`
   ${navLinkStyles};
   ${subMenuLinkStyle};
@@ -205,4 +217,18 @@ const StyledBox = styled.div`
     border: 1px solid #4d8fea;
   }
   position: relative;
+`
+
+const Link = styled.div`
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
+  text-transform: none;
+  padding: 0 66px 0 0;
+  cursor: pointer;
+  color: #292933;
+
+  &:hover {
+    color: #b8b8cc;
+  }
 `
