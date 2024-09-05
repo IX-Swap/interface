@@ -13,6 +13,8 @@ import { Info } from './Info'
 import { ROLES } from 'constants/roles'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
+import { routes } from 'utils/routes'
+import { BackButton, StyledArrowBack, BackText } from 'pages/PayoutItem/PayoutItemManager'
 
 const CreatePayoutEventPage: FC = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -40,11 +42,19 @@ const CreatePayoutEventPage: FC = () => {
     align-items: center;
   `
 
+  const handleBackClick = () => {
+    history.push(routes.payoutEvent)
+  }
+
   return (
     <Loadable noOverlay={true} loading={!isLoggedIn}>
       <FullScreenBackground>
         <StyledBodyWrapper style={{ minWidth: 1000 }} hasAnnouncement={!cookies.annoucementsSeen}>
           <Flex marginBottom="32px" alignItems="center">
+            <BackButton style={{top: '10px'}} onClick={handleBackClick}>
+              <StyledArrowBack />
+              <BackText>Back</BackText>
+            </BackButton>
             <PageTitle textAlign="center" margin="0 auto">
               <TYPE.title6>Create Claim Payout Event</TYPE.title6>
             </PageTitle>

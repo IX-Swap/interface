@@ -64,7 +64,7 @@ const Content: React.FC<ContentProps> = ({ open, toggle }) => {
         </Column>
       ) : null}
 
-      {checkAllowed(routes.tokenManager(), config?.pages) && isWhitelisted && (isTokenManager || isAdmin) ? (
+      {checkAllowed(routes.tokenManager('my-tokens', null), config?.pages) && isWhitelisted && (isTokenManager || isAdmin) ? (
         <Column>
           <Link onClick={() => navigateTo(routes.tokenManager('my-tokens', null))}>Payout</Link>
         </Column>
