@@ -111,7 +111,7 @@ const CreateTenant = () => {
 
   const formik = useFormik<TenantDetails>({
     initialValues,
-    validationSchema: validationSchema,
+    validationSchema: !id ? validationSchema : null,
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values: any) => {
@@ -204,7 +204,7 @@ const CreateTenant = () => {
           formik.setFieldValue('enableFeaturedSecurityVaults', data.enableFeaturedSecurityVaults)
           formik.setFieldValue('chartsUrl', data.chartsUrl)
           formik.setFieldValue('defaultUrl', data.defaultUrl)
-          formik.setFieldValue('tokens', JSON.parse(data.tokens))
+          formik.setFieldValue('tokens', data?.tokens ? JSON.parse(data.tokens) : [])
           formik.setFieldValue('logoUrl', data.logoUrl)
           formik.setFieldValue('faviconUrl', data.faviconUrl)
           formik.setFieldValue('supportEmail', data.supportEmail)
