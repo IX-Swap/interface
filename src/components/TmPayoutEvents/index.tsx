@@ -32,7 +32,7 @@ import { TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
 import { TokenLogo } from 'components/TokenLogo'
-
+import { adminOffset as offset } from 'state/admin/constants'
 const headerCells = [`ID`, `Status`, `Payout type`, `SEC token`, `Payment period`, `Record date`, `Amount claimed`, '']
 
 export const TmPayoutEvents = () => {
@@ -51,7 +51,7 @@ export const TmPayoutEvents = () => {
       const filtersApplied = Object.keys(filters).length > 0
       handleHaveFilters(filtersApplied)
       if (!payoutList.items?.length || filtersApplied) {
-        getMyPayouts({ ...filters, offset: 10, my: !isAdmin, page: 1 })
+        getMyPayouts({ ...filters, offset: offset, my: !isAdmin, page: payoutList.page })
           .then((response) => {
             if (!response.items?.length) {
             }
@@ -60,14 +60,14 @@ export const TmPayoutEvents = () => {
             console.error('Failed to fetch data:', error)
           })
       } else {
-        getMyPayouts({ offset: 10, my: !isAdmin, page: 1 })
+        getMyPayouts({ offset: offset, my: !isAdmin, page: payoutList.page  })
       }
     }
   }, [JSON.stringify(filters), account, token, pathname, isAdmin])
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    getMyPayouts({ ...filters, page, offset: 10, my: !isAdmin })
+    getMyPayouts({ ...filters, page, offset: offset, my: !isAdmin })
   }
 
   const goToCreate = () => {

@@ -10,7 +10,7 @@ import { EmptyState } from './EmptyState'
 import { Card } from './Card'
 import { AllPayoutContainer, AllPayoutFilterContainer, AllPayoutListContainer, AllPayoutListLayout } from './styleds'
 import { TmEmptyPage } from 'components/TmEmptyPage'
-
+import { adminOffset as offset } from 'state/admin/constants'
 export const AllPayoutEvents = () => {
   const { pathname } = useLocation()
   const [filters, handleFilters] = useState<Record<string, any>>({})
@@ -24,11 +24,11 @@ export const AllPayoutEvents = () => {
     if (Object.keys(filters).length) {
       handleHaveFilters(true)
     }
-    getPayoutList({ ...filters, offset: 16, page: 1 })
+    getPayoutList({ ...filters, offset: offset, page: list.page })
   }, [JSON.stringify(filters), getPayoutList, pathname])
 
   const onPageChange = async (page: number) => {
-    await getPayoutList({ ...filters, page, offset: 16 })
+    await getPayoutList({ ...filters, page, offset: offset })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
