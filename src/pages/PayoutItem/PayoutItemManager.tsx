@@ -20,6 +20,8 @@ import { useUserState } from 'state/user/hooks'
 import { ROLES } from 'constants/roles'
 import { routes } from 'utils/routes'
 import { PAYOUT_TYPE } from 'components/TmPayoutEvents/constants'
+import { ReactComponent as ArrowBack } from 'assets/images/newBack.svg'
+import styled from 'styled-components'
 
 export default function PayoutItemForManager({
   match: {
@@ -86,30 +88,63 @@ export default function PayoutItemForManager({
     getPayoutClaims()
   }, [payoutId, page])
 
+  const handleBackClick = () => {
+    history.push(routes.payoutEvent)
+  }
+
   return (
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator noOverlay={true} isLoading={loadingRequest} />
+
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
-          <Column style={{ gap: '40px' }}>
-            <PayoutHeader payout={payout} isMyPayout />
-            {payout.type !== PAYOUT_TYPE.AIRDROPS && (
-              <>
-                <PayoutTimeline payout={payout} />
-                <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
-              </>
-            )}
-            {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
-              <PayoutHistory
-                isLoading={isClaimHistoryLoading}
-                page={page}
-                setPage={setPage}
-                claimHistory={claimHistory}
-              />
-            )}
-          </Column>
+          <div style={{ position: 'relative' }}>
+            <BackButton onClick={handleBackClick}>
+              <StyledArrowBack />
+              <BackText>Back</BackText>
+            </BackButton>
+            <Column style={{ gap: '40px' }}>
+              <PayoutHeader payout={payout} isMyPayout />
+              {payout.type !== PAYOUT_TYPE.AIRDROPS && (
+                <>
+                  <PayoutTimeline payout={payout} />
+                  <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
+                </>
+              )}
+              {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
+                <PayoutHistory
+                  isLoading={isClaimHistoryLoading}
+                  page={page}
+                  setPage={setPage}
+                  claimHistory={claimHistory}
+                />
+              )}
+            </Column>
+          </div>
         )}
       </StyledBodyWrapper>
     </Loadable>
   )
 }
+
+export const StyledArrowBack = styled(ArrowBack)`
+  cursor: pointer;
+  path {
+    fill: ${({ theme: { text1 } }) => text1};
+  }
+`
+
+export const BackButton = styled.div`
+  position: absolute;
+  top: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`
+
+export const BackText = styled.span`
+  color: #6666ff;
+  font-weight: 600;
+  font-size: 14px;
+  margin-left: 8px;
+`
