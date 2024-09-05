@@ -47,7 +47,7 @@ export const AllPayoutEvents = () => {
                 FILTERS.RECORD_DATE,
               ]}
               onFiltersChange={handleFilters}
-              fullWidth={false}
+              isClearable
             />
           </AllPayoutFilterContainer>
           <AllPayoutListLayout>
