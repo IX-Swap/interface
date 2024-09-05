@@ -16,7 +16,7 @@ import { PAYOUT_AIRDROP_PROXY_ADDRESS } from 'constants/addresses'
 import { usePayoutAirdropContract } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { useWeb3React } from '@web3-react/core'
-import { floorToDecimals } from 'utils/formatCurrencyAmount'
+import { floorToDecimals, safeParseUnits } from 'utils/formatCurrencyAmount'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { parseUnits } from 'ethers/lib/utils'
 import { useAddPopup } from 'state/application/hooks'
@@ -42,6 +42,7 @@ export const PublishAirdropModal: FC<Props> = ({
   const history = useHistory()
   const { token, csvRows, tokenAmount } = values
   const tokenCurrency = useCurrency(token?.value as string)
+  const tokenDecimals = tokenCurrency?.decimals
   const [isLoading, handleIsLoading] = useState(false)
   const addTransaction = useTransactionAdder()
   const publishPayout = usePublishPayout()
@@ -51,7 +52,7 @@ export const PublishAirdropModal: FC<Props> = ({
 
   const [approvalState, approve, refreshAllowance] = useAllowance(
     token?.value as string,
-    utils.parseUnits(tokenAmount.toString(), tokenCurrency?.decimals),
+    safeParseUnits(+tokenAmount, tokenDecimals),
     PAYOUT_AIRDROP_PROXY_ADDRESS[chainId]
   )
   const isApproved = approvalState === ApprovalState.APPROVED
@@ -67,13 +68,13 @@ export const PublishAirdropModal: FC<Props> = ({
       const bnAmount: BigNumber[] = []
       batchedList.forEach(([recipient, amount]) => {
         recipients.push(recipient)
-        bnAmount.push(parseUnits(amount.toString(), tokenCurrency?.decimals))
+        bnAmount.push(safeParseUnits(+amount, tokenDecimals))
       })
       result.push([recipients, bnAmount])
     }
 
     return result
-  }, [payoutContract, csvRows, tokenCurrency, maxTransfer])
+  }, [payoutContract, csvRows, tokenDecimals, maxTransfer])
   const batchLength = batchData.length
 
   const paid = async () => {
@@ -160,7 +161,7 @@ export const PublishAirdropModal: FC<Props> = ({
             <StyledDivider />
             <CardContentWrapper>
               <ContentLabel>{totalWallets}</ContentLabel>
-              <ContentLabel>{floorToDecimals(+tokenAmount, 3)}</ContentLabel>
+              <ContentLabel>{floorToDecimals(+tokenAmount, tokenDecimals)}</ContentLabel>
             </CardContentWrapper>
           </StyledCard>
           {batchLength > 1 && (

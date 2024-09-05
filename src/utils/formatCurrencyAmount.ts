@@ -1,4 +1,5 @@
 import { CurrencyAmount, Currency, Fraction } from '@ixswap1/sdk-core'
+import { BigNumber, utils } from 'ethers'
 import JSBI from 'jsbi'
 
 export function floorTo4Decimals(num: number) {
@@ -37,4 +38,8 @@ export function formatPrice(price: any | undefined, sigFigs: number) {
 
 export function formatAmount(amount: number) {
   return amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 10 })
+}
+
+export function safeParseUnits(value: number, decimals = 1): BigNumber {
+  return utils.parseUnits(floorToDecimals(value, decimals).toString(), decimals)
 }
