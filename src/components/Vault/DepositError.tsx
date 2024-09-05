@@ -9,6 +9,7 @@ import Attention from '../../assets/images/NewWarning.svg'
 
 export const DepositError = ({ onClose }: { onClose: () => void }) => {
   const { depositError } = useDepositState()
+
   return (
     <div style={{ position: 'relative' }}>
       <Column>

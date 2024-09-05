@@ -69,7 +69,6 @@ export default function SecTokenDetails({
 
   return (
     <>
-      <DepositPopup currency={token?.token} token={token} />
       <WithdrawPopup currency={token?.token} token={token} />
       <TokenInfoContainer>
         <Container style={{ position: 'relative' }}>

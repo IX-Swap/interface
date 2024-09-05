@@ -1,19 +1,15 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Flex } from 'rebass'
 import { useWeb3React } from '@web3-react/core'
 
 import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { AppDispatch } from 'state'
-import { useDepositModalToggle } from 'state/application/hooks'
-import { setError, setLoading, setModalView } from 'state/deposit/actions'
+import { setError, setLoading } from 'state/deposit/actions'
 import { useDepositActionHandlers, useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hooks'
-import { DepositModalView } from 'state/deposit/reducer'
 import { useUserSecTokens } from 'state/user/hooks'
 import { ModalContentWrapper, ModalPadding } from 'theme'
 import { SecCurrency } from 'types/secToken'
-import { DepositAboutWrapping } from './DepositAboutWrapping'
-import { DepositError } from './DepositError'
 import { DepositRequestForm } from './DepositRequestForm'
 import styled from 'styled-components'
 import back from 'assets/images/newBack.svg'
@@ -24,6 +20,7 @@ import { useWalletState } from 'state/wallet/hooks'
 import { DepositTransaction } from './DepositTransaction'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { DepositStatus } from './enum'
+import { DepositPopup } from './DepositPopup'
 
 interface Props {
   currency?: SecCurrency
@@ -34,7 +31,6 @@ interface Props {
 export const DepositCard = ({ currency, token }: Props) => {
   const { secTokens } = useUserSecTokens()
   const hideAboutWrapping = useHideAboutWrappingCallback()
-  const toggle = useDepositModalToggle()
   const dispatch = useDispatch<AppDispatch>()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const networkName = getOriginalNetworkFromToken(tokenInfo)
@@ -47,16 +43,11 @@ export const DepositCard = ({ currency, token }: Props) => {
 
   const eventStatus = eventLog?.[0]?.status as DepositStatus
 
-  const onClose = useCallback(() => {
+  const handleBack = () => {
     onResetDeposit()
-    dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
     dispatch(setError({ errorMessage: '' }))
     dispatch(setLoading({ loading: false }))
-    toggle()
     hideAboutWrapping()
-  }, [toggle, dispatch, hideAboutWrapping])
-
-  const handleBack = () => {
     dispatch(setWalletState({ isOpenDepositCard: false, depositView: DepositView.CREATE_REQUEST }))
   }
 
@@ -100,23 +91,26 @@ export const DepositCard = ({ currency, token }: Props) => {
         )}
 
         <TokenName>
-          {currency?.originalSymbol || ''} <span>({networkName} Network)</span>
+          <div>{currency?.originalSymbol || ''}</div>
+          <div className="network">({networkName} Network)</div>
         </TokenName>
       </Flex>
 
       <ModalContentWrapper>
-        <ModalPadding>
-          {depositView === DepositView.CREATE_REQUEST && <DepositRequestForm token={token} currency={currency} />}
-          {depositView === DepositView.ERROR && <DepositError onClose={onClose} />}
-          {depositView === DepositView.ABOUT_WRAPPING && <DepositAboutWrapping />}
-          {depositView === DepositView.PENDING && <DepositTransaction currency={token} />}
-        </ModalPadding>
+        {depositView === DepositView.CREATE_REQUEST && <DepositRequestForm token={token} currency={currency} />}
+        {depositView === DepositView.PENDING && <DepositTransaction currency={token} />}
       </ModalContentWrapper>
+
+      <DepositPopup currency={token?.token} token={token} />
     </Container>
   )
 }
 
 const Container = styled.div`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100%;
+    padding: 24px 16px;
+  `};
   padding: 48px;
   width: 780px;
   background: #fff;
@@ -162,8 +156,16 @@ const TokenName = styled.div`
   line-height: 140%;
   letter-spacing: -0.6px;
   margin-left: 8px;
+  display: flex;
+  align-items: center;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex-direction: column;
+  `};
 
-  span {
+  .network {
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+      margin-left: 0
+    `};
     margin-left: 8px;
     color: #8f8fb2;
     font-size: 13px;

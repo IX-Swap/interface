@@ -100,7 +100,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
           <PinnedContentButton
             style={{ width: '100%' }}
             data-testid="deposit"
-            onClick={() => toggle()}
+            onClick={handleDeposit}
             disabled={isDisabled}
           >
             <Trans>Deposit</Trans>
