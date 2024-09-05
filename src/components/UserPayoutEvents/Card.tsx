@@ -23,6 +23,7 @@ import { Divider } from '@material-ui/core'
 import { ThemeContext } from 'styled-components'
 import { useSafeCurrency } from 'hooks/Tokens'
 import TokenNetwork from 'components/TokenNetwork'
+import { TYPE } from 'theme'
 
 interface Props {
   data: PayoutEvent
@@ -46,14 +47,19 @@ export const Card = ({
   return (
     <CardContainer onClick={redirect}>
       <PayoutHeader>
-        <PayoutTitle>
-          {secToken ? (
-            <TokenNetwork width={secTokenWidth} height={secTokenWidth} token={secToken} network={secToken?.network} />
-          ) : null}
-          <div>{`${secToken?.symbol}`}</div>
-        </PayoutTitle>
         <PayoutType>{PAYOUT_TYPE_LABEL[type] || '-'}</PayoutType>
+        {type !== PAYOUT_TYPE.AIRDROPS ? (
+          <PayoutTitle>
+            <div>{`${secToken?.symbol}`}</div>
+            {secToken ? (
+              <TokenNetwork width={secTokenWidth} height={secTokenWidth} token={secToken} network={secToken?.network} />
+            ) : null}
+          </PayoutTitle>
+        ) : (
+          ''
+        )}
       </PayoutHeader>
+      <TYPE.title9 lineHeight={'20px'}>{secToken?.description?.substring(0, 51)}</TYPE.title9>
       <Divider style={{ backgroundColor: theme.bg24 }} />
       <PayoutInfoContainer>
         {type !== PAYOUT_TYPE.AIRDROPS ? (
