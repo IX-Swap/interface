@@ -201,7 +201,7 @@ export const checkWrongChain = (
   }
 }
 
-export const getTokenLogoUrl = (network: string | undefined) => {
+export const getChainLogoUrl = (network: string | undefined) => {
   if (network === NetworkName.BASE) {
     return baseLogoUrl
   } else if (network === NetworkName.POLYGON) {
@@ -210,7 +210,7 @@ export const getTokenLogoUrl = (network: string | undefined) => {
   return null
 }
 
-export const getPayoutTokenLogoUrl = (chainId: number | undefined) => {
-  const networkName = chainIdToNetworkName(chainId || 1)
-  return getTokenLogoUrl(networkName)
+export const getChainLogoByChainId = (chainId: number | undefined) => {
+  const networkName = chainIdToNetworkName(chainId || 0)
+  return getChainLogoUrl(networkName)
 }

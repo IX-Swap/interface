@@ -22,7 +22,7 @@ import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } fro
 import { Line } from 'components/Line'
 import { TYPE } from 'theme'
 import dayjs from 'dayjs'
-import { getPayoutTokenLogoUrl, getTokenLogoUrl } from 'chains'
+import { getChainLogoByChainId, getChainLogoUrl } from 'chains'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 
@@ -124,8 +124,8 @@ const Row = ({ item }: IRow) => {
   const token = useToken(payoutToken)
   const { chainId } = useActiveWeb3React()
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
-  const secTokenLogoUrl = getTokenLogoUrl(secToken?.network)
-  const payoutTokenLogoUrl = getPayoutTokenLogoUrl(token?.chainId)
+  const secTokenLogoUrl = getChainLogoUrl(secToken?.network)
+  const payoutTokenLogoUrl = getChainLogoByChainId(token?.chainId)
 
   return (
     <StyledBodyRow>
