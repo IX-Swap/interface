@@ -18,13 +18,11 @@ import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import polygonLogoUrl from 'assets/images/polygon.svg'
-import baseLogoUrl from 'assets/images/base.svg'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
 import { Line } from 'components/Line'
 import { TYPE } from 'theme'
 import dayjs from 'dayjs'
-import { NetworkName, chainIdToNetworkName } from 'chains'
+import { getPayoutTokenLogoUrl, getTokenLogoUrl } from 'chains'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 
@@ -123,20 +121,6 @@ const Row = ({ item }: IRow) => {
     txHash,
   } = item
 
-  const getTokenLogoUrl = (network: string | undefined) => {
-    if (network === NetworkName.BASE) {
-      return baseLogoUrl
-    } else if (network === NetworkName.POLYGON) {
-      return polygonLogoUrl
-    }
-    return null
-  }
-
-  const getPayoutTokenLogoUrl = (chainId: number | undefined) => {
-    const networkName = chainIdToNetworkName(chainId || 1)
-    return getTokenLogoUrl(networkName)
-  }
-
   const token = useToken(payoutToken)
   const { chainId } = useActiveWeb3React()
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
@@ -153,7 +137,7 @@ const Row = ({ item }: IRow) => {
       <TokenContainer>
         <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
         {secTokenLogoUrl && <NetworkLogo src={secTokenLogoUrl} alt="network logo" />}
-        {secToken?.symbol || '-'}
+        <TYPE.main1 marginLeft={'5px'}>{secToken?.symbol || '-'}</TYPE.main1>  
       </TokenContainer>
 
       <TYPE.main1>{dayjs(createdAt).format('MMM DD, YYYY - HH:mm')}</TYPE.main1>
