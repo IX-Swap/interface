@@ -2,6 +2,8 @@ import type { AddEthereumChainParameter } from '@web3-react/types'
 import { SupportedChainId } from 'constants/chains'
 import { isProd, isStaging } from 'utils/isEnvMode'
 import { capitalizeWords } from 'utils/strings'
+import polygonLogoUrl from 'assets/images/polygon.svg'
+import baseLogoUrl from 'assets/images/base.svg'
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
   name: 'Ether',
@@ -197,4 +199,18 @@ export const checkWrongChain = (
     isWrongChain: chainId != testChain,
     expectChain: testChain,
   }
+}
+
+export const getChainLogoUrl = (network: string | undefined) => {
+  if (network === NetworkName.BASE) {
+    return baseLogoUrl
+  } else if (network === NetworkName.POLYGON) {
+    return polygonLogoUrl
+  }
+  return null
+}
+
+export const getChainLogoByChainId = (chainId: number | undefined) => {
+  const networkName = chainIdToNetworkName(chainId || 0)
+  return getChainLogoUrl(networkName)
 }
