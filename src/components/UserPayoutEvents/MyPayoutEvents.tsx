@@ -90,7 +90,7 @@ export const MyPayouts = () => {
                 {data.totalItems ? (
                   <MyListContainer>
                     {data.items.map((item) => (
-                      <Card key={item.id} data={item} />
+                      <Card key={item.id} data={item} secTokenWidth='30px'  />
                     ))}
                   </MyListContainer>
                 ) : (

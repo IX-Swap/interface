@@ -20,7 +20,7 @@ import {
   PayoutHeader,
 } from './styleds'
 import { Divider } from '@material-ui/core'
-import { ThemeContext } from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 import { useSafeCurrency } from 'hooks/Tokens'
 import TokenNetwork from 'components/TokenNetwork'
 import { TYPE } from 'theme'
@@ -32,7 +32,7 @@ interface Props {
 
 export const Card = ({
   secTokenWidth,
-  data: { secToken, type, recordDate, payoutToken, startDate, endDate, status, id },
+  data: { secToken, type, recordDate, payoutToken, startDate, endDate, status, id, title },
 }: Props) => {
   const history = useHistory()
   const token = useSafeCurrency(payoutToken)
@@ -59,7 +59,7 @@ export const Card = ({
           ''
         )}
       </PayoutHeader>
-      <TYPE.title9 lineHeight={'20px'}>{secToken?.description?.substring(0, 51)}</TYPE.title9>
+      <Title>{title}</Title>
       <Divider style={{ backgroundColor: theme.bg24 }} />
       <PayoutInfoContainer>
         {type !== PAYOUT_TYPE.AIRDROPS ? (
@@ -96,3 +96,12 @@ export const Card = ({
     </CardContainer>
   )
 }
+
+const Title = styled(TYPE.title9)`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+`
