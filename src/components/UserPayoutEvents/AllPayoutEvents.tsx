@@ -55,7 +55,7 @@ export const AllPayoutEvents = () => {
               <>
                 <AllPayoutListContainer>
                   {list.items.map((payout) => (
-                    <Card key={payout.id} data={payout} />
+                    <Card key={payout.id} data={payout} secTokenWidth='30px' />
                   ))}
                 </AllPayoutListContainer>
                 <Pagination

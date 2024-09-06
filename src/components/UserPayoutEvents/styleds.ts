@@ -387,5 +387,6 @@ export const PayoutType = styled.div`
   color: ${({ theme }) => theme.text5};
   font-weight: 500;
   font-size: 13px;
-  padding: 0 12px;
+  padding: 6px 12px;
+  height: min-content;
 `
