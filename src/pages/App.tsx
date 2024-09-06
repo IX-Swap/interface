@@ -248,9 +248,6 @@ export default function App() {
     [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
   )
 
-  const isRedirect =
-    userRole !== ROLES.OFFER_MANAGER || (userRole === ROLES.OFFER_MANAGER && !pathname.includes(routes.issuance))
-
   if (!config) {
     return <LoadingIndicator isLoading />
   }
@@ -282,16 +279,7 @@ export default function App() {
                 </>
               }
             >
-              <Switch>
-                {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
-
-                {isRedirect ? (
-                  <Route
-                    path={'/'}
-                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                  />
-                ) : null}
-              </Switch>
+              <Switch>{routeFinalConfig.map(routeGenerator).filter((route) => !!route)}</Switch>
             </Suspense>
             {/* </Web3ReactManager> */}
           </ToggleableBody>
