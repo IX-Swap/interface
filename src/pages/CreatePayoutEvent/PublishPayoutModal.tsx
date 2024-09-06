@@ -167,14 +167,15 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
     const gasLimit = await payoutContract?.estimateGas.initPayout(authorization)
 
-    const res = await payoutContract?.initPayout(authorization, { gasLimit })
-    addTransaction(res, {
+    const tx = await payoutContract?.initPayout(authorization, { gasLimit })
+    await tx.wait()
+
+    addTransaction(tx, {
       summary: `The transaction was successful. Waiting for system confirmation.`,
     })
-
-    const data = await handleFormSubmit(id, res.hash, authorization.payoutId)
+    const data = await handleFormSubmit(id, tx.hash, authorization.payoutId)
     if (data?.id) {
-      closeForm(data.id, res.hash)
+      closeForm(data.id, tx.hash)
     }
   }
 
