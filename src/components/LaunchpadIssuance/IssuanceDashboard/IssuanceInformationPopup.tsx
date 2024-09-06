@@ -196,6 +196,14 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, onClose }: Isssuanc
     )
   }
 
+  const shouldShowDeploySection = () => {
+    if (isMasterTenant) {
+      return false
+    }
+
+    return true
+  }
+
   return (
     <IssuanceDialog show={isOpen} title="Issuance Information" onClose={onClose} width="600px">
       <PopupWrapper>
@@ -222,7 +230,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, onClose }: Isssuanc
           </RowBetween>
         )}
 
-        {!isMasterTenant ? (
+        {shouldShowDeploySection() ? (
           <>
             {(vettingStatus || offerStatus) && <Separator />}
             {isOfferDeployed ? (
