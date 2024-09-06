@@ -193,7 +193,7 @@ export const IssuanceActionButtons = ({
           )}
         </FormSubmitContainer>
       )}
-      {isAdmin && showReviewButtons && isMasterTenant ? (
+      {(isAdmin || isMasterTenant) && showReviewButtons  ? (
         <FormSubmitContainer>
           <AdminButtons
             disabled={!offerId}
