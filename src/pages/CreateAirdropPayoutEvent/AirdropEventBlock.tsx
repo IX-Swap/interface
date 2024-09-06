@@ -13,6 +13,9 @@ import { ButtonsContainer, PayoutFormCard } from 'pages/CreatePayoutEvent/styled
 import { useTokensList } from 'hooks/useTokensList'
 import { PublishAirdropModal } from './PublishAirdropModal'
 import { usePayoutAirdropContract } from 'hooks/useContract'
+import { TYPE } from 'theme'
+import { sharedResourceLinks } from 'services/apiUrls'
+import styled from 'styled-components'
 
 interface Props {
   onValueChange: (key: string, value: any) => void
@@ -27,7 +30,7 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
   const [totalWallets, setTotalWallets] = useState(0) // New state for total wallets
   const [maxTransfer, setMaxTransfer] = useState(0)
   const payoutContract = usePayoutAirdropContract()
-
+  const csvTemplateLink = sharedResourceLinks.airdropCSVTemplateLink
   useEffect(() => {
     if (payoutContract) {
       payoutContract.maxTransfer().then(setMaxTransfer)
@@ -79,6 +82,10 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
     onValueChange('files', arrayOfFiles)
   }
 
+  const handleCsvTemplateClick = (url: string) => {
+    window.open(url, '_blank')
+  }
+
   return (
     <PayoutFormCard>
       <AreYouSureModal
@@ -112,22 +119,26 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
           disabled={!availableForEditing.includes('memo')}
         />
       </FormGrid>
-
-      <Uploader
-        isPayoutpage={true}
-        acceptedFileTypes={['.csv']}
-        title="Payout Attachments"
-        files={values.files}
-        required
-        onDrop={handleDropImage}
-        handleDeleteClick={handleImageDelete}
-        error={touched.files ? errors.files : ''}
-        tooltipText="Please attach any documentation relevant to the payout event (optional)."
-        isDisabled={!availableForEditing.includes('files')}
-        setTotalWallets={setTotalWallets}
-        setTotalAmount={(value) => onValueChange('tokenAmount', value)}
-        onCsvRowsChange={(value) => onValueChange('csvRows', value)}
-      />
+      <FormGrid style={{ position: 'relative' }} columns={1}>
+        <Uploader
+          isPayoutpage={true}
+          acceptedFileTypes={['.csv']}
+          title="Payout Attachments"
+          files={values.files}
+          required
+          onDrop={handleDropImage}
+          handleDeleteClick={handleImageDelete}
+          error={touched.files ? errors.files : ''}
+          tooltipText="Please attach any documentation relevant to the payout event (optional)."
+          isDisabled={!availableForEditing.includes('files')}
+          setTotalWallets={setTotalWallets}
+          setTotalAmount={(value) => onValueChange('tokenAmount', value)}
+          onCsvRowsChange={(value) => onValueChange('csvRows', value)}
+        />
+        <CsvTemplateLink color={'#6666ff'} onClick={() => handleCsvTemplateClick(csvTemplateLink)}>
+          Refer to CSV Template
+        </CsvTemplateLink>
+      </FormGrid>
 
       <ButtonsContainer style={{ marginBottom: '25px' }}>
         <PinnedContentButton type="button" onClick={open}>
@@ -148,3 +159,19 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
     </PayoutFormCard>
   )
 }
+
+const CsvTemplateLink = styled(TYPE.description2)`
+  position: absolute;
+  right: 10px;
+  color: #6666ff;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    color: #6666ff;
+  }
+
+  &:active {
+    color: #6666ff;
+  }
+`
