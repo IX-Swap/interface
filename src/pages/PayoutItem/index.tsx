@@ -60,18 +60,18 @@ export default function PayoutItemForUser({
     }
   }, [payoutId])
 
-  const getMyAmount = useCallback(async () => {
+  const getMyAmount = async () => {
     if (!payout?.secTokenId) return
     const data = await getMyPayoutAmount(+payoutId)
     if (data) {
       handleMyAmount(+data.poolTokens + +data.walletTokens)
     }
-  }, [payoutId, payout?.secTokenId])
+  }
 
   useEffect(() => {
     getPayoutItem()
     getMyAmount()
-  }, [payoutId, account])
+  }, [payoutId, account, payout?.secTokenId])
 
   useEffect(() => {
     setIsClaimHistoryLoading(true)
@@ -94,14 +94,13 @@ export default function PayoutItemForUser({
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '65px' }}>
-                 {payout.type !== PAYOUT_TYPE.AIRDROPS && (
+            {payout.type !== PAYOUT_TYPE.AIRDROPS && (
               <>
                 <PayoutTimeline payout={payout} />
                 <PayoutActionBlock payout={payout} isMyPayout={false} myAmount={myAmount} onUpdate={getPayoutItem} />
               </>
             )}
 
-         
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}
