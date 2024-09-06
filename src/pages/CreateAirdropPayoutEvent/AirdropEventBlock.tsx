@@ -36,6 +36,7 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
 
   const showError = useShowError()
   const { tokensOptions } = useTokensList()
+  const payoutTokensOptions = tokensOptions.filter((option) => !option.isNative)
   const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
   const onDelete = () => {
     toggleIsWarningOpen()
@@ -93,7 +94,7 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
           label="Payout Token"
           placeholder="Select token or paste address"
           selectedItem={token}
-          items={tokensOptions}
+          items={payoutTokensOptions}
           onSelect={(item) => onValueChange('token', item)}
           required
           error={touched.token ? errors.token : ''}
