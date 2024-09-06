@@ -45,7 +45,6 @@ export const routes = {
   payoutHistory: '/token-manager/payout-history',
   payoutEvent: '/token-manager/payout-events',
   manageTokens: '/token-manager/my-tokens',
-  tokenMananger: '/token-manager',
   launchpad: '/launchpad',
   offerPage: '/offers/:offerId',
   issuance: '/issuance',

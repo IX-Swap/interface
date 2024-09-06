@@ -56,7 +56,8 @@ export const pagesGroup: PagesGroup = {
     routes.manageTokens,
     routes.payoutHistory,
     routes.payoutEvent,
-    routes.tokenMananger,
+    routes.tokenManager('my-tokens', null),
+    routes.tokenManager()
   ],
   defaults,
 }

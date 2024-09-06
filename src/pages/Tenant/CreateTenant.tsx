@@ -175,6 +175,8 @@ const CreateTenant = () => {
             if (['pages', 'tokens'].includes(key)) {
               if (tenant.isIxSwap) {
                 payloadPatch[key] = null
+              } else if (tenant[key] != value) {
+                payloadPatch[key] = value
               }
             } else if (tenant[key] != value) {
               payloadPatch[key] = value
