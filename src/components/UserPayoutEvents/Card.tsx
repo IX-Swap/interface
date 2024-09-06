@@ -69,11 +69,8 @@ export const Card = ({
             </PayoutLabel>
             <PayoutValue>{dayjs(recordDate).format(dateFormat)}</PayoutValue>
           </div>
-        ) : (
-          ''
-        )}
-
-        <div>
+        ) : null}
+        <div style={{ alignItems: 'self-end' }}>
           <PayoutLabel>
             <Trans>Paid With</Trans>
           </PayoutLabel>
