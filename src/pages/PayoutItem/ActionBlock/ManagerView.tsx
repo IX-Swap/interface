@@ -97,7 +97,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
       })
 
       const tx = await payoutContract?.claimBack(authorization)
-
+      await tx.wait()
       handleIsLoading(false)
 
       await saveManagerClaimBack({ payoutEventId: id, secToken: secToken.id, txHash: tx.hash })
