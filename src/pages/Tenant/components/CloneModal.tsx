@@ -110,6 +110,7 @@ const CancelButton = styled.button`
   line-height: 18px; /* 128.571% */
   letter-spacing: -0.28px;
   outline: none;
+  cursor: pointer;
 
   &:hover {
     background: #f9f9ff;
@@ -135,6 +136,7 @@ const ConfirmButton = styled.button`
   line-height: normal;
   letter-spacing: -0.28px;
   border: none;
+  cursor: pointer;
 
   &:hover {
     background: #4d4dff;

@@ -157,7 +157,7 @@ const TenantForm = () => {
                 button: { primary: values?.colorButtonPrimary },
               })
             : '',
-          customStyles: '',
+          customStyles: '{}',
           supportEmail: values?.supportEmail,
           isIxSwap: values?.isIxSwap ?? false,
           tokens: values?.tokens ? JSON.stringify(values.tokens) : null,
@@ -270,39 +270,39 @@ const TenantForm = () => {
   useEffect(() => {
     if (selectedTenant && pathname === routes.tenantClone) {
       formik.setFieldValue('name', selectedTenant.name)
-        formik.setFieldValue('title', selectedTenant.title)
-        formik.setFieldValue('domain', selectedTenant.domain)
-        formik.setFieldValue('appUrl', selectedTenant.appUrl)
-        formik.setFieldValue('description', selectedTenant.description)
-        formik.setFieldValue('bannerImageUrl', selectedTenant.bannerImageUrl)
-        formik.setFieldValue('isIxSwap', selectedTenant.isIxSwap)
-        formik.setFieldValue('enableLbp', selectedTenant.enableLbp)
-        formik.setFieldValue('enableFeaturedSecurityVaults', selectedTenant.enableFeaturedSecurityVaults)
-        formik.setFieldValue('chartsUrl', selectedTenant.chartsUrl)
-        formik.setFieldValue('defaultUrl', selectedTenant.defaultUrl)
-        formik.setFieldValue('tokens', selectedTenant?.tokens ? JSON.parse(selectedTenant.tokens) : [])
-        formik.setFieldValue('logoUrl', selectedTenant.logoUrl)
-        formik.setFieldValue('faviconUrl', selectedTenant.faviconUrl)
-        formik.setFieldValue('supportEmail', selectedTenant.supportEmail)
-        formik.setFieldValue('enableLaunchpadBanner', selectedTenant.enableLaunchpadBanner)
-        formik.setFieldValue('launchpadBannerTitle', selectedTenant.launchpadBannerTitle)
-        formik.setFieldValue('launchpadBannerInfoRedirectTitle', selectedTenant.launchpadBannerInfoRedirectTitle)
-        formik.setFieldValue('launchpadBannerInfoRedirectUrl', selectedTenant.launchpadBannerInfoRedirectUrl)
-        formik.setFieldValue('kycSuccessRedirectUrl', selectedTenant.kycSuccessRedirectUrl)
-        formik.setFieldValue('kycCancelRedirectUrl', selectedTenant.kycCancelRedirectUrl)
-        const footerConfig = selectedTenant.footerConfig ? JSON.parse(selectedTenant.footerConfig) : null
-        formik.setFieldValue('termLink', footerConfig?.termsLink)
-        formik.setFieldValue('policyLink', footerConfig?.policyLink)
-        formik.setFieldValue('block1', footerConfig?.block1)
-        formik.setFieldValue('block2', footerConfig?.block2)
-        formik.setFieldValue('block3', footerConfig?.block3)
-        formik.setFieldValue('telegram', footerConfig?.socialLinks?.telegram)
-        formik.setFieldValue('linkedin', footerConfig?.socialLinks?.linkedin)
-        formik.setFieldValue('youtube', footerConfig?.socialLinks?.youtube)
-        formik.setFieldValue('twitter', footerConfig?.socialLinks?.twitter)
-        const colors = selectedTenant.colors ? JSON.parse(selectedTenant.colors) : null
-        formik.setFieldValue('colorButtonPrimary', colors?.button?.primary)
-        formik.setFieldValue('pages', selectedTenant?.pages ? checkExistInPageGroup(selectedTenant.pages) : pages)
+      formik.setFieldValue('title', selectedTenant.title)
+      formik.setFieldValue('domain', selectedTenant.domain)
+      formik.setFieldValue('appUrl', selectedTenant.appUrl)
+      formik.setFieldValue('description', selectedTenant.description)
+      formik.setFieldValue('bannerImageUrl', selectedTenant.bannerImageUrl)
+      formik.setFieldValue('isIxSwap', selectedTenant.isIxSwap)
+      formik.setFieldValue('enableLbp', selectedTenant.enableLbp)
+      formik.setFieldValue('enableFeaturedSecurityVaults', selectedTenant.enableFeaturedSecurityVaults)
+      formik.setFieldValue('chartsUrl', selectedTenant.chartsUrl)
+      formik.setFieldValue('defaultUrl', selectedTenant.defaultUrl)
+      formik.setFieldValue('tokens', selectedTenant?.tokens ? JSON.parse(selectedTenant.tokens) : [])
+      formik.setFieldValue('logoUrl', selectedTenant.logoUrl)
+      formik.setFieldValue('faviconUrl', selectedTenant.faviconUrl)
+      formik.setFieldValue('supportEmail', selectedTenant.supportEmail)
+      formik.setFieldValue('enableLaunchpadBanner', selectedTenant.enableLaunchpadBanner)
+      formik.setFieldValue('launchpadBannerTitle', selectedTenant.launchpadBannerTitle)
+      formik.setFieldValue('launchpadBannerInfoRedirectTitle', selectedTenant.launchpadBannerInfoRedirectTitle)
+      formik.setFieldValue('launchpadBannerInfoRedirectUrl', selectedTenant.launchpadBannerInfoRedirectUrl)
+      formik.setFieldValue('kycSuccessRedirectUrl', selectedTenant.kycSuccessRedirectUrl)
+      formik.setFieldValue('kycCancelRedirectUrl', selectedTenant.kycCancelRedirectUrl)
+      const footerConfig = selectedTenant.footerConfig ? JSON.parse(selectedTenant.footerConfig) : null
+      formik.setFieldValue('termLink', footerConfig?.termsLink)
+      formik.setFieldValue('policyLink', footerConfig?.policyLink)
+      formik.setFieldValue('block1', footerConfig?.block1)
+      formik.setFieldValue('block2', footerConfig?.block2)
+      formik.setFieldValue('block3', footerConfig?.block3)
+      formik.setFieldValue('telegram', footerConfig?.socialLinks?.telegram)
+      formik.setFieldValue('linkedin', footerConfig?.socialLinks?.linkedin)
+      formik.setFieldValue('youtube', footerConfig?.socialLinks?.youtube)
+      formik.setFieldValue('twitter', footerConfig?.socialLinks?.twitter)
+      const colors = selectedTenant.colors ? JSON.parse(selectedTenant.colors) : null
+      formik.setFieldValue('colorButtonPrimary', colors?.button?.primary || '#6666FF')
+      formik.setFieldValue('pages', selectedTenant?.pages ? checkExistInPageGroup(selectedTenant.pages) : pages)
     }
   }, [JSON.stringify(selectedTenant)])
 
