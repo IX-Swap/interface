@@ -61,11 +61,12 @@ export default function PayoutItemForUser({
   }, [payoutId])
 
   const getMyAmount = useCallback(async () => {
+    if (!payout?.secTokenId) return
     const data = await getMyPayoutAmount(+payoutId)
     if (data) {
       handleMyAmount(+data.poolTokens + +data.walletTokens)
     }
-  }, [payoutId])
+  }, [payoutId, payout?.secTokenId])
 
   useEffect(() => {
     getPayoutItem()

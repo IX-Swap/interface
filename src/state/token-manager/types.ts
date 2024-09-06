@@ -12,7 +12,7 @@ export interface PayoutEvent {
   type: string
   otherType: string
   status: PAYOUT_STATUS
-  secTokenId: number
+  secTokenId?: number
   secTokenAmount: string
   recordDate: string
   payoutToken: string
@@ -24,7 +24,7 @@ export interface PayoutEvent {
   createdAt: string
   updatedAt: string | null
   deletedAt: null | null
-  secToken: SecToken
+  secToken?: SecToken
   attachments: Array<Document>
   contractPayoutId?: string
   isReturned?: boolean

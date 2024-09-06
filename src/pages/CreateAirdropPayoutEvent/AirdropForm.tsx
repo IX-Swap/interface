@@ -92,7 +92,6 @@ export const AirdropForm = () => {
                 onValueChange('secToken', newToken)
               }}
               error={touched.secToken ? errors.secToken : ''}
-              required
               isDisabled={!availableForEditing.includes('secToken')}
               isNetworkVisiable={true}
               isTokenLogoVisible={true}

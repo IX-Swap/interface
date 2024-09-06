@@ -94,7 +94,6 @@ export function useAllowance(
         return response.wait()
       })
       .then((receipt: TransactionReceipt) => {
-        console.log('Transaction confirmed:', receipt)
         refreshAllowance()
       })
       .catch((error: Error) => {

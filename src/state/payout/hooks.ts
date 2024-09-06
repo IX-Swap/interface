@@ -53,6 +53,11 @@ const publishPayout = async (newPayoutDraft: any) => {
   return result.data
 }
 
+const publishAirdrop = async (newPayoutDraft: any) => {
+  const result = await apiService.post(payout.airdrop, newPayoutDraft)
+  return result.data
+}
+
 export const paidPayoutReq = async (id: number, params: PayPayoutDto) => {
   const result = await apiService.put(payout.paidPayout(id), params)
   return result.data
@@ -83,6 +88,26 @@ export function usePublishPayout() {
       try {
         dispatch(createDraft.pending())
         const data = await publishPayout(newPayoutDraft)
+        dispatch(createDraft.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(createDraft.rejected({ errorMessage: error }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+
+export function useCreateAirdrop() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (newPayoutDraft: any) => {
+      try {
+        dispatch(createDraft.pending())
+        const data = await publishAirdrop(newPayoutDraft)
         dispatch(createDraft.fulfilled(data))
         return data
       } catch (error: any) {

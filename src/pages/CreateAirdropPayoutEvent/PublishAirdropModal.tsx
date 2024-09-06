@@ -8,9 +8,9 @@ import { PinnedContentButton } from 'components/Button'
 import { Line } from 'components/Line'
 import { ReactComponent as AirdropIcon } from 'assets/images/airdrop.svg'
 import { FormValues, transformPayoutDraftDTO } from './utils'
-import { usePublishPayout } from 'state/payout/hooks'
+import { useCreateAirdrop } from 'state/payout/hooks'
 import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
-import { BigNumber, utils } from 'ethers'
+import { BigNumber } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
 import { PAYOUT_AIRDROP_PROXY_ADDRESS } from 'constants/addresses'
 import { usePayoutAirdropContract } from 'hooks/useContract'
@@ -18,9 +18,9 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { useWeb3React } from '@web3-react/core'
 import { floorToDecimals, safeParseUnits } from 'utils/formatCurrencyAmount'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { parseUnits } from 'ethers/lib/utils'
 import { useAddPopup } from 'state/application/hooks'
 import { routes } from 'utils/routes'
+import { findChainName } from 'chains'
 
 interface Props {
   maxTransfer: number
@@ -45,8 +45,9 @@ export const PublishAirdropModal: FC<Props> = ({
   const tokenDecimals = tokenCurrency?.decimals
   const [isLoading, handleIsLoading] = useState(false)
   const addTransaction = useTransactionAdder()
-  const publishPayout = usePublishPayout()
+  const publishAirdrop = useCreateAirdrop()
   const { chainId = 0 } = useWeb3React()
+  const chainName = findChainName(chainId)
   const payoutContract = usePayoutAirdropContract()
   const addPopup = useAddPopup()
 
@@ -94,12 +95,17 @@ export const PublishAirdropModal: FC<Props> = ({
     }
 
     const body = setBody()
-    const data = await publishPayout({ ...body })
+    const data = await publishAirdrop({
+      ...body,
+      network: chainName?.toLowerCase(),
+      csvRows,
+    })
     if (!data?.id) return
 
     for (let i = 0; i < batchData.length; i++) {
       const [recipients, bnAmounts] = batchData[i]
       const tx = await payoutContract.batchDistribute(data?.id, i, token?.value, recipients, bnAmounts)
+      await tx.wait(1)
       if (!tx.hash) return
       addTransaction(tx, {
         summary: `Distribute batch ${i + 1} of ${batchData.length} successfully.`,

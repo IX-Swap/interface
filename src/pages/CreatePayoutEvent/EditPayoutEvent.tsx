@@ -79,9 +79,9 @@ const EditPayoutEventPage: FC = () => {
         files: payout.attachments,
         recordDate: payout.recordDate,
         secToken: {
-          label: payout.secToken.symbol,
-          value: payout.secToken.id,
-          icon: <CurrencyLogo currency={new WrappedTokenInfo(payout.secToken)} />,
+          label: payout.secToken?.symbol || '',
+          value: payout.secToken?.id || '',
+          icon: payout.secToken && <CurrencyLogo currency={new WrappedTokenInfo(payout.secToken)} />,
         },
         secTokenAmount: payout.secTokenAmount,
         title: payout.title,

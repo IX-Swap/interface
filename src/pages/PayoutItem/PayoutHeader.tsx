@@ -49,7 +49,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
           <StyledSummaryBlock>
             <TokenInformationContainer>
               <TitleContent>
-                <TokenNetwork token={secToken} network={secToken.network} />
+                <TokenNetwork token={secToken || {}} network={secToken?.network || ''} />
                 <SecTokenLink to={routes.securityToken(secToken?.catalogId)}>
                   <Trans>{title}</Trans>
                   <span className="secTokenLinkSymbol">{secToken?.originalSymbol ?? secToken?.symbol}</span>

@@ -86,6 +86,8 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
 
   const claimBack = useCallback(async () => {
     try {
+      if (!secToken) throw Error('secToken is not defined')
+
       handleIsLoading(true)
 
       const authorization = await getClaimBackAuthorization({

@@ -44,7 +44,6 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
   const open = async () => {
     setTouched({
       title: true,
-      type: true,
       secToken: true,
       token: true,
       files: true,
@@ -79,8 +78,6 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
     onValueChange('files', arrayOfFiles)
   }
 
-
-
   return (
     <PayoutFormCard>
       <AreYouSureModal
@@ -102,7 +99,6 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
           error={touched.token ? errors.token : ''}
           tooltipText="Select the token you want to distribute for this payout event. (Used if your security token has other tokens in its governance)."
           isTokenLogoVisible={true}
-          // isDisabled={!availableForEditing.includes('token')}
         />
         <TextInput
           placeholder="Memo"
@@ -133,13 +129,6 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
       />
 
       <ButtonsContainer style={{ marginBottom: '25px' }}>
-        {/* comment draft button for now */}
-        {/* {!isEdit && (
-          <ButtonGradientBorder type="submit">
-            <TYPE.main2>Save as Draft</TYPE.main2>
-          </ButtonGradientBorder>
-        )} */}
-
         <PinnedContentButton type="button" onClick={open}>
           <Trans>Submit</Trans>
         </PinnedContentButton>

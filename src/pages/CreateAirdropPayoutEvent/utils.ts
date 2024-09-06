@@ -11,7 +11,6 @@ export const transformPayoutDraftDTO = ({ token, secToken, ...values }: any) => 
 
 export interface FormValues {
   title: string
-  type: string
   secToken: Option | null
   token: Option | null
   files: any[]
