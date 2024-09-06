@@ -204,3 +204,7 @@ const queryParams: { [key: string]: string } = {
   event: 'eventType',
   request: 'requestType',
 }
+
+export const sharedResourceLinks = {
+  airdropCSVTemplateLink: 'https://drive.google.com/file/d/1dbmONi-QuKHYov9aUUXJ3AkvRsIW8dui/view',
+}
