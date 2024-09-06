@@ -79,7 +79,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
       })
 
       const tx = await payoutContract?.claim(authorization)
-
+      await tx.wait()
       await saveUserClaim({ payoutEventId: id, secToken: secToken.id, txHash: tx.hash })
       const res = await getUserClaim(id)
       handleClaimStatus(res)
