@@ -75,7 +75,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, onClose }: Isssuanc
   const [touchedFee, touchFee] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const { isAdmin } = useRole()
+  const { isAdmin, isMasterTenant } = useRole()
 
   const vettingStatus = useMemo(() => issuance?.vetting?.status, [issuance])
   const offerStatus = useMemo(() => issuance?.vetting?.offer?.status, [issuance])
@@ -104,12 +104,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, onClose }: Isssuanc
   const disableSubmit = offer?.status !== OfferStatus.approved || Boolean(issuanceError) || isDistributionDisabled
 
   const confirmFeeDisabled = useMemo(() => {
-    return (
-      Boolean(issuanceError) ||
-      notAprrovedDisabled ||
-      isLoading ||
-      Number(offer?.feeRate) === issuanceFee
-    )
+    return Boolean(issuanceError) || notAprrovedDisabled || isLoading || Number(offer?.feeRate) === issuanceFee
   }, [issuanceError, notAprrovedDisabled, offer, issuanceFee, isLoading])
 
   const vettingLink = useMemo(() => {
@@ -226,77 +221,82 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, onClose }: Isssuanc
             <StatusBlock label="Status" status={offerStatus} />
           </RowBetween>
         )}
-        {(vettingStatus || offerStatus) && <Separator />}
-        {isOfferDeployed ? (
-          <Column>
-            <FeeRow>
-              <Column style={{ gap: '25px', flex: '1 1' }}>
-                <FieldLabel>
-                  Issuance Fee: <span style={{ color: theme.launchpad.colors.primary }}>{issuanceFee}%</span>
-                </FieldLabel>
-              </Column>
-            </FeeRow>
-          </Column>
-        ) : (
-          <Column>
-            <FeeRow>
-              <Column style={{ gap: '25px', flex: '1 1' }}>
-                <FieldLabel>Issuance Fee, %</FieldLabel>
-                <FormField
-                  placeholder="5%"
-                  field="issuanceFee"
-                  setter={onChangeFee}
-                  value={`${issuanceFee === undefined ? '' : issuanceFee}`}
-                  inputFilter={filterNumberWithDecimals}
-                  disabled={notAprrovedDisabled}
-                  maxLength={64}
-                />
-              </Column>
-              <FilledButton
-                disabled={confirmFeeDisabled}
-                style={{ alignSelf: 'flex-end', marginBottom: '10px' }}
-                onClick={submitFee}
-              >
-                Confirm
-              </FilledButton>
-            </FeeRow>
-            {issuanceError && <ErrorText>{issuanceError}</ErrorText>}
-          </Column>
-        )}
 
-        {showDistributionAddress && (
-          <Column>
-            <Column style={{ gap: '25px', flex: '1 1' }}>
-              <FieldLabel>Distribution Controller Address</FieldLabel>
-              <FormField
-                placeholder="Distribution Controller Address"
-                field="distributionControllerAddress"
-                setter={onChangeDistribution}
-                value={distributionAddress}
-                disabled={notAprrovedDisabled}
-                maxLength={64}
-              />
+        {!isMasterTenant ? (
+          <>
+            {(vettingStatus || offerStatus) && <Separator />}
+            {isOfferDeployed ? (
+              <Column>
+                <FeeRow>
+                  <Column style={{ gap: '25px', flex: '1 1' }}>
+                    <FieldLabel>
+                      Issuance Fee: <span style={{ color: theme.launchpad.colors.primary }}>{issuanceFee}%</span>
+                    </FieldLabel>
+                  </Column>
+                </FeeRow>
+              </Column>
+            ) : (
+              <Column>
+                <FeeRow>
+                  <Column style={{ gap: '25px', flex: '1 1' }}>
+                    <FieldLabel>Issuance Fee, %</FieldLabel>
+                    <FormField
+                      placeholder="5%"
+                      field="issuanceFee"
+                      setter={onChangeFee}
+                      value={`${issuanceFee === undefined ? '' : issuanceFee}`}
+                      inputFilter={filterNumberWithDecimals}
+                      disabled={notAprrovedDisabled}
+                      maxLength={64}
+                    />
+                  </Column>
+                  <FilledButton
+                    disabled={confirmFeeDisabled}
+                    style={{ alignSelf: 'flex-end', marginBottom: '10px' }}
+                    onClick={submitFee}
+                  >
+                    Confirm
+                  </FilledButton>
+                </FeeRow>
+                {issuanceError && <ErrorText>{issuanceError}</ErrorText>}
+              </Column>
+            )}
+
+            {showDistributionAddress && (
+              <Column>
+                <Column style={{ gap: '25px', flex: '1 1' }}>
+                  <FieldLabel>Distribution Controller Address</FieldLabel>
+                  <FormField
+                    placeholder="Distribution Controller Address"
+                    field="distributionControllerAddress"
+                    setter={onChangeDistribution}
+                    value={distributionAddress}
+                    disabled={notAprrovedDisabled}
+                    maxLength={64}
+                  />
+                </Column>
+                {distributionError && <ErrorText>{distributionError}</ErrorText>}
+              </Column>
+            )}
+
+            <Separator />
+            <Column>
+              {isOfferDeployed ? (
+                <FilledButton background={theme.launchpad.colors.success} style={{ cursor: 'default' }}>
+                  Deployed
+                </FilledButton>
+              ) : (
+                <FilledButton disabled={disableSubmit} onClick={() => setShowConfirm(true)}>
+                  Deploy
+                </FilledButton>
+              )}
+
+              <RowCenter style={{ marginTop: '13px' }}>
+                <SubmitHint>Confirm that all steps has been done and start the issuance</SubmitHint>
+              </RowCenter>
             </Column>
-            {distributionError && <ErrorText>{distributionError}</ErrorText>}
-          </Column>
-        )}
-
-        <Separator />
-        <Column>
-          {isOfferDeployed ? (
-            <FilledButton background={theme.launchpad.colors.success} style={{ cursor: 'default' }}>
-              Deployed
-            </FilledButton>
-          ) : (
-            <FilledButton disabled={disableSubmit} onClick={() => setShowConfirm(true)}>
-              Deploy
-            </FilledButton>
-          )}
-
-          <RowCenter style={{ marginTop: '13px' }}>
-            <SubmitHint>Confirm that all steps has been done and start the issuance</SubmitHint>
-          </RowCenter>
-        </Column>
+          </>
+        ) : null}
       </PopupWrapper>
       <ConfirmPopup
         isOpen={showConfirm}
