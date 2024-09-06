@@ -39,7 +39,7 @@ const DateBlock = (item: IDateItem) => {
 export const OfferStages = ({ offer, refreshOffer }: Props) => {
   const { timeframe, status, hasPresale } = offer
   const theme = useTheme()
-  const { isAdmin } = useRole()
+  const { isAdmin, isMasterTenant } = useRole()
   const [openEdit, setOpenEdit] = useState(false)
   const [localTime, setLocalTime] = useState(new Date())
 
@@ -49,7 +49,7 @@ export const OfferStages = ({ offer, refreshOffer }: Props) => {
     const allowedStatuses = KEY_OFFER_STATUSES.slice(0, index + 1)
     return allowedStatuses
   }, [status])
-  const showEdit = isAdmin && status !== OfferStatus.claim
+  const showEdit = (isAdmin || isMasterTenant) && status !== OfferStatus.claim
 
   const onEdit = () => {
     if (showEdit && !openEdit) {
