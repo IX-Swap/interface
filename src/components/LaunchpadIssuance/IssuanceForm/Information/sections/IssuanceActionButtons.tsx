@@ -41,7 +41,7 @@ export const IssuanceActionButtons = ({
   refetch,
 }: IssuanceButtonsProps) => {
   const theme = useTheme()
-  const { isAdmin } = useRole()
+  const { isAdmin, isMasterTenant } = useRole()
   const showError = useShowError()
   const { approve, reject, requestChanges } = useReviewOffer(offerId)
   const showSuccess = useShowSuccess()
@@ -193,7 +193,7 @@ export const IssuanceActionButtons = ({
           )}
         </FormSubmitContainer>
       )}
-      {isAdmin && showReviewButtons && (
+      {isAdmin && showReviewButtons && isMasterTenant ? (
         <FormSubmitContainer>
           <AdminButtons
             disabled={!offerId}
@@ -202,7 +202,7 @@ export const IssuanceActionButtons = ({
             onReject={() => setShowReject(true)}
           />
         </FormSubmitContainer>
-      )}
+      ) : null}
       {isAdmin && !showReviewButtons && (
         <FormSubmitContainer>
           <FilledButton onClick={() => null} background={theme.launchpad.colors.success} style={{ cursor: 'default' }}>
