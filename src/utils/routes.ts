@@ -74,6 +74,7 @@ export const routes = {
   adminUsers: 'admin/users-list',
   tenant: '/tenant',
   tenantCreate: '/tenant/create',
+  tenantClone: '/tenant/clone',
   tenantEdit: '/tenant/edit/:id',
 }
 

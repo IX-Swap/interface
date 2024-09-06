@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 
 import { ProgressBar } from './components/ProgressBar'
 import GeneralInfo from './components/GeneralInfo'
@@ -27,6 +27,7 @@ import { useSecTokenState } from 'state/secTokens/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import Loader from 'components/Loader'
 import { routes } from 'utils/routes'
+import { useGlobalState } from 'state/global/hooks'
 
 function checkObjectEmpty(obj: any) {
   return Object.keys(obj).length === 0
@@ -105,12 +106,15 @@ const initialValues: TenantDetails = {
   colorButtonPrimary: '#6666FF',
 }
 
-const CreateTenant = () => {
+const TenantForm = () => {
   const showError = useShowError()
   const showSuccess = useShowSuccess()
   const { tokens, loadingRequest } = useSecTokenState()
   const history = useHistory()
   const { id } = useParams<{ id: string }>()
+  const { pathname } = useLocation()
+  const { selectedTenant } = useGlobalState()
+
   const [tenant, setTenant] = React.useState<any>({})
 
   const activeTokens = tokens && tokens.length > 0 ? tokens : []
@@ -209,59 +213,98 @@ const CreateTenant = () => {
 
   useEffect(() => {
     const fetchTenantDetails = async () => {
-      if (id) {
-        try {
-          const response = await apiService.get(`${whitelabel.config}/${id}`)
-          const { data, status } = response
-          if (status !== 200) {
-            showError('Failed to fetch tenant details')
-            return
-          }
-
-          setTenant(data)
-          formik.setFieldValue('name', data.name)
-          formik.setFieldValue('title', data.title)
-          formik.setFieldValue('domain', data.domain)
-          formik.setFieldValue('appUrl', data.appUrl)
-          formik.setFieldValue('description', data.description)
-          formik.setFieldValue('bannerImageUrl', data.bannerImageUrl)
-          formik.setFieldValue('isIxSwap', data.isIxSwap)
-          formik.setFieldValue('enableLbp', data.enableLbp)
-          formik.setFieldValue('enableFeaturedSecurityVaults', data.enableFeaturedSecurityVaults)
-          formik.setFieldValue('chartsUrl', data.chartsUrl)
-          formik.setFieldValue('defaultUrl', data.defaultUrl)
-          formik.setFieldValue('tokens', data?.tokens ? JSON.parse(data.tokens) : [])
-          formik.setFieldValue('logoUrl', data.logoUrl)
-          formik.setFieldValue('faviconUrl', data.faviconUrl)
-          formik.setFieldValue('supportEmail', data.supportEmail)
-          formik.setFieldValue('enableLaunchpadBanner', data.enableLaunchpadBanner)
-          formik.setFieldValue('launchpadBannerTitle', data.launchpadBannerTitle)
-          formik.setFieldValue('launchpadBannerInfoRedirectTitle', data.launchpadBannerInfoRedirectTitle)
-          formik.setFieldValue('launchpadBannerInfoRedirectUrl', data.launchpadBannerInfoRedirectUrl)
-          formik.setFieldValue('kycSuccessRedirectUrl', data.kycSuccessRedirectUrl)
-          formik.setFieldValue('kycCancelRedirectUrl', data.kycCancelRedirectUrl)
-          const footerConfig = data.footerConfig ? JSON.parse(data.footerConfig) : null
-          formik.setFieldValue('termLink', footerConfig?.termsLink)
-          formik.setFieldValue('policyLink', footerConfig?.policyLink)
-          formik.setFieldValue('block1', footerConfig?.block1)
-          formik.setFieldValue('block2', footerConfig?.block2)
-          formik.setFieldValue('block3', footerConfig?.block3)
-          formik.setFieldValue('telegram', footerConfig?.socialLinks?.telegram)
-          formik.setFieldValue('linkedin', footerConfig?.socialLinks?.linkedin)
-          formik.setFieldValue('youtube', footerConfig?.socialLinks?.youtube)
-          formik.setFieldValue('twitter', footerConfig?.socialLinks?.twitter)
-          const colors = data.colors ? JSON.parse(data.colors) : null
-          formik.setFieldValue('colorButtonPrimary', colors?.button?.primary)
-          formik.setFieldValue('pages', data?.pages ? checkExistInPageGroup(data.pages) : pages)
-        } catch (error) {
-          console.error(error)
+      try {
+        const response = await apiService.get(`${whitelabel.config}/${id}`)
+        const { data, status } = response
+        if (status !== 200) {
           showError('Failed to fetch tenant details')
+          return
         }
+
+        setTenant(data)
+        formik.setFieldValue('name', data.name)
+        formik.setFieldValue('title', data.title)
+        formik.setFieldValue('domain', data.domain)
+        formik.setFieldValue('appUrl', data.appUrl)
+        formik.setFieldValue('description', data.description)
+        formik.setFieldValue('bannerImageUrl', data.bannerImageUrl)
+        formik.setFieldValue('isIxSwap', data.isIxSwap)
+        formik.setFieldValue('enableLbp', data.enableLbp)
+        formik.setFieldValue('enableFeaturedSecurityVaults', data.enableFeaturedSecurityVaults)
+        formik.setFieldValue('chartsUrl', data.chartsUrl)
+        formik.setFieldValue('defaultUrl', data.defaultUrl)
+        formik.setFieldValue('tokens', data?.tokens ? JSON.parse(data.tokens) : [])
+        formik.setFieldValue('logoUrl', data.logoUrl)
+        formik.setFieldValue('faviconUrl', data.faviconUrl)
+        formik.setFieldValue('supportEmail', data.supportEmail)
+        formik.setFieldValue('enableLaunchpadBanner', data.enableLaunchpadBanner)
+        formik.setFieldValue('launchpadBannerTitle', data.launchpadBannerTitle)
+        formik.setFieldValue('launchpadBannerInfoRedirectTitle', data.launchpadBannerInfoRedirectTitle)
+        formik.setFieldValue('launchpadBannerInfoRedirectUrl', data.launchpadBannerInfoRedirectUrl)
+        formik.setFieldValue('kycSuccessRedirectUrl', data.kycSuccessRedirectUrl)
+        formik.setFieldValue('kycCancelRedirectUrl', data.kycCancelRedirectUrl)
+        const footerConfig = data.footerConfig ? JSON.parse(data.footerConfig) : null
+        formik.setFieldValue('termLink', footerConfig?.termsLink)
+        formik.setFieldValue('policyLink', footerConfig?.policyLink)
+        formik.setFieldValue('block1', footerConfig?.block1)
+        formik.setFieldValue('block2', footerConfig?.block2)
+        formik.setFieldValue('block3', footerConfig?.block3)
+        formik.setFieldValue('telegram', footerConfig?.socialLinks?.telegram)
+        formik.setFieldValue('linkedin', footerConfig?.socialLinks?.linkedin)
+        formik.setFieldValue('youtube', footerConfig?.socialLinks?.youtube)
+        formik.setFieldValue('twitter', footerConfig?.socialLinks?.twitter)
+        const colors = data.colors ? JSON.parse(data.colors) : null
+        formik.setFieldValue('colorButtonPrimary', colors?.button?.primary)
+        formik.setFieldValue('pages', data?.pages ? checkExistInPageGroup(data.pages) : pages)
+      } catch (error) {
+        console.error(error)
+        showError('Failed to fetch tenant details')
       }
     }
 
-    fetchTenantDetails()
+    if (id) {
+      fetchTenantDetails()
+    }
   }, [id, showError, formik.setValues])
+
+  useEffect(() => {
+    if (selectedTenant && pathname === routes.tenantClone) {
+      formik.setFieldValue('name', selectedTenant.name)
+        formik.setFieldValue('title', selectedTenant.title)
+        formik.setFieldValue('domain', selectedTenant.domain)
+        formik.setFieldValue('appUrl', selectedTenant.appUrl)
+        formik.setFieldValue('description', selectedTenant.description)
+        formik.setFieldValue('bannerImageUrl', selectedTenant.bannerImageUrl)
+        formik.setFieldValue('isIxSwap', selectedTenant.isIxSwap)
+        formik.setFieldValue('enableLbp', selectedTenant.enableLbp)
+        formik.setFieldValue('enableFeaturedSecurityVaults', selectedTenant.enableFeaturedSecurityVaults)
+        formik.setFieldValue('chartsUrl', selectedTenant.chartsUrl)
+        formik.setFieldValue('defaultUrl', selectedTenant.defaultUrl)
+        formik.setFieldValue('tokens', selectedTenant?.tokens ? JSON.parse(selectedTenant.tokens) : [])
+        formik.setFieldValue('logoUrl', selectedTenant.logoUrl)
+        formik.setFieldValue('faviconUrl', selectedTenant.faviconUrl)
+        formik.setFieldValue('supportEmail', selectedTenant.supportEmail)
+        formik.setFieldValue('enableLaunchpadBanner', selectedTenant.enableLaunchpadBanner)
+        formik.setFieldValue('launchpadBannerTitle', selectedTenant.launchpadBannerTitle)
+        formik.setFieldValue('launchpadBannerInfoRedirectTitle', selectedTenant.launchpadBannerInfoRedirectTitle)
+        formik.setFieldValue('launchpadBannerInfoRedirectUrl', selectedTenant.launchpadBannerInfoRedirectUrl)
+        formik.setFieldValue('kycSuccessRedirectUrl', selectedTenant.kycSuccessRedirectUrl)
+        formik.setFieldValue('kycCancelRedirectUrl', selectedTenant.kycCancelRedirectUrl)
+        const footerConfig = selectedTenant.footerConfig ? JSON.parse(selectedTenant.footerConfig) : null
+        formik.setFieldValue('termLink', footerConfig?.termsLink)
+        formik.setFieldValue('policyLink', footerConfig?.policyLink)
+        formik.setFieldValue('block1', footerConfig?.block1)
+        formik.setFieldValue('block2', footerConfig?.block2)
+        formik.setFieldValue('block3', footerConfig?.block3)
+        formik.setFieldValue('telegram', footerConfig?.socialLinks?.telegram)
+        formik.setFieldValue('linkedin', footerConfig?.socialLinks?.linkedin)
+        formik.setFieldValue('youtube', footerConfig?.socialLinks?.youtube)
+        formik.setFieldValue('twitter', footerConfig?.socialLinks?.twitter)
+        const colors = selectedTenant.colors ? JSON.parse(selectedTenant.colors) : null
+        formik.setFieldValue('colorButtonPrimary', colors?.button?.primary)
+        formik.setFieldValue('pages', selectedTenant?.pages ? checkExistInPageGroup(selectedTenant.pages) : pages)
+    }
+  }, [JSON.stringify(selectedTenant)])
 
   console.log('formik', formik)
   return (
@@ -370,7 +413,7 @@ const CreateTenant = () => {
   )
 }
 
-export default CreateTenant
+export default TenantForm
 
 const Container = styled.div`
   min-height: 100vh;

@@ -21,7 +21,6 @@ const Token: React.FC<TokenProps> = ({ formik, activeTokens }) => {
     logo: token.logo,
   }))
 
-  console.log('items', items)
   return (
     <>
       <h1 className="title">Tokens</h1>

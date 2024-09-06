@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Table from './components/Table'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
-import { Edit } from 'react-feather'
+import { Copy, Edit } from 'react-feather'
 import dayjs from 'dayjs'
 import { useHistory } from 'react-router-dom'
 
@@ -10,6 +10,7 @@ import { PinnedContentButton } from 'components/Button'
 import apiService from 'services/apiService'
 import { whitelabel } from 'services/apiUrls'
 import { routes } from 'utils/routes'
+import CloneModal from './components/CloneModal'
 
 interface Tenant {
   key: string
@@ -22,6 +23,18 @@ const Tenant: React.FC = () => {
   const history = useHistory()
 
   const [data, setData] = useState<Tenant[]>([])
+  const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(null)
+  const [isOpenCloneModal, setIsOpenCloneModal] = useState(false)
+
+  const handleOpenCloneModal = (tenant: Tenant) => {
+    setSelectedTenant(tenant)
+    setIsOpenCloneModal(true)
+  }
+
+  const handleCloseCloneModal = () => {
+    setSelectedTenant(null)
+    setIsOpenCloneModal(false)
+  }
 
   const columns = [
     {
@@ -56,6 +69,9 @@ const Tenant: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <ActionWrapper>
+            <ActionButton onClick={() => handleOpenCloneModal(record)}>
+              <Copy />
+            </ActionButton>
             <ActionButton onClick={() => history.push(`${routes.tenant}/edit/${record?.id}`)}>
               <Edit />
             </ActionButton>
@@ -98,6 +114,10 @@ const Tenant: React.FC = () => {
 
         <Table columns={columns} dataSource={data} />
       </Content>
+
+      {isOpenCloneModal ? (
+        <CloneModal isOpen={isOpenCloneModal} tenant={selectedTenant} onClose={handleCloseCloneModal} />
+      ) : null}
     </Container>
   )
 }
@@ -124,8 +144,12 @@ const ActionWrapper = styled.div`
   justify-content: flex-end;
 `
 const ActionButton = styled.div`
-  cursor: pointer;
   color: #b8b8cc;
+  cursor: pointer;
+
+  &:hover {
+    color: blue;
+  }
 `
 
 const DomainText = styled.div`
