@@ -127,7 +127,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
             {showDetails && (
               <>
                 <InvestmentCardDetailsEntry>
-                  <InvestmentCardDetailsEntryLabel>Projected fundraise</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryLabel>Projected Fundraise</InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>
                     {formatNumberWithDecimals(offer.hardCap, 2, true)}
                   </InvestmentCardDetailsEntryValue>
@@ -152,7 +152,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
                 <InvestmentCardDetailsSeparator />
 
                 <InvestmentCardDetailsEntry>
-                  <InvestmentCardDetailsEntryLabel>Investment type</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryLabel>Investment Type</InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>
                     {capitalizeFirstLetter(offer.investmentType)}
                   </InvestmentCardDetailsEntryValue>
