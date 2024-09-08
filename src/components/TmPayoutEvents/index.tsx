@@ -11,7 +11,7 @@ import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { ReactComponent as EyeIcon } from 'assets/images/gray_eye_icon.svg'
 import { ReactComponent as EditIcon } from 'assets/images/gray_edit_icon.svg'
-import { useCurrency } from 'hooks/Tokens'
+import { useCurrency, useSafeCurrency } from 'hooks/Tokens'
 import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
 import { Pagination } from 'components/Pagination'
 import { LoadingIndicator } from 'components/LoadingIndicator'
@@ -131,7 +131,7 @@ const Row = ({ item }: IRow) => {
 
   const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken, claimed } = item
 
-  const currency = useCurrency(payoutToken)
+  const currency = useSafeCurrency(payoutToken)
   const dateFormat = 'MMM DD, YYYY'
 
   const clickView = () => {
