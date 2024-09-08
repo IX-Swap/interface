@@ -6,7 +6,6 @@ import StickyBox from 'react-sticky-box'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
 import { useFormik } from 'formik'
-import * as yup from 'yup'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 
 import { ProgressBar } from './components/ProgressBar'
@@ -21,75 +20,16 @@ import Design from './components/Design'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import apiService from 'services/apiService'
 import { whitelabel } from 'services/apiUrls'
-import { checkExistInPageGroup, getActiveRoutes } from './helpers'
+import { checkExistInPageGroup, generateTenantSubmitPayload, getActiveRoutes, setFieldsValue } from './helpers'
 import Token from './components/Token'
 import { useSecTokenState } from 'state/secTokens/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import Loader from 'components/Loader'
 import { routes } from 'utils/routes'
 import { useGlobalState } from 'state/global/hooks'
-
-function checkObjectEmpty(obj: any) {
-  return Object.keys(obj).length === 0
-}
-
-interface TenantDetails {
-  name?: string
-  title?: string
-  domain?: string
-  appUrl?: string
-  description?: string
-  bannerImageUrl?: string
-  pages?: any
-  chartsUrl?: string
-  enableLbp?: boolean
-  defaultUrl?: string
-  faviconUrl?: string
-  logoUrl?: string
-  enableFeaturedSecurityVaults?: boolean
-  colors?: string
-  customStyles?: string
-  supportEmail?: string
-  isIxSwap?: boolean
-  tokens?: any
-  enableLaunchpadBanner?: boolean
-  launchpadBannerTitle?: string
-  launchpadBannerInfoRedirectTitle?: string
-  launchpadBannerInfoRedirectUrl?: string
-  kycSuccessRedirectUrl?: string
-  kycCancelRedirectUrl?: string
-  footerConfig?: string
-  colorButtonPrimary?: string
-}
-
-const validationSchema = yup.object({
-  name: yup.string().required('Tenant name is required'),
-  title: yup.string().required('Title is required'),
-  domain: yup.string().required('Domain is required'),
-  appUrl: yup.string().required('App URL is required'),
-  description: yup.string().required('Description is required'),
-  defaultUrl: yup.string().required('Default URL is required'),
-  chartsUrl: yup.string().required('Charts URL is required'),
-  supportEmail: yup.string().required('Support Email is required'),
-  termLink: yup.string().required('Term Link is required'),
-  policyLink: yup.string().required('Policy Link is required'),
-  block1: yup.string().required('Block 1 is required'),
-  logoUrl: yup.string().required('A logo URL is required').url('Invalid URL format'),
-  faviconUrl: yup.string().required('A favicon URL is required').url('Invalid URL format'),
-  bannerImageUrl: yup.string().required('A banner URL is required').url('Invalid URL format'),
-})
-
-const pages = {
-  dex: false,
-  kyc: false,
-  lbp: false,
-  lbpAdmin: false,
-  offer: false,
-  issuance: false,
-  payout: false,
-  securityTokens: false,
-  admin: false,
-}
+import { validationSchema } from './schema'
+import { TenantDetails } from './types'
+import { pages } from './helpers'
 
 const initialValues: TenantDetails = {
   name: '',
@@ -126,50 +66,7 @@ const TenantForm = () => {
     validateOnBlur: false,
     onSubmit: async (values: any) => {
       try {
-        const socialLinks = {} as any
-        const footerConfig = {} as any
-        values?.telegram && (socialLinks['telegram'] = values?.telegram)
-        values?.linkedin && (socialLinks['linkedin'] = values?.linkedin)
-        values?.youtube && (socialLinks['youtube'] = values?.youtube)
-        values?.twitter && (socialLinks['twitter'] = values?.twitter)
-        !checkObjectEmpty(socialLinks) && (footerConfig['socialLinks'] = socialLinks)
-        values?.termLink && (footerConfig['termsLink'] = values?.termLink)
-        values?.policyLink && (footerConfig['policyLink'] = values?.policyLink)
-        values?.block1 && (footerConfig['block1'] = values?.block1)
-        values?.block2 && (footerConfig['block2'] = values?.block2)
-        values?.block3 && (footerConfig['block3'] = values?.block3)
-
-        const payload = {
-          name: values?.name,
-          title: values?.title,
-          appUrl: values?.appUrl,
-          description: values?.description,
-          bannerImageUrl: values?.bannerImageUrl,
-          pages: values?.pages ? getActiveRoutes(values.pages) : null,
-          chartsUrl: values?.chartsUrl,
-          enableLbp: values?.enableLbp,
-          defaultUrl: values?.defaultUrl,
-          faviconUrl: values?.faviconUrl,
-          logoUrl: values?.logoUrl,
-          enableFeaturedSecurityVaults: values?.enableFeaturedSecurityVaults ?? false,
-          colors: values?.colorButtonPrimary
-            ? JSON.stringify({
-                button: { primary: values?.colorButtonPrimary },
-              })
-            : '',
-          customStyles: '{}',
-          supportEmail: values?.supportEmail,
-          isIxSwap: values?.isIxSwap ?? false,
-          tokens: values?.tokens ? JSON.stringify(values.tokens) : null,
-          domain: values?.domain,
-          enableLaunchpadBanner: values?.enableLaunchpadBanner ?? false,
-          launchpadBannerTitle: values?.launchpadBannerTitle,
-          launchpadBannerInfoRedirectTitle: values?.launchpadBannerInfoRedirectTitle,
-          launchpadBannerInfoRedirectUrl: values?.launchpadBannerInfoRedirectUrl,
-          kycSuccessRedirectUrl: values?.kycSuccessRedirectUrl,
-          kycCancelRedirectUrl: values?.kycCancelRedirectUrl,
-          footerConfig: !checkObjectEmpty(footerConfig) ? JSON.stringify(footerConfig) : '',
-        }
+        const payload = generateTenantSubmitPayload(values)
         formik.setSubmitting(true)
 
         const payloadPatch = {} as any
@@ -186,9 +83,7 @@ const TenantForm = () => {
               payloadPatch[key] = value
             }
           }
-          console.log('tenant', tenant)
-          console.log('payloadPatch', payloadPatch)
-          debugger
+
           const response = await apiService.patch(`${whitelabel.create}/${id}`, payloadPatch)
 
           if (response.status === 200) {
@@ -222,40 +117,7 @@ const TenantForm = () => {
         }
 
         setTenant(data)
-        formik.setFieldValue('name', data.name)
-        formik.setFieldValue('title', data.title)
-        formik.setFieldValue('domain', data.domain)
-        formik.setFieldValue('appUrl', data.appUrl)
-        formik.setFieldValue('description', data.description)
-        formik.setFieldValue('bannerImageUrl', data.bannerImageUrl)
-        formik.setFieldValue('isIxSwap', data.isIxSwap)
-        formik.setFieldValue('enableLbp', data.enableLbp)
-        formik.setFieldValue('enableFeaturedSecurityVaults', data.enableFeaturedSecurityVaults)
-        formik.setFieldValue('chartsUrl', data.chartsUrl)
-        formik.setFieldValue('defaultUrl', data.defaultUrl)
-        formik.setFieldValue('tokens', data?.tokens ? JSON.parse(data.tokens) : [])
-        formik.setFieldValue('logoUrl', data.logoUrl)
-        formik.setFieldValue('faviconUrl', data.faviconUrl)
-        formik.setFieldValue('supportEmail', data.supportEmail)
-        formik.setFieldValue('enableLaunchpadBanner', data.enableLaunchpadBanner)
-        formik.setFieldValue('launchpadBannerTitle', data.launchpadBannerTitle)
-        formik.setFieldValue('launchpadBannerInfoRedirectTitle', data.launchpadBannerInfoRedirectTitle)
-        formik.setFieldValue('launchpadBannerInfoRedirectUrl', data.launchpadBannerInfoRedirectUrl)
-        formik.setFieldValue('kycSuccessRedirectUrl', data.kycSuccessRedirectUrl)
-        formik.setFieldValue('kycCancelRedirectUrl', data.kycCancelRedirectUrl)
-        const footerConfig = data.footerConfig ? JSON.parse(data.footerConfig) : null
-        formik.setFieldValue('termLink', footerConfig?.termsLink)
-        formik.setFieldValue('policyLink', footerConfig?.policyLink)
-        formik.setFieldValue('block1', footerConfig?.block1)
-        formik.setFieldValue('block2', footerConfig?.block2)
-        formik.setFieldValue('block3', footerConfig?.block3)
-        formik.setFieldValue('telegram', footerConfig?.socialLinks?.telegram)
-        formik.setFieldValue('linkedin', footerConfig?.socialLinks?.linkedin)
-        formik.setFieldValue('youtube', footerConfig?.socialLinks?.youtube)
-        formik.setFieldValue('twitter', footerConfig?.socialLinks?.twitter)
-        const colors = data.colors ? JSON.parse(data.colors) : null
-        formik.setFieldValue('colorButtonPrimary', colors?.button?.primary)
-        formik.setFieldValue('pages', data?.pages ? checkExistInPageGroup(data.pages) : pages)
+        setFieldsValue(formik.setFieldValue, data)
       } catch (error) {
         console.error(error)
         showError('Failed to fetch tenant details')
@@ -265,48 +127,14 @@ const TenantForm = () => {
     if (id) {
       fetchTenantDetails()
     }
-  }, [id, showError, formik.setValues])
+  }, [id, showError])
 
   useEffect(() => {
     if (selectedTenant && pathname === routes.tenantClone) {
-      formik.setFieldValue('name', selectedTenant.name)
-      formik.setFieldValue('title', selectedTenant.title)
-      formik.setFieldValue('domain', selectedTenant.domain)
-      formik.setFieldValue('appUrl', selectedTenant.appUrl)
-      formik.setFieldValue('description', selectedTenant.description)
-      formik.setFieldValue('bannerImageUrl', selectedTenant.bannerImageUrl)
-      formik.setFieldValue('isIxSwap', selectedTenant.isIxSwap)
-      formik.setFieldValue('enableLbp', selectedTenant.enableLbp)
-      formik.setFieldValue('enableFeaturedSecurityVaults', selectedTenant.enableFeaturedSecurityVaults)
-      formik.setFieldValue('chartsUrl', selectedTenant.chartsUrl)
-      formik.setFieldValue('defaultUrl', selectedTenant.defaultUrl)
-      formik.setFieldValue('tokens', selectedTenant?.tokens ? JSON.parse(selectedTenant.tokens) : [])
-      formik.setFieldValue('logoUrl', selectedTenant.logoUrl)
-      formik.setFieldValue('faviconUrl', selectedTenant.faviconUrl)
-      formik.setFieldValue('supportEmail', selectedTenant.supportEmail)
-      formik.setFieldValue('enableLaunchpadBanner', selectedTenant.enableLaunchpadBanner)
-      formik.setFieldValue('launchpadBannerTitle', selectedTenant.launchpadBannerTitle)
-      formik.setFieldValue('launchpadBannerInfoRedirectTitle', selectedTenant.launchpadBannerInfoRedirectTitle)
-      formik.setFieldValue('launchpadBannerInfoRedirectUrl', selectedTenant.launchpadBannerInfoRedirectUrl)
-      formik.setFieldValue('kycSuccessRedirectUrl', selectedTenant.kycSuccessRedirectUrl)
-      formik.setFieldValue('kycCancelRedirectUrl', selectedTenant.kycCancelRedirectUrl)
-      const footerConfig = selectedTenant.footerConfig ? JSON.parse(selectedTenant.footerConfig) : null
-      formik.setFieldValue('termLink', footerConfig?.termsLink)
-      formik.setFieldValue('policyLink', footerConfig?.policyLink)
-      formik.setFieldValue('block1', footerConfig?.block1)
-      formik.setFieldValue('block2', footerConfig?.block2)
-      formik.setFieldValue('block3', footerConfig?.block3)
-      formik.setFieldValue('telegram', footerConfig?.socialLinks?.telegram)
-      formik.setFieldValue('linkedin', footerConfig?.socialLinks?.linkedin)
-      formik.setFieldValue('youtube', footerConfig?.socialLinks?.youtube)
-      formik.setFieldValue('twitter', footerConfig?.socialLinks?.twitter)
-      const colors = selectedTenant.colors ? JSON.parse(selectedTenant.colors) : null
-      formik.setFieldValue('colorButtonPrimary', colors?.button?.primary || '#6666FF')
-      formik.setFieldValue('pages', selectedTenant?.pages ? checkExistInPageGroup(selectedTenant.pages) : pages)
+      setFieldsValue(formik.setFieldValue, selectedTenant)
     }
   }, [JSON.stringify(selectedTenant)])
 
-  console.log('formik', formik)
   return (
     <Container>
       <Content>
