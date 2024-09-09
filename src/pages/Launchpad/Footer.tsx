@@ -145,8 +145,8 @@ export const Footer: React.FC<Props> = (props) => {
 
           <div>
             <header>Company</header>
-
-            <DiscreteExternalLink href="https://ixswap.io/roadmap/">Roadmap</DiscreteExternalLink>
+            {/* hide for now */}
+            {/* <DiscreteExternalLink href="https://ixswap.io/roadmap/">Roadmap</DiscreteExternalLink> */}
             <DiscreteExternalLink href="https://ixswap.io/ecosystem/">Ecosystem</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/documentation/">Documents</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/team/">Team</DiscreteExternalLink>
