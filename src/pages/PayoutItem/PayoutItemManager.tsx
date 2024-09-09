@@ -43,7 +43,8 @@ export default function PayoutItemForManager({
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
 
-  const isValidRole = me.role === ROLES.TOKEN_MANAGER || me.role === ROLES.ADMIN
+  const isAdmin = me.role === ROLES.ADMIN
+  const isValidRole = me.role === ROLES.TOKEN_MANAGER || isAdmin
   useEffect(() => {
     if (me && isValidRole) {
       return
@@ -69,7 +70,7 @@ export default function PayoutItemForManager({
   }, [payout, me])
 
   useEffect(() => {
-    if (isMyPayout === false) {
+    if (isMyPayout === false && !isAdmin) {
       history.replace(routes.tokenManager('payout-events', null))
     }
   }, [isMyPayout])
