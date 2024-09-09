@@ -214,7 +214,7 @@ export default function App() {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
 
-  const userRole = useRawRole()
+  const userRole = useRawRole();
 
   const routeGenerator = useCallback(
     (route: RouteMapEntry) => {
@@ -226,7 +226,7 @@ export default function App() {
         route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
         route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
         route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
-        route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
+        route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && ![ROLES.ADMIN, ROLES.MASTER_TENANT].includes(userRole),
         roleGuard,
       ]
 
