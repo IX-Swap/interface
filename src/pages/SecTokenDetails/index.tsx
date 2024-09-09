@@ -24,8 +24,6 @@ import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { DepositCard } from 'components/Vault/DepositCard'
 import { useWalletState } from 'state/wallet/hooks'
-import { BackButton, StyledArrowBack, BackText } from 'pages/PayoutItem/PayoutItemManager'
-import { isMobile } from 'react-device-detect'
 
 export default function SecTokenDetails({
   match: {
@@ -73,10 +71,6 @@ export default function SecTokenDetails({
     <>
       <WithdrawPopup currency={token?.token} token={token} />
       <TokenInfoContainer>
-        <BackButton style={{ top: '170px',  left:  isMobile ? '33px' : '260px' }} onClick={onBack}>
-          <StyledArrowBack />
-          <BackText>Back</BackText>
-        </BackButton>
         <Container style={{ position: 'relative' }}>
           {networkLogo ? (
             <LogoWrap>
@@ -84,6 +78,7 @@ export default function SecTokenDetails({
             </LogoWrap>
           ) : null}
           <InfoTitle>
+            <BackArrowButton onBack={onBack} />
             {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}
             <Box display="flex" alignItems="center">
               <StyledTitleBig fontWeight="600">{token?.ticker}</StyledTitleBig>
@@ -120,6 +115,7 @@ export const TokenInfoContainer = styled.div<{ background?: string }>`
   padding: 0 2rem;
   // font-family: ${(props) => props.theme.launchpad.font};
   background: #ffffff;
+  margin-top: -25px;
 
   * {
     // font-family: ${(props) => props.theme.launchpad.font};

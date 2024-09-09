@@ -278,8 +278,4 @@ export const NotTradableContainer = styled.div`
     line-height: 28px;
     margin-bottom: 20px;
   }
-
-  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    padding: 100px 30px;
-  }
 `
