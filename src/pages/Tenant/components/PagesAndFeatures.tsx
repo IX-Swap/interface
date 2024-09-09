@@ -1,22 +1,11 @@
 import React from 'react'
 import { FormControlLabel, FormWrapper, TwoColumnGrid } from './styleds'
 import { Checkbox } from '@mui/material'
+import { PagesMapping } from '../helpers'
 
 interface PagesAndFeaturesProps {
   formik: any
 }
-
-const PagesMapping = {
-  admin: 'Admin Dashboard',
-  dex: 'DEX',
-  offer: 'Launchpad',
-  lbp: 'LBP',
-  issuance: 'Issuance Dashboard',
-  kyc: 'KYC',
-  securityTokens: 'RWA',
-  payout: 'Payout',
-  lbpAdmin: 'LBP Dashboard',
-} as any
 
 const PagesAndFeatures: React.FC<PagesAndFeaturesProps> = ({ formik }) => {
   // Implement the component logic here

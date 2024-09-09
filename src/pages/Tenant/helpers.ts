@@ -2,7 +2,7 @@
 import { routes } from 'utils/routes'
 import { PagesConfig, PagesGroup } from './types'
 
-const defaults = [routes.send, routes.faucet, routes.staking, routes.vesting, routes.launchpad]
+const defaults = [routes.send, routes.faucet, routes.launchpad]
 
 export const pagesGroup: PagesGroup = {
   admin: [
@@ -18,6 +18,7 @@ export const pagesGroup: PagesGroup = {
     routes.tenantCreate,
   ],
   dex: [routes.swap, routes.pool, routes.find, routes.swapOutputCurrency, routes.addCurrency, routes.removeCurrency],
+  farming: [routes.staking, routes.vesting],
   kyc: [routes.kyc, routes.kycIndividual, routes.kycIndividualV2, routes.kycCorporate],
   lbp: [routes.publicDetails],
   offer: [routes.offerPage],
@@ -74,6 +75,7 @@ export function checkExistInPageGroup(pagesSource: string) {
   const pages = {
     dex: false,
     kyc: false,
+    farming: false,
     lbp: false,
     lbpAdmin: false,
     offer: false,
@@ -88,6 +90,11 @@ export function checkExistInPageGroup(pagesSource: string) {
   if (isSubset(pagesArray, pagesGroup.dex)) {
     pages.dex = true
   }
+
+  if (isSubset(pagesArray, pagesGroup.farming)) {
+    pages.farming = true
+  }
+
   if (isSubset(pagesArray, pagesGroup.kyc)) {
     pages.kyc = true
   }
@@ -217,3 +224,16 @@ export function setFieldsValue(setFieldValue: any, data: any) {
   setFieldValue('colorButtonPrimary', colors?.button?.primary)
   setFieldValue('pages', data?.pages ? checkExistInPageGroup(data.pages) : pages)
 }
+
+export const PagesMapping = {
+  admin: 'Admin Dashboard',
+  dex: 'DEX',
+  farming: 'Farming',
+  offer: 'Launchpad',
+  lbp: 'LBP',
+  issuance: 'Issuance Dashboard',
+  kyc: 'KYC',
+  securityTokens: 'RWA',
+  payout: 'Payout',
+  lbpAdmin: 'LBP Dashboard',
+} as any
