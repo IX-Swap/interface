@@ -8,8 +8,6 @@ interface PagesAndFeaturesProps {
 }
 
 const PagesAndFeatures: React.FC<PagesAndFeaturesProps> = ({ formik }) => {
-  // Implement the component logic here
-
   return (
     <div>
       <h1 className="title">Pages</h1>

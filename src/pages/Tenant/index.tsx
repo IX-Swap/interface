@@ -97,8 +97,6 @@ const Tenant: React.FC = () => {
     getData()
   }, [])
 
-  console.log('data', data)
-
   return (
     <Container>
       <Content>
