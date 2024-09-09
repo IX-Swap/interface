@@ -37,7 +37,9 @@ export const DepositPopup = ({ currency }: Props) => {
   const { onResetDeposit } = useDepositActionHandlers()
 
   const onClose = useCallback(() => {
-    onResetDeposit()
+    if (modalView !== DepositModalView.ABOUT_WRAPPING) {
+      onResetDeposit()
+    }
     dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
     dispatch(setError({ errorMessage: '' }))
     dispatch(setLoading({ loading: false }))
