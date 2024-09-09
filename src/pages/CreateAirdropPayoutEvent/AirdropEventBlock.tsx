@@ -24,7 +24,7 @@ interface Props {
 
 export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditing }) => {
   const [isWarningOpen, setIsWarningOpen] = useState(false)
-  const { values, errors, touched, validateForm, setTouched, resetForm } = useFormikContext<FormValues>()
+  const { values, errors, touched, validateForm, setTouched, resetForm, setFieldValue } = useFormikContext<FormValues>()
   const { token } = values
   const [openModal, setOpenModal] = useState(false)
   const [totalWallets, setTotalWallets] = useState(0) // New state for total wallets
@@ -32,9 +32,16 @@ export const AirdropEventBlock: FC<Props> = ({ onValueChange, availableForEditin
   const payoutContract = usePayoutAirdropContract()
   const csvTemplateLink = sharedResourceLinks.airdropCSVTemplateLink
   useEffect(() => {
+    /**
+     * The network change will update
+     * the payout contract instance
+     * and the security token list, payout token list
+     */
     if (payoutContract) {
       payoutContract.maxTransfer().then(setMaxTransfer)
     }
+    setFieldValue('secToken', '')
+    setFieldValue('token', '')
   }, [payoutContract])
 
   const showError = useShowError()
