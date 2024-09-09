@@ -104,4 +104,6 @@ const Title = styled(TYPE.title9)`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+  height: 48px;
 `
+
