@@ -70,7 +70,7 @@ export default function PayoutItemForManager({
   }, [payout, me])
 
   useEffect(() => {
-    if (isMyPayout === false && !isAdmin) {
+    if (!isMyPayout && !isAdmin) {
       history.replace(routes.tokenManager('payout-events', null))
     }
   }, [isMyPayout])
