@@ -130,6 +130,7 @@ export const users = {
 }
 
 export const whitelabel = {
+  create: '/white-label',
   config: '/white-label/config',
   all: '/white-label/all',
 }

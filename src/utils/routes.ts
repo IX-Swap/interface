@@ -9,6 +9,10 @@ export const routes = {
   find: '/find',
   pool: '/pool',
   swap: '/swap',
+  swapOutputCurrency: '/swap/:outputCurrency',
+  addCurrency: '/add/:currencyIdA?/:currencyIdB?',
+  removeCurrency: '/remove/:currencyIdA/:currencyIdB',
+  send: '/send',
   faucet: '/faucet',
   kyc: '/kyc',
   kycIndividual: '/kyc/individual',
@@ -68,6 +72,10 @@ export const routes = {
   adminTransactions: 'admin/transactions',
   adminCatalog: 'admin/security-catalog',
   adminUsers: 'admin/users-list',
+  tenant: '/tenant',
+  tenantCreate: '/tenant/create',
+  tenantClone: '/tenant/clone',
+  tenantEdit: '/tenant/edit/:id',
 }
 
 export function checkAllowed(path: string, allowedPages: string[] | null | undefined): boolean {
