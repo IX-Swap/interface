@@ -150,7 +150,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
 
   const convertDateToBlockNumber = async (date: string) => {
     const dater = new EthDater(provider)
-    const formattedDate = dayjs.utc(date).startOf('day').format('YYYY-MM-DDTHH:mm:ss[Z]')
+    const formattedDate = dayjs.utc(date).endOf('day').format('YYYY-MM-DDTHH:mm:ss[Z]')
     const result = await dater.getDate(
       formattedDate, // Date, required. Any valid moment.js value: string, milliseconds, Date() object, moment() object.
       true, // Block after, optional. Search for the nearest block before or after the given date. By default true.
