@@ -59,7 +59,7 @@ export const Card = ({
           ''
         )}
       </PayoutHeader>
-      <Title>{title}</Title>
+      <Title style={{lineHeight: '24px'}}>{title}</Title>
       <Divider style={{ backgroundColor: theme.bg24 }} />
       <PayoutInfoContainer>
         {type !== PAYOUT_TYPE.AIRDROPS ? (
