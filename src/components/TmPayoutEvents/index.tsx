@@ -192,7 +192,7 @@ const Row = ({ item }: IRow) => {
                 <CurrencyLogo currency={currency} style={{ marginRight: 4 }} />
               </MouseoverTooltip>
               {currency?.symbol || '-'}&nbsp;{<TYPE.main1>{amountClaimed}</TYPE.main1>}&nbsp;/&nbsp;
-              <TYPE.main1>{tokenAmount}</TYPE.main1>
+              <TYPE.main1>{splitClaimedAmount(tokenAmount)}</TYPE.main1>
             </>
           ) : (
             '-'
