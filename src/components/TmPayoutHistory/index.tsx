@@ -6,7 +6,7 @@ import { FILTERS } from 'components/MultipleFilters/constants'
 import { Table } from 'components/Table'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { useToken } from 'hooks/Tokens'
+import { useSafeCurrency } from 'hooks/Tokens'
 import { useGetPayoutHistory, useTokenManagerState } from 'state/token-manager/hooks'
 import { TmEmptyPage } from 'components/TmEmptyPage'
 import { Pagination } from 'components/Pagination'
@@ -121,7 +121,7 @@ const Row = ({ item }: IRow) => {
     txHash,
   } = item
 
-  const token = useToken(payoutToken)
+  const token = useSafeCurrency(payoutToken)
   const { chainId } = useActiveWeb3React()
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
   const secTokenLogoUrl = getChainLogoUrl(secToken?.network)
