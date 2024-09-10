@@ -228,7 +228,7 @@ export default function App() {
         route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
         route.conditions?.isKycApproved === true &&
           kyc?.status !== KYCStatuses.APPROVED &&
-          ![ROLES.ADMIN, ROLES.MASTER_TENANT].includes(userRole),
+          ![ROLES.ADMIN, ROLES.MASTER_TENANT, ROLES.OFFER_MANAGER].includes(userRole),
         roleGuard,
       ]
 
