@@ -67,6 +67,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const error = Boolean(sender.length > 0 && !loading && !address && networkName === 'Ethereum')
   const computedAddress = networkName === 'Ethereum' ? address : sender
   const amountInput = amount ?? amountInputValue
+  const isInsufficientBalance = Number(amountInput) > Number(tokenBalance)
 
   const fetchTokenBalance = async () => {
     if (!tokenContract || !account) return
@@ -167,6 +168,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               amount={parsedAmount}
               symbol={currency?.originalSymbol}
             />
+            {isInsufficientBalance && <ErrorText>Insufficient balance</ErrorText>}
           </Column>
           <Column style={{ marginTop: '24px', marginBottom: 24, gap: '11px' }}>
             <Row>
@@ -283,4 +285,13 @@ const Section = styled.div`
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 16px 0;
   `};
+`
+
+const ErrorText = styled.span`
+  color: #ff6161;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.28px;
 `
