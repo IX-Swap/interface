@@ -66,14 +66,26 @@ export default function SecTokenDetails({
   if (!isLoggedIn) return <NotAvailablePage />
 
   if (isOpenDepositCard && token && token?.token) {
-    return <DepositCard currency={token?.token} token={token} />
+    return (
+      <>
+        {isWrongChain ? (
+          <Portal>
+            <CenteredFixed width="100vw" height="100vh">
+              <NetworkNotAvailable expectChain={expectChain} />
+            </CenteredFixed>
+          </Portal>
+        ) : (
+          <DepositCard currency={token?.token} token={token} />
+        )}
+      </>
+    )
   }
 
   return (
     <>
       <WithdrawPopup currency={token?.token} token={token} />
       <TokenInfoContainer>
-        <BackButton style={{ top: '170px',  left:  isMobile ? '33px' : '260px' }} onClick={onBack}>
+        <BackButton style={{ top: '170px', left: isMobile ? '33px' : '260px' }} onClick={onBack}>
           <StyledArrowBack />
           <BackText>Back</BackText>
         </BackButton>
