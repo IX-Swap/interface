@@ -166,7 +166,7 @@ export const muiTheme = ({ bg1, bg2, bg0, bg26, text1, text7, text9, config, bg2
         root: {
           background: bg25,
           marginBottom: '0px',
-          paddingTop: '20px',
+          paddingTop: '0px',
           switchHeader: {
             margin: '12px 24px 20px 24px !important',
           },
