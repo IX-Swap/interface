@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, useHistory } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import styled from 'styled-components'
 
@@ -27,6 +27,8 @@ import { PayoutTimeline } from './Timeline/PayoutTimeline'
 import { BodyWrapper } from 'pages/AppBody'
 import MorePayoutEvents from './MoreEventBlock'
 import { PAYOUT_TYPE } from 'components/TmPayoutEvents/constants'
+import { BackButton, StyledArrowBack, BackText } from './PayoutItemManager'
+import { routes } from 'utils/routes'
 
 export interface MyAmounts {
   poolTokens: number
@@ -50,7 +52,7 @@ export default function PayoutItemForUser({
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
-
+  const history = useHistory()
   const [myAmount, handleMyAmount] = useState(0)
 
   const getPayoutItem = useCallback(async () => {
@@ -87,9 +89,18 @@ export default function PayoutItemForUser({
     getPayoutClaims()
   }, [payoutId, page])
 
+  const handleBackClick = () => {
+    history.push(routes.payoutEvent)
+  }
+
   return (
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator noOverlay={true} isLoading={loadingRequest} />
+      <BackButton style={{ top: '150px', left: '260px' }} onClick={handleBackClick}>
+        <StyledArrowBack />
+        <BackText>Back</BackText>
+      </BackButton>
+
       {payout && <PayoutHeader payout={payout} isMyPayout={payout.userId === me.id} />}
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
