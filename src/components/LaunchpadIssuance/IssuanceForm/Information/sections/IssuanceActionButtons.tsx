@@ -42,6 +42,8 @@ export const IssuanceActionButtons = ({
 }: IssuanceButtonsProps) => {
   const theme = useTheme()
   const { isAdmin, isMasterTenant } = useRole()
+  const isAdministrator = isAdmin || isMasterTenant;
+
   const showError = useShowError()
   const { approve, reject, requestChanges } = useReviewOffer(offerId)
   const showSuccess = useShowSuccess()
@@ -177,7 +179,7 @@ export const IssuanceActionButtons = ({
         setMessage={setChangesRejected}
         setReason={setReasonRejected}
       />
-      {(!isApproved || isAdmin) && (
+      {(!isApproved || isAdministrator) && (
         <FormSubmitContainer>
           {showDraft && (
             <OutlineButton style={{ border: '1px solid #6666FF33' }} disabled={draftDisabled} onClick={onSaveDraft}>
@@ -193,7 +195,7 @@ export const IssuanceActionButtons = ({
           )}
         </FormSubmitContainer>
       )}
-      {(isAdmin || isMasterTenant) && showReviewButtons  ? (
+      {isAdministrator && showReviewButtons  ? (
         <FormSubmitContainer>
           <AdminButtons
             disabled={!offerId}
@@ -203,7 +205,7 @@ export const IssuanceActionButtons = ({
           />
         </FormSubmitContainer>
       ) : null}
-      {isAdmin && !showReviewButtons && (
+      {isAdministrator && !showReviewButtons && (
         <FormSubmitContainer>
           <FilledButton onClick={() => null} background={theme.launchpad.colors.success} style={{ cursor: 'default' }}>
             Approved
