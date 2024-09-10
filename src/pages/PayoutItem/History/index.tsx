@@ -83,6 +83,7 @@ const Row: FC<RowProps> = ({ item }) => {
   const { payoutToken } = payoutEvent
   const currency = useCurrency(payoutToken)
   const { chainId } = useActiveWeb3React()
+  
 
   return (
     <StyledBodyRow>
@@ -95,11 +96,17 @@ const Row: FC<RowProps> = ({ item }) => {
         <Box>{Number(sum).toFixed(4)}</Box>
       </Flex>
       <div>{`${formatDate(createdAt)} - ${dayjs(createdAt).format('HH:mm')}`}</div>
-      <StyledView>
-        <ExternalLink href={getExplorerLink(chainId || 137, txHash, ExplorerDataType.TRANSACTION)}>
-          <EyeIcon stroke="#B8B8CC" />
-        </ExternalLink>
-      </StyledView>
+      {txHash ? (
+        <StyledView>
+          <ExternalLink href={getExplorerLink(chainId || 137, txHash, ExplorerDataType.TRANSACTION)}>
+            <EyeIcon stroke="#B8B8CC" />
+          </ExternalLink>
+        </StyledView>
+      ) : (
+        <Loader>
+          <LoaderThin size={12} />
+        </Loader>
+      )}
     </StyledBodyRow>
   )
 }
@@ -137,4 +144,11 @@ const StyledView = styled(Flex)`
   svg {
     width: 14px;
   }
+`
+
+const Loader = styled.div`
+  display: flex;
+  margin-left: 20px;
+  align-items: left;
+  justify-content: left;
 `
