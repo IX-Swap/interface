@@ -33,7 +33,6 @@ export default function PayoutItemForManager({
   const [page, setPage] = useState(1)
   const [claimHistory, setClaimHistory] = useState([])
   const [isClaimHistoryLoading, setIsClaimHistoryLoading] = useState(false)
-  const [isMyPayout, setIsMyPayout] = useState<boolean | undefined>(undefined)
   const { loadingRequest } = usePayoutState()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
@@ -42,6 +41,7 @@ export default function PayoutItemForManager({
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
+  const isMyPayout = payout?.userId === me.id
 
   const isAdmin = me.role === ROLES.ADMIN
   const isValidRole = me.role === ROLES.TOKEN_MANAGER || isAdmin
@@ -64,16 +64,14 @@ export default function PayoutItemForManager({
   }, [payoutId, account])
 
   useEffect(() => {
-    if (payout) {
-      setIsMyPayout(payout.userId === me.id)
+    if (isAdmin) {
+      return
     }
-  }, [payout, me])
-
-  useEffect(() => {
-    if (!isMyPayout && !isAdmin) {
+    // The payout & user should be initiated before checking the ownership
+    if (payout?.userId && me.id && !isMyPayout) {
       history.replace(routes.tokenManager('payout-events', null))
     }
-  }, [isMyPayout])
+  }, [isMyPayout, payout?.userId, me.id, isAdmin])
 
   useEffect(() => {
     setIsClaimHistoryLoading(true)
