@@ -27,6 +27,8 @@ import { isMobile } from 'react-device-detect'
 import { ImagePreview } from 'components/FilePreview/ImagePreview'
 import { Plus } from 'react-feather'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { getChainLogoUrl } from 'chains'
+import { capitalize } from '@material-ui/core'
 
 export interface UploaderProps {
   files: FileWithPath[]
@@ -133,14 +135,22 @@ export const Select: FC<SelectProps> = ({
   isTokenLogoVisible,
   ...rest
 }: SelectProps) => {
+  const chainLogoUrl = getChainLogoUrl(selectedItem?.network)
   return (
     <Box>
       {label && <Label required={isDisabled ? false : required} label={label} tooltipText={tooltipText} />}
       {isDisabled && selectedItem ? (
-        <Row alignItems="center" style={{ columnGap: 4, marginBottom: '20px'}}>
-          {selectedItem?.icon}
-          {selectedItem?.label}
-        </Row>
+        <StyledRow>
+          <ItemDetails>
+            {selectedItem?.icon}
+            {selectedItem?.label}
+          </ItemDetails>
+
+          <NetworkDetails>
+            {capitalize(selectedItem?.network || '')}
+            {chainLogoUrl && <NetworkLogo src={chainLogoUrl} alt="network logo" />}
+          </NetworkDetails>
+        </StyledRow>
       ) : (
         <ReactSelect
           name={name}
@@ -341,8 +351,6 @@ export const TextareaInput: FC<TextInputProps> = ({
     </Box>
   )
 }
-
-
 
 export const SelfieUploader: FC<UploaderProps> = ({
   id,
@@ -855,4 +863,27 @@ export const SelfieUploaderCard = styled.div`
 `
 const LinkButton = styled(LinkStyledButton)`
   color: #6666ff;
+`
+
+const StyledRow = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  margin-bottom: 20px;
+`
+
+const ItemDetails = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+
+const NetworkDetails = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+
+const NetworkLogo = styled.img`
+  width: 25px;
 `

@@ -135,9 +135,9 @@ const Row = ({ item }: IRow) => {
 
       <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
       <TokenContainer>
-        <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
+        {secCurrency ? <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" /> : null}
         {secTokenLogoUrl && <NetworkLogo src={secTokenLogoUrl} alt="network logo" />}
-        <TYPE.main1 marginLeft={'5px'}>{secToken?.symbol || '-'}</TYPE.main1>  
+        <TYPE.main1 marginLeft={'5px'}>{secToken?.symbol || '-'}</TYPE.main1>
       </TokenContainer>
 
       <TYPE.main1>{dayjs(createdAt).format('MMM DD, YYYY - HH:mm')}</TYPE.main1>

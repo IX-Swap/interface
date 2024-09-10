@@ -81,6 +81,7 @@ const EditPayoutEventPage: FC = () => {
         secToken: {
           label: payout.secToken?.symbol || '',
           value: payout.secToken?.id || '',
+          network: payout.network || '',
           icon: payout.secToken && <CurrencyLogo currency={new WrappedTokenInfo(payout.secToken)} />,
         },
         secTokenAmount: payout.secTokenAmount,
