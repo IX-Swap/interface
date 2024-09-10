@@ -19,6 +19,7 @@ import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { AddWrappedToMetamask } from 'pages/SecTokenDetails/AddToMetamask'
 import { DepositView, setWalletState } from 'state/wallet'
+import { useDepositActionHandlers } from 'state/deposit/hooks'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -30,7 +31,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
   const symbolText = useMemo(() => token?.ticker ?? currency?.symbol, [currency?.symbol, token?.ticker])
 
   const { account } = useActiveWeb3React()
-  const toggle = useDepositModalToggle()
+  const { onResetDeposit } = useDepositActionHandlers()
   const { me } = useUserState()
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const isDisabled = useMemo(() => {
@@ -57,6 +58,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
   `
 
   const handleDeposit = () => {
+    onResetDeposit();
     dispatch(setWalletState({ isOpenDepositCard: true, depositView: DepositView.CREATE_REQUEST }))
   }
   return (
