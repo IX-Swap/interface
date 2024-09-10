@@ -36,8 +36,7 @@ interface Props {
 export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const { account } = useActiveWeb3React()
   const { secToken, status, id, contractPayoutId, payoutContractAddress } = payout
-  const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)
-  const statuses = [custodianStatus, brokerDealerStatus]
+  const { isApproved } = useAccreditationStatus((secToken as any)?.address || 0)
   const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
   const [isLoading, handleIsLoading] = useState(false)
   const theme = useTheme()
@@ -50,7 +49,6 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const addTransaction = useTransactionAdder()
   const secPayoutToken = secToken ? new WrappedTokenInfo(secToken) : null
   const tokenInfo = secPayoutToken?.tokenInfo
-  const isNotAccredited = statuses.some((status) => !status)
   const isNotTokenHolder = '0' === secTokenBalance || !amountToClaim
 
   useEffect(() => {
@@ -196,7 +194,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   }, [status, payoutToken, claimStatus, secPayoutToken])
 
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
-  if (isNotAccredited) return <NotAccreditedView secTokenId={secToken?.catalogId} />
+  if (!isApproved) return <NotAccreditedView secTokenId={secToken?.catalogId} />
   if (isNotTokenHolder) return <NotTokenHoldersView status={status} payoutToken={payoutToken} secToken={secToken} />
 
   return (
