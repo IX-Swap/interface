@@ -35,7 +35,7 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 export const NewIssuanceForm = () => {
   const theme = useTheme()
   const history = useHistory()
-  const { isAdmin } = useRole()
+  const { isAdmin, isMasterTenant } = useRole()
   const { config } = useWhitelabelState()
 
   const issuance = useGetIssuance()
@@ -374,7 +374,7 @@ export const NewIssuanceForm = () => {
                   width="320px"
                   as={DiscreteInternalLink}
                   to={
-                    isAdmin
+                    isAdmin || isMasterTenant
                       ? `/issuance/edit/information?id=${issuance.data?.id}`
                       : `/issuance/review/information?id=${issuance.data?.id}`
                   }
