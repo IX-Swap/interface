@@ -14,13 +14,12 @@ import { routes } from 'utils/routes'
 import { floorToDecimals, formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { Container, DelayedContainer, StyledButton, TokenSymbol } from './styleds'
-import { getClaimAuthorization, useGetUserClaim, useSaveUserClaim, getMyClaimableAmount } from 'state/payout/hooks'
+import { getClaimAuthorization, useSaveUserClaim, getMyClaimableAmount } from 'state/payout/hooks'
 import dayjs from 'dayjs'
 import { usePayoutContract } from 'hooks/useContract'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { Claimed } from './Claimed'
-import { UserClaim } from './dto'
 import { SecToken } from 'types/secToken'
 import styled, { useTheme } from 'styled-components'
 import PayoutStatusBadge from './StatusBadge'
@@ -37,11 +36,10 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const { account } = useActiveWeb3React()
   const { secToken, status, id, contractPayoutId, payoutContractAddress } = payout
   const { isApproved } = useAccreditationStatus((secToken as any)?.address || 0)
-  const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
+  const [claimed, setClaimed] = useState(false)
   const [isLoading, handleIsLoading] = useState(false)
   const theme = useTheme()
   const [amountToClaim, setAmountToClaim] = useState(0)
-  const getUserClaim = useGetUserClaim()
   const saveUserClaim = useSaveUserClaim()
   const balance = useCurrencyBalance(account ?? undefined, ({ ...secToken, isToken: true } as any) ?? undefined)
   const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
@@ -53,15 +51,19 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await getUserClaim(id)
-      handleClaimStatus(res)
-      const _amountToClaim = await getMyClaimableAmount(+id)
+      handleIsLoading(true)
+      const [_claimed, _amountToClaim] = await Promise.all([
+        payoutContract?.claimed(contractPayoutId, account),
+        getMyClaimableAmount(+id),
+      ])
+      setClaimed(_claimed)
       setAmountToClaim(+_amountToClaim)
+      handleIsLoading(false)
     }
-    if (id && account) {
+    if (id && account && contractPayoutId) {
       fetch()
     }
-  }, [id, account])
+  }, [id, account, contractPayoutId, payoutContract])
 
   const decimals = Math.min(tokenInfo?.decimals || 0, 6)
   const claim = useCallback(async () => {
@@ -79,8 +81,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
       const tx = await payoutContract?.claim(authorization)
       await tx.wait()
       await saveUserClaim({ payoutEventId: id, secToken: secToken.id, txHash: tx.hash })
-      const res = await getUserClaim(id)
-      handleClaimStatus(res)
+      setClaimed(true)
 
       if (tx.hash) {
         addTransaction(tx, {
@@ -92,7 +93,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
     } catch (e: any) {
       handleIsLoading(false)
     }
-  }, [contractPayoutId, account, id, secToken, getUserClaim, saveUserClaim])
+  }, [contractPayoutId, account, id, secToken, saveUserClaim])
 
   const getContentByStatus = useCallback(() => {
     const recordDateText = (
@@ -120,12 +121,8 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
 
     switch (status) {
       case PAYOUT_STATUS.STARTED:
-        return claimStatus?.status ? (
-          <Claimed
-            claimStatus={claimStatus.status}
-            payoutToken={payoutToken}
-            amountToClaim={floorToDecimals(amountToClaim, decimals)}
-          />
+        return claimed ? (
+          <Claimed payoutToken={payoutToken} amountToClaim={floorToDecimals(amountToClaim, decimals)} />
         ) : (
           <Box color={theme.text1}>
             <Flex alignItems="center" justifyContent="center" marginBottom="4px" fontWeight={600} flexWrap="wrap">
@@ -191,7 +188,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
       default:
         return null
     }
-  }, [status, payoutToken, claimStatus, secPayoutToken])
+  }, [status, payoutToken, claimed, secPayoutToken])
 
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
   if (!isApproved) return <NotAccreditedView secTokenId={secToken?.catalogId} />
@@ -204,7 +201,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
       {status !== PAYOUT_STATUS.ANNOUNCED && (
         <Container>
           {getContentByStatus()}
-          {!claimStatus?.status && (
+          {!claimed && (
             <StyledButton disabled={status !== PAYOUT_STATUS.STARTED || isLoading} onClick={claim}>
               <Trans>{`Claim Now`}</Trans>
             </StyledButton>
