@@ -83,12 +83,19 @@ export default function SecTokenDetails({
 
   return (
     <>
+      <BackButton
+        style={{
+          top: '6%',
+          left: isMobile ? '33px' : '5%',
+        }}
+        onClick={onBack}
+      >
+        <StyledArrowBack />
+        <BackText>Back</BackText>
+      </BackButton>
       <WithdrawPopup currency={token?.token} token={token} />
+
       <TokenInfoContainer>
-        <BackButton style={{ top: '170px', left: isMobile ? '33px' : '260px' }} onClick={onBack}>
-          <StyledArrowBack />
-          <BackText>Back</BackText>
-        </BackButton>
         <Container style={{ position: 'relative' }}>
           {networkLogo ? (
             <LogoWrap>
@@ -130,12 +137,8 @@ export const TokenInfoContainer = styled.div<{ background?: string }>`
   min-height: 55vh;
   width: 100%;
   padding: 0 2rem;
-  // font-family: ${(props) => props.theme.launchpad.font};
   background: #ffffff;
-
-  * {
-    // font-family: ${(props) => props.theme.launchpad.font};
-  }
+  padding: 80px 0px;
 
   /* Media Query for Mobile */
   @media (max-width: 768px) {
