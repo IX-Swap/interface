@@ -15,7 +15,6 @@ import { CopyAddress } from 'components/CopyAddress'
 import { PayoutHistory } from 'state/token-manager/types'
 import { PAYOUT_TYPE_LABEL } from 'components/TmPayoutEvents/constants'
 import { useUserState } from 'state/user/hooks'
-import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
@@ -38,24 +37,13 @@ const headerCells = [
 export const TmPayoutHistory = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const { account } = useUserState()
-  const { token } = useAuthState()
   const { payoutHistory, isLoading } = useTokenManagerState()
   const getPayoutHistory = useGetPayoutHistory()
-  const [isInitialLoad, setIsInitialLoad] = useState(true)
   const { pathname } = useLocation()
 
   useEffect(() => {
-    if (account && token && isInitialLoad) {
-      setIsInitialLoad(false)
-      fetchPayoutHistory(1)
-    }
-  }, [account, token])
-
-  useEffect(() => {
-    if (Object.keys(filters).length > 0) {
-      fetchPayoutHistory(payoutHistory.page)
-    }
-  }, [filters, pathname])
+    fetchPayoutHistory(payoutHistory.page)
+  }, [account, JSON.stringify(filters), pathname])
 
   const fetchPayoutHistory = (page: number) => {
     getPayoutHistory({ ...filters, offset: offset, page })
@@ -78,32 +66,30 @@ export const TmPayoutHistory = () => {
   }
   return (
     <>
-      <>
-        <Container style={{ marginTop: '20px' }}>
-          <MultipleFilters
-            filters={[FILTERS.SEARCH, FILTERS.DATE_OF_CLAIM, FILTERS.SEC_TOKENS]}
-            searchPlaceholder="Search by Wallet or ID"
-            onFiltersChange={handleFilters}
-            forManager
-          />
-        </Container>
-        <Line style={{ width: 'webkit-fill-available' }} />
-        <Container>
-          {payoutHistory.items?.length ? (
-            <Flex flexDirection="column" style={{ gap: 32 }}>
-              <Table header={<Header />} body={<Body items={payoutHistory.items} />} />
-              <Pagination
-                totalPages={payoutHistory.totalPages}
-                page={payoutHistory.page || 1}
-                onPageChange={onPageChange}
-                totalItems={payoutHistory.totalItems}
-              />
-            </Flex>
-          ) : (
-            <TmEmptyPage tab="payout-history" filtred={Object.keys(filters)?.length > 0} />
-          )}
-        </Container>
-      </>
+      <Container style={{ marginTop: '20px' }}>
+        <MultipleFilters
+          filters={[FILTERS.SEARCH, FILTERS.DATE_OF_CLAIM, FILTERS.SEC_TOKENS]}
+          searchPlaceholder="Search by Wallet or ID"
+          onFiltersChange={handleFilters}
+          forManager
+        />
+      </Container>
+      <Line style={{ width: 'webkit-fill-available' }} />
+      <Container>
+        {payoutHistory.items?.length ? (
+          <Flex flexDirection="column" style={{ gap: 32 }}>
+            <Table header={<Header />} body={<Body items={payoutHistory.items} />} />
+            <Pagination
+              totalPages={payoutHistory.totalPages}
+              page={payoutHistory.page || 1}
+              onPageChange={onPageChange}
+              totalItems={payoutHistory.totalItems}
+            />
+          </Flex>
+        ) : (
+          <TmEmptyPage tab="payout-history" filtred={Object.keys(filters)?.length > 0} />
+        )}
+      </Container>
     </>
   )
 }
