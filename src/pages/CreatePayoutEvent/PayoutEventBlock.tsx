@@ -271,7 +271,7 @@ export const PayoutEventBlock: FC<Props> = ({
               }
               placement="top"
             >
-              <PinnedContentButton type="button" onClick={open} disabled={isRecordFuture}>
+              <PinnedContentButton type="button" onClick={open}>
                 Pay for This Event
               </PinnedContentButton>
             </MouseoverTooltip>
