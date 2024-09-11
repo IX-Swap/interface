@@ -305,7 +305,6 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               name="payNow"
               isRadio
               checked={payNow}
-              disabled={isRecordFuture}
               onClick={() => handlePayNow(true)}
               label={
                 <Box>
