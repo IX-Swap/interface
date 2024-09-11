@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 
-import { MaxButton } from 'components/CurrencyInputPanel/MaxButton'
 import { RowFixed } from 'components/Row'
 import { TokenLogo } from 'components/TokenLogo'
 import { TYPE } from 'theme'
@@ -14,6 +13,7 @@ type SecCurrency = Currency & {
 }
 
 interface Props {
+  balance?: string
   currency?: SecCurrency
   value: string
   amount?: CurrencyAmount<SecCurrency>
@@ -21,14 +21,15 @@ interface Props {
   rightItem?: ReactNode
   onUserInput: (typedValue: string) => void
   token: any
-  symbol: string | undefined | null,
+  symbol: string | undefined | null
   originalDecimals?: number
   disabled?: boolean
 }
+
 export const AmountInputV2 = ({
+  balance,
   currency,
   value,
-  amount,
   onUserInput,
   rightItem,
   showMax = false,
@@ -38,6 +39,14 @@ export const AmountInputV2 = ({
   disabled = false,
   ...rest
 }: Props) => {
+  const isShowMaxButton = showMax && balance && Number(balance) > 0
+
+  const handleMax = () => {
+    if (balance) {
+      onUserInput(balance)
+    }
+  }
+
   return (
     <InputPanel id={'amount-input'} {...rest}>
       <Container disabled={disabled}>
@@ -56,7 +65,7 @@ export const AmountInputV2 = ({
                 }}
               />
             </>
-            {showMax && <MaxButton currency={currency} onInput={onUserInput} amount={amount} />}
+            {isShowMaxButton ? <StyledBalanceMax onClick={handleMax}>MAX</StyledBalanceMax> : null}
             {rightItem || (
               <RowFixed>
                 {token?.logo ? (
@@ -69,9 +78,7 @@ export const AmountInputV2 = ({
                   className="token-symbol-container"
                   active={Boolean(currency && currency.originalSymbol)}
                 >
-                  <TYPE.title7 fontSize="14px">
-                   {symbol}
-                  </TYPE.title7>
+                  <TYPE.title7 fontSize="14px">{symbol}</TYPE.title7>
                 </StyledTokenName>
               </RowFixed>
             )}
@@ -128,4 +135,33 @@ const StyledNumericalInput = styled(NumericalInput)`
     color: ${({ theme }) => theme.text3};
     cursor: not-allowed;
   }
+`
+
+export const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
+  background-color: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 10px 12px;
+  border: 1px solid #e6e6ff;
+  background: white;
+  color: ${({ theme }) => theme.text1};
+  pointer-events: ${({ disabled }) => (!disabled ? 'pointer' : 'none')};
+  margin-right: 12px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration: none;
+  :focus {
+    outline: none;
+  }
+  :hover {
+    background-color: #f7f7ff;
+  }
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    margin-right: 8px;
+    padding: 8px;
+  `};
 `

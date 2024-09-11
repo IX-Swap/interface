@@ -17,7 +17,6 @@ import {
   useShowAboutWrappingCallback,
   cancelDeposit,
 } from 'state/deposit/hooks'
-import { BlueGreyCard } from 'components/Card'
 import { useUserSecTokens } from 'state/user/hooks'
 import { TYPE } from 'theme'
 import { currencyId } from 'utils/currencyId'
@@ -27,10 +26,8 @@ import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 import { SecCurrency } from 'types/secToken'
 import { AddressInput } from './AddressInput'
 import { AmountInputV2 } from './AmountInputV2'
-import { Line } from 'components/Line'
 import { useTokenContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
-import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import useDecimals from 'hooks/useDecimals'
 import { useWeb3React } from '@web3-react/core'
 import { StatusIcon } from 'components/Web3Status'
@@ -39,6 +36,7 @@ import { parseUnits } from 'ethers/lib/utils'
 import { DepositView, setWalletState } from 'state/wallet'
 import { useGetEventCallback } from 'state/eventLog/hooks'
 import { shortAddress } from 'utils'
+import { floorToDecimals } from 'utils/formatCurrencyAmount'
 
 interface Props {
   currency?: SecCurrency & { tokenInfo?: { decimals?: number; originalDecimals?: number } }
@@ -142,6 +140,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     onCurrencySet(id)
   }, [currency, onCurrencySet])
 
+  console.log('tokenBalance', floorToDecimals(Number(tokenBalance), 3))
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '16px' }}>
@@ -155,11 +154,13 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
               <CurrentBalance>
                 Balance:
                 <span>
-                  {formatNumberWithDecimals(tokenBalance, 3, true)} {currency?.originalSymbol}
+                  {floorToDecimals(Number(tokenBalance), 3)} {currency?.originalSymbol}
                 </span>
               </CurrentBalance>
             </Row>
             <AmountInputV2
+              showMax
+              balance={floorToDecimals(Number(tokenBalance), 3)}
               token={token}
               currency={currency}
               originalDecimals={tokenInfo?.originalDecimals}
