@@ -63,6 +63,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   const isMyPayout = userId === me.id
   const getUserClaim = useGetUserClaim()
   const saveManagerClaimBack = useSaveManagerClaimBack()
+  const [isClaimedBack, setIsClaimedBack] = useState(false)
 
   useEffect(() => {
     const fetch = async () => {
@@ -102,11 +103,10 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
       const tx = await payoutContract?.claimBack(authorization)
       await tx.wait()
       handleIsLoading(false)
-
       await saveManagerClaimBack({ payoutEventId: id, secToken: secToken.id, txHash: tx.hash })
       const res = await getUserClaim(id)
       handleClaimStatus(res)
-
+      setIsClaimedBack(true)
       if (tx.hash) {
         addTransaction(tx, {
           summary: `Claim Back was successful. Waiting for system confirmation.`,
@@ -201,7 +201,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
               <Box>
                 <Trans>{`The event has been ended.`}</Trans>
               </Box>
-              {isMyPayout && isPaid && (
+              {isMyPayout && isPaid && !isClaimedBack && (
                 <>
                   <Flex alignItems="center">
                     <Box marginRight="4px">
@@ -222,8 +222,8 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
                 </>
               )}
             </Column>
-            <LoadingIndicator noOverlay={true} isLoading={isLoading} />
-            {!isLoading && isMyPayout && isPaid && (
+            <LoadingIndicator isRelative noOverlay={true} isLoading={isLoading} />
+            {!isLoading && isMyPayout && isPaid && !isClaimedBack && (
               <StyledButton onClick={claimBack}>
                 <Box marginX="8px">
                   <Trans>{`Claim Back `}</Trans>
