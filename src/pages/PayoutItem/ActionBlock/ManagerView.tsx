@@ -27,6 +27,7 @@ import { UserClaim } from './dto'
 import { useActiveWeb3React } from 'hooks/web3'
 import { FetchingBalance } from './FetchingBalance'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+import { useUserState } from 'state/user/hooks'
 
 interface Props {
   payout: PayoutEvent
@@ -57,7 +58,8 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   const [remaining, setRemaining] = useState<string | undefined>(undefined)
   const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
   const [isLoading, handleIsLoading] = useState(false)
-
+  const { me } = useUserState()
+  const isMyPayout = payout?.userId === me.id
   const getUserClaim = useGetUserClaim()
   const saveManagerClaimBack = useSaveManagerClaimBack()
 
@@ -198,25 +200,29 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
               <Box>
                 <Trans>{`The event has been ended.`}</Trans>
               </Box>
-              <Flex alignItems="center">
-                <Box marginRight="4px">
-                  <Trans>{`You can Claim Back`}</Trans>
-                </Box>
-                <CurrencyLogo currency={payoutToken} size="20px" />
-                <Box marginX="4px" fontWeight={600}>
-                  {payoutToken?.symbol ?? 'Payout Token'}
-                </Box>
-                <Trans>{`tokens.`}</Trans>
-              </Flex>
-              <Flex alignItems="center">
-                <CurrencyLogo currency={payoutToken} size="24px" />
-                <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>
-                  {`${payoutToken?.symbol ?? 'Payout Token'} ${remaining}`}
-                </Box>
-              </Flex>
+              {isMyPayout && isPaid && (
+                <>
+                  <Flex alignItems="center">
+                    <Box marginRight="4px">
+                      <Trans>{`You can Claim Back`}</Trans>
+                    </Box>
+                    <CurrencyLogo currency={payoutToken} size="20px" />
+                    <Box marginX="4px" fontWeight={600}>
+                      {payoutToken?.symbol ?? 'Payout Token'}
+                    </Box>
+                    <Trans>{`tokens.`}</Trans>
+                  </Flex>
+                  <Flex alignItems="center">
+                    <CurrencyLogo currency={payoutToken} size="24px" />
+                    <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>
+                      {`${payoutToken?.symbol ?? 'Payout Token'} ${remaining}`}
+                    </Box>
+                  </Flex>
+                </>
+              )}
             </Column>
             <LoadingIndicator noOverlay={true} isLoading={isLoading} />
-            {!isLoading && (
+            {!isLoading && isMyPayout && isPaid && (
               <StyledButton onClick={claimBack}>
                 <Box marginX="8px">
                   <Trans>{`Claim Back `}</Trans>
