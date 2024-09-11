@@ -52,6 +52,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
     contractPayoutId,
     paidTxHash,
     payoutContractAddress,
+    userId
   } = payout
 
   const [totalClaims, handleTotalClaims] = useState(0)
@@ -59,7 +60,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
   const [isLoading, handleIsLoading] = useState(false)
   const { me } = useUserState()
-  const isMyPayout = payout?.userId === me.id
+  const isMyPayout = userId === me.id
   const getUserClaim = useGetUserClaim()
   const saveManagerClaimBack = useSaveManagerClaimBack()
 
