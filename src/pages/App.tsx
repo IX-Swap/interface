@@ -200,8 +200,7 @@ export default function App() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [pathname])
-  const hash = window.location.hash
-  const isEditPayout = hash.split('/').slice(1).join('/')
+
   const isAdminKyc = pathname.includes('admin')
   const isWhiteBackground =
     pathname === routes.launchpad ||
@@ -210,7 +209,7 @@ export default function App() {
     pathname === routes.manageTokens ||
     pathname === routes.createPayoutEvent ||
     pathname === routes.createAirdropEvent ||
-    (pathname.includes('payout') && !isEditPayout.includes('edit')) ||
+    pathname.includes('payout') ||
     pathname.includes('security-tokens')
   const visibleBody = useMemo(() => {
     return !isSettingsOpen || !account || kyc !== null
