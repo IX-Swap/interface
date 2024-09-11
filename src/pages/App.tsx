@@ -209,6 +209,7 @@ export default function App() {
     pathname === routes.manageTokens ||
     pathname === routes.createPayoutEvent ||
     pathname === routes.createAirdropEvent ||
+    pathname.includes('payout') ||
     pathname.includes('security-tokens')
   const visibleBody = useMemo(() => {
     return !isSettingsOpen || !account || kyc !== null

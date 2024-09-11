@@ -868,8 +868,11 @@ const LinkButton = styled(LinkStyledButton)`
 const StyledRow = styled.div`
   display: flex;
   align-items: center;
-  column-gap: 20px;
   margin-bottom: 20px;
+  border: 1px solid #e6e6ff;
+  padding: 14px;
+  border-radius: 6px;
+  justify-content: space-between;
 `
 
 const ItemDetails = styled.div`
