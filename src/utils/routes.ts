@@ -44,6 +44,7 @@ export const routes = {
   adminDashboard: '/admin',
   payoutHistory: '/token-manager/payout-history',
   payoutEvent: '/token-manager/payout-events',
+  userPayoutEvents: '/security-tokens/payout-events',
   manageTokens: '/token-manager/my-tokens',
   launchpad: '/launchpad',
   offerPage: '/offers/:offerId',

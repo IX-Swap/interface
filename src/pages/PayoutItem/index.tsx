@@ -90,7 +90,7 @@ export default function PayoutItemForUser({
   }, [payoutId, page])
 
   const handleBackClick = () => {
-    history.push(routes.payoutEvent)
+    history.push(routes.userPayoutEvents)
   }
 
   return (
