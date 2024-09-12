@@ -26,6 +26,7 @@ import { DepositCard } from 'components/Vault/DepositCard'
 import { useWalletState } from 'state/wallet/hooks'
 import { BackButton, StyledArrowBack, BackText } from 'pages/PayoutItem/PayoutItemManager'
 import { isMobile } from 'react-device-detect'
+import { useCookies } from 'react-cookie'
 
 export default function SecTokenDetails({
   match: {
@@ -44,6 +45,7 @@ export default function SecTokenDetails({
   const network = token?.token?.network
   const networkLogo = network ? NETWORK_LOGOS[network] : ''
   const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
+  const [cookies] = useCookies(['annoucementsSeen'])
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -85,8 +87,9 @@ export default function SecTokenDetails({
     <>
       <BackButton
         style={{
-          top: '6%',
-          left: isMobile ? '33px' : '5%',
+          top: isMobile && !cookies.annoucementsSeen ? '11%' : '6%',
+          left: isMobile ? '7%' : '5%',
+          zIndex: 1,
         }}
         onClick={onBack}
       >
