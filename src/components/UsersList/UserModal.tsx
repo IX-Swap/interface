@@ -57,19 +57,12 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
   const tokensOptions = useMemo((): Record<number, Option> => {
     if (secTokens?.length) {
       return secTokens.reduce((acc, token) => {
-        const isDisabled = Boolean(
-          (item?.managerOf || []).find(({ token }) =>
-            Boolean(token?.payoutEvents.find(({ secTokenId }) => secTokenId === token.id))
-          )
-        )
-
         return {
           ...acc,
           [token.id]: {
             label: token.symbol,
             value: token.id,
             icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
-            isDisabled,
           },
         }
       }, {})
