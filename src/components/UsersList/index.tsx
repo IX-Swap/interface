@@ -117,7 +117,12 @@ export const UsersList: FC = () => {
       {usersList.items.length > 0 ? (
         <>
           <Table body={<Body changeUser={changeUser} items={usersList.items} />} header={<Header />} />
-          <Pagination totalPages={usersList.totalPages} page={usersList.page || 1} onPageChange={onPageChange} />
+          <Pagination
+            totalPages={usersList.totalPages}
+            page={usersList.page || 1}
+            onPageChange={onPageChange}
+            totalItems={usersList.totalItems}
+          />
         </>
       ) : (
         <NoData>
@@ -178,7 +183,7 @@ const TokenListPreview = (props: TokenListPreviewProps) => {
 const Row: FC<RowProps> = ({ item, changeUser }) => {
   const [expanded, handleExpanded] = useState(false)
   const { ethAddress, role, username, isWhitelisted, managerOf, whiteLabelConfig } = item
-  const needAccordion = role === ROLES.TOKEN_MANAGER  || role === ROLES.ADMIN && Boolean(managerOf?.length)
+  const needAccordion = role === ROLES.TOKEN_MANAGER || (role === ROLES.ADMIN && Boolean(managerOf?.length))
   const toggleAccordion = () => {
     if (needAccordion) {
       handleExpanded((state) => !state)
