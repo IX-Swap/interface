@@ -56,7 +56,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
                   to={routes.securityToken(secToken?.catalogId)}
                 >
                   <Trans>{title}</Trans>
-                  <span className="secTokenLinkSymbol">{secToken?.originalSymbol ?? secToken?.symbol}</span>
+                  <span className="secTokenLinkSymbol">{payout.includeOriginSupply ? secToken?.originalSymbol : secToken?.symbol}</span>
                 </SecTokenLink>
               </TitleContent>
               <ReadMoreContainer>
