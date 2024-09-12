@@ -93,6 +93,7 @@ const EditPayoutEventPage: FC = () => {
         payoutContractAddress: payout.payoutContractAddress,
         blockNumber: payout.blockNumber,
         includeOriginSupply: payout.includeOriginSupply,
+        userId: payout.userId,
       })
     }
   }, [payout])

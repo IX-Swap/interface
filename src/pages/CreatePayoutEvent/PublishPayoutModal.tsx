@@ -28,6 +28,7 @@ import { useCurrencyBalance, useETHBalances } from 'state/wallet/hooks'
 import { transformPayoutDraftDTO } from './utils'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Line } from 'components/Line'
+import { useUserState } from 'state/user/hooks'
 
 interface Props {
   close: () => void
@@ -45,8 +46,10 @@ interface DataProps {
 export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, onlyPay, availableForEditing }) => {
   const [payNow, handlePayNow] = useState(onlyPay)
   const [isLoading, handleIsLoading] = useState(false)
+  const { me } = useUserState()
+  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id, userId } = values
+  const isMyPayout = userId && userId === me?.id
 
-  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id } = values
   const validatePayout = usePayoutValidation()
   const publishPayout = usePublishPayout()
   const createDraftPayout = useCreateDraftPayout()
@@ -352,7 +355,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
           <PinnedContentButton
             type="button"
             onClick={() => (onlyPay || payNow ? publishAndPaid() : onlyPublish())}
-            disabled={!tokenAmount || !tokenBalance || !!isInsufficientBalance}
+            disabled={!tokenAmount || !tokenBalance || !!isInsufficientBalance || !isMyPayout}
           >
             {!tokenBalance ? <LoaderThin size={20} /> : null}
             <Trans>{`${buttonText}`}</Trans>

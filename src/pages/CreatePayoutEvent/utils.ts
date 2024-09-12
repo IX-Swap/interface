@@ -26,6 +26,7 @@ export interface FormValues {
   payoutContractAddress?: string
   blockNumber?: number
   includeOriginSupply?: boolean
+  userId?: number
 }
 
 export const availableInputsForEdit = (status = '', paid = false) => {
