@@ -109,7 +109,10 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
           <Trans>{`Based on your SEC token balance of`}</Trans>
         </Box>
         {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="32px" height="32px" /> : null}
-        <Box marginX="4px">{(tokenInfo as SecToken).originalSymbol ?? tokenInfo?.symbol}</Box>
+        <Box marginX="4px">
+          {payout.includeOriginSupply ? (tokenInfo as SecToken)?.originalSymbol : tokenInfo?.symbol}
+        </Box>
+
         <Box marginX="4px" color={theme.text1}>
           {floorToDecimals(myAmount, decimals)}
         </Box>
