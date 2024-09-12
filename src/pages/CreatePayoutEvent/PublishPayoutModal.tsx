@@ -48,7 +48,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   const [isLoading, handleIsLoading] = useState(false)
   const { me } = useUserState()
   const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id, userId } = values
-  const isMyPayout = userId && userId === me?.id
+  const isMyPayout = !id || userId === me?.id
 
   const validatePayout = usePayoutValidation()
   const publishPayout = usePublishPayout()
