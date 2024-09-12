@@ -107,14 +107,13 @@ export const Uploader: FC<UploaderProps> = ({
           return null
         }
 
-        const parsedAmount = parseFloat(trimmedAmount)
-        if (isNaN(parsedAmount)) {
+        if (isNaN(Number(trimmedAmount))) {
           console.error(`Invalid amount: ${trimmedAmount}`)
           hasError = true
           return null
         }
 
-        return [trimmedAddress, parsedAmount]
+        return [trimmedAddress, trimmedAmount]
       })
       .filter((row) => row !== null) as string[][]
 
