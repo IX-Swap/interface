@@ -160,12 +160,11 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   }
 
   const fetchAmountByRecordDate = async (secToken: any, recordDate: any, includeOriginSupply?: boolean) => {
-    setIsAmountLoading(true)
     const isFuture = dayjs(recordDate)
       .local()
       .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
-
     if (secToken?.value && recordDate && !isFuture) {
+      setIsAmountLoading(true)
       const formattedDate = dayjs(recordDate).local().format('YYYY-MM-DD')
       let blockNumber = blockNumberCache[formattedDate]
       if (!blockNumber) {
