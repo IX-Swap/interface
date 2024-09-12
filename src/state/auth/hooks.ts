@@ -1,4 +1,4 @@
-import { useFetchToken } from 'hooks/useFetchToken'
+import { useFetchAccessToken } from 'hooks/useFetchAccessToken'
 import { useActiveWeb3React } from 'hooks/web3'
 import md5 from 'md5'
 import { useCallback, useMemo } from 'react'
@@ -9,6 +9,8 @@ import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
 import { postLogin } from './actions'
+import { useDisconnect } from 'wagmi'
+import { setWalletState } from 'state/wallet'
 
 export enum LOGIN_STATUS {
   NO_ACCOUNT,
@@ -54,58 +56,64 @@ export function useUserisLoggedIn() {
 
 export function useLogout() {
   const dispatch = useDispatch<AppDispatch>()
-  return useCallback(async () => {
+  const { disconnect } = useDisconnect()
+
+  const disconnectWallet = () => {
+    disconnect()
+    dispatch(setWalletState({ isConnected: false, walletName: '' }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
-  }, [])
+  }
+
+  return { disconnectWallet }
 }
 
 export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLogin?: boolean; caller?: string }) {
   const { loginLoading } = useAuthState()
   const dispatch = useDispatch<AppDispatch>()
-  const { fetchToken } = useFetchToken()
+  const { fetchAccessToken } = useFetchAccessToken()
   const getHasLogin = useHasLogin()
   const isLoggedIn = useUserisLoggedIn()
   const { account } = useActiveWeb3React()
-  const checkLogin = useCallback(
-    async (expireLogin = false) => {
-      if (loginLoading && !account) {
-        return
+
+  const checkLogin =  async (expireLogin = false) => {
+    if (loginLoading && !account) {
+      return
+    }
+    if (isLoggedIn && !expireLogin) {
+      return LOGIN_STATUS.SUCCESS
+    }
+
+    try {
+      dispatch(postLogin.pending(account))
+      // gets here if he has no login at all, or login is forced
+      if (mustHavePreviousLogin) {
+        // gets here if he needs to be previously logged in
+        const hasLogin = await getHasLogin(account)
+
+        if (!hasLogin) {
+          dispatch(postLogin.rejected({ errorMessage: 'User has no account', account }))
+          dispatch(saveAccount({ account: '' }))
+        }
       }
-      if (isLoggedIn && !expireLogin) {
+      // gets here if previously logged in or previous login not needed
+      const auth = await fetchAccessToken()
+
+      if (!auth) {
+        dispatch(saveAccount({ account: '' }))
+        dispatch(postLogin.rejected({ errorMessage: 'Could not login', account }))
+        return LOGIN_STATUS.FAILED
+      } else {
+        dispatch(saveAccount({ account: account ?? '' }))
+        dispatch(postLogin.fulfilled({ auth, account }))
         return LOGIN_STATUS.SUCCESS
       }
-      try {
-        dispatch(postLogin.pending(account))
-        // gets here if he has no login at all, or login is forced
-        if (mustHavePreviousLogin) {
-          // gets here if he needs to be previously logged in
-          const hasLogin = await getHasLogin(account)
+    } catch (error: any) {
+      dispatch(postLogin.rejected({ errorMessage: error.message, account }))
+      dispatch(saveAccount({ account: '' }))
+      return LOGIN_STATUS.FAILED
+    }
+  }
 
-          if (!hasLogin) {
-            dispatch(postLogin.rejected({ errorMessage: 'User has no account', account }))
-            dispatch(saveAccount({ account: '' }))
-          }
-        }
-        // gets here if previously logged in or previous login not needed
-        const auth = await fetchToken()
-
-        if (!auth) {
-          dispatch(saveAccount({ account: '' }))
-          dispatch(postLogin.rejected({ errorMessage: 'Could not login', account }))
-          return LOGIN_STATUS.FAILED
-        } else {
-          dispatch(saveAccount({ account: account ?? '' }))
-          dispatch(postLogin.fulfilled({ auth, account }))
-          return LOGIN_STATUS.SUCCESS
-        }
-      } catch (error: any) {
-        dispatch(postLogin.rejected({ errorMessage: error.message, account }))
-        dispatch(saveAccount({ account: '' }))
-        return LOGIN_STATUS.FAILED
-      }
-    },
-    [fetchToken, dispatch, getHasLogin, mustHavePreviousLogin, account, isLoggedIn, loginLoading]
-  )
   return checkLogin
 }
