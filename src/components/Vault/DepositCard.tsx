@@ -6,9 +6,9 @@ import { useWeb3React } from '@web3-react/core'
 import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { AppDispatch } from 'state'
 import { setError, setLoading } from 'state/deposit/actions'
-import { useDepositActionHandlers, useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hooks'
+import { useDepositActionHandlers, useHideAboutWrappingCallback } from 'state/deposit/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
-import { ModalContentWrapper, ModalPadding } from 'theme'
+import { ModalContentWrapper } from 'theme'
 import { SecCurrency } from 'types/secToken'
 import { DepositRequestForm } from './DepositRequestForm'
 import styled from 'styled-components'
@@ -40,8 +40,7 @@ export const DepositCard = ({ currency, token }: Props) => {
   const getEvents = useGetEventCallback()
   const { eventLog } = useEventState()
 
-  const eventLogForToken = eventLog?.filter((event) => event.tokenId === token?.token?.id)
-  const eventStatus = eventLogForToken?.[0]?.status as DepositStatus
+  const eventStatus = eventLog?.[0]?.status as DepositStatus
 
   const handleBack = () => {
     onResetDeposit()
@@ -58,7 +57,7 @@ export const DepositCard = ({ currency, token }: Props) => {
   useEffect(() => {
     if (account) {
       const interval = setInterval(() => {
-        getEvents({ page: 1, filter: 'all' })
+        getEvents({ tokenId: token?.token?.id, page: 1, filter: 'all' })
       }, 5000)
 
       return () => {

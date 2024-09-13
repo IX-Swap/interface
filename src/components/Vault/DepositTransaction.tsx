@@ -40,8 +40,7 @@ export const DepositTransaction = ({ currency, token }: Props) => {
   const getEvents = useGetEventCallback()
   const dispatch = useDispatch()
 
-  const eventLogForToken = eventLog?.filter((event) => event.tokenId === token?.token?.id)
-  const data = eventLog ? eventLogForToken[0] : null
+  const data = eventLog ? eventLog[0] : null
 
   const amount = useMemo(() => {
     return data?.amount
@@ -49,7 +48,7 @@ export const DepositTransaction = ({ currency, token }: Props) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      getEvents({ page: 1, filter: 'all' })
+      getEvents({ tokenId: token?.token?.id, page: 1, filter: 'all' })
     }, 3000)
 
     return () => clearInterval(interval)
