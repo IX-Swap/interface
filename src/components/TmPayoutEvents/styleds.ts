@@ -7,6 +7,9 @@ import { ButtonIXSGradient } from 'components/Button'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
 `
 
 export const BodyContainer = styled.div`
@@ -15,16 +18,35 @@ export const BodyContainer = styled.div`
   row-gap: 8px;
 `
 
+const gridTemplateColumns = '70px 10% 10% 12% 20% 10% 20% minmax(100px, 10%)';
+const minWidth = '900px';
+
+export const StyledHeaderRow = styled(HeaderRow)`
+  grid-template-columns: ${gridTemplateColumns};
+  place-content: center;
+  min-width: ${minWidth};
+  margin-top: 22px;
+  > div {
+    color: ${({ theme }) => theme.text9};
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 21px;
+  }
+`
+
 export const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 75px 125px repeat(5, 1fr) minmax(200px, 1fr);
+  grid-template-columns: ${gridTemplateColumns};
+  place-content: center;
   height: 80px;
-  min-width: 1150px;
-  width: 100%;
+  min-width: ${minWidth};
   margin-bottom: 0px;
   border: none;
+
   > div {
     padding: 24px 10px;
+    gap: 4px;
   }
+
   button {
     min-height: 32px;
     height: 32px;
@@ -35,19 +57,6 @@ export const StyledBodyRow = styled(BodyRow)`
   }
 `
 
-export const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 75px 125px repeat(5, 1fr) minmax(200px, 1fr);
-  min-width: 1150px;
-  width: 100%;
-  margin-top: 22px;
-  > div {
-    color: ${({ theme }) => theme.text9};
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 21px;
-  }
-`
-
 export const StatusContainer = styled.div<{ color: Exclude<keyof Colors | 'transparent', 'config'> }>`
   width: 100%;
   text-align: center;
@@ -55,9 +64,9 @@ export const StatusContainer = styled.div<{ color: Exclude<keyof Colors | 'trans
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
-  padding: 4px 12px;
+  padding: 8px 23px;
   background-color: ${({ theme, color }) => (color === 'transparent' ? 'transparent' : theme[color])};
-  border-radius: 40px;
+  border-radius: 4px;
   ${({ color }) =>
     color === 'transparent' &&
     css`

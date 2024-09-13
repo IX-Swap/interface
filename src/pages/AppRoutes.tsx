@@ -45,6 +45,7 @@ const CreateCollection = lazy(() => import('pages/CreateCollection'))
 const NftAssetPage = lazy(() => import('pages/NFTAsset'))
 const TokenManager = lazy(() => import('pages/TokenManager'))
 const CreatePayoutEvent = lazy(() => import('pages/CreatePayoutEvent'))
+const CreateAirdropEvent = lazy(() => import('pages/CreateAirdropPayoutEvent'))
 const EditPayoutEvent = lazy(() => import('pages/CreatePayoutEvent/EditPayoutEvent'))
 const PayoutItem = lazy(() => import('pages/PayoutItem'))
 const PayoutItemManager = lazy(() => import('pages/PayoutItem/PayoutItemManager'))
@@ -62,6 +63,8 @@ const LaunchpadIssuanceInformationReview = lazy(() => import('pages/LaunchpadIss
 const ManageOffer = lazy(() => import('pages/LaunchpadIssuance/ManageOffer'))
 const LaunchpadIssuanceReport = lazy(() => import('pages/LaunchpadIssuance/Report'))
 const LBPPublicDetailsPage = lazy(() => import('./LBP/PublicDetails'))
+const TenantPage = lazy(() => import('./Tenant'))
+const CreateTenantPage = lazy(() => import('./Tenant/TenantForm'))
 
 export interface RouteMapEntry {
   path: string
@@ -79,7 +82,7 @@ export interface RouteMapEntry {
 }
 const onlyOfferManager = {
   conditions: {
-    rolesSupported: [ROLES.OFFER_MANAGER, ROLES.ADMIN],
+    rolesSupported: [ROLES.OFFER_MANAGER, ROLES.ADMIN, ROLES.MASTER_TENANT],
     isKycApproved: true,
   },
 }
@@ -168,6 +171,7 @@ export const routeConfigs: RouteMapEntry[] = [
   { path: '/token-manager', render: () => <Redirect to={routes.tokenManager('my-tokens', null)} /> },
   { path: routes.tokenManager(), component: TokenManager },
   { path: routes.createPayoutEvent, component: CreatePayoutEvent },
+  { path: routes.createAirdropEvent, component: CreateAirdropEvent },
   { path: routes.editPayoutEvent(), component: EditPayoutEvent },
   { path: routes.payoutItem(), component: PayoutItem },
   { path: routes.payoutItemManager(), component: PayoutItemManager },
@@ -217,4 +221,8 @@ export const routeConfigs: RouteMapEntry[] = [
     ...onlyOfferManager,
   },
   { path: routes.manageOffer, component: ManageOffer, ...onlyOfferManager },
+  { path: routes.tenant, component: TenantPage },
+  { path: routes.tenantCreate, component: CreateTenantPage },
+  { path: routes.tenantEdit, component: CreateTenantPage },
+  { path: routes.tenantClone, component: CreateTenantPage },
 ]

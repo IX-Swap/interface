@@ -91,19 +91,9 @@ export default function CustodianV2() {
 
   return (
     <>
-      <TYPE.title4
-        marginTop={isMobile ? '70px' : ''}
-        fontSize={isMobile ? '24px' : '40px'}
-        marginLeft={isMobile ? '30px' : ''}
-        marginBottom="30px"
-        paddingTop={isMobile ? '20px' : '24px'}
-        data-testid="securityTokensTitle"
-      >
-        <Trans>Security Tokens</Trans>
-      </TYPE.title4>
-      <MySecTokensTab marginBottom="72px">
+      <MySecTokensTab marginTop= '24px' marginBottom="72px">
         <TYPE.title5 marginBottom="32px">
-          <Trans>My Security Tokens</Trans>
+          <Trans>My RWAs</Trans>
         </TYPE.title5>
 
         {loading ? (
@@ -115,7 +105,7 @@ export default function CustodianV2() {
             {approvedSecTokens?.length > 0 ? (
               <SecTokenSection secTokens={approvedSecTokens} keyName="my-sec" title="Accredited" />
             ) : (
-              <EmptyData title="No Security Tokens" desc="You have no Security Tokens at the moment" />
+              <EmptyData title="No RWAs" desc="You have no RWAs at the moment" />
             )}
             {pendingSecTokens?.length > 0 && (
               <>

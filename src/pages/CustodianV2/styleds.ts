@@ -51,6 +51,7 @@ export const MySecTokenCard = styled(Box)<{ isPending: boolean }>`
   border: 1px solid #e6e6ff;
   // background: ${({ isPending, theme }) => (isPending ? theme.bgG14 : theme.bgG18)};
   ${cardCommonStyles};
+  cursor: pointer;
 `
 
 export const GradientText = styled.div`
@@ -108,7 +109,7 @@ export const StyledSearchInput = styled(SearchInput)`
   margin-right: 16px;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
-  width: 100%; 
+  width: 100%;
   margin-bottom: 16px;
   padding: 16px 22px;
   `};

@@ -4,8 +4,9 @@ import styled from 'styled-components/macro'
 
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { isMobile } from 'react-device-detect'
+import Box from '@mui/material/Box'
 
-export const BodyWrapper = styled.div<{
+export const BodyWrapper = styled(Box)<{
   margin?: string
   padding?: string
   paddingXS?: string

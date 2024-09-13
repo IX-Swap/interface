@@ -202,7 +202,15 @@ export default function App() {
   }, [pathname])
 
   const isAdminKyc = pathname.includes('admin')
-  const isLaunchpad = pathname === routes.launchpad
+  const isWhiteBackground =
+    pathname === routes.launchpad ||
+    pathname === routes.payoutHistory ||
+    pathname === routes.payoutEvent ||
+    pathname === routes.manageTokens ||
+    pathname === routes.createPayoutEvent ||
+    pathname === routes.createAirdropEvent ||
+    pathname.includes('payout') ||
+    pathname.includes('security-tokens')
   const visibleBody = useMemo(() => {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
@@ -219,7 +227,9 @@ export default function App() {
         route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
         route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
         route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
-        route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
+        route.conditions?.isKycApproved === true &&
+          kyc?.status !== KYCStatuses.APPROVED &&
+          ![ROLES.ADMIN, ROLES.MASTER_TENANT, ROLES.OFFER_MANAGER].includes(userRole),
         roleGuard,
       ]
 
@@ -233,6 +243,7 @@ export default function App() {
             />
           )
         }
+
         return null
       }
 
@@ -240,9 +251,6 @@ export default function App() {
     },
     [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
   )
-
-  const isRedirect =
-    userRole !== ROLES.OFFER_MANAGER || (userRole === ROLES.OFFER_MANAGER && !pathname.includes(routes.issuance))
 
   if (!config) {
     return <LoadingIndicator isLoading />
@@ -259,7 +267,7 @@ export default function App() {
         <Route component={ApeModeQueryParamReader} />
         <AppBackground />
         <Popups />
-        <AppWrapper isLaunchpad={isLaunchpad}>
+        <AppWrapper isLaunchpad={isWhiteBackground}>
           {!isAdminKyc && !hideHeader && <Header />}
           <ToggleableBody
             isVisible={visibleBody}
@@ -278,12 +286,7 @@ export default function App() {
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
-                {isRedirect ? (
-                  <Route
-                    path={'/'}
-                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                  />
-                ) : null}
+                <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
               </Switch>
             </Suspense>
             {/* </Web3ReactManager> */}
@@ -319,10 +322,6 @@ const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
 
 const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: boolean }>`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  min-height: calc(100vh - 120px);
-
-  ${(props) => !props.hideHeader && 'padding-bottom: 48px;'}
-
   ${({ theme }) => theme.mediaWidth.upToSmall`
     min-height: calc(100vh - 64px);
     // width: 100%;

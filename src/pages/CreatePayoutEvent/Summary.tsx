@@ -6,11 +6,13 @@ import { Flex } from 'rebass'
 import { TYPE } from 'theme'
 import { Label } from 'components/Label'
 import { ExtraInfoCard } from 'pages/KYC/styleds'
+import { Line } from 'components/Line'
 
 const Card = styled.div`
-  background: ${({ theme }) => theme.bg19};
+  background: ${({ theme }) => theme.bg0};
   padding: 16px;
-  border-radius: 20px;
+  border-radius: 8px;
+  border: 1px solid #e6e6ff;
 `
 
 const Divider = styled.div`
@@ -54,27 +56,26 @@ export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture, set
         label={`Token Payout Summary`}
         tooltipText="Shows the total amount of tokens both held in wallets and contributed to liquidity pools. It also indicates the number of tokens to be distributed for this payout event."
       />
-
       <Card>
-        <Flex marginBottom="8px" justifyContent="space-between" alignItems="center" opacity="50%">
-          <TYPE.body3>
-            <Trans>Wrapped Tokens (Pools)</Trans>
-          </TYPE.body3>
-          <TYPE.body3>{getValue(poolsAmount?.toFixed(2))}</TYPE.body3>
+        <Flex marginBottom="16px" justifyContent="space-between" alignItems="center" opacity="50%">
+          <TYPE.title11>
+            <Trans>Total amount in liquidity pools</Trans>
+          </TYPE.title11>
+          <TYPE.title11>{getValue(poolsAmount?.toFixed(2))}</TYPE.title11>
         </Flex>
-        <Flex marginBottom="8px" justifyContent="space-between" alignItems="center" opacity="50%">
-          <TYPE.body3>
-            <Trans>Wrapped Tokens (Wallets)</Trans>
-          </TYPE.body3>
-          <TYPE.body3>{getValue(walletsAmount?.toFixed(2))}</TYPE.body3>
+        <Flex marginBottom="16px" justifyContent="space-between" alignItems="center" opacity="50%">
+          <TYPE.title11>
+            <Trans>Total amount of all wallets</Trans>
+          </TYPE.title11>
+          <TYPE.title11>{getValue(walletsAmount?.toFixed(2))}</TYPE.title11>
         </Flex>
 
-        <Divider />
+        <Line style={{ margin: '20px 0px' }} />
 
         <Flex justifyContent="space-between">
-          <TYPE.body1 color={'text1'}>
-            <Trans>Total Wrapped Token Supply</Trans>
-          </TYPE.body1>
+          <TYPE.main1>
+            <Trans>Total token supply</Trans>
+          </TYPE.main1>
           <TYPE.body1 color={'text1'}>
             {isLoading || isRecordFuture ? '' : walletsAmount || poolsAmount ? `${totalSum} tokens` : '-'}
           </TYPE.body1>

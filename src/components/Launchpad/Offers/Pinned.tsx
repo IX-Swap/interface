@@ -94,7 +94,7 @@ export const Pinned: React.FC = () => {
           {!isMobile && <InvestmentTypeInfo industry={offer.industry} type={offer.type} status={offer.status} />}
 
           <PinnedContentTitle>{offer.title}</PinnedContentTitle>
-          <PinnedContentBody>{offer.longDescription}</PinnedContentBody>
+          <PinnedContentBody>{offer.shortDescription}</PinnedContentBody>
           <PinnedContentButton type="button" onClick={onClick}>
             Invest
           </PinnedContentButton>
@@ -157,7 +157,7 @@ const PinnedContent = styled.div`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: 1rem;
   max-width: 600px;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {

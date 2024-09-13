@@ -1,27 +1,38 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
-export interface GameState {
-  isConnected: boolean;
-  walletName: string;
+export enum DepositView {
+  CREATE_REQUEST,
+  PENDING,
+  ERROR,
+  ABOUT_WRAPPING,
 }
 
-const initialState: GameState = {
+export interface WalletState {
+  isConnected: boolean
+  walletName: string
+  isOpenDepositCard: boolean
+  depositView: DepositView
+}
+
+const initialState: WalletState = {
   isConnected: false,
   walletName: '',
-};
+  isOpenDepositCard: false,
+  depositView: DepositView.CREATE_REQUEST,
+}
 
 const walletSlice = createSlice({
   name: 'wallet',
   initialState,
   reducers: {
     setWalletState(state, action) {
-      const newState = { ...state, ...action.payload };
+      const newState = { ...state, ...action.payload }
 
-      return newState;
+      return newState
     },
     resetWalletState: () => initialState,
   },
-});
+})
 
-export const { setWalletState, resetWalletState } = walletSlice.actions;
-export default walletSlice.reducer;
+export const { setWalletState, resetWalletState } = walletSlice.actions
+export default walletSlice.reducer

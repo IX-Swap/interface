@@ -5,11 +5,9 @@ import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 import _get from 'lodash/get'
-
 import { useKYCState } from 'state/kyc/hooks'
 import { routes } from 'utils/routes'
 import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
-import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { MobileMenu } from '../Mobile-Menu'
@@ -24,10 +22,10 @@ import { useRole } from 'state/user/hooks'
 import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
 import { isMobile } from 'react-device-detect'
 import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
-import { useWalletModalToggle } from 'state/application/hooks'
 import { PinnedContentButton } from 'components/Button'
 import Modal from 'components/Modal'
 import ConnectionDialog from 'components/Launchpad/Wallet/ConnectionDialog'
+import AdministrationMenu from './AdministrationMenu'
 
 const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
   display: grid;
@@ -164,24 +162,14 @@ const HeaderWrapper = styled.div`
     `}
 `
 
-const IconWrapper = styled.div`
-  display: block;
-  cursor: pointer;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: none;
-  `};
-`
-
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
   const { account, chainId } = useActiveWeb3React()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
-  const { isTokenManager } = useRole()
+  const { isUser } = useRole()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [openPreviewModal, setPreviewModal] = React.useState(false)
-  const toggleWalletModal = useWalletModalToggle()
   const [showConnectModal, setShowConnectModal] = React.useState(false)
   const toggleModal = React.useCallback(() => setShowConnectModal((state) => !state), [])
 
@@ -273,24 +261,14 @@ export default function Header() {
             </HeaderRow>
             <HeaderLinks />
             <HeaderControls>
-              {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && isTokenManager && (
-                <IconWrapper>
-                  <HeaderElement>
-                    <NavLink
-                      style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }}
-                      to={routes.tokenManager('my-tokens', null)}
-                    >
-                      <TokenManager />
-                    </NavLink>
-                  </HeaderElement>
-                </IconWrapper>
-              )}
-
               {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
                 <HeaderElement>
                   <IXSBalance />
                 </HeaderElement>
               )}
+
+              {account && !isUser ? <AdministrationMenu /> : null}
+
               <HeaderElement>
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />

@@ -7,8 +7,13 @@ import { isValidAddress, shortAddress } from 'utils'
 import { useAddUserToken } from 'state/user/hooks'
 import { useToken } from 'hooks/Tokens'
 import { Line } from 'components/Line'
+import { ReactComponent as DefaultTokenItem } from 'assets/images/NoToken.svg'
+import CurrencyLogo from 'components/CurrencyLogo'
+import { NETWORK_LOGOS } from 'constants/chains'
+import { NetworkLogo } from 'components/Launchpad/InvestmentCard'
+import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 
-type Option = { label?: string; value?: any; disabled?: boolean }
+type Option = { label?: string; value?: any; disabled?: boolean; network?: string }
 
 interface Props {
   onSelect: (item: any) => void
@@ -24,22 +29,43 @@ interface Props {
   isClearable?: boolean
   addCustom?: boolean
   id?: any
+  isNetworkVisiable?: boolean
+  isTokenLogoVisible?: boolean
 }
 
 const colourStyles = {
+  menuPortal: (styles: Record<string, any>) => {
+    return {
+      ...styles,
+      zIndex: 9999,
+    }
+  },
   placeholder: (styles: Record<string, any>) => {
     return {
       ...styles,
       color: '#B8B8CC',
     }
   },
-  option: (styles: Record<string, any>, { isSelected, isMulti }: { isSelected: boolean; isMulti: boolean }) => {
+  option: (
+    styles: Record<string, any>,
+    { isSelected, isFocused, isMulti }: { isSelected: boolean; isMulti: boolean; isFocused: boolean }
+  ) => {
     return {
       ...styles,
-      backgroundColor: isSelected && !isMulti ? 'bg11' : 'transparend',
+      backgroundColor: isSelected && !isMulti ? 'bg11' : isFocused ? 'transparent' : 'transparent',
       color: isSelected && !isMulti ? '#292933' : '#8F8FB2',
       fontWeight: 500,
-      margin: '20px 0px',
+      borderBottom: '1px solid #E6E6FF',
+      padding: '18px',
+      ':active': {
+        backgroundColor: 'transparent', // Ensures background stays the same when clicked
+      },
+      ':last-child': {
+        borderBottom: 'none',
+      },
+      ':hover': {
+        color: '#292933',
+      },
     }
   },
   singleValue: (styles: Record<string, any>) => {
@@ -107,10 +133,9 @@ const MultiValue = (props: any) => {
   const itemIndex = valuesArray.findIndex(({ value }) => value === props?.data?.value)
 
   const isLast = itemIndex === valuesArray.length - 1
-
   return (
     <StyledValue>
-      {props?.data?.icon}
+      {props.data ? renderIcon(props?.data) : null}
       {`${props?.data?.label}${isLast ? '' : `,`}`}
       {!isLast && <>&nbsp;</>}
     </StyledValue>
@@ -118,36 +143,61 @@ const MultiValue = (props: any) => {
 }
 
 const SingleValue = (props: any) => {
+  const networkLogo = props?.data?.network ? NETWORK_LOGOS[props?.data?.network] : ''
   return (
-    <StyledValue disabled={props.isDisabled}>
-      {<img src={props?.data?.icon} />}
-      {props?.data?.label}
-    </StyledValue>
+    <div style={{ display: 'flex', justifyContent: 'space-between', width: '96%' }}>
+      <StyledValue disabled={props.isDisabled}>
+        {props?.isTokenLogoVisible && props?.data && renderIcon(props.data)}
+        {props?.data?.label}
+      </StyledValue>
+      {props?.isNetworkVisiable ? (
+        <StyledValue disabled={props.isDisabled}>
+          {capitalizeFirstLetter(props?.data?.network)}
+          <NetworkLogo style={{ width: '20px' }} src={networkLogo} alt="network logo" />
+        </StyledValue>
+      ) : null}
+    </div>
   )
+}
+
+const renderIcon = (data: any) => {
+  const { icon } = data
+
+  if (typeof icon === 'string') {
+    return <img src={icon} alt="currency icon" />
+  } else if (icon && icon.$$typeof === Symbol.for('react.element')) {
+    return icon
+  } else {
+    return <CurrencyLogo />
+  }
 }
 
 const Option = (props: any) => {
   const addToken = useAddUserToken()
+  const networkLogo = props?.data?.network ? NETWORK_LOGOS[props?.data?.network] : ''
 
   return (
     <components.Option {...props}>
-      <StyledValue
-        style={{ justifyContent: 'space-between' }}
-        disabled={props.isDisabled}
-        onClick={() => {
-          if (props.data?.token) {
-            addToken(props.data?.token)
-          }
-        }}
-      >
-        <img src={props?.data?.icon}></img>
-        {props?.data?.label}
-        {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
-
-        {!props.isMulti && <CheckMark checked={props.isSelected} label="" />}
-      </StyledValue>
-
-      <Line style={{ marginTop: '10px' }} />
+      <FlexContainer>
+        <MainStyledValue
+          disabled={props.isDisabled}
+          onClick={() => {
+            if (props.data?.token) {
+              addToken(props.data?.token)
+            }
+          }}
+        >
+          {props?.isTokenLogoVisible && props?.data && renderIcon(props.data)}
+          {props?.data?.label}
+          {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
+        </MainStyledValue>
+        {props?.isNetworkVisiable ? (
+          <MainStyledValue disabled={props.isDisabled}>
+            {capitalizeFirstLetter(props?.data?.network)}
+            <NetworkLogo style={{ width: '20px' }} src={networkLogo} alt="network logo" />
+          </MainStyledValue>
+        ) : null}
+      </FlexContainer>
     </components.Option>
   )
 }
@@ -166,6 +216,8 @@ export const Select = ({
   error = '',
   borderRadius = '36px',
   addCustom = false,
+  isNetworkVisiable,
+  isTokenLogoVisible,
 }: Props) => {
   const [search, handleSearch] = useState('')
 
@@ -193,9 +245,9 @@ export const Select = ({
     }
     return options
   }, [options, addCustom, search, token])
-
   return (
     <StyledReactSelect
+      menuPortalTarget={document.body}
       onInputChange={handleSearch}
       error={error}
       options={customOptions}
@@ -208,7 +260,15 @@ export const Select = ({
       onChange={(option: unknown) => {
         onSelect(option as Option)
       }}
-      components={{ MultiValue, SingleValue, Option }}
+      components={{
+        MultiValue,
+        SingleValue: (props) => (
+          <SingleValue {...props} isNetworkVisiable={isNetworkVisiable} isTokenLogoVisible={isTokenLogoVisible} />
+        ),
+        Option: (props) => (
+          <Option {...props} isNetworkVisiable={isNetworkVisiable} isTokenLogoVisible={isTokenLogoVisible} />
+        ),
+      }}
       value={selectedValue}
       placeholder={placeholder}
       name={name}
@@ -239,7 +299,9 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
       css`
         border: 1px solid;
         border-color: #ff6161 !important;
-      `}
+      `}import { stake } from '../../state/stake/actions'
+import { style } from 'styled-system'
+
   }
   *[class*='indicatorSeparator'] {
     display: none;
@@ -275,9 +337,21 @@ const StyledValue = styled.div<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
   column-gap: 6px;
+  cursor: pointer;
+
   ${({ disabled }) =>
     disabled &&
     css`
+      cursor: not-allowed;
       opacity: 0.5;
     `}
+`
+
+const FlexContainer = styled(StyledValue)`
+  justify-content: space-between;
+`
+
+const MainStyledValue = styled(StyledValue)`
+  display: flex;
+  align-items: center;
 `

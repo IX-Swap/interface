@@ -72,7 +72,9 @@ export default function CurrencyLogo({
 
   const uri =
     currency instanceof WrappedTokenInfo
-      ? currency?.logoURI || (tokens[currency?.address] as any)?.tokenInfo?.logoURI
+      ? currency?.logoURI ||
+        (tokens[currency?.address] as any)?.tokenInfo?.logoURI ||
+        (currency?.tokenInfo as any)?.logo?.public
       : undefined
   const uriLocations = useHttpLocations(uri)
   const { chainId } = useActiveWeb3React()

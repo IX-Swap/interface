@@ -83,7 +83,5 @@ export default createReducer<DepositState>(initialState, (builder) =>
     })
     .addCase(resetDeposit, (state, {}) => {
       state.amount = initialState.amount
-      state.currencyId = initialState.currencyId
-      state.sender = initialState.sender
     })
 )

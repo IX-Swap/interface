@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { gradientBorder, MEDIA_WIDTHS } from 'theme'
+import {  MEDIA_WIDTHS } from 'theme'
 
 export const Container = styled.div`
   flex: 1;
@@ -8,13 +8,13 @@ export const Container = styled.div`
 
 export const TokensList = styled.div`
   position: relative;
-  ${gradientBorder}
+  border: 1px solid #e6e6ff;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 32px;
   gap: 30px;
-  border-radius: 30px;
-  background: ${({ theme }) => theme.bg1};
+  border-radius: 8px;
+  background: ${({ theme }) => theme.bg25};
   :before {
     border-radius: 30px;
   }
@@ -32,9 +32,10 @@ export const TokensList = styled.div`
 
 export const Item = styled.div`
   cursor: pointer;
-  padding: 26px 86px;
-  border-radius: 30px;
-  background: ${({ theme }) => theme.bgG19};
+  padding: 16px 24px;
+  border-radius: 8px;
+  border: 1px solid #e6e6ff;
+  background: ${({ theme }) => theme.bg25};
   backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
@@ -49,19 +50,20 @@ export const Item = styled.div`
 
 export const InfoContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  gap: 10px;
+  align-items: center;
 `
 
 export const Symbol = styled.div`
-  font-weight: 600;
-  font-size: 22px;
+  font-weight: 500;
+  font-size: 13px;
   line-height: 33px;
-  color: #ffffff;
+  color: #292933;
 `
 
 export const Name = styled.div`
-  font-weight: 600;
-  font-size: 11px;
+  font-weight: 500;
+  font-size: 13px;
   line-height: 16px;
-  color: ${({ theme }) => theme.text2};
+  color: ${({ theme }) => theme.text11};
 `

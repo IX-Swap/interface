@@ -22,6 +22,11 @@ import { NETWORK_LOGOS } from 'constants/chains'
 import { checkWrongChain } from 'chains'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import { DepositCard } from 'components/Vault/DepositCard'
+import { useWalletState } from 'state/wallet/hooks'
+import { BackButton, StyledArrowBack, BackText } from 'pages/PayoutItem/PayoutItemManager'
+import { isMobile } from 'react-device-detect'
+import { useCookies } from 'react-cookie'
 
 export default function SecTokenDetails({
   match: {
@@ -30,14 +35,17 @@ export default function SecTokenDetails({
 }: RouteComponentProps<{ currencyId: string }>) {
   const history = useHistory()
   const currency = (useCurrency(currencyId) as any) ?? undefined
+  const { account, chainId } = useActiveWeb3React()
+  const { isOpenDepositCard } = useWalletState()
+
   const [token, setToken] = useState<any>(null)
   const [atlasInfo, setAtlasInfo] = useState<any | null>(null)
-  const { account, chainId } = useActiveWeb3React()
 
   const isLoggedIn = !!account
   const network = token?.token?.network
   const networkLogo = network ? NETWORK_LOGOS[network] : ''
   const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
+  const [cookies] = useCookies(['annoucementsSeen'])
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -59,10 +67,37 @@ export default function SecTokenDetails({
 
   if (!isLoggedIn) return <NotAvailablePage />
 
+  if (isOpenDepositCard && token && token?.token) {
+    return (
+      <>
+        {isWrongChain ? (
+          <Portal>
+            <CenteredFixed width="100vw" height="100vh">
+              <NetworkNotAvailable expectChain={expectChain} />
+            </CenteredFixed>
+          </Portal>
+        ) : (
+          <DepositCard currency={token?.token} token={token} />
+        )}
+      </>
+    )
+  }
+
   return (
     <>
-      <DepositPopup currency={token?.token} token={token} />
+      <BackButton
+        style={{
+          top: isMobile && !cookies.annoucementsSeen ? '11%' : '6%',
+          left: isMobile ? '7%' : '5%',
+          zIndex: 1,
+        }}
+        onClick={onBack}
+      >
+        <StyledArrowBack />
+        <BackText>Back</BackText>
+      </BackButton>
       <WithdrawPopup currency={token?.token} token={token} />
+
       <TokenInfoContainer>
         <Container style={{ position: 'relative' }}>
           {networkLogo ? (
@@ -71,7 +106,6 @@ export default function SecTokenDetails({
             </LogoWrap>
           ) : null}
           <InfoTitle>
-            <BackArrowButton onBack={onBack} />
             {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}
             <Box display="flex" alignItems="center">
               <StyledTitleBig fontWeight="600">{token?.ticker}</StyledTitleBig>
@@ -106,13 +140,8 @@ export const TokenInfoContainer = styled.div<{ background?: string }>`
   min-height: 55vh;
   width: 100%;
   padding: 0 2rem;
-  // font-family: ${(props) => props.theme.launchpad.font};
   background: #ffffff;
-  margin-top: -25px;
-
-  * {
-    // font-family: ${(props) => props.theme.launchpad.font};
-  }
+  padding: 80px 0px;
 
   /* Media Query for Mobile */
   @media (max-width: 768px) {

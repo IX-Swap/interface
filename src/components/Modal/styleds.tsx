@@ -22,13 +22,10 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
       `}
 
     display: flex;
+    
     align-items: ${({ isright }) => (isright ? 'flex-start' : 'center')};
     justify-content: ${({ isright }) => (isright ? 'flex-end' : 'center')};
     flex-direction: ${({ flexcolumn }) => (flexcolumn ? 'column' : 'row')};
-
-    // @media (max-width: 768px) {
-    //   display: flex;
-    // }
 
     ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       display: flex;

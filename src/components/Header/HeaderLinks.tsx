@@ -163,7 +163,7 @@ export const HeaderLinks = () => {
             return pathname.includes('security-token')
           }}
         >
-          <Trans>Security Tokens</Trans>
+          <Trans>RWAs</Trans>
         </StyledNavLink>
       )}
 
@@ -198,15 +198,6 @@ export const HeaderLinks = () => {
       {isAllowed(routes.faucet) && chainId === SupportedChainId.KOVAN && isWhitelisted && (
         <StyledNavLink disabled={!isApproved} id={`faucet-nav-link`} to={routes.faucet}>
           <Trans>Faucet</Trans>
-        </StyledNavLink>
-      )}
-
-      {isAllowed(routes.issuance) && showIssuance && <StyledNavLink to="/issuance">Issuance</StyledNavLink>}
-      {isAllowed('/admin') && account && isAdmin && isWhitelisted && <StyledNavLink to="/admin">Admin</StyledNavLink>}
-
-      {isAllowed(routes.lbpDashboard) && account && isAdmin && isWhitelisted && (
-        <StyledNavLink to={routes.lbpDashboard} data-testid={`lbp-nav-link`}>
-          <Trans>LBP</Trans>
         </StyledNavLink>
       )}
     </HeaderLinksWrap>
@@ -289,6 +280,42 @@ const navLinkStyles = css`
     font-size: 15px;
   }
 `
+
+const externalLinkStyles = css`
+  ${({ theme }) => theme.flexRowNoWrap}
+  align-items: left;
+  font-size: 13px;
+  border-radius: 3rem;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none !important;
+  color: ${({ theme }) => theme.text12};
+  width: fit-content;
+  word-break: break-word;
+  border-radius: 45px;
+  font-weight: 500;
+
+  :hover {
+    color: ${({ theme }) => darken(0.05, theme.text11)};
+  }
+
+  :focus,
+  :active {
+    color: ${({ theme }) => theme.text12};
+    outline: none;
+  }
+
+  @media (max-width: 1500px) {
+    font-size: 12px;
+  }
+  @media (max-width: 1300px) {
+    font-size: 16px;
+  }
+  @media (max-width: 1250px) {
+    font-size: 15px;
+  }
+`
+
 const StyledNavLink = styled(NavLink).attrs({
   activeClassName,
 })<{ disabled?: boolean }>`
@@ -323,7 +350,7 @@ const SubMenuExternalLink = styled(ExternalLink)<{ disabled?: boolean }>`
   }
 `
 const MenuExternalLink = styled(ExternalLink)`
-  ${navLinkStyles};
+  ${externalLinkStyles};
   ${({ disabled }) => disabled && `${disabledStyle}`};
 `
 const PopOverContent = styled.div`
