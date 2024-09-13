@@ -40,9 +40,8 @@ export const DepositCard = ({ currency, token }: Props) => {
   const getEvents = useGetEventCallback()
   const { eventLog } = useEventState()
 
-  const eventStatus = eventLog?.[0]?.status as DepositStatus
-
-  console.log('eventLog', eventLog)
+  const eventLogForToken = eventLog?.filter((event) => event.tokenId === token?.token?.id)
+  const eventStatus = eventLogForToken?.[0]?.status as DepositStatus
 
   const handleBack = () => {
     onResetDeposit()
@@ -69,8 +68,6 @@ export const DepositCard = ({ currency, token }: Props) => {
   }, [account, token?.id])
 
   useEffect(() => {
-    console.log('eventStatus', eventStatus)
-    console.log('token', token)
     if ([DepositStatus.PENDING, DepositStatus.APPROVED].includes(eventStatus)) {
       dispatch(setWalletState({ depositView: DepositView.PENDING }))
     }
