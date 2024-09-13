@@ -70,7 +70,7 @@ export const DepositCard = ({ currency, token }: Props) => {
   }, [account])
 
   useEffect(() => {
-    if ([DepositStatus.PENDING, DepositStatus.APPROVED].includes(eventStatus)) {
+    if ([DepositStatus.PENDING].includes(eventStatus)) {
       dispatch(setWalletState({ depositView: DepositView.PENDING }))
     }
   }, [eventStatus])
