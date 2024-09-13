@@ -6,9 +6,9 @@ import { useWeb3React } from '@web3-react/core'
 import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { AppDispatch } from 'state'
 import { setError, setLoading } from 'state/deposit/actions'
-import { useDepositActionHandlers, useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hooks'
+import { useDepositActionHandlers, useHideAboutWrappingCallback } from 'state/deposit/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
-import { ModalContentWrapper, ModalPadding } from 'theme'
+import { ModalContentWrapper } from 'theme'
 import { SecCurrency } from 'types/secToken'
 import { DepositRequestForm } from './DepositRequestForm'
 import styled from 'styled-components'
@@ -37,7 +37,6 @@ export const DepositCard = ({ currency, token }: Props) => {
   const { onResetDeposit } = useDepositActionHandlers()
   const { depositView } = useWalletState()
   const { account } = useWeb3React()
-  const { currencyId: cid } = useDepositState()
   const getEvents = useGetEventCallback()
   const { eventLog } = useEventState()
 
@@ -57,23 +56,21 @@ export const DepositCard = ({ currency, token }: Props) => {
 
   useEffect(() => {
     if (account) {
-      const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
-
       const interval = setInterval(() => {
-        getEvents({ tokenId, page: 1, filter: 'all' })
-      }, 15000)
+        getEvents({ tokenId: token?.token?.id, page: 1, filter: 'all' })
+      }, 5000)
 
       return () => {
         clearInterval(interval)
       }
     }
-  }, [account])
+  }, [account, token?.id])
 
   useEffect(() => {
-    if ([DepositStatus.PENDING].includes(eventStatus)) {
+    if ([DepositStatus.PENDING, DepositStatus.APPROVED].includes(eventStatus)) {
       dispatch(setWalletState({ depositView: DepositView.PENDING }))
     }
-  }, [eventStatus])
+  }, [eventStatus, token?.id])
 
   return (
     <Container>
@@ -98,7 +95,7 @@ export const DepositCard = ({ currency, token }: Props) => {
 
       <ModalContentWrapper>
         {depositView === DepositView.CREATE_REQUEST && <DepositRequestForm token={token} currency={currency} />}
-        {depositView === DepositView.PENDING && <DepositTransaction currency={token} />}
+        {depositView === DepositView.PENDING && <DepositTransaction currency={token} token={token} />}
       </ModalContentWrapper>
 
       <DepositPopup currency={token?.token} token={token} />

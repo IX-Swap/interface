@@ -97,7 +97,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
           tokenInfo?.custodyAssetAddress || '',
           parseUnits(amount, tokenDecimals)
         )
-        await getEvents({ tokenId, filter: 'all' })
+        getEvents({ tokenId: token?.token?.id, page: 1, filter: 'all' })
         dispatch(setWalletState({ depositView: DepositView.PENDING }))
         await transaction?.wait()
         onResetDeposit()

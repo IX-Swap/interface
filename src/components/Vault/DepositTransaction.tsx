@@ -23,7 +23,6 @@ import {
 } from './enum'
 import { LiniarProgressContainer } from './styleds'
 import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
-import { useSecTokenId } from 'state/secTokens/hooks'
 import styled, { css } from 'styled-components'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
@@ -31,13 +30,13 @@ import { DepositView, setWalletState } from 'state/wallet'
 import Loader from 'components/Loader'
 
 interface Props {
+  token: any
   currency?: Currency & { originalSymbol: string }
 }
 
-export const DepositTransaction = ({ currency }: Props) => {
+export const DepositTransaction = ({ currency, token }: Props) => {
   const { depositError } = useDepositState()
   const { eventLog } = useEventState()
-  const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
   const getEvents = useGetEventCallback()
   const dispatch = useDispatch()
 
@@ -49,7 +48,7 @@ export const DepositTransaction = ({ currency }: Props) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      getEvents({ tokenId, page: 1, filter: 'all' })
+      getEvents({ tokenId: token?.token?.id, page: 1, filter: 'all' })
     }, 3000)
 
     return () => clearInterval(interval)
