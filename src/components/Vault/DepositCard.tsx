@@ -96,7 +96,7 @@ export const DepositCard = ({ currency, token }: Props) => {
 
       <ModalContentWrapper>
         {depositView === DepositView.CREATE_REQUEST && <DepositRequestForm token={token} currency={currency} />}
-        {depositView === DepositView.PENDING && <DepositTransaction currency={token} />}
+        {depositView === DepositView.PENDING && <DepositTransaction currency={token} token={token} />}
       </ModalContentWrapper>
 
       <DepositPopup currency={token?.token} token={token} />

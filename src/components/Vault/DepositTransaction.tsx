@@ -30,16 +30,18 @@ import { DepositView, setWalletState } from 'state/wallet'
 import Loader from 'components/Loader'
 
 interface Props {
+  token: any
   currency?: Currency & { originalSymbol: string }
 }
 
-export const DepositTransaction = ({ currency }: Props) => {
+export const DepositTransaction = ({ currency, token }: Props) => {
   const { depositError } = useDepositState()
   const { eventLog } = useEventState()
   const getEvents = useGetEventCallback()
   const dispatch = useDispatch()
 
-  const data = eventLog ? eventLog[0] : null
+  const eventLogForToken = eventLog?.filter((event) => event.tokenId === token?.token?.id)
+  const data = eventLog ? eventLogForToken[0] : null
 
   const amount = useMemo(() => {
     return data?.amount
