@@ -37,11 +37,12 @@ export const DepositCard = ({ currency, token }: Props) => {
   const { onResetDeposit } = useDepositActionHandlers()
   const { depositView } = useWalletState()
   const { account } = useWeb3React()
-  const { currencyId: cid } = useDepositState()
   const getEvents = useGetEventCallback()
   const { eventLog } = useEventState()
 
   const eventStatus = eventLog?.[0]?.status as DepositStatus
+
+  console.log('eventLog', eventLog)
 
   const handleBack = () => {
     onResetDeposit()
@@ -57,23 +58,23 @@ export const DepositCard = ({ currency, token }: Props) => {
 
   useEffect(() => {
     if (account) {
-      const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
-
       const interval = setInterval(() => {
-        getEvents({ tokenId, page: 1, filter: 'all' })
-      }, 15000)
+        getEvents({ page: 1, filter: 'all' })
+      }, 5000)
 
       return () => {
         clearInterval(interval)
       }
     }
-  }, [account])
+  }, [account, token?.id])
 
   useEffect(() => {
-    if ([DepositStatus.PENDING].includes(eventStatus)) {
+    console.log('eventStatus', eventStatus)
+    console.log('token', token)
+    if ([DepositStatus.PENDING, DepositStatus.APPROVED].includes(eventStatus)) {
       dispatch(setWalletState({ depositView: DepositView.PENDING }))
     }
-  }, [eventStatus])
+  }, [eventStatus, token?.id])
 
   return (
     <Container>
