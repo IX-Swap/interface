@@ -8,7 +8,7 @@ import { metamask } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
-import { postLogin } from './actions'
+import { logout, postLogin } from './actions'
 import { useDisconnect } from 'wagmi'
 import { setWalletState } from 'state/wallet'
 
@@ -55,14 +55,18 @@ export function useUserisLoggedIn() {
 }
 
 export function useLogout() {
+  const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const { disconnect } = useDisconnect()
 
   const disconnectWallet = () => {
     disconnect()
+    dispatch(postLogin.rejected({ errorMessage: 'User logged out', account: '' }))
+    dispatch(logout(account))
     dispatch(setWalletState({ isConnected: false, walletName: '' }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
+    indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
   }
 
   return { disconnectWallet }
@@ -76,7 +80,7 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
   const isLoggedIn = useUserisLoggedIn()
   const { account } = useActiveWeb3React()
 
-  const checkLogin =  async (expireLogin = false) => {
+  const checkLogin = async (expireLogin = false) => {
     if (loginLoading && !account) {
       return
     }
