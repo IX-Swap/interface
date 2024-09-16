@@ -34,7 +34,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const theme = useTheme()
   const history = useHistory()
   const addPopup = useAddPopup()
-  const { isAdmin } = useRole()
+  const { isAdmin, isMasterTenant} = useRole()
+  const canEdit = isAdmin || isMasterTenant;
   const { account } = useActiveWeb3React();
   const loader = useLoader(false)
 
@@ -136,9 +137,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
             break
 
           case IssuanceStatus.pendingApproval:
-            if (!props.edit && isAdmin) {
+            if (!props.edit && canEdit) {
               history.replace(`/issuance/edit/information?id=${issuanceId}`)
-            } else if (!isAdmin) {
+            } else if (!canEdit) {
               history.replace(`/issuance`)
             }
 
@@ -210,6 +211,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               offerData={offer?.data}
               initialValues={initialValues}
               smartContractStrategy={smartContractStrategy}
+              refetch={offer.refetch}
             />
           )
         }}

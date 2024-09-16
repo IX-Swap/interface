@@ -1,17 +1,16 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { MobileDatePicker } from '@material-ui/pickers'
 import styled from 'styled-components'
-import { t } from '@lingui/macro'
-
 import { Input } from 'components/Input'
 import { ReactComponent as CalendarIcon } from 'assets/images/newCalendar.svg'
 import { Props as LabelProps } from 'components/Label'
 import dayjs from 'dayjs'
 import Row from 'components/Row'
 import { KycInputLabel } from 'pages/KYC/common'
+import { TYPE } from 'theme'
 
 interface Props {
-  value?: string | Date | number
+  value?: any
   onChange: (value: any) => void
   name?: string
   error?: any | JSX.Element
@@ -23,6 +22,7 @@ interface Props {
   isDisabled?: boolean
   format?: string
   id?: any
+  isDelayed?: boolean
 }
 
 export const DateInput = ({
@@ -37,30 +37,31 @@ export const DateInput = ({
   placeholder,
   isDisabled = false,
   format,
+  isDelayed,
   ...props
 }: Props & Partial<LabelProps>) => {
-  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false)
   const handleIconClick = () => {
-    setDatePickerOpen(true);
-  };
+    setDatePickerOpen(true)
+  }
   const handleCloseDatePicker = () => {
-    setDatePickerOpen(false);
-  };
+    setDatePickerOpen(false)
+  }
   const handleInputClick = () => {
-    setDatePickerOpen(true);
-  };
+    setDatePickerOpen(true)
+  }
   return (
     <Container>
       <KycInputLabel label={`${label}`} error={error} tooltipText={tooltipText} />
-      {isDisabled && value ? (
+      {(isDisabled && value) || isDelayed ? (
         <Row>
           {dayjs(value).format(format || 'MMM DD, YYYY')} <CalendarIcon style={{ marginLeft: 9 }} />
         </Row>
       ) : (
         <MobileDatePicker
-        open={isDatePickerOpen}
-        onClose={handleCloseDatePicker}
-          value={value || null}
+          open={isDatePickerOpen}
+          onClose={handleCloseDatePicker}
+          value={value}
           onChange={onChange}
           openTo={openTo ?? 'year'}
           views={['year', 'month', 'date']}
@@ -74,9 +75,9 @@ export const DateInput = ({
                 placeholder={placeholder}
                 disabled={isDisabled}
                 error={error}
-                onClick={handleInputClick} 
+                onClick={handleInputClick}
               />
-              <StyledCalendarIcon onClick={handleIconClick}  />
+              <StyledCalendarIcon onClick={handleIconClick} />
             </TextFieldContainer>
           )}
           disabled={isDisabled}
@@ -84,11 +85,11 @@ export const DateInput = ({
           {...props}
         />
       )}
-      {/* {error && (
+      {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}
         </TYPE.small>
-      )} */}
+      )}
     </Container>
   )
 }
@@ -101,7 +102,7 @@ const StyledCalendarIcon = styled(CalendarIcon)`
   position: absolute;
   right: 26px;
   top: 19px;
-  z-index: 1; 
+  z-index: 1;
   cursor: pointer;
 `
 

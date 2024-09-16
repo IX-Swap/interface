@@ -8,3 +8,4 @@ export const STAKING_CONTRACT_KOVAN =
 export const PINATA_API_KEY = process.env.REACT_APP_PINATA_API_KEY
 export const PINATA_SECRET_API_KEY = process.env.REACT_APP_PINATA_SECRET_API_KEY
 export const PRODUCTION_APP_URL = process.env.REACT_APP_PRODUCTION_APP_URL || 'app.ixswap.io'
+export const BRIDGE_ADMIN_URL = process.env.REACT_APP_BRIDGE_ADMIN_URL || 'https://bridge-admin.ixswap.io'

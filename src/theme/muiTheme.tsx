@@ -1,18 +1,16 @@
 import React from 'react'
 import { createTheme, MuiThemeProvider as ThemeProvider } from '@material-ui/core'
 import { DefaultTheme } from 'styled-components'
-
 import useTheme from 'hooks/useTheme'
-import { useActiveWeb3React } from 'hooks/web3'
-import { metaMask } from 'connectors/metaMask'
-import { walletConnectV2 } from 'connectors/walletConnectV2'
+import { background, marginBottom, paddingTop } from 'styled-system'
 
-export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, config }: DefaultTheme) =>
+export const muiTheme = ({ bg1, bg2, bg0, bg26, text1, text7, text9, config, bg23, bg24, bg25 }: DefaultTheme) =>
   createTheme({
     overrides: {
       MuiPickersBasePicker: {
         pickerView: {
-          backgroundColor: bg1,
+          backgroundColor: bg0,
+          borderBottom: `1px solid ${bg24}`,
           borderRadius: '6px',
           '&:focus-visible': {
             outline: 'none',
@@ -30,7 +28,7 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
             border: 'none !important',
           },
           outline: 'none',
-          backgroundColor: bg1,
+          backgroundColor: bg23,
           borderRadius: '6px',
           color: '#555566',
           '&:focus-visible': {
@@ -63,9 +61,6 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
         root: {
           backgroundColor: bg1,
           color: '#8D8DA3',
-          // '&:hover .MuiSvgIcon-root': {
-          //   color: 'red',
-          // },
         },
       },
       MuiTouchRipple: {
@@ -92,7 +87,7 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
           color: text1,
         },
         subtitle1: {
-          // color: `${text7} !important`,
+          color: `${text1} !important`,
           fontSize: '18px',
           lineHeight: '150%',
         },
@@ -115,6 +110,12 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
         },
       },
       MuiPickersToolbarText: {
+        root: {
+          color: text1,
+          '&.Mui-selected': {
+            color: text1,
+          },
+        },
         toolbarTxt: {
           color: text1,
         },
@@ -162,36 +163,45 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
         },
       },
       MuiPickersCalendarHeader: {
-        switchHeader: {
-          margin: '12px 24px 20px 24px !important',
-        },
-        dayLabel: {
-          color: text9,
-        },
-        iconButton: {
-          backgroundColor: 'black',
-          padding: 0,
-          color: text1,
-          width: 32,
-          height: 32,
-          '& svg': {
-            '& path:first-child': {
-              ...(config.elements?.main && {
-                fill: config.elements?.main,
-              }),
-            },
-            '& path:last-child': {
-              ...(config.background?.secondary && {
-                fill: 'none',
-              }),
-            },
+        root: {
+          background: bg25,
+          marginBottom: '0px',
+          paddingTop: '0px',
+          switchHeader: {
+            margin: '12px 24px 20px 24px !important',
           },
-          '&:hover': {
-            backgroundColor: bg1,
+          dayLabel: {
+            color: text9,
+          },
+          iconButton: {
+            backgroundColor: 'black',
+            padding: 0,
+            color: text1,
+            width: 32,
+            height: 32,
+            '& svg': {
+              '& path:first-child': {
+                ...(config.elements?.main && {
+                  fill: config.elements?.main,
+                }),
+              },
+              '& path:last-child': {
+                ...(config.background?.secondary && {
+                  fill: 'none',
+                }),
+              },
+            },
+            '&:hover': {
+              backgroundColor: bg1,
+            },
           },
         },
       },
+
       MuiPickersCalendar: {
+        daysHeader: {
+          background: bg25,
+        },
         transitionContainer: {
           margin: '12px 0px',
         },
@@ -199,6 +209,11 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
           color: text1,
           fontWeight: 400,
           fontSize: '14px',
+        },
+      },
+      MuiPickersSlideTransition: {
+        root: {
+          background: bg25,
         },
       },
       MuiPickersArrowSwitcher: {
@@ -211,12 +226,12 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
       },
       MuiPickersDay: {
         root: {
-          backgroundColor: bg1,
           color: text1,
           fontWeight: 400,
           fontSize: '16px',
           '&$selected': {
-            backgroundColor: bg1,
+            backgroundColor: bg26,
+            borderRadius: '6px',
             '&:hover': {
               backgroundColor: bg1,
             },
@@ -228,10 +243,11 @@ export const muiTheme = ({ bg1, bg2, bg11, bg18, text1, text7, text8, text9, con
 
           '&:hover': {
             background: bg2,
+            color: text1,
           },
           '&:focus': {
             '&$selected': {
-              backgroundColor: bg2,
+              backgroundColor: bg26,
             },
           },
         },

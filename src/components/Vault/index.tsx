@@ -81,7 +81,11 @@ export const Vault = ({ currency, token }: Props) => {
             />
           )}
           {vaultExists && (
-            <ExistingVault token={token} currency={newToken as any} custodian={accreditationRequest?.custodian} />
+            <ExistingVault
+              token={token}
+              currency={newToken as any}
+              custodian={accreditationRequest?.custodian}
+            />
           )}
         </>
       ) : (

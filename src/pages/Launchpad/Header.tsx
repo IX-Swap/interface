@@ -43,7 +43,7 @@ export const Header = () => {
           )}
           <HeaderLinks>
             <HeaderLink to={routes.swap}>Swap/Trade</HeaderLink>
-            <HeaderLink to={routes.securityTokens()}>Security Tokens</HeaderLink>
+            <HeaderLink to={routes.securityTokens()}>RWAs</HeaderLink>
             <HeaderLink to={routes.pool}>Liquidity Pools</HeaderLink>
             <HeaderLink to={routes.launchpad}>IXS Launchpad</HeaderLink>
             <HeaderLink to={'#'}>Farming</HeaderLink>

@@ -145,8 +145,8 @@ export const Footer: React.FC<Props> = (props) => {
 
           <div>
             <header>Company</header>
-
-            <DiscreteExternalLink href="https://ixswap.io/roadmap/">Roadmap</DiscreteExternalLink>
+            {/* hide for now */}
+            {/* <DiscreteExternalLink href="https://ixswap.io/roadmap/">Roadmap</DiscreteExternalLink> */}
             <DiscreteExternalLink href="https://ixswap.io/ecosystem/">Ecosystem</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/documentation/">Documents</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/team/">Team</DiscreteExternalLink>
@@ -174,7 +174,7 @@ export const Footer: React.FC<Props> = (props) => {
 
 const FooterContainer = styled.div`
   background-color: ${(props) => props.theme.bg0};
-  margin: 3rem auto;
+  margin: 5rem auto auto 0rem;
   width: 100%;
   padding: 120px;
   // max-width: ${(props) => props.theme.launchpad.content.maxWidth};

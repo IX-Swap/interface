@@ -17,7 +17,7 @@ import {
   useSaveManagerClaimBack,
 } from 'state/payout/hooks'
 
-import { Container, StyledButtonIXSGradient } from './styleds'
+import { Container, StyledButton } from './styleds'
 import { formatDate } from '../utils'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { usePayoutContract } from 'hooks/useContract'
@@ -27,6 +27,7 @@ import { UserClaim } from './dto'
 import { useActiveWeb3React } from 'hooks/web3'
 import { FetchingBalance } from './FetchingBalance'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+import { useUserState } from 'state/user/hooks'
 
 interface Props {
   payout: PayoutEvent
@@ -40,13 +41,26 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   const getRemainingTokens = useGetRemainingTokens()
 
   const { account } = useActiveWeb3React()
-  const { status, isPaid, secToken, tokenAmount, recordDate, id, startDate, contractPayoutId, paidTxHash } = payout
+  const {
+    status,
+    isPaid,
+    secToken,
+    tokenAmount,
+    recordDate,
+    id,
+    startDate,
+    contractPayoutId,
+    paidTxHash,
+    payoutContractAddress,
+    userId
+  } = payout
 
   const [totalClaims, handleTotalClaims] = useState(0)
   const [remaining, setRemaining] = useState<string | undefined>(undefined)
   const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
   const [isLoading, handleIsLoading] = useState(false)
-
+  const { me } = useUserState()
+  const isMyPayout = userId === me.id
   const getUserClaim = useGetUserClaim()
   const saveManagerClaimBack = useSaveManagerClaimBack()
 
@@ -69,24 +83,24 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
 
   const balance = useCurrencyBalance(account ?? undefined, ({ ...secToken, isToken: true } as any) ?? undefined)
   const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
-  const payoutContract = usePayoutContract()
+  const payoutContract = usePayoutContract(payoutContractAddress)
 
   const addTransaction = useTransactionAdder()
 
   const claimBack = useCallback(async () => {
     try {
+      if (!secToken) throw Error('secToken is not defined')
+
       handleIsLoading(true)
-      const nonce = await payoutContract?.nonce(contractPayoutId, account)
 
       const authorization = await getClaimBackAuthorization({
         id,
         token: payoutToken.address,
         deadline: dayjs().add(1, 'hour').toISOString(),
-        nonce,
       })
 
-      const tx = await payoutContract?.claim(authorization)
-
+      const tx = await payoutContract?.claimBack(authorization)
+      await tx.wait()
       handleIsLoading(false)
 
       await saveManagerClaimBack({ payoutEventId: id, secToken: secToken.id, txHash: tx.hash })
@@ -126,15 +140,21 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
       case PAYOUT_STATUS.SCHEDULED:
         return !isPaid && !paidTxHash ? (
           <>
-            <Box marginBottom="4px"><Trans>{`The event is not paid yet.`}</Trans></Box>
-            <Box marginBottom="24px"><Trans>{`Please proceed with the payment before the payment start date.`}</Trans></Box>
-            <StyledButtonIXSGradient onClick={goToEdit}><Trans>{`Pay for This Event`}</Trans></StyledButtonIXSGradient>
+            <Box marginBottom="4px">
+              <Trans>{`The event is not paid yet.`}</Trans>
+            </Box>
+            <Box marginBottom="24px">
+              <Trans>{`Please proceed with the payment before the payment start date.`}</Trans>
+            </Box>
+            <StyledButton onClick={goToEdit}>
+              <Trans>{`Pay for This Event`}</Trans>
+            </StyledButton>
           </>
         ) : !isPaid && paidTxHash ? (
           <>
             <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
               <Box marginRight="4px" fontSize="20px" lineHeight="30px">
-              <Trans>{`Paid was successful. Waiting for system confirmation.`}</Trans>
+                <Trans>{`Paid was successful. Waiting for system confirmation.`}</Trans>
               </Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
               <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
@@ -145,14 +165,18 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
         ) : (
           <>
             <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
-              <Box marginRight="4px" fontSize="20px" lineHeight="30px"><Trans>{`You have allocated for this event`}</Trans></Box>
+              <Box marginRight="4px" fontSize="20px" lineHeight="30px">
+                <Trans>{`You have allocated for this event`}</Trans>
+              </Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
               <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
                 payoutToken?.symbol ?? 'Payout Token'
               } ${tokenAmount}`}</Box>
             </Flex>
             <Flex>
-              <Box marginRight="4px"><Trans>{`Users will be able to start claiming on`}</Trans></Box>
+              <Box marginRight="4px">
+                <Trans>{`Users will be able to start claiming on`}</Trans>
+              </Box>
               <Box fontWeight={600}>{formatDate(dayjs(startDate))}</Box>
             </Flex>
           </>
@@ -161,8 +185,12 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
         if (payout?.isReturned) {
           return (
             <Column style={{ gap: '4px', alignItems: 'center' }}>
-              <Box><Trans>{`The event has been ended.`}</Trans></Box>
-              <Box><Trans>{`All tokens have been claimed back`}</Trans></Box>
+              <Box>
+                <Trans>{`The event has been ended.`}</Trans>
+              </Box>
+              <Box>
+                <Trans>{`All tokens have been claimed back`}</Trans>
+              </Box>
             </Column>
           )
         }
@@ -170,45 +198,65 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
         return (
           <>
             <Column style={{ gap: '4px', alignItems: 'center', marginBottom: 24 }}>
-              <Box><Trans>{`The event has been ended.`}</Trans></Box>
-              <Flex alignItems="center">
-                <Box marginRight="4px"><Trans>{`You can Claim Back`}</Trans></Box>
-                <CurrencyLogo currency={payoutToken} size="20px" />
-                <Box marginX="4px" fontWeight={600}>
-                  {payoutToken?.symbol ?? 'Payout Token'}
-                </Box>
-                <Trans>{`tokens.`}</Trans>
-              </Flex>
-              <Flex alignItems="center">
-                <CurrencyLogo currency={payoutToken} size="24px" />
-                <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>
-                  {`${payoutToken?.symbol ?? 'Payout Token'} ${remaining}`}
-                </Box>
-              </Flex>
+              <Box>
+                <Trans>{`The event has been ended.`}</Trans>
+              </Box>
+              {isMyPayout && isPaid && (
+                <>
+                  <Flex alignItems="center">
+                    <Box marginRight="4px">
+                      <Trans>{`You can Claim Back`}</Trans>
+                    </Box>
+                    <CurrencyLogo currency={payoutToken} size="20px" />
+                    <Box marginX="4px" fontWeight={600}>
+                      {payoutToken?.symbol ?? 'Payout Token'}
+                    </Box>
+                    <Trans>{`tokens.`}</Trans>
+                  </Flex>
+                  <Flex alignItems="center">
+                    <CurrencyLogo currency={payoutToken} size="24px" />
+                    <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>
+                      {`${payoutToken?.symbol ?? 'Payout Token'} ${remaining}`}
+                    </Box>
+                  </Flex>
+                </>
+              )}
             </Column>
-            <LoadingIndicator isLoading={isLoading} />
-            {!isLoading && (
-              <StyledButtonIXSGradient onClick={claimBack}>
-                <Box marginX="8px"><Trans>{`Claim Back `}</Trans></Box>
+            <LoadingIndicator noOverlay={true} isLoading={isLoading} />
+            {!isLoading && isMyPayout && isPaid && (
+              <StyledButton onClick={claimBack}>
+                <Box marginX="8px">
+                  <Trans>{`Claim Back `}</Trans>
+                </Box>
                 <CurrencyLogo currency={payoutToken} size="24px" />
                 <Box marginX="2px">{payoutToken?.symbol}</Box>
-              </StyledButtonIXSGradient>
+              </StyledButton>
             )}
           </>
         )
       case PAYOUT_STATUS.DELAYED:
         return (
           <>
-            <Box marginBottom="4px"><Trans>{`The event is not paid yet.`}</Trans></Box>
-            <Box marginBottom="24px"><Trans>{`Please proceed with the payment.`}</Trans></Box>
-            <StyledButtonIXSGradient onClick={goToEdit}><Trans>{`Pay for This Event`}</Trans></StyledButtonIXSGradient>
+            <Box marginBottom="4px">
+              <Trans>{`The event is not paid yet.`}</Trans>
+            </Box>
+            <Box marginBottom="24px">
+              <Trans>{`Please proceed with the payment.`}</Trans>
+            </Box>
+            <StyledButton onClick={goToEdit}>
+              <Trans>{`Pay for This Event`}</Trans>
+            </StyledButton>
           </>
         )
       case PAYOUT_STATUS.DRAFT:
         return (
           <>
-            <Box marginBottom="24px"><Trans>{`This event is not published and is not displayed in Payout Events list.`}</Trans></Box>
-            <StyledButtonIXSGradient onClick={goToEdit}><Trans>{`Publish Event`}</Trans></StyledButtonIXSGradient>
+            <Box marginBottom="24px">
+              <Trans>{`This event is not published and is not displayed in Payout Events list.`}</Trans>
+            </Box>
+            <StyledButton onClick={goToEdit}>
+              <Trans>{`Publish Event`}</Trans>
+            </StyledButton>
           </>
         )
       case PAYOUT_STATUS.ANNOUNCED:

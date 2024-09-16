@@ -1,4 +1,4 @@
-import { FormValues } from "./utils"
+import { FormValues } from './utils'
 
 export const payoutTypes = [
   {
@@ -20,12 +20,6 @@ export const payoutTypes = [
   },
   {
     id: 4,
-    label: 'Airdrop',
-    description:
-      'Airdrop - This payout type is used to distribute a specific number of FREE tokens to eligible token holders as part of a marketing promotion.',
-  },
-  {
-    id: 5,
     label: 'Other',
     description:
       'Other - Any type of pay-out that doesn’t fall under any of the options can be tagged as “Other”, provided that additional details will be provided about the payout event.',
@@ -46,4 +40,6 @@ export const initialValues: FormValues = {
   secToken: null,
   token: null,
   files: [],
+  blockNumber: 0,
+  includeOriginSupply: false,
 }

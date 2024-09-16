@@ -626,6 +626,7 @@ export const useRole = () => {
       isTokenManager: role === ROLES.TOKEN_MANAGER,
       isOfferManager: role === ROLES.OFFER_MANAGER,
       isUser: role === ROLES.USER,
+      isMasterTenant: role === ROLES.MASTER_TENANT,
     }),
     [role]
   )

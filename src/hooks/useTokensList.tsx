@@ -12,6 +12,7 @@ export interface Option {
   icon?: JSX.Element
   address?: string
   isNative?: boolean
+  network?: string
 }
 
 export const useTokensList = () => {

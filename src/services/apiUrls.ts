@@ -42,16 +42,19 @@ export const auth = {
 export const payout = {
   createDraft: `payout/draft`,
   publish: `payout/publish`,
+  airdrop: `payout/airdrop`,
   validateEvent: (id: number) => `payout/validate/${id}`,
   payoutsList: 'payout/list',
   payoutHistory: 'payout/history',
   myPayoutsList: 'payout/list/my',
   payoutById: (id: number) => `/payout/${id}`,
   claims: (payoutId: number) => `payout/claims?payoutId=${payoutId}`,
-  totalAmount: (tokenId: number, recordDate: any) => `payout/total-amount/${tokenId}?recordDate=${recordDate}`,
+  totalAmount: (tokenId: number, blockNumber: number, includeOriginSupply: boolean) =>
+    `payout/total-amount/${tokenId}?blockNumber=${blockNumber}&includeOriginSupply=${includeOriginSupply}`,
   deleteDraft: (id: number) => `payout/draft/${id}`,
   payoutAuthorization: '/payout/init',
   paidPayout: (id: number) => `/payout/pay/${id}`,
+  getMyClaimableAmount: (id: number) => `/payout/claimable-amount/${id}`,
   getMyPayoutAmount: (id: number) => `/payout/my-amount/${id}`,
   claimAuthorization: (id: number) => `/payout/init/claim/${id}`,
   claimBackAuthorization: (id: number) => `/payout/init/claim-back/${id}`,
@@ -127,7 +130,9 @@ export const users = {
 }
 
 export const whitelabel = {
+  create: '/white-label',
   config: '/white-label/config',
+  all: '/white-label/all',
 }
 
 export const pool = {
@@ -199,4 +204,8 @@ const queryParams: { [key: string]: string } = {
   tokenId: 'tokenId',
   event: 'eventType',
   request: 'requestType',
+}
+
+export const sharedResourceLinks = {
+  airdropCSVTemplateLink: 'https://drive.google.com/file/d/1dbmONi-QuKHYov9aUUXJ3AkvRsIW8dui/view',
 }

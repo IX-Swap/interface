@@ -22,3 +22,11 @@ export const StyledPdfImage = styled(PdfImage)`
       }
     `}
 `
+
+export const PayoutPreviewImageWrapper = styled(Flex)<{ withBackground: boolean }>`
+  padding: 0px 12px;
+  border-radius: 6px;
+  border: 1px solid #e6e6ff;
+  background-color: #f7f7fa;
+  position: relative;
+`

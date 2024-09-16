@@ -7,13 +7,13 @@ export const Info = () => {
     <Container>
       <div>
         <Trans>
-          To trade/swap Security Tokens make sure that you have passed issuer accreditation. To do this, click on the
+          To trade/swap RWAs make sure that you have passed issuer accreditation. To do this, click on the
           desired Security Token below.
         </Trans>
       </div>
       <div>
         <Trans>
-          You need to complete this process for each Security Tokens you would like to trade. The Accreditation is being
+          You need to complete this process for each RWAs you would like to trade. The Accreditation is being
           verified by the Custodian and can take up to 1-3 days.
         </Trans>
       </div>

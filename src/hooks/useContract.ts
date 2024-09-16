@@ -35,6 +35,7 @@ import NFT_CREATE_ABI from 'abis/nft-contract-create.json'
 import LAUNCHPAD_INVESTMENT_ABI from 'abis/launchpad-investment.json'
 import LBP_ABI from 'abis/LiquiidtyBoostrapPool.json'
 import LBP_FACTORY_ABI from 'abis/LiquidityBoostrapPoolFactory.json'
+import PAYOUT_AIRDROP_ABI from 'abis/payout-airdrop.json'
 import {
   ARGENT_WALLET_DETECTOR_ADDRESS,
   ENS_REGISTRAR_ADDRESSES,
@@ -47,6 +48,7 @@ import {
   PAYOUT_ADDRESS,
   SWAP_ROUTER_ADDRESS,
   IXSALE_ADDRESS,
+  PAYOUT_AIRDROP_PROXY_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
@@ -187,8 +189,12 @@ export function useIXSFaucetContract(tokenAddress: string) {
   return useContract(tokenAddress, IXS_FAUCET_ABI, true)
 }
 
-export function usePayoutContract(): Contract | null {
-  return useContract(PAYOUT_ADDRESS, PAYOUT_ABI, true)
+export function usePayoutContract(payoutContractAddress?: string): Contract | null {
+  return useContract(payoutContractAddress || PAYOUT_ADDRESS, PAYOUT_ABI, true)
+}
+
+export function usePayoutAirdropContract(payoutAirdropContractAddress?: string): Contract | null {
+  return useContract(payoutAirdropContractAddress || PAYOUT_AIRDROP_PROXY_ADDRESS, PAYOUT_AIRDROP_ABI, true)
 }
 
 export function useLaunchpadInvestmentContract(contractAddress: string) {

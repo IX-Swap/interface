@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Logo = styled.img<{ width: string; height: string }>`
   width: ${({ width }) => width};
-  height: ${({ width }) => width};
+  height: ${({ height }) => height};
   border-radius: 50%;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
@@ -13,10 +13,12 @@ const Logo = styled.img<{ width: string; height: string }>`
 `
 
 interface TokenLogoProps {
-  logo: {
-    storageUrl: string
-    uuid: string
-  }
+  logo:
+    | {
+        storageUrl?: string
+        uuid?: string
+      }
+    | string
   width?: string
   height?: string
 }
@@ -24,6 +26,13 @@ interface TokenLogoProps {
 export const TokenLogo: FC<TokenLogoProps> = ({ logo, width = '72px', height = '72px' }: TokenLogoProps) => {
   if (!logo) return null
 
-  const { storageUrl, uuid } = logo
-  return <Logo width={width} height={height} src={`${storageUrl}${uuid}`} />
+  let src: string = ''
+
+  if (typeof logo === 'string') {
+    src = logo // Handle case where logo is a URL string
+  } else if (logo.storageUrl && logo.uuid) {
+    src = `${logo.storageUrl}${logo.uuid}` // Handle case where logo is an object with storageUrl and uuid
+  }
+
+  return <Logo width={width} height={height} src={src} />
 }

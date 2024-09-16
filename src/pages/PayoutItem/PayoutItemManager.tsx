@@ -19,6 +19,9 @@ import { PayoutHistory } from './History'
 import { useUserState } from 'state/user/hooks'
 import { ROLES } from 'constants/roles'
 import { routes } from 'utils/routes'
+import { PAYOUT_TYPE } from 'components/TmPayoutEvents/constants'
+import { ReactComponent as ArrowBack } from 'assets/images/newBack.svg'
+import styled from 'styled-components'
 
 export default function PayoutItemForManager({
   match: {
@@ -30,7 +33,6 @@ export default function PayoutItemForManager({
   const [page, setPage] = useState(1)
   const [claimHistory, setClaimHistory] = useState([])
   const [isClaimHistoryLoading, setIsClaimHistoryLoading] = useState(false)
-  const [isMyPayout, setIsMyPayout] = useState<boolean | undefined>(undefined)
   const { loadingRequest } = usePayoutState()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
@@ -39,38 +41,37 @@ export default function PayoutItemForManager({
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
-  
-  useEffect(() => {
-    if (me && me.role !== ROLES.TOKEN_MANAGER) {
-      history.push(routes.payoutItem(+payoutId))
-    }
-  }, [me, history])
+  const isMyPayout = payout?.userId === me.id
 
-  const getPayoutItem = useCallback(
-    async () => {
-      const data = await getPayoutItemById(+payoutId)
-      if (data?.id) {
-        setPayout(data)
-      }
-    },
-    [payoutId]
-  )
+  const isAdmin = me.role === ROLES.ADMIN
+  const isValidRole = me.role === ROLES.TOKEN_MANAGER || isAdmin
+  useEffect(() => {
+    if (me && isValidRole) {
+      return
+    }
+    history.push('/kyc')
+  }, [me, history, isValidRole])
+
+  const getPayoutItem = useCallback(async () => {
+    const data = await getPayoutItemById(+payoutId)
+    if (data?.id) {
+      setPayout(data)
+    }
+  }, [payoutId])
 
   useEffect(() => {
     getPayoutItem()
   }, [payoutId, account])
 
   useEffect(() => {
-    if (payout) {
-      setIsMyPayout(payout.userId === me.id)
+    if (isAdmin) {
+      return
     }
-  }, [payout, me])
-
-  useEffect(() => {
-    if (isMyPayout === false) {
+    // The payout & user should be initiated before checking the ownership
+    if (payout?.userId && me.id && !isMyPayout) {
       history.replace(routes.tokenManager('payout-events', null))
     }
-  }, [isMyPayout])
+  }, [isMyPayout, payout?.userId, me.id, isAdmin])
 
   useEffect(() => {
     setIsClaimHistoryLoading(true)
@@ -86,26 +87,63 @@ export default function PayoutItemForManager({
     getPayoutClaims()
   }, [payoutId, page])
 
+  const handleBackClick = () => {
+    history.push(routes.payoutEvent)
+  }
+
   return (
     <Loadable loading={!isLoggedIn}>
-      <LoadingIndicator isLoading={loadingRequest} />
+      <LoadingIndicator noOverlay={true} isLoading={loadingRequest} />
+
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
-          <Column style={{ gap: '40px' }}>
-            <PayoutHeader payout={payout} isMyPayout />
-            <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
-            {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
-              <PayoutHistory
-                isLoading={isClaimHistoryLoading}
-                page={page}
-                setPage={setPage}
-                claimHistory={claimHistory}
-              />
-            )}
-          </Column>
+          <div style={{ position: 'relative' }}>
+            <BackButton onClick={handleBackClick}>
+              <StyledArrowBack />
+              <BackText>Back</BackText>
+            </BackButton>
+            <Column style={{ gap: '40px' }}>
+              <PayoutHeader payout={payout} isMyPayout />
+              {payout.type !== PAYOUT_TYPE.AIRDROPS && (
+                <>
+                  <PayoutTimeline payout={payout} />
+                  <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
+                </>
+              )}
+              {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
+                <PayoutHistory
+                  isLoading={isClaimHistoryLoading}
+                  page={page}
+                  setPage={setPage}
+                  claimHistory={claimHistory}
+                />
+              )}
+            </Column>
+          </div>
         )}
       </StyledBodyWrapper>
     </Loadable>
   )
 }
+
+export const StyledArrowBack = styled(ArrowBack)`
+  cursor: pointer;
+  path {
+    fill: ${({ theme: { text1 } }) => text1};
+  }
+`
+
+export const BackButton = styled.div`
+  position: absolute;
+  top: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`
+
+export const BackText = styled.span`
+  color: #6666ff;
+  font-weight: 600;
+  font-size: 14px;
+  margin-left: 8px;
+`

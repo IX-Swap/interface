@@ -295,16 +295,16 @@ export const corporateErrorsSchema = yup.object().shape({
   corporateName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   typeOfLegalEntity: yup.object().nullable().required('Required'),
   countryOfIncorporation: yup.object().nullable().required('Required'),
-  businessActivity: yup.string().required('Required'),
+  businessActivity: yup.string().nullable().required('Required'),
 
-  registrationNumber: yup.string().required('Required'),
+  registrationNumber: yup.string().nullable().required('Required'),
   inFatfJurisdiction: yup.string().required('Required'),
 
   personnelName: yup.string().required('Required'),
-  designation: yup.string().required('Required'),
+  designation: yup.string().nullable().required('Required'),
   email: yup.string().email('Invalid email').required('Required'),
   phoneNumber: yup
-    .string()
+    .string().nullable()
     .min(10, 'Must be valid phone number')
     .max(15, 'Must be valid phone number')
     .required('Required'),
@@ -327,26 +327,30 @@ export const corporateErrorsSchema = yup.object().shape({
   // accredited: yup.number().min(0).max(1),
   isUSTaxPayer: yup.number().min(0).max(1),
   usTin: yup
-    .string()
-    .nullable()
-    .when('isUSTaxPayer', {
-      is: 1,
-      then: yup.string().required('Required'),
-      otherwise: yup.string().nullable(),
-    }),
-  taxCountry: yup
-    .object()
-    .nullable()
-    .when('taxIdAvailable', {
-      is: true,
-      then: yup.object().required('Required'),
-      otherwise: yup.object().nullable(),
-    }),
-  taxNumber: yup.string().when('taxIdAvailable', {
+  .string()
+  .nullable()
+  .when('isUSTaxPayer', {
+    is: 1,
+    then: yup.string().required('Required'),
+    otherwise: yup.string().nullable(),
+  }),
+taxCountry: yup
+  .object()
+  .nullable()
+  .when('taxIdAvailable', {
+    is: true,
+    then: yup.object().required('Required'),
+    otherwise: yup.object().nullable(),
+  }),
+taxNumber: yup
+  .string()
+  .nullable()
+  .when('taxIdAvailable', {
     is: true,
     then: yup.string().required('Required'),
-    otherwise: yup.string(),
+    otherwise: yup.string().nullable(),
   }),
+
   beneficialOwners: yup
     .array()
     .of(
