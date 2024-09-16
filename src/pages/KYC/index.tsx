@@ -12,7 +12,6 @@ import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Column from 'components/Column'
 import { NotAvailablePage } from 'components/NotAvailablePage'
-import { usePendingSignState } from 'state/application/hooks'
 import { useKYCState } from 'state/kyc/hooks'
 import { ReactComponent as IndividualKYC } from 'assets/images/newIndividual.svg'
 import { ReactComponent as CorporateKYC } from 'assets/images/newCorporate.svg'
@@ -91,8 +90,6 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 
 const KYC = () => {
   const { account } = useWeb3React()
-  const [loading, setLoading] = useState(false)
-  const pendingSign = usePendingSignState()
   const [cookies] = useCookies(['annoucementsSeen'])
   const { config } = useWhitelabelState()
   const { kyc, loadingRequest } = useKYCState()
@@ -120,13 +117,7 @@ const KYC = () => {
 
   useEffect(() => {
     fetchMe()
-    // setReferralCode(code)
-    if (pendingSign) {
-      setLoading(true)
-    } else {
-      setLoading(false)
-    }
-  }, [pendingSign, status, description, kyc])
+  }, [status, description, kyc])
 
   const openModal = (kycType: string) => {
     console.log('Opening modal for', kycType)
@@ -325,7 +316,7 @@ const KYC = () => {
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
       <EmailVerification {...modalProps} closeModal={closeModal} />
       <StatusCard>
-        {loadingRequest || loading ? (
+        {loadingRequest ? (
           <RowCenter>
             <LoaderThin size={96} />
           </RowCenter>
