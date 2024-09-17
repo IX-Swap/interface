@@ -27,6 +27,7 @@ import { useLocation } from 'react-router-dom'
 
 const headerCells = [
   `Recipient's wallet`,
+  `Event name`,
   `Payout type`,
   `SEC token`,
   `Date/Time of claim`,
@@ -101,7 +102,7 @@ interface IRow {
 const Row = ({ item }: IRow) => {
   const {
     user: { ethAddress },
-    payoutEvent: { payoutToken, secToken, type },
+    payoutEvent: { title, payoutToken, secToken, type },
     createdAt,
     sum,
     txHash,
@@ -118,6 +119,8 @@ const Row = ({ item }: IRow) => {
       <TYPE.main1 color={'#B8B8CC'}>
         <CopyAddress address={ethAddress} />
       </TYPE.main1>
+
+      <TYPE.main1 style={{ marginRight: 20 }}>{title}</TYPE.main1>
 
       <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
       <TokenContainer>
