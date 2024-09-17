@@ -126,13 +126,9 @@ export const IssuancesFull = () => {
     refreshList()
   }
 
-  const getManageUrl = useCallback(
-    (issuance: Issuance) => {
-      if (!isAdmin) return ''
-      return getIssuanceManageUrl(issuance)
-    },
-    [isAdmin]
-  )
+  const getManageUrl = useCallback((issuance: Issuance) => {
+    return getIssuanceManageUrl(issuance)
+  }, [])
 
   const onSearch = useCallback(
     (search: string) => {
@@ -203,7 +199,7 @@ export const IssuancesFull = () => {
                     View Application <EyeIcon />
                   </OutlineButton>
 
-                  {isAdmin && !!issuance.isMine && (
+                  {(isMasterTenant || isAdmin) && !!issuance.isMine && (
                     <OutlineButton
                       color={theme.launchpad.colors.primary}
                       style={{ fontWeight: '600' }}
