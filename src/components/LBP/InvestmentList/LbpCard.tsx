@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import { text1, text2, text4, text5, text58, text9 } from 'components/LaunchpadMisc/typography'
+import Portal from '@reach/portal'
+
+import { text1, text4, text58 } from 'components/LaunchpadMisc/typography'
 import { LbpStatus } from '../types'
 import { LBP_STAGE_LABELS } from 'state/lbp/constants'
 import { LbpStatusBadge } from './LbpStatusBadge'
 import { LbpSaleStatusInfo } from './LbpSaleStatusInfo'
-
 import { useKyc } from 'state/user/hooks'
-
-import Portal from '@reach/portal'
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { MEDIA_WIDTHS } from 'theme'
 import { NETWORK_LOGOS } from 'constants/chains'
 
@@ -28,10 +27,9 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   const theme = useTheme()
   const { isChangeRequested, isPending, isDraft, isRejected, isNotSubmitted } = useKyc()
   const { account } = useWeb3React()
-  const [showDetails, setShowDetails] = React.useState(false)
+  const [showDetails] = React.useState(false)
   const [color, setColor] = React.useState('')
   const [showKYCModal, setShowKYCModal] = React.useState(false)
-  const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
 
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
   const network = lbp?.network ?? ''
@@ -220,28 +218,6 @@ const LbpCardDescription = styled.div`
   -webkit-box-orient: vertical;
 `
 
-const LbpCardDetailsEntry = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1.5rem;
-`
-const LbpCardDetailsSeparator = styled.hr`
-  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
-  opacity: 0.8;
-  margin: 0;
-`
-
-const LbpCardDetailsEntryLabel = styled.div`
-  ${text5}
-  color: ${(props) => props.theme.launchpad.colors.text.body};
-`
-
-const LbpCardDetailsEntryValue = styled.div`
-  ${text2}
-  color: ${(props) => props.theme.launchpad.colors.text.title};
-`
 
 const InvestButton = styled.button`
   display: flex;

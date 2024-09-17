@@ -5,7 +5,7 @@ import { Flex } from 'rebass'
 import { ReactComponent as OpenLink } from '../../assets/images/open-link.svg'
 import { ReactComponent as Disconnect } from '../../assets/images/disconnect.svg'
 import Copy from './Copy'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { shortAddress } from 'utils'
 import { StatusIcon } from 'components/Web3Status'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
@@ -16,7 +16,7 @@ interface WalletInfoProps {
 }
 
 const WalletInfo: React.FC<WalletInfoProps> = ({ ENSName = '', disconnectWallet }) => {
-  const { account, connector, chainId } = useWeb3React()
+  const { account, chainId } = useWeb3React()
   const explorerLink = chainId ? getExplorerLink(chainId, account || '', ExplorerDataType.ADDRESS) : ''
 
   return (
@@ -30,7 +30,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ ENSName = '', disconnectWallet 
       </Flex>
       <BoxContainer>
         <Flex alignItems="center" style={{ gap: 8 }}>
-          <StatusIcon connector={connector} />
+          <StatusIcon />
           <Address>{account ? shortAddress(account) : ENSName}</Address>
         </Flex>
 

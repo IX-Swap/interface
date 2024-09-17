@@ -4,7 +4,6 @@ import { Trans } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import { utils } from 'ethers'
-import { useWeb3React } from '@web3-react/core'
 import PAYOUT_ABI from 'abis/payout.json'
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
@@ -29,6 +28,7 @@ import { transformPayoutDraftDTO } from './utils'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Line } from 'components/Line'
 import { useUserState } from 'state/user/hooks'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 interface Props {
   close: () => void

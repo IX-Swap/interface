@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Flex } from 'rebass'
-import { useWeb3React } from '@web3-react/core'
 
 import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { AppDispatch } from 'state'
@@ -21,6 +20,7 @@ import { DepositTransaction } from './DepositTransaction'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { DepositStatus } from './enum'
 import { DepositPopup } from './DepositPopup'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 interface Props {
   currency?: SecCurrency

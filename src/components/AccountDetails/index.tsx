@@ -1,48 +1,27 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Trans } from '@lingui/macro'
-import { useDispatch } from 'react-redux'
-import { useWeb3React } from '@web3-react/core'
 
-import { AppDispatch } from '../../state'
-import { shortenAddress } from '../../utils'
-import {
-  AccountControl,
-  AccountGroupingRow,
-  AccountSection,
-  InfoCard,
-  UpperSection,
-  WalletAction,
-  YourAccount,
-} from './styleds'
+import { AccountControl, AccountSection, InfoCard, UpperSection, YourAccount } from './styleds'
 import { Line } from 'components/Line'
 import { useGetMe } from 'state/user/hooks'
 import { useKYCState } from 'state/kyc/hooks'
-
-import { tryDeactivateConnector } from 'connectors'
-import { setWalletState } from 'state/wallet'
-import { clearUserData } from 'state/user/actions'
-import { clearEventLog } from 'state/eventLog/actions'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import ReferFriend from './ReferFriend'
 import KycStatus from './KycStatus'
 import Avatar from './Avatar'
 import WalletInfo from './WalletInfo'
+import { useLogout } from 'state/auth/hooks'
 
 interface AccountDetailsProps {
   toggleWalletModal: () => void
-  pendingTransactions: string[]
-  confirmedTransactions: string[]
   ENSName?: string
-  openOptions: () => void
 }
 
 export default function AccountDetails({ ENSName, toggleWalletModal }: AccountDetailsProps) {
+  const { disconnectWallet } = useLogout()
   const { config } = useWhitelabelState()
-  const { connector } = useWeb3React()
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const getMe = useGetMe()
 
-  const dispatch = useDispatch<AppDispatch>()
   const { kyc } = useKYCState()
 
   const supportEmail = config?.supportEmail || 'c@ixswap.io'
@@ -56,11 +35,9 @@ export default function AccountDetails({ ENSName, toggleWalletModal }: AccountDe
     fetchMe()
   }, [])
 
-  const disconnectWallet = async () => {
-    await tryDeactivateConnector(connector)
-    dispatch(setWalletState({ isConnected: false, walletName: '' }))
-    dispatch(clearUserData())
-    dispatch(clearEventLog())
+  const handleDisconnect = async () => {
+    disconnectWallet();
+    toggleWalletModal();
   }
 
   return (
@@ -72,7 +49,7 @@ export default function AccountDetails({ ENSName, toggleWalletModal }: AccountDe
           <YourAccount>
             <InfoCard>
               <Line style={{ marginTop: '24px' }} />
-              <WalletInfo ENSName={ENSName} disconnectWallet={disconnectWallet} />
+              <WalletInfo ENSName={ENSName} disconnectWallet={handleDisconnect} />
 
               <Line style={{ marginTop: '10px' }} />
 

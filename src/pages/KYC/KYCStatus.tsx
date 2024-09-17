@@ -1,21 +1,17 @@
 import React, { FC, useMemo } from 'react'
 import { Flex } from 'rebass'
-
-import { useWeb3React } from '@web3-react/core'
-import { shortAddress } from 'utils'
-import { TYPE } from 'theme'
-
-import { KYCStatuses } from './enum'
-import { KYCStatusCard, getStatusInfo } from './styleds'
-import { metaMask } from '../../connectors/metaMask'
-import { walletConnectV2 } from '../../connectors/walletConnectV2'
-import Identicon from 'components/Identicon'
-import styled, { css } from 'styled-components'
-import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
-import { isTransactionRecent, useAllTransactions } from 'state/transactions/hooks'
-import { TransactionDetails } from 'state/transactions/reducer'
 import { Trans } from '@lingui/macro'
 
+import { useWeb3React } from 'hooks/useWeb3React'
+import { shortAddress } from 'utils'
+import { TYPE } from 'theme'
+import { KYCStatuses } from './enum'
+import { KYCStatusCard, getStatusInfo } from './styleds'
+import styled from 'styled-components'
+import { isTransactionRecent, useAllTransactions } from 'state/transactions/hooks'
+import { TransactionDetails } from 'state/transactions/reducer'
+import { useAccount } from 'hooks/useAccount'
+import { CONNECTOR_ICON_OVERRIDE_MAP } from 'components/Web3Provider/constants'
 interface Props {
   status: KYCStatuses
 }
@@ -40,23 +36,24 @@ function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
 }
 
 // eslint-disable-next-line react/prop-types
-function StatusIcon({ connector }: { connector: any }) {
-  if (connector === metaMask) {
-    return <Identicon />
-  } else if (connector === walletConnectV2) {
-    return (
-      <IconWrapper size={16}>
-        <img src={WalletConnectIcon} alt={'WalletConnect'} />
-      </IconWrapper>
-    )
-  }
+function StatusIcon() {
+  const { connector } = useAccount()
+  const icon = connector ? CONNECTOR_ICON_OVERRIDE_MAP[connector?.id] ?? connector?.icon : undefined
 
-  return null
+  return (
+    <>
+      {icon ? (
+        <IconWrapper size={20}>
+          <img src={icon} alt={'Icon'} style={{ borderRadius: 12 }} />
+        </IconWrapper>
+      ) : null}
+    </>
+  )
 }
 
 export const KYCStatus: FC<Props> = ({ status }: Props) => {
-  const { account, connector } = useWeb3React()
-  const { icon, text, color } = getStatusInfo(status)
+  const { account } = useWeb3React()
+  const { icon, text } = getStatusInfo(status)
   const allTransactions = useAllTransactions()
   const sortedRecentTransactions = useMemo(() => {
     const txs = Object.values(allTransactions)
@@ -68,7 +65,7 @@ export const KYCStatus: FC<Props> = ({ status }: Props) => {
 
   return (
     <KYCStatusCard style={{ borderRadius: '8px' }}>
-      {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
+      {!hasPendingTransactions && <StatusIcon />}
       <TYPE.main1 marginLeft={'10px'} marginRight="16px">
         {shortAddress(account ?? '')}
       </TYPE.main1>

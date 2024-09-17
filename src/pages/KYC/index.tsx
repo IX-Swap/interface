@@ -5,19 +5,16 @@ import { Flex, Text } from 'rebass'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
-import Portal from '@reach/portal'
 import _get from 'lodash/get'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Column from 'components/Column'
 import { NotAvailablePage } from 'components/NotAvailablePage'
-import { usePendingSignState } from 'state/application/hooks'
 import { useKYCState } from 'state/kyc/hooks'
 import { ReactComponent as IndividualKYC } from 'assets/images/newIndividual.svg'
 import { ReactComponent as CorporateKYC } from 'assets/images/newCorporate.svg'
-import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
 import { Content, getStatusDescription, StatusCard, DateInfoContainer } from './styleds'
@@ -29,8 +26,7 @@ import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
-import { detectWrongNetwork } from 'utils'
-import { useWalletState } from 'state/wallet/hooks'
+import { WrongNetworkModal } from 'components/WrongNetworkModal'
 
 interface DescriptionProps {
   description: string | null
@@ -93,10 +89,7 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 const KYC = () => {
-  const { account, chainId } = useWeb3React()
-  const { isConnected } = useWalletState()
-  const [loading, setLoading] = useState(false)
-  const pendingSign = usePendingSignState()
+  const { account } = useWeb3React()
   const [cookies] = useCookies(['annoucementsSeen'])
   const { config } = useWhitelabelState()
   const { kyc, loadingRequest } = useKYCState()
@@ -124,13 +117,7 @@ const KYC = () => {
 
   useEffect(() => {
     fetchMe()
-    // setReferralCode(code)
-    if (pendingSign) {
-      setLoading(true)
-    } else {
-      setLoading(false)
-    }
-  }, [pendingSign, status, description, kyc])
+  }, [status, description, kyc])
 
   const openModal = (kycType: string) => {
     console.log('Opening modal for', kycType)
@@ -317,17 +304,11 @@ const KYC = () => {
     }
   }, [status, description, kyc])
 
-  if (!account && !loadingRequest && !loading) return <NotAvailablePage />
-
-  const blurred = detectWrongNetwork(chainId || 0)
-
-  if (blurred) {
+  if (!account) {
     return (
-      <Portal>
-        <CenteredFixed width="100vw" height="100vh" style={{ background: 'rgba(0, 0, 0, .5)' }}>
-          <NotAvailablePage />
-        </CenteredFixed>
-      </Portal>
+      <Flex justifyContent="center" width="100%" mt="3rem">
+        <NotAvailablePage />
+      </Flex>
     )
   }
 
@@ -335,7 +316,7 @@ const KYC = () => {
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
       <EmailVerification {...modalProps} closeModal={closeModal} />
       <StatusCard>
-        {loadingRequest || loading ? (
+        {loadingRequest ? (
           <RowCenter>
             <LoaderThin size={96} />
           </RowCenter>
@@ -435,6 +416,7 @@ const KYC = () => {
           </Column>
         )}
       </StatusCard>
+      <WrongNetworkModal />
     </StyledBodyWrapper>
   )
 }

@@ -38,15 +38,13 @@ import { ROLES } from 'constants/roles'
 import { RestrictedModal } from './RestrictedModal'
 import axios from 'axios'
 import { ip } from 'services/apiUrls'
-import { metaMask } from 'connectors/metaMask'
-import { walletConnectV2 } from 'connectors/walletConnectV2'
-/* eslint-disable react/display-name */
 import { Footer as DefaultFooter } from './Launchpad/Footer'
 import { CustomHeaders } from 'components/CustomHeaders'
 import { useWalletState } from 'state/wallet/hooks'
-import { coinbaseWallet } from 'connectors/coinbaseWallet'
 import { blockedCountries } from 'constants/countriesList'
-import { SupportedChainId } from 'constants/chains'
+import Portal from '@reach/portal'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import SignMessageModal from 'components/SignMessageModal'
 
 const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -77,6 +75,7 @@ export default function App() {
   const hideHeader = useHideHeader()
   const { kyc } = useKYCState()
   const { isConnected, walletName } = useWalletState()
+  const {authenticate, loading} = useAccount();
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [countryCode, setCountryCode] = useState()
@@ -143,8 +142,6 @@ export default function App() {
     return (config?.pages ?? []).length > 0 ? config?.pages[0] : defaultPath
   }, [kyc, account, chainId, isWhitelisted, chains])
 
-  useAccount()
-
   useEffect(() => {
     getMyKyc()
   }, [account, token, getMyKyc])
@@ -166,31 +163,6 @@ export default function App() {
 
   useEffect(() => {
     clearLocaleStorage()
-
-    if (isConnected && walletName === 'MetaMask') {
-      // connect eagerly for metamask
-      void metaMask.connectEagerly().catch(() => {
-        console.debug('Failed to connect eagerly to metamask')
-      })
-    }
-
-    if (isConnected && walletName === 'WalletConnect') {
-      // connect eagerly for walletConnectV2
-      walletConnectV2.connectEagerly().catch((error) => {
-        console.debug('Failed to connect eagerly to walletconnect', error)
-      })
-    }
-
-    if (isConnected && walletName === 'Coinbase Wallet') {
-      const defaultChain = ENV_SUPPORTED_TGE_CHAINS?.[0] || SupportedChainId.AMOY
-
-      void coinbaseWallet.connectEagerly().catch((error) => {
-        coinbaseWallet.activate(defaultChain).catch((errorConnect) => {
-          console.debug('Failed to connect eagerly to coinbase wallet', errorConnect)
-        })
-        console.debug('Failed to connect eagerly to coinbase wallet', error)
-      })
-    }
   }, [isConnected, walletName])
 
   useEffect(() => {
@@ -261,6 +233,7 @@ export default function App() {
       <CustomHeaders />
       {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
       {countryCode && blockedCountries.includes(countryCode) && <RestrictedModal />}
+
       <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
         <Route component={DarkModeQueryParamReader} />
@@ -275,7 +248,6 @@ export default function App() {
             hideHeader={hideHeader}
           >
             <IXSBalanceModal />
-            {/* <Web3ReactManager> */}
             <Suspense
               fallback={
                 <>
@@ -289,11 +261,18 @@ export default function App() {
                 <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
               </Switch>
             </Suspense>
-            {/* </Web3ReactManager> */}
           </ToggleableBody>
           {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
         </AppWrapper>
       </ErrorBoundary>
+
+      {!token && account ? (
+        <Portal>
+          <CenteredFixed width="100vw" height="100vh">
+            <SignMessageModal loading={loading} authenticate={authenticate} />
+          </CenteredFixed>
+        </Portal>
+      ) : null}
     </>
   )
 }

@@ -27,7 +27,7 @@ import { isMobile } from 'react-device-detect'
 import { ImagePreview } from 'components/FilePreview/ImagePreview'
 import { Plus } from 'react-feather'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-import { getChainLogoUrl } from 'chains'
+import { getChainLogoUrl } from 'utils/chains'
 import { capitalize } from '@material-ui/core'
 
 export interface UploaderProps {
