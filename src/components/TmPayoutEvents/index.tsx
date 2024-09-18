@@ -11,7 +11,7 @@ import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { ReactComponent as EyeIcon } from 'assets/images/gray_eye_icon.svg'
 import { ReactComponent as EditIcon } from 'assets/images/gray_edit_icon.svg'
-import { useCurrency, useSafeCurrency } from 'hooks/Tokens'
+import { useSafeCurrency } from 'hooks/Tokens'
 import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
 import { Pagination } from 'components/Pagination'
 import { LoadingIndicator } from 'components/LoadingIndicator'
@@ -32,7 +32,7 @@ import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
 import { TokenLogo } from 'components/TokenLogo'
 import { adminOffset as offset } from 'state/admin/constants'
-const headerCells = [`ID`, `Status`, `Payout type`, `SEC token`, `Payment period`, `Record date`, `Amount claimed`, '']
+const headerCells = [`ID`, 'Event name', `Status`, `Payout type`, `SEC token`, `Payment period`, `Amount claimed`, '']
 
 export const TmPayoutEvents = () => {
   const { isAdmin } = useRole()
@@ -59,7 +59,7 @@ export const TmPayoutEvents = () => {
             console.error('Failed to fetch data:', error)
           })
       } else {
-        getMyPayouts({ offset: offset, my: !isAdmin, page: payoutList.page  })
+        getMyPayouts({ offset: offset, my: !isAdmin, page: payoutList.page })
       }
     }
   }, [JSON.stringify(filters), account, token, pathname, isAdmin])
@@ -129,7 +129,7 @@ const Row = ({ item }: IRow) => {
   const deletePayout = useDeletePayoutItem()
   const history = useHistory()
 
-  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken, claimed } = item
+  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken, claimed, title } = item
 
   const currency = useSafeCurrency(payoutToken)
   const dateFormat = 'MMM DD, YYYY'
@@ -165,35 +165,41 @@ const Row = ({ item }: IRow) => {
       <AreYouSureModal onAccept={onDelete} onDecline={toggleIsWarningOpen} isOpen={isWarningOpen} />
       <StyledBodyRow>
         <TYPE.main1 color={'#B8B8CC'}>#{id}</TYPE.main1>
+        <TYPE.main1 style={{ marginRight: 20 }}>{title}</TYPE.main1>
         <div>
           <StatusCell status={status} />
         </div>
         <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
         <div style={{ gap: '8px' }}>
-          {secToken?.logo ? (
-            <TokenLogo logo={secToken.logo.public} width="32px" height="32px" />
-          ) : null}
+          {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="32px" height="32px" /> : null}
           <TYPE.main1 color={'#8F8FB2'}>{secToken?.symbol || '-'}</TYPE.main1>
         </div>
-        <TYPE.main1>
-          {dayjs(startDate).format(dateFormat)}
-          {Boolean(endDate) && (
-            <>
-              &nbsp;- &nbsp;
-              {dayjs(endDate).format(dateFormat)}
-            </>
-          )}
-        </TYPE.main1>
-        <TYPE.main1>{dayjs(recordDate).format(dateFormat)}</TYPE.main1>
+        <div style={{ display: 'block' }}>
+          <TYPE.main1>
+            {dayjs(startDate).format(dateFormat)}
+            {Boolean(endDate) && (
+              <>
+                &nbsp;- &nbsp;
+                {dayjs(endDate).format(dateFormat)}
+              </>
+            )}
+          </TYPE.main1>
+          <TYPE.main1>
+            <strong>Record on: {dayjs(recordDate).format(dateFormat)}</strong>
+          </TYPE.main1>
+        </div>
         <TYPE.main1 style={{ fontWeight: 500 }}>
           {amountClaimed ? (
-            <>
+            <div style={{ display: 'block' }}>
               <MouseoverTooltip style={{ height: '30px' }} text={tooltipText} textStyle={{ whiteSpace: 'pre-line' }}>
                 <CurrencyLogo currency={currency} style={{ marginRight: 4 }} />
               </MouseoverTooltip>
-              {currency?.symbol || '-'}&nbsp;{<TYPE.main1>{amountClaimed}</TYPE.main1>}&nbsp;/&nbsp;
-              <TYPE.main1>{splitClaimedAmount(tokenAmount)}</TYPE.main1>
-            </>
+              {currency?.symbol || '-'}&nbsp;
+              <TYPE.main1>
+                {amountClaimed}&nbsp;/&nbsp;
+                {splitClaimedAmount(tokenAmount)}
+              </TYPE.main1>
+            </div>
           ) : (
             '-'
           )}

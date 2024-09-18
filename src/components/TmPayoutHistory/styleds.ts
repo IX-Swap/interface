@@ -16,7 +16,7 @@ export const BodyContainer = styled.div`
   row-gap: 8px;
 `
 
-const gridTemplateColumns = '1fr 1fr minmax(auto, 125px) 1fr 1fr minmax(auto, 125px)';
+const gridTemplateColumns = '1fr 1fr 1fr minmax(auto, 125px) 1fr 1fr minmax(auto, 125px)';
 const minWidth = '900px';
 
 
