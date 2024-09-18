@@ -64,7 +64,6 @@ export default function CorporateKycForm() {
   const { config } = useWhitelabelState()
 
   const [isTaxNumberDisabled, setIsTaxNumberDisabled] = useState<boolean>(false)
-  const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
   const [formData, setFormData] = useState<any>(null)
   const [canSubmit, setCanSubmit] = useState(true)
@@ -80,8 +79,6 @@ export default function CorporateKycForm() {
   }, [account, prevAccount, history])
 
   useEffect(() => {
-    setWaitingForInitialValues(true)
-
     const getProgress = async () => {
       const data = await getCorporateProgress()
       if (data) {
@@ -103,9 +100,7 @@ export default function CorporateKycForm() {
     } else {
       setFormData(corporateFormInitialValues)
     }
-
-    setWaitingForInitialValues(false)
-  }, [kyc])
+  }, [kyc, form])
 
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
@@ -362,7 +357,7 @@ export default function CorporateKycForm() {
       <LoadingIndicator isLoading={loadingRequest} />
 
       <StyledBodyWrapper style={{ background: 'none', boxShadow: 'none' }} hasAnnouncement={!cookies.annoucementsSeen}>
-        {!waitingForInitialValues && formData && (
+        {formData && (
           <Formik
             innerRef={form}
             initialValues={corporateFormInitialValues}
@@ -849,7 +844,7 @@ export default function CorporateKycForm() {
                               value={values.taxNumber}
                               label="Tax Indentification Number"
                               placeholder="Tax Indentification Number"
-                              disabled={isTaxNumberDisabled}
+                              disabled={isTaxNumberDisabled || !values.taxIdAvailable}
                               onChange={(e: any) =>
                                 onChangeInput('taxNumber', e.currentTarget.value, values, setFieldValue)
                               }
@@ -1287,7 +1282,9 @@ export default function CorporateKycForm() {
                         <Column style={{ gap: '40px' }}>
                           <Uploader
                             title="Additional Documents"
-                            subtitle={`For ${config?.name || 'IXS'} Launchpad Issuers and ${config?.name || 'IXS'} DEX Applicants, please also enclose the most recent financial documents (balance sheet, P&L statement or Annual Returns), Certificate of Incumbency and Company Organization Chart showing Ownership Structure (signed copy). All documents must be dated within the last 3 months.`}
+                            subtitle={`For ${config?.name || 'IXS'} Launchpad Issuers and ${
+                              config?.name || 'IXS'
+                            } DEX Applicants, please also enclose the most recent financial documents (balance sheet, P&L statement or Annual Returns), Certificate of Incumbency and Company Organization Chart showing Ownership Structure (signed copy). All documents must be dated within the last 3 months.`}
                             files={values.financialDocuments}
                             onDrop={(file: any) => {
                               handleDropImage(file, values, 'financialDocuments', setFieldValue)
