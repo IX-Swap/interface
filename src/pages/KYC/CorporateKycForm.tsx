@@ -849,7 +849,7 @@ export default function CorporateKycForm() {
                               value={values.taxNumber}
                               label="Tax Indentification Number"
                               placeholder="Tax Indentification Number"
-                              disabled={isTaxNumberDisabled || !values.taxIdAvailable }
+                              disabled={isTaxNumberDisabled}
                               onChange={(e: any) =>
                                 onChangeInput('taxNumber', e.currentTarget.value, values, setFieldValue)
                               }
