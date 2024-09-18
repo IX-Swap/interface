@@ -40,7 +40,8 @@ export const DepositTransaction = ({ currency, token }: Props) => {
   const getEvents = useGetEventCallback()
   const dispatch = useDispatch()
 
-  const data = eventLog ? eventLog[0] : null
+  const depositEventLog = eventLog?.filter((event) => event?.type === 'deposit')
+  const data = eventLog ? depositEventLog[0] : null
 
   const amount = useMemo(() => {
     return data?.amount

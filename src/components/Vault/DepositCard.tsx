@@ -40,7 +40,8 @@ export const DepositCard = ({ currency, token }: Props) => {
   const getEvents = useGetEventCallback()
   const { eventLog } = useEventState()
 
-  const eventStatus = eventLog?.[0]?.status as DepositStatus
+  const depositEventLog = eventLog?.filter((event) => event?.type === 'deposit')
+  const eventStatus = depositEventLog?.[0]?.status as DepositStatus
 
   const handleBack = () => {
     onResetDeposit()
