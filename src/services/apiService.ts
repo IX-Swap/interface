@@ -177,7 +177,7 @@ const apiService = {
   _prepareHeaders(data: any) {
     const headers: KeyValueMap = {
       // 'x-tenant-domain':  window.location.host,
-      'x-tenant-domain': 'dev.ixswap.io',
+      'x-tenant-domain': 'dev-readi.ixswap.io',
     }
     const { auth, user } = store.getState()
 
