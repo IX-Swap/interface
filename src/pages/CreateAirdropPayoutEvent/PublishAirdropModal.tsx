@@ -82,8 +82,7 @@ export const PublishAirdropModal: FC<Props> = ({
     if (!payoutContract) return
 
     const recipientSet = new Set()
-    csvRows.forEach(([recipient]) => recipientSet.add(recipient))
-
+    csvRows.forEach(([recipient]) => recipientSet.add(recipient.toLowerCase()))
     if (recipientSet.size !== csvRows.length) {
       addPopup({
         info: {
