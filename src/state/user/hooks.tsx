@@ -565,16 +565,6 @@ export function useAccount() {
     }
   }, [token, getUserSecTokens])
 
-  useEffect(() => {
-    if (kyc?.status !== KYCStatuses.APPROVED && accountChanged && !loadingRequest) {
-      if (pathname !== routes.kyc) {
-        const defaultPath = pathname === routes.launchpad ? routes.launchpad : routes.kyc
-        history.push(defaultPath)
-      }
-      handleAccountChanged(false)
-    }
-  }, [kyc, accountChanged, loadingRequest, pathname, history])
-
   return { loading, authenticate }
 }
 
