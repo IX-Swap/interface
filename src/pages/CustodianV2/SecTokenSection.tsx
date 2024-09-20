@@ -68,7 +68,6 @@ const SecTokenSection: React.FC<SecTokenSectionProps> = ({ secTokens, keyName, t
     }
   }, [account])
 
-  console.log('tokens', tokens)
   return (
     <>
       <TYPE.title6 fontSize={'13px'} marginBottom="32px">
