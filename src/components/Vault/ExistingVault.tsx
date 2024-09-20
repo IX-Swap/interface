@@ -3,9 +3,9 @@ import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { useDispatch } from 'react-redux'
+import { ethers } from 'ethers'
 
 import { useActiveWeb3React } from 'hooks/web3'
-import { useDepositModalToggle } from 'state/application/hooks'
 import { DesktopOnly, MobileAndTablet, TYPE } from 'theme'
 import { CustodianInfo } from 'components/Vault/enum'
 import { MouseoverTooltip } from 'components/Tooltip'
@@ -16,10 +16,11 @@ import { ExistingTitle, ExistingWrapper, StyledTitle, TitleStatusRow } from './s
 import { useUserState } from 'state/user/hooks'
 import { PinnedContentButton } from 'components/Button'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
-import { useCurrencyBalance } from 'state/wallet/hooks'
+import { useCurrencyBalance, useWalletState } from 'state/wallet/hooks'
 import { AddWrappedToMetamask } from 'pages/SecTokenDetails/AddToMetamask'
 import { DepositView, setWalletState } from 'state/wallet'
 import { useDepositActionHandlers } from 'state/deposit/hooks'
+import { formatNumberWithDecimals } from 'state/lbp/hooks'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -29,7 +30,6 @@ interface Props {
 export const ExistingVault = ({ currency, custodian, token }: Props) => {
   const dispatch = useDispatch()
   const symbolText = useMemo(() => token?.ticker ?? currency?.symbol, [currency?.symbol, token?.ticker])
-
   const { account } = useActiveWeb3React()
   const { onResetDeposit } = useDepositActionHandlers()
   const { me } = useUserState()
@@ -39,6 +39,14 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
 
     return !token.allowDeposit
   }, [me, token.allowDeposit])
+  const { secTokensBalance } = useWalletState()
+  const currentToken = secTokensBalance[token?.token?.address]
+  const defaultBalance = formatNumberWithDecimals(
+    ethers.utils.formatUnits(currentToken?.balance || '0', currentToken?.decimals || 18),
+    4
+  )
+  const currentBalance = formatCurrencyAmount(currencyBalance, currency?.decimals ?? 18)
+  const balance = currentBalance !== '-' ? currentBalance : defaultBalance
 
   const TextWrap = styled(TYPE.titleBig)`
     white-space: pre-wrap; /* CSS3 */
@@ -58,7 +66,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
   `
 
   const handleDeposit = () => {
-    onResetDeposit();
+    onResetDeposit()
     dispatch(setWalletState({ isOpenDepositCard: true, depositView: DepositView.CREATE_REQUEST }))
   }
   return (
@@ -70,9 +78,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
           </StyledTitle>
           <ExistingTitle>
             <TextWrap style={{ color: '#6666FF', fontSize: '40px', fontWeight: 800, marginBottom: '4px' }}>
-              <span style={{ marginRight: '10px' }}>
-                {formatCurrencyAmount(currencyBalance, currency?.decimals ?? 18)}
-              </span>
+              <span style={{ marginRight: '10px' }}>{balance}</span>
               <span>{currency?.symbol}</span>
             </TextWrap>
           </ExistingTitle>
