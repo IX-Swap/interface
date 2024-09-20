@@ -7,6 +7,8 @@ import apiService from 'services/apiService'
 import { MySecTokensGrid } from './styleds'
 import { MySecToken } from './MySecToken'
 import { tokens as tokenUrl } from 'services/apiUrls'
+import { useDispatch } from 'react-redux'
+import { setWalletState } from 'state/wallet'
 
 interface SecTokenSectionProps {
   secTokens: any[]
@@ -16,6 +18,8 @@ interface SecTokenSectionProps {
 
 const SecTokenSection: React.FC<SecTokenSectionProps> = ({ secTokens, keyName, title }) => {
   const { account } = useWeb3React()
+  const dispatch = useDispatch()
+
   const [tokens, setTokens] = useState<any[]>(secTokens)
   const [loading, setLoading] = useState(false)
 
@@ -39,6 +43,16 @@ const SecTokenSection: React.FC<SecTokenSectionProps> = ({ secTokens, keyName, t
           return { ...token, token: { ...token?.token, balance } }
         })
 
+        const secTokensBalance = {} as any
+
+        newTokens.forEach((token) => {
+          secTokensBalance[token?.token?.address] = {
+            balance: token?.token?.balance,
+            decimals: token?.token?.decimals,
+          }
+        })
+
+        dispatch(setWalletState({ secTokensBalance }))
         setTokens(newTokens)
       }
     } catch (error) {
@@ -54,6 +68,7 @@ const SecTokenSection: React.FC<SecTokenSectionProps> = ({ secTokens, keyName, t
     }
   }, [account])
 
+  console.log('tokens', tokens)
   return (
     <>
       <TYPE.title6 fontSize={'13px'} marginBottom="32px">
