@@ -11,9 +11,19 @@ interface Props {
   placeholder?: string
   disabled?: boolean
   rightItem?: JSX.Element
+  fontSize?: number
 }
 
-export const AddressInput = ({ id, value, error, placeholder, disabled, rightItem, onChange = null }: Props) => {
+export const AddressInput = ({
+  id,
+  value,
+  error,
+  placeholder,
+  disabled,
+  rightItem,
+  onChange = null,
+  fontSize = 16,
+}: Props) => {
   const handleInput = useCallback(
     (event: { target: { value: string } }) => {
       const input = event.target.value
@@ -27,7 +37,7 @@ export const AddressInput = ({ id, value, error, placeholder, disabled, rightIte
       <ContainerRow>
         <InputContainer>
           <Input
-            style={{ textOverflow: 'unset', fontSize: 16 }}
+            style={{ textOverflow: 'unset', fontSize }}
             className="recipient-address-input"
             type="text"
             autoComplete="off"

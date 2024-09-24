@@ -193,6 +193,7 @@
     "react-phone-input-2": "^2.15.0",
     "react-select": "^5.2.2",
     "react-sticky-box": "^0.9.3",
+    "react-toastify": "^10.0.5",
     "react-usestateref": "^1.0.8",
     "recharts": "^2.12.3",
     "redux-persist": "^6.0.0",

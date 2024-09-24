@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { Trans } from '@lingui/macro'
-import { Box } from 'rebass'
-import { Label } from '@rebass/forms'
+import { Box, Flex } from 'rebass'
 import { getNames } from 'country-list'
 import { isMobile } from 'react-device-detect'
+import styled, { useTheme } from 'styled-components'
 
 import { RowBetween, RowEnd } from 'components/Row'
 import { isValidAddress } from 'utils'
-import { ButtonText, CloseIcon, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
+import { ButtonText, CloseIcon, ModalBlurWrapper, ModalContentWrapper, ModalPadding, theme, TYPE } from 'theme'
 import { useAddPopup, useModalOpen, useTokenPopupToggle } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
@@ -39,6 +39,10 @@ import {
 import { industries, initialTokenState } from './mock'
 import { TokenAvailableFor } from './TokenAvailableFor'
 import { Line } from 'components/Line'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import NetworkSelect from './NetworkSelect'
+import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
+import { blockchainNetworks } from 'pages/KYC/mock'
 
 interface Props {
   token: any | null
@@ -47,6 +51,7 @@ interface Props {
 }
 
 export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurrentToken }: Props) => {
+  const theme = useTheme()
   const isOpen = useModalOpen(ApplicationModal.TOKEN_POPUP)
   const [hasErrorOnSubmit, setHasErrorOnSubmit] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -230,372 +235,97 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
 
   return (
     <>
-      <AreYouSureModal isOpen={isConfirmOpen} onDecline={closeConfirm} onAccept={confirmClose} />
-      <WideModal isLarge isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
-        <WideModalWrapper data-testid="tokenPopup" style={{ width: 1700, position: 'relative' }}>
-          {isLoading && (
-            <LoaderContainer>
-              <LoaderThin size={48} />
-            </LoaderContainer>
-          )}
-          <ModalContentWrapper>
-            <ModalPadding>
-              <RowBetween marginBottom="27px">
-                <TYPE.title4>
-                  <Trans>{token?.id ? 'Edit token' : 'Add token'}</Trans>
-                </TYPE.title4>
+      <RedesignedWideModal isOpen={isOpen} onDismiss={toggle}>
+        <ModalBody>
+          <CloseButton>
+            <CloseIcon onClick={toggle} />
+          </CloseButton>
 
-                <CloseIcon data-testid="cross" onClick={onClose} />
-              </RowBetween>
-              <Line style={{ marginBottom: '70px' }} />
-              {token && (
-                <>
-                  <FormWrapper>
-                    <FormGrid>
-                      <Box>
-                        <Label marginBottom="11px">
-                          <TYPE.title11 color="text2">
-                            <Trans>Logo:</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <ButtonText>
-                          {/* <Upload
-                            accept={AcceptFiles.IMAGE}
-                            file={currentIssuer?.file}
-                            onDrop={(file) => handleDropImage(file)}
-                          >
-                            <Logo>
-                              {currentIssuer?.filePath || currentIssuer?.logo?.public ? (
-                                <img
-                                  style={{ borderRadius: '6px' }}
-                                  width="146px"
-                                  height="146px"
-                                  src={currentIssuer?.filePath || currentIssuer?.logo?.public}
-                                />
-                              ) : (
-                                <div style={{ border: '1px solid #E6E6FF', borderRadius: '8px', padding: '35px' }}>
-                                  <LogoImage />
-                                </div>
-                              )}
-                            </Logo>
-                          </Upload> */}
-                          <Upload accept={AcceptFiles.IMAGE} file={token.file} onDrop={(file) => handleDropImage(file)}>
-                            <Logo error={errors?.logo}>
-                              {token.filePath || token.logo?.public ? (
-                                <img
-                                  style={{ borderRadius: '6px' }}
-                                  width="146px"
-                                  height="146px"
-                                  src={token.filePath || token.logo?.public}
-                                />
-                              ) : (
-                                <div
-                                  style={{
-                                    border: '1px solid #E6E6FF',
-                                    marginTop: '76px',
-                                    borderRadius: '8px',
-                                    padding: '35px',
-                                  }}
-                                >
-                                  <LogoImage />
-                                </div>
-                              )}
-                            </Logo>
-                          </Upload>
-                        </ButtonText>
-                        {errors?.logo && (
-                          <TYPE.small textAlign="center" marginTop="4px" color={'red1'}>
-                            {errors.logo}
-                          </TYPE.small>
-                        )}
-                      </Box>
-                      <Box style={{ marginLeft: 12 }}>
-                        <Label marginBottom="11px" htmlFor="token-address">
-                          <TYPE.title11 color="text2">
-                            <Trans>Contract Address</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <AddressInput
-                          {...{
-                            id: 'token-address',
-                            value: token.address,
-                            error: !Boolean(isValidAddress(token?.address || '')),
-                            onChange: (e: any) => setToken({ ...token, address: e }),
-                            placeholder: ' ',
-                          }}
-                        />
-                        {errors?.address && (
-                          <TYPE.small marginTop="4px" color={'red1'}>
-                            {errors.address}
-                          </TYPE.small>
-                        )}
-                      </Box>
-                      <Box>
-                        <Label marginBottom="11px" htmlFor="token-ticker">
-                          <TYPE.title11 color="text2">
-                            <Trans>Ticker</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <InputPanel id={'item-website'}>
-                          <ContainerRow>
-                            <InputContainer>
-                              <Input
-                                style={{ fontSize: '16px' }}
-                                id="token-ticker"
-                                value={token.ticker}
-                                onChange={(e: any) => setToken({ ...token, ticker: e.currentTarget.value })}
-                              />
-                            </InputContainer>
-                          </ContainerRow>
-                        </InputPanel>
-                        {errors?.ticker && (
-                          <TYPE.small marginTop="4px" color={'red1'}>
-                            {errors.ticker}
-                          </TYPE.small>
-                        )}
-                      </Box>
-                    </FormGrid>
-                    <FormRow>
-                      {/* <FormGrid> */}
-                      <Box></Box>
-                      <Box>
-                        <Label marginBottom="11px" htmlFor="token-chain">
-                          <TYPE.title11 color="text2">
-                            <Trans>Origin Chain</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <Dropdown
-                          onSelect={(item) => {
-                            setToken({ ...token, chainId: item.id })
-                          }}
-                          selectedItem={selectedChainOption}
-                          items={chainsOptions}
-                        />
-                        {errors?.chainId && (
-                          <TYPE.small marginTop="4px" color={'red1'}>
-                            {errors.chainId}
-                          </TYPE.small>
-                        )}
-                      </Box>
-                      <Box>
-                        <Label marginBottom="11px" htmlFor="token-wrapped-input">
-                          <TYPE.title11 color="text2">
-                            <Trans>Wrapped token address</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <AddressInput
-                          {...{
-                            id: 'token-wrapped-input',
-                            disabled: token?.token ? true : false,
-                            value: token.wrappedTokenAddress,
-                            error: !Boolean(isValidAddress(token?.wrappedTokenAddress || '')),
-                            onChange: handleWrappedTokenChange,
-                            placeholder: ' ',
-                          }}
-                        />
-                      </Box>
-                      {/* </FormGrid> */}
-                    </FormRow>
-                    <FormRow>
-                      <Box></Box>
-                      <Box>
-                        <Label marginBottom="11px" htmlFor="token-company-name">
-                          <TYPE.title11 color="text2">
-                            <Trans>Company name:</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <InputPanel id={'token-company-name'}>
-                          <ContainerRow>
-                            <InputContainer>
-                              <Input
-                                style={{ fontSize: '16px' }}
-                                id="token-company-name"
-                                value={token.companyName}
-                                onChange={(e: any) => setToken({ ...token, companyName: e.currentTarget.value })}
-                              />
-                            </InputContainer>
-                          </ContainerRow>
-                        </InputPanel>
-                        {errors?.companyName && (
-                          <TYPE.small marginTop="4px" color={'red1'}>
-                            {errors.companyName}
-                          </TYPE.small>
-                        )}
-                      </Box>
-                      <Box>
-                        <Label marginBottom="11px" htmlFor="token-website">
-                          <TYPE.title11 color="text2">
-                            <Trans>URL:</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <InputPanel id={'token-website'}>
-                          <ContainerRow>
-                            <InputContainer>
-                              <Input
-                                style={{ fontSize: '16px' }}
-                                id="token-website"
-                                value={token.url}
-                                onChange={(e: any) => setToken({ ...token, url: e.currentTarget.value })}
-                              />
-                            </InputContainer>
-                          </ContainerRow>
-                        </InputPanel>
-                        {errors?.url && (
-                          <TYPE.small marginTop="4px" color={'red1'}>
-                            {errors.url}
-                          </TYPE.small>
-                        )}
-                      </Box>
-                    </FormRow>
+          <Title>Add Token</Title>
 
-                    <NewFormRow>
-                      <Box></Box>
-                      <Box>
-                        <Label marginTop="20px" marginBottom="11px">
-                          <TYPE.title11 color="text2">
-                            <Trans>Industry:</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <Dropdown
-                          onSelect={(item) => setToken({ ...token, industry: item.name })}
-                          selectedItem={industries.find(({ name }) => name === token.industry)}
-                          items={industries}
-                        />
-                        {errors?.industry && (
-                          <TYPE.small marginTop="4px" color={'red1'}>
-                            {errors.industry}
-                          </TYPE.small>
-                        )}
-                      </Box>
-                      <Box>
-                        <Label marginTop="20px" marginBottom="11px">
-                          <TYPE.title11 color="text2">
-                            <Trans>Country:</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <Dropdown
-                          withScroll
-                          onSelect={(item) => setToken({ ...token, country: item.name })}
-                          selectedItem={countries.find(({ name }) => name === token.country)}
-                          items={countries}
-                        />
-                        {errors?.country && (
-                          <TYPE.small marginTop="4px" color={'red1'}>
-                            {errors.country}
-                          </TYPE.small>
-                        )}
-                      </Box>
-                      <Box>
-                        <Label marginTop="20px" marginBottom="11px" htmlFor="token-atlas-id">
-                          <TYPE.title11 color="text2">
-                            <Trans>AtlasOne ID:</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <InputPanel id={'token-atlas-id'} style={{ marginBottom: 20 }}>
-                          <ContainerRow>
-                            <InputContainer>
-                              <Input
-                                style={{ fontSize: '16px' }}
-                                id="token-atlas-id"
-                                value={token.atlasOneId}
-                                onChange={(e: any) => setToken({ ...token, atlasOneId: e.currentTarget.value })}
-                              />
-                            </InputContainer>
-                          </ContainerRow>
-                        </InputPanel>
-                      </Box>
-                    </NewFormRow>
-                    <NewFormRowDescriptions>
-                      <Box></Box>
-                      <Box>
-                        <Label marginBottom="11px">
-                          <TYPE.title11 color="text2">
-                            <Trans>Description:</Trans>
-                          </TYPE.title11>
-                        </Label>
-                        <Textarea
-                          value={token.description}
-                          style={{ height: '290px', marginBottom: 0 }}
-                          onChange={(e: any) => setToken({ ...token, description: e.currentTarget.value })}
-                        />
-                        {errors?.description && (
-                          <TYPE.small marginTop="4px" color={'red1'}>
-                            {errors.description}
-                          </TYPE.small>
-                        )}
-                      </Box>
-                    </NewFormRowDescriptions>
-                    <FormRow>
-                      <Box></Box>
-                      <Box>
-                        <TokenAvailableFor setToken={setToken} token={token} error={errors.kycTypeJson} />
-                      </Box>
-                      <Box
-                        style={{ border: '1px solid #E6E6FF', marginTop: '32px' }}
-                        display="flex"
-                        justifyContent="space-between"
-                      >
-                        <Box padding={'20px'} marginRight={isMobile ? '0px' : '16px'}>
-                          <TYPE.title11 marginBottom="16px" color="text2">
-                            <Trans>Active</Trans>
-                          </TYPE.title11>
-                          <TYPE.title11 marginBottom="26px" color="text2">
-                            <Trans>Featured</Trans>
-                          </TYPE.title11>
-                          <TYPE.title11 marginBottom="26px" color="text2">
-                            <Trans>Allow Deposit</Trans>
-                          </TYPE.title11>
-                          <TYPE.title11 marginBottom="26px" color="text2">
-                            <Trans>Allow Withdrawal</Trans>
-                          </TYPE.title11>
-                        </Box>
-                        <Box paddingRight={'30px'} paddingTop={'20px'} marginLeft={isMobile ? 'auto' : '0px'}>
-                          <Radio
-                            isActive={token.active}
-                            onToggle={() => setToken({ ...token, active: !token.active })}
-                          />
-                          <Radio
-                            isActive={token.featured}
-                            onToggle={() => setToken({ ...token, featured: !token.featured })}
-                          />
-                          <Radio
-                            isActive={token.allowDeposit}
-                            onToggle={() => setToken({ ...token, allowDeposit: !token.allowDeposit })}
-                          />
-                          <Radio
-                            isActive={token.allowWithdrawal}
-                            onToggle={() => setToken({ ...token, allowWithdrawal: !token.allowWithdrawal })}
-                          />
-                        </Box>
-                      </Box>
-                    </FormRow>
-                  </FormWrapper>
-                  {/* <div style={{ display: 'flex' }}> */}
+          <FormWrapper>
+            <Label htmlFor="network">Network</Label>
 
-                  {/* </div> */}
-                </>
-              )}
-            </ModalPadding>
-          </ModalContentWrapper>
-          <RowEnd>
-            <ButtonOutlined
-              onClick={onClose}
-              backgroundColor={'none'}
-              style={{ width: isMobile ? '100%' : 200, color: '#B8B8CC', marginRight: '10px' }}
-              disabled={isLoading}
-            >
-              <Trans>Cancel</Trans>
-            </ButtonOutlined>
-            <PinnedContentButton
-              onClick={handleCreateClick}
-              style={{ width: isMobile ? '100%' : 200 }}
-              disabled={isLoading}
-            >
-              <Trans>Save</Trans>
-            </PinnedContentButton>
-          </RowEnd>
-        </WideModalWrapper>
-      </WideModal>
+            <NetworkSelect
+              id="network"
+              name="network"
+              placeholder="Choose Network"
+              isClearable={false}
+              isSearchable={false}
+              onSelect={() => {}}
+              value={null}
+              options={blockchainNetworks}
+            />
+          </FormWrapper>
+
+          <FormWrapper>
+            <Label htmlFor="token-address">Contract Address</Label>
+            <AddressInput
+              {...{
+                id: 'token-address',
+                value: '',
+                error: !Boolean(isValidAddress(token?.address || '')),
+                onChange: (e: any) => setToken({ ...token, address: e }),
+                placeholder: 'Contract Address',
+                fontSize: 14,
+              }}
+            />
+          </FormWrapper>
+
+          <Flex justifyContent="space-between" style={{ gap: 12, marginTop: 32 }}>
+            <OutlineButton style={{ border: '1px solid #6666FF33', width: '100%' }} onClick={onClose}>
+              Cancel
+            </OutlineButton>
+
+            <FilledButton style={{ width: '100%' }}>Continue</FilledButton>
+          </Flex>
+        </ModalBody>
+      </RedesignedWideModal>
     </>
   )
 }
+
+const ModalBody = styled.div`
+  min-width: 420px;
+  padding: 32px;
+  position: relative;
+`
+
+const CloseButton = styled.div`
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  cursor: pointer;
+`
+
+const Title = styled.h1`
+  color: #292933;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.48px;
+  text-align: left;
+`
+
+const Label = styled.label`
+  color: #556;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.28px;
+  padding-bottom: 12px;
+  display: block;
+
+  .desc {
+    color: #8f8fb2;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.36px;
+  }
+`
