@@ -366,10 +366,7 @@ export const AdminSecurityCatalog: FC = () => {
               >
                 <Trans>Cancel</Trans>
               </PinnedContentButton>
-              <PinnedContentButton
-                onClick={handleSaveClick}
-                style={{ width: 226, marginLeft: '10px' }}
-              >
+              <PinnedContentButton onClick={handleSaveClick} style={{ width: 226, marginLeft: '10px' }}>
                 <Trans>Save</Trans>
               </PinnedContentButton>
             </RowEnd>
@@ -431,7 +428,7 @@ export const AdminSecurityCatalog: FC = () => {
           </>
         )}
 
-        <TokenPopup setCurrentToken={setCurrentToken} token={currentToken} currentIssuer={currentIssuer} />
+        <TokenPopup />
         <DeleteTokenConfirmationPopup tokenId={deleteTokenId} />
       </Container>
     </>

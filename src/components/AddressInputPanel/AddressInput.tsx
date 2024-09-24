@@ -4,7 +4,7 @@ import { ContainerRow, Input, InputContainer, InputPanel } from './styleds'
 
 interface Props {
   id?: string
-  // the typed string value
+  name?: string
   value: string
   error: boolean
   onChange?: ((arg: string) => void) | null
@@ -16,6 +16,7 @@ interface Props {
 
 export const AddressInput = ({
   id,
+  name,
   value,
   error,
   placeholder,
@@ -33,10 +34,12 @@ export const AddressInput = ({
     [onChange]
   )
   return (
-    <InputPanel id={id}>
+    <InputPanel>
       <ContainerRow>
         <InputContainer>
           <Input
+            name={name}
+            id={id}
             style={{ textOverflow: 'unset', fontSize }}
             className="recipient-address-input"
             type="text"
