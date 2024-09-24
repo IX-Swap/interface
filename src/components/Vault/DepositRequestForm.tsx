@@ -124,10 +124,8 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   }, [account, tokenContract, sender, tokenDecimals])
 
   useEffect(() => {
-    if (!sender) {
-      onTypeSender(account || '')
-    }
-  }, [])
+    onTypeSender(account || '')
+  }, [account])
 
   useEffect(() => {
     if (networkName) {
