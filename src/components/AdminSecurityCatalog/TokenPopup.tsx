@@ -10,7 +10,7 @@ import { useModalOpen, useTokenPopupToggle } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import NetworkSelect from './NetworkSelect'
+import StyledSelect from './StyledSelect'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { blockchainNetworks } from 'pages/KYC/mock'
 import Loader from 'components/Loader'
@@ -93,7 +93,7 @@ export const TokenPopup: FC<Props> = () => {
           <FormWrapper>
             <Label htmlFor="network">Network</Label>
 
-            <NetworkSelect
+            <StyledSelect
               id="network"
               name="network"
               placeholder="Choose Network"
@@ -107,7 +107,7 @@ export const TokenPopup: FC<Props> = () => {
           </FormWrapper>
 
           <FormWrapper>
-            <Label htmlFor="tokenAddress">Contract Address</Label>
+            <Label htmlFor="tokenAddress">Token Address</Label>
             <AddressInput
               id="tokenAddress"
               name="tokenAddress"

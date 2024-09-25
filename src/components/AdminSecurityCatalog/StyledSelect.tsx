@@ -177,7 +177,7 @@ const Option = (props: any) => {
   )
 }
 
-const NetworkSelect = ({
+const StyledSelect = ({
   onSelect,
   value,
   options,
@@ -247,7 +247,7 @@ const NetworkSelect = ({
   )
 }
 
-export default NetworkSelect
+export default StyledSelect
 
 const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: string }>`
   *[class*='control'] {
