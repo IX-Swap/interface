@@ -242,7 +242,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
               >
-                Farming
+                Staking
               </div>
               <MenuMobile
                 style={{ width: '90vw' }}
@@ -260,9 +260,9 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                     <MenuItem onClick={handleClose}>
                       <ExternalListItem
                         style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '400' }}
-                        href={`https://ixswap.defiterm.io/`}
+                        href={`https://staking.ixswap.io/`}
                       >
-                        <Trans>Live Pools</Trans>
+                        <Trans>Staking on Base</Trans>
                       </ExternalListItem>
                     </MenuItem>
                   </>
@@ -288,7 +288,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                 <MenuItem onClick={handleClose}>
                   <ExternalListItem
                     style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '500' }}
-                    href={`https://ixswap.defiterm.io/`}
+                    href={`https://staking.ixswap.io/`}
                   >
                     <Trans>Liquidity Mining Program (Quickswap)</Trans>
                   </ExternalListItem>
