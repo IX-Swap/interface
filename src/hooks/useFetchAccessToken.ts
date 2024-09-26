@@ -1,7 +1,7 @@
 import apiService from 'services/apiService'
 import { metamask } from 'services/apiUrls'
 import { login } from './login'
-import { sign } from './personalSign'
+import { useSignMessage } from './personalSign'
 import { useWeb3React } from 'hooks/useWeb3React'
 import { useCallback } from 'react'
 
@@ -20,6 +20,8 @@ const ERROR_MESSAGES = {
 export const useFetchAccessToken = () => {
   const { account, provider } = useWeb3React()
 
+  const { signMessage } = useSignMessage()
+
   const fetchAccessToken = useCallback(async () => {
     if (!account || !provider) {
       throw new Error(ERROR_MESSAGES.noWallet)
@@ -29,7 +31,7 @@ export const useFetchAccessToken = () => {
       if (!data.hash) {
         throw new Error(ERROR_MESSAGES.noHashReceived)
       }
-      const result = await sign({ hash: data.hash, account, provider })
+      const result = await signMessage({ hash: data.hash, account })
       if (!result) {
         throw new Error(ERROR_MESSAGES.loginSignFailed)
       }
