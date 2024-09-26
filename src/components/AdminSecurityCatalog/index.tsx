@@ -65,7 +65,8 @@ export const AdminSecurityCatalog: FC = () => {
   const [currentToken, setCurrentToken] = useState<any | null>(null)
   const [deleteTokenId, setDeleteTokenId] = useState(0)
   const [showMode, setShowMode] = useState<Tab['value']>('catalog')
-  const [isOpenTokenForm, setIsOpenTokenForm] = useState(true)
+  const [tokenData, setTokenData] = useState<any | null>(null)
+  const [isOpenTokenForm, setIsOpenTokenForm] = useState(false)
 
   useEffect(() => {
     if (showMode === 'catalog') {
@@ -179,12 +180,12 @@ export const AdminSecurityCatalog: FC = () => {
             <TokenForm
               setCurrentToken={setCurrentToken}
               token={currentToken}
+              tokenData={tokenData}
               currentIssuer={currentIssuer}
               toggle={() => setIsOpenTokenForm(false)}
             />
           ) : (
             <>
-              {' '}
               <Box style={{ background: '#FFFFFF', padding: '40px' }}>
                 <Flex>
                   <ButtonText
@@ -430,7 +431,7 @@ export const AdminSecurityCatalog: FC = () => {
         </>
       )}
 
-      <TokenPopup />
+      <TokenPopup setTokenData={setTokenData} setIsOpenTokenForm={setIsOpenTokenForm} />
 
       <DeleteTokenConfirmationPopup tokenId={deleteTokenId} />
     </Container>

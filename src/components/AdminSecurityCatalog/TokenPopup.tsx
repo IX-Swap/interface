@@ -14,6 +14,8 @@ import StyledSelect from './StyledSelect'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { blockchainNetworks } from 'pages/KYC/mock'
 import Loader from 'components/Loader'
+import { getTokenContract } from 'hooks/useContract'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 const networkSchema = yup
   .object({
@@ -34,7 +36,10 @@ const schema = yup.object().shape({
     }),
 })
 
-interface Props {}
+interface Props {
+  setTokenData: (data: any) => void
+  setIsOpenTokenForm: (isOpen: boolean) => void
+}
 
 interface INetwork {
   value: string
@@ -53,9 +58,10 @@ const initialValues: IToken = {
   tokenAddress: '',
 }
 
-export const TokenPopup: FC<Props> = () => {
+export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
   const isOpen = useModalOpen(ApplicationModal.TOKEN_POPUP)
   const toggle = useTokenPopupToggle()
+  const { provider } = useWeb3React()
 
   const formik = useFormik<IToken>({
     initialValues,
@@ -63,8 +69,32 @@ export const TokenPopup: FC<Props> = () => {
     onSubmit: async (values: any) => {
       try {
         formik.setSubmitting(true)
-        console.log('values', values)
+        if (provider) {
+          const tokenContract = await getTokenContract(values.tokenAddress, provider)
+          console.log('tokenContract', tokenContract)
+          const [decimals, symbol, name] = await Promise.all([
+            tokenContract?.callStatic?.decimals(),
+            tokenContract?.callStatic?.symbol(),
+            tokenContract?.callStatic?.name(),
+          ])
+          setTokenData({
+            decimals,
+            symbol,
+            name,
+            tokenAddress: values.tokenAddress,
+            network: values.network,
+          })
+          toggle()
+          setIsOpenTokenForm(true)
+        } else {
+          console.error('No provider found')
+          formik.setFieldError('tokenAddress', 'No provider found')
+          setTokenData(null)
+        }
       } catch (e: any) {
+        console.error('Failed to fetch token contract', e)
+        formik.setFieldError('tokenAddress', 'Invalid token address ')
+        setTokenData(null)
       } finally {
         formik.setSubmitting(false)
       }
@@ -76,7 +106,6 @@ export const TokenPopup: FC<Props> = () => {
   }
 
   const onSelectNetwork = (value: any) => {
-    debugger
     formik.setFieldValue('network', value)
   }
 

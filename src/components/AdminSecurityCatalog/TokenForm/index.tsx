@@ -41,6 +41,7 @@ import Availability from './Availability'
 
 interface Props {
   token: any | null
+  tokenData: any | null
   currentIssuer: any
   setCurrentToken: (value: any | null) => void
   toggle: () => void
@@ -89,7 +90,7 @@ const initialValues: ITokenData = {
   tokenId: '',
 }
 
-const TokenForm: FC<Props> = ({ token: propToken, currentIssuer, setCurrentToken, toggle }: Props) => {
+const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setCurrentToken, toggle }: Props) => {
   const [hasErrorOnSubmit, setHasErrorOnSubmit] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<any>()

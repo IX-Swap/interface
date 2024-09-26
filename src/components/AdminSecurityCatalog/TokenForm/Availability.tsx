@@ -1,50 +1,53 @@
 import { FormGrid } from 'pages/KYC/styleds'
-import { FormWrapper, InputWithLabel, Label } from 'pages/Tenant/components/styleds'
 import React from 'react'
-import { Box } from 'rebass'
+import { Box, Flex } from 'rebass'
 import styled from 'styled-components'
+import { Checkbox } from 'components/Checkbox'
+import { defaultKycType } from '../mock'
+import Toggle from 'components/Toggle'
+
+const options = [
+  { label: 'Individuals - Accredited Investors', value: 'individualAccredited' },
+  { label: 'Individuals - NOT Accredited Investors', value: 'individualAccreditedNot' },
+  { label: 'Corporate - Accredited Investors', value: 'corporateAccredited' },
+  { label: 'Corporate - NOT Accredited Investors', value: 'corporateAccreditedNot' },
+]
 
 interface AvailabilityProps {
   formik: any
 }
 
 const Availability: React.FC<AvailabilityProps> = ({ formik }) => {
+  const kycType = defaultKycType as any
+
   return (
     <>
       <h1 className="title">Availability</h1>
 
-      <Box>
-        <FormGrid columns={2}>
-          <FormWrapper>
-            <Label htmlFor="network">Withdraw Fee</Label>
+      <FormGrid columns={2} style={{ marginTop: 24 }}>
+        <div>
+          <Options>
+            {options.map(({ value, label }) => (
+              <Checkbox key={value} label={label} onClick={() => {}} checked={kycType[value]} />
+            ))}
+          </Options>
+        </div>
 
-            <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
-            />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
-          </FormWrapper>
-          <FormWrapper>
-            <Label htmlFor="network">Withdraw Fee Address</Label>
-
-            <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
-            />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
-          </FormWrapper>
-        </FormGrid>
-      </Box>
+        <Box>
+          <Flex alignItems="center" mb="24px">
+            <Toggle isActive={true} toggle={() => {}} showLabel={false} /> <LabelRadio>Active</LabelRadio>
+          </Flex>
+          <Flex alignItems="center" mb="24px">
+            <Toggle isActive={true} toggle={() => {}} showLabel={false} /> <LabelRadio>Featured</LabelRadio>
+          </Flex>
+          <Flex alignItems="center" mb="24px">
+            <Toggle isActive={true} toggle={() => {}} showLabel={false} /> <LabelRadio>Allow Withdrawal</LabelRadio>
+          </Flex>
+          <Flex alignItems="center" mb="24px">
+            <Toggle isActive={true} toggle={() => {}} showLabel={false} /> <LabelRadio>Allow Deposit</LabelRadio>
+          </Flex>
+        </Box>
+      </FormGrid>
     </>
   )
 }
@@ -58,4 +61,21 @@ const ErrorText = styled.span`
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.36px;
+`
+
+const Options = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`
+
+const LabelRadio = styled.div`
+  color: #556;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.28px;
+  margin-left: 10px;
 `
