@@ -88,7 +88,6 @@ interface ISelect {
 }
 interface ITokenData {
   id?: string
-  address: string
   ticker: string
   logo: any
   miniLogo: any
@@ -99,7 +98,6 @@ interface ITokenData {
   country: ISelect | null
   network: ISelect | null
   atlasOneId: string
-  kycTypeJson: any
   active: boolean
   featured: boolean
   allowDeposit: boolean
@@ -125,7 +123,6 @@ interface ITokenData {
 }
 
 const initialValues: ITokenData = {
-  address: '',
   ticker: '',
   logo: null,
   miniLogo: null,
@@ -136,7 +133,6 @@ const initialValues: ITokenData = {
   country: null,
   network: null,
   atlasOneId: '',
-  kycTypeJson: {},
   active: false,
   featured: false,
   allowDeposit: false,
@@ -211,6 +207,7 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
       formik.setFieldValue('originalDecimals', tokenData.decimals)
       formik.setFieldValue('originNetwork', tokenData.network)
       formik.setFieldValue('name', `Wrapped ${tokenData.name}`)
+      formik.setFieldValue('ticker', `Wrapped ${tokenData.name}`)
       formik.setFieldValue('symbol', `w${tokenData.symbol}`)
       formik.setFieldValue('decimails', tokenData.decimals)
     }
