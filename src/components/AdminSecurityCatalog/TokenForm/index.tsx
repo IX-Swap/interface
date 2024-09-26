@@ -1,36 +1,15 @@
-import React, { FC, useEffect, useMemo, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Trans } from '@lingui/macro'
-import { Box } from 'rebass'
-import { Label } from '@rebass/forms'
-import { getNames } from 'country-list'
 import { isMobile } from 'react-device-detect'
 import { useFormik } from 'formik'
-
-import { RowBetween, RowEnd } from 'components/Row'
-import { isValidAddress } from 'utils'
-import { ButtonText, CloseIcon, MEDIA_WIDTHS, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
-import { useAddPopup, useModalOpen, useTokenPopupToggle } from 'state/application/hooks'
-import { ApplicationModal } from 'state/application/actions'
-import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
-import { ButtonIXSGradient, ButtonOutlined, PinnedContentButton } from 'components/Button'
-import { addToken, checkWrappedAddress, updateToken, useFetchIssuers, validateToken } from 'state/secCatalog/hooks'
-import Upload from 'components/Upload'
-import { AddressInput } from 'components/AddressInputPanel/AddressInput'
-import { AreYouSureModal } from 'components/AreYouSureModal'
-import { adminOffset as offset } from 'state/admin/constants'
-import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-import { getAtlasIdByTicker } from 'state/admin/hooks'
-import { LoaderThin } from 'components/Loader/LoaderThin'
-import { AcceptFiles } from 'components/Upload/types'
-
-import { Dropdown } from '../Dropdown'
-import { Radio } from '../Radio'
-import { ReactComponent as LogoImage } from 'assets/images/UploadLogo.svg'
-import { FormWrapper, FormGrid, Logo, FormRow, LoaderContainer, NewFormRow, NewFormRowDescriptions } from '../styleds'
-import { industries, initialTokenState } from '../mock'
-import { TokenAvailableFor } from '../TokenAvailableFor'
 import styled from 'styled-components'
 import StickyBox from 'react-sticky-box'
+import * as yup from 'yup'
+
+import { RowEnd } from 'components/Row'
+import { ButtonOutlined, PinnedContentButton } from 'components/Button'
+import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { getAtlasIdByTicker } from 'state/admin/hooks'
 import { ProgressBar } from './ProgressBar'
 import GeneralInfo from './GeneralInfo'
 import WrappedTokenDetails from './WrappedTokenDetails'
@@ -38,6 +17,62 @@ import CustodyDetails from './CustodyDetails'
 import WithdrawalDetails from './WithdrawalDetails'
 import Whitelisting from './Whitelisting'
 import Availability from './Availability'
+
+const FILE_SIZE = 10 * 1024 * 1024 // 10 MB
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/svg+xml']
+
+export const kycType = {
+  individualAccredited: false,
+  individualAccreditedNot: false,
+  corporateAccredited: false,
+  corporateAccreditedNot: false,
+}
+
+const selectSchema = yup
+  .object({
+    value: yup.string().required('Network value is required'),
+    label: yup.string().required('Network label is required'),
+  })
+  .nullable()
+
+const validationSchema = yup.object().shape({
+  logo: yup
+    .mixed()
+    .required('Logo is required')
+    .test('fileSize', 'File too large. Maximum size is 2MB.', (value) => !value || (value && value.size <= FILE_SIZE))
+    .test(
+      'fileFormat',
+      'Unsupported file format. Only JPG, PNG, and GIF are allowed.',
+      (value) => !value || (value && SUPPORTED_FORMATS.includes(value.type))
+    ),
+  miniLogo: yup
+    .mixed()
+    .required('Mini logo is required')
+    .test('fileSize', 'File too large. Maximum size is 2MB.', (value) => !value || (value && value.size <= FILE_SIZE))
+    .test(
+      'fileFormat',
+      'Unsupported file format. Only JPG, PNG, and GIF are allowed.',
+      (value) => !value || (value && SUPPORTED_FORMATS.includes(value.type))
+    ),
+  companyName: yup.string().required('Company name is required'),
+  url: yup.string().url('Invalid URL').required('URL is required'),
+  industry: selectSchema.required('Industry is required'),
+  country: selectSchema.required('Country is required'),
+  description: yup.string().required('Description is required'),
+  withdrawFee: yup.number().required('Withdraw fee is required'),
+  withdrawFeeAddress: yup.string().required('Withdraw fee address is required'),
+  needsWhitelisting: yup.boolean().required(),
+  whitelistPlatform: selectSchema.when('needsWhitelisting', {
+    is: true, // When the switch is on (true)
+    then: selectSchema.required('Whitelist Platform is required'), // Validate this field
+    otherwise: selectSchema.nullable(), // If the switch is off, no validation
+  }),
+  whitelistContractAddress: yup.string().when('needsWhitelisting', {
+    is: true, // When the switch is on (true)
+    then: yup.string().required('Whitelist Contract Address is required'), // Validate this field
+    otherwise: yup.string().nullable(), // If the switch is off, no validation
+  }),
+})
 
 interface Props {
   token: any | null
@@ -47,18 +82,23 @@ interface Props {
   toggle: () => void
 }
 
+interface ISelect {
+  value: string
+  label: string
+}
 interface ITokenData {
   id?: string
   address: string
   ticker: string
   logo: any
+  miniLogo: any
   companyName: string
   description: string
   url: string
-  industry: string
-  country: string
+  industry: ISelect | null
+  country: ISelect | null
+  network: ISelect | null
   atlasOneId: string
-  kycType: string
   kycTypeJson: any
   active: boolean
   featured: boolean
@@ -67,19 +107,35 @@ interface ITokenData {
   chainId: number
   wrappedTokenAddress: string
   tokenId: string
+  whitelistPlatform: ISelect | null
+  needsWhitelisting: boolean
+  originalSymbol: string
+  originalName: string
+  originalDecimals: number | string
+  originalAddress: string
+  symbol: string
+  decimails: number | string
+  custodyVaultId: number | string
+  custodyAssetId: number | string
+  custodyAssetAddress: string
+  withdrawFee: number | string
+  withdrawFeeAddress: string
+  kycType: any
+  checkWhitelistFunciton: string
 }
 
 const initialValues: ITokenData = {
   address: '',
   ticker: '',
   logo: null,
+  miniLogo: null,
   companyName: '',
   description: '',
   url: '',
-  industry: '',
-  country: '',
+  industry: null,
+  country: null,
+  network: null,
   atlasOneId: '',
-  kycType: '',
   kycTypeJson: {},
   active: false,
   featured: false,
@@ -88,21 +144,30 @@ const initialValues: ITokenData = {
   chainId: SUPPORTED_TGE_CHAINS.MATIC,
   wrappedTokenAddress: '',
   tokenId: '',
+  whitelistPlatform: null,
+  needsWhitelisting: false,
+  originalSymbol: '',
+  originalName: '',
+  originalDecimals: '',
+  originalAddress: '',
+  symbol: '',
+  decimails: '',
+  custodyVaultId: '',
+  custodyAssetId: '',
+  custodyAssetAddress: '',
+  withdrawFee: '',
+  withdrawFeeAddress: '',
+  kycType,
+  checkWhitelistFunciton: 'ifWhitelisted',
 }
 
 const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setCurrentToken, toggle }: Props) => {
-  const [hasErrorOnSubmit, setHasErrorOnSubmit] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [errors, setErrors] = useState<any>()
-  const [isConfirmOpen, handleIsConfirmOpen] = useState(false)
   const [token, setToken] = useState<any>(null)
-
-  const getIssuers = useFetchIssuers()
-  const addPopup = useAddPopup()
 
   const formik = useFormik<ITokenData>({
     initialValues,
-    validationSchema: null,
+    validationSchema: validationSchema,
     onSubmit: async (values: any) => {
       try {
         formik.setSubmitting(true)
@@ -133,162 +198,26 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
     }
   }, [token?.atlasOneId])
 
-  const openConfirm = () => handleIsConfirmOpen(true)
-  const closeConfirm = () => handleIsConfirmOpen(false)
-
-  const resetErrors = () => {
-    setErrors({
-      address: null,
-      ticker: null,
-      logo: null,
-      companyName: null,
-      description: null,
-      wrappedTokenAddress: null,
-      kycType: null,
-    })
-  }
-
-  useEffect(() => {
-    if (propToken) setToken(propToken)
-    else setToken(initialTokenState)
-    resetErrors()
-    setHasErrorOnSubmit(false)
-  }, [propToken])
-
-  useEffect(() => {
-    if (token && hasErrorOnSubmit) {
-      const validationErrors = validateToken(token)
-      setErrors(validationErrors)
-    }
-  }, [token, hasErrorOnSubmit])
-
-  const confirmClose = () => {
-    closeConfirm()
-    resetErrors()
-    toggle()
-    setCurrentToken(initialTokenState)
-    setHasErrorOnSubmit(false)
-  }
-
   const onClose = () => {
-    const needConfirm = Object.values(token).some((value) => Boolean(value))
-    if (needConfirm) {
-      openConfirm()
-    } else {
-      confirmClose()
-    }
-    setHasErrorOnSubmit(false)
+    formik.resetForm()
+    toggle()
   }
 
-  const handleDropImage = (acceptedFile: any) => {
-    const file = acceptedFile
-    if (token.filePath) {
-      URL.revokeObjectURL(token.filePath)
+  useEffect(() => {
+    if (tokenData) {
+      formik.setFieldValue('originalAddress', tokenData.tokenAddress)
+      formik.setFieldValue('originalName', tokenData.name)
+      formik.setFieldValue('originalSymbol', tokenData.symbol)
+      formik.setFieldValue('originalDecimals', tokenData.decimals)
+      formik.setFieldValue('originNetwork', tokenData.network)
+      formik.setFieldValue('name', `Wrapped ${tokenData.name}`)
+      formik.setFieldValue('symbol', `w${tokenData.symbol}`)
+      formik.setFieldValue('decimails', tokenData.decimals)
     }
-    const preview = URL.createObjectURL(file)
-    setToken({ ...token, file, filePath: preview })
-  }
-
-  const handleCreateClick = async () => {
-    const kycTypeJson = Object.keys(token.kycTypeJson).reduce(
-      (acc, key) => (key.includes('Acc') ? { ...acc, [key]: token.kycTypeJson[key] } : acc),
-      {}
-    )
-    setIsLoading(true)
-    const validationErrors = validateToken(token)
-    const hasError = Object.values(validationErrors).some((value) => Boolean(value) === true)
-    const formattedData = { ...token, kycType: JSON.stringify(kycTypeJson) }
-
-    if (hasError) {
-      setErrors(validationErrors)
-      setHasErrorOnSubmit(true)
-    } else {
-      let data = null
-      if (token.id) {
-        data = await updateToken(formattedData)
-        if (data) {
-          addPopup({
-            info: {
-              success: true,
-              summary: 'Token was successfully updated.',
-            },
-          })
-        }
-      } else {
-        data = await addToken(currentIssuer.id, formattedData)
-        if (data) {
-          addPopup({
-            info: {
-              success: true,
-              summary: 'Token was successfully created.',
-            },
-          })
-        }
-      }
-
-      if (data) {
-        toggle()
-        getIssuers({ search: '', offset, page: 1 })
-        setCurrentToken(null)
-        setToken(initialTokenState)
-      } else {
-        addPopup({
-          info: {
-            success: false,
-            summary: 'Something went wrong',
-          },
-        })
-      }
-      resetErrors()
-      setHasErrorOnSubmit(false)
-    }
-    setIsLoading(false)
-  }
-
-  const handleWrappedTokenChange = async (e: string) => {
-    setIsLoading(true)
-    let newToken = { ...token, wrappedTokenAddress: e }
-
-    if (isValidAddress(e)) {
-      const data = await checkWrappedAddress(e)
-      if (data) newToken = { ...newToken, tokenId: data.id }
-      else {
-        addPopup({
-          info: {
-            success: false,
-            summary: 'Something went wrong',
-          },
-        })
-      }
-    }
-
-    setToken(newToken)
-    setIsLoading(false)
-  }
-
-  const countries = useMemo(() => {
-    return getNames()
-      .map((name, index) => ({ id: ++index, name }))
-      .sort((a, b) => a.name.localeCompare(b.name))
-  }, [])
-
-  const chainsOptions = useMemo(
-    () => [
-      { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Polygon' },
-      { id: SUPPORTED_TGE_CHAINS.BASE, name: 'Base' },
-    ],
-    []
-  )
-
-  const selectedChainOption = useMemo(() => {
-    if (!token) return {}
-    return chainsOptions.find(({ id }) => id === token.chainId)
-  }, [token, chainsOptions])
+  }, [JSON.stringify(tokenData)])
 
   return (
     <Content>
-      <AreYouSureModal isOpen={isConfirmOpen} onDecline={closeConfirm} onAccept={confirmClose} />
-
       <Title>Add Token</Title>
 
       <FormWrap>
@@ -326,9 +255,10 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
               <Trans>Cancel</Trans>
             </ButtonOutlined>
             <PinnedContentButton
-              onClick={handleCreateClick}
+              type="submit"
+              onClick={formik.submitForm}
+              disabled={formik.isSubmitting}
               style={{ width: '200px', height: 48, fontSize: 14 }}
-              disabled={isLoading}
             >
               <Trans>Save</Trans>
             </PinnedContentButton>
@@ -337,8 +267,8 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
 
         <StyledStickyBox style={{ marginBottom: isMobile ? '100px' : '1700px' }}>
           <ProgressBar
-            // isSubmitting={formik.isSubmitting}
-            // submitForm={formik.submitForm}
+            isSubmitting={formik.isSubmitting}
+            submitForm={formik.submitForm}
             topics={[
               {
                 title: 'General Info',
@@ -399,10 +329,6 @@ const Title = styled.h1`
 const FormContainer = styled.div`
   gap: 20px;
   flex-grow: 1;
-
-  & > * + * {
-    margin-top: 20px;
-  }
 `
 
 const StyledStickyBox = styled(StickyBox).attrs(() => ({ offsetTop: 100 }))`
@@ -414,6 +340,7 @@ const FormCard = styled.div<{ filled?: boolean }>`
   background: #ffffff;
   padding: 32px;
   border-radius: 8px;
+  margin-bottom: 24px;
 
   .title {
     color: #292933;

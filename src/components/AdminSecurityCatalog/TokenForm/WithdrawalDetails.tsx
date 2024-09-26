@@ -19,29 +19,31 @@ const WithdrawalDetails: React.FC<WithdrawalDetailsProps> = ({ formik }) => {
             <Label htmlFor="network">Withdraw Fee</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Withdraw Fee"
+              id="withdrawFee"
+              name="withdrawFee"
+              value={formik.values.withdrawFee}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.withdrawFee)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
+            {Boolean(formik.errors.withdrawFee) ? <ErrorText>{formik.errors.withdrawFee}</ErrorText> : null}
           </FormWrapper>
           <FormWrapper>
             <Label htmlFor="network">Withdraw Fee Address</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Withdraw Fee Addresse"
+              id="withdrawFeeAddress"
+              name="withdrawFeeAddress"
+              value={formik.values.withdrawFeeAddress}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.withdrawFeeAddress)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
+            {Boolean(formik.errors.withdrawFeeAddress) ? (
+              <ErrorText>{formik.errors.withdrawFeeAddress}</ErrorText>
+            ) : null}
           </FormWrapper>
         </FormGrid>
       </Box>

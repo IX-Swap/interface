@@ -1,65 +1,40 @@
+import { getNames } from 'country-list'
+
 import { Line } from 'components/Line'
 import Loader from 'components/Loader'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { UploaderLBP } from 'pages/KYC/common'
 import { FormGrid } from 'pages/KYC/styleds'
 import { FormWrapper, InputWithLabel, Label } from 'pages/Tenant/components/styleds'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { Box } from 'rebass'
 import { useShowError } from 'state/application/hooks'
 import styled from 'styled-components'
+import { industries } from '../mock'
+import StyledSelect from '../StyledSelect'
+import { blockchainNetworks } from 'pages/KYC/mock'
 
 interface GeneralInfoProps {
   formik: any
 }
 
 const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
-  const [values, setValues] = useState<any>({
-    LBPLogo: null,
-    LBPBanner: null,
-  })
-  const [loading, setLoading] = useState<boolean>(false)
-  const [touched, setTouched] = useState<{ [key: string]: boolean }>({
-    LBPLogo: false,
-    LBPBanner: false,
-  })
-  const [errorLogo, setErrorLogo] = useState<string>('')
-  const [errorBanner, setErrorBanner] = useState<string>('')
+  console.log('formik', formik)
 
-  const showError = useShowError()
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const countries = useMemo(() => {
+    return getNames()
+      .map((name, index) => ({ value: ++index, label: name }))
+      .sort((a, b) => a.label.localeCompare(b.label))
+  }, [])
 
   const handleDropImage = (acceptedFile: any, key: string) => {
-    const setError = key === 'LBPLogo' ? setErrorLogo : setErrorBanner
-
-    if (acceptedFile?.size > MAX_FILE_UPLOAD_SIZE) {
-      showError(MAX_FILE_UPLOAD_SIZE_ERROR)
-      setError(MAX_FILE_UPLOAD_SIZE_ERROR)
-    } else if (values[key]) {
-      showError('You can only upload one image at a time.')
-      setError('You can only upload one image at a time.')
-    } else {
-      const updatedValues = { ...values, [key]: acceptedFile }
-      setValues(updatedValues)
-      // onChange(updatedValues)
-      setError('')
-    }
+    formik.setFieldValue(key, acceptedFile)
   }
 
   const handleImageDelete = (key: string) => {
-    const updatedValues = { ...values, [key]: null }
-    setValues(updatedValues)
-    // onChange(updatedValues)
-  }
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
-    const { value } = e.target
-    const updatedValues = { ...values, [name]: value }
-    setValues(updatedValues)
-    // onChange(updatedValues)
-  }
-
-  const handleTouch = (key: string) => {
-    setTouched((prevTouched) => ({ ...prevTouched, [key]: true }))
+    formik.setFieldValue(key, null)
   }
 
   return (
@@ -68,56 +43,32 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
 
       <Box mt={3}>
         <FormGrid columns={2}>
-          {!loading ? (
-            <div>
-              <UploaderLBP
-                name="logo"
-                showLabel={false}
-                onChange={(e) => handleInputChange(e, 'LBPLogo')}
-                title="Mini Logo"
-                files={values.LBPLogo ? [values.LBPLogo] : []}
-                handleDeleteClick={() => handleImageDelete('LBPLogo')}
-                onDrop={(file) => {
-                  handleDropImage(file, 'LBPLogo')
-                  handleTouch('LBPLogo')
-                }}
-              />
-              {errorLogo ? (
-                <ErrorText>{errorLogo}</ErrorText>
-              ) : (
-                touched.LBPLogo && values.LBPLogo === null && <ErrorText>Please upload a logo</ErrorText>
-              )}
-            </div>
-          ) : (
-            <LoadingIndicator>
-              <Loader />
-            </LoadingIndicator>
-          )}
-          {!loading ? (
-            <div>
-              <UploaderLBP
-                name="banner"
-                showLabel={false}
-                onChange={(e) => handleInputChange(e, 'LBPBanner')}
-                title="Logo"
-                files={values.LBPBanner ? [values.LBPBanner] : []}
-                handleDeleteClick={() => handleImageDelete('LBPBanner')}
-                onDrop={(file) => {
-                  handleDropImage(file, 'LBPBanner')
-                  handleTouch('LBPBanner')
-                }}
-              />
-              {errorBanner ? (
-                <ErrorText>{errorBanner}</ErrorText>
-              ) : (
-                touched.LBPBanner && values.LBPBanner === null && <ErrorText>Please upload a banner</ErrorText>
-              )}
-            </div>
-          ) : (
-            <LoadingIndicator>
-              <Loader />
-            </LoadingIndicator>
-          )}
+          <div>
+            <UploaderLBP
+              name="miniLogo"
+              showLabel={false}
+              title="Mini Logo"
+              files={formik.values.miniLogo ? [formik.values.miniLogo] : []}
+              handleDeleteClick={() => handleImageDelete('miniLogo')}
+              onDrop={(file) => {
+                handleDropImage(file, 'miniLogo')
+              }}
+            />
+            {Boolean(formik.errors.miniLogo) ? <ErrorText>{formik.errors.miniLogo}</ErrorText> : null}
+          </div>
+          <div>
+            <UploaderLBP
+              name="logo"
+              showLabel={false}
+              title="Logo"
+              files={formik.values.logo ? [formik.values.logo] : []}
+              handleDeleteClick={() => handleImageDelete('logo')}
+              onDrop={(file) => {
+                handleDropImage(file, 'logo')
+              }}
+            />
+            {Boolean(formik.errors.logo) ? <ErrorText>{formik.errors.logo}</ErrorText> : null}
+          </div>
         </FormGrid>
 
         <FormGrid columns={2}>
@@ -125,60 +76,62 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
             <Label htmlFor="network">Company Name</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Company Name"
+              id="companyName"
+              name="companyName"
+              value={formik.values.companyName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.companyName)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
+            {Boolean(formik.errors.companyName) ? <ErrorText>{formik.errors.companyName}</ErrorText> : null}
           </FormWrapper>
           <FormWrapper>
             <Label htmlFor="network">URL</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Official Website"
+              id="url"
+              name="url"
+              value={formik.values.url}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.url)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
+            {Boolean(formik.errors.url) ? <ErrorText>{formik.errors.url}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
 
         <FormGrid columns={2}>
           <FormWrapper>
-            <Label htmlFor="network">Industry</Label>
+            <Label htmlFor="industry">Industry</Label>
 
-            <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+            <StyledSelect
+              id="industry"
+              name="industry"
+              placeholder="Select Industry"
+              isClearable={false}
+              isSearchable={false}
+              options={industries.map((industry) => ({ value: industry.id, label: industry.name }))}
+              value={formik.values.industry}
+              onSelect={(value) => formik.setFieldValue('industry', value)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
+            {Boolean(formik.errors.industry) ? <ErrorText>{formik.errors.industry}</ErrorText> : null}
           </FormWrapper>
           <FormWrapper>
             <Label htmlFor="network">Country</Label>
 
-            <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+            <StyledSelect
+              id="country"
+              name="country"
+              placeholder="Select Country"
+              isClearable={false}
+              isSearchable={false}
+              options={countries}
+              value={formik.values.country}
+              onSelect={(value) => formik.setFieldValue('country', value)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
+            {Boolean(formik.errors.country) ? <ErrorText>{formik.errors.country}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
 
@@ -198,6 +151,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               onBlur={formik.handleBlur}
               error={Boolean(formik.errors.description)}
             />
+            {Boolean(formik.errors.description) ? <ErrorText>{formik.errors.description}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
 
@@ -205,47 +159,47 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
 
         <FormGrid columns={3}>
           <FormWrapper>
-            <Label htmlFor="network">Token Name</Label>
+            <Label htmlFor="originalName">Token Name</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Token name"
+              id="originalName"
+              name="originalName"
+              disabled
+              value={formik.values.originalName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.originalName)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
           <FormWrapper>
-            <Label htmlFor="network">Symbol</Label>
+            <Label htmlFor="originalSymbol">Symbol</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Symbol"
+              id="originalSymbol"
+              name="originalSymbol"
+              disabled
+              value={formik.values.originalSymbol}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.originalSymbol)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
 
           <FormWrapper>
-            <Label htmlFor="network">Decimals</Label>
+            <Label htmlFor="originalDecimals">Decimals</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Decimals"
+              id="originalDecimals"
+              name="originalDecimals"
+              disabled
+              value={formik.values.originalDecimals}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.originalDecimals)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
 
@@ -253,30 +207,31 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
           <FormWrapper>
             <Label htmlFor="network">Original Network</Label>
 
-            <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+            <StyledSelect
+              id="originNetwork"
+              name="originNetwork"
+              isDisabled
+              placeholder="Choose Network"
+              isClearable={false}
+              isSearchable={false}
+              options={blockchainNetworks}
+              value={formik.values.originNetwork}
+              onSelect={(value) => formik.setFieldValue('originNetwork', value)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
           <FormWrapper>
             <Label htmlFor="network">Token Address</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Token Address"
+              id="originalAddress"
+              name="originalAddress"
+              disabled
+              value={formik.values.originalAddress}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.originalAddress)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
       </Box>

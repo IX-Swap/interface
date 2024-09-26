@@ -19,7 +19,8 @@ const WrappedTokenDetails: React.FC<WrappedTokenDetailsProps> = ({ formik }) => 
             <Label htmlFor="network">Wrapped Token Name</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
+              disabled
+              placeholder="Wrapped Token Name"
               id="name"
               name="name"
               value={formik.values.name}
@@ -27,36 +28,35 @@ const WrappedTokenDetails: React.FC<WrappedTokenDetailsProps> = ({ formik }) => 
               onBlur={formik.handleBlur}
               error={Boolean(formik.errors.name)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
           <FormWrapper>
-            <Label htmlFor="network">Wrapped Symbol</Label>
+            <Label htmlFor="symbol">Wrapped Symbol</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              disabled
+              placeholder="Wrapped Symbol"
+              id="symbol"
+              name="symbol"
+              value={formik.values.symbol}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.symbol)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
 
           <FormWrapper>
             <Label htmlFor="network">Wrapped Decimals</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              disabled
+              placeholder="Wrapped Decimals"
+              id="decimails"
+              name="decimails"
+              value={formik.values.decimails}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.decimails)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
       </Box>

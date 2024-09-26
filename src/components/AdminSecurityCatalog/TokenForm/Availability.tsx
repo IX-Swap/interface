@@ -1,25 +1,21 @@
 import { FormGrid } from 'pages/KYC/styleds'
 import React from 'react'
-import { Box, Flex } from 'rebass'
 import styled from 'styled-components'
-import { Checkbox } from 'components/Checkbox'
-import { defaultKycType } from '../mock'
-import Toggle from 'components/Toggle'
+import { Checkbox, Switch } from '@mui/material'
+import { FormControlLabel, Label } from 'pages/Tenant/components/styleds'
 
-const options = [
-  { label: 'Individuals - Accredited Investors', value: 'individualAccredited' },
-  { label: 'Individuals - NOT Accredited Investors', value: 'individualAccreditedNot' },
-  { label: 'Corporate - Accredited Investors', value: 'corporateAccredited' },
-  { label: 'Corporate - NOT Accredited Investors', value: 'corporateAccreditedNot' },
-]
+const kycTypeMapping = {
+  individualAccredited: 'Individuals - Accredited Investors',
+  individualAccreditedNot: 'Individuals - NOT Accredited Investors',
+  corporateAccredited: 'Corporate - Accredited Investors',
+  corporateAccreditedNot: 'Corporate - NOT Accredited Investors',
+} as any
 
 interface AvailabilityProps {
   formik: any
 }
 
 const Availability: React.FC<AvailabilityProps> = ({ formik }) => {
-  const kycType = defaultKycType as any
-
   return (
     <>
       <h1 className="title">Availability</h1>
@@ -27,26 +23,73 @@ const Availability: React.FC<AvailabilityProps> = ({ formik }) => {
       <FormGrid columns={2} style={{ marginTop: 24 }}>
         <div>
           <Options>
-            {options.map(({ value, label }) => (
-              <Checkbox key={value} label={label} onClick={() => {}} checked={kycType[value]} />
+            {Object.keys(formik.values.kycType).map((item) => (
+              <div key={item}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name={`kycType.${item}`}
+                      checked={formik.values.kycType[item]}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                  }
+                  label={kycTypeMapping[item]}
+                />
+              </div>
             ))}
           </Options>
         </div>
 
-        <Box>
-          <Flex alignItems="center" mb="24px">
-            <Toggle isActive={true} toggle={() => {}} showLabel={false} /> <LabelRadio>Active</LabelRadio>
-          </Flex>
-          <Flex alignItems="center" mb="24px">
-            <Toggle isActive={true} toggle={() => {}} showLabel={false} /> <LabelRadio>Featured</LabelRadio>
-          </Flex>
-          <Flex alignItems="center" mb="24px">
-            <Toggle isActive={true} toggle={() => {}} showLabel={false} /> <LabelRadio>Allow Withdrawal</LabelRadio>
-          </Flex>
-          <Flex alignItems="center" mb="24px">
-            <Toggle isActive={true} toggle={() => {}} showLabel={false} /> <LabelRadio>Allow Deposit</LabelRadio>
-          </Flex>
-        </Box>
+        <Options>
+          <FormControlLabel
+            control={
+              <Switch
+                name="active"
+                checked={formik.values.active}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            }
+            label={<Label>Active</Label>}
+          />
+
+          <FormControlLabel
+            control={
+              <Switch
+                name="featured"
+                checked={formik.values.featured}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            }
+            label={<Label>Featured</Label>}
+          />
+
+          <FormControlLabel
+            control={
+              <Switch
+                name="allowWithdrawal"
+                checked={formik.values.allowWithdrawal}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            }
+            label={<Label>Allow Withdrawal</Label>}
+          />
+
+          <FormControlLabel
+            control={
+              <Switch
+                name="allowDeposit"
+                checked={formik.values.allowDeposit}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            }
+            label={<Label>Allow Deposit</Label>}
+          />
+        </Options>
       </FormGrid>
     </>
   )
@@ -66,7 +109,6 @@ const ErrorText = styled.span`
 const Options = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
 `
 
 const LabelRadio = styled.div`

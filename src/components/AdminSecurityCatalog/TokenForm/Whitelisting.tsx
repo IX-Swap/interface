@@ -1,23 +1,41 @@
 import { FormControlLabel, Switch } from '@mui/material'
 import { FormGrid } from 'pages/KYC/styleds'
 import { FormWrapper, InputWithLabel, Label } from 'pages/Tenant/components/styleds'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box } from 'rebass'
 import styled from 'styled-components'
+import StyledSelect from '../StyledSelect'
 
 interface WhitelistingProps {
   formik: any
 }
 
 const Whitelisting: React.FC<WhitelistingProps> = ({ formik }) => {
+  const platforms = [
+    { value: 'investax', label: 'XTokenLite' },
+    { value: 'ixswap', label: 'XTokenProxy' },
+  ] as any
+
+  useEffect(() => {
+    const value = formik?.values?.whitelistPlatform?.value
+
+    if (value === 'investax') {
+      formik.setFieldValue('whitelistContractAddress', formik.values.originalAddress)
+      formik.setFieldValue('whitelistFunction', 'addToWhitelist')
+    } else if (value === 'ixswap') {
+      formik.setFieldValue('whitelistContractAddress', '')
+      formik.setFieldValue('whitelistFunction', 'addWhitelistInvestor')
+    }
+  }, [JSON.stringify(formik.values.whitelistPlatform)])
+
   return (
     <>
       <Box>
         <FormControlLabel
           control={
             <Switch
-              name="enableLaunchpadBanner"
-              checked={formik.values.enableLaunchpadBanner}
+              name="needsWhitelisting"
+              checked={formik.values.needsWhitelisting}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
@@ -25,36 +43,43 @@ const Whitelisting: React.FC<WhitelistingProps> = ({ formik }) => {
           label={<Label>Whitelisting</Label>}
         />
 
-        <FormGrid columns={2}>
-          <FormWrapper>
-            <Label htmlFor="network">Whitelist Platform</Label>
+        {formik.values.needsWhitelisting ? (
+          <FormGrid columns={2}>
+            <FormWrapper>
+              <Label htmlFor="network">Whitelist Platform</Label>
 
-            <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
-            />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
-          </FormWrapper>
-          <FormWrapper>
-            <Label htmlFor="network">Whitelist Contract Address</Label>
+              <StyledSelect
+                id="whitelistPlatform"
+                name="whitelistPlatform"
+                placeholder="Select Whitelist Platform"
+                isClearable={false}
+                isSearchable={false}
+                options={platforms}
+                value={formik.values.whitelistPlatform}
+                onSelect={(value) => formik.setFieldValue('whitelistPlatform', value)}
+              />
+              {Boolean(formik.errors.whitelistPlatform) ? (
+                <ErrorText>{formik.errors.whitelistPlatform}</ErrorText>
+              ) : null}
+            </FormWrapper>
+            <FormWrapper>
+              <Label htmlFor="network">Whitelist Contract Address</Label>
 
-            <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
-            />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
-          </FormWrapper>
-        </FormGrid>
+              <InputWithLabel
+                placeholder="Whitelist Contract Address"
+                id="whitelistContractAddress"
+                name="whitelistContractAddress"
+                value={formik.values.whitelistContractAddress}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={Boolean(formik.errors.whitelistContractAddress)}
+              />
+              {Boolean(formik.errors.whitelistContractAddress) ? (
+                <ErrorText>{formik.errors.whitelistContractAddress}</ErrorText>
+              ) : null}
+            </FormWrapper>
+          </FormGrid>
+        ) : null}
       </Box>
     </>
   )

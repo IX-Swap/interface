@@ -16,32 +16,30 @@ const CustodyDetails: React.FC<CustodyDetailsProps> = ({ formik }) => {
       <Box>
         <FormGrid columns={2}>
           <FormWrapper>
-            <Label htmlFor="network">Custody Vault ID</Label>
+            <Label htmlFor="custodyVaultId">Custody Vault ID</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Custody Vault ID"
+              id="custodyVaultId"
+              name="custodyVaultId"
+              value={formik.values.custodyVaultId}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.custodyVaultId)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
           <FormWrapper>
             <Label htmlFor="network">Custody Asset ID</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Custody Asset ID"
+              id="custodyAssetId"
+              name="custodyAssetId"
+              value={formik.values.custodyAssetId}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.custodyAssetId)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
 
@@ -50,15 +48,14 @@ const CustodyDetails: React.FC<CustodyDetailsProps> = ({ formik }) => {
             <Label htmlFor="network">Custody Asset Address</Label>
 
             <InputWithLabel
-              placeholder="Tenant name"
-              id="name"
-              name="name"
-              value={formik.values.name}
+              placeholder="Custody Asset Address"
+              id="custodyAssetAddress"
+              name="custodyAssetAddress"
+              value={formik.values.custodyAssetAddress}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.custodyAssetAddress)}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
       </Box>
