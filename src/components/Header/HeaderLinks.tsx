@@ -47,8 +47,8 @@ const HeaderPopover = () => {
           <Trans>Staking</Trans>
         </TYPE.body2> */}
 
-        <SubMenuExternalLink style={{ fontSize: '13px' }} href={`https://ixswap.defiterm.io/`}>
-          <Trans>Live Pools</Trans>
+        <SubMenuExternalLink style={{ fontSize: '13px' }} href={`https://staking.ixswap.io/`}>
+          <Trans>Staking on Base</Trans>
         </SubMenuExternalLink>
       </Column>
 
@@ -57,7 +57,7 @@ const HeaderPopover = () => {
       </Row>
 
       <Column style={{ gap: 3 }}>
-        {/* <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
+        {/* <SubMenuExternalLink href={`https://staking.ixswap.io/`}>
           <Trans>Liquidity Mining Program (Quickswap)</Trans>
         </SubMenuExternalLink>
 
@@ -188,7 +188,7 @@ export const HeaderLinks = () => {
         >
           <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom-start'}>
             <RowFixed onClick={toggle}>
-              <Trans>Farming</Trans>
+              <Trans>Staking</Trans>
               <ChevronElement marginLeft={5} showMore={open} />
             </RowFixed>
           </Popover>
