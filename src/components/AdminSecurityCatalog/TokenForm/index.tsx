@@ -47,15 +47,6 @@ const validationSchema = yup.object().shape({
       'Unsupported file format. Only JPG, PNG, and GIF are allowed.',
       (value) => !value || (value && SUPPORTED_FORMATS.includes(value.type))
     ),
-  miniLogo: yup
-    .mixed()
-    .required('Mini logo is required')
-    .test('fileSize', 'File too large. Maximum size is 2MB.', (value) => !value || (value && value.size <= FILE_SIZE))
-    .test(
-      'fileFormat',
-      'Unsupported file format. Only JPG, PNG, and GIF are allowed.',
-      (value) => !value || (value && SUPPORTED_FORMATS.includes(value.type))
-    ),
   companyName: yup.string().required('Company name is required'),
   url: yup.string().url('Invalid URL').required('URL is required'),
   industry: selectSchema.required('Industry is required'),
@@ -92,7 +83,6 @@ interface ITokenData {
   id?: string
   ticker: string
   logo: any
-  miniLogo: any
   companyName: string
   description: string
   url: string
@@ -126,7 +116,6 @@ interface ITokenData {
 const initialValues: ITokenData = {
   ticker: '',
   logo: null,
-  miniLogo: null,
   companyName: '',
   description: '',
   url: '',
@@ -178,7 +167,7 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
         }
         formData.append('issuerId', currentIssuer.id)
         for (const key in values) {
-          if (key === 'logo' || key === 'miniLogo') {
+          if (key === 'logo') {
             formData.append(key, values[key], values[key].name)
           } else if (['country', 'industry', 'originNetwork'].includes(key)) {
             formData.append(key, values[key].value)

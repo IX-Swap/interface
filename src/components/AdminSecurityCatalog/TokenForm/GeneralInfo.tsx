@@ -42,20 +42,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
       <h1 className="title">General Info</h1>
 
       <Box mt={3}>
-        <FormGrid columns={2}>
-          <div>
-            <UploaderLBP
-              name="miniLogo"
-              showLabel={false}
-              title="Mini Logo"
-              files={formik.values.miniLogo ? [formik.values.miniLogo] : []}
-              handleDeleteClick={() => handleImageDelete('miniLogo')}
-              onDrop={(file) => {
-                handleDropImage(file, 'miniLogo')
-              }}
-            />
-            {Boolean(formik.errors.miniLogo) ? <ErrorText>{formik.errors.miniLogo}</ErrorText> : null}
-          </div>
+        <FormGrid columns={1}>
           <div>
             <UploaderLBP
               name="logo"
