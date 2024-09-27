@@ -17,6 +17,8 @@ import CustodyDetails from './CustodyDetails'
 import WithdrawalDetails from './WithdrawalDetails'
 import Whitelisting from './Whitelisting'
 import Availability from './Availability'
+import apiService from 'services/apiService'
+import { toast } from 'react-toastify'
 
 const FILE_SIZE = 10 * 1024 * 1024 // 10 MB
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/svg+xml']
@@ -97,14 +99,12 @@ interface ITokenData {
   industry: ISelect | null
   country: ISelect | null
   network: ISelect | null
-  atlasOneId: string
+  brokerDealerId: string | number
   active: boolean
   featured: boolean
   allowDeposit: boolean
   allowWithdrawal: boolean
   chainId: number
-  wrappedTokenAddress: string
-  tokenId: string
   whitelistPlatform: ISelect | null
   needsWhitelisting: boolean
   originalSymbol: string
@@ -120,6 +120,7 @@ interface ITokenData {
   withdrawFeeAddress: string
   kycType: any
   checkWhitelistFunciton: string
+  platformId: number
 }
 
 const initialValues: ITokenData = {
@@ -132,14 +133,12 @@ const initialValues: ITokenData = {
   industry: null,
   country: null,
   network: null,
-  atlasOneId: '',
+  brokerDealerId: 1,
   active: false,
   featured: false,
   allowDeposit: false,
   allowWithdrawal: false,
   chainId: SUPPORTED_TGE_CHAINS.MATIC,
-  wrappedTokenAddress: '',
-  tokenId: '',
   whitelistPlatform: null,
   needsWhitelisting: false,
   originalSymbol: '',
@@ -155,6 +154,7 @@ const initialValues: ITokenData = {
   withdrawFeeAddress: '',
   kycType,
   checkWhitelistFunciton: 'ifWhitelisted',
+  platformId: 3
 }
 
 const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setCurrentToken, toggle }: Props) => {
@@ -165,9 +165,37 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
     initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values: any) => {
+      debugger
+      console.log('values', values)
       try {
         formik.setSubmitting(true)
-        console.log('values', values)
+        const formData = new FormData()
+        if (!values.needsWhitelisting) {
+          delete values.whitelistPlatform
+          delete values.whitelistContractAddress
+          delete values.checkWhitelistFunciton
+          delete values.whitelistFunction
+        }
+        formData.append('issuerId', currentIssuer.id)
+        for (const key in values) {
+          if (key === 'logo' || key === 'miniLogo') {
+            formData.append(key, values[key], values[key].name)
+          } else if (['country', 'industry', 'originNetwork'].includes(key)) {
+            formData.append(key, values[key].value)
+          } else if (key === 'kycType') {
+            formData.append(key, JSON.stringify(values[key]))
+          } else {
+            formData.append(key, values[key])
+          }
+        }
+        const response = await apiService.post('/token', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        if (response.status === 200) {
+          toast.success('Tenant create successfully')
+        }
       } catch (e: any) {
         console.error(e)
       } finally {
@@ -210,6 +238,7 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
       formik.setFieldValue('ticker', `Wrapped ${tokenData.name}`)
       formik.setFieldValue('symbol', `w${tokenData.symbol}`)
       formik.setFieldValue('decimails', tokenData.decimals)
+      formik.setFieldValue('chainId', tokenData?.network?.chainId)
     }
   }, [JSON.stringify(tokenData)])
 
