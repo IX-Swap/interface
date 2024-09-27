@@ -101,6 +101,7 @@ interface ITokenData {
   originalName: string
   originalDecimals: number | string
   originalAddress: string
+  originalNetwork: ISelect | null
   symbol: string
   decimails: number | string
   custodyVaultId: number | string
@@ -134,6 +135,7 @@ const initialValues: ITokenData = {
   originalName: '',
   originalDecimals: '',
   originalAddress: '',
+  originalNetwork: null,
   symbol: '',
   decimails: '',
   custodyVaultId: '',
@@ -222,7 +224,8 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
       formik.setFieldValue('originalName', tokenData.name)
       formik.setFieldValue('originalSymbol', tokenData.symbol)
       formik.setFieldValue('originalDecimals', tokenData.decimals)
-      formik.setFieldValue('originNetwork', tokenData.network)
+      formik.setFieldValue('originalNetwork', tokenData.network)
+      formik.setFieldValue('network', tokenData.network)
       formik.setFieldValue('name', `Wrapped ${tokenData.name}`)
       formik.setFieldValue('ticker', `Wrapped ${tokenData.name}`)
       formik.setFieldValue('symbol', `w${tokenData.symbol}`)

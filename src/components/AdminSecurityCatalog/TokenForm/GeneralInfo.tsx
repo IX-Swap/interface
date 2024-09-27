@@ -1,14 +1,11 @@
 import { getNames } from 'country-list'
 
 import { Line } from 'components/Line'
-import Loader from 'components/Loader'
-import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { UploaderLBP } from 'pages/KYC/common'
 import { FormGrid } from 'pages/KYC/styleds'
 import { FormWrapper, InputWithLabel, Label } from 'pages/Tenant/components/styleds'
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Box } from 'rebass'
-import { useShowError } from 'state/application/hooks'
 import styled from 'styled-components'
 import { industries } from '../mock'
 import StyledSelect from '../StyledSelect'
@@ -20,8 +17,6 @@ interface GeneralInfoProps {
 
 const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
   console.log('formik', formik)
-
-  const [loading, setLoading] = useState<boolean>(false)
 
   const countries = useMemo(() => {
     return getNames()
@@ -195,15 +190,15 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
             <Label htmlFor="network">Original Network</Label>
 
             <StyledSelect
-              id="originNetwork"
-              name="originNetwork"
+              id="originalNetwork"
+              name="originalNetwork"
               isDisabled
               placeholder="Choose Network"
               isClearable={false}
               isSearchable={false}
               options={blockchainNetworks}
-              value={formik.values.originNetwork}
-              onSelect={(value) => formik.setFieldValue('originNetwork', value)}
+              value={formik.values.originalNetwork}
+              onSelect={(value) => formik.setFieldValue('originalNetwork', value)}
             />
           </FormWrapper>
           <FormWrapper>
