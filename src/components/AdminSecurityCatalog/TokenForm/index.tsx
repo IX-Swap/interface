@@ -171,7 +171,7 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
         for (const key in values) {
           if (key === 'logo') {
             formData.append(key, values[key], values[key].name)
-          } else if (['country', 'industry', 'originNetwork'].includes(key)) {
+          } else if (['country', 'industry', 'originalNetwork', 'network'].includes(key)) {
             formData.append(key, values[key].value)
           } else if (key === 'kycType') {
             formData.append(key, JSON.stringify(values[key]))
