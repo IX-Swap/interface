@@ -189,7 +189,7 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
             'Content-Type': 'multipart/form-data',
           },
         })
-        if (response.status === 200) {
+        if (response.status === 201) {
           toast.success('Tenant create successfully')
         }
       } catch (e: any) {

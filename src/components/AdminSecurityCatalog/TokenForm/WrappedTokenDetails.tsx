@@ -50,12 +50,12 @@ const WrappedTokenDetails: React.FC<WrappedTokenDetailsProps> = ({ formik }) => 
             <InputWithLabel
               disabled
               placeholder="Wrapped Decimals"
-              id="decimails"
-              name="decimails"
-              value={formik.values.decimails}
+              id="decimals"
+              name="decimals"
+              value={formik.values.decimals}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.decimails)}
+              error={Boolean(formik.errors.decimals)}
             />
           </FormWrapper>
         </FormGrid>
