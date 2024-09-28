@@ -16,8 +16,6 @@ interface GeneralInfoProps {
 }
 
 const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
-  console.log('formik', formik)
-
   const countries = useMemo(() => {
     return getNames()
       .map((name, index) => ({ value: ++index, label: name }))

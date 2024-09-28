@@ -19,6 +19,7 @@ import Whitelisting from './Whitelisting'
 import Availability from './Availability'
 import apiService from 'services/apiService'
 import { toast } from 'react-toastify'
+import Loader from 'components/Loader'
 
 const FILE_SIZE = 10 * 1024 * 1024 // 10 MB
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/svg+xml']
@@ -103,14 +104,14 @@ interface ITokenData {
   originalAddress: string
   originalNetwork: ISelect | null
   symbol: string
-  decimails: number | string
+  decimals: number | string
   custodyVaultId: number | string
   custodyAssetId: number | string
   custodyAssetAddress: string
   withdrawFee: number | string
   withdrawFeeAddress: string
   kycType: any
-  checkWhitelistFunciton: string
+  whitelistFunction: string
   platformId: number
 }
 
@@ -137,15 +138,15 @@ const initialValues: ITokenData = {
   originalAddress: '',
   originalNetwork: null,
   symbol: '',
-  decimails: '',
+  decimals: 18,
   custodyVaultId: '',
   custodyAssetId: '',
   custodyAssetAddress: '',
   withdrawFee: '',
   withdrawFeeAddress: '',
   kycType,
-  checkWhitelistFunciton: 'ifWhitelisted',
-  platformId: 3
+  whitelistFunction: 'ifWhitelisted',
+  platformId: 4,
 }
 
 const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setCurrentToken, toggle }: Props) => {
@@ -155,6 +156,8 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
   const formik = useFormik<ITokenData>({
     initialValues,
     validationSchema: validationSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: async (values: any) => {
       debugger
       console.log('values', values)
@@ -164,14 +167,16 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
         if (!values.needsWhitelisting) {
           delete values.whitelistPlatform
           delete values.whitelistContractAddress
-          delete values.checkWhitelistFunciton
           delete values.whitelistFunction
+          delete values.whitelistFunction
+        } else {
+          formData.append('checkWhitelistFunction', 'isWhitelisted')
         }
         formData.append('issuerId', currentIssuer.id)
         for (const key in values) {
           if (key === 'logo') {
             formData.append(key, values[key], values[key].name)
-          } else if (['country', 'industry', 'originalNetwork', 'network'].includes(key)) {
+          } else if (['country', 'industry', 'originalNetwork', 'network', 'whitelistPlatform'].includes(key)) {
             formData.append(key, values[key].value)
           } else if (key === 'kycType') {
             formData.append(key, JSON.stringify(values[key]))
@@ -189,11 +194,14 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
         }
       } catch (e: any) {
         console.error(e)
+        toast.error(e.message)
       } finally {
         formik.setSubmitting(false)
       }
     },
   })
+
+  console.log('formik', formik)
 
   const getAtlasId = async () => {
     try {
@@ -229,7 +237,7 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
       formik.setFieldValue('name', `Wrapped ${tokenData.name}`)
       formik.setFieldValue('ticker', `Wrapped ${tokenData.name}`)
       formik.setFieldValue('symbol', `w${tokenData.symbol}`)
-      formik.setFieldValue('decimails', tokenData.decimals)
+      formik.setFieldValue('decimals', tokenData.decimals)
       formik.setFieldValue('chainId', tokenData?.network?.chainId)
     }
   }, [JSON.stringify(tokenData)])
@@ -268,7 +276,6 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
             <ButtonOutlined
               style={{ width: '200px', background: '#fff', fontSize: 14, marginRight: 16 }}
               onClick={onClose}
-              disabled={isLoading}
             >
               <Trans>Cancel</Trans>
             </ButtonOutlined>
@@ -278,7 +285,7 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
               disabled={formik.isSubmitting}
               style={{ width: '200px', height: 48, fontSize: 14 }}
             >
-              <Trans>Save</Trans>
+              {formik.isSubmitting ? <Loader size="18px" /> : null} Save
             </PinnedContentButton>
           </RowEnd>
         </FormContainer>
