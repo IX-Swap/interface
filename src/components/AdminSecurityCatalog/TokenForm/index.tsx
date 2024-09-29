@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { useFormik } from 'formik'
 import styled from 'styled-components'
@@ -20,6 +20,9 @@ import Availability from './Availability'
 import apiService from 'services/apiService'
 import { toast } from 'react-toastify'
 import Loader from 'components/Loader'
+import { countries, industries } from '../mock'
+import { getTokenContract } from 'hooks/useContract'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 const FILE_SIZE = 10 * 1024 * 1024 // 10 MB
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/svg+xml']
@@ -149,10 +152,8 @@ const initialValues: ITokenData = {
   platformId: 4,
 }
 
-const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setCurrentToken, toggle }: Props) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [token, setToken] = useState<any>(null)
-
+const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, setCurrentToken, toggle }: Props) => {
+  const { provider } = useWeb3React()
   const formik = useFormik<ITokenData>({
     initialValues,
     validationSchema: validationSchema,
@@ -184,13 +185,18 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
             formData.append(key, values[key])
           }
         }
-        const response = await apiService.post('/token', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        if (response.status === 201) {
-          toast.success('Tenant create successfully')
+
+        if (tokenData) {
+          const response = await apiService.post('/token', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          if (response.status === 201) {
+            toggle()
+            toast.success('Tenant create successfully')
+          }
+        } else {
         }
       } catch (e: any) {
         console.error(e)
@@ -203,27 +209,32 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
 
   console.log('formik', formik)
 
-  const getAtlasId = async () => {
-    try {
-      setIsLoading(true)
-      const res = await getAtlasIdByTicker(token.atlasOneId)
-      setToken({ ...token, atlasOneId: res.allIssuers[0]?.id || '' })
-      setIsLoading(false)
-    } catch (err) {
-      setToken({ ...token, atlasOneId: '' })
-      setIsLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    if (token?.atlasOneId && /^[a-zA-Z]{3,}/gm.test(token.atlasOneId)) {
-      getAtlasId()
-    }
-  }, [token?.atlasOneId])
-
   const onClose = () => {
     formik.resetForm()
     toggle()
+    setCurrentToken(null)
+  }
+
+  const getTokenInfo = async (tokenAddress: string) => {
+    try {
+      if (provider) {
+        const tokenContract = await getTokenContract(tokenAddress, provider)
+        const [decimals, symbol, name] = await Promise.all([
+          tokenContract?.callStatic?.decimals(),
+          tokenContract?.callStatic?.symbol(),
+          tokenContract?.callStatic?.name(),
+        ])
+
+        formik.setFieldValue('decimals', decimals)
+        formik.setFieldValue('symbol', symbol)
+        formik.setFieldValue('originalDecimals', decimals)
+        formik.setFieldValue('originalSymbol', symbol)
+        formik.setFieldValue('originalName', name)
+        formik.setFieldValue('originalAddress', tokenAddress)
+      }
+    } catch (e: any) {
+      console.error('Failed to fetch token contract', e)
+    }
   }
 
   useEffect(() => {
@@ -242,9 +253,25 @@ const TokenForm: FC<Props> = ({ token: propToken, tokenData, currentIssuer, setC
     }
   }, [JSON.stringify(tokenData)])
 
+  useEffect(() => {
+    if (editableToken) {
+      formik.setFieldValue('name', editableToken.ticker)
+      formik.setFieldValue('ticker', editableToken.ticker)
+      formik.setFieldValue('companyName', editableToken.companyName)
+      formik.setFieldValue('description', editableToken.description)
+      formik.setFieldValue('url', editableToken.url)
+      const country = countries.find((c) => c.value == editableToken.country)
+      const industry = industries.find((i) => i.id == editableToken.industry)
+      const industryMap = { value: industry?.id, label: industry?.name }
+      formik.setFieldValue('country', country)
+      formik.setFieldValue('industry', industryMap)
+      getTokenInfo(editableToken.address)
+    }
+  }, [JSON.stringify(editableToken)])
+
   return (
     <Content>
-      <Title>Add Token</Title>
+      <Title>{tokenData ? 'Add Token' : 'Edit Token'}</Title>
 
       <FormWrap>
         <FormContainer>

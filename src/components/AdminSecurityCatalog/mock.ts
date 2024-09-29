@@ -1,3 +1,5 @@
+import { getNames } from 'country-list'
+
 export const defaultKycType = {
   individualAccredited: false,
   individualAccreditedNot: false,
@@ -55,3 +57,7 @@ export const industries = [
   { id: 6, name: 'Collectibles' },
   { id: 7, name: 'Other' },
 ].sort((a, b) => a.name.localeCompare(b.name))
+
+export const countries = getNames()
+  .map((name, index) => ({ value: ++index, label: name }))
+  .sort((a, b) => a.label.localeCompare(b.label))

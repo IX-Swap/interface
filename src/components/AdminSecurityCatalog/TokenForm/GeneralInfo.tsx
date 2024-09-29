@@ -1,13 +1,12 @@
-import { getNames } from 'country-list'
+import React from 'react'
+import { Box } from 'rebass'
+import styled from 'styled-components'
 
 import { Line } from 'components/Line'
 import { UploaderLBP } from 'pages/KYC/common'
 import { FormGrid } from 'pages/KYC/styleds'
 import { FormWrapper, InputWithLabel, Label } from 'pages/Tenant/components/styleds'
-import React, { useMemo, useState } from 'react'
-import { Box } from 'rebass'
-import styled from 'styled-components'
-import { industries } from '../mock'
+import { industries, countries } from '../mock'
 import StyledSelect from '../StyledSelect'
 import { blockchainNetworks } from 'pages/KYC/mock'
 
@@ -16,12 +15,6 @@ interface GeneralInfoProps {
 }
 
 const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
-  const countries = useMemo(() => {
-    return getNames()
-      .map((name, index) => ({ value: ++index, label: name }))
-      .sort((a, b) => a.label.localeCompare(b.label))
-  }, [])
-
   const handleDropImage = (acceptedFile: any, key: string) => {
     formik.setFieldValue(key, acceptedFile)
   }

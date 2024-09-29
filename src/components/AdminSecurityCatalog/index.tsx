@@ -107,8 +107,9 @@ export const AdminSecurityCatalog: FC = () => {
 
   const handleEditTokenClick = (token: any) => {
     const editToken = token?.token ? { ...token, wrappedTokenAddress: token.token.address } : token
+    debugger
     setCurrentToken(editToken)
-    toggle()
+    setIsOpenTokenForm(true)
   }
 
   const handleSaveClick = async () => {
