@@ -47,6 +47,7 @@ interface Tab {
 }
 
 export const AdminSecurityCatalog: FC = () => {
+  const toggle = useTokenPopupToggle()
   useOnlyAdminAccess()
   const addIssuer = useAddIssuer()
   const editIssuer = useEditIssuer()
@@ -58,7 +59,6 @@ export const AdminSecurityCatalog: FC = () => {
     url: null,
   })
   const { issuers, loadingRequest } = useSecCatalogState()
-  const toggle = useTokenPopupToggle()
   const toggleDeleteTokenPopup = useDeleteTokenPopupToggle()
   const [searchValue, setSearchValue] = useState('')
   const [currentIssuer, setCurrentIssuer] = useState<null | any>(initialIssuerState)
@@ -105,9 +105,13 @@ export const AdminSecurityCatalog: FC = () => {
     })
   }
 
+  const handleCreateTokenClick = () => {
+    setCurrentToken(null)
+    toggle()
+  }
+
   const handleEditTokenClick = (token: any) => {
     const editToken = token?.token ? { ...token, wrappedTokenAddress: token.token.address } : token
-    debugger
     setCurrentToken(editToken)
     setIsOpenTokenForm(true)
   }
@@ -173,6 +177,11 @@ export const AdminSecurityCatalog: FC = () => {
     setCurrentIssuer({ ...currentIssuer, file, filePath: preview })
   }
 
+  const handleCloseTokenForm = () => {
+    setIsOpenTokenForm(false)
+    fetchIssuer()
+  }
+
   return (
     <Container style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 30px 0 30px' }}>
       {['add_issuer', 'edit_issuer'].includes(showMode) ? (
@@ -183,7 +192,7 @@ export const AdminSecurityCatalog: FC = () => {
               token={currentToken}
               tokenData={tokenData}
               currentIssuer={currentIssuer}
-              toggle={() => setIsOpenTokenForm(false)}
+              toggle={handleCloseTokenForm}
             />
           ) : (
             <>
@@ -293,22 +302,11 @@ export const AdminSecurityCatalog: FC = () => {
                   <TYPE.description7 style={{ margin: isMobile ? '10px' : '0px' }} color="#292933">
                     Tokens
                   </TYPE.description7>
-                  {/* {showMode === 'edit_issuer' && (
-  <EditButton marginBottom="20px" onClick={() => handleEditTokenClick(null)}>
-    <TYPE.body3 color="white" fontWeight={600}>
-      {`+ Add token`}
-    </TYPE.body3>
-  </EditButton>
-)} */}
                 </Box>
                 <Box>
-                  {/* {showMode === 'edit_issuer' && ( */}
-                  <NewEditButton onClick={() => handleEditTokenClick(null)}>
-                    {/* <TYPE.body3 color="white" fontWeight={600}> */}
+                  <NewEditButton onClick={() => handleCreateTokenClick()}>
                     <Trans>{`+ Add token`}</Trans>
-                    {/* </TYPE.body3> */}
                   </NewEditButton>
-                  {/* )} */}
                 </Box>
               </Flex>
               <Box style={{ background: currentIssuer?.tokens?.length > 0 ? '#FFFFFF' : 'none' }}>

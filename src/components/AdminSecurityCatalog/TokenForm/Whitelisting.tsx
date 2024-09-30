@@ -8,14 +8,10 @@ import StyledSelect from '../StyledSelect'
 
 interface WhitelistingProps {
   formik: any
+  platforms: any
 }
 
-const Whitelisting: React.FC<WhitelistingProps> = ({ formik }) => {
-  const platforms = [
-    { value: 'investax', label: 'XTokenLite' },
-    { value: 'ixswap', label: 'XTokenProxy' },
-  ] as any
-
+const Whitelisting: React.FC<WhitelistingProps> = ({ formik, platforms }) => {
   useEffect(() => {
     const value = formik?.values?.whitelistPlatform?.value
 

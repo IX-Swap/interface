@@ -45,7 +45,7 @@ const CustodyDetails: React.FC<CustodyDetailsProps> = ({ formik }) => {
 
         <FormGrid columns={1}>
           <FormWrapper>
-            <Label htmlFor="network">Custody Asset Address</Label>
+            <Label htmlFor="custodyAssetAddress">Custody Asset Address</Label>
 
             <InputWithLabel
               placeholder="Custody Asset Address"

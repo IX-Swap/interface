@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { useFormik } from 'formik'
@@ -9,7 +9,6 @@ import * as yup from 'yup'
 import { RowEnd } from 'components/Row'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-import { getAtlasIdByTicker } from 'state/admin/hooks'
 import { ProgressBar } from './ProgressBar'
 import GeneralInfo from './GeneralInfo'
 import WrappedTokenDetails from './WrappedTokenDetails'
@@ -21,11 +20,14 @@ import apiService from 'services/apiService'
 import { toast } from 'react-toastify'
 import Loader from 'components/Loader'
 import { countries, industries } from '../mock'
-import { getTokenContract } from 'hooks/useContract'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { blockchainNetworks } from 'pages/KYC/mock'
 
 const FILE_SIZE = 10 * 1024 * 1024 // 10 MB
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/svg+xml']
+const platforms = [
+  { value: 'investax', label: 'XTokenLite' },
+  { value: 'ixswap', label: 'XTokenProxy' },
+] as any
 
 export const kycType = {
   individualAccredited: false,
@@ -92,7 +94,6 @@ interface ITokenData {
   url: string
   industry: ISelect | null
   country: ISelect | null
-  network: ISelect | null
   brokerDealerId: string | number
   active: boolean
   featured: boolean
@@ -126,7 +127,6 @@ const initialValues: ITokenData = {
   url: '',
   industry: null,
   country: null,
-  network: null,
   brokerDealerId: 1,
   active: false,
   featured: false,
@@ -153,50 +153,116 @@ const initialValues: ITokenData = {
 }
 
 const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, setCurrentToken, toggle }: Props) => {
-  const { provider } = useWeb3React()
+  const onClose = () => {
+    formik.resetForm()
+    toggle()
+    setCurrentToken(null)
+  }
+
   const formik = useFormik<ITokenData>({
     initialValues,
-    validationSchema: validationSchema,
+    validationSchema: tokenData ? validationSchema : null,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values: any) => {
-      debugger
-      console.log('values', values)
       try {
         formik.setSubmitting(true)
-        const formData = new FormData()
-        if (!values.needsWhitelisting) {
-          delete values.whitelistPlatform
-          delete values.whitelistContractAddress
-          delete values.whitelistFunction
-          delete values.whitelistFunction
-        } else {
-          formData.append('checkWhitelistFunction', 'isWhitelisted')
-        }
-        formData.append('issuerId', currentIssuer.id)
-        for (const key in values) {
-          if (key === 'logo') {
-            formData.append(key, values[key], values[key].name)
-          } else if (['country', 'industry', 'originalNetwork', 'network', 'whitelistPlatform'].includes(key)) {
-            formData.append(key, values[key].value)
-          } else if (key === 'kycType') {
-            formData.append(key, JSON.stringify(values[key]))
-          } else {
-            formData.append(key, values[key])
-          }
-        }
 
         if (tokenData) {
+          const formData = new FormData()
+          if (!values.needsWhitelisting) {
+            delete values.whitelistPlatform
+            delete values.whitelistContractAddress
+            delete values.whitelistFunction
+            delete values.whitelistFunction
+          } else {
+            formData.append('checkWhitelistFunction', 'isWhitelisted')
+          }
+          formData.append('issuerId', currentIssuer.id)
+          for (const key in values) {
+            if (key === 'logo') {
+              formData.append(key, values[key], values[key].name)
+            } else if (['country', 'industry', 'originalNetwork', 'network', 'whitelistPlatform'].includes(key)) {
+              formData.append(key, values[key].value)
+            } else if (key === 'kycType') {
+              formData.append(key, JSON.stringify(values[key]))
+            } else {
+              formData.append(key, values[key])
+            }
+          }
+
           const response = await apiService.post('/token', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
           })
           if (response.status === 201) {
-            toggle()
-            toast.success('Tenant create successfully')
+            onClose()
+            toast.success('Create token successfully')
           }
         } else {
+          console.log('values', values)
+          const payload = {} as any
+          const compareEditPlayload = { ...editableToken, ...editableToken.token } as any
+
+          for (const [key, value] of Object.entries(values)) {
+            if (key === 'logo') {
+              // @ts-ignore
+              if (value.name != compareEditPlayload.logo.name) {
+                payload[key] = value
+              }
+            } else if (key === 'brokerDealerId') {
+              continue
+            } else if (['country', 'industry', 'originalNetwork', 'network', 'whitelistPlatform'].includes(key)) {
+              // @ts-ignore
+              if (compareEditPlayload[key] != value?.value) {
+                // @ts-ignore
+                payload[key] = value?.value
+              }
+            } else if (key === 'kycType') {
+              if (JSON.stringify(values[key]) != JSON.stringify(compareEditPlayload['kycTypeJson'])) {
+                payload[key] = JSON.stringify(values[key])
+              }
+            } else {
+              if (compareEditPlayload[key] && compareEditPlayload[key] == value) {
+                continue
+              } else {
+                payload[key] = value
+              }
+            }
+          }
+
+          const formData = new FormData()
+          if (!values.needsWhitelisting) {
+            delete payload.whitelistPlatform
+            delete payload.whitelistContractAddress
+            delete payload.whitelistFunction
+            delete payload.whitelistFunction
+          } else {
+            formData.append('checkWhitelistFunction', 'isWhitelisted')
+          }
+          formData.append('issuerId', currentIssuer.id)
+          for (const key in payload) {
+            if (key === 'logo') {
+              formData.append(key, payload[key], payload[key].name)
+            } else if (['country', 'industry', 'originalNetwork', 'network', 'whitelistPlatform'].includes(key)) {
+              formData.append(key, payload[key].value)
+            } else if (key === 'kycType') {
+              formData.append(key, JSON.stringify(payload[key]))
+            } else {
+              formData.append(key, payload[key])
+            }
+          }
+
+          const response = await apiService.put(`/catalog/token/${editableToken.id}`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          if (response.status === 200) {
+            onClose()
+            toast.success('Edit token successfully')
+          }
         }
       } catch (e: any) {
         console.error(e)
@@ -209,31 +275,19 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
 
   console.log('formik', formik)
 
-  const onClose = () => {
-    formik.resetForm()
-    toggle()
-    setCurrentToken(null)
-  }
-
-  const getTokenInfo = async (tokenAddress: string) => {
+  const fetchFileData = async (fileInfo: any, key: string) => {
     try {
-      if (provider) {
-        const tokenContract = await getTokenContract(tokenAddress, provider)
-        const [decimals, symbol, name] = await Promise.all([
-          tokenContract?.callStatic?.decimals(),
-          tokenContract?.callStatic?.symbol(),
-          tokenContract?.callStatic?.name(),
-        ])
-
-        formik.setFieldValue('decimals', decimals)
-        formik.setFieldValue('symbol', symbol)
-        formik.setFieldValue('originalDecimals', decimals)
-        formik.setFieldValue('originalSymbol', symbol)
-        formik.setFieldValue('originalName', name)
-        formik.setFieldValue('originalAddress', tokenAddress)
+      if (fileInfo && fileInfo.public) {
+        const response = await fetch(fileInfo.public)
+        if (response.ok) {
+          const blob = await response.blob()
+          formik.setFieldValue(key, new File([blob], fileInfo.name || key, { type: fileInfo.mimeType }))
+        } else {
+          throw new Error(`Failed to fetch ${key} data`)
+        }
       }
-    } catch (e: any) {
-      console.error('Failed to fetch token contract', e)
+    } catch (error) {
+      console.log(`Error fetching ${key} data`)
     }
   }
 
@@ -255,7 +309,6 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
 
   useEffect(() => {
     if (editableToken) {
-      formik.setFieldValue('name', editableToken.ticker)
       formik.setFieldValue('ticker', editableToken.ticker)
       formik.setFieldValue('companyName', editableToken.companyName)
       formik.setFieldValue('description', editableToken.description)
@@ -265,10 +318,45 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
       const industryMap = { value: industry?.id, label: industry?.name }
       formik.setFieldValue('country', country)
       formik.setFieldValue('industry', industryMap)
-      getTokenInfo(editableToken.address)
+      formik.setFieldValue('kycType', editableToken?.kycTypeJson ?? kycType)
+      formik.setFieldValue('active', editableToken?.active ?? false)
+      formik.setFieldValue('featured', editableToken?.featured ?? false)
+      formik.setFieldValue('allowDeposit', editableToken?.allowDeposit ?? false)
+      formik.setFieldValue('allowWithdrawal', editableToken?.allowWithdrawal ?? false)
+      fetchFileData(editableToken.logo, 'logo')
+      if (editableToken.token) {
+        formik.setFieldValue('decimals', editableToken?.token?.decimals)
+        formik.setFieldValue('symbol', editableToken?.token?.symbol)
+        formik.setFieldValue('name', editableToken?.token?.name)
+        formik.setFieldValue('originalDecimals', editableToken?.token?.originalDecimals)
+        formik.setFieldValue('originalSymbol', editableToken?.token?.originalSymbol)
+        formik.setFieldValue('originalName', editableToken?.token?.originalName)
+        formik.setFieldValue('originalAddress', editableToken?.token?.originalAddress)
+        formik.setFieldValue(
+          'originalNetwork',
+          blockchainNetworks.find((n: any) => n.value === editableToken?.token?.originalNetwork)
+        )
+        formik.setFieldValue(
+          'network',
+          blockchainNetworks.find((n: any) => n.value === editableToken?.token?.originalNetwork)
+        )
+        formik.setFieldValue('custodyVaultId', editableToken?.token?.custodyVaultId)
+        formik.setFieldValue('custodyAssetId', editableToken?.token?.custodyAssetId)
+        formik.setFieldValue('custodyAssetAddress', editableToken?.token?.custodyAssetAddress)
+        formik.setFieldValue('needsWhitelisting', editableToken?.token?.needsWhitelisting)
+        formik.setFieldValue(
+          'whitelistPlatform',
+          platforms.find((p: any) => p.value === editableToken?.token?.whitelistPlatform)
+        )
+        formik.setFieldValue('whitelistContractAddress', editableToken?.token?.whitelistContractAddress)
+        formik.setFieldValue('withdrawFee', editableToken?.token?.withdrawFee)
+        formik.setFieldValue('withdrawFeeAddress', editableToken?.token?.withdrawFeeAddress)
+        formik.setFieldValue('chainId', editableToken?.token?.chainId)
+      }
     }
   }, [JSON.stringify(editableToken)])
 
+  console.log('editableToken', editableToken)
   return (
     <Content>
       <Title>{tokenData ? 'Add Token' : 'Edit Token'}</Title>
@@ -288,7 +376,7 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
           </FormCard>
 
           <FormCard id="Whitelisting">
-            <Whitelisting formik={formik} />
+            <Whitelisting formik={formik} platforms={platforms} />
           </FormCard>
 
           <FormCard id="WithdrawalDetails">
