@@ -85,7 +85,6 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
       if (approvalState === ApprovalState.NOT_APPROVED) {
         await approve()
-        await refreshAllowance()
         handleIsLoading(false)
         return
       }
@@ -96,6 +95,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
           id: values.id,
           payoutContractAddress: values.payoutContractAddress,
         })
+        refreshAllowance()
         return
       }
 
@@ -106,6 +106,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
         id: data.id,
         payoutContractAddress: data.payoutContractAddress,
       })
+      refreshAllowance()
     } finally {
       handleIsLoading(false)
     }
