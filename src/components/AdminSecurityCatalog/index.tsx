@@ -41,6 +41,7 @@ import { ReactComponent as NoToken } from '../../assets/images/NoToken.svg'
 import { Line } from 'components/Line'
 import { RowEnd } from 'components/Row'
 import TokenForm from './TokenForm'
+import { shortAddress } from 'utils'
 
 interface Tab {
   value: 'catalog' | 'add_issuer' | 'edit_issuer'
@@ -182,6 +183,8 @@ export const AdminSecurityCatalog: FC = () => {
     fetchIssuer()
   }
 
+  console.log('currentIssuer', currentIssuer)
+
   return (
     <Container style={{ margin: isMobile ? '30px 0px 0px 40px' : '30px 30px 0 30px' }}>
       {['add_issuer', 'edit_issuer'].includes(showMode) ? (
@@ -315,6 +318,7 @@ export const AdminSecurityCatalog: FC = () => {
                     currentIssuer.tokens.map((token: any) => {
                       const { id, address, ticker, logo, url, featured, active, token: wrappedToken } = token
 
+                      console.log('url', url)
                       return (
                         <TokenCard style={{ marginBottom: 20 }} key={`token-${id}`}>
                           <Box>
@@ -323,32 +327,24 @@ export const AdminSecurityCatalog: FC = () => {
                               {ticker}
                             </TYPE.body3>
                           </Box>
-                          <TYPE.body3 color="text1">{address}</TYPE.body3>
+                          <TYPE.body3 color="text1">{shortAddress(address)}</TYPE.body3>
                           <TYPE.body3 color="text1">
-                            <ExternalLink
-                              style={{ color: 'white', overflow: 'hidden', textOverflow: 'ellipsis' }}
-                              href={url}
-                            >
+                            <ExternalLink style={{ overflow: 'hidden', textOverflow: 'ellipsis' }} href={url}>
                               {url}
                             </ExternalLink>
                           </TYPE.body3>
                           <TYPE.body3 color="text1">{featured ? 'Featured' : 'Not Featured'}</TYPE.body3>
-                          <TYPE.body3 color="text1">{active ? 'Active' : 'Not Active'}</TYPE.body3>
-                          <TYPE.body3 color="text1">{wrappedToken ? 'Tradable' : 'Non Tradable'}</TYPE.body3>
-                          <Box>
-                            {/* <EditButton onClick={() => handleEditTokenClick(token)}>
-            <TYPE.body3 fontWeight={600}>{`Edit`}</TYPE.body3>
-          </EditButton> */}
-
+                          <TYPE.body3 color="text1">{wrappedToken ? '✅ Tradable' : '❌ Non Tradable'}</TYPE.body3>
+                          <TYPE.body3 color="text1">{active ? '✅ Active' : '❌ Not Activree'}</TYPE.body3>
+                          <Flex style={{ gap: 24 }}>
                             <ButtonText onClick={() => handleEditTokenClick(token)}>
                               <EditIcon />
                             </ButtonText>
-                          </Box>
-                          <Box>
+
                             <ButtonText onClick={() => handleDeleteToken(id)}>
                               <Delete />
                             </ButtonText>
-                          </Box>
+                          </Flex>
                         </TokenCard>
                       )
                     })

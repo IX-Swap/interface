@@ -51,7 +51,7 @@ export const EditButton = styled(ButtonGray)`
   width: 109px;
   padding: 0px;
   color: ${({ theme }) => theme.text1};
-  
+
 }
 
 `
@@ -70,14 +70,14 @@ export const NewEditButton = styled.div`
 
 export const EditWrapper = styled.div`
   width: 109px;
-  padding: 0px; 
+  padding: 0px;
   margin-left: auto;
   cursor: pointer;
   ${({ theme }) => theme.mediaWidth.upToSmall`
   width: auto;
   margin-left: 30px;
   `};
-  
+
 }
 `
 
@@ -105,7 +105,7 @@ export const TokensListItem = styled.div`
     align-items: center;
   }
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`  
+  ${({ theme }) => theme.mediaWidth.upToSmall`
     > div:last-child {
       padding-right: 100px;
     }
@@ -152,7 +152,7 @@ export const Logo = styled.div<{ error?: boolean }>`
 
 export const TokenCard = styled(BodyRow)`
   display: grid;
-  grid-template-columns: 2fr 2fr 3fr 2fr 2fr 2fr 2fr 1fr;
+  grid-template-columns: 3fr 2fr 3fr 2fr 2fr 2fr 1fr;
   height: 80px;
   min-width: 1024px;
 
