@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { isAddress } from 'viem'
+import { isAddress } from '../../utils'
 import { FormikErrors, FormikTouched } from 'formik'
 import Big from 'big.js'
 import Papa from 'papaparse'
