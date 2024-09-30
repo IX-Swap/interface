@@ -26,6 +26,7 @@ import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { NETWORK_LOGOS } from 'constants/chains'
 import { PinnedContentButton } from 'components/Button'
 import { MEDIA_WIDTHS } from 'theme'
+import { RaisedFund } from './RaisedFund'
 
 interface Props {
   offer: any
@@ -166,6 +167,8 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
               </>
             )}
           </InvestmentCardDetailsContainer>
+
+          <RaisedFund totalInvestment={offer.totalInvestment} symbol={offer?.investingTokenSymbol} />
 
           <InvestmentSaleStatusInfo
             isClosed={isClosed}
