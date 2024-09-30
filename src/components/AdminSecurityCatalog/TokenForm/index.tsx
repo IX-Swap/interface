@@ -1,14 +1,12 @@
 import React, { FC, useEffect } from 'react'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { useFormik } from 'formik'
 import styled from 'styled-components'
 import StickyBox from 'react-sticky-box'
-import * as yup from 'yup'
 
 import { RowEnd } from 'components/Row'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
-import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { ProgressBar } from './ProgressBar'
 import GeneralInfo from './GeneralInfo'
 import WrappedTokenDetails from './WrappedTokenDetails'
@@ -17,61 +15,15 @@ import WithdrawalDetails from './WithdrawalDetails'
 import Whitelisting from './Whitelisting'
 import Availability from './Availability'
 import apiService from 'services/apiService'
-import { toast } from 'react-toastify'
+import { Slide, toast } from 'react-toastify'
 import Loader from 'components/Loader'
 import { countries, industries } from '../mock'
 import { blockchainNetworks } from 'pages/KYC/mock'
-
-const FILE_SIZE = 10 * 1024 * 1024 // 10 MB
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/svg+xml']
-const platforms = [
-  { value: 'investax', label: 'XTokenLite' },
-  { value: 'ixswap', label: 'XTokenProxy' },
-] as any
-
-export const kycType = {
-  individualAccredited: false,
-  individualAccreditedNot: false,
-  corporateAccredited: false,
-  corporateAccreditedNot: false,
-}
-
-const selectSchema = yup
-  .object({
-    value: yup.string().required('Network value is required'),
-    label: yup.string().required('Network label is required'),
-  })
-  .nullable()
-
-const validationSchema = yup.object().shape({
-  logo: yup
-    .mixed()
-    .required('Logo is required')
-    .test('fileSize', 'File too large. Maximum size is 2MB.', (value) => !value || (value && value.size <= FILE_SIZE))
-    .test(
-      'fileFormat',
-      'Unsupported file format. Only JPG, PNG, and GIF are allowed.',
-      (value) => !value || (value && SUPPORTED_FORMATS.includes(value.type))
-    ),
-  companyName: yup.string().required('Company name is required'),
-  url: yup.string().url('Invalid URL').required('URL is required'),
-  industry: selectSchema.required('Industry is required'),
-  country: selectSchema.required('Country is required'),
-  description: yup.string().required('Description is required'),
-  withdrawFee: yup.number().required('Withdraw fee is required'),
-  withdrawFeeAddress: yup.string().required('Withdraw fee address is required'),
-  needsWhitelisting: yup.boolean().required(),
-  whitelistPlatform: selectSchema.when('needsWhitelisting', {
-    is: true, // When the switch is on (true)
-    then: selectSchema.required('Whitelist Platform is required'), // Validate this field
-    otherwise: selectSchema.nullable(), // If the switch is off, no validation
-  }),
-  whitelistContractAddress: yup.string().when('needsWhitelisting', {
-    is: true, // When the switch is on (true)
-    then: yup.string().required('Whitelist Contract Address is required'), // Validate this field
-    otherwise: yup.string().nullable(), // If the switch is off, no validation
-  }),
-})
+import { ITokenData } from './types'
+import { compareChanges, prepareFormData, initialValues, platforms, kycType } from './helper'
+import { validationSchema } from './schema'
+import SuccessContent from 'components/ToastContent/Success'
+import ErrorContent from 'components/ToastContent/Error'
 
 interface Props {
   token: any | null
@@ -79,77 +31,6 @@ interface Props {
   currentIssuer: any
   setCurrentToken: (value: any | null) => void
   toggle: () => void
-}
-
-interface ISelect {
-  value: string
-  label: string
-}
-interface ITokenData {
-  id?: string
-  ticker: string
-  logo: any
-  companyName: string
-  description: string
-  url: string
-  industry: ISelect | null
-  country: ISelect | null
-  brokerDealerId: string | number
-  active: boolean
-  featured: boolean
-  allowDeposit: boolean
-  allowWithdrawal: boolean
-  chainId: number
-  whitelistPlatform: ISelect | null
-  needsWhitelisting: boolean
-  originalSymbol: string
-  originalName: string
-  originalDecimals: number | string
-  originalAddress: string
-  originalNetwork: ISelect | null
-  symbol: string
-  decimals: number | string
-  custodyVaultId: number | string
-  custodyAssetId: number | string
-  custodyAssetAddress: string
-  withdrawFee: number | string
-  withdrawFeeAddress: string
-  kycType: any
-  whitelistFunction: string
-  platformId: number
-}
-
-const initialValues: ITokenData = {
-  ticker: '',
-  logo: null,
-  companyName: '',
-  description: '',
-  url: '',
-  industry: null,
-  country: null,
-  brokerDealerId: 1,
-  active: false,
-  featured: false,
-  allowDeposit: false,
-  allowWithdrawal: false,
-  chainId: SUPPORTED_TGE_CHAINS.MATIC,
-  whitelistPlatform: null,
-  needsWhitelisting: false,
-  originalSymbol: '',
-  originalName: '',
-  originalDecimals: '',
-  originalAddress: '',
-  originalNetwork: null,
-  symbol: '',
-  decimals: 18,
-  custodyVaultId: '',
-  custodyAssetId: '',
-  custodyAssetAddress: '',
-  withdrawFee: '',
-  withdrawFeeAddress: '',
-  kycType,
-  whitelistFunction: 'ifWhitelisted',
-  platformId: 4,
 }
 
 const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, setCurrentToken, toggle }: Props) => {
@@ -169,111 +50,60 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
         formik.setSubmitting(true)
 
         if (tokenData) {
-          const formData = new FormData()
-          if (!values.needsWhitelisting) {
-            delete values.whitelistPlatform
-            delete values.whitelistContractAddress
-            delete values.whitelistFunction
-            delete values.whitelistFunction
-          } else {
-            formData.append('checkWhitelistFunction', 'isWhitelisted')
-          }
-          formData.append('issuerId', currentIssuer.id)
-          for (const key in values) {
-            if (key === 'logo') {
-              formData.append(key, values[key], values[key].name)
-            } else if (['country', 'industry', 'originalNetwork', 'network', 'whitelistPlatform'].includes(key)) {
-              formData.append(key, values[key].value)
-            } else if (key === 'kycType') {
-              formData.append(key, JSON.stringify(values[key]))
-            } else {
-              formData.append(key, values[key])
-            }
-          }
+          const formData = prepareFormData(values, currentIssuer?.id)
 
           const response = await apiService.post('/token', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
           })
+
           if (response.status === 201) {
             onClose()
-            toast.success('Create token successfully')
+            toast.success(<SuccessContent message="A new token has been successfully added." />, {
+              icon: false,
+              transition: Slide,
+              hideProgressBar: true,
+              position: 'bottom-right',
+              autoClose: 3000,
+            })
           }
         } else {
-          console.log('values', values)
-          const payload = {} as any
           const compareEditPlayload = { ...editableToken, ...editableToken.token } as any
-
-          for (const [key, value] of Object.entries(values)) {
-            if (key === 'logo') {
-              // @ts-ignore
-              if (value.name != compareEditPlayload.logo.name) {
-                payload[key] = value
-              }
-            } else if (key === 'brokerDealerId') {
-              continue
-            } else if (['country', 'industry', 'originalNetwork', 'network', 'whitelistPlatform'].includes(key)) {
-              // @ts-ignore
-              if (compareEditPlayload[key] != value?.value) {
-                // @ts-ignore
-                payload[key] = value?.value
-              }
-            } else if (key === 'kycType') {
-              if (JSON.stringify(values[key]) != JSON.stringify(compareEditPlayload['kycTypeJson'])) {
-                payload[key] = JSON.stringify(values[key])
-              }
-            } else {
-              if (compareEditPlayload[key] && compareEditPlayload[key] == value) {
-                continue
-              } else {
-                payload[key] = value
-              }
-            }
-          }
-
-          const formData = new FormData()
-          if (!values.needsWhitelisting) {
-            delete payload.whitelistPlatform
-            delete payload.whitelistContractAddress
-            delete payload.whitelistFunction
-            delete payload.whitelistFunction
-          } else {
-            formData.append('checkWhitelistFunction', 'isWhitelisted')
-          }
-          formData.append('issuerId', currentIssuer.id)
-          for (const key in payload) {
-            if (key === 'logo') {
-              formData.append(key, payload[key], payload[key].name)
-            } else if (['country', 'industry', 'originalNetwork', 'network', 'whitelistPlatform'].includes(key)) {
-              formData.append(key, payload[key].value)
-            } else if (key === 'kycType') {
-              formData.append(key, JSON.stringify(payload[key]))
-            } else {
-              formData.append(key, payload[key])
-            }
-          }
+          const payload = compareChanges(values, compareEditPlayload)
+          const formData = prepareFormData(payload, currentIssuer?.id)
 
           const response = await apiService.put(`/catalog/token/${editableToken.id}`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
           })
+
           if (response.status === 200) {
             onClose()
-            toast.success('Edit token successfully')
+            toast.success(<SuccessContent message="The token has been successfully edited." />, {
+              icon: false,
+              transition: Slide,
+              hideProgressBar: true,
+              position: 'bottom-right',
+              autoClose: 3000,
+            })
           }
         }
       } catch (e: any) {
         console.error(e)
-        toast.error(e.message)
+        toast.error(<ErrorContent message={e.message} />, {
+          icon: false,
+          transition: Slide,
+          hideProgressBar: true,
+          position: 'bottom-right',
+          autoClose: 3000,
+        })
       } finally {
         formik.setSubmitting(false)
       }
     },
   })
-
-  console.log('formik', formik)
 
   const fetchFileData = async (fileInfo: any, key: string) => {
     try {
@@ -324,6 +154,7 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
       formik.setFieldValue('allowDeposit', editableToken?.allowDeposit ?? false)
       formik.setFieldValue('allowWithdrawal', editableToken?.allowWithdrawal ?? false)
       fetchFileData(editableToken.logo, 'logo')
+
       if (editableToken.token) {
         formik.setFieldValue('decimals', editableToken?.token?.decimals)
         formik.setFieldValue('symbol', editableToken?.token?.symbol)
@@ -356,7 +187,6 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
     }
   }, [JSON.stringify(editableToken)])
 
-  console.log('editableToken', editableToken)
   return (
     <Content>
       <Title>{tokenData ? 'Add Token' : 'Edit Token'}</Title>
