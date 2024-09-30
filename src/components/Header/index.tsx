@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { Text } from 'rebass'
+import { Flex, Text } from 'rebass'
 import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
@@ -75,7 +75,7 @@ export default function Header() {
               {isAllowed(routes.kyc) && isWhitelisted && (
                 <HeaderElement>
                   <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to={routes.defaultRoute}>
-                    {kyc?.status !== 'approved' ? <NewKYCLogo /> : <NewKYCLogo />}
+                    {kyc?.status === 'approved' ? <NewKYCLogo /> : null}
                   </NavLink>
                 </HeaderElement>
               )}
@@ -93,9 +93,14 @@ export default function Header() {
             )}
           </HeaderFrame>
           {kyc?.status !== 'approved' && (
-            <HeaderElement style={{ background: 'white', padding: '18px 20px' }}>
-              <Web3Status />
-            </HeaderElement>
+            <Flex justifyContent="space-between" bg="#fff">
+              <HeaderElement style={{padding: '0 18px'}}>
+                <NetworkCard />
+              </HeaderElement>
+              <HeaderElement style={{ background: 'white', padding: '18px 20px' }}>
+                <Web3Status />
+              </HeaderElement>
+            </Flex>
           )}
         </HeaderWrapper>
       )}
