@@ -114,6 +114,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   }
 
   const onlyPublish = async () => {
+    handleIsLoading(true)
     const body = getBody()
     const data = await publishPayout({ ...body })
 
