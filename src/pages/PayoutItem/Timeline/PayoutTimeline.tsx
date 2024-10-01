@@ -7,10 +7,9 @@ import { PayoutEvent } from 'state/token-manager/types'
 
 import useTheme from 'hooks/useTheme'
 import { MEDIA_WIDTHS } from 'theme'
-import { isBefore, isSameDay, isSameOrAfter, isSameOrBefore } from '../utils'
+import { isSameDay, isSameOrAfter, isSameOrBefore } from '../utils'
 import { TimelineDate } from './TimelineDate'
 import { TodayIndicator } from './TodayIndicator'
-
 
 import { ReactComponent as ArrowHead } from '../../../assets/svg/arrow-head.svg'
 
@@ -29,12 +28,8 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
 
   const isTodayStartDate = useMemo(() => isSameDay(startDate), [startDate])
 
-  const needFake = useMemo(() => {
-    return isBefore(recordDate)
-  }, [recordDate])
-
   const todayPosition = useMemo(() => {
-    if (needFake) return '0%'
+    if (isSameOrBefore(recordDate)) return '0%'
     if (isSameDay(recordDate)) {
       return '6%'
     }
@@ -46,7 +41,7 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
     }
     if (isSameOrAfter(recordDate) && isSameOrBefore(startDate)) return '28.5%'
     if (isSameOrAfter(startDate) && isSameOrBefore(endDate)) return `75%`
-  }, [recordDate, startDate, endDate, needFake])
+  }, [recordDate, startDate, endDate])
 
   const displayTodayIndicator = [PAYOUT_STATUS.ANNOUNCED, PAYOUT_STATUS.SCHEDULED].includes(status)
   const isStarted = status === PAYOUT_STATUS.STARTED
@@ -57,55 +52,37 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
 
   return (
     <LineContainer>
-      {needFake && <FakeFirstButton />}
-
-      {!isAnnounced && recordDate && (
-        <TimelineDate
-          status={status}
-          date={recordDate}
-          label="Record Date"
-        />
-      )}
+      {!isAnnounced && recordDate && <TimelineDate status={status} date={recordDate} label="Record Date" />}
 
       {isScheduled && isMobile && !isTablet && (
-        <ArrowContainer
-          hasLeftSpace={!isAnnounced}
-        >
+        <ArrowContainer hasLeftSpace={!isAnnounced}>
           <ArrowHead />
         </ArrowContainer>
       )}
 
-      {displayTodayIndicator && <TodayIndicator offset={todayPosition} overlay={todayActionDate} isTodayStartDate={isTodayStartDate} />}
+      {displayTodayIndicator && (
+        <TodayIndicator offset={todayPosition} overlay={todayActionDate} isTodayStartDate={isTodayStartDate} />
+      )}
 
       <ArrowContainer
         hasLeftSpace={!isAnnounced}
-        color={!endDate ? isDelayed ? theme.red45 : isEnded ? theme.red4 : undefined : undefined}
+        color={!endDate ? (isDelayed ? theme.red45 : isEnded ? theme.red4 : undefined) : undefined}
       >
         <ArrowHead />
       </ArrowContainer>
-      {startDate && (
-        <TimelineDate
-          status={status}
-          date={startDate}
-          label="Payment Start Date"
-        />
-      )}
+      {startDate && <TimelineDate status={status} date={startDate} label="Payment Start Date" />}
       {endDate && (
         <ArrowContainer
           hasLeftSpace
-          className={(isStarted || isScheduled || isAnnounced || (isMobile && (isDelayed || isEnded))) ? 'dashed' : undefined}
-          color={!isMobile ? isDelayed ? theme.red45 : isEnded ? theme.red4 : undefined : undefined}
+          className={
+            isStarted || isScheduled || isAnnounced || (isMobile && (isDelayed || isEnded)) ? 'dashed' : undefined
+          }
+          color={!isMobile ? (isDelayed ? theme.red45 : isEnded ? theme.red4 : undefined) : undefined}
         >
           <ArrowHead />
         </ArrowContainer>
       )}
-      {endDate && (
-        <TimelineDate
-          status={status}
-          date={endDate}
-          label="Payment Deadline"
-        />
-      )}
+      {endDate && <TimelineDate status={status} date={endDate} label="Payment Deadline" />}
     </LineContainer>
   )
 }
@@ -124,10 +101,10 @@ const LineContainer = styled.div`
   }
 `
 
-const ArrowContainer = styled.div<{ hasLeftSpace?: boolean, color?: string }>`
+const ArrowContainer = styled.div<{ hasLeftSpace?: boolean; color?: string }>`
   padding-top: 23.5px;
   margin-right: 20px;
-  margin-left: ${({ hasLeftSpace }) => hasLeftSpace ? '20px' : '0'};
+  margin-left: ${({ hasLeftSpace }) => (hasLeftSpace ? '20px' : '0')};
   width: 100%;
   height: 1px;
   position: relative;
@@ -162,9 +139,4 @@ const ArrowContainer = styled.div<{ hasLeftSpace?: boolean, color?: string }>`
       bottom: -2.5px;
     }
   }
-`
-
-const FakeFirstButton = styled.div`
-  width: 0px;
-  height: 0px;
 `

@@ -144,7 +144,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
 
   const onValueChange = (key: string, value: any) => {
-    let processedValue = value
+    const processedValue = value
     setFieldValue(key, processedValue, true)
   }
 

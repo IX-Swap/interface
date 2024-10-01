@@ -99,12 +99,13 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
         return
       }
 
-      const body = setBody()
+      const body = getBody()
       const data = await createDraftPayout({ ...body })
       if (!data?.id) return
       await pay({
         id: data.id,
         payoutContractAddress: data.payoutContractAddress,
+        needRemoveFiles: true,
       })
       refreshAllowance()
     } finally {
@@ -113,7 +114,8 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   }
 
   const onlyPublish = async () => {
-    const body = setBody()
+    handleIsLoading(true)
+    const body = getBody()
     const data = await publishPayout({ ...body })
 
     if (data?.id) {
@@ -123,8 +125,13 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     handleIsLoading(false)
   }
 
-  const handleFormSubmit = async (id: string, paidTxHash?: string, contractPayoutId?: string) => {
-    const body = setBody()
+  const handleFormSubmit = async (
+    id: string,
+    paidTxHash?: string,
+    contractPayoutId?: string,
+    needRemoveFiles?: boolean
+  ) => {
+    const body = getBody(needRemoveFiles)
     const data = await publishPayout({
       ...body,
       id,
@@ -140,13 +147,21 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
       return true
     }
 
-    const body = setBody()
+    const body = getBody()
     const data = await validatePayout(id, { ...body })
 
     return data
   }
 
-  const pay = async ({ id, payoutContractAddress }: { id: string; payoutContractAddress: string }) => {
+  const pay = async ({
+    id,
+    payoutContractAddress,
+    needRemoveFiles,
+  }: {
+    id: string
+    payoutContractAddress: string
+    needRemoveFiles?: boolean
+  }) => {
     const payoutContract = getContractInstance({
       addressOrAddressMap: payoutContractAddress,
       ABI: PAYOUT_ABI,
@@ -177,28 +192,11 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     addTransaction(tx, {
       summary: `The transaction was successful. Waiting for system confirmation.`,
     })
-    const data = await handleFormSubmit(id, tx.hash, authorization.payoutId)
+    const data = await handleFormSubmit(id, tx.hash, authorization.payoutId, needRemoveFiles)
     if (data?.id) {
       closeForm(data.id, tx.hash)
     }
   }
-
-  /*const confirmPaidInfo = async (id: number, paidTxHash?: string, contractPayoutId?: string) => {
-    try {
-      const data = await paidPayout(id, {
-        ...(paidTxHash && { paidTxHash }),
-        ...(contractPayoutId && { contractPayoutId }),
-      })
-
-      if (data?.id) {
-        closeForm(data.id, paidTxHash)
-      }
-
-      handleIsLoading(false)
-    } catch (e: any) {
-      handleIsLoading(false)
-    }
-  }*/
 
   const closeForm = async (id: number, paidTxHash?: string) => {
     close()
@@ -212,7 +210,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     history.push({ pathname: routes.payoutItemManager(id) })
   }
 
-  const setBody = () => {
+  const getBody = (needRemoveFiles?: boolean) => {
     const formattedValues = Object.entries(values).reduce((acc: Record<string, any>, [key, next]) => {
       if (availableForEditing.includes(key)) {
         acc[key] = next
@@ -220,6 +218,9 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
       return acc
     }, {})
 
+    if (needRemoveFiles) {
+      delete formattedValues.files
+    }
     return transformPayoutDraftDTO(formattedValues)
   }
 
