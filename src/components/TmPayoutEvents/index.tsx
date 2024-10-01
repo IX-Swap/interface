@@ -26,7 +26,7 @@ import { ReactComponent as DeleteIcon } from 'assets/images/delete-basket.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { StatusCell } from './StatusCell'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ActionsContainer } from './styleds'
-import { PAYOUT_TYPE_LABEL } from './constants'
+import { PAYOUT_TYPE, PAYOUT_TYPE_LABEL } from './constants'
 import { TYPE } from 'theme'
 import { Line } from 'components/Line'
 import { PinnedContentButton } from 'components/Button'
@@ -138,7 +138,8 @@ const Row = ({ item }: IRow) => {
     history.push({ pathname: routes.payoutItemManager(id) })
   }
 
-  const splitClaimedAmount = (amount: string) => {
+  const splitClaimedAmount = (_amount: string | number) => {
+    const amount = _amount.toString()
     const result = amount.substring(amount.indexOf('.') + 1)
     return result.length > 0 ? Number(amount).toFixed(4) : result
   }
@@ -150,14 +151,15 @@ const Row = ({ item }: IRow) => {
 
   const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
 
-  const amountClaimed = claimed ? splitClaimedAmount(claimed.toString()) : null
+  const amountClaimed = claimed ? splitClaimedAmount(type === PAYOUT_TYPE.AIRDROPS ? tokenAmount : claimed) : null
+  const formatedTokenAmount = splitClaimedAmount(tokenAmount)
 
   const onEdit = () => {
     history.push(`/payout/edit/${id}`)
   }
 
   const tooltipText = `Token: ${currency?.symbol || '-'} 
-  Token amount: ${tokenAmount}
+  Token amount: ${formatedTokenAmount}
   Claimed: ${amountClaimed}`
 
   return (
@@ -197,7 +199,7 @@ const Row = ({ item }: IRow) => {
               {currency?.symbol || '-'}&nbsp;
               <TYPE.main1>
                 {amountClaimed}&nbsp;/&nbsp;
-                {splitClaimedAmount(tokenAmount)}
+                {formatedTokenAmount}
               </TYPE.main1>
             </div>
           ) : (
