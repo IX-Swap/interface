@@ -73,7 +73,7 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
           const payload = compareChanges(values, compareEditPlayload)
           const formData = prepareFormData(payload, currentIssuer?.id)
 
-          const response = await apiService.put(`/catalog/token/${editableToken.id}`, formData, {
+          const response = await apiService.put(`/token/${editableToken?.token?.id}`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
