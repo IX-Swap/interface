@@ -45,6 +45,7 @@ const Content: React.FC<ContentProps> = ({ open, toggle }) => {
     <PopoverContent
       onClick={(e: any) => (e ? e.stopPropagation() : null)}
       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
+      onMouseLeave={toggle}
     >
       {isAdmin ? (
         <Column>
