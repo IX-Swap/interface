@@ -11,6 +11,8 @@ import { clearUserData, saveAccount } from 'state/user/actions'
 import { logout, postLogin } from './actions'
 import { useDisconnect } from 'wagmi'
 import { setWalletState } from 'state/wallet'
+import { useHistory } from 'react-router-dom'
+import { routes } from 'utils/routes'
 
 export enum LOGIN_STATUS {
   NO_ACCOUNT,
@@ -58,8 +60,10 @@ export function useLogout() {
   const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const { disconnect } = useDisconnect()
+  const history = useHistory()
 
   const disconnectWallet = () => {
+    history.replace(routes.defaultRoute)
     disconnect()
     dispatch(postLogin.rejected({ errorMessage: 'User logged out', account: '' }))
     dispatch(logout(account))
