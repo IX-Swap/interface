@@ -1,4 +1,15 @@
 import { getNames } from 'country-list'
+import Active from 'assets/images/newRightCheck.svg'
+import InActive from 'assets/images/newReject.svg'
+import PendingIcon from 'assets/images/newPending.svg'
+import AddIcon from 'assets/images/newAdd.svg'
+
+export const statusIconMapping = {
+  created: AddIcon,
+  pending: PendingIcon,
+  approved: Active,
+  rejected: InActive,
+} as any
 
 export const defaultKycType = {
   individualAccredited: false,

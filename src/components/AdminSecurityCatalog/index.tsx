@@ -3,6 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
 import { Label } from '@rebass/forms'
 import { isMobile } from 'react-device-detect'
+import _get from 'lodash/get'
 
 import { ExternalLink, TYPE } from 'theme'
 import { Container } from 'components/AdminAccreditationTable'
@@ -32,12 +33,14 @@ import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
 import { Loader } from '../AdminTransactionsTable'
 import { BrokerDealerCard } from './BrokerDealerCard'
 import { StyledButtonGradientBorder, Logo, TokenCard, NewEditButton, FormGridNew } from './styleds'
-import { initialIssuerState } from './mock'
+import { initialIssuerState, statusIconMapping } from './mock'
 import { ReactComponent as ArrowLeft } from '../../assets/images/newBack.svg'
 import { ReactComponent as LogoImage } from '../../assets/images/UploadLogo.svg'
 import { ReactComponent as Delete } from '../../assets/images/NewTrashWB.svg'
 import { ReactComponent as EditIcon } from '../../assets/images/NewPen.svg'
 import { ReactComponent as NoToken } from '../../assets/images/NoToken.svg'
+import { ReactComponent as Passed } from 'assets/images/newRightCheck.svg'
+import { ReactComponent as NonTradable } from 'assets/images/newReject.svg'
 import { Line } from 'components/Line'
 import { RowEnd } from 'components/Row'
 import TokenForm from './TokenForm'
@@ -316,9 +319,9 @@ export const AdminSecurityCatalog: FC = () => {
                 <Box overflow={isMobile ? 'scroll' : 'visible'}>
                   {currentIssuer?.tokens?.length > 0 ? (
                     currentIssuer.tokens.map((token: any) => {
-                      const { id, address, ticker, logo, url, featured, active, token: wrappedToken } = token
+                      const { id, address, ticker, logo, url, active, token: wrappedToken } = token
 
-                      console.log('url', url)
+                      const status = _get(wrappedToken, 'status', '')
                       return (
                         <TokenCard style={{ marginBottom: 20 }} key={`token-${id}`}>
                           <Box>
@@ -333,9 +336,23 @@ export const AdminSecurityCatalog: FC = () => {
                               {url}
                             </ExternalLink>
                           </TYPE.body3>
-                          <TYPE.body3 color="text1">{featured ? 'Featured' : 'Not Featured'}</TYPE.body3>
-                          <TYPE.body3 color="text1">{wrappedToken ? '✅ Tradable' : '❌ Non Tradable'}</TYPE.body3>
-                          <TYPE.body3 color="text1">{active ? '✅ Active' : '❌ Not Activree'}</TYPE.body3>
+
+                          <Flex style={{ gap: 4 }}>
+                            {status ? <img src={statusIconMapping[status]} alt="status" /> : null}
+                            <TYPE.body3 color="text1" style={{ textTransform: 'capitalize' }}>
+                              {status || '-'}
+                            </TYPE.body3>
+                          </Flex>
+
+                          <Flex style={{ gap: 4 }}>
+                            {wrappedToken ? <Passed /> : <NonTradable />}
+                            <TYPE.body3 color="text1">{wrappedToken ? 'Tradable' : ' Non Tradable'}</TYPE.body3>
+                          </Flex>
+
+                          <Flex style={{ gap: 4 }}>
+                            {active ? <Passed /> : <NonTradable />}
+                            <TYPE.body3 color="text1">{active ? 'Active' : 'Not Active'}</TYPE.body3>
+                          </Flex>
                           <Flex style={{ gap: 24 }}>
                             <ButtonText onClick={() => handleEditTokenClick(token)}>
                               <EditIcon />
