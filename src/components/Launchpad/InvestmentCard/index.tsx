@@ -377,7 +377,7 @@ const LogoWrap = styled.div`
   z-index: 10;
 `
 
-const NetworkLogo = styled.img`
+export const NetworkLogo = styled.img`
   height: 32px;
   width: 32px;
 `

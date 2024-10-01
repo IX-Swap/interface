@@ -1,44 +1,61 @@
 import React, { FC } from 'react'
 import styled, { css } from 'styled-components'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 
 import { MEDIA_WIDTHS, TYPE } from 'theme'
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonIXSWide } from 'components/Button'
 
 import { formatDate } from '../utils'
+import { PAYOUT_STATUS } from 'constants/enums'
+import useTheme from 'hooks/useTheme'
 
 interface Props {
-  withBackground?: boolean
+  status?: string
   label: string
   date: any
-  ended?: boolean
 }
 
-export const TimelineDate: FC<Props> = ({ date, label, withBackground = true, ended = false }) => {
+export const TimelineDate: FC<Props> = ({
+  status,
+  date,
+  label,
+}) => {
+  const theme = useTheme()
+
+  const isRecordDate = label === 'Record Date'
   const isStartDate = label === 'Payment Start Date'
+  const isDeadlineDate = label === 'Payment Deadline'
+
+  let borderColor = undefined
+  let bgColor = undefined
+  let color = undefined
+
+  if (isStartDate && status === PAYOUT_STATUS.DELAYED) {
+    borderColor = theme.orange2
+    color = theme.orange2
+    bgColor = theme.orange25
+  } else if (isRecordDate || isStartDate && status === PAYOUT_STATUS.ENDED) {
+    borderColor = theme.bg26
+    color = theme.bg26
+    bgColor = theme.bg27
+  } else if (isDeadlineDate && status === PAYOUT_STATUS.ENDED) {
+    borderColor = theme.red4
+    color = theme.red4
+    bgColor = theme.red41
+  }
+
   return (
     <Container isStartDate={isStartDate}>
-      {withBackground ? (
-        <>
-          <StyledButtonIXSGradient ended={ended}>
-            {formatDate(date)}
-            {/* {isSameDay && <TodayIndicator overlay />} */}
-          </StyledButtonIXSGradient>
-          <TYPE.buttonMuted>
-            <Trans>{`${label}`}</Trans>
-          </TYPE.buttonMuted>
-        </>
-      ) : (
-        <>
-          <StyledButtonGradientBorder>
-            {formatDate(date)}
-            {/* {isSameDay && <TodayIndicator overlay />} */}
-          </StyledButtonGradientBorder>
-          <TYPE.body3 color={'text1'}>
-            <Trans>{`${label}`}</Trans>
-          </TYPE.body3>
-        </>
-      )}
+      <StyledButtonIXSWide
+        borderColor={borderColor}
+        bgColor={bgColor}
+        color={color}
+      >
+        {formatDate(date)}
+      </StyledButtonIXSWide>
+      <TYPE.small>
+        <Trans>{`${label}`}</Trans>
+      </TYPE.small>
     </Container>
   )
 }
@@ -48,50 +65,37 @@ const Container = styled.div<{ isStartDate: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
-  width: 140px;
+  width: 400px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     margin-top: 0px;
-    transform: ${({ isStartDate }) => `translateX(${isStartDate ? '' : '-'}50%)`};
     > div:last-child {
       font-size: 12px !important;
       line-height: 18px !important;
-    }
-    > button {
-      border-radius: ${({ isStartDate }) => (isStartDate ? '0px 32px 32px 0px' : '32px 0px 0px 32px')};
-      :before {
-        border-radius: ${({ isStartDate }) => (isStartDate ? '0px 32px 32px 0px' : '32px 0px 0px 32px')};
-      }
     }
   }
 `
 
 const buttonCommonStyles = css`
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-  max-height: 34px;
-  min-height: 34px;
-  border-radius: 32px;
-  padding: 5px 10px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
   position: relative;
   width: 100%;
+  margin: 0 0 12px 0;
+  min-height: 45px;
+  width: 180px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    width: 140px;
+    width: 180px;
   }
 `
 
-const StyledButtonIXSGradient = styled(ButtonIXSGradient)<{ ended: boolean }>`
+const StyledButtonIXSWide = styled(ButtonIXSWide)<{ borderColor?: string, bgColor?: string, color?: string }>`
   ${buttonCommonStyles}
   font-weight: 600;
-  ${({ ended }) =>
-    ended &&
-    css`
-      background: ${({ theme }) => theme.blue3};
-    `}
-`
-
-const StyledButtonGradientBorder = styled(ButtonGradientBorder)`
-  background: ${({ theme }) => theme.bg0};
-  ${buttonCommonStyles}
+  border: 1px solid;
+  text-align: center;
+  background: ${({ theme, bgColor }) => bgColor ?? theme.bg0};
+  border-color: ${({ borderColor }) => borderColor ?? 'rgba(102, 102, 255, 0.5)'};
+  color: ${({ theme, color }) => color ?? theme.text5};
 `

@@ -12,6 +12,8 @@ import { useRole } from 'state/user/hooks'
 import { FormSubmitContainer } from '../../shared/styled'
 import { RequestChangesPopup } from '../../../utils/RequestChangesPopup'
 import { OfferStatus } from 'state/launchpad/types'
+import { LoaderContainer } from 'components/LaunchpadMisc/styled'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
 
 interface IssuanceButtonsProps {
   onSaveDraft: () => void
@@ -23,6 +25,7 @@ interface IssuanceButtonsProps {
   offerId?: string
   status: OfferStatus
   isReset: boolean
+  refetch?: () => void
 }
 
 export const IssuanceActionButtons = ({
@@ -35,9 +38,16 @@ export const IssuanceActionButtons = ({
   status,
   offerId,
   isReset,
+  refetch,
 }: IssuanceButtonsProps) => {
   const theme = useTheme()
-  const { isAdmin } = useRole()
+  const { isAdmin, isMasterTenant } = useRole()
+  const isAdministrator = isAdmin || isMasterTenant;
+
+  const showError = useShowError()
+  const { approve, reject, requestChanges } = useReviewOffer(offerId)
+  const showSuccess = useShowSuccess()
+
   const [showApprove, setShowApprove] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
   const [showReject, setShowReject] = useState(false)
@@ -47,36 +57,47 @@ export const IssuanceActionButtons = ({
   const [reasonRejected, setReasonRejected] = useState('')
   const [changesRequested, setChangesRequested] = useState('')
   const [changesRejected, setChangesRejected] = useState('')
-  const showError = useShowError()
-  const { approve, reject, requestChanges } = useReviewOffer(offerId)
-  const showSuccess = useShowSuccess()
+  const [loading, setLoading] = useState(false)
+
   const onApprove = async () => {
     try {
+      setLoading(true)
       await approve()
+      await refetch?.()
       showSuccess('Offer approved successfully')
       setShowApprove(false)
     } catch (e: any) {
       showError(e?.message)
+    } finally {
+      setLoading(false)
     }
   }
   const onReject = async () => {
     try {
+      setLoading(true)
       await reject({ reasonRequested: reasonRejected, changesRequested: changesRejected })
+      await refetch?.()
       showSuccess('Offer rejected successfully')
       setShowConfirmReject(false)
       setShowReject(false)
     } catch (e: any) {
       showError(e?.message)
+    } finally {
+      setLoading(false)
     }
   }
   const onRequestChanges = async () => {
     try {
+      setLoading(true)
       await requestChanges({ reasonRequested, changesRequested })
+      await refetch?.()
       showSuccess('Requested changes for offer successfully')
       setShowConfirmUpdate(false)
       setShowUpdate(false)
     } catch (e: any) {
       showError(e?.message)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -99,6 +120,11 @@ export const IssuanceActionButtons = ({
 
   return (
     <Column style={{ gap: '1rem' }}>
+      {loading && (
+        <LoaderContainer width="100vw" height="100vh">
+          <Loader />
+        </LoaderContainer>
+      )}
       <ConfirmPopup
         isOpen={showApprove}
         onAccept={onApprove}
@@ -153,7 +179,7 @@ export const IssuanceActionButtons = ({
         setMessage={setChangesRejected}
         setReason={setReasonRejected}
       />
-      {(!isApproved || isAdmin) && (
+      {(!isApproved || isAdministrator) && (
         <FormSubmitContainer>
           {showDraft && (
             <OutlineButton style={{ border: '1px solid #6666FF33' }} disabled={draftDisabled} onClick={onSaveDraft}>
@@ -169,7 +195,7 @@ export const IssuanceActionButtons = ({
           )}
         </FormSubmitContainer>
       )}
-      {isAdmin && showReviewButtons && (
+      {isAdministrator && showReviewButtons  ? (
         <FormSubmitContainer>
           <AdminButtons
             disabled={!offerId}
@@ -178,8 +204,8 @@ export const IssuanceActionButtons = ({
             onReject={() => setShowReject(true)}
           />
         </FormSubmitContainer>
-      )}
-      {isAdmin && !showReviewButtons && (
+      ) : null}
+      {isAdministrator && !showReviewButtons && (
         <FormSubmitContainer>
           <FilledButton onClick={() => null} background={theme.launchpad.colors.success} style={{ cursor: 'default' }}>
             Approved

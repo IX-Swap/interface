@@ -76,6 +76,14 @@ export const useSecTokens = () => {
   return { secTokens }
 }
 
+export const useAllSecTokens = () => {
+  const { tokens } = useSecTokenState()
+  const secMap = listToSecTokenMap(listCache, tokens)
+  const secTokens = useAllSecTokensFromMap(secMap)
+
+  return { secTokens }
+}
+
 export function useFetchSecTokenListCallback(): (sendDispatch?: boolean) => Promise<SecToken[]> {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -158,6 +166,29 @@ export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: s
     return mapWithoutUrls
   }, [tokenMap, chainId])
 }
+
+
+export function useAllSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: string]: WrappedTokenInfo } {
+  return useMemo(() => {
+    if (!tokenMap) return {}
+
+    // Accumulate tokens across all chains
+    const allTokens = Object.keys(tokenMap).reduce<{ [address: string]: WrappedTokenInfo }>((accumulatedTokens, chainId) => {
+      const tokensForChain = tokenMap[chainId as unknown as keyof SecTokenAddressMap];
+
+      if (tokensForChain) {
+        Object.keys(tokensForChain).forEach((address) => {
+          accumulatedTokens[address] = tokensForChain[address].token;
+        });
+      }
+
+      return accumulatedTokens;
+    }, {});
+
+    return allTokens;
+  }, [tokenMap]);
+}
+
 
 export function useAccreditationStatus(currencyId?: string) {
   const { secTokens: userSecTokens } = useUserSecTokens()

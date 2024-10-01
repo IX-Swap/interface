@@ -163,7 +163,7 @@ export const HeaderLinks = () => {
             return pathname.includes('security-token')
           }}
         >
-          <Trans>Security Tokens</Trans>
+          <Trans>RWAs</Trans>
         </StyledNavLink>
       )}
 
@@ -198,15 +198,6 @@ export const HeaderLinks = () => {
       {isAllowed(routes.faucet) && chainId === SupportedChainId.KOVAN && isWhitelisted && (
         <StyledNavLink disabled={!isApproved} id={`faucet-nav-link`} to={routes.faucet}>
           <Trans>Faucet</Trans>
-        </StyledNavLink>
-      )}
-
-      {isAllowed(routes.issuance) && showIssuance && <StyledNavLink to="/issuance">Issuance</StyledNavLink>}
-      {isAllowed('/admin') && account && isAdmin && isWhitelisted && <StyledNavLink to="/admin">Admin</StyledNavLink>}
-
-      {isAllowed(routes.lbpDashboard) && account && isAdmin && isWhitelisted && (
-        <StyledNavLink to={routes.lbpDashboard} data-testid={`lbp-nav-link`}>
-          <Trans>LBP</Trans>
         </StyledNavLink>
       )}
     </HeaderLinksWrap>

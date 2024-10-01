@@ -52,7 +52,7 @@ export const IssuancesFull = () => {
   const [order, setOrder] = React.useState<OrderConfig>({})
   const [issuance, setIssuance] = React.useState<Issuance | null>(null)
   const [popUpOpen, setPopUpOpen] = React.useState(false)
-  const { isAdmin, isOfferManager } = useRole()
+  const { isAdmin, isOfferManager, isMasterTenant } = useRole()
   const history = useHistory()
 
   const [filter, setFilter] = React.useState<SearchConfig>(() => {
@@ -75,7 +75,7 @@ export const IssuancesFull = () => {
 
   const selectIssuance = useCallback(
     (issuance: Issuance) => {
-      if (isAdmin) {
+      if (isAdmin || isMasterTenant) {
         setIssuance(issuance)
         setPopUpOpen(true)
       } else if (isOfferManager) {
@@ -126,13 +126,9 @@ export const IssuancesFull = () => {
     refreshList()
   }
 
-  const getManageUrl = useCallback(
-    (issuance: Issuance) => {
-      if (!isAdmin) return ''
-      return getIssuanceManageUrl(issuance)
-    },
-    [isAdmin]
-  )
+  const getManageUrl = useCallback((issuance: Issuance) => {
+    return getIssuanceManageUrl(issuance)
+  }, [])
 
   const onSearch = useCallback(
     (search: string) => {
@@ -203,7 +199,7 @@ export const IssuancesFull = () => {
                     View Application <EyeIcon />
                   </OutlineButton>
 
-                  {isAdmin && !!issuance.isMine && (
+                  {(isMasterTenant || isAdmin) && !!issuance.isMine && (
                     <OutlineButton
                       color={theme.launchpad.colors.primary}
                       style={{ fontWeight: '600' }}

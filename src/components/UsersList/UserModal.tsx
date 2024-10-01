@@ -1,4 +1,4 @@
-import React, { useState, FC, useMemo } from 'react'
+import React, { useState, FC, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
 import { Label } from '@rebass/forms'
 import { Trans } from '@lingui/macro'
@@ -29,6 +29,8 @@ import { Line } from 'components/Line'
 import { HelpCircle } from 'react-feather'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import apiService from 'services/apiService'
+import { whitelabel } from 'services/apiUrls'
 
 interface Props {
   item: User | null
@@ -48,23 +50,19 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
   const [showDeleteTokensWarning, handleShowDeleteTokensWarning] = useState(false)
   const [changeRole, handleChangeRole] = useState(false)
   const [showSummary, handleShowSummary] = useState(false)
+  const [tenants, setTanents] = useState([])
+
+  const TENANT_ROLES = [ROLES.MASTER_TENANT, ROLES.TOKEN_MANAGER] as any
 
   const tokensOptions = useMemo((): Record<number, Option> => {
     if (secTokens?.length) {
       return secTokens.reduce((acc, token) => {
-        const isDisabled = Boolean(
-          (item?.managerOf || []).find(({ token: { payoutEvents } }) =>
-            Boolean(payoutEvents.find(({ secTokenId }) => secTokenId === token.id))
-          )
-        )
-
         return {
           ...acc,
           [token.id]: {
             label: token.symbol,
             value: token.id,
             icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
-            isDisabled,
           },
         }
       }, {})
@@ -77,16 +75,16 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
     if (item && Object.keys(tokensOptions).length) {
       return {
         ...item,
-        managerOf: item.managerOf.map(({ token: { id } }) => tokensOptions[id]),
+        managerOf: item.managerOf.filter((_) => _.token?.id).map(({ token }) => tokensOptions[token!.id]),
         username: item.username || '',
       }
     }
 
-    return { ethAddress: '', username: '', role: '', isWhitelisted: false, managerOf: [] }
+    return { ethAddress: '', username: '', role: '', isWhitelisted: false, managerOf: [], tenantId: config?.id }
   }, [item, tokensOptions])
 
   const submit = async () => {
-    const isManager = role === ROLES.TOKEN_MANAGER
+    const isManager = role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN
     try {
       handleShowDeleteTokensWarning(false)
       handleChangeRole(false)
@@ -97,6 +95,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
             role,
             isWhitelisted,
             username,
+            tenantId,
             managerOf: isManager ? managerOf.map((el) => el.value || el) : [],
             removedTokens: tokensToRemove.map(({ value }) => value),
           },
@@ -110,6 +109,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
             role,
             isWhitelisted,
             username,
+            tenantId,
             managerOf: isManager ? managerOf.map((el) => el.value || el) : [],
           },
           filters
@@ -163,7 +163,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
   }
 
   const {
-    values: { ethAddress, role, isWhitelisted, username, managerOf },
+    values: { ethAddress, role, isWhitelisted, username, managerOf, tenantId },
     errors,
     touched,
     setFieldValue,
@@ -195,11 +195,29 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
 
   const canNotEditRole = useMemo(() => {
     if (item && role === ROLES.TOKEN_MANAGER) {
-      return item.managerOf.some(({ token: { payoutEvents } }) => Boolean(payoutEvents.length))
+      return item.managerOf.some(({ token }) => Boolean(token?.payoutEvents?.length))
     }
 
     return false
   }, [item])
+
+  const getAllTenants = async () => {
+    try {
+      const { status, data } = await apiService.get(whitelabel.all)
+
+      if (status === 200) {
+        setTanents(data)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    getAllTenants()
+  }, [])
+
+
 
   return (
     <>
@@ -212,10 +230,10 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
         )}
 
         {showSummary && (
-          <UpdateSummary item={{ ethAddress, role, isWhitelisted, username, managerOf }} close={closeSummary} />
+          <UpdateSummary item={{ ethAddress, role, isWhitelisted, username, managerOf, tenant: tenants.find((item: any) => item?.id === tenantId) }} close={closeSummary} />
         )}
 
-        <ModalBlurWrapper data-testid="user-modal" style={{ maxWidth: '547px', width: '100%', position: 'relative' }}>
+        <ModalBlurWrapper>
           <LoadingIndicator isLoading={adminLoading} isRelative />
           <ModalContent>
             <Title>
@@ -272,22 +290,35 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                 placeholder="Choose Role of User"
                 isDisabled={canNotEditRole}
               />
-              {role === ROLES.TOKEN_MANAGER && (
+
+              {TENANT_ROLES.includes(role) ? (
+                <Select
+                  style={{ background: '#F7F7FA' }}
+                  withScroll
+                  label="Tenant:"
+                  selectedItem={tenantId}
+                  items={tenants.map((tenant: any) => ({ value: tenant?.id, label: tenant?.name }))}
+                  onSelect={(selectedTenant) => setFieldValue('tenantId', selectedTenant.value)}
+                  placeholder="Choose Tenant"
+                />
+              ) : null}
+
+              {(role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN) && (
                 <Select
                   style={{ background: '#F7F7FA' }}
                   withScroll
                   isMulti
                   error={touched.managerOf && errors.managerOf}
-                  label={`Security Tokens:`}
+                  label={`RWAs:`}
                   isClearable={false}
                   selectedItem={managerOf}
                   items={Object.values(tokensOptions)}
                   onSelect={handleSelectedTokens}
-                  placeholder="Choose Security Tokens"
+                  placeholder="Choose RWAs"
+                  isTokenLogoVisible
                 />
               )}
               <div style={{ display: 'flex' }}>
-                {' '}
                 <Checkbox
                   checked={isWhitelisted}
                   onClick={() => setFieldValue('isWhitelisted', !isWhitelisted)}
@@ -307,7 +338,7 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                 </MouseoverTooltip>
               </div>
 
-              {item && role === ROLES.TOKEN_MANAGER && (
+              {item && role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN && (
                 <TokensBlock
                   initialItems={initialValues?.managerOf || []}
                   currentItems={managerOf || []}
@@ -367,5 +398,4 @@ const Title = styled.div`
   align-items: center;
   justify-content: space-between;
   padding-bottom: 24px;
-  border-bottom: 1px solid rgba(39, 32, 70, 0.72); ;
 `

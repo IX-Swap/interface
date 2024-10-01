@@ -86,7 +86,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
       if (props.mode === 'single') {
         setSelectedRange([copyTime(selectedRangeRef.current[0], value)])
       } else {
-        setSelectedRange([copyTime(selectedRangeRef.current[0], value), selectedRangeRef.current[1]])
+        copyTime(selectedRangeRef.current[0], value)
       }
 
       callPropsOnChange()
@@ -196,6 +196,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
     if (hasEmptyState) {
       return `Do MMM, HH:mm ${props.mode === 'range' ? ` - ${dateFormat}` : ''}`
     }
+
     return formatDateRange(range[0]?.toDate(), range[1]?.toDate())
   }, [range, props.mode, props.dateFormat])
 
@@ -261,7 +262,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
                 minutesStep={10}
                 value={startTime}
                 onChange={onStartTimeChanged}
-                ampm={false}
                 format="HH:mm"
                 // minTime={moment(props.minDate)}
                 onError={onStartTimeError}
@@ -290,7 +290,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
                   minutesStep={10}
                   value={endTime}
                   onChange={onEndTimeChanged}
-                  ampm={false}
                   format="HH:mm"
                   // minTime={moment(props.minDate)}
                   onError={onEndTimeError}

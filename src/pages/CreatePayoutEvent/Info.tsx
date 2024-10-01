@@ -1,19 +1,12 @@
 import React from 'react'
-import { Trans } from '@lingui/macro'
-
 import { TYPE } from 'theme'
-
-import { FormCard } from './styleds'
+import { PayoutHeaderCard } from './styleds'
 
 export const Info = () => {
   return (
-    <FormCard marginBottom="32px">
-      <TYPE.title6 marginBottom="8px" style={{ textTransform: 'uppercase' }}>
-        <Trans>What is a payout event?</Trans>
-      </TYPE.title6>
-      <TYPE.body1>
-        <Trans>A payout event allows issuers to distribute tokens to qualified token holders.</Trans>
-      </TYPE.body1>
-    </FormCard>
+    <PayoutHeaderCard marginTop="16px" marginBottom="32px">
+      <TYPE.body style={{ fontWeight: '600' }}>What is a claim payout event?</TYPE.body>
+      <TYPE.description8>Users need to manually claim payout</TYPE.description8>
+    </PayoutHeaderCard>
   )
 }

@@ -67,6 +67,7 @@ interface Props {
   offerData?: InformationFormValues
   initialValues: InformationFormValues
   smartContractStrategy?: SMART_CONTRACT_STRATEGIES
+  refetch?: () => void
 }
 
 export const InformationForm = (props: Props) => {
@@ -249,6 +250,7 @@ export const InformationForm = (props: Props) => {
           offerId={offerData?.id}
           status={offerData?.status as any}
           isReset={isReset}
+          refetch={props.refetch}
         />
       </FormSideBar>
       <FormBody>

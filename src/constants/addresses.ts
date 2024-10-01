@@ -157,8 +157,17 @@ export const IXSALE_ADDRESS: { [key: number]: string } = {
 
 export const PAYOUT_ADDRESS = {
   [42]: '0xBf432B246e20afa1E26170932b8aD067F2dD52B2',
-  [137]: '0xd1B888b6fe05d9737ad0a0800253CD706254DB64',
-  [80001]: '0x12805f042f191d8C8e7C769a70dE169bCeBBe761',
+  [80002]: '0xad254DcBBedD1455D21848F668fE120DCec52E4c', // amoy
+  [84532]: '0x72Dc60450Daf5c72d2b6b9a52f4Db7321Ffdb7Ad', // base sepolia
+  [137]: process.env.REACT_APP_PAYOUT_ADDRESS_POLYGON,
+  [8453]: process.env.REACT_APP_PAYOUT_ADDRESS_BASE,
+} as Record<number, string>
+
+export const PAYOUT_AIRDROP_PROXY_ADDRESS = {
+  [80002]: '0xdcd1a5a50f99d7a73b4b783a87a847a410dfe231', // amoy
+  [84532]: '0xCF644341F6dC94533BC0748f205b371b81a86865', // base sepolia
+  [137]: process.env.REACT_APP_PAYOUT_AIRDROP_PROXY_ADDRESS_POLYGON,
+  [8453]: process.env.REACT_APP_PAYOUT_AIRDROP_PROXY_ADDRESS_BASE,
 } as Record<number, string>
 
 export const STAKING_ALTERNATE_MAP = {

@@ -51,9 +51,10 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
     if (secTokens?.length) {
       return secTokens.reduce((acc, token) => {
         const isDisabled = Boolean(
-          (item?.managerOf || []).find(({ token: { payoutEvents } }) =>
-            Boolean(payoutEvents.find(({ secTokenId }) => secTokenId === token.id))
-          )
+          (item?.managerOf || [])
+            .find(({ token }) =>
+              Boolean(token && token.payoutEvents.find(({ secTokenId }) => secTokenId === token.id))
+            )
         )
 
         return {
@@ -75,7 +76,7 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
     if (item && Object.keys(tokensOptions).length) {
       return {
         ...item,
-        managerOf: item.managerOf.map(({ token: { id } }) => tokensOptions[id]),
+        managerOf: item.managerOf.filter(_ => _.token?.id).map(({ token }) => tokensOptions[token!.id]),
         username: item.username || '',
       }
     }
@@ -84,7 +85,7 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
   }, [item, tokensOptions])
 
   const submit = async () => {
-    const isManager = role === ROLES.TOKEN_MANAGER
+    const isManager = role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN
     try {
       handleShowDeleteTokensWarning(false)
       handleChangeRole(false)
@@ -95,7 +96,7 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
             role,
             isWhitelisted,
             username,
-            managerOf: isManager ? managerOf.map((el) => el.value || el) : [],
+            managerOf: isManager ? managerOf.map((el) => el?.value || el) : [],
             removedTokens: tokensToRemove.map(({ value }) => value),
           },
           filters
@@ -108,7 +109,7 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
             role,
             isWhitelisted,
             username,
-            managerOf: isManager ? managerOf.map((el) => el.value || el) : [],
+            managerOf: isManager ? managerOf.map((el) => el?.value || el) : [],
           },
           filters
         )
@@ -145,9 +146,9 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
     }
 
     const tokensToDelete = Object.values(initialValues.managerOf).reduce((acc: Option[], el) => {
-      const isRemoved = managerOf.findIndex(({ value }) => value === el.value) === -1
+      const isRemoved = managerOf.findIndex((_) => el && _?.value === el.value) === -1
 
-      if (isRemoved) acc.push(el)
+      if (isRemoved) acc.push(el!)
 
       return acc
     }, [])
@@ -193,7 +194,7 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
 
   const canNotEditRole = useMemo(() => {
     if (item && role === ROLES.TOKEN_MANAGER) {
-      return item.managerOf.some(({ token: { payoutEvents } }) => Boolean(payoutEvents.length))
+      return item.managerOf.some(({ token }) => Boolean(token?.payoutEvents.length))
     }
 
     return false
@@ -209,7 +210,7 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
           <RoleChangeWarning close={closeRoleWarning} role={item?.role} newRole={role} onConfirm={submit} />
         )}
 
-        {showSummary && (
+        {managerOf && showSummary && (
           <UpdateSummary item={{ ethAddress, role, isWhitelisted, username, managerOf }} close={closeSummary} />
         )}
 
@@ -270,18 +271,18 @@ export const UserMobileFilters: FC<Props> = ({ item, filters }) => {
                 placeholder="Choose Role of User"
                 isDisabled={canNotEditRole}
               />
-              {role === ROLES.TOKEN_MANAGER && (
+              {role === ROLES.TOKEN_MANAGER || role === ROLES.ADMIN && (
                 <Select
                   style={{ background: '#F7F7FA' }}
                   withScroll
                   isMulti
                   error={touched.managerOf && errors.managerOf}
-                  label={`Security Tokens:`}
+                  label={`RWAs:`}
                   isClearable={false}
                   selectedItem={managerOf}
                   items={Object.values(tokensOptions)}
                   onSelect={handleSelectedTokens}
-                  placeholder="Choose Security Tokens"
+                  placeholder="Choose RWAs"
                 />
               )}
               <div style={{ display: 'flex' }}>

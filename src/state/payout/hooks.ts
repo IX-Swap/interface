@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import moment from 'moment'
 
 import { AppDispatch, AppState } from 'state'
 import apiService from 'services/apiService'
@@ -54,6 +53,11 @@ const publishPayout = async (newPayoutDraft: any) => {
   return result.data
 }
 
+const publishAirdrop = async (newPayoutDraft: any) => {
+  const result = await apiService.post(payout.airdrop, newPayoutDraft)
+  return result.data
+}
+
 export const paidPayoutReq = async (id: number, params: PayPayoutDto) => {
   const result = await apiService.put(payout.paidPayout(id), params)
   return result.data
@@ -84,6 +88,26 @@ export function usePublishPayout() {
       try {
         dispatch(createDraft.pending())
         const data = await publishPayout(newPayoutDraft)
+        dispatch(createDraft.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(createDraft.rejected({ errorMessage: error }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+
+export function useCreateAirdrop() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (newPayoutDraft: any) => {
+      try {
+        dispatch(createDraft.pending())
+        const data = await publishAirdrop(newPayoutDraft)
         dispatch(createDraft.fulfilled(data))
         return data
       } catch (error: any) {
@@ -263,8 +287,12 @@ export const getPayoutClaims = async (payoutId: number, params: Record<string, a
   return result.data
 }
 
-export const getTotalAmountByRecordDate = async (tokenId: number, recordDate: any) => {
-  const result = await apiService.get(payout.totalAmount(tokenId, moment(new Date(recordDate)).format('YYYY-MM-DD')))
+export const getTotalAmountByBlockNumber = async (
+  tokenId: number,
+  blockNumber: number,
+  includeOriginSupply: boolean
+) => {
+  const result = await apiService.get(payout.totalAmount(tokenId, blockNumber, includeOriginSupply))
   return result.data
 }
 
@@ -377,9 +405,13 @@ export const getMyPayoutAmount = async (id: number) => {
   return result.data
 }
 
+export const getMyClaimableAmount = async (id: number) => {
+  const result = await apiService.get(payout.getMyClaimableAmount(id))
+  return result.data
+}
+
 interface GetClaimAuthorization {
   token: string
-  nonce: number
   deadline: string
   id: number
 }

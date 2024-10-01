@@ -3,19 +3,25 @@ import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useActiveWeb3React } from 'hooks/web3'
-
 import { MEDIA_WIDTHS } from 'theme'
 import { useUserState } from 'state/user/hooks'
-import { Border, ToggleOption } from 'components/Tabs'
+import { BorderSimple, ToggleOption } from 'components/Tabs'
 import { ROLES } from 'constants/roles'
 import { TmMyTokens } from 'components/TmMyTokens'
-import { ButtonIXSGradient } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 import { TmPayoutEvents } from 'components/TmPayoutEvents'
 import { TmPayoutHistory } from 'components/TmPayoutHistory'
-import { routes } from 'utils/routes'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
+import { Line } from 'components/Line'
+import { CreatePayoutModal } from 'pages/PayoutItem/CreatePayoutModal/CreatePayoutModal'
 
-export type TokenManagerTab = 'my-tokens' | 'payout-events' | 'payout-history'
+export type TokenManagerTab =
+  | 'my-tokens'
+  | 'payout-events'
+  | 'payout-history'
+  | 'all-payout-events'
+  | 'no-upcoming-event'
 
 interface Tab {
   label: string
@@ -36,11 +42,26 @@ const tabs: Tab[] = [
 const renderTab = (selectedTab: TokenManagerTab | string) => {
   switch (selectedTab) {
     case 'my-tokens':
-      return <TmMyTokens />
+      return (
+        <StyledBodyWrapper style={{ marginTop: '20px' }}>
+          <TmMyTokens />
+        </StyledBodyWrapper>
+      )
+
     case 'payout-events':
-      return <TmPayoutEvents />
+      return (
+        <StyledTableWrapper style={{ marginTop: '2px' }}>
+          <TmPayoutEvents />
+        </StyledTableWrapper>
+      )
+
     case 'payout-history':
-      return <TmPayoutHistory />
+      return (
+        <StyledTableWrapper style={{ marginTop: '2px' }}>
+          <TmPayoutHistory />
+        </StyledTableWrapper>
+      )
+
     default:
       return null
   }
@@ -50,12 +71,12 @@ const TokenManager = () => {
   const [selectedTab, setSelectedTab] = useState<TokenManagerTab>('my-tokens')
   const { account } = useActiveWeb3React()
   const { me } = useUserState()
-
   const isLogged = account && me?.role
-
   const history = useHistory()
+  const [isModalOpen, handleIsModalOpen] = useState(false)
+  const openModal = () => handleIsModalOpen(true)
+  const closeModal = () => handleIsModalOpen(false)
   const params = useParams<TokenManagerParams>()
-
   const changeTab = useCallback(
     (tab: TokenManagerTab) => {
       history.push(`/token-manager/${tab}`)
@@ -69,52 +90,67 @@ const TokenManager = () => {
     setSelectedTab(tab)
   }, [params])
 
+  const isValidRole = me.role === ROLES.TOKEN_MANAGER || me.role === ROLES.ADMIN
   useEffect(() => {
-    if (me && me.role !== ROLES.TOKEN_MANAGER) {
-      history.push('/kyc')
+    if (me && isValidRole) {
+      return
     }
-  }, [me, history])
-
-  const goToCreate = () => {
-    history.push(routes.createPayoutEvent)
-  }
+    history.push('/kyc')
+  }, [me, history, isValidRole])
 
   if (!isLogged) {
     return <NotAvailablePage />
   }
-
   return (
-    <Container>
-      <Body>
+    <>
+      <Line />
+      <StyledHeaderWrapper>
         <TabsContainer>
-          {tabs.map(({ value, label }) => (
-            <ToggleOption key={`tabs-${value}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-              <Trans>{label}</Trans>
-              <Border active={selectedTab === value} />
-            </ToggleOption>
-          ))}
+          {tabs.map(({ value, label }, index) => {
+            const active = selectedTab === value
+            return (
+              <>
+                <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={active}>
+                  <TabLabel>
+                    <Trans>{label}</Trans>
+                  </TabLabel>
+                  <BorderSimple active={selectedTab === value} />
+                </ToggleOption>
+              </>
+            )
+          })}
           <ButtonContainer>
-            <CreateButton onClick={goToCreate}>
+            <CreatePayoutModal isModalOpen={isModalOpen} closeModal={closeModal} />
+
+            <CreateButton onClick={openModal}>
+              <CreateIcon />
               <Trans>Create Payout Event</Trans>
             </CreateButton>
           </ButtonContainer>
         </TabsContainer>
-
-        {renderTab(selectedTab)}
-      </Body>
-    </Container>
+      </StyledHeaderWrapper>
+      <Line />
+      {renderTab(selectedTab)}
+    </>
   )
 }
 
-export const Container = styled.div`
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
+export const StyledHeaderWrapper = styled.div`
+  padding: 0 200px;
+  background-color: #ffffff;
+  margin: 0 auto;
+  width: 100%;
 `
 
-export const Body = styled.div`
-  padding: 0 30px;
-  max-width: 1330px;
+export const StyledTableWrapper = styled.div`
+  padding: 0 150px;
+  background-color: #ffffff;
+  margin: 0 auto;
+  width: 100%;
+`
+
+export const StyledBodyWrapper = styled.div`
+  padding: 0 200px;
   margin: 0 auto;
   width: 100%;
 `
@@ -122,7 +158,6 @@ export const Body = styled.div`
 const TabsContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 60px;
   column-gap: 32px;
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     flex-direction: column;
@@ -136,13 +171,25 @@ const ButtonContainer = styled.div`
   flex: 1;
 `
 
-const CreateButton = styled(ButtonIXSGradient)`
+const CreateButton = styled(PinnedContentButton)`
   min-height: 40px;
-  height: 40px;
-  padding: 12px 24px;
+  height: 50px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 13px;
   line-height: 16px;
+  width: 200px;
+  gap: 8px;
+`
+
+const TabLabel = styled.div`
+  cursor: pointer;
+  padding: 12px 20px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  height: 80px;
+  display: flex;
+  align-items: center;
 `
 
 export default TokenManager

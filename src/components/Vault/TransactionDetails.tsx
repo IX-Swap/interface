@@ -1,29 +1,26 @@
 import React, { useCallback, useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
-import { Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { LinearProgress } from '@material-ui/core'
 import { Flex } from 'rebass'
+import styled, { css } from 'styled-components'
 
 import Column from 'components/Column'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { QRCodeWrap } from 'components/QRCodeWrap'
 import { RowCenter, RowBetween } from 'components/Row'
 import { CopyAddress } from 'components/CopyAddress'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleTransactionModal } from 'state/application/hooks'
 import { useDepositState } from 'state/deposit/hooks'
 import { useEventState } from 'state/eventLog/hooks'
-import { ModalBlurWrapper, TYPE, CloseIcon, ExternalLink } from 'theme'
+import { ModalBlurWrapper, TYPE, CloseIcon, ExternalLink, MEDIA_WIDTHS } from 'theme'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { LogItem } from 'state/eventLog/actions'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Colors } from 'theme/styled'
-
 import {
   ActionTypes,
   ActionTypeText,
-  DepositStatus,
   depositSuccessStatuses,
   getActionStatusPercent,
   getActionStatusText,
@@ -33,17 +30,10 @@ import {
   withdrawSuccessStatuses,
   depositErrorStatuses,
   withdrawErrorStatuses,
+  DepositStatus,
 } from './enum'
 
-import {
-  InfoModalHeader,
-  InfoModalBody,
-  LiniarProgressContainer,
-  PendingDepositInfo,
-  DepositWarningInfo,
-  DeadlineInfo,
-} from './styleds'
-import { DepoistStatusInfo } from './DepoistStatusInfo'
+import { InfoModalHeader, LiniarProgressContainer } from './styleds'
 import { getNetworkFromToken, getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { WithdrawalWarning } from './WithdrawalWarning'
 import { useNativeCurrency } from 'hooks/useNativeCurrency'
@@ -76,7 +66,7 @@ export const TransactionDetails = ({ currency }: Props) => {
 
   if (!data) return null
 
-  const status = data?.status ?? data?.params?.status ?? 'pending'
+  const status = data?.status ?? data?.params?.status ?? DepositStatus.PENDING
   const statusText = getActionStatusText(data.type, status, currency?.originalSymbol, currency?.symbol)
   const formattedDate = dayjs(data?.createdAt).format('MMM D, YYYY HH:mm')
   const isSuccess = (data.type === ActionTypes.DEPOSIT ? depositSuccessStatuses : withdrawSuccessStatuses).includes(
@@ -109,128 +99,25 @@ export const TransactionDetails = ({ currency }: Props) => {
           </TYPE.title5>
           <CloseIcon style={{ color: '#B8B8CC' }} data-testid="cross" onClick={toggle} />
         </InfoModalHeader>
-        <InfoModalBody style={{ position: 'relative' }} isSuccess={isSuccess}>
-          {isDeposit(data.type) && status === DepositStatus.PENDING && (
-            <DepositWarningInfo style={{ background: '#fff0f1' }}>
-              <div style={{ color: '#FF6161', fontSize: '13px', fontWeight: 600 }}>WARNING</div>
-              <span style={{ color: '#666680', fontSize: '13px', fontWeight: 400 }}>
-                Please execute the transaction of {currency?.originalSymbol} Tokens to the Custodians wallet address on
-                the {networkName} Blockchain.
-              </span>
-            </DepositWarningInfo>
-          )}
-
+        <Container isSuccess={isSuccess}>
           <div>
-            <label>
-              <Trans>Status:</Trans>
-            </label>
-            {data?.status === 'approved' && (
-              <LiniarProgressContainer
-                style={{
-                  background: '#FFFFFF',
-                  padding: '24px 16px',
-                  border: '1px solid #E6E6FF',
-                  borderRadius: '8px',
-                  marginTop: '10px',
-                  display: 'block',
-                }}
-                statusColor={statusColor as Exclude<keyof Colors, 'config'>}
-              >
-                <TYPE.description2 marginBottom={'10px'} color={statusColor}>
-                  {statusText}
-                </TYPE.description2>
-                <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
-              </LiniarProgressContainer>
-            )}
-
-            {/* <hr /> */}
-            {data?.status !== 'approved' && (
-              <div
-                style={{
-                  background: '#FFFFFF',
-                  padding: '24px 16px',
-                  border: '1px solid #E6E6FF',
-                  borderRadius: '8px',
-                  marginTop: '10px',
-                }}
-              >
-                <RowBetween>
-                  {/* <TYPE.description2 color={statusColor}>{statusText} </TYPE.description2> */}
-                  <LiniarProgressContainer
-                    style={{ width: '100%' }}
-                    statusColor={statusColor as Exclude<keyof Colors, 'config'>}
-                  >
-                    <TYPE.description2 marginBottom={'10px'} color={statusColor}>
-                      {statusText}
-                    </TYPE.description2>
-                    <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
-                  </LiniarProgressContainer>
-
-                  {/* {isSuccess ? (
-                    <SuccessIcon />
-                  ) : data?.status === 'pending' ? (
-                    ''
-                  ) : data?.status === 'approved' ? (
-                    <PendingIcon />
-                  ) : (
-                    <ErrorIcon />
-                  )} */}
-                </RowBetween>
-
-                {/* <LiniarProgressContainer statusColor={statusColor as Exclude<keyof Colors, 'config'>}>
+            <div className="title">Status</div>
+            <StatusWrap>
+              <RowBetween>
+                <LiniarProgressContainer
+                  style={{ width: '100%', marginTop: 0 }}
+                  statusColor={statusColor as Exclude<keyof Colors, 'config'>}
+                >
+                  <TYPE.description2 marginBottom={'10px'} color={statusColor}>
+                    {statusText}
+                  </TYPE.description2>
                   <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
-                </LiniarProgressContainer> */}
-              </div>
-            )}
-
-            <div>
-              {isDeposit(data.type) && status === DepositStatus.PENDING && (
-                <PendingDepositInfo>
-                  {/* <Row style={{ flexWrap: 'wrap', gap: '12px', alignItems: 'flex-end', marginTop: '8px' }}> */}
-                  <DepoistStatusInfo
-                    originalSymbol={currency?.originalSymbol}
-                    fromAddress={data.fromAddress}
-                    toAddress={data.depositAddress}
-                    amount={data.amount}
-                    network={originalNetworkName}
-                  />
-                  {/* </Row> */}
-
-                  <div
-                    style={{
-                      margin: '0 auto',
-                      border: '1px solid #E6E6FF',
-                      background: '#FFFFFF',
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <QRCodeWrap
-                      value={data.depositAddress ?? ''}
-                      size={80}
-                      // info={
-                      //   <StyledQrInfo>
-                      //     {shortenAddress(data?.depositAddress || '', 4, originalNetworkName)}
-                      //   </StyledQrInfo>
-                      // }
-                    ></QRCodeWrap>
-                  </div>
-                  {data.deadline && (
-                    <DeadlineInfo>
-                      <Trans>
-                        Deposit will be cancelled if no tokens are received until{' '}
-                        {dayjs(data.deadline).format('MMM D HH:mm')}
-                      </Trans>
-                    </DeadlineInfo>
-                  )}
-                </PendingDepositInfo>
-              )}
-            </div>
+                </LiniarProgressContainer>
+              </RowBetween>
+            </StatusWrap>
           </div>
 
-          <Column style={{ rowGap: '8px' }}>
+          <Column style={{ rowGap: '8px' }} className="info">
             <RowBetween style={{ flexWrap: 'wrap' }}>
               <TYPE.small>Txn ID:</TYPE.small>&nbsp;&nbsp;
               <TYPE.main1>{data.id}</TYPE.main1>
@@ -300,9 +187,81 @@ export const TransactionDetails = ({ currency }: Props) => {
               symbol={currency?.originalSymbol}
             />
           )}
-          {/* {!isSuccess && <PinnedContentButton>Contact Support</PinnedContentButton>} */}
-        </InfoModalBody>
+        </Container>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const Container = styled.div<{ isSuccess: boolean }>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  background: ${({ theme }) => theme.bg0};
+  border-radius: 0px 0px 20px 20px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 10px 16px;
+  }
+
+  > div:first-child {
+    margin-top: 18px;
+
+    .title {
+      color: rgba(41, 41, 51, 0.9);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: -0.42px;
+    }
+    label {
+      font-size: 14px;
+      color: ${({ theme }) => theme.text2};
+    }
+    > hr {
+      margin: 8px 0px;
+      border: none;
+      height: 1px;
+      background-color: ${({ theme }) => theme.text9};
+    }
+    > div {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+      ${({ isSuccess }) =>
+        isSuccess &&
+        css`
+          svg {
+            path {
+              fill: ${({ theme }) => theme.green1};
+            }
+          }
+        `}
+    }
+  }
+
+  .info {
+    background: ${({ theme }) => theme.bg7};
+    border-radius: 8px;
+    border: 1px solid #e6e6ff;
+    padding: 24px;
+    label {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+`
+
+const StatusWrap = styled.div`
+  background: #ffffff;
+  border: 1px solid #e6e6ff;
+  border-radius: 8px;
+  padding: 24px 32px;
+  margin-top: 10px;
+  min-height: 186px;
+`

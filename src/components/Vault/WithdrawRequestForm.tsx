@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
-import { t, Trans } from '@lingui/macro'
+import React, { useEffect, useState } from 'react'
+import { Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
+import { ethers } from 'ethers'
 
-import { ButtonIXSWide, PinnedContentButton } from 'components/Button'
+import { PinnedContentButton } from 'components/Button'
 import Column from 'components/Column'
 import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import Row from 'components/Row'
@@ -27,7 +28,6 @@ import { currencyId } from 'utils/currencyId'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 
 import { AddressInput } from '../AddressInputPanel/AddressInput'
-import { AmountInput } from './AmountInput'
 import { WithdrawModalView } from './WithdrawPopup'
 import { FeeStatus } from './FeeStatus'
 import { isPending, WithdrawStatus } from './enum'
@@ -36,6 +36,10 @@ import { ReactComponent as IButton } from 'assets/images/newIbutton.svg'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
 import { findChainName } from 'chains'
+import { useTokenContract } from 'hooks/useContract'
+import useDecimals from 'hooks/useDecimals'
+import { AmountInputV2 } from './AmountInputV2'
+import { floorToDecimals } from 'utils/formatCurrencyAmount'
 
 interface Props {
   currency?: SecCurrency
@@ -44,6 +48,9 @@ interface Props {
   onRedirect: () => void
 }
 export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }: Props) => {
+  const tokenAddress = (currency as any)?.address || ''
+  const tokenContract = useTokenContract(tokenAddress ?? '')
+  const tokenDecimals = useDecimals(tokenAddress ?? '') ?? 18
   const theme = useTheme()
   const getWithdrawStatus = useGetWithdrawStatus()
   const createDraftWithdraw = useCreateDraftWitdraw()
@@ -66,12 +73,27 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const networkName = getOriginalNetworkFromToken(tokenInfo)
   const { address, loading } = useENS(receiver)
+
+  const [tokenBalance, setTokenBalance] = useState('0')
+
   const error = Boolean(receiver.length > 0 && !loading && !address && networkName === 'Ethereum')
-
   const haveActiveWithdrawal = isPending(withdrawStatus.status || 'pending')
-
   const paid = [WithdrawStatus.FEE_ACCEPTED, WithdrawStatus.PENDING].includes(withdrawStatus.status as WithdrawStatus)
   const chainName = findChainName(chainId) || 'Base'
+
+  const fetchTokenBalance = async () => {
+    if (!tokenContract || !account) return
+
+    const balance = await tokenContract.balanceOf(account)
+
+    const exactBalance = ethers.utils.formatUnits(balance, tokenDecimals)
+
+    setTokenBalance(exactBalance)
+  }
+
+  useEffect(() => {
+    fetchTokenBalance()
+  }, [account, tokenContract])
 
   useEffect(() => {
     if (tokenInfo.id) {
@@ -143,20 +165,28 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
         </InfoSection>
 
         <Column style={{ gap: '11px' }}>
-          <Row>
+          <Row justify="space-between">
             <TYPE.title11>
-              <Trans>I want to withdraw:</Trans>
+              <Trans>Enter Amount</Trans>
             </TYPE.title11>
+
+            <CurrentBalance>
+              Balance:
+              <span>
+                {floorToDecimals(Number(tokenBalance), 3)} {currency?.originalSymbol}
+              </span>
+            </CurrentBalance>
           </Row>
-          <AmountInput
-            widthdraw
+          <AmountInputV2
+            showMax
+            balance={floorToDecimals(Number(tokenBalance), 3)}
             token={token}
             amount={parsedAmount}
-            showMax={true}
             currency={currency}
             originalDecimals={tokenInfo?.originalDecimals}
             value={amount ?? ''}
             onUserInput={onTypeAmount}
+            symbol={currency?.symbol}
           />
           <Row>
             <TYPE.description2 color={`${theme.text2}80`}>
@@ -218,4 +248,22 @@ export const InfoSection = styled.div`
   border: 1px solid #e6e6ff;
   border-radius: 8px;
   padding: 20px;
+`
+
+const CurrentBalance = styled.div`
+  color: #666680;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.28px;
+
+  span {
+    color: #292933;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: 4px;
+  }
 `

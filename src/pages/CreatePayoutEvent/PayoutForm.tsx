@@ -2,40 +2,35 @@ import React, { FC, useEffect, useState, useMemo } from 'react'
 import { useFormik, FormikProvider } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { useWeb3React } from '@web3-react/core'
-import { Trans } from '@lingui/macro'
-
 import dayjs from 'dayjs'
-
 import { Select } from 'pages/KYC/common'
 import { FormGrid } from 'pages/KYC/styleds'
-
 import { DateInput } from 'components/DateInput'
 import CurrencyLogo from 'components/CurrencyLogo'
-
 import { TYPE } from 'theme'
-
 import { useUserState } from 'state/user/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import {
-  getTotalAmountByRecordDate,
+  getTotalAmountByBlockNumber,
   useCreateDraftPayout,
   usePayoutState,
   useUpdateDraftPayout,
   useUpdatePayout,
 } from 'state/payout/hooks'
-
 import { routes } from 'utils/routes'
 import { availableInputsForEdit, FormValues, transformPayoutDraftDTO } from './utils'
-
-import { FormCard } from './styleds'
+import { PayoutFormCard } from './styleds'
 import { initialValues } from './mock'
 import { validation } from './validation'
-
 import { Summary } from './Summary'
 import { PayoutEventBlock } from './PayoutEventBlock'
 import { PAYOUT_STATUS } from 'constants/enums'
-
+import { useActiveWeb3React } from 'hooks/web3'
+// @ts-ignore:next-line
+import EthDater from 'ethereum-block-by-date'
+import styled from 'styled-components'
+import { Checkbox } from 'components/Checkbox'
 interface PayoutFormProps {
   payoutData?: Partial<FormValues>
   status?: PAYOUT_STATUS
@@ -43,19 +38,24 @@ interface PayoutFormProps {
 }
 
 export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, status = PAYOUT_STATUS.DRAFT }) => {
-  const { account } = useWeb3React()
+  const { account, provider } = useWeb3React()
   const { me } = useUserState()
+  const { chainId } = useActiveWeb3React()
 
   const secTokensOptions = useMemo(() => {
     if (me?.managerOf?.length) {
-      return me.managerOf.map(({ token }) => ({
-        label: token.symbol,
-        value: token.id,
-        icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
-      }))
+      return me.managerOf
+        .map(({ token }) => ({
+          isDisabled: token?.chainId !== chainId,
+          label: token?.symbol,
+          value: token?.id,
+          icon: token ? <CurrencyLogo currency={new WrappedTokenInfo(token)} /> : null,
+          network: token?.network,
+        }))
+        .sort((a: any, b: any) => a.isDisabled - b.isDisabled)
     }
     return []
-  }, [me])
+  }, [me, chainId])
 
   const [tokenAmount, setTokenAmount] = useState<any>({
     walletsAmount: null,
@@ -64,11 +64,10 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   })
   const { error } = usePayoutState()
   const [isAmountLoading, setIsAmountLoading] = useState(false)
-
   const createDraft = useCreateDraftPayout()
   const updateDraft = useUpdateDraftPayout()
   const updatePayout = useUpdatePayout()
-
+  const [blockNumberCache, setBlockNumberCache] = useState<Record<string, number>>({})
   const addPopup = useAddPopup()
   const history = useHistory()
 
@@ -125,12 +124,12 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   })
 
   const { values, errors, touched, setFieldValue, handleSubmit } = formik
-  const { recordDate, secToken } = values
+  const { recordDate, secToken, includeOriginSupply } = values
 
   useEffect(() => {
     if (payoutData) {
       onValueChange('secToken', payoutData.secToken)
-      fetchAmountByRecordDate(payoutData.secToken, recordDate)
+      fetchAmountByRecordDate(payoutData.secToken, recordDate, includeOriginSupply)
     }
   }, [])
 
@@ -145,17 +144,35 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
 
   const onValueChange = (key: string, value: any) => {
-    setFieldValue(key, value, true)
+    const processedValue = value
+    setFieldValue(key, processedValue, true)
   }
 
-  const fetchAmountByRecordDate = async (secToken: any, recordDate: any) => {
+  const convertDateToBlockNumber = async (date: string) => {
+    const dater = new EthDater(provider)
+    const formattedDate = dayjs.utc(date).endOf('day').format('YYYY-MM-DDTHH:mm:ss[Z]')
+    const result = await dater.getDate(
+      formattedDate, // Date, required. Any valid moment.js value: string, milliseconds, Date() object, moment() object.
+      true, // Block after, optional. Search for the nearest block before or after the given date. By default true.
+      false // Refresh boundaries, optional. Recheck the latest block before request. By default false.
+    )
+    return result.block
+  }
+
+  const fetchAmountByRecordDate = async (secToken: any, recordDate: any, includeOriginSupply?: boolean) => {
     const isFuture = dayjs(recordDate)
       .local()
       .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
-
     if (secToken?.value && recordDate && !isFuture) {
       setIsAmountLoading(true)
-      const data = await getTotalAmountByRecordDate(secToken.value, recordDate)
+      const formattedDate = dayjs(recordDate).local().format('YYYY-MM-DD')
+      let blockNumber = blockNumberCache[formattedDate]
+      if (!blockNumber) {
+        blockNumber = await convertDateToBlockNumber(recordDate)
+        setBlockNumberCache((prev) => ({ ...prev, [formattedDate]: blockNumber }))
+      }
+
+      const data = await getTotalAmountByBlockNumber(secToken.value, blockNumber, includeOriginSupply || false)
 
       if (data) {
         const totalSum = (+data.walletTokens ?? 0) + (+data.poolTokens ?? 0)
@@ -165,6 +182,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
           totalSum: totalSum.toFixed(2),
         })
         onValueChange('secTokenAmount', totalSum)
+        setFieldValue('blockNumber', blockNumber)
       }
 
       setIsAmountLoading(false)
@@ -174,24 +192,26 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
-        <FormCard marginBottom="32px">
-          <TYPE.title6 marginBottom="28px">
-            <Trans>SECURITY TOKENS</Trans>
-          </TYPE.title6>
+        <PayoutFormCard marginBottom="32px">
+          <TYPE.body fontWeight="600" marginBottom="28px">
+            Security Tokens
+          </TYPE.body>
           <FormGrid style={{ marginBottom: 20 }}>
             <Select
               tooltipText="Select the security token you want to distribute for this payout event."
               label="Security Token"
-              placeholder="Choose security token"
+              placeholder=" security token"
               selectedItem={values.secToken}
               items={secTokensOptions}
               onSelect={(newToken) => {
                 onValueChange('secToken', newToken)
-                fetchAmountByRecordDate(newToken, recordDate)
+                fetchAmountByRecordDate(newToken, recordDate, includeOriginSupply)
               }}
               error={touched.secToken ? errors.secToken : ''}
               required
               isDisabled={!availableForEditing.includes('secToken')}
+              isNetworkVisiable={true}
+              isTokenLogoVisible={true}
             />
 
             <DateInput
@@ -209,13 +229,33 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
               }
               onChange={(newDate) => {
                 onValueChange('recordDate', dayjs(newDate).local().format('YYYY-MM-DD'))
-                fetchAmountByRecordDate(secToken, dayjs(newDate).local().format('YYYY-MM-DD'))
+                fetchAmountByRecordDate(secToken, dayjs(newDate).local().format('YYYY-MM-DD'), includeOriginSupply)
               }}
               error={touched.recordDate ? errors.recordDate : ''}
               required
               tooltipText="The record date or cut-off date is selected to determine which token holders (from when) can participate in the payout event."
               isDisabled={!availableForEditing.includes('recordDate')}
             />
+          </FormGrid>
+          <FormGrid>
+            <Options>
+              <Checkbox
+                label="Include supply of the original token"
+                checked={values.includeOriginSupply ?? false}
+                onClick={() => {
+                  const newIncludeOriginSupply = !values.includeOriginSupply
+                  onValueChange('includeOriginSupply', newIncludeOriginSupply)
+                  if (values.secToken && values.recordDate) {
+                    fetchAmountByRecordDate(
+                      values.secToken,
+                      dayjs(values.recordDate).local().format('YYYY-MM-DD'),
+                      newIncludeOriginSupply
+                    )
+                  }
+                }}
+                disabled={isAmountLoading || !availableForEditing.includes('includeOriginSupply')}
+              />
+            </Options>
           </FormGrid>
 
           <Summary
@@ -225,7 +265,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
             setTokenAmount={setTokenAmount}
             onValueChange={onValueChange}
           />
-        </FormCard>
+        </PayoutFormCard>
 
         <PayoutEventBlock
           status={status}
@@ -241,3 +281,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     </FormikProvider>
   )
 }
+
+const Options = styled.div`
+  margin-bottom: 20px;
+`

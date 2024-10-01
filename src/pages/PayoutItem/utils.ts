@@ -8,17 +8,17 @@ export const useStatusButtonInfo = (status: PAYOUT_STATUS) => {
 
   switch (status) {
     case PAYOUT_STATUS.ANNOUNCED:
-      return { title: 'Announced', backgroundColor: theme.orange, color: theme.text1, borderColor: null }
+      return { title: 'Announced', backgroundColor: theme.blue4, color: theme.text1, borderColor: null }
     case PAYOUT_STATUS.DRAFT:
       return { title: 'Draft', backgroundColor: 'transparent', color: theme.bg10, borderColor: theme.bg10 }
     case PAYOUT_STATUS.ENDED:
-      return { title: 'Ended', backgroundColor: theme.blue3, color: theme.text1, borderColor: null }
+      return { title: 'Ended', backgroundColor: theme.error, color: theme.bg0, borderColor: null }
     case PAYOUT_STATUS.STARTED:
-      return { title: 'Started', backgroundColor: theme.green3, color: theme.text1, borderColor: null }
+      return { title: 'Started', backgroundColor: theme.green4, color: theme.bg0, borderColor: null }
     case PAYOUT_STATUS.SCHEDULED:
-      return { title: 'Scheduled', backgroundColor: theme.yellow4, color: theme.bg1, borderColor: null }
+      return { title: 'Scheduled', backgroundColor: theme.yellow5, color: theme.bg1, borderColor: null }
     case PAYOUT_STATUS.DELAYED:
-      return { title: 'Delayed', backgroundColor: theme.bgG6, color: theme.text1, borderColor: null }
+      return { title: 'Delayed', backgroundColor: theme.orange2, color: theme.bg0, borderColor: null }
   }
 }
 

@@ -30,7 +30,7 @@ import { countriesList } from 'constants/countriesList'
 import { ReactComponent as ArrowLeft } from 'assets/images/newBack.svg'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
-import { KycSelect as Select, KycTextInput as TextInput, Uploader, SelfieUploader } from './common'
+import { KycSelect as Select, KycTextInput as TextInput, SelfieUploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import {
   empleymentStatuses,
@@ -64,6 +64,7 @@ import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-
 import { KYCValidationErrors } from './KYCValidationErrors'
 import { error } from 'console'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { Uploader } from 'components/Uploader'
 
 type FormSubmitHanderArgs = {
   createFn: (body: any) => any
@@ -1015,7 +1016,7 @@ export default function IndividualKycForm() {
                             error={errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
-                            onDrop={(file) => {
+                            onDrop={(file: any) => {
                               handleDropImage(file, values, 'proofOfIdentity', setFieldValue)
                             }}
                             handleDeleteClick={handleImageDelete(
@@ -1096,7 +1097,7 @@ export default function IndividualKycForm() {
                                   subtitle="Latest 3 months Utility Bill, Bank Statement/Credit Card Statement, Tenancy Agreement or Telecom Bill"
                                   error={errors.proofOfAddress}
                                   files={values.proofOfAddress}
-                                  onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                                  onDrop={(file: any) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
                                   handleDeleteClick={handleImageDelete(
                                     values,
                                     'proofOfAddress',

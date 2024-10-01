@@ -1,73 +1,72 @@
 import React, { useEffect, useState } from 'react'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Flex } from 'rebass'
-
 import { routes } from 'utils/routes'
 import { MultipleFilters } from 'components/MultipleFilters'
 import { FILTERS } from 'components/MultipleFilters/constants'
-import { ButtonGradientBorder } from 'components/Button'
 import { Table } from 'components/Table'
+import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { ReactComponent as EyeIcon } from 'assets/images/eye.svg'
-import { useCurrency } from 'hooks/Tokens'
+import { ReactComponent as EyeIcon } from 'assets/images/gray_eye_icon.svg'
+import { ReactComponent as EditIcon } from 'assets/images/gray_edit_icon.svg'
+import { useSafeCurrency } from 'hooks/Tokens'
 import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
 import { Pagination } from 'components/Pagination'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { TmEmptyPage } from 'components/TmEmptyPage'
 import { PayoutEvent } from 'state/token-manager/types'
-import { useUserState } from 'state/user/hooks'
+import { useRole, useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
-import { useDeletePayoutItem, usePayoutState } from 'state/payout/hooks'
+import { useDeletePayoutItem } from 'state/payout/hooks'
 import { AreYouSureModal } from 'components/AreYouSureModal'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { ReactComponent as DeleteIcon } from 'assets/images/delete-basket.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
-
 import { StatusCell } from './StatusCell'
-import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton, ActionsContainer } from './styleds'
-import { PAYOUT_TYPE_LABEL } from './constants'
-
-const headerCells = [
-  `ID`,
-  `Status`,
-  `Payout type`,
-  `SEC token`,
-  `Payment period`,
-  `Record date`,
-  `Amount claimed`,
-  '',
-]
+import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ActionsContainer } from './styleds'
+import { PAYOUT_TYPE, PAYOUT_TYPE_LABEL } from './constants'
+import { TYPE } from 'theme'
+import { Line } from 'components/Line'
+import { PinnedContentButton } from 'components/Button'
+import { TokenLogo } from 'components/TokenLogo'
+import { adminOffset as offset } from 'state/admin/constants'
+const headerCells = [`ID`, 'Event name', `Status`, `Payout type`, `SEC token`, `Payment period`, `Amount claimed`, '']
 
 export const TmPayoutEvents = () => {
+  const { isAdmin } = useRole()
   const history = useHistory()
+  const { pathname } = useLocation()
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
-
   const { account } = useUserState()
   const { token } = useAuthState()
   const { payoutList, isLoading } = useTokenManagerState()
-  const { loadingRequest } = usePayoutState()
   const getMyPayouts = useGetMyPayout()
 
   useEffect(() => {
     if (account && token) {
-      if (Object.keys(filters).length) {
-        handleHaveFilters(true)
+      const filtersApplied = Object.keys(filters).length > 0
+      handleHaveFilters(filtersApplied)
+      if (!payoutList.items?.length || filtersApplied) {
+        getMyPayouts({ ...filters, offset: offset, my: !isAdmin, page: payoutList.page })
+          .then((response) => {
+            if (!response.items?.length) {
+            }
+          })
+          .catch((error) => {
+            console.error('Failed to fetch data:', error)
+          })
+      } else {
+        getMyPayouts({ offset: offset, my: !isAdmin, page: payoutList.page })
       }
-      getMyPayouts({ ...filters, offset: 10, my: true, page: 1 })
     }
-  }, [filters, getMyPayouts, account, token])
-
-  const fetch = (params: Record<string, any>) => {
-    getMyPayouts({ ...params, my: true })
-  }
+  }, [JSON.stringify(filters), account, token, pathname, isAdmin])
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    fetch({ ...filters, page, offset: 10 })
+    getMyPayouts({ ...filters, page, offset: offset, my: !isAdmin })
   }
 
   const goToCreate = () => {
@@ -76,10 +75,11 @@ export const TmPayoutEvents = () => {
 
   return (
     <>
-      <LoadingIndicator isLoading={isLoading || loadingRequest} />
+      <LoadingIndicator noOverlay={true} isLoading={isLoading && payoutList.items?.length === 0} />
       {payoutList.items?.length || haveFilters ? (
         <Container>
           <MultipleFilters
+            isClearable
             filters={[
               FILTERS.STATUS,
               FILTERS.PAYOUT_TYPE,
@@ -92,19 +92,28 @@ export const TmPayoutEvents = () => {
             forManager
           />
           {payoutList.items?.length ? (
-            <Flex flexDirection="column" style={{ gap: 32 }}>
-              <Table body={<Body items={payoutList.items} />} header={<Header />} />
-              <Pagination totalPages={payoutList.totalPages} page={payoutList.page || 1} onPageChange={onPageChange} />
-            </Flex>
+            <>
+              <Line style={{ marginTop: '20px' }} />
+              <Flex flexDirection="column" style={{ gap: 32 }}>
+                <Table body={<Body items={payoutList.items} />} header={<Header />} />
+                <Pagination
+                  totalItems={payoutList.totalItems}
+                  totalPages={payoutList.totalPages}
+                  page={payoutList.page || 1}
+                  onPageChange={onPageChange}
+                />
+              </Flex>
+            </>
           ) : (
             <TmEmptyPage tab="payout-events" filtred />
           )}
         </Container>
       ) : (
         <TmEmptyPage tab="payout-events">
-          <CreateButton onClick={goToCreate}>
+          <PinnedContentButton style={{ width: '240px', gap: '10px', margin: '30px 0px' }} onClick={goToCreate}>
+            <CreateIcon />
             <Trans>Create Payout Event</Trans>
-          </CreateButton>
+          </PinnedContentButton>
         </TmEmptyPage>
       )}
     </>
@@ -120,17 +129,17 @@ const Row = ({ item }: IRow) => {
   const deletePayout = useDeletePayoutItem()
   const history = useHistory()
 
-  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken, claimed } = item
+  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken, claimed, title } = item
 
-  const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
-  const currency = useCurrency(payoutToken)
+  const currency = useSafeCurrency(payoutToken)
   const dateFormat = 'MMM DD, YYYY'
 
   const clickView = () => {
     history.push({ pathname: routes.payoutItemManager(id) })
   }
 
-  const splitClaimedAmount = (amount: string) => {
+  const splitClaimedAmount = (_amount: string | number) => {
+    const amount = _amount.toString()
     const result = amount.substring(amount.indexOf('.') + 1)
     return result.length > 0 ? Number(amount).toFixed(4) : result
   }
@@ -142,65 +151,72 @@ const Row = ({ item }: IRow) => {
 
   const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
 
-  const amountClaimed = claimed ? splitClaimedAmount(claimed.toString()) : null
+  const amountClaimed = claimed ? splitClaimedAmount(type === PAYOUT_TYPE.AIRDROPS ? tokenAmount : claimed) : null
+  const formatedTokenAmount = splitClaimedAmount(tokenAmount)
 
   const onEdit = () => {
     history.push(`/payout/edit/${id}`)
   }
 
   const tooltipText = `Token: ${currency?.symbol || '-'} 
-  Token amount: ${tokenAmount}
+  Token amount: ${formatedTokenAmount}
   Claimed: ${amountClaimed}`
 
   return (
     <>
       <AreYouSureModal onAccept={onDelete} onDecline={toggleIsWarningOpen} isOpen={isWarningOpen} />
       <StyledBodyRow>
-        <div>#{id}</div>
+        <TYPE.main1 color={'#B8B8CC'}>#{id}</TYPE.main1>
+        <TYPE.main1 style={{ marginRight: 20 }}>{title}</TYPE.main1>
         <div>
           <StatusCell status={status} />
         </div>
-        <div>{PAYOUT_TYPE_LABEL[type] || type}</div>
-        <div>
-          <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
-          {secToken?.symbol || '-'}
+        <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
+        <div style={{ gap: '8px' }}>
+          {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="32px" height="32px" /> : null}
+          <TYPE.main1 color={'#8F8FB2'}>{secToken?.symbol || '-'}</TYPE.main1>
         </div>
-        <div>
-          {dayjs(startDate).format(dateFormat)}
-          {Boolean(endDate) && (
-            <>
-              &nbsp;-
-              <br />
-              {dayjs(endDate).format(dateFormat)}
-            </>
-          )}
+        <div style={{ display: 'block' }}>
+          <TYPE.main1>
+            {dayjs(startDate).format(dateFormat)}
+            {Boolean(endDate) && (
+              <>
+                &nbsp;- &nbsp;
+                {dayjs(endDate).format(dateFormat)}
+              </>
+            )}
+          </TYPE.main1>
+          <TYPE.main1>
+            <strong>Record on: {dayjs(recordDate).format(dateFormat)}</strong>
+          </TYPE.main1>
         </div>
-        <div>{dayjs(recordDate).format(dateFormat)}</div>
-        <div style={{ fontWeight: 500 }}>
+        <TYPE.main1 style={{ fontWeight: 500 }}>
           {amountClaimed ? (
-            <>
-              <MouseoverTooltip style={{ height: '24px' }} text={tooltipText} textStyle={{ whiteSpace: 'pre-line' }}>
-                <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
+            <div style={{ display: 'block' }}>
+              <MouseoverTooltip style={{ height: '30px' }} text={tooltipText} textStyle={{ whiteSpace: 'pre-line' }}>
+                <CurrencyLogo currency={currency} style={{ marginRight: 4 }} />
               </MouseoverTooltip>
-              {currency?.symbol || '-'}&nbsp;{amountClaimed}/{tokenAmount}
-            </>
+              {currency?.symbol || '-'}&nbsp;
+              <TYPE.main1>
+                {amountClaimed}&nbsp;/&nbsp;
+                {formatedTokenAmount}
+              </TYPE.main1>
+            </div>
           ) : (
             '-'
           )}
-        </div>
+        </TYPE.main1>
 
         <ActionsContainer>
           {status === PAYOUT_STATUS.DRAFT && <DeleteIcon onClick={toggleIsWarningOpen} />}
           {status !== PAYOUT_STATUS.ENDED && (
-            <ButtonGradientBorder
+            <EditIcon
               onClick={(e: any) => {
                 e.preventDefault()
                 e.stopPropagation()
                 onEdit()
               }}
-            >
-              <Trans>Edit</Trans>
-            </ButtonGradientBorder>
+            ></EditIcon>
           )}
           <EyeIcon onClick={clickView} style={{ cursor: 'pointer' }} />
         </ActionsContainer>
@@ -216,8 +232,12 @@ interface IBody {
 const Body = ({ items }: IBody) => {
   return (
     <BodyContainer>
-      {items.map((item) => (
-        <Row item={item} key={`payout-${item.id}`} />
+      {items.map((item, index) => (
+        <React.Fragment key={`payout-${item.id}`}>
+          <Line />
+          <Row item={item} />
+          {index === items.length - 1 && <Line />}
+        </React.Fragment>
       ))}
     </BodyContainer>
   )
@@ -228,7 +248,7 @@ const Header = () => {
     <StyledHeaderRow>
       {headerCells.map((cell) => (
         <div key={cell}>
-          <Trans>{cell}</Trans>
+          <TYPE.main1 color={'#B8B8CC'}>{cell}</TYPE.main1>
         </div>
       ))}
     </StyledHeaderRow>

@@ -1,6 +1,10 @@
 import { TokenInfo } from '@uniswap/token-lists'
 import { Currency } from '@ixswap1/sdk-core'
 
+export interface SecTokenLogo {
+  public: string
+}
+
 export interface SecToken extends TokenInfo {
   id: number
   catalogId: number
@@ -10,6 +14,7 @@ export interface SecToken extends TokenInfo {
   platformId: number
   description: string | null
   logoId: number | null
+  logo?: SecTokenLogo
   tokenUser: TokenUser | null
   createdAt: string
   updatedAt: string

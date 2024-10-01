@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { MouseoverTooltip } from 'components/Tooltip'
 import { TYPE } from 'theme'
-import { ReactComponent as Info } from 'assets/images/info-filled.svg'
+import { ReactComponent as Info } from 'assets/images/infoBlue.svg'
 import { Trans } from '@lingui/macro'
 
 export interface Props {

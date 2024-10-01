@@ -7,6 +7,11 @@ export const Container = styled.div`
   justify-content: center;
   background-color: ${({ theme }) => theme.white};
   z-index: 0;
+  margin-top: 120px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-top: 0px;
+  }
 `
 
 export const Content = styled.div`

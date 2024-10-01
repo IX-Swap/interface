@@ -163,7 +163,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                 to={routes.securityTokens('tokens')}
                 onClick={close}
               >
-                <Trans>Security Tokens</Trans>
+                <Trans>RWAs</Trans>
               </MenuListItem>
               <Line />
             </>
