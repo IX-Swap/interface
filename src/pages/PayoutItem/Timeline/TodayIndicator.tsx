@@ -29,7 +29,6 @@ const Label = styled.div<{ overlay?: boolean }>`
   ${({ overlay }) =>
     overlay &&
     css`
-      display: none;
       @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
         display: block;
       }
@@ -40,7 +39,6 @@ const Indicator = styled.div<{ overlay?: boolean; isTodayStartDate: boolean }>`
   display: flex;
   flex-direction: ${({ overlay }) => (overlay ? 'column-reverse' : 'column')};
   align-items: center;
-  transform: translateY(5.5px);
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-direction: ${({ isTodayStartDate }) => (isTodayStartDate ? 'row-reverse' : 'row')};
@@ -62,7 +60,7 @@ const Container = styled.div<{ offset?: string; overlay?: boolean; isTodayStartD
   flex-direction: column;
   align-items: center;
   top: -22px;
-  gap: 10px;
+  gap: 12px;
   height: 48px;
   transform: translateX(-50%);
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
@@ -82,5 +80,5 @@ const Bullet = styled.div<{ overlay?: boolean; isTodayStartDate: boolean }>`
   height: 8px;
   background: ${({ theme }) => theme.bg26};
   border-radius: 100%;
-  transform: ${({ overlay }) => (overlay ? 'translate(0px,50%)' : 'translate(0px,-50%)')};
+  transform: ${({ overlay }) => (overlay ? 'unset' : 'translate(0px,-50%)')};
 `
