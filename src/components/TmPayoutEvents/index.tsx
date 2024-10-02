@@ -193,14 +193,16 @@ const Row = ({ item }: IRow) => {
         <TYPE.main1 style={{ fontWeight: 500 }}>
           {amountClaimed ? (
             <div style={{ display: 'block' }}>
-              <MouseoverTooltip style={{ height: '30px' }} text={tooltipText} textStyle={{ whiteSpace: 'pre-line' }}>
-                <CurrencyLogo currency={currency} style={{ marginRight: 4 }} />
+              <MouseoverTooltip text={tooltipText} textStyle={{ whiteSpace: 'pre-line' }}>
+                <Flex alignItems="center">
+                  <CurrencyLogo currency={currency} style={{ marginRight: 4 }} />
+                  {currency?.symbol || '-'}&nbsp;
+                </Flex>
+                <TYPE.main1>
+                  {amountClaimed}&nbsp;/&nbsp;
+                  {formatedTokenAmount}
+                </TYPE.main1>
               </MouseoverTooltip>
-              {currency?.symbol || '-'}&nbsp;
-              <TYPE.main1>
-                {amountClaimed}&nbsp;/&nbsp;
-                {formatedTokenAmount}
-              </TYPE.main1>
             </div>
           ) : (
             '-'

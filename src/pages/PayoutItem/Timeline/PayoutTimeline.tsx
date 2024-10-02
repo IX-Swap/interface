@@ -21,11 +21,6 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
   const theme = useTheme()
   const { recordDate, startDate, endDate, status } = payout
 
-  const todayActionDate = useMemo(
-    () => isSameDay(recordDate) || isSameDay(startDate) || isSameDay(endDate),
-    [recordDate, startDate, endDate]
-  )
-
   const isTodayStartDate = useMemo(() => isSameDay(startDate), [startDate])
 
   const todayPosition = useMemo(() => {
@@ -60,9 +55,7 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
         </ArrowContainer>
       )}
 
-      {displayTodayIndicator && (
-        <TodayIndicator offset={todayPosition} overlay={todayActionDate} isTodayStartDate={isTodayStartDate} />
-      )}
+      {displayTodayIndicator && <TodayIndicator offset={todayPosition} isTodayStartDate={isTodayStartDate} />}
 
       <ArrowContainer
         hasLeftSpace={!isAnnounced}

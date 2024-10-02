@@ -27,7 +27,6 @@ const rowStyle = css`
     padding-left: 0px;
   }
 
-
   > div {
     display: flex;
     align-items: center;
@@ -53,11 +52,8 @@ export const HeaderRow = styled.div`
 
 export const BodyRow = styled.div`
   ${rowStyle};
-  // border: 1px solid ${({ theme: { bg11 } }) => bg11};
   border-bottom: 1px solid #e6e6ff;
-  // border-radius: 20px;
   margin-bottom: 8px;
-  // background-color: ${({ theme: { config } }) => config.background?.main || 'rgba(39, 31, 74, 0.3)'};
 `
 
 const Wrap = styled.div`
