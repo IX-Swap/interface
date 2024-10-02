@@ -55,6 +55,7 @@ import {
   getMe,
 } from './actions'
 import { ROLES } from 'constants/roles'
+import { setWalletState } from 'state/wallet'
 
 function serializeToken(token: Token): SerializedToken {
   // TO DO - refactor
@@ -511,14 +512,8 @@ export function useAccount() {
   const login = useLogin({ mustHavePreviousLogin: true })
   const getUserSecTokens = useFetchUserSecTokenListCallback()
   const isLoggedIn = useUserisLoggedIn()
-  const [accountChanged, handleAccountChanged] = useState(false)
-  const { kyc, loadingRequest } = useKYCState()
-  const history = useHistory()
-  const { pathname } = useLocation()
 
   const { loginError, token } = useAuthState()
-
-  const [loading, setLoading] = useState(false)
 
   //when there is an authorization error, then we clear the contents of the savedAccount
   const checkAuthError = useCallback(() => {
@@ -529,7 +524,7 @@ export function useAccount() {
 
   const authenticate = useCallback(async () => {
     try {
-      setLoading(true)
+      dispatch(setWalletState({ isSignLoading: true }))
       const status = await login(true)
       if (status == LOGIN_STATUS.SUCCESS && isLoggedIn) {
         getUserSecTokens()
@@ -537,7 +532,7 @@ export function useAccount() {
     } catch (error) {
       console.error(error)
     } finally {
-      setLoading(false)
+      dispatch(setWalletState({ isSignLoading: false }))
     }
   }, [login, getUserSecTokens, isLoggedIn])
 
@@ -552,7 +547,6 @@ export function useAccount() {
       localStorage.removeItem('Disclaimer')
       localStorage.removeItem('SDisclaimer')
       localStorage.removeItem('referralCode')
-      handleAccountChanged(true)
       dispatch(saveAccount({ account }))
       dispatch(clearSwapState())
       dispatch(clearSwapHelperState())
@@ -565,7 +559,7 @@ export function useAccount() {
     }
   }, [token, getUserSecTokens])
 
-  return { loading, authenticate }
+  return { authenticate }
 }
 
 export const me = async () => {

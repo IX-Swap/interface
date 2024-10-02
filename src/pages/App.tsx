@@ -75,7 +75,7 @@ export default function App() {
   const hideHeader = useHideHeader()
   const { kyc } = useKYCState()
   const { isConnected, walletName } = useWalletState()
-  const {authenticate, loading} = useAccount();
+  const { authenticate } = useAccount()
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const [countryCode, setCountryCode] = useState()
@@ -269,7 +269,7 @@ export default function App() {
       {!token && account ? (
         <Portal>
           <CenteredFixed width="100vw" height="100vh">
-            <SignMessageModal loading={loading} authenticate={authenticate} />
+            <SignMessageModal authenticate={authenticate} />
           </CenteredFixed>
         </Portal>
       ) : null}
