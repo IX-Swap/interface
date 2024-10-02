@@ -169,7 +169,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
                 <CurrencyLogo currency={payoutToken} />
                 <Box>
                   <TokenSymbol>{payoutToken.symbol}</TokenSymbol>
-                  {` ${Number(amountToClaim || '0')}`}
+                  {` ${floorToDecimals(amountToClaim || 0, payoutToken.decimals)}`}
                 </Box>
               </Flex>
               <Box>
