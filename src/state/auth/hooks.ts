@@ -67,7 +67,7 @@ export function useLogout() {
     disconnect()
     dispatch(postLogin.rejected({ errorMessage: 'User logged out', account: '' }))
     dispatch(logout(account))
-    dispatch(setWalletState({ isConnected: false, walletName: '' }))
+    dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
     indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
