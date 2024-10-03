@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo } from 'react'
 import { useFormik } from 'formik'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { MobileDatePicker } from '@material-ui/pickers'
 import { capitalize } from '@material-ui/core'
 import { useLocation } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { Search } from 'components/Search'
-import {  TYPE } from 'theme'
+import { TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { DateRangePickerFilter } from 'components/DateRangePicker'
@@ -41,7 +41,6 @@ export const MultipleFilters = ({
   isClearable,
   fullWidth = true,
 }: Props) => {
-
   const { pathname } = useLocation()
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
   const { me } = useUserState()
@@ -230,11 +229,7 @@ export const MultipleFilters = ({
             onClick={inputProps?.onClick as any}
             isOpen={Boolean(focused || values.recordDate)}
           >
-            <TYPE.main1
-              color="#8F8FB2"
-              overflow="hidden"
-              style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-            >
+            <TYPE.main1 color="#8F8FB2" overflow="hidden" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               <Trans>Record date</Trans>
             </TYPE.main1>
             <ArrowDownIcon />
@@ -269,26 +264,15 @@ export const MultipleFilters = ({
     ),
   } as Record<string, JSX.Element>
 
-  // if (isMobile) {
-  //   return (
-  //     <MobileFilters
-  //       applyFilters={submitForm}
-  //       values={values}
-  //       setFieldValue={setFieldValue}
-  //       onSelectValueChange={onSelectValueChange}
-  //       haveValues={!isEmpty}
-  //       filters={filters}
-  //       searchPlaceholder={searchPlaceholder}
-  //       forManager={forManager}
-  //       managerSecTokensOptions={managerSecTokensOptions}
-  //       statusOptionsSorted={statusOptionsSorted}
-  //       onResetFilters={onResetFilters}
-  //     />
-  //   )
-  // }
+  let additionalColumnAmount = 0
+  if (withSearch) additionalColumnAmount++
+  if (isClearable) additionalColumnAmount++
 
   return (
-    <Container sx={{ gap: fullWidth ? '16px' : 0 }}>
+    <Container
+      sx={{ gap: fullWidth ? '16px' : 0 }}
+      $gridTemplateColumns={'1fr' + ' auto'.repeat(additionalColumnAmount)}
+    >
       {withSearch && filterComponents[FILTERS.SEARCH]}
       <FiltersContainer className="filters-container">
         {filters.map(
