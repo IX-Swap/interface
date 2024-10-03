@@ -139,6 +139,7 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
 
   useEffect(() => {
     if (editableToken) {
+      console.log('editableToken', editableToken)
       formik.setFieldValue('ticker', editableToken.ticker)
       formik.setFieldValue('companyName', editableToken.companyName)
       formik.setFieldValue('description', editableToken.description)
@@ -148,7 +149,11 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
       const industryMap = { value: industry?.id, label: industry?.name }
       formik.setFieldValue('country', country)
       formik.setFieldValue('industry', industryMap)
-      formik.setFieldValue('kycType', editableToken?.kycTypeJson ?? kycType)
+      const fieldKycType =
+        editableToken.kycTypeJson && typeof editableToken.kycTypeJson === 'string'
+          ? JSON.parse(editableToken.kycTypeJson)
+          : editableToken.kycTypeJson
+      formik.setFieldValue('kycType', fieldKycType ?? kycType)
       formik.setFieldValue('active', editableToken?.active ?? false)
       formik.setFieldValue('featured', editableToken?.featured ?? false)
       formik.setFieldValue('allowDeposit', editableToken?.allowDeposit ?? false)

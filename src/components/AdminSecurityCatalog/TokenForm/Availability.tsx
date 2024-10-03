@@ -16,6 +16,11 @@ interface AvailabilityProps {
 }
 
 const Availability: React.FC<AvailabilityProps> = ({ formik }) => {
+  console.log('formik.values.kycType', formik.values.kycType)
+
+  const kycTypeOptions =
+    typeof formik.values.kycType === 'string' ? JSON.parse(formik.values.kycType) : formik.values.kycType
+
   return (
     <>
       <h1 className="title">Availability</h1>
@@ -23,7 +28,7 @@ const Availability: React.FC<AvailabilityProps> = ({ formik }) => {
       <FormGrid columns={2} style={{ marginTop: 24 }}>
         <div>
           <Options>
-            {Object.keys(formik.values.kycType).map((item) => (
+            {Object.keys(kycTypeOptions).map((item) => (
               <div key={item}>
                 <FormControlLabel
                   control={
