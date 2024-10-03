@@ -1,20 +1,15 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-
 import Portal from '@reach/portal'
-
 import { useHistory } from 'react-router-dom'
 
 import { useCheckKYC } from 'state/launchpad/hooks'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
 import { OfferStatus } from 'state/launchpad/types'
-
 import { Tooltip } from './Tooltip'
 import { InvestmentStatusBadge } from './InvestmentStatusBadge'
 import { InvestmentSaleStatusInfo } from './InvestmentSaleStatusInfo'
-
 import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
-
 import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentTypeInfo } from './InvestmentTypeInfo'
 import { text1, text2, text4, text5, text58 } from 'components/LaunchpadMisc/typography'

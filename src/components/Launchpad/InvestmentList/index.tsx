@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import _get from 'lodash/get'
 
 import { InvestmentCard } from '../InvestmentCard'
 import { FilterConfig, InvestmentListFilter } from './Filter'
 import { PaginationTrigger } from './PaginationTrigger'
-
 import { Offer } from 'state/launchpad/types'
 import { text53, text8 } from 'components/LaunchpadMisc/typography'
 import { LbpList } from 'components/LBP/InvestmentList/LbpList'
