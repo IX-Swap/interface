@@ -283,7 +283,7 @@ export const MultipleFilters = ({
         )}
       </FiltersContainer>
       {isClearable ? (
-        <PinnedContentButton disabled={isEmpty} onClick={onResetFilters}>
+        <PinnedContentButton disabled={isEmpty} onClick={onResetFilters} fontSize={1} padding="0 0.5rem">
           Clear Filters
         </PinnedContentButton>
       ) : null}
