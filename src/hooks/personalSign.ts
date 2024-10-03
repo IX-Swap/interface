@@ -1,6 +1,7 @@
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import store from 'state'
 import { setPendingSign } from 'state/application/actions'
-import { useSignMessage as useSignMessageWagmi } from 'wagmi'
+import { useSignMessage as useSignMessageWagmi, useSwitchChain } from 'wagmi'
 
 interface SignMessageProps {
   hash: string
@@ -10,6 +11,7 @@ interface SignMessageProps {
 // Custom hook for signing messages
 export const useSignMessage = () => {
   const { signMessageAsync } = useSignMessageWagmi()
+  const { switchChain } = useSwitchChain()
 
   const signMessage = async ({ hash, account }: SignMessageProps): Promise<string | null> => {
     if (hash && account) {
@@ -18,9 +20,14 @@ export const useSignMessage = () => {
         const result = await signMessageAsync({ message: { raw: hash as any } })
         store.dispatch(setPendingSign(false))
         return result
-      } catch (e) {
+      } catch (e: any) {
         store.dispatch(setPendingSign(false))
         console.error({ ERROR: e })
+        if (e?.name === 'ConnectorChainMismatchError') {
+          const defaultChain = ENV_SUPPORTED_TGE_CHAINS[0]
+          await switchChain({ chainId: defaultChain })
+        }
+
         return null
       }
     }
