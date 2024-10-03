@@ -195,7 +195,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
 
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
   if (!isApproved) return <NotAccreditedView secTokenId={secToken?.catalogId} />
-  if (isNotTokenHolder) return <NotTokenHoldersView status={status} payoutToken={payoutToken} secToken={secToken} />
+  if (isNotTokenHolder) return <NotTokenHoldersView status={status} secToken={secToken} />
 
   return (
     <Column style={{ gap: '32px' }}>
@@ -216,11 +216,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   )
 }
 
-const NotTokenHoldersView: FC<{ payoutToken: any; secToken?: SecToken; status: PAYOUT_STATUS }> = ({
-  payoutToken,
-  secToken,
-  status,
-}) => {
+const NotTokenHoldersView: FC<{ secToken?: SecToken; status: PAYOUT_STATUS }> = ({ secToken, status }) => {
   const history = useHistory()
   const secTokenSymbol = secToken?.symbol
 
@@ -232,17 +228,20 @@ const NotTokenHoldersView: FC<{ payoutToken: any; secToken?: SecToken; status: P
     switch (status) {
       case PAYOUT_STATUS.ANNOUNCED:
         return (
-          <Flex marginBottom="24px">
-            <Box marginX="4px">
-              <Trans>{`Add`}</Trans>
-            </Box>
-            <CurrencyLogo currency={payoutToken} size="24px" />
-            <Box marginX="4px" fontWeight="bold">
-              {payoutToken.symbol}{' '}
-            </Box>
-            <Box>
-              <Trans>{`to increase possible payout.`}</Trans>
-            </Box>
+          <Flex marginBottom="24px" alignItems="center">
+            <Trans>
+              No
+              <Flex color="#8f8fb2" marginX="4px" alignItems="center" style={{ gap: 4 }}>
+                {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="24px" height="24px" /> : null}
+                {secToken?.symbol}
+              </Flex>
+              detected. You need
+              <Flex color="#8f8fb2" marginX="4px" alignItems="center" style={{ gap: 4 }}>
+                {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="24px" height="24px" /> : null}
+                {secToken?.symbol}
+              </Flex>
+              to be eligible for this payout.
+            </Trans>
           </Flex>
         )
       case PAYOUT_STATUS.DELAYED:
