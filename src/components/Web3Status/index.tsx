@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import { Trans } from '@lingui/macro'
-import { useWeb3React } from 'hooks/useWeb3React'
 import styled from 'styled-components'
 import { ChevronDown } from 'react-feather'
+import { isMobile } from 'react-device-detect'
 
 import useENSName from '../../hooks/useENSName'
 import { useWalletModalToggle } from '../../state/application/hooks'
@@ -18,6 +18,7 @@ import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { useAccount } from 'hooks/useAccount'
 import { CONNECTOR_ICON_OVERRIDE_MAP } from 'components/Web3Provider/constants'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
   return b.addedTime - a.addedTime
@@ -68,13 +69,16 @@ function Web3StatusInner() {
           ) : (
             <Text style={{ margin: '4px 13px 4px 5px', width: '100%' }}>{ENSName || shortenAddress(account)}</Text>
           )}
-          <AccountElement style={{ pointerEvents: 'auto' }}>
-            {account && userEthBalance ? (
-              <Trans>
-                {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
-              </Trans>
-            ) : null}
-          </AccountElement>
+
+          {!isMobile ? (
+            <AccountElement style={{ pointerEvents: 'auto' }}>
+              {account && userEthBalance ? (
+                <Trans>
+                  {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
+                </Trans>
+              ) : null}
+            </AccountElement>
+          ) : null}
 
           <ChevronElement />
         </Web3StatusConnected>
@@ -91,7 +95,7 @@ export default function Web3Status() {
   return (
     <>
       <Web3StatusInner />
-      <WalletModal ENSName={ENSName ?? undefined}  />
+      <WalletModal ENSName={ENSName ?? undefined} />
     </>
   )
 }
