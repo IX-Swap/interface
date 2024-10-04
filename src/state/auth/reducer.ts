@@ -38,8 +38,9 @@ export default createReducer<AuthState>(initialState, (builder) =>
       state.refreshToken[account] = auth.refreshToken
       localStorage.setItem('redux_localstorage_simple_auth', JSON.stringify(state))
     })
-    .addCase(postLogin.rejected, (state, { payload: { errorMessage } }) => {
+    .addCase(postLogin.rejected, (state, { payload: { errorMessage, account } }) => {
       state.loginLoading = false
       state.loginError = errorMessage
+      state.token = {}
     })
 )
