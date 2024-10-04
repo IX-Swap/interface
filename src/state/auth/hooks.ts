@@ -64,7 +64,6 @@ export function useLogout() {
   const disconnectWallet = () => {
     history.replace(routes.defaultRoute)
     disconnect()
-    dispatch(postLogin.rejected({ errorMessage: 'User logged out', account: '' }))
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
