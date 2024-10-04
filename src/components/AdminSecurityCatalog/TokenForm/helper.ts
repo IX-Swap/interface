@@ -4,6 +4,15 @@ import { ITokenData } from './types'
 export const prepareFormData = (values: any, currentIssuerId: string) => {
   const formData = new FormData()
 
+  if (!values.needsWhitelisting) {
+    delete values.whitelistPlatform
+    delete values.whitelistContractAddress
+    delete values.whitelistFunction
+    delete values.whitelistFunction
+  } else {
+    formData.append('checkWhitelistFunction', 'isWhitelisted')
+  }
+
   for (const key in values) {
     if (key === 'logo') {
       formData.append(key, values[key], values[key].name)
@@ -14,15 +23,6 @@ export const prepareFormData = (values: any, currentIssuerId: string) => {
     } else {
       formData.append(key, values[key])
     }
-  }
-
-  if (!values.needsWhitelisting) {
-    delete values.whitelistPlatform
-    delete values.whitelistContractAddress
-    delete values.whitelistFunction
-    delete values.whitelistFunction
-  } else {
-    formData.append('checkWhitelistFunction', 'isWhitelisted')
   }
   formData.append('issuerId', currentIssuerId)
 
