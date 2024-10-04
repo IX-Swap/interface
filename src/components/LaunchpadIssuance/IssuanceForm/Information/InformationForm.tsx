@@ -374,12 +374,12 @@ export const InformationForm = (props: Props) => {
             setter={setFieldValue}
             touch={setFieldTouched}
             label="Token Ticker"
-            placeholder="2-11 letters"
+            placeholder="2-10 letters"
             disabled={edit}
             inputFilter={uppercaseFilter}
             value={values.tokenTicker}
             error={(touched.tokenTicker && errors.tokenTicker) as string}
-            maxLength={11}
+            maxLength={10}
           />
           <FormField
             field="decimals"
