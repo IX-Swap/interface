@@ -8,9 +8,8 @@ export const prepareFormData = (values: any, currentIssuerId: string) => {
     delete values.whitelistPlatform
     delete values.whitelistContractAddress
     delete values.whitelistFunction
-    delete values.whitelistFunction
   } else {
-    formData.append('checkWhitelistFunction', 'isWhitelisted')
+    formData.append('checkWhitelistFunction', 'ifWhitelisted')
   }
 
   for (const key in values) {
@@ -100,6 +99,6 @@ export const initialValues: ITokenData = {
   withdrawFee: '',
   withdrawFeeAddress: '',
   kycType,
-  whitelistFunction: 'ifWhitelisted',
+  whitelistFunction: '',
   platformId: 4,
 }
