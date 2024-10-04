@@ -7,6 +7,7 @@ import AddIcon from 'assets/images/newAdd.svg'
 export const statusIconMapping = {
   created: AddIcon,
   pending: PendingIcon,
+  wrapping: PendingIcon,
   approved: Active,
   rejected: InActive,
 } as any
