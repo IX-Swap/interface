@@ -71,15 +71,7 @@ export default function Header() {
                 )}
               </Title>
             </HeaderRow>
-            <HeaderControls>
-              {isAllowed(routes.kyc) && isWhitelisted && (
-                <HeaderElement>
-                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginTop: 5 }} to={routes.defaultRoute}>
-                    {kyc?.status === 'approved' ? <NewKYCLogo /> : null}
-                  </NavLink>
-                </HeaderElement>
-              )}
-            </HeaderControls>
+            <HeaderControls />
             <MobileMenu />
             {kyc?.status === 'approved' && (
               <HeaderRowNew>
@@ -94,7 +86,7 @@ export default function Header() {
           </HeaderFrame>
           {kyc?.status !== 'approved' && (
             <Flex justifyContent="space-between" bg="#fff">
-              <HeaderElement style={{padding: '0 18px'}}>
+              <HeaderElement style={{ padding: '0 18px' }}>
                 <NetworkCard />
               </HeaderElement>
               <HeaderElement style={{ background: 'white', padding: '18px 20px' }}>
