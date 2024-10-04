@@ -57,7 +57,6 @@ export function useUserisLoggedIn() {
 }
 
 export function useLogout() {
-  const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const { disconnect } = useDisconnect()
   const history = useHistory()
@@ -66,7 +65,6 @@ export function useLogout() {
     history.replace(routes.defaultRoute)
     disconnect()
     dispatch(postLogin.rejected({ errorMessage: 'User logged out', account: '' }))
-    dispatch(logout(account))
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
