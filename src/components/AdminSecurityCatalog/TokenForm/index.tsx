@@ -130,7 +130,7 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
       formik.setFieldValue('originalNetwork', tokenData.network)
       formik.setFieldValue('network', tokenData.network)
       formik.setFieldValue('name', `Wrapped ${tokenData.name}`)
-      formik.setFieldValue('ticker', `Wrapped ${tokenData.name}`)
+      formik.setFieldValue('ticker', `w${tokenData.symbol}`)
       formik.setFieldValue('symbol', `w${tokenData.symbol}`)
       formik.setFieldValue('decimals', tokenData.decimals)
       formik.setFieldValue('chainId', tokenData?.network?.chainId)
@@ -139,7 +139,6 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
 
   useEffect(() => {
     if (editableToken) {
-      console.log('editableToken', editableToken)
       formik.setFieldValue('ticker', editableToken.ticker)
       formik.setFieldValue('companyName', editableToken.companyName)
       formik.setFieldValue('description', editableToken.description)
