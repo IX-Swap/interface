@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { Box } from 'rebass'
 import styled from 'styled-components'
 import { useFormikContext } from 'formik'
+import { capitalize } from '@material-ui/core'
 
 import { TYPE } from 'theme'
 import { Checkbox } from 'components/Checkbox'
@@ -32,7 +33,7 @@ export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) =>
         {!availableForEditing.includes('type') ? (
           <>
             <div style={{ color: '#555566', fontSize: '13px', marginBottom: '18px' }}>Payout Type</div>
-            <div>{values.type}{values.type === 'Other' ? ` - ${values.otherType}` : ''}</div>
+            <div>{capitalize(values.type)}{values.type === 'other' ? ` - ${values.otherType}` : ''}</div>
           </>
         ) : (
           <>
