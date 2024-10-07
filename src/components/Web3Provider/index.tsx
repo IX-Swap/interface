@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from 'react'
+import React, { ReactNode } from 'react'
 import { WagmiProvider } from 'wagmi'
 import { QueryClientProvider } from '@tanstack/react-query'
 
@@ -9,7 +9,7 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
 
 export default function Web3Provider({ children }: { children: ReactNode }) {
-  const wagmiConfig = useMemo(() => createWagmiConfig(), [])
+  const wagmiConfig = createWagmiConfig()
 
   return (
     <WagmiProvider config={wagmiConfig}>
