@@ -32,7 +32,7 @@ export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) =>
         {!availableForEditing.includes('type') ? (
           <>
             <div style={{ color: '#555566', fontSize: '13px', marginBottom: '18px' }}>Payout Type</div>
-            <div>{values.type || values.otherType}</div>
+            <div>{values.type}{values.type === 'Other' ? ` - ${values.otherType}` : ''}</div>
           </>
         ) : (
           <>
