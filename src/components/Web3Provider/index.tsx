@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useMemo } from 'react'
+import React, { ReactNode, useMemo } from 'react'
 import { WagmiProvider } from 'wagmi'
 import { QueryClientProvider } from '@tanstack/react-query'
 
