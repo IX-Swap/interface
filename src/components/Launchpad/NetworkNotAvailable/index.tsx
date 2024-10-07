@@ -1,9 +1,9 @@
 import React from 'react'
+import { useSwitchChain } from 'wagmi'
+
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
-import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
 import { useWeb3React } from 'hooks/useWeb3React'
-import useSelectChain from 'hooks/useSelectChain'
 
 interface Props {
   expectChain: SupportedChainId | null
@@ -11,17 +11,16 @@ interface Props {
 
 export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
   const { chainId } = useWeb3React()
-  const selectChain = useSelectChain()
+  const { chains, switchChain } = useSwitchChain()
 
-  const changeNetwork = async (targetChain: number) => {
+  const changeNetwork = (targetChain: number) => {
     if (chainId !== targetChain) {
-      await selectChain(targetChain)
+      switchChain({ chainId: targetChain })
     }
   }
 
-  const sourceChains = ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]
-  const chains = sourceChains.filter((chain) => chain === expectChain)
-  const chainsNames = chains.map((chain) => CHAIN_INFO[chain].chainName)
+  const chainsFiltered = chains.filter((chain) => chain.id === expectChain)
+  const chainsNames = chainsFiltered.map((chain) => chain.name)
 
   return (
     <Container>
@@ -33,9 +32,9 @@ export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
       <Info>Available Blockchain Networks:</Info>
       <NetworksRow elements={chains.length} style={chains.length === 1 ? { marginLeft: 70, marginRight: 70 } : {}}>
         {chains.map((chain) => (
-          <NetworkCard onClick={() => changeNetwork(chain)} key={chain}>
-            <img src={CHAIN_INFO[chain].logoUrl} alt="icon" />
-            {CHAIN_INFO[chain].chainName}
+          <NetworkCard onClick={() => changeNetwork(chain.id)} key={chain.id}>
+            <img src={CHAIN_INFO[chain.id].logoUrl} alt="icon" />
+            {chain.name}
           </NetworkCard>
         ))}
       </NetworksRow>
