@@ -1,10 +1,8 @@
 import React, { FC } from 'react'
 import { Box } from 'rebass'
 import styled from 'styled-components'
-import { t } from '@lingui/macro'
 import { useFormikContext } from 'formik'
 
-import { Label } from 'components/Label'
 import { TYPE } from 'theme'
 import { Checkbox } from 'components/Checkbox'
 import { TextInput } from 'pages/KYC/common'
@@ -21,11 +19,11 @@ interface Props {
 export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) => {
   const { values, errors, touched } = useFormikContext<FormValues>()
 
-  const description = payoutTypes.find(({ label }) => values.type === label)?.description || null
+  const description = payoutTypes.find(({ value }) => values.type === value)?.description || null
 
-  const onTypeChange = (label: string) => {
-    if (label !== 'Other') onValueChange('otherType', '')
-    onValueChange('type', label)
+  const onTypeChange = (value: string) => {
+    if (value !== 'other') onValueChange('otherType', '')
+    onValueChange('type', value)
   }
 
   return (
@@ -38,7 +36,7 @@ export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) =>
           </>
         ) : (
           <>
-            {payoutTypes.map(({ id, label }) => (
+            {payoutTypes.map(({ id, label, value }) => (
               <Card key={`payout-type-card-${id}`}>
                 <Checkbox
                   key={`payout-type-${id}`}
@@ -46,8 +44,8 @@ export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) =>
                   buttonStyles={{ marginRight: 32 }}
                   isRadio
                   label={label}
-                  onClick={() => onTypeChange(label)}
-                  checked={values.type === label}
+                  onClick={() => onTypeChange(value)}
+                  checked={values.type === value}
                   disabled={!availableForEditing.includes('type')}
                 />
               </Card>
@@ -65,7 +63,7 @@ export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) =>
                 </TYPE.buttonMuted>
               </ExtraInfoCard>
             )}
-            {values.type === 'Other' && (
+            {values.type === 'other' && (
               <TextInput
                 style={{ marginTop: 12 }}
                 placeholder="Write payout type"
