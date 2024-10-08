@@ -1,27 +1,25 @@
 import React from 'react'
 import { useWeb3React } from 'hooks/useWeb3React'
 import Portal from '@reach/portal'
+import { useSwitchChain } from 'wagmi'
 
-import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
-import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { CHAIN_INFO } from 'constants/chains'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
-import useSelectChain from 'hooks/useSelectChain'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { detectWrongNetwork } from 'utils'
 
 export const WrongNetworkModal = () => {
-  const selectChain = useSelectChain()
   const { chainId, account } = useWeb3React()
+  const { chains, switchChain } = useSwitchChain()
   const isWrongNetwork = chainId && account ? detectWrongNetwork(chainId) : false
 
   const changeNetwork = async (targetChain: number) => {
     if (chainId !== targetChain) {
-      await selectChain(targetChain)
+      switchChain({ chainId: targetChain })
     }
   }
 
-  const chains = ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]
-  const chainsNames = chains.map((chain) => CHAIN_INFO[chain].chainName)
+  const chainsNames = chains.map((chain) => chain.name)
 
   return (
     <>
@@ -38,9 +36,9 @@ export const WrongNetworkModal = () => {
 
               <NetworksRow elements={chains.length}>
                 {chains.map((chain) => (
-                  <NetworkCard onClick={() => changeNetwork(chain)} key={chain}>
-                    <img src={CHAIN_INFO[chain].logoUrl} alt="icon" />
-                    {CHAIN_INFO[chain].chainName}
+                  <NetworkCard onClick={() => changeNetwork(chain.id)} key={chain.id}>
+                    <img src={CHAIN_INFO[chain.id].logoUrl} alt="icon" />
+                    {chain.name}
                   </NetworkCard>
                 ))}
               </NetworksRow>
