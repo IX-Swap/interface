@@ -32,8 +32,6 @@ const getAlchemyUrlFor = (network: string) =>
 
 export const CHAINS: [Chain, ...Chain[]] = isTestnet ? [baseSepolia, polygonAmoy] : [base, mainnet, polygon]
 
-const PUBLIC_MAINNET = 'https://ethereum.publicnode.com'
-
 export const PUBLIC_NODES = {
   [ChainId.Mainnet]: [getAlchemyUrlFor('eth-mainnet'), 'https://cloudflare-eth.com'].filter(Boolean),
   [ChainId.Polygon]: [getAlchemyUrlFor('polygon-mainnet'), 'https://polygon-rpc.com'].filter(Boolean),
@@ -45,11 +43,7 @@ export const PUBLIC_NODES = {
 export const transports = CHAINS.reduce((ts, chain) => {
   let httpStrings: string[] | readonly string[] = []
 
-  if (process.env.NODE_ENV === 'test' && chain.id === mainnet.id) {
-    httpStrings = [PUBLIC_MAINNET]
-  } else {
-    httpStrings = PUBLIC_NODES[chain.id] ? PUBLIC_NODES[chain.id] : []
-  }
+  httpStrings = PUBLIC_NODES[chain.id] ? PUBLIC_NODES[chain.id] : []
 
   if (ts) {
     return {
