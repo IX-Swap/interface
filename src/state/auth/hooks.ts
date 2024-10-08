@@ -9,7 +9,7 @@ import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
 import { logout, postLogin } from './actions'
-import { useDisconnect } from 'wagmi'
+import { useConnections, useDisconnect } from 'wagmi'
 import { setWalletState } from 'state/wallet'
 import { useHistory } from 'react-router-dom'
 import { routes } from 'utils/routes'
@@ -59,11 +59,14 @@ export function useUserisLoggedIn() {
 export function useLogout() {
   const dispatch = useDispatch<AppDispatch>()
   const { disconnect } = useDisconnect()
+  const connections = useConnections()
   const history = useHistory()
 
   const disconnectWallet = () => {
     history.replace(routes.defaultRoute)
-    disconnect()
+    connections.forEach(({ connector }) => {
+      disconnect({ connector })
+    })
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
