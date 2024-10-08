@@ -60,10 +60,8 @@ export function useLogout() {
   const dispatch = useDispatch<AppDispatch>()
   const { disconnect } = useDisconnect()
   const connections = useConnections()
-  const history = useHistory()
 
   const disconnectWallet = () => {
-    history.replace(routes.defaultRoute)
     connections.forEach(({ connector }) => {
       disconnect({ connector })
     })
