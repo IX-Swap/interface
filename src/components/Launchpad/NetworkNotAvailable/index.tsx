@@ -30,8 +30,8 @@ export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
         Blockchain Network
       </Title>
       <Info>Available Blockchain Networks:</Info>
-      <NetworksRow elements={chains.length} style={chains.length === 1 ? { marginLeft: 70, marginRight: 70 } : {}}>
-        {chains.map((chain) => (
+      <NetworksRow elements={chainsFiltered.length} style={chainsFiltered.length === 1 ? { marginLeft: 70, marginRight: 70 } : {}}>
+        {chainsFiltered.map((chain) => (
           <NetworkCard onClick={() => changeNetwork(chain.id)} key={chain.id}>
             <img src={CHAIN_INFO[chain.id].logoUrl} alt="icon" />
             {chain.name}
