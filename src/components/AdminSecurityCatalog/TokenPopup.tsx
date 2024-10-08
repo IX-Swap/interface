@@ -71,7 +71,6 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
         formik.setSubmitting(true)
         if (provider) {
           const tokenContract = await getTokenContract(values.tokenAddress, provider)
-          console.log('tokenContract', tokenContract)
           const [decimals, symbol, name] = await Promise.all([
             tokenContract?.callStatic?.decimals(),
             tokenContract?.callStatic?.symbol(),
@@ -86,6 +85,7 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
           })
           toggle()
           setIsOpenTokenForm(true)
+          formik.resetForm()
         } else {
           console.error('No provider found')
           formik.setFieldError('tokenAddress', 'No provider found')
