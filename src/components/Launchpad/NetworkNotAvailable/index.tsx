@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
-  console.log('expectChain', expectChain)
   const { chainId } = useWeb3React()
   const { chains, switchChain } = useSwitchChain()
 
@@ -20,7 +19,6 @@ export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
     }
   }
 
-  console.log('chains', chains)
   const chainsFiltered = chains.filter((chain) => chain.id === expectChain)
   const chainsNames = chainsFiltered.map((chain) => chain.name)
 
