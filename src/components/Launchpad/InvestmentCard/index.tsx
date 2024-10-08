@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 import Portal from '@reach/portal'
 import { useHistory } from 'react-router-dom'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { useCheckKYC } from 'state/launchpad/hooks'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
@@ -37,6 +38,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const theme = useTheme()
   const { account } = useActiveWeb3React()
   const { kyc } = useKYCState()
+  const { openConnectModal } = useConnectModal()
 
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
@@ -73,12 +75,16 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   }, [offer])
 
   const onClick = React.useCallback(() => {
-    if (canOpen) {
-      history.push(`/offers/${offer.id}`)
+    if (account) {
+      if (canOpen) {
+        history.push(`/offers/${offer.id}`)
+      } else {
+        toggleKYCModal()
+      }
     } else {
-      toggleKYCModal()
+      openConnectModal && openConnectModal()
     }
-  }, [canOpen, toggleKYCModal])
+  }, [account, canOpen, toggleKYCModal])
 
   const openModal = () => handleIsModalOpen(true)
   const closeModal = () => handleIsModalOpen(false)
