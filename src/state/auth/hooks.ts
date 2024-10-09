@@ -68,7 +68,6 @@ export function useLogout() {
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
-    indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
   }
 
   return { disconnectWallet }
