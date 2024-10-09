@@ -33,7 +33,7 @@ const WithdrawalDetails: React.FC<WithdrawalDetailsProps> = ({ formik }) => {
             <Label htmlFor="network">Withdraw Fee Address</Label>
 
             <InputWithLabel
-              placeholder="Withdraw Fee Addresse"
+              placeholder="Withdraw Fee Address"
               id="withdrawFeeAddress"
               name="withdrawFeeAddress"
               value={formik.values.withdrawFeeAddress}
