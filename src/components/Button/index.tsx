@@ -287,7 +287,6 @@ export const PinnedContentButton = styled(Base)`
   font-family: ${(props) => props.theme.launchpad.font};
   border-radius: 6px;
   text-align: center;
-  padding: 12px, 16px, 12px, 16px;
   border: unset;
   cursor: pointer;
   width: 100%;

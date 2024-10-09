@@ -15,11 +15,7 @@ interface Props {
   date: any
 }
 
-export const TimelineDate: FC<Props> = ({
-  status,
-  date,
-  label,
-}) => {
+export const TimelineDate: FC<Props> = ({ status, date, label }) => {
   const theme = useTheme()
 
   const isRecordDate = label === 'Record Date'
@@ -30,11 +26,11 @@ export const TimelineDate: FC<Props> = ({
   let bgColor = undefined
   let color = undefined
 
-  if (isStartDate && status === PAYOUT_STATUS.DELAYED) {
+  if (isStartDate && (status === PAYOUT_STATUS.DELAYED || status === PAYOUT_STATUS.STARTED)) {
     borderColor = theme.orange2
     color = theme.orange2
     bgColor = theme.orange25
-  } else if (isRecordDate || isStartDate && status === PAYOUT_STATUS.ENDED) {
+  } else if (isRecordDate || (isStartDate && status === PAYOUT_STATUS.ENDED)) {
     borderColor = theme.bg26
     color = theme.bg26
     bgColor = theme.bg27
@@ -46,11 +42,7 @@ export const TimelineDate: FC<Props> = ({
 
   return (
     <Container isStartDate={isStartDate}>
-      <StyledButtonIXSWide
-        borderColor={borderColor}
-        bgColor={bgColor}
-        color={color}
-      >
+      <StyledButtonIXSWide borderColor={borderColor} bgColor={bgColor} color={color}>
         {formatDate(date)}
       </StyledButtonIXSWide>
       <TYPE.small>
@@ -90,7 +82,7 @@ const buttonCommonStyles = css`
   }
 `
 
-const StyledButtonIXSWide = styled(ButtonIXSWide)<{ borderColor?: string, bgColor?: string, color?: string }>`
+const StyledButtonIXSWide = styled(ButtonIXSWide)<{ borderColor?: string; bgColor?: string; color?: string }>`
   ${buttonCommonStyles}
   font-weight: 600;
   border: 1px solid;

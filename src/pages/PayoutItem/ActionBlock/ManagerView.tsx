@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from 'react'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import dayjs from 'dayjs'
@@ -49,10 +49,9 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
     recordDate,
     id,
     startDate,
-    contractPayoutId,
     paidTxHash,
     payoutContractAddress,
-    userId
+    userId,
   } = payout
 
   const [totalClaims, handleTotalClaims] = useState(0)
@@ -63,6 +62,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   const isMyPayout = userId === me.id
   const getUserClaim = useGetUserClaim()
   const saveManagerClaimBack = useSaveManagerClaimBack()
+  const [isClaimedBack, setIsClaimedBack] = useState(false)
 
   useEffect(() => {
     const fetch = async () => {
@@ -102,11 +102,10 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
       const tx = await payoutContract?.claimBack(authorization)
       await tx.wait()
       handleIsLoading(false)
-
       await saveManagerClaimBack({ payoutEventId: id, secToken: secToken.id, txHash: tx.hash })
       const res = await getUserClaim(id)
       handleClaimStatus(res)
-
+      setIsClaimedBack(true)
       if (tx.hash) {
         addTransaction(tx, {
           summary: `Claim Back was successful. Waiting for system confirmation.`,
@@ -122,6 +121,38 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   }, [])
 
   if (secTokenBalance === '-') return <FetchingBalance />
+
+  const ConfirmatingNotification = () => (
+    <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
+      <Box marginRight="4px" fontSize="20px" lineHeight="30px">
+        <Trans>{`Paid was successful. Waiting for system confirmation.`}</Trans>
+      </Box>
+      <CurrencyLogo currency={payoutToken} size="24px" />
+      <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
+        payoutToken?.symbol ?? 'Payout Token'
+      } ${tokenAmount}`}</Box>
+    </Flex>
+  )
+
+  const PaidNotification = () => (
+    <>
+      <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
+        <Box marginRight="4px" fontSize="20px" lineHeight="30px">
+          <Trans>{`You have allocated for this event`}</Trans>
+        </Box>
+        <CurrencyLogo currency={payoutToken} size="24px" />
+        <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
+          payoutToken?.symbol ?? 'Payout Token'
+        } ${tokenAmount}`}</Box>
+      </Flex>
+      <Flex>
+        <Box marginRight="4px">
+          <Trans>{`Users will be able to start claiming on`}</Trans>
+        </Box>
+        <Box fontWeight={600}>{formatDate(dayjs(startDate))}</Box>
+      </Flex>
+    </>
+  )
 
   const getContentByStatus = () => {
     switch (status) {
@@ -151,35 +182,9 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
             </StyledButton>
           </>
         ) : !isPaid && paidTxHash ? (
-          <>
-            <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
-              <Box marginRight="4px" fontSize="20px" lineHeight="30px">
-                <Trans>{`Paid was successful. Waiting for system confirmation.`}</Trans>
-              </Box>
-              <CurrencyLogo currency={payoutToken} size="24px" />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
-                payoutToken?.symbol ?? 'Payout Token'
-              } ${tokenAmount}`}</Box>
-            </Flex>
-          </>
+          <ConfirmatingNotification />
         ) : (
-          <>
-            <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
-              <Box marginRight="4px" fontSize="20px" lineHeight="30px">
-                <Trans>{`You have allocated for this event`}</Trans>
-              </Box>
-              <CurrencyLogo currency={payoutToken} size="24px" />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
-                payoutToken?.symbol ?? 'Payout Token'
-              } ${tokenAmount}`}</Box>
-            </Flex>
-            <Flex>
-              <Box marginRight="4px">
-                <Trans>{`Users will be able to start claiming on`}</Trans>
-              </Box>
-              <Box fontWeight={600}>{formatDate(dayjs(startDate))}</Box>
-            </Flex>
-          </>
+          <PaidNotification />
         )
       case PAYOUT_STATUS.ENDED:
         if (payout?.isReturned) {
@@ -201,7 +206,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
               <Box>
                 <Trans>{`The event has been ended.`}</Trans>
               </Box>
-              {isMyPayout && isPaid && (
+              {isMyPayout && isPaid && !isClaimedBack && (
                 <>
                   <Flex alignItems="center">
                     <Box marginRight="4px">
@@ -222,8 +227,8 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
                 </>
               )}
             </Column>
-            <LoadingIndicator noOverlay={true} isLoading={isLoading} />
-            {!isLoading && isMyPayout && isPaid && (
+            <LoadingIndicator isRelative noOverlay={true} isLoading={isLoading} />
+            {!isLoading && isMyPayout && isPaid && !isClaimedBack && (
               <StyledButton onClick={claimBack}>
                 <Box marginX="8px">
                   <Trans>{`Claim Back `}</Trans>
@@ -235,7 +240,11 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
           </>
         )
       case PAYOUT_STATUS.DELAYED:
-        return (
+        return isPaid ? (
+          <PaidNotification />
+        ) : !isPaid && paidTxHash ? (
+          <ConfirmatingNotification />
+        ) : (
           <>
             <Box marginBottom="4px">
               <Trans>{`The event is not paid yet.`}</Trans>

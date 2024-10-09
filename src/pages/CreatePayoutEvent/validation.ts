@@ -7,7 +7,7 @@ export const validation = object().shape({
   tokenAmount: string().required('Field is required'),
   type: string().required('Field is required'),
   otherType: string().nullable().when('type', {
-    is: (type: string) => type === 'Other',
+    is: (type: string) => type === 'other',
     then: string().required('Field is required').max(50, 'Maximum is allowed 50 chars'),
     otherwise: string().nullable(),
   }),
