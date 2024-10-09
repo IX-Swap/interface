@@ -98,8 +98,6 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               id="country"
               name="country"
               placeholder="Select Country"
-              isClearable={false}
-              isSearchable={false}
               options={countries}
               value={formik.values.country}
               onSelect={(value) => formik.setFieldValue('country', value)}
