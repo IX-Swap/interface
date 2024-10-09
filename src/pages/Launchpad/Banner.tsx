@@ -206,6 +206,7 @@ const TotalRaisedWrap = styled.div`
   display: flex;
   gap: 42px;
   align-items: center;
+  z-index: 2;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-direction: column;
