@@ -191,6 +191,19 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
     }
   }, [JSON.stringify(editableToken)])
 
+  useEffect(() => {
+    const handleBackButton = () => {
+      toggle()
+      history.go(1)
+    }
+
+    window.onpopstate = handleBackButton
+
+    return () => {
+      window.onpopstate = null
+    }
+  }, [history])
+
   return (
     <Content>
       <Title>{tokenData ? 'Add Token' : 'Edit Token'}</Title>
