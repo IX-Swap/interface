@@ -66,6 +66,8 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
   const formik = useFormik<IToken>({
     initialValues,
     validationSchema: schema,
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: async (values: any) => {
       try {
         formik.setSubmitting(true)
