@@ -59,6 +59,25 @@ const WrappedTokenDetails: React.FC<WrappedTokenDetailsProps> = ({ formik }) => 
             />
           </FormWrapper>
         </FormGrid>
+
+        {formik?.values?.wrappedTokenAddress ? (
+          <FormGrid columns={2}>
+            <FormWrapper>
+              <Label htmlFor="network">Wrapped Token Address</Label>
+
+              <InputWithLabel
+                placeholder="Wrap Token Address"
+                id="wrappedTokenAddress"
+                name="wrappedTokenAddress"
+                disabled
+                value={formik.values.wrappedTokenAddress}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={Boolean(formik.errors.wrappedTokenAddress)}
+              />
+            </FormWrapper>
+          </FormGrid>
+        ) : null}
       </Box>
     </>
   )

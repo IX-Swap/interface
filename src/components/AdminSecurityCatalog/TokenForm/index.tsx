@@ -192,6 +192,9 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
         formik.setFieldValue('withdrawFee', editableToken?.token?.withdrawFee)
         formik.setFieldValue('withdrawFeeAddress', editableToken?.token?.withdrawFeeAddress)
         formik.setFieldValue('chainId', editableToken?.token?.chainId)
+        if (editableToken?.wrappedTokenAddress) {
+          formik.setFieldValue('wrappedTokenAddress', editableToken?.wrappedTokenAddress)
+        }
       }
     }
   }, [JSON.stringify(editableToken)])
