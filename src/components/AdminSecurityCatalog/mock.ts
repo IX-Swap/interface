@@ -73,3 +73,17 @@ export const industries = [
 export const countries = getNames()
   .map((name, index) => ({ value: ++index, label: name }))
   .sort((a, b) => a.label.localeCompare(b.label))
+
+export const industriesOption = [
+  { value: 'Diverse Industries', label: 'Diverse Industries' },
+  { value: 'Real Estate', label: 'Real Estate' },
+  { value: 'Finance', label: 'Finance' },
+  { value: 'Technology', label: 'Technology' },
+  { value: 'Energy & Mining', label: 'Energy & Mining' },
+  { value: 'Collectibles', label: 'Collectibles' },
+  { value: 'Other', label: 'Other' },
+].sort((a, b) => a.value.localeCompare(b.value))
+
+export const countriesOption = getNames()
+  .map((name) => ({ value: name, label: name }))
+  .sort((a, b) => a.label.localeCompare(b.label))
