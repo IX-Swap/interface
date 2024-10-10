@@ -17,7 +17,7 @@ import Availability from './Availability'
 import apiService from 'services/apiService'
 import { Slide, toast } from 'react-toastify'
 import Loader from 'components/Loader'
-import { countries, industries } from '../mock'
+import { countriesOption, industriesOption } from '../mock'
 import { blockchainNetworks } from 'pages/KYC/mock'
 import { ITokenData } from './types'
 import { compareChanges, prepareFormData, initialValues, platforms, kycType } from './helper'
@@ -35,6 +35,7 @@ interface Props {
 
 const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, setCurrentToken, toggle }: Props) => {
   const onClose = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     formik.resetForm()
     toggle()
     setCurrentToken(null)
@@ -143,11 +144,10 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
       formik.setFieldValue('companyName', editableToken.companyName)
       formik.setFieldValue('description', editableToken.description)
       formik.setFieldValue('url', editableToken.url)
-      const country = countries.find((c) => c.value == editableToken.country)
-      const industry = industries.find((i) => i.id == editableToken.industry)
+      const country = countriesOption.find((c) => c.value == editableToken.country)
+      const industry = industriesOption.find((i) => i.value == editableToken.industry)
       if (industry) {
-        const industryMap = { value: industry?.id, label: industry?.name }
-        formik.setFieldValue('industry', industryMap)
+        formik.setFieldValue('industry', industry)
       }
       if (country) {
         formik.setFieldValue('country', country)

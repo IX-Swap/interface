@@ -46,6 +46,10 @@ export const compareChanges = (values: ITokenData, compareEditPlayload: any) => 
       if (JSON.stringify(values[key]) != JSON.stringify(compareEditPlayload['kycTypeJson'])) {
         payload[key] = JSON.stringify(values[key])
       }
+    } else if (['active', 'featured', 'allowDeposit', 'allowWithdrawal', 'needsWhitelisting'].includes(key)) {
+      if (compareEditPlayload[key] !== value) {
+        payload[key] = value
+      }
     } else {
       if (compareEditPlayload[key] && compareEditPlayload[key] == value) {
         continue
