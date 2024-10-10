@@ -3,7 +3,7 @@ import { ITokenData } from './types'
 
 export const prepareFormData = (values: any, currentIssuerId: string) => {
   const formData = new FormData()
-  debugger
+
   if (!values.needsWhitelisting) {
     delete values.whitelistPlatform
     delete values.whitelistContractAddress
