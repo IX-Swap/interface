@@ -145,9 +145,14 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
       formik.setFieldValue('url', editableToken.url)
       const country = countries.find((c) => c.value == editableToken.country)
       const industry = industries.find((i) => i.id == editableToken.industry)
-      const industryMap = { value: industry?.id, label: industry?.name }
-      formik.setFieldValue('country', country)
-      formik.setFieldValue('industry', industryMap)
+      if (industry) {
+        const industryMap = { value: industry?.id, label: industry?.name }
+        formik.setFieldValue('industry', industryMap)
+      }
+      if (country) {
+        formik.setFieldValue('country', country)
+      }
+
       const fieldKycType =
         editableToken.kycTypeJson && typeof editableToken.kycTypeJson === 'string'
           ? JSON.parse(editableToken.kycTypeJson)

@@ -16,8 +16,6 @@ interface AvailabilityProps {
 }
 
 const Availability: React.FC<AvailabilityProps> = ({ formik }) => {
-  console.log('formik.values.kycType', formik.values.kycType)
-
   const kycTypeOptions =
     typeof formik.values.kycType === 'string' ? JSON.parse(formik.values.kycType) : formik.values.kycType
 

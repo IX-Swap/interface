@@ -40,7 +40,7 @@ export const compareChanges = (values: ITokenData, compareEditPlayload: any) => 
       continue
     } else if (['country', 'industry', 'originalNetwork', 'network', 'whitelistPlatform'].includes(key)) {
       if (compareEditPlayload[key] != value?.value) {
-        payload[key] = value?.value
+        payload[key] = value
       }
     } else if (key === 'kycType') {
       if (JSON.stringify(values[key]) != JSON.stringify(compareEditPlayload['kycTypeJson'])) {

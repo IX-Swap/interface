@@ -6,7 +6,7 @@ import { Line } from 'components/Line'
 import { UploaderLBP } from 'pages/KYC/common'
 import { FormGrid } from 'pages/KYC/styleds'
 import { FormWrapper, InputWithLabel, Label } from 'pages/Tenant/components/styleds'
-import { industries, countries } from '../mock'
+import { industriesOption, countriesOption } from '../mock'
 import StyledSelect from '../StyledSelect'
 import { blockchainNetworks } from 'pages/KYC/mock'
 
@@ -85,7 +85,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               placeholder="Select Industry"
               isClearable={false}
               isSearchable={false}
-              options={industries.map((industry) => ({ value: industry.id, label: industry.name }))}
+              options={industriesOption}
               value={formik.values.industry}
               onSelect={(value) => formik.setFieldValue('industry', value)}
             />
@@ -98,7 +98,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               id="country"
               name="country"
               placeholder="Select Country"
-              options={countries}
+              options={countriesOption}
               value={formik.values.country}
               onSelect={(value) => formik.setFieldValue('country', value)}
             />
@@ -211,11 +211,6 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
 }
 
 export default GeneralInfo
-
-const LoadingIndicator = styled.div`
-  align-content: center;
-  justify-self: center;
-`
 
 const ErrorText = styled.span`
   color: #f44336;
