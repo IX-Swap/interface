@@ -7,9 +7,7 @@ export function floorTo4Decimals(num: number) {
   return Math.floor((num + Number.EPSILON) * 10000) / 10000
 }
 export function floorToDecimals(num: number, decimals = 4) {
-  return new Big(num)
-    .round(decimals, Big.roundDown)
-    .toString()
+  return new Big(num).round(decimals, Big.roundDown).toString()
 }
 export function formatCurrencyAmount(amount: CurrencyAmount<Currency> | undefined, sigFigs: number) {
   if (!amount) {
@@ -39,8 +37,8 @@ export function formatPrice(price: any | undefined, sigFigs: number) {
   return price.toFixed(sigFigs)
 }
 
-export function formatAmount(amount: number) {
-  return amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 10 })
+export function formatAmount(amount: number, maximumFractionDigits = 10) {
+  return amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits })
 }
 
 export function safeParseUnits(value: number, decimals = 1): BigNumber {
