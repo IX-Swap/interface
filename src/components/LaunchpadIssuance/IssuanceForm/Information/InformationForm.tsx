@@ -379,7 +379,6 @@ export const InformationForm = (props: Props) => {
             inputFilter={uppercaseFilter}
             value={values.tokenTicker}
             error={(touched.tokenTicker && errors.tokenTicker) as string}
-            maxLength={10}
           />
           <FormField
             field="decimals"
