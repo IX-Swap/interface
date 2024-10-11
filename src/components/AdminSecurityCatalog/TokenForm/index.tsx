@@ -24,6 +24,7 @@ import { compareChanges, prepareFormData, initialValues, platforms, kycType } fr
 import { validationSchema } from './schema'
 import SuccessContent from 'components/ToastContent/Success'
 import ErrorContent from 'components/ToastContent/Error'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 
 interface Props {
   token: any | null
@@ -189,7 +190,7 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
           platforms.find((p: any) => p.value === editableToken?.token?.whitelistPlatform)
         )
         formik.setFieldValue('whitelistContractAddress', editableToken?.token?.whitelistContractAddress)
-        formik.setFieldValue('withdrawFee', editableToken?.token?.withdrawFee)
+        formik.setFieldValue('withdrawFee', formatAmount(editableToken?.token?.withdrawFee))
         formik.setFieldValue('withdrawFeeAddress', editableToken?.token?.withdrawFeeAddress)
         formik.setFieldValue('chainId', editableToken?.token?.chainId)
         if (editableToken?.wrappedTokenAddress) {
