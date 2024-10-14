@@ -8,6 +8,7 @@ import { responseSuccessInterceptor } from './interceptors'
 import { APIServiceRequestConfig, KeyValueMap, RequestConfig } from './types'
 import { LONG_WAIT_RESPONSE, LONG_WAIT_RESPONSE_CODE, OK_RESPONSE_CODE, CREATED_RESPONSE_CODE } from 'constants/misc'
 import * as Sentry from '@sentry/react'
+import { setWalletState } from 'state/wallet'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
@@ -56,6 +57,7 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
                 account,
               })
             )
+            store.dispatch(setWalletState({ isSignLoading: false }))
             return
           }
           store.dispatch(
@@ -71,6 +73,7 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
       } catch (error: any) {
         console.error({ requestError: error.message })
         store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
+        store.dispatch(setWalletState({ isSignLoading: false }))
       }
     }
 
@@ -176,7 +179,7 @@ const apiService = {
 
   _prepareHeaders(data: any) {
     const headers: KeyValueMap = {
-      'x-tenant-domain':  window.location.host,
+      'x-tenant-domain': window.location.host,
       // 'x-tenant-domain': 'dev-readi.ixswap.io',
     }
     const { auth, user } = store.getState()
