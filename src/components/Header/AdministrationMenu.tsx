@@ -65,7 +65,9 @@ const Content: React.FC<ContentProps> = ({ open, toggle }) => {
         </Column>
       ) : null}
 
-      {checkAllowed(routes.tokenManager('my-tokens', null), config?.pages) && isWhitelisted && (isTokenManager || isAdmin) ? (
+      {checkAllowed(routes.tokenManager('my-tokens', null), config?.pages) &&
+      isWhitelisted &&
+      (isTokenManager || isAdmin) ? (
         <Column>
           <Link onClick={() => navigateTo(routes.tokenManager('my-tokens', null))}>Payout</Link>
         </Column>
@@ -90,15 +92,8 @@ const AdministrationMenu = () => {
   const [open, toggle] = useToggle(false)
   const node = useRef<HTMLDivElement>()
 
-  useOnClickOutside(node, open ? toggle : undefined)
-
   return (
-    <StyledNavLink
-      ref={node as any}
-      id={`administration-nav-link`}
-      to={'#'}
-      isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
-    >
+    <Container ref={node as any}>
       <Popover
         hideArrow
         show={open}
@@ -112,7 +107,7 @@ const AdministrationMenu = () => {
           <ChevronElement showMore={open} setShowMore={() => {}} />
         </StyledBox>
       </Popover>
-    </StyledNavLink>
+    </Container>
   )
 }
 
@@ -170,13 +165,10 @@ const navLinkStyles = css`
     font-size: 15px;
   }
 `
-const StyledNavLink = styled(NavLink).attrs({
-  activeClassName,
-})<{ disabled?: boolean }>`
-  ${navLinkStyles};
-  ${({ disabled }) => disabled && `${disabledStyle}`};
+const Container = styled.div`
   margin-right: 8px;
   min-width: 168px;
+  cursor: pointer;
 `
 
 const subMenuLinkStyle = css`
