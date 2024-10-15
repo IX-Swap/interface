@@ -408,6 +408,7 @@ const CloseContainer = styled.div`
   border: 1px solid #e6e6ff;
   border-radius: 6px;
   padding: 10px 12px;
+  cursor: pointer;
 `
 
 const MenuList = styled.div`
