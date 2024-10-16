@@ -31,7 +31,6 @@ export const ImageField: React.FC<Props> = (props) => {
     (files: File[]) => {
       if (files.length === 1) {
         props.setter(props.field, { id: null, file: files[0] })
-        props.touch(props.field, true)
       }
     },
     [props.image]
@@ -43,7 +42,6 @@ export const ImageField: React.FC<Props> = (props) => {
       event.stopPropagation()
 
       props.setter(props.field, undefined)
-      props.touch(props.field, true)
     },
     [props.setter, props.field, props.field]
   )
