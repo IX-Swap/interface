@@ -191,8 +191,6 @@ export const InformationForm = (props: Props) => {
     setFieldValue(field, updatedErrors)
   }
 
-  console.log('formikProps', formikProps)
-
   return (
     <>
       <ConfirmationForm isOpen={showConfirmDialog} onClose={() => setShowConfirmDialog(false)} onSave={onSubmit} />
