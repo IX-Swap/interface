@@ -8,7 +8,7 @@ interface SupportInformationProps {
 const SupportInformation: React.FC<SupportInformationProps> = ({ formik }) => {
   return (
     <>
-      <h1 className="title">Support Informaton</h1>
+      <h1 className="title">Support Information</h1>
 
       <FormWrapper>
         <div>
@@ -20,9 +20,11 @@ const SupportInformation: React.FC<SupportInformationProps> = ({ formik }) => {
             value={formik.values.defaultUrl}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={Boolean(formik.errors.defaultUrl)}
+            error={formik.touched.defaultUrl && Boolean(formik.errors.defaultUrl)}
           />
-          {Boolean(formik.errors.defaultUrl) ? <ErrorText>{formik.errors.defaultUrl}</ErrorText> : null}
+          {formik.touched.defaultUrl && formik.errors.defaultUrl ? (
+            <ErrorText>{formik.errors.defaultUrl}</ErrorText>
+          ) : null}
         </div>
 
         <div>
@@ -34,9 +36,11 @@ const SupportInformation: React.FC<SupportInformationProps> = ({ formik }) => {
             value={formik.values.chartsUrl}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={Boolean(formik.errors.chartsUrl)}
+            error={formik.touched.chartsUrl && Boolean(formik.errors.chartsUrl)}
           />
-          {Boolean(formik.errors.chartsUrl) ? <ErrorText>{formik.errors.chartsUrl}</ErrorText> : null}
+          {formik.touched.chartsUrl && formik.errors.chartsUrl ? (
+            <ErrorText>{formik.errors.chartsUrl}</ErrorText>
+          ) : null}
         </div>
 
         <div>
@@ -48,9 +52,11 @@ const SupportInformation: React.FC<SupportInformationProps> = ({ formik }) => {
             value={formik.values.supportEmail}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={Boolean(formik.errors.supportEmail)}
+            error={formik.touched.supportEmail && Boolean(formik.errors.supportEmail)}
           />
-          {Boolean(formik.errors.supportEmail) ? <ErrorText>{formik.errors.supportEmail}</ErrorText> : null}
+          {formik.touched.supportEmail && formik.errors.supportEmail ? (
+            <ErrorText>{formik.errors.supportEmail}</ErrorText>
+          ) : null}
         </div>
       </FormWrapper>
     </>

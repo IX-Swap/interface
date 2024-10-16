@@ -62,8 +62,6 @@ const TenantForm = () => {
   const formik = useFormik<TenantDetails>({
     initialValues,
     validationSchema: !id ? validationSchema : null,
-    validateOnChange: false,
-    validateOnBlur: false,
     onSubmit: async (values: any) => {
       try {
         const payload = generateTenantSubmitPayload(values)
