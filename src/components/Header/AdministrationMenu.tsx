@@ -44,8 +44,6 @@ const Content: React.FC<ContentProps> = ({ open, toggle }) => {
   return (
     <PopoverContent
       onClick={(e: any) => (e ? e.stopPropagation() : null)}
-      onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
-      onMouseLeave={toggle}
     >
       {isAdmin ? (
         <Column>
@@ -91,6 +89,7 @@ const Content: React.FC<ContentProps> = ({ open, toggle }) => {
 const AdministrationMenu = () => {
   const [open, toggle] = useToggle(false)
   const node = useRef<HTMLDivElement>()
+  useOnClickOutside(node, open ? toggle : undefined)
 
   return (
     <Container ref={node as any}>
