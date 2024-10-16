@@ -261,7 +261,7 @@ export const InformationForm = (props: Props) => {
             field="profilePicture"
             setter={setFieldValue}
             touch={setFieldTouched}
-            error={(touched.profilePicture && errors.profilePicture) as string}
+            error={(errors.profilePicture) as string}
           />
 
           <ImageField
@@ -270,7 +270,7 @@ export const InformationForm = (props: Props) => {
             field="cardPicture"
             setter={setFieldValue}
             touch={setFieldTouched}
-            error={(touched.cardPicture && errors.cardPicture) as string}
+            error={(errors.cardPicture) as string}
           />
         </ImageBlock>
 
