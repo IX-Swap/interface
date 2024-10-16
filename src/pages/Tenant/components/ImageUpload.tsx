@@ -14,11 +14,21 @@ interface ImageUploadProps {
   id: string
   name: string
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
+  setFieldTouched: (field: string, isTouched?: boolean, shouldValidate?: boolean) => void // Add setFieldTouched prop
   error?: string
   value?: string
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ title, description, id, name, error, value, setFieldValue }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({
+  title,
+  description,
+  id,
+  name,
+  error,
+  value,
+  setFieldValue,
+  setFieldTouched,
+}) => {
   const fileInputRef = useRef<any>(null)
   const [image, setImage] = useState<any>(null)
   const [imageName, setImageName] = useState('')
@@ -64,6 +74,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ title, description, id, name,
     setFieldValue(name, '')
   }
 
+  const handleClick = () => {
+    setFieldTouched(name, true) // Mark the field as touched when the input is clicked
+  }
+
   return (
     <>
       <div>
@@ -80,7 +94,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ title, description, id, name,
 
           <label htmlFor={id}>
             <Input accept="image/*" id={id} name={name} type="file" ref={fileInputRef} onChange={handleImageUpload} />
-            <BrowserButton>Browse</BrowserButton>
+            <BrowserButton onClick={handleClick}>Browse</BrowserButton>
           </label>
         </Container>
         {image || value ? (
