@@ -195,6 +195,7 @@ const SubMenuExternalLink = styled(ExternalLink)<{ disabled?: boolean }>`
 
 const StyledBox = styled.div`
   font-size: 14px;
+  font-weight: 500;
   border: 1px solid #e6e6ff;
   padding: 13px 12px;
   border-radius: 4px;

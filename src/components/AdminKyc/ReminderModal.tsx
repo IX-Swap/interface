@@ -38,6 +38,17 @@ const ReminderModal: React.FC<ReminderModalProps> = ({ isOpen, item, onClose }) 
 
   const reminderLogs = data?.data?.reminderLogs || []
 
+  const getSentBy = (sentBy: string) => {
+    if (sentBy === 'Automatic') {
+      return 'Automatic'
+    }
+    try {
+      return JSON.parse(sentBy)?.fullName || 'Unknown'
+    } catch (error) {
+      return 'Unknown'
+    }
+  }
+
   return (
     <ModalBackground isOpen={isOpen}>
       <ModalContainer>
@@ -70,18 +81,12 @@ const ReminderModal: React.FC<ReminderModalProps> = ({ isOpen, item, onClose }) 
                     </TableRow>
                   </thead>
                   <tbody>
-                    {reminderLogs.map((row: any) => {
-                      const sentBy = JSON.parse(row.sentBy)
-
-                      return (
-                        <TableRow key={row.id}>
-                          <TableCell>{dayjs(row.createdAt).format('MMM DD, YYYY hh:mm')}</TableCell>
-                          <TableCell style={{ textAlign: 'right' }}>
-                            {sentBy?.fullName ? sentBy?.fullName : sentBy}
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })}
+                    {reminderLogs.map((row: any) => (
+                      <TableRow key={row.id}>
+                        <TableCell>{dayjs(row.createdAt).format('MMM DD, YYYY hh:mm')}</TableCell>
+                        <TableCell style={{ textAlign: 'right' }}>{getSentBy(row?.sentBy)}</TableCell>
+                      </TableRow>
+                    ))}
                   </tbody>
                 </StyledTable>
               ) : (
