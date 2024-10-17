@@ -1,4 +1,4 @@
-import { baseSepolia, base, mainnet, polygon, polygonAmoy, Chain } from 'wagmi/chains'
+import { baseSepolia, base, polygon, polygonAmoy, Chain } from 'wagmi/chains'
 import { fallback, http } from 'wagmi'
 import { Transport } from 'viem'
 
@@ -30,10 +30,9 @@ export const CONNECTOR_ICON_OVERRIDE_MAP: { [id in string]?: string } = {
 const getAlchemyUrlFor = (network: string) =>
   process.env.REACT_APP_ALCHEMY_KEY ? `https://${network}.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_KEY}` : ''
 
-export const CHAINS: [Chain, ...Chain[]] = isTestnet ? [baseSepolia, polygonAmoy] : [base, mainnet, polygon]
+export const CHAINS: [Chain, ...Chain[]] = isTestnet ? [baseSepolia, polygonAmoy] : [base, polygon]
 
 export const PUBLIC_NODES = {
-  [ChainId.Mainnet]: [getAlchemyUrlFor('eth-mainnet'), 'https://cloudflare-eth.com'].filter(Boolean),
   [ChainId.Polygon]: [getAlchemyUrlFor('polygon-mainnet'), 'https://polygon-rpc.com'].filter(Boolean),
   [ChainId.Amoy]: [getAlchemyUrlFor('polygon-amoy'), 'https://rpc-amoy.polygon.technology/'].filter(Boolean),
   [ChainId.Base]: [getAlchemyUrlFor('base-mainnet')],
