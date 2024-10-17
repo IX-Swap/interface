@@ -65,7 +65,6 @@ export function useLogout() {
     connections.forEach(({ connector }) => {
       disconnect({ connector })
     })
-    indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
