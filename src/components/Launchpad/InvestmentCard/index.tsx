@@ -1,20 +1,16 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-
 import Portal from '@reach/portal'
-
 import { useHistory } from 'react-router-dom'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { useCheckKYC } from 'state/launchpad/hooks'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
 import { OfferStatus } from 'state/launchpad/types'
-
 import { Tooltip } from './Tooltip'
 import { InvestmentStatusBadge } from './InvestmentStatusBadge'
 import { InvestmentSaleStatusInfo } from './InvestmentSaleStatusInfo'
-
 import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
-
 import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentTypeInfo } from './InvestmentTypeInfo'
 import { text1, text2, text4, text5, text58 } from 'components/LaunchpadMisc/typography'
@@ -26,6 +22,7 @@ import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { NETWORK_LOGOS } from 'constants/chains'
 import { PinnedContentButton } from 'components/Button'
 import { MEDIA_WIDTHS } from 'theme'
+import { RaisedFund } from './RaisedFund'
 
 interface Props {
   offer: any
@@ -41,6 +38,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const theme = useTheme()
   const { account } = useActiveWeb3React()
   const { kyc } = useKYCState()
+  const { openConnectModal } = useConnectModal()
 
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
@@ -77,12 +75,16 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   }, [offer])
 
   const onClick = React.useCallback(() => {
-    if (canOpen) {
-      history.push(`/offers/${offer.id}`)
+    if (account) {
+      if (canOpen) {
+        history.push(`/offers/${offer.id}`)
+      } else {
+        toggleKYCModal()
+      }
     } else {
-      toggleKYCModal()
+      openConnectModal && openConnectModal()
     }
-  }, [canOpen, toggleKYCModal])
+  }, [account, canOpen, toggleKYCModal])
 
   const openModal = () => handleIsModalOpen(true)
   const closeModal = () => handleIsModalOpen(false)
@@ -127,7 +129,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
             {showDetails && (
               <>
                 <InvestmentCardDetailsEntry>
-                  <InvestmentCardDetailsEntryLabel>Projected fundraise</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryLabel>Projected Fundraise</InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>
                     {formatNumberWithDecimals(offer.hardCap, 2, true)}
                   </InvestmentCardDetailsEntryValue>
@@ -152,7 +154,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
                 <InvestmentCardDetailsSeparator />
 
                 <InvestmentCardDetailsEntry>
-                  <InvestmentCardDetailsEntryLabel>Investment type</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryLabel>Investment Type</InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>
                     {capitalizeFirstLetter(offer.investmentType)}
                   </InvestmentCardDetailsEntryValue>
@@ -166,6 +168,8 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
               </>
             )}
           </InvestmentCardDetailsContainer>
+
+          <RaisedFund totalInvestment={offer.totalInvestment} symbol={offer?.investingTokenSymbol} />
 
           <InvestmentSaleStatusInfo
             isClosed={isClosed}

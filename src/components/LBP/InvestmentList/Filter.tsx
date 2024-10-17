@@ -1,11 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-
-
 import { ReactComponent as FilterIcon } from 'assets/launchpad/svg/filter-icon.svg'
 import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.svg'
-
-import { OFFER_INDUSTRY_LABELS, OFFER_STAGE_LABELS, OFFER_TYPE_LABELS } from 'state/launchpad/constants'
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { isMobile } from 'react-device-detect'
 import { FilterDropdown, FilterOption } from 'components/Launchpad/InvestmentList/FilterDropdown'

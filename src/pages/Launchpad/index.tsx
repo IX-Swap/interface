@@ -1,11 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Portal from '@reach/portal'
 import { Offers } from 'components/Launchpad/Offers'
-import { CenteredFixed } from 'components/LaunchpadMisc/styled'
-import { useActiveWeb3React } from 'hooks/web3'
-import { NotAvailablePage } from 'components/NotAvailablePage'
-import { detectWrongNetwork } from 'utils'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Banner } from './Banner'
 import { MEDIA_WIDTHS } from 'theme'
@@ -27,22 +22,10 @@ const BannerWrapper = styled.div`
 `
 
 export default function Launchpad() {
-  const { chainId } = useActiveWeb3React()
   const { config } = useWhitelabelState()
 
   const isIxSwap = config?.isIxSwap ?? false
   const enableLaunchpadBanner = config?.enableLaunchpadBanner ?? false
-  const blurred = detectWrongNetwork(chainId)
-
-  if (blurred) {
-    return (
-      <Portal>
-        <CenteredFixed width="100vw" height="100vh">
-          <NotAvailablePage />
-        </CenteredFixed>
-      </Portal>
-    )
-  }
 
   return (
     <>

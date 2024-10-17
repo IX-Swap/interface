@@ -5,6 +5,8 @@ import styled from 'styled-components/macro'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { isMobile } from 'react-device-detect'
 import Box from '@mui/material/Box'
+import Portal from '@reach/portal'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 
 export const BodyWrapper = styled(Box)<{
   margin?: string
@@ -89,9 +91,11 @@ export default function AppBody({
         paddingXS="12px"
       >
         {blurred && (
-          <BlurredOverlay>
-            <NotAvailablePage />
-          </BlurredOverlay>
+          <Portal>
+            <CenteredFixed width="100vw" height="100vh">
+              <NotAvailablePage />
+            </CenteredFixed>
+          </Portal>
         )}
         {!blurred && children}
       </BodyWrapper>

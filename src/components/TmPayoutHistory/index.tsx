@@ -21,7 +21,7 @@ import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } fro
 import { Line } from 'components/Line'
 import { TYPE } from 'theme'
 import dayjs from 'dayjs'
-import { getChainLogoByChainId, getChainLogoUrl } from 'chains'
+import { getChainLogoByChainId, getChainLogoUrl } from 'utils/chains'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 

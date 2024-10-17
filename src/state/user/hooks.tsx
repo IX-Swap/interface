@@ -55,6 +55,7 @@ import {
   getMe,
 } from './actions'
 import { ROLES } from 'constants/roles'
+import { setWalletState } from 'state/wallet'
 
 function serializeToken(token: Token): SerializedToken {
   // TO DO - refactor
@@ -511,11 +512,6 @@ export function useAccount() {
   const login = useLogin({ mustHavePreviousLogin: true })
   const getUserSecTokens = useFetchUserSecTokenListCallback()
   const isLoggedIn = useUserisLoggedIn()
-  const [triggeredAuth, handleTriggeredAuth] = useState(false)
-  const [accountChanged, handleAccountChanged] = useState(false)
-  const { kyc, loadingRequest } = useKYCState()
-  const history = useHistory()
-  const { pathname } = useLocation()
 
   const { loginError, token } = useAuthState()
 
@@ -526,48 +522,31 @@ export function useAccount() {
     }
   }, [loginError, dispatch])
 
+  const authenticate = useCallback(async () => {
+    try {
+      dispatch(setWalletState({ isSignLoading: true }))
+      const status = await login(true)
+      if (status == LOGIN_STATUS.SUCCESS && isLoggedIn) {
+        getUserSecTokens()
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+      dispatch(setWalletState({ isSignLoading: false }))
+    }
+  }, [login, getUserSecTokens, isLoggedIn])
+
   useEffect(() => {
     const timerFunc = setTimeout(checkAuthError, 20000)
 
     return () => clearTimeout(timerFunc)
   }, [checkAuthError])
 
-  const authenticate = useCallback(async () => {
-    handleTriggeredAuth(true)
-    const status = await login(true)
-    handleTriggeredAuth(false)
-    if (status == LOGIN_STATUS.SUCCESS && isLoggedIn) {
-      getUserSecTokens()
-    }
-  }, [login, getUserSecTokens, isLoggedIn])
-
-  // when user logins to another account clear his data and relogin him
-  // run with an interval of 5 sec in cases when user changes fast from an account to another
-  // so the user won't end up authenticated with a different account
-
-  // useEffect(() => {
-  //   const interval = setInterval(async () => {
-  //     if (account && savedAccount && savedAccount !== account) {
-  //       dispatch(saveAccount({ account: '' }))
-  //     }
-  //   }, 5000)
-  //   return () => clearInterval(interval)
-  // }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
-
-  // User connects with account
-
-  useEffect(() => {
-    if (!token && account && !triggeredAuth) {
-      authenticate()
-    }
-  }, [token, account, triggeredAuth, authenticate])
-
   useEffect(() => {
     if (account && account !== savedAccount) {
       localStorage.removeItem('Disclaimer')
       localStorage.removeItem('SDisclaimer')
       localStorage.removeItem('referralCode')
-      handleAccountChanged(true)
       dispatch(saveAccount({ account }))
       dispatch(clearSwapState())
       dispatch(clearSwapHelperState())
@@ -580,15 +559,7 @@ export function useAccount() {
     }
   }, [token, getUserSecTokens])
 
-  useEffect(() => {
-    if (kyc?.status !== KYCStatuses.APPROVED && accountChanged && !loadingRequest) {
-      if (pathname !== routes.kyc) {
-        const defaultPath = pathname === routes.launchpad ? routes.launchpad : routes.kyc
-        history.push(defaultPath)
-      }
-      handleAccountChanged(false)
-    }
-  }, [kyc, accountChanged, loadingRequest, pathname, history])
+  return { authenticate }
 }
 
 export const me = async () => {

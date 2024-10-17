@@ -261,7 +261,7 @@ export const InformationForm = (props: Props) => {
             field="profilePicture"
             setter={setFieldValue}
             touch={setFieldTouched}
-            error={(touched.profilePicture && errors.profilePicture) as string}
+            error={(errors.profilePicture) as string}
           />
 
           <ImageField
@@ -270,7 +270,7 @@ export const InformationForm = (props: Props) => {
             field="cardPicture"
             setter={setFieldValue}
             touch={setFieldTouched}
-            error={(touched.cardPicture && errors.cardPicture) as string}
+            error={(errors.cardPicture) as string}
           />
         </ImageBlock>
 
@@ -374,12 +374,11 @@ export const InformationForm = (props: Props) => {
             setter={setFieldValue}
             touch={setFieldTouched}
             label="Token Ticker"
-            placeholder="2-11 letters"
+            placeholder="2-10 letters"
             disabled={edit}
             inputFilter={uppercaseFilter}
             value={values.tokenTicker}
             error={(touched.tokenTicker && errors.tokenTicker) as string}
-            maxLength={11}
           />
           <FormField
             field="decimals"

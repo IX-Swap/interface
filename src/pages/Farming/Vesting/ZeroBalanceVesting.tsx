@@ -8,7 +8,7 @@ import { ReactComponent as ExternalBright } from 'assets/images/external-bright.
 import { IconWrapperWithBg } from 'components/AccountDetails/styleds'
 import { ExternalLink } from 'theme'
 import { shortAddress } from 'utils'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 import { useVestingState } from 'state/vesting/hooks'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 

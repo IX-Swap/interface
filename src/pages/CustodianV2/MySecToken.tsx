@@ -71,10 +71,9 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
             </LogoWrap>
           ) : null}
         </div>
-        <div style={{ display: 'block' }}>
-          <div style={{ display: 'flex', gap: '5px', alignItems: 'center', lineHeight: '1px' }}>
-            <TYPE.title11>{token.ticker}</TYPE.title11> -<TYPE.small fontWeight={600}>{wrappedToken.name}</TYPE.small>
-          </div>
+        <div style={{ display: 'block', textAlign: 'right' }}>
+          <TYPE.title11>{token.ticker}</TYPE.title11>
+          <TYPE.small fontWeight={600}>{wrappedToken.name}</TYPE.small>
           <Status status={status} amount={balance} decimals={token.token.decimals ?? 18} />
         </div>
       </Flex>

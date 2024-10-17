@@ -22,6 +22,7 @@ export const admin = {
   whitelistedList: 'users/whitelisted',
   addOrRemoveWhitelisted: (address: string) => `users/whitelist/address/${address}`,
   resendEmail: '/kyc/resendEmailCode',
+  kycReminder: (id: number) => `/kyc/reminder/${id}`,
 }
 
 export const vesting = {

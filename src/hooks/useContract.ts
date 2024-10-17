@@ -54,7 +54,7 @@ import { useMemo } from 'react'
 import { getContract } from 'utils'
 
 import { ArgentWalletDetector, EnsPublicResolver, EnsRegistrar, Erc20, Multicall2, Weth } from '../abis/types'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -102,6 +102,10 @@ export function getContractInstance({
     console.error('Failed to get contract', error)
     return null
   }
+}
+
+export function getTokenContract(tokenAddress: string, library: Web3Provider) {
+  return getContract(tokenAddress, ERC20_ABI, library)
 }
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {

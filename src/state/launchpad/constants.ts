@@ -8,6 +8,7 @@ export const OFFER_INDUSTRY_LABELS = [
   { label: "Gaming", value: OfferIndustry.gaming },
   { label: "Energy", value: OfferIndustry.energy },
   { label: "Healthcare", value: OfferIndustry.healthcare},
+  { label: 'Media & Entertainment', value: OfferIndustry.mediaAndEntertainment },
   { label: "Others", value: OfferIndustry.other },
 ]
 

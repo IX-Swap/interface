@@ -159,23 +159,23 @@ function CurrencyRow({
         >
           <CurrencyLogo currency={currency} size={'24px'} />
           <Column style={{ marginLeft: '8px' }}>
-            <RowFixed style={{ gap: '8px' }}>
+            <div>
               <Text color={'#292933'} title={currency.name} fontWeight={500}>
                 {currency.symbol}
               </Text>
-              <TYPE.darkGray ml="0px" fontSize={'12px'} fontWeight={300}>
+              <TYPE.darkGray ml="0px" fontSize={'13px'} fontWeight={500} color={'#B8B8CC'}>
                 {!currency.isNative && !isOnSelectedList && customAdded ? (
                   <Trans>{currency.name} • Added by user</Trans>
                 ) : (
                   currency.name
                 )}
               </TYPE.darkGray>
-            </RowFixed>
+            </div>
             <RowFixed>
               {/* <SvgIconWrapper size={20} style={{ marginLeft: '-6px' }}>
                 <img src={Attention} alt={'Attention'} />
               </SvgIconWrapper> */}
-              <TYPE.popOver color="#FF6060">
+              <TYPE.popOver color="#FF6060" fontSize={"11px"}>
                 <Trans>Needs accreditation</Trans>
               </TYPE.popOver>
             </RowFixed>
@@ -200,7 +200,7 @@ function CurrencyRow({
           <Text title={currency.name} fontWeight={500}>
             {currency.symbol}
           </Text>
-          <TYPE.darkGray ml="0px" fontSize={'12px'} fontWeight={300}>
+          <TYPE.darkGray ml="0px" fontSize={'12px'} fontWeight={500} color={'#B8B8CC'}>
             {!currency.isNative && !isOnSelectedList && customAdded ? (
               <Trans>{currency.name} • Added by user</Trans>
             ) : (
@@ -300,7 +300,7 @@ export default function CurrencyList({
   setImportToken: (token: Token) => void
 }) {
   const { config } = useWhitelabelState()
-  const isIxswap = config?.isIxSwap ?? false;
+  const isIxswap = config?.isIxSwap ?? false
 
   const sortedBySecList = useMemo(() => {
     const { sec, rest, wixs, usdc } = currencies.reduce(

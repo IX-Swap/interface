@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
@@ -10,6 +11,24 @@ import JSBI from 'jsbi'
 import walletValidator from 'multicoin-address-validator'
 import { NETWORK_ADDRESS_PATTERNS } from 'state/wallet/constants'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import usdcIcon from 'assets/images/usdcNew.svg'
+import ixsIcon from 'assets/images/ixsToken.svg'
+import usdIcon from 'assets/images/usdtNewToken.svg'
+
+export const getTokenIcon = (symbol: string) => {
+  switch (symbol) {
+    case 'USDC':
+      return usdcIcon
+    case 'IXS':
+      return ixsIcon
+    case 'WIXS':
+      return ixsIcon
+    case 'USDT':
+      return usdIcon
+    default:
+      return ''
+  }
+}
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
@@ -136,7 +155,7 @@ export function removeProtocolFromUrl(url: string): string {
 }
 
 export const detectWrongNetwork = (chainId: number): boolean => {
-  return  chainId ? !TGE_CHAINS_WITH_STAKING.includes(chainId) : false;
+  return chainId ? !TGE_CHAINS_WITH_STAKING.includes(chainId) : false
 }
 
 export function isValidUrl(url: string) {
@@ -149,9 +168,9 @@ export function isValidUrl(url: string) {
 }
 
 export function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 export function isEmptyObject(obj: object) {
-  return Object.keys(obj).length === 0;
+  return Object.keys(obj).length === 0
 }
