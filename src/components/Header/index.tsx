@@ -73,7 +73,7 @@ export default function Header() {
             </HeaderRow>
             <HeaderControls />
             <MobileMenu />
-            {kyc?.status === 'approved' && (
+            {account && kyc?.status === 'approved' ? (
               <HeaderRowNew>
                 <HeaderElement>
                   <NetworkCard />
@@ -82,7 +82,7 @@ export default function Header() {
                   <Web3Status />
                 </HeaderElement>
               </HeaderRowNew>
-            )}
+            ) : null}
           </HeaderFrame>
           {kyc?.status !== 'approved' && (
             <Flex justifyContent="space-between" bg="#fff">
