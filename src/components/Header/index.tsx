@@ -84,7 +84,7 @@ export default function Header() {
               </HeaderRowNew>
             ) : null}
           </HeaderFrame>
-          {kyc?.status !== 'approved' && (
+          {account && kyc?.status !== 'approved' ? (
             <Flex justifyContent="space-between" bg="#fff">
               <HeaderElement style={{ padding: '0 18px' }}>
                 <NetworkCard />
@@ -93,7 +93,7 @@ export default function Header() {
                 <Web3Status />
               </HeaderElement>
             </Flex>
-          )}
+          ) : null}
         </HeaderWrapper>
       )}
       {!isMobile && (
