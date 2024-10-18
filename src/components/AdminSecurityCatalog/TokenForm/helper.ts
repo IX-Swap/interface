@@ -18,7 +18,8 @@ export const prepareFormData = (values: any, currentIssuerId: string) => {
     } else if (['country', 'industry', 'originalNetwork', 'network', 'whitelistPlatform'].includes(key)) {
       formData.append(key, values[key].value)
     } else if (key === 'kycType') {
-      formData.append(key, JSON.stringify(values[key]))
+      const kycType = JSON.stringify(values[key])
+      formData.append(key, kycType)
     } else {
       formData.append(key, values[key])
     }
@@ -44,7 +45,7 @@ export const compareChanges = (values: ITokenData, compareEditPlayload: any) => 
       }
     } else if (key === 'kycType') {
       if (JSON.stringify(values[key]) != JSON.stringify(compareEditPlayload['kycTypeJson'])) {
-        payload[key] = JSON.stringify(values[key])
+        payload[key] = values[key]
       }
     } else if (['active', 'featured', 'allowDeposit', 'allowWithdrawal', 'needsWhitelisting'].includes(key)) {
       if (compareEditPlayload[key] !== value) {
