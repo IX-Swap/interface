@@ -80,7 +80,9 @@ const PublicDetails: React.FC = () => {
           ) : (
             <>
               <Background currentSharePriceUSD={statsData?.currentSharePriceUSD} lbpData={lbpData} />
-              <MiddleSection statsData={statsData} lbpData={lbpData} />
+
+              {account ? <MiddleSection statsData={statsData} lbpData={lbpData} /> : null}
+
               {isWrongChain ? (
                 <Portal>
                   <CenteredFixed width="100vw" height="100vh">
