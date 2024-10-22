@@ -111,12 +111,17 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
     formik.setFieldValue('network', value)
   }
 
+  const onClose = () => {
+    formik.resetForm()
+    toggle()
+  }
+
   return (
     <>
       <RedesignedWideModal isOpen={isOpen} onDismiss={() => {}}>
         <ModalBody>
           <CloseButton>
-            <CloseIcon onClick={toggle} />
+            <CloseIcon onClick={onClose} />
           </CloseButton>
 
           <Title>Add Token</Title>
@@ -152,7 +157,7 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
           </FormWrapper>
 
           <Flex justifyContent="space-between" style={{ gap: 12, marginTop: 32 }}>
-            <OutlineButton style={{ border: '1px solid #6666FF33', width: '100%' }} onClick={toggle}>
+            <OutlineButton style={{ border: '1px solid #6666FF33', width: '100%' }} onClick={onClose}>
               Cancel
             </OutlineButton>
 
