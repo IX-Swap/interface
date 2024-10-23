@@ -7,7 +7,12 @@ import { CHAINS, transports } from './constants'
 const WALLET_CONNECT_PROJECT_ID = <string>process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID
 
 export function createWagmiConfig() {
-  indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
+  const deletedIndexDB = localStorage.getItem('deletedIndexDB')
+
+  if (deletedIndexDB && deletedIndexDB !== 'true') {
+    indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
+    localStorage.setItem('deletedIndexDB', 'true')
+  }
 
   const config = getDefaultConfig({
     appName: 'IXSwap',
