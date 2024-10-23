@@ -66,8 +66,6 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
   const formik = useFormik<IToken>({
     initialValues,
     validationSchema: schema,
-    validateOnBlur: false,
-    validateOnChange: false,
     onSubmit: async (values: any) => {
       try {
         formik.setSubmitting(true)
@@ -104,11 +102,18 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
   })
 
   const onChangeTokenAddress = (value: string) => {
+    formik.setFieldTouched('tokenAddress', true)
     formik.setFieldValue('tokenAddress', value)
   }
 
   const onSelectNetwork = (value: any) => {
+    formik.setFieldTouched('tokenAddress', true)
     formik.setFieldValue('network', value)
+  }
+
+  const onClose = () => {
+    formik.resetForm()
+    toggle()
   }
 
   return (
@@ -116,7 +121,7 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
       <RedesignedWideModal isOpen={isOpen} onDismiss={() => {}}>
         <ModalBody>
           <CloseButton>
-            <CloseIcon onClick={toggle} />
+            <CloseIcon onClick={onClose} />
           </CloseButton>
 
           <Title>Add Token</Title>
@@ -134,7 +139,9 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
               value={formik.values.network}
               onSelect={onSelectNetwork}
             />
-            {Boolean(formik.errors.network) ? <ErrorText>{formik.errors.network}</ErrorText> : null}
+            {formik.touched.network && Boolean(formik.errors.network) ? (
+              <ErrorText>{formik.errors.network}</ErrorText>
+            ) : null}
           </FormWrapper>
 
           <FormWrapper>
@@ -144,15 +151,17 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
               name="tokenAddress"
               value={formik.values.tokenAddress}
               onChange={onChangeTokenAddress}
-              error={Boolean(formik.errors.tokenAddress)}
+              error={Boolean(formik.touched.tokenAddress) && Boolean(formik.errors.tokenAddress)}
               placeholder="Contract Address"
               fontSize={14}
             />
-            {Boolean(formik.errors.tokenAddress) ? <ErrorText>{formik.errors.tokenAddress}</ErrorText> : null}
+            {formik.touched.tokenAddress && Boolean(formik.errors.tokenAddress) ? (
+              <ErrorText>{formik.errors.tokenAddress}</ErrorText>
+            ) : null}
           </FormWrapper>
 
           <Flex justifyContent="space-between" style={{ gap: 12, marginTop: 32 }}>
-            <OutlineButton style={{ border: '1px solid #6666FF33', width: '100%' }} onClick={toggle}>
+            <OutlineButton style={{ border: '1px solid #6666FF33', width: '100%' }} onClick={onClose}>
               Cancel
             </OutlineButton>
 

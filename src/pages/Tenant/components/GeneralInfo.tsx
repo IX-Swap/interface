@@ -21,9 +21,9 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={Boolean(formik.errors.name)}
+            error={formik.touched.name && Boolean(formik.errors.name)}
           />
-          {Boolean(formik.errors.name) ? <ErrorText>{formik.errors.name}</ErrorText> : null}
+          {formik.touched.name && formik.errors.name ? <ErrorText>{formik.errors.name}</ErrorText> : null}
         </div>
 
         <div>
@@ -35,9 +35,9 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
             value={formik.values.title}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={Boolean(formik.errors.title)}
+            error={formik.touched.title && Boolean(formik.errors.title)}
           />
-          {Boolean(formik.errors.title) ? <ErrorText>{formik.errors.title}</ErrorText> : null}
+          {formik.touched.title && formik.errors.title ? <ErrorText>{formik.errors.title}</ErrorText> : null}
         </div>
 
         <TwoColumnGrid>
@@ -50,9 +50,9 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               value={formik.values.domain}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.domain)}
+              error={formik.touched.domain && Boolean(formik.errors.domain)}
             />
-            {Boolean(formik.errors.domain) ? <ErrorText>{formik.errors.domain}</ErrorText> : null}
+            {formik.touched.domain && formik.errors.domain ? <ErrorText>{formik.errors.domain}</ErrorText> : null}
           </div>
 
           <div>
@@ -64,9 +64,9 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               value={formik.values.appUrl}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.appUrl)}
+              error={formik.touched.appUrl && Boolean(formik.errors.appUrl)}
             />
-            {Boolean(formik.errors.appUrl) ? <ErrorText>{formik.errors.appUrl}</ErrorText> : null}
+            {formik.touched.appUrl && formik.errors.appUrl ? <ErrorText>{formik.errors.appUrl}</ErrorText> : null}
           </div>
         </TwoColumnGrid>
 
@@ -83,9 +83,11 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
             value={formik.values.description}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={Boolean(formik.errors.description)}
+            error={formik.touched.description && Boolean(formik.errors.description)}
           />
-          {Boolean(formik.errors.description) ? <ErrorText>{formik.errors.description}</ErrorText> : null}
+          {formik.touched.description && formik.errors.description ? (
+            <ErrorText>{formik.errors.description}</ErrorText>
+          ) : null}
         </div>
 
         <div>

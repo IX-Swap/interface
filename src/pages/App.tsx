@@ -266,7 +266,7 @@ export default function App() {
         </AppWrapper>
       </ErrorBoundary>
 
-      {!token && account ? (
+      {!token && account && chains.includes(chainId) ? (
         <Portal>
           <CenteredFixed width="100vw" height="100vh">
             <SignMessageModal authenticate={authenticate} />
