@@ -68,7 +68,12 @@ export function useLogout() {
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
-    indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
+    const deletedIndexDB = localStorage.getItem('deletedIndexDB')
+
+    if (deletedIndexDB && deletedIndexDB !== 'true') {
+      indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
+      localStorage.setItem('deletedIndexDB', 'true')
+    }
   }
 
   return { disconnectWallet }
