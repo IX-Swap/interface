@@ -1,8 +1,8 @@
-import React from 'react';
-import { ErrorText, FormWrapper, InputWithLabel, Label, TwoColumnGrid } from './styleds';
+import React from 'react'
+import { ErrorText, FormWrapper, InputWithLabel, Label, TwoColumnGrid } from './styleds'
 
 interface KYCLinksProps {
-  formik: any;
+  formik: any
 }
 
 const KYCLinks: React.FC<KYCLinksProps> = ({ formik }) => {
@@ -46,7 +46,7 @@ const KYCLinks: React.FC<KYCLinksProps> = ({ formik }) => {
         </TwoColumnGrid>
       </FormWrapper>
     </>
-  );
-};
+  )
+}
 
-export default KYCLinks;
+export default KYCLinks

@@ -1,8 +1,8 @@
-import React from 'react';
-import { ErrorText, FormWrapper, InputWithLabel, Label, TwoColumnGrid } from './styleds';
+import React from 'react'
+import { ErrorText, FormWrapper, InputWithLabel, Label, TwoColumnGrid } from './styleds'
 
 interface FooterConfigProps {
-  formik: any;
+  formik: any
 }
 
 const FooterConfig: React.FC<FooterConfigProps> = ({ formik }) => {
@@ -37,7 +37,9 @@ const FooterConfig: React.FC<FooterConfigProps> = ({ formik }) => {
               onBlur={formik.handleBlur}
               error={formik.touched.policyLink && Boolean(formik.errors.policyLink)}
             />
-            {formik.touched.policyLink && formik.errors.policyLink ? <ErrorText>{formik.errors.policyLink}</ErrorText> : null}
+            {formik.touched.policyLink && formik.errors.policyLink ? (
+              <ErrorText>{formik.errors.policyLink}</ErrorText>
+            ) : null}
           </div>
         </TwoColumnGrid>
 
@@ -94,7 +96,7 @@ const FooterConfig: React.FC<FooterConfigProps> = ({ formik }) => {
         </div>
       </FormWrapper>
     </>
-  );
-};
+  )
+}
 
-export default FooterConfig;
+export default FooterConfig

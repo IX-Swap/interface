@@ -1,10 +1,10 @@
-import React from 'react';
-import ImageUpload from './ImageUpload';
-import { FormWrapper, Label } from './styleds';
-import ColorPicker from './ColorPicker';
+import React from 'react'
+import ImageUpload from './ImageUpload'
+import { FormWrapper, Label } from './styleds'
+import ColorPicker from './ColorPicker'
 
 interface DesignProps {
-  formik: any;
+  formik: any
 }
 
 const Design: React.FC<DesignProps> = ({ formik }) => {
@@ -60,7 +60,7 @@ const Design: React.FC<DesignProps> = ({ formik }) => {
         </div>
       </FormWrapper>
     </>
-  );
-};
+  )
+}
 
-export default Design;
+export default Design
