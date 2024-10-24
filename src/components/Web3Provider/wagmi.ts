@@ -4,6 +4,7 @@ import * as wallets from '@rainbow-me/rainbowkit/wallets'
 
 import { CHAINS, transports } from './constants'
 import walletConnectConfig from 'walletConnectConfig.json'
+import { tryClearIndexedDB } from 'utils'
 
 type WalletConnectConfig = {
   [key: string]: string
@@ -18,14 +19,9 @@ function getWalletConnectProjectId() {
 }
 
 export function createWagmiConfig() {
-  const deletedIndexDB = localStorage.getItem('deletedIndexDB')
+  tryClearIndexedDB()
 
-  if (deletedIndexDB && deletedIndexDB !== 'true') {
-    indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
-    localStorage.setItem('deletedIndexDB', 'true')
-  }
-
-  const WALLET_CONNECT_PROJECT_ID = getWalletConnectProjectId();
+  const WALLET_CONNECT_PROJECT_ID = getWalletConnectProjectId()
 
   const config = getDefaultConfig({
     appName: 'IXSwap',
