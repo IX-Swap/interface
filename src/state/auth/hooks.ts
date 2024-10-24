@@ -13,6 +13,7 @@ import { useConnections, useDisconnect } from 'wagmi'
 import { setWalletState } from 'state/wallet'
 import { useHistory } from 'react-router-dom'
 import { routes } from 'utils/routes'
+import { tryClearIndexedDB } from 'utils'
 
 export enum LOGIN_STATUS {
   NO_ACCOUNT,
@@ -68,12 +69,7 @@ export function useLogout() {
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
-    const deletedIndexDB = localStorage.getItem('deletedIndexDB')
-
-    if (deletedIndexDB && deletedIndexDB !== 'true') {
-      indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
-      localStorage.setItem('deletedIndexDB', 'true')
-    }
+    tryClearIndexedDB()
   }
 
   return { disconnectWallet }
