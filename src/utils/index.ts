@@ -174,3 +174,12 @@ export function delay(ms: number) {
 export function isEmptyObject(obj: object) {
   return Object.keys(obj).length === 0
 }
+
+export function tryClearIndexedDB() {
+  const deletedIndexDB = localStorage.getItem('deletedIndexDB')
+
+  if (!deletedIndexDB) {
+    indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
+    localStorage.setItem('deletedIndexDB', 'true')
+  }
+}
