@@ -1,43 +1,27 @@
 import React, { useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
+import { useSwitchChain } from 'wagmi'
 
-import { CHAIN_INFO, NETWORK_LABELS, SupportedChainId } from 'constants/chains'
+import { CHAIN_INFO, NETWORK_LABELS } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import { ChevronElement } from 'components/ChevronElement'
 import { MEDIA_WIDTHS } from 'theme'
-import { switchToNetwork } from 'hooks/switchToNetwork'
-import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { ReactComponent as Checked } from 'assets/images/checked-blue.svg'
 import { VioletCard } from '../Card'
 
 export const NetworkCard = () => {
   const { chainId, provider, account } = useActiveWeb3React()
+  const { chains, isPending, switchChain } = useSwitchChain()
+
   const node = useRef<HTMLDivElement>()
   const open = useModalOpen(ApplicationModal.NETWORK_SELECTOR)
   const toggle = useToggleModal(ApplicationModal.NETWORK_SELECTOR)
   const info = chainId ? CHAIN_INFO[chainId] : undefined
   useOnClickOutside(node, open ? toggle : undefined)
-
-  function Row({ targetChain }: { targetChain: number }) {
-    const handleRowClick = () => {
-      if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
-        switchToNetwork({ provider, chainId: targetChain })
-        toggle()
-      }
-    }
-    const active = chainId === targetChain
-    return (
-      <FlyoutRow onClick={handleRowClick} active={active}>
-        <Logo src={CHAIN_INFO[targetChain].logoUrl} />
-        <NetworkLabel>{NETWORK_LABELS[targetChain]}</NetworkLabel>
-        {chainId === targetChain && <Checked />}
-      </FlyoutRow>
-    )
-  }
 
   const activeChainName = useMemo(() => chainId && NETWORK_LABELS[chainId], [chainId])
 
@@ -45,26 +29,45 @@ export const NetworkCard = () => {
     return null
   }
 
+  const handleRowClick = (targetChain: number) => {
+    toggle()
+    if (chainId !== targetChain) {
+      switchChain({ chainId: targetChain })
+    }
+  }
+
   return (
     <StyledBox>
       {account && (
         <Selector ref={node as any}>
           <SelectorControls onClick={() => toggle()}>
-            <Flex alignItems="center">
-              <Logo src={CHAIN_INFO[chainId].logoUrl} />
-              <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
-                {activeChainName}
-              </NetworkCardWrapper>
-            </Flex>
+            {isPending ? (
+              <PendingText>Switching...</PendingText>
+            ) : (
+              <Flex alignItems="center">
+                <Logo src={CHAIN_INFO[chainId].logoUrl} />
+                <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
+                  {activeChainName}
+                </NetworkCardWrapper>
+              </Flex>
+            )}
 
             <ChevronElement showMore={open} setShowMore={toggle} />
           </SelectorControls>
 
           {open && (
             <FlyoutMenu>
-              {(ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]).map((chainId) => (
-                <Row targetChain={chainId} key={chainId} />
-              ))}
+              {chains.map((chain: any) => {
+                const active = chainId === chain.id
+                const targetChain = chain.id
+                return (
+                  <FlyoutRow key={targetChain} onClick={() => handleRowClick(targetChain)} active={active}>
+                    <Logo src={CHAIN_INFO[targetChain].logoUrl} />
+                    <NetworkLabel>{chain.name}</NetworkLabel>
+                    {chainId === targetChain && <Checked />}
+                  </FlyoutRow>
+                )
+              })}
             </FlyoutMenu>
           )}
         </Selector>
@@ -72,7 +75,6 @@ export const NetworkCard = () => {
     </StyledBox>
   )
 }
-
 
 const SelectorControls = styled(VioletCard)`
   cursor: pointer;
@@ -179,4 +181,11 @@ const StyledBox = styled.div`
     border: 1px solid #4d8fea;
   }
   position: relative;
+`
+
+const PendingText = styled.div`
+  font-size: 14px;
+  color: #292933;
+  font-weight: 500;
+  margin-right: 10px;
 `

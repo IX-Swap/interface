@@ -27,7 +27,7 @@ export const Offers = () => {
   const { config } = useWhitelabelState()
   const [filter, setFilter] = React.useState<FilterConfig>(() => {
     const newFilter = localStorage.getItem('offersFilter')
-    return newFilter ? (JSON.parse(newFilter) as FilterConfig) : { search: '', industry: [], stage: [], type: [] }
+    return newFilter ? (JSON.parse(newFilter) as FilterConfig) : { search: '', industry: [], stage: [], type: [], network: [] }
   })
   const isIxSwap = config?.isIxSwap ?? false
 

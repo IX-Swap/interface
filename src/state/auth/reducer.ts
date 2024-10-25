@@ -41,7 +41,6 @@ export default createReducer<AuthState>(initialState, (builder) =>
     .addCase(postLogin.rejected, (state, { payload: { errorMessage, account } }) => {
       state.loginLoading = false
       state.loginError = errorMessage
-      state.token[account] = ''
-      state.refreshToken[account] = ''
+      state.token = {}
     })
 )

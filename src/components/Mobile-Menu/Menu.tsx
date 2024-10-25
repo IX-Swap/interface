@@ -129,7 +129,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         <MenuList style={!cookies.annoucementsSeen ? { marginTop: 130 } : {}}>
           {isIxSwap && isWhitelisted ? (
             <>
-              <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
+              <ExternalListItem target="_self" href={'https://info.ixswap.io/home'}>
                 <Trans>Charts</Trans>
               </ExternalListItem>
 
@@ -139,7 +139,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
 
           {isIxSwap ? (
             <>
-              <ExternalListItem disabled={!isApproved} target="_blank" href={bridgeUrl}>
+              <ExternalListItem target="_blank" href={bridgeUrl}>
                 <Trans>Bridge</Trans>
               </ExternalListItem>
 
@@ -379,7 +379,7 @@ const ModalContainer = styled.div`
   width: 100vw;
   height: 100%;
   // backdrop-filter: blur(36px);
-  z-index: 9999;
+  z-index: 99999;
   padding: 32px 18px;
   display: none;
   background: ${({ theme }) => theme.bg0};
@@ -408,6 +408,7 @@ const CloseContainer = styled.div`
   border: 1px solid #e6e6ff;
   border-radius: 6px;
   padding: 10px 12px;
+  cursor: pointer;
 `
 
 const MenuList = styled.div`

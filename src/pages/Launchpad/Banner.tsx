@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import _get from 'lodash/get'
 import LearnMoreIcon from 'assets/launchpad/icons/learn-more.png'
@@ -8,14 +8,35 @@ import { isMobile } from 'react-device-detect'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { ReactComponent as LPBackground } from 'assets/images/LPBackground.svg'
 import { ReactComponent as LaunchpadHeader } from 'assets/images/lauchpadHeader.svg'
+import apiService from 'services/apiService'
 
 export const Banner = () => {
   const { config } = useWhitelabelState()
+
+  const [totalRaised, setTotalRaised] = useState(0)
+
   const launchpadBannerTitle = config?.launchpadBannerTitle
     ? config.launchpadBannerTitle
     : 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunities'
   const launchpadBannerInfoRedirectTitle = config?.launchpadBannerInfoRedirectTitle ?? 'How does IXS Launchpad work?'
   const launchpadBannerInfoRedirectUrl = config?.launchpadBannerInfoRedirectUrl ?? 'https://www.ixswap.io/academy'
+
+  const getTotalRaised = async () => {
+    try {
+      const { status, data } = await apiService.get('/offers/total-raised-funds')
+
+      if (status === 200) {
+        setTotalRaised(_get(data, 'totalRaisedFunds', 0))
+      }
+    } catch (error) {
+      console.error('Error getting total raised', error)
+      setTotalRaised(0)
+    }
+  }
+
+  useEffect(() => {
+    getTotalRaised()
+  }, [])
 
   return (
     <BannerContainer>
@@ -31,13 +52,20 @@ export const Banner = () => {
           <BannerTitle dangerouslySetInnerHTML={{ __html: launchpadBannerTitle }} />
         )}
 
-        <BannerInfoRedirect>
-          <BannerInfoRedirectImage src={LearnMoreIcon} />
-          <BannerInfoRedirectLabel>
-            <BannerInfoRedirectTitle>{launchpadBannerInfoRedirectTitle}</BannerInfoRedirectTitle>
-            <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl}>Learn more</BannerInfoRedirectSubtitle>
-          </BannerInfoRedirectLabel>
-        </BannerInfoRedirect>
+        <TotalRaisedWrap>
+          <div>
+            <TotalRaisedLabel>Total Raised</TotalRaisedLabel>
+            <TotalRaisedValue>${totalRaised.toLocaleString('en-US')}</TotalRaisedValue>
+          </div>
+
+          <BannerInfoRedirect>
+            <BannerInfoRedirectImage src={LearnMoreIcon} />
+            <BannerInfoRedirectLabel>
+              <BannerInfoRedirectTitle>{launchpadBannerInfoRedirectTitle}</BannerInfoRedirectTitle>
+              <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl}>Learn more</BannerInfoRedirectSubtitle>
+            </BannerInfoRedirectLabel>
+          </BannerInfoRedirect>
+        </TotalRaisedWrap>
       </BannerContent>
       <BannerImage>
         <LPBackgroundWrapper>
@@ -171,5 +199,41 @@ const LaunchpadHeaderWrapper = styled.div`
   right: 70px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     display: none;
+  }
+`
+
+const TotalRaisedWrap = styled.div`
+  display: flex;
+  gap: 42px;
+  align-items: center;
+  z-index: 2;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+`
+
+const TotalRaisedLabel = styled.div`
+  color: #8f8fb2;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.28px;
+`
+
+const TotalRaisedValue = styled.div`
+  color: #292933;
+  font-family: Inter;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.96px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 24px;
   }
 `

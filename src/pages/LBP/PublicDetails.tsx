@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import Portal from '@reach/portal'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 import Background from 'components/LBP/PublicDetails/Background'
 import MiddleSection from 'components/LBP/PublicDetails/MiddleSection'
@@ -11,7 +11,7 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Loader } from 'components/AdminTransactionsTable'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
-import { checkWrongChain } from 'chains'
+import { checkWrongChain } from 'utils/chains'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import NotFound from './NotFound'
@@ -80,7 +80,9 @@ const PublicDetails: React.FC = () => {
           ) : (
             <>
               <Background currentSharePriceUSD={statsData?.currentSharePriceUSD} lbpData={lbpData} />
-              <MiddleSection statsData={statsData} lbpData={lbpData} />
+
+              {account ? <MiddleSection statsData={statsData} lbpData={lbpData} /> : null}
+
               {isWrongChain ? (
                 <Portal>
                   <CenteredFixed width="100vw" height="100vh">

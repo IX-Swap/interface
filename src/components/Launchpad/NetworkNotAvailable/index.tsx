@@ -1,46 +1,26 @@
 import React from 'react'
-import { Trans } from '@lingui/macro'
-import { switchToNetwork } from 'hooks/switchToNetwork'
+import { useSwitchChain } from 'wagmi'
+
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
-import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 interface Props {
   expectChain: SupportedChainId | null
 }
 
 export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
-  const { chainId, provider } = useWeb3React()
-  const { config } = useWhitelabelState()
+  const { chainId } = useWeb3React()
+  const { chains, switchChain } = useSwitchChain()
 
   const changeNetwork = (targetChain: number) => {
-    if (chainId !== targetChain && provider && provider?.provider?.isMetaMask) {
-      switchToNetwork({ provider, chainId: targetChain })
+    if (chainId !== targetChain) {
+      switchChain({ chainId: targetChain })
     }
   }
 
-  const sourceChains = ENV_SUPPORTED_TGE_CHAINS || [SupportedChainId.BASE]
-  const chains = sourceChains.filter((chain) => chain === expectChain)
-  const chainsNames = chains.map((chain) => CHAIN_INFO[chain].chainName)
-  const network = CHAIN_INFO[expectChain || SupportedChainId.BASE].chainName
-
-  if (!provider?.provider?.isMetaMask) {
-    return (
-      <Container>
-        <Title>
-          <Trans>{`${config?.name || 'IX Swap'} is not available`}</Trans>
-          <br /> <Trans>{`on this Blockchain network`}</Trans>
-        </Title>
-        <Info>
-          <Trans>
-            Please switch the network to {network} in your wallet.
-          </Trans>
-        </Info>
-      </Container>
-    )
-  }
+  const chainsFiltered = chains.filter((chain) => chain.id === expectChain)
+  const chainsNames = chainsFiltered.map((chain) => chain.name)
 
   return (
     <Container>
@@ -50,11 +30,11 @@ export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
         Blockchain Network
       </Title>
       <Info>Available Blockchain Networks:</Info>
-      <NetworksRow elements={chains.length} style={chains.length === 1 ? { marginLeft: 70, marginRight: 70 } : {}}>
-        {chains.map((chain) => (
-          <NetworkCard onClick={() => changeNetwork(chain)} key={chain}>
-            <img src={CHAIN_INFO[chain].logoUrl} alt="icon" />
-            {CHAIN_INFO[chain].chainName}
+      <NetworksRow elements={chainsFiltered.length} style={chainsFiltered.length === 1 ? { marginLeft: 70, marginRight: 70 } : {}}>
+        {chainsFiltered.map((chain) => (
+          <NetworkCard onClick={() => changeNetwork(chain.id)} key={chain.id}>
+            <img src={CHAIN_INFO[chain.id].logoUrl} alt="icon" />
+            {chain.name}
           </NetworkCard>
         ))}
       </NetworksRow>

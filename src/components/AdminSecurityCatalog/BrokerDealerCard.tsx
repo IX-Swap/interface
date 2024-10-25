@@ -1,14 +1,17 @@
 import React, { FC } from 'react'
-import { Box } from 'rebass'
+import { Box, Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
+import _get from 'lodash/get'
 
 import { ExternalLink, TYPE } from 'theme'
 import { ReactComponent as Passed } from 'assets/images/newRightCheck.svg'
 import { ReactComponent as NonTradable } from 'assets/images/newReject.svg'
 import { ReactComponent as EditIcon } from 'assets/images/NewEditButton.svg'
+import { ReactComponent as PendingIcon } from 'assets/images/newPending.svg'
 
-import { CardHeader, EditButton, EditWrapper, TokensList, TokensListItem } from './styleds'
+import { CardHeader, EditWrapper, TokensList, TokensListItem } from './styleds'
+import { statusIconMapping } from './mock'
 export interface BrokerDealerFakeProps {
   issuer: any
   handleEditClick: (editIssuer: any) => void
@@ -47,7 +50,7 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
 
       {tokens?.length > 0 && (
         <TokensList>
-          {tokens.map(({ ticker, url, token: wrappedToken, featured, logo }: any, index: number) => (
+          {tokens.map(({ ticker, url, token: wrappedToken, logo, active }: any, index: number) => (
             <TokensListItem key={`token-list-${index}`}>
               <Box>
                 <img style={{ borderRadius: '24px' }} width="30px" height="31px" src={logo?.public} />
@@ -61,6 +64,16 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
                   {url}
                 </ExternalLink>
               </TYPE.small>
+
+              <Flex style={{ gap: 4 }}>
+                {_get(wrappedToken, 'status', '') ? (
+                  <img src={statusIconMapping[_get(wrappedToken, 'status', '')]} alt="status" />
+                ) : null}
+                <TYPE.title10 fontSize="13px" marginLeft="10px" style={{ textTransform: 'capitalize' }}>
+                  {_get(wrappedToken, 'status', '-')}
+                </TYPE.title10>
+              </Flex>
+
               <div>
                 {wrappedToken ? (
                   <>
@@ -78,7 +91,13 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
                   </>
                 )}
               </div>
-              <TYPE.title10 fontSize="13px">{featured ? 'Featured' : '-'}</TYPE.title10>
+
+              <Flex style={{ gap: 4 }}>
+                {active ? <Passed /> : <NonTradable />}
+                <TYPE.title10 fontSize="13px" marginLeft="10px">
+                  {active ? 'Active' : 'Not Active'}
+                </TYPE.title10>
+              </Flex>
             </TokensListItem>
           ))}
         </TokensList>

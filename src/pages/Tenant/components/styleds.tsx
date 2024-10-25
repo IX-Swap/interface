@@ -52,7 +52,7 @@ export const FormWrapper = styled.div`
   margin-top: 24px;
 
   & > * + * {
-    margin-top: 24px;
+    margin-top: 10px;
   }
 `
 

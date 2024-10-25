@@ -1,6 +1,7 @@
 import ethereumLogoUrl from 'assets/images/ethereum-logo.png'
 import polygonLogoUrl from 'assets/images/polygon.svg'
 import baseLogoUrl from 'assets/images/base.svg'
+import { InterfaceChainId } from 'types/chains'
 
 export enum SupportedChainId {
   MAINNET = 1,
@@ -152,3 +153,5 @@ export const CHAIN_INFO: ChainInfoMap = {
     blockExplorerUrls: ['https://sepolia.basescan.org/'],
   },
 }
+
+export type SupportedInterfaceChainId = InterfaceChainId

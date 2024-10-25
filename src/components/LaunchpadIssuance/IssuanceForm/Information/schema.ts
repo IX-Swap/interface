@@ -108,7 +108,7 @@ export const createValidationSchema = (account: string | null | undefined) => {
       .string()
       .nullable()
       .min(STRING_MIN, getLongerThanOrEqual('Token symbol', STRING_MIN))
-      .max(11, 'Token symbol should be at most 11 charachters')
+      .max(10, 'Token ticker should not be longer than 10 characters')
       .matches(/^[a-zA-Z0-9_-]+$/, 'Only letters, numbers, underscores, and hyphens are allowed')
       .required(REQUIRED),
     tokenPrice: yup

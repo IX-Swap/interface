@@ -13,6 +13,8 @@ import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
 import { text12, text54, text59 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
 import { isMobile } from 'react-device-detect'
+import { useWeb3React } from 'hooks/useWeb3React'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 const getStageLabel = (stage: OfferStatus) => {
   return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
@@ -23,6 +25,8 @@ export const Pinned: React.FC = () => {
   const getPinnedOffer = useGetPinnedOffer()
   const checkKYC = useCheckKYC()
   const theme = useTheme()
+  const { account } = useWeb3React()
+  const { openConnectModal } = useConnectModal()
 
   const [offer, setOffer] = React.useState<Offer>()
   const [loading, setLoading] = React.useState(true)
@@ -36,16 +40,20 @@ export const Pinned: React.FC = () => {
       .finally(() => setLoading(false))
   }, [])
   const onClick = React.useCallback(() => {
-    const canOpen = checkKYC(
-      offer?.allowOnlyAccredited || false,
-      !!offer?.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status)
-    )
-    if (canOpen) {
-      history.push(`/offers/${offer?.id ?? ''}`)
+    if (account) {
+      const canOpen = checkKYC(
+        offer?.allowOnlyAccredited || false,
+        !!offer?.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status)
+      )
+      if (canOpen) {
+        history.push(`/offers/${offer?.id ?? ''}`)
+      } else {
+        toggleKYCModal()
+      }
     } else {
-      toggleKYCModal()
+      openConnectModal && openConnectModal()
     }
-  }, [checkKYC, toggleKYCModal, offer])
+  }, [account, checkKYC, toggleKYCModal, offer])
 
   const stage = React.useMemo(() => {
     if (offer?.hardCapReached) {
@@ -70,7 +78,7 @@ export const Pinned: React.FC = () => {
   if (!offer) {
     return (
       <>
-        <PinnedWrapper style={{margin: '0px', padding: '0px'}}>
+        <PinnedWrapper style={{ margin: '0px', padding: '0px' }}>
           <PinnedContainer></PinnedContainer>
         </PinnedWrapper>
       </>
