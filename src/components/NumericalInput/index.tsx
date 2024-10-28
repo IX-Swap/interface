@@ -65,7 +65,7 @@ export const Input = React.memo(function InnerInput({
         }
       }}
       // Universal input options
-      inputMode="decimal"
+      inputMode="none"
       autoComplete="off"
       autoCorrect="off"
       // Text-specific options
