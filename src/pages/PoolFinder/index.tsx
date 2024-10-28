@@ -27,11 +27,7 @@ import { Fields } from './enums'
 import { PrerequisiteMessage } from './PrerequisiteMessage'
 import { SelectCurrency } from './SelectCurrency'
 import { FoundPoolWrapper, PoolStateColumn, SelectCurrencyContainer } from './styleds'
-// import { Header } from 'pages/Launchpad/Header'
-import { useSetHideHeader } from 'state/application/hooks'
-import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
-import Portal from '@reach/portal'
-import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import Header from 'components/Header'
 import { isMobile } from 'react-device-detect'
 
@@ -107,7 +103,11 @@ export default function PoolFinder() {
     <>
       <Header />
       {/* <AddLiduidityContainer> */}
-      <AppBody page="liquidity" {...bodyProps}>
+      <AppBody
+        page="liquidity"
+        {...bodyProps}
+        blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}
+      >
         <FindPoolTabs origin={query.get('origin') ?? '/pool'} />
         <AutoColumn>
           <SelectCurrencyContainer gap="md">

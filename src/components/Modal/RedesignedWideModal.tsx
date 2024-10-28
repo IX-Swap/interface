@@ -104,7 +104,6 @@ const StyledDialogContent = styled(
     ${({ theme, scrollable }) => theme.mediaWidth.upToMedium`
       width: 100vw;
       ${scrollable && 'min-height: auto !important;'}
-      background: rgba(26, 18, 58, 0);
       backdrop-filter: opacity(0);
     `}
     ${({ theme, mobileMaxHeight }) => theme.mediaWidth.upToSmall`

@@ -104,6 +104,10 @@ export function getContractInstance({
   }
 }
 
+export function getTokenContract(tokenAddress: string, library: Web3Provider) {
+  return getContract(tokenAddress, ERC20_ABI, library)
+}
+
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
 }

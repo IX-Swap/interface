@@ -2,7 +2,6 @@ import React, { FC, useEffect, useMemo, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { Flex } from 'rebass'
 import { useHistory, useParams } from 'react-router-dom'
-import { capitalize } from '@material-ui/core'
 import { useActiveWeb3React } from 'hooks/web3'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import { Loadable } from 'components/LoaderHover'
@@ -88,7 +87,7 @@ const EditPayoutEventPage: FC = () => {
         title: payout.title,
         token,
         tokenAmount: payout.tokenAmount,
-        type: capitalize(payout.type),
+        type: payout.type,
         otherType: payout.otherType,
         payoutContractAddress: payout.payoutContractAddress,
         blockNumber: payout.blockNumber,

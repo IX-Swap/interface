@@ -21,9 +21,9 @@ const FooterConfig: React.FC<FooterConfigProps> = ({ formik }) => {
               value={formik.values.termLink}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.termLink)}
+              error={formik.touched.termLink && Boolean(formik.errors.termLink)}
             />
-            {Boolean(formik.errors.termLink) ? <ErrorText>{formik.errors.termLink}</ErrorText> : null}
+            {formik.touched.termLink && formik.errors.termLink ? <ErrorText>{formik.errors.termLink}</ErrorText> : null}
           </div>
 
           <div>
@@ -35,9 +35,11 @@ const FooterConfig: React.FC<FooterConfigProps> = ({ formik }) => {
               value={formik.values.policyLink}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.policyLink)}
+              error={formik.touched.policyLink && Boolean(formik.errors.policyLink)}
             />
-            {Boolean(formik.errors.policyLink) ? <ErrorText>{formik.errors.policyLink}</ErrorText> : null}
+            {formik.touched.policyLink && formik.errors.policyLink ? (
+              <ErrorText>{formik.errors.policyLink}</ErrorText>
+            ) : null}
           </div>
         </TwoColumnGrid>
 
@@ -54,9 +56,9 @@ const FooterConfig: React.FC<FooterConfigProps> = ({ formik }) => {
             value={formik.values.block1}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={Boolean(formik.errors.block1)}
+            error={formik.touched.block1 && Boolean(formik.errors.block1)}
           />
-          {Boolean(formik.errors.block1) ? <ErrorText>{formik.errors.block1}</ErrorText> : null}
+          {formik.touched.block1 && formik.errors.block1 ? <ErrorText>{formik.errors.block1}</ErrorText> : null}
         </div>
         <div>
           <Label htmlFor="block2">
@@ -71,8 +73,9 @@ const FooterConfig: React.FC<FooterConfigProps> = ({ formik }) => {
             value={formik.values.block2}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={Boolean(formik.errors.block2)}
+            error={formik.touched.block2 && Boolean(formik.errors.block2)}
           />
+          {formik.touched.block2 && formik.errors.block2 ? <ErrorText>{formik.errors.block2}</ErrorText> : null}
         </div>
         <div>
           <Label htmlFor="block3">
@@ -87,8 +90,9 @@ const FooterConfig: React.FC<FooterConfigProps> = ({ formik }) => {
             value={formik.values.block3}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={Boolean(formik.errors.block3)}
+            error={formik.touched.block3 && Boolean(formik.errors.block3)}
           />
+          {formik.touched.block3 && formik.errors.block3 ? <ErrorText>{formik.errors.block3}</ErrorText> : null}
         </div>
       </FormWrapper>
     </>

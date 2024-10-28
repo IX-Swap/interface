@@ -144,8 +144,6 @@ export const SeparatorDark = styled.div`
 `
 
 export const UnapprovedTokenWrapper = styled.div`
-  // ${gradientBorder}
-  // border: 1px solid #e6e6ff;
   padding-left: 24px;
   padding-right: 21px;
   align-items: center;

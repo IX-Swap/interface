@@ -71,7 +71,7 @@ export const IXSBalanceModal = () => {
                     <Trans>Balance of {IXSCurrency?.symbol}</Trans>
                     {IXSCurrency && isCanRegisterToken && (
                       <AddToMetamask onClick={() => !addIXS.success && addIXS.addToken()}>
-                        {!addIXS.success ? <Trans>Add {IXSCurrency.symbol}</Trans> : null}
+                        {!addIXS.success ? <Trans>Add to Metamask</Trans> : null}
                       </AddToMetamask>
                     )}
                   </RowBetween>
@@ -91,12 +91,9 @@ export const IXSBalanceModal = () => {
                     <RowBetween style={{ gap: '5px' }}>
                       <Trans>Balance of IXGov</Trans>
                       {IXSCurrency && isCanRegisterToken && (
-                        <TextGradient
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => !addIXSGov.success && addIXSGov.addToken()}
-                        >
-                          {!addIXSGov.success ? <Trans>Add {IXSCurrency.symbol}</Trans> : null}
-                        </TextGradient>
+                        <AddToMetamask onClick={() => !addIXSGov.success && addIXSGov.addToken()}>
+                          {!addIXSGov.success ? <Trans>Add to Metamask</Trans> : null}
+                        </AddToMetamask>
                       )}
                     </RowBetween>
                   }

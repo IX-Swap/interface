@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useMemo } from 'react'
+import React, { ReactNode } from 'react'
 import { WagmiProvider } from 'wagmi'
 import { QueryClientProvider } from '@tanstack/react-query'
 
@@ -9,11 +9,7 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
 
 export default function Web3Provider({ children }: { children: ReactNode }) {
-  const wagmiConfig = useMemo(() => createWagmiConfig(), [])
-
-  useEffect(() => {
-    indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
-  }, [])
+  const wagmiConfig = createWagmiConfig()
 
   return (
     <WagmiProvider config={wagmiConfig}>

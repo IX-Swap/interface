@@ -3,10 +3,26 @@ import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import * as wallets from '@rainbow-me/rainbowkit/wallets'
 
 import { CHAINS, transports } from './constants'
+import walletConnectConfig from 'walletConnectConfig.json'
+import { tryClearIndexedDB } from 'utils'
 
-const WALLET_CONNECT_PROJECT_ID = <string>process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID
+type WalletConnectConfig = {
+  [key: string]: string
+}
+
+function getWalletConnectProjectId() {
+  const key = window.location.host as keyof WalletConnectConfig
+  const configs: WalletConnectConfig = walletConnectConfig || {}
+
+  const projectId = configs[key]
+  return projectId
+}
 
 export function createWagmiConfig() {
+  tryClearIndexedDB()
+
+  const WALLET_CONNECT_PROJECT_ID = getWalletConnectProjectId()
+
   const config = getDefaultConfig({
     appName: 'IXSwap',
     projectId: WALLET_CONNECT_PROJECT_ID,

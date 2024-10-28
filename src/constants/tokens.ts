@@ -128,3 +128,8 @@ export const TOKEN_SHORTHANDS: { [shorthand: string]: Record<any, any> } = {
     [SupportedChainId.BASE]: IXS[8453],
   },
 }
+
+export enum TokenStatusEnum {
+  APPROVED = 'approved',
+  WRAPPING = 'wrapping',
+}

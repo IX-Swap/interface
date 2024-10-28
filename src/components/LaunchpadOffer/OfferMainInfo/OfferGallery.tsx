@@ -72,7 +72,8 @@ export const OfferGallery: React.FC<Props> = (props) => {
 
           {gallery.length > 3 && (
             <GalleryCarouselExtra onClick={() => openViewer()}>
-              <TYPE.blue fontWeight={'800'}>+{gallery.length - 3}</TYPE.blue></GalleryCarouselExtra>
+              <TYPE.blue fontWeight={'800'}>+{gallery.length - 3}</TYPE.blue>
+            </GalleryCarouselExtra>
           )}
         </GalleryCarouselExtraMediaList>
       </GalleryCarousel>
@@ -89,18 +90,13 @@ export const OfferGallery: React.FC<Props> = (props) => {
           <SocialMediaLinks>
             <SocialMediaLink href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
             {props.offer?.whitepaperUrl && <SocialMediaLink href={props.offer.whitepaperUrl}>Dataroom</SocialMediaLink>}
-            {socialMedialLinks?.slice(0, 3)?.map((link, idx) => (
-              <SocialMediaLink key={`link-${idx}`} href={link.url}>
-                {link.logo}
-              </SocialMediaLink>
-            ))}
-          </SocialMediaLinks>
-          <SocialMediaLinks style={{ marginTop: '20px', justifyContent: 'flex-start' }}>
-            {socialMedialLinks?.slice(3)?.map((link, idx) => (
-              <SocialMediaLink key={`link-${idx}`} href={link.url}>
-                {link.logo}
-              </SocialMediaLink>
-            ))}
+            {socialMedialLinks
+              .filter((link) => link.url)
+              ?.map((link, idx) => (
+                <SocialMediaLink key={`link-${idx}`} href={link.url}>
+                  {link.logo}
+                </SocialMediaLink>
+              ))}
           </SocialMediaLinks>
         </>
       ) : (
@@ -214,7 +210,7 @@ const GalleryCarouselExtra = styled.div`
 
 const SocialMediaLinks = styled.div`
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
   gap: 1.5rem;

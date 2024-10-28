@@ -21,9 +21,9 @@ const KYCLinks: React.FC<KYCLinksProps> = ({ formik }) => {
               value={formik.values.kycSuccessRedirectUrl}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.kycSuccessRedirectUrl)}
+              error={formik.touched.kycSuccessRedirectUrl && Boolean(formik.errors.kycSuccessRedirectUrl)}
             />
-            {Boolean(formik.errors.kycSuccessRedirectUrl) ? (
+            {formik.touched.kycSuccessRedirectUrl && formik.errors.kycSuccessRedirectUrl ? (
               <ErrorText>{formik.errors.kycSuccessRedirectUrl}</ErrorText>
             ) : null}
           </div>
@@ -37,9 +37,9 @@ const KYCLinks: React.FC<KYCLinksProps> = ({ formik }) => {
               value={formik.values.kycCancelRedirectUrl}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.kycCancelRedirectUrl)}
+              error={formik.touched.kycCancelRedirectUrl && Boolean(formik.errors.kycCancelRedirectUrl)}
             />
-            {Boolean(formik.errors.kycCancelRedirectUrl) ? (
+            {formik.touched.kycCancelRedirectUrl && formik.errors.kycCancelRedirectUrl ? (
               <ErrorText>{formik.errors.kycCancelRedirectUrl}</ErrorText>
             ) : null}
           </div>

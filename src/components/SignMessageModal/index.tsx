@@ -5,13 +5,15 @@ import signIcon from 'assets/svg/signIcon.svg'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { useLogout } from 'state/auth/hooks'
+import { useWalletState } from 'state/wallet/hooks'
 
 interface SignMessageModalProps {
   loading?: boolean
   authenticate: () => void
 }
 
-const SignMessageModal: React.FC<SignMessageModalProps> = ({ loading, authenticate }) => {
+const SignMessageModal: React.FC<SignMessageModalProps> = ({ authenticate }) => {
+  const { isSignLoading } = useWalletState()
   const { disconnectWallet } = useLogout()
 
   return (
@@ -30,10 +32,10 @@ const SignMessageModal: React.FC<SignMessageModalProps> = ({ loading, authentica
         </OutlineButton>
         <FilledButton
           style={{ boxShadow: '0px 16px 16px 0px #6666FF21', width: '100%' }}
-          disabled={loading}
+          disabled={isSignLoading}
           onClick={() => authenticate()}
         >
-          {loading ? <LoaderThin size={12} /> : null} Sign Message
+          {isSignLoading ? <LoaderThin size={12} /> : null} Sign Message
         </FilledButton>
       </ActionWrapper>
     </Container>

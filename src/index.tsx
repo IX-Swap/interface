@@ -7,13 +7,13 @@ import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { LocalizationProvider } from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
-import 'react-phone-input-2/lib/bootstrap.css'
 import { PersistGate } from 'redux-persist/integration/react'
+import * as Sentry from '@sentry/react'
+import { ToastContainer } from 'react-toastify'
 
 import { MuiThemeProvider } from './theme/muiTheme'
 import Blocklist from './components/Blocklist'
 import { LanguageProvider } from './i18n'
-import './index.css'
 import App from './pages/App'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import store, { persistor } from './state'
@@ -24,8 +24,11 @@ import SecTokenListUpdater from './state/secTokens/updater'
 import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
-import * as Sentry from '@sentry/react'
 import Web3Provider from 'components/Web3Provider'
+
+import 'react-toastify/dist/ReactToastify.css'
+import 'react-phone-input-2/lib/bootstrap.css'
+import './index.css'
 
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
@@ -44,8 +47,8 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
     customBrowserType: !isMobile
       ? 'desktop'
       : 'web3' in window || 'ethereum' in window
-        ? 'mobileWeb3'
-        : 'mobileRegular',
+      ? 'mobileWeb3'
+      : 'mobileRegular',
   })
 } else {
   ReactGA.initialize('test', { testMode: true, debug: true })
@@ -97,6 +100,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
                         <App />
+                        <ToastContainer />
                       </CookiesProvider>
                     </LocalizationProvider>
                   </MuiThemeProvider>

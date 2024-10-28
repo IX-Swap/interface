@@ -4,7 +4,7 @@ import { useDeleteTokenPopupToggle, useModalOpen } from 'state/application/hooks
 import { ApplicationModal } from 'state/application/actions'
 import { TYPE } from 'theme'
 import { RowBetween } from 'components/Row'
-import { ButtonGradientBorder, ButtonIXSGradient, PinnedContentButton } from 'components/Button'
+import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import { SmallModal, SmallModalWrapper } from './styleds'
 import { deleteToken, useFetchIssuers } from 'state/secCatalog/hooks'
 
@@ -33,14 +33,14 @@ export const DeleteTokenConfirmationPopup: FC<Props> = ({ tokenId }: Props) => {
         <TYPE.title3 marginBottom="32px" textAlign="center">
           Are you sure?
         </TYPE.title3>
-        <RowBetween>
-          <PinnedContentButton onClick={handleDeleteToken} style={{ width: 150 }}>
+        <div style={{ display: 'flex', gap: 24 }}>
+          <PinnedContentButton onClick={handleDeleteToken} style={{ flex: 1, height: 48, fontSize: 14 }}>
             Yes
           </PinnedContentButton>
-          <ButtonGradientBorder onClick={toggle} style={{ width: 150 }}>
+          <ButtonOutlined style={{ flex: 1, background: '#fff', fontSize: 14, height: 48 }} onClick={toggle}>
             Cancel
-          </ButtonGradientBorder>
-        </RowBetween>
+          </ButtonOutlined>
+        </div>
       </SmallModalWrapper>
     </SmallModal>
   )

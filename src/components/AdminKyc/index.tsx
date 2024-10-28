@@ -28,6 +28,11 @@ import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { useOnChangeOrder } from 'state/launchpad/hooks'
 import { AbstractOrder, KycOrderConfig } from 'state/launchpad/types'
 import { OrderType } from 'state/launchpad/types'
+
+import { ReactComponent as EyeSvg } from 'assets/svg/eye.svg'
+import { ReactComponent as BellSvg } from 'assets/svg/bell.svg'
+import ReminderModal from './ReminderModal'
+
 const headerCells = [
   { key: 'ethAddress', label: 'Wallet address', show: false },
   { key: 'fullName', label: 'Name', show: false },
@@ -35,7 +40,7 @@ const headerCells = [
   { key: 'Tenant', label: 'Tenant', show: false },
   { key: 'createdAt', label: 'Date of request', show: true },
   { key: 'status', label: 'KYC Status', show: false },
-  { key: 'completedKycOfProvider', label: 'Review Status', show: false },
+  { key: 'completedKycOfProvider', label: 'Provider Status', show: false },
   { key: 'updatedAt', label: 'Updated At', show: true },
   { key: 'authorizer', label: 'Authorizer', show: true },
 ]
@@ -45,6 +50,8 @@ interface RowProps {
 }
 
 const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
+  const [isOpenReminderModal, setIsOpenReminderModal] = useState(false)
+
   const {
     id,
     user: { ethAddress, whiteLabelConfig },
@@ -95,9 +102,22 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       </div>
       <div style={{ fontSize: '12px' }}>{dayjs(updatedAt).format('MMM D, YYYY HH:mm')}</div>
       <div style={{ fontSize: '12px' }}>{approverName}</div>
-      <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
-        Review
-      </TYPE.main2>
+
+      <div style={{ display: 'flex', gap: '16px', justifyContent: 'flex-end' }}>
+        {status === KYCStatuses.DRAFT ? (
+          <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={() => setIsOpenReminderModal(true)}>
+            <BellSvg />
+          </TYPE.main2>
+        ) : null}
+
+        <TYPE.main2 style={{ cursor: 'pointer' }} color="#6666FF" onClick={openModal}>
+          <EyeSvg />
+        </TYPE.main2>
+      </div>
+
+      {status === KYCStatuses.DRAFT ? (
+        <ReminderModal item={item} isOpen={isOpenReminderModal} onClose={() => setIsOpenReminderModal(false)} />
+      ) : null}
     </StyledBodyRow>
   )
 }

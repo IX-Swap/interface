@@ -15,7 +15,6 @@ export const BRIDGE_URL = process.env.REACT_APP_BRIDGE_URL || 'https://bridge.ix
 export const ALCHEMY_KEY = process.env.REACT_APP_ALCHEMY_KEY || ''
 export const ENV = process.env.REACT_APP_ENV || 'development'
 export const TELEGRAM_VERIFICATION_BOT = process.env.REACT_APP_TELEGRAM_VERIFICATION_BOT || ''
-export const WALLET_CONNECT_PROJECT_ID = process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID || ''
 export const IXSALE_ADDRESS_BASE = process.env.REACT_APP_IXSALE_ADDRESS_BASE || ''
 export const IXSALE_ADDRESS_BASE_SEPOLIA = process.env.REACT_APP_IXSALE_ADDRESS_BASE_SEPOLIA || ''
 export const IXSALE_ADDRESS_POLYGON = process.env.REACT_APP_IXSALE_ADDRESS_POLYGON || ''

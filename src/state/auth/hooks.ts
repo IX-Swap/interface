@@ -9,8 +9,11 @@ import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
 import { logout, postLogin } from './actions'
-import { useDisconnect } from 'wagmi'
+import { useConnections, useDisconnect } from 'wagmi'
 import { setWalletState } from 'state/wallet'
+import { useHistory } from 'react-router-dom'
+import { routes } from 'utils/routes'
+import { tryClearIndexedDB } from 'utils'
 
 export enum LOGIN_STATUS {
   NO_ACCOUNT,
@@ -55,18 +58,18 @@ export function useUserisLoggedIn() {
 }
 
 export function useLogout() {
-  const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const { disconnect } = useDisconnect()
+  const connections = useConnections()
 
   const disconnectWallet = () => {
-    disconnect()
-    dispatch(postLogin.rejected({ errorMessage: 'User logged out', account: '' }))
-    dispatch(logout(account))
-    dispatch(setWalletState({ isConnected: false, walletName: '' }))
+    connections.forEach(({ connector }) => {
+      disconnect({ connector })
+    })
+    dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
-    indexedDB?.deleteDatabase('WALLET_CONNECT_V2_INDEXED_DB')
+    tryClearIndexedDB()
   }
 
   return { disconnectWallet }

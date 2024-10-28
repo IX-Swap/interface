@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, ReactNode, RefObject, useCallback, useEffect, useRef } from 'react'
 import { Currency, Token } from '@ixswap1/sdk-core'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import useTheme from 'hooks/useTheme'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { VariableSizeList } from 'react-window'
@@ -9,7 +9,6 @@ import styled from 'styled-components/macro'
 
 import { ModalContentWrapper } from 'theme/components'
 
-import { ReactComponent as Edit } from '../../assets/images/edit-circle.svg'
 import { ButtonText, CloseIcon, TYPE } from '../../theme'
 import Column from '../Column'
 import Row, { RowBetween, RowFixed } from '../Row'
@@ -19,15 +18,12 @@ import { PaddedColumn40, SearchInput } from './styleds'
 import { useCurrencySearch } from './useCurrencySearch'
 import searchIcon from '../../assets/images/searchNew.svg'
 import { isMobile } from 'react-device-detect'
+import { TokenStatusEnum } from 'constants/tokens'
 
 const Footer = styled.div`
   width: 100%;
   border-radius: 20px;
   padding: 20px;
-  // border-top-left-radius: 0;
-  // border-top-right-radius: 0;
-  // background: ${({ theme }) => theme.bgG7};
-  // border-top: 1px solid ${({ theme }) => theme.bg2};
 `
 const Title = styled.span`
   font-weight: 600;
@@ -77,6 +73,13 @@ export function CurrencySearch({
     filteredInactiveTokens,
     filteredSortedTokensWithETH,
   } = useCurrencySearch({ listRef })
+  const filteredSortedApprovedTokensWithETH = (filteredSortedTokensWithETH as any[]).filter(token => {
+    if (token?.tokenInfo?.status) {
+      return token.tokenInfo.status === TokenStatusEnum.APPROVED
+    }
+
+    return true
+  })
 
   useEffect(() => {
     if (isOpen) setSearchQuery('')
@@ -148,7 +151,7 @@ export function CurrencySearch({
             {({ height }) => (
               <CurrencyList
                 height={height}
-                currencies={filteredSortedTokensWithETH}
+                currencies={filteredSortedApprovedTokensWithETH}
                 otherListTokens={filteredInactiveTokens}
                 onCurrencySelect={handleCurrencySelect}
                 otherCurrency={otherSelectedCurrency}

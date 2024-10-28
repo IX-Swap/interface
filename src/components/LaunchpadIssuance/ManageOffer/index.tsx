@@ -18,6 +18,7 @@ import { useAddPopup, useShowError } from 'state/application/hooks'
 import { text53 } from 'components/LaunchpadMisc/typography'
 import { SMART_CONTRACT_STRATEGIES } from '../types'
 import { ConfirmClaimModal } from './ConfirmClaimModal'
+import { useRole } from 'state/user/hooks'
 
 interface ManagedOfferPageParams {
   issuanceId: string
@@ -28,6 +29,7 @@ export const ManageOffer = () => {
   const history = useHistory()
   const goBack = useCallback(() => history.push('/issuance'), [history])
   const addPopup = useAddPopup()
+  const { isAdmin } = useRole()
 
   const [isOpenWhitelisting, setOpenWhitelisting] = useState(false)
   const [stage, setStage] = useState<OfferStatus>()
@@ -50,7 +52,10 @@ export const ManageOffer = () => {
   const triggerIssuerClaim = useTriggerIssuerClaim(offer?.id)
 
   const showWhitelisting = useMemo(() => stage === OfferStatus.whitelist, [stage])
-  const canWithdraw = useMemo(() => isOwner && usersClaimed && !issuerClaimed, [isOwner, usersClaimed, issuerClaimed])
+  const canWithdraw = useMemo(
+    () => (isAdmin || isOwner) && usersClaimed && !issuerClaimed,
+    [isOwner, usersClaimed, issuerClaimed, isAdmin]
+  )
   const claimBtnTitle = useMemo(() => {
     if (!softCapReached || (status && status !== OfferStatus.claim)) {
       return ''
@@ -146,7 +151,7 @@ export const ManageOffer = () => {
     timeframe: offer.timeframe,
   }
   return (
-    <Wrapper style={{padding: '0px 8%'}}>
+    <Wrapper style={{ padding: '0px 8%' }}>
       <ConfirmClaimModal
         isOpen={confirmClaim}
         onClose={() => setConfirmClaim(false)}

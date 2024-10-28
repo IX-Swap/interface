@@ -18,7 +18,7 @@ export const BodyContainer = styled.div`
   row-gap: 8px;
 `
 
-const gridTemplateColumns = '70px 2fr 1fr 1fr 1fr 2fr 140px minmax(100px,10%)';
+const gridTemplateColumns = '70px 2fr 1fr 1fr 1fr 2fr minmax(100px,160px) 80px';
 const minWidth = '900px';
 
 export const StyledHeaderRow = styled(HeaderRow)`
@@ -44,6 +44,10 @@ export const StyledBodyRow = styled(BodyRow)`
   > div {
     padding: 24px 10px;
     gap: 4px;
+  }
+
+  > div:last-child {
+    padding: 0;
   }
 
   button {

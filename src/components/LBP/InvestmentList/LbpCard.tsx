@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import Portal from '@reach/portal'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { text1, text4, text58 } from 'components/LaunchpadMisc/typography'
 import { LbpStatus } from '../types'
@@ -27,6 +28,8 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   const theme = useTheme()
   const { isChangeRequested, isPending, isDraft, isRejected, isNotSubmitted } = useKyc()
   const { account } = useWeb3React()
+  const { openConnectModal } = useConnectModal()
+
   const [showDetails] = React.useState(false)
   const [color, setColor] = React.useState('')
   const [showKYCModal, setShowKYCModal] = React.useState(false)
@@ -40,10 +43,14 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
   )
 
   const onClick = React.useCallback(() => {
-    if (!account || isChangeRequested || isPending || isDraft || isRejected || isNotSubmitted) {
-      toggleKYCModal()
+    if (account) {
+      if (isChangeRequested || isPending || isDraft || isRejected || isNotSubmitted) {
+        toggleKYCModal()
+      } else {
+        history.push(`/lbp/${lbp.id}`)
+      }
     } else {
-      history.push(`/lbp/${lbp.id}`)
+      openConnectModal && openConnectModal()
     }
   }, [!account, isChangeRequested, isPending, isDraft, isRejected, history, lbp.id])
 
@@ -217,7 +224,6 @@ const LbpCardDescription = styled.div`
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 `
-
 
 const InvestButton = styled.button`
   display: flex;

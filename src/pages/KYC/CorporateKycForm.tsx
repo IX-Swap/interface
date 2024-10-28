@@ -84,8 +84,6 @@ export default function CorporateKycForm() {
         const transformedData = corporateTransformApiData(data)
         const formData = { ...transformedData }
 
-        console.log('form', form)
-        console.log('formData', formData)
         form?.current?.setValues(formData)
 
         if (kyc?.status === KYCStatuses.DRAFT) {

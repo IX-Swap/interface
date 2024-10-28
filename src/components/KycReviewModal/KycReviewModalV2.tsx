@@ -111,11 +111,11 @@ export const KycReviewModalV2 = ({ isOpen, onClose, data }: Props) => {
           <Body>
             <IndividualFormV2 data={data} />
             <ActionContainer>
-              <RejectButton disabled={data.status !== 'pending'} onClick={reject}>
+              <RejectButton onClick={reject}>
                 Reject
                 {data.status === 'pending' && <KycRejectIcon style={{ marginLeft: '10px' }} />}
               </RejectButton>
-              <ApproveButton disabled={data.status !== 'pending'} onClick={approve}>
+              <ApproveButton onClick={approve}>
                 Approve
                 {data.status === 'pending' && <KycApproveIcon style={{ marginLeft: '10px' }} />}
               </ApproveButton>

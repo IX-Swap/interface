@@ -45,6 +45,7 @@ export interface UploaderProps {
   name?: string
   onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   isPayoutpage?: boolean
+  showLabel?: boolean
 }
 
 interface SelectProps {
@@ -482,12 +483,14 @@ export const UploaderLBP: FC<UploaderProps> = ({
   optional = false,
   tooltipText,
   isDisabled = false,
+  showLabel = true,
   name,
 }: UploaderProps) => {
   return (
     <Box>
       <Flex>
-        <Label label={title} required={required} tooltipText={tooltipText} />
+        {showLabel ? <Label label={title} required={required} tooltipText={tooltipText} /> : null}
+
         {optional && (
           <>
             <TYPE.body1 marginLeft="4px" marginRight="8px" color={`text9`}>

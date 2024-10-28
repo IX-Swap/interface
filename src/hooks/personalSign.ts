@@ -1,40 +1,38 @@
-import { Web3Provider } from '@ethersproject/providers'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import store from 'state'
 import { setPendingSign } from 'state/application/actions'
+import { useSignMessage as useSignMessageWagmi, useSwitchChain } from 'wagmi'
 
-interface Props {
-  hash?: string
-  account?: string | null
-  provider?: Web3Provider
+interface SignMessageProps {
+  hash: string
+  account: string
 }
-export const sign = async ({ hash, account, provider }: Props) => {
-  if (provider && hash && account) {
-    try {
-      store.dispatch(setPendingSign(true))
 
-      const result = await provider.send('personal_sign', [hash, account])
+// Custom hook for signing messages
+export const useSignMessage = () => {
+  const { signMessageAsync } = useSignMessageWagmi()
+  const { switchChain } = useSwitchChain()
 
-      store.dispatch(setPendingSign(false))
+  const signMessage = async ({ hash, account }: SignMessageProps): Promise<string | null> => {
+    if (hash && account) {
+      try {
+        store.dispatch(setPendingSign(true))
+        const result = await signMessageAsync({ message: { raw: hash as any } })
+        store.dispatch(setPendingSign(false))
+        return result
+      } catch (e: any) {
+        store.dispatch(setPendingSign(false))
+        console.error({ ERROR: e })
+        if (e?.name === 'ConnectorChainMismatchError') {
+          const defaultChain = ENV_SUPPORTED_TGE_CHAINS[0]
+          await switchChain({ chainId: defaultChain })
+        }
 
-      return result
-    } catch (e) {
-      store.dispatch(setPendingSign(false))
-
-      console.error({ ERROR: e })
+        return null
+      }
     }
+    return null
   }
-  return null
-}
 
-// const getLoginMessage = ({ hash, account }: { hash: string; account: string }) => {
-//   return `
-// Welcome to IX Swap!\n
-// You need to sign in in order to access features related to security tokens.\n You only need to click "Sign".\n No username or password is needed. This request will not cost any gas fees.\n By signing in you agree to IXSwap’s Terms and Conditions (https://ixswap.io/terms-and-conditions/),
-// and acknowledge that you have read and understood the IX Swap Privacy Policy (https://ixswap.io/privacy-policy/).\n
-// Wallet Address:
-// \t${account} \n
-// Hash:
-// \t${hash} \n
-// To the moon!
-// `
-// }
+  return { signMessage }
+}

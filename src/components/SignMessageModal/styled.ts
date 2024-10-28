@@ -10,8 +10,9 @@ export const Container = styled.div`
   background: ${({ theme }) => theme.bg25};
   padding: 48px 32px;
   text-align: center;
-  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    padding: 16px;
+
+  @media (max-width: 430px) {
+    min-width: 350px;
   }
 
   display: flex;
@@ -56,9 +57,9 @@ export const Desc = styled.p`
 `
 
 export const ActionWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 32px;
 `

@@ -56,7 +56,7 @@ export const Documents = ({ documents, title, kycKey }: Props) => {
           </Title>
         )}
         <Table>
-          <Body documents={documents} kycKey={kycKey}/>
+          <Body documents={documents} kycKey={kycKey} />
         </Table>
       </Container>
     )
@@ -64,21 +64,20 @@ export const Documents = ({ documents, title, kycKey }: Props) => {
 }
 
 const Row = ({
-  file: {
-    type,
-    id,
-    asset: { name, public: publicUrl, mimeType },
-    createdAt,
-  },
+  file: { type, id, asset, createdAt },
   isFirstRow,
   setPreviewModal,
-  kycKey
+  kycKey,
 }: {
   file: Document
   isFirstRow: boolean
   setPreviewModal: (value: boolean) => void
   kycKey: any
 }) => {
+  const name = asset?.name || ''
+  const publicUrl = asset?.public || ''
+  const mimeType = asset?.mimeType || ''
+
   const openModal = () => {
     setPreviewModal(true)
   }
@@ -93,7 +92,11 @@ const Row = ({
   }
 
   return (
-    <BodyRow key={id} gridColNo={kycKey === 'corporate' ? 2 : 3} onClick={() => handleRowClick(publicUrl, name, mimeType)}>
+    <BodyRow
+      key={id}
+      gridColNo={kycKey === 'corporate' ? 2 : 3}
+      onClick={() => handleRowClick(publicUrl, name, mimeType)}
+    >
       <div>
         {isFirstRow && (
           <ColumnHeader>
@@ -105,11 +108,18 @@ const Row = ({
           <EllipsisText>{name}</EllipsisText>
         </FileName>
       </div>
-      {kycKey === 'individual' && <div>
-        {isFirstRow && <ColumnHeader> <Trans>{headerCells[1]}</Trans></ColumnHeader>}
+      {kycKey === 'individual' && (
+        <div>
+          {isFirstRow && (
+            <ColumnHeader>
+              {' '}
+              <Trans>{headerCells[1]}</Trans>
+            </ColumnHeader>
+          )}
 
-        <Trans>{formattedTypes[type] || type}</Trans>
-      </div>}
+          <Trans>{formattedTypes[type] || type}</Trans>
+        </div>
+      )}
       <div>
         {isFirstRow && (
           <ColumnHeader>
@@ -143,7 +153,15 @@ const Body = ({ documents, kycKey }: Omit<Props, 'title'>) => {
       )}
 
       {documents?.map((item, index) => {
-        return <Row key={`kyc-table-${item.id}`} file={item} isFirstRow={!index} setPreviewModal={setPreviewModal} kycKey={kycKey}/>
+        return (
+          <Row
+            key={`kyc-table-${item.id}`}
+            file={item}
+            isFirstRow={!index}
+            setPreviewModal={setPreviewModal}
+            kycKey={kycKey}
+          />
+        )
       })}
     </>
   )

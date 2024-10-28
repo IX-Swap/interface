@@ -15,6 +15,7 @@ import { NotAvailablePage } from 'components/NotAvailablePage'
 import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 import { Line } from 'components/Line'
 import { CreatePayoutModal } from 'pages/PayoutItem/CreatePayoutModal/CreatePayoutModal'
+import { Container } from '@mui/material'
 
 export type TokenManagerTab =
   | 'my-tokens'
@@ -43,23 +44,23 @@ const renderTab = (selectedTab: TokenManagerTab | string) => {
   switch (selectedTab) {
     case 'my-tokens':
       return (
-        <StyledBodyWrapper style={{ marginTop: '20px' }}>
+        <Container style={{ marginTop: '20px' }}>
           <TmMyTokens />
-        </StyledBodyWrapper>
+        </Container>
       )
 
     case 'payout-events':
       return (
-        <StyledTableWrapper style={{ marginTop: '2px' }}>
+        <Container style={{ marginTop: '2px' }}>
           <TmPayoutEvents />
-        </StyledTableWrapper>
+        </Container>
       )
 
     case 'payout-history':
       return (
-        <StyledTableWrapper style={{ marginTop: '2px' }}>
+        <Container style={{ marginTop: '2px' }}>
           <TmPayoutHistory />
-        </StyledTableWrapper>
+        </Container>
       )
 
     default:
@@ -135,18 +136,9 @@ const TokenManager = () => {
   )
 }
 
-export const StyledHeaderWrapper = styled.div`
-  padding: 0 200px;
+export const StyledHeaderWrapper = styled(Container)`
   background-color: #ffffff;
   margin: 0 auto;
-  width: 100%;
-`
-
-export const StyledTableWrapper = styled.div`
-  padding: 0 150px;
-  background-color: #ffffff;
-  margin: 0 auto;
-  width: 100%;
 `
 
 export const StyledBodyWrapper = styled.div`

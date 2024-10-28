@@ -20,7 +20,7 @@ import Design from './components/Design'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import apiService from 'services/apiService'
 import { whitelabel } from 'services/apiUrls'
-import { checkExistInPageGroup, generateTenantSubmitPayload, getActiveRoutes, setFieldsValue } from './helpers'
+import { generateTenantSubmitPayload, setFieldsValue } from './helpers'
 import Token from './components/Token'
 import { useSecTokenState } from 'state/secTokens/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
@@ -62,8 +62,6 @@ const TenantForm = () => {
   const formik = useFormik<TenantDetails>({
     initialValues,
     validationSchema: !id ? validationSchema : null,
-    validateOnChange: false,
-    validateOnBlur: false,
     onSubmit: async (values: any) => {
       try {
         const payload = generateTenantSubmitPayload(values)

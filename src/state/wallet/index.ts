@@ -12,6 +12,8 @@ export interface WalletState {
   walletName: string
   isOpenDepositCard: boolean
   depositView: DepositView
+  secTokensBalance: any
+  isSignLoading: boolean
 }
 
 const initialState: WalletState = {
@@ -19,6 +21,8 @@ const initialState: WalletState = {
   walletName: '',
   isOpenDepositCard: false,
   depositView: DepositView.CREATE_REQUEST,
+  secTokensBalance: {},
+  isSignLoading: false,
 }
 
 const walletSlice = createSlice({

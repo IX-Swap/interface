@@ -231,7 +231,6 @@ export default function CurrencyInputPanel({
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const theme = useTheme()
-  const [inputId, setInputID] = useState(id?.split('-')[1])
 
   const decimals = (currency?.tokenInfo?.decimals ?? 18) > 4 ? 4 : currency?.tokenInfo?.decimals ?? 18
 

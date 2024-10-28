@@ -8,8 +8,6 @@ interface DesignProps {
 }
 
 const Design: React.FC<DesignProps> = ({ formik }) => {
-  // Implement the component logic here
-
   return (
     <>
       <h1 className="title">Design</h1>
@@ -21,7 +19,8 @@ const Design: React.FC<DesignProps> = ({ formik }) => {
             id="logoUrl"
             description="PNG, JPG, and SVG files only."
             setFieldValue={formik.setFieldValue}
-            error={formik.errors.logoUrl}
+            setFieldTouched={formik.setFieldTouched}
+            error={formik.touched.logoUrl && formik.errors.logoUrl}
             value={formik.values.logoUrl}
           />
         </div>
@@ -32,7 +31,8 @@ const Design: React.FC<DesignProps> = ({ formik }) => {
             id="faviconUrl"
             description="Upload a 48 x 48 pixel ICO, PNG, GIF, or JPG to display in browser tabs."
             setFieldValue={formik.setFieldValue}
-            error={formik.errors.faviconUrl}
+            setFieldTouched={formik.setFieldTouched}
+            error={formik.touched.faviconUrl && formik.errors.faviconUrl}
             value={formik.values.faviconUrl}
           />
         </div>
@@ -43,7 +43,8 @@ const Design: React.FC<DesignProps> = ({ formik }) => {
             title="Banner Image"
             description="PNG, JPG, and SVG files only."
             setFieldValue={formik.setFieldValue}
-            error={formik.errors.bannerImageUrl}
+            setFieldTouched={formik.setFieldTouched}
+            error={formik.touched.bannerImageUrl && formik.errors.bannerImageUrl}
             value={formik.values.bannerImageUrl}
           />
         </div>

@@ -5,10 +5,10 @@ import { ButtonText } from 'components/Button'
 import { MEDIA_WIDTHS } from 'theme'
 import Box from '@mui/material/Box'
 
-export const Container = styled(Box)`
+export const Container = styled(Box) <{ $gridTemplateColumns: string }>`
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: ${({ $gridTemplateColumns }) => $gridTemplateColumns};
   gap: 16px;
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     grid-template-columns: 1fr;

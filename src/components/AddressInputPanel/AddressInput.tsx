@@ -4,16 +4,27 @@ import { ContainerRow, Input, InputContainer, InputPanel } from './styleds'
 
 interface Props {
   id?: string
-  // the typed string value
+  name?: string
   value: string
   error: boolean
   onChange?: ((arg: string) => void) | null
   placeholder?: string
   disabled?: boolean
   rightItem?: JSX.Element
+  fontSize?: number
 }
 
-export const AddressInput = ({ id, value, error, placeholder, disabled, rightItem, onChange = null }: Props) => {
+export const AddressInput = ({
+  id,
+  name,
+  value,
+  error,
+  placeholder,
+  disabled,
+  rightItem,
+  onChange = null,
+  fontSize = 16,
+}: Props) => {
   const handleInput = useCallback(
     (event: { target: { value: string } }) => {
       const input = event.target.value
@@ -23,11 +34,13 @@ export const AddressInput = ({ id, value, error, placeholder, disabled, rightIte
     [onChange]
   )
   return (
-    <InputPanel id={id}>
+    <InputPanel>
       <ContainerRow>
         <InputContainer>
           <Input
-            style={{ textOverflow: 'unset', fontSize: 16 }}
+            name={name}
+            id={id}
+            style={{ textOverflow: 'unset', fontSize }}
             className="recipient-address-input"
             type="text"
             autoComplete="off"

@@ -73,6 +73,7 @@ export const TmPayoutHistory = () => {
           searchPlaceholder="Search by Wallet or ID"
           onFiltersChange={handleFilters}
           forManager
+          isClearable
         />
       </Container>
       <Line style={{ width: 'webkit-fill-available' }} />

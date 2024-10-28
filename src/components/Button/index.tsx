@@ -36,7 +36,6 @@ const Base = styled(RebassButton)<
   align-items: center;
   cursor: pointer;
   position: relative;
-  z-index: 1;
   &:disabled {
     cursor: auto;
     pointer-events: none;
@@ -287,7 +286,6 @@ export const PinnedContentButton = styled(Base)`
   font-family: ${(props) => props.theme.launchpad.font};
   border-radius: 6px;
   text-align: center;
-  padding: 12px, 16px, 12px, 16px;
   border: unset;
   cursor: pointer;
   width: 100%;
