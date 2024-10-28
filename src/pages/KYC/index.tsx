@@ -2,7 +2,7 @@ import React, { useCallback, FC, useEffect, useState, useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex, Text } from 'rebass'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
 import _get from 'lodash/get'
@@ -98,6 +98,7 @@ const KYC = () => {
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
   const [referralCode, setReferralCode] = useState<string | null>('')
   const getMe = useGetMe()
+  const history = useHistory()
 
   const supportEmail = _get(config, 'supportEmail', 'c@ixswap.io')
 
@@ -160,7 +161,7 @@ const KYC = () => {
               sx={{ gap: '1rem', marginTop: '40px' }}
             >
               <Flex
-                // onClick={() => openModal('individual')}
+                onClick={() => history.push(getKYCLink())}
                 sx={{
                   border: '1px solid #E6E6FF',
                   marginBottom: isMobile ? '32px' : '0px',
@@ -183,11 +184,9 @@ const KYC = () => {
                   >
                     <Trans>Pass KYC as Individual</Trans>
                   </Text>
-                  <Link style={{ textDecoration: 'none' }} to={getKYCLink()}>
-                    <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
-                      <Trans>Start Now</Trans>
-                    </Text>
-                  </Link>
+                  <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
+                    <Trans>Start Now</Trans>
+                  </Text>
                 </>
               </Flex>
 

@@ -20,7 +20,12 @@ export const RaisedFund: React.FC<Props> = ({ totalInvestment, symbol }) => {
         <LabelCalculating>Calculating</LabelCalculating>
       ) : (
         <LogoTokenWrapper>
-          <Label>{totalInvestment}</Label>
+          <Label>
+            {totalInvestment.toLocaleString('en-US', {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })}
+          </Label>
           <Logo srcs={[getTokenIcon(symbol)]} alt="logo" style={{ width: '24px', height: '24px' }} />
         </LogoTokenWrapper>
       )}
