@@ -107,7 +107,7 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
   }
 
   const onSelectNetwork = (value: any) => {
-    formik.setFieldTouched('tokenAddress', true)
+    formik.setFieldTouched('network', true)
     formik.setFieldValue('network', value)
   }
 
@@ -116,6 +116,7 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
     toggle()
   }
 
+  console.log('formik', formik)
   return (
     <>
       <RedesignedWideModal isOpen={isOpen} onDismiss={() => {}}>
