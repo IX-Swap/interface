@@ -1,3 +1,4 @@
+import { CHAINS } from 'components/Web3Provider/constants'
 import { useAccount } from 'hooks/useAccount'
 import { useEthersProvider } from 'hooks/useEthersProvider'
 import { useMemo } from 'react'
@@ -5,7 +6,7 @@ import { ChainId } from 'types/chains'
 
 export function useWeb3React() {
   const account = useAccount()
-  const chainId = account?.chain?.id ?? ChainId.Mainnet
+  const chainId = account?.chain?.id ?? CHAINS[0].id as ChainId
   const provider = useEthersProvider({ chainId })
 
   return useMemo(
