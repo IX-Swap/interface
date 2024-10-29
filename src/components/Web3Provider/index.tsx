@@ -7,7 +7,6 @@ import { ConnectionProvider } from 'hooks/useConnect'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 
 import '@rainbow-me/rainbowkit/styles.css'
-import { CHAINS } from './constants'
 
 export default function Web3Provider({ children }: { children: ReactNode }) {
   const wagmiConfig = createWagmiConfig()
@@ -15,7 +14,7 @@ export default function Web3Provider({ children }: { children: ReactNode }) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider initialChain={CHAINS[0]}>
+        <RainbowKitProvider>
           <ConnectionProvider>{children}</ConnectionProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
