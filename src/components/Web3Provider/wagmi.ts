@@ -1,8 +1,9 @@
 import { QueryClient } from '@tanstack/react-query'
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import * as wallets from '@rainbow-me/rainbowkit/wallets'
+import { baseSepolia, base, polygon, polygonAmoy, Chain, mainnet } from 'wagmi/chains'
 
-import {  CHAINS, transports } from './constants'
+import {  transports } from './constants'
 import walletConnectConfig from 'walletConnectConfig.json'
 import { tryClearIndexedDB } from 'utils'
 
@@ -45,7 +46,7 @@ export function createWagmiConfig() {
         ],
       },
     ],
-    chains: CHAINS,
+    chains: [baseSepolia, polygonAmoy, mainnet, base, polygon],
     transports,
   })
 
