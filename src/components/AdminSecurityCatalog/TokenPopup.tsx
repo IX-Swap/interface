@@ -116,7 +116,6 @@ export const TokenPopup: FC<Props> = ({ setTokenData, setIsOpenTokenForm }) => {
     toggle()
   }
 
-  console.log('formik', formik)
   return (
     <>
       <RedesignedWideModal isOpen={isOpen} onDismiss={() => {}}>
