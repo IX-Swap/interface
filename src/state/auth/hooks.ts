@@ -8,11 +8,9 @@ import { metamask } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
-import { logout, postLogin } from './actions'
-import { useConnections, useDisconnect } from 'wagmi'
+import {  postLogin } from './actions'
+import {  useDisconnect } from 'wagmi'
 import { setWalletState } from 'state/wallet'
-import { useHistory } from 'react-router-dom'
-import { routes } from 'utils/routes'
 import { tryClearIndexedDB } from 'utils'
 
 export enum LOGIN_STATUS {
@@ -60,12 +58,9 @@ export function useUserisLoggedIn() {
 export function useLogout() {
   const dispatch = useDispatch<AppDispatch>()
   const { disconnect } = useDisconnect()
-  const connections = useConnections()
 
   const disconnectWallet = () => {
-    connections.forEach(({ connector }) => {
-      disconnect({ connector })
-    })
+    disconnect();
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())
