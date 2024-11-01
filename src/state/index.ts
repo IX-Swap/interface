@@ -38,6 +38,7 @@ import tokenManager from './token-manager/reducer'
 import issuance from './issuance/reducer'
 import wallet from './wallet'
 import global from './global'
+import jumpTask from './jumpTask'
 
 const PERSISTED_KEYS: string[] = ['auth', 'lists', 'swap', 'swapHelper', 'transactions', 'user', 'wallet', 'global']
 
@@ -82,6 +83,7 @@ const combinedReducer = combineReducers({
   issuance,
   wallet,
   global,
+  jumpTask
 })
 
 const rootReducer = (state: any, action: any) => {
