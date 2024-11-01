@@ -3,8 +3,6 @@ import { Redirect, RouteComponentProps, Route, Switch, useLocation } from 'react
 import styled from 'styled-components/macro'
 import { useDispatch } from 'react-redux'
 
-import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-
 import { useActiveWeb3React } from 'hooks/web3'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 
@@ -45,8 +43,11 @@ import { blockedCountries } from 'constants/countriesList'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import SignMessageModal from 'components/SignMessageModal'
+import useQuery from 'hooks/useQuery'
+import { setJumpTaskState } from 'state/jumpTask'
+import { CHAINS } from 'components/Web3Provider/constants'
 
-const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
 
 const initSafary = () => {
@@ -76,23 +77,15 @@ export default function App() {
   const { kyc } = useKYCState()
   const { isConnected, walletName } = useWalletState()
   const { authenticate } = useAccount()
-
   const isWhitelisted = isUserWhitelisted({ account, chainId })
+  const query = useQuery()
+
   const [countryCode, setCountryCode] = useState()
 
+  const transactionId = query.get('transaction_id')
+  const affUnique1 = query.get('aff_unique1')
   const isIxSwap = whiteLabelConfig?.isIxSwap ?? false
   const routeFinalConfig = isAdmin ? routeConfigs : routeConfigs.filter((route) => !lbpAdminRoutes.includes(route.path))
-  useEffect(() => {
-    const getCountryCode = async () => {
-      const response = await axios.get(ip.getIPAddress)
-      setCountryCode(response?.data?.countryCode)
-    }
-    getCountryCode()
-  }, [])
-
-  useEffect(() => {
-    initSafary()
-  }, [])
 
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
@@ -124,6 +117,15 @@ export default function App() {
     [config]
   )
 
+  const clearLocaleStorage = () => {
+    const cleared = localStorage.getItem('clearedLS-28-04-22')
+    if (!cleared) {
+      dispatch(clearStore())
+      localStorage.clear()
+      localStorage.setItem('clearedLS-28-04-22', 'true')
+    }
+  }
+
   const defaultPage = useMemo(() => {
     const defaultPath = [routes.launchpad, routes.issuance].includes(pathname) ? routes.launchpad : routes.kyc
     if (isAllowed({ path: routes.kyc }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
@@ -141,37 +143,6 @@ export default function App() {
 
     return (config?.pages ?? []).length > 0 ? config?.pages[0] : defaultPath
   }, [kyc, account, chainId, isWhitelisted, chains])
-
-  useEffect(() => {
-    getMyKyc()
-  }, [account, token, getMyKyc])
-
-  const clearLocaleStorage = () => {
-    const cleared = localStorage.getItem('clearedLS-28-04-22')
-    if (!cleared) {
-      dispatch(clearStore())
-      localStorage.clear()
-      localStorage.setItem('clearedLS-28-04-22', 'true')
-    }
-  }
-
-  useEffect(() => {
-    if (token) {
-      getMe()
-    }
-  }, [token, getMe])
-
-  useEffect(() => {
-    clearLocaleStorage()
-  }, [isConnected, walletName])
-
-  useEffect(() => {
-    getWitelabelConfig()
-  }, [])
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
 
   const isAdminKyc = pathname.includes('admin')
   const isWhiteBackground =
@@ -223,6 +194,49 @@ export default function App() {
     },
     [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
   )
+
+  useEffect(() => {
+    getMyKyc()
+  }, [account, token, getMyKyc])
+
+  useEffect(() => {
+    if (token) {
+      getMe()
+    }
+  }, [token, getMe])
+
+  useEffect(() => {
+    clearLocaleStorage()
+  }, [isConnected, walletName])
+
+  useEffect(() => {
+    getWitelabelConfig()
+  }, [])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  useEffect(() => {
+    const getCountryCode = async () => {
+      const response = await axios.get(ip.getIPAddress)
+      setCountryCode(response?.data?.countryCode)
+    }
+    getCountryCode()
+  }, [])
+
+  useEffect(() => {
+    initSafary()
+  }, [])
+
+  useEffect(() => {
+    if (transactionId) {
+      dispatch(setJumpTaskState({ transactionId }))
+    }
+    if (affUnique1) {
+      dispatch(setJumpTaskState({ affUnique1 }))
+    }
+  }, [transactionId, affUnique1])
 
   if (!config) {
     return <LoadingIndicator isLoading />

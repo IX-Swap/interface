@@ -33,6 +33,7 @@ import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
 import { OfferStageStatus, getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { WalletEvent, INVEST_FLOW_EVENTS } from 'utils/event-logs'
+import usePostbackJumpTask from 'hooks/usePostbackJumpTask'
 
 interface Props {
   offer: Offer
@@ -64,6 +65,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
   const invest = useInvest(id)
   const getPresaleProof = usePresaleProof(id)
   const getInvestPublicSaleStructData = useInvestPublicSaleStructData(id)
+  const { callPostbackEndpoint } = usePostbackJumpTask()
 
   const [amount, setAmount] = useState<string>()
 
@@ -219,6 +221,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
 
             submitState.setSuccess()
             openSuccess()
+            callPostbackEndpoint()
           }
         }
       }
