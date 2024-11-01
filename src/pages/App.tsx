@@ -3,8 +3,6 @@ import { Redirect, RouteComponentProps, Route, Switch, useLocation } from 'react
 import styled from 'styled-components/macro'
 import { useDispatch } from 'react-redux'
 
-import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-
 import { useActiveWeb3React } from 'hooks/web3'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 
@@ -47,8 +45,9 @@ import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import SignMessageModal from 'components/SignMessageModal'
 import useQuery from 'hooks/useQuery'
 import { setJumpTaskState } from 'state/jumpTask'
+import { CHAINS } from 'components/Web3Provider/constants'
 
-const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
 
 const initSafary = () => {
