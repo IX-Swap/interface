@@ -26,6 +26,7 @@ export const useSignMessage = () => {
         if (e?.name === 'ConnectorChainMismatchError') {
           const defaultChain = ENV_SUPPORTED_TGE_CHAINS[0]
           await switchChain({ chainId: defaultChain })
+          window.location.reload()
         }
 
         return null

@@ -1,9 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
+import Portal from '@reach/portal'
+
 import { Offers } from 'components/Launchpad/Offers'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Banner } from './Banner'
 import { MEDIA_WIDTHS } from 'theme'
+import { CHAINS } from 'components/Web3Provider/constants'
+import { useActiveWeb3React } from 'hooks/web3'
+import { NotAvailablePage } from 'components/NotAvailablePage'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 
 const BannerWrapper = styled.div`
   background-color: #ffffff;
@@ -23,9 +29,11 @@ const BannerWrapper = styled.div`
 
 export default function Launchpad() {
   const { config } = useWhitelabelState()
+  const { chainId, account } = useActiveWeb3React()
 
   const isIxSwap = config?.isIxSwap ?? false
   const enableLaunchpadBanner = config?.enableLaunchpadBanner ?? false
+  const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 
   return (
     <>
@@ -35,6 +43,14 @@ export default function Launchpad() {
         </BannerWrapper>
       ) : null}
       <Offers />
+
+      {account && !chains.includes(chainId) ? (
+        <Portal>
+          <CenteredFixed width="100vw" height="100vh">
+            <NotAvailablePage />
+          </CenteredFixed>
+        </Portal>
+      ) : null}
     </>
   )
 }

@@ -12,10 +12,11 @@ import { ChevronElement } from 'components/ChevronElement'
 import { MEDIA_WIDTHS } from 'theme'
 import { ReactComponent as Checked } from 'assets/images/checked-blue.svg'
 import { VioletCard } from '../Card'
+import { CHAINS } from 'components/Web3Provider/constants'
 
 export const NetworkCard = () => {
   const { chainId, provider, account } = useActiveWeb3React()
-  const { chains, isPending, switchChain } = useSwitchChain()
+  const { isPending, switchChain } = useSwitchChain()
 
   const node = useRef<HTMLDivElement>()
   const open = useModalOpen(ApplicationModal.NETWORK_SELECTOR)
@@ -57,7 +58,7 @@ export const NetworkCard = () => {
 
           {open && (
             <FlyoutMenu>
-              {chains.map((chain: any) => {
+              {CHAINS.map((chain: any) => {
                 const active = chainId === chain.id
                 const targetChain = chain.id
                 return (

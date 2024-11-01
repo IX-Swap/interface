@@ -23,7 +23,7 @@ export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
     }
 
     if (paid || feePrice) {
-      return `${+feePrice} ${native.symbol}`
+      return `${formatAmount(+feePrice)} ${native.symbol}`
     }
     return `~${estimatedPrice ? `${formatAmount(estimatedPrice)} ${native.symbol}` : ' - '}`
   }, [estimatedPrice, feePrice, paid])
