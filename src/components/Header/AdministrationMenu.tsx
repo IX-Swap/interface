@@ -149,7 +149,6 @@ const navLinkStyles = css`
   color: ${({ theme }) => theme.text12};
   width: fit-content;
   word-break: break-word;
-  // opacity: 0.4;
   border-radius: 45px;
   font-weight: 500;
   &.${activeClassName} {
@@ -164,15 +163,6 @@ const navLinkStyles = css`
       color: #b8b8cc;
     }
   }
-  @media (max-width: 1500px) {
-    font-size: 14px;
-  }
-  @media (max-width: 1300px) {
-    font-size: 16px;
-  }
-  @media (max-width: 1250px) {
-    font-size: 15px;
-  }
 `
 const Container = styled.div`
   margin-right: 8px;
@@ -181,7 +171,7 @@ const Container = styled.div`
 `
 
 const subMenuLinkStyle = css`
-  font-size: 14px;
+  font-size: 13px;
   line-height: 24px;
   font-weight: 500;
   text-transform: none;
@@ -203,7 +193,7 @@ const SubMenuExternalLink = styled(ExternalLink)<{ disabled?: boolean }>`
 `
 
 const SelectorControls = styled.div`
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   border: 1px solid #e6e6ff;
   padding: 13px 12px;
@@ -229,7 +219,7 @@ const SelectorControls = styled.div`
 `
 
 const Link = styled.div`
-  font-size: 14px;
+  font-size: 13px;
   line-height: 24px;
   font-weight: 500;
   text-transform: none;
