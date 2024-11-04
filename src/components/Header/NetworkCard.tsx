@@ -118,7 +118,7 @@ const FlyoutMenu = styled.div`
   border: 1px solid #e6e6ff;
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+  font-size: 13px;
   overflow: auto;
   padding: 6px 24px;
   position: absolute;
@@ -185,7 +185,7 @@ const StyledBox = styled.div`
 `
 
 const PendingText = styled.div`
-  font-size: 14px;
+  font-size: 13px;
   color: #292933;
   font-weight: 500;
   margin-right: 10px;
