@@ -1,12 +1,11 @@
 import React, { useMemo, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { darken } from 'polished'
-import { NavLink, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import Column from 'components/Column'
-import { ExternalLink } from 'theme'
+import { ExternalLink, MEDIA_WIDTHS } from 'theme'
 import { checkAllowed, routes } from 'utils/routes'
-import Popover from 'components/Popover'
 import useToggle from 'hooks/useToggle'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { ChevronElement } from 'components/ChevronElement'
@@ -42,9 +41,7 @@ const Content: React.FC<ContentProps> = ({ open, toggle }) => {
   }
 
   return (
-    <PopoverContent
-      onClick={(e: any) => (e ? e.stopPropagation() : null)}
-    >
+    <PopoverContent>
       {isAdmin ? (
         <Column>
           <SubMenuExternalLink href={BRIDGE_ADMIN_URL}>Bridge</SubMenuExternalLink>
@@ -79,7 +76,7 @@ const Content: React.FC<ContentProps> = ({ open, toggle }) => {
 
       {isAdmin ? (
         <Column>
-          <Link onClick={() => navigateTo(routes.tenant)}>SaaS configuraiton</Link>
+          <Link onClick={() => navigateTo(routes.tenant)}>SaaS configuration</Link>
         </Column>
       ) : null}
     </PopoverContent>
@@ -92,21 +89,17 @@ const AdministrationMenu = () => {
   useOnClickOutside(node, open ? toggle : undefined)
 
   return (
-    <Container ref={node as any}>
-      <Popover
-        hideArrow
-        show={open}
-        content={<Content open={open} toggle={toggle} />}
-        placement={'bottom-start'}
-        offset={[0, 8]}
-      >
-        <StyledBox onClick={toggle}>
+    <StyledBox>
+      <Container ref={node as any}>
+        <SelectorControls onClick={toggle}>
           <img src={starIcon} alt="star" />
           <div>Administration</div>
           <ChevronElement showMore={open} setShowMore={() => {}} />
-        </StyledBox>
-      </Popover>
-    </Container>
+        </SelectorControls>
+
+        {open && <Content open={open} toggle={toggle} />}
+      </Container>
+    </StyledBox>
   )
 }
 
@@ -120,6 +113,23 @@ const PopoverContent = styled.div`
   padding: 24px;
   border-radius: 8px;
   border: solid 1px #e6e6ff;
+  position: absolute;
+  top: 70px;
+  width: 250px;
+  z-index: 99;
+  background: white;
+  @media screen and (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    top: 54px;
+    left: 0;
+  }
+  @media screen and (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
+    right: 70px;
+    left: 0;
+  }
+  @media screen and (max-width: 400px) {
+    right: 30px;
+    left: 0;
+  }
 `
 
 export const disabledStyle = css`
@@ -139,7 +149,6 @@ const navLinkStyles = css`
   color: ${({ theme }) => theme.text12};
   width: fit-content;
   word-break: break-word;
-  // opacity: 0.4;
   border-radius: 45px;
   font-weight: 500;
   &.${activeClassName} {
@@ -154,15 +163,6 @@ const navLinkStyles = css`
       color: #b8b8cc;
     }
   }
-  @media (max-width: 1500px) {
-    font-size: 14px;
-  }
-  @media (max-width: 1300px) {
-    font-size: 16px;
-  }
-  @media (max-width: 1250px) {
-    font-size: 15px;
-  }
 `
 const Container = styled.div`
   margin-right: 8px;
@@ -171,7 +171,7 @@ const Container = styled.div`
 `
 
 const subMenuLinkStyle = css`
-  font-size: 14px;
+  font-size: 13px;
   line-height: 24px;
   font-weight: 500;
   text-transform: none;
@@ -192,8 +192,8 @@ const SubMenuExternalLink = styled(ExternalLink)<{ disabled?: boolean }>`
   }
 `
 
-const StyledBox = styled.div`
-  font-size: 14px;
+const SelectorControls = styled.div`
+  font-size: 13px;
   font-weight: 500;
   border: 1px solid #e6e6ff;
   padding: 13px 12px;
@@ -219,7 +219,7 @@ const StyledBox = styled.div`
 `
 
 const Link = styled.div`
-  font-size: 14px;
+  font-size: 13px;
   line-height: 24px;
   font-weight: 500;
   text-transform: none;
@@ -230,4 +230,8 @@ const Link = styled.div`
   &:hover {
     color: #b8b8cc;
   }
+`
+
+const StyledBox = styled.div`
+  position: relative;
 `
