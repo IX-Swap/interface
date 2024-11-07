@@ -230,7 +230,13 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
           disabled={!!inputError || loadingFee || loadingWithdraw}
           onClick={onClick}
         >
-          {loadingFee || loadingWithdraw ? (
+          {loadingWithdraw ? (
+            <span style={{marginRight: 8}}>
+              <LoaderThin size={20} />
+            </span>
+          ) : null}
+
+          {loadingFee ? (
             <WaitingWitdrawalFee>
               <LoaderThin size={20} />
               <Trans>{`Sending Withdrawal Fee`}</Trans>
