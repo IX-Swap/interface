@@ -54,6 +54,7 @@ import apiService from 'services/apiService'
 import { useKyc } from 'state/user/hooks'
 import { PaginateResponse } from 'types/pagination'
 import { useActiveWeb3React } from 'hooks/web3'
+import { useQuery } from '@tanstack/react-query'
 
 interface OfferPagination {
   page: number
@@ -264,8 +265,11 @@ export const useInvest = (id: string) => {
   )
 }
 
-export const usePresaleProof = (id: string) =>
-  React.useCallback(() => apiService.get(`/offers/${id}/presale/proof`), [id])
+export const usePresaleProof = (id: string, amount?: string) => useQuery({
+  queryKey: ['usePresaleProof', id, amount],
+  enabled: !!id && !!amount,
+  queryFn: () => apiService.get(`/offers/${id}/presale/proof`, undefined, { amount: amount! }),
+})
 
 export const useInvestPublicSaleStructData = (id: string) => {
   return React.useCallback(
@@ -1041,7 +1045,7 @@ export const useOfferFormInitialValues = (
           }
           return accum
         },
-        { images: [], videos: [], documents: [], otherExecutionDocuments: [], purchaseAgreement: null, investmentMemorandum: null}
+        { images: [], videos: [], documents: [], otherExecutionDocuments: [], purchaseAgreement: null, investmentMemorandum: null }
       )
 
       const res = {
@@ -1069,15 +1073,15 @@ export const useOfferFormInitialValues = (
         faq: payload.faq?.length ? payload.faq : initialValues.faq,
         members: payload.members?.length
           ? payload.members.map(
-              (member) =>
-                ({
-                  id: member.id,
-                  name: member.name,
-                  role: member.title,
-                  about: member.description,
-                  photo: files.find((x) => x.id === member.avatar?.id),
-                } as TeamMember)
-            )
+            (member) =>
+            ({
+              id: member.id,
+              name: member.name,
+              role: member.title,
+              about: member.description,
+              photo: files.find((x) => x.id === member.avatar?.id),
+            } as TeamMember)
+          )
           : initialValues.members,
 
         social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
@@ -1093,20 +1097,20 @@ export const useOfferFormInitialValues = (
 
         additionalDocuments: documents.length
           ? documents.map((document: any) => {
-              const file = files.find((x) => x.id === document.file?.id)
+            const file = files.find((x) => x.id === document.file?.id)
 
-              return { file: file, asset: document?.file } as AdditionalDocument
-            })
+            return { file: file, asset: document?.file } as AdditionalDocument
+          })
           : initialValues.additionalDocuments,
 
         purchaseAgreement,
         investmentMemorandum,
         otherExecutionDocuments: otherExecutionDocuments.length
           ? otherExecutionDocuments.map((document: any) => {
-              const file = files.find((x) => x.id === document.file?.id)
+            const file = files.find((x) => x.id === document.file?.id)
 
-              return { file: file, asset: document?.file } as AdditionalDocument
-            })
+            return { file: file, asset: document?.file } as AdditionalDocument
+          })
           : initialValues.otherExecutionDocuments,
 
         hasPresale: payload.hasPresale,
@@ -1425,11 +1429,11 @@ export const useMinimalOfferEdit = () => {
       files: [
         ...executionDocuments,
         ...payload.otherExecutionDocuments
-            .map((x, idx) => ({
-              type: OfferFileType.otherExecutionDocument,
-              fileId: find('otherExecutionDocument', idx) || x.file?.id || null,
-            }))
-            .filter((x) => x.fileId),
+          .map((x, idx) => ({
+            type: OfferFileType.otherExecutionDocument,
+            fileId: find('otherExecutionDocument', idx) || x.file?.id || null,
+          }))
+          .filter((x) => x.fileId),
 
         ...payload.additionalDocuments
           .map((x, idx) => ({
@@ -1608,7 +1612,7 @@ export const useOnChangeOrder = (
 
         setOrder({ [current]: manner })
       }
-      if(setPage) setPage(1)
+      if (setPage) setPage(1)
     },
     [order, setOrder, setPage]
   )

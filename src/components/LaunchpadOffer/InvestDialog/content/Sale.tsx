@@ -63,11 +63,11 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
   const { amount: amountInvested, availableToInvest, lastStatus } = investedData
   const theme = useTheme()
   const invest = useInvest(id)
-  const getPresaleProof = usePresaleProof(id)
   const getInvestPublicSaleStructData = useInvestPublicSaleStructData(id)
   const { callPostbackEndpoint } = usePostbackJumpTask()
 
   const [amount, setAmount] = useState<string>()
+  const { data: presaleProof } = usePresaleProof(id, amount)
 
   const [isDisabled, setDisabled] = useState(true)
   const [purchaseAgreed, setPurchaseAgreed] = useState(false)
@@ -178,7 +178,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
   const submitState = useInvestSubmitState()
 
   const submit = useCallback(async () => {
-    if (!amount) {
+    if (!amount || !presaleProof?.data) {
       return
     }
 
@@ -193,8 +193,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
       if (launchpadContract) {
         let transaction
         if (status === OfferStatus.preSale) {
-          const { data: proof } = await getPresaleProof()
-          transaction = await launchpadContract.investPreSale(contractSaleId, parsedAmount, proof)
+          transaction = await launchpadContract.investPreSale(contractSaleId, parsedAmount, presaleProof.data)
         } else if (status === OfferStatus.sale) {
           const { data: investStructData } = await getInvestPublicSaleStructData(amount, account)
           transaction = await launchpadContract.investPublicSale(contractSaleId, parsedAmount, investStructData)
