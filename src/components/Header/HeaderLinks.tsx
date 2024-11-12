@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { Trans } from '@lingui/macro'
 import { darken } from 'polished'
 import { NavLink } from 'react-router-dom'
@@ -17,7 +17,6 @@ import { ExternalLink } from 'theme'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { routes } from 'utils/routes'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-
 import Row, { RowFixed } from '../Row'
 import { useKyc, useRole } from 'state/user/hooks'
 
@@ -43,10 +42,6 @@ const HeaderPopover = () => {
       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
       <Column style={{ gap: 3 }}>
-        {/* <TYPE.body2 fontWeight={600} marginBottom="4px">
-          <Trans>Staking</Trans>
-        </TYPE.body2> */}
-
         <SubMenuExternalLink style={{ fontSize: '13px' }} href={`https://staking.ixswap.io/`}>
           <Trans>Staking on Base</Trans>
         </SubMenuExternalLink>
@@ -57,14 +52,6 @@ const HeaderPopover = () => {
       </Row>
 
       <Column style={{ gap: 3 }}>
-        {/* <SubMenuExternalLink href={`https://staking.ixswap.io/`}>
-          <Trans>Liquidity Mining Program (Quickswap)</Trans>
-        </SubMenuExternalLink>
-
-        <Row style={{ padding: '0', margin: '5px 0' }}>
-          <Line />
-        </Row> */}
-
         {isAllowed(routes.vesting) && (
           <SubMenuLink style={{ fontSize: '13px' }} id={`vesting-nav-link`} to={routes.vesting}>
             <Trans>Token Sale Distribution</Trans>
@@ -75,30 +62,10 @@ const HeaderPopover = () => {
   )
 }
 
-const NFTPopover = () => {
-  return (
-    <PopOverContent
-      onClick={(e: any) => (e ? e.stopPropagation() : null)}
-      onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
-    >
-      <SubMenuLink id={`nft-collections-nav-link`} to={routes.nftCollections} exact>
-        <Trans>My Collections</Trans>
-      </SubMenuLink>
-      <SubMenuLink id={`nft-create-nav-link`} to={routes.nftCreate}>
-        <Trans>Create NFT</Trans>
-      </SubMenuLink>
-      <SubMenuLink id={`nft-create-collection-nav-link`} to={routes.nftCollectionCreate} exact>
-        <Trans>Create Collection</Trans>
-      </SubMenuLink>
-    </PopOverContent>
-  )
-}
-
 export const HeaderLinks = () => {
   const [open, toggle] = useToggle(false)
   const [openNFT, toggleNFT] = useToggle(false)
-  const { isCorporate, isApproved } = useKyc()
-  const { isOfferManager, isAdmin } = useRole()
+  const { isApproved } = useKyc()
   const farmNode = useRef<HTMLDivElement>()
   const nftNode = useRef<HTMLDivElement>()
 
@@ -122,85 +89,99 @@ export const HeaderLinks = () => {
     [config]
   )
 
-  const showIssuance = useMemo(
-    () => account && (isAdmin || (isApproved && isOfferManager)),
-    [account, isAdmin, isApproved, isOfferManager]
-  )
-
-  return (
-    <HeaderLinksWrap links={7}>
-      {isAllowed('/charts') && isWhitelisted && (
-        <MenuExternalLink
-          // disabled={!isApproved}
-          target="_self"
-          href={config?.chartsUrl || 'https://info.ixswap.io/home'}
-        >
+  const links = [
+    {
+      condition: isAllowed('/charts') && isWhitelisted,
+      component: (
+        <MenuExternalLink key="charts" target="_self" href={config?.chartsUrl || 'https://info.ixswap.io/home'}>
           <Trans>Charts</Trans>
         </MenuExternalLink>
-      )}
-      {config?.isIxSwap ? (
-        <MenuExternalLink target="_blank" href={bridgeUrl}>
+      ),
+    },
+    {
+      condition: config?.isIxSwap,
+      component: (
+        <MenuExternalLink key="bridge" target="_blank" href={bridgeUrl}>
           <Trans>Bridge</Trans>
         </MenuExternalLink>
-      ) : null}
-      <StyledNavLink
-        id={`issuance-nav-link`}
-        to={'/launchpad'}
-        isActive={(match, { pathname }) => {
-          return pathname.includes('lbp/') || pathname.includes('launchpad')
-        }}
-      >
-        <Trans>Launchpad</Trans>
-      </StyledNavLink>
-
-      {isAllowed(routes.securityTokens()) && isWhitelisted && (
+      ),
+    },
+    {
+      condition: true,
+      component: (
         <StyledNavLink
-          // disabled={!isApproved}
+          key="launchpad"
+          id="issuance-nav-link"
+          to="/launchpad"
+          isActive={(match, { pathname }) => pathname.includes('lbp/') || pathname.includes('launchpad')}
+        >
+          <Trans>Launchpad</Trans>
+        </StyledNavLink>
+      ),
+    },
+    {
+      condition: isAllowed(routes.securityTokens()) && isWhitelisted,
+      component: (
+        <StyledNavLink
+          key="securityTokens"
           data-testid="securityTokensButton"
-          id={`stake-nav-link`}
+          id="stake-nav-link"
           to={routes.securityTokens('tokens')}
-          isActive={(match, { pathname }) => {
-            return pathname.includes('security-token')
-          }}
+          isActive={(match, { pathname }) => pathname.includes('security-token')}
         >
           <Trans>RWAs</Trans>
         </StyledNavLink>
-      )}
-
-      {isAllowed(routes.pool) && isWhitelisted && (
-        <StyledNavLink id={`pool-nav-link`} to={routes.pool}>
+      ),
+    },
+    {
+      condition: isAllowed(routes.pool) && isWhitelisted,
+      component: (
+        <StyledNavLink key="pool" id="pool-nav-link" to={routes.pool}>
           <Trans>Liquidity Pools</Trans>
         </StyledNavLink>
-      )}
-
-      {isAllowed(routes.swap) && isWhitelisted && (
-        <StyledNavLink id={`swap-nav-link`} to={routes.swap} data-testid={`swap-nav-link`}>
+      ),
+    },
+    {
+      condition: isAllowed(routes.swap) && isWhitelisted,
+      component: (
+        <StyledNavLink key="swap" id="swap-nav-link" to={routes.swap} data-testid="swap-nav-link">
           <Trans>Swap/Trade</Trans>
         </StyledNavLink>
-      )}
-
-      {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
+      ),
+    },
+    {
+      condition: isAllowed(routes.vesting) && isAllowed(routes.staking),
+      component: (
         <StyledNavLink
+          key="staking"
           ref={farmNode as any}
-          id={`farming-nav-link`}
-          to={'#'}
+          id="farming-nav-link"
+          to="#"
           isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
         >
-          <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom-start'}>
+          <Popover hideArrow show={open} content={<HeaderPopover />} placement="bottom-start">
             <RowFixed onClick={toggle}>
               <Trans>Staking</Trans>
               <ChevronElement marginLeft={5} showMore={open} />
             </RowFixed>
           </Popover>
         </StyledNavLink>
-      )}
-
-      {isAllowed(routes.faucet) && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-        <StyledNavLink disabled={!isApproved} id={`faucet-nav-link`} to={routes.faucet}>
+      ),
+    },
+    {
+      condition: isAllowed(routes.faucet) && chainId === SupportedChainId.KOVAN && isWhitelisted,
+      component: (
+        <StyledNavLink key="faucet" disabled={!isApproved} id="faucet-nav-link" to={routes.faucet}>
           <Trans>Faucet</Trans>
         </StyledNavLink>
-      )}
-    </HeaderLinksWrap>
+      ),
+    },
+  ]
+
+  return (
+    <HeaderLinksWrapDesktop links={links.length}>
+      {links.map((link) => link.condition && link.component)}
+    </HeaderLinksWrapDesktop>
   )
 }
 
@@ -218,20 +199,27 @@ export const AdminHeaderLinks = () => {
   )
 }
 
-const HeaderLinksWrap = styled(Row)<{ links: number }>`
-  justify-self: center;
-  background-color: 'transparent';
-  width: fit-content;
-  flex-wrap: wrap;
-  overflow: visible;
-  grid-gap: 30px;
+const HeaderLinksWrapDesktop = styled(Row)<{ links: number }>`
   display: flex;
   align-items: center;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    justify-self: flex-end;
-  `};
+  gap: 30px;
+  margin-left: 35px;
+  padding-left: 35px;
+  border-left: solid 2px #e6e6ff;
   @media (max-width: 1600px) {
-    grid-gap: 15px;
+    gap: 15px;
+  }
+  @media (max-width: 1400px) {
+    display: none;
+  }
+`
+
+const HeaderLinksWrap = styled(Row)<{ links: number }>`
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  @media (max-width: 1600px) {
+    gap: 15px;
   }
   @media (max-width: 1400px) {
     display: none;
@@ -291,7 +279,6 @@ const externalLinkStyles = css`
   text-decoration: none !important;
   color: ${({ theme }) => theme.text12};
   width: fit-content;
-  word-break: break-word;
   border-radius: 45px;
   font-weight: 500;
 
