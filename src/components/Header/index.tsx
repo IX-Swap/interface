@@ -126,7 +126,10 @@ export default function Header() {
                 <Web3Status />
 
                 {!account && openConnectModal ? (
-                  <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={openConnectModal}>
+                  <PinnedContentButton
+                    style={{ boxShadow: '0px 16px 16px 0px #6666FF21', minWidth: 200 }}
+                    onClick={openConnectModal}
+                  >
                     <Text className="connect-wallet-button">
                       <Trans>Connect Wallet</Trans>
                     </Text>
