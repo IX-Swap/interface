@@ -138,6 +138,9 @@ export default function Header() {
 
                 {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
               </HeaderElement>
+              <WrapMobileMenuDesktop>
+                <MobileMenu />
+              </WrapMobileMenuDesktop>
             </HeaderControls>
           </HeaderFrameDesktop>
         </HeaderWrapper>
@@ -315,11 +318,10 @@ const HeaderWrapper = styled.div`
     `}
 `
 
-const IconWrapper = styled.div`
-  display: block;
-  cursor: pointer;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: none;
-  `};
+const WrapMobileMenuDesktop = styled.div`
+  display: none;
+  @media (max-width: 1400px) {
+    display: block;
+    margin-left: 8px;
+  }
 `
