@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { useJumpTaskState } from 'state/jumpTask/hooks'
+import { JUMPTASK_SECURITY_TOKENS } from 'config'
 import { resetJumpTaskState } from 'state/jumpTask'
 
 const usePostbackJumpTask = () => {
@@ -8,7 +9,9 @@ const usePostbackJumpTask = () => {
   const { transactionId, affUnique1 } = useJumpTaskState()
 
   const callPostbackEndpoint = async () => {
-    const url = `https://jumptask.go2cloud.org/aff_lsr?transaction_id=${transactionId}&adv_sub=${affUnique1}`
+    const securityToken = JUMPTASK_SECURITY_TOKENS
+
+    const url = `https://jumptask.go2cloud.org/aff_lsr?transaction_id=${transactionId}&adv_sub=${affUnique1}&security_token=${securityToken}`
 
     try {
       const { status } = await axios.get(url)
