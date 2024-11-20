@@ -178,7 +178,7 @@ export const useVerifyIdentity = () => {
   }
 
   function secondaryContact() {
-    return apiService.put(`/kyc/secondaryContact`, { type: 'proof_of_address', data: {} })
+    return apiService.put(`/kyc/individual/secondaryContact`, { type: 'proof_of_address', data: {} })
   }
 
   return {
