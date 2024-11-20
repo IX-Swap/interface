@@ -17,13 +17,18 @@ interface Props {
 
 export function useInvestSubmitState() {
   const [state, setState] = React.useState(InvestSubmitState.default)
+  const [errorMessage, setErrorMessage] = React.useState('')
 
   return {
     current: state,
+    errorMessage,
     setDefault: () => setState(InvestSubmitState.default),
     setLoading: () => setState(InvestSubmitState.loading),
     setSuccess: () => setState(InvestSubmitState.success),
-    setError: () => setState(InvestSubmitState.error),
+    setError: (error = '') => {
+      setState(InvestSubmitState.error)
+      setErrorMessage(error)
+    },
   }
 }
 

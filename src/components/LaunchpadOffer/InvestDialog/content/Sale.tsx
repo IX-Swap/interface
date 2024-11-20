@@ -67,7 +67,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
   const { callPostbackEndpoint } = usePostbackJumpTask()
 
   const [amount, setAmount] = useState<string>()
-  const { data: presaleProof } = usePresaleProof(id, amount)
+  const getPresaleProof = usePresaleProof(id)
 
   const [isDisabled, setDisabled] = useState(true)
   const [purchaseAgreed, setPurchaseAgreed] = useState(false)
@@ -167,7 +167,6 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
   ) as React.ReactNode
 
   const launchpadContract = useLaunchpadInvestmentContract(contractAddress)
-  const tokenCurrency = useCurrency(offer.investingTokenAddress)
   const { chainId = 137, account } = useActiveWeb3React()
 
   const [approval, approveCallback] = useAllowance(
@@ -192,10 +191,21 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
 
       if (launchpadContract) {
         let transaction
-        if (status === OfferStatus.preSale && presaleProof?.data) {
-          transaction = await launchpadContract.investPreSale(contractSaleId, parsedAmount, presaleProof.data)
+        if (status === OfferStatus.preSale) {
+          const { data: preSaleProof } = await getPresaleProof(amount)
+          .catch(e => {
+            submitState.setError(e.message)
+            return { data: null }
+          })
+          if (!preSaleProof) return
+          transaction = await launchpadContract.investPreSale(contractSaleId, parsedAmount, preSaleProof)
         } else if (status === OfferStatus.sale) {
           const { data: investStructData } = await getInvestPublicSaleStructData(amount, account)
+          .catch(e => {
+            submitState.setError(e.message)
+            return { data: null }
+          })
+          if (!investStructData) return
           transaction = await launchpadContract.investPublicSale(contractSaleId, parsedAmount, investStructData)
         }
 
@@ -379,7 +389,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
         )}
         {submitState.current === InvestSubmitState.error && (
           <Row justifyContent="space-between" alignItems="center" width="100%" padding="1rem">
-            <div style={{ flexGrow: 1, textAlign: 'left' }}>Your order was not executed.</div>
+            <div style={{ flexGrow: 1, textAlign: 'left' }}>{submitState.errorMessage || 'Your order was not executed.'}</div>
             <Info size="18" color={theme.launchpad.colors.error} />
           </Row>
         )}

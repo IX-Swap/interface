@@ -265,11 +265,13 @@ export const useInvest = (id: string) => {
   )
 }
 
-export const usePresaleProof = (id: string, amount?: string) => useQuery({
-  queryKey: ['usePresaleProof', id, amount],
-  enabled: !!id && !!amount,
-  queryFn: () => apiService.get(`/offers/${id}/presale/proof`, undefined, { amount: amount! }),
-})
+export const usePresaleProof = (id: string) => {
+  return React.useCallback(
+    (amount: string) =>
+      apiService.get(`/offers/${id}/presale/proof`, undefined, { amount }),
+    [id]
+  )
+}
 
 export const useInvestPublicSaleStructData = (id: string) => {
   return React.useCallback(
