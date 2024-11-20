@@ -131,7 +131,7 @@ export default function IndividualKycFormV2() {
   const { kyc, loadingRequest } = useKYCState()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
-  const verifyIdentity = useVerifyIdentity()
+  const { verifyIdentity, secondaryContact } = useVerifyIdentity()
   const [selectedCheckbox, setSelectedCheckbox] = useState<SecondaryContactTypeV2 | null>(null)
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const form = useRef<any>(null)
@@ -289,13 +289,34 @@ export default function IndividualKycFormV2() {
   const handleVerifyDocuments = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault()
     setLoading(true)
-    const result = await verifyIdentity()
-    if (result.success) {
-      const redirectUrl = result?.response?.data?.redirectUrl
+
+    if (selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS) {
+      try {
+        const {status} = await secondaryContact();
+
+        if (status !== 200) {
+          setLoading(false)
+          return;
+        }
+      } catch (error) {
+        setLoading(false)
+        return;
+      }
+    }
+
+    try {
+      const {data, status} = await verifyIdentity()
+
+      if (status !== 200) {
+        setLoading(false)
+        return;
+      }
+
+      const redirectUrl = data?.redirectUrl;
       setLoading(false)
       window.open(redirectUrl, '_self')
-    } else {
-      console.error('Verification failed', result.error)
+    } catch (error) {
+      console.error('Verification failed', error)
       setLoading(false)
     }
   }
@@ -432,7 +453,7 @@ export default function IndividualKycFormV2() {
                             }}
                             onSuccess={() => handleSuccess('personal')}
                           />
-                         )} 
+                        )}
 
                         {isPersonalVerified || kyc?.individual?.isEmailVerified ? <VerificationConfirmation /> : null}
                       </FormCard>
