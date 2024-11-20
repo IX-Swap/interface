@@ -28,6 +28,7 @@ import { Line } from 'components/Line'
 import VerificationConfirmation from './VerificationConfirmation'
 import { EmailType, SecondaryContactTypeV2, SuccessType } from './enum'
 import SecondaryContactOption from './SecondaryContactOption'
+import CountriesBlockAlert from './CountriesBlockAlert'
 export const FormRow = styled(Row)`
   align-items: flex-start;
   gap: 35px;
@@ -381,11 +382,14 @@ export default function IndividualKycFormV2() {
                         </HeaderContainer>
 
                         <Line style={{ margin: '40px 0px', opacity: '0.1' }} />
-                        <RowStart marginBottom="32px">
+                        <CountriesBlockAlert />
+
+                        <RowStart marginBottom="32px" marginTop="32px">
                           <TYPE.title7>
                             <Trans>Personal Information</Trans>
                           </TYPE.title7>
                         </RowStart>
+
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={isMobile ? 1 : 3}>
                             <TextInput
