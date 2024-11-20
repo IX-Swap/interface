@@ -173,16 +173,18 @@ export const useSocialAccountVerificationStatus = () => {
   }, [])
 }
 export const useVerifyIdentity = () => {
-  return React.useCallback(async () => {
-    try {
-      const response = await apiService.put(`/kyc/individual/verifyIdentity`, {})
-      console.log(response)
-      return { success: true, response }
-    } catch (error: any) {
-      console.error(error)
-      return { success: false, error }
-    }
-  }, [])
+  function verifyIdentity() {
+    return apiService.put(`/kyc/individual/verifyIdentity`, {})
+  }
+
+  function secondaryContact() {
+    return apiService.put(`/kyc/secondaryContact`, { type: 'proof_of_address', data: {} })
+  }
+
+  return {
+    verifyIdentity,
+    secondaryContact,
+  }
 }
 
 export const useEmailVerifyCode = () => {
