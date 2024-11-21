@@ -22,7 +22,7 @@ import { LoadingIndicator } from 'components/LoadingIndicator'
 import { KycSelect as Select, KycTextInput as TextInput } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { individualFormV2InitialValues, initialValuesBusinessEmail, promptValue } from './mock'
-import { FormCard, FormGrid, FormWrapper, StyledStickyBox } from './styleds'
+import { EligibilityAndDocumentsContainer, FormCard, FormGrid, FormWrapper, StyledStickyBox } from './styleds'
 import { businessEmailSchema, individualErrorsSchemaV2 } from './schema'
 import { Line } from 'components/Line'
 import VerificationConfirmation from './VerificationConfirmation'
@@ -141,6 +141,7 @@ export default function IndividualKycFormV2() {
   const [isPersonalVerified, setIsPersonalVerified] = useState(false)
   const [isBusinessEmailVerified, setIsBusinessEmailVerified] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false)
   const [initialValues, setInitialValues] = useState(individualFormV2InitialValues)
   const getMyKyc = useGetMyKyc()
 
@@ -328,6 +329,10 @@ export default function IndividualKycFormV2() {
     } else {
       return individualErrorsSchemaV2
     }
+  }
+
+  const handleCheckboxVerifyDocument = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsCheckboxChecked(event.target.checked)
   }
 
   return (
@@ -631,6 +636,7 @@ export default function IndividualKycFormV2() {
                             <Trans>Verify Documents</Trans>
                           </TYPE.title7>
                         </RowCenter>
+
                         <RowCenter>
                           <TYPE.description3
                             style={{ margin: isMobile ? '10px' : '0px 190px 30px 190px', textAlign: 'center' }}
@@ -639,7 +645,29 @@ export default function IndividualKycFormV2() {
                             process may take some time, and you will be notified within 10-15 minutes.
                           </TYPE.description3>
                         </RowCenter>
-                        <PinnedContentButton onClick={handleVerifyDocuments} disabled={loading}>
+
+                        <EligibilityAndDocumentsContainer>
+                          <div className="title">Eligibility & Document Requirements:</div>
+                          <ul className="description">
+                            <li>Document Authenticity: No copied or expired documents allowed</li>
+                            <li>Liveliness Test: A mandatory selfie is required to verify your identity</li>
+                          </ul>
+
+                          <div className="checkbox-container">
+                            <input
+                              type="checkbox"
+                              id="eligibility-confirmation"
+                              className="checkbox"
+                              checked={isCheckboxChecked}
+                              onChange={handleCheckboxVerifyDocument}
+                            />
+                            <label htmlFor="eligibility-confirmation" className="label">
+                              I confirm that I have read and understood the Eligibility and Document Requirements.
+                            </label>
+                          </div>
+                        </EligibilityAndDocumentsContainer>
+
+                        <PinnedContentButton onClick={handleVerifyDocuments} disabled={!isCheckboxChecked || loading}>
                           {loading ? 'Verifying...' : 'Verify Documents'}
                         </PinnedContentButton>
                       </FormCard>
