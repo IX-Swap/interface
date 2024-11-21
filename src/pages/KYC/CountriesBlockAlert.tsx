@@ -7,16 +7,16 @@ import { ReactComponent as AlertIcon } from 'assets/images/icons/alert.svg'
 const countries = {
   us: {
     name: 'United States',
-    flags: ['🇺🇸'],
+    flag: '🇺🇸',
   },
   kp: {
     name: 'North Korea',
-    flags: ['🇰🇵'],
+    flag: '🇰🇵',
   },
 }
 
 const CountriesBlockAlert: React.FC = () => {
-  const flags = [...countries.us.flags, ...countries.kp.flags]
+  const flags = Object.values(countries).map((country) => country.flag)
 
   return (
     <Container>
