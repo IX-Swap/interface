@@ -306,3 +306,68 @@ export const DateInfoContainer = styled.div`
   text-align: center;
   color: ${({ theme: { text9 } }) => text9};
 `
+
+export const EligibilityAndDocumentsContainer = styled.div`
+  border-radius: 8px;
+  border: 1px solid #e6e6ff;
+  background: #f7f7fa;
+  display: flex;
+  padding: 48px 64px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+  margin-bottom: 24px;
+
+  .title {
+    color: #292933;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 130%; /* 26px */
+    letter-spacing: -0.6px;
+  }
+
+  ul.description {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 8px;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(102, 102, 255, 0.1);
+
+    li {
+      color: #666680;
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 210%; /* 29.4px */
+      letter-spacing: -0.28px;
+    }
+  }
+
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    label.label {
+      color: #666680;
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 210%; /* 29.4px */
+      letter-spacing: -0.28px;
+      margin-left: 8px;
+    }
+
+    input.checkbox {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+  }
+`

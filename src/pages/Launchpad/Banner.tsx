@@ -20,6 +20,7 @@ export const Banner = () => {
     : 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunities'
   const launchpadBannerInfoRedirectTitle = config?.launchpadBannerInfoRedirectTitle ?? 'How does IXS Launchpad work?'
   const launchpadBannerInfoRedirectUrl = config?.launchpadBannerInfoRedirectUrl ?? 'https://www.ixswap.io/academy'
+  const isIxswap = config?.isIxSwap ?? false
 
   const getTotalRaised = async () => {
     try {
@@ -53,10 +54,12 @@ export const Banner = () => {
         )}
 
         <TotalRaisedWrap>
-          <div>
-            <TotalRaisedLabel>Total Raised</TotalRaisedLabel>
-            <TotalRaisedValue>${totalRaised.toLocaleString('en-US')}</TotalRaisedValue>
-          </div>
+          {isIxswap ? (
+            <div>
+              <TotalRaisedLabel>Total Raised</TotalRaisedLabel>
+              <TotalRaisedValue>${totalRaised.toLocaleString('en-US')}</TotalRaisedValue>
+            </div>
+          ) : null}
 
           <BannerInfoRedirect>
             <BannerInfoRedirectImage src={LearnMoreIcon} />

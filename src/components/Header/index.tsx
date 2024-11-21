@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
@@ -8,8 +8,6 @@ import _get from 'lodash/get'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useKYCState } from 'state/kyc/hooks'
 import { routes } from 'utils/routes'
-import { ReactComponent as NewKYCLogo } from 'assets/images/newKYCLogo.svg'
-import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { MobileMenu } from '../Mobile-Menu'
 import { RowFixed } from '../Row'
@@ -28,11 +26,10 @@ import AdministrationMenu from './AdministrationMenu'
 
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
   const { isUser } = useRole()
-  const isWhitelisted = isUserWhitelisted({ account, chainId })
   const { openConnectModal } = useConnectModal()
 
   const [openPreviewModal, setPreviewModal] = useState(false)
@@ -56,7 +53,7 @@ export default function Header() {
 
   return (
     <>
-      {isMobile && (
+      {isMobile ? (
         <HeaderWrapper>
           {!cookies.annoucementsSeen && <Announcement />}
           <HeaderFrame>
@@ -95,25 +92,28 @@ export default function Header() {
             </Flex>
           ) : null}
         </HeaderWrapper>
-      )}
-      {!isMobile && (
+      ) : (
         <HeaderWrapper>
           {!cookies.annoucementsSeen && <Announcement />}
-          <HeaderFrame>
-            <HeaderRow marginLeft={50}>
-              <Title to={routes.defaultRoute}>
-                {logoUrl ? (
-                  <div style={{ width: 130 }}>
-                    <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
-                  </div>
-                ) : (
-                  <IXSIcon>
-                    <NewLogo width="130px" height="47px" />
-                  </IXSIcon>
-                )}
-              </Title>
-            </HeaderRow>
-            <HeaderLinks />
+          <HeaderFrameDesktop>
+            <Flex alignItems="center" width={'100%'}>
+              <HeaderRow>
+                <Title to={routes.defaultRoute}>
+                  {logoUrl ? (
+                    <div style={{ width: 130 }}>
+                      <img src={logoUrl} alt="logo" style={{ width: '100%', height: 'auto' }} />
+                    </div>
+                  ) : (
+                    <IXSIcon>
+                      <NewLogo width="130px" height="47px" />
+                    </IXSIcon>
+                  )}
+                </Title>
+              </HeaderRow>
+
+              <HeaderLinks />
+            </Flex>
+
             <HeaderControls>
               {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
                 <HeaderElement>
@@ -126,7 +126,10 @@ export default function Header() {
                 <Web3Status />
 
                 {!account && openConnectModal ? (
-                  <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={openConnectModal}>
+                  <PinnedContentButton
+                    style={{ boxShadow: '0px 16px 16px 0px #6666FF21', minWidth: 200 }}
+                    onClick={openConnectModal}
+                  >
                     <Text className="connect-wallet-button">
                       <Trans>Connect Wallet</Trans>
                     </Text>
@@ -135,9 +138,11 @@ export default function Header() {
 
                 {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
               </HeaderElement>
+              <WrapMobileMenuDesktop>
+                <MobileMenu />
+              </WrapMobileMenuDesktop>
             </HeaderControls>
-            <MobileMenu />
-          </HeaderFrame>
+          </HeaderFrameDesktop>
         </HeaderWrapper>
       )}
     </>
@@ -150,6 +155,41 @@ const HeaderFrame = styled.div<{ showBackground?: boolean; lightBackground?: boo
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+  width: 100%;
+  top: 0;
+  position: relative;
+  padding: 1rem;
+  z-index: 1;
+  position: relative;
+  background-color: white;
+  background-image: ${({ theme }) => `linear-gradient(to bottom, transparent 50%, ${theme.bg0} 50%)`};
+  background-position: ${({ showBackground }) => (showBackground ? '0 -100%' : '0 0')};
+  background-size: 100% 200%;
+  transition: background-position 0.1s, box-shadow 0.1s;
+
+  @media (max-width: 1400px) {
+    grid-template-columns: 2fr auto auto;
+    grid-gap: 28px;
+  }
+
+  @media (max-width: 1080px) {
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 28px;
+    padding: 14px 18px;
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr 1fr auto;
+    padding: 10px 10px;
+    grid-template-rows: auto;
+    margin: 0;
+  }
+`
+
+const HeaderFrameDesktop = styled.div<{ showBackground?: boolean; lightBackground?: boolean }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   top: 0;
   position: relative;
@@ -198,7 +238,6 @@ const HeaderElement = styled.div`
 `
 
 const HeaderRow = styled(RowFixed)`
-  width: 100%;
   margin-left: 16px;
 `
 
@@ -279,11 +318,10 @@ const HeaderWrapper = styled.div`
     `}
 `
 
-const IconWrapper = styled.div`
-  display: block;
-  cursor: pointer;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: none;
-  `};
+const WrapMobileMenuDesktop = styled.div`
+  display: none;
+  @media (max-width: 1400px) {
+    display: block;
+    margin-left: 8px;
+  }
 `
