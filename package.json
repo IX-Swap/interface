@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "private": true,
   "devDependencies": {
+    "@balancer-labs/typechain": "^1.0.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@ethersproject/experimental": "^5.2.0",
     "@ixswap1/default-token-list": "1.5.2",
