@@ -421,6 +421,7 @@ export interface ManagedOffer extends Offer {
   smartContractStrategy: SMART_CONTRACT_STRATEGIES
   distributionControllerAddress: string
   isOwner: boolean
+  investmentCount: number
 }
 
 export type MiniOffer = Pick<Offer, 'id' | 'status' | 'timeframe' | 'hasPresale'>
