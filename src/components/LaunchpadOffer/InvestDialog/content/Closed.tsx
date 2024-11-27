@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 import { CheckCircle, Clock, Info } from 'react-feather'
@@ -50,6 +50,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const addPopup = useAddPopup()
   const claimRefund = useClaimOfferRefund(id)
   const { setHasClaimed, hasClaimed } = useCheckClaimed(id)
+  const [claiming, setClaiming] = useState(false)
 
   const [contactFormOpen, setContactForm] = React.useState(false)
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
@@ -80,6 +81,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
       }
 
       if (launchpadContract) {
+        setClaiming(true)
         const data = await launchpadContract.claim(contractSaleId, account)
 
         if (data.hash)
@@ -93,6 +95,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
       }
     } catch (err: any) {
       addPopup({ info: { success: false, summary: 'Something went wrong. Please try again.' } })
+    } finally {
+      setClaiming(false)
     }
   }, [claimRefund, amount])
 
@@ -129,7 +133,10 @@ export const ClosedStage: React.FC<Props> = (props) => {
         </Column>
 
         {!isSuccessfull && (
-          <ClaimedFilledButton onClick={onSubmit} disabled={!canClaim || amount <= 0 || hasClaimed}>
+          <ClaimedFilledButton
+            onClick={onSubmit}
+            disabled={claiming || !canClaim || amount <= 0 || hasClaimed}
+          >
             Claim
           </ClaimedFilledButton>
         )}
