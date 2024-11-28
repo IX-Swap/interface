@@ -39,6 +39,7 @@ export const ManageOffer = () => {
   const { loading, data: offer, load } = useGetManagedOffer(params.issuanceId)
   const {
     usersClaimed,
+    investmentCount,
     issuerClaimed,
     status,
     softCapReached,
@@ -178,7 +179,11 @@ export const ManageOffer = () => {
             </OutlineButton>
           )}
           {claimBtnTitle && (
-            <FilledButton style={{ marginLeft: '13px' }} onClick={() => setConfirmClaim(true)}>
+            <FilledButton
+              disabled={investmentCount === 0}
+              style={{ marginLeft: '13px' }}
+              onClick={() => setConfirmClaim(true)}
+            >
               <ButtonLabel>{claimBtnTitle}</ButtonLabel>
             </FilledButton>
           )}
