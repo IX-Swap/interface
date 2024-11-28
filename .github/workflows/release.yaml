@@ -1,93 +1,93 @@
-name: Release - build & deploy
+# name: Release - build & deploy
 
-env:
-  CI: 'true'
-  AWS_REGION: 'ap-southeast-1'
-  AWS_APP_NAME: 'ix-swap-web'
-  AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
-  AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
-  NPM_REG_ATUH_TOKEN: '${{ secrets.NPM_REG_ATUH_TOKEN }}'
-  GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+# env:
+#   CI: 'true'
+#   AWS_REGION: 'ap-southeast-1'
+#   AWS_APP_NAME: 'ix-swap-web'
+#   AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+#   AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+#   NPM_REG_ATUH_TOKEN: '${{ secrets.NPM_REG_ATUH_TOKEN }}'
+#   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  bump_version:
-    name: Bump Version
-    runs-on: ubuntu-latest
-    outputs:
-      new_tag: ${{ steps.github_tag_action.outputs.new_tag }}
-      changelog: ${{ steps.github_tag_action.outputs.changelog }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+# jobs:
+#   bump_version:
+#     name: Bump Version
+#     runs-on: ubuntu-latest
+#     outputs:
+#       new_tag: ${{ steps.github_tag_action.outputs.new_tag }}
+#       changelog: ${{ steps.github_tag_action.outputs.changelog }}
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
 
-      - name: Bump version and push tag
-        id: github_tag_action
-        uses: mathieudutour/github-tag-action@331898d5052eedac9b15fec867b5ba66ebf9b692
-        with:
-          github_token: ${{ env.GITHUB_TOKEN }}
-          release_branches: .*
+#       - name: Bump version and push tag
+#         id: github_tag_action
+#         uses: mathieudutour/github-tag-action@331898d5052eedac9b15fec867b5ba66ebf9b692
+#         with:
+#           github_token: ${{ env.GITHUB_TOKEN }}
+#           release_branches: .*
 
-  create_release:
-    name: Create Release
-    runs-on: ubuntu-latest
-    needs: bump_version
-    if: ${{ needs.bump_version.outputs.new_tag != null }}
-    env:
-      ENVIRONMENT: 'production'
-    steps:
-      - name: Config terraform
-        run: |
-          mkdir $HOME/terraform/  && \
-          curl  -v -k -L https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -o  $HOME/terraform/terraform_0.12.26_linux_amd64.zip  && \
-          unzip  $HOME/terraform/terraform_0.12.26_linux_amd64.zip -d  $HOME/terraform/  && \
-          cp -fv $HOME/terraform/terraform /usr/local/bin/  && \
-          terraform --version
+#   create_release:
+#     name: Create Release
+#     runs-on: ubuntu-latest
+#     needs: bump_version
+#     if: ${{ needs.bump_version.outputs.new_tag != null }}
+#     env:
+#       ENVIRONMENT: 'production'
+#     steps:
+#       - name: Config terraform
+#         run: |
+#           mkdir $HOME/terraform/  && \
+#           curl  -v -k -L https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -o  $HOME/terraform/terraform_0.12.26_linux_amd64.zip  && \
+#           unzip  $HOME/terraform/terraform_0.12.26_linux_amd64.zip -d  $HOME/terraform/  && \
+#           cp -fv $HOME/terraform/terraform /usr/local/bin/  && \
+#           terraform --version
 
-      - name: Checkout
-        uses: actions/checkout@v2
+#       - name: Checkout
+#         uses: actions/checkout@v2
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Set up node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18.14
-          registry-url: https://registry.npmjs.org
+#       - name: Set up node
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: 18.14
+#           registry-url: https://registry.npmjs.org
 
-      - name: create .npmrc file
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+#       - name: create .npmrc file
+#         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
-      - name: Create .env using AWS SSM Paramter Store
-        run: |
-          export CI=${{ env.CI }} AWS_REGION=${{ env.AWS_REGION }}  AWS_APP_NAME=${{ env.AWS_APP_NAME }} ENVIRONMENT=${{ env.ENVIRONMENT }}
-          rm -fv .env*          && \
-          chmod +x bin/*.sh     && \
-          bin/tf-ssm-env-file.sh
-          cp -v .env .env.$ENVIRONMENT
+#       - name: Create .env using AWS SSM Paramter Store
+#         run: |
+#           export CI=${{ env.CI }} AWS_REGION=${{ env.AWS_REGION }}  AWS_APP_NAME=${{ env.AWS_APP_NAME }} ENVIRONMENT=${{ env.ENVIRONMENT }}
+#           rm -fv .env*          && \
+#           chmod +x bin/*.sh     && \
+#           bin/tf-ssm-env-file.sh
+#           cp -v .env .env.$ENVIRONMENT
 
-      - name: Install dep's & build
-        env:
-          SENTRY_PROJECT_NAME: '${{ secrets.SENTRY_PROJECT_NAME }}'
-          SENTRY_AUTH_TOKEN: '${{ secrets.SENTRY_AUTH_TOKEN }}'
-        run: |
-          export CI=false && export DISABLE_ESLINT_PLUGIN=true &&\
-          yarn install --frozen-lockfile  &&\
-          npm ls babel-loader
-          yarn run build
+#       - name: Install dep's & build
+#         env:
+#           SENTRY_PROJECT_NAME: '${{ secrets.SENTRY_PROJECT_NAME }}'
+#           SENTRY_AUTH_TOKEN: '${{ secrets.SENTRY_AUTH_TOKEN }}'
+#         run: |
+#           export CI=false && export DISABLE_ESLINT_PLUGIN=true &&\
+#           yarn install --frozen-lockfile  &&\
+#           npm ls babel-loader
+#           yarn run build
 
-      - name: Sync AWS S3 Bucket
-        run: |
-          export CI=${{ env.CI }}
-          chmod +x bin/*.sh
-          bin/tf-init.sh
-          bin/s3-web-sync.sh
+#       - name: Sync AWS S3 Bucket
+#         run: |
+#           export CI=${{ env.CI }}
+#           chmod +x bin/*.sh
+#           bin/tf-init.sh
+#           bin/s3-web-sync.sh
