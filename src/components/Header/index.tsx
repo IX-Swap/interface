@@ -25,7 +25,8 @@ import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
 import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
 import { PinnedContentButton } from 'components/Button'
 import AdministrationMenu from './AdministrationMenu'
-import { DEFAULT_CHAIN_ID, SUPPORTED_TGE_CHAINS } from 'config'
+import { DEFAULT_CHAIN_ID } from 'config'
+import { CHAINS } from 'components/Web3Provider/constants'
 
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -34,7 +35,7 @@ export default function Header() {
   const { config } = useWhitelabelState()
   const { isUser } = useRole()
   const { openConnectModal } = useConnectModal()
-  const { isPending, switchChain } = useSwitchChain()
+  const { switchChain } = useSwitchChain()
 
   const [openPreviewModal, setPreviewModal] = useState(false)
 
@@ -58,7 +59,7 @@ export default function Header() {
   useEffect(() => {
     const lastAccount = localStorage.getItem('account')
     const currentChainId: any = chainId ? chainId.toString() : ''
-    const supportedChains: any = SUPPORTED_TGE_CHAINS
+    const supportedChains: any = CHAINS ? CHAINS.map((chain) => chain.id) : []
     const defaultChainId = Number(DEFAULT_CHAIN_ID)
     if (!lastAccount && account && chainId !== defaultChainId && supportedChains.includes(currentChainId)) {
       localStorage.setItem('account', account)
