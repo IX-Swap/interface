@@ -13,6 +13,11 @@ import { MEDIA_WIDTHS } from 'theme'
 import { ReactComponent as Checked } from 'assets/images/checked-blue.svg'
 import { VioletCard } from '../Card'
 import { CHAINS } from 'components/Web3Provider/constants'
+import wrongNetworkImg from 'assets/images/warningRedRec.png'
+
+interface StyledBoxProps {
+  isCorrectNetwork: boolean
+}
 
 export const NetworkCard = () => {
   const { chainId, provider, account } = useActiveWeb3React()
@@ -23,6 +28,8 @@ export const NetworkCard = () => {
   const toggle = useToggleModal(ApplicationModal.NETWORK_SELECTOR)
   const info = chainId ? CHAIN_INFO[chainId] : undefined
   useOnClickOutside(node, open ? toggle : undefined)
+  const supportedChains = CHAINS ? CHAINS.map((chain) => chain.id) : []
+  const isCorrectNetwork = supportedChains.includes(chainId)
 
   const activeChainName = useMemo(() => chainId && NETWORK_LABELS[chainId], [chainId])
 
@@ -38,7 +45,7 @@ export const NetworkCard = () => {
   }
 
   return (
-    <StyledBox>
+    <StyledBox isCorrectNetwork={isCorrectNetwork}>
       {account && (
         <Selector ref={node as any}>
           <SelectorControls onClick={() => toggle()}>
@@ -46,10 +53,21 @@ export const NetworkCard = () => {
               <PendingText>Switching...</PendingText>
             ) : (
               <Flex alignItems="center">
-                <Logo src={CHAIN_INFO[chainId].logoUrl} />
-                <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
-                  {activeChainName}
-                </NetworkCardWrapper>
+                {isCorrectNetwork ? (
+                  <>
+                    <Logo src={CHAIN_INFO[chainId].logoUrl} />
+                    <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
+                      {activeChainName}
+                    </NetworkCardWrapper>
+                  </>
+                ) : (
+                  <>
+                    <Logo src={wrongNetworkImg} />
+                    <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
+                      Wrong Network
+                    </NetworkCardWrapper>
+                  </>
+                )}
               </Flex>
             )}
 
@@ -165,21 +183,21 @@ const NetworkLabel = styled.div`
 const Selector = styled.div`
   margin-right: 5px;
 `
-const StyledBox = styled.div`
+const StyledBox = styled.div<StyledBoxProps>`
   font-size: 12px;
-  border: 1px solid #e6e6ff;
+  border: 1px solid ${({ isCorrectNetwork }) => (isCorrectNetwork ? '#e6e6ff' : 'red')};
   padding: 10px 5px 10px 10px;
   border-radius: 4px;
   ${({ theme }) => theme.mediaWidth.upToMedium`
      padding: 10px 20px 10px 20px;
   `};
   :active {
-    border: 1px solid #4d8fea;
+    border: 1px solid ${({ isCorrectNetwork }) => (isCorrectNetwork ? '#4d8fea' : 'red')};
   }
   :hover {
     transform: scale(0.99);
     transition: 0.2s;
-    border: 1px solid #4d8fea;
+    border: 1px solid ${({ isCorrectNetwork }) => (isCorrectNetwork ? '#4d8fea' : 'red')};
   }
   position: relative;
 `

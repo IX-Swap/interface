@@ -11,7 +11,6 @@ import { useWeb3React } from 'hooks/useWeb3React'
 import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Column from 'components/Column'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { useKYCState } from 'state/kyc/hooks'
 import { ReactComponent as IndividualKYC } from 'assets/images/newIndividual.svg'
 import { ReactComponent as CorporateKYC } from 'assets/images/newCorporate.svg'
@@ -26,7 +25,7 @@ import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
-import { WrongNetworkModal } from 'components/WrongNetworkModal'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 interface DescriptionProps {
   description: string | null
@@ -306,7 +305,7 @@ const KYC = () => {
   if (!account) {
     return (
       <Flex justifyContent="center" width="100%" mt="3rem">
-        <NotAvailablePage />
+        <ConnectWalletCard />
       </Flex>
     )
   }
@@ -415,7 +414,6 @@ const KYC = () => {
           </Column>
         )}
       </StatusCard>
-      <WrongNetworkModal />
     </StyledBodyWrapper>
   )
 }
