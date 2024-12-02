@@ -23,7 +23,7 @@ export default function Updater(): null {
     try {
       await fetchList(false) // Ensure fetchList doesn't cause state reset
     } catch (error) {
-      console.error('Failed to fetch list:', error)
+      console.log('Failed to fetch list:', error)
     }
   }, [fetchList, isWindowVisible, savedAccount])
 
