@@ -1,15 +1,27 @@
 import React from 'react'
 import { useSwitchChain } from 'wagmi'
+import * as all from "viem/chains";
 
 import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
 import { useWeb3React } from 'hooks/useWeb3React'
 
-interface Props {
-  expectChain: SupportedChainId | null
+function getChain(id: number) {
+  const { ...chains } = all;
+  for (const chain of Object.values(chains)) {
+    if (chain.id === id) {
+      return chain;
+    }
+  }
+
+  throw new Error(`Chain with id ${id} not found`);
 }
 
-export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
+interface Props {
+  expectChainId: SupportedChainId | null
+}
+
+export const NetworkNotAvailable: React.FC<Props> = ({ expectChainId }) => {
   const { chainId } = useWeb3React()
   const { chains, switchChain } = useSwitchChain()
 
@@ -19,27 +31,30 @@ export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
     }
   }
 
-  const chainsFiltered = chains.filter((chain) => chain.id === expectChain)
-  const chainsNames = chainsFiltered.map((chain) => chain.name)
+  const expectChain = chains.find((chain) => chain.id === expectChainId)
+  const currentChain = getChain(chainId);
+  const currentChainName = currentChain.name;
+
+  console.log('currentChainName', currentChainName);
 
   return (
     <Container>
-      <Title>
-        Connect to the Right
-        <br />
-        Blockchain Network
-      </Title>
-      <Info>Available Blockchain Networks:</Info>
-      <NetworksRow elements={chainsFiltered.length} style={chainsFiltered.length === 1 ? { marginLeft: 70, marginRight: 70 } : {}}>
+      <Title>You are in wrong network</Title>
+      <Info>{`You are on ${currentChainName},`}</Info>
+      <Info>{`switch to {required network name} to continue`}</Info>
+      {/* <NetworksRow
+        elements={chainsFiltered.length}
+        style={chainsFiltered.length === 1 ? { marginLeft: 70, marginRight: 70 } : {}}
+      >
         {chainsFiltered.map((chain) => (
           <NetworkCard onClick={() => changeNetwork(chain.id)} key={chain.id}>
             <img src={CHAIN_INFO[chain.id].logoUrl} alt="icon" />
             {chain.name}
           </NetworkCard>
         ))}
-      </NetworksRow>
+      </NetworksRow> */}
 
-      <InfoRows>
+      {/* <InfoRows>
         <div>
           Switch to{' '}
           {chainsNames.map((chainName, index) => (
@@ -51,7 +66,7 @@ export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
           ))}
         </div>
         <div>to get full functionality</div>
-      </InfoRows>
+      </InfoRows> */}
     </Container>
   )
 }
