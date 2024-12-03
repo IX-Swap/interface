@@ -11,11 +11,11 @@ import { TmMyTokens } from 'components/TmMyTokens'
 import { PinnedContentButton } from 'components/Button'
 import { TmPayoutEvents } from 'components/TmPayoutEvents'
 import { TmPayoutHistory } from 'components/TmPayoutHistory'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { ReactComponent as CreateIcon } from 'assets/images/add.svg'
 import { Line } from 'components/Line'
 import { CreatePayoutModal } from 'pages/PayoutItem/CreatePayoutModal/CreatePayoutModal'
 import { Container } from '@mui/material'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 export type TokenManagerTab =
   | 'my-tokens'
@@ -100,7 +100,7 @@ const TokenManager = () => {
   }, [me, history, isValidRole])
 
   if (!isLogged) {
-    return <NotAvailablePage />
+    return <ConnectWalletCard />
   }
   return (
     <>

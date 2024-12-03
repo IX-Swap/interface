@@ -33,8 +33,9 @@ import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import Header from 'components/Header'
 import { isMobile } from 'react-device-detect'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import { DEFAULT_CHAIN_ID } from 'config'
 
 const LinkTitle = styled(TYPE.body1)`
   color: ${({ theme }) => theme.text1};
@@ -106,7 +107,7 @@ export default function Pool() {
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NotAvailablePage />
+          <NetworkNotAvailable expectChainId={Number(DEFAULT_CHAIN_ID)} />
         </CenteredFixed>
       </Portal>
     )

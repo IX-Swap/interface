@@ -1,23 +1,19 @@
 import React from 'react'
-import { isMobile } from 'react-device-detect'
 import styled from 'styled-components/macro'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { RowBetween } from 'components/Row'
 import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-import { SupportedChainId } from 'constants/chains'
 import useIXSCurrency from 'hooks/useIXSCurrency'
-import { useActiveWeb3React } from 'hooks/web3'
-import { TextGradient, TYPE } from 'theme'
-import { LightBackground } from 'theme/Background'
+import { TYPE } from 'theme'
 
 import { Vesting } from './Vesting/Vesting'
 import { StyledBodyWrapper } from './styleds'
-import { Pinned } from 'components/Launchpad/Offers/Pinned'
-import { PinnedContentButton } from 'components/Button'
 import { useWeb3React } from 'hooks/useWeb3React'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
+import { DEFAULT_CHAIN_ID } from 'config'
 
 const PaddedRow = styled(RowBetween)`
   padding: 40px 30px 0px 30px;
@@ -41,8 +37,12 @@ export const VestingTab = () => {
 
   const blurred = ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0) || !account
 
-  if (blurred || !account) {
-    return <NotAvailablePage />
+  if (!account) {
+    return <ConnectWalletCard />
+  }
+
+  if (blurred) {
+    return <NetworkNotAvailable expectChainId={Number(DEFAULT_CHAIN_ID)} />
   }
 
   return (

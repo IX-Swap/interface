@@ -4,7 +4,7 @@ import { MEDIA_WIDTHS } from 'theme'
 
 export const Container = styled.div`
   max-width: 779px;
-  min-height: 473px;
+  min-height: 446px;
   width: 100%;
   border-radius: 6px;
   background: ${({ theme }) => theme.bg25};
@@ -19,12 +19,8 @@ export const Title = styled.div`
   font-weight: 700;
   font-size: 18px;
   line-height: 145%;
-  background: ${({ theme }) => theme.config.text?.main || theme.bgG1};
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   margin-bottom: 8px;
-  color: #292933;
+  color: black;
 `
 
 export const Info = styled.div`

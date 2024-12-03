@@ -7,6 +7,8 @@ import { isMobile } from 'react-device-detect'
 import Box from '@mui/material/Box'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import { DEFAULT_CHAIN_ID } from 'config'
 
 export const BodyWrapper = styled(Box)<{
   margin?: string
@@ -93,7 +95,7 @@ export default function AppBody({
         {blurred && (
           <Portal>
             <CenteredFixed width="100vw" height="100vh">
-              <NotAvailablePage />
+              <NetworkNotAvailable expectChainId={Number(DEFAULT_CHAIN_ID)} />
             </CenteredFixed>
           </Portal>
         )}
