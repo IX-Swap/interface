@@ -26,7 +26,6 @@ const data = [
 export const SocialBlock = () => {
   const { config } = useWhitelabelState()
 
-  console.log('config?.footerConfig?.socialLinks', config?.footerConfig?.socialLinks)
   return (
     <SocialBlockContainer>
       <div>
