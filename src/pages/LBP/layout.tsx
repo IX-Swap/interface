@@ -5,8 +5,8 @@ import { useWeb3React } from 'hooks/useWeb3React'
 import Header from 'components/Header'
 import { useSetHideHeader } from 'state/application/hooks'
 import { MEDIA_WIDTHS } from 'theme'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { useUserState } from 'state/user/hooks'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 interface Props {
   background?: string
@@ -28,7 +28,7 @@ export const LbpLayout: React.FC<React.PropsWithChildren<Props>> = (props) => {
   }, [])
 
   if (!isLogged) {
-    return <NotAvailablePage />
+    return <ConnectWalletCard />
   }
 
   return (

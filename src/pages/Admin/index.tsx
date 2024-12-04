@@ -1,16 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory, useParams, useLocation } from 'react-router-dom' // Step 1: Import useLocation
 import styled from 'styled-components'
-import { Trans } from '@lingui/macro'
 import { useWeb3React } from 'hooks/useWeb3React'
 
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { MEDIA_WIDTHS } from 'theme'
 import { useUserState, useGetMe } from 'state/user/hooks'
 import { AdminAccreditationTable } from 'components/AdminAccreditationTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
-import { Border, ToggleOption } from 'components/Tabs'
 import { UsersList } from 'components/UsersList'
 import { AdminKycTable } from 'components/AdminKyc'
 
@@ -19,23 +16,10 @@ import { SUPPORTED_ADMIN_ROLES } from './mock'
 
 type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog' | 'users-list'
 
-interface Tab {
-  label: string
-  value: AdminTab
-}
-
 export interface AdminParams {
   tab: AdminTab
   id?: string
 }
-
-const tabs: Tab[] = [
-  { label: 'Accreditation', value: 'accreditation' },
-  { label: 'KYC', value: 'kyc' },
-  { label: 'Broker-dealer Transactions', value: 'transactions' },
-  { label: 'Security catalog', value: 'security-catalog' },
-  { label: 'Users', value: 'users-list' },
-]
 
 const renderTab = (selectedTab: AdminTab | string) => {
   switch (selectedTab) {
@@ -107,10 +91,6 @@ const Admin = () => {
     history.push('/')
   }, [me, fetchMe, history])
 
-  if (!isLogged) {
-    return <NotAvailablePage />
-  }
-
   const containerBackground = location.pathname.includes('security-catalog') ? 'none' : '#ffffff'
 
   return (
@@ -157,17 +137,6 @@ export const Body = styled.div`
 
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     margin: 20px auto;
-  }
-`
-
-const TabsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 60px;
-  column-gap: 32px;
-  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
-    flex-direction: column;
-    row-gap: 4px;
   }
 `
 

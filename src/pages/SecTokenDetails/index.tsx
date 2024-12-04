@@ -5,14 +5,11 @@ import styled from 'styled-components'
 import Portal from '@reach/portal'
 
 import { Vault } from 'components/Vault'
-import { DepositPopup } from 'components/Vault/DepositPopup'
 import { WithdrawPopup } from 'components/Vault/WithdrawPopup'
 import { useCurrency } from 'hooks/Tokens'
 import { routes } from 'utils/routes'
 import { getAtlasInfo, getToken } from 'state/secCatalog/hooks'
-import { BackArrowButton } from 'components/BackArrowButton'
 import { TokenLogo } from 'components/TokenLogo'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Container, ValutContainer, InfoTitle, Logo, StyledTitleBig } from './styleds'
 import { DetailsInfo } from './DetailsInfo'
@@ -27,6 +24,7 @@ import { useWalletState } from 'state/wallet/hooks'
 import { BackButton, StyledArrowBack, BackText } from 'pages/PayoutItem/PayoutItemManager'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 export default function SecTokenDetails({
   match: {
@@ -65,7 +63,7 @@ export default function SecTokenDetails({
     history.push(routes.securityTokens('tokens'))
   }
 
-  if (!isLoggedIn) return <NotAvailablePage />
+  if (!isLoggedIn) return <ConnectWalletCard />
 
   if (isOpenDepositCard && token && token?.token) {
     return (
@@ -73,7 +71,7 @@ export default function SecTokenDetails({
         {isWrongChain ? (
           <Portal>
             <CenteredFixed width="100vw" height="100vh">
-              <NetworkNotAvailable expectChain={expectChain} />
+              <NetworkNotAvailable expectChainId={expectChain} />
             </CenteredFixed>
           </Portal>
         ) : (
@@ -125,7 +123,7 @@ export default function SecTokenDetails({
       {isWrongChain ? (
         <Portal>
           <CenteredFixed width="100vw" height="100vh">
-            <NetworkNotAvailable expectChain={expectChain} />
+            <NetworkNotAvailable expectChainId={expectChain} />
           </CenteredFixed>
         </Portal>
       ) : null}

@@ -133,7 +133,7 @@ export default function LaunchpadOffer() {
       {isWrongChain ? (
         <Portal>
           <CenteredFixed width="100vw" height="100vh">
-            <NetworkNotAvailable expectChain={expectChain} />
+            <NetworkNotAvailable expectChainId={expectChain} />
           </CenteredFixed>
         </Portal>
       ) : null}

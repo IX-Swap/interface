@@ -6,7 +6,7 @@ import { LaunchpadContainer } from 'pages/Launchpad'
 import { useSetHideHeader } from 'state/application/hooks'
 import Header from 'components/Header'
 import { useWeb3React } from 'hooks/useWeb3React'
-import { NotAvailablePage } from 'components/NotAvailablePage'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 interface Props {
   background?: string
@@ -24,7 +24,7 @@ export const IssuancePageLayout: React.FC<React.PropsWithChildren<Props>> = (pro
     }
   }, [])
 
-  if (!account) return <NotAvailablePage />
+  if (!account) return <ConnectWalletCard />
 
   return (
     <>
