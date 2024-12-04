@@ -6,7 +6,7 @@ import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 import _get from 'lodash/get'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useSwitchChain } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 import { isMobile } from 'react-device-detect'
 
 import { useKYCState } from 'state/kyc/hooks'
@@ -30,7 +30,8 @@ import { CHAINS } from 'components/Web3Provider/constants'
 
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
-  const { account, chainId } = useActiveWeb3React()
+  const { chainId } = useAccount()
+  const { account } = useActiveWeb3React()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
   const { isUser } = useRole()
@@ -58,9 +59,10 @@ export default function Header() {
 
   useEffect(() => {
     const lastAccount = localStorage.getItem('account')
-    const currentChainId: any = chainId ? chainId.toString() : ''
+    const currentChainId: any = chainId ? chainId : ''
     const supportedChains: any = CHAINS ? CHAINS.map((chain) => chain.id) : []
     const defaultChainId = Number(DEFAULT_CHAIN_ID)
+
     if (!lastAccount && account && chainId !== defaultChainId && supportedChains.includes(currentChainId)) {
       localStorage.setItem('account', account)
       switchChain({ chainId: defaultChainId })
