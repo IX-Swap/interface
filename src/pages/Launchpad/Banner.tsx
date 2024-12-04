@@ -65,7 +65,7 @@ export const Banner = () => {
             <BannerInfoRedirectImage src={LearnMoreIcon} />
             <BannerInfoRedirectLabel>
               <BannerInfoRedirectTitle>{launchpadBannerInfoRedirectTitle}</BannerInfoRedirectTitle>
-              <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl}>Learn more</BannerInfoRedirectSubtitle>
+              <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl} target='_blank'>Learn more</BannerInfoRedirectSubtitle>
             </BannerInfoRedirectLabel>
           </BannerInfoRedirect>
         </TotalRaisedWrap>
