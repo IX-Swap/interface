@@ -14,7 +14,7 @@ import { SocialBlockContainer } from './styleds'
 
 const data = [
   { href: 'https://t.me/ixswapofficial', Icon: telegramImg, name: 'telegram' },
-  { href: 'https://x.com/IxSwap', Icon: xImg, name: 'x' },
+  { href: 'https://x.com/IxSwap', Icon: xImg, name: 'twitter' },
   { href: 'https://www.linkedin.com/company/ixswap', Icon: linkedinImg, name: 'linkedin' },
   { href: 'https://www.youtube.com/channel/UCaYPNR-eLs9iuB5ZVKRx-fw', Icon: youtubeImg, name: 'youtube' },
   { href: 'https://www.coingecko.com/en/coins/ix-swap', Icon: coingekoImg, name: 'coingeko' },
@@ -26,6 +26,7 @@ const data = [
 export const SocialBlock = () => {
   const { config } = useWhitelabelState()
 
+  console.log('config?.footerConfig?.socialLinks', config?.footerConfig?.socialLinks)
   return (
     <SocialBlockContainer>
       <div>
