@@ -1,16 +1,16 @@
 import React from 'react'
-import { useSwitchChain } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 import * as all from 'viem/chains'
 
 import { Container, Title, Info } from './styled'
-import { useWeb3React } from 'hooks/useWeb3React'
 import wrongNetworkImg from 'assets/images/warningRedRec.png'
 import { Flex } from 'rebass'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import { useLogout } from 'state/auth/hooks'
 
-function getChain(id: number) {
+function getChain(id: any) {
   const { ...chains } = all
+
   for (const chain of Object.values(chains)) {
     if (chain.id === id) {
       return chain
@@ -21,11 +21,11 @@ function getChain(id: number) {
 }
 
 interface Props {
-  expectChainId: any;
+  expectChainId: any
 }
 
 export const NetworkNotAvailable: React.FC<Props> = ({ expectChainId }) => {
-  const { chainId } = useWeb3React()
+  const { chainId } = useAccount()
   const { isPending, chains, switchChain } = useSwitchChain()
   const { disconnectWallet } = useLogout()
 
