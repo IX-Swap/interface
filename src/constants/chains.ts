@@ -1,6 +1,7 @@
 import ethereumLogoUrl from 'assets/images/ethereum-logo.png'
 import polygonLogoUrl from 'assets/images/polygon.svg'
 import baseLogoUrl from 'assets/images/base.svg'
+import ozeanLogoUrl from 'assets/images/chains/ozean.png'
 import { InterfaceChainId } from 'types/chains'
 
 export enum SupportedChainId {
@@ -11,6 +12,7 @@ export enum SupportedChainId {
   AMOY = 80002,
   BASE = 8453,
   BASE_SEPOLIA = 84532,
+  OZEAN_TESTNET = 7849306,
 }
 
 export const NETWORK_LOGOS: { [chainName: string]: string } = {
@@ -30,6 +32,7 @@ export const NETWORK_LABELS: { [chainId: number]: string } = {
   [137]: 'Polygon',
   [84532]: 'Base Sepolia',
   [8453]: 'Base',
+  [7849306]: 'Ozean Testnet',
 }
 
 export const NETWORK_NAMES: { [chainId: number]: string } = {
@@ -151,6 +154,17 @@ export const CHAIN_INFO: ChainInfoMap = {
     logoUrl: baseLogoUrl,
     rpcUrls: ['https://sepolia.base.org/'],
     blockExplorerUrls: ['https://sepolia.basescan.org/'],
+  },
+  [SupportedChainId.OZEAN_TESTNET]: {
+    chainName: 'Ozean Testnet',
+    nativeCurrency: {
+      name: 'USDX',
+      symbol: 'USDX',
+      decimals: 18,
+    },
+    logoUrl: ozeanLogoUrl,
+    rpcUrls: ['https://ozean-testnet.rpc.caldera.xyz/http'],
+    blockExplorerUrls: ['https://ozean-testnet.explorer.caldera.xyz'],
   },
 }
 

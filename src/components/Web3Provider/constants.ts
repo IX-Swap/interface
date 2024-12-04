@@ -8,6 +8,7 @@ import GNOSIS_ICON from 'assets/wallets/gnosis.png'
 import COINBASE_ICON from 'assets/wallets/coinbase-icon.svg'
 import METAMASK_ICON from 'assets/wallets/metamask-icon.svg'
 import WALLET_CONNECT_ICON from 'assets/wallets/walletconnect-icon.svg'
+import ozeanTestnet from './chains/ozeanTestnet'
 
 export const CONNECTION = {
   WALLET_CONNECT_CONNECTOR_ID: 'walletConnect',
@@ -30,7 +31,7 @@ export const CONNECTOR_ICON_OVERRIDE_MAP: { [id in string]?: string } = {
 const getAlchemyUrlFor = (network: string) =>
   process.env.REACT_APP_ALCHEMY_KEY ? `https://${network}.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_KEY}` : ''
 
-export const CHAINS: [Chain, ...Chain[]] = isTestnet ? [baseSepolia, polygonAmoy] : [base, polygon]
+export const CHAINS: [Chain, ...Chain[]] = isTestnet ? [baseSepolia, polygonAmoy, ozeanTestnet] : [base, polygon]
 
 export const PUBLIC_NODES = {
   [ChainId.Polygon]: [getAlchemyUrlFor('polygon-mainnet'), 'https://polygon-rpc.com'].filter(Boolean),
