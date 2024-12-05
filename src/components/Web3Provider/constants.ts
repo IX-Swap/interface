@@ -33,6 +33,10 @@ const getAlchemyUrlFor = (network: string) =>
 
 export const CHAINS: [Chain, ...Chain[]] = isTestnet ? [baseSepolia, polygonAmoy, ozeanTestnet] : [base, polygon]
 
+export const customChains = {
+  ozeanTestnet,
+}
+
 export const PUBLIC_NODES = {
   [ChainId.Polygon]: [getAlchemyUrlFor('polygon-mainnet'), 'https://polygon-rpc.com'].filter(Boolean),
   [ChainId.Amoy]: [getAlchemyUrlFor('polygon-amoy'), 'https://rpc-amoy.polygon.technology/'].filter(Boolean),
