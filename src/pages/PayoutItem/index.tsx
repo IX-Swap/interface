@@ -29,6 +29,7 @@ import MorePayoutEvents from './MoreEventBlock'
 import { PAYOUT_TYPE } from 'components/TmPayoutEvents/constants'
 import { BackButton, StyledArrowBack, BackText } from './PayoutItemManager'
 import { routes } from 'utils/routes'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 export interface MyAmounts {
   poolTokens: number
@@ -91,6 +92,10 @@ export default function PayoutItemForUser({
 
   const handleBackClick = () => {
     history.push(routes.userPayoutEvents)
+  }
+
+  if (!account) {
+    return <ConnectWalletCard />
   }
 
   return (
