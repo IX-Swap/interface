@@ -17,7 +17,7 @@ function getChain(id: any) {
     }
   }
 
-  throw new Error(`Chain with id ${id} not found`)
+  return null
 }
 
 interface Props {
@@ -38,7 +38,7 @@ export const NetworkNotAvailable: React.FC<Props> = ({ expectChainId }) => {
   const expectChain = chains.find((chain) => chain.id === expectChainId)
   const expectChainName = expectChain?.name || 'Unknown'
   const currentChain = getChain(chainId)
-  const currentChainName = currentChain.name
+  const currentChainName = currentChain ? currentChain.name : 'Unknown'
 
   return (
     <Container>
