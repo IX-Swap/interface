@@ -7,11 +7,13 @@ import wrongNetworkImg from 'assets/images/warningRedRec.png'
 import { Flex } from 'rebass'
 import { ButtonOutlined, PinnedContentButton } from 'components/Button'
 import { useLogout } from 'state/auth/hooks'
+import ozeanTestnet from 'components/Web3Provider/chains/ozeanTestnet'
 
 function getChain(id: any) {
   const { ...chains } = all
+  const allChains = {...chains, ozeanTestnet}
 
-  for (const chain of Object.values(chains)) {
+  for (const chain of Object.values(allChains)) {
     if (chain.id === id) {
       return chain
     }
