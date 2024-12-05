@@ -20,6 +20,7 @@ import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { useWeb3React } from 'hooks/useWeb3React'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 interface Props {
   payout: PayoutEvent
@@ -56,7 +57,9 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
                   to={routes.securityToken(secToken?.catalogId)}
                 >
                   <Trans>{title}</Trans>
-                  <span className="secTokenLinkSymbol">{payout.includeOriginSupply ? secToken?.originalSymbol : secToken?.symbol}</span>
+                  <span className="secTokenLinkSymbol">
+                    {payout.includeOriginSupply ? secToken?.originalSymbol : secToken?.symbol}
+                  </span>
                 </SecTokenLink>
               </TitleContent>
               <ReadMoreContainer>
