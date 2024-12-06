@@ -43,7 +43,6 @@ export const NetworkCard = () => {
     }
   }
 
-  console.log('account', account)
   return (
     <StyledBox isCorrectNetwork={isCorrectNetwork}>
       {account && (

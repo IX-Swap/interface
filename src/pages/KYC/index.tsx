@@ -26,6 +26,8 @@ import Copy from 'components/AccountDetails/Copy'
 import { useGetMe } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
 import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
+import { detectWrongNetwork } from 'utils'
+import { useAccount } from 'wagmi'
 
 interface DescriptionProps {
   description: string | null
@@ -89,6 +91,7 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 
 const KYC = () => {
   const { account } = useWeb3React()
+  const { chainId } = useAccount()
   const [cookies] = useCookies(['annoucementsSeen'])
   const { config } = useWhitelabelState()
   const { kyc, loadingRequest } = useKYCState()
@@ -98,6 +101,7 @@ const KYC = () => {
   const [referralCode, setReferralCode] = useState<string | null>('')
   const getMe = useGetMe()
   const history = useHistory()
+  const isWrongNetwork = detectWrongNetwork(chainId as number)
 
   const supportEmail = _get(config, 'supportEmail', 'c@ixswap.io')
 
@@ -160,7 +164,7 @@ const KYC = () => {
               sx={{ gap: '1rem', marginTop: '40px' }}
             >
               <Flex
-                onClick={() => history.push(getKYCLink())}
+                onClick={() => !isWrongNetwork && history.push(getKYCLink())}
                 sx={{
                   border: '1px solid #E6E6FF',
                   marginBottom: isMobile ? '32px' : '0px',
@@ -183,14 +187,15 @@ const KYC = () => {
                   >
                     <Trans>Pass KYC as Individual</Trans>
                   </Text>
+
                   <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
-                    <Trans>Start Now</Trans>
+                    {isWrongNetwork ? <LoaderThin size={24} style={{ marginTop: 12 }} /> : <Trans>Start Now</Trans>}
                   </Text>
                 </>
               </Flex>
 
               <Flex
-                onClick={() => openModal('corporate')}
+                onClick={() => !isWrongNetwork && openModal('corporate')}
                 sx={{
                   border: '1px solid #E6E6FF',
                   padding: isMobile ? '40px 40px' : '50px 90px',
@@ -208,9 +213,11 @@ const KYC = () => {
                   </Text>
                 </>
                 {/* <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate"> */}
+
                 <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
-                  <Trans>Start Now</Trans>
+                  {isWrongNetwork ? <LoaderThin size={24} /> : <Trans>Start Now</Trans>}
                 </Text>
+
                 {/* </Link> */}
               </Flex>
             </Flex>
@@ -300,7 +307,7 @@ const KYC = () => {
           </>
         )
     }
-  }, [status, description, kyc])
+  }, [status, description, kyc, chainId])
 
   if (!account) {
     return (
