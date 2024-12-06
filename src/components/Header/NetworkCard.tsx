@@ -1,11 +1,10 @@
 import React, { useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
-import { useSwitchChain } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 
 import { CHAIN_INFO, NETWORK_LABELS } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
-import { useActiveWeb3React } from 'hooks/web3'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import { ChevronElement } from 'components/ChevronElement'
@@ -20,7 +19,7 @@ interface StyledBoxProps {
 }
 
 export const NetworkCard = () => {
-  const { chainId, provider, account } = useActiveWeb3React()
+  const { chainId, address: account } = useAccount()
   const { isPending, switchChain } = useSwitchChain()
 
   const node = useRef<HTMLDivElement>()
@@ -29,11 +28,11 @@ export const NetworkCard = () => {
   const info = chainId ? CHAIN_INFO[chainId] : undefined
   useOnClickOutside(node, open ? toggle : undefined)
   const supportedChains = CHAINS ? CHAINS.map((chain) => chain.id) : []
-  const isCorrectNetwork = supportedChains.includes(chainId)
+  const isCorrectNetwork = supportedChains.includes(chainId as number)
 
   const activeChainName = useMemo(() => chainId && NETWORK_LABELS[chainId], [chainId])
 
-  if (!chainId || !NETWORK_LABELS[chainId] || !info || !provider) {
+  if (!chainId || !NETWORK_LABELS[chainId] || !info) {
     return null
   }
 
@@ -44,6 +43,7 @@ export const NetworkCard = () => {
     }
   }
 
+  console.log('account', account)
   return (
     <StyledBox isCorrectNetwork={isCorrectNetwork}>
       {account && (

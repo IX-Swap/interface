@@ -30,8 +30,7 @@ import { CHAINS } from 'components/Web3Provider/constants'
 
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
-  const { chainId } = useAccount()
-  const { account } = useActiveWeb3React()
+  const { chainId, address: account } = useAccount()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
   const { isUser } = useRole()
