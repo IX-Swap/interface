@@ -110,4 +110,16 @@ export const POOL_SIZE_LIMIT_TEXTS: {
     [PERIOD.TWO_MONTHS]: `1 mln`,
     [PERIOD.THREE_MONTHS]: `500k`,
   },
+  [SupportedChainId.KAIA]: {
+    [PERIOD.ONE_WEEK]: `Unlimited`,
+    [PERIOD.ONE_MONTH]: `500k`,
+    [PERIOD.TWO_MONTHS]: `1 mln`,
+    [PERIOD.THREE_MONTHS]: `500k`,
+  },
+  [SupportedChainId.KAIROS_TESTNET]: {
+    [PERIOD.ONE_WEEK]: `Unlimited`,
+    [PERIOD.ONE_MONTH]: `500k`,
+    [PERIOD.TWO_MONTHS]: `1 mln`,
+    [PERIOD.THREE_MONTHS]: `500k`,
+  },
 }

@@ -1,4 +1,4 @@
-import { baseSepolia, base, polygon, polygonAmoy, Chain } from 'wagmi/chains'
+import { baseSepolia, base, polygon, polygonAmoy, Chain, kairos, kaia } from 'wagmi/chains'
 import { fallback, http } from 'wagmi'
 import { Transport } from 'viem'
 
@@ -31,7 +31,9 @@ export const CONNECTOR_ICON_OVERRIDE_MAP: { [id in string]?: string } = {
 const getAlchemyUrlFor = (network: string) =>
   process.env.REACT_APP_ALCHEMY_KEY ? `https://${network}.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_KEY}` : ''
 
-export const CHAINS: [Chain, ...Chain[]] = isTestnet ? [baseSepolia, polygonAmoy, ozeanTestnet] : [base, polygon]
+export const CHAINS: [Chain, ...Chain[]] = isTestnet
+  ? [baseSepolia, polygonAmoy, ozeanTestnet, kairos]
+  : [base, polygon, kaia]
 
 export const customChains = {
   ozeanTestnet,
@@ -42,6 +44,9 @@ export const PUBLIC_NODES = {
   [ChainId.Amoy]: [getAlchemyUrlFor('polygon-amoy'), 'https://rpc-amoy.polygon.technology/'].filter(Boolean),
   [ChainId.Base]: [getAlchemyUrlFor('base-mainnet')],
   [ChainId.BaseSepolia]: [getAlchemyUrlFor('base-sepolia')],
+  [ChainId.OzeanTestnet]: ['https://ozean-testnet.rpc.caldera.xyz/http'],
+  [ChainId.KairosTestnet]: ['https://public-en-kairos.node.kaia.io'],
+  [ChainId.Kaia]: ['https://public-en-kaia.node.kaia.io'],
 } as any
 
 export const transports = CHAINS.reduce((ts, chain) => {

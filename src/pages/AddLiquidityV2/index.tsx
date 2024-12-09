@@ -14,7 +14,6 @@ import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter
 import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
 import { setPoolTransactionHash, useAddLiquidity, useMitigationEnabled } from 'state/pool/hooks'
 import { routes } from 'utils/routes'
-import { NETWORK_NAMES } from 'constants/chains'
 
 import { NewApproveButton, PinnedContentButton } from '../../components/Button'
 import { AutoColumn, ColumnCenter } from '../../components/Column'

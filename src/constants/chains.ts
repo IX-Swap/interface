@@ -2,6 +2,7 @@ import ethereumLogoUrl from 'assets/images/ethereum-logo.png'
 import polygonLogoUrl from 'assets/images/polygon.svg'
 import baseLogoUrl from 'assets/images/base.svg'
 import ozeanLogoUrl from 'assets/images/chains/ozean.png'
+import kaiaLogoUrl from 'assets/images/chains/kaia.svg'
 import { InterfaceChainId } from 'types/chains'
 
 export enum SupportedChainId {
@@ -13,6 +14,8 @@ export enum SupportedChainId {
   BASE = 8453,
   BASE_SEPOLIA = 84532,
   OZEAN_TESTNET = 7849306,
+  KAIROS_TESTNET = 1001,
+  KAIA = 8217,
 }
 
 export const NETWORK_LOGOS: { [chainName: string]: string } = {
@@ -33,14 +36,8 @@ export const NETWORK_LABELS: { [chainId: number]: string } = {
   [84532]: 'Base Sepolia',
   [8453]: 'Base',
   [7849306]: 'Ozean Testnet',
-}
-
-export const NETWORK_NAMES: { [chainId: number]: string } = {
-  [1]: 'ethereum',
-  [42]: 'kovan',
-  [137]: 'polygon',
-  [8453]: 'base',
-  [84532]: 'base-sepolia',
+  [1001]: 'Kairos Testnet',
+  [8217]: 'Kaia',
 }
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
@@ -68,7 +65,7 @@ export const nameChainMap = {
   polygon: SupportedChainId.MATIC,
   kovan: SupportedChainId.KOVAN,
   ethereum: SupportedChainId.MAINNET,
-  base: SupportedChainId.BASE
+  base: SupportedChainId.BASE,
 }
 
 export const getChainFromName = (name: string, isTestnet = false): SupportedChainId => {
@@ -165,6 +162,28 @@ export const CHAIN_INFO: ChainInfoMap = {
     logoUrl: ozeanLogoUrl,
     rpcUrls: ['https://ozean-testnet.rpc.caldera.xyz/http'],
     blockExplorerUrls: ['https://ozean-testnet.explorer.caldera.xyz'],
+  },
+  [SupportedChainId.KAIROS_TESTNET]: {
+    chainName: 'Base Sepolia',
+    nativeCurrency: {
+      name: 'Kairos KAIA',
+      symbol: 'KAIA',
+      decimals: 18,
+    },
+    logoUrl: kaiaLogoUrl,
+    rpcUrls: ['https://public-en-kairos.node.kaia.io'],
+    blockExplorerUrls: ['https://kairos.kaiascan.io'],
+  },
+  [SupportedChainId.KAIA]: {
+    chainName: 'Kaia',
+    nativeCurrency: {
+      name: 'Kaia',
+      symbol: 'KAIA',
+      decimals: 18,
+    },
+    logoUrl: kaiaLogoUrl,
+    rpcUrls: ['https://public-en.node.kaia.io'],
+    blockExplorerUrls: ['https://kaiascan.io'],
   },
 }
 

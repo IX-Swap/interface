@@ -4,6 +4,9 @@ export enum SupportedChainId {
   AMOY = 80002,
   BASE = 8453,
   BASE_SEPOLIA = 84532,
+  OZEAN_TESTNET = 7849306,
+  KAIROS_TESTNET = 1001,
+  KAIA = 8217,
 }
 
 export enum ChainId {
@@ -12,6 +15,9 @@ export enum ChainId {
   Base = SupportedChainId.BASE,
   Amoy = SupportedChainId.AMOY,
   BaseSepolia = SupportedChainId.BASE_SEPOLIA,
+  OzeanTestnet = SupportedChainId.OZEAN_TESTNET,
+  KairosTestnet = SupportedChainId.KAIROS_TESTNET,
+  Kaia = SupportedChainId.KAIA,
 }
 
 export interface RetryOptions {
