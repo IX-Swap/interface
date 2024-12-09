@@ -1,7 +1,6 @@
 import { Currency } from '@ixswap1/sdk-core'
 
 import { currencyId } from './currencyId'
-import { Whitelabel } from 'state/whitelabel/types'
 
 export const routes = {
   add: (currency0: Currency, currency1: Currency) => `/add/${currencyId(currency0)}/${currencyId(currency1)}`,
@@ -80,6 +79,7 @@ export const routes = {
 
   // Dex V2
   dexV2CreatePool: '/dex-v2/pool/create',
+  dexV2Pool: '/dex-v2/pool',
 }
 
 export function checkAllowed(path: string, allowedPages: string[] | null | undefined): boolean {
