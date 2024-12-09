@@ -32,10 +32,6 @@ export const NetworkCard = () => {
 
   const activeChainName = useMemo(() => chainId && NETWORK_LABELS[chainId], [chainId])
 
-  if (!chainId || !NETWORK_LABELS[chainId] || !info) {
-    return null
-  }
-
   const handleRowClick = (targetChain: number) => {
     toggle()
     if (chainId !== targetChain) {
@@ -54,7 +50,7 @@ export const NetworkCard = () => {
               <Flex alignItems="center">
                 {isCorrectNetwork ? (
                   <>
-                    <Logo src={CHAIN_INFO[chainId].logoUrl} />
+                    {info ? <Logo src={info.logoUrl} /> : null}
                     <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
                       {activeChainName}
                     </NetworkCardWrapper>
