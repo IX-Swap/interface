@@ -112,7 +112,6 @@ const IndividualFormV2 = ({ data }: Props) => {
 
       {message ? (
         <>
-          {' '}
           <StatusHeader>
             <TYPE.body4 color={'bg14'}>Rejection message</TYPE.body4>
           </StatusHeader>
