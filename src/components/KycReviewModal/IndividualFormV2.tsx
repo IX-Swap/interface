@@ -110,13 +110,18 @@ const IndividualFormV2 = ({ data }: Props) => {
       <StatusBoxContainer>{renderInfoBox(getSecondaryContactLabel(), getSecondaryContactValue())}</StatusBoxContainer>
       <Line style={{ marginTop: '10px' }} />
 
-      <StatusHeader>
-        <TYPE.body4 color={'bg14'}>Rejection message</TYPE.body4>
-      </StatusHeader>
-      <TYPE.body3 marginBottom="16px" opacity="0.5">
-        {message}
-      </TYPE.body3>
-      <Line style={{ marginTop: '10px' }} />
+      {message ? (
+        <>
+          {' '}
+          <StatusHeader>
+            <TYPE.body4 color={'bg14'}>Rejection message</TYPE.body4>
+          </StatusHeader>
+          <TYPE.body3 marginBottom="16px" opacity="0.5">
+            {message}
+          </TYPE.body3>
+          <Line style={{ marginTop: '10px' }} />
+        </>
+      ) : null}
     </FormContainer>
   )
 }
