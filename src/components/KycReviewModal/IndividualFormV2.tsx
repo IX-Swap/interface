@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
+import _get from 'lodash/get'
+
 import { ReactComponent as EyeIcon } from '../../assets/images/blue_eye_icon.svg'
 import { Line } from 'components/Line'
 import { KycItem } from 'state/admin/actions'
@@ -12,6 +14,7 @@ interface Props {
 }
 
 const IndividualFormV2 = ({ data }: Props) => {
+  console.log('data', data)
   const renderStatusBox = (title: string, status: string) =>
     status ? (
       <StatusBox>
@@ -31,6 +34,7 @@ const IndividualFormV2 = ({ data }: Props) => {
 
   const renderedStatusBoxes = statusBoxes.filter((box) => box.status).length
   const gridTemplateColumns = `repeat(${renderedStatusBoxes}, 1fr)`
+  const message = _get(data, 'message', '')
 
   const renderInfoBox = (label: string, value: string) => {
     if (!value) return null
@@ -105,6 +109,14 @@ const IndividualFormV2 = ({ data }: Props) => {
         <TYPE.body4>Secondary Contact Details</TYPE.body4>
       </StatusHeader>
       <StatusBoxContainer>{renderInfoBox(getSecondaryContactLabel(), getSecondaryContactValue())}</StatusBoxContainer>
+      <Line style={{ marginTop: '10px' }} />
+
+      <StatusHeader>
+        <TYPE.body4 color={'bg14'}>Rejection message</TYPE.body4>
+      </StatusHeader>
+      <TYPE.body3 marginBottom="16px" opacity="0.5">
+        {message}
+      </TYPE.body3>
       <Line style={{ marginTop: '10px' }} />
     </FormContainer>
   )
