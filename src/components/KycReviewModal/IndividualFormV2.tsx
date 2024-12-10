@@ -14,7 +14,6 @@ interface Props {
 }
 
 const IndividualFormV2 = ({ data }: Props) => {
-  console.log('data', data)
   const renderStatusBox = (title: string, status: string) =>
     status ? (
       <StatusBox>
