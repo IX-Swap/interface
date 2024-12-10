@@ -18,7 +18,6 @@ import { Pagination } from '../Pagination'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { StatusCell } from './StatusCell'
 import { KycReviewModal } from 'components/KycReviewModal'
-import { ButtonGradientBorder } from 'components/Button'
 import { AdminParams } from 'pages/Admin'
 import { NoData } from 'components/UsersList/styleds'
 import { getStatusStats } from 'state/kyc/hooks'
@@ -36,8 +35,8 @@ import ReminderModal from './ReminderModal'
 const headerCells = [
   { key: 'ethAddress', label: 'Wallet address', show: false },
   { key: 'fullName', label: 'Name', show: false },
-  { key: 'identity', label: 'Identity', show: false },
   { key: 'Tenant', label: 'Tenant', show: false },
+  { key: 'nationality', label: 'Nationality', show: false },
   { key: 'createdAt', label: 'Date of request', show: true },
   { key: 'status', label: 'KYC Status', show: false },
   { key: 'completedKycOfProvider', label: 'Provider Status', show: false },
@@ -67,7 +66,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   const kyc = individualKycId ? individual : corporate
   const completedKycOfProvider = individual?.completedKycOfProvider
   const fullName = individualKycId
-    ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
+    ? [kyc?.firstName, kyc?.middleName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
     : kyc?.corporateName
 
   let approverName = '-'
@@ -91,8 +90,8 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <CopyAddress address={ethAddress} />
       </Wallet>
       <div style={{ fontSize: '12px' }}>{fullName || '-'}</div>
-      <div style={{ fontSize: '12px' }}>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>
       <div style={{ fontSize: '12px' }}>{t`${whiteLabelConfig?.name}`}</div>
+      <div style={{ fontSize: '12px' }}>{kyc?.nationality || '-'}</div>
       <div style={{ fontSize: '12px' }}>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
       <div style={{ fontSize: '12px', whiteSpace: 'break-spaces' }}>
         <StatusCell status={status} />
@@ -275,6 +274,7 @@ export const AdminKycTable = () => {
               </>
             }
           />
+
           <Pagination totalItems={totalItems} page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
       )}
@@ -332,10 +332,4 @@ const StyledBodyRow = styled(BodyRow)`
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     min-width: 1370px;
   }
-`
-
-const StyledReviewButton = styled(ButtonGradientBorder)`
-  min-height: 32px;
-  padding: 4px 8px;
-  font-size: 14px;
 `
