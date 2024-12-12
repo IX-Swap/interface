@@ -2,7 +2,7 @@ import ethereumLogoUrl from 'assets/images/ethereum-logo.png'
 import polygonLogoUrl from 'assets/images/polygon.svg'
 import baseLogoUrl from 'assets/images/base.svg'
 import ozeanLogoUrl from 'assets/images/chains/ozean.png'
-import kaiaLogoUrl from 'assets/images/chains/kaia.svg'
+import kaiaLogoUrl from 'assets/images/chains/kaia.png'
 import { InterfaceChainId } from 'types/chains'
 
 export enum SupportedChainId {
@@ -22,6 +22,8 @@ export const NETWORK_LOGOS: { [chainName: string]: string } = {
   ethereum: ethereumLogoUrl,
   polygon: polygonLogoUrl,
   base: baseLogoUrl,
+  ozean: ozeanLogoUrl,
+  kaia: kaiaLogoUrl,
 }
 
 export const NETWORK_LABELS: { [chainId: number]: string } = {
@@ -66,6 +68,7 @@ export const nameChainMap = {
   kovan: SupportedChainId.KOVAN,
   ethereum: SupportedChainId.MAINNET,
   base: SupportedChainId.BASE,
+
 }
 
 export const getChainFromName = (name: string, isTestnet = false): SupportedChainId => {

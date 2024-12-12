@@ -4,7 +4,6 @@ import Portal from '@reach/portal'
 import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 
-import { useActiveWeb3React } from 'hooks/web3'
 import { Footer } from 'pages/Launchpad/Footer'
 import { OfferStatus } from 'state/launchpad/types'
 import { useCheckKYC, useGetOffer } from 'state/launchpad/hooks'
@@ -24,6 +23,7 @@ import Header from 'components/Header'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import WhiteLabelFooter from 'components/WhiteLabelFooter'
 import { checkWrongChain } from 'utils/chains'
+import { useAccount } from 'wagmi'
 
 interface OfferPageParams {
   offerId: string
@@ -33,7 +33,7 @@ export default function LaunchpadOffer() {
   const theme = useTheme()
   const history = useHistory()
   const params = useParams<OfferPageParams>()
-  const { chainId, account } = useActiveWeb3React()
+  const { chainId, address: account } = useAccount()
   const offer: any = useGetOffer(params.offerId)
   const hideHeader = useSetHideHeader()
   const checkKYC = useCheckKYC()

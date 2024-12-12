@@ -1,18 +1,20 @@
 import React, { useCallback, useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { Search, Copy, Plus } from 'react-feather'
+import { isMobile } from 'react-device-detect'
+import { useAccount } from 'wagmi'
+
 import MetamaskIcon from 'assets/images/metamask.png'
 import { IconButton, Row } from 'components/LaunchpadMisc/styled'
 import { shortenAddress } from 'utils'
 import { OfferNetwork } from 'state/launchpad/types'
 import { useAddPopup } from 'state/application/hooks'
-import { CHAIN_INFO, SupportedChainId, nameChainMap, getChainFromName } from 'constants/chains'
+import { CHAIN_INFO, getChainFromName } from 'constants/chains'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
 import { DiscreteExternalLink, MEDIA_WIDTHS } from 'theme'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { text10 } from 'components/LaunchpadMisc/typography'
-import { useActiveWeb3React } from 'hooks/web3'
-import { isMobile } from 'react-device-detect'
+import { isTestnet } from 'utils/isEnvMode'
 
 interface Props {
   network: OfferNetwork
@@ -25,17 +27,15 @@ export const OfferLinks: React.FC<Props> = ({ network, address, symbol, decimals
   const theme = useTheme()
   const addPopup = useAddPopup()
 
-  const { chainId } = useActiveWeb3React()
-  const nameChainMapNetwork = chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[network]
+  const { chainId } = useAccount()
 
-  const networkLogoUrl = CHAIN_INFO[nameChainMapNetwork].logoUrl
+  const networkLogoUrl = CHAIN_INFO[chainId as any].logoUrl
 
   const explorerLink = useMemo(() => {
-    const isTestnet = [SupportedChainId.AMOY, SupportedChainId.BASE_SEPOLIA].includes(chainId)
     const nameChainMapNetwork = getChainFromName(network, isTestnet)
 
     return getExplorerLink(nameChainMapNetwork, address, ExplorerDataType.TOKEN)
-  }, [network, address, nameChainMapNetwork])
+  }, [network, address, chainId])
 
   const copyAddress = useCallback(async () => {
     await navigator.clipboard.writeText(address)
