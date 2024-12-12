@@ -1,5 +1,7 @@
 import PolygonIcon from 'assets/images/polygonIcon.svg'
 import BaseIcon from 'assets/images/baseIcon.svg'
+import ozeanLogoUrl from 'assets/images/chains/ozean.png'
+import kaiaLogoUrl from 'assets/images/chains/kaia.png'
 import { Chains, NetworkName } from 'utils/chains'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { capitalizeWords } from 'utils/strings'
@@ -40,6 +42,8 @@ export const socialMediaPlatform = ['Telegram', 'Discord', 'X.com', 'Facebook', 
 const networkIcons = {
   [NetworkName.BASE]: BaseIcon,
   [NetworkName.POLYGON]: PolygonIcon,
+  [NetworkName.OZEAN]: ozeanLogoUrl,
+  [NetworkName.KAIA]: kaiaLogoUrl,
 }
 
 export const blockchainNetworks = Object.entries(NetworkName).map(([key, value]) => {

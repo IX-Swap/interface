@@ -3,10 +3,14 @@ import { isProd, isStaging } from 'utils/isEnvMode'
 import { capitalizeWords } from 'utils/strings'
 import polygonLogoUrl from 'assets/images/polygon.svg'
 import baseLogoUrl from 'assets/images/base.svg'
+import ozeanLogoUrl from 'assets/images/chains/ozean.png'
+import kaiaLogoUrl from 'assets/images/chains/kaia.png'
 
 export enum NetworkName {
   BASE = 'base',
   POLYGON = 'polygon',
+  OZEAN = 'ozean',
+  KAIA = 'kaia',
 }
 
 // chainIdToNetworkName covert chainId to network name regardless of whether it is testnet or mainnet
@@ -24,6 +28,8 @@ export const Chains = {
   // network name : tesnet, mainnet
   [NetworkName.BASE]: [SupportedChainId.BASE_SEPOLIA, SupportedChainId.BASE],
   [NetworkName.POLYGON]: [SupportedChainId.AMOY, SupportedChainId.MATIC],
+  [NetworkName.OZEAN]: [SupportedChainId.OZEAN_TESTNET], // TODO: Add mainnet chain id
+  [NetworkName.KAIA]: [SupportedChainId.KAIROS_TESTNET, SupportedChainId.KAIA],
 }
 
 export const findChainName = (chainId: number): string | null => {
@@ -44,6 +50,7 @@ export const checkWrongChain = (
   expectChain: number | null
 } => {
   const expectedChains = Chains[network as NetworkName] || [] // Default to an empty array if network is not found
+  console.log('expectedChains', expectedChains)
   if (!expectedChains.length) {
     return {
       isWrongChain: false,
@@ -69,7 +76,12 @@ export const getChainLogoUrl = (network: string | undefined) => {
     return baseLogoUrl
   } else if (network === NetworkName.POLYGON) {
     return polygonLogoUrl
+  } else if (network === NetworkName.OZEAN) {
+    return ozeanLogoUrl
+  } else if (network === NetworkName.KAIA) {
+    return kaiaLogoUrl
   }
+
   return null
 }
 

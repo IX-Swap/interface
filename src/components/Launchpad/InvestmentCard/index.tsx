@@ -49,7 +49,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
   const network = offer?.network ?? ''
   const networkLogo = network ? NETWORK_LOGOS[network] : ''
-  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
+  const isKycApproved = kyc?.status === KYCStatuses.APPROVED;
 
   const isClosed = React.useMemo(
     () => !!offer.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status),

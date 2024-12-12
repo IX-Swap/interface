@@ -22,6 +22,8 @@ export const NETWORK_LOGOS: { [chainName: string]: string } = {
   ethereum: ethereumLogoUrl,
   polygon: polygonLogoUrl,
   base: baseLogoUrl,
+  ozean: ozeanLogoUrl,
+  kaia: kaiaLogoUrl,
 }
 
 export const NETWORK_LABELS: { [chainId: number]: string } = {
