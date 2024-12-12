@@ -117,7 +117,6 @@ export const industryOptions = [
   { label: 'Technology', value: OfferIndustry.technology },
   { label: 'Media & Entertainment', value: OfferIndustry.mediaAndEntertainment },
   { label: 'Other', value: OfferIndustry.other },
-
 ]
 
 export const investmentStructureOptions = [
@@ -131,6 +130,8 @@ export const networkOptions = [
   // { label: 'Etherium', value: OfferNetwork.ethereum },
   { label: 'Polygon', value: OfferNetwork.polygon },
   { label: 'Base', value: OfferNetwork.base },
+  { label: 'Ozean', value: OfferNetwork.ozean },
+  { label: 'Kaia', value: OfferNetwork.kaia },
   // { label: 'Kovan', value: OfferNetwork.kovan },
 ]
 
