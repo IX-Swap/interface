@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 import { getData } from 'country-list'
@@ -24,7 +24,8 @@ import { AdditionalInformation } from './sections/AdditionalInformation'
 
 import {
   industryOptions,
-  tokenTypeOptions,
+  tokenTypeOptions as defaultTokenTypeOptions,
+  tokenTypeOptionsByNetwork,
   networkOptions,
   standardOptions,
   distributionFrequencyOptions,
@@ -133,6 +134,7 @@ export const InformationForm = (props: Props) => {
   // states
   const [showReview, setShowReview] = useState(false)
   const [isReset, setReset] = useState(false)
+  const [tokenTypeOptions, setTokenTypeOptions] = useState(defaultTokenTypeOptions)
 
   // callbacks
   const saveDraft = useCallback((values: InformationFormValues) => _submit(values, true), [_submit])
@@ -190,6 +192,13 @@ export const InformationForm = (props: Props) => {
     const updatedErrors = [...currentErrors, ...errorText]
     setFieldValue(field, updatedErrors)
   }
+
+  useEffect(() => {
+    if (values.network) {
+      setTokenTypeOptions(tokenTypeOptionsByNetwork[values.network])
+      setFieldValue('tokenType', undefined)
+    }
+  }, [values.network])
 
   return (
     <>
@@ -261,7 +270,7 @@ export const InformationForm = (props: Props) => {
             field="profilePicture"
             setter={setFieldValue}
             touch={setFieldTouched}
-            error={(errors.profilePicture) as string}
+            error={errors.profilePicture as string}
           />
 
           <ImageField
@@ -270,7 +279,7 @@ export const InformationForm = (props: Props) => {
             field="cardPicture"
             setter={setFieldValue}
             touch={setFieldTouched}
-            error={(errors.cardPicture) as string}
+            error={errors.cardPicture as string}
           />
         </ImageBlock>
 

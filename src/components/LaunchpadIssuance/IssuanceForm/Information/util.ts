@@ -151,6 +151,31 @@ export const tokenTypeOptions = [
   { label: 'USDC', value: OfferTokenType.USDC },
   { label: 'USDT', value: OfferTokenType.USDT },
 ]
+
+export const tokenTypeOptionsByNetwork = {
+  [OfferNetwork.polygon]: [
+    { label: 'WIXS', value: OfferTokenType.WIXS },
+    { label: 'WETH', value: OfferTokenType.WETH },
+    { label: 'USDC', value: OfferTokenType.USDC },
+    { label: 'USDT', value: OfferTokenType.USDT },
+  ],
+  [OfferNetwork.base]: [
+    { label: 'WIXS', value: OfferTokenType.WIXS },
+    { label: 'MATIC', value: OfferTokenType.MATIC },
+    { label: 'USDC', value: OfferTokenType.USDC },
+    { label: 'USDT', value: OfferTokenType.USDT },
+  ],
+  [OfferNetwork.ozean]: [
+    { label: 'WUSDX', value: OfferTokenType.WUSDX },
+    { label: 'USDC', value: OfferTokenType.USDC },
+    { label: 'USDT', value: OfferTokenType.USDT },
+  ],
+  [OfferNetwork.kaia]: [
+    { label: 'USDC', value: OfferTokenType.USDC },
+    { label: 'USDT', value: OfferTokenType.USDT },
+  ],
+} as any;
+
 export const tokenDecimalsOnOptions = [
   { label: 'On', value: true },
   { label: 'Off', value: false },
