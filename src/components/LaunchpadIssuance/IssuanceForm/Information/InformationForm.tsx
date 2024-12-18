@@ -195,8 +195,12 @@ export const InformationForm = (props: Props) => {
 
   useEffect(() => {
     if (values.network) {
-      setTokenTypeOptions(tokenTypeOptionsByNetwork[values.network])
-      setFieldValue('tokenType', undefined)
+      const options = tokenTypeOptionsByNetwork[values.network]
+      setTokenTypeOptions(options)
+
+      if (options && !options.find((option: any) => option.value === values.tokenType)) {
+        setFieldValue('tokenType', undefined)
+      }
     }
   }, [values.network])
 
