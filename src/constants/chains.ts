@@ -75,6 +75,8 @@ export const getChainFromName = (name: string, isTestnet = false): SupportedChai
   const chainByName = {
     polygon: isTestnet ? SupportedChainId.AMOY : SupportedChainId.MATIC,
     base: isTestnet ? SupportedChainId.BASE_SEPOLIA : SupportedChainId.BASE,
+    kaia: isTestnet ? SupportedChainId.KAIROS_TESTNET : SupportedChainId.KAIA,
+    ozean: isTestnet ? SupportedChainId.OZEAN_TESTNET : SupportedChainId.OZEAN_TESTNET,
   } as any
 
   return chainByName[name]
