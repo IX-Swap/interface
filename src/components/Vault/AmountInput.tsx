@@ -1,14 +1,107 @@
+import React, { ReactNode, useState } from 'react'
+import styled from 'styled-components'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
-import { MaxButton } from 'components/CurrencyInputPanel/MaxButton'
+import numeral from 'numeral'
+
 import { RowFixed } from 'components/Row'
 import { TokenLogo } from 'components/TokenLogo'
-import React, { ReactNode } from 'react'
-import styled from 'styled-components'
 import { TYPE } from 'theme'
-import { formatCurrencySymbol } from 'utils/formatCurrencySymbol'
 import CurrencyLogo from '../CurrencyLogo'
-import { Input as NumericalInput } from '../NumericalInput'
-import { style } from 'styled-system'
+
+type SecCurrency = Currency & {
+  originalSymbol?: string | null
+}
+
+interface Props {
+  balance?: string
+  currency?: SecCurrency
+  value: string
+  amount?: CurrencyAmount<SecCurrency>
+  showMax?: boolean
+  rightItem?: ReactNode
+  onUserInput: (typedValue: string) => void
+  token: any
+  symbol: string | undefined | null
+  originalDecimals?: number
+  disabled?: boolean
+}
+
+export const AmountInput = ({
+  balance,
+  currency,
+  onUserInput,
+  rightItem,
+  showMax = false,
+  token,
+  symbol,
+  disabled = false,
+  ...rest
+}: Props) => {
+  const isShowMaxButton = showMax && balance && Number(balance) > 0
+  const [displayValue, setDisplayValue] = useState<string>('')
+
+  const handleMax = () => {
+    if (balance) {
+      onUserInput(balance)
+    }
+  }
+
+  const onChange = (val: string) => {
+    const regex = /^-?\d*[.,]?\d*$/
+    const value = val.split(',').join('')
+
+    if (regex.test(value) && value.length < 13) {
+      // @ts-ignore
+      onUserInput(numeral(value).value())
+
+      if (val.length >= 2 && val.charAt(0) === '0' && val.charAt(1) === '0') {
+        return setDisplayValue('0')
+      }
+
+      setDisplayValue(value ? numeral(value).format('0,0') : '')
+    }
+  }
+
+  return (
+    <InputPanel id={'amount-input'} {...rest}>
+      <Container disabled={disabled}>
+        <InputRow style={{}}>
+          <Aligner>
+            <>
+              <StyledNumericalInput
+                value={displayValue}
+                onChange={(e) => onChange(e.target.value)}
+                placeholder={'0.0'}
+                inputMode="decimal"
+                autoComplete="off"
+                autoCorrect="off"
+                type="text"
+                spellCheck="false"
+              />
+            </>
+            {isShowMaxButton ? <StyledBalanceMax onClick={handleMax}>MAX</StyledBalanceMax> : null}
+            {rightItem || (
+              <RowFixed>
+                {token?.logo ? (
+                  <TokenLogo logo={token.logo} width="24px" height="24px" />
+                ) : (
+                  <CurrencyLogo currency={currency} size="72px" />
+                )}
+
+                <StyledTokenName
+                  className="token-symbol-container"
+                  active={Boolean(currency && currency.originalSymbol)}
+                >
+                  <TYPE.title7 fontSize="14px">{symbol}</TYPE.title7>
+                </StyledTokenName>
+              </RowFixed>
+            )}
+          </Aligner>
+        </InputRow>
+      </Container>
+    </InputPanel>
+  )
+}
 
 const InputPanel = styled.div<{ hideInput?: boolean }>`
   ${({ theme }) => theme.flexColumnNoWrap}
@@ -33,7 +126,7 @@ const Container = styled.div<{ disabled?: boolean }>`
   background-color: ${({ theme, disabled }) => (disabled ? theme.bg7 : theme.bg0)};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'initial')};
   width: 'initial';
-  padding: 10px 27px;
+  padding: 10px 16px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       boder-radius: 1rem;
   `};
@@ -48,7 +141,47 @@ const Aligner = styled.span`
   width: 100%;
 `
 
-const StyledNumericalInput = styled(NumericalInput)`
+const StyledNumericalInput = styled.input<{ error?: boolean; fontSize?: string; align?: string; route?: boolean }>`
+  color: ${({ error, route, theme }) => (error ? theme.red1 : route ? theme.text12 : theme.text1)};
+  width: 0;
+  position: relative;
+  outline: none;
+  border: none;
+  flex: 1 1 auto;
+  font-weight: 600;
+  background-color: ${({ theme, route }) => (route ? theme.bg1 : theme.bg1)};
+  text-align: ${({ align }) => align && align};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0px;
+  -webkit-appearance: textfield;
+  border: 1px solid #E6E6FF
+  text-align: left;
+  font-size: 22px;
+  line-height: 40px;
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100%
+    font-size: 14px;
+  `}
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  [type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  ::placeholder {
+    color: ${({ error, theme, route }) => (route ? theme.text1 : error ? theme.red1 : theme.text12)}
+    opacity: 0.5;
+    font-style: normal;
+  }
   background-color: ${({ theme }) => theme.bg0};
 
   &:disabled {
@@ -58,75 +191,31 @@ const StyledNumericalInput = styled(NumericalInput)`
   }
 `
 
-type SecCurrency = Currency & {
-  originalSymbol?: string | null
-}
+export const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
+  background-color: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 10px 12px;
+  border: 1px solid #e6e6ff;
+  background: white;
+  color: ${({ theme }) => theme.text1};
+  pointer-events: ${({ disabled }) => (!disabled ? 'pointer' : 'none')};
+  margin-right: 12px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration: none;
+  :focus {
+    outline: none;
+  }
+  :hover {
+    background-color: #f7f7ff;
+  }
 
-interface Props {
-  currency?: SecCurrency
-  value: string
-  amount?: CurrencyAmount<SecCurrency>
-  showMax?: boolean
-  rightItem?: ReactNode
-  onUserInput: (typedValue: string) => void
-  token: any
-  widthdraw?: boolean
-  originalDecimals?: number
-  disabled?: boolean
-}
-export const AmountInput = ({
-  currency,
-  value,
-  amount,
-  onUserInput,
-  rightItem,
-  showMax = false,
-  token,
-  widthdraw,
-  originalDecimals = 0,
-  disabled = false,
-  ...rest
-}: Props) => {
-  return (
-    <InputPanel id={'amount-input'} {...rest}>
-      <Container disabled={disabled}>
-        <InputRow style={{}}>
-          <Aligner>
-            <>
-              <StyledNumericalInput
-                className="token-amount-input"
-                data-testid="token-amount-input"
-                value={value}
-                disabled={disabled}
-                onUserInput={(val) => {
-                  const floatingPart = val.split('.')[1]
-                  if (floatingPart && currency && originalDecimals < floatingPart.length) return
-                  onUserInput(val)
-                }}
-              />
-            </>
-            {showMax && <MaxButton currency={currency} onInput={onUserInput} amount={amount} />}
-            {rightItem || (
-              <RowFixed>
-                {token?.logo ? (
-                  <TokenLogo logo={token.logo} width="24px" height="24px" />
-                ) : (
-                  <CurrencyLogo currency={currency} size="72px" />
-                )}
-
-                <StyledTokenName
-                  className="token-symbol-container"
-                  active={Boolean(currency && currency.originalSymbol)}
-                >
-                  <TYPE.title7 fontSize="14px">
-                    {widthdraw ? currency?.symbol : formatCurrencySymbol({ currency })}
-                  </TYPE.title7>
-                </StyledTokenName>
-              </RowFixed>
-            )}
-          </Aligner>
-        </InputRow>
-      </Container>
-    </InputPanel>
-  )
-}
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    margin-right: 8px;
+    padding: 8px;
+  `};
+`

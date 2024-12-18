@@ -49,28 +49,28 @@ export const Input = React.memo(function InnerInput({
       route={isActiveRoute}
       {...rest}
       value={prependSymbol && value ? prependSymbol + value : formatNumberValue(value)}
-      onChange={(event) => {
-        const inputValue = event.target.value;
-
+      onChange={(event: { target: { value: string } }) => {
         if (prependSymbol) {
-          // Cut off prepended symbol
-          const formattedValue = inputValue.includes(prependSymbol)
-            ? inputValue.slice(prependSymbol.length)
-            : inputValue;
+          const value = event.target.value
 
-          // Replace commas with periods, because ixswap exclusively uses period as the decimal separator
-          enforcer(formattedValue.replace(/,/g, '.'));
+          // cut off prepended symbol
+          const formattedValue = value.toString().includes(prependSymbol)
+            ? value.toString().slice(1, value.toString().length + 1)
+            : value
+
+          // replace commas with periods, because ixswap exclusively uses period as the decimal separator
+          enforcer(formattedValue.replace(/,/g, ''))
         } else {
-          enforcer(inputValue.replace(/,/g, '.'));
+          enforcer(event.target.value.replace(/,/g, ''))
         }
       }}
-      // Universal input options
+      // universal input options
       inputMode="decimal"
       autoComplete="off"
       autoCorrect="off"
-      // Text-specific options
+      // text-specific options
       type="text"
-      pattern="[0-9]*[.]?[0-9]*"
+      pattern="^[0-9]*[.,]?[0-9]*$"
       placeholder={placeholder || '0.00'}
       minLength={1}
       maxLength={maxLength}
