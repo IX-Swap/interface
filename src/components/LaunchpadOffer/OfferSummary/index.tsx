@@ -21,7 +21,7 @@ export const OfferSummary: React.FC<Props> = (props) => {
 
       <SummaryDescription>{props.offer.shortDescription}</SummaryDescription>
 
-      <InvestmentTypeInfo industry={props.offer.industry} type={props.offer.type} status={props.offer.status} />
+      <InvestmentTypeInfo industry={props.offer.industry} type={props.offer.type} status={props?.offer?.status} />
     </SummaryContainer>
   )
 }
