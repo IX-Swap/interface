@@ -52,12 +52,12 @@ export default function LaunchpadOffer() {
         setIsAllowed(
           checkKYC(
             offer.data.allowOnlyAccredited,
-            [OfferStatus.closed, OfferStatus.claim].includes(offer.data.status)
+            [OfferStatus.closed, OfferStatus.claim].includes(offer?.data?.status)
           ) || account?.toLowerCase() === offer?.data?.ethAddress?.toLowerCase()
         )
       } else {
         setIsAllowed(
-          checkKYC(offer.data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(offer.data.status))
+          checkKYC(offer.data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(offer?.data?.status))
         )
       }
     }
