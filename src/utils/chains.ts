@@ -50,7 +50,6 @@ export const checkWrongChain = (
   expectChain: number | null
 } => {
   const expectedChains = Chains[network as NetworkName] || [] // Default to an empty array if network is not found
-  console.log('expectedChains', expectedChains)
   if (!expectedChains.length) {
     return {
       isWrongChain: false,
