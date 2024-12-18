@@ -2777,10 +2777,10 @@
   resolved "https://registry.yarnpkg.com/@ixswap1/lib/-/lib-1.3.0.tgz#0a8e8bafa0ca6783c7c254338fda8b41f5b83b19"
   integrity sha512-30MpT4gc5oe6Lh2bWk0ldJND5D0YIiwUTbvpymyVx61twvQHyqYZEWcgi3GTxxKT6nkyNJIV9dwA7shLqlBKPw==
 
-"@ixswap1/sdk-core@1.3.6":
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.3.6.tgz#3db6d74c2d7397735c7a35be254cb1367b819369"
-  integrity sha512-jLfAWaeoWSkaVoIWqtaHSecYuvC6o3pOeR9sCiVSTQM+kff1VsQ3ZZpuTim5PpFvNkAeUbOCKixx3XpdLY3YDg==
+"@ixswap1/sdk-core@1.x.x":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.3.1.tgz#e140d8870ae9ba73ada6372f90410ed4e8510170"
+  integrity sha512-M1Kc1BBwdOjokZ+oX619D041VJP0LBZTVKGGLxCLb5mAnsedHTX+42T5a9wnXGSxD4eMS8AsmOXc74/N1qz+ew==
   dependencies:
     "@ethersproject/address" "^5.0.2"
     big.js "^5.2.2"
@@ -2789,10 +2789,10 @@
     tiny-invariant "^1.1.0"
     toformat "^2.0.0"
 
-"@ixswap1/sdk-core@1.x.x":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.3.1.tgz#e140d8870ae9ba73ada6372f90410ed4e8510170"
-  integrity sha512-M1Kc1BBwdOjokZ+oX619D041VJP0LBZTVKGGLxCLb5mAnsedHTX+42T5a9wnXGSxD4eMS8AsmOXc74/N1qz+ew==
+"@ixswap1/sdk-core@^1.3.6":
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.3.6.tgz#3db6d74c2d7397735c7a35be254cb1367b819369"
+  integrity sha512-jLfAWaeoWSkaVoIWqtaHSecYuvC6o3pOeR9sCiVSTQM+kff1VsQ3ZZpuTim5PpFvNkAeUbOCKixx3XpdLY3YDg==
   dependencies:
     "@ethersproject/address" "^5.0.2"
     big.js "^5.2.2"
@@ -5285,6 +5285,11 @@
   version "15.14.9"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-15.14.9.tgz#bc43c990c3c9be7281868bbc7b8fdd6e2b57adfa"
   integrity sha512-qjd88DrCxupx/kJD5yQgZdcYKZKSIGBVDIBE1/LTGcNm3d2Np/jxojkdePDdfnBHJc5W7vSMpbJ1aB7p/Py69A==
+
+"@types/numeral@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@types/numeral/-/numeral-2.0.5.tgz#388e5c4ff4b0e1787f130753cbbe83d3ba770858"
+  integrity sha512-kH8I7OSSwQu9DS9JYdFWbuvhVzvFRoCPCkGxNwoGgaPeDfEPJlcxNvEOypZhQ3XXHsGbfIuYcxcJxKUfJHnRfw==
 
 "@types/papaparse@^5.3.9":
   version "5.3.14"
@@ -13680,6 +13685,11 @@ nth-check@^2.0.1:
   integrity sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==
   dependencies:
     boolbase "^1.0.0"
+
+numeral@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/numeral/-/numeral-2.0.6.tgz#4ad080936d443c2561aed9f2197efffe25f4e506"
+  integrity sha512-qaKRmtYPZ5qdw4jWJD6bxEf1FJEqllJrwxCLIm0sQU/A7v2/czigzOb+C2uSiFsa9lBUzeH7M1oK+Q+OLxL3kA==
 
 nwsapi@^2.2.0:
   version "2.2.7"
