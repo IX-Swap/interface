@@ -18,13 +18,13 @@ import PlainCopy from 'components/PlainCopy/PlainCopy'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
 import { shortenAddress } from 'utils'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import { getChainFromName, SupportedChainId } from 'constants/chains'
+import { getChainFromName } from 'constants/chains'
 import { ExternalLink, MEDIA_WIDTHS } from 'theme'
 import { text10, text33, text6, text9 } from 'components/LaunchpadMisc/typography'
 import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
-import { useActiveWeb3React } from 'hooks/web3'
 import { InvestFailedModal } from '../InvestDialog/utils/InvestFailedModal'
 import { INVESTING_TOKEN_SYMBOL } from 'state/launchpad/constants'
+import { isTestnet } from 'utils/isEnvMode'
 interface Props {
   offer: Offer
 }
@@ -42,10 +42,12 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const investedData = useInvestedData(props.offer.id)
   const { amount: amountToClaim } = investedData
   const { status: whitelistedStatus, isInterested } = useGetWhitelistStatus(props.offer.id)
-  const { chainId } = useActiveWeb3React()
-  const isTestnet = [SupportedChainId.AMOY, SupportedChainId.BASE_SEPOLIA].includes(chainId)
   const nameChainMapNetwork = getChainFromName(props?.offer?.network, isTestnet)
-  const explorerLink = getExplorerLink(nameChainMapNetwork, props.offer.tokenAddress, ExplorerDataType.TOKEN)
+  let type = ExplorerDataType.TOKEN
+  if (['ozean'].includes(props?.offer?.network)) {
+    type = ExplorerDataType.ADDRESS
+  }
+  const explorerLink = getExplorerLink(nameChainMapNetwork, props.offer.tokenAddress, type)
   const { addToken } = useAddTokenByDetailsToMetamask()
   const addToMetamask = () => {
     addToken({
