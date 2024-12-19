@@ -25,8 +25,11 @@ const CustodyDetails: React.FC<CustodyDetailsProps> = ({ formik }) => {
               value={formik.values.custodyVaultId}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.custodyVaultId)}
+              error={formik.touched.custodyVaultId && Boolean(formik.errors.custodyVaultId)}
             />
+            {formik.touched.custodyVaultId && Boolean(formik.errors.custodyVaultId) ? (
+              <ErrorText>{formik.errors.custodyVaultId}</ErrorText>
+            ) : null}
           </FormWrapper>
           <FormWrapper>
             <Label htmlFor="network">Custody Asset ID</Label>
@@ -38,8 +41,11 @@ const CustodyDetails: React.FC<CustodyDetailsProps> = ({ formik }) => {
               value={formik.values.custodyAssetId}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.custodyAssetId)}
+              error={formik.touched.custodyAssetId && Boolean(formik.errors.custodyAssetId)}
             />
+            {formik.touched.custodyAssetId && Boolean(formik.errors.custodyAssetId) ? (
+              <ErrorText>{formik.errors.custodyAssetId}</ErrorText>
+            ) : null}
           </FormWrapper>
         </FormGrid>
 
@@ -54,8 +60,11 @@ const CustodyDetails: React.FC<CustodyDetailsProps> = ({ formik }) => {
               value={formik.values.custodyAssetAddress}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.custodyAssetAddress)}
+              error={formik.touched.custodyAssetId && Boolean(formik.errors.custodyAssetAddress)}
             />
+            {formik.touched.custodyAssetId && Boolean(formik.errors.custodyAssetAddress) ? (
+              <ErrorText>{formik.errors.custodyAssetAddress}</ErrorText>
+            ) : null}
           </FormWrapper>
         </FormGrid>
       </Box>

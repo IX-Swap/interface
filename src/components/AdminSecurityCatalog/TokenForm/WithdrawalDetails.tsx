@@ -25,9 +25,11 @@ const WithdrawalDetails: React.FC<WithdrawalDetailsProps> = ({ formik }) => {
               value={formik.values.withdrawFee}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.withdrawFee)}
+              error={formik.touched.withdrawFee && Boolean(formik.errors.withdrawFee)}
             />
-            {Boolean(formik.errors.withdrawFee) ? <ErrorText>{formik.errors.withdrawFee}</ErrorText> : null}
+            {formik.touched.withdrawFee && Boolean(formik.errors.withdrawFee) ? (
+              <ErrorText>{formik.errors.withdrawFee}</ErrorText>
+            ) : null}
           </FormWrapper>
           <FormWrapper>
             <Label htmlFor="network">Withdraw Fee Address</Label>
@@ -39,9 +41,9 @@ const WithdrawalDetails: React.FC<WithdrawalDetailsProps> = ({ formik }) => {
               value={formik.values.withdrawFeeAddress}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.withdrawFeeAddress)}
+              error={formik.touched.withdrawFeeAddress && Boolean(formik.errors.withdrawFeeAddress)}
             />
-            {Boolean(formik.errors.withdrawFeeAddress) ? (
+            {formik.touched.withdrawFeeAddress && Boolean(formik.errors.withdrawFeeAddress) ? (
               <ErrorText>{formik.errors.withdrawFeeAddress}</ErrorText>
             ) : null}
           </FormWrapper>

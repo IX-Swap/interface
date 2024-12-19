@@ -38,4 +38,7 @@ export const validationSchema = yup.object().shape({
     then: yup.string().required('Whitelist Contract Address is required'), // Validate this field
     otherwise: yup.string().nullable(), // If the switch is off, no validation
   }),
+  custodyVaultId: yup.string().required('Custody Vault ID is required'),
+  custodyAssetId: yup.string().required('Custody Asset ID is required'),
+  custodyAssetAddress: yup.string().required('Custody Asset Address is required'),
 })
