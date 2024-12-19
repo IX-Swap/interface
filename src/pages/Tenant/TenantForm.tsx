@@ -144,7 +144,6 @@ const TenantForm = () => {
     }
   }, [JSON.stringify(selectedTenant)])
 
-  console.log('formik', formik)
   return (
     <Container>
       <Content>
