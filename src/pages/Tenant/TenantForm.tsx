@@ -44,6 +44,15 @@ const initialValues: TenantDetails = {
   enableLaunchpadBanner: false,
   tokens: [],
   colorButtonPrimary: '#6666FF',
+  termLink: '',
+  policyLink: '',
+  block1: '',
+  bannerImageUrl: '',
+  supportEmail: '',
+  defaultUrl: '',
+  chartsUrl: '',
+  faviconUrl: '',
+  logoUrl: '',
 }
 
 const TenantForm = () => {
@@ -61,6 +70,8 @@ const TenantForm = () => {
 
   const formik = useFormik<TenantDetails>({
     initialValues,
+    validateOnBlur: false,
+    validateOnMount: true,
     validationSchema: !id ? validationSchema : null,
     onSubmit: async (values: any) => {
       try {
@@ -133,6 +144,7 @@ const TenantForm = () => {
     }
   }, [JSON.stringify(selectedTenant)])
 
+  console.log('formik', formik)
   return (
     <Container>
       <Content>
