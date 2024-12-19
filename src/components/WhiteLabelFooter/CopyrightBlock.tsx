@@ -10,7 +10,6 @@ export const CopyrightBlock = () => {
   const year = dayjs().format('YYYY')
   const { config } = useWhitelabelState()
 
-  console.log('config', config)
   return (
     <Flex flexDirection="column" mb={120} mt={16}>
       <CopyrightText>
