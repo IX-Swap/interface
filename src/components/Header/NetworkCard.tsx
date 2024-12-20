@@ -114,7 +114,7 @@ const NetworkCardWrapper = styled.div`
   font-size: 13px;
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-     max-width: min-content;
+     padding: 4.6px 0;
   `};
 
   ${({ theme }) => theme.mediaWidth.upToLarge`
