@@ -23,6 +23,7 @@ import { useKyc } from 'state/user/hooks'
 import { text9 } from 'components/LaunchpadMisc/typography'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { routes } from 'utils/routes'
+import { useAccount } from 'wagmi'
 
 interface Props {
   offerId?: string
