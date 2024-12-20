@@ -87,7 +87,7 @@ export default function LaunchpadOffer() {
     )
   }
 
-  if (!isAllowed) {
+  if (account && !isAllowed) {
     return (
       <Portal>
         <KYCPrompt
