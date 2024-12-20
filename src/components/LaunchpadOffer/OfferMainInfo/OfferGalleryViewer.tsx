@@ -59,7 +59,7 @@ export const OfferGalleryViewer: React.FC<Props> = (props) => {
               active={media === activeMedia}
               onClick={() => selectActive(media)}
             >
-              <MediaEntry media={media} />
+              <MediaEntryItem media={media} />
             </ViewerMediaEntry>
           ))}
         </ViewerMediaSelector>
@@ -87,7 +87,51 @@ interface MediaEntryProps {
 export const MediaEntry: React.FC<MediaEntryProps> = (props) => {
   return (
     <>
-      {props.media.type === OfferFileType.image && <Image src={props.media.file.public} />}
+      {props.media.type === OfferFileType.image && (
+        <ImageContainer>
+          <Image src={props.media.file.public} />
+        </ImageContainer>
+      )}
+      {props.media.type === OfferFileType.video && props.canPlayVideo && <VideoViewer src={props.media.videoUrl} />}
+      {props.media.type === OfferFileType.video && !props.canPlayVideo && (
+        <VideoThumbnail>
+          <PlayButtonWrapper>
+            <PlayButton />
+          </PlayButtonWrapper>
+        </VideoThumbnail>
+      )}
+    </>
+  )
+}
+
+export const MediaEntryItem: React.FC<MediaEntryProps> = (props) => {
+  return (
+    <>
+      {props.media.type === OfferFileType.image && (
+        <ImageItemContainer>
+          <Image src={props.media.file.public} />
+        </ImageItemContainer>
+      )}
+      {props.media.type === OfferFileType.video && props.canPlayVideo && <VideoViewer src={props.media.videoUrl} />}
+      {props.media.type === OfferFileType.video && !props.canPlayVideo && (
+        <VideoThumbnail>
+          <PlayButtonWrapper>
+            <PlayButton />
+          </PlayButtonWrapper>
+        </VideoThumbnail>
+      )}
+    </>
+  )
+}
+
+export const MediaEntryItemViewer: React.FC<MediaEntryProps> = (props) => {
+  return (
+    <>
+      {props.media.type === OfferFileType.image && (
+        <ImageItemViewerContainer>
+          <Image src={props.media.file.public} />
+        </ImageItemViewerContainer>
+      )}
       {props.media.type === OfferFileType.video && props.canPlayVideo && <VideoViewer src={props.media.videoUrl} />}
       {props.media.type === OfferFileType.video && !props.canPlayVideo && (
         <VideoThumbnail>
@@ -125,53 +169,53 @@ const VideoViewer: React.FC<VideoViewerProps> = (props) => {
 
   const youtubeVideoId = React.useMemo(() => {
     switch (linkType) {
-      case VideoLinkType.youtube:
-        const [path, query] = props.src.split('?')
+    case VideoLinkType.youtube:
+      const [path, query] = props.src.split('?')
 
-        if (!query) {
-          return path.split('/').pop()
-        }
-
-        const queryParams = query
-          .split('&')
-          .map((x) => x.split('='))
-          .map(([key, value]) => ({ key, value }))
-
-        const link = queryParams.find((x) => x.key === 'v')
-
-        if (link) {
-          return link.value
-        }
-
+      if (!query) {
         return path.split('/').pop()
+      }
 
-      case VideoLinkType.youtubeShare:
-        const queryShare = props.src.split('?').shift()!.split('/').pop()
+      const queryParams = query
+        .split('&')
+        .map((x) => x.split('='))
+        .map(([key, value]) => ({ key, value }))
 
-        return queryShare
+      const link = queryParams.find((x) => x.key === 'v')
 
-      default:
-        return null
+      if (link) {
+        return link.value
+      }
+
+      return path.split('/').pop()
+
+    case VideoLinkType.youtubeShare:
+      const queryShare = props.src.split('?').shift()!.split('/').pop()
+
+      return queryShare
+
+    default:
+      return null
     }
   }, [props.src, linkType])
 
   switch (linkType) {
-    case VideoLinkType.youtube:
-    case VideoLinkType.youtubeShare:
-      return (
-        <YoutubeVideo
-          width="660"
-          height="415"
-          src={`https://www.youtube.com/embed/${youtubeVideoId}`}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></YoutubeVideo>
-      )
+  case VideoLinkType.youtube:
+  case VideoLinkType.youtubeShare:
+    return (
+      <YoutubeVideo
+        width="660"
+        height="415"
+        src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></YoutubeVideo>
+    )
 
-    case VideoLinkType.other:
-      return <Video src={props.src} controls />
+  case VideoLinkType.other:
+    return <Video src={props.src} controls />
   }
 }
 
@@ -239,7 +283,6 @@ const ViewerControl = styled.div<{ area: 'left' | 'right' }>`
     transform: scale(1.3);
   }
 
-
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     position: absolute;
     top: 50%;
@@ -259,16 +302,34 @@ const ViewerMediaEntry = styled.div<{ active: boolean }>`
   }
 `
 
-const Image = styled.img`
-  max-width: 84vw;
-  max-height: 90vh;
-  width: auto;
-  height: auto;
+const ImageContainer = styled.div`
   border-radius: 8px;
-  object-fit: contain;
+  overflow: hidden;
+  max-width: 84vw;
+  max-height: 84vh;
+`
+
+const ImageItemViewerContainer = styled.div`
+  width: 148px;
+  height: 148px;
+  border-radius: 8px;
+`
+
+const ImageItemContainer = styled.div`
+  border-radius: 8px;
+  overflow: hidden;
+  width: 120px;
+  height: 120px;
+`
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
   display: block;
   margin: 0 auto;
-    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     max-width: 62vw;
     max-height: 80vh;
   }
