@@ -24,6 +24,10 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import WhiteLabelFooter from 'components/WhiteLabelFooter'
 import { checkWrongChain } from 'utils/chains'
 import { useAccount } from 'wagmi'
+import { CHAINS } from 'components/Web3Provider/constants'
+import { useAuthState } from 'state/auth/hooks'
+import { Flex } from 'rebass'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 interface OfferPageParams {
   offerId: string
@@ -38,6 +42,7 @@ export default function LaunchpadOffer() {
   const hideHeader = useSetHideHeader()
   const checkKYC = useCheckKYC()
   const { config } = useWhitelabelState()
+  const { token } = useAuthState()
 
   const network = offer?.data?.network ?? ''
   const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
@@ -45,6 +50,10 @@ export default function LaunchpadOffer() {
   const [isAllowed, setIsAllowed] = React.useState<boolean>(true)
 
   const isIxSwap = config?.isIxSwap ?? false
+
+  const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
+  // @ts-ignore
+  const shouldShowSignModal = !token && account && chains.includes(chainId)
 
   React.useEffect(() => {
     if (offer.data) {
@@ -57,7 +66,10 @@ export default function LaunchpadOffer() {
         )
       } else {
         setIsAllowed(
-          checkKYC(offer.data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(offer?.data?.status))
+          checkKYC(
+            offer.data.allowOnlyAccredited,
+            [OfferStatus.closed, OfferStatus.claim].includes(offer?.data?.status)
+          )
         )
       }
     }
@@ -87,7 +99,20 @@ export default function LaunchpadOffer() {
     )
   }
 
-  if (account && !isAllowed) {
+  if (!account) {
+    return (
+      <OfferBackgroundWrapper>
+        <header>
+          <Header />
+        </header>
+        <Flex justifyContent="center" width="100%" mt="8rem">
+          <ConnectWalletCard />
+        </Flex>
+      </OfferBackgroundWrapper>
+    )
+  }
+
+  if (!shouldShowSignModal && !isAllowed) {
     return (
       <Portal>
         <KYCPrompt
