@@ -82,6 +82,6 @@ export const usePoolList = () => {
   })
 
   return {
-    pools: subgraphData?.pools || [],
+    pools: subgraphData?.pools,
   }
 }

@@ -1,7 +1,7 @@
 import { Flex } from "rebass";
 import { BodyRow, HeaderRow, Table } from "components/Table";
 import { BodyContainer } from "components/TmPayoutHistory/styleds";
-import { Fragment, memo, useMemo, useState } from "react";
+import { Fragment, memo } from "react";
 import { Line } from "components/Line";
 import { Pagination } from "components/Pagination";
 import styled from "styled-components";
@@ -17,6 +17,7 @@ import CurrencyLogo from "components/CurrencyLogo";
 import { useSafeCurrency } from "hooks/Tokens";
 import { usePoolFilter } from "./FilterProvider";
 import { adminOffset } from "state/admin/constants";
+import { LoadingIndicator } from "components/LoadingIndicator";
 
 export default function PoolList() {
   const { pools } = usePoolList()
@@ -29,7 +30,11 @@ export default function PoolList() {
 
   return (
     <Flex flexWrap='wrap' flexDirection="column" style={{ gap: 32 }}>
-      <Table header={<Header />} body={<Body items={pools} />} />
+      {pools === undefined ?
+        <LoadingIndicator noOverlay={true} isLoading /> :
+        <Table header={<Header />} body={<Body items={pools} />} />
+      }
+      
       <Pagination
         totalPages={null}
         page={page + 1}
