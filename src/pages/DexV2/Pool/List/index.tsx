@@ -3,18 +3,21 @@ import { Trans } from "@lingui/macro";
 import styled from "styled-components";
 import Filters from "./Filters";
 import PoolList from "./PoolList";
+import { FilterProvider } from "./FilterProvider";
 
 export default function LiquidityPool() {
   return (
-    <Pager>
-      <PageContainer>
-        <TYPE.title4 marginBottom="30px" data-testid="liquidityPoolTitle">
-          <Trans>Liquidity Pools</Trans>
-        </TYPE.title4>
-        <Filters />
-        <PoolList />
-      </PageContainer>
-    </Pager>
+    <FilterProvider>
+      <Pager>
+        <PageContainer>
+          <TYPE.title4 marginBottom="30px" data-testid="liquidityPoolTitle">
+            <Trans>Liquidity Pools</Trans>
+          </TYPE.title4>
+          <Filters />
+          <PoolList />
+        </PageContainer>
+      </Pager>
+    </FilterProvider>
   )
 }
 

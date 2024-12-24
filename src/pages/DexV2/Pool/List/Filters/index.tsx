@@ -4,20 +4,10 @@ import { PoolTypes } from "../constants";
 import { BorderSimple, ToggleOption } from "components/Tabs";
 import { Flex } from "rebass";
 import { NetworkCard } from "./NetworkCard";
-import { CHAINS } from "components/Web3Provider/constants";
-import { useState } from "react";
-
-const typeFilters = [
-  { title: 'All', value: PoolTypes.all },
-  { title: 'RWA', value: PoolTypes.rwa },
-  { title: 'Crypto', value: PoolTypes.crypto },
-]
+import { typeFilters, usePoolFilter } from "../FilterProvider";
 
 const Filters: React.FC = () => {
-  const [filters, setFilters] = useState({
-    type: typeFilters[0].value,
-    network: CHAINS[0].id,
-  })
+  const {filters, setFilters} = usePoolFilter()
 
   const handleChangeType = (type: PoolTypes) => {
     setFilters({ ...filters, type })

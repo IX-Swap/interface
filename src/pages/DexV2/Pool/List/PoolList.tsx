@@ -1,73 +1,40 @@
 import { Flex } from "rebass";
 import { BodyRow, HeaderRow, Table } from "components/Table";
 import { BodyContainer } from "components/TmPayoutHistory/styleds";
-import { Fragment, useState } from "react";
+import { Fragment, memo, useMemo, useState } from "react";
 import { Line } from "components/Line";
 import { Pagination } from "components/Pagination";
 import styled from "styled-components";
 import { Title } from "components/LaunchpadMisc/tables";
 import { SortIcon } from "components/LaunchpadIssuance/utils/SortIcon";
-import { useOnChangeOrder } from "./hooks";
+import { useOnChangeOrder, usePoolList } from "./hooks";
 import { AbstractOrder } from "state/launchpad/types";
 import { TYPE } from "theme";
 import useTheme from "hooks/useTheme";
-
-export interface OrderConfig {
-  tvl?: string | null
-  volumn?: string | null
-  type?: string | null
-  apr?: string | null
-}
+import { useCurrency } from "lib/balancer/hooks/useCurrency";
+import { fNum } from "lib/balancer/utils/numbers";
+import CurrencyLogo from "components/CurrencyLogo";
+import { useSafeCurrency } from "hooks/Tokens";
+import { usePoolFilter } from "./FilterProvider";
+import { adminOffset } from "state/admin/constants";
 
 export default function PoolList() {
+  const { pools } = usePoolList()
+  const { page, setPage } = usePoolFilter()
+
   const onPageChange = (page: number) => {
+    setPage(page - 1)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
     <Flex flexWrap='wrap' flexDirection="column" style={{ gap: 32 }}>
-      <Table header={<Header />} body={<Body items={[{
-        tokens: [{
-          ticker: 'USDC',
-          percentage: '50%',
-          iconUrl: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png'
-        }, {
-          ticker: 'ETH',
-          percentage: '50%',
-          iconUrl: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880'
-        }],
-        tvl: '$24,654.54',
-        volume: '$5,443.45',
-        type: 'RWA',
-        apr: '3.67%',
-      }, {
-        tokens: [{
-          ticker: 'USDC',
-          percentage: '25%',
-          iconUrl: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png'
-        }, {
-          ticker: 'ETH',
-          percentage: '25%',
-          iconUrl: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880'
-        }, {
-          ticker: 'USDT',
-          percentage: '25%',
-          iconUrl: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png'
-        }, {
-          ticker: 'DAI',
-          percentage: '25%',
-          iconUrl: 'https://assets.coingecko.com/coins/images/9956/standard/Badge_Dai.png'
-        }],
-        tvl: '$24,654.54',
-        volume: '$5,443.45',
-        type: 'RWA',
-        apr: '2.61% - 3.66%',
-      }]} />} />
+      <Table header={<Header />} body={<Body items={pools} />} />
       <Pagination
-        totalPages={9}
-        page={1}
+        totalPages={null}
+        page={page + 1}
         onPageChange={onPageChange}
-        totalItems={99}
+        totalItems={adminOffset}
       />
     </Flex>
   )
@@ -79,10 +46,10 @@ interface IBody {
 const Body = ({ items }: IBody) => {
   return (
     <BodyContainer>
-      {items.map((item, index) => (
-        <Fragment key={`payout-${item.id}`}>
+      {items.map((pool, index) => (
+        <Fragment key={`pool-${pool.id}`}>
           <Line />
-          <Row item={item} key={`payout-${item.id}`} />
+          <Row pool={pool} />
           {index === items.length - 1 && <Line />}
         </Fragment>
       ))}
@@ -91,19 +58,19 @@ const Body = ({ items }: IBody) => {
 }
 
 const Header = () => {
-  const [page, setPage] = useState(1)
-  const [order, setOrder] = useState<OrderConfig>({})
+  const { order, setOrder, setPage } = usePoolFilter()
+  
   const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
   return (
     <StyledHeaderRow>
       <Title>
         Pool name
       </Title>
-      <StyledTitle onClick={() => onChangeOrder('tvl')}>
-        TVL <SortIcon type={order.tvl} />
+      <StyledTitle onClick={() => onChangeOrder('totalLiquidity')}>
+        TVL <SortIcon type={order.totalLiquidity} />
       </StyledTitle>
-      <StyledTitle onClick={() => onChangeOrder('volume')}>
-        Volume <SortIcon type={order.volumn} />
+      <StyledTitle onClick={() => onChangeOrder('totalSwapVolume')}>
+        Volume <SortIcon type={order.totalSwapVolume} />
       </StyledTitle>
       <StyledTitle onClick={() => onChangeOrder('type')}>
         Type <SortIcon type={order.type} />
@@ -115,31 +82,47 @@ const Header = () => {
   )
 }
 
-const Row = ({item}: {item: any}) => {
+type TokenIconProps = {
+  address: string
+}
+
+const TokenIcon = ({ address }: TokenIconProps) => {
+  const currency = useSafeCurrency(address)
+  return (
+    <CurrencyLogo currency={currency} size={'24px'} />
+  )
+}
+
+const MemoTokenIcon = memo(TokenIcon, (prevProps: TokenIconProps, nextProps: TokenIconProps) => {
+  return prevProps.address === nextProps.address;
+})
+
+const Row = ({ pool }: { pool: any }) => {
   const theme = useTheme()
+  const { toCurrency } = useCurrency()
 
   return (
     <StyledBodyRow>
       <Flex flexWrap='wrap'>
-        {item.tokens.map((token: any) => (
+        {pool?.tokens?.map((token: any) => (
           <Flex key={token.ticker} alignItems="center" className="token">
-            <img src={token.iconUrl} alt={token.ticker} width={24} height={24} />
-            <span>{token.ticker}</span>
-            <span className="percentage">{token.percentage}</span>
+            <MemoTokenIcon address={token.address} />
+            <span>{token.symbol}</span>
+            <span className="percentage">{fNum('weight', token.weight || '')}</span>
           </Flex>
         ))}
       </Flex>
-      <TYPE.main1>
-        {item.tvl}
-      </TYPE.main1>
-      <TYPE.main1>
-        {item.volume}
-      </TYPE.main1>
+      <TYPE.main color={'text1'}>
+        {toCurrency(pool.totalLiquidity)}
+      </TYPE.main>
+      <TYPE.main color={'text1'}>
+        {toCurrency(pool.totalSwapVolume)}
+      </TYPE.main>
       <TYPE.main1 color={theme.blue5}>
-        {item.type}
+        SAMPLE
       </TYPE.main1>
       <TYPE.main0 fontSize={16}>
-        {item.apr}
+        aprToShow
       </TYPE.main0>
     </StyledBodyRow>
   )
