@@ -58,9 +58,9 @@ const Body = ({ items }: IBody) => {
 }
 
 const Header = () => {
-  const { order, setOrder, setPage } = usePoolFilter()
+  const { order, setOrder } = usePoolFilter()
   
-  const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
+  const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder)
   return (
     <StyledHeaderRow>
       <Title>
