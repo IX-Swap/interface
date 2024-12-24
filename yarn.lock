@@ -1741,13 +1741,6 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@balancer-labs/sor@^4.1.1-beta.17":
-  version "4.1.1-beta.18"
-  resolved "https://registry.yarnpkg.com/@balancer-labs/sor/-/sor-4.1.1-beta.18.tgz#25b37a2b77b3509172b408e6daf17624bc633ab9"
-  integrity sha512-y/JfWXHAE76Ry/bptqzltTYmx8zvX1fHjCxKR28ZmAhhvG2ctWwBh8alabjMlQhstoaN1ResyHNLh9ChLsIDTA==
-  dependencies:
-    isomorphic-fetch "^2.2.1"
-
 "@balancer-labs/typechain@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@balancer-labs/typechain/-/typechain-1.0.0.tgz#823eb13b9e166f7b50334c9d70d9ade81344f5c9"
@@ -3133,12 +3126,11 @@
   resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.4.9.tgz#1014b8d4ef7098265e651b43f376b1ee2da6bf88"
   integrity sha512-g/hjFAipzNueTGMxtwkil0xYE2SZ6XEMIE6Xe0D2EMRSoyTMAtGUDAP7HHHCz2/TR04B5YNSwTJZF3rBTTUaCw==
 
-"@ixswap1/dex-v2-sdk@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@ixswap1/dex-v2-sdk/-/dex-v2-sdk-1.2.1.tgz#0f1860cb5aeeb0a912db9d300e82c894c5e76b63"
-  integrity sha512-OF6vIRLvB0wb2+urXekz+4jvmq58sjKirrSPa0l1OJCJNG2bbnFC/AM9YNODXdXRh9PbmKK3eZ4xsriE5EaZDQ==
+"@ixswap1/dex-v2-sdk@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@ixswap1/dex-v2-sdk/-/dex-v2-sdk-1.2.2.tgz#a038f77d7c5a474bb43389c37c3ef24f76d5b4a4"
+  integrity sha512-2nAmEpNunhzmw2JPMOcOv7Zrv+pnzQM9QHaYDelqtcGJaQNEzCKJYqVWc1GT45uKQ/LJd3OoQwt5KfOKaRqGNg==
   dependencies:
-    "@balancer-labs/sor" "^4.1.1-beta.17"
     "@ethersproject/abi" "^5.4.0"
     "@ethersproject/abstract-signer" "^5.4.0"
     "@ethersproject/address" "^5.4.0"
@@ -3148,12 +3140,20 @@
     "@ethersproject/constants" "^5.4.0"
     "@ethersproject/contracts" "^5.4.0"
     "@ethersproject/providers" "^5.4.5"
+    "@ixswap1/ixs-v2-sor" "^0.1.0"
     axios "^0.24.0"
     ethers "^5"
     graphql "^15.6.1"
     graphql-request "^3.5.0"
     json-to-graphql-query "^2.2.4"
     lodash "^4.17.21"
+
+"@ixswap1/ixs-v2-sor@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@ixswap1/ixs-v2-sor/-/ixs-v2-sor-0.1.0.tgz#ed82eaa56f0ffe316d22a40377b17288cfeba484"
+  integrity sha512-xnzsDKmsg3s6vzdkWQcf2MO34S0+aCR9n93jUfLXgtg7zlfx4Yt0pMV0GpM1mzLxXiHH405sfPqOSIJELDYO1w==
+  dependencies:
+    isomorphic-fetch "^2.2.1"
 
 "@ixswap1/lib@1.x.x":
   version "1.3.0"
