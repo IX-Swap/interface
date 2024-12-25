@@ -45,7 +45,7 @@ const ChooseWeights: React.FC = () => {
     addTokenWeightToPool,
     proceed,
     removeTokenWeights,
-    similarPools,
+    similarPoolsResp,
     getPoolSymbol,
   } = usePoolCreation()
   const { seedTokens } = usePoolCreationState()
@@ -55,7 +55,8 @@ const ChooseWeights: React.FC = () => {
   const { getToken } = useTokens()
   const { data: hash, writeContract } = useWriteContract()
   const { fNum } = useNumbers()
-  const isPoolExisting = similarPools?.length > 0
+  const { data: similarPoolsData, isLoading: similarPoolsLoading } = similarPoolsResp
+  const isPoolExisting = !similarPoolsLoading && similarPoolsData?.data?.pools?.length > 0
 
   const networkConfig = config[chainId]
 
@@ -89,12 +90,12 @@ const ChooseWeights: React.FC = () => {
 
   const isProceedDisabled = useMemo(() => {
     if (!account) return false
-    if (!similarPools || isPoolExisting) return true // validating or pool is existing
+    if (similarPoolsLoading || isPoolExisting) return true // validating or pool is existing
     if (Number(totalAllocatedWeight) !== 100) return true
     if (seedTokens.length < 2) return true
     if (zeroWeightToken) return true
     return false
-  }, [account, JSON.stringify(seedTokens), similarPools, isPoolExisting])
+  }, [account, JSON.stringify(seedTokens), similarPoolsLoading, isPoolExisting])
 
   const showLiquidityAlert = useMemo(() => {
     const validTokens = seedTokens.filter((t) => t.tokenAddress !== '')

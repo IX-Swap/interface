@@ -35,7 +35,7 @@ import config from 'lib/config'
 import WeightedPoolFactoryV4Abi from 'lib/abi/WeightedPoolFactoryV4.json'
 import { ZERO_ADDRESS } from 'constants/misc'
 import { generateSalt } from 'lib/utils/random'
-import { useSubgraphQuery } from 'hooks/useSubgraphQuery'
+import { useSubgraphQueryLegacy, useSubgraphQuery } from 'hooks/useSubgraphQuery'
 import { SUBGRAPH_QUERY } from 'constants/subgraph'
 import { isAddress } from 'utils'
 
@@ -400,7 +400,8 @@ export const usePoolCreation = () => {
       tokensList,
     }
   }, [tokensList])
-  const similarPoolsData = useSubgraphQuery({
+  const similarPoolsResp = useSubgraphQuery({
+    queryKey: ['GetSimilarPools', SUBGRAPH_QUERY.POOLS, chainId, similarPoolsVariables],
     feature: SUBGRAPH_QUERY.POOLS,
     chainId,
     query: `
@@ -422,6 +423,7 @@ export const usePoolCreation = () => {
       }
     `,
     variables: similarPoolsVariables,
+    enabled: tokensList.filter(address => isAddress(address)).length > 1,
   })
 
   return {
@@ -444,6 +446,6 @@ export const usePoolCreation = () => {
     joinPool,
     removeTokenWeights,
     tokensList,
-    similarPools: similarPoolsData?.pools,
+    similarPoolsResp: similarPoolsResp,
   }
 }
