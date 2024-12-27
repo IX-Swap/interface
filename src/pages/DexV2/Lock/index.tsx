@@ -12,6 +12,7 @@ import { useTokensState } from 'state/dexV2/tokens/hooks'
 import { fetchTokensAllowwances } from 'state/dexV2/tokens'
 import { TYPE } from 'theme'
 import { LockProvider } from './LockProvider'
+import LockBenefits from './components/LockBenefits'
 
 const Lock: React.FC = () => {
   const { chainId, account } = useWeb3React()
@@ -45,7 +46,9 @@ const Lock: React.FC = () => {
               <LockContent />
             </Card>
           </CenterContent>
-          <RightContent></RightContent>
+          <RightContent>
+            <LockBenefits />
+          </RightContent>
         </LayoutContainer>
       </WidthFull>
     </LockProvider>
