@@ -121,7 +121,7 @@ const TokenInput: React.FC<TokenInputProps> = (props) => {
         {errors.length > 0 ? (
           <FlexBalance>
             <ErrorText>{errors[0]}</ErrorText>
-            <WarningIcon />
+            <WarningIcon color='#FF8080' />
           </FlexBalance>
         ) : null}
       </Flex>
