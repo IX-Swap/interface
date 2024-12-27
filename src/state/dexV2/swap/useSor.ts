@@ -3,15 +3,19 @@ import { BigNumber, formatFixed } from '@ethersproject/bignumber'
 import { AddressZero, WeiPerEther as ONE, Zero } from '@ethersproject/constants'
 import { formatUnits, parseUnits } from '@ethersproject/units'
 // @ts-ignore
-import { parseFixed, SwapType, SubgraphPoolBase } from '@ixswap1/dex-v2-sdk'
+import { parseFixed, SwapType, SubgraphPoolBase, SwapTypes } from '@ixswap1/dex-v2-sdk'
 
-import { WrapType } from 'lib/utils/wrapper'
+import { getWrapOutput, WrapType } from 'lib/utils/wrapper'
 import { TokenInfo } from 'types/TokenList'
 import { GAS_PRICE, MAX_POOLS } from 'config'
 import { rpcProviderService } from 'services/rpc-provider/rpc-provider.service'
 import { SorManager, SorReturn } from 'utils/balancer/helpers/sorManager'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { bnum } from 'lib/utils'
+import { useTokens } from '../tokens/hooks/useTokens'
+import { overflowProtected } from 'pages/DexV2/Pool/components/helpers'
+import { configService } from 'services/config/config.service'
+import useNumbers from 'hooks/dex-v2/useNumbers'
 
 const MIN_PRICE_IMPACT = 0.0001
 const HIGH_PRICE_IMPACT_THRESHOLD = 0.05
@@ -114,202 +118,230 @@ export default function useSor({
   setTokenOutAmountInput,
 }: Props) {
   const state = useSelector((state: any) => state.swap)
+  const { priceFor, getToken } = useTokens()
+  const { fNum } = useNumbers()
+
   const [pools, setPools] = useState<SubgraphPoolBase[]>([])
   const [poolsLoading, setPoolsLoading] = useState<boolean>(true)
   const [priceImpact, setPriceImpact] = useState<number>(0)
   const [sorReturn, setSorReturn] = useState<any>({})
 
-  // async function fetchPools(): Promise<void> {
-  //   if (!sorManager) {
-  //     return
-  //   }
+  async function fetchPools(): Promise<void> {
+    if (!sorManager) {
+      return
+    }
 
-  //   console.time('[SOR] fetchPools')
-  //   await sorManager.fetchPools()
-  //   console.timeEnd('[SOR] fetchPools')
-  //   setPoolsLoading(false)
-  //   // Updates any swaps with up to date pools/balances
-  //   if (sorConfig.handleAmountsOnFetchPools) {
-  //     handleAmountChange()
-  //   }
-  // }
+    console.time('[SOR] fetchPools')
+    await sorManager.fetchPools()
+    console.timeEnd('[SOR] fetchPools')
+    setPoolsLoading(false)
+    // Updates any swaps with up to date pools/balances
+    if (sorConfig.handleAmountsOnFetchPools) {
+      // handleAmountChange()
+    }
+  }
 
-  // function resetInputAmounts(amount: string): void {
-  //   if (exactIn && bnum(amount).isZero()) {
-  //     setTokenOutAmountInput('')
-  //   } else if (!exactIn && bnum(amount).isZero()) {
-  //     setTokenInAmountInput('')
-  //   } else {
-  //     setTokenInAmountInput(amount)
-  //     setTokenOutAmountInput(amount)
-  //   }
+  function resetInputAmounts(amount: string): void {
+    if (exactIn && bnum(amount).isZero()) {
+      setTokenOutAmountInput('')
+    } else if (!exactIn && bnum(amount).isZero()) {
+      setTokenInAmountInput('')
+    } else {
+      setTokenInAmountInput(amount)
+      setTokenOutAmountInput(amount)
+    }
 
-  //   setPriceImpact(0)
-  //   setSorReturn((old: any) => ({ ...old, returnAmount: Zero, hasSwaps: false }))
-  // }
+    setPriceImpact(0)
+    setSorReturn((old: any) => ({ ...old, returnAmount: Zero, hasSwaps: false }))
+  }
 
-  // async function handleAmountChange(): Promise<void> {
-  //   if (isCowswapSwap) {
-  //     return
-  //   }
+  async function handleAmountChange(): Promise<void> {
+    if (isCowswapSwap) {
+      return
+    }
 
-  //   let amount = exactIn ? tokenInAmountInput : tokenOutAmountInput
-  //   // Avoid using SOR if querying a zero value or (un)wrapping swap
-  //   const zeroValueSwap = amount === '' || bnum(amount).isZero()
-  //   if (zeroValueSwap) {
-  //     resetInputAmounts(amount)
-  //     return
-  //   }
+    let amount = exactIn ? tokenInAmountInput : tokenOutAmountInput
+    // Avoid using SOR if querying a zero value or (un)wrapping swap
+    const zeroValueSwap = amount === '' || bnum(amount).isZero()
+    if (zeroValueSwap) {
+      resetInputAmounts(amount)
+      return
+    }
 
-  //   const tokenInAddress = tokenInAddressInput
-  //   const tokenOutAddress = tokenOutAddressInput
+    const tokenInAddress = tokenInAddressInput
+    const tokenOutAddress = tokenOutAddressInput
 
-  //   if (!tokenInAddress || !tokenOutAddress) {
-  //     if (exactIn) tokenOutAmountInput = ''
-  //     else tokenInAmountInput = ''
-  //     return
-  //   }
+    if (!tokenInAddress || !tokenOutAddress) {
+      if (exactIn) tokenOutAmountInput = ''
+      else tokenInAmountInput = ''
+      return
+    }
 
-  //   const tokenInDecimals = getTokenDecimals(tokenInAddressInput)
-  //   const tokenOutDecimals = getTokenDecimals(tokenOutAddressInput)
+    const tokenInDecimals = getTokenDecimals(tokenInAddressInput)
+    const tokenOutDecimals = getTokenDecimals(tokenOutAddressInput)
 
-  //   const inputAmountDecimals = exactIn ? tokenInDecimals : tokenOutDecimals
-  //   amount = overflowProtected(amount, inputAmountDecimals)
+    const inputAmountDecimals = exactIn ? tokenInDecimals : tokenOutDecimals
+    amount = overflowProtected(amount, inputAmountDecimals)
 
-  //   if (wrapType.value !== WrapType.NonWrap) {
-  //     const wrapper = wrapType.value === WrapType.Wrap ? tokenOutAddress : tokenInAddress
+    if (wrapType !== WrapType.NonWrap) {
+      const wrapper = wrapType === WrapType.Wrap ? tokenOutAddress : tokenInAddress
 
-  //     if (exactIn) {
-  //       setTokenInAmountInput(amount)
+      if (exactIn) {
+        setTokenInAmountInput(amount)
 
-  //       const outputAmount = await getWrapOutput(wrapper, wrapType.value, parseFixed(amount, tokenInDecimals))
-  //       setTokenOutAmountInput(formatFixed(outputAmount, tokenInDecimals))
-  //     } else {
-  //       setTokenOutAmountInput(amount)
+        const outputAmount = await getWrapOutput(wrapper, wrapType, parseFixed(amount, tokenInDecimals))
+        setTokenOutAmountInput(formatFixed(outputAmount, tokenInDecimals))
+      } else {
+        setTokenOutAmountInput(amount)
 
-  //       const inputAmount = await getWrapOutput(
-  //         wrapper,
-  //         wrapType.value === WrapType.Wrap ? WrapType.Unwrap : WrapType.Wrap,
-  //         parseFixed(amount, tokenOutDecimals)
-  //       )
-  //       setTokenInAmountInput(formatFixed(inputAmount, tokenOutDecimals))
-  //     }
+        const inputAmount = await getWrapOutput(
+          wrapper,
+          wrapType === WrapType.Wrap ? WrapType.Unwrap : WrapType.Wrap,
+          parseFixed(amount, tokenOutDecimals)
+        )
+        setTokenInAmountInput(formatFixed(inputAmount, tokenOutDecimals))
+      }
 
-  //     setSorReturn((old: any) => ({ ...old, hasSwaps: false }))
-  //     setPriceImpact(0)
-  //     return
-  //   }
+      setSorReturn((old: any) => ({ ...old, hasSwaps: false }))
+      setPriceImpact(0)
+      return
+    }
 
-  //   if (!sorManager || !sorManager.hasPoolData()) {
-  //     if (exactIn) setTokenOutAmountInput('')
-  //     else setTokenInAmountInput('')
-  //     return
-  //   }
+    if (!sorManager || !sorManager.hasPoolData()) {
+      if (exactIn) setTokenOutAmountInput('')
+      else setTokenInAmountInput('')
+      return
+    }
 
-  //   if (exactIn) {
-  //     await setSwapCost(tokenOutAddressInput, tokenOutDecimals, sorManager)
+    if (exactIn) {
+      await setSwapCost(tokenOutAddressInput, tokenOutDecimals, sorManager)
 
-  //     let tokenInAmountScaled = parseUnits(amount, tokenInDecimals)
+      let tokenInAmountScaled = parseUnits(amount, tokenInDecimals)
 
-  //     console.log('[SOR Manager] swapExactIn')
+      console.log('[SOR Manager] swapExactIn')
 
-  //     const swapReturn: SorReturn = await sorManager.getBestSwap(
-  //       tokenInAddress,
-  //       tokenOutAddress,
-  //       tokenInDecimals,
-  //       tokenOutDecimals,
-  //       SwapTypes.SwapExactIn,
-  //       tokenInAmountScaled
-  //     )
+      const swapReturn: SorReturn = await sorManager.getBestSwap(
+        tokenInAddress,
+        tokenOutAddress,
+        tokenInDecimals,
+        tokenOutDecimals,
+        SwapTypes.SwapExactIn,
+        tokenInAmountScaled
+      )
 
-  //     setSorReturn(swapReturn)
-  //     let tokenOutAmount = swapReturn.returnAmount
+      setSorReturn(swapReturn)
+      let tokenOutAmount = swapReturn.returnAmount
 
-  //     setTokenOutAmountInput(tokenOutAmount.gt(0) ? formatAmount(formatUnits(tokenOutAmount, tokenOutDecimals)) : '')
+      setTokenOutAmountInput(tokenOutAmount.gt(0) ? formatAmount(formatUnits(tokenOutAmount, tokenOutDecimals)) : '')
 
-  //     if (!sorReturn.hasSwaps) {
-  //       setPriceImpact(0)
-  //       state.validationErrors.noSwaps = true
-  //     } else {
-  //       // If either in/out address is stETH we should mutate the value for the
-  //       // priceImpact calculation.
-  //       tokenInAmountScaled = await mutateAmount({
-  //         amount: tokenInAmountScaled,
-  //         address: tokenInAddress,
-  //         isInputToken: true,
-  //       })
-  //       tokenOutAmount = await mutateAmount({
-  //         amount: tokenOutAmount,
-  //         address: tokenOutAddress,
-  //         isInputToken: false,
-  //       })
-  //       const priceImpactCalc = calcPriceImpact(
-  //         tokenInAmountScaled,
-  //         tokenInDecimals,
-  //         tokenOutAmount,
-  //         tokenOutDecimals,
-  //         SwapType.SwapExactIn,
-  //         swapReturn.marketSpNormalised
-  //       )
+      if (!sorReturn.hasSwaps) {
+        setPriceImpact(0)
+        state.validationErrors.noSwaps = true
+      } else {
+        // If either in/out address is stETH we should mutate the value for the
+        // priceImpact calculation.
+        tokenInAmountScaled = await mutateAmount({
+          amount: tokenInAmountScaled,
+          address: tokenInAddress,
+          isInputToken: true,
+        })
+        tokenOutAmount = await mutateAmount({
+          amount: tokenOutAmount,
+          address: tokenOutAddress,
+          isInputToken: false,
+        })
+        const priceImpactCalc = calcPriceImpact(
+          tokenInAmountScaled,
+          tokenInDecimals,
+          tokenOutAmount,
+          tokenOutDecimals,
+          SwapType.SwapExactIn,
+          swapReturn.marketSpNormalised
+        )
 
-  //       setPriceImpact(Math.max(Number(formatUnits(priceImpactCalc)), MIN_PRICE_IMPACT))
-  //     }
-  //   } else {
-  //     // Notice that outputToken is tokenOut if swapType == 'swapExactIn' and tokenIn if swapType == 'swapExactOut'
-  //     await setSwapCost(tokenInAddressInput, tokenInDecimals, sorManager)
+        setPriceImpact(Math.max(Number(formatUnits(priceImpactCalc)), MIN_PRICE_IMPACT))
+      }
+    } else {
+      // Notice that outputToken is tokenOut if swapType == 'swapExactIn' and tokenIn if swapType == 'swapExactOut'
+      await setSwapCost(tokenInAddressInput, tokenInDecimals, sorManager)
 
-  //     let tokenOutAmountScaled = parseUnits(amount, tokenOutDecimals)
+      let tokenOutAmountScaled = parseUnits(amount, tokenOutDecimals)
 
-  //     console.log('[SOR Manager] swapExactOut')
+      console.log('[SOR Manager] swapExactOut')
 
-  //     const swapReturn: SorReturn = await sorManager.getBestSwap(
-  //       tokenInAddress,
-  //       tokenOutAddress,
-  //       tokenInDecimals,
-  //       tokenOutDecimals,
-  //       SwapTypes.SwapExactOut,
-  //       tokenOutAmountScaled
-  //     )
+      const swapReturn: SorReturn = await sorManager.getBestSwap(
+        tokenInAddress,
+        tokenOutAddress,
+        tokenInDecimals,
+        tokenOutDecimals,
+        SwapTypes.SwapExactOut,
+        tokenOutAmountScaled
+      )
 
-  //     setSorReturn(swapReturn) // TO DO - is it needed?
+      setSorReturn(swapReturn) // TO DO - is it needed?
 
-  //     let tokenInAmount = swapReturn.returnAmount
-  //     setTokenInAmountInput(tokenInAmount.gt(0) ? formatAmount(formatUnits(tokenInAmount, tokenInDecimals)) : '')
+      let tokenInAmount = swapReturn.returnAmount
+      setTokenInAmountInput(tokenInAmount.gt(0) ? formatAmount(formatUnits(tokenInAmount, tokenInDecimals)) : '')
 
-  //     if (!sorReturn.hasSwaps) {
-  //       setPriceImpact(0)
-  //       state.validationErrors.noSwaps = true
-  //     } else {
-  //       // If either in/out address is stETH we should mutate the value for the
-  //       // priceImpact calculation.
-  //       tokenOutAmountScaled = await mutateAmount({
-  //         amount: tokenOutAmountScaled,
-  //         address: tokenOutAddress,
-  //         isInputToken: true,
-  //       })
-  //       tokenInAmount = await mutateAmount({
-  //         amount: tokenInAmount,
-  //         address: tokenInAddress,
-  //         isInputToken: false,
-  //       })
-  //       const priceImpactCalc = calcPriceImpact(
-  //         tokenInAmount,
-  //         tokenInDecimals,
-  //         tokenOutAmountScaled,
-  //         tokenOutDecimals,
-  //         SwapType.SwapExactIn,
-  //         swapReturn.marketSpNormalised
-  //       )
+      if (!sorReturn.hasSwaps) {
+        setPriceImpact(0)
+        state.validationErrors.noSwaps = true
+      } else {
+        // If either in/out address is stETH we should mutate the value for the
+        // priceImpact calculation.
+        tokenOutAmountScaled = await mutateAmount({
+          amount: tokenOutAmountScaled,
+          address: tokenOutAddress,
+          isInputToken: true,
+        })
+        tokenInAmount = await mutateAmount({
+          amount: tokenInAmount,
+          address: tokenInAddress,
+          isInputToken: false,
+        })
+        const priceImpactCalc = calcPriceImpact(
+          tokenInAmount,
+          tokenInDecimals,
+          tokenOutAmountScaled,
+          tokenOutDecimals,
+          SwapType.SwapExactIn,
+          swapReturn.marketSpNormalised
+        )
 
-  //       setPriceImpact(Math.max(Number(formatUnits(priceImpactCalc)), MIN_PRICE_IMPACT))
-  //     }
-  //   }
+        setPriceImpact(Math.max(Number(formatUnits(priceImpactCalc)), MIN_PRICE_IMPACT))
+      }
+    }
 
-  //   setPools(sorManager.selectedPools)
+    setPools(sorManager.selectedPools)
 
-  //   state.validationErrors.highPriceImpact = priceImpact >= HIGH_PRICE_IMPACT_THRESHOLD
-  // }
+    state.validationErrors.highPriceImpact = priceImpact >= HIGH_PRICE_IMPACT_THRESHOLD
+  }
 
+  // Uses stored market prices to calculate price of native asset in terms of token
+  function calculateEthPriceInToken(tokenAddress: string): number {
+    const ethPriceFiat = priceFor(configService.network.nativeAsset.address)
+    const tokenPriceFiat = priceFor(tokenAddress)
+    if (tokenPriceFiat === 0) return 0
+    const ethPriceToken = ethPriceFiat / tokenPriceFiat
+    return ethPriceToken
+  }
+
+  // Sets SOR swap cost for more efficient routing
+  async function setSwapCost(tokenAddress: string, tokenDecimals: number, sorManager: SorManager): Promise<void> {
+    await sorManager.setCostOutputToken(tokenAddress, tokenDecimals, calculateEthPriceInToken(tokenAddress).toString())
+  }
+
+  function formatAmount(amount: string) {
+    return fNum(amount, {
+      maximumSignificantDigits: 6,
+      useGrouping: false,
+      fixedFormat: true,
+    })
+  }
+
+  function getTokenDecimals(tokenAddress: string) {
+    return getToken(tokenAddress)?.decimals
+  }
   /**
    * mutateAmount
    *
@@ -338,6 +370,23 @@ export default function useSor({
     // }
     return amount
   }
+
+  useEffect(() => {
+    const getData = async () => {
+      const unknownAssets: string[] = [];
+      if (tokenInAddressInput && !getToken(tokenInAddressInput)) {
+        unknownAssets.push(tokenInAddressInput);
+      }
+      if (tokenOutAddressInput && !getToken(tokenOutAddressInput)) {
+        unknownAssets.push(tokenOutAddressInput);
+      }
+      // await injectTokens(unknownAssets);
+      await fetchPools();
+      await handleAmountChange();
+    }
+
+    getData()
+  }, [])
 
   return {
     sorManager,
