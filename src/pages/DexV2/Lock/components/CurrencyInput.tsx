@@ -36,13 +36,11 @@ export default function CurrencyInputPanel({
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const theme = useTheme()
-
-  const decimals = (currency?.tokenInfo?.decimals ?? 18) > 4 ? 4 : currency?.tokenInfo?.decimals ?? 18
-
+  const decimals = currency?.tokenInfo?.decimals || 18
   const onChangeInput = (val: string) => {
     const floatingPart = val.split('.')[1]
-    const inputDecimals = currency?.decimals || (currency as any)?.tokenInfo?.decimals || 2
-    if (floatingPart && currency && inputDecimals < floatingPart.length) return
+    const inputDecimals = decimals
+    if (floatingPart && inputDecimals < floatingPart.length) return
     onUserInput(val)
   }
 
