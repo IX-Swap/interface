@@ -1,10 +1,9 @@
 import { Slider } from "@mui/material"
-import { Box, Button, Flex } from "rebass"
+import { Box, Flex } from "rebass"
 import styled from "styled-components"
 import { TYPE } from "theme"
 import { useLock } from "../LockProvider"
-
-const WEEK = 604800
+import { WEEK } from "../constants"
 
 const DurationSlider: React.FC = () => {
   const {
