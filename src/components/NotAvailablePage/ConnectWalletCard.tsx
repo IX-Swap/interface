@@ -11,6 +11,20 @@ const ConnectWalletCard = () => {
   const { config } = useWhitelabelState()
   const { openConnectModal } = useConnectModal()
 
+  //   const initLineNext = async () => {
+  //     const sdk = await DappPortalSDK.init({ clientId: 'bab621cd-1d1e-45ef-8b42-c2b0917c645a' })
+  //     const provider = sdk.getWalletProvider()
+
+  //     const accounts = (await provider.request({ method: 'kaia_requestAccounts' })) as any
+  //     const accountAddress = accounts[0]
+  //     console.log('accounts', accounts)
+  //     console.log('accountAddress', accountAddress)
+
+  //     if (accounts.length > 0) {
+  //       window.ethereum = provider
+  //     }
+  //   }
+
   return (
     <ConnectWalletContainer>
       <Text>
@@ -63,4 +77,5 @@ const ConnectWalletCard = () => {
   )
 }
 
-export default ConnectWalletCard;
+export default ConnectWalletCard
+

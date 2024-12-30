@@ -2,9 +2,13 @@ import { QueryClient } from '@tanstack/react-query'
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import * as wallets from '@rainbow-me/rainbowkit/wallets'
 
-import {  CHAINS, transports } from './constants'
+import { RainbowKitProvider, connectorsForWallets } from '@rainbow-me/rainbowkit'
+
+import { CHAINS, transports } from './constants'
 import walletConnectConfig from 'walletConnectConfig.json'
 import { tryClearIndexedDB } from 'utils'
+import { createConfig } from 'wagmi'
+import { lineNextWallet } from './linenext-wallet'
 
 type WalletConnectConfig = {
   [key: string]: string
@@ -29,7 +33,7 @@ export function createWagmiConfig() {
     wallets: [
       {
         groupName: 'Popular',
-        wallets: [wallets.coinbaseWallet, wallets.metaMaskWallet, wallets.walletConnectWallet],
+        wallets: [wallets.coinbaseWallet, wallets.metaMaskWallet, wallets.walletConnectWallet, lineNextWallet],
       },
       {
         groupName: 'Others',
@@ -51,5 +55,32 @@ export function createWagmiConfig() {
 
   return config
 }
+
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: 'Recommended',
+      wallets: [wallets.coinbaseWallet, wallets.metaMaskWallet, wallets.walletConnectWallet],
+    },
+
+    {
+      groupName: 'Others',
+      wallets: [
+        wallets.trustWallet,
+        wallets.phantomWallet,
+        wallets.braveWallet,
+        wallets.uniswapWallet,
+        wallets.rainbowWallet,
+        wallets.zerionWallet,
+        wallets.rabbyWallet,
+        wallets.injectedWallet,
+      ],
+    },
+  ],
+  {
+    appName: 'IXSwap',
+    projectId: getWalletConnectProjectId(),
+  }
+)
 
 export const queryClient = new QueryClient()
