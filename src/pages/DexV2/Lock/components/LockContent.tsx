@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react'
-import styled from 'styled-components'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { utils } from 'ethers'
 import { Flex } from 'rebass'
@@ -15,16 +14,24 @@ import LockExplanation from './LockExplanation'
 import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
 import { IXS_ADDRESS, VOTING_ESCROW_ADDRESS } from 'constants/addresses'
 import useIXSCurrency from 'hooks/useIXSCurrency'
+import { PinnedContentButton } from 'components/Button'
+import { useVotingEscrowContract } from 'hooks/useContract'
+import { safeParseUnits } from 'utils/formatCurrencyAmount'
+import { useTransactionAdder } from 'state/transactions/hooks'
+import { WEEK } from '../constants'
 
 const LockContent: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const {
     userInput,
     setUserInput,
+    duration,
   } = useLock()
   const currency = useIXSCurrency()
   const { account, chainId } = useWeb3React()
   const { openConnectModal } = useConnectModal()
+  const votingEscrowContract = useVotingEscrowContract()
+  const addTransaction = useTransactionAdder()
   
   const [approvalState, approve, refreshAllowance] = useAllowance(
     IXS_ADDRESS[chainId],
@@ -32,31 +39,44 @@ const LockContent: React.FC = () => {
     VOTING_ESCROW_ADDRESS[chainId]
   )
 
-  const walletLabel = useMemo(() => {
+  const primaryButtonLabel = useMemo(() => {
     if (!account) {
       return 'Connect Wallet'
+    } else if (isLoading) {
+      return 'Processing...'
     } else if (approvalState !== ApprovalState.APPROVED) {
       return 'Allow IXS'
     }
     return 'Lock'
   }, [account, approvalState])
 
-  function handleLock() {
-
+  async function handleLock() {
+    const tx = await votingEscrowContract?.createLock(
+      safeParseUnits(+userInput, currency?.decimals),
+      duration,
+    )
+    await tx.wait()
+    if (!tx.hash) return
+    addTransaction(tx, {
+      summary: `Lock ${userInput} IXS in ${ Math.round(duration / WEEK) } weeks`,
+    })
   }
 
   async function handleProceed() {
-    if (!account) {
-      openConnectModal && openConnectModal()
-    } else if (approvalState === ApprovalState.NOT_APPROVED) {
-      try {
-        setIsLoading(true)
-        await approve()
-        setIsLoading(false)
-        handleLock()
-      } catch (error) {
-        console.error('Error approving', error)
+    try {
+      setIsLoading(true)
+      if (!account) {
+        openConnectModal && openConnectModal()
+      } else if (approvalState === ApprovalState.NOT_APPROVED) {
+          await approve()
+          await handleLock()
+      } else { // token approved
+          await handleLock()
       }
+    } catch (error) {
+      console.error('Error processing', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -79,44 +99,15 @@ const LockContent: React.FC = () => {
 
       <LockExplanation />
 
-      <ButtonPrimary
+      <PinnedContentButton
         onClick={() => handleProceed()}
-        disabled={approvalState === ApprovalState.PENDING}
+        type="button"
+        disabled={approvalState === ApprovalState.PENDING || isLoading || !userInput}
       >
-        {walletLabel}
-      </ButtonPrimary>
+        {primaryButtonLabel}
+      </PinnedContentButton>
     </Flex>
   )
 }
 
 export default LockContent
-
-const ButtonPrimary = styled.button`
-  display: flex;
-  height: 48px;
-  padding: 12px 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  align-self: stretch;
-  color: #fff;
-  font-family: Inter;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  letter-spacing: -0.28px;
-  border-radius: 8px;
-  background: #66f;
-  border: none;
-  width: 100%;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(0.99);
-  }
-
-  &:disabled {
-    background: #ececfb;
-  }
-`
