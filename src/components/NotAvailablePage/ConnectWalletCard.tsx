@@ -6,6 +6,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { ConnectWalletContainer } from './styled'
 import { PinnedContentButton } from 'components/Button'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import CustomConnectButton from './CustomButotn'
 
 const ConnectWalletCard = () => {
   const { config } = useWhitelabelState()
@@ -40,6 +41,7 @@ const ConnectWalletCard = () => {
           </Text>
         </PinnedContentButton>
       )}
+      <CustomConnectButton />
 
       {config?.isIxSwap ? (
         <span>
@@ -78,4 +80,3 @@ const ConnectWalletCard = () => {
 }
 
 export default ConnectWalletCard
-
