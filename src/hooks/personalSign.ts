@@ -2,6 +2,8 @@ import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import store from 'state'
 import { setPendingSign } from 'state/application/actions'
 import { useSignMessage as useSignMessageWagmi, useSwitchChain } from 'wagmi'
+import { Web3Provider } from '@ethersproject/providers'
+import { getSDKInstance } from 'components/Web3Provider/linenext-wallet'
 
 interface SignMessageProps {
   hash: string
@@ -36,4 +38,32 @@ export const useSignMessage = () => {
   }
 
   return { signMessage }
+}
+
+interface Props {
+  hash?: string
+  account?: string | null
+}
+// specific function developed for Kaia - Linenext integration
+export const kaiaLineSign = async ({ hash, account }: Props): Promise<string | null> => {
+  if (hash && account) {
+    try {
+      const sdk = await getSDKInstance()
+
+      const provider = sdk.getWalletProvider()
+      store.dispatch(setPendingSign(true))
+
+      const result = await provider.request({ method: 'kaia_signLegacy', params: [hash, account] })
+      console.info('result', result)
+
+      store.dispatch(setPendingSign(false))
+
+      return ''
+    } catch (e) {
+      store.dispatch(setPendingSign(false))
+
+      console.error({ ERROR: e })
+    }
+  }
+  return null
 }

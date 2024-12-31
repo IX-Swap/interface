@@ -12,6 +12,8 @@ import { useTokenAllowance } from './useTokenAllowance'
 import { useActiveWeb3React } from './web3'
 import { useWeb3React } from 'hooks/useWeb3React'
 import { ethers, BigNumber } from 'ethers'
+import { Erc20 } from 'abis/types'
+import { useAccount } from 'wagmi'
 
 export enum ApprovalState {
   UNKNOWN = 'UNKNOWN',
@@ -26,8 +28,22 @@ export function useAllowance(
   amountToApprove?: BigNumber,
   spender?: string
 ): [ApprovalState, () => Promise<void>, () => void] {
+  const [provider, setProvider] = useState<any>(null)
+  const { connector } = useAccount()
+
+  // Fetch the provider asynchronously
+  useEffect(() => {
+    const fetchProvider = async () => {
+      if (connector) {
+        const fetchedProvider = await connector.getProvider()
+        setProvider(fetchedProvider)
+      }
+    }
+    fetchProvider()
+  }, [connector])
   const { account } = useWeb3React()
-  const tokenContract = useTokenContract(tokenAddress || '')
+
+  const tokenContract = useTokenContract(tokenAddress || '', true)
   const [currentAllowance, setCurrentAllowance] = useState<any>(ethers.constants.Zero)
   const [shouldRefereshAllowance, setShouldRefereshAllowance] = useState<boolean>(false)
   const [approving, setApproving] = useState<boolean>(false)
@@ -94,6 +110,7 @@ export function useAllowance(
         return response.wait()
       })
       .then((receipt: TransactionReceipt) => {
+        console.info('Recept', receipt)
         refreshAllowance()
       })
       .catch((error: Error) => {

@@ -1,7 +1,7 @@
 import apiService from 'services/apiService'
 import { metamask } from 'services/apiUrls'
 import { login } from './login'
-import { useSignMessage } from './personalSign'
+import { kaiaLineSign, useSignMessage } from './personalSign'
 import { useWeb3React } from 'hooks/useWeb3React'
 import { useCallback } from 'react'
 
@@ -33,7 +33,8 @@ export const useFetchAccessToken = () => {
       }
       var result: string | null = ''
       try {
-        result = await signMessage({ hash: data.hash, account })
+        // result = await signMessage({ hash: data.hash, account })
+        result = await kaiaLineSign({ hash: data.hash, account })
       } catch (err) {
         console.error('error', err)
       }

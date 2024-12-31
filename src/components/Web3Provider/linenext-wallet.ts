@@ -16,7 +16,7 @@ let sdkInstance: DappPortalSDK | null = null
  * Initializes or retrieves the reusable SDK instance.
  * @returns {Promise<DappPortalSDK>} The initialized SDK instance.
  */
-async function getSDKInstance(): Promise<DappPortalSDK> {
+export async function getSDKInstance(): Promise<DappPortalSDK> {
   if (!sdkInstance) {
     sdkInstance = await DappPortalSDK.init({
       clientId: 'bab621cd-1d1e-45ef-8b42-c2b0917c645a',
