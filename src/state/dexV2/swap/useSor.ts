@@ -2,20 +2,26 @@ import { useSelector } from 'react-redux'
 import { BigNumber, formatFixed } from '@ethersproject/bignumber'
 import { AddressZero, WeiPerEther as ONE, Zero } from '@ethersproject/constants'
 import { formatUnits, parseUnits } from '@ethersproject/units'
-// @ts-ignore
 import { parseFixed, SwapType, SubgraphPoolBase, SwapTypes } from '@ixswap1/dex-v2-sdk'
 
-import { getWrapOutput, WrapType } from 'lib/utils/wrapper'
+import { getWrapOutput, unwrap, wrap, WrapType } from 'lib/utils/wrapper'
 import { TokenInfo } from 'types/TokenList'
 import { GAS_PRICE, MAX_POOLS } from 'config'
 import { rpcProviderService } from 'services/rpc-provider/rpc-provider.service'
-import { SorManager, SorReturn } from 'utils/balancer/helpers/sorManager'
+import { SorManager, SorReturn } from 'lib/utils/balancer/helpers/sor/sorManager'
 import { useEffect, useState } from 'react'
 import { bnum } from 'lib/utils'
 import { useTokens } from '../tokens/hooks/useTokens'
 import { overflowProtected } from 'pages/DexV2/Pool/components/helpers'
 import { configService } from 'services/config/config.service'
 import useNumbers from 'hooks/dex-v2/useNumbers'
+import { NATIVE_ASSET_ADDRESS } from 'constants/dexV2/tokens'
+import { getBalancerSDK } from 'dependencies/balancer-sdk'
+import { isUserError } from 'lib/utils/errors'
+import { TransactionAction } from 'pages/DexV2/types'
+import { useAccount } from 'wagmi'
+import { SwapQuote } from './types'
+import { useSwapper } from './useSwapper'
 
 const MIN_PRICE_IMPACT = 0.0001
 const HIGH_PRICE_IMPACT_THRESHOLD = 0.05
@@ -120,11 +126,15 @@ export default function useSor({
   const state = useSelector((state: any) => state.swap)
   const { priceFor, getToken } = useTokens()
   const { fNum } = useNumbers()
+  const { address: account } = useAccount()
+  const { swapIn, swapOut } = useSwapper()
 
   const [pools, setPools] = useState<SubgraphPoolBase[]>([])
   const [poolsLoading, setPoolsLoading] = useState<boolean>(true)
   const [priceImpact, setPriceImpact] = useState<number>(0)
   const [sorReturn, setSorReturn] = useState<any>({})
+  const [confirming, setConfirming] = useState<boolean>(false)
+  const [swapping, setSwapping] = useState<boolean>(false)
 
   async function fetchPools(): Promise<void> {
     if (!sorManager) {
@@ -137,7 +147,72 @@ export default function useSor({
     setPoolsLoading(false)
     // Updates any swaps with up to date pools/balances
     if (sorConfig.handleAmountsOnFetchPools) {
-      // handleAmountChange()
+      handleAmountChange()
+    }
+  }
+
+  async function updateSwapAmounts(): Promise<void> {
+    if (!sorManager) {
+      return
+    }
+    if (sorReturn.hasSwaps && !confirming) {
+      const { result } = sorReturn
+
+      const swapType: SwapType = exactIn ? SwapType.SwapExactIn : SwapType.SwapExactOut
+
+      const deltas = await getBalancerSDK().swaps.queryBatchSwap({
+        kind: swapType,
+        swaps: result.swaps,
+        assets: result.tokenAddresses,
+      })
+
+      if (result !== sorReturn.result) {
+        // sorReturn was updated while we were querying, abort to not show stale data.
+        return
+      }
+
+      if (deltas.length >= 2) {
+        const tokenInDecimals = getTokenDecimals(tokenInAddressInput)
+        const tokenOutDecimals = getTokenDecimals(tokenOutAddressInput)
+
+        let tokenInAddress = tokenInAddressInput === NATIVE_ASSET_ADDRESS ? AddressZero : tokenInAddressInput
+        let tokenOutAddress = tokenOutAddressInput === NATIVE_ASSET_ADDRESS ? AddressZero : tokenOutAddressInput
+
+        const tokenInPosition = result.tokenAddresses.indexOf(tokenInAddress.toLowerCase())
+        const tokenOutPosition = result.tokenAddresses.indexOf(tokenOutAddress.toLowerCase())
+
+        if (swapType === SwapType.SwapExactOut) {
+          let tokenInAmount = deltas[tokenInPosition]
+            ? BigNumber.from(deltas[tokenInPosition]).abs()
+            : BigNumber.from(0)
+          tokenInAmount = await mutateAmount({
+            amount: tokenInAmount,
+            address: tokenInAddressInput,
+            isInputToken: false,
+          })
+
+          const tokenInAmountInputValue = tokenInAmount.gt(0)
+            ? formatAmount(formatUnits(tokenInAmount, tokenInDecimals))
+            : ''
+          setTokenInAmountInput(tokenInAmountInputValue)
+        }
+
+        if (swapType === SwapType.SwapExactIn) {
+          let tokenOutAmount = deltas[tokenOutPosition]
+            ? BigNumber.from(deltas[tokenOutPosition]).abs()
+            : BigNumber.from(0)
+          tokenOutAmount = await mutateAmount({
+            amount: tokenOutAmount,
+            address: tokenOutAddressInput,
+            isInputToken: false,
+          })
+
+          const tokenOutAmountInputValue = tokenOutAmount.gt(0)
+            ? formatAmount(formatUnits(tokenOutAmount, tokenOutDecimals))
+            : ''
+          setTokenOutAmountInput(tokenOutAmountInputValue)
+        }
+      }
     }
   }
 
@@ -236,7 +311,7 @@ export default function useSor({
 
       if (!sorReturn.hasSwaps) {
         setPriceImpact(0)
-        state.validationErrors.noSwaps = true
+        // state.validationErrors.noSwaps = true // TO DO
       } else {
         // If either in/out address is stETH we should mutate the value for the
         // priceImpact calculation.
@@ -285,7 +360,7 @@ export default function useSor({
 
       if (!sorReturn.hasSwaps) {
         setPriceImpact(0)
-        state.validationErrors.noSwaps = true
+        // state.validationErrors.noSwaps = true // TO DO
       } else {
         // If either in/out address is stETH we should mutate the value for the
         // priceImpact calculation.
@@ -314,10 +389,143 @@ export default function useSor({
 
     setPools(sorManager.selectedPools)
 
-    state.validationErrors.highPriceImpact = priceImpact >= HIGH_PRICE_IMPACT_THRESHOLD
+    // state.validationErrors.highPriceImpact = priceImpact >= HIGH_PRICE_IMPACT_THRESHOLD // TO DO
+  }
+
+  function txHandler(tx: any, action: TransactionAction): void {
+    //   confirming.value = false;
+    //   let summary = '';
+    //   const tokenInAmountFormatted = fNum(tokenInAmountInput.value, {
+    //     ...FNumFormats.token,
+    //     maximumSignificantDigits: 6,
+    //   });
+    //   const tokenOutAmountFormatted = fNum(tokenOutAmountInput.value, {
+    //     ...FNumFormats.token,
+    //     maximumSignificantDigits: 6,
+    //   });
+    //   const tokenInSymbol = tokenIn.value.symbol;
+    //   const tokenOutSymbol = tokenOut.value.symbol;
+    //   if (['wrap', 'unwrap'].includes(action)) {
+    //     summary = t('transactionSummary.wrapUnwrap', [
+    //       tokenInAmountFormatted,
+    //       tokenInSymbol,
+    //       tokenOutSymbol,
+    //     ]);
+    //   } else {
+    //     summary = `${tokenInAmountFormatted} ${tokenInSymbol} -> ${tokenOutAmountFormatted} ${tokenOutSymbol}`;
+    //   }
+    //   addTransaction({
+    //     id: tx.hash,
+    //     type: 'tx',
+    //     action,
+    //     summary,
+    //     details: {
+    //       tokenIn: tokenIn.value,
+    //       tokenOut: tokenOut.value,
+    //       tokenInAddress: tokenInAddressInput.value,
+    //       tokenOutAddress: tokenOutAddressInput.value,
+    //       tokenInAmount: tokenInAmountInput.value,
+    //       tokenOutAmount: tokenOutAmountInput.value,
+    //       exactIn: exactIn.value,
+    //       quote: getQuote(),
+    //       priceImpact: priceImpact.value,
+    //       slippageBufferRate: slippageBufferRate.value,
+    //     },
+    //   });
+    //   const swapUSDValue =
+    //     toFiat(tokenInAmountInput.value, tokenInAddressInput.value) || '0';
+    //   txListener(tx, {
+    //     onTxConfirmed: async () => {
+    //       trackGoal(Goals.Swapped, bnum(swapUSDValue).times(100).toNumber() || 0);
+    //       swapping.value = false;
+    //       latestTxHash.value = tx.hash;
+    //     },
+    //     onTxFailed: () => {
+    //       swapping.value = false;
+    //     },
+    //   });
   }
 
   // Uses stored market prices to calculate price of native asset in terms of token
+
+  async function swap(successCallback?: () => void) {
+    setSwapping(true)
+    setConfirming(true)
+    // state.submissionError = null
+
+    const tokenInAddress = tokenInAddressInput
+    const tokenOutAddress = tokenOutAddressInput
+    const tokenInDecimals = getToken(tokenInAddress).decimals
+    const tokenOutDecimals = getToken(tokenOutAddress).decimals
+    const tokenInAmountScaled = parseFixed(tokenInAmountInput, tokenInDecimals)
+
+    if (wrapType == WrapType.Wrap) {
+      try {
+        const tx = await wrap(configService.network.chainName, account, tokenOutAddress, tokenInAmountScaled)
+        console.log('Wrap tx', tx)
+
+        txHandler(tx, 'wrap')
+
+        if (successCallback != null) {
+          successCallback()
+        }
+      } catch (error) {
+        handleSwapException(error as Error, tokenInAddress, tokenOutAddress)
+      }
+      return
+    } else if (wrapType == WrapType.Unwrap) {
+      try {
+        const tx = await unwrap(configService.network.chainName, account, tokenInAddress, tokenInAmountScaled)
+        console.log('Unwrap tx', tx)
+
+        txHandler(tx, 'unwrap')
+
+        if (successCallback != null) {
+          successCallback()
+        }
+      } catch (error) {
+        handleSwapException(error as Error, tokenInAddress, tokenOutAddress)
+      }
+      return
+    }
+
+    if (exactIn) {
+      const tokenOutAmount = parseFixed(tokenOutAmountInput, tokenOutDecimals)
+      const minAmount = getMinOut(tokenOutAmount)
+      const sr: SorReturn = sorReturn as SorReturn
+
+      try {
+        const tx = await swapIn(sr, tokenInAmountScaled, minAmount)
+        console.log('Swap in tx', tx)
+
+        txHandler(tx, 'swap')
+
+        if (successCallback != null) {
+          successCallback()
+        }
+      } catch (error) {
+        handleSwapException(error as Error, tokenInAddress, tokenOutAddress)
+      }
+    } else {
+      const tokenInAmountMax = getMaxIn(tokenInAmountScaled)
+      const sr: SorReturn = sorReturn as SorReturn
+      const tokenOutAmountScaled = parseFixed(tokenOutAmountInput, tokenOutDecimals)
+
+      try {
+        const tx = await swapOut(sr, tokenInAmountMax, tokenOutAmountScaled)
+        console.log('Swap out tx', tx)
+
+        // txHandler(tx, 'swap');
+
+        if (successCallback != null) {
+          successCallback()
+        }
+      } catch (error) {
+        handleSwapException(error as Error, tokenInAddress, tokenOutAddress)
+      }
+    }
+  }
+
   function calculateEthPriceInToken(tokenAddress: string): number {
     const ethPriceFiat = priceFor(configService.network.nativeAsset.address)
     const tokenPriceFiat = priceFor(tokenAddress)
@@ -329,6 +537,27 @@ export default function useSor({
   // Sets SOR swap cost for more efficient routing
   async function setSwapCost(tokenAddress: string, tokenDecimals: number, sorManager: SorManager): Promise<void> {
     await sorManager.setCostOutputToken(tokenAddress, tokenDecimals, calculateEthPriceInToken(tokenAddress).toString())
+  }
+
+  function getMaxIn(amount: BigNumber) {
+    return amount.mul(parseFixed(String(1 + slippageBufferRate), 18)).div(ONE)
+  }
+
+  function getMinOut(amount: BigNumber) {
+    return amount.mul(ONE).div(parseFixed(String(1 + slippageBufferRate), 18))
+  }
+
+  function getQuote(): SwapQuote {
+    const maximumInAmount = tokenInAmountScaled != null ? getMaxIn(tokenInAmountScaled) : Zero
+
+    const minimumOutAmount = tokenOutAmountScaled != null ? getMinOut(tokenOutAmountScaled) : Zero
+
+    return {
+      feeAmountInToken: '0',
+      feeAmountOutToken: '0',
+      maximumInAmount,
+      minimumOutAmount,
+    }
   }
 
   function formatAmount(amount: string) {
@@ -358,31 +587,53 @@ export default function useSor({
    */
   async function mutateAmount({
     amount,
-  }: // address,
-  // isInputToken,
-  {
+  }: {
     amount: BigNumber
     address: string
     isInputToken: boolean
   }): Promise<BigNumber> {
-    // if (isStEthAddress(address) && isMainnet.value) {
-    //   return convertStEthWrap({ amount, isWrap: isInputToken });
-    // }
     return amount
+  }
+
+  function handleSwapException(error: Error, tokenIn: string, tokenOut: string) {
+    if (!isUserError(error)) {
+      console.trace(error)
+      // state.submissionError = t('swapException', ['Balancer'])
+
+      //   captureBalancerException({
+      //     error,
+      //     action: 'swap',
+      //     msgPrefix: state.submissionError,
+      //     context: {
+      //       extra: {
+      //         sender: account.value,
+      //         tokenIn,
+      //         tokenOut,
+      //       },
+      //       tags: {
+      //         swapType: 'balancer',
+      //       },
+      //     },
+      //   })
+    }
+
+    setConfirming(false)
+    setSwapping(false)
+    throw error
   }
 
   useEffect(() => {
     const getData = async () => {
-      const unknownAssets: string[] = [];
+      const unknownAssets: string[] = []
       if (tokenInAddressInput && !getToken(tokenInAddressInput)) {
-        unknownAssets.push(tokenInAddressInput);
+        unknownAssets.push(tokenInAddressInput)
       }
       if (tokenOutAddressInput && !getToken(tokenOutAddressInput)) {
-        unknownAssets.push(tokenOutAddressInput);
+        unknownAssets.push(tokenOutAddressInput)
       }
       // await injectTokens(unknownAssets);
-      await fetchPools();
-      await handleAmountChange();
+      await fetchPools()
+      await handleAmountChange()
     }
 
     getData()
