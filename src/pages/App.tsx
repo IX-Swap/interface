@@ -46,6 +46,8 @@ import SignMessageModal from 'components/SignMessageModal'
 import useQuery from 'hooks/useQuery'
 import { setJumpTaskState } from 'state/jumpTask'
 import { CHAINS } from 'components/Web3Provider/constants'
+import liff from '@line/liff'
+import * as Sentry from '@sentry/react'
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -221,6 +223,39 @@ export default function App() {
     const getCountryCode = async () => {
       const response = await axios.get(ip.getIPAddress)
       setCountryCode(response?.data?.countryCode)
+
+      const resp = await liff.init({
+        liffId: '2006732958-EAK9vggN', // Use own liffId
+      })
+
+      console.info('Resp', resp)
+      console.log(liff.getAppLanguage())
+      console.log(liff.getVersion())
+      console.log('isInClient', liff.isInClient())
+      console.log(liff.isLoggedIn())
+      console.log(liff.getOS())
+      console.log(liff.getLineVersion())
+
+      const context = liff.getContext()
+      console.info('context', context)
+      console.info('isLoggedin', liff.isLoggedIn())
+      // if (!liff.isLoggedIn()) {
+      //   liff.login()
+      // }
+
+      Sentry.addBreadcrumb({
+        category: 'liff',
+        level: 'info',
+        data: {
+          resp: resp,
+          appLanguage: liff.getAppLanguage(),
+          version: liff.getVersion(),
+          isInClient: liff.isInClient(),
+          isLoggedIn: liff.isLoggedIn(),
+          os: liff.getOS(),
+          LineVersion: liff.getLineVersion(),
+        },
+      })
     }
     getCountryCode()
   }, [])
