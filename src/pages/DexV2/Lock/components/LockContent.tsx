@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { utils } from 'ethers'
 import { Flex } from 'rebass'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
+import styled from 'styled-components'
 import { Line } from '../../Pool/Create'
 import { useWeb3React } from 'hooks/useWeb3React'
 import CurrencyInput from './CurrencyInput'
@@ -11,33 +11,24 @@ import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import DurationSlider from './DurationSlider'
 import LockExplanation from './LockExplanation'
-import { ApprovalState, useAllowance } from 'hooks/useApproveCallback'
-import { IXS_ADDRESS, VOTING_ESCROW_ADDRESS } from 'constants/addresses'
+import { ApprovalState } from 'hooks/useApproveCallback'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import { PinnedContentButton } from 'components/Button'
-import { useVotingEscrowContract } from 'hooks/useContract'
-import { safeParseUnits } from 'utils/formatCurrencyAmount'
-import { useTransactionAdder } from 'state/transactions/hooks'
-import { WEEK } from '../constants'
+import { ReactComponent as CheckedIcon } from 'assets/images/checked-green.svg'
 
 const LockContent: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const {
     userInput,
     setUserInput,
-    duration,
+    handleLock,
+    approvalState,
+    approve,
+    locked,
   } = useLock()
   const currency = useIXSCurrency()
-  const { account, chainId } = useWeb3React()
+  const { account } = useWeb3React()
   const { openConnectModal } = useConnectModal()
-  const votingEscrowContract = useVotingEscrowContract()
-  const addTransaction = useTransactionAdder()
-  
-  const [approvalState, approve] = useAllowance(
-    IXS_ADDRESS[chainId],
-    utils.parseUnits(userInput || '0', currency?.decimals),
-    VOTING_ESCROW_ADDRESS[chainId]
-  )
 
   const primaryButtonLabel = useMemo(() => {
     if (!account) {
@@ -46,21 +37,16 @@ const LockContent: React.FC = () => {
       return 'Processing...'
     } else if (approvalState !== ApprovalState.APPROVED) {
       return 'Allow IXS'
+    } else if (locked) {
+      return (
+        <Flex alignItems='center' style={{ gap: 6 }}>
+          <CheckedIcon />
+          Lock Created
+        </Flex>
+      )
     }
     return 'Lock'
-  }, [account, approvalState])
-
-  async function handleLock() {
-    const tx = await votingEscrowContract?.createLock(
-      safeParseUnits(+userInput, currency?.decimals),
-      duration,
-    )
-    await tx.wait()
-    if (!tx.hash) return
-    addTransaction(tx, {
-      summary: `Lock ${userInput} IXS in ${ Math.round(duration / WEEK) } weeks`,
-    })
-  }
+  }, [account, approvalState, locked, isLoading])
 
   async function handleProceed() {
     try {
@@ -99,15 +85,24 @@ const LockContent: React.FC = () => {
 
       <LockExplanation />
 
-      <PinnedContentButton
+      <StyledPrimaryButton
         onClick={() => handleProceed()}
         type="button"
         disabled={approvalState === ApprovalState.PENDING || isLoading || !userInput}
+        locked={locked}
       >
         {primaryButtonLabel}
-      </PinnedContentButton>
+      </StyledPrimaryButton>
     </Flex>
   )
 }
+
+const StyledPrimaryButton = styled(PinnedContentButton)<{ locked: boolean }>`
+  ${({ locked, theme }) => (locked && `
+    background-color: ${ theme.green51 };
+    color: ${ theme.green5 };
+    border: 1px solid ${ theme.green5 };
+  `)}
+`
 
 export default LockContent
