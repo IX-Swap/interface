@@ -33,7 +33,7 @@ const LockContent: React.FC = () => {
   const votingEscrowContract = useVotingEscrowContract()
   const addTransaction = useTransactionAdder()
   
-  const [approvalState, approve, refreshAllowance] = useAllowance(
+  const [approvalState, approve] = useAllowance(
     IXS_ADDRESS[chainId],
     utils.parseUnits(userInput || '0', currency?.decimals),
     VOTING_ESCROW_ADDRESS[chainId]
