@@ -1,16 +1,17 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useConnect } from 'wagmi'
-import { Text } from 'rebass'
-import { Trans } from '@lingui/macro'
+import {ConnectButton} from '@rainbow-me/rainbowkit'
+import {useConnect} from 'wagmi'
+import {Text} from 'rebass'
+import {Trans} from '@lingui/macro'
 
-import { PinnedContentButton } from 'components/Button'
-import { WalletEvent } from 'utils/event-logs'
+import {PinnedContentButton} from 'components/Button'
+import {WalletEvent} from 'utils/event-logs'
 
+import DappPortalSDK from '@linenext/dapp-portal-sdk'
 import liff from '@line/liff'
 import * as Sentry from '@sentry/react'
 
 export default function CustomConnectButton() {
-  const { connectors, connect } = useConnect()
+  const {connectors, connect} = useConnect()
 
   const handleClick = async () => {
     const resp = await liff.init({
@@ -32,27 +33,19 @@ export default function CustomConnectButton() {
     //   liff.login()
     // }
 
-    Sentry.addBreadcrumb({
-      category: 'liff',
-      level: 'info',
-      data: {
-        resp: resp,
-        appLanguage: liff.getAppLanguage(),
-        version: liff.getVersion(),
-        isInClient: liff.isInClient(),
-        isLoggedIn: liff.isLoggedIn(),
-        os: liff.getOS(),
-        LineVersion: liff.getLineVersion(),
-      },
+    const sdk = await DappPortalSDK.init({
+      clientId: 'bab621cd-1d1e-45ef-8b42-c2b0917c645a',
+      chainId: '1001',
     })
 
-    Sentry.captureMessage(`Connecting to LINE`)
-    const passkeyConnector = connectors.find((connector) => connector.id === 'linenextWallet')
+    const provider = sdk.getWalletProvider()
+
+    const accounts = (await provider.request({method: 'kaia_requestAccounts'})) as string[]
+
+    console.log("accounts", accounts)
 
     try {
-      console.info('passkeyconnector', passkeyConnector)
       new WalletEvent('Connecting line liff ').walletAddress('unknonw').info('Prepare to connect')
-      connect({ connector: passkeyConnector as any })
     } catch (err: any) {
       new WalletEvent('Connecting line liff error').walletAddress('unknonw').error(err.toString())
     }
@@ -60,7 +53,7 @@ export default function CustomConnectButton() {
 
   return (
     <ConnectButton.Custom>
-      {({ account, chain, mounted }) => {
+      {({account, chain, mounted}) => {
         const ready = mounted
         const connected = ready && account && chain
 
@@ -73,7 +66,7 @@ export default function CustomConnectButton() {
             {(() => {
               if (!connected && isNormieVisitor) {
                 return (
-                  <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={handleClick}>
+                  <PinnedContentButton style={{boxShadow: '0px 16px 16px 0px #6666FF21'}} onClick={handleClick}>
                     <Text className="connect-wallet-button">
                       <Trans>Connect Kaia Dapp portal Wallet</Trans>
                     </Text>
