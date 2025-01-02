@@ -4,7 +4,7 @@ import { AddressZero, WeiPerEther as ONE, Zero } from '@ethersproject/constants'
 import { formatUnits, parseUnits } from '@ethersproject/units'
 import { parseFixed, SwapType, SubgraphPoolBase, SwapTypes } from '@ixswap1/dex-v2-sdk'
 
-import { getWrapOutput, unwrap, wrap, WrapType } from 'lib/utils/wrapper'
+import { getWrapOutput, unwrap, wrap, WrapType } from 'lib/utils/balancer/wrapper'
 import { TokenInfo } from 'types/TokenList'
 import { GAS_PRICE, MAX_POOLS } from 'config'
 import { rpcProviderService } from 'services/rpc-provider/rpc-provider.service'
@@ -41,7 +41,6 @@ type Props = {
   tokenIn: TokenInfo
   tokenOut: TokenInfo
   slippageBufferRate: number
-  isCowswapSwap: boolean
   setTokenInAmountInput: (amount: string) => void
   setTokenOutAmountInput: (amount: string) => void
 }
@@ -119,7 +118,6 @@ export default function useSor({
   tokenIn,
   tokenOut,
   slippageBufferRate,
-  isCowswapSwap,
   setTokenInAmountInput,
   setTokenOutAmountInput,
 }: Props) {
@@ -231,10 +229,6 @@ export default function useSor({
   }
 
   async function handleAmountChange(): Promise<void> {
-    if (isCowswapSwap) {
-      return
-    }
-
     let amount = exactIn ? tokenInAmountInput : tokenOutAmountInput
     // Avoid using SOR if querying a zero value or (un)wrapping swap
     const zeroValueSwap = amount === '' || bnum(amount).isZero()
@@ -622,6 +616,10 @@ export default function useSor({
     throw error
   }
 
+  function resetState() {
+   debugger;
+  }
+
   useEffect(() => {
     const getData = async () => {
       const unknownAssets: string[] = []
@@ -640,8 +638,24 @@ export default function useSor({
   }, [])
 
   return {
+    ...state,
     sorManager,
+    sorReturn,
     pools,
-    // fetchPools,
+    handleAmountChange,
+    exactIn,
+    swap,
+    swapping,
+    priceImpact,
+    // latestTxHash,
+    fetchPools,
+    poolsLoading,
+    getQuote,
+    resetState,
+    confirming,
+    updateSwapAmounts,
+    resetInputAmounts,
+    // For Tests
+    setSwapCost,
   }
 }
