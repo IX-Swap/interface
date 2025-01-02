@@ -112,6 +112,7 @@ export const useTokens = () => {
   }
 
   return {
+    tokens,
     getToken,
     balanceFor,
     priceFor,
