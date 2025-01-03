@@ -25,6 +25,13 @@ import { useSwapper } from './useSwapper'
 
 const MIN_PRICE_IMPACT = 0.0001
 const HIGH_PRICE_IMPACT_THRESHOLD = 0.05
+type SorState = {
+  validationErrors: {
+    highPriceImpact: boolean
+    noSwaps: boolean
+  }
+  submissionError: string | null
+}
 
 type Props = {
   exactIn: boolean
@@ -133,6 +140,8 @@ export default function useSor({
   const [sorReturn, setSorReturn] = useState<any>({})
   const [confirming, setConfirming] = useState<boolean>(false)
   const [swapping, setSwapping] = useState<boolean>(false)
+  const [validationErrors, setValidationErrors] = useState<any>({ highPriceImpact: false, noSwaps: false })
+  const [submissionError, setSubmissionError] = useState<string | null>(null)
 
   async function fetchPools(): Promise<void> {
     if (!sorManager) {
@@ -305,7 +314,7 @@ export default function useSor({
 
       if (!sorReturn.hasSwaps) {
         setPriceImpact(0)
-        // state.validationErrors.noSwaps = true // TO DO
+        setValidationErrors((old: any) => ({ ...old, noSwaps: true }))
       } else {
         // If either in/out address is stETH we should mutate the value for the
         // priceImpact calculation.
@@ -354,7 +363,7 @@ export default function useSor({
 
       if (!sorReturn.hasSwaps) {
         setPriceImpact(0)
-        // state.validationErrors.noSwaps = true // TO DO
+        setValidationErrors((old: any) => ({ ...old, noSwaps: true }))
       } else {
         // If either in/out address is stETH we should mutate the value for the
         // priceImpact calculation.
@@ -383,7 +392,7 @@ export default function useSor({
 
     setPools(sorManager.selectedPools)
 
-    // state.validationErrors.highPriceImpact = priceImpact >= HIGH_PRICE_IMPACT_THRESHOLD // TO DO
+    setValidationErrors((old: any) => ({ ...old, highPriceImpact: priceImpact >= HIGH_PRICE_IMPACT_THRESHOLD }))
   }
 
   function txHandler(tx: any, action: TransactionAction): void {
@@ -616,9 +625,7 @@ export default function useSor({
     throw error
   }
 
-  function resetState() {
-   debugger;
-  }
+  function resetState() {}
 
   useEffect(() => {
     const getData = async () => {
@@ -639,6 +646,8 @@ export default function useSor({
 
   return {
     ...state,
+    validationErrors,
+    submissionError,
     sorManager,
     sorReturn,
     pools,
