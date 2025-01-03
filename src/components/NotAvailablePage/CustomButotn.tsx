@@ -6,56 +6,18 @@ import { Trans } from '@lingui/macro'
 import { PinnedContentButton } from 'components/Button'
 import { WalletEvent } from 'utils/event-logs'
 
-import liff from '@line/liff'
 import * as Sentry from '@sentry/react'
 
 export default function CustomConnectButton() {
   const { connectors, connect } = useConnect()
 
   const handleClick = async () => {
-    const resp = await liff.init({
-      liffId: '2006732958-EAK9vggN', // Use own liffId
-    })
-
-    console.info('Resp', resp)
-    console.log(liff.getAppLanguage())
-    console.log(liff.getVersion())
-    console.log('isInClient', liff.isInClient())
-    console.log(liff.isLoggedIn())
-    console.log(liff.getOS())
-    console.log(liff.getLineVersion())
-
-    const context = liff.getContext()
-    console.info('context', context)
-    console.info('isLoggedin', liff.isLoggedIn())
-    // if (!liff.isLoggedIn()) {
-    //   liff.login()
-    // }
-
-    Sentry.addBreadcrumb({
-      category: 'liff',
-      level: 'info',
-      data: {
-        resp: resp,
-        appLanguage: liff.getAppLanguage(),
-        version: liff.getVersion(),
-        isInClient: liff.isInClient(),
-        isLoggedIn: liff.isLoggedIn(),
-        os: liff.getOS(),
-        LineVersion: liff.getLineVersion(),
-      },
-    })
-
     Sentry.captureMessage(`Connecting to LINE`)
     const passkeyConnector = connectors.find((connector) => connector.id === 'linenextWallet')
 
-    try {
-      console.info('passkeyconnector', passkeyConnector)
-      new WalletEvent('Connecting line liff ').walletAddress('unknonw').info('Prepare to connect')
-      connect({ connector: passkeyConnector as any })
-    } catch (err: any) {
-      new WalletEvent('Connecting line liff error').walletAddress('unknonw').error(err.toString())
-    }
+    console.info('passkeyconnector', passkeyConnector)
+    new WalletEvent('Connecting line liff ').walletAddress('unknonw').info('Prepare to connect')
+    connect({ connector: passkeyConnector as any })
   }
 
   return (

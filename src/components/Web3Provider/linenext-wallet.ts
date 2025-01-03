@@ -103,9 +103,10 @@ export function lineNextConnector(walletDetails: any): CreateConnectorFn {
     type: 'wallet',
     ...walletDetails.rkDetails,
     connect: async (params) => {
-      console.info('Config', config)
+      console.info('Config lINEXT NEXT', config)
       const sdk = await getSDKInstance()
       const provider = sdk.getWalletProvider()
+      console.info('provider lINEXT NEXT', provider)
       const accounts = (await provider.request({ method: 'kaia_requestAccounts' })) as string[]
 
       if (!accounts || accounts.length === 0) {

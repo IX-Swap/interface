@@ -29,6 +29,8 @@ import Web3Provider from 'components/Web3Provider'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-phone-input-2/lib/bootstrap.css'
 import './index.css'
+import { LiffProvider } from 'pages/LiffProvider'
+import eruda from 'eruda'
 
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
@@ -53,6 +55,7 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
 } else {
   ReactGA.initialize('test', { testMode: true, debug: true })
 }
+eruda.init()
 
 function Updaters() {
   return (
@@ -99,7 +102,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   <MuiThemeProvider>
                     <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
-                        <App />
+                        <LiffProvider>
+                          <App />
+                        </LiffProvider>
                         <ToastContainer />
                       </CookiesProvider>
                     </LocalizationProvider>
