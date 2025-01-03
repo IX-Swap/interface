@@ -280,4 +280,5 @@ export const countriesList = [
 ]
 
 
-export const blockedCountries = ['US', 'KP'];
+// export const blockedCountries = ['US', 'KP'];
+export const blockedCountries = [];
