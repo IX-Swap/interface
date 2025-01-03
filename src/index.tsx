@@ -1,34 +1,35 @@
-import { CookiesProvider } from 'react-cookie'
-import React, { StrictMode } from 'react'
-import { isMobile } from 'react-device-detect'
+import {CookiesProvider} from 'react-cookie'
+import React, {StrictMode} from 'react'
+import {isMobile} from 'react-device-detect'
 import ReactDOM from 'react-dom/client'
 import ReactGA from 'react-ga'
-import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
-import { LocalizationProvider } from '@material-ui/pickers'
+import {Provider} from 'react-redux'
+import {HashRouter} from 'react-router-dom'
+import {LocalizationProvider} from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
-import { PersistGate } from 'redux-persist/integration/react'
+import {PersistGate} from 'redux-persist/integration/react'
 import * as Sentry from '@sentry/react'
-import { ToastContainer } from 'react-toastify'
+import {ToastContainer} from 'react-toastify'
 
-import { MuiThemeProvider } from './theme/muiTheme'
+import {MuiThemeProvider} from './theme/muiTheme'
 import Blocklist from './components/Blocklist'
-import { LanguageProvider } from './i18n'
+import {LanguageProvider} from './i18n'
 import App from './pages/App'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
-import store, { persistor } from './state'
+import store, {persistor} from './state'
 import ApplicationUpdater from './state/application/updater'
 import ListsUpdater from './state/lists/updater'
 import MulticallUpdater from './state/multicall/updater'
 import SecTokenListUpdater from './state/secTokens/updater'
 import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
-import ThemeProvider, { ThemedGlobalStyle } from './theme'
+import ThemeProvider, {ThemedGlobalStyle} from './theme'
 import Web3Provider from 'components/Web3Provider'
 
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-phone-input-2/lib/bootstrap.css'
 import './index.css'
+import {LiffProvider} from 'pages/LiffProvider'
 
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
@@ -47,11 +48,11 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
     customBrowserType: !isMobile
       ? 'desktop'
       : 'web3' in window || 'ethereum' in window
-      ? 'mobileWeb3'
-      : 'mobileRegular',
+        ? 'mobileWeb3'
+        : 'mobileRegular',
   })
 } else {
-  ReactGA.initialize('test', { testMode: true, debug: true })
+  ReactGA.initialize('test', {testMode: true, debug: true})
 }
 
 function Updaters() {
@@ -99,7 +100,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   <MuiThemeProvider>
                     <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
-                        <App />
+                        <LiffProvider>
+                          <App />
+                        </LiffProvider>
                         <ToastContainer />
                       </CookiesProvider>
                     </LocalizationProvider>
