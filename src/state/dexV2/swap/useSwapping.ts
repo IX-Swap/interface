@@ -14,10 +14,20 @@ import useJoinExit from './useJoinExit'
 import { useSwapAssets } from './useSwapAssets'
 import { NATIVE_ASSET_ADDRESS } from 'constants/dexV2/tokens'
 import { useTokens } from '../tokens/hooks/useTokens'
+import { TokenInfo } from 'types/TokenList'
 
 export type SwapRoute = 'wrapUnwrap' | 'balancer' | 'joinExit'
 
 export type UseSwapping = ReturnType<typeof useSwapping>
+
+const emptyToken: TokenInfo = {
+  address: '',
+  chainId: 0,
+  decimals: 0,
+  logoURI: '',
+  name: '',
+  symbol: '',
+}
 
 export default function useSwapping(
   exactIn: boolean,
@@ -42,12 +52,18 @@ export default function useSwapping(
   const wrapType = getWrapAction(tokenInAddressInput, tokenOutAddressInput)
   const isWrap = wrapType === WrapType.Wrap
   const isUnwrap = wrapType === WrapType.Unwrap
-  const tokenIn = getToken(tokenInAddressInput)
-  const tokenOut = getToken(tokenOutAddressInput)
+  const tokenIn = useMemo(
+    () => (tokenInAddressInput ? getToken(tokenInAddressInput) : emptyToken),
+    [tokenInAddressInput]
+  )
+  const tokenOut = useMemo(
+    () => (tokenOutAddressInput ? getToken(tokenOutAddressInput) : emptyToken),
+    [tokenOutAddressInput]
+  )
   const isNativeAssetSwap = tokenInAddressInput === NATIVE_ASSET_ADDRESS
-  const tokenInAmountScaled = parseFixed(tokenInAmountInput || '0', tokenIn.decimals)
+  const tokenInAmountScaled = parseFixed(tokenInAmountInput || '0', tokenIn?.decimals)
 
-  const tokenOutAmountScaled = parseFixed(tokenOutAmountInput || '0', tokenOut.decimals)
+  const tokenOutAmountScaled = parseFixed(tokenOutAmountInput || '0', tokenOut?.decimals)
   const requiresTokenApproval = useMemo(() => {
     if (wrapType === WrapType.Unwrap || isNativeAssetSwap) {
       return false
@@ -76,40 +92,6 @@ export default function useSwapping(
       tokenOut: '',
     }
   }, [tokenInAmountInput, tokenOutAmountInput])
-  const swapRoute = useMemo<SwapRoute>(() => {
-    if (wrapType !== WrapType.NonWrap) {
-      return 'wrapUnwrap'
-    } else if (isNativeAssetSwap) {
-      return 'balancer'
-    }
-
-    const swapInfoAvailable = joinExit.swapInfo?.returnAmount && !joinExit.swapInfo?.returnAmount.isZero()
-
-    const joinExitSwapAvailable = swapInfoAvailable
-      ? canUseJoinExit(
-          exactIn ? SwapTypes.SwapExactIn : SwapTypes.SwapExactOut,
-          tokenInAddressInput,
-          tokenOutAddressInput
-        )
-      : false
-
-    const joinExitSwapPresent = joinExitSwapAvailable
-      ? someJoinExit(
-          sor.pools as SubgraphPoolBase[],
-          joinExit.swapInfo?.swaps ?? [],
-          joinExit.swapInfo?.tokenAddresses ?? []
-        )
-      : false
-    // Currently joinExit swap is only suitable for ExactIn and non-eth swaps
-    return joinExitSwapPresent ? 'joinExit' : 'balancer'
-  }, [])
-
-  const isBalancerSwap = swapRoute === 'balancer'
-  const isJoinExitSwap = swapRoute === 'joinExit'
-  const isWrapUnwrapSwap = swapRoute === 'wrapUnwrap'
-  const isGaslessSwappingDisabled = isNativeAssetSwap || isWrapUnwrapSwap
-  const hasSwapQuote = parseFloat(tokenInAmountInput) > 0 && parseFloat(tokenOutAmountInput) > 0
-
   const sor = useSor({
     exactIn,
     tokenInAddressInput,
@@ -144,6 +126,39 @@ export default function useSwapping(
     setTokenInAmountInput,
     setTokenOutAmountInput,
   })
+  const swapRoute = useMemo<SwapRoute>(() => {
+    if (wrapType !== WrapType.NonWrap) {
+      return 'wrapUnwrap'
+    } else if (isNativeAssetSwap) {
+      return 'balancer'
+    }
+
+    const swapInfoAvailable = joinExit.swapInfo?.returnAmount && !joinExit.swapInfo?.returnAmount.isZero()
+
+    const joinExitSwapAvailable = swapInfoAvailable
+      ? canUseJoinExit(
+          exactIn ? SwapTypes.SwapExactIn : SwapTypes.SwapExactOut,
+          tokenInAddressInput,
+          tokenOutAddressInput
+        )
+      : false
+
+    const joinExitSwapPresent = joinExitSwapAvailable
+      ? someJoinExit(
+          sor.pools as SubgraphPoolBase[],
+          joinExit.swapInfo?.swaps ?? [],
+          joinExit.swapInfo?.tokenAddresses ?? []
+        )
+      : false
+    // Currently joinExit swap is only suitable for ExactIn and non-eth swaps
+    return joinExitSwapPresent ? 'joinExit' : 'balancer'
+  }, [])
+
+  const isBalancerSwap = swapRoute === 'balancer'
+  const isJoinExitSwap = swapRoute === 'joinExit'
+  const isWrapUnwrapSwap = swapRoute === 'wrapUnwrap'
+  const isGaslessSwappingDisabled = isNativeAssetSwap || isWrapUnwrapSwap
+  const hasSwapQuote = parseFloat(tokenInAmountInput) > 0 && parseFloat(tokenOutAmountInput) > 0
 
   const isLoading = useMemo(() => {
     if (hasSwapQuote || isWrapUnwrapSwap) {
@@ -233,7 +248,6 @@ export default function useSwapping(
 
     handleAmountChange()
   }, [tokenInAmountInput])
-
 
   useEffect(() => {
     const gaslessDisabled = window.location.href.includes('gasless=false')

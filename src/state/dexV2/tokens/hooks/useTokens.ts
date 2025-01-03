@@ -2,17 +2,24 @@ import { useDispatch } from 'react-redux'
 
 import { getAddress } from '@ethersproject/address'
 import { bnum, getAddressFromPoolId, isSameAddress, selectByAddressFast } from 'lib/utils'
-import { TokenInfo } from 'types/TokenList'
+import { NativeAsset, TokenInfo } from 'types/TokenList'
 import { useTokensState } from '.'
 import { fetchTokensAllowwances, setSpenders } from '..'
 import { useWeb3React } from 'hooks/useWeb3React'
 import BigNumber from 'bignumber.js'
 import { AmountToApprove } from './useTokenApprovalActions'
+import useConfig from 'hooks/dex-v2/useConfig'
 
 export const useTokens = () => {
   const { tokens, balances, prices, spenders, allowances } = useTokensState()
   const dispatch = useDispatch()
   const { account } = useWeb3React()
+  const { networkConfig } = useConfig();
+
+  const nativeAsset: NativeAsset = {
+    ...networkConfig.nativeAsset,
+    chainId: networkConfig.chainId,
+  };
 
   /**
    * Returns the allowance for a token, scaled by token decimals
@@ -112,6 +119,8 @@ export const useTokens = () => {
   }
 
   return {
+    balances,
+    nativeAsset,
     tokens,
     getToken,
     balanceFor,
