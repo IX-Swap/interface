@@ -20,7 +20,7 @@ export type SwapRoute = 'wrapUnwrap' | 'balancer' | 'joinExit'
 
 export type UseSwapping = ReturnType<typeof useSwapping>
 
-const emptyToken: TokenInfo = {
+export const emptyToken: TokenInfo = {
   address: '',
   chainId: 0,
   decimals: 0,

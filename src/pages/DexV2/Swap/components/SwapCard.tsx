@@ -44,18 +44,6 @@ const SwapCard: React.FC = () => {
     setInitialized,
   } = useSwapState()
 
-  console.log('init data', {
-    tokenInAddress,
-    tokenOutAddress,
-    tokenInAmount,
-    tokenOutAmount,
-    setTokenInAddress,
-    setTokenOutAddress,
-    setTokenInAmount,
-    setTokenOutAmount,
-    setInitialized,
-  })
-
   const { address: account } = useAccount()
   const swapping = useSwapping(
     exactIn,
@@ -165,12 +153,12 @@ const SwapCard: React.FC = () => {
   }
 
   function handlePreviewButton() {
-    swapping.resetSubmissionError();
+    swapping.resetSubmissionError()
     // modalSwapPreviewIsOpen.value = true; TODO: Review UX
   }
 
   function handlePreviewModalClose() {
-    swapping.resetSubmissionError();
+    swapping.resetSubmissionError()
     // modalSwapPreviewIsOpen.value = false;  TODO: Review UX
   }
 
@@ -198,7 +186,21 @@ const SwapCard: React.FC = () => {
         {isOpenSwapSettings ? <SwapSettingsModal onClose={() => setOpenSwapSettings(false)} /> : null}
       </Flex>
 
-      <SwapPair />
+      <SwapPair
+        tokenInAmount={tokenInAmount}
+        tokenInAddress={tokenInAddress}
+        tokenOutAmount={tokenOutAmount}
+        tokenOutAddress={tokenOutAddress}
+        exactIn={exactIn}
+        swapLoading={swapping.isBalancerSwap ? swapping.isLoading : false}
+        effectivePriceMessage={swapping.effectivePriceMessage}
+        amountChange={swapping.handleAmountChange}
+        setTokenInAddress={setTokenInAddress}
+        setTokenOutAddress={setTokenOutAddress}
+        setTokenInAmount={setTokenInAmount}
+        setTokenOutAmount={setTokenOutAmount}
+        setExactIn={setExactIn}
+      />
 
       <SwapDetail />
 

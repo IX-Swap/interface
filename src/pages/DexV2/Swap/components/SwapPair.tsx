@@ -1,13 +1,124 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box } from 'rebass'
 import styled from 'styled-components'
 
 import TokenInput from './TokenInput'
 import SwapIcon from 'assets/images/dex-v2/swap.svg'
+import { emptyToken, UseSwapping } from 'state/dexV2/swap/useSwapping'
+import useNumbers from 'hooks/dex-v2/useNumbers'
+import { useTokens } from 'state/dexV2/tokens/hooks/useTokens'
 
-interface SwapPairProps {}
+type Props = {
+  tokenInAmount: string
+  tokenInAddress: string
+  tokenOutAmount: string
+  tokenOutAddress: string
+  exactIn: boolean
+  priceImpact?: number
+  effectivePriceMessage?: UseSwapping['effectivePriceMessage']
+  swapLoading?: boolean
+  amountChange: () => void
+  setTokenInAmount: (amount: string) => void
+  setTokenOutAmount: (amount: string) => void
+  setTokenInAddress: (address: string) => void
+  setTokenOutAddress: (address: string) => void
+  setExactIn: (exactIn: boolean) => void
+}
 
-const SwapPair: React.FC<SwapPairProps> = () => {
+const SwapPair: React.FC<Props> = ({
+  tokenInAmount,
+  tokenInAddress,
+  tokenOutAmount,
+  tokenOutAddress,
+  exactIn,
+  priceImpact,
+  effectivePriceMessage,
+  swapLoading,
+  amountChange,
+  setExactIn,
+  setTokenInAmount,
+  setTokenOutAmount,
+  setTokenInAddress,
+  setTokenOutAddress,
+}) => {
+  const { fNum } = useNumbers()
+  const { getToken } = useTokens()
+
+  const [_tokenInAmount, setLocalTokenInAmount] = useState('')
+  const [_tokenOutAmount, setLocalTokenOutAmount] = useState('')
+  const [_tokenInAddress, setLocalTokenInAddress] = useState('')
+  const [_tokenOutAddress, setLocalTokenOutAddress] = useState('')
+  const [isInRate, setIsInRate] = useState(true)
+  const [typingTimeout, setTypingTimeout] = useState<any>(undefined)
+
+  const missingToken = !_tokenInAddress || !_tokenOutAddress
+  const missingAmount = !_tokenInAmount || !_tokenOutAmount
+
+  const tokenIn = _tokenInAddress ? getToken(_tokenInAddress) : emptyToken
+  const tokenOut = _tokenOutAddress ? getToken(_tokenOutAddress) : emptyToken
+
+  function preventUpdatesOnTyping(callback: () => void) {
+    if (typingTimeout.value) {
+      clearTimeout(typingTimeout.value)
+    }
+    typingTimeout.value = setTimeout(() => {
+      callback()
+    }, 300)
+  }
+
+  function handleInAmountChange(value: string): void {
+    setTokenInAmount(value)
+    preventUpdatesOnTyping(() => {
+      amountChange()
+    })
+  }
+
+  function handleOutAmountChange(value: string): void {
+    setTokenOutAmount(value)
+    preventUpdatesOnTyping(() => {
+      amountChange()
+    })
+  }
+
+  function handleTokenSwitch(): void {
+    setExactIn(!exactIn)
+    setTokenInAmount(_tokenOutAmount)
+    setTokenInAddress(_tokenOutAddress)
+    setTokenOutAmount(_tokenInAmount)
+    setTokenOutAddress(_tokenInAddress)
+    amountChange()
+  }
+
+  async function handleInputTokenChange(newTokenIn: string) {
+    if (newTokenIn === _tokenOutAddress) {
+      handleTokenSwitch()
+      return
+    }
+    setTokenInAddress(newTokenIn)
+  }
+
+  async function handleOutputTokenChange(newTokenOut: string) {
+    if (newTokenOut === _tokenInAddress) {
+      handleTokenSwitch()
+      return
+    }
+    setTokenOutAddress(newTokenOut)
+  }
+
+  useEffect(() => {
+    setLocalTokenInAmount(tokenInAmount)
+    setLocalTokenOutAmount(tokenOutAmount)
+    setLocalTokenInAddress(tokenInAddress)
+    setLocalTokenOutAddress(tokenOutAddress)
+  }, [tokenInAmount, tokenOutAmount, tokenInAddress, tokenOutAddress])
+
+  useEffect(() => {
+    // populates initial tokenOutAmount
+    if (tokenOutAmount) {
+      handleOutAmountChange(tokenOutAmount)
+    }
+  }, [])
+
   return (
     <Container>
       <div>
