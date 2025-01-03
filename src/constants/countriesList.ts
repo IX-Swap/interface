@@ -279,4 +279,6 @@ export const countriesList = [
   'Zimbabwe',
 ]
 
-export const blockedCountries = ['US', 'KP'];
+
+// export const blockedCountries = ['US', 'KP'];
+export const blockedCountries = [];
