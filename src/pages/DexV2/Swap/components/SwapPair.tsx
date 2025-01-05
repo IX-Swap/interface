@@ -122,13 +122,34 @@ const SwapPair: React.FC<Props> = ({
   return (
     <Container>
       <div>
-        <TokenInput />
+        <TokenInput
+          amount={_tokenInAmount}
+          address={_tokenInAddress}
+          name="tokenIn"
+          excludedTokens={[]}
+          autoFocus
+          updateAmount={handleInAmountChange}
+          updateAddress={handleInputTokenChange}
+          // input={() => setExactIn(true)}
+          setMax={() => setExactIn(true)}
+        />
       </div>
       <SwapIconWrapper>
         <img src={SwapIcon} alt="Swap" />
       </SwapIconWrapper>
       <Box mt={24}>
-        <TokenInput />
+        <TokenInput
+          amount={_tokenInAmount}
+          address={_tokenOutAddress}
+          name="tokenOut"
+          excludedTokens={[]}
+          noRules
+          noMax
+          disableNativeAssetBuffer
+          updateAmount={handleInAmountChange}
+          updateAddress={handleInputTokenChange}
+          // input={() => setExactIn(true)}
+        />
       </Box>
     </Container>
   )

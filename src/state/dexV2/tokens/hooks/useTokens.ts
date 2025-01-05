@@ -108,6 +108,31 @@ export const useTokens = () => {
   }
 
   /**
+   * Get max balance of token
+   * @param tokenAddress
+   * @param disableNativeAssetBuffer Optionally disable native asset buffer
+   */
+  function getMaxBalanceFor(
+    tokenAddress: string,
+    disableNativeAssetBuffer = false
+  ): string {
+    let maxAmount;
+    const tokenBalance = balanceFor(tokenAddress) || '0';
+    const tokenBalanceBN = bnum(tokenBalance);
+
+    if (tokenAddress === nativeAsset.address && !disableNativeAssetBuffer) {
+      // Subtract buffer for gas
+      maxAmount = tokenBalanceBN.gt(nativeAsset.minTransactionBuffer)
+        ? tokenBalanceBN.minus(nativeAsset.minTransactionBuffer).toString()
+        : tokenBalance.toString();
+    } else {
+      maxAmount = tokenBalance;
+    }
+    return maxAmount;
+  }
+
+
+  /**
    * Injects contract addresses that could possibly spend the users tokens into
    * the spenders map. E.g. This is used for injecting gauges into the map as they
    * must be allowed to spend a users BPT in order to stake the BPT in the gauge.
@@ -130,5 +155,6 @@ export const useTokens = () => {
     approvalsRequired,
     allowanceFor,
     approvalRequired,
+    getMaxBalanceFor,
   }
 }
