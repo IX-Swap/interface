@@ -20,7 +20,7 @@ export const LiffProvider: React.FC<LiffProviderProps> = ({ children }) => {
 
   useEffect(() => {
     liff
-      .init({ liffId: '2006732958-EAK9vggN' })
+      .init({ liffId: '2006746651-DmRwZed0' })
       .then(() => {
         console.log('LIFF initialization is done')
         setLiffObject(liff)

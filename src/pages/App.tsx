@@ -46,6 +46,7 @@ import SignMessageModal from 'components/SignMessageModal'
 import useQuery from 'hooks/useQuery'
 import { setJumpTaskState } from 'state/jumpTask'
 import { CHAINS } from 'components/Web3Provider/constants'
+import liff from '@line/liff'
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -60,6 +61,21 @@ const initSafary = () => {
   script.crossOrigin = 'anonymous'
   document.head.appendChild(script)
 }
+
+// Clean URL parameters
+const cleanUrlParameters = () => {
+  const url = new URL(window.location.href)
+  url.searchParams.delete('mst_challenge')
+  window.history.replaceState({}, document.title, url.pathname + url.search)
+}
+
+// export default function App() {
+//   useEffect(() => {
+//     normalizeUrl()
+//   }, [])
+
+//   return <AppInside />
+// }
 
 export default function App() {
   const getMe = useGetMe()
@@ -81,6 +97,8 @@ export default function App() {
   const query = useQuery()
 
   const [countryCode, setCountryCode] = useState()
+
+  const [isLiffReady, setIsLiffReady] = useState(false)
 
   const transactionId = query.get('transaction_id')
   const affUnique1 = query.get('aff_unique1')
@@ -144,7 +162,48 @@ export default function App() {
     return (config?.pages ?? []).length > 0 ? config?.pages[0] : defaultPath
   }, [kyc, account, chainId, isWhitelisted, chains])
 
+  // useEffect(() => {
+  //   const initLiff = async () => {
+  //     liff
+  //       .init({ liffId: '2006746651-DmRwZed0' })
+  //       .then(() => {
+  //         console.log('LIFF initialization is done')
+  //         console.log(liff.getAppLanguage())
+  //         console.log(liff.getVersion())
+  //         console.log(liff.isInClient())
+  //         console.log(liff.isLoggedIn())
+  //         console.log(liff.getOS())
+  //         console.log(liff.getLineVersion())
+
+  //         setIsLiffReady(true) // Ensure LIFF initialization is complete
+  //       })
+  //       .catch((error: any) => {
+  //         console.error(`LIFF initialization failed: ${error}`)
+  //       })
+  //   }
+
+  //   initLiff()
+  // }, [])
+
+  // useEffect(() => {
+  //   if (!isLiffReady) {
+  //     return
+  //   }
+
+  //   const checkLoginStatus = async () => {
+  //     if (!liff.isLoggedIn()) {
+  //       liff.login() // Redirect to LINE login
+  //     } else {
+  //       const profile = await liff.getProfile()
+  //       console.log('Logged in user profile:', profile)
+  //     }
+  //   }
+
+  //   checkLoginStatus()
+  // }, [isLiffReady])
+
   const isAdminKyc = pathname.includes('admin')
+
   const isWhiteBackground =
     pathname === routes.launchpad ||
     pathname === routes.payoutHistory ||
@@ -229,6 +288,11 @@ export default function App() {
     initSafary()
   }, [])
 
+  // useEffect(() => {
+  //   // Clean up URL parameters
+  //   cleanUrlParameters()
+  // }, [])
+
   useEffect(() => {
     if (transactionId) {
       dispatch(setJumpTaskState({ transactionId }))
@@ -238,7 +302,7 @@ export default function App() {
     }
   }, [transactionId, affUnique1])
 
-  if (!config) {
+  if (!config && !isLiffReady) {
     return <LoadingIndicator isLoading />
   }
 

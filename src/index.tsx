@@ -102,9 +102,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   <MuiThemeProvider>
                     <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
-                        <LiffProvider>
-                          <App />
-                        </LiffProvider>
+                        <App />
                         <ToastContainer />
                       </CookiesProvider>
                     </LocalizationProvider>
