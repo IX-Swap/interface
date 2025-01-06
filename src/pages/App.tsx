@@ -165,15 +165,25 @@ export default function App() {
   // useEffect(() => {
   //   const initLiff = async () => {
   //     liff
-  //       .init({ liffId: '2006746651-DmRwZed0' })
+  //       .init({ liffId: '2006747538-xQkGy9bm', withLoginOnExternalBrowser: true })
   //       .then(() => {
   //         console.log('LIFF initialization is done')
-  //         console.log(liff.getAppLanguage())
+  //         // console.log(liff.getAppLanguage())
   //         console.log(liff.getVersion())
   //         console.log(liff.isInClient())
   //         console.log(liff.isLoggedIn())
   //         console.log(liff.getOS())
   //         console.log(liff.getLineVersion())
+  //         console.log('Is Logged In:', liff.isLoggedIn())
+  //         console.log('Access Token:', liff.getAccessToken())
+  //         if (!liff.isLoggedIn()) {
+  //           liff.login()
+  //         } else {
+  //           // Initialization successful, proceed with app logic
+  //           liff.getProfile().then((profile) => {
+  //             console.log('User Profile:', profile)
+  //           })
+  //         }
 
   //         setIsLiffReady(true) // Ensure LIFF initialization is complete
   //       })
@@ -302,7 +312,7 @@ export default function App() {
     }
   }, [transactionId, affUnique1])
 
-  if (!config && !isLiffReady) {
+  if (!config) {
     return <LoadingIndicator isLoading />
   }
 

@@ -20,11 +20,11 @@ export const LiffProvider: React.FC<LiffProviderProps> = ({ children }) => {
 
   useEffect(() => {
     liff
-      .init({ liffId: '2006746651-DmRwZed0' })
+      .init({ liffId: '2006747538-xQkGy9bm' })
       .then(() => {
         console.log('LIFF initialization is done')
         setLiffObject(liff)
-        console.log(liff.getAppLanguage())
+        // console.log(liff.getAppLanguage())
         console.log(liff.getVersion())
         console.log(liff.isInClient())
         console.log(liff.isLoggedIn())

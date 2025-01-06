@@ -100,12 +100,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <ThemeProvider>
                   <ThemedGlobalStyle />
                   <MuiThemeProvider>
-                    <LocalizationProvider dateAdapter={DayJsUtils}>
-                      <CookiesProvider>
-                        <App />
-                        <ToastContainer />
-                      </CookiesProvider>
-                    </LocalizationProvider>
+                    <LiffProvider>
+                      <LocalizationProvider dateAdapter={DayJsUtils}>
+                        <CookiesProvider>
+                          <App />
+                          <ToastContainer />
+                        </CookiesProvider>
+                      </LocalizationProvider>
+                    </LiffProvider>
                   </MuiThemeProvider>
                 </ThemeProvider>
               </Blocklist>
