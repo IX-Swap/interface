@@ -346,7 +346,7 @@ export default function App() {
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
-                <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
+                {/* <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} /> */}
               </Switch>
             </Suspense>
           </ToggleableBody>

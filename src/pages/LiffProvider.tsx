@@ -1,12 +1,9 @@
 'use client'
 
 import liff from '@line/liff'
-import React, {createContext, useContext, useEffect, useState, ReactNode} from 'react'
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 
-interface LiffContextType {
-  liffObject: typeof liff | null
-  liffError: string | null
-}
+interface LiffContextType {}
 
 const LiffContext = createContext<LiffContextType | undefined>(undefined)
 
@@ -14,16 +11,16 @@ interface LiffProviderProps {
   children: ReactNode
 }
 
-export const LiffProvider: React.FC<LiffProviderProps> = ({children}) => {
-  const [liffObject, setLiffObject] = useState<typeof liff | null>(null)
+export const LiffProvider: React.FC<LiffProviderProps> = ({ children }) => {
+  // const [liffObject, setLiffObject] = useState<typeof liff | null>(null)
   const [liffError, setLiffError] = useState<string | null>(null)
 
   useEffect(() => {
     liff
-      .init({liffId: '2006748647-qLm3rOxO'})
+      .init({ liffId: '2006746651-DmRwZed0' })
       .then(() => {
         console.log('LIFF initialization is done')
-        setLiffObject(liff)
+        // setLiffObject(liff)
         // console.log(liff.getAppLanguage())
         console.log(liff.getVersion())
         console.log(liff.isInClient())
@@ -37,7 +34,7 @@ export const LiffProvider: React.FC<LiffProviderProps> = ({children}) => {
       })
   }, [])
 
-  return <LiffContext.Provider value={{liffObject, liffError}}>{children}</LiffContext.Provider>
+  return <LiffContext.Provider value={{}}>{children}</LiffContext.Provider>
 }
 
 export const useLiff = () => {
