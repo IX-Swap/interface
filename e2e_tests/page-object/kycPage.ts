@@ -46,7 +46,7 @@ export class KycPage extends WebPage {
   readonly countryOfTaxDeclarationDropdown: Locator;
   readonly taxIdentificationNumberField: Locator;
 
-  kycURL = config.use.baseURL + '#/kyc';
+  kycURL = config.use.baseURL + '/kyc';
   pendingApprovalText = 'Pending approval';
   changesRequestedText = 'Changes Requested';
   rejectedText = 'Rejected';

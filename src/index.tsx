@@ -1,10 +1,11 @@
+/* eslint-disable react/no-deprecated */
 import { CookiesProvider } from 'react-cookie'
 import React, { StrictMode } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactDOM from 'react-dom/client'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { LocalizationProvider } from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -92,7 +93,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <HashRouter>
+        <BrowserRouter>
           <LanguageProvider>
             <Web3Provider>
               <Blocklist>
@@ -113,7 +114,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               </Blocklist>
             </Web3Provider>
           </LanguageProvider>
-        </HashRouter>
+        </BrowserRouter>
       </PersistGate>
     </Provider>
   </StrictMode>
