@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { Redirect, RouteComponentProps, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { useDispatch } from 'react-redux'
@@ -47,6 +47,7 @@ import useQuery from 'hooks/useQuery'
 import { setJumpTaskState } from 'state/jumpTask'
 import { CHAINS } from 'components/Web3Provider/constants'
 import CustomConnectButton from 'components/NotAvailablePage/CustomButotn'
+const Launchpad = lazy(() => import('pages/Launchpad'))
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -144,7 +145,6 @@ export default function App() {
 
     return (config?.pages ?? []).length > 0 ? config?.pages[0] : defaultPath
   }, [kyc, account, chainId, isWhitelisted, chains])
-
 
   const isAdminKyc = pathname.includes('admin')
 
@@ -273,6 +273,7 @@ export default function App() {
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
+                <Route path="*" component={() => <Launchpad />} />
                 {/* <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} /> */}
               </Switch>
             </Suspense>
