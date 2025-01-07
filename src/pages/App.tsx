@@ -272,7 +272,7 @@ export default function App() {
             >
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
-
+                {/* TODO */}
                 <Route path="*" component={() => <Launchpad />} />
                 {/* <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} /> */}
               </Switch>
