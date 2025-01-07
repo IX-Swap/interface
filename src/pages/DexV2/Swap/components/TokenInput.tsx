@@ -13,6 +13,7 @@ import { useAccount } from 'wagmi'
 import { isLessThanOrEqualTo, isPositive } from 'lib/utils/validations'
 import { Rules } from 'pages/DexV2/types'
 import { overflowProtected } from 'pages/DexV2/Pool/components/helpers'
+import { useTokensState } from 'state/dexV2/tokens/hooks'
 
 type InputValue = string | number
 
@@ -94,6 +95,7 @@ const TokenInput: React.FC<Props> = (props = defaultProps) => {
   const isWalletReady = useMemo(() => account !== null, [account])
   const { fNum, toFiat } = useNumbers()
   const { getToken, balanceFor, nativeAsset, getMaxBalanceFor } = useTokens()
+  const { balances } = useTokensState()
 
   /**
    * COMPUTED
@@ -101,7 +103,10 @@ const TokenInput: React.FC<Props> = (props = defaultProps) => {
   const tokenBalance = useMemo(() => {
     if (customBalance) return customBalance
     return balanceFor(_get(props, 'address', ''))
-  }, [props.address, customBalance])
+  }, [props.address, customBalance, JSON.stringify(balances)])
+
+  console.log('tokenBalance', tokenBalance)
+  console.log('props.address', props.address)
 
   const hasToken = !!props.address
   const amountBN = bnum(props.amount)
@@ -226,7 +231,7 @@ const TokenInput: React.FC<Props> = (props = defaultProps) => {
       </Flex>
 
       <Flex justifyContent="space-between" alignItems="center">
-        <StyledNumber>$0.00</StyledNumber>
+        <StyledNumber>{fNum(tokenValue, FNumFormats.fiat)}</StyledNumber>
         <Flex alignItems="center" style={{ gap: 8 }}>
           <StyledNumber>{fNum(tokenBalance, FNumFormats.token)}</StyledNumber>
           <WalletIcon />

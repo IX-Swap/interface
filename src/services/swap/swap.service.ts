@@ -131,7 +131,7 @@ export class SwapService {
   }
 
   private async getFundManagement(): Promise<FundManagement> {
-    const account = getAccount(wagmiConfig)
+    const { address: account } = getAccount(wagmiConfig)
     const funds: FundManagement = {
       // @ts-ignore
       sender: account,

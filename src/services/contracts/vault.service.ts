@@ -2,7 +2,7 @@ import { FundManagement, SingleSwap, SwapType, SwapV2 } from '@ixswap1/dex-v2-sd
 import { Vault__factory } from '@balancer-labs/typechain'
 import { TransactionResponse } from '@ethersproject/abstract-provider'
 import { ContractInterface } from '@ethersproject/contracts'
-import { readContract, writeContract } from '@wagmi/core'
+import { readContract, writeContract, simulateContract } from '@wagmi/core'
 
 import { calculateValidTo } from '../cowswap/utils'
 import ConfigService, { configService } from 'services/config/config.service'
@@ -40,7 +40,7 @@ export default class VaultService {
     })
   }
 
-  public batchSwap(
+  public async batchSwap(
     swapKind: SwapType,
     swaps: SwapV2[],
     tokenAddresses: string[],
@@ -51,16 +51,21 @@ export default class VaultService {
   ): Promise<TransactionResponse> {
     const deadline = calculateValidTo(transactionDeadline)
 
+    console.log('this.abi', this.abi)
+    debugger
     // @ts-ignore
-    return writeContract(wagmiConfig, {
-      // @ts-ignore
-      address: this.address,
+    const { request } = await simulateContract(wagmiConfig, {
       // @ts-ignore
       abi: this.abi,
-      action: 'batchSwap',
+      // @ts-ignore
+      address: this.address,
+      functionName: 'batchSwap',
       args: [swapKind, swaps, tokenAddresses, funds, limits, deadline],
-      options,
+      // options,
     })
+
+    // @ts-ignore
+    return writeContract(wagmiConfig, request)
   }
 
   public getInternalBalance(account: string, tokens: string[]): Promise<string[]> {
