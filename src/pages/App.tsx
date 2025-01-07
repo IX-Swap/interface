@@ -47,6 +47,7 @@ import useQuery from 'hooks/useQuery'
 import { setJumpTaskState } from 'state/jumpTask'
 import { CHAINS } from 'components/Web3Provider/constants'
 import liff from '@line/liff'
+import CustomConnectButton from 'components/NotAvailablePage/CustomButotn'
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -298,6 +299,11 @@ export default function App() {
     initSafary()
   }, [])
 
+  useEffect(() => {
+    // Alert the current URL when the component mounts
+    console.log(window.location.href)
+  }, [window.location.href])
+
   // useEffect(() => {
   //   // Clean up URL parameters
   //   cleanUrlParameters()
@@ -355,6 +361,7 @@ export default function App() {
           {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
         </AppWrapper>
       </ErrorBoundary> */}
+      <CustomConnectButton />
 
       {!token && account && chains.includes(chainId) ? (
         <Portal>
