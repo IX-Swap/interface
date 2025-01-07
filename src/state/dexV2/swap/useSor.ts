@@ -307,6 +307,8 @@ export default function useSor({
         tokenInAmountScaled
       )
 
+      console.log('swapReturn', swapReturn)
+
       setSorReturn(swapReturn)
       let tokenOutAmount = swapReturn.returnAmount
 
@@ -359,6 +361,7 @@ export default function useSor({
       setSorReturn(swapReturn) // TO DO - is it needed?
 
       let tokenInAmount = swapReturn.returnAmount
+
       setTokenInAmountInput(tokenInAmount.gt(0) ? formatAmount(formatUnits(tokenInAmount, tokenInDecimals)) : '')
 
       if (!sorReturn.hasSwaps) {

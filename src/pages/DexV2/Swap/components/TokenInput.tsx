@@ -6,7 +6,7 @@ import _get from 'lodash/get'
 import TokenSelectInput from '../../common/TokenSelectInput'
 import { ReactComponent as WalletIcon } from 'assets/images/dex-v2/wallet.svg'
 import { useTokens } from 'state/dexV2/tokens/hooks/useTokens'
-import useNumbers from 'hooks/dex-v2/useNumbers'
+import useNumbers, { FNumFormats } from 'hooks/dex-v2/useNumbers'
 import { bnum, isSameAddress } from 'lib/utils'
 import { TokenInfo } from 'types/TokenList'
 import { useAccount } from 'wagmi'
@@ -85,9 +85,10 @@ const defaultProps: Props = {
 }
 
 const TokenInput: React.FC<Props> = (props = defaultProps) => {
-  const { name, amount, address, customBalance, excludedTokens, autoFocus, disableNativeAssetBuffer } = props
-  const [_address, setAddress] = useState<any>('')
-  const [_amount, setAmount] = useState<string>('')
+  const { name, noMax, disableMax, customBalance, excludedTokens, autoFocus, disableNativeAssetBuffer, updateAddress } =
+    props
+  const [address, setAddress] = useState<any>('')
+  const [amount, setAmount] = useState<any>('')
 
   const { address: account } = useAccount()
   const isWalletReady = useMemo(() => account !== null, [account])
@@ -99,14 +100,15 @@ const TokenInput: React.FC<Props> = (props = defaultProps) => {
    */
   const tokenBalance = useMemo(() => {
     if (customBalance) return customBalance
-    return balanceFor(_address)
-  }, [_address, customBalance])
-  const hasToken = !!_address
-  const amountBN = bnum(_amount)
+    return balanceFor(_get(props, 'address', ''))
+  }, [props.address, customBalance])
+
+  const hasToken = !!props.address
+  const amountBN = bnum(props.amount)
   const tokenBalanceBN = bnum(tokenBalance)
   const hasAmount = amountBN.gt(0)
   const hasBalance = tokenBalanceBN.gt(0)
-  const shouldUseTxBuffer = _address === nativeAsset.address && !disableNativeAssetBuffer
+  const shouldUseTxBuffer = props.address === nativeAsset.address && !disableNativeAssetBuffer
   const amountExceedsTokenBalance = amountBN.gt(tokenBalance)
   const shouldShowTxBufferMessage = useMemo(() => {
     if (amountExceedsTokenBalance || !shouldUseTxBuffer || !hasBalance || !hasAmount) {
@@ -118,18 +120,18 @@ const TokenInput: React.FC<Props> = (props = defaultProps) => {
 
   const isMaxed = useMemo(() => {
     if (shouldUseTxBuffer) {
-      return _amount === tokenBalanceBN.minus(nativeAsset.minTransactionBuffer).toString()
+      return props.amount === tokenBalanceBN.minus(nativeAsset.minTransactionBuffer).toString()
     } else {
-      return _amount === tokenBalance
+      return props.amount === tokenBalance
     }
-  }, [_amount, tokenBalance, shouldUseTxBuffer])
+  }, [props.amount, tokenBalance, shouldUseTxBuffer])
 
   const token = useMemo((): TokenInfo | undefined => {
     if (!hasToken) return undefined
-    return getToken(_address)
-  }, [_address, hasToken])
+    return getToken(_get(props, 'address', ''))
+  }, [props.address, hasToken])
 
-  const tokenValue = props.tokenValue ?? toFiat(amount, _address)
+  const tokenValue = props.tokenValue ?? toFiat(amount, _get(props, 'address', ''))
 
   const inputRules = useMemo(() => {
     if (!hasToken || !isWalletReady || props.noRules) {
@@ -163,13 +165,10 @@ const TokenInput: React.FC<Props> = (props = defaultProps) => {
 
   const decimalLimit = token?.decimals || 18
 
-  const updateAddress = (address: string) => {
-    setAddress(address)
-  }
-
   function handleAmountChange(amount: InputValue) {
     const safeAmount = overflowProtected(amount, decimalLimit)
 
+    setAmount(safeAmount)
     props.updateAmount(safeAmount)
   }
 
@@ -178,19 +177,26 @@ const TokenInput: React.FC<Props> = (props = defaultProps) => {
 
     const maxAmount = props.customBalance
       ? props.customBalance
-      : getMaxBalanceFor(_address.value, props.disableNativeAssetBuffer)
+      : getMaxBalanceFor(_get(props, 'address', ''), props.disableNativeAssetBuffer)
 
     // emit('setMax', maxAmount)
     handleAmountChange(maxAmount)
   }
 
-  useEffect(() => {
-    setAmount(amount.toString())
-  }, [amount])
+  function blockInvalidChar(event: KeyboardEvent) {
+    if (['e', 'E', '+', '-'].includes(event.key)) {
+      event.preventDefault()
+    }
+  }
+
+  function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
+    blockInvalidChar(event.nativeEvent)
+  }
 
   useEffect(() => {
-    setAddress(address)
-  }, [address])
+    setAddress(props.address)
+    setAmount(props.amount)
+  }, [props.address, props.amount])
 
   return (
     <Container>
@@ -199,23 +205,30 @@ const TokenInput: React.FC<Props> = (props = defaultProps) => {
           placeholder="0.00"
           min="0"
           step="0.01"
-          onKeyDown={() => {}}
+          onKeyDown={onKeyDown}
           type="text"
           inputMode="decimal"
           pattern="[0-9]*[.,]?[0-9]*"
-          value={''}
+          value={amount}
           name={name}
           autoFocus={autoFocus}
-          onChange={(e) => {}}
+          onChange={(e) => handleAmountChange(e.target.value)}
         />
 
-        <TokenSelectInput modelValue={_address} excludedTokens={excludedTokens} updateAddress={updateAddress} />
+        <Flex alignItems="center" style={{ gap: 8 }}>
+          {hasBalance && !noMax && !disableMax ? <MaxButton onClick={setMax}>MAX</MaxButton> : null}
+          <TokenSelectInput
+            modelValue={address as string}
+            excludedTokens={excludedTokens}
+            updateAddress={(value) => updateAddress(value)}
+          />
+        </Flex>
       </Flex>
 
       <Flex justifyContent="space-between" alignItems="center">
         <StyledNumber>$0.00</StyledNumber>
         <Flex alignItems="center" style={{ gap: 8 }}>
-          <StyledNumber>346.93</StyledNumber>
+          <StyledNumber>{fNum(tokenBalance, FNumFormats.token)}</StyledNumber>
           <WalletIcon />
         </Flex>
       </Flex>
@@ -256,4 +269,21 @@ const StyledNumber = styled.div`
   font-style: normal;
   font-weight: 500;
   letter-spacing: -0.42px;
+`
+
+const MaxButton = styled.button`
+  display: flex;
+  padding: 8px 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 8px;
+  background: #fff;
+  outline: none;
+  border: none;
+  font-weight: 600;
+  color: #66f;
+  font-size: 9px;
 `

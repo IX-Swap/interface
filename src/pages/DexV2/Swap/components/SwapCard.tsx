@@ -72,6 +72,7 @@ const SwapCard: React.FC = () => {
     return 'Swap'
   }, [swapping.wrapType, swapping.tokenIn?.symbol, swapping.tokenOut?.symbol])
   const pools: SubgraphPoolBase[] = swapping.sor.pools
+  console.log('pools', pools)
   const error = useMemo(() => {
     if (isMismatchedNetwork) {
       return {
@@ -162,11 +163,25 @@ const SwapCard: React.FC = () => {
     // modalSwapPreviewIsOpen.value = false;  TODO: Review UX
   }
 
+  async function swap() {
+    return swapping.swap(() => {
+      swapping.resetAmounts()
+      // emit('close');
+    })
+  }
+
   useEffect(() => {
     populateInitialTokens()
     setInitialized(true)
   }, [])
 
+  useEffect(() => {
+    // if (!swapping.isLoading) {
+    //   swapping.handleAmountChange()
+    // }
+  }, [tokenInAmount, tokenOutAmount])
+
+  console.log("swapping.isLoading", swapping.isLoading)
   return (
     <Container>
       <Flex justifyContent="space-between" alignItems="center">
@@ -187,24 +202,18 @@ const SwapCard: React.FC = () => {
       </Flex>
 
       <SwapPair
-        tokenInAmount={tokenInAmount}
-        tokenInAddress={tokenInAddress}
-        tokenOutAmount={tokenOutAmount}
-        tokenOutAddress={tokenOutAddress}
         exactIn={exactIn}
         swapLoading={swapping.isBalancerSwap ? swapping.isLoading : false}
         effectivePriceMessage={swapping.effectivePriceMessage}
         amountChange={swapping.handleAmountChange}
-        setTokenInAddress={setTokenInAddress}
-        setTokenOutAddress={setTokenOutAddress}
-        setTokenInAmount={setTokenInAmount}
-        setTokenOutAmount={setTokenOutAmount}
         setExactIn={setExactIn}
       />
 
       <SwapDetail />
 
-      <div>{account ? <ButtonPrimary>Next</ButtonPrimary> : <ButtonPrimary>Connect Wallet</ButtonPrimary>}</div>
+      <div>
+        {account ? <ButtonPrimary onClick={swap}>Next</ButtonPrimary> : <ButtonPrimary>Connect Wallet</ButtonPrimary>}
+      </div>
     </Container>
   )
 }
