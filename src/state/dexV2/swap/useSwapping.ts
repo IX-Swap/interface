@@ -244,10 +244,14 @@ export default function useSwapping(
   }, [tokenInAddressInput])
 
   useEffect(() => {
-    setOutputAsset(tokenOutAddressInput)
+    setOutputAsset(tokenOutAddressInput);
 
     handleAmountChange()
-  }, [tokenInAmountInput])
+  }, [tokenOutAddressInput])
+
+  useEffect(() => {
+    handleAmountChange()
+  }, [tokenInAmountInput, tokenOutAmountInput])
 
   useEffect(() => {
     const gaslessDisabled = window.location.href.includes('gasless=false')

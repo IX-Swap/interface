@@ -175,13 +175,6 @@ const SwapCard: React.FC = () => {
     setInitialized(true)
   }, [])
 
-  useEffect(() => {
-    // if (!swapping.isLoading) {
-    //   swapping.handleAmountChange()
-    // }
-  }, [tokenInAmount, tokenOutAmount])
-
-  console.log("swapping.isLoading", swapping.isLoading)
   return (
     <Container>
       <Flex justifyContent="space-between" alignItems="center">
