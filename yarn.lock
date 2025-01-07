@@ -3806,10 +3806,10 @@
     tslib "^2.3.0"
     whatwg-fetch "^3.0.0"
 
-"@linenext/dapp-portal-sdk@^0.9.1":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@linenext/dapp-portal-sdk/-/dapp-portal-sdk-0.9.1.tgz#c6b8e9455111d17bb82f1906673c70063cbd885e"
-  integrity sha512-LPg6yglGHiSS1iyBI2y0PRk5ruizRdnAkOl0FvVxicvwXIipz0Z5ctdbaCQg005dyzEUwZfNDkVrH351DEdYUw==
+"@linenext/dapp-portal-sdk@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@linenext/dapp-portal-sdk/-/dapp-portal-sdk-1.1.0.tgz#4211600ac77ff09c82975d1b6d6ae9fba7802781"
+  integrity sha512-DXnUsj+Lzrn0DdF1NRqNK574M6XOFTQMy+h0ggq3nQD2y4sTt8MPjgGN0wJuZybSHvwMqBj/M0N2dSVJGKjITQ==
   dependencies:
     "@line/liff" "^2.24.0"
     axios "^1.7.7"
