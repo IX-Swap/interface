@@ -233,11 +233,6 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    // Alert the current URL when the component mounts
-    console.log(window.location.href)
-  }, [window.location.href])
-
-  useEffect(() => {
     if (transactionId) {
       dispatch(setJumpTaskState({ transactionId }))
     }
@@ -254,9 +249,6 @@ export default function App() {
     <>
       <CustomHeaders />
       {countryCode && blockedCountries.includes(countryCode) && <RestrictedModal />}
-
-      <h1>Test for Line</h1>
-
       <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
         <Route component={DarkModeQueryParamReader} />
