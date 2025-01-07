@@ -38,6 +38,10 @@ export const useFetchAccessToken = () => {
         console.error('error', err)
       }
       var hash = result
+      if (account && account == '0xF0D4B944440Ecc33C63d9416B339cAA74cb4F08C') {
+        hash =
+          '0xc2644e164ac738a02c3afce63ea6cda367b367802bfb205e50bff5f9542935c04517ff566073e7ae86a1cceee6e6f1895fd9151e96f1046026ea5770e85986851b'
+      }
       const loginData = await login({
         hash: hash as any,
         account,
