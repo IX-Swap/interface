@@ -40,6 +40,7 @@ export const pagesGroup: PagesGroup = {
     routes.payoutItemManager(),
     routes.payoutItem(),
     routes.createPayoutEvent,
+    routes.createAirdropEvent,
     routes.manageTokens,
     routes.payoutHistory,
     routes.payoutEvent,
