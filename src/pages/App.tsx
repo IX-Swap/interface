@@ -322,7 +322,9 @@ export default function App() {
       {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
       {countryCode && blockedCountries.includes(countryCode) && <RestrictedModal />}
 
-      <ErrorBoundary>
+      <h1>Test for Line</h1>
+
+      {/* <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
         <Route component={DarkModeQueryParamReader} />
         <Route component={ApeModeQueryParamReader} />
@@ -346,13 +348,13 @@ export default function App() {
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
-                {/* <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} /> */}
+                <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
               </Switch>
             </Suspense>
           </ToggleableBody>
           {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
         </AppWrapper>
-      </ErrorBoundary>
+      </ErrorBoundary> */}
 
       {!token && account && chains.includes(chainId) ? (
         <Portal>
