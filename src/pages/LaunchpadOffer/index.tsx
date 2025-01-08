@@ -34,13 +34,9 @@ interface OfferPageParams {
 }
 
 export default function LaunchpadOffer() {
-  const params = useParams<OfferPageParams>()
-  console.log('params', params)
-  return <h1>Test Offer</h1>
-
   const theme = useTheme()
   const history = useHistory()
-  // const params = useParams<OfferPageParams>()
+  const params = useParams<OfferPageParams>()
   const { chainId, address: account } = useAccount()
   const offer: any = useGetOffer(params.offerId)
   const hideHeader = useSetHideHeader()
@@ -127,6 +123,7 @@ export default function LaunchpadOffer() {
       </Portal>
     )
   }
+
   return (
     <OfferBackgroundWrapper>
       <OfferContainer>

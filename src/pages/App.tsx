@@ -183,7 +183,7 @@ export default function App() {
         roleGuard,
       ]
 
-      if (false && guards.some((guard) => guard === true)) {
+      if (!isLineLiff && guards.some((guard) => guard === true)) {
         if (roleGuard) {
           return (
             <Route
@@ -253,41 +253,41 @@ export default function App() {
     <>
       <CustomHeaders />
       {countryCode && blockedCountries.includes(countryCode) && <RestrictedModal />}
-      {/* <ErrorBoundary> */}
-      <Route component={GoogleAnalyticsReporter} />
-      <Route component={DarkModeQueryParamReader} />
-      <Route component={ApeModeQueryParamReader} />
-      <AppBackground />
-      <Popups />
-      <AppWrapper isLaunchpad={isWhiteBackground}>
-        {!isAdminKyc && !hideHeader && <Header />}
-        <ToggleableBody
-          isVisible={visibleBody}
-          {...(isAdminKyc && { style: { marginTop: 26 } })}
-          hideHeader={hideHeader}
-        >
-          <IXSBalanceModal />
-          <Suspense
-            fallback={
-              <>
-                <LoadingIndicator isLoading />
-              </>
-            }
+      <ErrorBoundary>
+        <Route component={GoogleAnalyticsReporter} />
+        <Route component={DarkModeQueryParamReader} />
+        <Route component={ApeModeQueryParamReader} />
+        <AppBackground />
+        <Popups />
+        <AppWrapper isLaunchpad={isWhiteBackground}>
+          {!isAdminKyc && !hideHeader && <Header />}
+          <ToggleableBody
+            isVisible={visibleBody}
+            {...(isAdminKyc && { style: { marginTop: 26 } })}
+            hideHeader={hideHeader}
           >
-            <Switch>
-              {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
+            <IXSBalanceModal />
+            <Suspense
+              fallback={
+                <>
+                  <LoadingIndicator isLoading />
+                </>
+              }
+            >
+              <Switch>
+                {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
-              {isLineLiff ? (
-                <Route path="*" component={() => <Launchpad />} />
-              ) : (
-                <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
-              )}
-            </Switch>
-          </Suspense>
-        </ToggleableBody>
-        {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
-      </AppWrapper>
-      {/* </ErrorBoundary> */}
+                {isLineLiff ? (
+                  <Route path="*" component={() => <Launchpad />} />
+                ) : (
+                  <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
+                )}
+              </Switch>
+            </Suspense>
+          </ToggleableBody>
+          {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
+        </AppWrapper>
+      </ErrorBoundary>
       <CustomConnectButton />
 
       {!token && account && chains.includes(chainId) ? (
