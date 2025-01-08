@@ -34,6 +34,8 @@ interface OfferPageParams {
 }
 
 export default function LaunchpadOffer() {
+  return <h1>Test Offer</h1>
+
   const theme = useTheme()
   const history = useHistory()
   const params = useParams<OfferPageParams>()
@@ -123,7 +125,6 @@ export default function LaunchpadOffer() {
       </Portal>
     )
   }
-
   return (
     <OfferBackgroundWrapper>
       <OfferContainer>

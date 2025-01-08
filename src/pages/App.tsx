@@ -183,7 +183,7 @@ export default function App() {
         roleGuard,
       ]
 
-      if (!isLineLiff && guards.some((guard) => guard === true)) {
+      if (false && guards.some((guard) => guard === true)) {
         if (roleGuard) {
           return (
             <Route
