@@ -14,7 +14,7 @@ interface LiffProviderProps {
 export const LiffProvider: React.FC<LiffProviderProps> = ({ children }) => {
   useEffect(() => {
     liff
-      .init({ liffId: '2006746651-DmRwZed0' })
+      .init({ liffId: '2006752416-jRvbRpZ1' })
       .then(() => {
         console.log('LIFF initialization is done')
         // console.log(liff.getAppLanguage())
