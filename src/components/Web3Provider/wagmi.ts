@@ -33,21 +33,22 @@ export function createWagmiConfig() {
     wallets: [
       {
         groupName: 'Popular',
-        wallets: [wallets.coinbaseWallet, wallets.metaMaskWallet, wallets.walletConnectWallet, lineNextWallet],
+        // wallets: [wallets.coinbaseWallet, wallets.metaMaskWallet, wallets.walletConnectWallet, lineNextWallet],
+        wallets: [lineNextWallet, wallets.metaMaskWallet],
       },
-      {
-        groupName: 'Others',
-        wallets: [
-          wallets.trustWallet,
-          wallets.phantomWallet,
-          wallets.braveWallet,
-          wallets.uniswapWallet,
-          wallets.rainbowWallet,
-          wallets.zerionWallet,
-          wallets.rabbyWallet,
-          wallets.injectedWallet,
-        ],
-      },
+      // {
+      //   groupName: 'Others',
+      //   wallets: [
+      //     wallets.trustWallet,
+      //     wallets.phantomWallet,
+      //     wallets.braveWallet,
+      //     wallets.uniswapWallet,
+      //     wallets.rainbowWallet,
+      //     wallets.zerionWallet,
+      //     wallets.rabbyWallet,
+      //     wallets.injectedWallet,
+      //   ],
+      // },
     ],
     chains: CHAINS,
     transports,

@@ -29,8 +29,8 @@ async function getSDKInstance(): Promise<DappPortalSDK> {
 
 export const lineNextWallet = ({ projectId, options }: WalletConnectWalletOptions): Wallet => ({
   id: 'linenextWallet',
-  name: 'Kaia dapp portal',
-  iconUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQITxXz05OAjnF118yy-y7O-YSoO8fO4OfoOg&s',
+  name: 'Kaia Dapp Portal',
+  iconUrl: 'https://vos.line-scdn.net/kaia-wallet-web-prod/wallet-web/assets/media/img_kaia.67d45f7d.svg',
   iconBackground: '#0c2f78',
   downloadUrls: {
     android: 'https://play.google.com/store/apps/details?id=my.wallet',
