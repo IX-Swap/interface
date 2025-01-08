@@ -104,6 +104,10 @@ export default function App() {
     return true
   }
 
+  const isLineLiff = useMemo(() => {
+    return window.location.hostname.includes('line-liff.ixswap.io')
+  }, [])
+
   const isAllowed = useCallback(
     (route: RouteMapEntry): boolean => {
       if (!config) {
@@ -179,7 +183,7 @@ export default function App() {
         roleGuard,
       ]
 
-      if (guards.some((guard) => guard === true)) {
+      if (!isLineLiff && guards.some((guard) => guard === true)) {
         if (roleGuard) {
           return (
             <Route
@@ -272,9 +276,12 @@ export default function App() {
             >
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
-                {/* TODO */}
-                <Route path="*" component={() => <Launchpad />} />
-                {/* <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} /> */}
+
+                {isLineLiff ? (
+                  <Route path="*" component={() => <Launchpad />} />
+                ) : (
+                  <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
+                )}
               </Switch>
             </Suspense>
           </ToggleableBody>
