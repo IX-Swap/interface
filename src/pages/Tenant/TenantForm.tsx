@@ -82,7 +82,7 @@ const TenantForm = () => {
 
         if (id) {
           for (const [key, value] of Object.entries(payload)) {
-            if (['pages', 'tokens'].includes(key)) {
+            if (['tokens'].includes(key)) {
               if (tenant.isIxSwap) {
                 payloadPatch[key] = null
               } else if (tenant[key] != value) {
