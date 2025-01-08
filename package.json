@@ -167,6 +167,7 @@
       "last 1 safari version"
     ]
   },
+  "homepage": "https://line-liff.ixswap.io/",
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@cyntler/react-doc-viewer": "^1.14.1",
