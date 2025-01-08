@@ -180,15 +180,15 @@ export default function App() {
       ]
 
       if (guards.some((guard) => guard === true)) {
-        // if (roleGuard) {
-        //   return (
-        //     <Route
-        //       component={(props: RouteComponentProps) => (
-        //         <Redirect to={{ ...props, pathname: !isAdmin ? routes.kyc : defaultPage }} />
-        //       )}
-        //     />
-        //   )
-        // }
+        if (roleGuard) {
+          return (
+            <Route
+              component={(props: RouteComponentProps) => (
+                <Redirect to={{ ...props, pathname: !isAdmin ? routes.kyc : defaultPage }} />
+              )}
+            />
+          )
+        }
 
         return null
       }
