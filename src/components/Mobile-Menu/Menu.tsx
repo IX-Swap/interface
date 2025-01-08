@@ -127,7 +127,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         </CloseContainer>
 
         <MenuList style={!cookies.annoucementsSeen ? { marginTop: 130 } : {}}>
-          {isIxSwap && isWhitelisted ? (
+          {isIxSwap && isAllowed('charts') && isWhitelisted ? (
             <>
               <ExternalListItem target="_self" href={'https://info.ixswap.io/home'}>
                 <Trans>Charts</Trans>
@@ -137,7 +137,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             </>
           ) : null}
 
-          {isIxSwap ? (
+          {isIxSwap && isAllowed('bridge') ? (
             <>
               <ExternalListItem target="_blank" href={bridgeUrl}>
                 <Trans>Bridge</Trans>
@@ -232,7 +232,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             <Line />
           </> */}
 
-          {isIxSwap ? (
+          {isIxSwap && isAllowed('staking') ? (
             <div>
               <div
                 style={{ fontSize: '20px', fontWeight: '700', marginTop: '20px', height: '40px' }}
