@@ -47,6 +47,9 @@ export const pagesGroup: PagesGroup = {
     routes.tokenManager('my-tokens', null),
     routes.tokenManager(),
   ],
+  charts: ['charts'],
+  bridge: ['bridge'],
+  staking: ['staking'],
   defaults,
 }
 
@@ -84,6 +87,9 @@ export function checkExistInPageGroup(pagesSource: string) {
     payout: false,
     securityTokens: false,
     admin: false,
+    charts: false,
+    bridge: false,
+    staking: false,
   }
 
   const pagesArray = JSON.parse(pagesSource)
@@ -119,6 +125,15 @@ export function checkExistInPageGroup(pagesSource: string) {
   }
   if (isSubset(pagesArray, pagesGroup.admin)) {
     pages.admin = true
+  }
+  if (isSubset(pagesArray, pagesGroup.charts)) {
+    pages.charts = true
+  }
+  if (isSubset(pagesArray, pagesGroup.bridge)) {
+    pages.bridge = true
+  }
+  if (isSubset(pagesArray, pagesGroup.staking)) {
+    pages.staking = true
   }
 
   return pages
@@ -187,6 +202,9 @@ export const pages = {
   payout: false,
   securityTokens: false,
   admin: false,
+  charts: false,
+  bridge: false,
+  staking: false,
 }
 
 export function setFieldsValue(setFieldValue: any, data: any) {
@@ -237,4 +255,7 @@ export const PagesMapping = {
   securityTokens: 'RWA',
   payout: 'Payout',
   lbpAdmin: 'LBP Dashboard',
+  charts: 'Charts',
+  bridge: 'Bridge',
+  staking: 'Staking',
 } as any
