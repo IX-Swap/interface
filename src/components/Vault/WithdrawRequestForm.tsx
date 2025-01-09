@@ -114,7 +114,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
         createDraftWithdraw({
           tokenId: tokenInfo.id,
           fromAddress: receiver,
-          amount,
+          amount: amount.toString(),
         })
 
         return
