@@ -7,6 +7,7 @@ import { Offer } from 'state/launchpad/types'
 import { useGetOffers } from 'state/launchpad/hooks'
 import { MEDIA_WIDTHS } from 'theme'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { isLineLiff } from 'utils'
 
 const InvestmentListWrapper = styled.div`
   background-color: #ffffff;
@@ -27,7 +28,14 @@ export const Offers = () => {
   const { config } = useWhitelabelState()
   const [filter, setFilter] = React.useState<FilterConfig>(() => {
     const newFilter = localStorage.getItem('offersFilter')
-    return newFilter ? (JSON.parse(newFilter) as FilterConfig) : { search: '', industry: [], stage: [], type: [], network: [] }
+    const initFilter = newFilter
+      ? (JSON.parse(newFilter) as FilterConfig)
+      : { search: '', industry: [], stage: [], type: [], network: [] }
+    if (isLineLiff) {
+      initFilter.network = [{ label: 'Kaia', value: 'kaia' }]
+    }
+
+    return initFilter
   })
   const isIxSwap = config?.isIxSwap ?? false
 
@@ -59,7 +67,7 @@ export const Offers = () => {
 
   return (
     <div style={{ width: '100%' }}>
-      {isIxSwap ? <Pinned /> : null}
+      {isIxSwap && !isLineLiff ? <Pinned /> : null}
       <InvestmentListWrapper>
         <InvestmentList
           offers={offers}

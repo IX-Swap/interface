@@ -49,6 +49,7 @@ import { CHAINS } from 'components/Web3Provider/constants'
 import CustomConnectButton from 'components/NotAvailablePage/CustomButotn'
 const Launchpad = lazy(() => import('pages/Launchpad'))
 import KYC from 'pages/KYC'
+import { isLineLiff } from 'utils'
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -104,10 +105,6 @@ export default function App() {
 
     return true
   }
-
-  const isLineLiff = useMemo(() => {
-    return window.location.hostname.includes('line-liff.ixswap.io')
-  }, [])
 
   const isAllowed = useCallback(
     (route: RouteMapEntry): boolean => {
