@@ -184,6 +184,4 @@ export function tryClearIndexedDB() {
   }
 }
 
-export const isLineLiff =
-  window.location.hostname.includes('line-liff.ixswap.io') || window.location.hostname.includes('localhost')
-
+export const isLineLiff = window.location.hostname.includes('line-liff.ixswap.io')
