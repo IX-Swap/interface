@@ -34,7 +34,7 @@ export function createWagmiConfig() {
       {
         groupName: 'Popular',
         // wallets: [wallets.coinbaseWallet, wallets.metaMaskWallet, wallets.walletConnectWallet, lineNextWallet],
-        wallets: [lineNextWallet, wallets.metaMaskWallet],
+        wallets: [lineNextWallet],
       },
       // {
       //   groupName: 'Others',
@@ -56,32 +56,5 @@ export function createWagmiConfig() {
 
   return config
 }
-
-const connectors = connectorsForWallets(
-  [
-    {
-      groupName: 'Recommended',
-      wallets: [wallets.coinbaseWallet, wallets.metaMaskWallet, wallets.walletConnectWallet],
-    },
-
-    {
-      groupName: 'Others',
-      wallets: [
-        wallets.trustWallet,
-        wallets.phantomWallet,
-        wallets.braveWallet,
-        wallets.uniswapWallet,
-        wallets.rainbowWallet,
-        wallets.zerionWallet,
-        wallets.rabbyWallet,
-        wallets.injectedWallet,
-      ],
-    },
-  ],
-  {
-    appName: 'IXSwap',
-    projectId: getWalletConnectProjectId(),
-  }
-)
 
 export const queryClient = new QueryClient()
