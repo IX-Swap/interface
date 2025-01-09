@@ -40,7 +40,7 @@ const ConnectWalletCard = () => {
         Please Connect <br /> your Wallet to use <br /> the Application.
       </div>
       {renderConnectButton()}
-      {config?.isIxSwap ? (
+      {config?.isIxSwap && !isLineLiff ? (
         <span>
           While your wallet is not connected, you can see our New <br />
           <a
