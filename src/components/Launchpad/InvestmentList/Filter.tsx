@@ -10,6 +10,7 @@ import { OFFER_INDUSTRY_LABELS, OFFER_STAGE_LABELS, OFFER_TYPE_LABELS } from 'st
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { isMobile } from 'react-device-detect'
 import { networkOptions } from 'components/LaunchpadIssuance/IssuanceForm/Information/util'
+import { isLineLiff } from 'utils'
 
 export interface FilterConfig {
   search: string
@@ -54,12 +55,15 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
           options={OFFER_STAGE_LABELS}
           onSelect={handleDropdownSelect('stage')}
         />
-        <FilterDropdown
-          selected={filter.network}
-          label="Network"
-          options={networkOptions}
-          onSelect={handleDropdownSelect('network')}
-        />
+
+        {!isLineLiff ? (
+          <FilterDropdown
+            selected={filter.network}
+            label="Network"
+            options={networkOptions}
+            onSelect={handleDropdownSelect('network')}
+          />
+        ) : null}
 
         {!isMobile && <Spacer />}
         {/* Disabled for version 2 https://app.clickup.com/t/4733323/IXS-2662 */}

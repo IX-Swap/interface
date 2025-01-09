@@ -4,7 +4,6 @@ import { Text } from 'rebass'
 import { Trans } from '@lingui/macro'
 
 import { PinnedContentButton } from 'components/Button'
-import { WalletEvent } from 'utils/event-logs'
 
 import * as Sentry from '@sentry/react'
 
@@ -13,11 +12,9 @@ export default function CustomConnectButton() {
 
   const handleClick = async () => {
     Sentry.captureMessage(`Connecting to LINE`)
-    const passkeyConnector = connectors.find((connector) => connector.id === 'linenextWallet')
-
-    console.info('passkeyconnector', passkeyConnector)
-    new WalletEvent('Connecting line liff ').walletAddress('unknonw').info('Prepare to connect')
-    connect({ connector: passkeyConnector as any })
+    const connector = connectors.find((connector) => connector.id === 'linenextWallet')
+    console.info('connector', connector)
+    connect({ connector: connector as any })
   }
 
   return (
@@ -35,9 +32,12 @@ export default function CustomConnectButton() {
             {(() => {
               if (!connected && isNormieVisitor) {
                 return (
-                  <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={handleClick}>
+                  <PinnedContentButton
+                    style={{ boxShadow: '0px 16px 16px 0px #6666FF21', marginBottom: '20px' }}
+                    onClick={handleClick}
+                  >
                     <Text className="connect-wallet-button">
-                      <Trans>Connect Kaia Dapp portal Wallet</Trans>
+                      <Trans>Connect Wallet</Trans>
                     </Text>
                   </PinnedContentButton>
                 )
