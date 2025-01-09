@@ -89,7 +89,7 @@ const FieldContainer = styled.div`
 const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height'> & { hasCaption: boolean }>`
   position: relative;
   display: grid;
-  grid-template-columns: minmax(60%, 1fr) auto;
+  grid-template-columns: minmax(46%, 1fr) auto;
 
   ${(props) =>
     props.hasCaption &&
@@ -115,7 +115,7 @@ const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height'> 
 
   max-width: 100%;
 
-  height: ${(props) => props.height ?? '60px'};
+  height: ${(props) => props.height ?? '80px'};
 
   padding: ${(props) => props.padding ?? '0.75rem 1.25rem'};
 

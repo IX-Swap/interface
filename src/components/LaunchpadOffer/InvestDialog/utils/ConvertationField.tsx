@@ -326,11 +326,13 @@ const ConvertationArrow = styled.div`
   transform: translate(-50%, -50%);
   display: grid;
   place-content: center;
-  width: 48px;
-  height: 48px;
-  background: ${(props) => props.theme.launchpad.colors.foreground};
-  border: 8px solid ${(props) => props.theme.launchpad.colors.background};
+  width: 42px;
+  height: 42px;
+  background-color: rgb(249, 249, 249);
+  border-color: rgb(255, 255, 255);
   border-radius: 16px;
+  border-style: solid;
+  border-width: 4px;
 `
 
 interface TokenOption {
