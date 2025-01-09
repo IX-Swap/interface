@@ -114,7 +114,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
         createDraftWithdraw({
           tokenId: tokenInfo.id,
           fromAddress: receiver,
-          amount,
+          amount: amount.toString(),
         })
 
         return
@@ -143,6 +143,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
     onCurrencySet(id)
   }, [currency, onCurrencySet])
 
+  console.log('inputError', inputError)
   return (
     <div style={{ position: 'relative', padding: isMobile ? '0px 10px 0px 10px' : '' }}>
       <Column style={{ gap: '25px', marginTop: '18px' }}>
