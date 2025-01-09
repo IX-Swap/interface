@@ -108,7 +108,7 @@ const KYC = () => {
   const fetchMe = useCallback(async () => {
     const result = await getMe()
     setReferralCode(result?.referralCode)
-  }, [getMe, history])
+  }, [getMe])
 
   const infoText = (
     <p>

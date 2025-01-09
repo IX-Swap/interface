@@ -207,7 +207,7 @@ export default function App() {
     if (token) {
       getMe()
     }
-  }, [token, getMe])
+  }, [token])
 
   useEffect(() => {
     clearLocaleStorage()
