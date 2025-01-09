@@ -48,6 +48,7 @@ import { setJumpTaskState } from 'state/jumpTask'
 import { CHAINS } from 'components/Web3Provider/constants'
 import CustomConnectButton from 'components/NotAvailablePage/CustomButotn'
 const Launchpad = lazy(() => import('pages/Launchpad'))
+import KYC from 'pages/KYC'
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -278,7 +279,7 @@ export default function App() {
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
                 {isLineLiff ? (
-                  <Route path="*" component={() => <Launchpad />} />
+                  <Route path="*" component={() => (account ? <Launchpad /> : <KYC />)} />
                 ) : (
                   <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
                 )}
