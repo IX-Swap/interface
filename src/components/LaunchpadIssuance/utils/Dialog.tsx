@@ -26,11 +26,10 @@ export const IssuanceDialog: React.FC<React.PropsWithChildren<Props>> = (props) 
     <Portal>
       <DialogWrapper onScroll={(e) => e.stopPropagation()}>
         <OuterContainer>
-
-        {/* <CloseIcon style={{ position: 'absolute', right: '20px', top: '100px', color: 'black' }} data-testid="cross"   onClick={props.onClose!} /> */}
+          {/* <CloseIcon style={{ position: 'absolute', right: '20px', top: '100px', color: 'black' }} data-testid="cross"   onClick={props.onClose!} /> */}
 
           <DialogCloseButton onClick={props.onClose}>
-            <X  size={20} />
+            <X size={20} />
           </DialogCloseButton>
 
           <DialogContainer width={props.width} height={props.height} padding={props.padding}>
@@ -103,6 +102,10 @@ const DialogContainer = styled.div<{ height?: string; width?: string; padding?: 
 
   max-height: 100vh;
   overflow-y: scroll;
+
+  @media (max-width: 720px) {
+    width: 360px;
+  }
 `
 
 const Content = styled.div`
