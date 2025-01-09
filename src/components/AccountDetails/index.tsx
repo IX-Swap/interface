@@ -29,15 +29,15 @@ export default function AccountDetails({ ENSName, toggleWalletModal }: AccountDe
   const fetchMe = useCallback(async () => {
     const result = await getMe()
     setReferralCode(result?.referralCode)
-  }, [getMe, history])
+  }, [getMe])
 
   useEffect(() => {
     fetchMe()
   }, [])
 
   const handleDisconnect = async () => {
-    disconnectWallet();
-    toggleWalletModal();
+    disconnectWallet()
+    toggleWalletModal()
   }
 
   return (
