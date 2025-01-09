@@ -6,7 +6,8 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { ConnectWalletContainer } from './styled'
 import { PinnedContentButton } from 'components/Button'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-import CustomConnectButton from './CustomButotn'
+import CustomLineLiffConnectButton from './CustomLineLiffConnectButton'
+import { isLineLiff } from 'utils'
 
 const ConnectWalletCard = () => {
   const { config } = useWhitelabelState()
@@ -34,15 +35,14 @@ const ConnectWalletCard = () => {
       <div>
         Please Connect <br /> your Wallet to use <br /> the Application.
       </div>
-      {openConnectModal && (
-        <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={openConnectModal}>
-          <Text className="connect-wallet-button">
-            <Trans>Connect Wallet</Trans>
-          </Text>
-        </PinnedContentButton>
-      )}
-      <CustomConnectButton />
-
+      {/* {openConnectModal && ( */}
+      {/*   <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={openConnectModal}> */}
+      {/*     <Text className="connect-wallet-button"> */}
+      {/*       <Trans>Connect Wallet</Trans> */}
+      {/*     </Text> */}
+      {/*   </PinnedContentButton> */}
+      {/* )} */}
+      <CustomLineLiffConnectButton />
       {config?.isIxSwap ? (
         <span>
           While your wallet is not connected, you can see our New <br />
