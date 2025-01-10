@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react'
 import styled from 'styled-components'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import numeral from 'numeral'
+import _get from 'lodash/get'
 
 import { RowFixed } from 'components/Row'
 import { TokenLogo } from 'components/TokenLogo'
@@ -26,6 +27,8 @@ interface Props {
   disabled?: boolean
 }
 
+const displayNumeralNoDecimal = (amount: any) => numeral(amount).format('0,0')
+
 export const AmountInput = ({
   balance,
   currency,
@@ -40,9 +43,11 @@ export const AmountInput = ({
   const isShowMaxButton = showMax && balance && Number(balance) > 0
   const [displayValue, setDisplayValue] = useState<string>('')
 
+  const decimals = _get(currency, 'decimals', 18)
+
   const handleMax = () => {
     if (balance) {
-      onUserInput(balance)
+      onChange(balance)
     }
   }
 
@@ -50,12 +55,19 @@ export const AmountInput = ({
     const regex = /^-?\d*[.,]?\d*$/
     const value = val.split(',').join('')
 
-    if (regex.test(value) && value.length < 13) {
+    if (regex.test(value)) {
       // @ts-ignore
       onUserInput(numeral(value).value())
 
       if (val.length >= 2 && val.charAt(0) === '0' && val.charAt(1) === '0') {
         return setDisplayValue('0')
+      }
+
+      if (value.indexOf('.') > -1) {
+        const decimal = value.substring(value.indexOf('.') + 1, value.indexOf('.') + decimals + 1)
+        const int = value.substring(0, value.indexOf('.'))
+        const data = displayNumeralNoDecimal(int) + '.' + decimal
+        return setDisplayValue(data)
       }
 
       setDisplayValue(value ? numeral(value).format('0,0') : '')
