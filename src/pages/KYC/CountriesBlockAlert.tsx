@@ -20,7 +20,7 @@ const CountriesBlockAlert: React.FC = () => {
 
   return (
     <Container>
-      <Flex alignItems={'center'} style={{ gap: 8 }}>
+      <Flex flexDirection={['column', 'row']} alignItems={'center'} style={{ gap: 8 }} >
         <AlertIcon />
         <div>Our service is currently unavailable to citizens of the United States or North Korea.</div>
       </Flex>
@@ -55,4 +55,9 @@ const Container = styled.div`
   font-weight: 400;
   line-height: 160%; /* 22.4px */
   letter-spacing: -0.28px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 8px;
+  }
 `
