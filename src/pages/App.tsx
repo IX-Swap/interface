@@ -49,6 +49,7 @@ import { CHAINS } from 'components/Web3Provider/constants'
 const Launchpad = lazy(() => import('pages/Launchpad'))
 import KYC from 'pages/KYC'
 import { isLineLiff } from 'utils'
+import { useLiff } from './LiffProvider'
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -82,6 +83,8 @@ export default function App() {
   const { authenticate } = useAccount()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const query = useQuery()
+
+  const { isLiffBrowser } = useLiff()
 
   const [countryCode, setCountryCode] = useState()
 
@@ -275,7 +278,7 @@ export default function App() {
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
                 {isLineLiff ? (
-                  <Route path="*" component={() => (account ? <Launchpad /> : <KYC />)} />
+                  <Route path="*" component={() => (isLiffBrowser ? <Launchpad /> : <KYC />)} />
                 ) : (
                   <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
                 )}

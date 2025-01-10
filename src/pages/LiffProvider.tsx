@@ -3,7 +3,9 @@
 import liff from '@line/liff'
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 
-interface LiffContextType {}
+interface LiffContextType {
+  isLiffBrowser: boolean
+}
 
 const LiffContext = createContext<LiffContextType | undefined>(undefined)
 
@@ -12,6 +14,8 @@ interface LiffProviderProps {
 }
 
 export const LiffProvider: React.FC<LiffProviderProps> = ({ children }) => {
+  const [isLiffBrowser, setIsLiffBrowser] = useState(false)
+
   useEffect(() => {
     liff
       .init({ liffId: '2006746651-DmRwZed0' })
@@ -23,13 +27,15 @@ export const LiffProvider: React.FC<LiffProviderProps> = ({ children }) => {
         console.log(liff.isLoggedIn())
         console.log(liff.getOS())
         console.log(liff.getLineVersion())
+
+        setIsLiffBrowser(liff.isInClient()) // Set the value of isLiffBrowser
       })
       .catch((error: any) => {
         console.error(`LIFF initialization failed: ${error}`)
       })
   }, [])
 
-  return <LiffContext.Provider value={{}}>{children}</LiffContext.Provider>
+  return <LiffContext.Provider value={{ isLiffBrowser }}>{children}</LiffContext.Provider>
 }
 
 export const useLiff = () => {
