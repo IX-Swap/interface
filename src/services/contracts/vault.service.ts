@@ -51,8 +51,6 @@ export default class VaultService {
   ): Promise<TransactionResponse> {
     const deadline = calculateValidTo(transactionDeadline)
 
-    console.log('this.abi', this.abi)
-    debugger
     // @ts-ignore
     const { request } = await simulateContract(wagmiConfig, {
       // @ts-ignore
