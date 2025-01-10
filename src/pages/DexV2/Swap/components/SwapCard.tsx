@@ -202,7 +202,7 @@ const SwapCard: React.FC = () => {
         setExactIn={setExactIn}
       />
 
-      <SwapDetail />
+      <SwapDetail swapping={swapping} />
 
       <div>
         {account ? <ButtonPrimary onClick={swap}>Next</ButtonPrimary> : <ButtonPrimary>Connect Wallet</ButtonPrimary>}

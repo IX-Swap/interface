@@ -108,8 +108,23 @@ const SwapPair: React.FC<Props> = ({
           setMax={() => setExactIn(true)}
         />
       </div>
-      <SwapIconWrapper>
-        <img src={SwapIcon} alt="Swap" />
+      <SwapIconWrapper onClick={handleTokenSwitch}>
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1 10L3.29289 12.2929C3.92286 12.9229 5 12.4767 5 11.5858V1"
+            stroke="#B8B8CC"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M14 5L11.7071 2.70711C11.0771 2.07714 10 2.52331 10 3.41421V14"
+            stroke="#B8B8CC"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </SwapIconWrapper>
       <Box mt={24}>
         <TokenInput
@@ -148,4 +163,13 @@ const SwapIconWrapper = styled.div`
   align-items: center;
   box-shadow: 0px 0px 64px 0px rgba(102, 102, 255, 0.1);
   cursor: pointer;
+
+  &:hover {
+    background: #6666ff;
+    svg {
+      path {
+        stroke: #ffffff;
+      }
+    }
+  }
 `

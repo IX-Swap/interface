@@ -86,8 +86,17 @@ const defaultProps: Props = {
 }
 
 const TokenInput: React.FC<Props> = (props = defaultProps) => {
-  const { name, noMax, disableMax, customBalance, excludedTokens, autoFocus, disableNativeAssetBuffer, updateAddress } =
-    props
+  const {
+    name,
+    noMax,
+    disableMax,
+    customBalance,
+    excludedTokens,
+    autoFocus,
+    hideFiatValue,
+    disableNativeAssetBuffer,
+    updateAddress,
+  } = props
   const [address, setAddress] = useState<any>('')
   const [amount, setAmount] = useState<any>('')
 
@@ -231,7 +240,12 @@ const TokenInput: React.FC<Props> = (props = defaultProps) => {
       </Flex>
 
       <Flex justifyContent="space-between" alignItems="center">
-        <StyledNumber>{fNum(tokenValue, FNumFormats.fiat)}</StyledNumber>
+        {hasAmount && hasToken && !hideFiatValue ? (
+          <StyledNumber>{fNum(tokenValue, FNumFormats.fiat)}</StyledNumber>
+        ) : (
+          <div />
+        )}
+
         <Flex alignItems="center" style={{ gap: 8 }}>
           <StyledNumber>{fNum(tokenBalance, FNumFormats.token)}</StyledNumber>
           <WalletIcon />
@@ -265,7 +279,7 @@ const StyledInput = styled.input`
   border: none;
   background: transparent;
   min-width: 50px;
-  max-width: 185px;
+  max-width: 170px;
 `
 
 const StyledNumber = styled.div`
