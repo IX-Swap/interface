@@ -509,13 +509,13 @@ const CodeBox = styled.input.attrs(
       width: isMobile ? '50px' : '80px',
       height: isMobile ? '60px' : '80px',
       textAlign: 'center',
-      marginRight: '10px',
       background: props.backgroundColor,
       border: `1px solid ${props.borderColor}`,
       borderRadius: '5px',
-      fontSize: '32px',
+      fontSize: '24px',
       fontWeight: '700',
       color: props.color,
+      fontFamily: 'Inter',
     },
     maxLength: 1,
     type: 'tel',
@@ -539,6 +539,7 @@ const CodeRow = styled.div`
   justify-content: center;
   margin-bottom: 10px;
   flex-direction: row;
+  gap: 4px;
 `
 
 export default SecondaryContactOption
