@@ -7,6 +7,7 @@ import { Lbp } from 'state/lbp/types'
 import { PaginationTrigger } from 'components/Launchpad/InvestmentList/PaginationTrigger'
 import { ReactComponent as NoItemImage } from '../../../assets/images/noitem.svg'
 import { ReactComponent as EmptyListImage } from '../../../assets/images/emptylist.svg'
+import { MEDIA_WIDTHS } from 'theme'
 
 export const LbpList = () => {
   const getLbps = useGetLbpsFull()
@@ -84,6 +85,10 @@ const InvestmentListGrid = styled.div`
   grid-template-rows: repeat(2, auto);
   gap: 1rem;
   place-content: start;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    grid-template-columns: repeat(auto-fit, 100%);
+  }
 `
 
 const EmptyListContainer = styled.div`
