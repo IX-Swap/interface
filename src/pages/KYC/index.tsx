@@ -98,7 +98,6 @@ const KYC = () => {
   const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false, referralCode: '' })
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
-  const [referralCode, setReferralCode] = useState<string | null>('')
 
   const { me } = useUserState()
   const history = useHistory()
@@ -115,11 +114,9 @@ const KYC = () => {
     </p>
   )
 
-  useEffect(() => {
-    if (me?.referralCode) {
-      setReferralCode(me?.referralCode)
-    }
-  }, [me])
+  const referralCode = useMemo(() => {
+    return me?.referralCode
+  }, [JSON.stringify(me)])
 
   const openModal = (kycType: string) => {
     console.log('Opening modal for', kycType)
