@@ -140,6 +140,10 @@ const LbpCardContainer = styled.article`
   align-items: stretch;
   width: 380px;
   overflow: hidden;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 100%;
+  }
 `
 
 const LbpCardHeader = styled.header`
@@ -159,7 +163,7 @@ const LbpCardImage = styled.img`
   border-radius: 6px;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    width: 368px;
+    width: 100%;
   }
 `
 

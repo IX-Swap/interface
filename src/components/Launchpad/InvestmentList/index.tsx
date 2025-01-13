@@ -8,6 +8,7 @@ import { Offer } from 'state/launchpad/types'
 import { text53, text8 } from 'components/LaunchpadMisc/typography'
 import { LbpList } from 'components/LBP/InvestmentList/LbpList'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { MEDIA_WIDTHS } from 'theme'
 
 enum InvesmentTabs {
   issuance = 'issuance',
@@ -122,6 +123,10 @@ const InvestmentListGrid = styled.div`
   grid-template-rows: repeat(2, auto);
   gap: 1rem;
   place-content: start;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    grid-template-columns: repeat(auto-fit, 100%);
+  }
 `
 
 const Tabs = styled.div`
