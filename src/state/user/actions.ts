@@ -112,4 +112,5 @@ export interface RawGetMePayload {
   deletedAt: string
   isWhitelisted: boolean
   managerOf: ManagerOfToken[]
+  referralCode: string
 }
