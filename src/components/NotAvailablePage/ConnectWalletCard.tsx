@@ -6,8 +6,8 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { ConnectWalletContainer } from './styled'
 import { PinnedContentButton } from 'components/Button'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-import CustomLineLiffConnectButton from './CustomLineLiffConnectButton'
 import { isLineLiff } from 'utils'
+import { LineLiffConnectButton } from 'pages/ConnectWalletModal/LineLiffConnectButton'
 
 const ConnectWalletCard = () => {
   const { config } = useWhitelabelState()
@@ -15,7 +15,7 @@ const ConnectWalletCard = () => {
 
   const renderConnectButton = () => {
     if (isLineLiff) {
-      return <CustomLineLiffConnectButton />
+      return <LineLiffConnectButton />
     }
 
     if (openConnectModal) {

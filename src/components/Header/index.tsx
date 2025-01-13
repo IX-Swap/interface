@@ -143,7 +143,7 @@ export default function Header() {
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
 
-                {!account && openConnectModal ? (
+                {!account && openConnectModal && !isLineLiff ? (
                   <PinnedContentButton
                     style={{ boxShadow: '0px 16px 16px 0px #6666FF21', minWidth: 200 }}
                     onClick={openConnectModal}
