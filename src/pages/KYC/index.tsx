@@ -23,7 +23,7 @@ import { RowCenter } from 'components/Row'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import styled from 'styled-components'
 import Copy from 'components/AccountDetails/Copy'
-import { useGetMe } from 'state/user/hooks'
+import { useUserState } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
 import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 import { detectWrongNetwork } from 'utils'
@@ -98,17 +98,12 @@ const KYC = () => {
   const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false, referralCode: '' })
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
-  const [referralCode, setReferralCode] = useState<string | null>('')
-  const getMe = useGetMe()
+
+  const { me } = useUserState()
   const history = useHistory()
   const isWrongNetwork = detectWrongNetwork(chainId as number)
 
   const supportEmail = _get(config, 'supportEmail', 'c@ixswap.io')
-
-  const fetchMe = useCallback(async () => {
-    const result = await getMe()
-    setReferralCode(result?.referralCode)
-  }, [getMe, history])
 
   const infoText = (
     <p>
@@ -119,9 +114,9 @@ const KYC = () => {
     </p>
   )
 
-  useEffect(() => {
-    fetchMe()
-  }, [status, description, kyc])
+  const referralCode = useMemo(() => {
+    return me?.referralCode
+  }, [JSON.stringify(me)])
 
   const openModal = (kycType: string) => {
     console.log('Opening modal for', kycType)
