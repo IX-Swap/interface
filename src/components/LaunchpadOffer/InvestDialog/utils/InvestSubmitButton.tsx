@@ -99,6 +99,8 @@ export const InvestInfoMessage = styled.div<{ state: InvestSubmitState; disabled
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 
   ${(props) =>
     props.state === InvestSubmitState.default &&
