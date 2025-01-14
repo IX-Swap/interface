@@ -161,6 +161,7 @@ export default function IndividualKycFormV2() {
   }
 
   useEffect(() => {
+    console.log("APP URL", window.location.href)
     const code = query.get('referralCode')
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
