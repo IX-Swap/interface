@@ -8,8 +8,8 @@ import { metamask } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
-import {  postLogin } from './actions'
-import {  useDisconnect } from 'wagmi'
+import { postLogin } from './actions'
+import { useDisconnect } from 'wagmi'
 import { setWalletState } from 'state/wallet'
 import { tryClearIndexedDB } from 'utils'
 
@@ -60,7 +60,7 @@ export function useLogout() {
   const { disconnect } = useDisconnect()
 
   const disconnectWallet = () => {
-    disconnect();
+    disconnect()
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())

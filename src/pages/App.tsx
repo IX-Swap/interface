@@ -289,13 +289,13 @@ export default function App() {
         </AppWrapper>
       </ErrorBoundary>
 
-      {!token && account && chains.includes(chainId) ? (
-        <Portal>
-          <CenteredFixed width="100vw" height="100vh">
-            <SignMessageModal authenticate={authenticate} />
-          </CenteredFixed>
-        </Portal>
-      ) : null}
+      {/* {!token && account && chains.includes(chainId) ? ( */}
+      {/*   <Portal> */}
+      {/*     <CenteredFixed width="100vw" height="100vh"> */}
+      {/*       <SignMessageModal authenticate={authenticate} /> */}
+      {/*     </CenteredFixed> */}
+      {/*   </Portal> */}
+      {/* ) : null} */}
     </>
   )
 }
