@@ -284,7 +284,7 @@ export default function App() {
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
                 {isLineLiff ? (
-                  <Route path="*" component={() => (isLiffBrowser ? <Launchpad /> : <KYC />)} />
+                  <Route path="*" component={() => <Launchpad />} />
                 ) : (
                   <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
                 )}
