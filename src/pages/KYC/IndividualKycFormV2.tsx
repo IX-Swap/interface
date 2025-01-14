@@ -29,6 +29,8 @@ import VerificationConfirmation from './VerificationConfirmation'
 import { EmailType, SecondaryContactTypeV2, SuccessType } from './enum'
 import SecondaryContactOption from './SecondaryContactOption'
 import CountriesBlockAlert from './CountriesBlockAlert'
+import useQuery from 'hooks/useQuery'
+
 export const FormRow = styled(Row)`
   align-items: flex-start;
   gap: 35px;
@@ -153,6 +155,7 @@ export default function IndividualKycFormV2() {
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false)
   const [initialValues, setInitialValues] = useState(individualFormV2InitialValues)
   const getMyKyc = useGetMyKyc()
+  const query = useQuery()
 
   const getInitialValues = () => {
     if (kyc?.individual) {
@@ -167,7 +170,7 @@ export default function IndividualKycFormV2() {
   }
 
   useEffect(() => {
-    const code = new URL(window.location.href).href?.split('=')[1]
+    const code = query.get('referralCode')
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
       setReferralCode(code)
