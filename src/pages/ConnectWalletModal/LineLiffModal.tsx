@@ -128,7 +128,7 @@ export const LineLiffModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           <Subtitle>Connect Mini Dapp to Dapp Portal Wallet</Subtitle>
         )}
 
-        <LineLiffConnectButton text="Connect with Social Login" onClose={onClose}></LineLiffConnectButton>
+        <LineLiffConnectButton onClose={onClose}></LineLiffConnectButton>
       </ModalContent>
     </ModalOverlay>
   )

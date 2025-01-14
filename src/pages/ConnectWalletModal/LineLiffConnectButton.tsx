@@ -42,7 +42,7 @@ export const LineLiffConnectButton: React.FC<LineLiffConnectButtonProps> = ({
                     style={{ boxShadow: '0px 16px 16px 0px #6666FF21', marginBottom: '20px' }}
                     onClick={handleClick}
                   >
-                    <img src={LineNextIcon} alt="line-next-icon" />
+                    <img src={LineNextIcon} alt="line-next-icon" /> |
                     <Text className="connect-wallet-button">
                       <Trans>{text}</Trans>
                     </Text>
