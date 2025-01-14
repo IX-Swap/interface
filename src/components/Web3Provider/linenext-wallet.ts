@@ -114,7 +114,7 @@ export function lineNextConnector(walletDetails: any): CreateConnectorFn {
         throw new Error('No accounts found')
       }
 
-      new WalletEvent('Line Liff connector').walletAddress(accounts[0]).info('Connecting...')
+      new WalletEvent('Line Liff connector').walletAddress(accounts[0]).info('Connected...')
       return { accounts, chainId: kairos.id }
     },
     disconnect: async () => {
