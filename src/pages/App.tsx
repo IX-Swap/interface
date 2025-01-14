@@ -245,6 +245,12 @@ export default function App() {
     }
   }, [transactionId, affUnique1])
 
+  useEffect(() => {
+    if (isLineLiff && !token && account && chains.includes(chainId)) {
+      authenticate()
+    }
+  }, [token, account, chainId])
+
   if (!config) {
     return <LoadingIndicator isLoading />
   }
@@ -289,13 +295,13 @@ export default function App() {
         </AppWrapper>
       </ErrorBoundary>
 
-      {/* {!token && account && chains.includes(chainId) ? ( */}
-      {/*   <Portal> */}
-      {/*     <CenteredFixed width="100vw" height="100vh"> */}
-      {/*       <SignMessageModal authenticate={authenticate} /> */}
-      {/*     </CenteredFixed> */}
-      {/*   </Portal> */}
-      {/* ) : null} */}
+      {!isLineLiff && !token && account && chains.includes(chainId) ? (
+        <Portal>
+          <CenteredFixed width="100vw" height="100vh">
+            <SignMessageModal authenticate={authenticate} />
+          </CenteredFixed>
+        </Portal>
+      ) : null}
     </>
   )
 }

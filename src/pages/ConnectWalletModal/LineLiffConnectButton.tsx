@@ -4,8 +4,6 @@ import { useConnect } from 'wagmi'
 import { Text } from 'rebass'
 import { Trans } from '@lingui/macro'
 
-import { useAuthState, useLogin } from 'state/auth/hooks'
-import { useAccount } from 'state/user/hooks'
 import * as Sentry from '@sentry/react'
 import { LineButton } from './LineLiffModal'
 import LineNextIcon from 'assets/images/linenext-logo.png'
@@ -21,19 +19,11 @@ export const LineLiffConnectButton: React.FC<LineLiffConnectButtonProps> = ({
 }) => {
   const { connectors, connectAsync } = useConnect()
 
-  const { token } = useAuthState()
-  const { authenticate } = useAccount()
-
-  const login = useLogin({ mustHavePreviousLogin: true })
-
   const handleClick = async () => {
     Sentry.captureMessage(`Connecting to LINE`)
     const connector = connectors.find((connector) => connector.id === 'linenextWallet')
     await connectAsync({ connector: connector as any })
-    console.info('TOIKEN', token)
-    if (!token) {
-      const status = await login(true)
-    }
+
     onClose()
   }
 
