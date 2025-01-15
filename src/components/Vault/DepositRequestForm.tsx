@@ -25,7 +25,7 @@ import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 import { SecCurrency } from 'types/secToken'
 import { AddressInput } from './AddressInput'
-import { AmountInputV2 } from './AmountInputV2'
+import { AmountInput } from './AmountInput'
 import { useTokenContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
 import useDecimals from 'hooks/useDecimals'
@@ -155,7 +155,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
                 </span>
               </CurrentBalance>
             </Row>
-            <AmountInputV2
+            <AmountInput
               showMax
               balance={floorToDecimals(Number(tokenBalance), 3)}
               token={token}
@@ -225,7 +225,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
                 </TYPE.description2>
               </HideSmall>
             </RowBetween>
-            <AmountInputV2
+            <AmountInput
               token={token}
               currency={currency}
               originalDecimals={tokenInfo?.originalDecimals}

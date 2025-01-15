@@ -25,6 +25,11 @@ export interface TenantDetails {
   kycCancelRedirectUrl?: string
   footerConfig?: string
   colorButtonPrimary?: string
+  termLink?: string
+  policyLink?: string
+  block1?: string
+  block2?: string
+  block3?: string
 }
 
 export interface PagesConfig {

@@ -49,7 +49,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
   const network = offer?.network ?? ''
   const networkLogo = network ? NETWORK_LOGOS[network] : ''
-  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
+  const isKycApproved = kyc?.status === KYCStatuses.APPROVED
 
   const isClosed = React.useMemo(
     () => !!offer.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status),
@@ -235,6 +235,10 @@ const InvestmentCardContainer = styled.article`
   align-items: stretch;
   width: 380px;
   overflow: hidden;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 100%;
+  }
 `
 
 const InvestmentCardHeader = styled.header`
@@ -253,8 +257,9 @@ const InvestmentCardImage = styled.img`
   overflow-x: hidden;
   border-radius: 6px;
   height: 300px;
+
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    width: 365px;
+    width: 100%;
   }
 `
 
@@ -331,6 +336,10 @@ const InvestmentCardDetailsContainer = styled.div<{ show: boolean }>`
   ${(props) => props.show && `margin: 0.5rem -1.5rem;`}
   border-top: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   width: 380px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 100%;
+  }
 `
 const InvestmentCardDetailsEntry = styled.div`
   display: flex;

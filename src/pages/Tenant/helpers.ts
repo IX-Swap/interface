@@ -2,7 +2,7 @@
 import { routes } from 'utils/routes'
 import { PagesConfig, PagesGroup } from './types'
 
-const defaults = [routes.send, routes.faucet, routes.launchpad]
+const defaults = [routes.launchpad]
 
 export const pagesGroup: PagesGroup = {
   admin: [
@@ -18,7 +18,6 @@ export const pagesGroup: PagesGroup = {
     routes.tenantCreate,
   ],
   dex: [routes.swap, routes.pool, routes.find, routes.swapOutputCurrency, routes.addCurrency, routes.removeCurrency],
-  farming: [routes.staking, routes.vesting],
   kyc: [routes.kyc, routes.kycIndividual, routes.kycIndividualV2, routes.kycCorporate],
   lbp: [routes.publicDetails],
   offer: [routes.offerPage],
@@ -40,12 +39,16 @@ export const pagesGroup: PagesGroup = {
     routes.payoutItemManager(),
     routes.payoutItem(),
     routes.createPayoutEvent,
+    routes.createAirdropEvent,
     routes.manageTokens,
     routes.payoutHistory,
     routes.payoutEvent,
     routes.tokenManager('my-tokens', null),
     routes.tokenManager(),
   ],
+  charts: ['charts'],
+  bridge: ['bridge'],
+  staking: ['staking'],
   defaults,
 }
 
@@ -75,7 +78,6 @@ export function checkExistInPageGroup(pagesSource: string) {
   const pages = {
     dex: false,
     kyc: false,
-    farming: false,
     lbp: false,
     lbpAdmin: false,
     offer: false,
@@ -83,6 +85,9 @@ export function checkExistInPageGroup(pagesSource: string) {
     payout: false,
     securityTokens: false,
     admin: false,
+    charts: false,
+    bridge: false,
+    staking: false,
   }
 
   const pagesArray = JSON.parse(pagesSource)
@@ -90,11 +95,6 @@ export function checkExistInPageGroup(pagesSource: string) {
   if (isSubset(pagesArray, pagesGroup.dex)) {
     pages.dex = true
   }
-
-  if (isSubset(pagesArray, pagesGroup.farming)) {
-    pages.farming = true
-  }
-
   if (isSubset(pagesArray, pagesGroup.kyc)) {
     pages.kyc = true
   }
@@ -118,6 +118,15 @@ export function checkExistInPageGroup(pagesSource: string) {
   }
   if (isSubset(pagesArray, pagesGroup.admin)) {
     pages.admin = true
+  }
+  if (isSubset(pagesArray, pagesGroup.charts)) {
+    pages.charts = true
+  }
+  if (isSubset(pagesArray, pagesGroup.bridge)) {
+    pages.bridge = true
+  }
+  if (isSubset(pagesArray, pagesGroup.staking)) {
+    pages.staking = true
   }
 
   return pages
@@ -186,6 +195,9 @@ export const pages = {
   payout: false,
   securityTokens: false,
   admin: false,
+  charts: false,
+  bridge: false,
+  staking: false,
 }
 
 export function setFieldsValue(setFieldValue: any, data: any) {
@@ -228,7 +240,6 @@ export function setFieldsValue(setFieldValue: any, data: any) {
 export const PagesMapping = {
   admin: 'Admin Dashboard',
   dex: 'DEX',
-  farming: 'Farming',
   offer: 'Launchpad',
   lbp: 'LBP',
   issuance: 'Issuance Dashboard',
@@ -236,4 +247,7 @@ export const PagesMapping = {
   securityTokens: 'RWA',
   payout: 'Payout',
   lbpAdmin: 'LBP Dashboard',
+  charts: 'Charts',
+  bridge: 'Bridge',
+  staking: 'Staking',
 } as any

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import styled, { css } from 'styled-components'
@@ -6,6 +6,9 @@ import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 import _get from 'lodash/get'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useAccount, useSwitchChain } from 'wagmi'
+import { isMobile } from 'react-device-detect'
+
 import { useKYCState } from 'state/kyc/hooks'
 import { routes } from 'utils/routes'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -18,19 +21,21 @@ import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { useRole } from 'state/user/hooks'
-import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
-import { isMobile } from 'react-device-detect'
+import { ReactComponent as NewLogo } from 'assets/images/logo/logo-full-dark.svg'
 import BuyModal from 'components/LaunchpadOffer/InvestDialog/BuyModal'
 import { PinnedContentButton } from 'components/Button'
 import AdministrationMenu from './AdministrationMenu'
+import { DEFAULT_CHAIN_ID } from 'config'
+import { CHAINS } from 'components/Web3Provider/constants'
 
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
-  const { account } = useActiveWeb3React()
+  const { chainId, address: account } = useAccount()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
   const { isUser } = useRole()
   const { openConnectModal } = useConnectModal()
+  const { switchChain } = useSwitchChain()
 
   const [openPreviewModal, setPreviewModal] = useState(false)
 
@@ -50,6 +55,18 @@ export default function Header() {
   const closeModal = () => {
     setPreviewModal(false)
   }
+
+  useEffect(() => {
+    const lastAccount = localStorage.getItem('account')
+    const currentChainId: any = chainId ? chainId : ''
+    const supportedChains: any = CHAINS ? CHAINS.map((chain) => chain.id) : []
+    const defaultChainId = Number(DEFAULT_CHAIN_ID)
+
+    if (!lastAccount && account && chainId !== defaultChainId && supportedChains.includes(currentChainId)) {
+      localStorage.setItem('account', account)
+      switchChain({ chainId: defaultChainId })
+    }
+  }, [account, chainId])
 
   return (
     <>

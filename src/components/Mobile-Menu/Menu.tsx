@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useCallback, useEffect, useMemo } from 'react'
@@ -18,6 +17,7 @@ import { Line } from 'components/Line'
 import MenuMobile from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Fade from '@mui/material/Fade'
+import { CHAINS } from 'components/Web3Provider/constants'
 
 interface Props {
   close: () => void
@@ -56,7 +56,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
-  const chains = ENV_SUPPORTED_TGE_CHAINS || [137]
+  const chains = CHAINS.map((chain) => chain.id)
 
   const isAllowed = useCallback(
     (path: string): boolean => {
@@ -127,7 +127,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         </CloseContainer>
 
         <MenuList style={!cookies.annoucementsSeen ? { marginTop: 130 } : {}}>
-          {isIxSwap && isWhitelisted ? (
+          {isIxSwap && isAllowed('charts') && isWhitelisted ? (
             <>
               <ExternalListItem target="_self" href={'https://info.ixswap.io/home'}>
                 <Trans>Charts</Trans>
@@ -137,7 +137,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             </>
           ) : null}
 
-          {isIxSwap ? (
+          {isIxSwap && isAllowed('bridge') ? (
             <>
               <ExternalListItem target="_blank" href={bridgeUrl}>
                 <Trans>Bridge</Trans>
@@ -232,7 +232,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             <Line />
           </> */}
 
-          {isIxSwap ? (
+          {isIxSwap && isAllowed('staking') ? (
             <div>
               <div
                 style={{ fontSize: '20px', fontWeight: '700', marginTop: '20px', height: '40px' }}

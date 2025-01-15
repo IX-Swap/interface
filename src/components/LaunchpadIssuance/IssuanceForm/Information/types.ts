@@ -16,6 +16,7 @@ export enum OfferTokenType {
   MATIC = 'MATIC',
   USDC = 'USDC',
   USDT = 'USDT',
+  WUSDX = 'WUSDX',
 }
 
 export enum SocialMediaType {

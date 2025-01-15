@@ -4,7 +4,6 @@ import Portal from '@reach/portal'
 import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 
-import { useActiveWeb3React } from 'hooks/web3'
 import { Footer } from 'pages/Launchpad/Footer'
 import { OfferStatus } from 'state/launchpad/types'
 import { useCheckKYC, useGetOffer } from 'state/launchpad/hooks'
@@ -24,6 +23,11 @@ import Header from 'components/Header'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import WhiteLabelFooter from 'components/WhiteLabelFooter'
 import { checkWrongChain } from 'utils/chains'
+import { useAccount } from 'wagmi'
+import { CHAINS } from 'components/Web3Provider/constants'
+import { useAuthState } from 'state/auth/hooks'
+import { Flex } from 'rebass'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 interface OfferPageParams {
   offerId: string
@@ -33,11 +37,12 @@ export default function LaunchpadOffer() {
   const theme = useTheme()
   const history = useHistory()
   const params = useParams<OfferPageParams>()
-  const { chainId, account } = useActiveWeb3React()
+  const { chainId, address: account } = useAccount()
   const offer: any = useGetOffer(params.offerId)
   const hideHeader = useSetHideHeader()
   const checkKYC = useCheckKYC()
   const { config } = useWhitelabelState()
+  const { token } = useAuthState()
 
   const network = offer?.data?.network ?? ''
   const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
@@ -46,18 +51,25 @@ export default function LaunchpadOffer() {
 
   const isIxSwap = config?.isIxSwap ?? false
 
+  const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
+  // @ts-ignore
+  const shouldShowSignModal = !token && account && chains.includes(chainId)
+
   React.useEffect(() => {
     if (offer.data) {
       if (offer && offer.data && offer.data.ethAddress) {
         setIsAllowed(
           checkKYC(
             offer.data.allowOnlyAccredited,
-            [OfferStatus.closed, OfferStatus.claim].includes(offer.data.status)
+            [OfferStatus.closed, OfferStatus.claim].includes(offer?.data?.status)
           ) || account?.toLowerCase() === offer?.data?.ethAddress?.toLowerCase()
         )
       } else {
         setIsAllowed(
-          checkKYC(offer.data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(offer.data.status))
+          checkKYC(
+            offer.data.allowOnlyAccredited,
+            [OfferStatus.closed, OfferStatus.claim].includes(offer?.data?.status)
+          )
         )
       }
     }
@@ -87,7 +99,20 @@ export default function LaunchpadOffer() {
     )
   }
 
-  if (!isAllowed) {
+  if (!account) {
+    return (
+      <OfferBackgroundWrapper>
+        <header>
+          <Header />
+        </header>
+        <Flex justifyContent="center" width="100%" mt="8rem">
+          <ConnectWalletCard />
+        </Flex>
+      </OfferBackgroundWrapper>
+    )
+  }
+
+  if (!shouldShowSignModal && !isAllowed) {
     return (
       <Portal>
         <KYCPrompt
@@ -133,7 +158,7 @@ export default function LaunchpadOffer() {
       {isWrongChain ? (
         <Portal>
           <CenteredFixed width="100vw" height="100vh">
-            <NetworkNotAvailable expectChain={expectChain} />
+            <NetworkNotAvailable expectChainId={expectChain} />
           </CenteredFixed>
         </Portal>
       ) : null}

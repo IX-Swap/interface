@@ -38,7 +38,7 @@ import { isMobile } from 'react-device-detect'
 import { findChainName } from 'utils/chains'
 import { useTokenContract } from 'hooks/useContract'
 import useDecimals from 'hooks/useDecimals'
-import { AmountInputV2 } from './AmountInputV2'
+import { AmountInput } from './AmountInput'
 import { floorToDecimals } from 'utils/formatCurrencyAmount'
 
 interface Props {
@@ -114,7 +114,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
         createDraftWithdraw({
           tokenId: tokenInfo.id,
           fromAddress: receiver,
-          amount,
+          amount: amount ? amount.toString() : '0',
         })
 
         return
@@ -177,7 +177,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
               </span>
             </CurrentBalance>
           </Row>
-          <AmountInputV2
+          <AmountInput
             showMax
             balance={floorToDecimals(Number(tokenBalance), 3)}
             token={token}

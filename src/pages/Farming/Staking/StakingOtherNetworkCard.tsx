@@ -57,6 +57,24 @@ export const StakingOtherNetworkCard = () => {
         options: [],
         switchTitle: `other pools on ethereum`,
       },
+      [SupportedChainId.OZEAN_TESTNET]: {
+        icon: EthereumRound,
+        name: `ethereum`,
+        options: [],
+        switchTitle: `other pools on ethereum`,
+      },
+      [SupportedChainId.KAIA]: {
+        icon: EthereumRound,
+        name: `ethereum`,
+        options: [],
+        switchTitle: `other pools on ethereum`,
+      },
+      [SupportedChainId.KAIROS_TESTNET]: {
+        icon: EthereumRound,
+        name: `ethereum`,
+        options: [],
+        switchTitle: `other pools on ethereum`,
+      },
     }),
     []
   )

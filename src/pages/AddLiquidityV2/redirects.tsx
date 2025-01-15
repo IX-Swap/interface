@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import AddLiquidityV2 from './index'
 import styled from 'styled-components'
@@ -6,11 +6,11 @@ import styled from 'styled-components'
 import { useSetHideHeader } from 'state/application/hooks'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
-import { useActiveWeb3React } from 'hooks/web3'
-import { useTokens } from 'pages/Pool/useTokens'
 import Header from 'components/Header'
-import { NotAvailablePage } from 'components/NotAvailablePage'
-import { detectWrongNetwork } from 'utils'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import { DEFAULT_CHAIN_ID } from 'config'
+import { useAccount } from 'wagmi'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
 export const AddWhiteBGContainer = styled.div<{ background?: string }>`
   display: flex;
@@ -51,8 +51,7 @@ export const RedirectDuplicateTokenIdsV2: React.FC<
   RouteComponentProps<{ currencyIdA: string; currencyIdB: string }>
 > = (props) => {
   const hideHeader = useSetHideHeader()
-  const { chainId } = useActiveWeb3React()
-  const { account } = useTokens()
+  const { chainId } = useAccount()
 
   useEffect(() => {
     hideHeader(true)
@@ -72,13 +71,13 @@ export const RedirectDuplicateTokenIdsV2: React.FC<
     return <Redirect to={`/add/${currencyIdA}`} />
   }
 
-  const blurred = detectWrongNetwork(chainId)
+  const blurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
 
   if (blurred) {
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NotAvailablePage />
+          <NetworkNotAvailable expectChainId={Number(DEFAULT_CHAIN_ID)} />
         </CenteredFixed>
       </Portal>
     )

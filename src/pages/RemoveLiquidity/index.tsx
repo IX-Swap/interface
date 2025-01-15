@@ -43,8 +43,10 @@ import { useSetHideHeader } from 'state/application/hooks'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import Header from 'components/Header'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { DEFAULT_CHAIN_ID } from 'config'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
 const DEFAULT_REMOVE_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(5, 100)
 
@@ -335,7 +337,7 @@ export default function RemoveLiquidity({
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NotAvailablePage />
+          <NetworkNotAvailable expectChainId={Number(DEFAULT_CHAIN_ID)} />
         </CenteredFixed>
       </Portal>
     )
@@ -364,7 +366,7 @@ export default function RemoveLiquidity({
         <Header />
         {/* <AddLiduidityContainer> */}
         <Box>
-          <AppBody page="liquidity">
+          <AppBody page="liquidity" blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
             <AddRemoveTabs creating={false} adding={false} showBadge={mitigationEnabled} />
             <Box mb={'20px'}>
               <AutoColumn gap="md">
