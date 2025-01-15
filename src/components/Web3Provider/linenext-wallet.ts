@@ -8,10 +8,13 @@ import { CreateConnector, WalletDetailsParams } from '@rainbow-me/rainbowkit/dis
 import DappPortalSDK from '@linenext/dapp-portal-sdk'
 import { CreateConnectorFn, createConnector } from 'wagmi'
 import { kaia, kairos } from 'viem/chains'
-import { Address } from 'cluster'
 import { WalletEvent } from 'utils/event-logs'
 
 let sdkInstance: DappPortalSDK | null = null
+
+const LIFF_MODE = process.env.REACT_APP_LIFF_MODE
+
+const chainId = LIFF_MODE === 'mainnet' ? kaia.id : kairos.id
 
 /**
  * Initializes or retrieves the reusable SDK instance.
@@ -21,7 +24,7 @@ async function getSDKInstance(): Promise<DappPortalSDK> {
   if (!sdkInstance) {
     sdkInstance = await DappPortalSDK.init({
       clientId: 'bab621cd-1d1e-45ef-8b42-c2b0917c645a',
-      chainId: '1001',
+      chainId: chainId.toString(),
     })
     console.info('SDK Initialized', sdkInstance)
   }
@@ -113,7 +116,7 @@ export function lineNextConnector(walletDetails: any): CreateConnectorFn {
       }
 
       new WalletEvent('Line Liff connector').walletAddress(accounts[0]).info('Connected...')
-      return { accounts, chainId: kairos.id }
+      return { accounts, chainId }
     },
     disconnect: async () => {
       console.info('Disconnect is currently not supported for Linenext Wallet.')
@@ -136,12 +139,8 @@ export function lineNextConnector(walletDetails: any): CreateConnectorFn {
       return Number(chainId)
     },
     getProvider: async () => {
-      const sdkInstance = await DappPortalSDK.init({
-        clientId: 'bab621cd-1d1e-45ef-8b42-c2b0917c645a',
-        chainId: '1001',
-      })
       const sdk = await getSDKInstance()
-      return sdkInstance.getWalletProvider()
+      return sdk.getWalletProvider()
     },
     isAuthorized: async () => {
       const sdk = await getSDKInstance()
