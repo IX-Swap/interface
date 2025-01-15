@@ -48,7 +48,7 @@ export const PUBLIC_NODES = {
   [ChainId.BaseSepolia]: [getAlchemyUrlFor('base-sepolia')],
   [ChainId.OzeanTestnet]: ['https://ozean-testnet.rpc.caldera.xyz/http'],
   [ChainId.KairosTestnet]: ['https://public-en-kairos.node.kaia.io'],
-  [ChainId.Kaia]: ['https://public-en-kaia.node.kaia.io'],
+  [ChainId.Kaia]: ['https://public-en.node.kaia.io'],
 } as any
 
 export const transports = CHAINS.reduce((ts, chain) => {
