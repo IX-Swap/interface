@@ -28,6 +28,7 @@ import { EmailVerification } from './EmailVerifyModal'
 import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 import { detectWrongNetwork } from 'utils'
 import { useAccount } from 'wagmi'
+import { useLocalization } from 'i18n'
 
 interface DescriptionProps {
   description: string | null
@@ -98,6 +99,7 @@ const KYC = () => {
   const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false, referralCode: '' })
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
+  const { t } = useLocalization();
 
   const { me } = useUserState()
   const history = useHistory()
@@ -107,7 +109,7 @@ const KYC = () => {
 
   const infoText = (
     <p>
-      In order to make changes to your KYC please get in touch with us via{' '}
+      {t('kyc_paragraph1')}{' '}
       <a href={`mailto:${supportEmail}`} style={{ textDecoration: 'none', color: '#6666FF' }}>
         {supportEmail}
       </a>

@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
-import { LocalizationProvider } from '@material-ui/pickers'
+import { LocalizationProvider as MuiLocalizationProvider } from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import { PersistGate } from 'redux-persist/integration/react'
 import * as Sentry from '@sentry/react'
@@ -13,7 +13,7 @@ import { ToastContainer } from 'react-toastify'
 
 import { MuiThemeProvider } from './theme/muiTheme'
 import Blocklist from './components/Blocklist'
-import { LanguageProvider } from './i18n'
+import { LanguageProvider, LocalizationProvider } from './i18n'
 import App from './pages/App'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import store, { persistor } from './state'
@@ -90,24 +90,26 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <HashRouter>
-          <LanguageProvider>
-            <Web3Provider>
-              <Blocklist>
-                <Updaters />
-                <ThemeProvider>
-                  <ThemedGlobalStyle />
-                  <MuiThemeProvider>
-                    <LocalizationProvider dateAdapter={DayJsUtils}>
-                      <CookiesProvider>
-                        <App />
-                        <ToastContainer />
-                      </CookiesProvider>
-                    </LocalizationProvider>
-                  </MuiThemeProvider>
-                </ThemeProvider>
-              </Blocklist>
-            </Web3Provider>
-          </LanguageProvider>
+          <LocalizationProvider>
+            <LanguageProvider>
+              <Web3Provider>
+                <Blocklist>
+                  <Updaters />
+                  <ThemeProvider>
+                    <ThemedGlobalStyle />
+                    <MuiThemeProvider>
+                      <MuiLocalizationProvider dateAdapter={DayJsUtils}>
+                        <CookiesProvider>
+                          <App />
+                          <ToastContainer />
+                        </CookiesProvider>
+                      </MuiLocalizationProvider>
+                    </MuiThemeProvider>
+                  </ThemeProvider>
+                </Blocklist>
+              </Web3Provider>
+            </LanguageProvider>
+          </LocalizationProvider>
         </HashRouter>
       </PersistGate>
     </Provider>
