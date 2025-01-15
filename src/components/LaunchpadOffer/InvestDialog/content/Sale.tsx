@@ -24,8 +24,6 @@ import { text10, text11, text59 } from 'components/LaunchpadMisc/typography'
 import { useLaunchpadInvestmentContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
 import { useAllowance } from 'hooks/useApproveCallback'
-import { useCurrency } from 'hooks/Tokens'
-import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { IXSALE_ADDRESS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/shared/fields/IssuanceTooltip'
@@ -34,6 +32,8 @@ import { OfferStageStatus, getTokenSymbol } from 'components/LaunchpadOffer/Offe
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { WalletEvent, INVEST_FLOW_EVENTS } from 'utils/event-logs'
 import usePostbackJumpTask from 'hooks/usePostbackJumpTask'
+import { useLineReward } from 'providers/LineRewardProvider'
+import { INVEST_REWARD_PER_TOKEN, LineRewardAction } from 'constants/lineRewards'
 
 interface Props {
   offer: Offer
@@ -65,6 +65,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
   const invest = useInvest(id)
   const getInvestPublicSaleStructData = useInvestPublicSaleStructData(id)
   const { callPostbackEndpoint } = usePostbackJumpTask()
+  const { setRewardsData, setOpenTaskSuccessModal } = useLineReward()
 
   const [amount, setAmount] = useState<string>()
   const getPresaleProof = usePresaleProof(id)
@@ -192,16 +193,14 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
       if (launchpadContract) {
         let transaction
         if (status === OfferStatus.preSale) {
-          const { data: preSaleProof } = await getPresaleProof(amount)
-          .catch(e => {
+          const { data: preSaleProof } = await getPresaleProof(amount).catch((e) => {
             submitState.setError(e.message)
             return { data: null }
           })
           if (!preSaleProof) return
           transaction = await launchpadContract.investPreSale(contractSaleId, parsedAmount, preSaleProof)
         } else if (status === OfferStatus.sale) {
-          const { data: investStructData } = await getInvestPublicSaleStructData(amount, account)
-          .catch(e => {
+          const { data: investStructData } = await getInvestPublicSaleStructData(amount, account).catch((e) => {
             submitState.setError(e.message)
             return { data: null }
           })
@@ -218,6 +217,11 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
             await invest(status, {
               amount,
               txHash: receipt.transactionHash,
+            })
+            setOpenTaskSuccessModal(true)
+            setRewardsData({
+              points: INVEST_REWARD_PER_TOKEN * +amount,
+              action: LineRewardAction.INVEST,
             })
 
             new WalletEvent(INVEST_FLOW_EVENTS.INVEST(status))
@@ -389,7 +393,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
         )}
         {submitState.current === InvestSubmitState.error && (
           <Row justifyContent="space-between" alignItems="center" width="100%" padding="1rem">
-            <div style={{ flexGrow: 1, textAlign: 'left' }}>{submitState.errorMessage || 'Your order was not executed.'}</div>
+            <div style={{ flexGrow: 1, textAlign: 'left' }}>
+              {submitState.errorMessage || 'Your order was not executed.'}
+            </div>
             <Info size="18" color={theme.launchpad.colors.error} />
           </Row>
         )}

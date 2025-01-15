@@ -210,3 +210,9 @@ const queryParams: { [key: string]: string } = {
 export const sharedResourceLinks = {
   airdropCSVTemplateLink: 'https://drive.google.com/file/d/1dbmONi-QuKHYov9aUUXJ3AkvRsIW8dui/view',
 }
+
+export const linePoint = {
+  baseUrl: process.env.REACT_APP_LINE_REWARD_API_URL,
+  addPoint: `/add-points`,
+  checkClaimed: `/check-claimed`,
+}

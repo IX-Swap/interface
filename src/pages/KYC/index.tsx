@@ -1,4 +1,4 @@
-import React, { useCallback, FC, useEffect, useState, useMemo } from 'react'
+import React, { useCallback, FC, useState, useMemo, useEffect } from 'react'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex, Text } from 'rebass'
@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
 import _get from 'lodash/get'
+import { useQuery } from '@tanstack/react-query'
 import { useWeb3React } from 'hooks/useWeb3React'
 
 import { TYPE } from 'theme'
@@ -26,8 +27,12 @@ import Copy from 'components/AccountDetails/Copy'
 import { useUserState } from 'state/user/hooks'
 import { EmailVerification } from './EmailVerifyModal'
 import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
-import { detectWrongNetwork } from 'utils'
+import { detectWrongNetwork, isLineLiff } from 'utils'
 import { useAccount } from 'wagmi'
+import { KYC_REWARD, LineRewardAction } from 'constants/lineRewards'
+import { apiService as lineRewardApiService } from 'hooks/useLineReward'
+import { linePoint } from 'services/apiUrls'
+import { useLineReward } from 'providers/LineRewardProvider'
 
 interface DescriptionProps {
   description: string | null
@@ -98,6 +103,38 @@ const KYC = () => {
   const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false, referralCode: '' })
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
+
+  const { setOpenTaskSuccessModal, setRewardsData } = useLineReward()
+  const validateClaimRewards = useQuery({
+    queryKey: ['validateKycRewards', account, status],
+    enabled: status === KYCStatuses.APPROVED && !!account && isLineLiff,
+    queryFn: async () => {
+      const { data } = await lineRewardApiService.get(linePoint.checkClaimed, {
+        params: {
+          address: account,
+          action: LineRewardAction.KYC,
+          date: new Date().getTime(),
+        },
+      })
+      return data
+    },
+    staleTime: Infinity,
+  })
+  useEffect(() => {
+    if (
+      !account ||
+      !validateClaimRewards.isFetched ||
+      validateClaimRewards.data?.claimed ||
+      status !== KYCStatuses.APPROVED
+    )
+      return
+
+    setOpenTaskSuccessModal(true)
+    setRewardsData({
+      action: LineRewardAction.KYC,
+      points: KYC_REWARD,
+    })
+  }, [account, validateClaimRewards.isFetched, validateClaimRewards.data?.claimed, status])
 
   const { me } = useUserState()
   const history = useHistory()

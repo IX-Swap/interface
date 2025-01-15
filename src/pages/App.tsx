@@ -50,6 +50,8 @@ const Launchpad = lazy(() => import('pages/Launchpad'))
 import KYC from 'pages/KYC'
 import { isLineLiff } from 'utils'
 import { useLiff } from './LiffProvider'
+import TaskSuccessModal from 'components/Rewards/TaskSuccessModal'
+import { useLineReward } from 'providers/LineRewardProvider'
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -80,6 +82,7 @@ export default function App() {
   const hideHeader = useHideHeader()
   const { kyc } = useKYCState()
   const { isConnected, walletName } = useWalletState()
+  const { openTaskSuccessModal, setOpenTaskSuccessModal } = useLineReward()
   const { authenticate } = useAccount()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const query = useQuery()
@@ -302,6 +305,8 @@ export default function App() {
           </CenteredFixed>
         </Portal>
       ) : null}
+
+      {openTaskSuccessModal && <TaskSuccessModal show={openTaskSuccessModal} onClose={() => setOpenTaskSuccessModal(false)} />}
     </>
   )
 }

@@ -16,7 +16,7 @@ import { Column, Row, Separator } from '../../LaunchpadMisc/styled'
 import { InvestDialog } from '../InvestDialog'
 import PlainCopy from 'components/PlainCopy/PlainCopy'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
-import { shortenAddress } from 'utils'
+import { isLineLiff, shortenAddress } from 'utils'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { getChainFromName } from 'constants/chains'
 import { ExternalLink, MEDIA_WIDTHS } from 'theme'
@@ -174,7 +174,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
           ) : null}
         </InvestButtonContainer>
 
-        {showSuccess && <InvestSuccessModal show={showSuccess} onClose={() => setShowSuccess(false)} />}
+        {showSuccess && !isLineLiff && <InvestSuccessModal show={showSuccess} onClose={() => setShowSuccess(false)} />}
         {showFailed && <InvestFailedModal show={showFailed} onClose={() => setShowFailed(false)} />}
         {showInvestDialog && (
           <InvestDialog

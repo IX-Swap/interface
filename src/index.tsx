@@ -32,6 +32,7 @@ import 'react-phone-input-2/lib/bootstrap.css'
 import './index.css'
 import { LiffProvider } from 'pages/LiffProvider'
 import eruda from 'eruda'
+import { LineRewardProvider } from 'providers/LineRewardProvider'
 
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
@@ -102,12 +103,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   <ThemedGlobalStyle />
                   <MuiThemeProvider>
                     <LiffProvider>
-                      <LocalizationProvider dateAdapter={DayJsUtils}>
-                        <CookiesProvider>
-                          <App />
-                          <ToastContainer />
-                        </CookiesProvider>
-                      </LocalizationProvider>
+                      <LineRewardProvider>
+                        <LocalizationProvider dateAdapter={DayJsUtils}>
+                          <CookiesProvider>
+                            <App />
+                            <ToastContainer />
+                          </CookiesProvider>
+                        </LocalizationProvider>
+                      </LineRewardProvider>
                     </LiffProvider>
                   </MuiThemeProvider>
                 </ThemeProvider>

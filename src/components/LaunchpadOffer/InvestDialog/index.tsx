@@ -10,11 +10,8 @@ import { InvestedDataRes, Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestDialogSidebar } from './Sidebar'
 import { text26 } from 'components/LaunchpadMisc/typography'
 import useInterval from 'hooks/useInterval'
-import { Centered } from 'components/LaunchpadMisc/styled'
-import { useTokenLoading } from 'hooks/Tokens'
-import { Loader } from '../util/Loader'
 import { isMobile } from 'react-device-detect'
-import { MEDIA_WIDTHS, ModalPadding } from 'theme'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   offer: Offer
@@ -65,7 +62,6 @@ export const InvestDialog: React.FC<Props> = (props) => {
   useInterval(updateCallback, 30 * 1000)
   const labelToShow = allLabels.find((label) => label.value === props.offer.status)?.label
 
-  console.log(props.offer.status, 'kklklk')
   return (
     <>
       <ModalContainer>
@@ -76,14 +72,23 @@ export const InvestDialog: React.FC<Props> = (props) => {
               <DialogHeader>
                 {isMobile ? (
                   <>
-                    <DialogHeaderExit style={{position: 'absolute', right: '10px', top: '24px'}} onClick={props.onClose}>
+                    <DialogHeaderExit
+                      style={{ position: 'absolute', right: '10px', top: '24px' }}
+                      onClick={props.onClose}
+                    >
                       <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
                     </DialogHeaderExit>
                     <DialogHeaderTitle style={{ marginBottom: '20px' }}>
                       <DialogHeaderTitle> Dashboard</DialogHeaderTitle>
 
                       <div
-                        style={{ margin: '10px', border: '1px solid #E6E6FF', padding: '3px 20px', borderRadius: '8px', width: 'fit-content' }}
+                        style={{
+                          margin: '10px',
+                          border: '1px solid #E6E6FF',
+                          padding: '3px 20px',
+                          borderRadius: '8px',
+                          width: 'fit-content',
+                        }}
                       >
                         {labelToShow || props.offer.status}
                       </div>
