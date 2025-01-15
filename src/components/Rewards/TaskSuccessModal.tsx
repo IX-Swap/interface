@@ -12,6 +12,7 @@ import { Box, Stack } from '@mui/material'
 import { Slide, toast } from 'react-toastify'
 import { useLineReward } from 'providers/LineRewardProvider'
 import { useWeb3React } from 'hooks/useWeb3React'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 
 interface Props {
   show: boolean
@@ -34,7 +35,7 @@ const TaskSuccessModal = ({ show, onClose }: Props) => {
 
     onClose()
 
-    toast.success("A new token has been successfully added.", {
+    toast.success("You have successfully claimed the point reward.", {
       transition: Slide,
     })
   }
@@ -51,7 +52,7 @@ const TaskSuccessModal = ({ show, onClose }: Props) => {
           </OuterCircle>
           <Title>Task Completed</Title>
           <Box style={{ textAlign: 'center' }}>
-            <TYPE.black color='text6'>You&apos;ve erned <strong>{rewardsData.points} IXSurge</strong>.</TYPE.black>
+            <TYPE.black color='text6'>You&apos;ve erned <strong>{formatAmount(rewardsData.points)} IXSurge</strong>.</TYPE.black>
             <TYPE.black color='text6'>Keep going to unlock more rewards!</TYPE.black>
           </Box>
           <FilledButton disabled={mutatePoint.isPending} onClick={handleClaimRewards} style={{ zIndex: 30, width: '100%' }}>

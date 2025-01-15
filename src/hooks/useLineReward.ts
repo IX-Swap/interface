@@ -15,7 +15,7 @@ export const apiService = axios.create({
 function useLineReward() {
   const [openTaskSuccessModal, setOpenTaskSuccessModal] = useState(false)
   const [rewardsData, setRewardsData] = useState<{
-    points?: number
+    points: number
     action?: LineRewardAction
   }>({
     points: 0,

@@ -214,5 +214,5 @@ export const sharedResourceLinks = {
 export const linePoint = {
   baseUrl: process.env.REACT_APP_LINE_REWARD_API_URL,
   addPoint: `/add-points`,
-  checkClaimed: `/checkClaimed`,
+  checkClaimed: `/check-claimed`,
 }
