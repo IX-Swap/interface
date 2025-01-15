@@ -12,7 +12,7 @@ import walletValidator from 'multicoin-address-validator'
 import { NETWORK_ADDRESS_PATTERNS } from 'state/wallet/constants'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import usdcIcon from 'assets/images/usdcNew.svg'
-import ixsIcon from 'assets/images/ixsToken.svg'
+import ixsIcon from 'assets/images/logo/IXS-Token.png'
 import usdIcon from 'assets/images/usdtNewToken.svg'
 
 export const getTokenIcon = (symbol: string) => {
