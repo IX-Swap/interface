@@ -27,6 +27,7 @@ import { PinnedContentButton } from 'components/Button'
 import AdministrationMenu from './AdministrationMenu'
 import { DEFAULT_CHAIN_ID } from 'config'
 import { CHAINS } from 'components/Web3Provider/constants'
+import { isLineLiff } from 'utils'
 
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -72,7 +73,7 @@ export default function Header() {
     <>
       {isMobile ? (
         <HeaderWrapper>
-          {!cookies.annoucementsSeen && <Announcement />}
+          {!cookies.annoucementsSeen && !isLineLiff ? <Announcement /> : null}
           <HeaderFrame>
             <HeaderRow>
               <Title to={routes.defaultRoute}>
@@ -111,7 +112,7 @@ export default function Header() {
         </HeaderWrapper>
       ) : (
         <HeaderWrapper>
-          {!cookies.annoucementsSeen && <Announcement />}
+          {!cookies.annoucementsSeen && !isLineLiff ? <Announcement /> : null}
           <HeaderFrameDesktop>
             <Flex alignItems="center" width={'100%'}>
               <HeaderRow>
@@ -142,7 +143,7 @@ export default function Header() {
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
 
-                {!account && openConnectModal ? (
+                {!account && openConnectModal && !isLineLiff ? (
                   <PinnedContentButton
                     style={{ boxShadow: '0px 16px 16px 0px #6666FF21', minWidth: 200 }}
                     onClick={openConnectModal}

@@ -1,10 +1,11 @@
+/* eslint-disable react/no-deprecated */
 import { CookiesProvider } from 'react-cookie'
 import React, { StrictMode } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactDOM from 'react-dom/client'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { LocalizationProvider } from '@material-ui/pickers'
 import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -29,6 +30,8 @@ import Web3Provider from 'components/Web3Provider'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-phone-input-2/lib/bootstrap.css'
 import './index.css'
+import { LiffProvider } from 'pages/LiffProvider'
+import eruda from 'eruda'
 
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
@@ -53,6 +56,7 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
 } else {
   ReactGA.initialize('test', { testMode: true, debug: true })
 }
+eruda.init()
 
 function Updaters() {
   return (
@@ -89,7 +93,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <HashRouter>
+        <BrowserRouter>
           <LanguageProvider>
             <Web3Provider>
               <Blocklist>
@@ -97,18 +101,20 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <ThemeProvider>
                   <ThemedGlobalStyle />
                   <MuiThemeProvider>
-                    <LocalizationProvider dateAdapter={DayJsUtils}>
-                      <CookiesProvider>
-                        <App />
-                        <ToastContainer />
-                      </CookiesProvider>
-                    </LocalizationProvider>
+                    <LiffProvider>
+                      <LocalizationProvider dateAdapter={DayJsUtils}>
+                        <CookiesProvider>
+                          <App />
+                          <ToastContainer />
+                        </CookiesProvider>
+                      </LocalizationProvider>
+                    </LiffProvider>
                   </MuiThemeProvider>
                 </ThemeProvider>
               </Blocklist>
             </Web3Provider>
           </LanguageProvider>
-        </HashRouter>
+        </BrowserRouter>
       </PersistGate>
     </Provider>
   </StrictMode>

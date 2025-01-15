@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { Redirect, RouteComponentProps, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { useDispatch } from 'react-redux'
@@ -46,6 +46,10 @@ import SignMessageModal from 'components/SignMessageModal'
 import useQuery from 'hooks/useQuery'
 import { setJumpTaskState } from 'state/jumpTask'
 import { CHAINS } from 'components/Web3Provider/constants'
+const Launchpad = lazy(() => import('pages/Launchpad'))
+import KYC from 'pages/KYC'
+import { isLineLiff } from 'utils'
+import { useLiff } from './LiffProvider'
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -79,6 +83,8 @@ export default function App() {
   const { authenticate } = useAccount()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const query = useQuery()
+
+  const { isLiffBrowser } = useLiff()
 
   const [countryCode, setCountryCode] = useState()
 
@@ -145,6 +151,7 @@ export default function App() {
   }, [kyc, account, chainId, isWhitelisted, chains])
 
   const isAdminKyc = pathname.includes('admin')
+
   const isWhiteBackground =
     pathname === routes.launchpad ||
     pathname === routes.payoutHistory ||
@@ -176,7 +183,7 @@ export default function App() {
         roleGuard,
       ]
 
-      if (guards.some((guard) => guard === true)) {
+      if (!isLineLiff && guards.some((guard) => guard === true)) {
         if (roleGuard) {
           return (
             <Route
@@ -203,7 +210,7 @@ export default function App() {
     if (token) {
       getMe()
     }
-  }, [token, getMe])
+  }, [token])
 
   useEffect(() => {
     clearLocaleStorage()
@@ -238,6 +245,12 @@ export default function App() {
     }
   }, [transactionId, affUnique1])
 
+  useEffect(() => {
+    if (isLineLiff && !token && account && chains.includes(chainId)) {
+      authenticate()
+    }
+  }, [token, account, chainId])
+
   if (!config) {
     return <LoadingIndicator isLoading />
   }
@@ -245,9 +258,7 @@ export default function App() {
   return (
     <>
       <CustomHeaders />
-      {/* {isMobile && !window.ethereum && <ConnectWalletModal />} */}
       {countryCode && blockedCountries.includes(countryCode) && <RestrictedModal />}
-
       <ErrorBoundary>
         <Route component={GoogleAnalyticsReporter} />
         <Route component={DarkModeQueryParamReader} />
@@ -272,7 +283,11 @@ export default function App() {
               <Switch>
                 {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
 
-                <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
+                {isLineLiff ? (
+                  <Route path="*" component={() => <Launchpad />} />
+                ) : (
+                  <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
+                )}
               </Switch>
             </Suspense>
           </ToggleableBody>
@@ -280,7 +295,7 @@ export default function App() {
         </AppWrapper>
       </ErrorBoundary>
 
-      {!token && account && chains.includes(chainId) ? (
+      {!isLineLiff && !token && account && chains.includes(chainId) ? (
         <Portal>
           <CenteredFixed width="100vw" height="100vh">
             <SignMessageModal authenticate={authenticate} />

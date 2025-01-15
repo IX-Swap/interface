@@ -9,6 +9,7 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { ReactComponent as LPBackground } from 'assets/images/LPBackground.svg'
 import { ReactComponent as LaunchpadHeader } from 'assets/images/lauchpadHeader.svg'
 import apiService from 'services/apiService'
+import { isLineLiff } from 'utils'
 
 export const Banner = () => {
   const { config } = useWhitelabelState()
@@ -54,7 +55,7 @@ export const Banner = () => {
         )}
 
         <TotalRaisedWrap>
-          {isIxswap ? (
+          {isIxswap && !isLineLiff ? (
             <div>
               <TotalRaisedLabel>Total Raised</TotalRaisedLabel>
               <TotalRaisedValue>${totalRaised.toLocaleString('en-US')}</TotalRaisedValue>
@@ -65,7 +66,9 @@ export const Banner = () => {
             <BannerInfoRedirectImage src={LearnMoreIcon} />
             <BannerInfoRedirectLabel>
               <BannerInfoRedirectTitle>{launchpadBannerInfoRedirectTitle}</BannerInfoRedirectTitle>
-              <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl} target='_blank'>Learn more</BannerInfoRedirectSubtitle>
+              <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl} target="_blank">
+                Learn more
+              </BannerInfoRedirectSubtitle>
             </BannerInfoRedirectLabel>
           </BannerInfoRedirect>
         </TotalRaisedWrap>

@@ -183,3 +183,6 @@ export function tryClearIndexedDB() {
     localStorage.setItem('deletedIndexDB', 'true')
   }
 }
+
+export const isLineLiff =
+  window.location.hostname.includes('line-liff.ixswap.io') || window.location.hostname.includes('localhost')

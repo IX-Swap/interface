@@ -31,16 +31,23 @@ export const useFetchAccessToken = () => {
       if (!data.hash) {
         throw new Error(ERROR_MESSAGES.noHashReceived)
       }
-      const result = await signMessage({ hash: data.hash, account })
-      if (!result) {
-        throw new Error(ERROR_MESSAGES.loginSignFailed)
+      var result: string | null = ''
+      try {
+        result = await signMessage({ hash: data.hash, account })
+      } catch (err) {
+        console.error('error', err)
       }
-      const loginData = await login({ hash: result, account })
+      var hash = result
+      const loginData = await login({
+        hash: hash as any,
+        account,
+      })
       if (!loginData || !loginData.data) {
         throw new Error(ERROR_MESSAGES.noLoginData)
       }
       return loginData.data
     } catch (error) {
+      console.error('ERRRO', error)
       // Logging the error or handling it more specifically might be necessary
       throw error
     }

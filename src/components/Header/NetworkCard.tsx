@@ -2,6 +2,7 @@ import React, { useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
 import { useAccount, useSwitchChain } from 'wagmi'
+import { isMobile } from 'react-device-detect'
 
 import { CHAIN_INFO, NETWORK_LABELS } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
@@ -51,16 +52,22 @@ export const NetworkCard = () => {
                 {isCorrectNetwork ? (
                   <>
                     {info ? <Logo src={info.logoUrl} /> : null}
-                    <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
-                      {activeChainName}
-                    </NetworkCardWrapper>
+
+                    {!isMobile ? (
+                      <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
+                        {activeChainName}
+                      </NetworkCardWrapper>
+                    ) : null}
                   </>
                 ) : (
                   <>
                     <Logo src={wrongNetworkImg} />
-                    <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
-                      Wrong Network
-                    </NetworkCardWrapper>
+
+                    {!isMobile ? (
+                      <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
+                        Wrong Network
+                      </NetworkCardWrapper>
+                    ) : null}
                   </>
                 )}
               </Flex>

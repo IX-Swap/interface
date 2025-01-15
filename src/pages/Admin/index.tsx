@@ -62,7 +62,7 @@ const Admin = () => {
     } else {
       history.push('/')
     }
-  }, [getMe, history])
+  }, [])
 
   const changeTab = useCallback(
     (tab: AdminTab) => {

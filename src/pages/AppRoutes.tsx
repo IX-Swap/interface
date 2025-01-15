@@ -21,20 +21,18 @@ import { KycReviewModal } from 'components/KycReviewModal'
 import LBPForm from './LBP/LbpForm'
 import LbpDashboardPage from './LBP/Dashboard'
 import AdminLbpDetail from './LBP/AdminLbpDetail'
+import LaunchpadOffer from 'pages/LaunchpadOffer'
+import KYC from 'pages/KYC'
+import IndividualKYC from 'pages/KYC/IndividualKycForm'
+import CorporateKYC from 'pages/KYC/CorporateKycForm'
+import IndividualKYCV2 from 'pages/KYC/IndividualKycFormV2'
 
 const Admin = lazy(() => import('pages/Admin'))
 const Swap = lazy(() => import('pages/Swap'))
 const PoolV2 = lazy(() => import('pages/Pool/v2'))
 const RemoveLiquidity = lazy(() => import('pages/RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('pages/SecTokenDetails'))
-
-const KYC = lazy(() => import('pages/KYC'))
-const IndividualKYC = lazy(() => import('pages/KYC/IndividualKycForm'))
-const IndividualKYCV2 = lazy(() => import('pages/KYC/IndividualKycFormV2'))
-const CorporateKYC = lazy(() => import('pages/KYC/CorporateKycForm'))
-
 const SecurityTokens = lazy(() => import('pages/SecurityTokens'))
-
 const ListNFT = lazy(() => import('pages/ListNFT'))
 const CreateNFT = lazy(() => import('pages/CreateNFT'))
 const NftImport = lazy(() => import('pages/NftImport'))
@@ -49,10 +47,7 @@ const CreateAirdropEvent = lazy(() => import('pages/CreateAirdropPayoutEvent'))
 const EditPayoutEvent = lazy(() => import('pages/CreatePayoutEvent/EditPayoutEvent'))
 const PayoutItem = lazy(() => import('pages/PayoutItem'))
 const PayoutItemManager = lazy(() => import('pages/PayoutItem/PayoutItemManager'))
-
 const Launchpad = lazy(() => import('pages/Launchpad'))
-const LaunchpadOffer = lazy(() => import('pages/LaunchpadOffer'))
-
 const LaunchpadIssuanceDashboard = lazy(() => import('pages/LaunchpadIssuance/Dashboard'))
 const LaunchpadIssuanceForm = lazy(() => import('pages/LaunchpadIssuance/Form'))
 const LaunchpadIssuanceVettingForm = lazy(() => import('pages/LaunchpadIssuance/VettingForm'))

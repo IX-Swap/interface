@@ -522,9 +522,10 @@ export function useAccount() {
     }
   }, [loginError, dispatch])
 
-  const authenticate = useCallback(async () => {
+  const authenticate = async () => {
     try {
       dispatch(setWalletState({ isSignLoading: true }))
+      console.info('AUTHENITCAITN')
       const status = await login(true)
       if (status == LOGIN_STATUS.SUCCESS && isLoggedIn) {
         getUserSecTokens()
@@ -534,7 +535,7 @@ export function useAccount() {
     } finally {
       dispatch(setWalletState({ isSignLoading: false }))
     }
-  }, [login, getUserSecTokens, isLoggedIn])
+  }
 
   useEffect(() => {
     const timerFunc = setTimeout(checkAuthError, 20000)
