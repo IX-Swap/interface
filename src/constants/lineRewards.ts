@@ -1,7 +1,7 @@
 
 export const DAILY_REWARD = 100
 
-export const JOIN_CAMPAIGN_REWARD = 100
+export const JOIN_CAMPAIGN_REWARD = 1_000
 
 export const KYC_REWARD = 1_000
 
