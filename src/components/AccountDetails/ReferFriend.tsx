@@ -14,7 +14,7 @@ const ReferFriend: React.FC<ReferFriendProps> = ({ referralCode }) => {
       <BoxContainer>
         <ReferCode>{referralCode}</ReferCode>
 
-        <Copy toCopy={`${window.location.origin}/#/kyc?referralCode=${referralCode}`} />
+        <Copy toCopy={`${window.location.origin}/kyc?referralCode=${referralCode}`} />
       </BoxContainer>
     </div>
   )
