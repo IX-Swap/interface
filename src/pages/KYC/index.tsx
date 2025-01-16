@@ -33,6 +33,7 @@ import { KYC_REWARD, LineRewardAction } from 'constants/lineRewards'
 import { apiService as lineRewardApiService } from 'hooks/useLineReward'
 import { linePoint } from 'services/apiUrls'
 import { useLineReward } from 'providers/LineRewardProvider'
+import { useQueryParams } from 'hooks/useParams'
 
 interface DescriptionProps {
   description: string | null
@@ -95,6 +96,7 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 const KYC = () => {
+  const { objectParams } = useQueryParams<{ referralCode: string }>(['referralCode'])
   const { account } = useWeb3React()
   const { chainId } = useAccount()
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -161,9 +163,7 @@ const KYC = () => {
     setModalProps({
       isModalOpen: true,
       kycType,
-      referralCode: new URL(window.location.href).href?.split('=')[1]
-        ? `/kyc/${kycType}?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
-        : `/kyc/${kycType}`,
+      referralCode: objectParams?.referralCode ? `/kyc/${kycType}?referralCode=${objectParams?.referralCode}` : `/kyc/${kycType}`,
       // Add more props as needed
     })
   }
