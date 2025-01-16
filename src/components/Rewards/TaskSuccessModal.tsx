@@ -26,7 +26,7 @@ const TaskSuccessModal = ({ show, onClose }: Props) => {
 
   const handleClaimRewards = async () => {
     if (!account || !rewardsData.points || !rewardsData.action) return
-    
+
     await mutatePoint.mutateAsync({
       account,
       points: rewardsData.points,
@@ -35,7 +35,7 @@ const TaskSuccessModal = ({ show, onClose }: Props) => {
 
     onClose()
 
-    toast.success("You have successfully claimed the point reward.", {
+    toast.success('You have successfully claimed the point reward.', {
       transition: Slide,
     })
   }
@@ -44,7 +44,7 @@ const TaskSuccessModal = ({ show, onClose }: Props) => {
     <IssuanceDialog show={show} onClose={onClose} padding="0" width="475px">
       <Wrapper>
         <LeftConfettiSvg className="left" />
-        <Stack direction='column' alignItems='center' gap={4} p={2}>
+        <Stack direction="column" alignItems="center" gap={4} p={2}>
           <OuterCircle>
             <InnerCircle>
               <Check color={theme.launchpad.colors.primary} size="20" />
@@ -52,10 +52,16 @@ const TaskSuccessModal = ({ show, onClose }: Props) => {
           </OuterCircle>
           <Title>Task Completed</Title>
           <Box style={{ textAlign: 'center' }}>
-            <TYPE.black color='text6'>You&apos;ve erned <strong>{formatAmount(rewardsData.points)} IXSurge</strong>.</TYPE.black>
-            <TYPE.black color='text6'>Keep going to unlock more rewards!</TYPE.black>
+            <TYPE.black color="text6">
+              You&apos;ve erned <strong>{formatAmount(rewardsData.points)} IXSurge</strong>.
+            </TYPE.black>
+            <TYPE.black color="text6">Keep going to unlock more rewards!</TYPE.black>
           </Box>
-          <FilledButton disabled={mutatePoint.isPending} onClick={handleClaimRewards} style={{ zIndex: 30, width: '100%' }}>
+          <FilledButton
+            disabled={mutatePoint.isPending}
+            onClick={handleClaimRewards}
+            style={{ zIndex: 30, width: '100%' }}
+          >
             <BtnLabel>Get IXSurge</BtnLabel>
           </FilledButton>
         </Stack>
