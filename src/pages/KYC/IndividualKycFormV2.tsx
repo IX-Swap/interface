@@ -30,6 +30,7 @@ import { EmailType, SecondaryContactTypeV2, SuccessType } from './enum'
 import SecondaryContactOption from './SecondaryContactOption'
 import CountriesBlockAlert from './CountriesBlockAlert'
 import useQuery from 'hooks/useQuery'
+import { isValidReferralCode } from 'utils'
 
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -172,6 +173,11 @@ export default function IndividualKycFormV2() {
   useEffect(() => {
     console.log('APP URL', window.location.href)
     const code = query.get('referralCode')
+
+    if (!code || !isValidReferralCode(code)) {
+      return
+    }
+
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
       setReferralCode(code)
