@@ -254,6 +254,17 @@ export default function App() {
     }
   }, [token, account, chainId])
 
+  useEffect(() => {
+    const code = query.get('referralCode')
+    if (!code) {
+      return
+    }
+    const storedReferralCode = localStorage.getItem('referralCode')
+    if (!storedReferralCode) {
+      localStorage.setItem('referralCode', code)
+    }
+  }, [])
+
   if (!config) {
     return <LoadingIndicator isLoading />
   }
@@ -306,7 +317,9 @@ export default function App() {
         </Portal>
       ) : null}
 
-      {openTaskSuccessModal && <TaskSuccessModal show={openTaskSuccessModal} onClose={() => setOpenTaskSuccessModal(false)} />}
+      {openTaskSuccessModal && (
+        <TaskSuccessModal show={openTaskSuccessModal} onClose={() => setOpenTaskSuccessModal(false)} />
+      )}
     </>
   )
 }
