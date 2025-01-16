@@ -8,6 +8,7 @@ import { MyKyc } from 'state/kyc/actions'
 import { ReactComponent as Edit } from '../../assets/images/edit.svg'
 import { ReactComponent as DefaultAvatar } from '../../assets/images/default-avatar.svg'
 import styled from 'styled-components'
+import { useQueryParams } from 'hooks/useParams'
 
 interface ModalProps {
   isModalOpen: boolean
@@ -21,6 +22,7 @@ interface AvatarProps {
 }
 
 const Avatar: React.FC<AvatarProps> = ({ kyc, toggleWalletModal }) => {
+  const { objectParams } = useQueryParams<{ referralCode: string }>(['referralCode'])
   const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false, referralCode: '' })
 
   const closeModal = () => {
@@ -30,8 +32,8 @@ const Avatar: React.FC<AvatarProps> = ({ kyc, toggleWalletModal }) => {
     setModalProps({
       isModalOpen: true,
       kycType,
-      referralCode: new URL(window.location.href).href?.split('=')[1]
-        ? `/kyc/${kycType}?referralCode=${new URL(window.location.href).href?.split('=')[1]}`
+      referralCode: objectParams?.referralCode
+        ? `/kyc/${kycType}?referralCode=${objectParams?.referralCode}`
         : `/kyc/${kycType}`,
     })
   }

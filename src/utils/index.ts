@@ -186,3 +186,9 @@ export function tryClearIndexedDB() {
 
 export const isLineLiff =
   window.location.hostname.includes('line-liff.ixswap.io') || window.location.hostname.includes('localhost')
+
+export const isValidReferralCode = (code: string) => {
+  // Define the regex pattern for 6 characters, only alphabets and digits
+  const pattern = /^[A-Za-z0-9]{6}$/
+  return pattern.test(code)
+}

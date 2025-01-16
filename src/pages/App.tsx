@@ -48,7 +48,7 @@ import { setJumpTaskState } from 'state/jumpTask'
 import { CHAINS } from 'components/Web3Provider/constants'
 const Launchpad = lazy(() => import('pages/Launchpad'))
 import KYC from 'pages/KYC'
-import { isLineLiff } from 'utils'
+import { isLineLiff, isValidReferralCode } from 'utils'
 import { useLiff } from './LiffProvider'
 import TaskSuccessModal from 'components/Rewards/TaskSuccessModal'
 import { useLineReward } from 'providers/LineRewardProvider'
@@ -259,6 +259,11 @@ export default function App() {
     if (!code) {
       return
     }
+
+    if (!isValidReferralCode(code)) {
+      return
+    }
+
     const storedReferralCode = localStorage.getItem('referralCode')
     if (!storedReferralCode) {
       localStorage.setItem('referralCode', code)
