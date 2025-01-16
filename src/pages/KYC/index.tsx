@@ -1,4 +1,4 @@
-import React, { useCallback, FC, useEffect, useState, useMemo } from 'react'
+import React, { useCallback, FC, useState, useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex, Text } from 'rebass'
@@ -109,7 +109,7 @@ const KYC = () => {
 
   const infoText = (
     <p>
-      {t('kyc_paragraph1')}{' '}
+      {t('kyc.section1Title')}{' '}
       <a href={`mailto:${supportEmail}`} style={{ textDecoration: 'none', color: '#6666FF' }}>
         {supportEmail}
       </a>
@@ -330,7 +330,7 @@ const KYC = () => {
               alignItems="center"
             >
               <TYPE.description6 fontWeight={'800'} marginTop={'30px'} marginBottom="15px">
-                <Trans>{config?.name || 'IX Swap'} KYC</Trans>
+                <Trans>{config?.name || 'IX Swap'} KYC   {t('kyc.section1Title')}</Trans>
               </TYPE.description6>
               <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />
               {referralCode && (

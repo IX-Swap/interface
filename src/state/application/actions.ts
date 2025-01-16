@@ -35,6 +35,7 @@ export enum ApplicationModal {
   UNSTAKE_IXS,
   IXS_BALANCE,
   NETWORK_SELECTOR,
+  LOCALE_SELECTOR,
   GENERAL,
   PROPERTIES,
   LEVELS,

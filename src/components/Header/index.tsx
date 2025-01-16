@@ -27,6 +27,7 @@ import { PinnedContentButton } from 'components/Button'
 import AdministrationMenu from './AdministrationMenu'
 import { DEFAULT_CHAIN_ID } from 'config'
 import { CHAINS } from 'components/Web3Provider/constants'
+import { LocaleDropdown } from './LocaleDropdown'
 
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -141,6 +142,7 @@ export default function Header() {
               <HeaderElement>
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
+                <LocaleDropdown />
 
                 {!account && openConnectModal ? (
                   <PinnedContentButton

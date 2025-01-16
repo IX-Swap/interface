@@ -1,0 +1,61 @@
+{
+  "navbar": {
+    "charts": "チャート",
+    "bridge": "ブリッジ",
+    "rwas": "RWAs",
+    "liquidityPools": "流動性プール",
+    "swapTrade": "スワップ/トレード",
+    "kyc": "KYC",
+    "staking": "ステーキング"
+  },
+  "footer": {
+    "copyright": "著作権 © IX Swap 2024",
+    "termsAndConditions": "利用規約",
+    "privacyPolicy": "プライバシーポリシー",
+    "cookieSetting": "クッキー設定"
+  },
+  "landing": {
+    "welcome": "IXSwapへようこそ",
+    "pleaseConnectWallet": "IX Swapを使用するにはウォレットを接続してください",
+    "connectWallet": "ウォレットを接続",
+    "whileWalletIsNotConnected": "ウォレットが接続されていない間は、最新情報を見ることができます"
+  },
+  "kyc": {
+    "section1Title": "IX Swapにサインアップするには、KYCを通過する必要があります",
+    "referFriend": "友人を紹介する",
+    "kycAsIndividual": "個人としてKYCを通過する",
+    "kycAsCorporate": "法人としてKYCを通過する",
+    "startNow": "今すぐ開始",
+    "individual": {
+      "title": "個人KYC",
+      "section1Title": "個人情報",
+      "firstName": "名",
+      "middleName": "ミドルネーム",
+      "lastName": "姓",
+      "emailAddress": "メールアドレス",
+      "invalidEmailAddress": "有効なアドレスを入力してください",
+      "enterOtpCode": "コードを入力",
+      "otpCodeInfo": "6桁の認証コードがメールアドレスに送信されました。以下にコードを入力してメールを確認してください",
+      "sendOtpCode": "コードを送信",
+      "resendOtpCode": "コードを再送信",
+      "invalidOtpCode": "無効な認証コードです",
+      "verificationCodeSuccess": "認証コードが正常に確認されました。",
+      "section2Title": "セカンダリ連絡先情報"
+    },
+    "corporate": {
+      "corporateName": "法人名"
+    }
+  },
+  "launchpad": {
+    "section1Title": "スタートアップや他のユニコーンのような機会に投資する",
+    "totalRaised": "合計調達額",
+    "investments": "投資"
+  },
+  "maintenance": {
+    "title": "メンテナンス中です",
+    "info": "このページはメンテナンス中で、まもなく復旧します"
+  },
+  "general": {
+    "confirmed": "確認済み"
+  }
+}

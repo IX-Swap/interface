@@ -5,8 +5,10 @@ import { ReactNode } from 'react'
 import { useActiveLocale, useSetLocaleFromUrl } from 'hooks/useActiveLocale'
 import { SupportedLocale } from 'constants/locales'
 // Import your locale files
-import en from './locales/en-US.json'
-import ph from './locales/fil-PH.json'
+import en from './translations/english.json'
+import cn from './translations/chinese.json'
+import jp from './translations/japanese.json'
+import ko from './translations/korean.json'
 
 export async function dynamicActivate(locale: SupportedLocale) {
   try {
@@ -36,49 +38,89 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   return <I18nProvider i18n={i18n}>{children}</I18nProvider>
 }
 
-const locales = { en, ph } // Add more languages as needed
+// New Localization Implementation
+export const LOCALES = [
+  {
+    code: 'en',
+    fullName: 'English', // Text shown when the dropdown is open
+    shortName: 'EN', // Text shown on the dropdown itself
+    translations: en,
+  },
+  {
+    code: 'cn',
+    fullName: 'Chinese',
+    shortName: 'CN',
+    translations: cn,
+  },
+  {
+    code: 'jp',
+    fullName: 'Japanese',
+    shortName: 'JP',
+    translations: jp,
+  },
+  {
+    code: 'ko',
+    fullName: 'Korean',
+    shortName: 'KO',
+    translations: ko,
+  },
+  // Add more languages as needed
+]
 
 interface LocalizationContextProps {
-  t: (key: string, params?: Record<string, string>) => string
-  switchLanguage: (lang: string) => void
-  language: string
+  t: (key: string, params?: Record<string, string>) => string;
+  switchLanguage: (lang: string) => void;
+  language: string;
 }
 
 const LocalizationContext = createContext<LocalizationContextProps>({
   t: (key) => key,
   switchLanguage: () => {},
   language: 'en',
-})
+});
 
 interface LocalizationProviderProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export const LocalizationProvider: React.FC<LocalizationProviderProps> = ({ children }) => {
-  const [language, setLanguage] = useState<string>('ph') // Default language
+  const [language, setLanguage] = useState<string>('en'); // Default language is 'en'
 
   const t = (key: string, params: Record<string, string> = {}): string => {
-    // @ts-expect-error
-    let translation = locales[language]?.[key] || key
+    const currentLocale = LOCALES.find((locale) => locale.code === language)?.translations || en;
+    const keys = key.split('.');
+    let translation: any = currentLocale;
+
+    for (const k of keys) {
+      translation = translation?.[k];
+      if (!translation) break;
+    }
+
+    if (!translation) return key; // Fallback to the key if not found
 
     // Replace placeholders with dynamic values
     Object.keys(params).forEach((param) => {
-      translation = translation.replace(`{{${param}}}`, params[param])
-    })
+      translation = translation.replace(`{{${param}}}`, params[param]);
+    });
 
-    return translation
-  }
+    return translation;
+  };
 
   const switchLanguage = (lang: string): void => {
-    // @ts-expect-error
-    if (locales[lang]) {
-      setLanguage(lang)
+    const localeExists = LOCALES.some((locale) => locale.code === lang);
+    if (localeExists) {
+      setLanguage(lang);
     } else {
-      console.warn(`Language "${lang}" is not supported.`)
+      console.warn(`Language "${lang}" is not supported.`);
     }
-  }
+  };
 
-  return <LocalizationContext.Provider value={{ t, switchLanguage, language }}>{children}</LocalizationContext.Provider>
-}
+  return (
+    <LocalizationContext.Provider value={{ t, switchLanguage, language }}>
+      {children}
+    </LocalizationContext.Provider>
+  );
+};
 
-export const useLocalization = (): LocalizationContextProps => useContext(LocalizationContext)
+export const useLocalization = (): LocalizationContextProps =>
+  useContext(LocalizationContext);
