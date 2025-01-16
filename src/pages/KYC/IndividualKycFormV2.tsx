@@ -45,6 +45,10 @@ export const FormContainer = styled(FormWrapper)`
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    flex-direction: column;
+  }
 `
 
 const Title = styled(TYPE.title4)`
@@ -64,6 +68,11 @@ const ReferralCode = styled.span`
   font-weight: 600;
   align-self: center;
   color: #b8b8cc;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    align-self: flex-start;
+    margin-left: 0;
+  }
 `
 
 const ReferralCodeText = styled.span`
@@ -294,27 +303,27 @@ export default function IndividualKycFormV2() {
 
     if (selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS) {
       try {
-        const {status} = await secondaryContact();
+        const { status } = await secondaryContact()
 
         if (status !== 200) {
           setLoading(false)
-          return;
+          return
         }
       } catch (error) {
         setLoading(false)
-        return;
+        return
       }
     }
 
     try {
-      const {data, status} = await verifyIdentity()
+      const { data, status } = await verifyIdentity()
 
       if (status !== 200) {
         setLoading(false)
-        return;
+        return
       }
 
-      const redirectUrl = data?.redirectUrl;
+      const redirectUrl = data?.redirectUrl
       setLoading(false)
       window.open(redirectUrl, '_self')
     } catch (error) {
