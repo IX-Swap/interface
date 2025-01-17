@@ -26,15 +26,21 @@ const TaskSuccessModal = ({ show, onClose }: Props) => {
   const { rewardsData, mutatePoint } = useLineReward()
 
   const handleClaimRewards = async () => {
+    if (rewardsData.action === LineRewardAction.JOIN_CAMPAIGN) {
+      onClose()
+      toast.success('You have successfully claimed the point reward.', {
+        transition: Slide,
+      })
+      return
+    }
+
     if (!account || !rewardsData.points || !rewardsData.action) return
 
-    if (rewardsData.action !== LineRewardAction.JOIN_CAMPAIGN) {
-      await mutatePoint.mutateAsync({
-        account,
-        points: rewardsData.points,
-        action: rewardsData.action,
-      })
-    }
+    await mutatePoint.mutateAsync({
+      account,
+      points: rewardsData.points,
+      action: rewardsData.action,
+    })
 
     onClose()
 
