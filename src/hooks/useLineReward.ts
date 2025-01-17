@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { linePoint } from 'services/apiUrls'
 import { Address } from 'viem'
-import { API_KEY, JOIN_CAMPAIGN_REWARD, LineRewardAction } from 'constants/lineRewards'
+import { API_KEY, JOIN_CAMPAIGN_REWARD, LINE_REWARD_KEY, LineRewardAction } from 'constants/lineRewards'
 import { useWeb3React } from './useWeb3React'
 import { isLineLiff } from 'utils'
 import { apiService as lineRewardApiService } from 'hooks/useLineReward'
@@ -41,26 +41,17 @@ function useLineReward() {
   })
 
   // Claim rewards for joining campaign
-  const validateClaimRewards = useQuery({
-    queryKey: ['validateJoinCampaignRewards', account],
-    enabled: isLineLiff,
-    queryFn: async () => {
-      const { data } = await lineRewardApiService.get(linePoint.checkClaimed, {
-        params: {
-          address: account,
-          action: LineRewardAction.JOIN_CAMPAIGN,
-        },
-      })
-      return data
-    },
-    staleTime: Infinity,
-  })
+  const lineRewardLocal = JSON.parse(
+    localStorage.getItem(LINE_REWARD_KEY) || '{}'
+  )
+  const hasJoinedLiffCampaigned = Boolean(lineRewardLocal.hasJoinedLiffCampaigned)
+  const setLineRewardLocalStorage = (key: string, value: any) => {
+    lineRewardLocal[key] = value
+    localStorage.setItem(LINE_REWARD_KEY, JSON.stringify(lineRewardLocal))
+  }
+
   useEffect(() => {
-    if (
-      !account ||
-      !validateClaimRewards.isFetched ||
-      validateClaimRewards.data?.claimed
-    )
+    if (hasJoinedLiffCampaigned)
       return
 
     setOpenTaskSuccessModal(true)
@@ -68,7 +59,8 @@ function useLineReward() {
       action: LineRewardAction.JOIN_CAMPAIGN,
       points: JOIN_CAMPAIGN_REWARD,
     })
-  }, [account, validateClaimRewards.isFetched, validateClaimRewards.data?.claimed])
+    setLineRewardLocalStorage('hasJoinedLiffCampaigned', true)
+  }, [hasJoinedLiffCampaigned])
 
   return {
     mutatePoint,
