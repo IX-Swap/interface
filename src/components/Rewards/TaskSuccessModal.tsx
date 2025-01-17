@@ -56,7 +56,7 @@ const TaskSuccessModal = ({ show, onClose }: Props) => {
           <Title>Task Completed</Title>
           <Box style={{ textAlign: 'center' }}>
             <TYPE.black color="text6">
-              You&apos;ve erned <strong>{formatAmount(rewardsData.points)} IXSurge</strong>.
+              You&apos;ve earned <strong>{formatAmount(rewardsData.points)} IXSurge</strong>.
             </TYPE.black>
             <TYPE.black color="text6">Keep going to unlock more rewards!</TYPE.black>
           </Box>
