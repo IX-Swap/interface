@@ -13,6 +13,7 @@ import { Slide, toast } from 'react-toastify'
 import { useLineReward } from 'providers/LineRewardProvider'
 import { useWeb3React } from 'hooks/useWeb3React'
 import { formatAmount } from 'utils/formatCurrencyAmount'
+import { LineRewardAction } from 'constants/lineRewards'
 
 interface Props {
   show: boolean
@@ -27,11 +28,13 @@ const TaskSuccessModal = ({ show, onClose }: Props) => {
   const handleClaimRewards = async () => {
     if (!account || !rewardsData.points || !rewardsData.action) return
 
-    await mutatePoint.mutateAsync({
-      account,
-      points: rewardsData.points,
-      action: rewardsData.action,
-    })
+    if (rewardsData.action !== LineRewardAction.JOIN_CAMPAIGN) {
+      await mutatePoint.mutateAsync({
+        account,
+        points: rewardsData.points,
+        action: rewardsData.action,
+      })
+    }
 
     onClose()
 

@@ -15,3 +15,5 @@ export enum LineRewardAction {
 }
 
 export const API_KEY = process.env.REACT_APP_LINE_REWARD_API_KEY
+
+export const LINE_REWARD_KEY = 'line_reward'
