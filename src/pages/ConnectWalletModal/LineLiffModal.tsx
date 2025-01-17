@@ -70,7 +70,7 @@ export const LineButton = styled.button`
   border: none;
   border-radius: 6px;
   padding: 12px;
-  min-width: 280px;
+  min-width: 200px;
   width: 100%;
   font-weight: 500;
   cursor: pointer;

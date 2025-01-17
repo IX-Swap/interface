@@ -28,6 +28,7 @@ import AdministrationMenu from './AdministrationMenu'
 import { DEFAULT_CHAIN_ID } from 'config'
 import { CHAINS } from 'components/Web3Provider/constants'
 import { isLineLiff } from 'utils'
+import { LineLiffConnectButton } from 'pages/ConnectWalletModal/LineLiffConnectButton'
 
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -143,16 +144,17 @@ export default function Header() {
                 {account ? <NetworkCard /> : ''}
                 <Web3Status />
 
-                {!account && openConnectModal && !isLineLiff ? (
-                  <PinnedContentButton
-                    style={{ boxShadow: '0px 16px 16px 0px #6666FF21', minWidth: 200 }}
-                    onClick={openConnectModal}
-                  >
-                    <Text className="connect-wallet-button">
-                      <Trans>Connect Wallet</Trans>
-                    </Text>
-                  </PinnedContentButton>
-                ) : null}
+                {/* {!account && openConnectModal && !isLineLiff ? ( */}
+                {/*   <PinnedContentButton */}
+                {/*     style={{ boxShadow: '0px 16px 16px 0px #6666FF21', minWidth: 200 }} */}
+                {/*     onClick={openConnectModal} */}
+                {/*   > */}
+                {/*     <Text className="connect-wallet-button"> */}
+                {/*       <Trans>Connect Wallet</Trans> */}
+                {/*     </Text> */}
+                {/*   </PinnedContentButton> */}
+                {/* ) : null} */}
+                {!account && <LineLiffConnectButton />}
 
                 {openPreviewModal && <BuyModal isOpen onClose={closeModal} />}
               </HeaderElement>
