@@ -14,9 +14,9 @@ const ConnectWalletCard = () => {
   const { openConnectModal } = useConnectModal()
 
   const renderConnectButton = () => {
-    if (isLineLiff) {
-      return <LineLiffConnectButton />
-    }
+    // if (isLineLiff) {
+    //   return <LineLiffConnectButton />
+    // }
 
     if (openConnectModal) {
       return (
