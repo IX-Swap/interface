@@ -23,8 +23,6 @@ import { NETWORK_LOGOS } from 'constants/chains'
 import { PinnedContentButton } from 'components/Button'
 import { MEDIA_WIDTHS } from 'theme'
 import { RaisedFund } from './RaisedFund'
-import { LineLiffModal } from 'pages/ConnectWalletModal/LineLiffModal'
-import { isLineLiff } from 'utils'
 
 interface Props {
   offer: any
@@ -45,7 +43,6 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
   const [isModalOpen, handleIsModalOpen] = React.useState(false)
-  const [isLineLiffModalOpen, setIsLineLiffModalOpen] = React.useState(false)
 
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
@@ -85,11 +82,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
         toggleKYCModal()
       }
     } else {
-      if (isLineLiff && !account) {
-        setIsLineLiffModalOpen(true)
-      } else {
-        openConnectModal && openConnectModal()
-      }
+      openConnectModal && openConnectModal()
     }
   }, [account, canOpen, toggleKYCModal])
 
@@ -228,7 +221,6 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
           <KYCPrompt offerId={offer.id} allowOnlyAccredited={offer.allowOnlyAccredited} />
         </Portal>
       )}
-      <LineLiffModal isOpen={isLineLiffModalOpen} onClose={() => setIsLineLiffModalOpen(false)} />
     </>
   )
 }
