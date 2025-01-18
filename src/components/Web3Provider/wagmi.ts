@@ -33,8 +33,8 @@ export function createWagmiConfig() {
     wallets: [
       {
         groupName: 'Popular',
-        // wallets: [wallets.coinbaseWallet, wallets.metaMaskWallet, wallets.walletConnectWallet, lineNextWallet],
-        wallets: [lineNextWallet],
+        wallets: [wallets.coinbaseWallet, wallets.metaMaskWallet, wallets.walletConnectWallet],
+        // wallets: [lineNextWallet],
       },
       // {
       //   groupName: 'Others',
