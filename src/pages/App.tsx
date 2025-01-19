@@ -328,10 +328,6 @@ export default function App() {
           </CenteredFixed>
         </Portal>
       ) : null}
-
-      {openTaskSuccessModal && (
-        <TaskSuccessModal show={openTaskSuccessModal} onClose={() => setOpenTaskSuccessModal(false)} />
-      )}
     </>
   )
 }

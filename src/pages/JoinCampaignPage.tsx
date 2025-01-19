@@ -62,8 +62,11 @@ interface Props {
 
 const Popup = ({ show, onClose }: Props) => {
   const theme = useTheme()
+  const [isButtonClicked, setIsButtonClicked] = useState(false) // Track button click
 
   const handleClaimRewards = async () => {
+    if (isButtonClicked) return // Prevent multiple clicks
+    setIsButtonClicked(true) // Disable the button after the first click
     toast.success('You have successfully claimed the point reward.', {
       transition: Slide,
     })
@@ -87,7 +90,11 @@ const Popup = ({ show, onClose }: Props) => {
             </TYPE.black>
             <TYPE.black color="text6">Keep going to unlock more rewards!</TYPE.black>
           </Box>
-          <FilledButton onClick={handleClaimRewards} style={{ zIndex: 30, width: '100%' }}>
+          <FilledButton
+            onClick={handleClaimRewards}
+            style={{ zIndex: 30, width: '100%' }}
+            disabled={isButtonClicked} // Disable the button if clicked
+          >
             <BtnLabel>Get IXSurge</BtnLabel>
           </FilledButton>
         </Stack>
