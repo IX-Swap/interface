@@ -52,6 +52,7 @@ import { isLineLiff, isValidReferralCode } from 'utils'
 import { useLiff } from './LiffProvider'
 import TaskSuccessModal from 'components/Rewards/TaskSuccessModal'
 import { useLineReward } from 'providers/LineRewardProvider'
+import JoinCampaignPage from './JoinCampaignPage'
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
 const lbpAdminRoutes = [routes.lbpCreate, routes.lbpEdit, routes.lbpDashboard, routes.adminDetails]
@@ -284,34 +285,40 @@ export default function App() {
         <Route component={ApeModeQueryParamReader} />
         <AppBackground />
         <Popups />
-        <AppWrapper isLaunchpad={isWhiteBackground}>
-          {!isAdminKyc && !hideHeader && <Header />}
-          <ToggleableBody
-            isVisible={visibleBody}
-            {...(isAdminKyc && { style: { marginTop: 26 } })}
-            hideHeader={hideHeader}
-          >
-            <IXSBalanceModal />
-            <Suspense
-              fallback={
-                <>
-                  <LoadingIndicator isLoading />
-                </>
-              }
-            >
-              <Switch>
-                {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
-
-                {isLineLiff ? (
-                  <Route path="*" component={() => <Launchpad />} />
-                ) : (
-                  <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
-                )}
-              </Switch>
-            </Suspense>
-          </ToggleableBody>
-          {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
-        </AppWrapper>
+        <Switch>
+          <Route path="/line-reward" render={() => <JoinCampaignPage />} />
+          <Route
+            render={() => (
+              <AppWrapper isLaunchpad={isWhiteBackground}>
+                {!isAdminKyc && !hideHeader && <Header />}
+                <ToggleableBody
+                  isVisible={visibleBody}
+                  {...(isAdminKyc && { style: { marginTop: 26 } })}
+                  hideHeader={hideHeader}
+                >
+                  <IXSBalanceModal />
+                  <Suspense
+                    fallback={
+                      <>
+                        <LoadingIndicator isLoading />
+                      </>
+                    }
+                  >
+                    <Switch>
+                      {routeFinalConfig.map(routeGenerator).filter((route) => !!route)}
+                      {isLineLiff ? (
+                        <Route path="*" component={() => <Launchpad />} />
+                      ) : (
+                        <Route component={() => <Redirect to={defaultPage ? defaultPage : routes.kyc} />} />
+                      )}
+                    </Switch>
+                  </Suspense>
+                </ToggleableBody>
+                {!hideHeader ? <>{isIxSwap ? <DefaultFooter /> : <WhiteLabelFooter />}</> : null}
+              </AppWrapper>
+            )}
+          />
+        </Switch>
       </ErrorBoundary>
 
       {!isLineLiff && !token && account && chains.includes(chainId) ? (
