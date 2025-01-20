@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 import { CheckCircle, Clock, Info } from 'react-feather'
+import _get from 'lodash/get'
+import dayjs from 'dayjs'
+import { CurrencyAmount } from '@ixswap1/sdk-core'
+import { ethers } from 'ethers'
+
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
 import { useCheckClaimed, useClaimOfferRefund } from 'state/launchpad/hooks'
 import { InvestedDataRes, Offer, OfferStatus } from 'state/launchpad/types'
@@ -19,8 +24,6 @@ import { useLaunchpadInvestmentContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
-import { CurrencyAmount } from '@ixswap1/sdk-core'
-import { ethers } from 'ethers'
 import { IXSALE_ADDRESS } from 'constants/addresses'
 import { getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
 
@@ -45,6 +48,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
     investingTokenSymbol,
     contractSaleId,
     contractAddress,
+    timeframe,
   } = props.offer
 
   const addPopup = useAddPopup()
@@ -54,10 +58,10 @@ export const ClosedStage: React.FC<Props> = (props) => {
 
   const [contactFormOpen, setContactForm] = React.useState(false)
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
-
   const canClaim = React.useMemo(() => status === OfferStatus.claim, [])
 
   const isSuccessfull = React.useMemo(() => softCapReached, [])
+  const claimTime = _get(timeframe, 'claim', '')
 
   const { amount, amountClaim, loading: amountLoading, error: amountError } = props.investedData
   const launchpadContract = useLaunchpadInvestmentContract(contractAddress)
@@ -67,9 +71,9 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
-          tokenCurrency,
+        tokenCurrency,
           ethers.utils.parseUnits(amount?.toString(), investingTokenDecimals) as any
-        )
+      )
       : undefined,
     contractAddress || IXSALE_ADDRESS[chainId]
   )
@@ -133,10 +137,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
         </Column>
 
         {!isSuccessfull && (
-          <ClaimedFilledButton
-            onClick={onSubmit}
-            disabled={claiming || !canClaim || amount <= 0 || hasClaimed}
-          >
+          <ClaimedFilledButton onClick={onSubmit} disabled={claiming || !canClaim || amount <= 0 || hasClaimed}>
             Claim
           </ClaimedFilledButton>
         )}
@@ -148,8 +149,12 @@ export const ClosedStage: React.FC<Props> = (props) => {
         <Row alignItems="center" gap="1rem">
           <Clock color={theme.launchpad.colors.primary} size="50" />
           <CantClaimNotice>
-            Upon the commencement of the token claim deal stage, the issuer will initiate a batch claim process for the
-            tokens. The tokens will be automatically distributed to the investor&apos;s wallets.
+            {isSuccessfull
+              ? `Upon the commencement of the token claim deal stage, the issuer will initiate a batch claim process for the
+            tokens. The tokens will be automatically distributed to the investor&apos;s wallets.`
+              : `You cannot claim any tokens yet. Please come back on the claim date, ${
+                claimTime ? `${dayjs(claimTime).format('DD/MM/YYYY')}.` : ''
+              }`}
           </CantClaimNotice>
         </Row>
       )}
@@ -157,9 +162,12 @@ export const ClosedStage: React.FC<Props> = (props) => {
       {canClaim && (
         <Column gap="0.5rem">
           <CanClaimNotice>
-            The funding round has reached its conclusion, and once the issuer initiates the batch distribution, the
+            {isSuccessfull
+              ? `The funding round has reached its conclusion, and once the issuer initiates the batch distribution, the
             designated tokens will be sent to your wallet. To view and manage these tokens in your web3 wallet, please
-            ensure that the correct token address has been added.
+            ensure that the correct token address has been added.`
+              : `Once claimed, you can find your tokens in your wallet. Please make sure to add the token address to your
+            wallet to see the token on your wallet feed.`}
           </CanClaimNotice>
 
           <OfferLinks
