@@ -51,8 +51,6 @@ export const ClosedStage: React.FC<Props> = (props) => {
     timeframe,
   } = props.offer
 
-  console.log('props.offer', props.offer)
-
   const addPopup = useAddPopup()
   const claimRefund = useClaimOfferRefund(id)
   const { setHasClaimed, hasClaimed } = useCheckClaimed(id)
