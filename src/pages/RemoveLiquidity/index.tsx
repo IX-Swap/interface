@@ -39,7 +39,6 @@ import { ModalHeader } from './ModalHeader'
 import { RemoveAmount } from './RemoveAmount'
 import { RemovedLiquidity } from './RemovedLiquidity'
 import useCurrencyInput from './useCurrencyInput'
-import { useSetHideHeader } from 'state/application/hooks'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import Header from 'components/Header'
@@ -73,7 +72,6 @@ export default function RemoveLiquidity({
   // modal and loading
   const [showConfirm, setShowConfirm] = useState<boolean>(false)
   const [attemptingTxn, setAttemptingTxn] = useState(false) // clicked confirm
-  const [isOpenConnectWallet, setOpenConnectWallet] = useState(false)
   // txn values
   const [txHash, setTxHash] = useState<string>('')
   const deadline = useTransactionDeadline()
@@ -321,16 +319,6 @@ export default function RemoveLiquidity({
     setTxHash('')
   }, [onUserInput, txHash, history])
 
-  const hideHeader = useSetHideHeader()
-
-  React.useEffect(() => {
-    hideHeader(true)
-
-    return () => {
-      hideHeader(false)
-    }
-  }, [])
-
   const blurred = detectWrongNetwork(chainId ?? 0)
 
   if (blurred) {
@@ -363,8 +351,6 @@ export default function RemoveLiquidity({
         pendingText={pendingText}
       />
       <>
-        <Header />
-        {/* <AddLiduidityContainer> */}
         <Box>
           <AppBody page="liquidity" blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
             <AddRemoveTabs creating={false} adding={false} showBadge={mitigationEnabled} />
