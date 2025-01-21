@@ -31,7 +31,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'react-phone-input-2/lib/bootstrap.css'
 import './index.css'
 import { LiffProvider } from 'pages/LiffProvider'
-import eruda from 'eruda'
 import { LineRewardProvider } from 'providers/LineRewardProvider'
 
 if (!!window.ethereum) {
@@ -57,7 +56,6 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
 } else {
   ReactGA.initialize('test', { testMode: true, debug: true })
 }
-eruda.init()
 
 function Updaters() {
   return (
