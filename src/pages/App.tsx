@@ -321,7 +321,7 @@ export default function App() {
         </Switch>
       </ErrorBoundary>
 
-      {!isLineLiff && !token && account && chains.includes(chainId) ? (
+      {!token && account && chains.includes(chainId) ? (
         <Portal>
           <CenteredFixed width="100vw" height="100vh">
             <SignMessageModal authenticate={authenticate} />
