@@ -14,7 +14,6 @@ import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter
 import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
 import { setPoolTransactionHash, useAddLiquidity, useMitigationEnabled } from 'state/pool/hooks'
 import { routes } from 'utils/routes'
-import { NETWORK_NAMES } from 'constants/chains'
 
 import { NewApproveButton, PinnedContentButton } from '../../components/Button'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
@@ -53,6 +52,7 @@ import { ReactComponent as ExternalIcon } from '../../assets/images/rightcheck.s
 import styled from 'styled-components/macro'
 import { isMobile } from 'react-device-detect'
 import { chainIdToNetworkName } from 'utils/chains'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
@@ -380,7 +380,7 @@ export default function AddLiquidity({
       <ToggleableBody style={{ marginTop: isMobile ? '0px' : '0px' }} isVisible={!showConfirm}>
         {/* <AddLiduidityContainer></AddLiduidityContainer> */}
         <Box style={{ marginTop: isMobile ? '0px' : '200px' }}>
-          <AppBody page="liquidity">
+          <AppBody page="liquidity" blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
             <AddRemoveTabs creating={isCreate} adding={true} showBadge={mitigationEnabled} />
             <>
               <AutoColumn gap="14px">

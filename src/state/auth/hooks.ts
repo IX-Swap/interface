@@ -65,6 +65,7 @@ export function useLogout() {
     dispatch(clearUserData())
     dispatch(clearEventLog())
     tryClearIndexedDB()
+    localStorage.removeItem('account')
   }
 
   return { disconnectWallet }

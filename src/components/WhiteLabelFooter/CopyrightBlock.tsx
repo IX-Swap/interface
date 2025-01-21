@@ -1,5 +1,5 @@
 import React from 'react'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
@@ -17,7 +17,7 @@ export const CopyrightBlock = () => {
       </CopyrightText>
       <Flex alignItems="center">
         <TermText
-          href={config?.termsAndConditionsUrl || 'https://ixswap.io/terms-and-conditions/'}
+          href={config?.footerConfig?.termsLink || 'https://ixswap.io/terms-and-conditions/'}
           target="_blank"
           rel="noreferrer"
         >
@@ -25,7 +25,7 @@ export const CopyrightBlock = () => {
         </TermText>
         <Dot />
         <TermText
-          href={config?.privacyPolicyUrl || 'https://ixswap.io/privacy-policy/'}
+          href={config?.footerConfig?.policyLink || 'https://ixswap.io/privacy-policy/'}
           target="_blank"
           rel="noreferrer"
         >

@@ -9,10 +9,11 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import { ReactComponent as HelpIcon } from 'assets/launchpad/svg/help-icon.svg'
 import { ContactFormModal } from '../utils/ContactFormModal'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import { getChainFromName, SupportedChainId } from 'constants/chains'
+import { getChainFromName } from 'constants/chains'
 import { DiscreteInternalLink, DiscreteExternalLink } from 'theme'
 import { text10, text8 } from 'components/LaunchpadMisc/typography'
-import { useActiveWeb3React } from 'hooks/web3'
+import { isTestnet } from 'utils/isEnvMode'
+import { supportedChainId } from 'utils/supportedChainId'
 
 interface Props {
   offer: ManagedOffer
@@ -43,12 +44,15 @@ export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
   const onCopy = () => {
     setCopied(tokenAddress)
   }
-  const { chainId } = useActiveWeb3React()
   const explorerLink = useMemo(() => {
-    const isTestnet = [SupportedChainId.AMOY, SupportedChainId.BASE_SEPOLIA].includes(chainId)
+    let type = ExplorerDataType.TOKEN
     const nameChainMapNetwork = getChainFromName(network, isTestnet)
 
-    return getExplorerLink(nameChainMapNetwork, tokenAddress, ExplorerDataType.TOKEN)
+    if (['ozean'].includes(network)) {
+      type = ExplorerDataType.ADDRESS
+    }
+
+    return getExplorerLink(nameChainMapNetwork, tokenAddress, type)
   }, [network, tokenAddress])
   const editLink = useMemo(() => `/issuance/edit/information?id=${issuanceId}`, [issuanceId])
 

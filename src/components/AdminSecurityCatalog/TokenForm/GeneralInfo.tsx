@@ -40,7 +40,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
                 handleDropImage(file, 'logo')
               }}
             />
-            {Boolean(formik.errors.logo) ? <ErrorText>{formik.errors.logo}</ErrorText> : null}
+            {formik.touched.logo && Boolean(formik.errors.logo) ? <ErrorText>{formik.errors.logo}</ErrorText> : null}
           </div>
         </FormGrid>
 
@@ -55,9 +55,11 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               value={formik.values.companyName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.companyName)}
+              error={formik.touched.companyName && Boolean(formik.errors.companyName)}
             />
-            {Boolean(formik.errors.companyName) ? <ErrorText>{formik.errors.companyName}</ErrorText> : null}
+            {formik.touched.companyName && Boolean(formik.errors.companyName) ? (
+              <ErrorText>{formik.errors.companyName}</ErrorText>
+            ) : null}
           </FormWrapper>
           <FormWrapper>
             <Label htmlFor="network">URL</Label>
@@ -69,9 +71,9 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               value={formik.values.url}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.url)}
+              error={formik.touched.url && Boolean(formik.errors.url)}
             />
-            {Boolean(formik.errors.url) ? <ErrorText>{formik.errors.url}</ErrorText> : null}
+            {formik.touched.url && Boolean(formik.errors.url) ? <ErrorText>{formik.errors.url}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
 
@@ -89,7 +91,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               value={formik.values.industry}
               onSelect={(value) => formik.setFieldValue('industry', value)}
             />
-            {Boolean(formik.errors.industry) ? <ErrorText>{formik.errors.industry}</ErrorText> : null}
+            {formik.touched.industry && Boolean(formik.errors.industry) ? <ErrorText>{formik.errors.industry}</ErrorText> : null}
           </FormWrapper>
           <FormWrapper>
             <Label htmlFor="network">Country</Label>
@@ -102,7 +104,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               value={formik.values.country}
               onSelect={(value) => formik.setFieldValue('country', value)}
             />
-            {Boolean(formik.errors.country) ? <ErrorText>{formik.errors.country}</ErrorText> : null}
+            {formik.touched.country && Boolean(formik.errors.country) ? <ErrorText>{formik.errors.country}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
 
@@ -120,9 +122,9 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
               value={formik.values.description}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={Boolean(formik.errors.description)}
+              error={formik.touched.country && Boolean(formik.errors.description)}
             />
-            {Boolean(formik.errors.description) ? <ErrorText>{formik.errors.description}</ErrorText> : null}
+            {formik.touched.country && Boolean(formik.errors.description) ? <ErrorText>{formik.errors.description}</ErrorText> : null}
           </FormWrapper>
         </FormGrid>
 

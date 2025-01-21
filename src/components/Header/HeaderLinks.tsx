@@ -91,7 +91,7 @@ export const HeaderLinks = () => {
 
   const links = [
     {
-      condition: isAllowed('/charts') && isWhitelisted,
+      condition: isAllowed('charts') && isWhitelisted,
       component: (
         <MenuExternalLink key="charts" target="_self" href={config?.chartsUrl || 'https://info.ixswap.io/home'}>
           <Trans>Charts</Trans>
@@ -99,7 +99,7 @@ export const HeaderLinks = () => {
       ),
     },
     {
-      condition: config?.isIxSwap,
+      condition: isAllowed('bridge') && config?.isIxSwap,
       component: (
         <MenuExternalLink key="bridge" target="_blank" href={bridgeUrl}>
           <Trans>Bridge</Trans>
@@ -150,7 +150,7 @@ export const HeaderLinks = () => {
       ),
     },
     {
-      condition: isAllowed(routes.vesting) && isAllowed(routes.staking),
+      condition: isAllowed('staking'),
       component: (
         <StyledNavLink
           key="staking"

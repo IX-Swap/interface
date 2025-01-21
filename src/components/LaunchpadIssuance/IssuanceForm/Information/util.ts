@@ -117,7 +117,6 @@ export const industryOptions = [
   { label: 'Technology', value: OfferIndustry.technology },
   { label: 'Media & Entertainment', value: OfferIndustry.mediaAndEntertainment },
   { label: 'Other', value: OfferIndustry.other },
-
 ]
 
 export const investmentStructureOptions = [
@@ -131,6 +130,8 @@ export const networkOptions = [
   // { label: 'Etherium', value: OfferNetwork.ethereum },
   { label: 'Polygon', value: OfferNetwork.polygon },
   { label: 'Base', value: OfferNetwork.base },
+  { label: 'Ozean', value: OfferNetwork.ozean },
+  { label: 'Kaia', value: OfferNetwork.kaia },
   // { label: 'Kovan', value: OfferNetwork.kovan },
 ]
 
@@ -150,6 +151,31 @@ export const tokenTypeOptions = [
   { label: 'USDC', value: OfferTokenType.USDC },
   { label: 'USDT', value: OfferTokenType.USDT },
 ]
+
+export const tokenTypeOptionsByNetwork = {
+  [OfferNetwork.polygon]: [
+    { label: 'WIXS', value: OfferTokenType.WIXS },
+    { label: 'MATIC', value: OfferTokenType.MATIC },
+    { label: 'USDC', value: OfferTokenType.USDC },
+    { label: 'USDT', value: OfferTokenType.USDT },
+  ],
+  [OfferNetwork.base]: [
+    { label: 'USDC', value: OfferTokenType.USDC },
+    { label: 'USDT', value: OfferTokenType.USDT },
+    { label: 'WIXS', value: OfferTokenType.WIXS },
+    { label: 'WETH', value: OfferTokenType.WETH },
+  ],
+  [OfferNetwork.ozean]: [
+    { label: 'WUSDX', value: OfferTokenType.WUSDX },
+    { label: 'USDC', value: OfferTokenType.USDC },
+    { label: 'USDT', value: OfferTokenType.USDT },
+  ],
+  [OfferNetwork.kaia]: [
+    { label: 'USDC', value: OfferTokenType.USDC },
+    { label: 'USDT', value: OfferTokenType.USDT },
+  ],
+} as any
+
 export const tokenDecimalsOnOptions = [
   { label: 'On', value: true },
   { label: 'Off', value: false },

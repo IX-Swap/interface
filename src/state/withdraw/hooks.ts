@@ -102,7 +102,7 @@ export function useDerivedWithdrawInfo(): {
 
   const inputCurrency = useCurrency(currencyId)
 
-  const parsedAmount = tryParseAmount(amount, inputCurrency ?? undefined)
+  const parsedAmount = tryParseAmount(amount ? amount.toString() : '0', inputCurrency ?? undefined)
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
   let inputError: string | undefined
   if (!account) {

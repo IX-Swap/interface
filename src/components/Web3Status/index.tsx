@@ -126,7 +126,7 @@ const Web3StatusGeneric = styled(ButtonSecondary)`
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
   background: ${({ theme }) => theme.bg25};
   opacity: ${({ pending }) => (pending ? '0.7' : '1')};
-  padding: 10px 5px 10px 10px;
+  padding: 9px 5px 9px 10px;
   color: ${({ theme }) => theme.black};
   // font-weight: 600;
   border-radius: 4px;

@@ -37,7 +37,7 @@ export interface Whitelabel {
   chartsUrl?: string
   footerConfig: {
     termsLink: string
-    privacyLink: string
+    policyLink: string
     socialLinks: Record<string, string>
     block1?: string
     block2?: string

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { useAccount } from 'wagmi'
 import { Link, Redirect } from 'react-router-dom'
 
 import { PromptFooter } from './PromptFooter'
@@ -31,7 +31,7 @@ interface Props {
 }
 
 export const KYCPrompt: React.FC<Props> = (props) => {
-  const { account } = useWeb3React()
+  const { address: account } = useAccount()
   const { kyc } = useKYCState()
   const { isApproved, isRejected, isAccredited, isPending, isInProgress, isChangeRequested, isNotSubmitted, isDraft } =
     useKyc()
@@ -54,19 +54,6 @@ export const KYCPrompt: React.FC<Props> = (props) => {
     () => !contactFormOpen && (!kyc || isNotSubmitted || isPending || isInProgress || isChangeRequested || isDraft),
     [kyc]
   )
-
-  useEffect(() => {
-    if (
-      account &&
-      !!kyc &&
-      !isChangeRequested &&
-      !(isPending || isInProgress || isDraft) &&
-      !isRejected &&
-      !(props.allowOnlyAccredited && !isAccredited)
-    ) {
-      toggleModal(false)
-    }
-  }, [account, !!kyc, isChangeRequested, isPending, isInProgress, isRejected, isAccredited, isDraft])
 
   return (
     <Modal isOpen={isOpen} onDismiss={() => {}}>

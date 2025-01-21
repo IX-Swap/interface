@@ -39,12 +39,13 @@ import { ModalHeader } from './ModalHeader'
 import { RemoveAmount } from './RemoveAmount'
 import { RemovedLiquidity } from './RemovedLiquidity'
 import useCurrencyInput from './useCurrencyInput'
-import { useSetHideHeader } from 'state/application/hooks'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import Header from 'components/Header'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { detectWrongNetwork } from 'utils'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { DEFAULT_CHAIN_ID } from 'config'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
 const DEFAULT_REMOVE_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(5, 100)
 
@@ -71,7 +72,6 @@ export default function RemoveLiquidity({
   // modal and loading
   const [showConfirm, setShowConfirm] = useState<boolean>(false)
   const [attemptingTxn, setAttemptingTxn] = useState(false) // clicked confirm
-  const [isOpenConnectWallet, setOpenConnectWallet] = useState(false)
   // txn values
   const [txHash, setTxHash] = useState<string>('')
   const deadline = useTransactionDeadline()
@@ -319,23 +319,13 @@ export default function RemoveLiquidity({
     setTxHash('')
   }, [onUserInput, txHash, history])
 
-  const hideHeader = useSetHideHeader()
-
-  React.useEffect(() => {
-    hideHeader(true)
-
-    return () => {
-      hideHeader(false)
-    }
-  }, [])
-
   const blurred = detectWrongNetwork(chainId ?? 0)
 
   if (blurred) {
     return (
       <Portal>
         <CenteredFixed width="100vw" height="100vh">
-          <NotAvailablePage />
+          <NetworkNotAvailable expectChainId={Number(DEFAULT_CHAIN_ID)} />
         </CenteredFixed>
       </Portal>
     )
@@ -361,10 +351,8 @@ export default function RemoveLiquidity({
         pendingText={pendingText}
       />
       <>
-        <Header />
-        {/* <AddLiduidityContainer> */}
         <Box>
-          <AppBody page="liquidity">
+          <AppBody page="liquidity" blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
             <AddRemoveTabs creating={false} adding={false} showBadge={mitigationEnabled} />
             <Box mb={'20px'}>
               <AutoColumn gap="md">

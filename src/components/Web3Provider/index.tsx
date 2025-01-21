@@ -8,8 +8,9 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 
 import '@rainbow-me/rainbowkit/styles.css'
 
+export const wagmiConfig = createWagmiConfig()
+
 export default function Web3Provider({ children }: { children: ReactNode }) {
-  const wagmiConfig = createWagmiConfig()
 
   return (
     <WagmiProvider config={wagmiConfig}>

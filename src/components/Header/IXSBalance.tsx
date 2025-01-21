@@ -1,4 +1,3 @@
-import IXSToken from 'assets/images/IXS-token.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { BIG_INT_ZERO } from 'constants/misc'
 import JSBI from 'jsbi'
@@ -38,8 +37,8 @@ export const IXSBalance = () => {
   return (
     <BalanceWrapper onClick={() => toggle()}>
       {!IXSBalance.loading && !IXSGovBalance.loading && (
-        <IconWrapper size={32} style={{ marginRight: '8px' }}>
-          <img src={IXSToken} alt="logo" />
+        <IconWrapper style={{ marginRight: '8px', width: 32 }}>
+          <img src="https://static.ixswap.io/ixs-logo.png" alt="logo" style={{ width: '100%', height: 'auto' }} />
         </IconWrapper>
       )}
       {(IXSBalance.loading || IXSGovBalance.loading) && <Dots></Dots>}

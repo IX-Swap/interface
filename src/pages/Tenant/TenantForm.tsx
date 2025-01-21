@@ -44,6 +44,15 @@ const initialValues: TenantDetails = {
   enableLaunchpadBanner: false,
   tokens: [],
   colorButtonPrimary: '#6666FF',
+  termLink: '',
+  policyLink: '',
+  block1: '',
+  bannerImageUrl: '',
+  supportEmail: '',
+  defaultUrl: '',
+  chartsUrl: '',
+  faviconUrl: '',
+  logoUrl: '',
 }
 
 const TenantForm = () => {
@@ -61,6 +70,8 @@ const TenantForm = () => {
 
   const formik = useFormik<TenantDetails>({
     initialValues,
+    validateOnBlur: false,
+    validateOnMount: true,
     validationSchema: !id ? validationSchema : null,
     onSubmit: async (values: any) => {
       try {
@@ -71,7 +82,7 @@ const TenantForm = () => {
 
         if (id) {
           for (const [key, value] of Object.entries(payload)) {
-            if (['pages', 'tokens'].includes(key)) {
+            if (['tokens'].includes(key)) {
               if (tenant.isIxSwap) {
                 payloadPatch[key] = null
               } else if (tenant[key] != value) {
