@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { useDispatch } from 'react-redux'
 
 import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
-import IXSToken from 'assets/images/IXS-token.svg'
+import IXSToken from 'assets/images/logo/IXS-Token.png'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonIXSWide } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -165,7 +165,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
                         }\n`
                   }
 
-                  Staked ${ixsCurrency?.symbol} in Pool: 
+                  Staked ${ixsCurrency?.symbol} in Pool:
                   ${poolSizeState[tier.period]} ${ixsCurrency?.symbol}
 
                   ${isTierUnlimited ? '' : '\nAvailable for staking: \n' + leftToFill + '/' + stringLimit + '.'}`}

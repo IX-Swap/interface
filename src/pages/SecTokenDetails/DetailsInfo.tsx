@@ -20,7 +20,7 @@ const KeyValueRow = ({ label, value }: { label: string; value: any }) => (
     </Label>
     {value ? (
       <Value>
-        {label === 'Issuer' || label === 'Website' ? (
+        {label === 'Website' ? (
           <a
             href={value}
             target="_blank"

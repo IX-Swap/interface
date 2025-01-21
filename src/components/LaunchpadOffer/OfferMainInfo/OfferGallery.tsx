@@ -13,10 +13,11 @@ import { ReactComponent as RedditLogo } from 'assets/launchpad/svg/social/reddit
 import { ReactComponent as CoingeckoLogo } from 'assets/launchpad/svg/social/coingecko.svg'
 import { ReactComponent as InstagramLogo } from 'assets/launchpad/svg/social/instagram.svg'
 import OtherLogo from 'assets/images/otherMediaIcon.svg'
-import { MediaEntry, OfferGalleryViewer } from './OfferGalleryViewer'
+import { MediaEntryItemViewer, OfferGalleryViewer } from './OfferGalleryViewer'
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { isMobile } from 'react-device-detect'
+import { Flex } from 'rebass'
 
 interface Props {
   offer: Offer
@@ -63,16 +64,25 @@ export const OfferGallery: React.FC<Props> = (props) => {
           <GalleryCarouselImage src={props.offer?.cardPicture.public} />
         </GalleryCarouselMainImage>
 
-        <GalleryCarouselExtraMediaList style={{ height: gallery?.length > 0 ? '145px' : '' }}>
+        <GalleryCarouselExtraMediaList style={{ height: gallery?.length > 0 ? '160px' : '' }}>
           {gallery.slice(0, 3).map((media, idx) => (
             <GalerryCarouselEntry key={`carousel-${idx}`} onClick={() => openViewer(media)}>
-              <MediaEntry media={media} />
+              <MediaEntryItemViewer media={media} />
             </GalerryCarouselEntry>
           ))}
 
           {gallery.length > 3 && (
             <GalleryCarouselExtra onClick={() => openViewer()}>
-              <TYPE.blue fontWeight={'800'}>+{gallery.length - 3}</TYPE.blue>
+              <Flex
+                color="#2172E5"
+                fontWeight={'800'}
+                width={150}
+                height={150}
+                justifyContent="center"
+                alignItems="center"
+              >
+                +{gallery.length - 3}
+              </Flex>
             </GalleryCarouselExtra>
           )}
         </GalleryCarouselExtraMediaList>
@@ -157,6 +167,12 @@ const GalleryCarouselExtraMediaList = styled.div`
   flex-flow: row nowrap;
   justify-content: flex-start;
   gap: 1rem;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    overflow-x: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
 `
 
 const GalleryCarouselImage = styled.img`
@@ -171,7 +187,7 @@ const GalerryCarouselEntry = styled.div`
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
   height: 150px;
-  width: 160px;
+  width: 150px;
   color: ${(props) => props.theme.launchpad.colors.text.title};
   display: flex;
   align-items: center;
@@ -195,7 +211,8 @@ const GalerryCarouselEntry = styled.div`
 const GalleryCarouselExtra = styled.div`
   display: grid;
   place-content: center;
-  width: 80px;
+  width: 150px;
+  height: 150px;
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
   color: ${(props) => props.theme.launchpad.colors.text.title};

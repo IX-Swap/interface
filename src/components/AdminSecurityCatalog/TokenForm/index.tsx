@@ -46,7 +46,8 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
     initialValues,
     validationSchema: tokenData ? validationSchema : null,
     validateOnBlur: false,
-    validateOnChange: false,
+    validateOnChange: true,
+    validateOnMount: true,
     onSubmit: async (values: any) => {
       try {
         formik.setSubmitting(true)

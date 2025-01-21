@@ -29,6 +29,8 @@ import VerificationConfirmation from './VerificationConfirmation'
 import { EmailType, SecondaryContactTypeV2, SuccessType } from './enum'
 import SecondaryContactOption from './SecondaryContactOption'
 import CountriesBlockAlert from './CountriesBlockAlert'
+import useQuery from 'hooks/useQuery'
+
 export const FormRow = styled(Row)`
   align-items: flex-start;
   gap: 35px;
@@ -45,6 +47,10 @@ export const FormContainer = styled(FormWrapper)`
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    flex-direction: column;
+  }
 `
 
 const Title = styled(TYPE.title4)`
@@ -64,6 +70,11 @@ const ReferralCode = styled.span`
   font-weight: 600;
   align-self: center;
   color: #b8b8cc;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    align-self: flex-start;
+    margin-left: 0;
+  }
 `
 
 const ReferralCodeText = styled.span`
@@ -144,6 +155,7 @@ export default function IndividualKycFormV2() {
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false)
   const [initialValues, setInitialValues] = useState(individualFormV2InitialValues)
   const getMyKyc = useGetMyKyc()
+  const query = useQuery()
 
   const getInitialValues = () => {
     if (kyc?.individual) {
@@ -158,7 +170,7 @@ export default function IndividualKycFormV2() {
   }
 
   useEffect(() => {
-    const code = new URL(window.location.href).href?.split('=')[1]
+    const code = query.get('referralCode')
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
       setReferralCode(code)
@@ -294,27 +306,27 @@ export default function IndividualKycFormV2() {
 
     if (selectedCheckbox === SecondaryContactTypeV2.PROOF_OF_ADDRESS) {
       try {
-        const {status} = await secondaryContact();
+        const { status } = await secondaryContact()
 
         if (status !== 200) {
           setLoading(false)
-          return;
+          return
         }
       } catch (error) {
         setLoading(false)
-        return;
+        return
       }
     }
 
     try {
-      const {data, status} = await verifyIdentity()
+      const { data, status } = await verifyIdentity()
 
       if (status !== 200) {
         setLoading(false)
-        return;
+        return
       }
 
-      const redirectUrl = data?.redirectUrl;
+      const redirectUrl = data?.redirectUrl
       setLoading(false)
       window.open(redirectUrl, '_self')
     } catch (error) {

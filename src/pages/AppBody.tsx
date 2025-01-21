@@ -2,11 +2,11 @@ import React from 'react'
 import { useCookies } from 'react-cookie'
 import styled from 'styled-components/macro'
 
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { isMobile } from 'react-device-detect'
 import Box from '@mui/material/Box'
-import Portal from '@reach/portal'
-import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { useWeb3React } from 'hooks/useWeb3React'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
+import FeatureNotSupported from 'components/FeatureNotSupported'
 
 export const BodyWrapper = styled(Box)<{
   margin?: string
@@ -69,7 +69,6 @@ export const BlurredOverlay = styled.div`
 export default function AppBody({
   children,
   blurred,
-  page,
   ...rest
 }: {
   children: React.ReactNode
@@ -78,7 +77,17 @@ export default function AppBody({
   maxWidth?: string
   page?: string
 }) {
+  const { account } = useWeb3React()
   const [cookies] = useCookies(['annoucementsSeen'])
+
+  if (!account) {
+    return <ConnectWalletCard />
+  }
+
+  if (blurred) {
+    return <FeatureNotSupported />
+  }
+
   return (
     <React.Fragment>
       <BodyWrapper
@@ -90,13 +99,6 @@ export default function AppBody({
         blurred={blurred}
         paddingXS="12px"
       >
-        {blurred && (
-          <Portal>
-            <CenteredFixed width="100vw" height="100vh">
-              <NotAvailablePage />
-            </CenteredFixed>
-          </Portal>
-        )}
         {!blurred && children}
       </BodyWrapper>
     </React.Fragment>

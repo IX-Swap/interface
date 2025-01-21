@@ -1,57 +1,70 @@
 import React from 'react'
-import { useSwitchChain } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
+import * as all from 'viem/chains'
 
-import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
-import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows } from './styled'
-import { useWeb3React } from 'hooks/useWeb3React'
+import { Container, Title, Info } from './styled'
+import wrongNetworkImg from 'assets/images/warningRedRec.png'
+import { Flex } from 'rebass'
+import { ButtonOutlined, PinnedContentButton } from 'components/Button'
+import { useLogout } from 'state/auth/hooks'
+import { customChains } from 'components/Web3Provider/constants'
 
-interface Props {
-  expectChain: SupportedChainId | null
+function getChain(id: any) {
+  const { ...chains } = all
+  const allChains = { ...chains, ...customChains }
+
+  for (const chain of Object.values(allChains)) {
+    if (chain.id === id) {
+      return chain
+    }
+  }
+
+  return null
 }
 
-export const NetworkNotAvailable: React.FC<Props> = ({ expectChain }) => {
-  const { chainId } = useWeb3React()
-  const { chains, switchChain } = useSwitchChain()
+interface Props {
+  expectChainId: any
+}
 
-  const changeNetwork = (targetChain: number) => {
+export const NetworkNotAvailable: React.FC<Props> = ({ expectChainId }) => {
+  const { chainId } = useAccount()
+  const { isPending, chains, switchChain } = useSwitchChain()
+  const { disconnectWallet } = useLogout()
+
+  const changeNetwork = (targetChain: any) => {
     if (chainId !== targetChain) {
       switchChain({ chainId: targetChain })
     }
   }
 
-  const chainsFiltered = chains.filter((chain) => chain.id === expectChain)
-  const chainsNames = chainsFiltered.map((chain) => chain.name)
+  const expectChain = chains.find((chain) => chain.id === expectChainId)
+  const expectChainName = expectChain?.name || 'Unknown'
+  const currentChain = getChain(chainId)
+  const currentChainName = currentChain ? currentChain.name : 'Unknown'
 
   return (
     <Container>
-      <Title>
-        Connect to the Right
-        <br />
-        Blockchain Network
-      </Title>
-      <Info>Available Blockchain Networks:</Info>
-      <NetworksRow elements={chainsFiltered.length} style={chainsFiltered.length === 1 ? { marginLeft: 70, marginRight: 70 } : {}}>
-        {chainsFiltered.map((chain) => (
-          <NetworkCard onClick={() => changeNetwork(chain.id)} key={chain.id}>
-            <img src={CHAIN_INFO[chain.id].logoUrl} alt="icon" />
-            {chain.name}
-          </NetworkCard>
-        ))}
-      </NetworksRow>
-
-      <InfoRows>
-        <div>
-          Switch to{' '}
-          {chainsNames.map((chainName, index) => (
-            <span key={index}>
-              <b style={{ color: '#292933' }}>{chainName}</b>
-              {index < chainsNames.length - 2 ? ', ' : ''}
-              {index === chainsNames.length - 2 ? ' or ' : ''}
-            </span>
-          ))}
+      <Title>Wrong Network</Title>
+      <Info>
+        You are on <strong style={{ color: 'black' }}>{currentChainName}</strong>
+      </Info>
+      <Info>
+        Switch to the <strong style={{ color: 'black' }}>{expectChainName}</strong> to get full functionality.
+      </Info>
+      <Flex justifyContent="center" my={32}>
+        <div style={{ width: 100 }}>
+          <img src={wrongNetworkImg} style={{ width: '100%', height: 'auto' }} />
         </div>
-        <div>to get full functionality</div>
-      </InfoRows>
+      </Flex>
+
+      <Flex flexDirection="column" style={{ gap: 12, minWidth: 300 }}>
+        <PinnedContentButton style={{ fontSize: 14 }} onClick={() => changeNetwork(expectChainId)}>
+          {isPending ? 'Loading...' : `Switch to ${expectChainName}`}
+        </PinnedContentButton>
+        <ButtonOutlined style={{ fontSize: 14, color: 'rgba(255,109,109,0.9)' }} onClick={disconnectWallet}>
+          Disconnect Wallet
+        </ButtonOutlined>
+      </Flex>
     </Container>
   )
 }

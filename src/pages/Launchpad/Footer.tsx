@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Box } from 'rebass'
 
 import { Formik } from 'formik'
 import { object, string } from 'yup'
 
 import { ReactComponent as DotSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
 // import { ReactComponent as Logo } from 'assets/images/FooterlogoNew.svg'
-import { ReactComponent as Logo } from 'assets/images/ix-swapNew.svg'
+import Logo from 'assets/images/logo/logo-full-dark.png'
 import { ReactComponent as TelegramLogo } from 'assets/launchpad/svg/social/telegram.svg'
 import { ReactComponent as XLogo } from 'assets/launchpad/svg/social/twitter.svg'
 import { ReactComponent as MLogo } from 'assets/launchpad/svg/social/m.svg'
@@ -106,9 +107,12 @@ export const Footer: React.FC<Props> = (props) => {
 
       <FooterInfoContainer>
         <About>
-          <header>
-            <Logo />
-          </header>
+          <div className="header">
+            <Box width={100}>
+              <img src={Logo} alt="IX Swap" style={{ width: '100%', height: 'auto' }} />
+            </Box>
+          </div>
+
           <main>
             IX Swap is built by a global team of capital markets, legal and blockchain experts, bringing you the next
             generation of trading for Security tokens and tokenized stocks
@@ -286,7 +290,7 @@ const Copyright = styled.div`
 `
 const About = styled.div`
   width: 270px;
-  header {
+  .header {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;

@@ -5,7 +5,7 @@ import _get from 'lodash/get'
 import { Link } from 'react-router-dom'
 
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-import { ReactComponent as NewLogo } from 'assets/images/ix-swapNew.svg'
+import { ReactComponent as NewLogo } from 'assets/images/logo/logo-full-dark.svg'
 import { AdminHeaderLinks } from 'components/Header/HeaderLinks'
 import { MobileMenu } from 'components/Mobile-Menu'
 import { RowFixed } from 'components/Row'

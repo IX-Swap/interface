@@ -9,6 +9,9 @@ const ETHERSCAN_PREFIXES: { [chainId: number]: string } = {
   137: '',
   84532: 'sepolia.',
   8453: '',
+  7849306: 'ozean-testnet.',
+  1001: 'kairos.',
+  8217: '',
 }
 const CHAIN_EXPLORERS: { [chainId: number]: string } = {
   1: 'etherscan.io',
@@ -21,6 +24,9 @@ const CHAIN_EXPLORERS: { [chainId: number]: string } = {
   137: 'polygonscan.com',
   84532: 'basescan.org',
   8453: 'basescan.org',
+  7849306: 'explorer.caldera.xyz',
+  1001: 'kaiascan.io',
+  8217: 'kaiascan.io',
 }
 
 export enum ExplorerDataType {
@@ -36,22 +42,22 @@ export enum ExplorerDataType {
  * @param data the data to return a link for
  * @param type the type of the data
  */
-export function getExplorerLink(chainId: number, data: string, type: ExplorerDataType): string {
+export function getExplorerLink(chainId: any, data: string, type: ExplorerDataType): string {
   const prefix = `https://${ETHERSCAN_PREFIXES[chainId] ?? ''}${CHAIN_EXPLORERS[chainId] ?? 'etherscan.io'}`
 
   switch (type) {
-  case ExplorerDataType.TRANSACTION: {
-    return `${prefix}/tx/${data}`
-  }
-  case ExplorerDataType.TOKEN: {
-    return `${prefix}/token/${data}`
-  }
-  case ExplorerDataType.BLOCK: {
-    return `${prefix}/block/${data}`
-  }
-  case ExplorerDataType.ADDRESS:
-  default: {
-    return `${prefix}/address/${data}`
-  }
+    case ExplorerDataType.TRANSACTION: {
+      return `${prefix}/tx/${data}`
+    }
+    case ExplorerDataType.TOKEN: {
+      return `${prefix}/token/${data}`
+    }
+    case ExplorerDataType.BLOCK: {
+      return `${prefix}/block/${data}`
+    }
+    case ExplorerDataType.ADDRESS:
+    default: {
+      return `${prefix}/address/${data}`
+    }
   }
 }

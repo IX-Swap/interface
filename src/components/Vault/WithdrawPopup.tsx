@@ -35,7 +35,6 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
   const { secTokens } = useUserSecTokens()
   const toggle = useWithdrawModalToggle()
   const [modalView, setModalView] = useState<WithdrawModalView>(WithdrawModalView.WITHDRAW_REQUEST)
-  const { loading } = useWithdrawState()
   const { onResetWithdraw } = useWithdrawActionHandlers()
   const { chainId } = useActiveWeb3React()
   const chainName = findChainName(chainId) || 'Base'
@@ -71,7 +70,6 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
       }
     >
       <ModalBlurWrapper style={{ position: 'relative' }}>
-        <LoadingIndicator isLoading={loading} isRelative />
         <ModalContentWrapper>
           <ModalPadding>
             <RowBetween>

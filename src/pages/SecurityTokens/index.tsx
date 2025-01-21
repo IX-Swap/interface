@@ -4,18 +4,17 @@ import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
 import { BorderSimple, ToggleOption } from 'components/Tabs'
-import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
 import CustodianV2 from 'pages/CustodianV2'
 import { UserPayoutEvents } from 'components/UserPayoutEvents'
-import AppBody, { BodyWrapper } from 'pages/AppBody'
+import { BodyWrapper } from 'pages/AppBody'
 import { useWeb3React } from 'hooks/useWeb3React'
 import { useCookies } from 'react-cookie'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 import { useAuthState } from 'state/auth/hooks'
 import { routes } from 'utils/routes'
 import { MEDIA_WIDTHS } from 'theme'
 import { Line } from 'components/Line'
+import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 type SecurityTab = 'tokens' | 'payout-events' | ':tab'
 
@@ -46,7 +45,7 @@ const renderTab = (selectedTab: SecurityTab | string) => {
 }
 
 const SecurityTokens = () => {
-  const { chainId, account } = useWeb3React()
+  const { account } = useWeb3React()
   const [selectedTab, setSelectedTab] = useState<SecurityTab>('tokens')
   const [cookies] = useCookies(['annoucementsSeen'])
   const { token } = useAuthState()
@@ -54,7 +53,6 @@ const SecurityTokens = () => {
   const history = useHistory()
   const params = useParams<AdminParams>()
 
-  const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const isLoggedIn = !!token && !!account
 
   const changeTab = useCallback(
@@ -69,13 +67,9 @@ const SecurityTokens = () => {
     setSelectedTab(tab === ':tab' ? 'tokens' : tab)
   }, [params])
 
-  if (!isLoggedIn) return <NotAvailablePage />
+  if (!isLoggedIn) return <ConnectWalletCard />
 
-  return blurred ? (
-    <AppBody blurred>
-      <Trans>RWAs</Trans>
-    </AppBody>
-  ) : (
+  return (
     <>
       <Line />
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>

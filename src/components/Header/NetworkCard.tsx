@@ -1,11 +1,10 @@
 import React, { useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
-import { useSwitchChain } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 
 import { CHAIN_INFO, NETWORK_LABELS } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
-import { useActiveWeb3React } from 'hooks/web3'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import { ChevronElement } from 'components/ChevronElement'
@@ -13,9 +12,14 @@ import { MEDIA_WIDTHS } from 'theme'
 import { ReactComponent as Checked } from 'assets/images/checked-blue.svg'
 import { VioletCard } from '../Card'
 import { CHAINS } from 'components/Web3Provider/constants'
+import wrongNetworkImg from 'assets/images/warningRedRec.png'
+
+interface StyledBoxProps {
+  isCorrectNetwork: boolean
+}
 
 export const NetworkCard = () => {
-  const { chainId, provider, account } = useActiveWeb3React()
+  const { chainId, address: account } = useAccount()
   const { isPending, switchChain } = useSwitchChain()
 
   const node = useRef<HTMLDivElement>()
@@ -23,12 +27,10 @@ export const NetworkCard = () => {
   const toggle = useToggleModal(ApplicationModal.NETWORK_SELECTOR)
   const info = chainId ? CHAIN_INFO[chainId] : undefined
   useOnClickOutside(node, open ? toggle : undefined)
+  const supportedChains = CHAINS ? CHAINS.map((chain) => chain.id) : []
+  const isCorrectNetwork = supportedChains.includes(chainId as number)
 
   const activeChainName = useMemo(() => chainId && NETWORK_LABELS[chainId], [chainId])
-
-  if (!chainId || !NETWORK_LABELS[chainId] || !info || !provider) {
-    return null
-  }
 
   const handleRowClick = (targetChain: number) => {
     toggle()
@@ -38,7 +40,7 @@ export const NetworkCard = () => {
   }
 
   return (
-    <StyledBox>
+    <StyledBox isCorrectNetwork={isCorrectNetwork}>
       {account && (
         <Selector ref={node as any}>
           <SelectorControls onClick={() => toggle()}>
@@ -46,10 +48,21 @@ export const NetworkCard = () => {
               <PendingText>Switching...</PendingText>
             ) : (
               <Flex alignItems="center">
-                <Logo src={CHAIN_INFO[chainId].logoUrl} />
-                <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
-                  {activeChainName}
-                </NetworkCardWrapper>
+                {isCorrectNetwork ? (
+                  <>
+                    {info ? <Logo src={info.logoUrl} /> : null}
+                    <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
+                      {activeChainName}
+                    </NetworkCardWrapper>
+                  </>
+                ) : (
+                  <>
+                    <Logo src={wrongNetworkImg} />
+                    <NetworkCardWrapper style={{ color: '#292933', marginRight: '10px' }}>
+                      Wrong Network
+                    </NetworkCardWrapper>
+                  </>
+                )}
               </Flex>
             )}
 
@@ -101,7 +114,7 @@ const NetworkCardWrapper = styled.div`
   font-size: 13px;
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-     max-width: min-content;
+     padding: 4.6px 0;
   `};
 
   ${({ theme }) => theme.mediaWidth.upToLarge`
@@ -165,21 +178,21 @@ const NetworkLabel = styled.div`
 const Selector = styled.div`
   margin-right: 5px;
 `
-const StyledBox = styled.div`
+const StyledBox = styled.div<StyledBoxProps>`
   font-size: 12px;
-  border: 1px solid #e6e6ff;
+  border: 1px solid ${({ isCorrectNetwork }) => (isCorrectNetwork ? '#e6e6ff' : 'red')};
   padding: 10px 5px 10px 10px;
   border-radius: 4px;
   ${({ theme }) => theme.mediaWidth.upToMedium`
      padding: 10px 20px 10px 20px;
   `};
   :active {
-    border: 1px solid #4d8fea;
+    border: 1px solid ${({ isCorrectNetwork }) => (isCorrectNetwork ? '#4d8fea' : 'red')};
   }
   :hover {
     transform: scale(0.99);
     transition: 0.2s;
-    border: 1px solid #4d8fea;
+    border: 1px solid ${({ isCorrectNetwork }) => (isCorrectNetwork ? '#4d8fea' : 'red')};
   }
   position: relative;
 `

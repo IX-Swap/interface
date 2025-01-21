@@ -15,7 +15,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import usdcDropDown from '../../../assets/images/usdcNew.svg'
-import ixsDropDown from '../../../assets/images/ixsToken.svg'
+import ixsDropDown from 'assets/images/logo/IXS-Token.png'
 import usdtropDown from '../../../assets/images/usdtNewToken.svg'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
@@ -456,7 +456,7 @@ const Tokenomics = ({
         {isWrongChain ? (
           <Portal>
             <CenteredFixed width="100vw" height="100vh">
-              <NetworkNotAvailable expectChain={expectChain} />
+              <NetworkNotAvailable expectChainId={expectChain} />
             </CenteredFixed>
           </Portal>
         ) : null}
