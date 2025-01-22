@@ -50,7 +50,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
     contractAddress,
     timeframe,
   } = props.offer
-  const isBlackList = ['40e1ce66-1532-4794-86c4-af465bf22a57', '16e9891c-0092-4879-b11e-05a7ec84336b'].includes(id);
+  const isBlackList = ['40e1ce66-1532-4794-86c4-af465bf22a57', '16e9891c-0092-4879-b11e-05a7ec84336b'].includes(id)
 
   const addPopup = useAddPopup()
   const claimRefund = useClaimOfferRefund(id)
@@ -72,9 +72,9 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
-        tokenCurrency,
+          tokenCurrency,
           ethers.utils.parseUnits(amount?.toString(), investingTokenDecimals) as any
-      )
+        )
       : undefined,
     contractAddress || IXSALE_ADDRESS[chainId]
   )
@@ -138,11 +138,23 @@ export const ClosedStage: React.FC<Props> = (props) => {
         </Column>
 
         {!isSuccessfull && (
-          <ClaimedFilledButton onClick={onSubmit} disabled={claiming || !canClaim || amount <= 0 || hasClaimed || isBlackList}>
+          <ClaimedFilledButton
+            onClick={onSubmit}
+            disabled={claiming || !canClaim || amount <= 0 || hasClaimed || isBlackList}
+          >
             Claim
           </ClaimedFilledButton>
         )}
       </Row>
+
+      {isBlackList ? (
+        <h5 style={{ margin: 0, color: '#ffaa71' }}>
+          Your investment has been refunded. See transaction{' '}
+          <a href={`https://polygonscan.com/address/${account}`} target="_blank" rel="noreferrer">
+            here
+          </a>
+        </h5>
+      ) : null}
 
       <Separator />
 
@@ -154,8 +166,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
               ? `Upon the commencement of the token claim deal stage, the issuer will initiate a batch claim process for the
             tokens. The tokens will be automatically distributed to the investor&apos;s wallets.`
               : `You cannot claim any tokens yet. Please come back on the claim date, ${
-                claimTime ? `${dayjs(claimTime).format('DD/MM/YYYY')}.` : ''
-              }`}
+                  claimTime ? `${dayjs(claimTime).format('DD/MM/YYYY')}.` : ''
+                }`}
           </CantClaimNotice>
         </Row>
       )}
