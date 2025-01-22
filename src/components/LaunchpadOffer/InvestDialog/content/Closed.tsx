@@ -50,6 +50,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
     contractAddress,
     timeframe,
   } = props.offer
+  const isBlackList = ['40e1ce66-1532-4794-86c4-af465bf22a57', '16e9891c-0092-4879-b11e-05a7ec84336b'].includes(id);
 
   const addPopup = useAddPopup()
   const claimRefund = useClaimOfferRefund(id)
@@ -137,7 +138,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
         </Column>
 
         {!isSuccessfull && (
-          <ClaimedFilledButton onClick={onSubmit} disabled={claiming || !canClaim || amount <= 0 || hasClaimed}>
+          <ClaimedFilledButton onClick={onSubmit} disabled={claiming || !canClaim || amount <= 0 || hasClaimed || isBlackList}>
             Claim
           </ClaimedFilledButton>
         )}
