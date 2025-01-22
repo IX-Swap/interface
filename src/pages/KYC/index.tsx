@@ -236,7 +236,7 @@ const KYC = () => {
                   <IndividualKYC />
                   <Link style={{ textDecoration: 'none' }} to={getKYCLink()}>
                     <PinnedContentButton sx={{ padding: '16px 24px', marginTop: '32px' }}>
-                      <Trans>Continue Pass KYC as Individual</Trans>
+                      <Trans>{t('kyc.kycAsIndividualContinue')}</Trans>
                     </PinnedContentButton>
                   </Link>
                 </Flex>
@@ -247,7 +247,7 @@ const KYC = () => {
                   <CorporateKYC />
                   <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
                     <PinnedContentButton sx={{ padding: '16px 24px', marginTop: '32px' }}>
-                      <Trans>Continue Pass KYC as Corporate</Trans>
+                      <Trans>{t('kyc.kycAsCorporateContinue')}</Trans>
                     </PinnedContentButton>
                   </Link>
                 </Flex>
@@ -330,7 +330,7 @@ const KYC = () => {
               alignItems="center"
             >
               <TYPE.description6 fontWeight={'800'} marginTop={'30px'} marginBottom="15px">
-                <Trans>{config?.name || 'IX Swap'} KYC   {t('kyc.section1Title')}</Trans>
+                <Trans>{config?.name || 'IX Swap'} KYC</Trans>
               </TYPE.description6>
               <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />
               {referralCode && (
@@ -400,7 +400,7 @@ const KYC = () => {
                   )}
 
                   <Column style={{ margin: '20px 0px' }}>
-                    <TYPE.title11>Refer a Friend</TYPE.title11>
+                    <TYPE.title11>{t('labels.referFriend')}</TYPE.title11>
                   </Column>
 
                   <Column style={{ margin: '5px 0px' }}>

@@ -19,6 +19,7 @@ import { routes } from 'utils/routes'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import Row, { RowFixed } from '../Row'
 import { useKyc, useRole } from 'state/user/hooks'
+import { useLocalization } from 'i18n'
 
 const activeClassName = 'ACTIVE'
 
@@ -71,6 +72,7 @@ export const HeaderLinks = () => {
 
   const { config } = useWhitelabelState()
   const { chainId, account } = useActiveWeb3React()
+  const { t } = useLocalization();
   const bridgeUrl = process.env.REACT_APP_BRIDGE_URL || ''
 
   useOnClickOutside(farmNode, open ? toggle : undefined)
@@ -94,7 +96,7 @@ export const HeaderLinks = () => {
       condition: isAllowed('charts') && isWhitelisted,
       component: (
         <MenuExternalLink key="charts" target="_self" href={config?.chartsUrl || 'https://info.ixswap.io/home'}>
-          <Trans>Charts</Trans>
+          <Trans>{t('navbar.charts')}</Trans>
         </MenuExternalLink>
       ),
     },

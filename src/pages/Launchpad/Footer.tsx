@@ -17,6 +17,7 @@ import { useSubscribeToOffer } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { DiscreteExternalLink } from 'theme'
 import { text1, text12, text23, text24, text25, text26, text8 } from 'components/LaunchpadMisc/typography'
+import { useLocalization } from 'i18n'
 
 type ValueSetter = (field: string, value: any, shouldValidate?: boolean | undefined) => void
 
@@ -35,6 +36,7 @@ interface Props {
 export const Footer: React.FC<Props> = (props) => {
   const subscribe = useSubscribeToOffer()
   const addPopup = useAddPopup()
+  const { t } = useLocalization();
 
   const [active, setActive] = React.useState(false)
 
@@ -56,9 +58,9 @@ export const Footer: React.FC<Props> = (props) => {
   return (
     <FooterContainer>
       <SubscriptionFormContainer>
-        <SubscriptionFormTitle>Subscribe for {props.offerId ? "the Deal's" : ''} Updates</SubscriptionFormTitle>
+        <SubscriptionFormTitle>{t('landing.subscribe')} {props.offerId ? "the Deal's" : ''} {t('landing.updates')}</SubscriptionFormTitle>
 
-        <SubscriptionFormSubtitle>Get the latest IX Swap news, all spam-free.</SubscriptionFormSubtitle>
+        <SubscriptionFormSubtitle>{t('landing.subscribeSubtitle')}</SubscriptionFormSubtitle>
 
         <Formik initialValues={initialValues} validationSchema={schema} onSubmit={submit}>
           {({ errors, setFieldValue, submitForm }) => (
@@ -66,12 +68,12 @@ export const Footer: React.FC<Props> = (props) => {
               <SubscriptionFormEmailField>
                 <SubscriptionFormEmailFieldInput onChange={(e) => handleEmailInput(e.target.value, setFieldValue)} />
 
-                <SubscriptionFormEmailFieldLabel active={active}>Email Address</SubscriptionFormEmailFieldLabel>
+                <SubscriptionFormEmailFieldLabel active={active}>{t('labels.emailAddress')}</SubscriptionFormEmailFieldLabel>
 
                 {errors.email && <ErrorText>{errors.email}</ErrorText>}
               </SubscriptionFormEmailField>
 
-              <SubscriptionFormSubmitButton onClick={submitForm}>Submit</SubscriptionFormSubmitButton>
+              <SubscriptionFormSubmitButton onClick={submitForm}>{t('buttons.submit')}</SubscriptionFormSubmitButton>
             </SubscriptionFormFieldContainer>
           )}
         </Formik>

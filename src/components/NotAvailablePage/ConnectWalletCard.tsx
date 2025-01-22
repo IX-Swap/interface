@@ -6,30 +6,33 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { ConnectWalletContainer } from './styled'
 import { PinnedContentButton } from 'components/Button'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { useLocalization } from 'i18n'
 
 const ConnectWalletCard = () => {
   const { config } = useWhitelabelState()
   const { openConnectModal } = useConnectModal()
+  const { t } = useLocalization();
 
   return (
     <ConnectWalletContainer>
       <Text>
-        <Trans>Welcome to {config?.name || 'IX Swap'}</Trans>
+        <Trans>{t('landing.welcome')} {config?.name || 'IX Swap'}</Trans>
       </Text>
       <div>
-        Please Connect <br /> your Wallet to use <br /> the Application.
+        {t('landing.pleaseConnectWallet')}
+        {/* Please Connect <br /> your Wallet to use <br /> the Application. */}
       </div>
       {openConnectModal && (
         <PinnedContentButton style={{ boxShadow: '0px 16px 16px 0px #6666FF21' }} onClick={openConnectModal}>
           <Text className="connect-wallet-button">
-            <Trans>Connect Wallet</Trans>
+            <Trans>{t('buttons.connectWallet')}</Trans>
           </Text>
         </PinnedContentButton>
       )}
 
       {config?.isIxSwap ? (
         <span>
-          While your wallet is not connected, you can see our New <br />
+          {t('landing.whileWaiting')} <br />
           <a
             style={{ color: '#6666FF', textDecoration: 'none' }}
             href="https://staking.ixswap.io/"

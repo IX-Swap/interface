@@ -18,6 +18,7 @@ import MenuMobile from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Fade from '@mui/material/Fade'
 import { CHAINS } from 'components/Web3Provider/constants'
+import { useLocalization } from 'i18n'
 
 interface Props {
   close: () => void
@@ -28,6 +29,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
   const { chainId, account } = useActiveWeb3React()
   const { config } = useWhitelabelState()
   const [cookies] = useCookies(['annoucementsSeen'])
+  const { t } = useLocalization();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -130,7 +132,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
           {isIxSwap && isAllowed('charts') && isWhitelisted ? (
             <>
               <ExternalListItem target="_self" href={'https://info.ixswap.io/home'}>
-                <Trans>Charts</Trans>
+                <Trans>{t('navbar.charts')}</Trans>
               </ExternalListItem>
 
               <Line />
@@ -140,7 +142,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
           {isIxSwap && isAllowed('bridge') ? (
             <>
               <ExternalListItem target="_blank" href={bridgeUrl}>
-                <Trans>Bridge</Trans>
+                <Trans>{t('navbar.bridge')}</Trans>
               </ExternalListItem>
 
               <Line />
@@ -149,7 +151,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
 
           <>
             <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
-              <Trans>Launchpad</Trans>
+              <Trans>{t('navbar.launchpad')}</Trans>
             </MenuListItem>
 
             <Line />
@@ -242,7 +244,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
               >
-                Staking
+                {t('navbar.staking')}{' '}
               </div>
               <MenuMobile
                 style={{ width: '90vw' }}

@@ -1,7 +1,7 @@
 {
   "navbar": {
-    "charts": "Charts",
-    "bridge": "Bridge",
+    "charts": "图表",
+    "bridge": "桥",
     "rwas": "RWAs",
     "liquidityPools": "Liquidity Pools",
     "swapTrade": "Swap/Trade",

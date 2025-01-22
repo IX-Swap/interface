@@ -6,6 +6,8 @@ import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { useLogout } from 'state/auth/hooks'
 import { useWalletState } from 'state/wallet/hooks'
+import { useLocalization } from 'i18n'
+import { buttons } from 'polished'
 
 interface SignMessageModalProps {
   loading?: boolean
@@ -15,6 +17,7 @@ interface SignMessageModalProps {
 const SignMessageModal: React.FC<SignMessageModalProps> = ({ authenticate }) => {
   const { isSignLoading } = useWalletState()
   const { disconnectWallet } = useLogout()
+  const { t } = useLocalization();
 
   return (
     <Container>
@@ -22,20 +25,20 @@ const SignMessageModal: React.FC<SignMessageModalProps> = ({ authenticate }) => 
         <img src={signIcon} alt="signIcon" />
       </div>
 
-      <Title>Verify your account</Title>
+      <Title>{t('labels.verifyTitle')}</Title>
 
-      <Desc>Please sign the message in your wallet to verify your account ownership</Desc>
+      <Desc>{t('labels.verifyDesc')}</Desc>
 
       <ActionWrapper>
         <OutlineButton style={{ border: '1px solid #6666FF33', width: '100%' }} onClick={() => disconnectWallet()}>
-          Cancel
+          {t('buttons.cancel')}
         </OutlineButton>
         <FilledButton
           style={{ boxShadow: '0px 16px 16px 0px #6666FF21', width: '100%' }}
           disabled={isSignLoading}
           onClick={() => authenticate()}
         >
-          {isSignLoading ? <LoaderThin size={12} /> : null} Sign Message
+          {isSignLoading ? <LoaderThin size={12} /> : null} {t('buttons.signMessage')}
         </FilledButton>
       </ActionWrapper>
     </Container>

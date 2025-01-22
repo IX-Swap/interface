@@ -2,11 +2,24 @@
   "navbar": {
     "charts": "Charts",
     "bridge": "Bridge",
+    "launchpad": "Launchpad",
     "rwas": "RWAs",
     "liquidityPools": "Liquidity Pools",
     "swapTrade": "Swap/Trade",
     "kyc": "KYC",
     "staking": "Staking"
+  },
+  "labels": {
+    "emailAddress": "Email Address",
+    "verifyTitle": "Verify your Account",
+    "verifyDesc": "Please sign the message in your wallet to verify your account ownership",
+    "referFriend": "Refer a Friend"
+  },
+  "buttons": {
+    "submit": "Submit",
+    "connectWallet": "Connect Wallet",
+    "cancel": "Cancel",
+    "signMessage": "Sign Message"
   },
   "footer": {
     "copyright": "Copyright © IX Swap 2024",
@@ -15,16 +28,19 @@
     "cookieSetting": "Cookie Setting"
   },
   "landing": {
-    "welcome": "Welcome to IXSwap",
-    "pleaseConnectWallet": "Please connect your wallet to use IX Swap",
-    "connectWallet": "Connect Wallet",
+    "welcome": "Welcome to",
+    "whileWaiting": "While your wallet is not connected, you can see our New",
+    "subscribe": "Subscribe for",
+    "updates": "Updates",
+    "subscribeSubtitle": "Get the latest IX Swap news, all spam-free.",
+    "pleaseConnectWallet": "Please connect your wallet to use the Application",
     "whileWalletIsNotConnected": "While your wallet is not connected, you can see our New"
   },
   "kyc": {
-    "section1Title": "To sign up to IX Swap, you have to pass KYC",
-    "referFriend": "Refer a Friend",
     "kycAsIndividual": "Pass KYC as Individual",
     "kycAsCorporate": "Pass KYC as Corporate",
+    "kycAsIndividualContinue": "Continue Pass KYC as Individual",
+    "kycAsCorporateContinue": "Continue Pass KYC as Corporate",
     "startNow": "Start Now",
     "individual": {
       "title": "Idividual KYC",
