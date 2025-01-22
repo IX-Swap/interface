@@ -28,9 +28,9 @@ export const InvestSuccessModal = ({ show, onClose }: Props) => {
             </InnerCircle>
           </OuterCircle>
           <Title>Order Successful</Title>
-          <FilledButton onClick={onClose} style={{ zIndex: 30, width: '100%' }}>
+          <CustomFilledButton onClick={onClose} style={{ zIndex: 30 }}>
             <BtnLabel>Close</BtnLabel>
-          </FilledButton>
+          </CustomFilledButton>
         </Container>
         <RightConfettiSvg className="right" />
       </Wrapper>
@@ -92,5 +92,13 @@ const Wrapper = styled.div`
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 20px;
+  }
+`
+
+const CustomFilledButton = styled(FilledButton)`
+  width: 384px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 100%;
   }
 `

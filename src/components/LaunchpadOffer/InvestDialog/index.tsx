@@ -167,7 +167,6 @@ const ModalWrapper = styled.div`
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     overflow-y: scroll;
     max-height: 100vh;
-    background: white;
   }
 `
 
@@ -187,6 +186,8 @@ const DialogContainer = styled.article`
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     grid-template-columns: 0px 400px;
+    border-radius: 0px 0px 16px 16px;
+    padding-top: 20px;
   }
 
   > header {
@@ -209,13 +210,19 @@ const DialogContainer = styled.article`
   > main {
     padding: 0 2rem;
   }
+
+
 `
 
 const DialogHeader = styled.div`
   display: flex;
-  // flex-flow: row nowrap;
-  // justify-content: flex-around;
   align-items: center;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    background: white;
+    position: relative;
+    border-radius: 16px 16px 0 0;
+  }
 `
 
 const DialogHeaderTitle = styled.div`
