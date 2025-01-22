@@ -29,6 +29,7 @@ const RemoveLiquidity = lazy(() => import('pages/RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('pages/SecTokenDetails'))
 
 const KYC = lazy(() => import('pages/KYC'))
+const Maintenance = lazy(() => import('pages/Maintenance'))
 const IndividualKYC = lazy(() => import('pages/KYC/IndividualKycForm'))
 const IndividualKYCV2 = lazy(() => import('pages/KYC/IndividualKycFormV2'))
 const CorporateKYC = lazy(() => import('pages/KYC/CorporateKycForm'))
@@ -136,6 +137,7 @@ export const routeConfigs: RouteMapEntry[] = [
   },
 
   { path: routes.kyc, component: KYC, conditions: { isWhitelisted: true } },
+  { path: '/maintainance', component: Maintenance, },
   {
     path: routes.kycIndividual,
     component: IndividualKYC,

@@ -17,6 +17,7 @@ import { isPending } from './enum'
 import { useUserState } from 'state/user/hooks'
 import { ButtonGradientBorder, NewApproveButton } from 'components/Button'
 import { isMobile } from 'react-device-detect'
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   currency?: Currency
@@ -55,6 +56,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
   const { withdrawStatus } = useWithdrawState()
   const haveActiveWithdrawal = isPending(withdrawStatus.status || '')
   const { me } = useUserState()
+  const history = useHistory()
 
   const tooltipText = useMemo(() => {
     if (me?.isWhitelisted) return ''
@@ -73,6 +75,12 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
     return !token.allowWithdrawal || haveActiveWithdrawal
   }, [me, token.allowWithdrawal, haveActiveWithdrawal])
 
+
+  const handleWithdraw = () => {
+    history.push('/maintainance')
+    // toggle()
+  }
+
   return (
     <StyledTitleStatusRow style={{ marginTop: '0.6rem' }}>
       {/* <ExistingTitle>
@@ -87,9 +95,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
           <NewApproveButton
             style={{ width: isMobile ? '100%' : '200px', border: '1px solid #6666FF33', color: '#6666FF' }}
             data-testid="withdraw"
-            onClick={async () => {
-              toggle()
-            }}
+            onClick={handleWithdraw}
             disabled={isDisabled}
           >
             <Trans>Withdraw</Trans>
@@ -101,9 +107,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
           <NewApproveButton
             style={{ width: isMobile ? '100%' : '200px', border: '1px solid #6666FF33', color: '#6666FF' }}
             data-testid="withdraw"
-            onClick={async () => {
-              toggle()
-            }}
+            onClick={handleWithdraw}
             disabled={isDisabled}
           >
             <Trans>Withdraw</Trans>
