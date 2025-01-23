@@ -88,7 +88,7 @@ export function useDerivedDepositInfo(): {
 
   const inputCurrency = useCurrency(currencyId)
 
-  const parsedAmount = tryParseAmount(amount, inputCurrency ?? undefined)
+  const parsedAmount = tryParseAmount(amount.toString(), inputCurrency ?? undefined)
 
   let inputError: string | undefined
   if (!account) {
