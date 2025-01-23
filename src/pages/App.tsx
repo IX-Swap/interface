@@ -49,9 +49,6 @@ import { CHAINS } from 'components/Web3Provider/constants'
 const Launchpad = lazy(() => import('pages/Launchpad'))
 import KYC from 'pages/KYC'
 import { isLineLiff, isValidReferralCode } from 'utils'
-import { useLiff } from './LiffProvider'
-import TaskSuccessModal from 'components/Rewards/TaskSuccessModal'
-import { useLineReward } from 'providers/LineRewardProvider'
 import JoinCampaignPage from './JoinCampaignPage'
 
 const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
@@ -83,12 +80,9 @@ export default function App() {
   const hideHeader = useHideHeader()
   const { kyc } = useKYCState()
   const { isConnected, walletName } = useWalletState()
-  const { openTaskSuccessModal, setOpenTaskSuccessModal } = useLineReward()
   const { authenticate } = useAccount()
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const query = useQuery()
-
-  const { isLiffBrowser } = useLiff()
 
   const [countryCode, setCountryCode] = useState()
 
