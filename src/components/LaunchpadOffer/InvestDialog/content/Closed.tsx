@@ -33,6 +33,11 @@ interface Props {
   investedData: InvestedDataRes
 }
 
+const transactionHash: any = {
+  '40e1ce66-1532-4794-86c4-af465bf22a57': '',
+  '16e9891c-0092-4879-b11e-05a7ec84336b': 'https://polygonscan.com/tx/0x600090b79291fb303618ce98ec1568fd88f2dc5c68da32079e77e698b8242167',
+}
+
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
   const {
@@ -72,9 +77,9 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
-          tokenCurrency,
+        tokenCurrency,
           ethers.utils.parseUnits(amount?.toString(), investingTokenDecimals) as any
-        )
+      )
       : undefined,
     contractAddress || IXSALE_ADDRESS[chainId]
   )
@@ -150,7 +155,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
       {isBlackList ? (
         <h5 style={{ margin: 0, color: '#ffaa71' }}>
           Your investment has been refunded. See transaction{' '}
-          <a href={`https://polygonscan.com/address/${account}`} target="_blank" rel="noreferrer">
+          <a href={transactionHash[id]} target="_blank" rel="noreferrer">
             here
           </a>
         </h5>
@@ -166,8 +171,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
               ? `Upon the commencement of the token claim deal stage, the issuer will initiate a batch claim process for the
             tokens. The tokens will be automatically distributed to the investor&apos;s wallets.`
               : `You cannot claim any tokens yet. Please come back on the claim date, ${
-                  claimTime ? `${dayjs(claimTime).format('DD/MM/YYYY')}.` : ''
-                }`}
+                claimTime ? `${dayjs(claimTime).format('DD/MM/YYYY')}.` : ''
+              }`}
           </CantClaimNotice>
         </Row>
       )}
