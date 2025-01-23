@@ -21,6 +21,7 @@ import { AddWrappedToMetamask } from 'pages/SecTokenDetails/AddToMetamask'
 import { DepositView, setWalletState } from 'state/wallet'
 import { useDepositActionHandlers } from 'state/deposit/hooks'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -28,6 +29,7 @@ interface Props {
   token: any
 }
 export const ExistingVault = ({ currency, custodian, token }: Props) => {
+  const history = useHistory();
   const dispatch = useDispatch()
   const symbolText = useMemo(() => token?.ticker ?? currency?.symbol, [currency?.symbol, token?.ticker])
   const { account } = useActiveWeb3React()
@@ -66,8 +68,9 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
   `
 
   const handleDeposit = () => {
-    onResetDeposit()
-    dispatch(setWalletState({ isOpenDepositCard: true, depositView: DepositView.CREATE_REQUEST }))
+    history.push('/maintainance')
+    // onResetDeposit()
+    // dispatch(setWalletState({ isOpenDepositCard: true, depositView: DepositView.CREATE_REQUEST }))
   }
   return (
     <ExistingWrapper>

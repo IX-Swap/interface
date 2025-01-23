@@ -33,6 +33,11 @@ interface Props {
   investedData: InvestedDataRes
 }
 
+const transactionHash: any = {
+  '40e1ce66-1532-4794-86c4-af465bf22a57': '',
+  '16e9891c-0092-4879-b11e-05a7ec84336b': 'https://polygonscan.com/tx/0x600090b79291fb303618ce98ec1568fd88f2dc5c68da32079e77e698b8242167',
+}
+
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
   const {
@@ -50,6 +55,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
     contractAddress,
     timeframe,
   } = props.offer
+  const isBlackList = ['40e1ce66-1532-4794-86c4-af465bf22a57', '16e9891c-0092-4879-b11e-05a7ec84336b'].includes(id)
 
   const addPopup = useAddPopup()
   const claimRefund = useClaimOfferRefund(id)
@@ -137,11 +143,23 @@ export const ClosedStage: React.FC<Props> = (props) => {
         </Column>
 
         {!isSuccessfull && (
-          <ClaimedFilledButton onClick={onSubmit} disabled={claiming || !canClaim || amount <= 0 || hasClaimed}>
+          <ClaimedFilledButton
+            onClick={onSubmit}
+            disabled={claiming || !canClaim || amount <= 0 || hasClaimed || isBlackList}
+          >
             Claim
           </ClaimedFilledButton>
         )}
       </Row>
+
+      {isBlackList ? (
+        <h5 style={{ margin: 0, color: '#ffaa71' }}>
+          Your investment has been refunded. See transaction{' '}
+          <a href={transactionHash[id]} target="_blank" rel="noreferrer">
+            here
+          </a>
+        </h5>
+      ) : null}
 
       <Separator />
 
