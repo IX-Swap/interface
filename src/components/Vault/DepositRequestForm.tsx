@@ -140,7 +140,6 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     onCurrencySet(id)
   }, [currency, onCurrencySet])
 
-  console.log('amount', amount)
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '16px' }}>
