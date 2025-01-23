@@ -2,7 +2,7 @@ import React from 'react'
 import { Box } from 'rebass'
 import { Trans } from '@lingui/macro'
 
-import IXSToken from 'assets/images/IXS-token.svg'
+import IXSToken from 'assets/images/logo/IXS-Token.png'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import Column from 'components/Column'
 import { RowCenter } from 'components/Row'

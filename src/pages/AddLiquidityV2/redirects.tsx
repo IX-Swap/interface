@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import AddLiquidityV2 from './index'
 import styled from 'styled-components'
 // import { Header } from 'pages/Launchpad/Header'
-import { useSetHideHeader } from 'state/application/hooks'
 import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
-import Header from 'components/Header'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { DEFAULT_CHAIN_ID } from 'config'
 import { useAccount } from 'wagmi'
@@ -50,16 +48,7 @@ export const AddWhiteBGContainer = styled.div<{ background?: string }>`
 export const RedirectDuplicateTokenIdsV2: React.FC<
   RouteComponentProps<{ currencyIdA: string; currencyIdB: string }>
 > = (props) => {
-  const hideHeader = useSetHideHeader()
   const { chainId } = useAccount()
-
-  useEffect(() => {
-    hideHeader(true)
-
-    return () => {
-      hideHeader(false)
-    }
-  }, [])
 
   const {
     match: {
@@ -85,10 +74,7 @@ export const RedirectDuplicateTokenIdsV2: React.FC<
 
   return (
     <>
-      <Header />
-      {/* <AddLiduidityContainer> */}
       <AddLiquidityV2 {...props} />
-      {/* </AddLiduidityContainer> */}
     </>
   )
 }

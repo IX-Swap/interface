@@ -65,6 +65,7 @@ import { KYCValidationErrors } from './KYCValidationErrors'
 import { error } from 'console'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { Uploader } from 'components/Uploader'
+import useQuery from 'hooks/useQuery'
 
 type FormSubmitHanderArgs = {
   createFn: (body: any) => any
@@ -120,6 +121,7 @@ export default function IndividualKycForm() {
   const { kyc, loadingRequest } = useKYCState()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
+  const query = useQuery()
 
   const [showTaxModal, setShowTaxModal] = useState(false)
   const [showFATCAModal, setShowFATCAModal] = useState(false)
@@ -153,7 +155,7 @@ export default function IndividualKycForm() {
   const prevAccount = usePrevious(account)
 
   useEffect(() => {
-    const code = new URL(window.location.href).href?.split('=')[1]
+    const code = query.get('referralCode')
     const storedReferralCode = localStorage.getItem('referralCode')
     if (code) {
       setReferralCode(code)
