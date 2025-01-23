@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import numeral from 'numeral'
@@ -73,6 +73,12 @@ export const AmountInput = ({
       setDisplayValue(value ? numeral(value).format('0,0') : '')
     }
   }
+
+  useEffect(() => {
+    if (rest.value) {
+      setDisplayValue(numeral(rest.value).format('0,0'))
+    }
+  }, [rest.value])
 
   return (
     <InputPanel id={'amount-input'} {...rest}>

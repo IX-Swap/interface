@@ -88,14 +88,15 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
       setLoadingDeposit(true)
       const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
       if (tokenId && !error && parsedAmount && !inputError && computedAddress) {
-        const response = await depositToken({ tokenId, amount, fromAddress: computedAddress })
+        const amountToDeposit = amount.toString();
+        const response = await depositToken({ tokenId, amount: amountToDeposit, fromAddress: computedAddress })
         if (!response?.data) {
           throw new Error(`Something went wrong. Could not deposit amount`)
         }
         requestId = response.data.id
         const transaction = await tokenContract?.transfer(
           tokenInfo?.custodyAssetAddress || '',
-          parseUnits(amount, tokenDecimals)
+          parseUnits(amountToDeposit, tokenDecimals)
         )
         getEvents({ tokenId: token?.token?.id, page: 1, filter: 'all' })
         dispatch(setWalletState({ depositView: DepositView.PENDING }))
