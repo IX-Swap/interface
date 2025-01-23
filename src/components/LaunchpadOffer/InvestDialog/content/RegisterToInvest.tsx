@@ -17,6 +17,7 @@ import { useGetWarning } from '../utils/ConvertationField'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import { ReactComponent as NewEyeIcon } from '../../../../assets/images/NewEyeIcon.svg'
 import { getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   offer: Offer
@@ -203,17 +204,17 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
 
               <WhitelistMessage>
                 {whitelist.status === WhitelistStatus.pending ? (
-                  <>
+                  <PendingText>
                     Thank you. Please check by <b>{moment(props.offer.timeframe.preSale).format('DD/MM/YYYY')}</b> for
                     the result of your registration application.
-                  </>
+                  </PendingText>
                 ) : whitelist.status === WhitelistStatus.declined ? (
-                  <>
+                  <PendingText>
                     Your registration to invest was unsuccessful. You can invest in this deal once the public sale
                     opens.
-                  </>
+                  </PendingText>
                 ) : whitelist.status === WhitelistStatus.accepted ? (
-                  <>Your registration to invest was successful. You can invest in this deal once the pre-sale starts.</>
+                  <PendingText>Your registration to invest was successful. You can invest in this deal once the pre-sale starts.</PendingText>
                 ) : null}
               </WhitelistMessage>
             </Column>
@@ -256,12 +257,24 @@ const CurrencyLabel = styled.div`
 
 const WhitelistMessage = styled.div`
   ${text59}
-
-  text-align: center;
+  font-size: 18px;
   max-width: 80%;
+  text-align: center;
   color: ${(props) => props.theme.launchpad.colors.text.title};
 
   b {
     color: ${(props) => props.theme.launchpad.colors.primary};
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    max-width: 100%;
+  }
+`
+
+const PendingText = styled.div`
+  margin-bottom: 0;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-bottom: 50px;
   }
 `
