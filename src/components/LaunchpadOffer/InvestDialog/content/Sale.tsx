@@ -32,8 +32,6 @@ import { OfferStageStatus, getTokenSymbol } from 'components/LaunchpadOffer/Offe
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { WalletEvent, INVEST_FLOW_EVENTS } from 'utils/event-logs'
 import usePostbackJumpTask from 'hooks/usePostbackJumpTask'
-import { useLineReward } from 'providers/LineRewardProvider'
-import { INVEST_REWARD_PER_TOKEN, LineRewardAction } from 'constants/lineRewards'
 
 interface Props {
   offer: Offer
@@ -65,7 +63,6 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
   const invest = useInvest(id)
   const getInvestPublicSaleStructData = useInvestPublicSaleStructData(id)
   const { callPostbackEndpoint } = usePostbackJumpTask()
-  const { setRewardsData, setOpenTaskSuccessModal } = useLineReward()
 
   const [amount, setAmount] = useState<string>()
   const getPresaleProof = usePresaleProof(id)
@@ -217,11 +214,6 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
             await invest(status, {
               amount,
               txHash: receipt.transactionHash,
-            })
-            setOpenTaskSuccessModal(true)
-            setRewardsData({
-              points: INVEST_REWARD_PER_TOKEN * +amount,
-              action: LineRewardAction.INVEST,
             })
 
             new WalletEvent(INVEST_FLOW_EVENTS.INVEST(status))
