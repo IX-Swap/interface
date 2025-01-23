@@ -37,6 +37,7 @@ import { useGetEventCallback } from 'state/eventLog/hooks'
 import { shortAddress } from 'utils'
 import { floorToDecimals } from 'utils/formatCurrencyAmount'
 import { useWeb3React } from 'hooks/useWeb3React'
+import { AmountInputReceived } from './AmountInputReceived'
 
 interface Props {
   currency?: SecCurrency & { tokenInfo?: { decimals?: number; originalDecimals?: number } }
@@ -139,6 +140,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     onCurrencySet(id)
   }, [currency, onCurrencySet])
 
+  console.log('amount', amount)
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '16px' }}>
@@ -226,7 +228,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
                 </TYPE.description2>
               </HideSmall>
             </RowBetween>
-            <AmountInput
+            <AmountInputReceived
               token={token}
               currency={currency}
               originalDecimals={tokenInfo?.originalDecimals}
